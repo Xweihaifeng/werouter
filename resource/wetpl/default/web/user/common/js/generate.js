@@ -111,9 +111,9 @@ var genMenu = function(mark, domain) {
     return template;
 }
 
-$("#middle").append(genMenu(mark, "qqxqs.com"))
-
-if (currPage != '') {
+$("#middle").append(genMenu(mark, "qqxqs.com")) // domain
+console.log(currPage)
+if (currPage != '' && currPage != 'user') {
     $("#" + parentPage + "_" + currPage).parent().parent(".we-cont").show();
     $("#" + parentPage + "_" + currPage).css({"color": "red", "background": "#f7f7f7"})
 } else {
