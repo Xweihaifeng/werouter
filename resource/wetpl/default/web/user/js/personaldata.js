@@ -53,7 +53,8 @@ if(sessionStorage.lastname == "we_title_1") {
 
      var isLogin = false; //判断用户登陆与否
      var router = function(route){
-        var routerList = ['home', 'login', 'article','active', 'shopping'];
+        // var routerList = ['home', 'login', 'article','active', 'shopping'];
+        var routerList = ['home', 'login', 'article','active'];
 
         var isMember = function(routerList, route){
             return routerList.filter(x => x === route);
@@ -101,7 +102,8 @@ if(sessionStorage.lastname == "we_title_1") {
         }
     }
 
-    $("#home, #login, #article,#active, #shopping").click(function(){
+    // $("#home, #login, #article,#active, #shopping").click(function(){
+    $("#home, #login, #article,#active").click(function(){
         var id = $(this).attr("id");
         router(id);
     })

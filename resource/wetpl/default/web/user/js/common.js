@@ -44,7 +44,8 @@ hasDomain(weid);
 
 var isLogin = false; //判断用户登陆与否
 var router = function(route){
-    var routerList = ['home', 'login', 'article','active','project', 'shopping'];
+    // var routerList = ['home', 'login', 'article','active','project', 'shopping'];
+    var routerList = ['home', 'login', 'article','active'];
 
     var isMember = function(routerList, route){
         return routerList.filter(x => x === route);
@@ -97,7 +98,8 @@ var router = function(route){
     }
 }
 
-$("#home, #login, #article,#active,#project, #shopping").click(function(){
+// $("#home, #login, #article,#active,#project, #shopping").click(function(){
+$("#home, #login, #article,#active").click(function(){
     var id = $(this).attr("id");
     router(id);
 })

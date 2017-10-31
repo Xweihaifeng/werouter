@@ -443,7 +443,8 @@ var isLogin = false; //判断用户登陆与否
 function router(route){
         // console.log(route);
     
-    var routerList = ['home', 'login', 'article','active','project', 'shopping'];
+    // var routerList = ['home', 'login', 'article','active','project', 'shopping'];
+    var routerList = ['home', 'login', 'article','active'];
         // console.log(route);
 
     var isMember = function(routerList, route){
@@ -502,7 +503,8 @@ function router(route){
     }
 }
 
-$("#home, #login, #article,#active,#project, #shopping").click(function(){
+// $("#home, #login, #article,#active,#project, #shopping").click(function(){
+$("#home, #login, #article,#active").click(function(){
     var id = $(this).attr("id");
     // console.log(id);
     router(id);
