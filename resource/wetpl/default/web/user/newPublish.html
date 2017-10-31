@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <script src="/common/js/jquery-3.2.1.min.js"></script>
+    <script src="/common/js/browser.min.js"></script>
+    <link rel="shortcut icon" id="favicon" href="" />
+    <link rel="stylesheet" href="/new.wezchina.com/user/common/css/main.css">
+    <link rel="stylesheet" href="/new.wezchina.com/user/css/newPublish.css">
+    <link rel="stylesheet" href="/new.wezchina.com/user/css/manage.css">
+    <link rel="stylesheet" href="/common/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/common/css/buttons.css">
+    <link rel="stylesheet" href="/common/css/swiper.min.css">
+    <!-- <link rel="stylesheet" type="text/css" href="css/magic-input.css"> -->
+    <!-- <link rel="stylesheet" type="text/css" href="css/magic-input.min.css"> -->
+    <script src="/common/js/jquery.imagecompress.js"></script>
+    <script src="/common/js/layer/layer.js"></script>
+    <script src="/new.wezchina.com/configure.js"></script>
+    <script src="/common/js/control.js"></script>
+    <script src="/new.wezchina.com/user/js/common.js"></script>
+    <script src="/new.wezchina.com/user/admin/publish/js/common.js"></script>
+	<script src="/new.wezchina.com/user/common/js/generate_manage.js"></script>
+
+    <script src="/new.wezchina.com/user/js/publish.js"></script>
+    <script src="/common/js/swiper-3.3.1.min.js"></script>
+    <script src="/common/js/buttons.js"></script>
+    <script src="/common/js/ckeditor/ckeditor.js"></script>
+    <script src="/common/js/plupload/plupload.full.min.js"></script>
+    <script src="/common/js/qiniu.js"></script>
+    <title>文章发布</title>
+</head>
+<body style="width: 100%; background: #F7F6F2;">
+<div class="login">
+    <div class="left-nav">
+        
+    </div>
+    <div id="top">
+        
+    </div>
+    <div id="middle">
+        
+    </div>
+
+    <div id="right">
+        <div class="we-art-nav">
+            <ol class="breadcrumb" >
+                <li class="homepage"><a>文章管理</a></li>
+                <li class="active">发布文章</li>
+            </ol>
+        </div>
+        <div class="container1" style="padding: 30px;">
+        <div class="we-release">
+            <!-- <div class="we-art-nav">
+                <ol class="breadcrumb" style="height: 44px; line-height: 30px; font-size: 15px; cursor: pointer;">
+                    <li class="homepage"><a>发布文章</a></li>
+                    <li class="back"><a>编辑</a></li>
+                    <li class="active">文章信息</li>
+                </ol>
+            </div> -->
+            <div class="art-header">
+            	<div style="font-size: 20px; text-align: left; padding-bottom: 20px; border-bottom: 1px solid #f4f4f4; color: #666;">文章信息</div>
+                <!-- <span>文章标题:</span> -->
+                <input name="title" type="text" id="head" size="30" class="form-control" maxlength="100"
+                       placeholder="文章标题" wrap="hard" cols="100" style="width: 100%; margin: 20px 0 0 0; padding: 0 12px;"/>
+                <!-- <span style="color: red; margin-left: -60px;">*</span>必填 -->
+            </div>
+            <div style="display: flex;">
+	            <div class="art-author">
+	                <!-- <span>文章作者:</span> -->
+	                <input name="author" type="text" id="author" size="30" class="form-control" maxlength="15"
+	                       placeholder="文章作者" wrap="hard" cols="100" style="width: 170px; margin: 20px 50px 0 0; padding: 0 12px;"/>
+	                <!-- <span style="color: red; margin-left: -60px;">*</span>必填 -->
+	            </div>
+	            <div class="art-issuer">
+	                <!-- <span>发布人:</span> -->
+	                <input name="issuer" type="text" id="issuer" size="30" class="form-control" maxlength="15"
+	                       placeholder="文章来源" wrap="hard" cols="100" style="width: 170px; margin: 20px 0 0 0; padding: 0 12px;"/>
+	            </div>
+	            <div class="art-original" style="display: flex; align-items: center; height: 65px; padding-left: 60px;">
+	                <!-- <input type="checkbox" id="original" style="width: 15px; margin-left: 10px; line-height: 65px;"/> -->
+	                <input type="checkbox" id="original" class="mgc mgc-primary mgc-lg" style="width: 15px; height: 15px; margin-right: 10px;" />
+	                <span style="margin-top: 4px; padding: 0; display: inline-block;">原创</span>
+	            </div>
+            </div>
+            <!-- <div class="art-source" style="clear: left;">
+                <span>来源:</span>
+                <input name="source" type="text" id="source" size="30" class="form-control" maxlength="100"
+                       placeholder="" wrap="hard" cols="100" style="width: 600px;"/>
+            </div>
+            <div class="art-text">
+                <span>文章正文:</span>
+            </div> -->
+        </div>
+        <div class="editor" style="width: 100%; margin-top: 20px;">
+            <section class="content">
+                <div class="box box-info">
+                    <div class="box-body pad">
+                        <textarea id="editor1" name="editor1" rows="10" cols="80"></textarea>
+                    </div>
+                </div>
+            </section>
+        </div>
+		<div class="art-link">
+            <span style="display: flex; align-items: center;"><input type="checkbox" class="mgc mgc-primary mgc-lg" id="link-box" style="margin-top: -1px; margin-right: 15px;"/>原文链接</span>
+            <input name="art-link" type="text" id="art-link" size="30" class="form-control" maxlength="100"
+                   placeholder="" wrap="hard" cols="100" style="margin-left: 15px; padding: 0 12px;display: none;" />
+        </div>
+        <div style="width: 100%; border-bottom: 1px solid #f0f0f0; margin-top: 20px;"></div>
+        <div class="we-release-add">
+            <div class="art-cover">
+            	<div style="font-size: 20px; color: #666; margin-bottom: 10px;">发布样式</div>
+                <p>封面图片<span style="margin-left: 15px; color: #999; padding: 0;">图片建议尺寸320像素*320像素</span></p>
+            </div>
+	        <div class="form-group">
+	            <div class="col-sm-offset-3" style="margin: 0;">
+	                <input name="thumb_image" type="hidden" value="" class="form-control"/>
+	                <input id="pickfiles" name="cover" type="file" class="form-control hide"/>
+	                <div id="look" style="width: 200px; height: 110px; background: #f4f4f4; border: 1px solid #ccc; display: flex; justify-content: center; align-items: center;">
+	                    <img onclick="$('#pickfiles').click()" id="img" width="" height= "108" style="max-width: 198px; padding: 0;border: none; margin: 0; border-radius: 0;" src="/common/img/img-14.png" alt="暂无预览图片" class="thumbnail">
+	                </div>
+	            </div>
+	        </div>
+	        <div style="margin: 15px 0 10px 0;">摘要<span style="margin-left: 15px; color: #999; padding: 0;">选填，如果不填写会默认抓取正文前54个字</span></div>
+        </div>
+        <div class="we-release-add">
+            <div class="art-cover-intro">
+                <!-- <span>封面描述:</span> -->
+                <textarea name="summary" type="text" class="form-control" id="summary" size="30" maxlength="600"
+                          placeholder="" wrap="hard" cols="30"></textarea>
+            </div>
+            <div class="art-type" style="display: flex; margin-top: 30px;">
+                <!-- <span style="margin-right: 15px;">文章分类:</span> -->
+                <select name="article" class="form-control" style="width: 120px;"></select>
+            </div>
+            <div class="art-private">
+                <span style="padding: 0;">隐私发布:</span>
+                <span><input type="checkbox" id="yes"> 是 </span>
+                <span><input type="checkbox" id="no" checked> 否 </span>
+                <!-- <span>开启后为隐私文章，不会被搜索到</span> -->
+            </div>
+            <div class="art-submit">
+                <button id="save" class="button button-box button-jumbo" style="width: 150px; margin-top:0;height: 40px; margin-bottom: 25px; font-size: medium; line-height: 1; background: #1075fe; color: #fff; border-radius: 4px;">保存并发送</button>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+<script>
+	$('#link-box').click(function(){
+		if($(this).is(':checked')){
+			$('#art-link').fadeIn(400);
+		} else {
+			$('#art-link').fadeOut(400);
+		}
+	})
+
+</script>
+</body>
+</html>

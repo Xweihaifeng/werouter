@@ -1,0 +1,108 @@
+
+@charset "utf-8";
+
+* {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    scrollbar-3dlight-color:#fff;          /*3d亮色阴影边框(threedlightshadow)的外观颜色*/
+    scrollbar-highlight-color:#fff;        /*滚动条3d高亮边框(threedhighlight)的外观颜色*/
+    scrollbar-arrow-color:#fff;            /*滚动条方向箭头的颜色*/
+    scrollbar-shadow-color:#fff;           /*滚动条方向箭头的颜色*/
+    scrollbar-darkshadow-color:#fff;       /*滚动条3d暗色阴影边框(threeddarkshadow)的外观颜色*/
+    scrollbar-base-color:#fff;             /*滚动条基准颜色*/
+    scrollbar-track-color:#fff;            /*滚动条拖动区域的外观颜色*/
+    scrollbar-dark-shadow-color: #fff;
+    font-family: "微软雅黑","PingFang SC","Helvetica Neue","Hiragino Sans GB","Segoe UI","Microsoft YaHei",sans-serif;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    background-image: url(../../images/dibu.jpg);
+    background-attachment: fixed;
+}
+
+::-webkit-scrollbar {
+    width: 0px;
+    height: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+.hr {
+	border: none;
+    border-top: 1px solid #ccc;
+    margin: 15px 0;
+}
+
+.news_menu {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 90px;
+    height: 100%;
+    background-color: #ececec;
+    overflow: hidden;
+}
+
+.news_menu li {
+    width: 100%;
+    height: 80px;
+}
+
+.news_menu a.logoImg {
+    width: 100%;
+    height: 90px;
+    background-image: url(../img/logo.png);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: rgba(0, 79, 136, 1);
+}
+
+.news_menu a {
+    display: flex;
+    width: 100%;
+    height: 80px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+    cursor: pointer;
+    line-height: 1.9rem;
+    font-size: 15px;
+    color: #999;
+}
+
+.news_menu a i {
+    font-size: 29px;
+}
+
+.news_menu .menu-title {
+    display: none;
+}
+
+.news_menu li:hover .menu-title {
+    display: block;
+}
+
+.news_menu li:not(:first-of-type):hover {
+    background: #cdcdcd;
+}
+
+.news_menu a:hover {
+    color: #777;
+}
+
+.news_menu .selectedSpan {
+    color: #fc3e32;
+    background: rgb(217, 217, 217);
+}

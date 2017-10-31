@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+	<head lang="en">
+		<title>操作密令</title>
+        <meta charset="UTF-8">
+        <link rel="shortcut icon" id="favicon" href="" />
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+        <script charset="utf-8" type="text/javascript" src="/common/js/jquery-3.2.1.min.js"></script>
+        <script charset="utf-8" type="text/javascript" src="/common/js/browser.min.js"></script>
+        <script charset="utf-8" type="text/javascript" src="/common/js/jquery.imagecompress.js"></script>
+        <script charset="utf-8" type="text/javascript" src="/common/js/swiper-3.3.1.min.js"></script>
+        <script charset="utf-8" type="text/javascript" src="/common/js/buttons.js"></script>
+
+        <link rel="stylesheet" href="/common/css/main.css">
+        <link rel="stylesheet" href="/common/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/common/css/buttons.css">
+        <link rel="stylesheet" href="/common/css/swiper.min.css">
+        <link rel="stylesheet" type="text/css" href="/new.wezchina.com/user/admin/css/myOperate.css"/>
+        <link rel="stylesheet" type="text/css" href="/new.wezchina.com/user/admin/css/myB - bf.css"/>
+        <!-- <link rel="stylesheet" type="text/css" href="icon/font_hhs1pgs3hfbc5wmi/iconfont1.css" /> -->
+	</head>
+
+	<body style="width: 100%; background: #F7F6F2;">
+     <div class="left-nav"></div>
+	<div class="login">
+		<div id="top"></div>
+		<div id="middle"></div>
+        <!-- 右边内容 -->
+    	<div id="right" class="homeright pageright f_r">
+    	    <div class="header">
+    			<p>我的账户 > 操作密令</p>
+    		</div>
+            <div class="top-h4-span-wp"></div>
+            <script>
+                $(".top_release").click(function(){
+                    $(this).nextAll().toggle();
+                })
+            </script>
+          <!--   <div class="list_title clearfix">
+            <div class="cur">
+            <span>操作密令</span>
+            </div>
+            </div> -->
+            <!-- 操作密令已设置去修改 -->
+            <div class="list_conment setting_security">
+                <div class="setting_box" style="display:block">
+                    <div class="control-group small-control-group">
+                        <label class="control-label"></label>
+                        <div class="control-text settting-success">操作密令已设置。<a href="javascript:void(0)" onclick="modpaypaw()">去修改！</a></div>
+                        <div class="blank0"></div>
+                    </div>
+                </div>
+                <div class="setting_box pr grayscale" id="setting-pass-box" style="display:block">
+                    <div class="layerbg"></div>                    <form class="ajax_form_paypassword" action="/settings-paypassword_binding.html">
+                    <div class="control-group small-control-group">
+                        <label class="control-label">新密令:</label>
+                        <div class="control-text" id="con-txt2">
+                            <input type="password" autocomplete="off" id="" value="" class="small_textbox" name="paypassword">
+                        </div>
+                        <div class="blank0"></div>
+                    </div>
+                    <div class="control-group small-control-group">
+                        <label class="control-label">确认密令:</label>
+                        <div class="control-text" id="con-txt3">
+                            <input type="password" autocomplete="off" id="" value="" class="small_textbox" name="confirm_pypassword">
+                        </div>
+                        <div class="blank0"></div>
+                    </div>
+                    <div class="control-group smaller-control-group">
+                        <label class="control-label">手机号:</label>
+                        <div class="control-text" id="con-txt" style="line-height: 37px;"><input type="text" disabled="true"  class="small_textbox" name=""></div>
+                        <div class="blank0"></div>
+                    </div>
+                    <div class="control-group small-control-group">
+                        <label class="control-label">验证码:</label>
+                        <div class="control-text" id="con-txt1">
+                            <input type="text" value="" class="small_textbox mr10" name="verify" style="width:165px;">
+                            <input type="button" value="获取验证码" class="ui_button send_sms_verify small_send_sms_verify bg_red" id="hqJ_send_sms_verify_pay">
+                        </div>
+                    </div>
+                    <div class="blank10"></div>
+                    <div class="submit_btn_row control-group">
+                        <label class="control-label"></label>
+                        <div class="ui-button theme_bgcolor" rel="green">提交</div>
+                        <input type="hidden" value="1" name="ajax">
+                        <input type="hidden" value="0" name="step">
+                    </div>
+                    </form>
+                </div>
+            </div>
+            <div class="blank"></div>
+        </div>
+    </div>
+    <!--模块引入-->
+    <script charset="utf-8" type="text/javascript" src="/new.wezchina.com/configure.js"></script>
+    <script charset="utf-8" type="text/javascript" src="/new.wezchina.com/user/common/js/generate.js"></script>
+    <script charset="utf-8" type="text/javascript" src="/common/js/control.js"></script>
+    <script charset="utf-8" type="text/javascript" src="/new.wezchina.com/user/js/common.js"></script>
+    <script charset="utf-8" type="text/javascript" src="/new.wezchina.com/user/js/myBag.js"></script>
+    <script charset="utf-8" type="text/javascript" src="/new.wezchina.com/user/js/myOperate.js"></script>
+    <script charset="utf-8" type="text/javascript">
+        function modpaypaw(){
+            $("#setting-pass-box").removeClass("grayscale");
+            $(".layerbg").hide();
+        }
+    </script>
+	</body>
+
+</html>

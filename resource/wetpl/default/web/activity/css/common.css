@@ -1,0 +1,1266 @@
+:after,
+:before {
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+* {
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  font-size: 10px;
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  font-family: "PingFang SC", "Microsoft YaHei", Helvetica Neue, Helvetica, STHeiTi, arial, sans-serif;
+  font-size: 1.4rem;
+  margin: 0;
+  position: relative;
+  min-height: 100%;
+  color: #333;
+  background-color: #f2f2f2;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+button,
+p,
+figure {
+  margin: 0;
+  padding: 0;
+}
+
+button:focus,
+button:active {
+  outline: none;
+}
+
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+a:hover,
+a:link,
+a:visited,
+a:focus {
+  text-decoration: none;
+}
+
+blockquote {
+  font-size: 17.5px;
+  margin: 0 0 20px;
+  padding: 10px 20px;
+  border-left: 5px solid #eee;
+}
+
+aside {
+  position: fixed;
+}
+
+.clearfix:after {
+  content: '\20';
+  display: block;
+  height: 0;
+  clear: both;
+}
+
+.clearfix {
+  *zoom: 1;
+}
+
+.flex {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.flex-1 {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+     -moz-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1
+}
+
+.main-justify {
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+/*通用头部*/
+
+.wl-app-banner {
+  height: 5.8rem;
+}
+
+.wl-header {
+  position: fixed;
+  z-index: 9;
+  width: 100%;
+  height: 5.8rem;
+  padding: 1rem 9rem 1rem 6rem;
+  border-bottom: 1px solid #eee;
+  background-color: #fff;
+}
+
+.wl-header .wl-logo,
+.wl-header .wl-download {
+  position: absolute;
+  top: 50%;
+}
+
+.wl-header .wl-logo {
+  left: 1rem;
+  width: 4.2rem;
+  height: 4.2rem;
+  margin-top: -2.1rem;
+}
+
+.wl-header .wl-logo > img {
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+}
+
+.wl-header .wl-info {
+  font-size: 1.4rem;
+  display: table-cell;
+  vertical-align: middle;
+  color: #04a6e9;
+}
+
+.wl-header .wl-info > img {
+  display: block;
+  width: 4rem;
+  margin-bottom: 3px;
+}
+
+.wl-header .wl-download {
+  font-size: 1.2rem;
+  line-height: 2.8rem;
+  right: 1rem;
+  display: block;
+  width: 7.5rem;
+  margin-top: -1.4rem;
+  text-align: center;
+  color: #fff;
+  border-radius: 4px;
+  background-color: #04a6e9;
+}
+
+.wl-header .wl-download > img {
+  position: relative;
+  top: 5px;
+  width: 12px;
+  margin-right: 5px;
+}
+
+
+/*通用按钮*/
+
+.wl-btn {
+  font-size: 1.6rem;
+  display: inline-block;
+  padding: .5rem 1rem;
+  color: #fff;
+}
+
+.wl-btn-blue {
+  border: 1px solid #04a6e9;
+  background-color: #04a6e9;
+}
+
+.wl-btn-white {
+  color: #04A6E9;
+  border: 1px solid #ccc;
+  background-color: #fff;
+}
+
+.wl-btn-gray {
+  border: 1px solid #ccc;
+  background-color: #ccc;
+}
+
+.wl-btn-orange {
+  border: 1px solid #fbb217;
+  background-color: #fbb217;
+}
+
+.wl-btn-link {
+  color: #4093c6;
+}
+
+.wl-btn-outline {
+  background-color: #fff;
+  color: inherit;
+}
+
+
+/*通用悬浮按钮*/
+
+.wl-fixed-button {
+  position: fixed;
+  z-index: 9;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 4.5rem;
+}
+
+.wl-fixed-button .wl-btn {
+  line-height: 3.5rem;
+  width: 100%;
+  text-align: center;
+}
+
+
+/*通用个人信息*/
+
+.wl-user {
+  position: relative;
+  padding: 1.5rem 0 1rem 4rem;
+}
+
+.wl-user > figure {
+  position: absolute;
+  top: 1.5rem;
+  left: 0;
+  width: 3.4rem;
+  height: 3.4rem;
+}
+
+.wl-user > figure > .icon-vc {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+}
+
+.wl-user-avatar {
+  overflow: hidden;
+  width: 3.4rem;
+  height: 3.4rem;
+  border-radius: 50%;
+  background-color: #eee;
+}
+
+.wl-user-name {
+  display: inline-block;
+}
+
+.wl-user-time {
+  font-size: 1.2rem;
+  float: right;
+  color: #adadad;
+}
+
+.wl-user-company {
+  font-size: 1.2rem;
+  line-height: 1.4rem;
+  overflow: hidden;
+  height: 1.4rem;
+  margin-top: .4rem;
+  color: #a1a1a1;
+}
+
+.wl-user-company > span {
+  margin-right: 5px;
+}
+
+.wl-user .wl-btn,
+.wl-user .tag {
+  position: absolute;
+  top: 2rem;
+  right: 1rem;
+  color: #3474ba;
+  border-color: #eaeaea;
+}
+
+.wl-user .wl-btn {
+  font-size: 1.4rem;
+  top: 2.1rem;
+  padding: .3rem .75rem;
+}
+
+.wl-user .tag {
+  font-size: 1.2rem;
+  line-height: 2.4rem;
+  border: 0;
+}
+
+.wl-user .tag.wechat {
+  color: #adadad;
+}
+
+
+/*通用活动信息*/
+
+.wl-act {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 115px;
+  padding: 15px;
+  padding-left: 140px;
+  border-bottom: 1px solid #eaeaea;
+  cursor: pointer;
+}
+
+.wl-act .wl-act-poster {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  width: 115px;
+  height: 85px;
+}
+
+.wl-act .wl-act-title {
+  font-size: 1.6rem;
+  line-height: 20px;
+  overflow: hidden;
+  width: 100%;
+  height: 40px;
+}
+
+.wl-act .wl-act-sponsor {
+  color: #999;
+  height: 20px;
+  line-height: 20px;
+  overflow: hidden;
+}
+
+.wl-act .wl-act-info {
+  font-size: 1.2rem;
+  line-height: 16px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  overflow: hidden;
+  padding-top: 5px;
+}
+
+.wl-act .wl-act-info > div {
+  color: #999;
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+}
+
+.wl-act .wl-act-info .icon {
+  width: 1.2rem;
+  height: 1.2rem;
+  margin-right: 3px;
+}
+
+
+/*九宫格图片*/
+
+.wl-pic {
+  overflow: hidden;
+}
+
+.wl-pic-item {
+  float: left;
+  overflow: hidden;
+  width: 32%;
+  margin-bottom: 2%;
+  margin-left: 2%;
+  -webkit-transition: height .3s ease-out;
+  transition: height .3s ease-out;
+}
+
+.wl-pic-item:nth-child(3n-2) {
+  margin-left: 0;
+}
+
+
+/* 通用卡片 */
+
+.card {
+  position: relative;
+  display: block;
+  height: 56px;
+  margin-top: .5rem;
+  margin-bottom: 1rem;
+  padding: 8px 8px 8px 55px;
+  border: 1px solid #e5e5e5;
+  border-radius: 4px;
+}
+
+.card .card-logo {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  width: 40px;
+  height: 40px;
+}
+
+.card .card-logo img {
+  overflow: hidden;
+  width: 100%;
+  border-radius: 50%;
+}
+
+.card > div {
+  line-height: 20px;
+  overflow: hidden;
+  height: 20px;
+  max-height: 40px;
+}
+
+.card .card-title {
+  font-size: 14px;
+  color: #555;
+}
+
+.card .card-intro {
+  font-size: 13px;
+  color: #adadad;
+}
+
+.card.discuss,
+.card.link {
+  display: -webkit-flex;
+  display: flexbox;
+  -webkit-align-items: center;
+  align-items: center;
+  -webkit-box-align: center;
+  -moz-box-align: center;
+  -ms-flex-align: center;
+}
+
+.card-lg {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  height: 210px;
+  margin-top: .5rem;
+  margin-bottom: 1rem;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+}
+
+.card-lg .card-logo {
+  overflow: hidden;
+  width: 100%;
+  height: 150px;
+  border-bottom: 1px solid #d9d9d9;
+}
+
+.card-lg .card-logo img {
+  width: 100%;
+}
+
+.card-lg .card-content {
+  padding: .75rem;
+  color: #555;
+}
+
+.card-lg .card-title {
+  line-height: 20px;
+  display: -webkit-box;
+  overflow: hidden;
+  height: 20px;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
+
+.card-lg .card-intro {
+  font-size: 1.2rem;
+  margin-top: 3px;
+  color: #999;
+}
+
+.card-label {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  height: 1.3rem;
+  text-align: center;
+  color: #fff;
+  border-top-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  background-color: #5cafff;
+}
+
+
+/*通用状态*/
+
+.wl-state {
+  overflow: hidden;
+  padding: 1rem 0;
+  color: #999;
+}
+
+.wl-state .data {
+  float: left;
+}
+
+.wl-state .data span {
+  margin-right: 2rem;
+}
+
+
+/*通用评论*/
+
+.wl-comment {
+  position: relative;
+  overflow: hidden;
+  padding: 1rem 0 1rem 4rem;
+  border-bottom: 1px solid #ececec;
+}
+
+.wl-comment-avatar {
+  position: absolute;
+  top: 1rem;
+  left: 0;
+  overflow: hidden;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background-color: #e5e5e5;
+}
+
+.wl-comment-user {
+  line-height: 1.2rem;
+  display: inline-block;
+  margin-bottom: 5px;
+}
+
+.wl-comment-user-name {
+  font-size: 1.4rem;
+  color: #333;
+}
+
+.wl-comment-publish-time {
+  font-size: 1.1rem;
+  color: #adadad;
+}
+
+.wl-comment-company {
+  font-size: 1rem;
+  line-height: 1.2rem;
+  margin-bottom: 5px;
+  color: #999;
+}
+
+.wl-comment-company > span {
+  margin-right: 5px;
+}
+
+.wl-comment-time {
+  font-size: 1.2rem;
+  float: right;
+  color: #999;
+}
+
+.wl-comment-content {
+  font-size: 1.4rem;
+  margin-bottom: 5px;
+  color: #555;
+}
+
+.wl-comment-to-user span {
+  margin: 0 5px;
+  color: #5282bf;
+}
+
+.wl-comments .no-comment {
+  font-style: italic;
+  padding: 5px 0;
+  text-align: center;
+  color: #7d7d7d;
+}
+
+
+/**
+ * 通用简单评论列表
+ */
+
+.wl-simple-comment {
+  font-size: 1.3rem;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  border-radius: 4px;
+  background-color: #f8fbfd;
+}
+
+.wl-simple-comment-item {
+  padding: 3px 0;
+  color: #555;
+}
+
+.wl-simple-comment-user {
+  color: #4093c6;
+}
+
+
+/*通用icon*/
+
+.icon {
+  position: relative;
+  top: 1px;
+  display: inline-block;
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
+.icon-time {
+  background: url(http://fed.welian.com/0_icon/icon_time%402x.png);
+  background-size: cover;
+}
+
+.icon-marker {
+  background: url(http://fed.welian.com/0_icon/icon_map%402x.png);
+  background-size: cover;
+}
+
+.icon-group {
+  background: url(http://fed.welian.com/0_icon/discovery_activity_detail_people%402x.png);
+  background-size: cover;
+}
+
+.icon-sponor {
+  background: url(http://fed.welian.com/0_icon/icon_host%402x.png);
+  background-size: cover;
+}
+
+.icon-good {
+  background: url(http://fed.welian.com/0_icon/icon_good.png);
+  background-size: cover;
+}
+
+.icon-good-blue {
+  background: url(http://fed.welian.com/0_icon/icon_good_blue.png);
+  background-size: cover;
+}
+
+.icon-comment {
+  background: url(http://fed.welian.com/0_icon/icon_comment.png);
+  background-size: cover;
+}
+
+.icon-share {
+  background: url(http://fed.welian.com/0_icon/icon_share.png);
+  background-size: cover;
+}
+
+.icon-edit {
+  background: url(http://fed.welian.com/0_icon/icon_edit%402x.png);
+  background-size: cover;
+}
+
+.icon-pen {
+  background: url(http://fed.welian.com/0_icon/icon_pen%402x.png);
+  background-size: cover;
+}
+
+.icon-user {
+  background: url(http://fed.welian.com/0_icon/icon_user_blue%402x.png);
+  background-size: cover;
+}
+
+.icon-phone {
+  background: url(http://fed.welian.com/0_icon/icon_phone_blue%402x.png);
+  background-size: cover;
+}
+
+.icon-bag {
+  background: url(http://fed.welian.com/0_icon/icon_bag_blue%402x.png);
+  background-size: cover;
+}
+
+.icon-flag {
+  background: url(http://fed.welian.com/0_icon/icon_flag_blue%402x.png);
+  background-size: cover;
+}
+
+.icon-vc {
+  background: url(http://fed.welian.com/2_h5/deliver_vc.png);
+  background-size: cover;
+}
+
+.arraw {
+  width: 10px;
+  width: 15px;
+  height: 10px;
+}
+
+.arraw:before,
+.arraw:after {
+  position: absolute;
+  display: block;
+  width: 12px;
+  height: 1px;
+  content: "";
+  cursor: pointer;
+  border-radius: 2px;
+  background: #c7c7cc;
+}
+
+.arraw:before {
+  top: 0;
+}
+
+.arraw:after {
+  bottom: 0;
+}
+
+.arraw-right:before {
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.arraw-right:after {
+  -webkit-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+}
+
+
+/*通用蒙板*/
+
+.backdrop {
+  position: fixed;
+  z-index: 999;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: none;
+  opacity: 0;
+  background-color: #000;
+}
+
+.fade {
+  -webkit-transition: opacity .5s ease-out;
+  transition: opacity .5s ease-out;
+}
+
+.fade.in {
+  opacity: .5;
+}
+
+.no-scroll {
+  overflow: hidden !important;
+  height: 100% !important;
+}
+
+
+/*通用电子票*/
+
+.ticket-card {
+  position: relative;
+  float: left;
+  width: 100%;
+  min-height: 45px;
+  padding: 1rem;
+  border: 1px solid #04a6e9;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.ticket-card:before {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 72%;
+  display: block;
+  width: 7px;
+  height: 100%;
+  content: "";
+  background: url(//fed.welian.com/2_h5/ticket_center%402x.png) no-repeat;
+  background-size: 100% 100%;
+}
+
+.ticket-card .info > div {
+  overflow: hidden;
+  width: 90%;
+  height: 1.8rem;
+}
+
+.ticket-card .info {
+  line-height: 1.4rem;
+  float: left;
+  width: 75%;
+  color: #555;
+}
+
+.ticket-card .info .tk-intro {
+  height: auto;
+  color: #999;
+}
+
+.ticket-card .tk-all-price {
+  font-size: 1.6rem;
+  font-weight: bold;
+  float: right;
+  overflow: hidden;
+  width: 25%;
+  text-align: center;
+}
+
+.ticket-card .tk-all-price .tk-price {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  width: 25%;
+  display: block;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  color: #04a6e9;
+}
+
+.ticket-card .num {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 0;
+  height: 0;
+  border-right: 40px solid transparent;
+  border-bottom: 40px solid #f9f9f9;
+  border-top-right-radius: 7px;
+  background-color: #04a6e9;
+}
+
+.ticket-card .num > span {
+  font-size: 1.2rem;
+  position: relative;
+  top: 5px;
+  left: 5px;
+  display: block;
+  width: 40px;
+  height: 20px;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+  text-align: center;
+  color: #fff;
+}
+
+
+/* 通用侧边二维码 */
+
+.qrcode {
+  display: none;
+  position: fixed;
+  width: 200px;
+  height: 240px;
+  left: 50%;
+  top: 10px;
+  margin-left: 380px;
+  background-color: #fff;
+}
+
+.qrcode>img {
+  width: 200px;
+  height: 200px;
+}
+
+.qrcode .text {
+  font-size: 14px;
+  width: 200px;
+  text-align: center;
+}
+
+
+/*other*/
+
+.wrap {
+  background-color: #fff;
+}
+
+.hide {
+  display: none !important;
+}
+
+.pull-left {
+  float: left !important;
+}
+
+.pull-right {
+  float: right !important;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.split {
+  width: 100%;
+  height: 1rem;
+  background-color: #f2f2f2;
+}
+
+.word-blue {
+  margin: 0 .3rem;
+  color: #04a6e9;
+}
+
+.plus,
+.plus:before {
+  display: block;
+  width: 1.4rem;
+  height: 2px;
+  background-color: #999;
+}
+
+.plus:before {
+  content: "";
+  -webkit-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  transform: rotate(90deg);
+}
+
+.minus {
+  display: block;
+  width: 1.4rem;
+  height: 2px;
+  background-color: #999;
+}
+
+.multip {
+  position: relative;
+  display: inline-block;
+  width: 1.4rem;
+  height: 4px;
+}
+
+.multip:before,
+.multip:after {
+  position: absolute;
+  display: block;
+  width: 1.4rem;
+  height: 4px;
+  content: "";
+  border-radius: 2px;
+  background-color: #adadad;
+}
+
+.multip:before {
+  left: -1px;
+  -webkit-transform: rotate(45deg);
+}
+
+.multip:after {
+  -webkit-transform: rotate(-45deg);
+}
+
+.wl-loading-bg {
+  opacity: .5;
+}
+
+.wl-loading {
+  position: fixed;
+  z-index: 1000;
+  top: 50%;
+  left: 50%;
+  display: none;
+  width: 7rem;
+  height: 7rem;
+  margin-top: -3.5rem;
+  margin-left: -3.5rem;
+  padding: 1rem;
+  text-align: center;
+  color: #adadad;
+  border-radius: .5rem;
+  background: rgba(255, 255, 255, 1);
+}
+
+.wl-loading > img {
+  width: 3rem;
+  height: 3rem;
+}
+
+.wl-loading > p {
+  line-height: 2rem;
+}
+
+@media screen and (min-width: 375px) {
+  .wl-header .wl-info {
+    font-size: 1.4rem;
+  }
+}
+
+
+/* 兼容pc */
+
+@media screen and (min-width: 1024px) {
+  .wrap {
+    width: 740px !important;
+    min-height: -webkit-calc(100% - 5.8rem);
+    min-height: calc(100% - 5.8rem);
+    margin-right: auto;
+    margin-left: auto;
+    box-shadow: 0 -4px 4px rgba(0, 0, 0, .2);
+  }
+  .wl-app-banner {
+    width: 740px;
+    margin: 0 auto;
+    box-shadow: 0 -4px 4px rgba(0, 0, 0, .2);
+  }
+  .wl-header {
+    width: 740px;
+  }
+  .wl-fixed-button {
+    width: 740px;
+    margin: 0 auto;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, .2);
+  }
+  .qrcode {
+    display: block;
+  }
+}
+
+
+/** alert start */
+
+.wl-confirm-box {
+  position: absolute;
+  z-index: 5000;
+  max-width: 400px;
+  border-radius: 10px;
+  background-color: #e2e2e2;
+  box-shadow: 0 0 10px rgba(0, 0, 0, .4);
+}
+
+.wl-confirm-box .wl-confirm-title {
+  font-size: 1.9rem;
+  font-size: 1.9em\9;
+  width: 100%;
+  margin: 1.6rem 0 1.6rem;
+  margin: 1.6em 0 1.6em\9;
+  text-align: center;
+}
+
+.wl-confirm-box .wl-confirm-content {
+  font-size: 1.6rem;
+  font-size: 1.6em\9;
+  margin: 0 1.6rem 6.2rem;
+  margin: 0 1.6em 6.2em\9;
+  text-align: left;
+}
+
+.wl-confirm-box button {
+  font-size: 1.6rem;
+  font-size: 1.6em\9;
+  position: absolute;
+  bottom: 0;
+  display: block;
+  width: 50%;
+  height: 4rem;
+  height: 4em\9;
+  cursor: pointer;
+  text-align: center;
+  color: #04a6e9;
+  border: none;
+  border-top: 1px solid #b4b4b4;
+  background: transparent;
+}
+
+.wl-confirm-box .wl-confirm-button-wrap button.wl-confirm-btn-right {
+  right: 0;
+  border-radius: 0 0 10px 0;
+}
+
+.wl-confirm-box .wl-confirm-button-wrap button.wl-confirm-btn-left {
+  left: 0;
+  border-right: 1px solid #b4b4b4;
+  border-radius: 0 0 0 10px;
+}
+
+.wl-confirm-box .wl-confirm-button-wrap button:focus,
+.wl-confirm-box .wl-confirm-button-wrap button:hover {
+  font-weight: bold;
+  background: #efefef;
+}
+
+.wl-confirm-box .wl-confirm-button-wrap button:active {
+  background: #d6d6d6;
+}
+
+.wl-confirm-box .wl-confirm-button-wrap button.wl-confirm-btn-full-width {
+  width: 100%;
+  border-radius: 0 0 10px 10px;
+}
+
+.wl-loading-box {
+  position: absolute;
+  z-index: 5000;
+  min-width: 16em;
+  padding: 15px;
+  text-align: center;
+  color: #000;
+  border-radius: 10px;
+  background-color: #e2e2e2;
+  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, .4);
+  -moz-box-shadow: 0 0 10px rgba(0, 0, 0, .4);
+}
+
+.wl-loading-box .wl-loading-img {
+  width: 31px;
+  height: 31px;
+  margin: 0 auto;
+  background-image: url(//fed.welian.com/2_h5/loading.gif);
+  background-size: 31px 31px;
+}
+
+.wl-loading-box .wl-loading-title {
+  font-size: 1.4rem;
+  font-size: 1.4rem\9;
+  padding-top: 5px;
+}
+
+.wl-confirm-box .wl-confirm-content .wl-toast-msg {
+  text-align: center;
+}
+
+.wl-confirm-box .wl-confirm-content .wl-toast-msg p {
+  font-size: 1.4rem;
+  margin: 1rem 0;
+}
+
+
+/** alert start */
+
+
+/** overlay start */
+
+.ui-ios-overlay {
+  z-index: 99999;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  padding: 20px 10px;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  filter: progid: DXImageTransform.Microsoft.gradient(startColorstr=#cc000000, endColorstr=#cc000000);
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 4px;
+}
+
+.ui-ios-overlay .title {
+  color: #FFF;
+  text-align: center;
+  display: block;
+  margin-top: 5px;
+  font-size: 14px;
+  width: 100%;
+}
+
+.ui-ios-overlay img {
+  display: block;
+  width: 30px;
+  height: 30px;
+  margin: 0 auto;
+}
+
+.ui-ios-overlay .spinner {
+  left: 50% !important;
+  top: 40% !important;
+}
+
+.ios-overlay-show {
+  -webkit-animation-name: ios-overlay-show;
+  -webkit-animation-duration: 750ms;
+  -moz-animation-name: ios-overlay-show;
+  -moz-animation-duration: 750ms;
+  -ms-animation-name: ios-overlay-show;
+  -ms-animation-duration: 750ms;
+  -o-animation-name: ios-overlay-show;
+  -o-animation-duration: 750ms;
+  animation-name: ios-overlay-show;
+  animation-duration: 750ms;
+}
+
+@-webkit-keyframes ios-overlay-show {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes ios-overlay-show {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.ios-overlay-hide {
+  -webkit-animation-name: ios-overlay-hide;
+  -webkit-animation-duration: 750ms;
+  -webkit-animation-fill-mode: forwards;
+  -moz-animation-name: ios-overlay-hide;
+  -moz-animation-duration: 750ms;
+  -moz-animation-fill-mode: forwards;
+  -ms-animation-name: ios-overlay-hide;
+  -ms-animation-duration: 750ms;
+  -ms-animation-fill-mode: forwards;
+  -o-animation-name: ios-overlay-hide;
+  -o-animation-duration: 750ms;
+  -o-animation-fill-mode: forwards;
+  animation-name: ios-overlay-hide;
+  animation-duration: 750ms;
+  animation-fill-mode: forwards;
+}
+
+@-webkit-keyframes ios-overlay-hide {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes ios-overlay-hide {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+
+/** overlay end */

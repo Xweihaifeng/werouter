@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <script src="/common/js/jquery-3.2.1.min.js"></script>
+    <!-- <script src="js/jquery.js"></script> -->
+    <!-- <script type='text/javascript'  src='js/region.js'></script>     -->
+    <script src="/common/js/browser.min.js"></script>
+    <link rel="stylesheet" href="/common/css/main.css">
+    <link rel="shortcut icon" id="favicon" href="" />
+    
+
+    <link rel="stylesheet" href="/new.wezchina.com/font/iconfont.css" />
+    <link rel="stylesheet" href="/new.wezchina.com/css/news_base.css" />
+    <link rel="stylesheet" href="/new.wezchina.com/css/modal_login.css" />
+
+    <link rel="stylesheet" href="/new.wezchina.com/css/article.css">
+    <title>全球秦商总会</title>
+    <link rel="stylesheet" href="/common/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/common/css/buttons.css">
+    <!-- <link rel="stylesheet" type="text/css" href="css/shopcommon.css"> -->
+    <link rel="stylesheet" type="text/css" href="/new.wezchina.com/shopping/css/shoporderstyle.css">
+    <link rel="stylesheet" type="text/css" href="/new.wezchina.com/shopping/css/shoporder.css">
+
+
+    <link rel="stylesheet" type="text/css" href="/new.wezchina.com/shopping/css/focusimg.css">
+    <!-- <link type="text/css" rel="stylesheet" href="css/jqzoom.css"/> -->
+
+    <script src="/common/js/swiper-3.3.1.min.js"></script>
+    <script src="/common/js/buttons.js"></script>
+    <script type="text/javascript" src="/common/layer-v3.0.3/layer-v3.0.3/layer/layer.js"></script>
+    
+    <!-- 放大镜 -->
+    <!-- <script type="text/javascript" src="js/focusimg.js"></script> -->
+    <!-- <script type="text/javascript" src="js/jquery.jqzoom.min.js"></script> -->
+    <!-- 放大镜 end  -->
+    <!-- <script type="text/javascript" src="js/jquery.qrcode.min.js"></script> -->
+    <!-- <script type="text/javascript" src="js/switch_city.js"></script> -->
+    <script type="text/javascript">
+            var APP_ROOT = '';
+            var LOADER_IMG = 'https://kezunping.wezchina.com/app/Tpl/wezchina/images/lazy_loading.gif';
+            var ERROR_IMG = 'https://kezunping.wezchina.com/app/Tpl/wezchina/images/image_err.gif';
+                        var send_span = 2000;
+                        var __HASH_KEY__ = "ATLQFaCNiLUdZRWiSAHphrdhfNiWlobYEyehjcxqbyZvJXKOQe";
+        </script>
+
+    <style>
+        ::-webkit-scrollbar { width: 0; height: 0; }
+        .dropdown-toggle, .get-check { height: 40px !important; }
+    </style>
+</head>
+<body style="width: 1366px;">
+   <!-- 登录部分 -->
+    <div class="modal_login" id="modal_login"></div>
+    <!-- 导航部分开始 -->
+    <ul class="news_menu" id="public_main_news_menu"></ul>
+    <!-- 导航部分结束 -->
+<!--     <div id="modal"></div>
+    <div class="show-login">
+        <div class="close"></div>
+        <div class="login-cont">
+            <div class="login-heading">快速登陆</div>
+            <div class="login-body">
+                <div class="input-group" style="margin-top: 30px;">
+                    <div class="input-group-btn">
+                        <button type="button" class="btn btn-default dropdown-toggle" style="height: 44px;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">+86 中国 </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="active">+86 中国</a></li>
+                            <li><a >美国</a></li>
+                        </ul>
+                    </div>
+                    <input type="text" class="form-control phone-num" maxlength="11" style="height: 44px; line-height: 44px; font-size: medium;" placeholder="请输入手机号码">
+                </div>
+                <div class="input-group" style="margin-top: 30px;">
+                    <input type="text" class="form-control check-num" maxlength="5" placeholder="请输入短信验证码" style="height: 44px; line-height: 44px; font-size: medium;">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default get-check" style="height: 44px;" type="button">获取验证码</button>
+                        </span>
+                </div>
+                <div class="check" style="margin-top: 30px;">
+                    <input type="checkbox" id="check" checked>
+                    <span><a>已阅读并同意《微众中国服务条款》</a></span>
+                </div>
+                <div id="log-in">
+                    <a class="button button-lowercase button-primary login-bt">登陆</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="left-nav">
+        <div id="home">
+            <img src="http://images.new.wezchina.com/plats/resource/1505649755086.png" width='90' alt="HOME" />
+        </div>
+        <div id="login">
+            <div class="log-head"></div>
+            <div><img src="/common/img/bbd.png" width='28' alt="article" /></div>
+            <div class="word">登录</div>
+        </div>
+        <div id="article">
+            <div><img src="/common/img/wz.png" width='28' alt="article" /></div>
+            <div class="word">文章</div>
+        </div>
+        <div id="project">
+            <div><img src="/common/img/pj.png" width='28' alt="project" /></div>
+            <div class="word">项目</div>
+        </div>
+        <div id="active">
+            <div><img src="/common/img/at.png" width='28' alt="active" /></div>
+            <div class="word">活动</div>
+        </div>
+        <div id="shopping">
+            <div><img src="/common/img/sp.png" width='32' alt="shopping" /></div>
+            <div class="word">商城</div>
+        </div>
+        <div id="zone">
+            <div><img src="/common/img/qz.png" width='28' alt="zone" /></div>
+            <div class="word">圈子</div>
+        </div>
+    </div> -->
+
+    <div class="article">
+        <!-- <div id="art-head">
+            <div id="head-icon"></div>
+            <div id="user-name">
+                <div class="line-0"></div>
+                <div class="line-1"></div>
+            </div>
+        </div> -->
+        <div id="art-body">
+
+            <!-- 确认订单start -->
+            <div id="">
+                <div class="index-content" style="height: 642px;">
+        <!-- <script src="http://next.wezchina.com/static/jquery/jquery.min.js"></script> -->
+<!-- <script src="http://next.wezchina.com/static/layer/layer.js"></script> -->
+
+        <div id="layoutContainer">
+
+
+       <div class="content-padding">
+            <div class="user-info ">
+    <p class="querendingdan">确认订单 <img src="/common/img/shouhuoxinxi.png" alt=""></p>
+    <p class="heduidingdan didan">填写并核对订单信息
+    <!-- <img src="/common/img/dingdanbaocun.png" alt=""> -->
+    </p>
+    <form method="post" >
+        <input type="hidden" name="_token" value="Dj5Ez1yA4Dfow8SiFuMpYl2xDURwMjBMHWpHm4Kt">
+        <div>
+        <div class="buy-person co-tit"> 收货人信息</div>
+        <div id="address-lists" style="position: relative;margin-bottom: 30px;">
+        <p class="add-address" id="addRess">添加收货地址+</p>
+        </div>
+
+        <div class="line"></div>
+
+        <div class="pay-way co-tit" style="margin-top:10px">
+            <p>支付方式</p>
+
+        </div>
+
+        <div class="pay_all">
+            <div class="radio-pay active">
+             <img src="/common/img/weixinpay.png" alt="">
+                <input type="hidden" name="paystyle"  value=1>
+            </div>
+        </div>
+        <div class="line"></div>
+        <div class="co-tit m-t-10">
+            <p>确认订单信息</p>
+        </div>
+
+
+
+
+        <ul class="product-buy-list p0 row">
+            <!-- <li class="col-sm-2">
+
+                <p class="">商家:</p>
+                <img src="http://next.wezchina.com/storage/images/temp/avatar-f1b594d478d81cdcabf5c59e18f3832d.jpeg" alt=""> </li>
+            <li class="col-sm-4">
+            <span class="fenglei"> 1</span>
+                <p>商品名称</p>
+                <p><img src="http://next.wezchina.com/images/qitian.png" alt="">该商品不支持7天无理由退货</p>
+            </li>
+            <li class="col-sm-3"><p id="one_price"> 单价：0.01</p></li>
+            <li class="col-sm-3">
+                <span class="amount-num">
+                    <span class="amount-num-jian">-</span>
+                    <input type="text" value="1" id="numm" name="nums">
+                    <span class="amount-num-jia">+</span>
+                </span>
+            </li> -->
+        </ul>
+       <div class="product-msg">
+            <p>备注信息</p>
+            <textarea name="remark" placeholder="请填写备注信息"></textarea>
+       </div>
+
+
+        </div>
+        <div class="pay-list">
+            <p><span>商品总金额： </span><span id="sum_price">￥0.01</span></p>
+            <p><span>运费：</span><span id="freight">0</span></p>
+
+            <div class="shouhuodizhi">
+                <span>应付金额：</span><span id="pay_price">0.01</span><br>
+                <div class="shouhuodizhi-default"></div>
+
+            </div>
+            <div class="sub">
+                <input name="num" type="hidden" value="1">
+                <input name="address_id" id="address_id" type="hidden" value="81">
+                <button type="button" id="submit" class="btn btn-danger">提交订单</button>
+            </div>
+        </div>
+    </form>
+
+
+
+  <!-- 添加收货地址 -->
+
+
+
+<div class="product_buy_site address_pop" style="display: none;" id="productBuySite">
+    <form id="save-consignee-form">
+        <input type="hidden" name="id">
+        <div class="product_buy_frame">
+            <div class="product_buy_title">
+                <span>新增收货人信息</span>
+                <span class="products_buy_exit">
+                    <img src="/common/img/close.png" width="25" alt=""></span>
+            </div>
+            <div class="product_buy_con">
+                <div class="product_buy_form">
+                    <div class="product_buy_item">
+                        <span>
+                            <em>*</em>
+                            收货人
+                        </span>
+                        <div class="product_buy_input">
+                            <input class="product_buy_name" type="text" name="consignee"></div>
+                        </div>
+                    <div class="product_buy_item">
+                        <span>
+                            <em>*</em>
+                            所在地区
+                        </span>
+                        <div class="product_buy_input">
+                            <div class="control-text">
+                                <select name="province" id="province" class="ui-select field_select small">
+                                    <option value="" rel="0">请选择省份</option>
+
+                                                                    </select>
+                                <select name="city" id="city" class="ui-select field_select small">
+                                    <option value="" rel="0">请选择城市</option>
+
+                                                                    </select>
+                            </div>
+                        </div>
+                        <div style="color:#ff0000;">地址为可配送的范围</div>
+                    </div>
+                    <div class="product_buy_item">
+                        <span>
+                            <em>*</em>
+                            详细地址
+                        </span>
+                        <div class="product_buy_input">
+                            <input class="address_input" type="text" name="address"></div>
+                    </div>
+                    <div class="product_buy_item">
+                        <span>
+                            <em>*</em>
+                            邮编
+                        </span>
+                        <div class="product_buy_input">
+                            <input class="product_buy_zip" type="text" name="zip" onkeyup="this.value=this.value.replace(/\D/g,'')" maxlength="11"></div>
+                    </div>
+                    <div class="product_buy_item">
+                        <span>
+                            <em>*</em>
+                            手机号码
+                        </span>
+                        <div class="product_buy_input">
+                            <input class="product_buy_num" type="text" name="mobile" onkeyup="this.value=this.value.replace(/\D/g,'')" maxlength="11">
+                        </div>
+                    </div>
+                    <div class="product_buy_item">
+                        <span>
+                            <em>*</em>
+                            默认地址
+                        </span>
+                        <div class="product_buy_input">
+                            <input class="product_buy_num" type="radio" value=1 checked="checked" name="defaultaddr" >是
+                            <input class="product_buy_num" type="radio" value=2 name="defaultaddr" >否
+                        </div>
+                    </div>
+                    <div class="product_buy_item">
+                     <input type="hidden" name="_token" value="Dj5Ez1yA4Dfow8SiFuMpYl2xDURwMjBMHWpHm4Kt">
+                        <span></span>
+                         <input type="hidden" name="id" value="">
+                        <button class="product_buy_btn save-consignee-btn save_btn" type="button" rel="green">保存收货人信息</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+
+
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+        <h4 class="modal-title">Modal title</h4>
+      </div>
+      <div class="modal-body">
+        <p>One fine body…</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+       </div>
+
+
+
+
+    </div>
+    <div id="plat-two-back-top" style="display: none;"><img src="/new.wezchina.com/user/img/gotop.png"></div>
+    </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="/new.wezchina.com/configure.js"></script>
+    <script src="/new.wezchina.com/js/modal_login.js"></script>
+    <script src="/common/js/control.js"></script>
+    <script src="/new.wezchina.com/shopping/js/shoporder.js"></script>
+    <!-- <script src="js/jquery.lazyload.min.js"></script> -->
+
+</body>
+</html>
+
+
+    <script type="text/javascript">
+        $(function(){
+                $(window).scroll(function(){
+
+                if ($(window).scrollTop()>100){
+                    $("#plat-two-back-top").show();
+                }
+                else{
+                    $("#plat-two-back-top").hide();
+                }
+            });
+         $("#plat-two-back-top").click(function(){
+
+           $('body').animate({scrollTop:0},200);
+                });
+            $('.index-content').height($(window).height() + 'px');
+            $(window).resize(function(){
+                $('.index-content').height($(window).height() + 'px');
+
+            })
+        })
+    </script>

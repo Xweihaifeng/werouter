@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="shortcut icon" id="favicon" href="" />
+    <script src="/common/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="/common/layer-v3.0.3/layer-v3.0.3/layer/layer.js"></script>
+    <script src="/common/js/browser.min.js"></script>
+    <link rel="stylesheet" href="/common/AdminLTE-2.4.0-rc/bower_components/font-awesome/css/font-awesome.min.css">
+    <title>全球秦商总会</title>
+    <!-- <link rel="stylesheet" href="/new.wezchina.com/css/public_main.css"> -->
+        <link rel="stylesheet" href="/new.wezchina.com/font/iconfont.css" />
+        <link rel="stylesheet" href="/new.wezchina.com/css/news_base.css" />
+        <link rel="stylesheet" href="/new.wezchina.com/css/modal_login.css" />
+        <link rel="stylesheet" href="/new.wezchina.com/css/article.css">
+
+    <link rel="stylesheet" href="/common/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/common/css/buttons.css">
+    <link rel="stylesheet" href="/common/layer-v3.0.3/layer-v3.0.3/layer/skin/default/layer.css">
+    <!-- <link rel="stylesheet" type="text/css" href="css/shopcommon.css"> -->
+
+    <link rel="stylesheet" type="text/css" href="/new.wezchina.com/project/css/projectdetail.css">
+    <link rel="stylesheet" type="text/css" href="/new.wezchina.com/project/css/project-sup.css">
+    <!-- <link rel="stylesheet" type="text/css" href="/new.wezchina.com/project/css/project.css"> -->
+    <!-- <link rel="stylesheet" type="text/css" href="/new.wezchina.com/project/css/zc.css"> -->
+
+     <script src="/new.wezchina.com/configure.js"></script>
+    <script src="/new.wezchina.com/js/modal_login.js"></script>
+    <script src="/common/js/swiper-3.3.1.min.js"></script>
+
+    <style>::-webkit-scrollbar { width: 0; }
+    .page-content{
+    padding-top: 20px!important;
+}
+    </style>
+</head>
+<body style="background: url(/common/img/dibu.jpg);">
+    <!-- 登录部分 -->
+    <div class="modal_login" id="modal_login"></div>
+    <!-- 导航部分开始 -->
+    <ul class="news_menu" id="public_main_news_menu"></ul>
+    <div class="index-content ">
+
+
+     <div class="grzxOuterBox  ng-scope" ng-if="app==2" ng-element-ready="" style="display: block;">
+    <div class="zhifuOuterBox">
+        <div class="mainIn02Box">
+        <h3 class="main-h3" style=""></h3>
+            <div class="zhifuInnerBox">
+                <!--<div class="zhifuTitle">
+                    <a target="_blank" href="/deal-show/id-{{deal_id}}" class="hoUdLink" >{{deal_name.substring(0,40)}}</a>
+                </div>-->
+                <div class="zhifuCBox">
+                    <div class="zhifuNavBox  hidden two">
+                        <div class="ftDiv">1.提交订单</div>
+                        <div class="scDiv">2.选择支付方式</div>
+                        <div class="thDiv">3.支持成功</div>
+                    </div>
+                    <div class="ui-view-container">
+                        <!-- uiView:  --><div data-ui-view="" class="animate-slide ng-scope" style="min-height: 400px; position: relative; left: 0%;"><style class="ng-scope">
+    .con {
+        text-align: center;
+        padding: 20px 0 90px;
+    }
+    .con h2 {
+        color: #333333;
+        font-size: 18px;
+        font-weight: bold;
+    }
+    .con p.wfirst {
+        margin-bottom: 20px;
+    }
+    .solid {
+        border: 1px solid #e4e4e4;
+    }
+    .con p {
+        font-size: 18px;
+        color: #333333;
+        margin-top: 30px;
+    }
+</style>
+
+<div class="qrcode-view ng-scope">
+    <div class="clearfix">
+        <div class="con">
+            <h2>请使用微信扫描二维码进行支付</h2>
+            <div qrcode="" url="weixin://wxpay/bizpayurl?pr=UqS850J" class="dateurl"><img  width="325" height="325"></div>
+            <div class="solid"></div>
+            <p class="wfirst">总计金额：<span class="amount"></span></p>
+            <p class="w325 ng-binding">订&nbsp;&nbsp;单&nbsp;&nbsp;号：
+            <span class="dcar"></span>
+            </p>
+            <p class="w325 ng-binding">下单日期：<span class="ngdate"></span>
+
+            </p>
+        </div>
+    </div>
+</div>
+</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+    </div>
+    <script src="/common/js/control.js"></script>
+
+<!-- 列表详情 -->
+    <!-- <script src="/project/js/projectdetail.js"></script> -->
+    <script src="">
+
+                $(document).ready(function () {
+            var hint = new InputHinter({container: 'search-box', id: "searchInput"});
+            $('#searchBtn').click(function () {
+                var $input = $('#searchInput');
+                window.location.href = "/search/kw-" + hint.encodeKw($.trim($input.val()) || $input.attr('placeholder'));
+            });
+            $('#searchInput').focus(function(){
+                setTimeout(function() {
+                    $('#search-box').addClass("siteMSearch-focus")},1)
+            })
+            $('#searchInput').blur(function(){
+                setTimeout(function() {
+                    $('#search-box').removeClass("siteMSearch-focus")},1)
+            });
+            if (!$(".other-login").html())
+            {
+                $('.siteMSearch').css('right','80px');
+            }
+        });
+        var showCode = '';
+    </script>
+
+<!-- <script src="/project/p-detail/js/03c.js"></script> -->
+</body>
+</html>
+<script src="https://cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.js"></script>
+<!-- <script src="/new.wezchina.com/activity/js/activity.js"></script> -->
+<script src="/new.wezchina.com/project/js/project-code.js"></script>

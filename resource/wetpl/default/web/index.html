@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html>
+    <head lang="en">
+        <title></title>
+        <meta charset="UTF-8" />
+        <link rel="shortcut icon" id="favicon" href="" />
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport" />
+        <meta name="description" content="" />
+        <meta name="keywords" content="" />
+
+        <link rel="stylesheet" href="/common/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/new.wezchina.com/font/iconfont.css" />
+        <link rel="stylesheet" href="/common/css/swiper.min.css">
+        <link rel="stylesheet" href="/common/css/buttons.css">
+        <link rel="stylesheet" href="/new.wezchina.com/css/public_main.css">
+        <link rel="stylesheet" href="/new.wezchina.com/css/news_base.css" />
+        <link rel="stylesheet" href="/new.wezchina.com/css/modal_login.css" />
+        <link rel="stylesheet" href="/new.wezchina.com/css/index_page.css" />
+        <link rel="stylesheet" href="/new.wezchina.com/css/index_style.css" />
+        <link rel="stylesheet" href="/new.wezchina.com/css/org.css" />
+
+        <script src="/common/js/jquery-3.2.1.min.js"></script>        
+        <script type="text/javascript" src="/common/layer-v3.0.3/layer-v3.0.3/layer/layer.js"></script>
+        <script type="text/javascript" src="/new.wezchina.com/configure.js"></script>
+        <script type="text/javascript" src="/new.wezchina.com/js/modal_login.js"></script>
+        <script src="/common/js/swiper-3.3.1.min.js"></script>
+        <script src="/common/js/browser.min.js"></script>
+        <script src="/common/js/buttons.js"></script>
+        <script src="/common/js/jquery.rollGallery_yeso.js"></script>
+        <script src="/common/js/jquery.mousewheel.js"></script>
+
+        <style>
+            ::-webkit-scrollbar { width: 0; height: 0; }
+            .dropdown-toggle, .get-check { height: 40px !important; }
+        </style>
+    </head>
+    <body style="width: 1920px; overflow-y: hidden">
+
+        <div class="modal_login" id="modal_login"></div>
+        <ul class="news_menu" id="public_main_news_menu"></ul>
+
+        <div id="right-nav">
+            <div id="nav-news">
+                <div class="nav-news-title">新闻</div>
+                <div class="nav-news-content">
+                    <ul>
+                        <li>视频新闻</li>
+                        <li>图片新闻</li>
+                        <li>专题</li>
+                        <li>微新闻</li>
+                    </ul>
+                </div>
+            </div>
+            <div id="nav-org">
+                <div class="nav-org-title">组织</div>
+                <div class="nav-org-content">
+                    <ul>
+                        <li>银商服务</li>
+                        <li>科商服务</li>
+                        <li>校商服务</li>
+                        <li>法商服务</li>
+                    </ul>
+                </div>
+            </div>
+            <div id="nav-help">
+                <div class="nav-help-title">互助</div>
+                <div class="nav-help-content">
+                    <ul>
+                        <li>工商联</li>
+                        <li>商会</li>
+                        <li>其他组织</li>
+                    </ul>
+                </div>
+            </div>
+            <div id="nav-share">
+                <div class="nav-share-title">共享</div>
+                <div class="nav-share-content">
+                    <ul>
+                        <li>优秀民企</li>
+                        <li>企业家</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="main">
+            <div class="home" style="">
+                <div id="home-head">
+                    <div id="carousel">
+                        <style>
+                            .swiper-button-prev {
+                                width: 40px;
+                                height: 74px;
+                                background: url(/common/img/back.png) no-repeat center;
+                                background-size: 100%;
+                                background-color: rgba(0, 0, 0, 0.3);
+                                z-index: 10;
+                                position: absolute;
+                                left: 0;
+                                top: 50%;
+                                margin-top: -35px;
+                                opacity: 0;
+                            }
+
+                            .swiper-button-next {
+                                width: 40px;
+                                height: 74px;
+                                background: url(/common/img/more.png) no-repeat center;
+                                background-size: 100%;
+                                background-color: rgba(0, 0, 0, 0.3);
+                                z-index: 10;
+                                position: absolute;
+                                right: 0;
+                                top: 50%;
+                                margin-top: -35px;
+                                opacity: 0;
+                            }
+
+                            .swiper-button-prev:hover,.swiper-button-next:hover {
+                                background-color: rgba(0, 0, 0, 0.7);
+                            }
+
+                            .swiper-pagination {
+                                height: 30px;
+                                bottom: 0!important;
+                                padding-right: 10px;
+                                text-align: right;
+                                /*line-height: 35;*/
+                            }
+
+                            .swiper-pagination-bullet {
+                                width: 10px;
+                                height: 10px;
+                                background-color: white!important;
+                            }
+
+                            .sw-bg {
+                                position: relative;
+                                top: 210px;
+                                height: 40px;
+                                background: black;
+                                opacity: 0.5;
+                            }
+
+                            .sw-wd {
+                                position: relative;
+                                top: 165px;
+                                padding-left: 35px;
+                                line-height: 50px;
+                                z-index: 15;
+                                color: white;
+                                font-size: small;
+                            }
+                        </style>
+                        <div class="swiper-container" id="my-swiper">
+                            <div class="swiper-wrapper carousel"></div>
+                            <div class="swiper-pagination"></div>
+                            <div class="swiper-button-prev"></div>
+                            <div class="swiper-button-next"></div>
+                        </div>
+                    </div>
+                    <div id="blue"></div>
+                    <div id="news"></div>
+                    <div class="main-news"></div>
+                    <div class="news-center">
+                        <ul class="nav nav-tabs">
+                            <li role="presentation" class="center active"><a href="news">新闻中心</a></li>
+                            <li role="presentation" class="sirase"><a href="org">公示公告</a></li>
+                            <li role="presentation" class="release"><a>官方发布</a></li>
+                        </ul>
+                    </div>
+
+                    <script>
+                        $(".center a").css("color", "black!important");
+                    </script>
+
+                    <div class="news-link">
+                        <div id="center"></div>
+                        <div id="sirase" style="display: none;"></div>
+                        <div id="release"></div>
+                    </div>
+
+                    <div id="recommend"></div>
+                    <div class="rcd-bt">
+                        <div class="tb">特别推荐<div class="triangle-right"></div></div>
+                        <div class="hy">会员推荐<div class="triangle-right-1"></div></div>
+                        <div class="circle-tb"><div class="sm-circle-tb"></div></div>
+                        <div class="circle-hy"><div class="sm-circle-hy"></div></div>
+                    </div>
+                    <div class="rcd-news">
+                        <div class="rcd-tb"></div>
+                        <div class="rcd-hy" style="display: none;"></div>
+                    </div>
+                    <div id="adv"></div>
+                    <div class="adv-left">
+                        <div class="adv-left-0" style="background: dodgerblue"></div>
+                        <div class="adv-left-1" style="background: green"></div>
+                        <div class="adv-left-2" style="background: orange"></div>
+                        <div class="adv-left-3" style="background: lightskyblue"></div>
+                    </div>
+                    <div class="adv-right">
+                        <div class="swiper-container" id="my-swiper2"><div class="swiper-wrapper adv-right-0"></div></div>
+                        <div class="swiper-container" id="my-swiper3"><div class="swiper-wrapper adv-right-1"></div></div>
+                        <div class="swiper-container" id="my-swiper4"><div class="swiper-wrapper adv-right-2"></div></div>
+                    </div>
+                </div>
+                <div id="home-body">
+                    <div id="bar"></div>
+                    <div id="bg"></div>
+                </div>
+                <div id="imgs">
+                    <div class="imgs-title"></div>
+                    <div class="imgs-style">
+                        <div class="imgs-chairman"></div>
+                        <div class="imgs-name"></div>
+                    </div>
+                    <div class="imgs-active">
+                        <div class="swiper-container" id="my-swiper1">
+                            <div class="swiper-wrapper"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="organization" style="display: none;">
+                <!-- 组织 -->
+                <dd  class="organize" id="organize">
+                    <div class="zuzhi-top">
+                        <div class="flex" style="display: none">
+                            <img src="/common/img/zuzhi-log.png" alt="">
+                            <div class="chuanchengbainian">
+                                <p>传承百年精神</p>
+                                <span>繁荣产业生态，共建网络强国</span>
+                            </div>
+                        </div>
+                        <div class="shanghuijieshao"></div>
+                    </div>
+                    <div class="zuzhi-bottom">
+                        <div class="fazhanbaogao">
+                            <div class="diyi">
+                                <p class="title"></p>
+                                <div class="report">
+                                    <div class="swiper-container swiper-report">
+                                        <div class="pagination pagination-report"></div>
+                                        <div class="swiper-wrapper report_swiper"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dier"></div>
+                            <div class="disan">
+                                <p class="title"></p>
+                                <div class="lunbo">
+                                    <div class="swiper-container swiper-nested">
+                                        <div class="pagination pagination-nested"></div>
+                                        <div class="swiper-wrapper lunbo_swiper"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <img alt="" id="org_bottom_big_img" style="">
+                    </div>
+                </dd>
+                <!-- 组织 -->
+            </div>
+            <!-- 项目活动 start -->
+            <div class="huzhu" style="display: none; left:210px;">
+                <div class="huzhu-top-img">
+                    <div class="huzhu-top-img-title">
+                        <p class="t1">互助平台</p>
+                        <p class="t2">共筑众筹梦想朋友圈</p>
+                    </div>
+                    <img src="http://next.wezchina.com/images/project-banner.jpg" alt="" style="height: 235px;width: 960px">
+                </div>
+                <div class="huzhu-top">
+                    <div class="big-title">
+                        <span id="xiangmu-btn" style="background: rgb(213, 213, 213); color: rgb(85, 85, 85);">互助项目</span>
+                        <span id="huodong-btn" style="background: rgb(0, 124, 211); color: rgb(255, 255, 255);">线下活动</span>
+                    </div>
+                    <div class="clearfix"></div>
+
+                    <div class="little-title" id="xiamgmu-title" style="display: none;">
+                        <a href="http://next.wezchina.com?p=3&amp;c=1"><span class="title-active" style="margin-left: 10px">互助众筹</span></a>
+                        <a href="http://next.wezchina.com?p=3&amp;c=2"><span>回报众筹</span></a>
+                        <a href="http://next.wezchina.com?p=3&amp;c=3"><span>产品众筹</span></a>
+                        <a href="http://next.wezchina.com?p=3&amp;c=4"><span>一元众筹</span></a>
+                    </div>
+
+                    <!-- <div class="little-title" id="huodong-title" style="display: block;">
+                        <a href="http://next.wezchina.com?p=3&amp;a=1"><span style="margin-left: 10px">线下活动</span></a>
+                        <a href="http://next.wezchina.com?p=3&amp;a=2"><span>最新活动</span></a>
+                    </div> -->
+                </div>
+                <div class="clearfix"></div>
+
+                <div class="line"></div>
+
+                <div class="person-article-lists" id="xiangmu" style="display: none;">
+                    <div class="article-item">
+                        <div class="row m0 huzhubox"></div>
+                        
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="weizhuye-activity" id="huodong" style="display: block;">
+                    <div class="person-article-lists row m0"></div>
+                    
+                </div>
+
+            </div>
+            <!-- 项目活动 end    -->
+
+            <!-- 会员特供 start -->
+            <div class="goodsBox" id="goodsBox" style="display:none;">
+                <div style="width: 100%;height:auto;">
+                    <img src="http://next.wezchina.com/images/gongxiangtop.png" alt="" style="height: 235px">
+                </div>
+                <p class="huiyuantegong">会<span>/</span>员<span>/</span>特<span>/</span>供</p>
+                <div class="person-goods-lists">
+                    <div class="row p-t-3">
+                                                  
+                               
+                            
+                            
+                    </div>
+                </div>
+
+            </div>
+            <!-- 会员特供 end -->
+        </div>
+
+        
+        <div id="beijing" style="position: absolute; left:1365px; top: 0; right: 0; bottom: 0; width:100%; height:100%;">
+        </div>
+
+        <script src="/common/js/control.js"></script>
+        <script src="/new.wezchina.com/js/public_main.js"></script>
+
+    </body>
+</html>
+<script>
+        $(function () {
+//            项目活动切换
+            $("#xiangmu-btn").on("click",function(){
+                $("#xiangmu").show();
+                $("#huodong").hide();
+                $("#xiamgmu-title").show();
+                $("#huodong-title").hide();
+                $(this).css({"background":"#007cd3","color":"#fff"});
+                $("#huodong-btn").css({"background":"#d5d5d5","color":"#555"})
+            });
+            $("#huodong-btn").on("click",function(){
+                $("#huodong").show();
+                $("#xiangmu").hide();
+                $("#xiamgmu-title").hide();
+                $("#huodong-title").show();
+                $(this).css({"background":"#007cd3","color":"#fff"});
+                $("#xiangmu-btn").css({"background":"#d5d5d5","color":"#555"})
+            });
+            /*导航*/
+            $('.index-nav-esse').find('a').hover(function () {
+                $(this).css('background', 'rgb(217,217,217)');
+                $(this).find('span').css('top', '40%');
+                $(this).find('strong').css('display', 'block');
+            }, function () {
+                $(this).css('background', '');
+                $(this).find('span').css('top', '50%');
+                $(this).find('strong').css('display', 'none');
+            });
+
+
+           /* $("#toplist").rollGallery({
+                direction:"top",
+                speed:4000,
+                showNum:2
+            });
+
+            $("#leftlist").rollGallery({
+                direction:"left",
+                speed:2000,
+                showNum:1
+            });
+
+            $("#fontlist").rollGallery({
+                direction:"top",
+                speed:2000,
+                showNum:2
+            });*/
+
+
+            /*推荐新闻切换*/
+            {
+                $('#zsyw').find('li').mouseover(function () {
+                    $(this).addClass('at').siblings('li').removeClass('at');
+                    $('.zsyw_nr').find('.pose_content').eq($(this).index()).show().siblings('.pose_content').hide();
+                })
+            }
+
+
+            /*列表tab切换*/
+            $('#xwzx').find('li').mouseover(function () {
+                /*热点新闻*/
+                //$('.syzx_rg').find('.syzx_rtj').eq($(this).index()).show().siblings('.syzx_rtj').hide();
+                /*显示菜单*/
+                $(this).removeClass('not').addClass('at').siblings().removeClass('at').addClass('not');
+                /*显示列表*/
+                $('.rnew_nr').find('.xwzx_c_0').eq($(this).index()).show().siblings('.xwzx_c_0').hide();
+            });
+
+            /*中部fadein图片自适应*/
+            $('.slideBox').find('img').css({'width': '960px', 'height': $('.slideBox').height()});
+            /*中部fadein*/
+            // $(".slideBox").slide({mainCell: ".bd ul", effect: "fade", autoPlay: true});
+            /*底部滚动*/
+//            $(".picScroll-left").slide({mainCell:".bd ul",autoPlay:true,effect:"leftMarquee",vis:8,
+//                interTime:50,trigger:"click"});
+
+
+
+
+
+
+            /*整屏标签切换*/
+            // $(function () {
+            $(document).ready(function() { 
+                gongshanglian();
+               $(window).bind("resize", function () {
+                    gongshanglian();
+                });
+                 /*$("#home nav ul li:first,.search").hover(function () {
+                    $(".search").css({
+                        "left": $("#home nav ul li:first").width() + "px",
+                        "top": $("#home nav ul li:first").offset().top + "px",
+                        "height": $("#home nav ul li:first").height() + "px"
+                    }).show();
+                    $("#home nav ul li:first").addClass("active");
+                }, function () {
+                    $("#home nav ul li:first").removeClass("active");
+                    $(".search").hide();
+                });
+                $("#gongshanglian dt").bind("click", function () {
+                    $(this).addClass("active");
+                    $(this).next().addClass("active");
+                    $(this).siblings("dt").removeClass("active");
+                    $(this).next().siblings("dd").removeClass("active");
+                });*/
+               /* $("#home").mousewheel(function (event, delta) {
+                    var _i = $("#gongshanglian dt.active").index() / 2;
+                    _i += -delta;
+                    if (_i >= $("#gongshanglian dt").length) _i--;
+                    if (_i < 0) _i = 0;
+                    $("#gongshanglian dt").eq(_i).click();
+                });*/
+                // $(".xinwen-video").tab({trigger: ".control a:lt(3)"});
+               /* $(".xinwen-gonggao .box ul").easyPaginate({
+                    numeric: false,
+                    step: 3,
+                    controls: 'xinwen-gonggao-controls',
+                });
+                $(".xinwen-weixinwen .box ul").easyPaginate({
+                    numeric: false,
+                    step: 1,
+                    controls: 'xinwen-weixinwen-controls',
+                });
+                $(".xinwen-zhuanti .box ul").easyPaginate({
+                    numeric: false,
+                    step: 1,
+                    label: true,
+                    controls: 'xinwen-zhuanti-controls',
+                });
+                $(".xinwen-tupianxinwen .box ul").easyPaginate({
+                    nextprev: false,
+                    step: 1,
+                    auto: true,
+                    loop: true,
+                    chained: 'xinwen-tupianxinwen-photo',
+                    controls: 'xinwen-tupianxinwen-controls'
+                });*/
+//                $("#xinwen-tupianxinwen-photo a,.xinwen-tupianxinwen .box a").fancybox({
+//                    width: "70%",
+//                    height: "80%",
+//                    autoSize: false,
+//                    type: "iframe"
+//                });
+                /*if (location.hash == "") {
+                    $("#gongshanglian dt:first").click();
+                } else {
+                    $("#gongshanglian dt." + (location.hash.replace("#", ""))).click();
+                }*/
+                // $("nav li:last a").fancybox();
+                play_number(0);
+                /*if ($.browser.msie && $.browser.version < 9) {
+                    $("#iealert").slideDown().find("span").html("IE " + $.browser.version);
+                    $("#iealert a").click(function () {
+                        $("#iealert").slideUp();
+                    });
+                }*/
+            });
+
+            function play_number(index) {
+                if (index >= $("#stat span").length) return;
+                var n = parseInt($("#stat span").eq(index).text(), 10);
+                n++;
+                if (n > $("#stat span").eq(index).attr("data-number")) {
+                    play_number(index + 1);
+                    return;
+                }
+                $("#stat span").eq(index).text(n);
+                setTimeout(function () {
+                    play_number(index);
+                }, 50);
+            }
+
+            function gongshanglian() {
+                // $("#gongshanglian dt,#gongshanglian dd").css("height", $("#gongshanglian").height());
+                $(".huzhu").css("height", $("#main").height());
+            }
+
+            /*浏览器大小改动时*/
+            $(window).resize(function () {
+                /*设置中间banner图片宽高*/
+                /*$('#myCarousel-1').find('img').css({
+                    'width': $('.index-bottom-top').width(),
+                    "height": $('.index-bottom-top').height()
+                });
+                $('#myCarousel').find('img').css({
+                    'width': $('.slide-1-list-left-top').width(),
+                    "height": $('.slide-1-list-left-top').height()
+                });*/
+            });
+
+
+            /*组织里面的轮播图*/
+           /* $('.carousel-inner-1').carousel({
+                interval: 2000
+            });
+*/
+
+            
+            
+        })
+        /*横向增加颜色递增的div*/
+       /* function widthExt() {
+            if($(window).width() > 1365){
+                var width = $(window).width() - 1365;
+                $('.container').append('<div id="splith-index" style="width: '+width+'px;"></div>');
+
+            }else{
+                $('.container').find('#splith-index').remove();
+                console.log('删除');
+            }
+        }*/
+        function heightExt() {
+            /*判断当前屏幕高度是否小于768，进行相应设置 */
+           /* if( $(window).height() < 768 )
+            {
+                $('#gongshanglian .xinwen .list-right .ul-nav ').find('a').css({'font-size':'19px'});
+                $('.picScroll-left').width('width','780px');
+                $('.picScroll-left').find('.next').css('left','759px')
+            }
+            if( $(window).height() >768 )
+            {
+                var width = ($(window).height()) - 600;
+                $('.index-bottom-bottom').height(width);
+                $('.splithbox').css({"height":(width - 120)+'px'});
+            }*/
+        }
+        //        heightExt();
+        //        widthExt();
+        //        window.onresize = widthExt;
+
+        /*审批状态*/
+       /* var layerIndex,isLogin = 1;
+        function auditing()
+        {
+            if (isLogin == 0) {
+                layer.alert('请先登录',function () {
+                    loginLayer();
+                });
+            } else {
+                layerIndex = layer.open({
+                    type: 1,
+                    title:'入会申请',
+                    area: ['650px','550px'],
+                    content: $('#layer-box')
+                });
+            }
+        }
+
+        function ajaxApply() {
+            var form = document.getElementById('form-apply');
+            var formData = new FormData(form);
+            var xhr = new XMLHttpRequest();
+            xhr.open("post","http://next.wezchina.com/ajax/apply");
+            xhr.send(formData);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    eval(" var data = " + xhr.responseText);
+                    console.log(data);
+                    if (data.error.length > 0) {
+                        layer.msg(data.error);
+                    }
+                    if (data.success.length > 0) {
+                        layer.close(layerIndex);
+                        layer.alert('申请成功',function () {
+                            location.reload();
+                        });
+                    }
+                }
+            }
+        }
+
+
+
+        //文件预览
+        if(typeof FileReader == 'undefined'){
+            alert('您的浏览器不支持预览');
+        }else{
+            document.getElementById('company_license').addEventListener('change',readFile,false);
+            document.getElementById('company_data').addEventListener('change',readFileMany,false);
+        }
+        function readFile()
+        {
+            var file = this.files[0];
+            if (!/image\/\w+/.test(file.type)) {
+                alert("请确保文件为图像类型");
+                return false;
+            }
+            var reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function (e) {
+                $('#company_license_img').attr('src', this.result);
+            }
+        }
+        function readFileMany()
+        {
+            $('#boximg').empty();
+            var length = this.files.length;
+            for(i = 0;i< length;i++)
+            {
+                var file = this.files[i];
+                if (!/image\/\w+/.test(file.type)) {
+                    alert("请确保文件为图像类型");
+                    return false;
+                }
+                var reader = 'reader'+i;
+                reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = function (e) {
+                    $('#boximg').append('<img width="100" height="80" class="col-sm-2 thumbnail" src="' + this.result + '" />');
+                }
+            }
+        }*/
+
+        // 首页滚动图特效处理
+      /*  function overRoll(){
+            $('.myCarousel-left').css('display', 'block');
+            $('.myCarousel-right').css('display', 'block');
+        }
+        function outRoll(){
+            $('.myCarousel-left').css('display', 'none');
+            $('.myCarousel-right').css('display', 'none');
+        }*/
+
+</script>

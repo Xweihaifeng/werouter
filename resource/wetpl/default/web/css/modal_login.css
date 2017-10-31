@@ -1,0 +1,280 @@
+@charset "utf-8";
+
+#modal_login {
+    display: none;
+}
+
+div#modal {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: black;
+    opacity: 0.5;
+    z-index: 99999;
+    overflow: hidden;
+}
+
+.flex {
+    display: flex;
+}
+
+.show-login {
+    position: fixed;
+    width: 360px;
+    height: 360px;
+    background: white;
+    z-index: 100000;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 50%;
+}
+
+.close {
+    position: relative;
+    float: right;
+    width: 32px;
+    height: 32px;
+    background-color: #c82100;
+    top: 0px;
+    margin-right: -32px;
+    opacity: 1!important;
+    text-shadow: none;
+}
+
+.close-btn {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    text-align: center;
+    line-height: 32px;
+    font-size: 24px;
+    font-family: serif !important;
+    cursor: default;
+    color: white!important;
+}
+
+.close-btn:hover {
+    transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -webkit-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-transition-property: all;
+    transition-property: all;
+    -webkit-transition-duration: .6s;
+    transition-duration: .6s;
+    opacity: 1!important;
+}
+
+::-webkit-input-placeholder {
+    font-size: 14px;
+    color: #999;
+}
+
+.login-heading {
+    height: 40px;
+    line-height: 40px;
+    border-bottom: 1px solid #eee;
+    font-size: 20px;
+    text-align: center;
+    color: #333;
+    overflow: hidden;
+    background-color: #F8F8F8;
+    border-radius: 2px 2px 0 0;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    display: none;
+    float: left;
+    min-width: 160px;
+    padding: 5px 0;
+    margin: 2px 0 0;
+    font-size: 14px;
+    text-align: left;
+    list-style: none;
+    background-color: #fff;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    border: 1px solid #ccc;
+    border: 1px solid rgba(0, 0, 0, .15);
+    border-radius: 4px;
+    -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+}
+
+button.btn.btn-default.dropdown-toggle {
+    height: 42px;
+    line-height: 42px;
+    outline: none;
+    padding: 0;
+    border: 1px solid #ccc;
+    width: 100px;
+    margin-right: 0px;
+    background-color: #fff;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+button.btn.btn-default.get-check,
+#image_code_id_url {
+    height: 42px;
+    line-height: 42px;
+    outline: none;
+    padding: 0;
+    border: 1px solid #ccc;
+    width: 100px;
+    margin-left: 0px;
+    cursor: pointer;
+    color: #fff;
+    background-color: #007cd3;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+button.btn.btn-default.get-check {
+    border: 1px solid #007cd3;
+}
+
+.input-group-btn button:hover,
+.input-group-btn button:focus,
+.input-group-btn button:active {
+    /*color: #333;
+    background-color: #d4d4d4 !important;
+    border-color: #8c8c8c !important;*/
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-transition-property: all;
+    transition-property: all;
+    -webkit-transition-duration: .3s;
+    transition-duration: .3s;
+}
+
+.get-check:hover {
+    background-color: #007cd3;
+    text-decoration: underline;
+}
+
+.input-group-btn {
+    flex: 1;
+    width: 100px;
+}
+
+input.form-control.phone-num {
+    flex: 3;
+    max-width: 230px;
+    height: 40px;
+    line-height: 40px;
+    text-indent: 1em;
+    padding: 0;
+    margin: 0;
+    font-size: medium;
+    outline: none;
+    border: 1px solid #ccc;
+    border-left: none;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+input.form-control.check-num,
+input.form-control.image_code {
+    flex: 3;
+    max-width: 230px;
+    height: 40px;
+    line-height: 40px;
+    text-indent: 1em;
+    padding: 0;
+    margin: 0;
+    font-size: medium;
+    outline: none;
+    border: 1px solid #ccc;
+    border-right: none;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.login-body {
+    margin: 15px;
+}
+
+.login-body>div {
+    margin-top: 20px;
+    height: 40px;
+}
+
+.login-body>div #consent_clause {
+    font-size: 14px;
+}
+
+#log-in {
+    text-align: left;
+    margin-top: 0px;
+}
+
+.button-primary,
+.button-primary-flat {
+    width: 176px;
+    height: 32px;
+    line-height: 32px;
+    display: inline-block;
+    color: #FFF !important;
+    background-color: #007cd3;
+    border-color: #007cd3;
+    border-radius: 4px;
+    font-weight: 300;
+    font-size: 16px;
+    font-family: "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    text-decoration: none;
+    text-align: center;
+    text-transform: lowercase;
+    appearance: none;
+    cursor: pointer;
+    border: none;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-transition-property: all;
+    transition-property: all;
+    -webkit-transition-duration: .3s;
+    transition-duration: .3s;
+}
+
+#log-in .button-primary:active,
+#log-in .button-primary.active,
+#log-in .button-primary.is-active,
+#log-in .button-primary-flat:active,
+#log-in .button-primary-flat.active,
+#log-in .button-primary-flat.is-active {
+    background-color: #2798eb;
+    border-color: #2798eb;
+    color: #dedede !important;
+}
+
+#log-in .button-primary:hover,
+#log-in .button-primary:focus,
+#log-in .button-primary-flat:hover,
+#log-in .button-primary-flat:focus {
+    /*background-color: #4cb0f9;*/
+    background-color: #007cd3;
+    border-color: #4cb0f9;
+    color: #fff !important;
+}
+
+.i-header {
+    position: relative;
+    width: 40px !important;
+    height: 40px !important;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    border-radius: 50%;
+    border: 1px solid #eee;
+}

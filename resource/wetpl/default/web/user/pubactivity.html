@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html>
+
+	<head lang="en">
+		<meta charset="UTF-8">
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+		<!-- <link rel="stylesheet" type="text/css" href="/user/common/css/bootstrap-datetimepicker.min.css"> -->
+		<link rel="stylesheet" type="text/css" href="/new.wezchina.com/user/css/laydate.css">
+
+
+		<!-- <script src="/common/js/browser.min.js"></script> -->
+		<!-- <script src="/common/js/jquery.imagecompress.js"></script> -->
+		<link rel="shortcut icon" id="favicon" href="" />
+		<link rel="stylesheet" type="text/css" href="/common/css/main.css">
+    	<link rel="stylesheet" href="/new.wezchina.com/user/css/manage.css">
+
+
+		<!-- <link rel="stylesheet" href="/common/css/base.css"> -->
+		<!-- <link rel="stylesheet" href="/common/iconfont/iconfont.css"> -->
+		<link rel="stylesheet" href="/new.wezchina.com/user/common/css/font.min.css">
+		<link rel="stylesheet" href="/new.wezchina.com/user/css/personaldata.css">
+		<link rel="stylesheet" href="/new.wezchina.com/user/css/activitycommon.css">
+		<link rel="stylesheet" href="/new.wezchina.com/user/css/activityedit.css">
+		<!-- <link rel="stylesheet" href="/common/font_d1a25jl81n86ko6r/iconfont.css"> -->
+		<!-- <link rel="stylesheet" href="/common/font_di0ylnkt4q85mi/iconfont.css"> -->
+		<link rel="stylesheet" href="/common/css/bootstrap.min.css">
+		<link rel="stylesheet" href="/common/css/buttons.css">
+		<link rel="stylesheet" href="/common/css/swiper.min.css">
+		<link rel="stylesheet" href="/new.wezchina.com/user/css/jquery-ui.css">
+		<!-- <link rel="stylesheet" href="/user/css/jquery-ui-theme.css"> -->
+		<script src="/common/js/jquery-3.2.1.min.js"></script>
+		<script type="text/javascript" src="/common/layer-v3.0.3/layer-v3.0.3/layer/layer.js"></script>
+		<script src="/new.wezchina.com/user/js/activity/jquery.noty.js"></script>
+
+		<script src="/common/js/swiper-3.3.1.min.js"></script>
+		<script src="/common/js/buttons.js"></script>
+    	<script src="/common/js/ckeditor/ckeditor.js"></script>
+		<script src="/common/js/plupload/plupload.full.min.js"></script>
+		<script src="/common/js/qiniu.js"></script>
+		<script type="text/javascript" src="/new.wezchina.com/user/js/laydate.js"></script>
+
+		<!-- <script src="/common/js/layer/layer.js"></script> -->
+		<script src="/new.wezchina.com/user/js/activitycom.js"></script>
+		<script src="/new.wezchina.com/user/common/js/generate_manage.js"></script>
+
+		<title>发布活动</title>
+		<style type="text/css">
+			 #activity-add {
+            color: red;
+            background: #f7f7f7;
+        }
+        .art-img{
+              line-height:29px;
+                }
+    .we-active{display:block;}
+		</style>
+	</head>
+
+	<body style="width: 100%; background: #F7F6F2;">
+	<div class="login">
+        <div class="left-nav">
+
+        </div>
+        <div id="top">
+
+        </div>
+        <div id="middle">
+
+        </div>
+		<div class="right">
+			<div class="right-cen">
+				<div class="personaldata">
+					<nav class="navbar navbar-default" style="height: 30px;">
+							<div class="container-fluid" style="height: 30px;">
+								<div class="navbar-header">
+									<ol class="breadcrumb">
+										<li>
+											<a href="#">我的活动</a>
+										</li>
+										<li>
+											<a href="#">发布活动</a>
+										</li>
+									</ol>
+								</div>
+							</div>
+					</nav>
+
+<!-- 发布活动start -->
+					<div class="container">
+			            <div class="form">
+			               <!--  <div class="mark">基本信息
+			                   <p class="J_CacheTips">（已载入上次保存内容<span class="J_ClearCache">清除</span><span class="J_SaveCache">保留</span>）</p>
+			               </div> -->
+			                <form method="post" id="J_FormActivity" >
+			                    <input type="hidden" id="J_ActivityId" value="">
+			                    <div class="base-info">
+			                        <!--封面-->
+			                        <div class="inline bfc">
+			                            <label class="form-label">活动封面<span class="red-word">*</span></label>
+			                            <div class="form-group clearfix">
+			                            	 <!-- <div class="col-sm-offset-3"> -->
+								                <input name="thumb_image" id="J_ActivityPoster" type="hidden" value="" class="form-control"/>
+								                <input id="pickfiles" name="cover" type="file" class="form-control hide"/>
+								                <div id="look" class="poster" 	>
+								                  <img onclick="$('#pickfiles').click()" id="img" src="/common/img/cover.png" alt="暂无预览图片" class="thumbnail">
+								              </div>
+
+			                               <div class="poster-select">
+			                                  <!--  <div class="btn btn-active btn-upload webuploader-container" id="J_PosterPicker"><div class="webuploader-pick"><i class="fa fa-upload"></i>上传海报</div><div id="rt_rt_1bqhipucb13m01qrt1uac1kec14m81" style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; overflow: hidden; bottom: auto; right: auto;"><input type="file" name="file" class="webuploader-element-invisible" multiple="multiple" accept="image/png,image/jpeg"><label style="opacity: 0; width: 100%; height: 100%; display: block; cursor: pointer; background: rgb(255, 255, 255);"></label></div></div> -->
+
+			                                   <p class="poster-tips">注：海报图片不能超过5M，并且不能小于750*558</p>
+			                               </div>
+			                            </div>
+			                        </div>
+			                        <div class="inline">
+			                            <label class="form-label">活动标题<span class="red-word">*</span></label>
+			                            <div class="form-group">
+			                                <input type="text" class="input-control" placeholder="活动标题不少于5个字" id="J_ActivityTitle" maxlength="100" value="">
+			                            </div>
+			                        </div>
+			                        <!--活动城市开始-->
+			                        <div class="inline">
+			                            <label class="form-label">活动城市<span class="red-word">*</span></label>
+			                            <div class="form-group">
+			                                <div class="form-group-city">
+			                                    <span class="triangle"></span>
+			                                    <input type="hidden" name="cityId" id="J_ActivityCityId" value="">
+			                                    <input type="text" class="input-control input-control-city" readonly="" placeholder="城市" id="J_ActivityCity" value="">
+			                                    <!-- 城市 -->
+			                                    <div class="w-city-select J_CitySelectWeidgt">
+			                                        <div class="w-city-body">
+			                                            <div class="J_HotList">
+			                                                <div class="w-hot-city">
+			                                                    <div role="tabpanel" class="hot-city-tabpanel">
+			                                                        <!-- Nav tabs -->
+			                                                        <ul class="nav nav-tabs" role="tablist" id="J_CityTab">
+			                                                            <li role="presentation" class="active">
+			                                                                <a href="#hotCity" role="tab" data-toggle="tab">热门城市</a>
+			                                                            </li>
+                                                                        <li role="presentation">
+			                                                                <a href="#ABCDE" role="tab" data-toggle="tab">ABCDE</a>
+			                                                            </li>
+                                                                        <li role="presentation">
+			                                                                <a href="#FGHJK" role="tab" data-toggle="tab">FGHJK</a>
+			                                                            </li>
+                                                                        <li role="presentation">
+			                                                                <a href="#LMNPQ" role="tab" data-toggle="tab">LMNPQ</a>
+			                                                            </li>
+                                                                        <li role="presentation">
+			                                                                <a href="#RSTWX" role="tab" data-toggle="tab">RSTWX</a>
+			                                                            </li>
+                                                                        <li role="presentation">
+			                                                                <a href="#YZ" role="tab" data-toggle="tab">YZ</a>
+			                                                            </li>
+
+			                                                        </ul>
+			                                                        <!-- Tab panes -->
+			                                                        <div class="tab-content">
+			                                                            <div role="tabpanel" class="tab-pane active" id="hotCity">
+			                                                                <dl>
+			                                                                    <dt></dt>
+			                                                                    <dd>
+			                                                                        <span class="J_CityItem" data-id="131">北京</span>
+			                                                                        <span class="J_CityItem" data-id="289">上海</span>
+			                                                                        <span class="J_CityItem" data-id="218">武汉</span>
+			                                                                        <span class="J_CityItem" data-id="179">杭州</span>
+			                                                                        <span class="J_CityItem" data-id="257">广州</span>
+			                                                                        <span class="J_CityItem" data-id="340">深圳</span>
+			                                                                        <span class="J_CityItem" data-id="75">成都</span>
+			                                                                    </dd>
+			                                                                </dl>
+			                                                            </div>
+			                                                            <div role="tabpanel" class="tab-pane" id="ABCDE">
+			                                                                <dl>
+			                                                                    <dt>A</dt>
+			                                                                    <dd>
+			                                                                        <span class="J_CityItem" data-id="130">安庆</span>
+			                                                                        <span class="J_CityItem" data-id="324">安康</span>
+			                                                                        <span class="J_CityItem" data-id="267">安阳</span>
+			                                                                        <span class="J_CityItem" data-id="263">安顺</span>
+			                                                                        <span class="J_CityItem" data-id="2912">澳门</span>
+			                                                                        <span class="J_CityItem" data-id="85">阿克苏地区</span>
+			                                                                        <span class="J_CityItem" data-id="96">阿勒泰地区</span>
+			                                                                        <span class="J_CityItem" data-id="185">阿坝藏族羌族自治州</span>
+			                                                                        <span class="J_CityItem" data-id="230">阿拉善盟</span>
+			                                                                        <span class="J_CityItem" data-id="731">阿拉尔</span>
+			                                                                        <span class="J_CityItem" data-id="103">阿里地区</span>
+			                                                                        <span class="J_CityItem" data-id="320">鞍山</span>
+			                                                                    </dd>
+			                                                                    <dt>B</dt>
+			                                                                    <dd>
+			                                                                        <span class="J_CityItem" data-id="188">亳州</span>
+			                                                                        <span class="J_CityItem" data-id="1217">保亭黎族苗族自治</span>
+			                                                                        <span class="J_CityItem" data-id="307">保定</span>
+			                                                                        <span class="J_CityItem" data-id="112">保山</span>
+			                                                                        <span class="J_CityItem" data-id="229">包头</span>
+			                                                                        <span class="J_CityItem" data-id="131">北京</span>
+			                                                                        <span class="J_CityItem" data-id="295">北海</span>
+			                                                                        <span class="J_CityItem" data-id="88">博尔塔拉蒙古自治州</span>
+			                                                                        <span class="J_CityItem" data-id="171">宝鸡</span>
+			                                                                        <span class="J_CityItem" data-id="239">巴中</span>
+			                                                                        <span class="J_CityItem" data-id="169">巴彦淖尔</span>
+			                                                                        <span class="J_CityItem" data-id="86">巴音郭楞蒙古自治州</span>
+			                                                                        <span class="J_CityItem" data-id="227">本溪</span>
+			                                                                        <span class="J_CityItem" data-id="206">毕节地区</span>
+			                                                                        <span class="J_CityItem" data-id="235">滨州</span>
+			                                                                        <span class="J_CityItem" data-id="51">白城</span>
+			                                                                        <span class="J_CityItem" data-id="57">白山</span>
+			                                                                        <span class="J_CityItem" data-id="2359">白沙黎族自治</span>
+			                                                                        <span class="J_CityItem" data-id="35">白银</span>
+			                                                                        <span class="J_CityItem" data-id="203">百色</span>
+			                                                                        <span class="J_CityItem" data-id="126">蚌埠</span>
+			                                                                    </dd>
+			                                                                    <dt>C</dt>
+			                                                                    <dd>
+			                                                                        <span class="J_CityItem" data-id="144">崇左</span>
+			                                                                        <span class="J_CityItem" data-id="251">巢湖</span>
+			                                                                        <span class="J_CityItem" data-id="348">常州</span>
+			                                                                        <span class="J_CityItem" data-id="219">常德</span>
+			                                                                        <span class="J_CityItem" data-id="75">成都</span>
+			                                                                        <span class="J_CityItem" data-id="207">承德</span>
+			                                                                        <span class="J_CityItem" data-id="93">昌吉回族自治州</span>
+			                                                                        <span class="J_CityItem" data-id="1642">昌江黎族自治</span>
+			                                                                        <span class="J_CityItem" data-id="99">昌都地区</span>
+			                                                                        <span class="J_CityItem" data-id="280">朝阳</span>
+			                                                                        <span class="J_CityItem" data-id="105">楚雄彝族自治州</span>
+			                                                                        <span class="J_CityItem" data-id="299">池州</span>
+			                                                                        <span class="J_CityItem" data-id="149">沧州</span>
+			                                                                        <span class="J_CityItem" data-id="189">滁州</span>
+			                                                                        <span class="J_CityItem" data-id="201">潮州</span>
+			                                                                        <span class="J_CityItem" data-id="2757">澄迈</span>
+			                                                                        <span class="J_CityItem" data-id="297">赤峰</span>
+			                                                                        <span class="J_CityItem" data-id="275">郴州</span>
+			                                                                        <span class="J_CityItem" data-id="132">重庆</span>
+			                                                                        <span class="J_CityItem" data-id="158">长沙</span>
+			                                                                    </dd>
+			                                                                    <dt>D</dt>
+			                                                                    <dd>
+			                                                                        <span class="J_CityItem" data-id="2634">东方</span>                                                                         <span class="J_CityItem" data-id="119">东莞</span>                                                                         <span class="J_CityItem" data-id="174">东营</span>                                                                         <span class="J_CityItem" data-id="282">丹东</span>                                                                         <span class="J_CityItem" data-id="1215">儋州</span>                                                                         <span class="J_CityItem" data-id="38">大兴安岭地区</span>                                                                         <span class="J_CityItem" data-id="355">大同</span>                                                                         <span class="J_CityItem" data-id="50">大庆</span>                                                                         <span class="J_CityItem" data-id="111">大理白族自治州</span>                                                                         <span class="J_CityItem" data-id="167">大连</span>                                                                         <span class="J_CityItem" data-id="1214">定安</span>                                                                         <span class="J_CityItem" data-id="136">定西</span>                                                                         <span class="J_CityItem" data-id="116">德宏傣族景颇族自治州</span>                                                                         <span class="J_CityItem" data-id="372">德州</span>                                                                         <span class="J_CityItem" data-id="74">德阳</span>                                                                         <span class="J_CityItem" data-id="369">达州</span>                                                                         <span class="J_CityItem" data-id="115">迪庆藏族自治州</span>
+			                                                                    </dd>
+			                                                                    <dt>E</dt>
+			                                                                    <dd>
+			                                                                        <span class="J_CityItem" data-id="373">恩施土家族苗族自治州</span>                                                                         <span class="J_CityItem" data-id="283">鄂尔多斯</span>                                                                         <span class="J_CityItem" data-id="122">鄂州</span>
+			                                                                    </dd>
+
+			                                                                </dl>
+			                                                            </div>
+			                                                            <div role="tabpanel" class="tab-pane" id="FGHJK">
+			                                                                <dl>
+			                                                                    <dd>
+			                                                                        <span class="J_CityItem" data-id="138">佛山</span>                                                                         <span class="J_CityItem" data-id="226">抚州</span>                                                                         <span class="J_CityItem" data-id="184">抚顺</span>                                                                         <span class="J_CityItem" data-id="300">福州</span>                                                                         <span class="J_CityItem" data-id="59">阜新</span>                                                                         <span class="J_CityItem" data-id="128">阜阳</span>                                                                         <span class="J_CityItem" data-id="204">防城港</span>
+			                                                                    </dd>
+			                                                                    <dt>G</dt>
+			                                                                    <dd>
+			                                                                        <span class="J_CityItem" data-id="246">固原</span>                                                                         <span class="J_CityItem" data-id="329">广元</span>                                                                         <span class="J_CityItem" data-id="241">广安</span>                                                                         <span class="J_CityItem" data-id="257">广州</span>                                                                         <span class="J_CityItem" data-id="72">果洛藏族自治州</span>                                                                         <span class="J_CityItem" data-id="142">桂林</span>                                                                         <span class="J_CityItem" data-id="247">甘南藏族自治州</span>                                                                         <span class="J_CityItem" data-id="73">甘孜藏族自治州</span>                                                                         <span class="J_CityItem" data-id="341">贵港</span>                                                                         <span class="J_CityItem" data-id="146">贵阳</span>                                                                         <span class="J_CityItem" data-id="365">赣州</span>                                                                         <span class="J_CityItem" data-id="802">高雄</span>
+			                                                                    </dd>
+			                                                                    <dt>H</dt>
+			                                                                    <dd>                                                                                                                                        <span class="J_CityItem" data-id="127">合肥</span>                                                                         <span class="J_CityItem" data-id="61">呼伦贝尔</span>                                                                         <span class="J_CityItem" data-id="321">呼和浩特</span>                                                                         <span class="J_CityItem" data-id="82">和田地区</span>                                                                         <span class="J_CityItem" data-id="91">哈密地区</span>                                                                         <span class="J_CityItem" data-id="48">哈尔滨</span>                                                                         <span class="J_CityItem" data-id="363">怀化</span>                                                                         <span class="J_CityItem" data-id="301">惠州</span>                                                                         <span class="J_CityItem" data-id="179">杭州</span>                                                                         <span class="J_CityItem" data-id="352">汉中</span>                                                                         <span class="J_CityItem" data-id="143">河池</span>                                                                         <span class="J_CityItem" data-id="200">河源</span>                                                                         <span class="J_CityItem" data-id="69">海东地区</span>                                                                         <span class="J_CityItem" data-id="67">海北藏族自治州</span>                                                                         <span class="J_CityItem" data-id="68">海南藏族自治州</span>                                                                         <span class="J_CityItem" data-id="125">海口</span>                                                                         <span class="J_CityItem" data-id="65">海西蒙古族藏族自治州</span>                                                                         <span class="J_CityItem" data-id="253">淮北</span>                                                                         <span class="J_CityItem" data-id="250">淮南</span>                                                                         <span class="J_CityItem" data-id="162">淮安</span>                                                                         <span class="J_CityItem" data-id="294">湖州</span>                                                                         <span class="J_CityItem" data-id="107">红河哈尼族彝族自治州</span>                                                                         <span class="J_CityItem" data-id="808">花莲</span>                                                                         <span class="J_CityItem" data-id="353">菏泽</span>                                                                         <span class="J_CityItem" data-id="319">葫芦岛</span>                                                                         <span class="J_CityItem" data-id="208">衡水</span>                                                                         <span class="J_CityItem" data-id="159">衡阳</span>                                                                         <span class="J_CityItem" data-id="260">贺州</span>                                                                         <span class="J_CityItem" data-id="151">邯郸</span>                                                                         <span class="J_CityItem" data-id="215">鹤壁</span>                                                                         <span class="J_CityItem" data-id="43">鹤岗</span>                                                                         <span class="J_CityItem" data-id="271">黄冈</span>                                                                         <span class="J_CityItem" data-id="70">黄南藏族自治州</span>                                                                         <span class="J_CityItem" data-id="252">黄山</span>                                                                         <span class="J_CityItem" data-id="11111">黄浦</span>                                                                         <span class="J_CityItem" data-id="311">黄石</span>                                                                         <span class="J_CityItem" data-id="39">黑河</span>
+			                                                                    </dd>                                                                                                                          <dt>J</dt>
+			                                                                    <dd>                                                                                                                                   <span class="J_CityItem" data-id="349">九江</span>                                                                         <span class="J_CityItem" data-id="42">佳木斯</span>                                                                         <span class="J_CityItem" data-id="318">吉安</span>                                                                         <span class="J_CityItem" data-id="55">吉林市</span>                                                                         <span class="J_CityItem" data-id="807">嘉义</span>                                                                         <span class="J_CityItem" data-id="334">嘉兴</span>                                                                         <span class="J_CityItem" data-id="33">嘉峪关</span>                                                                         <span class="J_CityItem" data-id="803">基隆</span>                                                                         <span class="J_CityItem" data-id="259">揭阳</span>                                                                         <span class="J_CityItem" data-id="238">晋中</span>                                                                         <span class="J_CityItem" data-id="290">晋城</span>                                                                         <span class="J_CityItem" data-id="225">景德镇</span>                                                                         <span class="J_CityItem" data-id="302">江门</span>                                                                         <span class="J_CityItem" data-id="288">济南</span>                                                                         <span class="J_CityItem" data-id="286">济宁</span>                                                                         <span class="J_CityItem" data-id="211">焦作</span>                                                                         <span class="J_CityItem" data-id="157">荆州</span>                                                                         <span class="J_CityItem" data-id="217">荆门</span>                                                                         <span class="J_CityItem" data-id="37">酒泉</span>                                                                         <span class="J_CityItem" data-id="333">金华</span>                                                                         <span class="J_CityItem" data-id="34">金昌</span>                                                                         <span class="J_CityItem" data-id="809">金门</span>                                                                         <span class="J_CityItem" data-id="166">锦州</span>                                                                         <span class="J_CityItem" data-id="46">鸡西</span>
+			                                                                    </dd>                                                                                                                                   <dt>K</dt>
+			                                                                    <dd>                                                                                                                                           <span class="J_CityItem" data-id="84">克孜勒苏柯尔克孜自治州</span>                                                                         <span class="J_CityItem" data-id="95">克拉玛依</span>                                                                         <span class="J_CityItem" data-id="83">喀什地区</span>                                                                         <span class="J_CityItem" data-id="210">开封</span>                                                                         <span class="J_CityItem" data-id="104">昆明</span>
+			                                                                    </dd>
+
+			                                                                </dl>
+			                                                            </div>                                                              <div role="tabpanel" class="tab-pane" id="LMNPQ">
+			                                                                <dl>                                                                                                                                                      <dt>L</dt>
+			                                                                    <dd>                                                                                                                                               <span class="J_CityItem" data-id="182">临夏回族自治州</span>                                                                         <span class="J_CityItem" data-id="368">临汾</span>                                                                         <span class="J_CityItem" data-id="234">临沂</span>                                                                         <span class="J_CityItem" data-id="110">临沧</span>                                                                         <span class="J_CityItem" data-id="2033">临高</span>                                                                         <span class="J_CityItem" data-id="292">丽水</span>                                                                         <span class="J_CityItem" data-id="114">丽江</span>                                                                         <span class="J_CityItem" data-id="2032">乐东黎族自治</span>                                                                         <span class="J_CityItem" data-id="79">乐山</span>                                                                         <span class="J_CityItem" data-id="298">六安</span>                                                                         <span class="J_CityItem" data-id="147">六盘水</span>                                                                         <span class="J_CityItem" data-id="36">兰州</span>                                                                         <span class="J_CityItem" data-id="80">凉山彝族自治州</span>                                                                         <span class="J_CityItem" data-id="327">吕梁</span>                                                                         <span class="J_CityItem" data-id="221">娄底</span>                                                                         <span class="J_CityItem" data-id="191">廊坊</span>                                                                         <span class="J_CityItem" data-id="100">拉萨</span>                                                                         <span class="J_CityItem" data-id="202">来宾</span>                                                                         <span class="J_CityItem" data-id="98">林芝地区</span>                                                                         <span class="J_CityItem" data-id="305">柳州</span>                                                                         <span class="J_CityItem" data-id="331">泸州</span>                                                                         <span class="J_CityItem" data-id="153">洛阳</span>                                                                         <span class="J_CityItem" data-id="344">漯河</span>                                                                         <span class="J_CityItem" data-id="366">聊城</span>                                                                         <span class="J_CityItem" data-id="124">莱芜</span>                                                                         <span class="J_CityItem" data-id="183">辽源</span>                                                                         <span class="J_CityItem" data-id="351">辽阳</span>                                                                         <span class="J_CityItem" data-id="347">连云港</span>                                                                         <span class="J_CityItem" data-id="810">连江</span>                                                                         <span class="J_CityItem" data-id="256">陇南</span>                                                                         <span class="J_CityItem" data-id="1643">陵水黎族自治</span>                                                                         <span class="J_CityItem" data-id="193">龙岩</span>
+			                                                                    </dd>                                                                                                                                        <dt>M</dt>
+			                                                                    <dd>                                                                                                                                               <span class="J_CityItem" data-id="141">梅州</span>                                                                         <span class="J_CityItem" data-id="49">牡丹江</span>                                                                         <span class="J_CityItem" data-id="77">眉山</span>                                                                         <span class="J_CityItem" data-id="240">绵阳</span>                                                                         <span class="J_CityItem" data-id="811">苗栗</span>                                                                         <span class="J_CityItem" data-id="139">茂名</span>                                                                         <span class="J_CityItem" data-id="358">马鞍山</span>
+			                                                                    </dd>                                                                                                                                         <dt>N</dt>
+			                                                                    <dd>                                                                                                                                             <span class="J_CityItem" data-id="248">内江</span>                                                                         <span class="J_CityItem" data-id="315">南京</span>                                                                         <span class="J_CityItem" data-id="291">南充</span>                                                                         <span class="J_CityItem" data-id="261">南宁</span>                                                                         <span class="J_CityItem" data-id="133">南平</span>                                                                         <span class="J_CityItem" data-id="812">南投</span>                                                                         <span class="J_CityItem" data-id="163">南昌</span>                                                                         <span class="J_CityItem" data-id="161">南通</span>                                                                         <span class="J_CityItem" data-id="309">南阳</span>                                                                         <span class="J_CityItem" data-id="192">宁德</span>                                                                         <span class="J_CityItem" data-id="180">宁波</span>                                                                         <span class="J_CityItem" data-id="113">怒江傈僳族自治州</span>                                                                         <span class="J_CityItem" data-id="101">那曲地区</span>
+			                                                                    </dd>                                                                                                                                       <dt>P</dt>
+			                                                                    <dd>                                                                                                                                               <span class="J_CityItem" data-id="813">屏东</span>                                                                         <span class="J_CityItem" data-id="359">平凉</span>                                                                         <span class="J_CityItem" data-id="213">平顶山</span>                                                                         <span class="J_CityItem" data-id="81">攀枝花</span>                                                                         <span class="J_CityItem" data-id="108">普洱</span>                                                                         <span class="J_CityItem" data-id="814">澎湖</span>                                                                         <span class="J_CityItem" data-id="209">濮阳</span>                                                                         <span class="J_CityItem" data-id="228">盘锦</span>                                                                         <span class="J_CityItem" data-id="195">莆田</span>                                                                         <span class="J_CityItem" data-id="350">萍乡</span>
+			                                                                    </dd>                                                                                                                                         <dt>Q</dt>
+			                                                                    <dd>                                                                                                                                               <span class="J_CityItem" data-id="47">七台河</span>                                                                         <span class="J_CityItem" data-id="100000">其他</span>                                                                         <span class="J_CityItem" data-id="135">庆阳</span>                                                                         <span class="J_CityItem" data-id="249">曲靖</span>                                                                         <span class="J_CityItem" data-id="134">泉州</span>                                                                         <span class="J_CityItem" data-id="197">清远</span>                                                                         <span class="J_CityItem" data-id="1293">潜江</span>                                                                         <span class="J_CityItem" data-id="2031">琼中黎族苗族自治</span>                                                                         <span class="J_CityItem" data-id="2358">琼海</span>                                                                         <span class="J_CityItem" data-id="148">秦皇岛</span>                                                                         <span class="J_CityItem" data-id="243">衢州</span>                                                                         <span class="J_CityItem" data-id="145">钦州</span>                                                                         <span class="J_CityItem" data-id="236">青岛</span>                                                                         <span class="J_CityItem" data-id="342">黔东南苗族侗族自治州</span>                                                                         <span class="J_CityItem" data-id="306">黔南布依族苗族自治州</span>                                                                         <span class="J_CityItem" data-id="343">黔西南布依族苗族自治州</span>                                                                         <span class="J_CityItem" data-id="41">齐齐哈尔</span>
+			                                                                    </dd>
+
+			                                                                </dl>
+			                                                            </div>                                                              <div role="tabpanel" class="tab-pane" id="RSTWX">
+			                                                                <dl><dt>R</dt>
+			                                                                    <dd><span class="J_CityItem" data-id="102">日喀则地区</span> <span class="J_CityItem" data-id="173">日照</span>
+			                                                                    </dd><dt>S</dt><dd>	                                                                                                                                                <span class="J_CityItem" data-id="121">三亚</span>                                                                         <span class="J_CityItem" data-id="254">三明</span>                                                                         <span class="J_CityItem" data-id="212">三门峡</span>                                                                         <span class="J_CityItem" data-id="289">上海</span>                                                                         <span class="J_CityItem" data-id="364">上饶</span>                                                                         <span class="J_CityItem" data-id="216">十堰</span>                                                                         <span class="J_CityItem" data-id="45">双鸭山</span>                                                                         <span class="J_CityItem" data-id="154">商丘</span>                                                                         <span class="J_CityItem" data-id="285">商洛</span>                                                                         <span class="J_CityItem" data-id="56">四平</span>                                                                         <span class="J_CityItem" data-id="370">宿州</span>                                                                         <span class="J_CityItem" data-id="277">宿迁</span>                                                                         <span class="J_CityItem" data-id="97">山南地区</span>                                                                         <span class="J_CityItem" data-id="237">朔州</span>                                                                         <span class="J_CityItem" data-id="52">松原</span>                                                                         <span class="J_CityItem" data-id="303">汕头</span>                                                                         <span class="J_CityItem" data-id="339">汕尾</span>                                                                         <span class="J_CityItem" data-id="58">沈阳</span>                                                                         <span class="J_CityItem" data-id="340">深圳</span>                                                                         <span class="J_CityItem" data-id="335">石嘴山</span>                                                                         <span class="J_CityItem" data-id="150">石家庄</span>                                                                         <span class="J_CityItem" data-id="770">石河子</span>                                                                         <span class="J_CityItem" data-id="2734">神农架林区</span>                                                                         <span class="J_CityItem" data-id="293">绍兴</span>                                                                         <span class="J_CityItem" data-id="44">绥化</span>                                                                         <span class="J_CityItem" data-id="224">苏州</span>                                                                         <span class="J_CityItem" data-id="330">遂宁</span>                                                                         <span class="J_CityItem" data-id="273">邵阳</span>                                                                         <span class="J_CityItem" data-id="371">随州</span>                                                                         <span class="J_CityItem" data-id="137">韶关</span>
+			                                                                    </dd>	                                                                                                                                          <dt>T</dt>
+			                                                                    <dd>                                                                                                                                                <span class="J_CityItem" data-id="815">台东</span>                                                                         <span class="J_CityItem" data-id="804">台中</span>                                                                         <span class="J_CityItem" data-id="801">台北</span>                                                                         <span class="J_CityItem" data-id="805">台南</span>                                                                         <span class="J_CityItem" data-id="244">台州</span>                                                                         <span class="J_CityItem" data-id="89">吐鲁番地区</span>                                                                         <span class="J_CityItem" data-id="265">唐山</span>                                                                         <span class="J_CityItem" data-id="792">图木舒克</span>                                                                         <span class="J_CityItem" data-id="94">塔城地区</span>                                                                         <span class="J_CityItem" data-id="196">天水</span>                                                                         <span class="J_CityItem" data-id="332">天津</span>                                                                         <span class="J_CityItem" data-id="2654">天门</span>                                                                         <span class="J_CityItem" data-id="176">太原</span>                                                                         <span class="J_CityItem" data-id="1641">屯昌</span>                                                                         <span class="J_CityItem" data-id="816">桃源</span>                                                                         <span class="J_CityItem" data-id="325">泰安</span>                                                                         <span class="J_CityItem" data-id="276">泰州</span>                                                                         <span class="J_CityItem" data-id="165">通化</span>                                                                         <span class="J_CityItem" data-id="64">通辽</span>                                                                         <span class="J_CityItem" data-id="60">铁岭</span>                                                                         <span class="J_CityItem" data-id="205">铜仁地区</span>                                                                         <span class="J_CityItem" data-id="232">铜川</span>                                                                         <span class="J_CityItem" data-id="337">铜陵</span>
+			                                                                    </dd>	                                                                                                                                          <dt>W</dt>
+			                                                                    <dd>                                                                                                                                                <span class="J_CityItem" data-id="1216">万宁</span>                                                                         <span class="J_CityItem" data-id="168">乌兰察布</span>                                                                         <span class="J_CityItem" data-id="123">乌海</span>                                                                         <span class="J_CityItem" data-id="92">乌鲁木齐</span>                                                                         <span class="J_CityItem" data-id="789">五家渠</span>                                                                         <span class="J_CityItem" data-id="1644">五指山</span>                                                                         <span class="J_CityItem" data-id="322">吴忠</span>                                                                         <span class="J_CityItem" data-id="175">威海</span>                                                                         <span class="J_CityItem" data-id="177">文山壮族苗族自治州</span>                                                                         <span class="J_CityItem" data-id="2758">文昌</span>                                                                         <span class="J_CityItem" data-id="317">无锡</span>                                                                         <span class="J_CityItem" data-id="304">梧州</span>                                                                         <span class="J_CityItem" data-id="118">武威</span>                                                                         <span class="J_CityItem" data-id="218">武汉</span>                                                                         <span class="J_CityItem" data-id="178">温州</span>                                                                         <span class="J_CityItem" data-id="170">渭南</span>                                                                         <span class="J_CityItem" data-id="287">潍坊</span>                                                                         <span class="J_CityItem" data-id="129">芜湖</span>
+			                                                                    </dd>                                                                                                                                        <dt>X</dt>
+			                                                                    <dd>                                                                                                                                                <span class="J_CityItem" data-id="1713">仙桃</span>                                                                         <span class="J_CityItem" data-id="214">信阳</span>                                                                         <span class="J_CityItem" data-id="62">兴安盟</span>                                                                         <span class="J_CityItem" data-id="194">厦门</span>                                                                         <span class="J_CityItem" data-id="362">咸宁</span>                                                                         <span class="J_CityItem" data-id="323">咸阳</span>                                                                         <span class="J_CityItem" data-id="310">孝感</span>                                                                         <span class="J_CityItem" data-id="190">宣城</span>                                                                         <span class="J_CityItem" data-id="316">徐州</span>                                                                         <span class="J_CityItem" data-id="367">忻州</span>                                                                         <span class="J_CityItem" data-id="152">新乡</span>                                                                         <span class="J_CityItem" data-id="164">新余</span>                                                                         <span class="J_CityItem" data-id="817">新北</span>                                                                         <span class="J_CityItem" data-id="806">新竹</span>                                                                         <span class="J_CityItem" data-id="313">湘潭</span>                                                                         <span class="J_CityItem" data-id="274">湘西土家族苗族自治州</span>                                                                         <span class="J_CityItem" data-id="156">襄阳</span>                                                                         <span class="J_CityItem" data-id="109">西双版纳傣族自治州</span>                                                                         <span class="J_CityItem" data-id="66">西宁</span>                                                                         <span class="J_CityItem" data-id="233">西安</span>                                                                         <span class="J_CityItem" data-id="155">许昌</span>                                                                         <span class="J_CityItem" data-id="266">邢台</span>                                                                         <span class="J_CityItem" data-id="63">锡林郭勒盟</span>                                                                         <span class="J_CityItem" data-id="2911">香港</span>
+			                                                                    </dd>
+
+			                                                                </dl>
+			                                                            </div>	                                                                                                                        <div role="tabpanel" class="tab-pane" id="YZ">
+			                                                                <dl>	                                                                                                                                                                           <dt>Y</dt>
+			                                                                    <dd>                                                                                                                                             <span class="J_CityItem" data-id="818">云林</span>                                                                         <span class="J_CityItem" data-id="258">云浮</span>                                                                         <span class="J_CityItem" data-id="40">伊春</span>                                                                         <span class="J_CityItem" data-id="90">伊犁哈萨克自治州</span>                                                                         <span class="J_CityItem" data-id="819">宜兰</span>                                                                         <span class="J_CityItem" data-id="186">宜宾</span>                                                                         <span class="J_CityItem" data-id="270">宜昌</span>                                                                         <span class="J_CityItem" data-id="278">宜春</span>                                                                         <span class="J_CityItem" data-id="220">岳阳</span>                                                                         <span class="J_CityItem" data-id="284">延安</span>                                                                         <span class="J_CityItem" data-id="54">延边朝鲜族自治州</span>                                                                         <span class="J_CityItem" data-id="346">扬州</span>                                                                         <span class="J_CityItem" data-id="231">榆林</span>                                                                         <span class="J_CityItem" data-id="314">永州</span>                                                                         <span class="J_CityItem" data-id="326">烟台</span>                                                                         <span class="J_CityItem" data-id="361">玉林</span>                                                                         <span class="J_CityItem" data-id="71">玉树藏族自治州</span>                                                                         <span class="J_CityItem" data-id="106">玉溪</span>                                                                         <span class="J_CityItem" data-id="272">益阳</span>                                                                         <span class="J_CityItem" data-id="223">盐城</span>                                                                         <span class="J_CityItem" data-id="281">营口</span>                                                                         <span class="J_CityItem" data-id="328">运城</span>                                                                         <span class="J_CityItem" data-id="360">银川</span>                                                                         <span class="J_CityItem" data-id="199">阳江</span>                                                                         <span class="J_CityItem" data-id="357">阳泉</span>                                                                         <span class="J_CityItem" data-id="76">雅安</span>                                                                         <span class="J_CityItem" data-id="279">鹰潭</span>
+			                                                                    </dd>                                                                                                                                        <dt>Z</dt>
+			                                                                    <dd>                                                                                                                                           <span class="J_CityItem" data-id="181">中卫</span>                                                                         <span class="J_CityItem" data-id="187">中山</span>                                                                         <span class="J_CityItem" data-id="308">周口</span>                                                                         <span class="J_CityItem" data-id="264">张家口</span>                                                                         <span class="J_CityItem" data-id="312">张家界</span>                                                                         <span class="J_CityItem" data-id="117">张掖</span>                                                                         <span class="J_CityItem" data-id="820">彰化</span>                                                                         <span class="J_CityItem" data-id="336">昭通</span>                                                                         <span class="J_CityItem" data-id="172">枣庄</span>                                                                         <span class="J_CityItem" data-id="222">株洲</span>                                                                         <span class="J_CityItem" data-id="354">淄博</span>                                                                         <span class="J_CityItem" data-id="198">湛江</span>                                                                         <span class="J_CityItem" data-id="255">漳州</span>                                                                         <span class="J_CityItem" data-id="140">珠海</span>                                                                         <span class="J_CityItem" data-id="338">肇庆</span>                                                                         <span class="J_CityItem" data-id="78">自贡</span>                                                                         <span class="J_CityItem" data-id="245">舟山</span>                                                                         <span class="J_CityItem" data-id="242">资阳</span>                                                                         <span class="J_CityItem" data-id="262">遵义</span>                                                                         <span class="J_CityItem" data-id="268">郑州</span>                                                                         <span class="J_CityItem" data-id="160">镇江</span>                                                                         <span class="J_CityItem" data-id="53">长春</span>                                                                         <span class="J_CityItem" data-id="356">长治</span>                                                                         <span class="J_CityItem" data-id="269">驻马店</span>
+			                                                                    </dd>
+
+			                                                                </dl>
+			                                                            </div>
+
+			                                                        </div>
+			                                                    </div>
+			                                                </div>
+			                                            </div>
+			                                        </div>
+			                                    </div>
+			                                </div>
+			                                <div class="form-group-address">
+			                                    <input type="hidden" name="lng" id="J_ActivityMapLng" value="">
+			                                    <input type="hidden" name="lat" id="J_ActivityMapLat" value="">
+			                                    <i class="fa fa-map-marker"></i>
+			                                    <input type="text" name="address" class="input-control input-control-addr" placeholder="例如：文二路118号" id="J_ActivityAddr" value="">
+			                                    <!-- 历史地址 -->
+			                                    <div class="address-list" id="J_ActivityAddressHistory">
+			                                        <ul>
+			                                            <li class="J_ActivityAddressHistoryItem">敬业路</li>
+
+			                                        </ul>
+			                                    </div>
+			                                    <div class="map" id="J_ActivityAddressMap"></div>
+			                                </div>
+			                            </div>
+			                        </div>
+			                        <!--活动时间开始-->
+			                        <div class="inline">
+			                            <label class="form-label">活动时间<span class="red-word">*</span></label>
+			                            <div class="form-group">
+			                                <div class="form-group-time start-time">
+
+
+													<div class="orders_time_list">
+												        <div class="control-text">
+												            <input placeholder="开始时间" value="" name="start_time" class="laydate-icon" id="J_ActivityStartDate">
+
+												          </div>
+												        <div class="clear"></div>
+												   </div>
+
+			                                    <select class="input-control select-control-time" id="J_ActivityStartTime">
+                                                    <option value="00:00">00:00</option>
+                                                    <option value="00:30">00:30</option>
+                                                    <option value="01:00">01:00</option>
+                                                    <option value="01:30">01:30</option>
+                                                    <option value="02:00">02:00</option>
+                                                    <option value="02:30">02:30</option>
+                                                    <option value="03:00">03:00</option>
+                                                    <option value="03:30">03:30</option>
+                                                    <option value="04:00">04:00</option>
+                                                    <option value="04:30">04:30</option>
+                                                    <option value="05:00">05:00</option>
+                                                    <option value="05:30">05:30</option>
+                                                    <option value="06:00">06:00</option>
+                                                    <option value="06:30">06:30</option>
+                                                    <option value="07:00">07:00</option>
+                                                    <option value="07:30">07:30</option>
+                                                    <option value="08:00">08:00</option>
+                                                    <option value="08:30">08:30</option>
+                                                    <option value="09:00">09:00</option>
+                                                    <option value="09:30">09:30</option>
+                                                    <option value="10:00">10:00</option>
+                                                    <option value="10:30">10:30</option>
+                                                    <option value="11:00">11:00</option>
+                                                    <option value="11:30">11:30</option>
+                                                    <option value="12:00">12:00</option>
+                                                    <option value="12:30">12:30</option>
+                                                    <option value="13:00">13:00</option>
+                                                    <option value="13:30">13:30</option>
+                                                    <option value="14:00" selected="">14:00</option>
+                                                    <option value="14:30">14:30</option>
+                                                    <option value="15:00">15:00</option>
+                                                    <option value="15:30">15:30</option>
+                                                    <option value="16:00">16:00</option>
+                                                    <option value="16:30">16:30</option>
+                                                    <option value="17:00">17:00</option>
+                                                    <option value="17:30">17:30</option>
+                                                    <option value="18:00">18:00</option>
+                                                    <option value="18:30">18:30</option>
+                                                    <option value="19:00">19:00</option>
+                                                    <option value="19:30">19:30</option>
+                                                    <option value="20:00">20:00</option>
+                                                    <option value="20:30">20:30</option>
+                                                    <option value="21:00">21:00</option>
+                                                    <option value="21:30">21:30</option>
+                                                    <option value="22:00">22:00</option>
+                                                    <option value="22:30">22:30</option>
+                                                    <option value="23:00">23:00</option>
+                                                    <option value="23:30">23:30</option>
+
+			                                    </select>
+			                                </div>
+			                                <div class="form-group-time">~</div>
+			                                <div class="form-group-time over-time">
+												<div class="orders_time_list">
+											        <div class="control-text">
+														<input placeholder="结束时间" value="" name="end_time" class="laydate-icon " id="J_ActivityOverDate">
+
+											          </div>
+											        <div class="clear"></div>
+											   </div>
+			                                    <select class="input-control select-control-time" id="J_ActivityOverTime">
+			                                                                                <option value="00:00">00:00</option>
+			                                                                                <option value="00:30">00:30</option>
+			                                                                                <option value="01:00">01:00</option>
+			                                                                                <option value="01:30">01:30</option>
+			                                                                                <option value="02:00">02:00</option>
+			                                                                                <option value="02:30">02:30</option>
+			                                                                                <option value="03:00">03:00</option>
+			                                                                                <option value="03:30">03:30</option>
+			                                                                                <option value="04:00">04:00</option>
+			                                                                                <option value="04:30">04:30</option>
+			                                                                                <option value="05:00">05:00</option>
+			                                                                                <option value="05:30">05:30</option>
+			                                                                                <option value="06:00">06:00</option>
+			                                                                                <option value="06:30">06:30</option>
+			                                                                                <option value="07:00">07:00</option>
+			                                                                                <option value="07:30">07:30</option>
+			                                                                                <option value="08:00">08:00</option>
+			                                                                                <option value="08:30">08:30</option>
+			                                                                                <option value="09:00">09:00</option>
+			                                                                                <option value="09:30">09:30</option>
+			                                                                                <option value="10:00">10:00</option>
+			                                                                                <option value="10:30">10:30</option>
+			                                                                                <option value="11:00">11:00</option>
+			                                                                                <option value="11:30">11:30</option>
+			                                                                                <option value="12:00">12:00</option>
+			                                                                                <option value="12:30">12:30</option>
+			                                                                                <option value="13:00">13:00</option>
+			                                                                                <option value="13:30">13:30</option>
+			                                                                                <option value="14:00">14:00</option>
+			                                                                                <option value="14:30">14:30</option>
+			                                                                                <option value="15:00">15:00</option>
+			                                                                                <option value="15:30">15:30</option>
+			                                                                                <option value="16:00" selected="">16:00</option>
+			                                                                                <option value="16:30">16:30</option>
+			                                                                                <option value="17:00">17:00</option>
+			                                                                                <option value="17:30">17:30</option>
+			                                                                                <option value="18:00">18:00</option>
+			                                                                                <option value="18:30">18:30</option>
+			                                                                                <option value="19:00">19:00</option>
+			                                                                                <option value="19:30">19:30</option>
+			                                                                                <option value="20:00">20:00</option>
+			                                                                                <option value="20:30">20:30</option>
+			                                                                                <option value="21:00">21:00</option>
+			                                                                                <option value="21:30">21:30</option>
+			                                                                                <option value="22:00">22:00</option>
+			                                                                                <option value="22:30">22:30</option>
+			                                                                                <option value="23:00">23:00</option>
+			                                                                                <option value="23:30">23:30</option>
+
+			                                    </select>
+			                                </div>
+			                            </div>
+			                        </div>
+			                        <div class="inline">
+			                            <label class="form-label">报名截止时间<span class="red-word">*</span></label>
+			                            <div class="form-group">
+
+			                                <div class="orders_time_list">
+											        <div class="control-text">
+														<input placeholder="截止时间" value="" name="J_ActivityEntryOverDate" class="laydate-icon " id="J_ActivityEntryOverDate">
+
+											          </div>
+											        <div class="clear"></div>
+											   </div>
+			                                <select class="input-control select-control-time" id="J_ActivityEntryOverTime">
+			                                                                        <option value="00:00">00:00</option>
+			                                                                        <option value="00:30">00:30</option>
+			                                                                        <option value="01:00">01:00</option>
+			                                                                        <option value="01:30">01:30</option>
+			                                                                        <option value="02:00">02:00</option>
+			                                                                        <option value="02:30">02:30</option>
+			                                                                        <option value="03:00">03:00</option>
+			                                                                        <option value="03:30">03:30</option>
+			                                                                        <option value="04:00">04:00</option>
+			                                                                        <option value="04:30">04:30</option>
+			                                                                        <option value="05:00">05:00</option>
+			                                                                        <option value="05:30">05:30</option>
+			                                                                        <option value="06:00">06:00</option>
+			                                                                        <option value="06:30">06:30</option>
+			                                                                        <option value="07:00">07:00</option>
+			                                                                        <option value="07:30">07:30</option>
+			                                                                        <option value="08:00">08:00</option>
+			                                                                        <option value="08:30">08:30</option>
+			                                                                        <option value="09:00">09:00</option>
+			                                                                        <option value="09:30">09:30</option>
+			                                                                        <option value="10:00">10:00</option>
+			                                                                        <option value="10:30">10:30</option>
+			                                                                        <option value="11:00">11:00</option>
+			                                                                        <option value="11:30">11:30</option>
+			                                                                        <option value="12:00">12:00</option>
+			                                                                        <option value="12:30">12:30</option>
+			                                                                        <option value="13:00">13:00</option>
+			                                                                        <option value="13:30">13:30</option>
+			                                                                        <option value="14:00">14:00</option>
+			                                                                        <option value="14:30">14:30</option>
+			                                                                        <option value="15:00">15:00</option>
+			                                                                        <option value="15:30">15:30</option>
+			                                                                        <option value="16:00">16:00</option>
+			                                                                        <option value="16:30">16:30</option>
+			                                                                        <option value="17:00">17:00</option>
+			                                                                        <option value="17:30">17:30</option>
+			                                                                        <option value="18:00">18:00</option>
+			                                                                        <option value="18:30">18:30</option>
+			                                                                        <option value="19:00">19:00</option>
+			                                                                        <option value="19:30">19:30</option>
+			                                                                        <option value="20:00">20:00</option>
+			                                                                        <option value="20:30">20:30</option>
+			                                                                        <option value="21:00">21:00</option>
+			                                                                        <option value="21:30">21:30</option>
+			                                                                        <option value="22:00">22:00</option>
+			                                                                        <option value="22:30">22:30</option>
+			                                                                        <option value="23:00">23:00</option>
+			                                                                        <option value="23:30">23:30</option>
+
+			                                </select>
+			                            </div>
+			                        </div>
+			                        <!--主办方开始-->
+			                        <div class="inline">
+			                            <label class="form-label">主办方<span class="red-word">*</span></label>
+			                            <div class="form-group form-group-sponors" tabindex="1">
+			                                                                <span class="tag-add J_TagAddSponor">
+			                                    <input type="text" class="J_InputTag J_SponorInputTag ui-autocomplete-input" id="J_InputSponor" autocomplete="off" style="">
+			                                    <span class="J_BtnAddTag" data-type="sponor">添加<i class="fa fa-plus J_BtnAddTagIcon"></i></span>
+			                                <div class="sponor-list" id="J_SponorHistoryList">
+			                                    <ul>
+
+			                                    </ul>
+			                                </div>
+			                                </span>
+			                                <div class="input-tips">请点击“添加+”完成主办方的添加。如果有多个主办方，请逐个添加</div>
+			                            </div>
+			                        </div>
+			                        <!--活动详情-->
+			                        <div class="inline">
+			                            <label class="form-label">活动详情<span class="red-word">*</span></label>
+			                            <div class="form-group form-group-detail">
+			                                <!-- 加载编辑器的容器 -->
+			                                <div class="editor">
+			                                    <section class="content" style="width: 600px;">
+			                                        <div class="box box-info">
+			                                            <div class="box-body pad">
+			                                                    <textarea id="editor1" name="editor1" rows="10" cols="80"></textarea>
+			                                            </div>
+			                                        </div>
+			                                    </section>
+			                                </div>
+			                            </div>
+			                        </div>
+			                        <!--活动类型开始-->
+			                        <div class="inline bfc">
+			                            <label class="form-label">活动类型<span class="red-word">*</span></label>
+			                            <div class="form-group">
+			                                <div class="form-group-type" tabindex="1">
+			                                    <div class="radio-group">
+			                                        <input type="radio" id="J_RadioFree" name="type" value="1" checked="">
+			                                        <label for="J_RadioFree">免费</label>
+			                                    </div>
+			                                    <!-- <div class="radio-group">
+                                                    <input type="radio" id="J_RadioFee" name="type" value="1">
+                                                    <label for="J_RadioFee">收费</label>
+                                                    <span class="fee-tips J_FeeTips">（活动结束后，一周内打款至您填写的账号。达到或超过一万元人民币，收取1%手续费）</span>
+                                                </div> -->
+			                                </div>
+			                                <!-- <div class="form-group-layout">
+                                                                                                <div class="layout-free J_LayoutFree">
+                                                                                                    <input type="text" class="input-control input-control-limit" id="J_ActivityLimit" placeholder="输入限制人数（不填或0表示不限人数）" value="">
+                                                                                                    <label>人</label>
+                                                                                                </div>
+                                                <div class="layout-fee J_LayoutFee">
+                                                    <div class="grad ticket">
+                                                        <div class="J_SortableList J_TicketList ui-sortable">
+                                                                                                        </div>
+                                                        <div class="row add J_GuestAdd">
+                                                            <div class="cell">
+                                                                <a href="javascript:;" data-toggle="dialog" data-target="#J_DialogTicket">添加门票</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div> -->
+			                            </div>
+			                        </div>
+                                    <div class="inline">
+                                        <label class="form-label">人数限制</label>
+                                         <div class="form-group-layout">
+                                            <div class="layout-free J_LayoutFree">
+                                                <input type="text" class="input-control input-control-limit" id="J_ActivityLimit" placeholder="输入限制人数（不填或0表示不限人数）" value="">
+                                                <label>人</label>
+                                            </div>
+
+                                        </div>
+                                    </div>
+			                        <div class="inline">
+				                        <label class="form-label">活动嘉宾</label>
+				                        <div class="form-group">
+				                            <div class="grad guest">
+				                                <div class="J_SortableList J_GuestList ui-sortable">
+				                                                                    </div>
+				                                <div class="row add J_GuestAdd">
+				                                    <div class="cell">
+				                                        <a href="javascript:;" class="add_guest" data-toggle="dialog" data-target="#J_DialogGuest">添加嘉宾</a>
+				                                    </div>
+				                                </div>
+				                            </div>
+				                        </div>
+				                    </div>
+				                    <div class="inline">
+				                        <label class="form-label">隐私设置</label>
+				                        <div class="form-group">
+				                            <div class="checkedbox-group">
+				                                <input type="checkbox" id="J_ActivityProperty">
+				                                <label for="J_ActivityProperty">设为私密活动<span>（私密活动将不会在页面中展现）</span></label>
+				                            </div>
+				                        </div>
+				                    </div>
+				                    <div class="operation">
+								        <p>
+								            <input type="checkbox" checked="" id="J_ActivityProtocal">
+								            <label>我已阅读并同意<a href="#" data-toggle="dialog" data-target="#J_DialogProtocol">《活动协议》</a></label>
+								        </p>
+								        <div>
+								                        <!--创建-->
+								            <button class="btn btn-activity btn-pub btn-active J_BtnActivitySave" type="button" data-id="0" data-status="0"><i class="fa fa-paper-plane-o"></i>发布</button>
+								            <button class="btn btn-activity btn-save J_BtnActivitySave" type="button" data-id="0" data-status="2">存为草稿</button>
+								                    <!--     <button class="btn btn-preview" id="J_BtnPreview">预览</button> -->
+								        </div>
+								    </div>
+			                    </div>
+			                </form>
+			            </div>
+			        </div>
+
+			        <div class="container">
+				    <div class="dialog dialog-announce-activity J_DialogAnnounceActivity">
+					    <div class="dialog-head">
+					        <h3>活动须知</h3>
+					        <span class="fa fa-times dialog-close"></span>
+					    </div>
+					    <div class="dialog-body">
+					        <div class="announce">
+					            <div class="sequence">
+					                <p>①.只有被微众运营人员推荐的活动才会出现在微众APP（发现-活动）中</p>
+					            </div>
+					            <div class="sequence">
+					                <p>②.符合国家法律法规、面向创业者的高质量活动才会被推荐</p>
+					            </div>
+					            <div class="sequence">
+					                <p>③.什么样的活动不会被推荐？</p>
+					                <ul>
+					                    <li>1. 不合法、不合规</li>
+					                    <li>2. 私密的活动</li>
+					                    <li>3. 不符合创业者的需求</li>
+					                    <li>4. 信息不完整</li>
+					                    <li>5. 营销味道过浓</li>
+					                    <li>6. 短时间内，同一嘉宾多次出现</li>
+					                    <li>7. 收费不合理的活动</li>
+					                    <li>8. 微众不合作的机构发起的活动</li>
+					                </ul>
+					            </div>
+					            <div class="sequence">
+					                <p>④.我的活动没有被推荐怎么办？</p>
+					                <ul>
+					                    <li>虽然不会被推荐给微众用户，但是并不妨碍你通过自己的渠道进行推广。</li>
+					                </ul>
+					            </div>
+					        </div>
+					    </div>
+					</div>
+
+
+					<div class="dialog dialog-guest" id="J_DialogGuest">
+					    <div class="dialog-head">
+					        <h3>添加嘉宾</h3>
+					        <span class="fa fa-times dialog-close"></span>
+					    </div>
+					    <div class="dialog-body">
+					        <form class="form dialog-form J_GuestForm" novalidate="novalidate">
+					            <input type="hidden" id="J_GuestCreateTime" value="0">
+					            <input type="hidden" id="J_GuestId" value="0">
+					            <div class="inline">
+					                <label class="form-label">姓名<span class="red-word">*</span></label>
+					                <div class="form-group">
+					                    <input type="text" class="input-control ui-autocomplete-input" id="J_GuestName" name="name" autocomplete="off" aria-required="true">
+					                </div>
+					            </div>
+					            <div class="inline">
+					                <label class="form-label">公司<span class="red-word">*</span></label>
+					                <div class="form-group">
+					                    <input type="text" class="input-control" id="J_GuestCompany" name="company" aria-required="true">
+					                </div>
+					            </div>
+					            <div class="inline">
+					                <label class="form-label">职务<span class="red-word">*</span></label>
+					                <div class="form-group">
+					                    <input type="text" class="input-control" id="J_GuestPosition" name="position" aria-required="true">
+					                </div>
+					            </div>
+					            <div class="inline nomb">
+					                <label class="form-label">头像<span class="red-word">*</span></label>
+					                <div class="form-group clearfix">
+                                        <input name="thumb_image1" id="J_GuestAvatar" type="hidden" value="" class="form-control"/>
+                                        <input id="pickfiles1" name="cover" type="file" class="form-control hide"/>
+                                        <div id="look1" class="poster"   >
+                                          <img onclick="$('#pickfiles1').click()" id="img1" src="/common/img/add-person.png" alt="暂无预览图片" class="thumbnail">
+                                      </div>
+
+					                    <!-- <input type="hidden" id="J_GuestAvatar" name="avatar" value="">
+                                        <div class="upload webuploader-container" id="J_AvatarPicker"><div class="webuploader-pick">
+                                            <i class="fa fa-plus fa-3x"></i>
+                                            <p>添加头像</p>
+                                            <div class="upload-mask">
+                                                <div class="upload-loading">
+                                                    <img src="http://fed.welian.com/loading.gif">
+                                                </div>
+                                            </div>
+
+                                        </div><div id="rt_rt_1bqhsdkt21ui01sm2vi71kb61h2k4" style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; overflow: hidden; bottom: auto; right: auto;"><input type="file" name="file" class="webuploader-element-invisible" multiple="multiple" accept="image/png,image/jpeg"><label style="opacity: 0; width: 100%; height: 100%; display: block; cursor: pointer; background: rgb(255, 255, 255);"></label></div></div> -->
+					                </div>
+					            </div>
+					        </form>
+					    </div>
+					    <div class="dialog-footer" style="text-align:right">
+					        <button type="button" class="btn btn-cancel dialog-close">取消</button>
+					        <button type="button" class="btn btn-active" id="J_BtnSaveGuest" data-id="1">保存</button>
+					    </div>
+					</div>
+
+					<!-- <div class="dialog" id="J_DialogTicket">
+					    <div class="dialog-head">
+					        <h3>添加门票</h3>
+					        <span class="fa fa-times dialog-close"></span>
+					    </div>
+					    <div class="dialog-body">
+					        <form class="form dialog-form J_TicketForm" novalidate="novalidate">
+					            <input type="hidden" id="J_TicketId" value="0">
+					            <div class="inline">
+					                <label class="form-label">票种名称<span class="red-word">*</span></label>
+					                <div class="form-group">
+					                    <input type="text" class="input-control" id="J_TicketName" placeholder="如：预售票。最多五个字" name="name" maxlength="5">
+					                </div>
+					            </div>
+					            <div class="inline">
+					                <label class="form-label">说明</label>
+					                <div class="form-group">
+					                   <input type="text" class="input-control" id="J_TicketIntro" placeholder="如：自助餐。最多12个字" name="intro" maxlength="12">
+					                   <textarea class="input-control" id="J_TicketIntro" name="intro" maxlength="50" placeholder="如：自助餐。最多50个字" cols="13" rows="3"></textarea>
+					                </div>
+					            </div>
+					            <div class="inline">
+					                <label class="form-label">单价<span class="red-word">*</span></label>
+					                <div class="form-group">
+					                    <input type="text" class="input-control" id="J_TicketPrice" placeholder="元/张" name="price">
+					                </div>
+					            </div>
+					            <div class="inline nomb">
+					                <label class="form-label">数量<span class="red-word">*</span></label>
+					                <div class="form-group">
+					                    <input type="text" class="input-control" id="J_TicketNum" placeholder="张" name="num">
+					                </div>
+					            </div>
+					        </form>
+					    </div>
+					    <div class="dialog-footer" style="text-align:right">
+					        <button type="button" class="btn btn-cancel dialog-close">取消</button>
+					        <button type="button" class="btn btn-active" id="J_BtnSaveTicket">保存</button>
+					    </div>
+					</div> -->
+
+					<div class="dialog dialog-protocol" id="J_DialogProtocol">
+					    <div class="dialog-head">
+					        <h3>活动协议</h3>
+					        <span class="fa fa-times dialog-close"></span>
+					    </div>
+					    <div class="dialog-body">
+					        <div class="protocol">
+					            <p>微众为收费活动提供代收款服务，您在使用该服务（以下简称本服务）之前，需要仔细阅读本协议，并通过在线形式签署，您选择【同意】，即表示协议生效。本协议由杭州传送门网络科技有限公司（以下简称本公司）和您签订。</p>
+					            <h4>一、定义及解释</h4>
+					            <p>1.微众：杭州传送门网络科技有限公司拥有所有权与经营权的产品，包括www.welian.com、微众客户端以及后续开发的其他产品。</p>
+					            <p>2.微众账户（或本文中所称谓的“该账户”）：是本公司向您提供的唯一身份证明。您可以自行设置密码，您使用该账户登录并使用微众各项功能、查询或计量您的交易记录和账户余额。</p>
+					            <p>3.活动：本文中的活动指通过微众的组织活动、发起招募功能而发布的信息，包括但不限于聚会、会议、培训、赛事、众筹、招募、招聘、展览等形式。</p>
+					            <p>4.活动参与者：报名并付款参加付费活动的个人或者单位。</p>
+					            <h4>二、声明和承诺</h4>
+					            <p>5您完全理解并确认，在实际使用本服务前，您已充分阅读、理解并接受本协议的全部内容，同意遵循本协议之所有约定。</p>
+					            <p>6.您完全理解并同意，本公司有权随时对本协议内容进行单方面的变更，并以在本网站公告的方式予以公布，无需另行单独通知您；若在本协议内容公告变更后继续使用本服务的，表示您已充分阅读、完全理解并接受修改后的协议内容，也将遵循修改后的协议内容使用本服务；若您不同意修改后的协议内容，您应停止使用本服务。</p>
+					            <p>7.您完全理解并保证，在使用本服务时，您已经年满16周岁，在中国大陆地区具有合法开展组织活动或其他业务的法人身份或其他组织或个人；若您在国外，本协议内容不受您所属国家或地区法律的排斥。不具备前述条件的，您应立即停止使用本服务。</p>
+					            <h4>三、服务条款</h4>
+					            <p>8.代收款：您在微众上发生的所有交易，不可撤消地授权由本公司为您代收交易款项，同时本公司有权从微众上获取您的相关信息（包括但不限于活动信息，报名参与者信息，活动举办情况，账户相关信息等）。</p>
+					            <p>9.提现：在符合本协议规则的情况下，您可以申请本公司将您微众账户中的资金提取到您的有效中国大陆银行账户内，该银行账户开户名需与您的姓名或名称一致。除被冻结或限制款项外，本公司将于收到提现指令后的一至五个工作日内，将相应款项汇入该银行账户。根据您提供的账户所属银行不同，会有到账时间差异。此外，本公司对提现行为进行风险审查，因此可能导致提现延迟。</p>
+					            <p>10.拒绝提现：当您的提现申请或个人行为违反本服务协议或行业规则时，本公司有权拒绝您的提现申请，并告知您拒绝原因。</p>
+					            <p>11.提现失败：当您提供的银行卡相关信息有误而导致提现失败时，本公司允许您修改银行卡账户信息并会在微众客户端中提供给您相应的入口。</p>
+					            <p>12.退款：当活动参与者要求退款、或者您的活动发生变化，活动参与者向您提出退款要求时，需要您自行处理，本公司不负责处理任何退款事宜。与微众另有补充协议的除外。</p>
+					            <h4>四、收费标准</h4>
+					            <p>13.当您提现时，本公司将有权向您收取相关服务费用，本公司保留制定及调整服务费的权利。当前一万元人民币以下，不收取手续费；达到或者超过一万元人民币，收取1%的手续费。</p>
+					            <h4>五、使用限制与责任</h4>
+					            <p>14.您在使用本服务时应遵守中华人民共和国相关法律法规、您所在国家或地区之法令及相关国际惯例，不将本服务用于任何非法目的（包括用于禁止或限制交易物品的交易），也不以任何非法方式使用本服务。</p>
+					            <p>15.您必须保证您发布的活动信息（包括但不限于文字、图片、视频及活动本身）真实、合法且不侵犯第三方的合法权益，否则应承担所有相关法律责任。</p>
+					            <p>16.您不得利用本服务从事侵害他人合法权益之行为，否则应承担所有相关法律责任，因此导致本公司或本公司雇员受损的，您应承担赔偿责任。</p>
+					            <p>上述行为包括但不限于：</p>
+					            <ul>
+					                <li>(1)侵害他人名誉权、隐私权、商业秘密、商标权、著作权、专利权等合法权益。</li>
+					                <li>(2)违反依法定或约定之保密义务。</li>
+					                <li>(3)冒用他人名义使用本服务。</li>
+					                <li>(4)从事非法交易行为，如洗钱、传销、发布反动信息、倒卖毒品、禁药、组织淫秽活动等本公司认为不得使用本服务进行发布的活动等。</li>
+					                <li>(5)提供赌博资讯或以任何方式引诱他人参与赌博。</li>
+					                <li>(6)非法使用他人银行账户（包括信用卡账户）或无效银行账号（包括信用卡账户）交易。</li>
+					                <li>(7)违反《银行卡业务管理办法》使用银行卡，或利用信用卡套取现金（以下简称套现）。</li>
+					                <li>(8)进行与您或活动参与者对方宣称的交易内容不符的交易，或不真实的交易。</li>
+					                <li>(9)从事任何可能含有电脑病毒或是可能侵害本服务系统、资料之行为。</li>
+					                <li>(10)其他本公司有正当理由认为不适当之行为。</li>
+					            </ul>
+					            <p>17.您应妥善保管您的账号密码，由于您自己的原因造成的密码遗失或者泄露，您应承担由此造成的一切损失及所有责任。</p>
+					            <h4>六、免责条款</h4>
+					            <p>18.本公司不对因下述任一情况导致的任何损害赔偿承担责任，包括但不限于利润、商誉、使用、数据等方面的损失或其他无形损失的损害赔偿</p>
+					            <ul>
+					                <li>（1）本公司有权基于单方判断，包含但不限于本公司认为您已经违反本协议的明文规定及精神，暂停、中断或终止向您提供本服务或其任何部分，并移除您的资料。</li>
+					                <li>（2）本公司在发现异常交易或有疑义或有违反法律规定或本协议约定之虞时，有权不经通知先行暂停或终止该账户的使用（包括但不限于对该账户名下的款项和在途交易采取取消交易、调账等限制措施），并拒绝您使用本服务之部分或全部功能。 </li>
+					                <li>（3）在必要时，本公司无需事先通知即可终止提供本服务，并暂停、关闭或删除该账户及您账号中所有相关资料及档案，并将您滞留在该账户的全部合法资金退回到您的银行账户。</li>
+					            </ul>
+					            <p>19.系统因下列状况无法正常运作，使您无法使用各项服务时，本公司不承担任何损害赔偿责任，该状况包括但不限于：</p>
+					            <ul>
+					                <li>（1）本公司在微众客户端公告之系统停机维护期间。 </li>
+					                <li>（2）电信设备出现故障不能进行数据传输的。 </li>
+					                <li>（3）因台风、地震、海啸、洪水、停电、战争、恐怖袭击等不可抗力之因素，造成本公司系统障碍不能执行业务的。</li>
+					                <li> （4）由于黑客攻击、电信部门技术调整或故障、网站升级、银行、第三方支付工具方面的问题等原因而造成的服务中断或者延迟。</li>
+					            </ul>
+					            <p>20.因您的过错导致的任何损失由您自行承担，本公司不承担任何损害赔偿责任，该过错包括但不限于：遗忘或泄漏密码，密码被他人破解，您使用的手机或其他终端被他人侵入等。</p>
+					            <h4>七、法律适用管辖</h4>
+					            <p>21.本协议之效力、解释、变更、执行与争议解决均适用中华人民共和国法律，没有相关法律规定的，参照通用国际商业惯例和（或）行业惯例。本协议部分内容被有管辖权的法院认定为违法的，不因此影响其他内容的效力。</p>
+					            <p>22.因本协议产生之争议，均应依照中华人民共和国法律予以处理，并由杭州市西湖区人民法院管辖。</p>
+					        </div>
+					    </div>
+					</div>
+
+					<div class="dialog dialog-preview" id="J_DialogPreview">
+					    <div class="phone">
+					        <i class="fa fa-times-circle fa-2x dialog-close"></i>
+					        <img data-src="http://fed.welian.com/1_my/phone.png" src="http://fed.welian.com/1_my/phone.png">
+					        <div class="screen">
+					            <iframe id="previewIFrame" data-src="http://my.welian.com/views/preview.html"></iframe>
+					        </div>
+					    </div>
+					</div>
+
+<!-- 发布活动end -->
+
+
+
+
+				</div>
+			</div>
+
+		</div>
+	</div>
+		<div id="masker" style="display: none"></div>
+
+    	<script src="/new.wezchina.com/configure.js"></script>
+
+		<!--模块引入-->
+		<script src="/common/js/control.js"></script>
+    	<script src="/new.wezchina.com/user/js/common.js"></script>
+
+		<!-- <script src='/user/common/jQueryProvinces/js/area.js'></script> -->
+		<!-- <script src='/user/common/jQueryProvinces/js/select.js'></script> -->
+		<!-- <script src="/user/js/citydata.js"></script> -->
+		<!-- <script src="/user/js/cityPicker-1.1.3.js"></script> -->
+		<!-- <script src="/common/js/ifconfig.js"></script> -->
+		<!-- <script src="js/cert-config.js"></script> -->
+		<script type="text/javascript">
+			/*//原生城市-无联动
+			var select = $('.city-picker-select').cityPicker({
+				dataJson: cityData,
+				renderMode: false,
+				autoSelected: true
+			});
+
+			//设置城市
+			select.setCityVal([{
+				'id': '610000',
+				'name': '陕西省'
+			}, {
+				'id': '610100',
+				'name': '西安市'
+			}, {
+				'id': '610113',
+				'name': '雁塔区'
+			}]);*/
+		</script>
+
+	</body>
+
+</html>
+  <script id="J_TmplTicket" type="text/html">
+    <div class="row J_ActivityTicket" data-result="((result))" data-id="((id))">
+        <div class="cell drag"><span></span></div>
+        <div class="cell name">((name))</div>
+        <div class="cell info">((intro))</div>
+        <div class="cell price"><span>((price))</span>元</div>
+        <div class="cell num"><span>((num))</span>张</div>
+        <div class="cell operate">
+            <i class="fa fa-pencil-square-o J_TicketEdit"></i>
+            <i class="fa fa-close J_TicketDelete"></i>
+        </div>
+    </div>
+</script>
+<script id="J_TmplGuest" type="text/html">
+    <div class="row J_ActivityGuest" data-result="((result))">
+        <div class="cell drag"><span></span></div>
+        <div class="cell avatar1"><img src="((avatarUrl))"></div>
+        <div class="cell name">((name))</div>
+        <div class="cell company">((company))</div>
+        <div class="cell position">((position))</div>
+        <div class="cell operate">
+            <i class="fa fa-pencil-square-o J_GuestEdit"></i>
+            <i class="fa fa-close J_GuestDelete"></i>
+        </div>
+    </div>
+</script>
+<script id="J_TmplTag" type="text/html">
+    <span class="tag" data-type="((type))" data-time="((ctime))" data-id="0">((name))<i class="fa fa-times-circle"></i></span>
+</script>
+ <!--  <script type="text/javascript" src="js/json.js"></script>
+ <script type="text/javascript" src="js/jquery-ui.min.js"></script>
+ <script type="text/javascript" src="js/jquery.validate.min.js"></script>
+ <script type="text/javascript" src="js/jquery.placeholder.js"></script>
+ <script type="text/javascript" src="js/webuploader/webuploader.min.js"></script>
+ <script type="text/javascript" src="http://my.welian.com/static/ueditor/ueditor.config.js"></script>
+ <script type="text/javascript" src="http://my.welian.com/static/ueditor/ueditor.all.min.js"></script>
+ <script type="text/javascript" src="http://my.welian.com/static/ueditor/ueditor.parse.min.js"></script>
+ <script type="text/javascript" src="js/template.js"></script>
+ <script type="text/javascript" src="js/jquery.ba-throttle-debounce.min.js"></script> -->
+		<script src="/new.wezchina.com/user/js/activity/jquery-ui.js"></script>
+        <script src="/new.wezchina.com/user/js/activity/validate.js"></script>
+        <script src="/new.wezchina.com/user/js/activity/placehoder.js"></script>
+        <script src="/new.wezchina.com/user/js/activity/webuploader.js"></script>
+        <script src="/new.wezchina.com/user/js/activity/template.js"></script>
+        <script src="/new.wezchina.com/user/js/activity/debounce.js"></script>
+
+
+
+    <script type="text/javascript" src="/new.wezchina.com/user/js/activitycommon.js"></script>
+
+		<script src="/new.wezchina.com/user/js/pubactivity.js"></script>
+
+
+    <script>
+
+    //嘉宾编辑时，删除嘉宾（从数据库删除）
+    function guest_del(id) {
+        if (!confirm('确定删除嘉宾？')) {
+            return false;
+        }
+        $.ajax({
+            type: 'post',
+            url: 'http://my.welian.com/event/guest_del/' + id,
+            success: function(data) {
+                if (data) {
+                    $("#J_DeleteGuest" + id).remove();
+                } else {
+                    alert('删除出现异常');
+                    return false;
+                }
+            }
+        });
+    }
+    //删除报名表单配置
+    function field_del(id) {
+        if (!confirm('确定删除？')) {
+            return false;
+        }
+        $.ajax({
+            type: 'post',
+            url: 'http://my.welian.com/event/field_del_byId/' + id,
+            success: function(data) {
+                if (data) {
+                    $("#J_DeleteField" + id).parent().remove();
+                } else {
+                    alert('删除出现异常');
+                    return false;
+                }
+            }
+        })
+    }
+
+    </script>
+
+    <script>
+    	 var start = {
+	        elem: '#J_ActivityStartDate',
+	        format: 'YYYY-MM-DD',
+	        max: '2099-06-16', //最大日期
+	        istime: true,
+	        istoday: false,
+	        choose: function(datas){
+	             end.min = datas; //开始日选好后，重置结束日的最小日期
+	             end.start = datas //将结束日的初始值设定为开始日
+	        }
+	    };
+	    var end = {
+	        elem: '#J_ActivityOverDate',
+	        format: 'YYYY-MM-DD',
+	        max: '2099-06-16',
+	        istime: true,
+	        istoday: false,
+	        choose: function(datas){
+	            start.max = datas; //结束日选好后，重置开始日的最大日期
+	        }
+	    };
+	    var applyend = {
+	        elem: '#J_ActivityEntryOverDate',
+	        format: 'YYYY-MM-DD',
+	        max: '2099-06-16',
+	        istime: true,
+	        istoday: false,
+	        choose: function(datas){
+	            start.max = datas; //结束日选好后，重置开始日的最大日期
+	        }
+	    };
+	    // laydate(start);
+	    // laydate(end);
+	    // laydate(applyend);
+    </script>

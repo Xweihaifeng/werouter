@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+
+	<head lang="en">
+		<meta charset="UTF-8">
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+		<link rel="shortcut icon" id="favicon" href="" />
+		<link rel="stylesheet" href="/common/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="/new.wezchina.com/user/common/css/bootstrap-datetimepicker.min.css">
+		<link rel="stylesheet" href="/new.wezchina.com/user/common/css/main.css">
+		<link rel="stylesheet" href="/common/css/buttons.css">
+		<script src="/common/js/jquery-3.2.1.min.js"></script>
+		<script type="text/javascript" src="/common/js/bootstrap.min.js"></script>
+		<script src="/common/js/browser.min.js"></script>
+		<link rel="stylesheet" href="/new.wezchina.com/user/css/manage.css">
+		<!-- <link rel="stylesheet" type="text/css" href="css/order.css"> -->
+		<link rel="stylesheet" type="text/css" href="/new.wezchina.com/user/css/mall_manage.css">
+		<script src="/common/js/plupload/plupload.full.min.js"></script>
+		<script src="/new.wezchina.com/configure.js"></script>
+		<script src="/common/js/control.js"></script>
+		<script src="/new.wezchina.com/user/js/common.js"></script>
+		<script src="/common/js/swiper-3.3.1.min.js"></script>
+		<script src="/common/js/buttons.js"></script>
+		<!-- <script src="/common/js/ckeditor/ckeditor.js"></script> -->
+		<script src="/common/js/qiniu.js"></script>
+		<script src="/new.wezchina.com/user/common/js/generate_manage.js"></script>
+		<script type="text/javascript" src="/new.wezchina.com/user/js/shopcate.js"></script>
+		<title>全球秦商总会</title>
+		<style type="text/css">
+			#right {
+			    padding-bottom: 30px;
+		        min-height: 760px;
+			}
+			
+			#pub-shopping-cate {
+				color: red;
+				background: #f7f7f7;
+			}
+			.sort_box{padding:0 20px;}
+			.we-cont .active>div {
+				color: red;
+				background: #f7f7f7;
+			}
+		</style>
+		<script>
+			window.csrf = {
+				"csrfToken": "Dj5Ez1yA4Dfow8SiFuMpYl2xDURwMjBMHWpHm4Kt"
+			}
+		</script>
+		<script>
+			window.Laravel = {
+				"csrfToken": "Dj5Ez1yA4Dfow8SiFuMpYl2xDURwMjBMHWpHm4Kt"
+			}
+		</script>
+	</head>
+
+	<body style="width: 100%; background: #F7F6F2;">
+		<div class="login">
+			<div class="left-nav">
+	            
+	        </div>
+			<div id="top">
+		        
+		    </div>
+		    <div id="middle">
+        
+			</div>
+
+			<div id="right">
+				<div class="we-release">
+					<!-- <div class="we-art-nav">
+						<ol class="breadcrumb" style="height: 44px; line-height: 30px; font-size: 15px; cursor: pointer;">
+							<li class="homepage">
+								<a>我的商城</a>
+							</li>
+							<li class="back">
+								<a>编辑</a>
+							</li>
+							<li class="active">订单管理</li>
+						</ol>
+					</div> -->
+					<div class="order-table">
+							
+						<div class="use-right">
+							<div class="list_title clearfix">
+					            <div class="cur">
+					                <span>商品分类</span>
+					            </div>
+					        </div>
+					        <div class="sort_box">
+					            <ul class="sort_top clearfloat">
+					                <li class="add_sort">
+					                    <a href="javascript:;" id="add_sort" >+添加分类</a>
+					                </li>
+					                <li class="sort_save">
+					                    <a href="javascript:;" class="save_change save-btn">+保存更改</a>
+					                </li>
+					            </ul>
+					            <div class="sort_bottom">
+					                <p class="sort_bottom_tit">
+					                    <span class="sort_name">分类名称</span>
+					                    <span class="sort_order">排序</span>
+					                    <span class="sort_operate">操作</span>
+					                </p>
+					                <ul class="operate_box">
+					                    
+					                    
+						            </ul>
+						        </div>
+						    </div>
+						</div>
+
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</body>
+
+</html>
+<!-- 加载编辑器的容器 -->
+<!-- <script src="http://next.wezchina.com/static/distpicker-master/js/bootstrap-datetimepicker.min.js"></script> -->
+<!-- <script src="http://next.wezchina.com/static/layer/layer.js"></script> -->
+<!-- 实例化编辑器 -->
+<script type="text/javascript">
+	$(function() {		
+		/*$(".form_datetime").datetimepicker({
+			format: 'yyyy-mm-dd hh:ii'
+		});*/
+	})
+
+	var currWidth = $(window).height() - 90;
+	var currHeight = $(window).height() - 90;
+	setHeight(currHeight + 90);
+	$("#middle, #right").height(currHeight);
+
+	$(window).resize(function() {
+		currWidth = $(window).height() - 90;
+		currHeight = $(window).height() - 90;
+		setHeight(currHeight + 90);
+		$("#middle, #right").height(currHeight);
+	})
+
+	$("#add").hover(function() {
+		$(".add").show();
+	}, function() {
+		$(".add").hide();
+	})
+
+	$("#avatar, #dropdown").hover(function() {
+		$(".avatar").show();
+	}, function() {
+		$(".avatar").hide();
+	})
+
+	$("#avatar-logout span").click(function() {
+		localStorage.removeItem('token');
+		localStorage.removeItem('weid');
+	})
+
+
+
+	$(function(){
+		/*var categoryItemValue = [];
+		var newCIV = [];
+		var subB = false;
+		$(".category-item").each(function(){
+			categoryItemValue.push($(this).find(".category-name").val());
+			newCIV.push($(this).find(".category-name").val())
+		});
+        //添加商品分类
+        $('#add_sort').on('click',function(){
+            var sortList = "<li class='clearfloat category-item'><input type='text' class='sort_info category-name' value=''><input type='number' class='order_info category-floor' value=''>&nbsp;F<div class='operate_info'><a href='javascript:;' class='delete_sort'>删除</a></div></li>";
+            $('.operate_box').append(sortList);
+            $('.no_sort').remove();	
+			newCIV.push("")
+        });
+
+		$(".operate_box").on("blur",".category-name",function(){
+			var _This =  $(this)
+			var _index = $(this).parents("li").index();
+			for (var i=0;i<newCIV.length ;i++ )
+			{				
+				if (newCIV[i] == $(this).val() )//判断是否重复
+				{
+					if (i != _index)
+					{
+						$.showSuccess("分类名称不能重复",function(){return false});
+						_This.val('');
+					}
+				}else	if(_index>newCIV.length-1){
+					newCIV.push($(this).val())
+				}else {
+					newCIV[_index] = $(this).val();
+				}
+			}
+
+			return false;
+		})
+
+		
+        //删除分类
+        $('.operate_box').on('click','.delete_sort',function(){
+            var _lidom = $(this).closest('li');
+			newCIV.splice(_lidom.index(),1);
+			categoryItemValue.splice(_lidom.index(),1);
+            if(_lidom.data("id")){
+                var params = {id:_lidom.data("id"),ajax:1};
+                var callback = function(msg){
+                    if(msg.result == 0){
+                        _lidom.remove();
+                    }else{
+                        $.showErr(msg.description);
+                    }
+                }
+                requestAjax(params, 'post', '/index.php?ctl=mywemall&act=del_category', callback, true);
+            }else{
+                _lidom.remove();
+            }
+        })
+		//保存分类
+        $(document).on("click",".save-btn",function(){
+            var categories = new Array();
+			var noneVal = {};
+            $(".category-item").each(function(){
+                var item = {};
+                item.id = $(this).data("id");
+                item.name = $(this).find(".category-name").val();
+                item.floor = $(this).find(".category-floor").val();
+                if(!item.name){
+					noneVal.nD = item.id;
+                    return;
+                }
+                if(!item.floor){
+                    item.floor = 0;
+                }
+                categories.push(item);
+            })
+            if(categories.length == 0){
+                return;
+            }
+            var params = {categories:categories,ajax:1};
+		
+			if (categoryItemValue.length == newCIV.length){
+				var cn_arr = []
+				for(var s in categoryItemValue){
+					for(var x in newCIV){
+						if(categoryItemValue[s] == newCIV[x]){
+							cn_arr.push(categoryItemValue[s]);
+						}
+					}
+				}
+				if (cn_arr.length != categoryItemValue.length)
+				{
+					subB = false;
+				}else{
+					subB = true;
+				}
+			}else{
+				subB = false;
+			}
+
+			if (noneVal.nD)
+			{
+				$.showSuccess("商品名称不能为空",function(){
+					return false;
+				})
+			}else if (subB)
+			{
+				$.showSuccess("没有修改分类",function(){
+					return false;
+				})
+			}else{
+				var callback = function(msg){
+					if(msg.result == 0){
+							$.showSuccess("保存成功",function(){
+								window.location.reload();					
+							});
+					}else{
+						$.showErr(msg.description,function(){
+							if(msg.data){
+								window.location.href = msg.data;
+							}
+						});
+					}
+				}				
+				requestAjax(params, 'post', '/index.php?ctl=mywemall&act=do_categories', callback, true);
+			}
+        });*/
+    })
+</script>

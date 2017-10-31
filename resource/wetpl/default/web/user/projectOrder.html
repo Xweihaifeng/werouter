@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html>
+    <head lang="en">
+        <meta charset="UTF-8">
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+	<!-- <link rel="shortcut icon" id="favicon" href="" /> -->
+<!-- <base href="http://g.welian.com/my/"> -->
+<link rel="stylesheet" type="text/css" href="/new.wezchina.com/user/css/active - common.css">
+<link rel="stylesheet" type="text/css" href="/new.wezchina.com/user/css/active - font-min.css">
+<link rel="stylesheet" href="/common/css/main.css">
+
+<link rel="stylesheet" type="text/css" href="/common/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="/common/css/buttons.css">
+<link rel="stylesheet" type="text/css" href="/common/css/swiper.min.css">
+<link rel="stylesheet" type="text/css" href="/new.wezchina.com/user/css/active.css">
+<link rel="stylesheet" type="text/css" href="/new.wezchina.com/user/css/projectOrder.css">
+<!-- <link rel="shortcut icon" href="http://my.welian.com/welian.png"> -->
+<!-- <script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/jquery.noty.min.js"></script>
+ -->
+
+
+	<script charset="utf-8" type="text/javascript" src="/common/js/jquery-3.2.1.min.js"></script>
+		<script charset="utf-8" type="text/javascript" src="/common/js/swiper-3.3.1.min.js"></script>
+        <script charset="utf-8" type="text/javascript" src="/common/layer-v3.0.3/layer-v3.0.3/layer/layer.js"></script>
+        <script charset="utf-8" type="text/javascript" src="/new.wezchina.com/configure.js"></script>
+
+        <script charset="utf-8" type="text/javascript" src="/common/js/control.js"></script>
+
+        <script charset="utf-8" type="text/javascript"  src="/new.wezchina.com/user/js/common.js"></script>
+
+
+		<script charset="utf-8" type="text/javascript" src="/common/js/browser.min.js"></script>
+		<script charset="utf-8" type="text/javascript" src="/common/js/jquery.imagecompress.js"></script>
+        <script charset="utf-8" type="text/javascript" src="/common/js/buttons.js"></script>
+		<script charset="utf-8" type="text/javascript" src="/common/js/bootstrap.min.js"></script>
+		<script src="/new.wezchina.com/user/common/js/generate_manage.js"></script>
+
+	
+     <title>订单管理</title>
+       <style type="text/css">
+
+
+            #activity-list {
+                color: red;
+                background: #f7f7f7;
+            }
+            .we-active{display:block;}
+
+            .we-cont .active>div {
+                color: red;
+                background: #f7f7f7;
+            }
+            .star{    color: #ff0000;    margin-right: 3px;    position: relative;    top: 3px;}
+            .info{height:auto;}
+            .cancel{float:none;}
+
+        </style>
+
+
+
+</head>
+
+<body style="width: 100%; background: #F7F6F2;">
+   	<div class="login">
+        <div class="left-nav">
+           
+        </div>
+        <div id="top">
+           
+        </div>
+        <div id="middle">
+           
+        </div>
+        <div id="right">
+
+
+			   <div class="header_top">
+			   <p>项目管理 &gt; 订单管理</p>
+
+              </div>
+              <input type="hidden" value="http://my.welian.com/event/publish" id="J_PublishActivity">
+              <input type="hidden" value="http://my.welian.com/event/del" id="J_DeleteActivity">
+
+                  <div class="wrap">
+
+
+
+                     <div class="backstage-wrap wrap1120 clearfix">
+
+    <div class="personal-center-right">
+        <div class="m-ulitem">
+            <!-- <span class="project-name">去养老院做工</span> -->
+            <ul class="list-nav clearfix">
+                <li><a class="z-own" href="#">全部订单(0)</a></li>
+                <li><a href="#">待发货（0）</a></li>
+                <li><a href="#">已发货（0）</a></li>
+
+                <li><a href="#">已收货（0）</a></li>
+            </ul>
+<!--                             <form id="Js-search" name="searchForm" action="/corp-search" wx-validator="" class="project-search" wx-validator-single-error="error" autocomplete="off">
+                    <div id="error" class="error-text" style="position: absolute;left: 12px;top: 0;"></div>
+                    <select class="pd-type" name="deal_id">
+                                                                                    <option value="728748" selected="selected">用户名</option>
+                                                            <option value="728757">张三</option>
+                                                                        </select>
+                    <select class="pd-type" name="rt">
+                        <option value="">回报类型</option>
+                        <option value="1">产品回报</option>
+                        <option value="2">无私奉献</option>
+                        <option value="3">抽奖</option>
+                        <!-- <option value="4">抽奖</option> -->
+                 <!--    </select>
+                    <span><input type="text" wx-validator-rule="digits" wx-validator-placeholder="可输入订单号进行查询" name="order_id" value="" placeholder="可输入订单号进行查询"></span>
+                    <span><input type="text" wx-validator-rule="mobile" wx-validator-placeholder="可输入手机号进行查询" name="mobile" value="" placeholder="可输入手机号进行查询"></span>
+                    <a href="javascript:;" type="submit" class="search-btn">查询</a>
+                </form>
+                        <div class="project-checked">
+                                    <a id="Js-outputAll" href="javascript:;">全部导出</a>
+                                <a id="Js-outputItems" href="javascript:;">导出</a>
+                            </div>  -->
+            <div class="m-location">
+
+
+                <table>
+                    <colgroup>
+                        <col width="5%">
+                        <col width="5%">
+                        <col width="5%">
+                        <col width="5%">
+                        <col width="10%">
+                        <col width="10%">
+                        <col width="5%">
+                        <col width="5%">
+                        <col width="5%">
+                        <col width="10%">
+                        <col width="10%">
+                    </colgroup>
+                    <thead>
+                    <tr class="bg-tr">
+                       <td class="wp10">序号</td>
+                        <td class="wp10">用户名</td>
+                        <!-- <td class="wp6">单价</td> -->
+                        <td class="wp6">数量</td>
+                        <!-- <td class="wp6">支付金额</td> -->
+                        <td class="wp20">回报项</td>
+                        <!-- <td class="wp20">地址</td> -->
+                        <!-- <td class="wp6">收货人</td> -->
+                        <td class="wp6">项目分类</td>
+                        <td class="wp6">订单状态</td>
+                        <!-- <td class="wp6">是否中奖</td> -->
+                        <!-- <td class="wp6">支付方式</td> -->
+                        <!-- <td class="wp14">物流信息</td> -->
+                        <td class="wp10" style="min-width: 100px">发货时间</td>
+                        <td class="wp14">操作</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="bg-tr">
+                        <td class="wp10">1</td>
+                        <td class="wp10">张三</td>
+                        <!-- <td class="wp6">500</td> -->
+                        <td class="wp6">1</td>
+                        <!-- <td class="wp6">500</td> -->
+                        <td class="wp20">无私奉献</td>
+                        <!-- <td class="wp20">天上人间</td> -->
+                        <!-- <td class="wp6">李四</td> -->
+                        <td class="wp6">产品众筹</td>
+                        <td class="wp6">已发货</td>
+                        <!-- <td class="wp6">否</td> -->
+                        <!-- <td class="wp6">余额</td> -->
+                        <!-- <td class="wp14">在路上</td> -->
+                        <td class="wp10" style="min-width: 100px">2017.10.1</td>
+                        <td class="wp10" style="min-width: 50px">
+                          <a href="/user/admin/project/Orderdetail" class="manage_a">管理订单</a>
+                        </td>
+                    </tr>
+                      <tr class="bg-tr">
+                        <td class="wp10">2</td>
+                        <td class="wp10">张三</td>
+                        <!-- <td class="wp6">500</td> -->
+                        <td class="wp6">1</td>
+                        <!-- <td class="wp6">500</td> -->
+                        <td class="wp20">无私奉献</td>
+                        <!-- <td class="wp20">天上人间</td> -->
+                        <!-- <td class="wp6">李四</td> -->
+                        <td class="wp6">一元众筹</td>
+                        <td class="wp6">已发货</td>
+                        <!-- <td class="wp6">否</td> -->
+                        <!-- <td class="wp6">余额</td> -->
+                        <!-- <td class="wp14">在路上</td> -->
+                        <td class="wp10" style="min-width: 100px">2017.10.1</td>
+                        <td class="wp10" style="min-width: 50px">
+                          <a href="/user/admin/project/Orderdetail" class="manage_a">管理订单</a>
+                        </td>
+                    </tr>
+                     <tr class="bg-tr">
+                        <td class="wp10">3</td>
+                        <td class="wp10">张三</td>
+                        <!-- <td class="wp6">500</td> -->
+                        <td class="wp6">2</td>
+                        <!-- <td class="wp6">500</td> -->
+                        <td class="wp20">无私奉献</td>
+                        <!-- <td class="wp20">天上人间</td> -->
+                        <!-- <td class="wp6">李四</td> -->
+                        <td class="wp6">互助众筹</td>
+                        <td class="wp6">已发货</td>
+                        <!-- <td class="wp6">否</td> -->
+                        <!-- <td class="wp6">余额</td> -->
+                        <!-- <td class="wp14">在路上</td> -->
+                        <td class="wp10" style="min-width: 100px">2017.10.1</td>
+                        <td class="wp10" style="min-width: 50px">
+                          <a href="/user/admin/project/Orderdetail" class="manage_a">管理订单</a>
+                        </td>
+                    </tr>
+                     <!-- <tr class="bg-tr">
+                        <td class="wp10">张三</td>
+                        <td class="wp6">500</td>
+                        <td class="wp6">1</td>
+                        <td class="wp6">500</td>
+                        <td class="wp20">无私</td>
+                        <td class="wp20">天上人间</td>
+                        <td class="wp6">李四</td>
+                        <td class="wp6">已发货</td>
+                        <td class="wp6">否</td>
+                        <td class="wp6">余额</td>
+                        <td class="wp14">在路上</td>
+                        <td class="wp10" style="min-width: 100px">2017.10.1</td>
+                        <td class="wp10" style="min-width: 50px">
+                            <button type="button">删除</button>
+                            <button type="button">查看</button>
+                        </td>
+                    </tr> -->
+                    </tbody>
+
+
+                </table>
+
+                <div class="pager">
+                    <ul class="pagination clearfix"></ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+                </div>
+        </div>
+    </div>
+<div class="modal fade bs-example-modal-sm" id="myModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">填写发货信息</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <input type="hidden" value="" id="myModal_input">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">物流公司</label>
+                        <input type="text" name="wuliu_company" class="form-control" id="exampleInputEmail1">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">物流编号</label>
+                        <input type="text" name="wuliu_card" class="form-control" id="exampleInputPassword1">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button" class="btn btn-primary save">确定</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <!-- 埋点区域 -->
+    <!-- 发布和取消发布活动的接口 -->
+
+    <!-- 删除活动借口 -->
+		<!-- <script charset="utf-8" type="text/javascript" src="/new.wezchina.com/user/js/activitymanage.js"></script> -->
+        <script charset="utf-8" type="text/javascript" src="/new.wezchina.com/user/js/project/projectOrder.js"></script>
+
+<!--     <script type="text/javascript" src="js/jqPaginator.min.js"></script>
+    <script type="text/javascript" src="js/index.js"></script> -->
+    <style>
+    .title a {
+        color: #000;
+    }
+
+    .title a:hover {
+        color: #3474ba;
+        text-decoration: underline;
+    }
+    </style>
+
+</body>
+
+</html>
+<script>
+    var currWidth = $(window).height() - 90;
+    var currHeight = $(window).height() - 90;
+    setHeight(currHeight + 90);
+    $("#middle, #right").height(currHeight);
+
+    $(window).resize(function() {
+        currWidth = $(window).height() - 90;
+        currHeight = $(window).height() - 90;
+        setHeight(currHeight + 90);
+        $("#middle, #right").height(currHeight);
+    })
+
+    $("#add").hover(function() {
+        $(".add").show();
+    }, function() {
+        $(".add").hide();
+    })
+
+    $("#avatar, #dropdown").hover(function() {
+        $(".avatar").show();
+    }, function() {
+        $(".avatar").hide();
+    })
+
+    $("#avatar-logout span").click(function() {
+        localStorage.removeItem('token');
+        localStorage.removeItem('weid');
+    })
+</script>

@@ -1,0 +1,330 @@
+#top {
+    background: url(/common/img/top.png) no-repeat center;
+    background-size: 100% 100%;
+    z-index: 10002;
+}
+
+
+#active_l {
+    color: red;
+    background: #f7f7f7;
+}
+.btn-group .icon {
+    width: 14px;
+    height: 14px;
+    margin-right: 5px;
+    position: relative;
+    top: 1px;
+}
+
+.btn-group .icon-bill {
+    background: url(http://fed.welian.com/0_icon/icon_bill.png);
+    background-size: 100% 100%;
+}
+
+.btn-group .icon-account {
+    background: url(http://fed.welian.com/0_icon/icon_account.png);
+    background-size: 100% 100%;
+}
+
+.btn-group .btn-active-o {
+    margin-right: 10px;
+}
+
+.filter {
+    height: 86px;
+    border: 1px solid #ebebeb;
+    background-color: #fff;
+    margin-top: 15px;
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.filter ul li {
+    float: left;
+    width: 234px;
+    height: 86px;
+    text-align: center;
+    border-left: 1px solid #ebebeb;
+    font-size: 20px;
+    cursor: pointer;
+    position: relative;
+}
+
+.filter ul li:first-child {
+    border-left: 0;
+    background: url(../img/filter_bg_all.png);
+    background-position: -1px -1px;
+}
+
+.filter ul li a {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    color: #555;
+    line-height: 86px;
+}
+
+.filter ul li span {
+    color: #3474ba;
+    margin-left: 12px;
+    position: relative;
+    top: 1px;
+}
+
+.filter .underline {
+    display: none;
+    width: 234px;
+    height: 5px;
+    background-color: #3474ba;
+    position: absolute;
+    bottom: -5px;
+    left: -1px;
+}
+
+.filter .underline .triangle {
+    border-width: 5px;
+    border-bottom-color: #3474ba;
+    position: absolute;
+    top: -10px;
+    left: 93px;
+}
+
+.filter .selected .underline {
+    display: block;
+}
+
+.activity {
+    /*width: 724px;*/
+    padding: 20px 20px 20px 246px;
+    margin-bottom: 10px;
+    background-color: #fff;
+    position: relative;
+    border-radius: 5px;
+        border-bottom: 1px solid #ccc;
+}
+
+.activity .status {
+    width: 69px;
+    height: 33px;
+    position: absolute;
+    top: 28px;
+    left: 1px;
+    z-index: 99;
+}
+
+.activity .status .up {
+    width: 69px;
+    height: 30px;
+    position: absolute;
+    z-index: 101;
+    line-height: 30px;
+    text-align: center;
+    color: #fff;
+    font-size: 16px;
+    left: 0;
+}
+
+.activity .status .down {
+    width: 13px;
+    height: 33px;
+    position: absolute;
+    z-index: 100;
+    left: 0;
+}
+
+.activity .status-start .up {
+    background-color: #fad46b;
+}
+
+.activity .status-start .down {
+    background-color: #e2bc52;
+}
+
+.activity .status-process .up {
+    background-color: #f58410;
+}
+
+.activity .status-process .down {
+    background-color: #dd770f;
+}
+
+.activity .status-over .up {
+    background-color: #93a4aa;
+}
+
+.activity .status-over .down {
+    background-color: #7d8d93;
+}
+
+.activity .poster {
+    position: absolute;
+    left: 20px;
+    top: 20px;
+    width: 206px;
+    height: 152px;
+    z-index: 89;
+}
+
+.activity .poster .pic {
+    width: 100%;
+    height: 100%;
+    background-color: #eee;
+}
+
+.detail {
+    width: 650px;
+    text-align: left;
+}
+
+.detail .title {
+    font-size: 20px;
+    line-height: 1.2;
+    margin: 0;
+    height: 48px;
+    overflow: hidden;
+}
+
+.detail .property {
+    color: #9f9f9f;
+}
+
+.detail .property div {
+    margin-top: 10px;
+}
+
+.detail .property .clearfix {
+    padding: 0;
+    margin: 0;
+}
+
+.detail .property .display-ib {
+    margin-right: 20px;
+    background-color:transparent;
+}
+
+.detail .flow {
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+}
+
+.operation {
+    position: absolute;
+    top: 20px;
+    right: 0;
+}
+
+.operation li {
+    margin-bottom: 12px;
+}
+
+.operation li a {
+    color: #999;
+}
+
+.operation li a .fa {
+    position: relative;
+    width: 16px;
+    font-size: 16px;
+    top: 0;
+    margin-right: 7px;
+}
+
+.operation li a:hover {
+    color: #555;
+}
+
+.operation li a.disabled,
+.operation li a.disabled:hover {
+    color: #ccc;
+}
+
+.nodata {
+    padding: 30px;
+    text-align: center;
+}
+
+.nodata p {
+    margin-bottom: 25px;
+}
+
+.guidance {
+    color: #fff;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 1001;
+}
+
+.guidance .container-build {
+    padding-top: 70px;
+}
+
+.guidance .msg {
+    position: relative;
+}
+
+.guidance .msg>img {
+    position: absolute;
+    right: 120px;
+    top: 34px;
+}
+
+.guidance .hole {
+    position: absolute;
+    width: 150px;
+    height: 66px;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, .4);
+    right: -40px;
+    top: -19px;
+}
+
+.guidance .desc {
+    padding-top: 110px;
+    float: right;
+    text-align: center;
+    padding-right: 100px;
+}
+
+.guidance .action {
+    margin-top: 20px;
+}
+
+.guidance .action a {
+    border: 1px solid #fff;
+    border-radius: 5px;
+    margin: 0 10px;
+    padding: 7px 4px;
+    font-size: 12px;
+    min-height: 0;
+}
+
+
+.header_top{
+    line-height: 30px;
+    background-color: #CCC;
+}
+.header_top p{
+        color: #FFF;
+    padding-left: 30px;
+    margin-bottom: 25px;
+}
+#right{
+        position: relative;
+    height: auto!important;
+    margin-left: 230px;
+    float: left;
+    left: 80px;
+    top: 110px;
+    width: 998px;
+    background:#fff;
+    // overflow:hidden;
+}
+.container {
+    width: 970px!important;
+}

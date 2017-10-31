@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <script src="/common/js/jquery-3.2.1.min.js"></script>
+    <!-- <script src="js/jquery.js"></script> -->
+    <script type='text/javascript'  src='/new.wezchina.com/shopping/js/region.js'></script>
+    <script src="/common/js/browser.min.js"></script>
+    <link rel="stylesheet" href="/common/css/main.css">
+    <link rel="stylesheet" href="/new.wezchina.com/css/article.css">
+    <link rel="shortcut icon" id="favicon" href="" />
+    
+    <title>全球秦商总会</title>
+    <link rel="stylesheet" href="/common/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/common/css/buttons.css">
+
+    <link rel="stylesheet" href="/new.wezchina.com/font/iconfont.css" />
+    <link rel="stylesheet" href="/new.wezchina.com/css/news_base.css" />
+    <link rel="stylesheet" href="/new.wezchina.com/css/modal_login.css" />
+
+    <!-- <link rel="stylesheet" type="text/css" href="css/shopcommon.css"> -->
+    <link rel="stylesheet" type="text/css" href="/new.wezchina.com/shopping/css/shopbuy.css">
+    <!-- <link rel="stylesheet" type="text/css" href="/new.wezchina.com/shopping/css/focusimg.css"> -->
+    <!-- <link type="text/css" rel="stylesheet" href="css/jqzoom.css"/> -->
+
+    <script src="/common/js/swiper-3.3.1.min.js"></script>
+    <script src="/common/js/buttons.js"></script>
+    <!-- 放大镜 -->
+    <!-- <script type="text/javascript" src="js/focusimg.js"></script> -->
+    <!-- <script type="text/javascript" src="js/jquery.jqzoom.min.js"></script> -->
+    <!-- 放大镜 end  -->
+    <!-- <script type="text/javascript" src="js/jquery.qrcode.min.js"></script> -->
+    <!-- <script type="text/javascript" src="js/switch_city.js"></script> -->
+    <script type="text/javascript">
+            var APP_ROOT = '';
+            var LOADER_IMG = 'https://kezunping.wezchina.com/app/Tpl/wezchina/images/lazy_loading.gif';
+            var ERROR_IMG = 'https://kezunping.wezchina.com/app/Tpl/wezchina/images/image_err.gif';
+                        var send_span = 2000;
+                        var __HASH_KEY__ = "ATLQFaCNiLUdZRWiSAHphrdhfNiWlobYEyehjcxqbyZvJXKOQe";
+        </script>
+
+    <style>
+        ::-webkit-scrollbar { width: 0; height: 0; }
+        .dropdown-toggle, .get-check { height: 40px !important; }
+    </style>
+</head>
+<body style="width: 1366px;">
+   <!-- 登录部分 -->
+    <div class="modal_login" id="modal_login"></div>
+    <!-- 导航部分开始 -->
+    <ul class="news_menu" id="public_main_news_menu"></ul>
+<!--     <div id="modal"></div>
+    <div class="show-login">
+        <div class="close"></div>
+        <div class="login-cont">
+            <div class="login-heading">快速登陆</div>
+            <div class="login-body">
+                <div class="input-group" style="margin-top: 30px;">
+                    <div class="input-group-btn">
+                        <button type="button" class="btn btn-default dropdown-toggle" style="height: 44px;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">+86 中国 </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="active">+86 中国</a></li>
+                            <li><a >美国</a></li>
+                        </ul>
+                    </div>
+                    <input type="text" class="form-control phone-num" maxlength="11" style="height: 44px; line-height: 44px; font-size: medium;" placeholder="请输入手机号码">
+                </div>
+
+                <div class="input-group" style="margin-top: 30px;">
+                    <input type="text" class="form-control check-num" maxlength="5" placeholder="请输入短信验证码" style="height: 44px; line-height: 44px; font-size: medium;">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default get-check" style="height: 44px;" type="button">获取验证码</button>
+                        </span>
+                </div>
+                <div class="check" style="margin-top: 30px;">
+                    <input type="checkbox" id="check" checked>
+                    <span><a>已阅读并同意《微众中国服务条款》</a></span>
+                </div>
+                <div id="log-in">
+                    <a class="button button-lowercase button-primary login-bt">登陆</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="left-nav">
+        <div id="home">
+            <img src="http://next.wezchina.com/storage/images/906f4f7c227f67a96a859bdf64cbd5c0.png" width='90' alt="HOME" />
+        </div>
+        <div id="login">
+            <div class="log-head"></div>
+            <div><img src="/common/img/bbd.png" width='28' alt="article" /></div>
+            <div class="word">登录</div>
+        </div>
+        <div id="article">
+            <div><img src="/common/img/wz.png" width='28' alt="article" /></div>
+            <div class="word">文章</div>
+        </div>
+        <div id="project">
+            <div><img src="/common/img/pj.png" width='28' alt="project" /></div>
+            <div class="word">项目</div>
+        </div>
+        <div id="active">
+            <div><img src="/common/img/at.png" width='28' alt="active" /></div>
+            <div class="word">活动</div>
+        </div>
+        <div id="shopping">
+            <div><img src="/common/img/sp.png" width='32' alt="shopping" /></div>
+            <div class="word">商城</div>
+        </div>
+        <div id="zone">
+            <div><img src="/common/img/qz.png" width='28' alt="zone" /></div>
+            <div class="word">圈子</div>
+        </div>
+    </div> -->
+
+    <div class="article">
+        <!-- <div id="art-head">
+            <div id="head-icon"></div>
+            <div id="user-name">
+                <div class="line-0"></div>
+                <div class="line-1"></div>
+            </div>
+        </div> -->
+        <div id="art-body" style="height:100%;">
+
+            <!-- 订单支付start -->
+            <div id="">
+            <div class="index-content" style="height: 430px;">
+            <!-- <script src="http://next.wezchina.com/static/jquery/jquery.min.js"></script>
+            <script src="http://next.wezchina.com/static/layer/layer.js"></script> -->
+            <div id="layoutContainer">   
+                <div class="content-padding">            
+                    <div id="oderNum" class="row">
+                        <div class="row" id="wxzhifu">
+                            <div class="col-md-12">
+                                <p class="order-title1">订单提交成功，请尽快完成付款！订单号：<span>g1503996354-1-1-498</span></p>
+                                <p class="order-title2">
+                                    请您在24小时内完成支付，否则订单会被自动取消（库存紧俏商品支付时限以订单详情页为准）
+                                    <span class="cope-with">应付金额<span>11</span>元</span>
+                                </p>
+                            </div>
+    
+                            <div class="col-md-6 erweima">  
+                            <div class="payimg">                 
+            
+            <input type="hidden" id="indentId" value="498">
+            </div>
+                <div class="saoyisao">
+        <div class="z"><img src="/new.wezchina.com/images/saomiao.png" alt=""></div>
+        <p class="z">请使用微信扫一扫支付<br>扫描二维码支付</p>
+        </div>
+    
+    
+    </div>
+    <div class="col-md-6">
+        <img src="/new.wezchina.com/images/saoyisao.png">
+    </div>
+   
+</div>
+</div>
+<div id="successPay">
+    <i class="fa fa-check-square"></i>
+    <p class="you-pay-success">恭喜您已经支付成功。</p>
+    <p class="phonenum-and-news">请您留意电话和短信通知，我们会尽快给您发货，如果有疑问请联系客服</p>
+    <p class="back-shouye"><a class="a-none" href="http://next.wezchina.com">返回首页&gt;&gt;</a></p>
+</div>
+       </div>
+        
+        
+        
+    </div>
+    <div id="plat-two-back-top" style="display: none;"><img src="http://next.wezchina.com/images/gotop.png"></div>
+    </div>
+    </div>
+            <!-- 订单支付end -->
+
+        </div>
+    </div>
+
+    <script src="/new.wezchina.com/configure.js"></script>
+    <script src="/new.wezchina.com/js/modal_login.js"></script>
+
+    <script src="/common/js/control.js"></script>
+    <script src="/new.wezchina.com/shopping/js/shopbuy.js"></script>
+    <script src="/new.wezchina.com/shopping/js/jquery.lazyload.min.js"></script>
+
+</body>
+</html>
+<script>
+    $(".ws_item li").mouseenter(function(){
+        $(this).addClass("hover")
+    }).mouseleave(function(){
+        $(this).removeClass("hover")
+    })
+    // 产品图片懒加载
+    $("img.pro_load").lazyload({
+          placeholder : "https://kezunping.wezchina.com/app/Tpl/wezchina/wemall/images/products_load.jpg",
+          effect: "fadeIn"
+    });
+    $(function(){
+        $(".ws_item ul").each(function(){
+            var liLen=$(this).children("li").length;
+            var licum = Math.ceil(liLen/3);
+            $(this).attr('licum',licum)
+            if (licum > 1){
+                $(this).siblings(".ws_item_more").css("visibility",'visible');
+            }else if (licum == 0)
+            {
+                $(this).css("height","50px").append("<li class='nonepro'>暂无商品</li>")
+            }
+        })  
+    })
+    $(document).on("click",".ws_item .ws_item_more",function(){
+            nlicum = $(this).prev().attr('licum')-1;
+            $(this).prev().animate({"height":$(this).prev().outerHeight()+313+"px"})
+            $(this).prev().attr('licum',nlicum);
+            if (nlicum<=1){
+                $(this).hide();
+            }
+    })
+
+
+        $(document).on("click",".collect-btn",function(){
+        var params = {openid:'4ec3b534-1f80-29b3-2bac-f3565778273f',tag:$(this).data("tag"),ajax:1};
+        var callback = function(msg){
+            if(msg.result == 0){
+                $.showSuccess("操作成功",function(){
+                    window.location.reload();
+                });
+            }else{
+                $.showErr(msg.description,function(){
+                    if(msg.data){
+                        window.location.href = msg.data;
+                    }
+                });
+            }
+        }
+        requestAjax(params, 'post', '/mywemall-do_collect.html', callback, true);
+    });
+    
+
+        //lazyload
+    $("img.lazy").lazyload({
+          placeholder : "https://kezunping.wezchina.com/app/Tpl/wezchina/images/info_load.jpg", 
+          effect: "fadeIn",
+    });
+    $("img.lazy2").lazyload({
+          placeholder : "https://kezunping.wezchina.com/app/Tpl/wezchina/images/focus_load.jpg",
+          effect: "fadeIn", 
+    });
+    $("img.lazy3").lazyload({
+          placeholder : "https://kezunping.wezchina.com/app/Tpl/wezchina/images/focus_load.jpg",
+          effect: "show", 
+          threshold : 200,
+    });
+    $(".qr_code_icon").on("mouseenter",function(event){
+            $(".boxcode").addClass('big');
+    }).on("mouseleave", function(event){
+        $(".boxcode").removeClass('big');
+    });
+// 顶部下拉固定
+     $(window).bind("scroll", function () {  
+        var offset = $('.user_nav').prev().offset().top;
+        if(offset > 814){
+            $(".pro_deta_tab").addClass('user_nav_offset');
+        }else{
+            $(".pro_deta_tab").removeClass('user_nav_offset');
+        }    
+     }); 
+// 锚点过渡效果
+$('.pro_date_tit').click(function () {
+    $('html, body').animate({
+    scrollTop: $($.attr(this, 'href')).offset().top-180
+    }, 800);
+    $(this).addClass("active").siblings().removeClass("active");
+    return false;
+    });
+$(".pro_date_tit2").click(function(){
+    $(this).addClass("active").siblings().removeClass("active");
+})
+// 购买数量
+$(".mui-amount-increase").click(function(){
+    var num = $('.mui-amount-input').val();
+    if(num > 1){
+        num--;
+        $('.mui-amount-input').val(num);
+    }
+});
+$(".mui-amount-decrease").click(function(){
+    var num = $('.mui-amount-input').val();
+    var kc = parseInt($('.num_kc').text()) ;
+    if(num < kc ){
+            num++;
+    $('.mui-amount-input').val(num);
+    }
+});
+$('.mui-amount-input').blur(function(){
+    var num_input = $(".tb-text").val();
+    var kc = parseInt($('.num_kc').text()) ;
+    if(num_input < kc){
+        $('.mui-amount-input').val(num_input);
+    }else{
+        $('.mui-amount-input').val(kc);
+    }
+});
+$(document).ready(function(){
+    $(".serve-agree-bd").css({"padding":"20px 1px"})
+});
+
+
+</script>
