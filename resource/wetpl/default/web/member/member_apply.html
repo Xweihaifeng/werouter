@@ -8,24 +8,24 @@
         <!-- <meta name="description" content="" /> -->
         <!-- <meta name="keywords" content="" /> -->
 
-        <link rel="stylesheet" href="/new.wezchina.com/font/iconfont.css" />
-        <link rel="stylesheet" href="/new.wezchina.com/css/news_base.css" />
-        <link rel="stylesheet" href="/new.wezchina.com/css/modal_login.css" />
-        <link rel="stylesheet" href="/new.wezchina.com/member/css/member_apply.css" />
-        <link rel="stylesheet" href="/new.wezchina.com/member/css/member_process.css" />
+        <link rel="stylesheet" href="{{PATH_TML}}font/iconfont.css" />
+        <link rel="stylesheet" href="{{PATH_TML}}css/news_base.css" />
+        <link rel="stylesheet" href="{{PATH_TML}}css/modal_login.css" />
+        <link rel="stylesheet" href="{{PATH_TML}}member/css/member_apply.css" />
+        <link rel="stylesheet" href="{{PATH_TML}}member/css/member_process.css" />
 
         <script src="/common/js/jquery-3.2.1.min.js"></script>
-        <script src="/new.wezchina.com/configure.js"></script>
+        <script src="{{PATH_CONFIG}}"></script>
         <script src="/common/layer-v3.0.3/layer-v3.0.3/layer/layer.js"></script>
         <!-- <script src="/common/js/swiper-3.3.1.min.js"></script> -->
         <script src="/common/js/plupload/plupload.full.min.js"></script>
         <script src="/common/js/qiniu.js"></script>
 
-        <script src="/new.wezchina.com/js/modal_login.js"></script>
+        <script src="{{PATH_TML}}js/modal_login.js"></script>
         <!-- <script src="/common/js/control.js"></script> -->
-        <!-- <script src="/new.wezchina.com/js/public_main.js"></script> -->
-        <script src="/new.wezchina.com/member/js/member_public_config.js"></script>
-        <script src="/new.wezchina.com/member/js/member_picture_base_logic.js"></script>
+        <!-- <script src="{{PATH_TML}}js/public_main.js"></script> -->
+        <script src="{{PATH_TML}}member/js/member_public_config.js"></script>
+        <script src="{{PATH_TML}}member/js/member_picture_base_logic.js"></script>
 
         <style>
             ::-webkit-scrollbar { width: 0; height: 0; }
@@ -55,7 +55,7 @@
                 </div>
 
                 <div class="member_apply_list">
-                    <div class="member_list_header"><img style="width: 25px;height: 25px;vertical-align: middle;margin-top: -5px" src="/new.wezchina.com/member/img/huiyuanshengqing.png"> 会员申请 </div>
+                    <div class="member_list_header"><img style="width: 25px;height: 25px;vertical-align: middle;margin-top: -5px" src="{{PATH_TML}}member/img/huiyuanshengqing.png"> 会员申请 </div>
 
                     <!-- 会员类型 -->
                     <div class="member_sel_type">
@@ -71,8 +71,8 @@
                     <!-- 申请tab切换 -->
                     <div class="member_sel_type member_tab_bottom">
                         <div class="member_type_title"> 申请类型： </div>
-                        <div class="member_type_tab member_type_tab_selected" id="personal_apply"> <img class="member_tab_per" src="/new.wezchina.com/member/img/men_1.png"> 个人申请 </div>
-                        <div class="member_type_tab" id="institution_apply"> <img class="member_tab_int already" src="/new.wezchina.com/member/img/lou_1.png"> 机构申请 </div>
+                        <div class="member_type_tab member_type_tab_selected" id="personal_apply"> <img class="member_tab_per" src="{{PATH_TML}}member/img/men_1.png"> 个人申请 </div>
+                        <div class="member_type_tab" id="institution_apply"> <img class="member_tab_int already" src="{{PATH_TML}}member/img/lou_1.png"> 机构申请 </div>
                     </div>
 
                     <!-- 个人申请 -->
@@ -82,7 +82,7 @@
                             <div class="display_flex"> 
                                 <a class="member_a_style term_servcice_rule"> 《 会员服务管理规范 》 </a>、
                                 <a class="member_a_style constitution"> 《 协会章程 》 </a>、
-                                <a class="member_a_style apply_template"> <img src="/new.wezchina.com/member/img/dowload.png"> 会员申请书模板下载 </a>
+                                <a class="member_a_style apply_template"> <img src="{{PATH_TML}}member/img/dowload.png"> 会员申请书模板下载 </a>
                             </div>
                         </div>
 
@@ -134,7 +134,7 @@
                             <div  class="display_flex"> 
                                 <a class="member_a_style term_servcice_rule"> 《 会员服务管理规范 》 </a>、
                                 <a class="member_a_style constitution"> 《 协会章程 》 </a>、
-                                <a class="member_a_style apply_template"> <img src="/new.wezchina.com/member/img/dowload.png"> 会员申请书模板下载 </a>
+                                <a class="member_a_style apply_template"> <img src="{{PATH_TML}}member/img/dowload.png"> 会员申请书模板下载 </a>
                             </div>
                         </div>
 
@@ -200,7 +200,7 @@
                     <!-- 提示信息 -->
                     <div class="member_success_media clearfix">
                         <div class="member_media_middle">
-                            <img class="member_media_object" src="/new.wezchina.com/user/img/carry.png" alt="警示！">
+                            <img class="member_media_object" src="{{PATH_TML}}user/img/carry.png" alt="警示！">
                         </div>
                         <div class="member_media_body">
                             <h4 class="member_media_heading">  </h4>
@@ -225,7 +225,7 @@
                             <input name="member_upload_3" id="member_upload_3" type="hidden" value="" class="form-control"/>
                             <input id="member_pickfiles_3" type="file" name="" class="member_app_input" style="display: none" placeholder="身份证正面上传">
                             <div id="member_exhibition_3">
-                                <img onclick="$('#member_pickfiles_3').click()" id="member_pic_3" src="/new.wezchina.com/member/img/negative.png" alt="暂无预览图片" class="thumbnail">
+                                <img onclick="$('#member_pickfiles_3').click()" id="member_pic_3" src="{{PATH_TML}}member/img/negative.png" alt="暂无预览图片" class="thumbnail">
                             </div>
                         </div>
 
@@ -234,7 +234,7 @@
                             <input name="member_upload_4" id="member_upload_4" type="hidden" value="" class="form-control"/>
                             <input id="member_pickfiles_4" type="file" name="" class="member_app_input" style="display: none" placeholder="身份证背面上传">
                             <div id="member_exhibition_4">
-                                <img onclick="$('#member_pickfiles_4').click()" id="member_pic_4" src="/new.wezchina.com/member/img/positive.png" alt="暂无预览图片" class="thumbnail">
+                                <img onclick="$('#member_pickfiles_4').click()" id="member_pic_4" src="{{PATH_TML}}member/img/positive.png" alt="暂无预览图片" class="thumbnail">
                             </div>
                         </div>
                     </div>
@@ -254,7 +254,7 @@
 
                         <div class="member_verified_right">
                             <div class="member_verified_list">
-                                <img class="member_verified_tequan" src="/new.wezchina.com/member/img/tequan.png">
+                                <img class="member_verified_tequan" src="{{PATH_TML}}member/img/tequan.png">
                             </div>
                         </div>
                     </div>
@@ -288,7 +288,7 @@
                                 <input name="member_upload_5" id="member_upload_5" type="hidden" value="" class="form-control"/>
                                 <input id="member_pickfiles_5" type="file" name="" class="member_app_input" style="display: none" placeholder="证明资料上传">
                                 <div id="member_exhibition_5">
-                                    <img onclick="$('#member_pickfiles_5').click()" id="member_pic_5" src="/new.wezchina.com/member/img/default_img.png" alt="暂无预览图片" class="thumbnail">
+                                    <img onclick="$('#member_pickfiles_5').click()" id="member_pic_5" src="{{PATH_TML}}member/img/default_img.png" alt="暂无预览图片" class="thumbnail">
                                 </div>
                             </div>
                         </div>
@@ -305,7 +305,7 @@
                                 <input name="member_upload_6" id="member_upload_6" type="hidden" value="" class="form-control"/>
                                 <input id="member_pickfiles_6" type="file" name="" class="member_app_input" style="display: none" placeholder="营业执照上传">
                                 <div id="member_exhibition_6">
-                                    <img onclick="$('#member_pickfiles_6').click()" id="member_pic_6" src="/new.wezchina.com/member/img/default_img.png" alt="暂无预览图片" class="thumbnail">
+                                    <img onclick="$('#member_pickfiles_6').click()" id="member_pic_6" src="{{PATH_TML}}member/img/default_img.png" alt="暂无预览图片" class="thumbnail">
                                 </div>
                             </div>
 
@@ -339,7 +339,7 @@
                                 <input name="member_upload_7" id="member_upload_7" type="hidden" value="" class="form-control"/>
                                 <input id="member_pickfiles_7" type="file" name="" class="member_app_input" style="display: none" placeholder="授权资料上传">
                                 <div id="member_exhibition_7">
-                                    <img onclick="$('#member_pickfiles_7').click()" id="member_pic_7" src="/new.wezchina.com/member/img/default_img.png" alt="暂无预览图片" class="thumbnail">
+                                    <img onclick="$('#member_pickfiles_7').click()" id="member_pic_7" src="{{PATH_TML}}member/img/default_img.png" alt="暂无预览图片" class="thumbnail">
                                 </div>
                             </div>
 
@@ -368,7 +368,7 @@
                                 <input name="member_upload_8" id="member_upload_8" type="hidden" value="" class="form-control"/>
                                 <input id="member_pickfiles_8" type="file" name="" class="member_app_input" style="display: none" placeholder="证明资料上传">
                                 <div id="member_exhibition_8">
-                                    <img onclick="$('#member_pickfiles_8').click()" id="member_pic_8" src="/new.wezchina.com/member/img/default_img.png" alt="暂无预览图片" class="thumbnail">
+                                    <img onclick="$('#member_pickfiles_8').click()" id="member_pic_8" src="{{PATH_TML}}member/img/default_img.png" alt="暂无预览图片" class="thumbnail">
                                 </div>
                             </div>
                         </div>
@@ -380,8 +380,8 @@
             </div>
         </div>
 
-        <script src="/new.wezchina.com/member/js/member_process.js"></script>
-        <script src="/new.wezchina.com/member/js/member_public.js"></script>
-        <script src="/new.wezchina.com/member/js/member_apply.js"></script>
+        <script src="{{PATH_TML}}member/js/member_process.js"></script>
+        <script src="{{PATH_TML}}member/js/member_public.js"></script>
+        <script src="{{PATH_TML}}member/js/member_apply.js"></script>
     </body>
 </html>

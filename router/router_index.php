@@ -170,7 +170,7 @@ class main
 
         $content = file_get_contents('.'.$this->file.$directory.$router_map);
 
-        echo $this->_get_str_replace_content($content , $config_file);
+        echo $this->_get_str_replace_content($content , $config_file , $directory);
 
     }
 
@@ -210,11 +210,10 @@ class main
     }
 
     // 网站元素要替换规则
-    private function _get_str_replace_content($content , $config_file)
+    private function _get_str_replace_content($content , $config_file , $directory)
     {
-        $content = str_replace('/new.wezchina.com/configure.js', $config_file.'?t='.time() , $content);
-        $content = str_replace('/new.wezchina.com/', $this->file.'web/', $content);
-        // $content = str_replace('"/common/', '"'.$this->file.'common/', $content);
+        $content = str_replace('{{PATH_CONFIG}}', $config_file.'?t='.time() , $content);
+		$content = str_replace('{{PATH_TML}}', $this->file.$directory.'/' , $content);
         return $content;
     }
 

@@ -7,33 +7,33 @@
   <meta content="email=no" name="format-detection">
   <link rel="shortcut icon" id="fav" href=""/>
   <!-- <link href="https://cdn.bootcss.com/Swiper/3.4.2/css/swiper.min.css" rel="stylesheet"> -->
-  <!-- <link rel="stylesheet" href="/new.wezchina.com/vote/css/swiper.min.css"> -->
-  <link rel="stylesheet" href="/new.wezchina.com/vote/static/icon/iconfont_1.css">
-  <link rel="stylesheet" type="text/css" href="/new.wezchina.com/vote/css/modal.css">
+  <!-- <link rel="stylesheet" href="{{PATH_TML}}vote/css/swiper.min.css"> -->
+  <link rel="stylesheet" href="{{PATH_TML}}vote/static/icon/iconfont_1.css">
+  <link rel="stylesheet" type="text/css" href="{{PATH_TML}}vote/css/modal.css">
   <style>.alert{text-align: center;z-index: 20000;color: #fff;background: rgba(0, 0, 0, 0.5);height: 46px;line-height: 46px;border: none;position: fixed;top: 0;width: 35%;border-radius: 5px;} .modal-title{font-size: 14px;display: block;margin-top: -2px;}</style>
   <!-- <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"> -->
-  <!-- <link rel="stylesheet" href="/new.wezchina.com/votem/css/bootstrap.min.css"> -->
-  <link rel="stylesheet" href="/new.wezchina.com/votem/css/bootstrap.css">
+  <!-- <link rel="stylesheet" href="{{PATH_TML}}votem/css/bootstrap.min.css"> -->
+  <link rel="stylesheet" href="{{PATH_TML}}votem/css/bootstrap.css">
   <style></style>
   <!-- <script src="https://hm.baidu.com/hm.js?2aebf58b53526800fad58107aeb1c56e"></script> -->
-  <!-- <link id="layuicss-skinlayercss" rel="stylesheet" href="/new.wezchina.com/vote/layui/css/modules/layer/default/layer.css?v=3.0.11110" media="all"></head> -->
+  <!-- <link id="layuicss-skinlayercss" rel="stylesheet" href="{{PATH_TML}}vote/layui/css/modules/layer/default/layer.css?v=3.0.11110" media="all"></head> -->
 
 <body>
 <div class="wxalert alert-danger" role="alert" id="message-top" style="display: none;"></div>
 <script type="text/javascript" src="/common/art-template.js"></script>
-<link rel="stylesheet" href="/new.wezchina.com/vote/css/mui.min.css">
-<link rel="stylesheet" href="/new.wezchina.com/vote/layui/css/layui.css">
-<link rel="stylesheet" href="/new.wezchina.com/vote/iconfont/iconfont.css">
-<link rel="stylesheet" href="/new.wezchina.com/vote/font/iconfont.css">
+<link rel="stylesheet" href="{{PATH_TML}}vote/css/mui.min.css">
+<link rel="stylesheet" href="{{PATH_TML}}vote/layui/css/layui.css">
+<link rel="stylesheet" href="{{PATH_TML}}vote/iconfont/iconfont.css">
+<link rel="stylesheet" href="{{PATH_TML}}vote/font/iconfont.css">
 <link rel="stylesheet" href="/common/jquery.animsition/css/animsition.min.css">
 <style>body {background-color: #fff;} .iconfont {font-size: 15px;margin-right: 5px;} img {width: 100%;} /*标题*/ .vote-title {margin: 10px 10px 20px;font-size: 16px;color: #333;} .vote-statistics {text-align: center;background-color: #e60000;margin: 0 10px;border-radius: 5px;color: #fff;padding: 7px 0;font-size: 12px;} .vote-statistics-1 {display: block;} .vote-statistics-2 {display: block;margin-top: 5px;} .vote-statistics-border {border-left: 1px solid;border-right: 1px solid;} .condition-1 {margin: 25px 10px 0;} .condition-2 {margin-top: 10px;} .condition-2 a{color: #337ab7;} .condition-3 {display: none;margin-top: 10px;} .condition-3 a{color: #337ab7;} .icon-downarrow{font-weight: bold;color: #e60000;margin-left: -4px;cursor: pointer;} .icon-toparrow{font-weight: bold;color: #e60000;cursor: pointer;margin-left: -4px;} .search-1 {margin: 20px 10px 5px;} .search-2 {padding-right: 10px;} .search-2 input {margin-bottom: 0;height: 30px;line-height: 30px;} .search-3 {height: 30px;padding: 0 15px;background-color: #e60000;} .search-3:active {background-color: #ec7063;} .search-3 i {font-size: 14px;} /*投票列表*/ .vote-box {margin: 0 10px;} .vote-list:nth-child(2n+1) {padding-right: 5px;margin-top: 15px;} .vote-list:nth-child(2n) {padding-right: 5px;margin-top: 15px;} .vote-list-bgc {background-color: #ececec;} @media screen and (max-width: 320px) { .vote-list-bgc img {height: 98px;} } @media screen and (max-width: 375px) and (min-width: 321px) { .vote-list-bgc img {height: 117px;} } @media screen and (max-width: 414px) and (min-width: 376px) { .vote-list-bgc img {height: 130px;} } .vote-list-title {padding: 10px 10px 0;color: #333;height: 48px;overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 2;} .vote-list-btn {text-align: center;margin-top: 10px;padding: 0 10px;} .vote-list-btn button {width: 100%;color: #fff;padding: 3px 0;background-color: #e60000;} .vote-list-btn button:hover{background-color: #c70202;} .vote-list-btn a {width: 85%;color: #fff;padding: 3px 0;background-color: #e60000;display: block;margin: 0 auto;border-radius: 3px;} .vote-list-btn button:active {background-color: #ec7063;} .vote-list-btn a:active {background-color: #ec7063;} .vote-list-btn button i {font-size: 14px;} .vote-list-btn a i {font-size: 14px;} .vote-list-num {text-align: center;padding: 10px;color: #333;} /*底部信息*/ .vote-footer-box {color: #666;text-align: center;background-color: #F5F5F5;padding: 20px 0;} .vote-footer-link {margin-top: 10px;} .vote-footer-link a {color: #666;} /*登录弹框*/ .modal .modal-dialog{margin-top: 50%;width: 80%;margin-left: 10%;} .modal .input-w{height: 206px;border-radius: 6px;display: block;width: initial;margin-top: initial;margin-left: initial;position: initial;} .modal .input1{margin-top: 30px;height: 40px;border: none;border-radius: 4px;padding-left: 8px;margin-bottom: 0;} .modal .input2{width: 52%;height: 40px;border: none;border-radius: 4px;padding-left: 8px;margin-bottom: 0;} .modal .input3{height:39px;background-color: #ff605d;color: #fff;font-size: 14px;width: 44%;margin-top: 10px;} /*操作栏*/ .home{position: fixed;bottom: 120px;right: 0;background-color: #ec5f38;color: #fff;height: 40px;width: 40px;text-align: center;border-radius: 2px;padding-top: 4px;} .home a{color: #fff;} .home span{display: block;font-size:12px;} .paiming{position: fixed;bottom: 75px;right: 0;background-color: #F7B824;color: #fff;height: 40px;width: 40px;text-align: center;border-radius: 2px;padding-top: 4px;} .paiming a{color: #fff;} .paiming span{display: block;font-size:12px;} .guize{position: fixed;bottom: 30px;right: 0;background-color: #24b5f7;color: #fff;height: 40px;width: 40px;text-align: center;border-radius: 2px;padding-top: 4px;} .guize a{color: #fff;} .guize span{display: block;font-size:12px;} /*点击查看全文*/ #click{display: block;text-align: center;margin-top: 10px;} /*广告位*/ .ad-box{padding: 0 10px;margin-top: 20px;} .ad-img{margin-bottom: 5px;} /*加载更多*/ .layui-flow-more {margin-top: 20px;width: 100%;display: inline-block;}
   @font-face {
     font-family: 'iconfont';
-    src: url('/new.wezchina.com/vote/font/iconfont.eot');
-    src: url('/new.wezchina.com/vote/font/iconfont.eot?#iefix') format('embedded-opentype'),
-    url('/new.wezchina.com/vote/font/iconfont.woff') format('woff'),
-    url('/new.wezchina.com/vote/font/iconfont.ttf') format('truetype'),
-    url('/new.wezchina.com/vote/font/iconfont.svg#iconfont') format('svg');
+    src: url('{{PATH_TML}}vote/font/iconfont.eot');
+    src: url('{{PATH_TML}}vote/font/iconfont.eot?#iefix') format('embedded-opentype'),
+    url('{{PATH_TML}}vote/font/iconfont.woff') format('woff'),
+    url('{{PATH_TML}}vote/font/iconfont.ttf') format('truetype'),
+    url('{{PATH_TML}}vote/font/iconfont.svg#iconfont') format('svg');
   }
 
   .iconfont{
@@ -156,10 +156,10 @@ template.helper('imgc', function (val) {
 </body>
 
 </html>
-<script src='/new.wezchina.com/vote/js/vue.min.js'></script>
-<script src='/new.wezchina.com/vote/js/jquery1.4.3.min.js'></script>
-<!-- <script src='/new.wezchina.com/vote/js/swiper-3.3.1.min.js'></script> -->
-<!-- <script src='/new.wezchina.com/vote/js/bootstrap.min.js'></script> -->
+<script src='{{PATH_TML}}vote/js/vue.min.js'></script>
+<script src='{{PATH_TML}}vote/js/jquery1.4.3.min.js'></script>
+<!-- <script src='{{PATH_TML}}vote/js/swiper-3.3.1.min.js'></script> -->
+<!-- <script src='{{PATH_TML}}vote/js/bootstrap.min.js'></script> -->
 <!-- <script src="https://cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
 <script src="https://cdn.bootcss.com/Swiper/3.4.2/js/swiper.jquery.js"></script>
 <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
@@ -214,14 +214,14 @@ $(function() {
     });
 });*/
 </script>
-<!-- <script src="/new.wezchina.com/vote/js/mui.min.js"></script> -->
+<!-- <script src="{{PATH_TML}}vote/js/mui.min.js"></script> -->
 <script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
-<script src="/new.wezchina.com/vote/layui/layui.js"></script>
-<!-- <script src="/new.wezchina.com/vote/layer/layer.js"></script> -->
+<script src="{{PATH_TML}}vote/layui/layui.js"></script>
+<!-- <script src="{{PATH_TML}}vote/layer/layer.js"></script> -->
 <!-- <script src="https://cdn.bootcss.com/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script> -->
-<script src="/new.wezchina.com/vote/js/jquery.lazyload.min.js"></script>
+<script src="{{PATH_TML}}vote/js/jquery.lazyload.min.js"></script>
 <script src="/common/jquery.animsition/js/jquery.animsition.min.js"></script>
-<script src=/new.wezchina.com/votem/js/config.js></script>
+<script src={{PATH_TML}}votem/js/config.js></script>
 <script>
 
     // 分享模板关键字替换
