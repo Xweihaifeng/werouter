@@ -157,7 +157,8 @@ $(function(){
 
     var isLogin = false; //判断用户登陆与否
     var router = function(route){
-        var routerList = ['home', 'login', 'article', 'shopping'];
+        // var routerList = ['home', 'login', 'article', 'shopping'];
+        var routerList = ['home', 'login', 'article'];
 
         var isMember = function(routerList, route){
             return routerList.filter(x => x === route);
@@ -199,7 +200,8 @@ $(function(){
         }
     }
 
-    $("#home, #login, #article, #shopping").click(function(){
+    // $("#home, #login, #article, #shopping").click(function(){
+    $("#home, #login, #article").click(function(){
         var id = $(this).attr("id");
         router(id);
     })
