@@ -120,7 +120,7 @@ $(function() {
     // 栏目显示区
     var news_channel_categories = function(result) {
         var template = `
-            <a class="chan_li" id="` + result.domain + `" name="` + result.weid + `" href="/`+ pathname[0] +"/"+ result.domain + `" type="`+ result.type +`">` + result.title + `</a>`
+            <a class="chan_li" id="` + result.domain + `" name="` + result.weid + `" href="/`+ pathname[0] +"/"+ result.domain + `" type="`+ result.type +`">` + result.title.substr(0, 4) + `</a>`
 
         return template;
     }
@@ -157,7 +157,9 @@ $(function() {
                     if(data.code === 200) {
                         $.map(data.data, function(item, index) {
                             if(item.domain == pathname[1]) {
-                               $(".list-article-ul").html("<div class='org_content'><div>"+ item.content +"</div></div>");
+                                $(".paging").slideUp();
+                                $(".article_list").text(item.title);
+                                $(".list-article-ul").html("<div class='org_content'><div>"+ item.content +"</div></div>");
                             }
                         });
                     }
