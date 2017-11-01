@@ -52,6 +52,8 @@ $(function() {
     var options2 = $.get(CMS_CHANNEL_CATEGORIES + get_param);
     options2.done(function(data) {
         if(data.code === 200) {
+
+            console.log("状态", data);
             $.map(data.data, function(item, index) {
                 if(index < 13) {
                     $("#menuX").append(news_channel_categories(item));

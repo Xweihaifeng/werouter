@@ -16,13 +16,6 @@ $(function() {
             scrollTop: 0
         }, 200); 
     });
-
-    $('.details-content').height($(window).height() + 'px');
-    
-    $(window).resize(function() {
-        $('.details-content').height($(window).height() + 'px');
-
-    });
 });
 
 //回到顶部
