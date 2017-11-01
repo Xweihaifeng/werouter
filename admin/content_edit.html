@@ -471,7 +471,7 @@
                         $('input[name=auth]').val(data.data.auth);
                         $('textarea[name=summary]').html(data.data.summary);
                         if (data.data.thumb_image) {
-                            $('#img').attr("src", ApiMaterPlatQiniuDomain + data.data.thumb_image);
+                            $('#img').attr("src", data.data.thumb_image.indexOf('http') !== -1 ? data.data.thumb_image : ApiMaterPlatQiniuDomain + data.data.thumb_image);
                             $('input[name=thumb_image]').val(data.data.thumb_image);
                         }
                         $('textarea[name=content]').html(data.data.content);

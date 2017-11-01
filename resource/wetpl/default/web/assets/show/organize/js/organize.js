@@ -145,7 +145,7 @@ $(function() {
                 }
 
                 $('#' + li_name).addClass("cate-active-on").siblings().removeClass("cate-active-on");
-                document.title = $("#" + li_name).text();
+                // document.title = $("#" + li_name).text();
                 $("#menuY").html($('#' + li_name).text());
 
             } else {
@@ -197,7 +197,7 @@ $(function() {
     // 一级分类栏目呈现
     var news_channel_categories = function(result) {
         var template = `
-            <a class="chan_li" id="` + result.domain + `" name="` + result.weid + `" href="/`+ pathname[0] +"/"+ result.domain + `">` + result.title + `</a>`;
+            <a class="chan_li" id="` + result.domain + `" name="` + result.weid + `" href="/`+ pathname[0] +"/"+ result.domain + `">` + result.title.substr(0, 4) + `</a>`;
         return template;
     }
 
