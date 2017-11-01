@@ -117,7 +117,7 @@ $(function() {
         return template;
     }
 
-    $(window).scroll(function(){
+    $(".details-content").scroll(function(){
         var scrollTop = $(this).scrollTop();
         var scrollHeight = $(document).height();
         var windowHeight = $(this).height();
