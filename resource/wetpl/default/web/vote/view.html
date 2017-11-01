@@ -12,6 +12,7 @@
     <style>.alert{text-align: center;z-index: 20000;color: #fff;background: rgba(0, 0, 0, 0.5);height: 46px;line-height: 46px;border: none;position: fixed;top: 0;width: 35%;border-radius: 5px;} .modal-title{font-size: 14px;display: block;margin-top: -2px;}</style>
     <link rel="stylesheet" href="{{PATH_TML}}votem/css/bootstrap.css">
     <style></style>
+    <script type="text/javascript" src="/common/art-template.js"></script>
     <script src="https://hm.baidu.com/hm.js?2aebf58b53526800fad58107aeb1c56e"></script>
   
   <body selectstart="return true">
@@ -39,6 +40,19 @@
         -moz-osx-font-smoothing: grayscale;
       }
     </style>
+
+    <script type="text/html" id="tml_vote" >
+      <div class="mui-col-xs-6 mui-col-sm-6 vote-list">
+        <div class="vote-list-bgc">
+          <a href="/vote/show/{{item.weid}}">
+            <img id="place" class="lazy-{{key}}" src="{{lazy_cover}}" data-original="{{item_cover}}" alt="" />
+          </a>
+          <div class="vote-list-title">{{item.sort}}.{{item.title }}</div>
+          <div class="vote-list-btn"><button id='{{item.sort}}.{{item.title}}' data-original="{{item_cover}}" data-sort="{{item.sort}}" data-title="{{item.title}}" data-id="{{item.weid}}">
+          <i class="iconfont icon-zan"></i>投票</button></div><div class="vote-list-num"><font>{{item.nums}}</font>票</div>
+        </div>
+      </div>
+    </script>
     <!--头部大图-->
     <div class="indexapp animsition">
       <div class="hidden_wechat" :value="only_wechat" style="display:none;"></div>
