@@ -698,7 +698,6 @@ $(document).ready(function(){
                 if(centerAdv != null) {
                     var centerImg = centerAdv.image;
                     if (centerImg.indexOf('http') === -1) {
-                        // centerImg = ApiMaterPlatQiniuDomain + centerImg;
                         centerImg = imgSet(centerImg, 960, 83);
                     }
                     $("#bar").css({
@@ -819,10 +818,10 @@ $(document).ready(function(){
                     bgRight = ApiMaterPlatQiniuDomain + bgRight;
                 }
                 $("#home-body").css({ "background": "url(" + bgImg + ") no-repeat center", "background-size": "100%", "opacity": "1", })                
-                $("#beijing").css({ "background-image": "url(" + bgRight + ")"})
-                $("#nav-news").css({ "background-image": "url(" + bar1 + ")","background-size": "cover","background-repeat": "no-repeat","background-position": "center" })
-                $("#nav-org").css({ "background-image": "url(" + bar2 + ")","background-size": "cover","background-repeat": "no-repeat","background-position": "center" })
-                $("#nav-help").css({ "background-image": "url(" + bar3 + ")","background-size": "cover","background-repeat": "no-repeat","background-position": "center" })
+                $("#beijing")  .css({ "background-image": "url(" + bgRight + ")"})
+                $("#nav-news") .css({ "background-image": "url(" + bar1 + ")","background-size": "cover","background-repeat": "no-repeat","background-position": "center" })
+                $("#nav-org")  .css({ "background-image": "url(" + bar2 + ")","background-size": "cover","background-repeat": "no-repeat","background-position": "center" })
+                $("#nav-help") .css({ "background-image": "url(" + bar3 + ")","background-size": "cover","background-repeat": "no-repeat","background-position": "center" })
                 $("#nav-share").css({ "background-image": "url(" + bar4 + ")","background-size": "cover","background-repeat": "no-repeat","background-position": "center" })
 
                 //官方发布
@@ -830,124 +829,57 @@ $(document).ready(function(){
 
                 //right side control
                 var script_status = false;
+
+                // 首页新闻模块
+                $("#nav-news").click(function(){
+                    homeState = "news";
+                    $("#nav-news, .huzhu, .organization, .goodsBox").hide();
+                    $(".home, #nav-help, #nav-share, #nav-org").show();
+                    $("#nav-help,#nav-share").css("margin-left", "0");
+                    $("#nav-org,#nav-help,#nav-share").css({ "position":"static", "left":"0" });
+                    var temp = mySwiper.width;
+                    mySwiper.startAutoplay();
+                })
+
+                // 首页组织模块
                 $("#nav-org").click(function(){
                     if(!script_status) {
                         $.getScript("/common/js/organized.js");
                         script_status = true;
                     }
                     homeState = "org";
-                    $(".home").hide();
-                    $("#nav-news").show();
-                    $("#nav-help").show();
-                    $("#nav-share").show();
+                    $(".home, #nav-org, .huzhu, .goodsBox").hide();
+                    $("#nav-news, #nav-help, #nav-share, .organization").show();
+                    $("#nav-org,#nav-share").css({ "margin-left": "0", "position":"static" });
+                    $("#nav-help").css({ "position":"static", "left":"0", "margin-left":"105px" });
                     mySwiper.stopAutoplay();
-                    // mySwiper1.stopAutoplay();
-                    $("#nav-org").hide();
-                    // $("#nav-help").css("margin-left", "105px");
-                    // $("#nav-share").css("margin-left", "0");
-                     $("#nav-org,#nav-share").css({
-                        "margin-left": "0",
-                        "position":"static"
-                    });
-                    $("#nav-help").css({
-                        "position":"static",
-                        "left":"0",
-                        "margin-left":"105px"
-                    });
-                    $(".organization").show();
-                    $(".huzhu").hide();
-
-
-                    $(".goodsBox").hide();
-
                 })
+
+                // 首页互助模块
                 $("#nav-help").click(function(){
-                   
                     homeState = "help";
-                    $(".home").hide();
-                    $("#nav-news").show();
-                    $("#nav-org").show();
-                    $("#nav-share").show();
-                    $("#nav-org").css({
-                        "position":"absolute",
-                        "left":"-855px"
-                    });
-                    $("#nav-help").css({
-                        "margin-left": "0",
-                        "position":"static"
-                    });
-
-                    $("#nav-share").css({
-                        "position":"static",
-                        // "left":"0",
-                        "margin-left":"105px"
-                    });
+                    $(".home, #nav-help, .organization, .goodsBox").hide();
+                    $("#nav-news, #nav-org, #nav-share, .huzhu").show();
+                    $("#nav-org").css({ "position":"absolute", "left":"-855px" });
+                    $("#nav-help").css({ "margin-left": "0", "position":"static" });
+                    $("#nav-share").css({ "position":"static", "left":"0", "margin-left":"210px" });
                     mySwiper.stopAutoplay();
-                    // mySwiper1.stopAutoplay();
-                    // $("#nav-share").css("margin-left", "105px");
-                    $(".huzhu").show();
-
-                    $(".organization").hide();
-
-                    $(".goodsBox").hide();
-                    // 加载活动列表
                     activitylist(localStorage.getItem("indexweid"),localStorage.getItem("nickname"),localStorage.getItem("avatar"),1,8);
-                    // 加载项目列表
                     projectcate(localStorage.getItem("indexweid"),localStorage.getItem("nickname"),localStorage.getItem("avatar"));
                     projectlist(localStorage.getItem("indexweid"),localStorage.getItem("nickname"),localStorage.getItem("avatar"),"",1);
-                    
 
                 })
+
+                // 首页共享模块
                 $("#nav-share").click(function(){
-                   
                     homeState = "share";
-                    $(".home").hide();
-                    $(".huzhu").hide();
-                    $("#nav-news").show();
-                    $("#nav-org").show();
-                    $("#nav-help").show();
+                    $(".home, .huzhu, #nav-share, .organization").hide();
+                    $("#nav-news, #nav-org, #nav-help, .goodsBox").show();
                     $("#nav-share,#nav-help").css("margin-left", "0");
-
-                    $("#nav-org").css({
-                        "position":"absolute",
-                        "left":"-855px"
-                    });
-                    $("#nav-help").css({
-                        "position":"absolute",
-                        "left":"-750px"
-                    });
-
+                    $("#nav-org").css({ "position":"absolute", "left":"-855px" });
+                    $("#nav-help").css({ "position":"absolute", "left":"-750px" });
                     mySwiper.stopAutoplay();
-                    // mySwiper1.stopAutoplay();
-                    $("#nav-share").hide();
-                    // $("#nav-help").css("margin-left", "210px");
-                    $(".goodsBox").show();
-                    $(".organization").hide();
-                    // 加载商品列表
                     shoppinglist(localStorage.getItem("indexweid"),1);
-
-                })
-
-                $("#nav-news").click(function(){
-                    homeState = "news";
-                    $(".home").show();
-                    $("#nav-news").hide();
-                    $("#nav-help,#nav-share").show();
-                    $("#nav-help,#nav-share").css("margin-left", "0");
-                     $("#nav-org,#nav-help,#nav-share").css({
-                        "position":"static",
-                        "left":"0"
-                    });
-                    $("#nav-org").show();
-                    var temp = mySwiper.width;
-                    mySwiper.startAutoplay();
-                    // mySwiper1.startAutoplay();
-                    $(".huzhu").hide();
-
-                    $(".organization").hide();
-
-                    $(".organization").hide();
-                    $(".goodsBox").hide();
                 })
 
                 var title = setting.title;
@@ -959,11 +891,8 @@ $(document).ready(function(){
 
                 localStorage.setItem('fav', favicon);
                 localStorage.setItem('logo', logo);
-
-                //console.log(favicon);
-                //console.log('logo:',logo);
-                // console.log('title:', title)
                 localStorage.setItem('title', title);
+
                 $('title').text(title);
                 $('meta[name="keywords"]').attr('content', keyWord);
                 $('meta[name="description"]').attr('content', description);
@@ -971,18 +900,15 @@ $(document).ready(function(){
                 if(favicon.indexOf('http') === -1){
                     favicon = ApiMaterPlatQiniuDomain + favicon;
                 }
-                //console.log('favicon：',favicon);
                 $('#favicon').attr('href',favicon);
 
                 if(backgroundUp.indexOf('http') === -1){
-                    // backgroundUp = ApiMaterPlatQiniuDomain + backgroundUp;
                     backgroundUp = imgSet(backgroundUp, 960, 424);
                 }
                 $('#home-head').css({
                     'background': "url(" + backgroundUp + ") no-repeat center",
                     'background-size': '100%'
                 })
-
             }
         })
     }
@@ -1048,22 +974,6 @@ $(document).ready(function(){
     }
     loadMemberNews();
 
-    // $(".login-bt").click(function(){
-    //     logBt();
-    // })
-
-    // $(".phone-num").keydown(function(evt){
-    //     switch (evt.keyCode){
-    //         case 13: $(".check-num").select();
-    //     }
-    // });
-
-    // $(".check-num").keydown(function(evt){
-    //     switch (evt.keyCode){
-    //         case 13: logBt();
-    //     }
-    // });
-
     var newsItems = ['center', 'sirase', 'release'];
     var remove = function(arr, item){
         return arr.filter(x => x != item);
@@ -1081,8 +991,6 @@ $(document).ready(function(){
         res.map(x => $("." + x).css("border-bottom", "none"));
     })
 
-
-
     //活动 start
      var listtemplate = function(data,nickname,avatar){
         var typetext="";
@@ -1090,74 +998,67 @@ $(document).ready(function(){
             typetext="免费";
        }else{
             typetext="收费";
-
        }
 
-       //你设定的时间
-    var aa=new Date(data.begain_time);
-    var y=aa.getFullYear();
-    var m=aa.getMonth()+1;
-    var d=aa.getDate(); 
-    //现在的时间
-    var nn=new Date();
-    var yn=nn.getFullYear();
-    var mn=nn.getMonth()+1;
-    var dn=nn.getDate();
-    var timetext="";
-    // alert((yn-y)+'年'+(mn-m)+'个月'+(dn-d)+'天之前')
-    if((yn-y)>=1){
-        timetext= (yn-y)+'年前';
-    }else if((mn-m)>=1){
-        timetext= (mn-m)+'月前';
-
-    }else{
-        if((dn-d)>0){
-            timetext= (dn-d)+'天前';
-        }else if((dn-d)==0){ 
-            timetext= '今天';
-
+        //你设定的时间
+        var aa=new Date(data.begain_time);
+        var y=aa.getFullYear();
+        var m=aa.getMonth()+1;
+        var d=aa.getDate(); 
+        //现在的时间
+        var nn=new Date();
+        var yn=nn.getFullYear();
+        var mn=nn.getMonth()+1;
+        var dn=nn.getDate();
+        var timetext="";
+        // alert((yn-y)+'年'+(mn-m)+'个月'+(dn-d)+'天之前')
+        if((yn-y)>=1){
+            timetext= (yn-y)+'年前';
+        }else if((mn-m)>=1){
+            timetext= (mn-m)+'月前';
         }else{
-            timetext= Math.abs(dn-d)+'天后';
-
+            if((dn-d)>0){
+                timetext= (dn-d)+'天前';
+            }else if((dn-d)==0){ 
+                timetext= '今天';
+            }else{
+                timetext= Math.abs(dn-d)+'天后';
+            }
         }
-        
 
-    }
+        var templete=
+        '<div class="col-sm-3 p-r-0" style="margin-top: 15px;margin-bottom: 5px">'+
+            '<div class="project-lists-one">'+
+                '<div class="project-section">'+
+                    '<div class="biaoti">热门活动</div>'+
+                    '<div class="shijian"> '+timetext+'</div>'+
+                    '<a href="'+data.domain+'/activity/'+data.weid+'" target="_blank" class="hover-img-box">'+
+                        '<div class="posi-div"><img src="'+ApiMaterPlatQiniuDomain+data.cover+'" class="person-left-img"></div>'+
+                    '</a>'+
+                    '<img class="logo" src="'+ApiMaterPlatQiniuDomain+avatar+'" alt="">'+
+                    '<div class="project-username">'+nickname+'</div>'+
+                '</div>'+
 
-       var templete=
-                    '<div class="col-sm-3 p-r-0" style="margin-top: 15px;margin-bottom: 5px">'+
-                    '<div class="project-lists-one">'+
-                        '<div class="project-section">'+
-                            '<div class="biaoti">热门活动</div>'+
-                            '<div class="shijian"> '+timetext+'</div>'+
-                            '<a href="'+data.domain+'/activity/'+data.weid+'" target="_blank" class="hover-img-box">'+
-                                '<div class="posi-div"><img src="'+ApiMaterPlatQiniuDomain+data.cover+'" class="person-left-img"></div>'+
-                            '</a>'+
-                            '<img class="logo" src="'+ApiMaterPlatQiniuDomain+avatar+'" alt="">'+
-                            '<div class="project-username">'+nickname+'</div>'+
-                        '</div>'+
-
-                        '<div class="content">'+
-                            '<div class="title ">'+
-                                '<a class="font-weight" target="_blank" href="'+data.domain+'/activity/'+data.weid+'">'+data.title+'</a>'+
-                            '</div>'+
-
-                            '<div class="jutishijian">'+
-                                '<span class="z"><i class="fa fa-clock-o"></i></span>'+data.begain_time+' ~ '+data.end_time+
-                            '</div>'+
-                            '<!--<div class="biaoqian">'+
-                                '<span>人工智能</span> <span>智能软件</span>'+
-                            '</div>-->'+
-                            '<div class="didian">'+
-                                '<i class="fa fa-map-marker"></i>'+
-                                '<span class="address">'+data.area_name+'</span>'+
-                                '<span class="y">'+typetext+'</span></div>'+
-                        '</div>'+
+                '<div class="content">'+
+                    '<div class="title ">'+
+                        '<a class="font-weight" target="_blank" href="'+data.domain+'/activity/'+data.weid+'">'+data.title+'</a>'+
                     '</div>'+
-                '</div>';
+
+                    '<div class="jutishijian">'+
+                        '<span class="z"><i class="fa fa-clock-o"></i></span>'+data.begain_time+' ~ '+data.end_time+
+                    '</div>'+
+                    '<!--<div class="biaoqian">'+
+                        '<span>人工智能</span> <span>智能软件</span>'+
+                    '</div>-->'+
+                    '<div class="didian">'+
+                        '<i class="fa fa-map-marker"></i>'+
+                        '<span class="address">'+data.area_name+'</span>'+
+                        '<span class="y">'+typetext+'</span></div>'+
+                '</div>'+
+            '</div>'+
+        '</div>';
         return templete;
     }
-
 
     // 1.获取活动列表
     var activitylist=function(weid,nickname,avatar,page,limit){
@@ -1221,78 +1122,71 @@ $(document).ready(function(){
 
     //活动 end
     //项目 start
-       var projectlisttemplate = function(data,nickname,avatar){
+    var projectlisttemplate = function(data,nickname,avatar){
         var typetext="";
-       if(data.type==1){
+        if(data.type==1){
             typetext="免费";
-       }else{
+        }else{
             typetext="收费";
-
        }
 
        //你设定的时间
-    var aa=new Date(data.date_start);
-    var y=aa.getFullYear();
-    var m=aa.getMonth()+1;
-    var d=aa.getDate();
-    //现在的时间
-    var nn=new Date();
-    var yn=nn.getFullYear();
-    var mn=nn.getMonth()+1;
-    var dn=nn.getDate();
-    var timetext="";
-    // alert((yn-y)+'年'+(mn-m)+'个月'+(dn-d)+'天之前')
-    if((yn-y)>=1){
-        timetext= (yn-y)+'年前';
-    }else if((mn-m)>=1){
-        timetext= (mn-m)+'月前';
-
-    }else{
-        if((dn-d)>0){
-            timetext= (dn-d)+'天前';
-        }else if((dn-d)==0){
-            timetext= '今天';
-
+        var aa=new Date(data.date_start);
+        var y=aa.getFullYear();
+        var m=aa.getMonth()+1;
+        var d=aa.getDate();
+        //现在的时间
+        var nn=new Date();
+        var yn=nn.getFullYear();
+        var mn=nn.getMonth()+1;
+        var dn=nn.getDate();
+        var timetext="";
+        // alert((yn-y)+'年'+(mn-m)+'个月'+(dn-d)+'天之前')
+        if((yn-y)>=1){
+            timetext= (yn-y)+'年前';
+        }else if((mn-m)>=1){
+            timetext= (mn-m)+'月前';
         }else{
-            timetext= Math.abs(dn-d)+'天后';
-
+            if((dn-d)>0){
+                timetext= (dn-d)+'天前';
+            }else if((dn-d)==0){
+                timetext= '今天';
+            }else{
+                timetext= Math.abs(dn-d)+'天后';
+            }
         }
 
-
-    }
-
-   var templete=`<div class="col-sm-3 " style="padding-left: 15px;padding-right: 0">
-                    <div class="project-lists-one">
-                        <div class="project-section">
-                            <div class="shijian"> `+timetext+`</div>
-                            <div class="yishou"><span class="span_left"></span><span class="span_status">`+data.onStatus+`</span><span class="span_right"></span></div>
-                            <div class="zhonglei y xiang-mu-baio-zhi"><span> `+data.cate_name+` </span></div>
-                            <a href="/`+data.domain+`/project/projectdetail/`+data.weid+`" target="_blank">
-                                <div class="posi-div"><img src=`+ApiMaterPlatQiniuDomain+data.cover+` class="p100 person-left-img"></div>
-                            </a>
-                            <img class="logo" src=`+ApiMaterPlatQiniuDomain+avatar+` alt="">
-                            <div class="project-username">`+nickname+`</div>
+        var templete=`
+        <div class="col-sm-3 " style="padding-left: 15px;padding-right: 0">
+            <div class="project-lists-one">
+                <div class="project-section">
+                    <div class="shijian"> `+timetext+`</div>
+                    <div class="yishou"><span class="span_left"></span><span class="span_status">`+data.onStatus+`</span><span class="span_right"></span></div>
+                    <div class="zhonglei y xiang-mu-baio-zhi"><span> `+data.cate_name+` </span></div>
+                    <a href="/`+data.domain+`/project/projectdetail/`+data.weid+`" target="_blank">
+                        <div class="posi-div"><img src=`+ApiMaterPlatQiniuDomain+data.cover+` class="p100 person-left-img"></div>
+                    </a>
+                    <img class="logo" src=`+ApiMaterPlatQiniuDomain+avatar+` alt="">
+                    <div class="project-username">`+nickname+`</div>
+                </div>
+                <div class="content">
+                    <div class="title ">
+                        <a class="font-weight" target="_blank" href="/`+data.domain+`/project/projectdetail/`+data.weid+`">`+data.title+`</a>
+                    </div>                            
+                    <div class="project-money">
+                        <div class="shengluehao p0">
+                           <span class="article-color ">目标金额<i class="y">`+data.amount+` 元</i></span>
                         </div>
-                        <div class="content">
-                            <div class="title ">
-                                <a class="font-weight" target="_blank" href="/`+data.domain+`/project/projectdetail/`+data.weid+`">`+data.title+`</a>
-                            </div>                            
-                            <div class="project-money">
-                                <div class="shengluehao p0">
-                                   <span class="article-color ">目标金额<i class="y">`+data.amount+` 元</i></span>
-                                </div>
-                                <div class="shengluehao p0">
-                                 <span class="article-color"><span>已筹金额</span><i class="y">`+data.raise_amount+` 元</i></span>
-                                </div>
-                            </div>
-                            <div class="article-item-user-image">
-                               <p class="y m0">已有 <i>`+data.suport_num+` </i>人支持</p>
-                            </div>
-                        </div>
+                        <div class="shengluehao p0">
+                         <span class="article-color"><span>已筹金额</span><i class="y">`+data.raise_amount+` 元</i></span>
                         </div>
                     </div>
-   `;
-
+                    <div class="article-item-user-image">
+                       <p class="y m0">已有 <i>`+data.suport_num+` </i>人支持</p>
+                    </div>
+                </div>
+            </div>
+        </div>`;
         return templete;
     }
 
@@ -1314,8 +1208,8 @@ $(document).ready(function(){
             type:'post',
             data:sendData,
             headers: {
-                    'Token': localStorage.getItem('token')
-                },
+                'Token': localStorage.getItem('token')
+            },
             //console.log(token)
             success:function(data){
                 // console.log(data);
@@ -1354,18 +1248,13 @@ $(document).ready(function(){
                     }else{
                         $("#xiangmu .huzhubox").children().remove();
                         $("#xiangmu .huzhubox").append('<div align="center" id="crowd_uloadingsImg" style="display: block; height: 40px; margin-top: 40px; color: rgb(146, 146, 146);" class="col-sm-12 more"><div style="color: #858585;">——————————&nbsp;这是我的底线啦&nbsp;—————————</div></div>')
-
                     }
-
-
-
                 }
             },
             error: function(xhr){
                 console.log(xhr);
             }
         })
-
     }
     //2.1分类模板
     var catetemplate=function(data){
@@ -1379,8 +1268,8 @@ $(document).ready(function(){
             type:'post',
             data:{user_id:userid},
             headers: {
-                    'Token': localStorage.getItem('token')
-                },
+                'Token': localStorage.getItem('token')
+            },
             success:function(data){
                 if(data.code == 200){
                     $(".little-title").children().remove();
@@ -1401,7 +1290,7 @@ $(document).ready(function(){
     }
     //项目 end
     //商品列表
-      var coverPicpath = '/common/img/products_load.jpg';
+    var coverPicpath = '/common/img/products_load.jpg';
     var shopListTemplete = function(data){
         if(data.cover!=''){
             coverPicpath=ApiMaterPlatQiniuDomain+data.cover;
@@ -1457,13 +1346,13 @@ $(document).ready(function(){
             type:'post',
             data: sendData,
             headers: {
-                    'Token': localStorage.getItem('token')
-                },
+                'Token': localStorage.getItem('token')
+            },
             success: function(data){
                 console.log(data);
                 if (data.code == 200) {
                     var shop = data.data.list;
-                   /* if(shop.length==0){
+                    /* if(shop.length==0){
                         ulnone($("."+tid));
                     }*/
                     if(data.data.total>0){
@@ -1500,11 +1389,7 @@ $(document).ready(function(){
                     }else{
                          $("#goodsBox .person-goods-lists .row").children().remove();
                         $("#goodsBox .person-goods-lists .row").append('<div align="center" id="crowd_uloadingsImg" style="display: block; height: 40px; margin-top: 40px; color: rgb(146, 146, 146);" class="col-sm-12 more"><div style="color: #858585;">——————————&nbsp;这是我的底线啦&nbsp;—————————</div></div>')
-
                     }
-                    
-
-                  
                 }
             },
             error: function(xhr){

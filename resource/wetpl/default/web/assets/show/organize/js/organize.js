@@ -145,7 +145,7 @@ $(function() {
                 }
 
                 $('#' + li_name).addClass("cate-active-on").siblings().removeClass("cate-active-on");
-                document.title = $("#" + li_name).text();
+                // document.title = $("#" + li_name).text();
                 $("#menuY").html($('#' + li_name).text());
 
             } else {
