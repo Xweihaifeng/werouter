@@ -274,14 +274,20 @@ $(function() {
     var fast = (lists, lis, page, next) => {
       // console.log(lists);
       pages_total = Math.ceil(lists.total / limit);
+
       layui.each(lists.list,
-      function(index, item) {                   
-        var item_cover = item.cover.indexOf('//') != -1 ? item.cover : ApiMaterPlatQiniuDomain + item.cover
-        lis.push('<div class="mui-col-xs-6 mui-col-sm-6 vote-list">' + '<div class="vote-list-bgc">' + '<a href="/vote/show/' + item.weid + '">' + '<img id="place" class="lazy-' + i + '" data-original="' + item_cover + '" alt="" />' + '</a>' + '<div class="vote-list-title">' + item.sort + '.' + item.title + '</div>' + '<div class="vote-list-btn">' + '<button id=' + item.sort + '.' + item.title + ' data-sort="' + item.sort + '" data-title="' + item.title + '" data-id="' + item.weid + '">' + '<i class="iconfont icon-zan"></i>投票' + '</button>' + '</div>' + '<div class="vote-list-num"><font>' + item.nums + '</font>票</div>' + '</div>' + '</div>');
+      function(index, item) {   
+        var item_val = [];
+        item_val['item'] = item;
+        item_val['key'] = i;
+        item_val['lazy_cover'] = lazy_cover;
+        item_val['item_cover'] = item.cover.indexOf('//') != -1 ? item.cover : ApiMaterPlatQiniuDomain + item.cover + '?/3/w/170/h/130/interlace/1/format/webp';
+        var vote_tml = template('tml_vote' , item_val);   
+        lis.push(vote_tml);
       });
       next(lis.join(''), page < pages_total);
-      // 图片懒加载
-      jQuery(".lazy-" + i).lazyload({
+      // // 图片懒加载
+      jQuery(".lazy-"+i).lazyload({
         // 图片淡入效果
         effect: "fadeIn",
         // 加载前的默认图片
