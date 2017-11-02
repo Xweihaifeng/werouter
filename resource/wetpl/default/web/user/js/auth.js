@@ -163,6 +163,22 @@ $(document).ready(function(){
 
     var weid='';
 
+    var auth_info = function(data) {
+        var operation_status;
+        if(data.operation_status == 2) {
+            operation_status = "已通过"
+        } else {
+            operation_status = "未通过"
+        }
+        var template = `
+        <ul class="jumu">
+            <li class="jumu-list"><label>身份证姓名：</label><span>`+ data.name +`</span></li>
+            <li class="jumu-list"><label>身份证号码：</label><span>`+ data.card_id +`</span></li>
+            <li class="jumu-list"><label>认 证 时 间 ：</label><span>`+ data.updated_at +`</span><label>&emsp;认证状态：</label><span class="success-status">`+ operation_status +`</span></li>
+        </ul>`
+        return template;
+    }
+
     // 实名认证信息显示
     var options = $.get(CERT_REALNAME_DETAIL);
     options.done(function(data) {
@@ -180,7 +196,7 @@ $(document).ready(function(){
                 $("#id-card").val(result.card_id);
                 return false;
             }
-            $(".cert-success-info")   .show();
+            $(".cert-success-info").show();
         }
     });
     options.fail(function(error) {
@@ -235,7 +251,7 @@ $(document).ready(function(){
                 $(".warn-img")       .attr("src", "/common/img/carry.png");
             }
             else if(result.is_authenticated == 1 && result.operation_status==2) {
-                $(".cert-success-info").show();
+                $(".cert-success-info").show().after(auth_info(result));
             }
         }
     });
