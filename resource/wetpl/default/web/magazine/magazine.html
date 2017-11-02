@@ -51,7 +51,7 @@
             </div>
         </div>
 
-        <Page :total="parseInt(total)" show-elevator style="margin-top: 10px; margin-right: 50px; float: right;"></Page>
+        <Page :total="parseInt(total)" :current="page" :page-size="limit" @on-change="change" show-elevator style="margin-top: 10px; margin-right: 50px; float: right;"></Page>
 
     </div>
     <!--<div id="footer"></div>-->
@@ -84,6 +84,40 @@
     localStorage.setItem("large", '');
     localStorage.setItem("ename", ename);
 
+    var reqPage = function(_self, ename) {
+        $.ajax({
+            url: apiUrl + "magazine/index?ename=" + ename + "&limit=" + _self.limit + "&page=" + _self.page,
+            type: "GET",
+            success: function(data) {
+                console.log(data.data)
+                if (data.data.magazine.background_image != null && data.data.magazine.background_image != '') {
+                    _self.top = data.data.magazine.background_image.indexOf('http://') != -1 ? data.data.magazine.background_image : ApiMaterPlatQiniuDomain + data.data.magazine.background_image;    
+                }
+                _self.name = data.data.magazine.name;
+                _self.ename = ename;
+                _self.main_cover = data.data.list[0].cover.indexOf('http://') != -1 ? data.data.list[0].cover : ApiMaterPlatQiniuDomain + data.data.list[0].cover;
+                _self.main_title = data.data.list[0].title;
+                _self.main_url = "/magazine/" + ename + "/" + data.data.list[0].weid;
+                if (data.data != null) {
+                    var list = data.data.list;
+                    list.map(x => {
+                        if (x.cover.indexOf('//images') != -1) {
+                            return x;
+                        } else {
+                            x.cover = ApiMaterPlatQiniuDomain + x.cover;
+                            return x;
+                        }
+                    })
+                    _self.list = list;
+                    _self.total = data.data.total;
+                }
+            },
+            error: function(xhr) {
+                console.log(xhr);
+            }
+        })
+    }
+
     new Vue({
         el: '#app',
         data: {
@@ -95,41 +129,13 @@
             total: '',
             ename: '',
             top: '/common/img/1506618834113.png',
-            position: '目录导航'
+            position: '目录导航',
+            limit: 12,
+            page: 1
         },
         created: function () {
             var _self = this;
-            $.ajax({
-                url: apiUrl + "magazine/index?ename=" + ename,
-                type: "GET",
-                success: function(data) {
-                    console.log(data.data)
-                    if (data.data.magazine.background_image != null && data.data.magazine.background_image != '') {
-                        _self.top = data.data.magazine.background_image.indexOf('http://') != -1 ? data.data.magazine.background_image : ApiMaterPlatQiniuDomain + data.data.magazine.background_image;    
-                    }
-                    _self.name = data.data.magazine.name;
-                    _self.ename = ename;
-                    _self.main_cover = data.data.list[0].cover.indexOf('http://') != -1 ? data.data.list[0].cover : ApiMaterPlatQiniuDomain + data.data.list[0].cover;
-                    _self.main_title = data.data.list[0].title;
-                    _self.main_url = "/magazine/" + ename + "/" + data.data.list[0].weid;
-                    if (data.data != null) {
-                        var list = data.data.list;
-                        list.map(x => {
-                            if (x.cover.indexOf('//images') != -1) {
-                                return x;
-                            } else {
-                                x.cover = ApiMaterPlatQiniuDomain + x.cover;
-                                return x;
-                            }
-                        })
-                        _self.list = list;
-                        _self.total = data.data.total;
-                    }
-                },
-                error: function(xhr) {
-                    console.log(xhr);
-                }
-            })
+            reqPage(_self, ename);
         },
         methods: {
             load: function(part){
@@ -145,8 +151,8 @@
                     window.location.href = '/magazine/' + ename + '/adv'
                 }
             },
-            read: function(weid, title){
-                console.log(weid)
+            read: function(weid, title) {
+                // console.log(weid)
                 $.ajax({
                     url: apiUrl + 'magazine/images?weid=' + weid,
                     type: "GET",
@@ -163,6 +169,12 @@
                         // window.location.href = '/magazine/' + ename + '/' + weid;
                     }
                 })
+            },
+            change: function(page) {
+                console.log(page)
+                _self = this;
+                _self.page = page;
+                reqPage(_self, ename);                
             }
         }
     })
