@@ -84,7 +84,7 @@
     localStorage.setItem("large", '');
     localStorage.setItem("ename", ename);
 
-    var reqPage = function(_self, ename) {
+    var reqPage = function(_self, ename, flag) {
         $.ajax({
             url: apiUrl + "magazine/index?ename=" + ename + "&limit=" + _self.limit + "&page=" + _self.page,
             type: "GET",
@@ -95,9 +95,11 @@
                 }
                 _self.name = data.data.magazine.name;
                 _self.ename = ename;
-                _self.main_cover = data.data.list[0].cover.indexOf('http://') != -1 ? data.data.list[0].cover : ApiMaterPlatQiniuDomain + data.data.list[0].cover;
-                _self.main_title = data.data.list[0].title;
-                _self.main_url = "/magazine/" + ename + "/" + data.data.list[0].weid;
+                if (flag) {
+                    _self.main_cover = data.data.list[0].cover.indexOf('http://') != -1 ? data.data.list[0].cover : ApiMaterPlatQiniuDomain + data.data.list[0].cover;
+                    _self.main_title = data.data.list[0].title;
+                    _self.main_url = "/magazine/" + ename + "/" + data.data.list[0].weid;                    
+                }
                 if (data.data != null) {
                     var list = data.data.list;
                     list.map(x => {
@@ -135,7 +137,7 @@
         },
         created: function () {
             var _self = this;
-            reqPage(_self, ename);
+            reqPage(_self, ename, true);
         },
         methods: {
             load: function(part){
@@ -174,7 +176,7 @@
                 console.log(page)
                 _self = this;
                 _self.page = page;
-                reqPage(_self, ename);                
+                reqPage(_self, ename, false);
             }
         }
     })
