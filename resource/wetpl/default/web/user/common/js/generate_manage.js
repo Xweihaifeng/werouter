@@ -1,15 +1,7 @@
  //列表折叠
-sessionStorage.listname='we-shop';
-var listchange=function(){
-    //列表折叠
-    // var curr = 'we-shop';
-    var curr = "we-set";
-    if(sessionStorage.listname==null || sessionStorage.listname=="" ||sessionStorage.listname==undefined ||sessionStorage.listname=="null"){
-        curr = "we-set";
-
-    }else{
-        curr = sessionStorage.listname;
-    }
+// sessionStorage.listname='we-shop';
+var listchange=function(curr){
+    var curr = curr;
     var status = true;
     var list = ['we-set','we-art','we-shop','we-active','we-project','we-app','we-crm','we-log'];
 
@@ -17,46 +9,23 @@ var listchange=function(){
         return list.filter(x => x != id);
     }
 
+    $("#155").css("border-bottom", "1px solid #eeeeee");
     $("." + curr + ":eq(0)").css("border-bottom", "1px solid #eeeeee");
-    if(curr=="we-log"){
-        remove(curr, list).map(x => $("." + x + ":eq(1)").hide());
-    }else{
-       $("." + curr + " span img").css("transform", "rotate(90deg)");
-        remove(curr, list).map(x => $("." + x + ":eq(1)").stop().hide());
-    }
-
+    $("." + curr + " span img").css("transform", "rotate(90deg)");
+    remove(curr, list).map(x => $("." + x + ":eq(1)").stop().hide());
 
     var showList = function(state, id) {
-        var currid=id;
         var id = "." + id;
         if (state) {
-            if(currid=="we-log"){
-                $(id + ":eq(1)").hide(500);
-            }else{
-                $(id + ":eq(1)").stop().hide(300);
-            }
-
-            if (id != ".we-log") {
+            $(id + ":eq(1)").stop().hide(300);
+            if (id != ".we-app") {
                 $(id + ":eq(0)").css("border-bottom", "0");
             }
-
-            if(currid=="we-log"){
-                $(id + " span img").attr('src', '/common/img/more1.png');
-            }else{
-                $(id + " span img").css("transform", "rotate(0deg)")
-
-            }
+            $(id + " span img").css("transform", "rotate(0deg)")
             status = false;
         } else {
-            if(currid=="we-log"){
-                $(id + ":eq(1)").show(500);
-                $(id + " span img").attr('src', '/common/img/more_unfold.png');
-            }else{
-                $(id + ":eq(1)").stop().show(300);
-                $(id + " span img").css("transform", "rotate(90deg)");
-            }
-
-
+            $(id + ":eq(1)").stop().show(300);
+            $(id + " span img").css("transform", "rotate(90deg)")
             $(id + ":eq(0)").css("border-bottom", "1px solid #eeeeee");
             status = true;
         }
@@ -64,74 +33,53 @@ var listchange=function(){
 
     list.map(x => {
         $("." + x).click(function() {
-            if(x=="we-log"){
-                 if (curr == x) {
-                    remove(x, list).map(x => {
-                        $("." + x + ":eq(1)").hide(500)
-                        $("." + x + " span img").attr('src', '/common/img/more1.png');
-                    });
-                    showList(status, x);
-                } else {
-                    status = false;
-                    $("." + curr + ":eq(0)").css("border-bottom", "0");
-                    curr = x;
-                    remove(x, list).map(x => {
-                        $("." + x + ":eq(1)").hide(500)
-                        $("." + x + " span img").attr('src', '/common/img/more1.png');
-                    });
-                    showList(status, x);
-                }
-            }else{
-                var isCont = $(this).attr('class').search('we-cont');
-                if (isCont == 0) {
-                    return;
-                }
-                if (curr == x) {
-                    showList(status, x);
-                } else {
-                    status = false;
-                    remove(x, list).map(x => {
-                        $("." + x + ":eq(1)").stop().hide(300)
-                        $("." + x + " span img").css("transform", "rotate(0deg)")
-                    });
-                    if (curr != "we-log") {
-                        $("." + curr + ":eq(0)").css("border-bottom", "0");
-                    }
-                    curr = x;
-                    showList(status, x);
-                }
+            var isCont = $(this).attr('class').search('we-cont');
+            if (isCont == 0) {
+                return;
             }
-
-
+            if (curr == x) {
+                showList(status, x);
+            } else {
+                status = false;
+                remove(x, list).map(x => {
+                    $("." + x + ":eq(1)").stop().hide(300)
+                    $("." + x + " span img").css("transform", "rotate(0deg)")
+                });
+                if (curr != "we-app") {
+                    $("." + curr + ":eq(0)").css("border-bottom", "0");
+                }
+                curr = x;
+                showList(status, x);
+            }
         })
     })
 }
 
 //generate mainHeader
-var mark = 'admin';
+var mark = 'user/admin';
 var domain = window.location.host;
 var currPage = window.location.pathname.split('/').pop();
-var parentPage = window.location.pathname.split('/').slice(2,3)[0];
+var parentPage = window.location.pathname.split('/').slice(3,4)[0];
 
 var genMenu = function(mark, domain) {
     var genCont = function(data) {
         var template = `
             <a href="/user/` + data.url + `">
-                <div id=` + data.mark + `>` + data.name + `</div>
+                <div id="` + data.mark + `">` + data.name + `</div>
             </a>`;
         return template;
     }
 
-    var genTitle = function(data) {        
+    var genTitle = function(data) {
         var template = `
-            <div class="we-title" id=` + data.id + `>
-                <img src=` + data.mark + ` width="18" alt="" />
+            <div class="we-title ` + data.url + `" id="` + data.id + `">
+                <img src="` + data.mark + `" width="18" alt="" />
                 <span>` + data.name + `</span>
                 <span><img src="/common/img/more1.png" width="18" class="title-img"/></span>
-                <div class="we-cont" style="display: none;">`
-                    + data.children.map(x => genCont(x)).join('') + 
-                `</div>
-            </div>`;
+            </div>
+            <div class="we-cont ` + data.url + `" style="display: none;">`
+                + data.children.map(x => genCont(x)).join('') + 
+            `</div>`;
         return template;
     };
 
@@ -154,15 +102,31 @@ var genMenu = function(mark, domain) {
     return template;
 }
 
-$("#middle").append(genMenu(mark, "qqxqs.com"))
+console.log(genMenu(mark, "qqxqs.com"))
+$(document).ready(function(){
+    $("#middle").append(genMenu(mark, "qqxqs.com"))
 
-if (currPage != '') {
-    $("#" + parentPage + "_" + currPage).parent().parent(".we-cont").show();
-    $("#" + parentPage + "_" + currPage).css({"color": "red", "background": "#f7f7f7"})
-} else {
-    $("#settings_profile").parent().parent(".we-cont").show();
-    $("#settings_profile").css({"color": "red", "background": "#f7f7f7"})
-}
+    console.log(parentPage + "_" + currPage)
+
+    if (currPage != '' && currPage != 'admin') {
+        $("#" + parentPage + "_" + currPage).parent().parent(".we-cont").show();
+        $("#" + parentPage + "_" + currPage).css({"color": "red", "background": "#f7f7f7"})
+    } else {
+        $("#settings_base").parent().parent(".we-cont").show();
+        $("#settings_base").css({"color": "red", "background": "#f7f7f7"})
+    }
+
+    var getType = function(parentPage){
+        switch(parentPage) {
+            case 'settings' : return 'we-set'; break;
+            case 'article' : return 'we-art'; break;
+            case 'activity' : return 'we-active'; break;
+            case 'apps': return 'we-app'; break;
+        }
+    }
+
+    listchange(getType(parentPage));
+    })
 
 
 $(function(){
@@ -251,7 +215,7 @@ let mainLeft_p = `
 $("#top").append(mainLeft_p);
 
 //mainheader
-let mainheader = `
+/*let mainheader = `
         <div class="we-title we-set">
             <img src="/common/img/set.png" width="18" alt=""/>
             <span>系统设置</span>
@@ -281,10 +245,10 @@ var mainheader_part1=`
         </div>
         <div class="we-cont we-log" style="">
             <a href="/user/admin/logs/operation"><div id="my-logo">系统日志</div></a>
-        </div>`;
+        </div>`;*/
 
 // $("#middle").append(mainheader);
-var moduletemplate=function(x,modulearr){
+/*var moduletemplate=function(x,modulearr){
     var modulehtml="";
     if($.inArray(x.module_id, modulearr)>-1 && x.status == 1){
         if($.inArray(x.module_id, modulearr)==0){
@@ -365,7 +329,8 @@ var moduletemplate=function(x,modulearr){
             // $(".we-crm").show();
             // $('#toggle-button-3').prop("checked", true);
         }
-    }
+    }*/
+
    /* var modulehtml=`
         <div class="we-title we-art" style="display: none;">
             <img src="/common/img/form.png" width="18" alt=""/>
@@ -422,10 +387,10 @@ var moduletemplate=function(x,modulearr){
             <a href="/user/admin/quan/crm/list"><div id="zone-associator-list">会员列表</div></a>
         </div>
     `;*/
-    return modulehtml;
-}
+//     return modulehtml;
+// }
 // 模块列表
-var modulearr=[];
+/*var modulearr=[];
 var modulelist=function(){
      $.ajax({
         url: apiUrl+"pages/module/platlist",
@@ -467,10 +432,10 @@ if(sessionStorage.statedata!=null && sessionStorage.statedata!="" && sessionStor
 }else{
     // 第一次进入加载
     modulelist();
-}
+}*/
 
 //判断左侧边栏二显示
-   var modeleName = [];
+   /*var modeleName = [];
     var moduleState = function() {
         $.ajax({
             url: PAGES_MODULERUN_LIST,
@@ -487,7 +452,7 @@ if(sessionStorage.statedata!=null && sessionStorage.statedata!="" && sessionStor
                     $("#middle").append(mainheader);
                     state.map(x => {
                         $(".we-cont.we-set").after(moduletemplate(x,modulearr));
-                    })
+                    })*/
                     /*state.map(x => {
                         if($.inArray(x.module_id, modulearr)>-1 && x.status == 1){
                             if($.inArray(x.module_id, modulearr)==0){
@@ -513,7 +478,7 @@ if(sessionStorage.statedata!=null && sessionStorage.statedata!="" && sessionStor
 
 
                     })*/
-                    $("#middle").append(mainheader_part1);
+                    /*$("#middle").append(mainheader_part1);
 
                 } else {
                     layer.msg(data.message, {
@@ -527,7 +492,7 @@ if(sessionStorage.statedata!=null && sessionStorage.statedata!="" && sessionStor
                 console.log(xhr);
             }
         })
-    }
+    }*/
 // moduleState();
 // $.getScript("../../layer-v3.0.3/layer-v3.0.3/layer/layer.js");
 
