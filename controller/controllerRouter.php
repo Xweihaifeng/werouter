@@ -93,9 +93,9 @@ class controllerRouter
         	redirect('/login');
         }
 
-		$sql = 'SELECT domain FROM we_pages  WHERE plat_id=? AND plat_user_id =?';
+		$sql = 'SELECT weid FROM we_pages  WHERE plat_id=? AND plat_user_id =?';
         $row = $this->_db->queryOne($sql , array($this->_weid , $this->_user_id));
-        if(!empty($row['domain']))
+        if(!empty($row['weid']))
         {
         	return TRUE;
         }
