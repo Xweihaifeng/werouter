@@ -14,15 +14,14 @@ $(function() {
     }
 
     // 全剧共用变量
-    var pathname  = window.location.pathname.split('/').slice(1,3);
-    var get_param = window.location.pathname.split('/').pop();
-    // var ApiMaterPlatQiniuDomain = 'http://oty3r3tmi.bkt.clouddn.com/';
-    var praise_if, original;
-
     $(".prompt-info").hide();
 
+    var pathname  = window.location.pathname.split('/').slice(1,3);
+    var get_param = window.location.pathname.split('/').pop();
+    var praise_if, original;
     // token 加载值请求头（Headers）
     var token = window.localStorage.getItem('token'), isLogin = false;
+
     if(token) {
         $.ajaxSetup({
             global: true,
@@ -106,7 +105,6 @@ $(function() {
             <div class="page-info"><div class="page-details"><p>` + result.content + `</p></div></div>
             <div class="evaluate"><p class="readings"><a class="read_original" href="`+ result.source_url +`" target="_blank"> 阅读原文 </a><span>阅读 ` + result.views + `</span><span class="zan" id="zan"><i class="gesture"></i><span class="zanCount">` + result.praise_num + `<span></span></p></div>`
 
-            // <span class="source_url">`+ result.source_url +`</span>
         return template;
     }
 
@@ -157,18 +155,8 @@ $(function() {
                     $(".read_original").hide();
                 }
 
-                // if(data.data.is_original == 1/* && document.body.clientWidth < 767*/) {
-                //     $(".original").show();
-                // } else {
-                //     $(".original").hide();
-                // }
-
                 if(!data.data.source) {
                     $(".source").hide();
-                }
-
-                if(document.body.clientWidth < 767) {
-                    $("#plat-two-back-top").hide();
                 }
 
                 if(!praise_if) {
@@ -194,24 +182,6 @@ $(function() {
         });
     }
     detail_data();
-
-    // 原创显示与否
-    var lock = false;
-    $(window).resize(function(){
-        if (document.body.clientWidth < 767) {
-            if (!lock) {
-                $(".page-left").html("");
-                detail_data();
-                lock = true;
-            }
-        } else {
-            if (lock) {
-                $(".page-left").html("");
-                detail_data();
-                lock = false;
-            }
-        }
-    });
 
     // 二维码的生成
     var qurl = apiUrl + '/file/qrcode?margin=3&url=' + window.location.href;

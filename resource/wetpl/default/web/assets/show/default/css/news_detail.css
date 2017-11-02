@@ -108,6 +108,8 @@ a {
 }
 .page-content .page-left .page-details img {
     width: 90%;
+    display: block;
+    margin: 0 auto;
 }
 .page-content .page-left .evaluate {
     user-select: none;
@@ -223,75 +225,4 @@ a {
 .read_original {
     padding: 0px 10px 0 0;
     color: #607fa6;
-}
-
-@media screen and (max-width: 767px) {
-
-    .news_menu, .page-right, .clearfix.bts span, .page-title, .hr {
-        display: none;
-    }
-
-    .page-content {
-        width: 100%;
-        display: block !important;
-        left: 0;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        -webkit-overflow-scrolling : touch;
-    }
-
-    .page-left {
-        display: block;
-        width: auto !important;
-        padding: 20px 15px !important;
-        -webkit-overflow-scrolling : touch;
-    }
-
-    .page-left .rich_media_title {
-        height: auto !important; 
-        line-height: normal !important;
-        font-size: 24px !important;
-        margin: 0 0 10px !important;
-        white-space: normal !important;
-    }
-
-    .page-left .page-details p {
-        text-indent: 0 !important;
-    }
-
-    .page-left .page-details img {
-        width: 100% !important;
-        height: auto !important;
-        margin: 0 auto;
-    }
-
-    .clearfix.bts span.publisher, .clearfix.bts span.updated_at {
-        display: block;
-        font-size: 17px !important;
-    }
-
-    .clearfix.bts span.publisher {
-        color: #607fa6;
-        font-weight: normal !important;
-    }
-
-    .clearfix.bts span.updated_at {
-        color: #8c8c8c;
-    }
-
-    .page-left .bts {
-        flex-direction: row-reverse;
-        justify-content: flex-end !important;
-        height: 30px;
-        margin: 0 0 10px !important;
-    }
-
-    #plat-two-back-top {
-        margin-left: 0;
-        left: inherit;
-        right: 5px;
-        bottom: 10px;
-        display: none !important;
-    }
 }
