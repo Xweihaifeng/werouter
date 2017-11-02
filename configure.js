@@ -270,3 +270,7 @@ const MEMBERLEVEL_SAVED = apiUrl + 'pages/member/level/saved'; //保存会员等
 const MEMBERLEVEL_LISTS = apiUrl + 'pages/member/level/lists'; //微主页会员等级列表
 const MEMBER_LISTS = apiUrl + 'pages/member/lists'; //微主页会员列表
 const MEMBER_USER_DETAIL = apiUrl + 'pages/member/user/detail'; //会员折扣信息AX\В
+
+//杂志
+const MAGAZINE_INDEX = apiUrl + 'magazine/index' //杂志列表
+const MAGEZINE_IMAGES = apiUrl + 'magazine/images' //杂志图片

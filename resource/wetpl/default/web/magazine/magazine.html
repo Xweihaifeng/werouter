@@ -22,7 +22,7 @@
         .dropdown-toggle, .get-check { height: 40px !important; }
     </style>
 </head>
-<body style="width: 100%; background: url(/common/img/dibu.jpg); overflow-y: hidden;">
+<body style="width: 1190px; background: url(/common/img/dibu.jpg); overflow-y: hidden;">
 <div id="app">
     <div class="modal_login" id="modal_login"></div>
     <ul class="news_menu" id="public_main_news_menu"></ul>
@@ -86,7 +86,7 @@
 
     var reqPage = function(_self, ename, flag) {
         $.ajax({
-            url: apiUrl + "magazine/index?ename=" + ename + "&limit=" + _self.limit + "&page=" + _self.page,
+            url: MAGAZINE_INDEX + "?ename=" + ename + "&limit=" + _self.limit + "&page=" + _self.page,
             type: "GET",
             success: function(data) {
                 console.log(data.data)
@@ -156,7 +156,7 @@
             read: function(weid, title) {
                 // console.log(weid)
                 $.ajax({
-                    url: apiUrl + 'magazine/images?weid=' + weid,
+                    url: MAGEZINE_IMAGES + '?weid=' + weid,
                     type: "GET",
                     success: function(data) {
                         console.log(data.data);
