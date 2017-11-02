@@ -13,7 +13,7 @@ class controllerRouter
      */
     public $config;
     //网站ID
-    private $_weid;
+    private $weid;
 
     //用户ID
     private $_user_id = FALSE;
@@ -92,9 +92,9 @@ class controllerRouter
         	redirect('/login');
         }
 
-		$sql = 'SELECT domain FROM we_pages  WHERE plat_id=? AND plat_user_id =?';
-        $row = $this->_db->queryOne($sql , array($this->_weid , $this->_user_id));
-        if(!empty($row['domain']))
+		$sql = 'SELECT weid FROM we_pages  WHERE plat_id=? AND plat_user_id =?';
+        $row = $this->_db->queryOne($sql , array($this->weid , $this->_user_id));
+        if(!empty($row['weid']))
         {
         	return TRUE;
         }
