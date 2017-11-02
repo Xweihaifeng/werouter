@@ -26,7 +26,6 @@ class controllerRouter
         $this->weid = $weid;
 
         $this->_db = new EasyDB();
-
     }
 
 
