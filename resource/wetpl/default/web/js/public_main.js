@@ -283,7 +283,7 @@ $(document).ready(function(){
                                     "plat_id": "88e41d20-72ad-11e7-8825-933924ec5999",
                                     "plat_user_id": "11e41d20-72ad-11e7-8825-933924ec5999",
                                     "type_id": "8668f180-765b-11e7-b0b8-8fa37bb824de",
-                                    "title": "秦商风采",
+                                    "title": "风采",
                                     "image": "http://images.new.wezchina.com/resource/adv/1501758711620.png",
                                     "url": "http://www.qqxqs.com",
                                     "created_at": "2017-08-03 19:12:39",
@@ -402,8 +402,8 @@ $(document).ready(function(){
                                     "plat_user_id": "11e41d20-72ad-11e7-8825-933924ec5999",
                                     "type_id": "988a7980-765b-11e7-ac51-05d65085c74e",
                                     "title": "建设频道",
-                                    "image": "plats/resource/1505287295640.jpeg",
-                                    "url": "http://new.wezchina.com/js",
+                                    "image": "http://images.new.wezchina.com/plats/resource/1505287295640.jpeg",
+                                    "url": "",
                                     "created_at": "2017-09-13 15:14:04",
                                     "updated_at": "2017-09-13 15:14:04",
                                     "plat_admin_id": "d3f06a11-6c47-11e7-a12a-00e04c8cace4"
@@ -413,9 +413,9 @@ $(document).ready(function(){
                                     "plat_id": "88e41d20-72ad-11e7-8825-933924ec5999",
                                     "plat_user_id": "11e41d20-72ad-11e7-8825-933924ec5999",
                                     "type_id": "988a7980-765b-11e7-ac51-05d65085c74e",
-                                    "title": "推荐栏目",
+                                    "title": "推荐栏目3",
                                     "image": "#",
-                                    "url": "http://new.wezchina.com/org",
+                                    "url": "",
                                     "created_at": "2017-08-03 20:07:32",
                                     "updated_at": "2017-09-18 23:02:31",
                                     "plat_admin_id": null
@@ -425,9 +425,9 @@ $(document).ready(function(){
                                     "plat_id": "88e41d20-72ad-11e7-8825-933924ec5999",
                                     "plat_user_id": "11e41d20-72ad-11e7-8825-933924ec5999",
                                     "type_id": "988a7980-765b-11e7-ac51-05d65085c74e",
-                                    "title": "推荐栏目x",
+                                    "title": "推荐栏目2",
                                     "image": "#",
-                                    "url": "http://new.wezchina.com/org",
+                                    "url": "",
                                     "created_at": "2017-08-03 20:07:32",
                                     "updated_at": "2017-09-18 23:03:30",
                                     "plat_admin_id": null
@@ -437,9 +437,9 @@ $(document).ready(function(){
                                     "plat_id": "88e41d20-72ad-11e7-8825-933924ec5999",
                                     "plat_user_id": "11e41d20-72ad-11e7-8825-933924ec5999",
                                     "type_id": "988a7980-765b-11e7-ac51-05d65085c74e",
-                                    "title": "推荐栏目2",
+                                    "title": "推荐栏目1",
                                     "image": "#",
-                                    "url": "http://new.wezchina.com/news/",
+                                    "url": "",
                                     "created_at": "2017-08-03 20:07:32",
                                     "updated_at": "2017-09-18 23:04:38",
                                     "plat_admin_id": null
@@ -464,7 +464,7 @@ $(document).ready(function(){
                             "plat_id": "88e41d20-72ad-11e7-8825-933924ec5999",
                             "plat_user_id": "11e41d20-72ad-11e7-8825-933924ec5999",
                             "type_id": "a56119c0-765b-11e7-a42e-770589f0cdd7",
-                            "title": "秦商风采",
+                            "title": "风采",
                             "image": "#",
                             "url": "#",
                             "created_at": "2017-08-15 14:25:17",
@@ -589,14 +589,14 @@ $(document).ready(function(){
                         var len = block.length;
                         for (var i = 0; i < len; i++) {
                             if (i < 4) {
-                                $(".adv-left-" + i).html('<a href=' + block[len - i - 1].url + ' target="_blank">' + block[len - i - 1].title + '</a>');
+                                $(".adv-left-" + i).html('<a href="' + block[len - i - 1].url + '" target="_blank">' + block[len - i - 1].title + '</a>');
                             }
                         }
                     } else {
                         var len = mainData.data.block.list.length;
                         for (var i = 0; i < len; i++) {
                             if (i < 4) {
-                                $(".adv-left-" + i).html('<a href=' + mainData.data.block.list[len - i - 1].url + ' target="_blank">' + mainData.data.block.list[len - i - 1].title + '</a>');
+                                $(".adv-left-" + i).html('<a href="' + mainData.data.block.list[len - i - 1].url + '" target="_blank">' + mainData.data.block.list[len - i - 1].title + '</a>');
                             }
                         }
                     }
@@ -606,7 +606,7 @@ $(document).ready(function(){
                 if (data.data.peoples_title != null) {
                     $(".imgs-title").text(data.data.peoples_title.title);
                 } else {
-                    $(".imgs-title").text('秦商风采');
+                    $(".imgs-title").text('风采');
                 }
 
                 //会长
