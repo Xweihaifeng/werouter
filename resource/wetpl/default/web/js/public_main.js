@@ -83,12 +83,10 @@ $(document).ready(function(){
 
         var templete =
             '<div class="swiper-slide" id=' + data.weid + '>' +
-            '<div style="width: 470px; height: 250px; background: url(' + imgUrl + ') no-repeat center; background-size: 100% 100%">' +
-                //'<a href=' + data.url + '>' +
-                '<div class="sw-bg"></div>' +
-                '<div class="sw-wd">' + data.title + '</div>' +
-                //'</a>' +
-            '</div>' +
+                '<div style="width: 470px; height: 250px; background: url(' + imgUrl + ') no-repeat center; background-size: 100% 100%">' +
+                    '<div class="sw-bg"></div>' +
+                    '<div class="sw-wd">' + data.title + '</div>' +
+                '</div>' +
             '</div>';
 
         return templete;
@@ -175,8 +173,7 @@ $(document).ready(function(){
     var memberTemplete = function(data, flag){        
         var memberId = 'member_' + memberCnt;    
         var imgUrl = data.avatar;
-        if (imgUrl != null && imgUrl.indexOf('http') === -1){            
-            // imgUrl = ApiMaterPlatQiniuDomain + imgUrl;
+        if (imgUrl != null && imgUrl.indexOf('http') === -1){
             imgUrl = imgSet(imgUrl, 80, 100);
         } else if (imgUrl == null) {
             imgUrl = '/common/img/avatar.png';
@@ -184,27 +181,27 @@ $(document).ready(function(){
 
         if (flag) {
             var templete =
-            '<div class="swiper-slide">' +
-            //'<a href=' + "member/" + data.weid + '>' +
-            '<a href="/u/' + data.weid + '">' + 
-            '<div class="imgs-style">' +
-            '<div class="imgs-member">' +
-            '<img src=' + imgUrl + ' width="80"/>' +
-            '</div>' +
-            '</a>' + 
-            '<div id=' + memberId + ' style="width: 100px; height: 50px; text-align: center; line-height: 30px;">' + data.real_name + '</div>' +
-            '</div>' +
-            //'</a>' +
+            '<div class="rolling_img">' +
+                '<a href="/u/' + data.weid + '">' + 
+                    '<div class="imgs-style">' +
+                        '<div class="imgs-member">' +
+                            '<img src=' + imgUrl + ' width="80"/>' +
+                        '</div>' +
+                        '<div id=' + memberId + ' style="width: 100%; height: 33px; text-align: center; line-height: 33px;">' + data.real_name + '</div>' +
+                    '</div>' +
+                '</a>' + 
             '</div>'
         } else {
             var templete =
-            '<a href="/u/' + data.weid + '">' + 
-            '<div class="imgs-style">' +
-            '<div class="imgs-member">' +
-            '<img src=' + imgUrl + ' width="80"/>' +
-            '</div>' +
-            '</a>' + 
-            '<div id=' + memberId + ' style="width: 100px; height: 50px; text-align: center; line-height: 30px;">' + data.real_name + '</div>' +
+            '<div class="rolling_img">' +
+                '<a href="/u/' + data.weid + '">' + 
+                    '<div class="imgs-style">' +
+                        '<div class="imgs-member">' +
+                            '<img src=' + imgUrl + ' width="80"/>' +
+                        '</div>' +
+                        '<div id=' + memberId + ' style="width: 100%; height: 33px; text-align: center; line-height: 33px;">' + data.real_name + '</div>' +
+                    '</div>' +
+                '</a>' + 
             '</div>'
         }
 
@@ -217,16 +214,44 @@ $(document).ready(function(){
     var advTemplete = function(data){
         var imgUrl = data.image;
         if (imgUrl.indexOf('http') === -1){
-            // imgUrl = ApiMaterPlatQiniuDomain + imgUrl;
             imgUrl = imgSet(imgUrl, 136, 47);
         }
         var templete = '<div class="swiper-slide" id=' + data.weid + '>' +
-            '<a href=' + data.url + '>' +
-            '<img src=' + imgUrl + ' alt=""/>' +
-            '</a>' +
+                '<a href=' + data.url + '>' +
+                    '<img src=' + imgUrl + ' alt=""/>' +
+                '</a>' +
             '</div>'
 
         return templete;
+    }
+
+    // 设置keyframes属性
+    function addKeyFrames(y){
+        var style = document.createElement('style');
+        style.type = 'text/css';
+        var keyFrames = `
+        @-webkit-keyframes rowup {
+            0% {
+                -webkit-transform: translate3d(0, 0, 0);
+                transform: translate3d(0, 0, 0);
+            }
+            100% {
+                -webkit-transform: translate3d(A_DYNAMIC_VALUE, 0, 0);
+                transform: translate3d(A_DYNAMIC_VALUE, 0, 0);
+            }
+        }
+        @keyframes rowup {
+            0% {
+                -webkit-transform: translate3d(0, 0, 0);
+                transform: translate3d(0, 0, 0);
+            }
+            100% {
+                -webkit-transform: translate3d(A_DYNAMIC_VALUE, 0, 0);
+                transform: translate3d(A_DYNAMIC_VALUE, 0, 0);
+            }
+        }`;
+        style.innerHTML = keyFrames.replace(/A_DYNAMIC_VALUE/g, y);
+        document.getElementsByTagName('head')[0].appendChild(style);
     }
 
     //首页轮播，广告，秦商风采接口
@@ -651,47 +676,121 @@ $(document).ready(function(){
                 getUserInfo();
 
                 //会员
-                if (users != '') {
+                // if (users != '') {
+                //     if (users.length < 8) {
+                //         users.map(x => $(".imgs-active").append(memberTemplete(x, false)))
+                //     } else {
+                //         users.map(x => $("#my-swiper1 .swiper-wrapper").append(memberTemplete(x, true)))
+                //         var mySwiper1 = new Swiper ('#my-swiper1', {
+                //             direction: 'horizontal',
+                //             loop: true,
+                //             slidesPerView : 8,
+                //             slidesPerGroup : 1,
+                //             speed: 3000,
+                //             autoplay : 1,
+                //             autoplayDisableOnInteraction : false,
+                //             grabCursor : true,
+                //             freeMode:true
+                //         })
+                //         $("#my-swiper1").mouseenter(function () {
+                //             mySwiper1.stopAutoplay();
+                //         }).mouseleave(function(){
+                //             mySwiper1.startAutoplay();
+                //         });
+                //     }                    
+                // } else {
+                //     mainData.data.users.map(x => $("#my-swiper1 .swiper-wrapper").append(memberTemplete(x, true)))
+                //     var mySwiper1 = new Swiper ('#my-swiper1', {
+                //         direction: 'horizontal',
+                //         loop: true,
+                //         slidesPerView : 8,
+                //         slidesPerGroup : 1,
+                //         speed: 3000,
+                //         autoplay : 1,
+                //         autoplayDisableOnInteraction : false,
+                //         grabCursor : true,
+                //         freeMode:true
+                //     })
+                //     $("#my-swiper1").mouseenter(function () {
+                //         mySwiper1.stopAutoplay();
+                //     }).mouseleave(function(){
+                //         mySwiper1.startAutoplay();
+                //     });
+                // }
+                /*if (users != '') {
                     if (users.length < 8) {
                         users.map(x => $(".imgs-active").append(memberTemplete(x, false)))
                     } else {
                         users.map(x => $("#my-swiper1 .swiper-wrapper").append(memberTemplete(x, true)))
-                        var mySwiper1 = new Swiper ('#my-swiper1', {
-                            direction: 'horizontal',
-                            loop: true,
-                            slidesPerView : 8,
-                            slidesPerGroup : 1,
-                            speed: 3000,
-                            autoplay : 1,
-                            autoplayDisableOnInteraction : false,
-                            grabCursor : true,
-                            freeMode:true
-                        })
-                        $("#my-swiper1").mouseenter(function () {
-                            mySwiper1.stopAutoplay();
-                        }).mouseleave(function(){
-                            mySwiper1.startAutoplay();
-                        });
+                        var pcLoopObj = $("#my-swiper1 .swiper-wrapper");
+                        new loopFun(pcLoopObj).Start();
                     }                    
                 } else {
                     mainData.data.users.map(x => $("#my-swiper1 .swiper-wrapper").append(memberTemplete(x, true)))
-                    var mySwiper1 = new Swiper ('#my-swiper1', {
-                        direction: 'horizontal',
-                        loop: true,
-                        slidesPerView : 8,
-                        slidesPerGroup : 1,
-                        speed: 3000,
-                        autoplay : 1,
-                        autoplayDisableOnInteraction : false,
-                        grabCursor : true,
-                        freeMode:true
-                    })
-                    $("#my-swiper1").mouseenter(function () {
-                        mySwiper1.stopAutoplay();
-                    }).mouseleave(function(){
-                        mySwiper1.startAutoplay();
-                    });
+                    var pcLoopObj = $("#my-swiper1 .swiper-wrapper");
+                    new loopFun(pcLoopObj).Start();
+                }*/
+
+                /*function loopFun(obj) {
+                    this.maxLength = 9; //最低显示数   
+                    this.Timer = 2000; //计时器间隔时间
+                    this.Ul = obj;
+                    var timer; //计时器id
+                    var self = this;
+                    this.Start = function() {
+                        if (self.Ul.children().length < this.maxLength) {
+                            self.Ul.append(self.Ul.children().clone());
+                        }
+                        timer = setInterval(self.Play, self.Timer);
+                    }
+                    this.Play = function() {
+                        var img = self.Ul.children().eq(0);
+                        var left = img.children().eq(0).width();
+                        img.animate({
+                            // "marginLeft": (-1 * left) + "px"
+                            "marginLeft": "1px"
+                        }, 600, function() {
+                            //appendTo函数是实现走马灯一直不间断播放的秘诀。
+                            //目前网上看到的很多走马灯，走到最后一张的时候，会立马闪回第一张，而不是继续从后往前推进，即是没有明白该函数的作用的原因
+                            $(this).css("margin-left", "auto").appendTo(self.Ul);
+                        });
+                    }
+                }*/
+
+                var kayFrame = function() {
+                    var loopObj_list = "";
+                    mainData.data.users.map(x => loopObj_list += memberTemplete(x, true));
+                    var loopObj_list_html = "<div class='rolling_html'>"+ loopObj_list +"</div>"
+                    $("#my-swiper1 .swiper_rolling").html(loopObj_list_html + loopObj_list_html);
+                    var width = document.querySelector('.rolling_html').offsetWidth;
+                    $("#my-swiper1").width(width);
+                    document.querySelector('.swiper_rolling').className += ' rowup';
                 }
+
+                var init = function(){
+                    if (users != '') {
+                        if (users.length < 8) {
+                            kayFrame();
+                        } else {
+                            kayFrame();
+                            addKeyFrames( '-' + width + 'px' );
+                        }                    
+                    } else {
+                        if(mainData.data.users.length < 8) {
+                            kayFrame();
+                        } else {
+                            kayFrame();
+                            addKeyFrames( '-' + width + 'px' );
+                        }
+                    }
+                }
+                init();
+
+                $(".imgs-active").hover(function() {
+                    $(".swiper_rolling").addClass("rowups");
+                }, function() {
+                    $(".swiper_rolling").removeClass("rowups")
+                });
 
                 //中间广告
                 var centerAdv = data.data.center;
