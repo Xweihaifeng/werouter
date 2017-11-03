@@ -14,7 +14,6 @@ $(function() {
         success: function(data){
             if(data.code == 200) {
                 var result = data.data;
-                console.info("查询频道", result);
                 if(!result.thumb_image) {
                     $(".zuzhi-top").css({ "background-image": "url('http://images.new.wezchina.com/plat/cert/1505289973450.png')","background-size": "100% 100%","background-repeat": "no-repeat","background-position": "center" });
 
@@ -52,8 +51,7 @@ $(function() {
         url: apiUrl + "/cms/contents?channel_id=org",
         dataType: 'json',
         success: function(data){
-            // console.log("所有频道文章");
-            console.log(data.data);
+            // console.log("所有频道文章", data.data);
         },
         error: function(xhr){
             console.log(xhr);
@@ -66,24 +64,22 @@ $(function() {
         dataType: 'json',
         success: function(data){
             // console.log("所有栏目");
-            
-            console.log(data.data);
+
             $.map(data.data, function(item, index) {
                 if(item.title == '入会申请') {
                     $(".dier").append(`
                         <p class="title">`+item.title+`</p>
                         <ul id="ruhuishenqing" name="`+item.weid+`"></ul>`
                     );
-                    column_rhsq(item.weid);
+                    column_rhsq(item.weid, item.thumb_image);
                 } else if(item.title == "发展报告") {
                     $(".diyi .title").text(item.title);
-                    report(item.weid);
+                    report(item.weid, item.thumb_image);
                 } else if(item.title == "光彩事业") {
                     $(".disan .title").text(item.title);
-                    lunbo(item.weid);
+                    lunbo(item.weid, item.thumb_image);
                 } else {
                     if(index <= 8) {
-                        console.log("data=", item +", "+ index)
                         $(".shanghuijieshao").append(column_list(item));
                     }
                 }
@@ -130,8 +126,12 @@ $(function() {
             url: apiUrl + "/cms/contents?cate_id=" + data,
             dataType: 'json',
             success: function(data){
+                if((!data.data.list || data.data.list.length == 0) && thumb_imgs) {
+                    thumb_imgs = imgSet(thumb_imgs, 45, 40, 3);
+                    $(".dier #ruhuishenqing").css({"background-image": "url("+ thumb_imgs +")"});
+                }
+
                 $.map(data.data.list, function(item, index) {
-                    console.info(index);
                     if(index <= 5) {
                         var thumb_image = item.thumb_image;
                         if (thumb_image.indexOf('http') != 0 && thumb_image != "") {
@@ -157,11 +157,15 @@ $(function() {
         });
     }
 
-    var report = function(bg_weid) {
+    var report = function(bg_weid, thumb_imgs) {
         $.ajax({
             url: apiUrl + "/cms/contents?cate_id=" + bg_weid,
             dataType: 'json',
             success: function(data){
+                if((!data.data.list || data.data.list.length == 0) && thumb_imgs) {
+                    thumb_imgs = imgSet(thumb_imgs, 45, 40, 3);
+                    $(".diyi .report").css({"background-image": "url("+ thumb_imgs +")"});
+                }
 
                 $.map(data.data.list, function(item) {
                     var thumb_image = item.thumb_image;
@@ -200,6 +204,10 @@ $(function() {
             url: apiUrl + "/cms/contents?cate_id=" + gc_weid,
             dataType: 'json',
             success: function(data){
+                if((!data.data.list || data.data.list.length == 0) && thumb_imgs) {
+                    thumb_imgs = imgSet(thumb_imgs, 45, 40, 3);
+                    $(".disan .lunbo").css({"background-image": "url("+ thumb_imgs +")"});
+                }
 
                 $.map(data.data.list, function(item) {
                     var thumb_image = item.thumb_image;

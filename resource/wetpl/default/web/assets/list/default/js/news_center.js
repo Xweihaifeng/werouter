@@ -117,16 +117,6 @@ $(function() {
         return template;
     }
 
-    $(".details-content").scroll(function(){
-        var scrollTop = $(this).scrollTop();
-        var scrollHeight = $(document).height();
-        var windowHeight = $(this).height();
-
-        if(scrollTop + windowHeight == scrollHeight){
-            console.log("已经到最底部了！");
-        }
-    });
-
     //  点击加载更多后显示出第二页的数据
     $('#news_loadingsImg').click(function() {
         if(limit * pageNum > total) {
@@ -248,5 +238,4 @@ $(function() {
     options4.fail(function (error) {
         console.info(error);
     })
-
 })

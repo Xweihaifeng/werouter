@@ -186,6 +186,4 @@ $(function() {
     // 二维码的生成
     var qurl = apiUrl + '/file/qrcode?margin=3&url=' + window.location.href;
     $(".qr_code_pc_outer").prepend(`<img src="` + qurl + `" />`);
-
-
 });
