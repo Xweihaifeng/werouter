@@ -42,7 +42,7 @@ function FlippingBook() {
 			gotoSpeed: 3,
 			rigidPageSpeed: 5,
 			flipSound: "/common/magazine/sounds/01.mp3",
-			hardcoverSound: "/common/magazine/sounds/03.mp3",
+			hardcoverSound: "",
 			preloaderType: "Thin", // "Progress Bar", "Round", "Thin", "Dots", "Gradient Wheel", "Gear Wheel", "Line", "Animated Book", "None"
 			pageBackgroundColor: 0xEEEEEE,
 			loadOnDemand: true,
@@ -59,7 +59,7 @@ function FlippingBook() {
 			flipCornerAngle: 20,
 			flipCornerRelease: true,
 			flipCornerVibrate: true,
-			flipCornerPlaySound: true,
+			flipCornerPlaySound: false
 			zoomEnabled: true,
 			//zoomPath: "pages/large/",
 			zoomImageWidth: 900,
