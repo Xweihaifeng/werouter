@@ -102,19 +102,13 @@ var genMenu = function(mark, domain) {
     return template;
 }
 
-console.log(genMenu(mark, "qqxqs.com"))
+// console.log(genMenu(mark, "qqxqs.com"))
 $(document).ready(function(){
     $("#middle").append(genMenu(mark, "qqxqs.com"))
 
-    console.log(parentPage + "_" + currPage)
+    console.log('currpage:', currPage)
 
-    if (currPage != '' && currPage != 'admin') {
-        $("#" + parentPage + "_" + currPage).parent().parent(".we-cont").show();
-        $("#" + parentPage + "_" + currPage).css({"color": "red", "background": "#f7f7f7"})
-    } else {
-        $("#settings_base").parent().parent(".we-cont").show();
-        $("#settings_base").css({"color": "red", "background": "#f7f7f7"})
-    }
+    console.log(parentPage + "_" + currPage)
 
     var getType = function(parentPage){
         switch(parentPage) {
@@ -122,11 +116,21 @@ $(document).ready(function(){
             case 'article' : return 'we-art'; break;
             case 'activity' : return 'we-active'; break;
             case 'apps': return 'we-app'; break;
+            default: break;
         }
     }
 
-    listchange(getType(parentPage));
-    })
+    if (currPage != '' && currPage != 'admin') {
+        $("#" + parentPage + "_" + currPage).parent().parent(".we-cont").show();
+        $("#" + parentPage + "_" + currPage).css({"color": "red", "background": "#f7f7f7"})
+        listchange(getType(parentPage));
+    } else {
+        $("#settings_base").parent().parent(".we-cont").show();
+        $("#settings_base").css({"color": "red", "background": "#f7f7f7"})
+        listchange('we-set');
+    }
+
+})
 
 
 $(function(){
