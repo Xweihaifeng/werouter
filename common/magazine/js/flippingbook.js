@@ -59,7 +59,7 @@ function FlippingBook() {
 			flipCornerAngle: 20,
 			flipCornerRelease: true,
 			flipCornerVibrate: true,
-			flipCornerPlaySound: false
+			flipCornerPlaySound: false,
 			zoomEnabled: true,
 			//zoomPath: "pages/large/",
 			zoomImageWidth: 900,
