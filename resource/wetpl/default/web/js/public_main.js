@@ -767,20 +767,30 @@ $(document).ready(function(){
                     document.querySelector('.swiper_rolling').className += ' rowup';
                 }
 
+                var kayFrames = function() {
+                    var loopObj_list = "";
+                    mainData.data.users.map(x => loopObj_list += memberTemplete(x, true));
+                    var loopObj_list_html = "<div class='rolling_html'>"+ loopObj_list +"</div>"
+                    $("#my-swiper1 .swiper_rolling").html(loopObj_list_html + loopObj_list_html);
+                    var width = document.querySelector('.rolling_html').offsetWidth;
+                    $("#my-swiper1").width(width);
+                    document.querySelector('.swiper_rolling').className += ' rowup';
+
+                    addKeyFrames( '-' + width + 'px' );
+                }
+
                 var init = function(){
                     if (users != '') {
                         if (users.length < 8) {
                             kayFrame();
                         } else {
-                            kayFrame();
-                            addKeyFrames( '-' + width + 'px' );
+                            kayFrames();
                         }                    
                     } else {
                         if(mainData.data.users.length < 8) {
                             kayFrame();
                         } else {
-                            kayFrame();
-                            addKeyFrames( '-' + width + 'px' );
+                            kayFrames();
                         }
                     }
                 }
