@@ -111,7 +111,7 @@ $(function() {
                 <div class="zhu-yao-nei-rong">`+ result.content +`</div>
                 <div class="a-none"><a class="a-none" style="color: #007cd3;" href="/`+ pathname[0] +"/"+ jumpUrl +`" target="_top" >查看全文</a></div>
                 <div class="pageviews center-disperse">
-                    <div class="new-issuser "><span>`+ result.auth +` <b> · </b></span><span>`+ result.created_at +`</span><span>浏览量：<span style="color: #007cd3;">`+ result.views +`</span></span></div>
+                    <div class="new-issuser "><span>`+ result.auth +` <b> · </b></span><span>`+ result.publish_time +`</span><span>浏览量：<span style="color: #007cd3;">`+ result.views +`</span></span></div>
                     <div><a href="#"><span class="article-cate new-title">`+ result.cate_name +`</span></a></div>
                 </div>
             </div>

@@ -97,7 +97,7 @@ $(function() {
                 <span class="publisher"><a href="/index" class="" target="win_index">` + publisher.substr(0, 10) + `</a></span>
                 <span class="auth">` + result.auth.substr(0, 5) + `</span>
                 <span class="source">`+ result.source +`</span>
-                <span class="updated_at">` + result.updated_at.substr(0, 10) + `</span>
+                <span class="updated_at">` + result.publish_time.substr(0, 10) + `</span>
                 <a href="/`+ pathname[0] + "/" + result.category.domain +`" class="original" target="_blank">`+ result.category.title + `</a>
             </div>
             <hr class="hr" />

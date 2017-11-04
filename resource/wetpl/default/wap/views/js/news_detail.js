@@ -85,7 +85,7 @@ $(function() {
                 <span class="publisher">` + result.publisher.substr(0, 5) + `</span>
                 <span class="author">` + result.auth.substr(0, 5) + `</span>
                 <span class="source_url">`+ result.source_url +`</span>
-                <span class=updated_at">` + result.updated_at.substr(0, 10) + `</span>
+                <span class=updated_at">` + result.publish_time.substr(0, 10) + `</span>
                 <span class="original">` + result.is_original + `</span>
             </div>
             <div class="page-info"><div class="page-details"><p>` + result.content + `</p></div></div>
