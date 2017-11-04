@@ -289,78 +289,6 @@
         });
         $(function() {
             __init();
-
-            // 条款
-            var uploader = Qiniu.uploader({
-                runtimes: 'html5,flash,html4',
-                browse_button: 'pickfiles',
-                uptoken_url: ApiUrl + 'file/qiniu_token',
-                get_new_uptoken: false,
-                domain: ApiMaterPlatQiniuDomain,
-                max_file_size: '100mb',
-                flash_swf_url: 'http://cdn.staticfile.org/plupload/2.1.8/Moxie.swf',
-                max_retries: 3,
-                chunk_size: '4mb',
-                auto_start: true,
-                filters: {
-                    max_file_size: '5mb',
-                    prevent_duplicates: true,
-                    // Specify what files to browse for
-                    mime_types: [{
-                        title: "Word File",
-                        extensions: "docx,doc"
-                    }, ]
-                },
-                init: {
-                    'FileUploaded': function(up, file, info) {
-                        var domain = up.getOption('domain');
-                        res = JSON.parse(info.response);
-                        $("input[name=term_servcice_rule]").val(res.key);
-                        var sourceLink = domain + res.key;
-                    },
-                    'Key': function(up, file) {
-                        var key = "member/resource/";
-                        key += new Date().valueOf() + '.' + file.name.substring(file.name.indexOf('.') + 1);
-                        return key;
-                    }
-                }
-            });
-
-            // 章程
-            var uploader2 = Qiniu.uploader({
-                runtimes: 'html5,flash,html4',
-                browse_button: 'pickfiles2',
-                uptoken_url: ApiUrl + 'file/qiniu_token',
-                get_new_uptoken: false,
-                domain: ApiMaterPlatQiniuDomain,
-                max_file_size: '100mb',
-                flash_swf_url: 'http://cdn.staticfile.org/plupload/2.1.8/Moxie.swf',
-                max_retries: 3,
-                chunk_size: '4mb',
-                auto_start: true,
-                filters: {
-                    max_file_size: '5mb',
-                    prevent_duplicates: true,
-                    // Specify what files to browse for
-                    mime_types: [{
-                        title: "Word File",
-                        extensions: "docx,doc"
-                    }, ]
-                },
-                init: {
-                    'FileUploaded': function(up, file, info) {
-                        var domain = up.getOption('domain');
-                        res = JSON.parse(info.response);
-                        $("input[name=constitution]").val(res.key);
-                        var sourceLink = domain + res.key;
-                    },
-                    'Key': function(up, file) {
-                        var key = "member/resource/";
-                        key += new Date().valueOf() + '.' + file.name.substring(file.name.indexOf('.') + 1);
-                        return key;
-                    }
-                }
-            });
             // 申请模板
             var uploader3 = Qiniu.uploader({
                 runtimes: 'html5,flash,html4',
@@ -436,7 +364,7 @@
                 }
             });
             // 证书印章
-            var uploader4 = Qiniu.uploader({
+            var uploader5 = Qiniu.uploader({
                 runtimes: 'html5,flash,html4',
                 browse_button: 'pickfiles5',
                 uptoken_url: ApiUrl + 'file/qiniu_token',
