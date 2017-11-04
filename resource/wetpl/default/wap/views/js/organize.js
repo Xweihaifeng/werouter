@@ -13,7 +13,7 @@ $(function() {
     // var ApiMaterPlatQiniuDomain = 'http://oty3r3tmi.bkt.clouddn.com/';
 
     get_weid = pathname[0];
-    var options1 = $.get(CMS_CHANNELS_DOMAIN_QUERY + get_weid);
+/*    var options1 = $.get(CMS_CHANNELS_DOMAIN_QUERY + get_weid);
     options1.done(function(data) {
         if(data.code == -200) {
             console.info(data.message);
@@ -36,7 +36,7 @@ $(function() {
     });
     options1.fail(function(error) {
         console.error(error);
-    });
+    });*/
 
     // 组织内容部分显示
     var news_detail = function(result) {
@@ -63,7 +63,6 @@ $(function() {
         return template;
     }
 
-
     if(pathname.length == 2 && pathname[1] != '') {
         get_parse = pathname[1];
         var options2 = $.get(CMS_DETAIL + get_parse);
@@ -73,12 +72,10 @@ $(function() {
             if(body.code === 200) {
                 var result = body.data;
                 if(!result) {
-                    $(".list-article-ul").html(news_detail(result););
+                    $(".list-article-ul").html(news_detail(result));
+                } else {
+                    window.location.href = "/404";
                 }
-                // if(body.data != null) {
-                //     $(".paging").hide();
-                //     $(".list-article-ul").html(`<div class="org_content"><h3>` + body.data.summary + `</h3><div>` + body.data.content + `</div></div>`);
-                // }
 
             } else {
                 console.warn(body.message);
@@ -87,5 +84,7 @@ $(function() {
         options2.fail(function(error) {
             console.error(error);
         })
+    } else {
+        window.location.href = "/404";
     }
 });
