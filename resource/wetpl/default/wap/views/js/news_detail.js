@@ -91,6 +91,9 @@ $(function() {
             <div class="page-info"><div class="page-details"><p>` + result.content + `</p></div></div>
             <div class="evaluate"><p class="readings"><a class="read_original" href="`+ result.source_url +`" target="_blank"> 阅读原文 </a><span>阅读 ` + result.views + `</span><span class="zan" id="zan"><i class="gesture"></i><span class="zanCount">` + result.praise_num + `<span></span></p></div>`
 
+            if(result.is_original == 0) {
+                $(".original").hide();
+            }
         return template;
     }
 

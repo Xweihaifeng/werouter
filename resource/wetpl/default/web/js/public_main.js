@@ -818,7 +818,7 @@ $(document).ready(function(){
                     })
                 } else {
                     $("#bar").css({
-                        "background": "url(/common/img/u_home_bg.png) no-repeat center",
+                        "background": "url(/common/img/middle_bg.png) no-repeat center",
                         "background-size": "100% 100%"
                     })
                     $("#bar").click(function () {
