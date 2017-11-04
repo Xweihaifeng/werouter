@@ -72,9 +72,9 @@ $(function() {
             if(body.code === 200) {
                 var result = body.data;
                 if(!result) {
-                    $(".list-article-ul").html(news_detail(result));
-                } else {
                     window.location.href = "/404";
+                } else {
+                    $(".list-article-ul").html(news_detail(result));
                 }
 
             } else {
