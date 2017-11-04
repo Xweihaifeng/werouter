@@ -6,6 +6,11 @@
     font-family: "微软雅黑","PingFang SC","Helvetica Neue","Hiragino Sans GB","Segoe UI","Microsoft YaHei",sans-serif;
 }
 
+::-webkit-scrollbar {
+    width: 0px;
+    height: 0;
+}
+
 html,body {
     position: fixed;
     width: 100%;
@@ -32,10 +37,15 @@ li {
 }
 
 .list-article-ul {
-    margin: 30px 0 15px;
+    position: fixed;
+    min-height: 100%;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
     padding: 15px;
     border: 1px solid #ccc;
-    min-height: 440px;
+    overflow-y: scroll;
 }
 
 .list-article-ul li {
