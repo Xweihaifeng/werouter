@@ -121,6 +121,23 @@ class controllerRouter
         return FALSE;
     }
 
+    // 频道额外规则
+    public function channel_art( $param, $match = array())
+    {
+        $sql = 'SELECT B.template AS tml FROM we_plat_cms_cate A LEFT JOIN we_plat_cms_template B on A.list_id=B.weid  WHERE A.plat_id =? AND A.domain=?';
+        $row = $this->_db->queryOne($sql , array($this->weid , $param));
+
+        if(!empty($row['tml']))
+        {   
+            if($match['current'] == $match['total'])
+            {
+                $this->config['template'] = '/views/list/'.$row['tml'].'.html';
+            }
+            return TRUE;
+        }
+        return FALSE;
+    }
+
     // 频道详情页
     public function channel_detailid($param , $match = array())
     {

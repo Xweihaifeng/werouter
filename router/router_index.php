@@ -145,7 +145,7 @@ class main
 
             error(404);
         }
-        
+
         $router_map = $router_verify->router['router_map'];
         $controller_router_config = (!empty($router_verify->router['config'])) ? $router_verify->router['config']  : '' ;
 
