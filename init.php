@@ -1,4 +1,6 @@
 <?php
+// 自动加载类
+include('./autoload.php');
 include('./config.php');
 // DB
 include('./db/mysqlDb.php');

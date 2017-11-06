@@ -43,6 +43,15 @@ function redirect($router)
     exit;
 }
 
+// 加载类文件
+function loader($file)
+{
+    if(is_file('./library/'.$file))
+    {
+        require_once($file);
+    }
+}
+
 // 判断是否是手机
 function is_mobile()
 { 
