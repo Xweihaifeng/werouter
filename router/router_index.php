@@ -115,7 +115,7 @@ class router_index
     }
 }
 
-class main 
+class main
 { 
     //路由配置信息
     public $params;
@@ -145,7 +145,7 @@ class main
 
             error(404);
         }
-
+        
         $router_map = $router_verify->router['router_map'];
         $controller_router_config = (!empty($router_verify->router['config'])) ? $router_verify->router['config']  : '' ;
 
@@ -196,7 +196,6 @@ class main
             {
                 $config .= "\n".$key;
             }
-            
         }
         $cache_config_file = '/config/web/'.md5($domain).'.js';
 
@@ -212,9 +211,7 @@ class main
     // 网站元素要替换规则
     private function _get_str_replace_content($content , $config_file , $directory)
     {
-        $content = str_replace('{{PATH_CONFIG}}', $config_file.'?t='.time() , $content);
-		$content = str_replace('{{PATH_TML}}', $this->file.$directory.'/' , $content);
-        return $content;
+        return Wez_template::init($this->file ,  $content , $config_file , $directory);
     }
 
 }
