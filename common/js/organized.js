@@ -5,7 +5,6 @@
 $(function() {
 
     var channels = window.location.pathname.split('/').slice(1,3);
-    // var ApiMaterPlatQiniuDomain = 'http://oty3r3tmi.bkt.clouddn.com/';
 
     // 查询频道
     $.ajax({
@@ -68,8 +67,8 @@ $(function() {
             $.map(data.data, function(item, index) {
                 if(item.title == '入会申请') {
                     $(".dier").append(`
-                        <p class="title">`+item.title+`</p>
-                        <ul id="ruhuishenqing" name="`+item.weid+`"></ul>`
+                        <p class="title">`+ item.title +`</p>
+                        <ul id="ruhuishenqing" name="`+ item.weid +`"></ul>`
                     );
                     column_rhsq(item.weid, item.thumb_image);
                 } else if(item.title == "发展报告") {
@@ -110,8 +109,8 @@ $(function() {
             success: function(data){
                 $.map(data.data.list, function(item) {
                     $(".list_selected").append(`
-                        <a href="/org/`+item.weid+`">
-                            <i class="iconfont">&#xe61a;</i>`+item.title.substr(0, 4)+`
+                        <a href="/org/`+ item.weid +`" title="`+ item.title +`">
+                            <i class="iconfont">&#xe61a;</i>`+ item.title.substr(0, 4) +`
                         </a>`);
                 });
             },
@@ -139,12 +138,12 @@ $(function() {
                         }
                         var template = `
                         <li>
-                            <a href="/org/`+item.weid+`">`
+                            <a href="/org/`+ item.weid +`">`
                                 if(thumb_image != "") {
-                                    template = template + `<img class="iconfont" src="` + thumb_image + `" alt="">`;
+                                    template = template + `<img class="iconfont" src="`+ thumb_image +`" alt="">`;
                                 }
                                 template = template + `
-                                <p>`+item.title.substr(0, 6)+`</p>
+                                <p>`+ item.title.substr(0, 6) +`</p>
                             </a>
                         </li>`
                         $("#ruhuishenqing").append(template);
@@ -175,10 +174,10 @@ $(function() {
                     var template = `
                     <div class="swiper-slide">`
                         if(thumb_image != "") {
-                            template = template + `<img class="iconfont" src="` + thumb_image + `" alt="">`;
+                            template = template + `<img class="iconfont" src="`+ thumb_image +`" alt="">`;
                         }
                         template = template + `
-                        <a href="/org/`+item.weid+`" class="a btn-look">点击查看</a>
+                        <a href="/org/`+ item.weid +`" class="a btn-look">点击查看</a>
                     </div>`;
                     $(".report_swiper").append(template);
                 })
@@ -217,10 +216,10 @@ $(function() {
                     var template = `
                     <div class="swiper-slide">`
                         if(thumb_image != "") {
-                            template = template + `<img class="iconfont" src="` + thumb_image + `" alt="">`;
+                            template = template + `<img class="iconfont" src="`+ thumb_image +`" alt="">`;
                         }
                         template = template + `
-                        <a href="/org/`+item.weid+`" class="a btn-info">点击查看</a>
+                        <a href="/org/`+ item.weid +`" class="a btn-info">点击查看</a>
                     </div>`;
                     $(".lunbo_swiper").append(template);
                 })
@@ -247,18 +246,18 @@ $(function() {
             thumb_image = imgSet(thumb_image, 45, 40, 3);
         }
         var template = `
-        <div class="list diyidier" name="`+data.domain+`">
-            <a href="/org/`+data.domain+`">
-                <p>`+data.title+`</p>`;
+        <div class="list diyidier" name="`+ data.domain +`">
+            <a href="/org/`+ data.domain +`">
+                <p>`+ data.title +`</p>`;
                 if(thumb_image != "") {
-                    template = template + `<img class="iconfont" src="` + thumb_image + `" alt="">`;
+                    template = template + `<img class="iconfont" src="`+ thumb_image +`" alt="">`;
                 }
                 template = template + `
 
             </a>
             <div class="sub">
-                <a href="/org/`+data.weid+`">
-                    <i class="iconfont">&#xe61a;</i>`+data.title+`
+                <a href="/org/`+ data.weid +`">
+                    <i class="iconfont">&#xe61a;</i>`+ data.title +`
                 </a>
             </div>
         </div>`
