@@ -757,9 +757,9 @@ $(document).ready(function(){
                     }
                 }*/
 
-                var kayFrame = function() {
+                var kayFrame = function(result) {
                     var loopObj_list = "";
-                    mainData.data.users.map(x => loopObj_list += memberTemplete(x, true));
+                    result.map(x => loopObj_list += memberTemplete(x, false));
                     var loopObj_list_html = "<div class='rolling_html'>"+ loopObj_list +"</div>"
                     $("#my-swiper1 .swiper_rolling").html(loopObj_list_html + loopObj_list_html);
                     var width = document.querySelector('.rolling_html').offsetWidth;
@@ -767,9 +767,9 @@ $(document).ready(function(){
                     document.querySelector('.swiper_rolling').className += ' rowup';
                 }
 
-                var kayFrames = function() {
+                var kayFrames = function(result) {
                     var loopObj_list = "";
-                    mainData.data.users.map(x => loopObj_list += memberTemplete(x, true));
+                    result.map(x => loopObj_list += memberTemplete(x, true));
                     var loopObj_list_html = "<div class='rolling_html'>"+ loopObj_list +"</div>"
                     $("#my-swiper1 .swiper_rolling").html(loopObj_list_html + loopObj_list_html);
                     var width = document.querySelector('.rolling_html').offsetWidth;
@@ -782,15 +782,15 @@ $(document).ready(function(){
                 var init = function(){
                     if (users != '') {
                         if (users.length < 8) {
-                            kayFrame();
+                            kayFrame(users);
                         } else {
-                            kayFrames();
+                            kayFrames(users);
                         }                    
                     } else {
                         if(mainData.data.users.length < 8) {
-                            kayFrame();
+                            kayFrame(mainData.data.users);
                         } else {
-                            kayFrames();
+                            kayFrames(mainData.data.users);
                         }
                     }
                 }
