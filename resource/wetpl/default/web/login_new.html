@@ -37,11 +37,15 @@
                                 <input type="text" class="form-control phone-num" maxlength="11" style="height: 44px; line-height: 44px; font-size: medium;" placeholder="请输入手机号码">
                             </div>
 
-                            <div class="input-group" style="margin-top: 15px;">
+                            <!-- <div class="input-group" style="margin-top: 15px;">
                                 <input type="text" class="form-control image_code" maxlength="5" placeholder="请输入图片验证码" style="height: 44px; line-height: 44px; font-size: medium;">
                                 <span class="input-group-btn">
                                     <img src="" class="btn btn-default" id="image_code_id_url" alt="图片验证码" style="width:100px;height:44px;padding:0;" title="图片验证码">
                                 </span>
+                            </div> -->
+
+                            <div class="input-group" style="margin-top: 15px;width: 330px;">
+                                <div class="l-captcha"  data-site-key="f33ae969d27848afdaa3ff2c79c58476" data-width="328" data-callback="getResponse"></div>
                             </div>
 
                             <div class="input-group" style="margin-top: 15px;">
@@ -76,6 +80,7 @@
         </div>
 
         <script src="{{PATH_CONFIG}}"></script>
+        <script src="//captcha.luosimao.com/static/js/api.js"></script>
         <script src="{{PATH_TML}}js/image_code_id.js"></script>
         <!-- <script src="/js/news_base.js"></script> -->
         <script>

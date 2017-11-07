@@ -31,7 +31,7 @@
         <div id="nav">
             <div class="nav">
                 <div class="zs">{{name}}</div>
-                <span class="content" @click="load('content')">目录导航</span>
+                <span class="content" @click="load('content')" style="color: #e60000">目录导航</span>
                 <span class="simple" @click="load('simple')">杂志简介</span>
                 <span class="adv" @click="load('adv')">广告刊例</span>
                 <span class="bread">您当前的位置：首页 > {{name}} > <a @click="load('content')">{{ position }}</a></span>
@@ -46,7 +46,7 @@
         </div>
         <div id="content">
             <div class="magazine" :id="data.weid" v-for="data in list">
-                <a :href="'/magazine/' + ename + '/' + data.weid" target="_blank"><img @click="read(data.weid, data.title)" :src="data.cover" alt="" width="108" height="136"/></a>
+                <a :href="'/magazine/' + ename + '/' + data.weid" target="_blank"><img @click="read(data.weid, data.title)" :src="data.cover" alt="" width="110" height="139"/></a>
                 <p style="padding-top: 15px;"> {{data.title}} </p>
             </div>
         </div>
@@ -123,7 +123,7 @@
     new Vue({
         el: '#app',
         data: {
-            main_cover: '/common/img/products_load.jpg',
+            main_cover: '/common/img/zuzhi-log.png',
             main_title: '',
             main_url: '',
             name: '',

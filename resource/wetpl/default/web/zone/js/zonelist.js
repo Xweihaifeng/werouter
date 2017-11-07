@@ -21,9 +21,14 @@ $(document).ready(function(){
     $(".linkto").attr('href', '/' + domain)
 
     //route
-    var isLogin = false; //判断用户登陆与否
+    var isLogin; //判断用户登陆与否
     var router = function(route){
-        var routerList = ['home', 'login', 'article','active','project','zone', 'shopping'];
+        if(!window.localStorage.getItem("token")) {
+            isLogin = false;
+        } else {
+            isLogin = true;
+        }
+        var routerList = ['home', 'login', 'article', 'active', 'project', 'shopping', 'zone', 'zan'];
 
         var isMember = function(routerList, route){
             return routerList.filter(x => x === route);
@@ -33,47 +38,38 @@ $(document).ready(function(){
             window.location.href = '/';
         }
 
-        var top = $(window).scrollTop();
-
         var login = function(){
             if (!isLogin) {
                 showLogin = true;
-                $("#modal").show();
-                $(".show-login").css({
-                    // "margin-left": width,
-                    // "margin-top": top + height
-                });
-                $(".show-login").fadeIn(300);
-                $("body").css("overflow", "hidden");
+                $("#modal_login").fadeIn(300);
             } else {
-                window.location.href = "/user/";
+                window.location.href = "/user";
             }
         }
 
         var article = function(){
             showLogin = false;
-            window.location.href = domain + "/article";
+            window.location.href = "/index/article";
         }
 
-         var active = function(){
+        var active = function(){
             showLogin = false;
-            window.location.href = domain + "/activity";
+            window.location.href = "/index/activity";
         }
-
-         var project = function(){
+        var project = function(){
             showLogin = false;
-            window.location.href = domain + "/project";
+            window.location.href = "/index/project";
         }
 
 
         var shopping = function(){
             showLogin = false;
-            window.location.href = domain + "/wemall";
+            window.location.href = "/index/wemall";
         }
 
         var zone = function(){
             showLogin = false;
-            window.location.href = domain + "/zone";
+            window.location.href = "/index/quan";
         }
 
         if (isMember(routerList, route) != ""){
@@ -81,7 +77,7 @@ $(document).ready(function(){
         }
     }
 
-    $("#home, #login, #article,#active,#project,#zone, #shopping").click(function(){
+    $("#home, #login, #article, #active, #project, #shopping, #zone, #zan").click(function(){
         var id = $(this).attr("id");
         router(id);
     })

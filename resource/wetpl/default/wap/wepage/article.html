@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,viewport-fit=cover">
+    <title>文章页面</title>
+    <link rel="stylesheet" href="css/home.css"/>
+    <link rel="stylesheet" href="css/article.css"/>
+    <script src="lib/jquery.min.js"></script>
+    <script src="js/home.js"></script>
+</head>
+<body>
+	<nav></nav>
+	<div class="my-container">
+		<div class="temp1">
+			<div class="left">
+				<span></span>
+			</div>
+			<div class="right">
+				<span class="title">内蒙古风干牛肉干</span>
+				<p>文章标题 北京轻松筹率先推出基于社交网络北京轻松筹率先推出基于社交网络</p>
+				<div class="content">
+					<span><img src="img/slice.jpg" alt=""></span>
+					<span class="des-text">文章描述 北京轻北京轻松络北京轻松筹率先推出基于社交网络北京轻北京轻松络北京轻松筹率先推出基于社交网络北京轻北京轻松络北京轻松筹率先推出基于社交网络北京轻北京轻松络北京轻松筹率先推出基于社交网络</span>
+				</div>
+				<div class="other">
+					<span>14分钟前</span>
+					<span></span>
+				</div>
+			</div>
+		</div>
+		<div class="temp2">
+			<div class="left">
+				<span></span>
+			</div>
+			<div class="right">
+				<span class="title">内蒙古风干牛肉干</span>
+				<p>【重磅】北京轻松筹率先推出基于社交网络北京轻松筹率先推出基于社交网络</p>
+				<div class="content">
+					
+						<img src="img/slice.jpg" alt="">
+						<img src="img/slice.jpg" alt="">
+						<img src="img/slice.jpg" alt="">
+					
+					
+						<img src="img/slice.jpg" alt="">
+						<img src="img/slice.jpg" alt="">
+						<img src="img/slice.jpg" alt="">
+					
+						<img src="img/slice.jpg" alt="">
+						<img src="img/slice.jpg" alt="">
+						<img src="img/slice.jpg" alt="">
+					
+					
+					
+				</div>
+				<div class="other">
+					<span>14分钟前</span>
+					<span></span>
+				</div>
+			</div>
+		</div>
+	</div>
+	<footer></footer>
+	<script>
+		$(document).ready(function(){
+			$(".temp1 .des-text").each(function(){
+				var maxLength = 24;
+				if($(this).text().length > maxLength){
+					$(this).text($(this).text().substring(0,maxLength)+"...")
+				}
+			})
+	    })
+	</script>
+</body>
+</html>
