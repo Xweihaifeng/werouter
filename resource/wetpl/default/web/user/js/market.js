@@ -79,9 +79,16 @@ $(document).ready(function(){
     var weid = localStorage.getItem('weid');
     hasDomain(weid);
 
-    var isLogin = false; //判断用户登陆与否
+    //route
+    var isLogin; //判断用户登陆与否
     var router = function(route){
-        var routerList = ['home', 'login', 'article','active','project','zone', 'shopping'];
+        if(!window.localStorage.getItem("token")) {
+            isLogin = false;
+        } else {
+            isLogin = true;
+        }
+        // var routerList = ['home', 'login', 'article', 'active', 'project', 'shopping', 'zone', 'zan'];
+        var routerList = ['home', 'login', 'article', 'active', 'zan'];
 
         var isMember = function(routerList, route){
             return routerList.filter(x => x === route);
@@ -94,40 +101,35 @@ $(document).ready(function(){
         var login = function(){
             if (!isLogin) {
                 showLogin = true;
-                $("#modal").show();
-                $(".show-login").css({
-                    "margin-left": width,
-                    "margin-top": height
-                });
-                $(".show-login").fadeIn(300);
-                $("body").css("overflow", "hidden");
+                $("#modal_login").fadeIn(300);
             } else {
                 window.location.href = "/user";
             }
         }
 
         var article = function(){
-
             showLogin = false;
-            window.location.href = domain + "/article";
-//          window.history.go(0);
+            window.location.href = "/index/article";
         }
 
-        var shopping = function(){
-            showLogin = false;
-            window.location.href = domain + "/wemall";
-        }
         var active = function(){
             showLogin = false;
-            window.location.href = domain + "/activity";
+            window.location.href = "/index/activity";
         }
         var project = function(){
             showLogin = false;
-            window.location.href = domain + "/project";
+            window.location.href = "/index/project";
         }
+
+
+        var shopping = function(){
+            showLogin = false;
+            window.location.href = "/index/wemall";
+        }
+
         var zone = function(){
             showLogin = false;
-            window.location.href = domain + "/quan";
+            window.location.href = "/index/quan";
         }
 
         if (isMember(routerList, route) != ""){
@@ -135,7 +137,8 @@ $(document).ready(function(){
         }
     }
 
-    $("#home, #login, #article,#project,#active,#zone, #shopping").click(function(){
+    // $("#home, #login, #article, #active, #project, #shopping, #zone, #zan").click(function(){
+    $("#home, #login, #article, #active, #zan").click(function(){
         var id = $(this).attr("id");
         router(id);
     })
