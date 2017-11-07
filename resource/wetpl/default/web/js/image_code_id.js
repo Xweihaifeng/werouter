@@ -1,3 +1,9 @@
+var luo_response = '';
+function getResponse(resp)
+{
+    luo_response = resp;
+}
+
 $(function() {
 
     localStorage.removeItem('token');
@@ -110,14 +116,9 @@ $(function() {
     })
 
     //route
-    var isLogin; //判断用户登陆与否
+    var isLogin = false; //判断用户登陆与否
     var router = function(route){
-        if(!window.localStorage.getItem("token")) {
-            isLogin = false;
-        } else {
-            isLogin = true;
-        }
-        var routerList = ['home', 'login', 'article', 'active', 'project', 'shopping', 'zone', 'zan'];
+        var routerList = ['home', 'login', 'article', 'shopping'];
 
         var isMember = function(routerList, route){
             return routerList.filter(x => x === route);
@@ -130,7 +131,8 @@ $(function() {
         var login = function(){
             if (!isLogin) {
                 showLogin = true;
-                $("#modal_login").fadeIn(300);
+                $("#modal").show();
+                $(".show-login").fadeIn(300);
             } else {
                 window.location.href = "/user";
             }
@@ -141,24 +143,9 @@ $(function() {
             window.location.href = "/index/article";
         }
 
-        var active = function(){
-            showLogin = false;
-            window.location.href = "/index/activity";
-        }
-        var project = function(){
-            showLogin = false;
-            window.location.href = "/index/project";
-        }
-
-
         var shopping = function(){
             showLogin = false;
-            window.location.href = "/index/wemall";
-        }
-
-        var zone = function(){
-            showLogin = false;
-            window.location.href = "/index/quan";
+            // window.location.href = "/index/wemall";
         }
 
         if (isMember(routerList, route) != ""){
@@ -166,7 +153,7 @@ $(function() {
         }
     }
 
-    $("#home, #login, #article, #active, #project, #shopping, #zone, #zan").click(function(){
+    $("#home, #login, #article, #shopping, #zan").click(function(){
         var id = $(this).attr("id");
         router(id);
     })
@@ -234,41 +221,47 @@ $(function() {
     //获取验证码
     var lock = false, isCheckNum = false, /*默认false*/ count = false; /*验证码倒计时*/
     var getCheck = function(phoneNum){
-        var timeout = false;
-        var seconds = 60;
-
-        lock = true;
-        count = setInterval(function(){
-            if (seconds > 0){
-                seconds -= 1;
-                $(".get-check").text("剩余"+ seconds + "秒");
-            } else {
-                $(".get-check").text("重新获取验证码");
-                timeout = false;
-                seconds = 60;
-                lock = false;
-                clearInterval(count);
-            }
-        }, 1000);
 
         $.ajax({
             url: CODES,
             dataType: 'json',
             type: 'post',
-            data: { 'phone': phoneNum},
+            data: { 'phone': phoneNum , luo_response: luo_response},
             success: function(data){
-                isCheckNum = true;
-                console.log(data);
+               if(data.code == 200)
+               {
+                    isCheckNum = true;
+                    var timeout = false;
+                    var seconds = 60;
+
+                    lock = true;
+                    count = setInterval(function(){
+                        if (seconds > 0){
+                            seconds -= 1;
+                            $(".get-check").text("剩余"+ seconds + "秒");
+                        } else {
+                            $(".get-check").text("重新获取验证码");
+                            timeout = false;
+                            seconds = 60;
+                            lock = false;
+                            clearInterval(count);
+                        }
+                    }, 1000);
+               }
+               else
+                {
+                    layer.msg("获取验证码失败", { time: 2500 });
+                }
             },
             error: function(err){
-                console.log(err);
+                layer.msg("获取验证码失败", { time: 2500 });
             }
         })
     }
 
-    var phoneNum = 0, checkNum = 0, imageCode = '', imageCodeID = '', flag = false;
+    var phoneNum = 0, checkNum = 0, flag = false /*,imageCode = '', imageCodeID = ''*/;
 
-    $('#image_code_id_url').bind("click", image_code_id);
+/*    $('#image_code_id_url').bind("click", image_code_id);
     function image_code_id() {
         $.ajax({
             url: USER_IMAGECODEID,
@@ -285,33 +278,20 @@ $(function() {
             }
         })
     }
-    image_code_id();
+    image_code_id();*/
 
     $(".get-check").click(function(){
         if (!lock) {
             phoneNum = $(".phone-num").val();
-            imageCode = $(".image_code").val();
+            // imageCode = $(".image_code").val();
             var regexp = /^(13|14|17|15|18)/;
             var reg =  new RegExp(regexp);
+            if(!luo_response){
+                layer.msg("请先通过验证!", { time: 2500 });
+                return false;
+            }
             if (reg.test(phoneNum) && phoneNum.length == 11){
-                $.ajax({
-                    url: USER_GETIMAGECODE + imageCodeID,
-                    async: false,
-                    success: function(data) {
-                        if(data.code == 200) {
-                            if(data.data != $(".image_code").val()) {
-                                layer.msg("请输入正确的图片验证码", { time: 2500 });
-                                image_code_id();
-                                return false;
-                            } else {
-                                getCheck(phoneNum);
-                            }
-                        }
-                    },
-                    error: function(error) {
-                        console.error(error);
-                    }
-                })
+                getCheck(phoneNum);
             } else {
                 layer.msg("手机号码错误", { time: 2500 });
                 return false;
@@ -320,11 +300,11 @@ $(function() {
     })
 
     //用户登录
-    var login = function(phoneNum, checkNum, imageCode, imageCodeID){
+    var login = function(phoneNum, checkNum/*, imageCode, imageCodeID*/){
         $.ajax({
             url: LOGIN,
             type: 'post',
-            data: {'phone': phoneNum, 'code': checkNum , 'imagecode': imageCode, 'imagecode_id': imageCodeID },
+            data: {'phone': phoneNum, 'code': checkNum , 'luo_response': luo_response},
             success: function(data){
                 console.log(data);
                 if (data.code != -200) {
@@ -337,8 +317,6 @@ $(function() {
                     lock = false;
                     clearInterval(count);
                     layer.msg(data.message, { time: 2500 });
-                    image_code_id();
-                    $(".get-check").text("重新获取验证码");
                 }
             },
             error: function(err){
@@ -351,18 +329,14 @@ $(function() {
     var logBt = function(){
         phoneNum = $(".phone-num").val();
         checkNum = $(".check-num").val();
-        imageCode = $(".image_code").val();
+        // imageCode = $(".image_code").val();
         var regexp = /^(13|14|17|15|18)/;
         var reg =  new RegExp(regexp);
-        if (reg.test(phoneNum) && phoneNum.length == 11 && checkNum.length == 6 && isCheckNum && isChecked && imageCode && imageCodeID) {
-            login(phoneNum, checkNum, imageCode, imageCodeID);
+        if (reg.test(phoneNum) && phoneNum.length == 11 && checkNum.length == 6 && isCheckNum && isChecked ) {
+            login(phoneNum, checkNum/*, imageCode, imageCodeID*/);
         } else {
             if (!(phoneNum.length == 11) || !reg.test(phoneNum)){
                 layer.msg("手机号码错误", { time: 2500 });
-                return;
-            }
-            if(!imageCode || !imageCodeID) {
-                layer.msg("图片验证码错误", { time: 2500 });
                 return;
             }
             if (!(checkNum.length == 6) || !isCheckNum) {
