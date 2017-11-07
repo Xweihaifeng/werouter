@@ -1,3 +1,10 @@
+
+var luo_response = '';
+function getResponse(resp)
+{
+    luo_response = resp;
+}
+
 $(function() {
 
     // localStorage.removeItem('token');
@@ -38,11 +45,8 @@ $(function() {
                     <input type="text" class="form-control phone-num" maxlength="11" placeholder="请输入手机号码">
                 </div>
 
-                <div class="input-group flex">
-                    <input type="text" class="form-control image_code" maxlength="5" placeholder="请输入图片验证码">
-                    <span class="input-group-btn">
-                        <img src="" class="btn btn-default" id="image_code_id_url" alt="图片验证码" style="height:40px" title="图片验证码">
-                    </span>
+                <div class="input-group" style="margin-top: 15px;width: 330px;">
+                    <div class="l-captcha"  data-site-key="f33ae969d27848afdaa3ff2c79c58476" data-width="328" data-callback="getResponse"></div>
                 </div>
 
                 <div class="input-group flex">
@@ -61,6 +65,13 @@ $(function() {
             </div>
         </div>
     </div>`
+
+/*                <div class="input-group flex">
+                    <input type="text" class="form-control image_code" maxlength="5" placeholder="请输入图片验证码">
+                    <span class="input-group-btn">
+                        <img src="" class="btn btn-default" id="image_code_id_url" alt="图片验证码" style="height:40px" title="图片验证码">
+                    </span>
+                </div>*/
 
     $("#modal_login").append(template_login);
 
@@ -289,9 +300,9 @@ $(function() {
         })
     }
 
-    var phoneNum = 0, checkNum = 0, imageCode = '', imageCodeID = '', flag = false;
+    var phoneNum = 0, checkNum = 0, flag = false/*, imageCode = '', imageCodeID = ''*/;
 
-    $('#image_code_id_url').bind("click", image_code_id);
+/*    $('#image_code_id_url').bind("click", image_code_id);
     function image_code_id() {
         $.ajax({
             url: USER_IMAGECODEID,
@@ -308,16 +319,20 @@ $(function() {
             }
         })
     }
-    image_code_id();
+    image_code_id();*/
 
     $(".get-check").click(function(){
         if (!lock) {
             phoneNum = $(".phone-num").val();
-            imageCode = $(".image_code").val();
+            // imageCode = $(".image_code").val();
             var regexp = /^(13|14|17|15|18)/;
             var reg =  new RegExp(regexp);
+            if(!luo_response){
+                layer.msg("请先通过验证!", { time: 2500 });
+                return false;
+            }
             if (reg.test(phoneNum) && phoneNum.length == 11){
-                $.ajax({
+/*                $.ajax({
                     url: USER_GETIMAGECODE + imageCodeID,
                     async: false,
                     success: function(data) {
@@ -336,7 +351,8 @@ $(function() {
                     error: function(error) {
                         console.error(error);
                     }
-                })
+                })*/
+                getCheck(phoneNum);
             } else {
                 layer.msg("手机号码错误", { time: 2500 });
                 return false;
@@ -345,11 +361,11 @@ $(function() {
     })
 
     //用户登录
-    var login = function(phoneNum, checkNum, imageCode, imageCodeID){
+    var login = function(phoneNum, checkNum/*, imageCode, imageCodeID*/){
         $.ajax({
             url: LOGIN,
             type: 'post',
-            data: {'phone': phoneNum, 'code': checkNum , 'imagecode': imageCode, 'imagecode_id': imageCodeID },
+            data: {'phone': phoneNum, 'code': checkNum/* , 'imagecode': imageCode, 'imagecode_id': imageCodeID*/ },
             success: function(data){
                 console.log(data);
                 if (data.code != -200) {
@@ -376,20 +392,20 @@ $(function() {
     var logBt = function(){
         phoneNum = $(".phone-num").val();
         checkNum = $(".check-num").val();
-        imageCode = $(".image_code").val();
+        // imageCode = $(".image_code").val();
         var regexp = /^(13|14|17|15|18)/;
         var reg =  new RegExp(regexp);
-        if (reg.test(phoneNum) && phoneNum.length == 11 && checkNum.length == 6 && isCheckNum && isChecked && imageCode && imageCodeID) {
-            login(phoneNum, checkNum, imageCode, imageCodeID);
+        if (reg.test(phoneNum) && phoneNum.length == 11 && checkNum.length == 6 && isCheckNum && isChecked/* && imageCode && imageCodeID*/) {
+            login(phoneNum, checkNum/*, imageCode, imageCodeID*/);
         } else {
             if (!(phoneNum.length == 11) || !reg.test(phoneNum)){
                 layer.msg("手机号码错误", { time: 2500 });
                 return;
             }
-            if(!imageCode || !imageCodeID) {
+/*            if(!imageCode || !imageCodeID) {
                 layer.msg("图片验证码错误", { time: 2500 });
                 return;
-            }
+            }*/
             if (!(checkNum.length == 6) || !isCheckNum) {
                 layer.msg("手机验证码错误", { time: 2500 });
                 return;
