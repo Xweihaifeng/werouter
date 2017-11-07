@@ -439,76 +439,67 @@ var hasDomain = function(weid){
 var weid = localStorage.getItem('weid');
 hasDomain(weid);
 
-var isLogin = false; //判断用户登陆与否
-function router(route){
-        // console.log(route);
-    
-    // var routerList = ['home', 'login', 'article','active','project', 'shopping'];
-    var routerList = ['home', 'login', 'article','active'];
-        // console.log(route);
-
-    var isMember = function(routerList, route){
-        return routerList.filter(x => x === route);
-    }
-
-    var home = function(){
-        window.location.href = '/';
-    }
-
-    var login = function(){
-        if (!isLogin) {
-
-            showLogin = true;
-            $("#modal").show();
-            $(".show-login").css({
-                "margin-left": width,
-
-                "margin-top": height
-
-            });
-            $(".show-login").fadeIn(300);
-            $("body").css("overflow", "hidden");
+    //route
+    var isLogin; //判断用户登陆与否
+    var router = function(route){
+        if(!window.localStorage.getItem("token")) {
+            isLogin = false;
         } else {
+            isLogin = true;
+        }
+        var routerList = ['home', 'login', 'article', 'active', 'project', 'shopping', 'zone', 'zan'];
 
-            window.location.href = "/user";
+        var isMember = function(routerList, route){
+            return routerList.filter(x => x === route);
+        }
+
+        var home = function(){
+            window.location.href = '/';
+        }
+
+        var login = function(){
+            if (!isLogin) {
+                showLogin = true;
+                $("#modal_login").fadeIn(300);
+            } else {
+                window.location.href = "/user";
+            }
+        }
+
+        var article = function(){
+            showLogin = false;
+            window.location.href = "/index/article";
+        }
+
+        var active = function(){
+            showLogin = false;
+            window.location.href = "/index/activity";
+        }
+        var project = function(){
+            showLogin = false;
+            window.location.href = "/index/project";
+        }
+
+
+        var shopping = function(){
+            showLogin = false;
+            window.location.href = "/index/wemall";
+        }
+
+        var zone = function(){
+            showLogin = false;
+            window.location.href = "/index/quan";
+        }
+
+        if (isMember(routerList, route) != ""){
+            eval(route)();
         }
     }
 
-    var article = function(){
-
-        showLogin = false;
-        window.location.href = domain + "/article";
-//          window.history.go(0);
-    }
-    var active = function(){
-        // console.log(domain);
-        showLogin = false;
-        window.location.href = domain + "/activity";
-//          window.history.go(0);
-    }
-     var project = function(){
-        // console.log(domain);
-        showLogin = false;
-        window.location.href = domain + "/project";
-//          window.history.go(0);
-    }
-
-    var shopping = function(){
-        showLogin = false;
-        window.location.href = domain + "/wemall";
-    }
-
-    if (isMember(routerList, route) != ""){
-        eval(route)();
-    }
-}
-
-// $("#home, #login, #article,#active,#project, #shopping").click(function(){
-$("#home, #login, #article,#active").click(function(){
-    var id = $(this).attr("id");
-    // console.log(id);
-    router(id);
-})
+    $("#home, #login, #article, #active, #project, #shopping, #zone, #zan").click(function(){
+        var id = $(this).attr("id");
+        router(id);
+    })
 
 $("#add").hover(function () {
     $(".add").show();
