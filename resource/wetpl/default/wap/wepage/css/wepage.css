@@ -1,0 +1,222 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 26.66vw;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    text-align: justify;
+    background: #eeeeee;
+    font-family: -apple-system-font,"PingFang SC","Helvetica Neue","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+.list {
+    overflow: hidden;
+    overflow-y: auto;
+}
+.list::-webkit-scrollbar-track-piece {
+    background-color: rgba(0, 0, 0, 0);
+    border-left: 1px solid rgba(0, 0, 0, 0);
+}
+.list::-webkit-scrollbar {
+    width: 5px;
+    height: 13px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+.list::-webkit-scrollbar-thumb {
+    background-color: rgba(75, 75, 75, 0.4);
+    background-clip: padding-box;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    min-height: 28px;;
+}
+.list::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+#app {
+    width: 100%;
+}
+
+#title {
+    position: fixed;
+    width: 100%;
+    height: 0.45rem;
+    top: 0;
+    font-size: 0.16rem;
+    color: white;
+    background: #555555;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 5;
+}
+
+#goback {
+    margin-left: 0.18rem;
+}
+
+#user {
+    margin-right: 0.18rem;
+}
+
+.article {
+    position: relative;
+    width: 90%;
+    height: auto;
+    top: -0.1rem;
+    margin-left: 0.18rem;
+    padding-bottom: 0.05rem;
+    min-height: 3rem;
+    border: 1px solid #dddddd;
+    border-radius: 0.03rem;
+    background: #fafafa;
+}
+
+.art-title {
+    margin: 0 0.12rem;
+    padding-top: 0.12rem;
+    font-size: 0.15rem;
+    color: black;
+}
+
+.art-date {
+    height: 0.3rem;
+    margin-left: 0.12rem;
+    margin-right: 0.12rem;
+    font-size: 0.12rem;
+    color: #9b9b9b;
+    line-height: 0.3rem;
+}
+
+.art-cover, .cover {
+    height: 1.6rem;
+    margin-left: 0.12rem;
+    margin-right: 0.12rem;
+    background: url(../img/cover.png) no-repeat center;
+    background-size: 100%;
+}
+
+.cover {
+    margin-top: 0.12rem;
+}
+
+.title {
+    position: relative;
+    height: 0.4rem;
+    margin: -0.6rem 0.12rem 0.12rem;
+    z-index: 10;
+    font-size: 0.16rem;
+    color: white;
+    padding: 0.1rem;
+    letter-spacing: 0.01rem;
+    background: rgba(0, 0, 0, 0.6);
+}
+
+.lists {
+    position: relative;
+    border-top: 1px solid #eeeeee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.1rem 0;
+    margin: 0 0.12rem;
+}
+
+.list-title {
+    position: relative;
+    width: 73%;
+    font-size: 0.14rem;
+    word-break: break-all;
+    /*letter-spacing: 0.01rem;*/
+}
+
+.list-cover {
+    width: 0.5rem;
+    height: 0.5rem;
+    background: url(../img/cover.png) no-repeat center;
+    background-size: 100%;
+    display: inline-block;
+}
+
+.art-summary {
+    height: 0.3rem;
+    margin: 0.12rem;
+    font-size: 0.12rem;
+    color: #9b9b9b;
+    word-break: break-all;
+    text-overflow£ºellipsis;
+}
+
+.art-read {
+    margin: 0 0.12rem;
+    font-size: 0.12rem;
+    color: black;
+}
+
+.art-list {
+    position: relative;
+    width: 90%;
+    height: auto;
+    top: -0.1rem;
+    margin-left: 0.18rem;
+    padding-bottom: 0.05rem;
+    border: 1px solid #dddddd;
+    border-radius: 0.03rem;
+    background: #fafafa;
+}
+
+#goback, #user {
+    position: relative;
+    height: 0.45rem;
+    line-height: 0.45rem;
+    display: inline-block;
+}
+
+.blank {
+    position: relative;
+    width: 100%;
+    height: 0.5rem;
+    top: 0.45rem;
+    background: #eeeeee;
+}
+
+.part {
+    position: relative;
+    width: 100%;
+    height: auto;
+    margin-top: -0.8rem;
+    margin-bottom: 0.1rem;
+}
+
+.date {
+    position: relative;
+    text-align: center;
+}
+
+.date span {
+    padding: 0.01rem 0.05rem;
+    font-size: 0.13rem;
+    color: #fafafa;
+    background: #dddddd;
+    border-radius: 0.025rem;
+    display: inline-block;
+}
+
