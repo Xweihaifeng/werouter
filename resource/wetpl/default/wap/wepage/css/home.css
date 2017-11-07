@@ -3,6 +3,8 @@
     padding: 0;
 }
 
+::-webkit-scrollbar { width: 0; height: 0; }
+
 html {
     font-size: 26.66vw;
 }
@@ -14,7 +16,6 @@ body {
     text-align: justify;
     background: #eeeeee;
     font-family: -apple-system-font,"PingFang SC","Helvetica Neue","Hiragino Sans GB","Microsoft YaHei",sans-serif;
-    overflow-x: hidden;
 }
 
 a {
@@ -64,7 +65,8 @@ nav ul {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 0.14rem;
+    font-size: 0.15rem;
+    /*font-weight: 600;*/
     padding: 0 0.25rem 0 0.35rem;
     border-bottom: 1px solid #e6e6e6;
     z-index: 5;
@@ -128,7 +130,7 @@ footer ul li img {
     z-index: 5;
 }
 
-#home {
+#dynamic {
     border-bottom: 2px solid #00c9ff;
 }
 
@@ -143,3 +145,4 @@ footer ul li img {
     padding: 0.05rem;
     z-index: 10;
 }
+

@@ -243,16 +243,16 @@ options1.done(function(data) {
         var result = data.data;
         if(!result) {
             $("#v_form_list").show();
-            $("#v_v_cert").attr("href", "/user/settings/personal");
+            $("#settings_personal").parent("a").attr("href", "/user/settings/personal");
             $(".personal").attr({"disabled": false, "href": "personal"});
             $(".institutional").attr({"disabled": false, "href": "institutional"});
             return false;
         }
 
         if(result.type == 1) {
-            $("#v_v_cert").attr("href", "/user/settings/personal");
+            $("#settings_personal").parent("a").attr("href", "/user/settings/personal");
         } else if(result.type == 2) {
-            $("#v_v_cert").attr("href", "institutional");
+            $("#settings_personal").parent("a").attr("href", "institutional");
         }
 
         if(result.type == 1 || result.type == 2) {
@@ -339,17 +339,17 @@ options.done(function(data) {
         if(!result) {
             $("#form_list").show();
             $("#avatar-admin").hide();
-            $("#v_v_cert").slideUp();
+            $("#settings_personal").slideUp();
             return false;
         }
         if(result.is_authenticated == 2) {
-            $("#v_v_cert").slideUp();
+            $("#settings_personal").slideUp();
             if(result.operation_status == 3) {
                 $(".cert-to-pass, #form_list").show();
             }
         } else if(result.is_authenticated == 1 && result.operation_status==2) {
             $(".cert-success-info").show();
-            $("#v_v_cert").slideDown();
+            $("#settings_personal").slideDown();
         }
     }
 });
@@ -447,7 +447,8 @@ hasDomain(weid);
         } else {
             isLogin = true;
         }
-        var routerList = ['home', 'login', 'article', 'active', 'project', 'shopping', 'zone', 'zan'];
+        // var routerList = ['home', 'login', 'article', 'active', 'project', 'shopping', 'zone', 'zan'];
+        var routerList = ['home', 'login', 'article', 'active', 'zan'];
 
         var isMember = function(routerList, route){
             return routerList.filter(x => x === route);
@@ -496,7 +497,8 @@ hasDomain(weid);
         }
     }
 
-    $("#home, #login, #article, #active, #project, #shopping, #zone, #zan").click(function(){
+    // $("#home, #login, #article, #active, #project, #shopping, #zone, #zan").click(function(){
+    $("#home, #login, #article, #active, #zan").click(function(){
         var id = $(this).attr("id");
         router(id);
     })

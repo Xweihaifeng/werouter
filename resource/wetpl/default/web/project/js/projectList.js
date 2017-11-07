@@ -29,7 +29,8 @@ var qiniu_bucket_domain = ApiMaterPlatQiniuDomain;
         } else {
             isLogin = true;
         }
-        var routerList = ['home', 'login', 'article', 'active', 'project', 'shopping', 'zone', 'zan'];
+        // var routerList = ['home', 'login', 'article', 'active', 'project', 'shopping', 'zone', 'zan'];
+        var routerList = ['home', 'login', 'article', 'active', 'zan'];
 
         var isMember = function(routerList, route){
             return routerList.filter(x => x === route);
@@ -78,11 +79,11 @@ var qiniu_bucket_domain = ApiMaterPlatQiniuDomain;
         }
     }
 
-    $("#home, #login, #article, #active, #project, #shopping, #zone, #zan").click(function(){
+    // $("#home, #login, #article, #active, #project, #shopping, #zone, #zan").click(function(){
+    $("#home, #login, #article, #active, #zan").click(function(){
         var id = $(this).attr("id");
         router(id);
     })
-
 
     //left-navbar show words
     $("#login, #article, #project, #active, #shopping, #zone").hover(function(e){
