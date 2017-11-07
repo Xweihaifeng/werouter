@@ -1,0 +1,145 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 26.66vw;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    text-align: justify;
+    background: #eeeeee;
+    font-family: -apple-system-font,"PingFang SC","Helvetica Neue","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    overflow-x: hidden;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+ul {
+    list-style: none;
+}
+
+.list {
+    overflow: hidden;
+    overflow-y: auto;
+}
+.list::-webkit-scrollbar-track-piece {
+    background-color: rgba(0, 0, 0, 0);
+    border-left: 1px solid rgba(0, 0, 0, 0);
+}
+.list::-webkit-scrollbar {
+    width: 5px;
+    height: 13px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+.list::-webkit-scrollbar-thumb {
+    background-color: rgba(75, 75, 75, 0.4);
+    background-clip: padding-box;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    min-height: 28px;;
+}
+.list::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+nav ul {
+    position: fixed;
+    width: 84%;
+    height: 0.375rem;
+    background: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.14rem;
+    padding: 0 0.25rem 0 0.35rem;
+    border-bottom: 1px solid #e6e6e6;
+    z-index: 5;
+}
+
+nav ul li {
+    padding: 0.03rem;
+}
+
+nav ul li img {
+    width: 0.14rem;
+    height: 0.14rem;
+    margin-top: 0.02rem;
+    display: block;
+}
+
+footer ul{
+    position: fixed;
+    width: 100%;
+    height: 0.5rem;
+    bottom: 0;
+    background: white;
+    display: flex;
+    align-items: center;
+    font-size: 0.14rem;
+    color: #555555;
+    border-top: 1px solid #e6e6e6;
+}
+
+footer ul li {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    align-items: center;
+}
+
+footer ul li img {
+    width: 0.25rem;
+    height: 0.25rem;
+    display: block;
+}
+
+.up {
+    position: absolute;
+    width: 0.55rem;
+    height: 0.55rem;
+    top: -0.1rem;
+    left: 1.59rem;
+    border-radius: 0.55rem;
+    border: 1px solid #e6e6e6;
+    background: white;
+}
+
+.down {
+    position: absolute;
+    width: 0.58rem;
+    height: 0.38rem;
+    top: 0.1rem;
+    left: 1.58rem;
+    background: white;
+    z-index: 5;
+}
+
+#home {
+    border-bottom: 2px solid #00c9ff;
+}
+
+#add {
+    width: 0.35rem;
+    height: 0.35rem;
+}
+
+#add img {
+    border-radius: 0.35rem;
+    border: 1px solid #00c9ff;
+    padding: 0.05rem;
+    z-index: 10;
+}

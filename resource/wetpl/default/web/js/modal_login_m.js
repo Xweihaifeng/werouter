@@ -215,13 +215,13 @@ $(function() {
 
     //route
     var isLogin; //判断用户登陆与否
-    if(!token) {
-        isLogin = false;
-    } else {
-        isLogin = true;
-    }
     var router = function(route){
-        var routerList = ['home', 'login', 'article','active','project', 'shopping','zone', 'zan'];
+        if(!window.localStorage.getItem("token")) {
+            isLogin = false;
+        } else {
+            isLogin = true;
+        }
+        var routerList = ['home', 'login', 'article', 'active', 'project', 'shopping', 'zone', 'zan'];
 
         var isMember = function(routerList, route){
             return routerList.filter(x => x === route);
@@ -270,7 +270,7 @@ $(function() {
         }
     }
 
-    $("#home, #login, #article,#active,#project, #shopping,#zone, #zan").click(function(){
+    $("#home, #login, #article, #active, #project, #shopping, #zone, #zan").click(function(){
         var id = $(this).attr("id");
         router(id);
     })
