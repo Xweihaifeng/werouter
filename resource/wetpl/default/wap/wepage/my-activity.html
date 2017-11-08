@@ -6,50 +6,31 @@
     <link rel="shortcut icon" id="favicon" href="" />
     <!--<link rel="stylesheet" href="{{PATH_TML}}article/css/article.css">-->
     <link rel="stylesheet" href="css/wepage.css"/>
-    <script src="js/browser.min.js"></script>
-    <script src="js/jquery-3.2.1.min.js"></script>
-    <script src="js/vue.min.js"></script>
+    <link rel="stylesheet" href="css/home.css"/>
+    <!--<script src="js/browser.min.js"></script>-->
+    <script src="js/zepto.min.js"></script>
+    <script src="interface/my-activity.json"></script>
+    <!--<script src="js/vue.min.js"></script>-->
+    <script src="js/home.js"></script>
     <!--<script charset="utf-8" type="text/javascript" src="{{PATH_CONFIG}}"></script>-->
     <!--<script src="js/wepage.js"></script>-->
     <title></title>
 </head>
 <body>
-    <div id="app">
-        <div id="title">
+    <!--<div id="app">-->
+        <!--<div id="title">
             <img id="goback" src="img/back.svg" width="18" />
             <p>{{title}}</p>
             <img id="user" src="img/user.svg" width="20" />
-        </div>
-        <div class="blank"></div>
-        <div id="content">
-            <div class="part">
-                <div class="date"><span>{{single_data.created_at}}</span></div>
-                <div class="article">
-                    <div class="art-title">{{single_data.title}}</div>
-                    <div class="art-date">{{single_data.created_at.substr(0, 10)}}</div>
-                    <div class="art-cover" :style="{'background-image': 'url(' + single_data.cover + ')', 'background-size': '100% 100%'}"></div>
-                    <div class="art-summary" v-html="single_data.summary"></div>
-                    <div class="art-read"><a >查看全文</a></div>
-                </div>
-            </div>
-
-            <div class="part">
-                <div class="date"><span>{{car_data.created_at}}</span></div>
-                <div class="art-list">
-                    <div class="cover" :style="{'background-image': 'url(' + car_data.cover + ')', 'background-size': '100% 100%'}"></div>
-                    <div class="title"><span>{{car_data.title}}</span></div>
-                    <div class="lists" v-for="list in cdr_data">
-                        <div class="list-title">{{list.title}}</div>
-                        <div class="list-cover" :style="{'background-image': 'url(' + list.cover + ')', 'background-size': '100%'}"></div>
-                        <!--<img class="list-cover" src="img/cover.png" />-->
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+        </div>-->
+        <!--<div class="blank"></div>-->
+        <nav></nav>
+        <div id="container"></div>
+        <footer></footer>
+    <!--</div>-->
 
     <script>
-        var single = function(list){
+        /*var single = function(list){
             var cover = '';
             if (list[0].cover != '') {
                 cover = list[0].cover;
@@ -100,13 +81,8 @@
             return template;
         }
 
-        var oneDay = (item, list) => {
-            return list.filter(x => x.created_at.substr(0, 10) == item.created_at.substr(0, 10));
-        }
-
-        var remove = (item, list) => {
-            return list.filter(x => x.created_at.substr(0, 10) != item.created_at.substr(0, 10));
-        }
+        var oneDay = (item, list) => list.filter(x => x.created_at.substr(0, 10) == item.created_at.substr(0, 10));
+        var remove = (item, list) => list.filter(x => x.created_at.substr(0, 10) != item.created_at.substr(0, 10));
 
         var genTpl = (list) => {
             var ls = oneDay(list[0], list);
@@ -114,15 +90,17 @@
                 return ;
             }
             if (ls.length == 1) {
-                $("#content").append(single(ls));
+                $("#container").append(single(ls));
             } else {
-                $("#content").append(multiHead(ls));
+                $("#container").append(multiHead(ls));
             }
             return genTpl(remove(list[0], list));
-        }
+        }*/
+
+//        genTpl(my_activity);
 
         var artLists = function(ref, id){
-            $.ajax({
+            /*$.ajax({
                 url: 'http://new.wezchina.com/api/articles/list' + '?userId=' + id,
                 type: 'GET',
                 success: function(data) {
@@ -131,7 +109,7 @@
                         var list = data.data.list;
                         //var len = data.data.list.length;
                         genTpl(list);
-                        /*ref.single_data = list[0];
+                        /!*ref.single_data = list[0];
                         console.log(ref.single_data)
                         if (len == 0) {
                             return ;
@@ -143,12 +121,12 @@
                             }
                         } else {
                             ref.single_data = list[0];
-                        }*/
+                        }*!/
                     }
                 }
-            })
+            })*/
         }
-        new Vue({
+        /*new Vue({
             el: '#app',
             data: {
                 title: 'Ta的微主页',
@@ -163,7 +141,7 @@
             methods: {
 
             }
-        })
+        })*/
     </script>
 </body>
 </html>
