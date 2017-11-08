@@ -16,38 +16,33 @@
 			html, body { font-size: 26.66vw; position: relative; height: 100%; }
 			a { text-decoration: none; display: inline-block; }
 			
-			.header, .section, .footer { width: 100%; background-color: #f2f2f2; }
-			.header { position: fixed; height: 0.6rem; top: 0; background-color: #555; }
-			.section, .shop { position: fixed; top: 0.375rem; right: 0; bottom: 0.51rem; left: 0; }
-			.footer { position: fixed; height: 0.6rem; bottom: 0; background-color: #555; }
+			.container { position: fixed; width: 100%; top: 0.375rem; right: 0; bottom: 0.51rem; left: 0; background-color: #f2f2f2; overflow-y: scroll; -webkit-overflow-scrolling: touch; z-index: 1; font-size: 0.12rem; color: #333; }
 
-			.shop { overflow-y: scroll; -webkit-overflow-scrolling: touch; z-index: 1; font-size: 0.12rem; color: #333; }
-			.shop > li { display: flex; margin: 0.01rem 0; background-color: #fff; padding: 0 0 0.05rem; }
-			.shop > li:last-child { margin-bottom: 0;}
-			.shop > li > slide.li_img_wap { padding-right: 0.22rem; }
-			.shop > li > slide.li_img_wap > img { width: 0.36rem; height: 0.36rem; margin: 0.09rem 0 0 0.08rem; border-radius: 50%; }
-			.shop > li > slide.li_info { font-size: 0.12rem; padding-right: 0.1rem; }
-			.shop > li > slide.li_info > h2 { font-size: 0.14rem; font-weight: unset; height: 0.2rem; padding: 0.2rem 0 0.02rem; color: rgba(28, 108, 167, 1); }
-			.shop > li > slide.li_info > h3 { font-size: 0.14rem; font-weight: unset; max-height: 0.2rem; margin: 0 0 0.05rem; overflow-y: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1; }
-			.shop > li > slide.li_info > .lii_img img { width: 0.88rem; height: 0.88rem; margin: 0.005rem; }
-			.shop > li > slide.li_info > .lii_sold { margin: 0.05rem 0; background-color: #eee; width: 3rem; }
-			.shop > li > slide.li_info > .lii_sold > a { display: flex; color: #333; height: 0.6rem; }
-			.shop > li > slide.li_info > .lii_sold > a > slide.li_img_wap { display: inline-flex; align-items: center; }
-			.shop > li > slide.li_info > .lii_sold > a > slide.li_img_wap > img { width: 0.48rem; height: 0.48rem; border: 1px solid #eee; margin: 0 0.05rem; background-color: #fff; }
-			.shop > li > slide.li_info > .lii_sold > a > slide.li_info { overflow: hidden; }
-			.shop > li > slide.li_info > .lii_sold > a > slide.li_info > h3 { font-size: 0.12rem; font-weight: unset; max-height: 0.32rem; overflow-y: hidden; padding: 0.025rem 0.05rem 0.025rem 0; height: 0.16rem; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1; }
-			.shop > li > slide.li_info > .lii_sold > a > slide.li_info > .lii_price { font-size: 0.11rem; color: #f00; }
-			.shop > li > slide.li_info > .lii_sold > a > slide.li_info > .lii_sold { font-size: 0.11rem; padding: 0.025rem 0; }
-			.shop > li > slide.li_info > .lii_sold span { padding-right: 0.1rem; }
-			.shop > li > slide.li_info > .lii_eval { display: flex; justify-content: space-between; align-items: center; padding: 0 0 0.05rem 0; color: #9b9b9b; }
+			.section > slide { display: flex; margin: 0.01rem 0; background-color: #fff; padding: 0 0 0.05rem; }
+			.section > slide:last-child { margin-bottom: 0;}
+			.section > slide > slide.li_img_wap { padding-right: 0.22rem; }
+			.section > slide > slide.li_img_wap > img { width: 0.36rem; height: 0.36rem; margin: 0.09rem 0 0 0.08rem; border-radius: 50%; }
+			.section > slide > slide.li_info { font-size: 0.12rem; padding-right: 0.1rem; }
+			.section > slide > slide.li_info > h2 { font-size: 0.14rem; font-weight: unset; height: 0.2rem; padding: 0.2rem 0 0.02rem; color: rgba(28, 108, 167, 1); }
+			.section > slide > slide.li_info > h3 { font-size: 0.14rem; font-weight: unset; max-height: 0.2rem; margin: 0 0.22rem 0.05rem 0; overflow-y: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1; }
+			.section > slide > slide.li_info > .lii_img img { width: 0.88rem; height: 0.88rem; margin: 0.005rem; }
+			.section > slide > slide.li_info > .lii_sold { margin: 0.05rem 0; background-color: #eee; width: 2.9rem; }
+			.section > slide > slide.li_info > .lii_sold > a { display: flex; color: #333; height: 0.6rem; }
+			.section > slide > slide.li_info > .lii_sold > a > slide.li_img_wap { display: inline-flex; align-items: center; }
+			.section > slide > slide.li_info > .lii_sold > a > slide.li_img_wap > img { width: 0.48rem; height: 0.48rem; border: 1px solid #eee; margin: 0 0.05rem; background-color: #fff; }
+			.section > slide > slide.li_info > .lii_sold > a > slide.li_info { overflow: hidden; }
+			.section > slide > slide.li_info > .lii_sold > a > slide.li_info > h3 { font-size: 0.12rem; font-weight: unset; max-height: 0.32rem; overflow-y: hidden; padding: 0.025rem 0.05rem 0.025rem 0; height: 0.16rem; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1; }
+			.section > slide > slide.li_info > .lii_sold > a > slide.li_info > .lii_price { font-size: 0.11rem; color: #f00; }
+			.section > slide > slide.li_info > .lii_sold > a > slide.li_info > .lii_sold { font-size: 0.11rem; padding: 0.025rem 0; }
+			.section > slide > slide.li_info > .lii_sold span { padding-right: 0.1rem; }
+			.section > slide > slide.li_info > .lii_eval { display: flex; justify-content: space-between; align-items: center; padding: 0 0 0.05rem 0; color: #9b9b9b; }
 		</style>
 	</head>
 
 	<body>
 		<nav></nav>
-		<section class="section">
-			<ul class="shop">
-				<li>
+		<section class="container section">
+				<slide>
 					<slide class="li_img_wap">
 						<img src="img/img1.jpg">
 					</slide>
@@ -77,8 +72,8 @@
 							<!-- <span class="lii_assess"> 💬 </span> --> <!-- 👍 --> 
 						</div>
 					</slide>
-				</li>
-				<li>
+				</slide>
+				<slide>
 					<slide class="li_img_wap">
 						<img src="img/img6.jpg">
 					</slide>
@@ -108,8 +103,8 @@
 							<!-- <span class="lii_assess"> 💬 </span> --> <!-- 👍 --> 
 						</div>
 					</slide>
-				</li>
-				<li>
+				</slide>
+				<slide>
 					<slide class="li_img_wap">
 						<img src="img/img11.jpg">
 					</slide>
@@ -139,8 +134,7 @@
 							<!-- <span class="lii_assess"> 💬 </span> --> <!-- 👍 --> 
 						</div>
 					</slide>
-				</li>
-			</ul>
+				</slide>
 		</section>
 		<footer></footer>
 	</body>
