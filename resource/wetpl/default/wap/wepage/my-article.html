@@ -4,59 +4,52 @@
 	<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,viewport-fit=cover">
     <title>List</title>
+    <link rel="stylesheet" href="css/home.css"/>
     <link rel="stylesheet" href="css/list.css"/>
     <script src="lib/jquery.min.js"></script>
+    <script src="js/zepto.min.js"></script>
+    <script src="interface/my-article.json"></script>
+    <!-- <script src="js/home.js"></script> -->
 </head>
 <body>
-	<header>
-		<div>
-			<span  class="back">
-				<img src="font/back.svg" alt="">
-			</span>
-			<span>公众号</span>
-			<span  class="user">
-				<img src="font/user.svg" alt="">
-			</span>
-		</div>		
-	</header>
-	<div class="my_container">
-	<!-- <div>
-		<div  class="time t_for_lists">
-			<span>昨天&nbsp;下午1:30</span>
-		</div>
-		
-		<div class="lists">
+	<nav></nav>
+	<div id="container" class="section my_container">
+			<!-- <div>
+				<div  class="time t_for_lists">
+					<span>昨天&nbsp;下午1:30</span>
+				</div>
+				
+				<div class="lists">
+					<div>
+						<label>
+							<span>为什么在安静的环境下，你会听到不存在的声音？</span>
+						</label>
+					</div>	
+					<p>
+						<span>为什么在安静的环境下，你会听到不存在的声音？</span>
+						<img src="img/slice.jpg" alt="">
+					</p>
+					<p>
+						<span>为什么在安静的环境下，你会听到不存在的声音？</span>
+						<img src="img/slice.jpg" alt="">
+					</p>
+				</div>
+			</div>
 			<div>
-				<label>
-					<span>为什么在安静的环境下，你会听到不存在的声音？</span>
-				</label>
-			</div>	
-			<p>
-				<span>为什么在安静的环境下，你会听到不存在的声音？</span>
-				<img src="img/slice.jpg" alt="">
-			</p>
-			<p>
-				<span>为什么在安静的环境下，你会听到不存在的声音？</span>
-				<img src="img/slice.jpg" alt="">
-			</p>
-		</div>
+				<div  class="time t_for_single">
+					<span>下午1:30</span>
+				</div>
+				
+				<div class="single"> 
+					<p class="title">文章标题</p>
+					<span class="pt">11月2日</span>
+					<img src="img/slice.jpg" alt="">
+					<span class="detail">详情内容</span>
+					<p>查看全文</p>
+				</div>
+			</div> -->			
 	</div>
-	<div>
-		<div  class="time t_for_single">
-			<span>下午1:30</span>
-		</div>
-		
-		<div class="single"> 
-			<p class="title">文章标题</p>
-			<span class="pt">11月2日</span>
-			<img src="img/slice.jpg" alt="">
-			<span class="detail">详情内容</span>
-			<p>查看全文</p>
-		</div>
-	</div> -->
-		
-		
-	</div>
+	<footer></footer>
 	<script>
 		$(document).ready(function(){
 
@@ -67,10 +60,6 @@
 				var scale = $('body').width() / 410;
                 $('html').css('font-size', 100 * scale + 'px');
 			})
-
-			$('.user').on('click', function(event) {
-				window.location = "file:///E:/working/werouter/resource/wetpl/default/wap/wepage/info.html"
-			});
 			
 			function columnList(data){
 				var temp = 
@@ -109,9 +98,7 @@
 
 
 				'</div>'
-
 				
-
 				return temp;
 			}
 		
@@ -201,56 +188,10 @@
 
 				}
 			}
-			$.ajax({
-				url : "http://new.wezchina.com/api/articles/list?userId=11e41d20-72ad-11e7-8825-933924ec5999",
-				type : "get",
-				success : function(data){
-					console.log(data);
 
-					// data = {
-					// 	"code" : 200,
-					// 	"data" : {
-					// 		"list" : [{
-					// 			"cover" : "img/slice.jpg",
-					// 			"title" : "学思践悟十九大|中国共产党为什么能领导中国走向伟大复兴",
-					// 			"summary" : "实现伟大复兴，是中华民族近代以来最伟大的梦想",
-					// 			"created_at" : "2017-11-03 14:37:57"
-					// 		},{
-					// 			"cover" : "img/slice.jpg",
-					// 			"title" : "学思践悟十九大|中国共产党为什么能领导中国走向伟大复兴",
-					// 			"summary" : "实现伟大复兴，是中华民族近代以来最伟大的梦想",
-					// 			"created_at" : "2017-11-02 14:37:57"
-					// 		},{
-					// 			"cover" : "img/slice.jpg",
-					// 			"title" : "学思践悟十九大|中国共产党为什么能领导中国走向伟大复兴",
-					// 			"summary" : "实现伟大复兴，是中华民族近代以来最伟大的梦想",
-					// 			"created_at" : "2017-11-03 14:37:57"
-					// 		},{
-					// 			"cover" : "img/slice.jpg",
-					// 			"title" : "学思践悟十九大|中国共产党为什么能领导中国走向伟大复兴",
-					// 			"summary" : "实现伟大复兴，是中华民族近代以来最伟大的梦想",
-					// 			"created_at" : "2017-11-02 14:37:57"
-					// 		},{
-					// 			"cover" : "img/slice.jpg",
-					// 			"title" : "学思践悟十九大|中国共产党为什么能领导中国走向伟大复兴",
-					// 			"summary" : "实现伟大复兴，是中华民族近代以来最伟大的梦想",
-					// 			"created_at" : "2017-11-03 14:37:57"
-					// 		},{
-					// 			"cover" : "img/slice.jpg",
-					// 			"title" : "学思践悟十九大|中国共产党为什么能领导中国走向伟大复兴",
-					// 			"summary" : "实现伟大复兴，是中华民族近代以来最伟大的梦想",
-					// 			"created_at" : "2017-11-01 14:37:57"
-					// 		},{
-					// 			"cover" : "img/slice.jpg",
-					// 			"title" : "学思践悟十九大|中国共产党为什么能领导中国走向伟大复兴",
-					// 			"summary" : "实现伟大复兴，是中华民族近代以来最伟大的梦想",
-					// 			"created_at" : "2017-11-04 14:37:57"
-					// 		}],
-					// 		"total" : 7
-					// 	}
-					// }
 
-					if(data.code == 200){
+			function handleResponse(data){
+				if(data.code == 200){
 
 						$('.my_container').children().remove();
 
@@ -296,24 +237,28 @@
 								$(".my_container").append(singleList(sort[key][0], pDate,num))
 
 								timeList.push(sort[key][0].created_at)
-								getTime(timeList,"#"+num+" .t_for_single span")
-								
+								getTime(timeList,"#"+num+" .t_for_single span")								
 								
 							}
 
 							num++;
 
-
-						}
-
-						
-
-						
+						}						
 
 					}
+			}
+
+			$.ajax({
+				url : "http://new.wezchina.com/api/articles/list?userId=11e41d20-72ad-11e7-8825-933924ec5999",
+				type : "get",
+				success : function(data){
+					console.log(data);
+					handleResponse(data)
+					
 				},
 				error : function(xhr){
 					console.log(xhr)
+					handleResponse(my_article)
 				}
 			})
 
