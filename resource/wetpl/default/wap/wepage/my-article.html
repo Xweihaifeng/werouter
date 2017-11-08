@@ -9,7 +9,7 @@
     <script src="lib/jquery.min.js"></script>
     <script src="js/zepto.min.js"></script>
     <script src="interface/my-article.json"></script>
-    <!-- <script src="js/home.js"></script> -->
+	<script src="js/home.js"></script>
 </head>
 <body>
 	<nav></nav>
@@ -47,7 +47,7 @@
 					<span class="detail">详情内容</span>
 					<p>查看全文</p>
 				</div>
-			</div> -->			
+			</div> -->
 	</div>
 	<footer></footer>
 	<script>
@@ -61,7 +61,7 @@
                 $('html').css('font-size', 100 * scale + 'px');
 			})
 			
-			function columnList(data){
+			/*function columnList(data){
 				var temp = 
 
 				'<p><label><span>'+data.title+'</span><img src="'+data.cover+'"></label></p>';
@@ -246,9 +246,9 @@
 						}						
 
 					}
-			}
+			}*/
 
-			$.ajax({
+			/*$.ajax({
 				url : "http://new.wezchina.com/api/articles/list?userId=11e41d20-72ad-11e7-8825-933924ec5999",
 				type : "get",
 				success : function(data){
@@ -260,7 +260,7 @@
 					console.log(xhr)
 					handleResponse(my_article)
 				}
-			})
+			})*/
 
 
 		})
