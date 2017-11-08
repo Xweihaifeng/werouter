@@ -29,13 +29,6 @@
 			}
 		</script>
 		<script>
-			$(function() {
-				var result = my_shopping.shop;
-				$.each(result, function(key, value) {
-					$(".shop ul").append(shop(key, value));
-				});
-			})
-
 			function shop(key, value) {
 				var template = `
 				<li>
@@ -52,6 +45,13 @@
 				</li>`
 
 				return template;
+			}
+
+			var genShop = function(my_shopping) {
+				var result = my_shopping.shop;
+				$.each(result, function (key, value) {
+					$(".shop ul").append(shop(key, value));
+				});
 			}
 		</script>
 	</head>
