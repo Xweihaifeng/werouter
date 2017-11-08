@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title> 商城 </title>
+
+		<link rel="stylesheet" href="css/home.css" />
+		<link rel="stylesheet" href="css/my-shopping.css" />
+
+		<script type="text/javascript" src="js/zepto.min.js" ></script>
+		<script src="interface/my-shopping.json"></script>
+		<script type="text/javascript" src="js/home.js" ></script>
+		<script>
+			window.onload = function() {
+				console.log(my_shopping);
+				var menu_title = document.getElementById("menu_title");
+				var oUl = document.createElement("ul");
+				oUl.id = "shop_type";
+				menu_title.appendChild(oUl);
+				var shop_type = document.getElementById('shop_type');
+				for (var i = 0; i <= my_shopping.type.length - 1; i++) {
+					var oLi = document.createElement("li");
+					var text = document.createTextNode(my_shopping.type[i]);
+					oLi.appendChild(text);
+					shop_type.appendChild(oLi);
+				}
+			}
+		</script>
+		<script>
+			$(function() {
+				var result = my_shopping.shop;
+				$.each(result, function(key, value) {
+					$(".shop ul").append(shop(key, value));
+				});
+			})
+
+			function shop(key, value) {
+				var template = `
+				<li>
+					<a href="">
+						<slide class="li_img_wap">
+							<img src="`+ value.thumb +`">
+						</slide>
+						<slide class="li_info">
+							<h3>`+ value.title +`</h3>
+							<div class="lii_price">`+ value.price +`</div>
+							<p class="lii_sold"><span>已售：`+ value.sold +`</span><span>收藏：`+ value.collect +`</span></p>
+						</slide>
+					</a>
+				</li>`
+
+				return template;
+			}
+		</script>
+	</head>
+
+	<body>
+		<nav></nav>
+		<div class="container mall">
+			<menu class="menu" id="menu_title"></menu>
+			<article class="shop">
+				<ul></ul>
+			</article>
+		</div>
+		<footer></footer>
+	</body>
+
+</html>

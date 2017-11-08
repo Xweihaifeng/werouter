@@ -1,0 +1,59 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+        <title> ionic 滚动 </title>
+        <link href="https://cdn.bootcss.com/ionic/1.3.2/css/ionic.css" rel="stylesheet">
+        <script src="https://cdn.bootcss.com/ionic/1.3.2/js/ionic.bundle.min.js"></script>
+        <script type="text/javascript">
+            angular.module('ionicApp', ['ionic'])
+
+            .controller('SlideController', function($scope) {
+              
+                $scope.myActiveSlide = 0;
+              
+            })
+        </script>
+        <style type="text/css">
+            .slider {
+                height: 100%;
+            }
+            .slider-slide {
+                color: #fff; 
+                background-color: #fff;
+                text-align: center; 
+                font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; font-weight: 300; }
+            .banner1 {
+                background-color: #ccc;
+            }
+            .banner2 {
+                background-color: #eee;
+            }
+            .banner3 {
+                background-color: #ccc;
+            }
+            .box{ 
+                height:100%; 
+            } 
+            .box h1{
+                position: relative;
+                top: 50%;
+                transform: translateY(-50%); 
+            }
+        </style>
+    </head>
+
+    <body ng-app="ionicApp" animation="slide-left-right-ios7" ng-controller="SlideController">
+        <ion-slide-box active-slide="myActiveSlide">
+            <ion-slide>
+                <div class="box banner1"><h1>BLUE</h1></div>
+            </ion-slide>
+            <ion-slide>
+                <div class="box banner2"><h1>YELLOW</h1></div>
+            </ion-slide>
+            <ion-slide>
+                <div class="box banner3"><h1>PINK</h1></div>
+            </ion-slide>
+        </ion-slide-box>
+    </body>
+</html>
