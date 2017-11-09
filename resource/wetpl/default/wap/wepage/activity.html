@@ -7,18 +7,33 @@
     <link rel="stylesheet" href="css/home.css"/>
     <link rel="stylesheet" href="css/act.css"/>
     <link rel="stylesheet" href="css/wepage.css"/>
-    <script src="js/zepto.min.js"></script>
-    <!--<script src="js/vue.min.js"></script>-->
+    <link rel="stylesheet" href="css/liMarquee.css"/>
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/jquery.liMarquee.js"></script>
     <script src="interface/activity.json"></script>
     <script src="interface/my-activity.json"></script>
     <script src="js/home.js"></script>
     <title></title>
 </head>
 <body>
+    <style>
+        #container {
+            padding-top: 0.57rem!important;
+        }
+    </style>
     <nav></nav>
-
+    <div class="act-sound">
+        <img src="img/sound.svg" alt="" />
+    </div>
+    <div class="str1 str_wrap">
+        <span>Javascript是一种基于（Object）和事件驱动并具有安全性能的脚本语言。</span>
+        <span>Javascript是一种通用的脚本编程语言</span>
+    </div>
     <div id="container"></div>
-
     <footer></footer>
+
+    <script>
+        $('.str1').liMarquee();
+    </script>
 </body>
 </html>

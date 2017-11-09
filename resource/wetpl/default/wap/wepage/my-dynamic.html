@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/home.css"/>
+    <link rel="stylesheet" href="css/act.css"/>
+    <link rel="stylesheet" href="css/article.css"/>
+    <link rel="stylesheet" href="css/shopping.css"/>
+    <script src="js/zepto.min.js"></script>
+    <script src="interface/activity.json"></script>
+    <script src="interface/article.json"></script>
+    <script src="interface/shopping.json"></script>
+    <script src="js/home.js"></script>
+    <title></title>
+</head>
+<body>
+    <style>
+        .act-content {
+            display: flex;
+            background: #ffffff;
+            padding: 0.15rem 0 0.15rem 0.05rem;
+            padding-left: 0.15rem;
+            margin-right: 0;
+            border-bottom: 1px solid #e6e6e6;
+        }
+
+        .act-cont {
+            width: auto;
+            font-size: 0.13rem;
+        }
+
+        .art-content {
+            display: flex;
+            padding: 0.15rem 0 0.15rem 0.05rem;
+            padding-left: 0.15rem;
+            background: #ffffff;
+            border-bottom: 1px solid #e6e6e6;
+        }
+
+        .act-cont-time, .act-cont-info {
+            font-size: 0.12rem;
+        }
+
+        .art-content img {
+            width: 1rem;
+            height: 0.625rem;
+            display: block;
+        }
+
+        .art-content span:last-child {
+            font-size: 0.13rem;
+            padding-left: 0.64rem;
+            padding-right: 0.1rem;
+        }
+
+        .lii_sold { padding: 0.05rem 0.05rem 0.1rem 0.1rem; background-color: #ffffff; border-bottom: 1px solid #e6e6e6;}
+        .lii_sold > a { display: flex; color: #333; }
+        .lii_sold > a > slide.li_img_wap { display: inline-flex; align-items: center; }
+        .lii_sold > a > slide.li_img_wap > img { width: 1rem; height: 0.625rem; border: 1px solid #eee; margin: 0 0.05rem; background-color: #fff; }
+        .lii_sold > a > slide.li_info { overflow: hidden; }
+        .lii_sold > a > slide.li_info > h3 { font-size: 0.14rem; font-weight: unset; max-height: 0.32rem; overflow-y: hidden; padding: 0.025rem 0.05rem 0.025rem 0; height: 0.16rem;
+        .lii_sold > a > slide.li_info > .lii_price { font-size: 0.11rem; color: #f00; }
+        .lii_sold > a > slide.li_info > .lii_sold { font-size: 0.11rem;  color: #9b9b9b; }
+        .lii_sold span { padding-right: 0.1rem; }
+    </style>
+
+    <nav></nav>
+    <div id="container" class="my_container"></div>
+    <footer></footer>
+</body>
+</html>
