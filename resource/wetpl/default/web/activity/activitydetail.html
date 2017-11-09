@@ -27,7 +27,13 @@
     <script src="/common/js/swiper-3.3.1.min.js"></script>
     <script src="/common/js/buttons.js"></script>
      <script type="text/javascript" src="{{PATH_TML}}shopping/js/jquery.qrcode.min.js"></script>
-    <style>::-webkit-scrollbar { width: 0; }</style>
+    <style>
+    ::-webkit-scrollbar { width: 0; }
+    html {
+        position: absolute!important;
+        overflow-y: auto!important;
+    }
+    </style>
 </head>
 <body style="width: 1366px;background: url(/common/img/dibu.jpg)">
     <!-- 登录部分 -->
