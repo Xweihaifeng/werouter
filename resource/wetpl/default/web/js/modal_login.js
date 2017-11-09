@@ -334,7 +334,8 @@ $(function() {
                 return false;
             }
             if (reg.test(phoneNum) && phoneNum.length == 11){
-/*                $.ajax({
+                $(".get-check").html(`<img src="/common/img/loading.gif" alt="" />`);
+              /*$.ajax({
                     url: USER_GETIMAGECODE + imageCodeID,
                     async: false,
                     success: function(data) {

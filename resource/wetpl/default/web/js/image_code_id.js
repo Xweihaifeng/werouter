@@ -312,6 +312,7 @@ $(function() {
                 return false;
             }
             if (reg.test(phoneNum) && phoneNum.length == 11){
+                $(".get-check").html(`<img src="/common/img/loading.gif" alt="" />`);
                 getCheck(phoneNum);
             } else {
                 layer.msg("手机号码错误", { time: 2500 });
