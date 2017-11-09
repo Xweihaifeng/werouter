@@ -8,10 +8,11 @@
 
 		<link rel="stylesheet" href="css/home.css" />
 		<link rel="stylesheet" href="css/my-shopping.css" />
-
+		<link rel="stylesheet" href="css/swiper.min.css"/>
 		<script type="text/javascript" src="js/zepto.min.js" ></script>
 		<script src="interface/my-shopping.json"></script>
 		<script type="text/javascript" src="js/home.js" ></script>
+		<script src="js/swiper-3.3.1.min.js"></script>
 		<script>
 			window.onload = function() {
 				console.log(my_shopping);
@@ -57,7 +58,20 @@
 	</head>
 
 	<body>
-		<nav></nav>
+	<div id="carousel">
+		<div class="swiper-container" id="my-swiper">
+			<div class="swiper-wrapper carousel">
+				<div class="swiper-slide">
+					<img src="img/default.png" alt=""/>
+				</div>
+				<div class="swiper-slide">
+					<img src="img/bg.png" alt=""/>
+				</div>
+			</div>
+			<div class="swiper-pagination"></div>
+		</div>
+	</div>
+	<nav></nav>
 		<div class="container mall">
 			<menu class="menu" id="menu_title"></menu>
 			<article class="shop">
@@ -66,5 +80,26 @@
 		</div>
 		<footer></footer>
 	</body>
+
+	<script>
+		var mySwiper = new Swiper ('#my-swiper', {
+			direction: 'horizontal',
+			loop: true,
+			speed: 1000,
+			autoplay : 3000,
+			autoplayDisableOnInteraction : false,
+			pagination: '.swiper-pagination',
+			paginationClickable :true,
+			nextButton: '.swiper-button-next',
+			prevButton: '.swiper-button-prev',
+			grabCursor : true
+		})
+
+		$("#my-swiper").hover(function(){
+			$(".swiper-button-prev, .swiper-button-next").css("opacity", "0.6");
+		}, function(){
+			$(".swiper-button-prev, .swiper-button-next").css("opacity", "0");
+		});
+	</script>
 
 </html>
