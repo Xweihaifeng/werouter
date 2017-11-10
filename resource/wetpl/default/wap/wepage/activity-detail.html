@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="shortcut icon" id="favicon" href="" />
+    <link rel="stylesheet" href="css/home.css"/>
+    <link rel="stylesheet" href="css/swiper.min.css"/>
+    <link rel="stylesheet" href="css/activity-detail.css"/>
+    <link rel="stylesheet" href="css/common.css"/>
+    <script src="js/zepto.min.js"></script>
+    <script src="js/vue.min.js"></script>
+    <script src="js/swiper-3.3.1.min.js"></script>
+    <script src="js/layui/layui.all.js"></script>
+    <title></title>
+</head>
+<body>
+    <div id="title">
+        <a href="my-activity.html"><img id="goback" src="img/back.svg" width="18" /></a>
+        <p>活动详情</p>
+        <img id="user" src="img/user.svg" width="20" />
+    </div>
+
+    <div id="carousel">
+        <div class="swiper-container" id="my-swiper">
+            <div class="swiper-wrapper carousel">
+                <div class="swiper-slide">
+                    <img src="img/bg1.jpg" alt=""/>
+                </div>
+                <div class="swiper-slide">
+                    <img src="img/bg2.jpg" alt=""/>
+                </div>
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+    </div>
+
+    <div id="container">
+        <div class="actd-title">相约珠峰：一起攀登珠穆朗玛峰</div>
+        <ul>
+            <li class="actd-time"><img src="img/clock.png" alt=""/><p>11-15 00:00 至 11-30 00:00 报名截止</p></li>
+            <li class="actd-map"><img src="img/address.png" alt=""/><p><a href="activity-map.html">中国西藏定日县扎西宗乡</a></p></li>
+            <li class="actd-zb"><img src="img/zb.png" alt=""/><p>微众中国</p></li>
+            <li class="actd-bm" style="background: #f6f6f6">已报名 <strong>3</strong> 人</li>
+            <li class="actd-users">
+                <img src="img/default.png" alt=""/>
+                <img src="img/avatar.png" alt=""/>
+                <img src="img/bg3.jpg" alt=""/>
+            </li>
+            <li style="background: #f6f6f6">嘉宾</li>
+            <li class="actd-guest">
+                <img src="img/bg3.jpg" alt=""/>
+                <div>
+                    <p>刘政</p>
+                    <p style="font-size: 0.12rem; color: #a6a6a6">领队</p>
+                </div>
+            </li>
+            <li class="actd-guest">
+                <img src="img/bg2.jpg" alt=""/>
+                <div>
+                    <p>李海红</p>
+                    <p style="font-size: 0.12rem; color: #a6a6a6">副队长</p>
+                </div>
+            </li>
+            <li style="background: #f6f6f6">活动详情</li>
+            <li class="actd-detail">
+                暂无
+            </li>
+        </ul>
+        <div class="actd-apply">立即报名</div>
+
+    </div>
+
+    <script>
+        var mySwiper = new Swiper ('#my-swiper', {
+            direction: 'horizontal',
+            loop: true,
+            speed: 1000,
+            autoplay : 3000,
+            autoplayDisableOnInteraction : false,
+            pagination: '.swiper-pagination',
+            paginationClickable :true,
+            nextButton: '.swiper-button-next',
+            prevButton: '.swiper-button-prev',
+            grabCursor : true
+        })
+
+        $(".actd-apply").click(function(){
+            layer.msg('活动暂未开始', {
+                time: 1500
+            })
+        })
+
+        $("#user").click(function(){
+            window.location.href = "info.html";
+        })
+
+        new Vue({
+
+        })
+    </script>
+</body>
+</html>

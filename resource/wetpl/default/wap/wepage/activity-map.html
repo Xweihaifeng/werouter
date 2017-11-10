@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <link rel="shortcut icon" id="favicon" href="" />
+    <link rel="stylesheet" href="css/activity-map.css" />
+    <link rel="stylesheet" href="http://cache.amap.com/lbs/static/main.css?v=1.0"/>
+    <script src="js/zepto.min.js"></script>
+    <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.1&key=505c22c58d12fca9a6606f7f2bb0d58f"></script>
+    <title></title>
+</head>
+<body>
+
+    <style type="text/css">
+        #tip {
+            height: 45px;
+            background-color: #fff;
+            padding-left: 10px;
+            padding-right: 10px;
+            border: 1px solid #969696;
+            position: absolute;
+            font-size: 12px;
+            right: 10px;
+            bottom: 20px;
+            border-radius: 3px;
+            line-height: 45px;
+        }
+    </style>
+
+    <div id="mapContainer"></div>
+    <div id="container"></div>
+    <div id="tip">
+        <div id="info">珠穆朗玛峰</div>
+        <div id="result"></div>
+    </div>
+    <script type="text/javascript">
+        //初始化地图对象，加载地图
+        ////初始化加载地图时，若center及level属性缺省，地图默认显示用户当前城市范围
+        var map = new AMap.Map('mapContainer', {
+            resizeEnable: true,
+            zoom:11,
+            center: [86.853092,28.137544]
+        });
+        //地图中添加地图操作ToolBar插件
+        map.plugin(['AMap.ToolBar'], function() {
+            //设置地位标记为自定义标记
+            var toolBar = new AMap.ToolBar();
+            map.addControl(toolBar);
+        });
+
+        /*var map, geolocation;
+        //加载地图，调用浏览器定位服务
+        map = new AMap.Map('container', {
+            resizeEnable: true
+        });
+        map.plugin('AMap.Geolocation', function() {
+            geolocation = new AMap.Geolocation({
+                enableHighAccuracy: true,//是否使用高精度定位，默认:true
+                timeout: 10000,          //超过10秒后停止定位，默认：无穷大
+                buttonOffset: new AMap.Pixel(10, 20),//定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
+                zoomToAccuracy: true,      //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
+                buttonPosition:'RB'
+            });
+            map.addControl(geolocation);
+            geolocation.getCurrentPosition();
+            AMap.event.addListener(geolocation, 'complete', onComplete);//返回定位信息
+            AMap.event.addListener(geolocation, 'error', onError);      //返回定位出错信息
+        });
+        //解析定位结果
+        function onComplete(data) {
+            var str=['定位成功'];
+            str.push('经度：' + data.position.getLng());
+            str.push('纬度：' + data.position.getLat());
+            if(data.accuracy){
+                str.push('精度：' + data.accuracy + ' 米');
+            }//如为IP精确定位结果则没有精度信息
+            str.push('是否经过偏移：' + (data.isConverted ? '是' : '否'));
+            document.getElementById('tip').innerHTML = str.join('<br>');
+        }
+        //解析定位错误信息
+        function onError(data) {
+            document.getElementById('tip').innerHTML = '定位失败';
+        }*/
+    </script>
+</body>
+</html>
