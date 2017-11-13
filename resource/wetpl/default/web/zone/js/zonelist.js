@@ -142,17 +142,21 @@ $(document).ready(function(){
 
                     if (info.nickname != null) {
                         $(".line-0").html(
-                            info.nickname + '<img src="/common/img/vrenzheng.png" alt="">'
+                            info.nickname + '<img class="rz" src="/common/img/vrenzheng.png" alt="">' +
+                            '<div class="collection"><img class="ct" src="/common/img/collect.svg" alt=""/><span>关注</span></div>'
                         );
+                        $('title').text('圈子-' + info.nickname + '的官方微主页');
                     } else {
                         if (info.real_name != null) {
                             $(".line-0").html(
                                 info.real_name + '<img src="/common/img/vrenzheng.png" alt="">'
                             );
+                            $('title').text('圈子-' + info.real_name + '的官方微主页');
                         } else {
                             $(".line-0").html(
                                 localStorage.getItem('title') + '官方微主页' + '<img src="/common/img/vrenzheng.png" alt="">'
                             );
+                            $('title').text('圈子-' + localStorage.getItem('title') + '官方微主页');
                         }
                     }
                     if(info.motto!=null && info.motto!=""){
@@ -245,7 +249,7 @@ $(document).ready(function(){
 
                     } else {
                         $(".line-0").html(
-                            data.data.title + '<img src="http://next.wezchina.com/images/vrenzheng.png" alt="">'
+                            data.data.title + '<img src="/common/img/vrenzheng.png" alt="" style="display: inline-block; margin-left: 10px;">'
                         );
                         $(".line-1").text("品牌介绍");
                         var logo = data.data.logo;
