@@ -44,6 +44,70 @@
 		<!-- 商城详情内容开始 -->
 		<section class="detail_section">
 
+			<!-- 保存商品开始 -->
+			<div class="save_shopping">
+				<slide class="detail_save">
+					<div class="detail_preservate"> 商品 </div>
+					<div class="detail_preservate_sub">
+						<li> 保存商品 </li>
+					</div>
+					<div class="detail_preservate_switch">
+						<em class="detail_btn2"></em>
+					</div>
+				</slide>
+				<slide class="detail_save_list">
+					<div><input type="text" value="" placeholder="cate_id" 		class="detail_save_1"></div>
+					<div><input type="text" value="" placeholder="title" 		class="detail_save_2"></div>
+					<div><input type="text" value="" placeholder="price" 		class="detail_save_3"></div>
+					<div><input type="text" value="" placeholder="marketprice"  class="detail_save_4"></div>
+					<div><input type="text" value="" placeholder="views" 		class="detail_save_5"></div>
+					<div><input type="text" value="" placeholder="collections" 	class="detail_save_6"></div>
+					<div><input type="text" value="" placeholder="cover" 		class="detail_save_7"></div>
+					<div><input type="text" value="" placeholder="picture" 		class="detail_save_8"></div>
+					<div><input type="text" value="" placeholder="summary" 		class="detail_save_9"></div>
+					<div><input type="text" value="" placeholder="note" 		class="detail_save_10"></div>
+					<div><input type="text" value="" placeholder="content" 		class="detail_save_11"></div>
+					<div><input type="text" value="" placeholder="sort" 		class="detail_save_12"></div>
+					<div><input type="text" value="" placeholder="stock" 		class="detail_save_13"></div>
+					<button class="detail_save_button"> 保存 </button>
+				</slide>
+				<script>
+					$(function() {
+						$(".detail_icon_img_menu").click(function() {
+							$(".save_shopping").toggle("slow");
+						});
+
+						$(".detail_save_button").click(function() {
+							var body = {}
+
+							body.cate_id 		= $(".detail_save_1").val();
+							body.title 			= $(".detail_save_2").val();
+							body.price 			= $(".detail_save_3").val();
+							body.marketprice 	= $(".detail_save_4").val();
+							body.views 			= $(".detail_save_5").val();
+							body.collections 	= $(".detail_save_6").val();
+							body.cover 			= $(".detail_save_7").val();
+							body.picture 		= $(".detail_save_8").val();
+							body.summary 		= $(".detail_save_9").val();
+							body.note 			= $(".detail_save_10").val();
+							body.content 		= $(".detail_save_11").val();
+							body.sort 			= $(".detail_save_12").val();
+							body.stock 			= $(".detail_save_13").val();
+
+							var options0 = $.post(apiUrl + "goods/store", body);
+							options0.done(function(data) {
+								if(data.code != 200) {
+									layer.msg(data.message, { time: 1500 });
+									return false;
+								}
+								layer.msg(data.message, { time: 1500 });
+							});
+						})
+					})
+				</script>
+			</div>
+			<!-- 保存商品结束 -->
+
 			<!-- 内容轮播开始 -->
 			<slide class="detail_swiper"></slide>
 			<!-- 内容轮播结束 -->

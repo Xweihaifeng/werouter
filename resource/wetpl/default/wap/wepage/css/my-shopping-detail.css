@@ -34,6 +34,14 @@ li {
 	list-style: none;
 }
 
+.block {
+	display: block !important;
+}
+
+.none {
+	display: none !important;
+}
+
 .clearfix:after{
 	visibility: hidden;
 	display: block;
@@ -174,7 +182,7 @@ li {
 }
 /* 内容轮播结束 */
 
-.detail_title, .detail_package, .detail_purchase, .detail_address, .detail_floor, .detail_eval, .detail_eval_list {
+.detail_title, .detail_package, .detail_purchase, .detail_address, .detail_floor, .detail_eval, .detail_eval_list, .detail_save, .detail_save_list {
 	display: block;
 	position: relative;
 	margin-bottom: 0.10rem;
@@ -261,6 +269,58 @@ li {
 	background-position: 3px 7px;
 }
 /* 查看套餐结束 */
+
+/* 保存商品开始 */
+.detail_save {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	font-size: 0.11rem;
+}
+
+.detail_preservate {
+	width: 0.35rem;
+	color: #81838e;
+}
+
+.detail_preservate_sub {
+	flex: 1;
+	color: #252525;
+}
+
+.detail_preservate_switch {
+	width: 20px;
+	height: 20px;
+}
+
+.detail_preservate_switch > em {
+	width: 20px;
+	height: 20px;
+	background-position: 3px 7px;
+}
+
+.detail_save_list {
+	margin-top: -0.1rem;
+	border-top: 1px solid #eee;
+}
+
+.detail_save_list input {
+    width: 80%;
+    min-height: 0.25rem;
+    margin: 0.01rem auto;
+    text-indent: 1em;
+    border: 1px solid #eee;
+    border-radius: 3px;
+}
+
+.detail_save_button {
+    width: 20%;
+    height: 0.25rem;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    margin: 0.05rem auto;
+}
+/* 保存商品结束 */
 
 /* 购买套餐开始 */
 .detail_purchase {
