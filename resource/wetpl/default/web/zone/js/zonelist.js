@@ -532,7 +532,28 @@ $(document).ready(function(){
                     if (data.data.userPageInfo.province != null) {
                         $(".oline-1 p").text(data.data.userPageInfo.province + ' ' + data.data.userPageInfo.city);
                     }
-                    wefriends(data.data.wnums, []);
+
+                    let m = 1; //倍率
+                    let n = 10; //时间
+                    let i = 0;
+                    let nums = data.data.wnums;
+                    var computeTime = function(sum, time) {
+                        if (sum > (time * 1000 / n)) {
+                            m = parseInt(sum / (time * 1000 / n));
+                        }
+                    }
+
+                    var numbers = setInterval(function(){
+                        if (i < (nums / 2)) {
+                            wefriends(i, []);
+                            i += m;
+                        } else {
+                            wefriends(nums, []);
+                            clearInterval(numbers);
+                        }
+                    }, n);
+
+                    computeTime(nums, 4);
                     $(".fans").html(`<a>Ta的粉丝(${data.data.fnums})</a>`);
                     $(".friends").html(`<a>Ta的关注(${data.data.gnums})</a>`);
                     data.data.flist.map(x => $("#fans").append(listTpl('fans-head', x)));
@@ -572,9 +593,9 @@ $(document).ready(function(){
 
     //微友
     var wefriends = function(nums, res) {
+        let n = parseInt(nums);
         nums = nums + '';
-        var len = nums.length;
-        var n = parseInt(nums);
+        let len = nums.length;
         if (len == 0) {
             $(".red").html(res.reverse().join(''));
         } else {
