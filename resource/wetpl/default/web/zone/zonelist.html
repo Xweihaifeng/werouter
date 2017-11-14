@@ -239,11 +239,10 @@
 
             var genMap = function(spread) {
                 let res = [];
-                spread.map(x => res.push({"name": String.prototype.ToUnicode(x.area_title), "value": x.nums}))
+//                spread.map(x => res.push({"name": String.prototype.ToUnicode(x.area_title), "value": x.nums}))
+                spread.map(x => res.push({"name": x.area_title, "value": x.nums}))
                 return res;
             }
-
-            console.log(String.prototype.ToUnicode("陕西"));
 
             var getLine = function(url) {
                 $.ajax({
@@ -260,9 +259,8 @@
                         Active = genArr(curve, arr);
                         // 地图
                         mapChart = echarts.init(document.getElementById('lanuch_main'));
-//                        mapData = eval('[{"name":"\u9655\u897f","value":1}]');
-                        mapData = eval('[{"name":"\u6E56\u5357","value":"8"},{"name":"\u91CD\u5E86","value":"4"},{"name":"\u56DB\u5DDD","value":"5"}]');
-                        console.log(JSON.stringify(genMap(spread)))
+                        mapData = genMap(spread);
+//                        console.log(mapData)
                         makeChart();
                     }
                 })

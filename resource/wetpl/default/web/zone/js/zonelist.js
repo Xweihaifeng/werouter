@@ -16,7 +16,7 @@ $(document).ready(function(){
     var url = window.location.pathname.split('/');
     var active = url.pop();
     var domain = url.slice(1, 2)[0];
-    console.log('domain', domain);
+    //console.log('domain', domain);
 
     $(".linkto").attr('href', '/' + domain)
 
