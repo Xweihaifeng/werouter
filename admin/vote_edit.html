@@ -38,6 +38,7 @@
 
     <link rel="stylesheet" href="plugins/timepicker/bootstrap-datetimepicker.min.css">
     <script src="plugins/timepicker/bootstrap-datetimepicker.min.js"></script>
+    <script type="text/javascript" src="js/My97DatePicker/WdatePicker.js"></script>
     
     <!-- Google Font -->
     <style>::-webkit-scrollbar { width: 0; }</style>
@@ -224,11 +225,15 @@
                                 <div class="form-group">
                                     <label for="" class="control-label col-sm-2">投票时间</label>
                                     <div class="col-sm-2">
-                                        <input id="datepicker" name="begin_time" type="text" value="" readonly class="form-control datepicker">
+                                    <input type="text" name="begin_time" id="begintime" class="form-control" value="" onfocus="WdatePicker({maxDate:$('#endtime').val()||'\'2099-11-20\''});">
+
+                                      <!--   <input id="datepicker" name="begin_time" type="text" value="" readonly class="form-control datepicker"> -->
                                         <i class="iconfont icon-shizhong"></i>
                                     </div>
                                     <div class="col-sm-2">
-                                        <input id="datepicker" name="end_time" type="text" value="" readonly class="form-control datepicker">
+                                    <input type="text" name="end_time" id="endtime" class="form-control" value="" onfocus="WdatePicker({minDate:$('#begintime').val(),maxDate:'2099-11-20'});">
+                                        
+                                        <!-- <input id="datepicker" name="end_time"  type="text" value="" readonly class="form-control datepicker"> -->
                                         <i class="iconfont icon-shizhong"></i>
                                     </div>
                                 </div>
