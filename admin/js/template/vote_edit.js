@@ -310,11 +310,11 @@ $(document).ready(function(){
           
      });
 
-    $('.datepicker').datetimepicker({
-            autoclose: true,
-            format: 'yyyy-mm-dd hh:ii:ss',
-            showMeridian:true
-    });
+    // $('.datepicker').datetimepicker({
+    //         autoclose: true,
+    //         format: 'yyyy-mm-dd hh:ii:ss',
+    //         showMeridian:true
+    // });
 
     
 
