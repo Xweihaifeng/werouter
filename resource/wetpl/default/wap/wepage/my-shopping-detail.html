@@ -17,6 +17,7 @@
 
 		<script type="text/javascript" src="{{PATH_TML}}wepage/js/jquery-3.2.1.min.js"></script>
 		<script type="text/javascript" src="{{PATH_CONFIG}}"></script>
+		<script type="text/javascript" src="/common/layer-v3.0.3/layer-v3.0.3/layer/layer.js"></script>
 		<script type="text/javascript" src="{{PATH_TML}}wepage/js/swiper-3.3.1.min.js"></script>
 		<script type="text/javascript" src="{{PATH_TML}}wepage/js/my-shopping-detail.js"></script>
 	</head>
@@ -26,11 +27,13 @@
 		<!-- 商城详情头部开始 -->
 		<header class="detail_header">
 			<nav class="detail_nav">
-				<li class="detail_icon_img detail_icon_img_clear"></li>
+				<a href="javascript:void(0)" onclick="javascript:history.back(-1)">
+					<li class="detail_icon_img detail_icon_img_clear"></li>
+				</a>
 				<li class="detail_nav_title">
-					<slide> 商品 </slide>
-					<slide> 详情 </slide>
-					<slide> 评价 </slide>
+					<a href="javascript:void(0)"> 商品 </a href="javascript:void(0)">
+					<a href="javascript:void(0)"> 详情 </a href="javascript:void(0)">
+					<a href="/shopping/store">    评价 </a href="javascript:void(0)">
 				</li>
 				<li class="detail_icon_img detail_icon_img_menu"></li>
 			</nav>
@@ -197,18 +200,18 @@
 		<!-- 商城详情内容结束 -->
 
 		<!-- 商城详情底部开始 -->
-		<fooer class="detail_footer">
-				<div class="detail_footer_follow">
-					<div class="detail_footer_follow_img detail_btn1"></div>
-					关注
-				</div>
-				<div class="detail_footer_cart">
-					<div class="detail_footer_cart_img detail_btn1"></div>
-					购物车
-				</div>
-				<div class="detail_footer_join">加入购物车</div>
-				<div class="detail_footer_pay">立即购买</div>
-		</fooer>
+		<footer class="detail_footer">
+			<a href="javascript:void(0)" class="detail_footer_follow">
+				<div class="detail_footer_follow_img detail_btn1"></div>
+				关注
+			</a>
+			<a href="/cart" class="detail_footer_cart">
+				<div class="detail_footer_cart_img detail_btn1"></div>
+				购物车
+			</a>
+			<a href="javascript:void(0)" class="detail_footer_join">加入购物车</a>
+			<a href="javascript:void(0)" class="detail_footer_pay">立即购买</a>
+		</footer>
 		<!-- 商城详情底部结束 -->
 	</body>
 

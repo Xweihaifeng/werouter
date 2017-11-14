@@ -4,7 +4,9 @@
 
 $(function() {
 
-    var token = window.localStorage.getItem('token');
+    // var token = window.localStorage.getItem('token'),
+    var token = "eyJpdiI6IjFcL2VKSlR6VVZUSm1pQVwvUVwvSXFUZ2c9PSIsInZhbHVlIjoiZDMyREwyYjVoXC9ab2lwK0hCSjExN1JkemFnVUtqcUMzanNHVjhjMUJnZFwvNzNwOXVIS1NwZ1FGOUh5SWZFcFNuNys2ODB3V1BmRTdwWGY2bmcxZlFxWGZ1T3hyb1JuUkVlVFNyV094S3JhUT0iLCJtYWMiOiIxMzkwOGI2ODNjMmFmZGE5NTNiOGQ5MTAyYWNmMDliZjgxYjIyOGQxN2E0MGM1ZTRhZTE5NGExMjczY2YwNWQ3In0=",
+    weid = "21aea730-abec-11e7-a919-9b1d4a41c921";
     if(token) {
         $.ajaxSetup({
             global: true,
@@ -71,7 +73,7 @@ $(function() {
 		});
 	});
 
-	var options1 = $.get(GOODS_DETAIL + "/21aea730-abec-11e7-a919-9b1d4a41c921");
+	var options1 = $.get(GOODS_DETAIL + "/" + weid);
 	options1.done(function(data) {
 		console.log(data)
 		if(data.code != 200) {
@@ -80,7 +82,6 @@ $(function() {
 
 		var result = data.data;
 		$(".detail_title").html(detail_title(result));
-
 		$(".detail_swiper").html(detail_swiper(result));
 		
 		// 商城详情内容轮播
@@ -99,4 +100,23 @@ $(function() {
 	options1.fail(function(error) {
 		console.error(error);
 	});
+
+	$(".detail_footer_join").click(function() {
+		var body = {
+			goods_id : weid,
+			goods_num: 1
+		}
+		var options2 =  $.post(apiUrl + "cart/store", body);
+		options2.done(function(data) {
+			console.log(data);
+			if(data.code != 200) {
+				layer.msg(data.message, { time: 1500 });
+				return false;
+			}
+			layer.msg(data.message, { time: 1500 });
+		});
+		options2.fail(function(error) {
+			console.error(error);
+		});
+	})
 });
