@@ -534,13 +534,13 @@ $(document).ready(function(){
                     }
                     wefriends(data.data.wnums, []);
                     $(".fans").html(`<a>Ta的粉丝(${data.data.fnums})</a>`);
-                    $(".friends").html(`<a>Ta的粉丝(${data.data.gnums})</a>`);
+                    $(".friends").html(`<a>Ta的关注(${data.data.gnums})</a>`);
                     data.data.flist.map(x => $("#fans").append(listTpl('fans-head', x)));
                     data.data.glist.map(x => $("#friends").append(listTpl('friends-head', x)));
 
                     $(".fans-head, .friends-head").click(function(e){
                         let domain = $(e.target).attr('id');
-                        windows.location.href = '/' + domain;
+                        window.location.href = '/' + domain;
                         //console.log(domain);
                     });
 
