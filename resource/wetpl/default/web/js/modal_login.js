@@ -376,7 +376,7 @@ $(function() {
                     showLogin = false;
                     isLogin = true;
                     isCheckNum = false;
-                    window.location.href = '/user/';
+                    window.location.href = window.location.href;
                 } else {
                     lock = false;
                     clearInterval(count);

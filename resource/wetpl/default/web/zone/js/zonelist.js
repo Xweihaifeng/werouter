@@ -143,7 +143,7 @@ $(document).ready(function(){
                     if (info.nickname != null) {
                         $(".line-0").html(
                             info.nickname + '<img class="rz" src="/common/img/vrenzheng.png" alt="">' +
-                            '<div class="collection"><img class="ct" src="/common/img/collect.svg" alt=""/><span>关注</span></div>'
+                            '<div class="collection"><img class="ct" src="/common/img/collect.svg" alt=""/><span class="wd">关注</span></div>'
                         );
                         $('title').text('圈子-' + info.nickname + '的官方微主页');
                     } else {
@@ -168,8 +168,10 @@ $(document).ready(function(){
                     $(".line-1").text(info.motto);
                     // $(".oline-2").find("span").eq(1).text(info.motto);
                     $(".user-cnt").text(info.real_name);
-                    artCount(weid);
-                    countinfo(weid);
+
+                    genListTpl(apiUrl + 'circel/index?domain=' + domain.substr(1))
+                    //artCount(weid);
+                    //countinfo(weid);
                     // artTypeList(weid);
                 } else {
                     layer.msg("请登录后浏览", {
@@ -317,7 +319,7 @@ $(document).ready(function(){
         __init(domain);
     }
 
-    var artCount = function(weid){
+    /*var artCount = function(weid){
         $.ajax({
             url: ARTICLES_LISTCOUNT + "?userId=" + weid,
             type: 'get',
@@ -348,7 +350,7 @@ $(document).ready(function(){
                 console.log(xhr);
             }
         })
-    }
+    }*/
 
     //主页初始化
     /*var init = function(token){
@@ -409,5 +411,181 @@ $(document).ready(function(){
     }
 
     init(localStorage.getItem('token'));
+
+    //TA的粉丝/TA他的关注
+    var listTpl = function(cid, data) {
+        //let avatar = apiUrl + data.avatar;
+        let avatar = '';
+        let nickname = ''
+        if (data.nickname != null) {
+            nickname = data.nickname;
+        }
+        if (data.avatar != null) {
+            avatar = 'http://images.new.wezchina.com/' + data.avatar;
+        } else {
+            avatar = '/common/img/page.png';
+        }
+        let tpl = `
+            <div class="${cid}" title="${nickname}">
+                <img id="${data.domain}" style="border: 1px solid #ccc; border-radius: 50%; height: 100%;  width: 100%; " src="${avatar}" width="54" />
+            </div>
+        `
+        return tpl;
+    }
+
+    var genFans = function(url) {
+        $.ajax({
+            url: url,
+            type: 'GET',
+            headers: {
+                'Token': window.localStorage.getItem("token")
+            },
+            success: function (data) {
+                $(".fans").html(`<a>Ta的粉丝(${data.data.fnums})</a>`);
+                $(".friends").html(`<a>Ta的粉丝(${data.data.gnums})</a>`);
+                $("#fans").html('');
+                $("#friends").html('');
+                data.data.flist.map(x => $("#fans").append(listTpl('fans-head', x)));
+                data.data.glist.map(x => $("#friends").append(listTpl('friends-head', x)));
+            }
+        })
+    }
+
+    //关注
+    var follow = function(url) {
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: {
+                'domain': domain.substr(1),
+                'type': 2
+            },
+            headers: {
+                'Token': window.localStorage.getItem("token")
+            },
+            success: function(data) {
+                console.log(data)
+                if (data.code == 200) {
+                    $(".ct").attr('src', '/common/img/collected.svg');
+                    $(".wd").text('已关注');
+                    layer.msg("关注成功", {
+                        time: 1500
+                    });
+                    genFans(apiUrl + 'circel/index?domain=' + domain.substr(1))
+                }
+            },
+            error: function(xhr) {
+                console.log(xhr)
+            }
+        })
+    }
+
+    //取消关注
+    var cancelFollow = function(url) {
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: {
+                'domain': domain.substr(1),
+                'type': 2
+            },
+            headers: {
+                'Token': window.localStorage.getItem("token")
+            },
+            success: function(data) {
+                console.log(data)
+                if (data.code == 200) {
+                    $(".ct").attr('src', '/common/img/collect.svg');
+                    $(".wd").text('关注');
+                    layer.msg("取消关注成功", {
+                        time: 1500
+                    })
+                    genFans(apiUrl + 'circel/index?domain=' + domain.substr(1))
+                }
+            },
+            error: function(xhr) {
+                console.log(xhr)
+            }
+        })
+    }
+
+    //写入圈子页面数据
+    var genListTpl = function(url) {
+        $.ajax({
+            url: url,
+            type: 'GET',
+            headers: {
+                'Token': window.localStorage.getItem("token")
+            },
+            success: function(data) {
+                console.log(data)
+                if (data.code == 200) {
+                    var isLike;
+                    var isFollow = data.data.if_follow;
+                    if (isFollow == 0) {
+                        isLike = false;
+                    } else if (isFollow == 1) {
+                        isLike = true;
+                        $(".ct").attr('src', '/common/img/collected.svg');
+                        $(".wd").text('已关注');
+                    }
+                    $(".user-art").children('div:eq(0)').text(data.data.article_count);
+                    $(".user-proj").children('div:eq(0)').text(data.data.project_count);
+                    $(".user-type").children('div:eq(0)').text(data.data.activity_count);
+                    if (data.data.userPageInfo.province != null) {
+                        $(".oline-1 p").text(data.data.userPageInfo.province + ' ' + data.data.userPageInfo.city);
+                    }
+                    wefriends(data.data.wnums, []);
+                    $(".fans").html(`<a>Ta的粉丝(${data.data.fnums})</a>`);
+                    $(".friends").html(`<a>Ta的粉丝(${data.data.gnums})</a>`);
+                    data.data.flist.map(x => $("#fans").append(listTpl('fans-head', x)));
+                    data.data.glist.map(x => $("#friends").append(listTpl('friends-head', x)));
+
+                    $(".fans-head, .friends-head").click(function(e){
+                        let domain = $(e.target).attr('id');
+                        windows.location.href = '/' + domain;
+                        //console.log(domain);
+                    })
+
+                    //关注
+                    $(".line-0").click(function(e){
+                        var ls = ['ct', 'wd', 'collection'];
+                        var cid = $(e.target).attr('class');
+                        if (ls.indexOf(cid) != -1) {
+                            if(isFollow == -1) {
+                                $("#modal_login").fadeIn(300);
+                            } else {
+                                if (!isLike) {
+                                    isLike = true;
+                                    follow(apiUrl + 'circel/relationship');
+                                } else {
+                                    isLike = false;
+                                    cancelFollow(apiUrl + 'circel/quxiao');
+                                }
+                            }
+                        }
+                    })
+                }
+            },
+            error: function(xhr) {
+                console.log(xhr)
+            }
+        })
+    }
+
+    //微友
+    var wefriends = function(nums, res) {
+        nums = nums + '';
+        var len = nums.length;
+        var n = parseInt(nums);
+        if (len == 0) {
+            $(".red").html(res.reverse().join(''));
+        } else {
+            res.push(`<li>${n % 10}</li>`);
+            wefriends(nums.substr(0, len - 1), res);
+        }
+    }
+
+    //用户认证 user_cert != null
 
 })
