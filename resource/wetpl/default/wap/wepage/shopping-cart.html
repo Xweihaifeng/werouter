@@ -1,256 +1,260 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <link rel="stylesheet" href="{{PATH_TML}}wepage/css/shopping-cart.css">
-    <title>购物车页面</title>
-    <script src="{{PATH_TML}}wepage/js/jquery-3.2.1.min.js"></script>
-    <script src="{{PATH_TML}}wepage/js/vue.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.3.4"></script>
 
-</head>
-<body>
-<div id="shopCart">
-    <header>
-        <span>购物车</span>
-        <a class="back"></a>
-    </header>
-    <div class="main">
-        <div class="address">
-            <span>
-                <img src="{{PATH_TML}}wepage/img/location.png" alt="">
-                西安
-            </span>
-            <span>编辑商品</span>
-        </div>
+<html>
 
-        <div class="store" v-for="(store,pIndex) in list">
-            <div class="name">
-                <label class="circle" :class="{'checked-item-circle' : store.mall.pCheck}" :for="pIndex"><input @click="selectStore(store);" v-model="store.mall.pCheck" :id="pIndex" :value="pIndex" type="checkbox"></label>
-                <p>
-                    <i></i>
-                    <span>{{store.mall.title}}</span>
-                </p>
-            </div>
-            <ul>
-                <li v-for="(item,index) in store.goods">
-                    <label class="circle" :class="{'checked-item-circle' : item.checked}" :for="pIndex+''+index">
-                        <input @click="selectItem(store,item,index)" v-model="item.checked" class="circle" :id="pIndex+''+index" type="checkbox"></label>
-                    <img :src="'http://images.new.wezchina.com/' + item.cover" alt="">
-                    <div class="product">
-                        <p class="des">{{item.title}}</p>
-                        <p class="price">
-                            <span>{{item.price * item.selectNum}}</span>
-                            <label>
-                                <span @click="reduceNum(item,store)">-</span>
-                                <span>{{item.selectNum ? item.selectNum : 1}}</span>
-                                <span @click="addNum(item,store)">+</span>
-                            </label>
-                        </p>
-                        <p class="operation">
-                            <span>删除</span>
-                            <span>移入关注</span>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+        <title>购物车页面</title>
+
+        <link rel="stylesheet" href="{{PATH_TML}}wepage/css/shopping-cart.css">
+
+        <script src="{{PATH_TML}}wepage/js/jquery-3.2.1.min.js"></script>
+        <script src="{{PATH_TML}}wepage/js/vue.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.3.4"></script>
+
+    </head>
+    <body>
+        <div id="shopCart">
+            <header>
+                <span>购物车</span>
+                <a class="back"></a>
+            </header>
+            <div class="main">
+                <div class="address">
+                    <span>
+                        <img src="{{PATH_TML}}wepage/img/location.png" alt="">
+                        西安
+                    </span>
+                    <span>编辑商品</span>
+                </div>
+
+                <div class="store" v-for="(store,pIndex) in list">
+                    <div class="name">
+                        <label class="circle" :class="{'checked-item-circle' : store.mall.pCheck}" :for="pIndex"><input @click="selectStore(store);" v-model="store.mall.pCheck" :id="pIndex" :value="pIndex" type="checkbox"></label>
+                        <p>
+                            <i></i>
+                            <span>{{store.mall.title}}</span>
                         </p>
                     </div>
-                </li>
-            </ul>
-            <div class="store-count">总计：￥<span>{{store.storeAllMoney}}</span></div>
+                    <ul>
+                        <li v-for="(item,index) in store.goods">
+                            <label class="circle" :class="{'checked-item-circle' : item.checked}" :for="pIndex+''+index">
+                                <input @click="selectItem(store,item,index)" v-model="item.checked" class="circle" :id="pIndex+''+index" type="checkbox"></label>
+                            <img :src="'http://images.new.wezchina.com/' + item.cover" alt="">
+                            <div class="product">
+                                <p class="des">{{item.title}}</p>
+                                <p class="price">
+                                    <span>{{item.price * item.selectNum}}</span>
+                                    <label>
+                                        <span @click="reduceNum(item,store)">-</span>
+                                        <span>{{item.selectNum ? item.selectNum : 1}}</span>
+                                        <span @click="addNum(item,store)">+</span>
+                                    </label>
+                                </p>
+                                <p class="operation">
+                                    <span>删除</span>
+                                    <span>移入关注</span>
+                                </p>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="store-count">总计：￥<span>{{store.storeAllMoney}}</span></div>
+                </div>
+            </div>
+            <footer>
+                <label :class="{'checked-item-circle' : allChecked}" for="all">
+                    <input @click="selectAll()" v-model="allChecked" class="circle" id="all" type="checkbox">
+                </label>
+                <div>
+                    <p>
+                    <span>
+                        总计：
+                        <strong>￥{{money}}</strong>
+                    </span>
+                        <span>总额￥{{money}} 立减￥0.00</span>
+                    </p>
+                    <a :class="{'red-bg' : money>0}">去结算
+                        <small>({{selectList.length}})件</small>
+                    </a>
+                </div>
+            </footer>
         </div>
-    </div>
-    <footer>
-        <label :class="{'checked-item-circle' : allChecked}" for="all">
-            <input @click="selectAll()" v-model="allChecked" class="circle" id="all" type="checkbox">
-        </label>
-        <div>
-            <p>
-            <span>
-                总计：
-                <strong>￥{{money}}</strong>
-            </span>
-                <span>总额￥{{money}} 立减￥0.00</span>
-            </p>
-            <a :class="{'red-bg' : money>0}">去结算
-                <small>({{selectList.length}})件</small>
-            </a>
-        </div>
-    </footer>
-</div>
 
-<script>
+        <script>
 
-    var app = new Vue({
-        el : "#shopCart",
-        data : {
-            allChecked:false,
-            list:[],
-            selectList : [],
-            money :0.00
-        },
-        mounted : function(){
-            this.$http.get('{{PATH_TML}}wepage/mock/cart.json').then(function (res) {
-                this.list = res.data.data.list;
-            })
-        },
-        methods:{
-            selectStore : function (storeObj) {
-                storeObj.mall.pCheck = !storeObj.mall.pCheck;
-                storeObj.storeAllMoney = 0.00;
-                this.money = 0;
-                var len = storeObj.goods.length;
-                for(var i=0;i<len;i++){
-                    storeObj.goods[i].checked = storeObj.mall.pCheck;
-                    if(storeObj.mall.pCheck){
-                        var isFind = this.selectList.filter(function (t) { return t.weid === storeObj.goods[i].weid });
-                        if(!isFind.length){
-                            this.selectList.push(storeObj.goods[i]);
-                        }
-                        storeObj.storeAllMoney += storeObj.goods[i].price * storeObj.goods[i].selectNum;
-                    }else{
-                        for(var a=0;a<this.selectList.length;a++){
-                            if(storeObj.goods[i]){
-                                if(this.selectList[a].weid === storeObj.goods[i].weid){
-                                    this.selectList.splice(a,1)
+            var app = new Vue({
+                el : "#shopCart",
+                data : {
+                    allChecked:false,
+                    list:[],
+                    selectList : [],
+                    money :0.00
+                },
+                mounted : function(){
+                    this.$http.get('{{PATH_TML}}wepage/mock/cart.json').then(function (res) {
+                        this.list = res.data.data.list;
+                    })
+                },
+                methods:{
+                    selectStore : function (storeObj) {
+                        storeObj.mall.pCheck = !storeObj.mall.pCheck;
+                        storeObj.storeAllMoney = 0.00;
+                        this.money = 0;
+                        var len = storeObj.goods.length;
+                        for(var i=0;i<len;i++){
+                            storeObj.goods[i].checked = storeObj.mall.pCheck;
+                            if(storeObj.mall.pCheck){
+                                var isFind = this.selectList.filter(function (t) { return t.weid === storeObj.goods[i].weid });
+                                if(!isFind.length){
+                                    this.selectList.push(storeObj.goods[i]);
+                                }
+                                storeObj.storeAllMoney += storeObj.goods[i].price * storeObj.goods[i].selectNum;
+                            }else{
+                                for(var a=0;a<this.selectList.length;a++){
+                                    if(storeObj.goods[i]){
+                                        if(this.selectList[a].weid === storeObj.goods[i].weid){
+                                            this.selectList.splice(a,1)
+                                        }
+                                    }
                                 }
                             }
                         }
-                    }
-                }
 
-                var goodsLen = 0;
-                for(var i=0;i<this.list.length;i++){
-                    goodsLen += this.list[i].goods.length;
-                    this.money += this.list[i].storeAllMoney
-                }
-
-                this.allChecked = (this.selectList.length === goodsLen)
-
-            },
-            selectItem : function (storeObj,itemObj,index){
-                itemObj.checked = !itemObj.checked;
-                var isAllCheck = storeObj.goods.filter(function (item) {
-                    return item.checked === false;
-                });
-                storeObj.mall.pCheck = (isAllCheck.length===0);
-                if(itemObj.checked){
-                    var isFind = this.selectList.filter(function (t) { return t.weid === itemObj.weid });
-                    if(!isFind.length){
-                        this.selectList.push(itemObj);
-                    }
-                }else{
-                    for(var i=0;i<this.selectList.length;i++){
-                        if(this.selectList[i].weid === itemObj.weid){
-                            this.selectList.splice(i,1)
+                        var goodsLen = 0;
+                        for(var i=0;i<this.list.length;i++){
+                            goodsLen += this.list[i].goods.length;
+                            this.money += this.list[i].storeAllMoney
                         }
-                    }
-                }
-                storeObj.storeAllMoney = 0.00;
-                this.money = 0.00;
-                var len = storeObj.goods.length;
-                for(var i=0;i<len;i++){
-                    if(storeObj.goods[i].checked){
-                        storeObj.storeAllMoney += storeObj.goods[i].price * storeObj.goods[i].selectNum;
-                    }
-                }
 
-                var goodsLen = 0;
-                for(var i=0;i<this.list.length;i++){
-                    goodsLen += this.list[i].goods.length;
-                    this.money += this.list[i].storeAllMoney
-                }
+                        this.allChecked = (this.selectList.length === goodsLen)
 
-                this.allChecked = (this.selectList.length === goodsLen)
-
-
-            },
-            addNum : function (item,storeObj) {
-                item.selectNum++;
-                if(item.selectNum > item.stock){
-                    item.selectNum = item.stock
-                }
-                item.checked = true;
-                var isAllCheck = storeObj.goods.filter(function (item) {
-                    return item.checked === false;
-                });
-                storeObj.mall.pCheck = (isAllCheck.length===0);
-
-
-                var isFind = this.selectList.filter(function (t) { return t.weid === item.weid });
-                if(!isFind.length){
-                    this.selectList.push(item);
-                }
-                storeObj.storeAllMoney = 0.00;
-                this.money = 0;
-                var len = storeObj.goods.length;
-                for(var i=0;i<len;i++){
-                    if(storeObj.goods[i].checked){
-                        storeObj.storeAllMoney += storeObj.goods[i].price * storeObj.goods[i].selectNum;
-                    }
-                }
-                var goodsLen = 0;
-                for(var i=0;i<this.list.length;i++){
-                    goodsLen += this.list[i].goods.length;
-                    this.money += this.list[i].storeAllMoney
-                }
-
-                this.allChecked = (this.selectList.length === goodsLen)
-
-
-            },
-            reduceNum : function (item,storeObj) {
-                item.selectNum--;
-                if(item.selectNum<=0){
-                    item.selectNum = 1;
-                }
-                item.checked = true;
-                var isAllCheck = storeObj.goods.filter(function (item) {
-                    return item.checked === false;
-                });
-                storeObj.mall.pCheck = (isAllCheck.length===0);
-
-
-                var isFind = this.selectList.filter(function (t) { return t.weid === item.weid });
-                if(!isFind.length){
-                    this.selectList.push(item);
-                }
-
-                storeObj.storeAllMoney = 0.00;
-                this.money = 0;
-                var len = storeObj.goods.length;
-                for(var i=0;i<len;i++){
-                    if(storeObj.goods[i].checked){
-                        storeObj.storeAllMoney += storeObj.goods[i].price * storeObj.goods[i].selectNum;
-                    }
-                }
-                var goodsLen = 0;
-                for(var i=0;i<this.list.length;i++){
-                    goodsLen += this.list[i].goods.length;
-                    this.money += this.list[i].storeAllMoney
-                }
-
-                this.allChecked = (this.selectList.length === goodsLen)
-
-            },
-            selectAll : function () {
-                this.allChecked = !this.allChecked;
-                this.money = 0;
-                this.selectList = [];
-                for(var i=0;i<this.list.length;i++){
-                    this.list[i].mall.pCheck = this.allChecked;
-                    this.list[i].storeAllMoney = 0.00;
-                    for(var a=0;a < this.list[i].goods.length;a++){
-                        this.list[i].goods[a].checked = this.allChecked;
-                        if(this.allChecked){
-                            this.selectList.push(this.list[i].goods[a]);
-                            this.list[i].storeAllMoney += this.list[i].goods[a].price * this.list[i].goods[a].selectNum;
+                    },
+                    selectItem : function (storeObj,itemObj,index){
+                        itemObj.checked = !itemObj.checked;
+                        var isAllCheck = storeObj.goods.filter(function (item) {
+                            return item.checked === false;
+                        });
+                        storeObj.mall.pCheck = (isAllCheck.length===0);
+                        if(itemObj.checked){
+                            var isFind = this.selectList.filter(function (t) { return t.weid === itemObj.weid });
+                            if(!isFind.length){
+                                this.selectList.push(itemObj);
+                            }
+                        }else{
+                            for(var i=0;i<this.selectList.length;i++){
+                                if(this.selectList[i].weid === itemObj.weid){
+                                    this.selectList.splice(i,1)
+                                }
+                            }
                         }
-                    }
-                    this.money += this.list[i].storeAllMoney;
-                }
+                        storeObj.storeAllMoney = 0.00;
+                        this.money = 0.00;
+                        var len = storeObj.goods.length;
+                        for(var i=0;i<len;i++){
+                            if(storeObj.goods[i].checked){
+                                storeObj.storeAllMoney += storeObj.goods[i].price * storeObj.goods[i].selectNum;
+                            }
+                        }
 
-            }
-        }
-    })
-</script>
-</body>
+                        var goodsLen = 0;
+                        for(var i=0;i<this.list.length;i++){
+                            goodsLen += this.list[i].goods.length;
+                            this.money += this.list[i].storeAllMoney
+                        }
+
+                        this.allChecked = (this.selectList.length === goodsLen)
+
+
+                    },
+                    addNum : function (item,storeObj) {
+                        item.selectNum++;
+                        if(item.selectNum > item.stock){
+                            item.selectNum = item.stock
+                        }
+                        item.checked = true;
+                        var isAllCheck = storeObj.goods.filter(function (item) {
+                            return item.checked === false;
+                        });
+                        storeObj.mall.pCheck = (isAllCheck.length===0);
+
+
+                        var isFind = this.selectList.filter(function (t) { return t.weid === item.weid });
+                        if(!isFind.length){
+                            this.selectList.push(item);
+                        }
+                        storeObj.storeAllMoney = 0.00;
+                        this.money = 0;
+                        var len = storeObj.goods.length;
+                        for(var i=0;i<len;i++){
+                            if(storeObj.goods[i].checked){
+                                storeObj.storeAllMoney += storeObj.goods[i].price * storeObj.goods[i].selectNum;
+                            }
+                        }
+                        var goodsLen = 0;
+                        for(var i=0;i<this.list.length;i++){
+                            goodsLen += this.list[i].goods.length;
+                            this.money += this.list[i].storeAllMoney
+                        }
+
+                        this.allChecked = (this.selectList.length === goodsLen)
+
+
+                    },
+                    reduceNum : function (item,storeObj) {
+                        item.selectNum--;
+                        if(item.selectNum<=0){
+                            item.selectNum = 1;
+                        }
+                        item.checked = true;
+                        var isAllCheck = storeObj.goods.filter(function (item) {
+                            return item.checked === false;
+                        });
+                        storeObj.mall.pCheck = (isAllCheck.length===0);
+
+
+                        var isFind = this.selectList.filter(function (t) { return t.weid === item.weid });
+                        if(!isFind.length){
+                            this.selectList.push(item);
+                        }
+
+                        storeObj.storeAllMoney = 0.00;
+                        this.money = 0;
+                        var len = storeObj.goods.length;
+                        for(var i=0;i<len;i++){
+                            if(storeObj.goods[i].checked){
+                                storeObj.storeAllMoney += storeObj.goods[i].price * storeObj.goods[i].selectNum;
+                            }
+                        }
+                        var goodsLen = 0;
+                        for(var i=0;i<this.list.length;i++){
+                            goodsLen += this.list[i].goods.length;
+                            this.money += this.list[i].storeAllMoney
+                        }
+
+                        this.allChecked = (this.selectList.length === goodsLen)
+
+                    },
+                    selectAll : function () {
+                        this.allChecked = !this.allChecked;
+                        this.money = 0;
+                        this.selectList = [];
+                        for(var i=0;i<this.list.length;i++){
+                            this.list[i].mall.pCheck = this.allChecked;
+                            this.list[i].storeAllMoney = 0.00;
+                            for(var a=0;a < this.list[i].goods.length;a++){
+                                this.list[i].goods[a].checked = this.allChecked;
+                                if(this.allChecked){
+                                    this.selectList.push(this.list[i].goods[a]);
+                                    this.list[i].storeAllMoney += this.list[i].goods[a].price * this.list[i].goods[a].selectNum;
+                                }
+                            }
+                            this.money += this.list[i].storeAllMoney;
+                        }
+
+                    }
+                }
+            })
+        </script>
+    </body>
 </html>
