@@ -15,7 +15,7 @@ function makeLineOption() {
             trigger: 'axis'
         },
         legend: {
-            show: false,
+            show: true,
             data: ['新增微友数', '活跃微友数']
         },
         toolbox: {
@@ -144,7 +144,7 @@ function makeMapOption() {
                 {start: 1000, end: 5000, color: '#C1E461'},
                 {start: 100, end: 1000, color: '#F4F77D'},
                 {start: 1, end: 100, color: '#CCCCCC'},
-                {start:0, end: 0, color: '#EEEEEE'}
+                {start: 0, end: 0, color: '#EEEEEE'}
             ]
         },
         layoutCenter: ['45%', '50%'],
@@ -226,7 +226,9 @@ function changeTime(timeType, fromUrl) {
  * @param requestData
  */
 function sendRequest(requestData, timeType, fromUrl) {
-    $.post(requestUrl, {titleData:requestData, timeType:timeType, fromUrl:fromUrl}, function (data) {
+    //$.post(requestUrl, {titleData:requestData, timeType:timeType, fromUrl:fromUrl}, function (data) {
+    $.get(requestUrl, function (data) {
+        console.log('echarts: ', data);
         eval(" var data = " + data);
         var resopnse = data.data;
         eval(" xTitle =" + resopnse.xTitle);

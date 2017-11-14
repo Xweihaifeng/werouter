@@ -159,6 +159,7 @@ $(document).ready(function(){
                             $('title').text('圈子-' + localStorage.getItem('title') + '官方微主页');
                         }
                     }
+
                     if(info.motto!=null && info.motto!=""){
                         $(".oline-2").find("span").eq(1).text(info.motto);
 
@@ -198,10 +199,8 @@ $(document).ready(function(){
                     localStorage.removeItem('token');
                 }*/
                 if (data.code == 200){
-                    console.log(data);
-                    if (data.data == null) {
-
-                    } else {
+                    //console.log(data);
+                    if (data.data != null) {
                         //微主页banner图
                         var bgLogo = data.data.background;
                         if (bgLogo != null) {
@@ -246,12 +245,11 @@ $(document).ready(function(){
                     localStorage.removeItem('token');
                 }*/
                 if (data.code == 200){
-                    console.log(data);
-                    if (data.data == null) {
-
-                    } else {
+                    //console.log(data);
+                    if (data.data != null) {
                         $(".line-0").html(
-                            data.data.title + '<img src="/common/img/vrenzheng.png" alt="" style="display: inline-block; margin-left: 10px;">'
+                            data.data.title + '<img src="/common/img/vrenzheng.png" alt="" style="display: inline-block; margin-left: 10px;">' +
+                            '<div class="collection"><img class="ct" src="/common/img/collect.svg" alt=""/><span class="wd">关注</span></div>'
                         );
                         $(".line-1").text("品牌介绍");
                         var logo = data.data.logo;
@@ -262,7 +260,6 @@ $(document).ready(function(){
                             });
                         }
                     }
-
                 } else {
                     // layer.msg(data.message, {
                     //     time: 1500
@@ -288,14 +285,14 @@ $(document).ready(function(){
                     console.log(data.data);
                     if (data.data != null) {
                         userId = data.data.plat_user_id;
-                        console.log('userId:', userId);
-                        console.log('userDetail')
+                        //console.log('userId:', userId);
+                        //console.log('userDetail')
                         getUserInfo(USERDETAIL, "/" + userId);
                         hasDomain(userId);
                     } else {
                         domain = '';
                         getUserInfo(FOUNDER, '');
-                        console.log('router error')
+                        //console.log('router error')
                     }
                 } else {
                     //window.location.href = "/*";
@@ -545,7 +542,7 @@ $(document).ready(function(){
                         let domain = $(e.target).attr('id');
                         windows.location.href = '/' + domain;
                         //console.log(domain);
-                    })
+                    });
 
                     //关注
                     $(".line-0").click(function(e){
@@ -585,6 +582,8 @@ $(document).ready(function(){
             wefriends(nums.substr(0, len - 1), res);
         }
     }
+
+
 
     //用户认证 user_cert != null
 
