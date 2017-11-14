@@ -1,4 +1,9 @@
-@charset "utf-8";*/
+/**
+ * Created by weifeng on 2017/11/12.
+ */
+
+@charset "utf-8";
+
 * {
 	margin: 0;
 	padding: 0;
@@ -22,7 +27,7 @@ body {
 
 a {
 	text-decoration: none;
-	color: black;
+	display: inline-block;
 }
 
 li {
@@ -277,15 +282,16 @@ li {
 }
 
 .detail_selected_switch {
-	width: 20px;
-	height: 20px;
+    width: 20px;
+    height: 6px;
 }
 
 .detail_selected_switch > em {
-	width: 20px;
-	height: 20px;
-	color: #cecece;
-	background-position: 3px 7px;
+    width: 20px;
+    height: 6px;
+    color: #cecece;
+    background-position: -41px -16px;
+    background-size: 100px 100px !important;
 }
 /* 购买套餐结束 */
 
@@ -562,6 +568,7 @@ li {
 .detail_eval {
 	display: flex;
 	justify-content: space-between;
+	align-items: center;
 	font-size: 0.11rem;
 }
 
@@ -574,6 +581,7 @@ li {
 	width: auto;
 	height: 20px;
 	display: inline-flex;
+	align-items: center;
 }
 
 .detail_evaluate_switch_num {

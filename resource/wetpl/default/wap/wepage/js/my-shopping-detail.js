@@ -1,4 +1,19 @@
+/**
+ * Created by weifeng on 2017/11/12.
+ */
+
 $(function() {
+
+    var token = window.localStorage.getItem('token');
+    if(token) {
+        $.ajaxSetup({
+            global: true,
+            headers: {
+                'Token': token,
+            }
+        });
+    }
+
 	// 商城详情内容轮播
 	var mySwiper = new Swiper('#detail_swiper_img', {
 		direction: 'horizontal',
@@ -27,5 +42,10 @@ $(function() {
 		}, "slow", function() {
 			$(".detail_rddress_mask_content").hide();
 		});
+	});
+
+	var options1 = $.get("http://new.wezchina.com/api/goods/detail/80ecd160-b306-11e7-9ae5-5be3accfa823");
+	options1.done(function(data) {
+		console.log(data)
 	});
 });
