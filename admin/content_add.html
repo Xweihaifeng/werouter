@@ -166,11 +166,12 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="col-sm-2">
-                                            <div class="input-append date" id="datetimepicker" data-date-format="yyyy-mm-dd hh:ii:ss">
+                                            <!-- <div class="input-append date" id="datetimepicker" data-date-format="yyyy-mm-dd hh:ii:ss">
                                                 <input class="form-control" type="text" name="publish_time" placeholder="发布时间">
                                                 <span class="add-on"><i class="icon-remove"></i></span>
                                                 <span class="add-on"><i class="icon-th"></i></span>
-                                            </div>
+                                            </div> -->
+                                             <input type="text" name="publish_time"  class="form-control" value="" placeholder="发布时间" onfocus="WdatePicker({maxDate:'\'2099-11-20\''});">
                                         </div>
                                         <div class="col-sm-2">
                                             <select name="status" class="form-control">
@@ -419,7 +420,7 @@
         <!-- ckeditor -->
         <script src="plugins/ckeditor/ckeditor.js"></script>
         <script src="/common/sweetalert2/dist/sweetalert2.min.js"></script>
-
+        <script type="text/javascript" src="js/My97DatePicker/WdatePicker.js"></script>
 
 
         <script src="js/react.js"></script>
