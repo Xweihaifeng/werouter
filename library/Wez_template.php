@@ -4,7 +4,6 @@
 */
 class Wez_template
 {
-
 	private static $variable;
 
 	public static function init($file ,  $content , $config_file , $directory)
