@@ -3,32 +3,42 @@
 <head>
 	<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,viewport-fit=cover">
-    <title>Info</title>
-    <link rel="stylesheet" href="lib/weui.css" />
-    <link rel="stylesheet" href="css/info.css"/>
-    <script src="lib/jquery.min.js"></script>
+    <title></title>
+    <link rel="stylesheet" href="{{PATH_TML}}wepage/lib/weui.css" />
+    <link rel="stylesheet" href="{{PATH_TML}}wepage/css/info.css"/>
+    <script src="{{PATH_TML}}wepage/lib/jquery.min.js"></script>
+	<script src="{{PATH_CONFIG}}"></script>
+	<script src="{{PATH_TML}}wepage/js/vue.min.js"></script>
 </head>
 <body>
-<div class="box">
+<div id="app" class="box">
 	<div class="myInfo">
-		<span class="img"></span>
+		<span class="img"><img :src="avatar" alt=""/></span>
 		<span>
-			<p class="name">微信公众号</p>
-			<p class="wid">微信号：abcdf</p>
+			<p class="name">{{nickname}}</p>
+			<p class="wid">WEID：{{domain}}</p>
 		</span>
 	</div>
 	<div class="des">
 		<div>
-			<label style="display:table-cell">功能介绍</label>
-			<span style="display:table-cell">时代峻峰拉丝机地方啦时代峻峰卡洛斯接待来访说了的减肥啦卡萨丁了的说法是的发的是的减肥a</span>
+			<label style="display:table-cell">个人介绍</label>
+			<span style="display:table-cell">{{motto}}</span>
 		</div>
 		<div>
 			<label>账号主体</label>
-			<span>个人</span>
+			<span>{{domain}}</span>
 		</div>
+		<div>
+			<label>认证信息</label>
+			<span>{{domain}}</span>
+		</div>
+		<!--<div>
+			<label>所在地</label>
+			<span style="padding-left: 0.13rem;">陕西&nbsp;&nbsp;西安</span>
+		</div>-->
 	</div>
 	
-	<div class="user_select">
+	<!--<div class="user_select">
 		<div>
 			<label>接收文章推送</label>
             <input class="weui-switch" type="checkbox" checked="checked"/>
@@ -37,27 +47,78 @@
 			<label>置顶公众号</label>
 			<input class="weui-switch" type="checkbox"/>
 		</div>
-	</div>
+	</div>-->
 	<div class="history">
 		<label>
 			查看历史消息
-		</label>	
+		</label>
 	</div>
+	<!--<div class="history" style="display: flex;">
+		<label>
+			功能模块
+		</label>
+		<label style="display: flex">
+			<img src="{{PATH_TML}}wepage/img/tb2.png" alt=""/>
+			<img src="{{PATH_TML}}wepage/img/tb3.png" alt=""/>
+			<img src="{{PATH_TML}}wepage/img/tb4.png" alt=""/>
+			<img src="{{PATH_TML}}wepage/img/tb5.png" alt=""/>
+		</label>
+	</div>-->
 	<div class="foot">
 		<div>
-			<p class="enter">进入公众号</p>
+			<p class="enter" >关注</p>
 			<p>投诉</p>
 		</div>		
 	</div>
 </div>	
 <script>
 	$(document).ready(function(){
-		var scale = $('body').width()/320;
+		/*var scale = $('body').width()/320;
 		$('html').css('font-size', 100*scale + 'px')
 		$(window).resize(function(){
 			var scale = $('body').width()/320;
 			$('html').css('font-size', 100*scale + 'px')
+		})*/
+
+
+
+
+	})
+
+	var init = function(url, ref) {
+		$.ajax({
+			url: url,
+			type: 'get',
+			success: function(data){
+				console.log(data);
+				ref.avatar = 'http://images.new.wezchina.com/' + data.data.user.avatar;
+				ref.nickname = data.data.user.nickname;
+				ref.domain = data.data.user.domain;
+				ref.motto = data.data.user.motto;
+			}
 		})
+	}
+
+	new Vue({
+		el: '#app',
+		data: {
+			avatar: '',
+			nickname: '',
+			domain: '',
+			motto: '',
+
+		},
+		created: function(){
+			var _self = this;
+			init(apiUrl + 'circel/wcard/' + '983ad200-7698-11e7-87c1-41f823b6258c', _self);
+		},
+		methods: {
+			care: function(){
+				var _self = this;
+				$(".enter").text("进入公众号");
+			}
+		}
+
 	})
 </script>
 </body>
