@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <link rel="stylesheet" href="css/shopping-cart.css">
+    <link rel="stylesheet" href="{{PATH_TML}}wepage/css/shopping-cart.css">
     <title>购物车页面</title>
-    <script src="js/jquery-3.2.1.min.js"></script>
-    <script src="js/vue.min.js"></script>
+    <script src="{{PATH_TML}}wepage/js/jquery-3.2.1.min.js"></script>
+    <script src="{{PATH_TML}}wepage/js/vue.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.3.4"></script>
 
 </head>
@@ -19,7 +19,7 @@
     <div class="main">
         <div class="address">
             <span>
-                <img src="img/location.png" alt="">
+                <img src="{{PATH_TML}}wepage/img/location.png" alt="">
                 西安
             </span>
             <span>编辑商品</span>
@@ -88,7 +88,7 @@
             money :0.00
         },
         mounted : function(){
-            this.$http.get('mock/cart.json').then(function (res) {
+            this.$http.get('{{PATH_TML}}wepage/mock/cart.json').then(function (res) {
                 this.list = res.data.data.list;
             })
         },

@@ -12,28 +12,20 @@
 
 		<title> 商品详情 </title>
 
-		<link rel="stylesheet" type="text/css" href="{{PATH_TML}}wepage/css/swiper.min.css" />
-		<link rel="stylesheet" type="text/css" href="{{PATH_TML}}wepage/css/my-shopping-detail.css" />
+		<link rel="stylesheet" type="text/css" href="css/swiper.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/my-shopping-detail.css" />
 
-		<script type="text/javascript" src="{{PATH_TML}}wepage/js/jquery-3.2.1.min.js"></script>
-		<script type="text/javascript" src="{{PATH_CONFIG}}"></script>
-		<script type="text/javascript" src="{{PATH_TML}}wepage/js/swiper-3.3.1.min.js"></script>
-		<script type="text/javascript" src="{{PATH_TML}}wepage/js/my-shopping-detail.js"></script>
+		<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+		<script type="text/javascript" src="js/vue.min.js"></script>
+		<script type="text/javascript" src="js/swiper-3.3.1.min.js"></script>
+		<script type="text/javascript" src="js/my-shopping-detail.js"></script>
 	</head>
 
 	<body>
 
 		<!-- 商城详情头部开始 -->
-		<header class="detail_header">
-			<nav class="detail_nav">
-				<li class="detail_icon_img detail_icon_img_clear"></li>
-				<li class="detail_nav_title">
-					<slide> 商品 </slide>
-					<slide> 详情 </slide>
-					<slide> 评价 </slide>
-				</li>
-				<li class="detail_icon_img detail_icon_img_menu"></li>
-			</nav>
+		<header class="detail_header" id="detail_header">
+			<headers></headers>
 		</header>
 		<!-- 商城详情头部结束 -->
 
@@ -41,11 +33,34 @@
 		<section class="detail_section">
 
 			<!-- 内容轮播开始 -->
-			<slide class="detail_swiper"></slide>
+			<slide class="detail_swiper">
+				<div class="swiper-container" id="detail_swiper_img">
+					<div class="swiper-wrapper carousel">
+						<div class="swiper-slide">
+							<img src="img/img4.jpg" alt="" />
+						</div>
+						<div class="swiper-slide">
+							<img src="img/img3.jpg" alt="" />
+						</div>
+					</div>
+					<div class="swiper-pagination detail_pagination"></div>
+				</div>
+			</slide>
 			<!-- 内容轮播结束 -->
 
 			<!-- 商品描述开始 -->				
-			<slide class="detail_title"></slide>
+			<slide class="detail_title">
+				<slide class="detail_title_h1">
+					<span class="detail_title_text">三洋（SANYO）WF810326BS0S 8公斤变频滚筒洗衣机 多段加热洗涤 全模糊智能控制（银色）</span>
+				</slide>
+				<slide class="detail_price">
+					<div class="detail_price_count">￥<span>3000.00</span></div>
+					<div class="detail_price_cut"><button>降价通知</button></div>
+				</slide>
+				<slide class="detail_art">
+					<div>【裸价直击】买即赠电机10年包修服务，赠完即止！好评2.5万+，好评率96%，三洋变频电机，品质可靠，整机保修3年，使用放心，详询客服 <a href="#"> 点击查看详情 </a></div>
+				</slide>
+			</slide>
 			<!-- 商品描述结束 -->
 
 			<!-- 查看套餐开始 -->
@@ -79,7 +94,7 @@
 			<slide class="detail_rddress_mask_content" style="height: 0;">
 				<div class="detail_mask_top">
 					<div class="detail_mask_pic">
-						<img src="{{PATH_TML}}wepage/img/img6.jpg" alt="">
+						<img src="img/img6.jpg" alt="">
 					</div>
 					<div class="detail_mask_price">￥<span>450.00 </span></div>
 					<div class="detail_mask_close"><em class="detail_btn2"></em></div>
@@ -140,7 +155,7 @@
 			<!-- 商家店铺开始 -->
 			<slide class="detail_floor">
 				<div class="detail_store">
-					<div class="detail_flagship"> <img src="{{PATH_TML}}wepage/img/we-store.jpg" alt=""> </div>
+					<div class="detail_flagship"> <img src="img/we-store.jpg" alt=""> </div>
 					<div class="detail_flagship_sub">
 						<li> 毛菇琪琪女装旗舰店 </li>
 						<li> 毛菇琪琪女装旗舰店 </li>
@@ -181,12 +196,12 @@
 					</div>
 					<div class="detail_evaluate_cont"> 宝贝质量很好，是我喜欢的款式，大爱，要入手的亲们可以下手了，真的质量非常好，很值这个价钱。 </div>
 					<div class="detail_evaluate_imgs clearfix">
-						<div><img src="{{PATH_TML}}wepage/img/img6.jpg" alt=""></div>
-						<div><img src="{{PATH_TML}}wepage/img/img6.jpg" alt=""></div>
-						<div><img src="{{PATH_TML}}wepage/img/img6.jpg" alt=""></div>
-						<div><img src="{{PATH_TML}}wepage/img/img6.jpg" alt=""></div>
-						<div><img src="{{PATH_TML}}wepage/img/img6.jpg" alt=""></div>
-						<div><img src="{{PATH_TML}}wepage/img/img6.jpg" alt=""></div>
+						<div><img src="img/img6.jpg" alt=""></div>
+						<div><img src="img/img6.jpg" alt=""></div>
+						<div><img src="img/img6.jpg" alt=""></div>
+						<div><img src="img/img6.jpg" alt=""></div>
+						<div><img src="img/img6.jpg" alt=""></div>
+						<div><img src="img/img6.jpg" alt=""></div>
 					</div>
 					<div class="detail_evaluate_time"> 2017-11-11 </div>
 				</div>
@@ -197,19 +212,58 @@
 		<!-- 商城详情内容结束 -->
 
 		<!-- 商城详情底部开始 -->
-		<fooer class="detail_footer">
-				<div class="detail_footer_follow">
-					<div class="detail_footer_follow_img detail_btn1"></div>
-					关注
-				</div>
-				<div class="detail_footer_cart">
-					<div class="detail_footer_cart_img detail_btn1"></div>
-					购物车
-				</div>
-				<div class="detail_footer_join">加入购物车</div>
-				<div class="detail_footer_pay">立即购买</div>
+		<fooer class="detail_footer" id="detail_footer">
+			<footers></footers>
 		</fooer>
 		<!-- 商城详情底部结束 -->
+
+
+		<script>
+			var Header = {
+			    template: `
+				<nav class="detail_nav">
+					<li class="detail_icon_img detail_icon_img_clear"></li>
+					<li class="detail_nav_title">
+						<slide> 商品 </slide>
+						<slide> 详情 </slide>
+						<slide> 评价 </slide>
+					</li>
+					<li class="detail_icon_img detail_icon_img_menu"></li>
+				</nav>
+			    `
+			}
+
+			var Footer = {
+				template: `
+				<div class="detail_footer_menu">
+					<div class="detail_footer_follow">
+						<div class="detail_footer_follow_img detail_btn1"></div>
+						关注
+					</div>
+					<div class="detail_footer_cart">
+						<div class="detail_footer_cart_img detail_btn1"></div>
+						购物车
+					</div>
+					<div class="detail_footer_join">加入购物车</div>
+					<div class="detail_footer_pay">立即购买</div>
+				</div>
+				`
+			}
+
+			new Vue({
+			  	el: '#detail_header',
+			  	components: {
+			    	'headers': Header,
+			  	}
+			})
+
+			new Vue({
+			  	el: '#detail_footer',
+			  	components: {
+			    	'footers': Footer,
+			  	}
+			})
+		</script>
 	</body>
 
 </html>
