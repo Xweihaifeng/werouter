@@ -5,15 +5,18 @@
 $(function() {
 
     var token = window.localStorage.getItem('token');
-    // var token = "eyJpdiI6Ik1cL2ZyYkVlVENIc3p2R0x5b0dCUXVnPT0iLCJ2YWx1ZSI6Ik5wa25oK05zRE1hZ0xER044bUt5NXptbjNwNFMzRGZsVzhkRldLektybkRINFpkSTVxczI5MTQwUjl4UXpiMTNxQ3Z0Q1AxQ0RLMnd2M0p5N3lDblc2dlwvQUtMcmhHSlRXNkM2b1RDQUNaZz0iLCJtYWMiOiI3ZmRlZTZiZDU2ZTc5NTk2YjljY2M0M2VmMGU1Yzg5ODE4NjVjOTkwNTM2NThkYzYzMzdkNDg3NTc1M2M3ZGRjIn0=",
-    weid = "21aea730-abec-11e7-a919-9b1d4a41c921";
+    var user_weid = window.localStorage.getItem("user_weid");
+    var weid = "21aea730-abec-11e7-a919-9b1d4a41c921";
+
     if(token) {
         $.ajaxSetup({
             global: true,
+            async:  false,
             headers: {
                 'Token': token,
             }
         });
+        $("#token").slideUp();
     }
 
 	var detail_title = function(result) {
@@ -75,7 +78,7 @@ $(function() {
 
 	var options1 = $.get(GOODS_DETAIL + "/" + weid);
 	options1.done(function(data) {
-		console.log(data)
+		console.log("商品详情：", data)
 		if(data.code != 200) {
 			return false;
 		}
@@ -124,60 +127,88 @@ $(function() {
 
 
 
-
-
-
-
-
-
-
-
+	// 商品保存开始
 	$(".detail_icon_img_menu").click(function() {
-		$(".save_shopping").toggle("slow");
-	});
+		$(".save_shopping").slideToggle("slow");
+	})
 
 	$(".detail_save_token").click(function() {
 		window.localStorage.setItem("token", $(".detail_token").val());
 		layer.msg("token已经保存", { time: 1500 });
+		token = window.localStorage.getItem('token');
 
         $.ajaxSetup({
             global: true,
+            async:  false,
             headers: {
                 'Token': token,
             }
         });
+
+        $("#token").slideUp();
 	})
+
+	$(".detail_save_weid").click(function() {
+		window.localStorage.setItem("user_weid", $(".detail_weid").val());
+		layer.msg("user_weid保存成功", { time: 1500 });
+		$("#user_weid").slideUp();
+	})
+
 
 	$(".detail_sort_button").click(function() {
 		var body1 = {}, get_weid;
-		body1.name = $(".detail_save").val();;
-		body1.sort = $(".detail_save_0").val();;
+		body1.name = $(".detail_save_s").val();
+		body1.sort = $(".detail_save_0").val();
 
 		var options = $.post(apiUrl + "goods/cates/store", body1);
 		options.done(function(data) {
 			console.log("分类：", data);
-			if(data.code != 200) {
+			if(data.code == 200) {
 				layer.msg(data.message, { time: 1500 });
-				return false;
+				classify();
+			} else {
+				layer.msg(data.message, { time: 1500 });
+				return false;				
 			}
-
-			
-			layer.msg(data.message, { time: 1500 });
-
-			var optionss = $.get(apiUrl + "goods/cates/list");
-			optionss.done(function(data0) {
-				if(data0.code != 200) {
-					layer.msg(data0.message, { time: 1500 });
-					return false;
-				}
-				get_weid = data.data.weid;
-				layer.msg(data0.message, { time: 1500 });
-			});
 		});
 		options.fail(function(error) {
 			console.error(error);
 		});		
 	})
+
+	$("#detail_mySelect").change(function() { SelectChange(); });
+
+    function SelectChange() {
+        var selectText = $("#detail_mySelect").find("option:selected").text();
+        get_weid = $("#detail_mySelect").val();
+    }
+
+	function classify() {
+		var optionss = $.get(apiUrl + "goods/cates/listsbyuser/" + user_weid);
+		optionss.done(function(data0) {
+			if(data0.code != 200) {
+				layer.msg(data0.message, { time: 1500 });
+				return false;
+			}
+
+			$.each(data0.data, function(index, value) {
+				$("#detail_mySelect").append("<option value="+ value.weid +" sort="+ value.sort +">"+ value.name +"</options>");
+			});
+
+			SelectChange();
+		});
+		optionss.fail(function(error) {
+			console.log(error);
+		});
+	}
+	if(user_weid) {
+		$("#user_weid").slideUp();
+		classify();
+	}
+
+	$(".detail_preservate_switch").click(function() {
+		$(".detail_shop_classify").slideToggle("slow");
+	});
 
 	$(".detail_save_button").click(function() {
 		var body = {}
@@ -189,20 +220,27 @@ $(function() {
 		body.views 			= $(".detail_save_5").val();
 		body.collections 	= $(".detail_save_6").val();
 		body.cover 			= $(".detail_save_7").val();
-		body.picture 		= $(".detail_save_8").val();
+		body.picture 		= $(".detail_save_8").val().split(",");
 		body.summary 		= $(".detail_save_9").val();
 		body.note 			= $(".detail_save_10").val();
 		body.content 		= $(".detail_save_11").val();
 		body.sort 			= $(".detail_save_12").val();
 		body.stock 			= $(".detail_save_13").val();
 
+		if(!body.cate_id) {
+			layer.msg("选择商品分类", { time: 1500 });
+			return false;
+		}
 		var options0 = $.post(apiUrl + "goods/store", body);
 		options0.done(function(data) {
 			if(data.code != 200) {
 				layer.msg(data.message, { time: 1500 });
 				return false;
 			}
+
 			layer.msg(data.message, { time: 1500 });
+			$(".save_shopping").slideToggle("slow");
 		});
 	})
+	// 商品保存结束
 });

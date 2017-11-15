@@ -271,7 +271,7 @@ li {
 /* 查看套餐结束 */
 
 /* 保存商品开始 */
-.save_shopping {
+.save_shopping, .detail_shop_classify {
 	display: none;
 }
 
@@ -308,9 +308,9 @@ li {
 	border-top: 1px solid #eee;
 }
 
-.detail_save_list input {
+.detail_save_list input, #detail_mySelect {
 	padding: 0;
-    width: 75%;
+    width: 78%;
     min-height: 0.25rem;
     margin: 0.01rem 0;
     text-indent: 1em;
@@ -318,21 +318,28 @@ li {
     border-radius: 3px;
 }
 
-.detail_save_button, .detail_sort_button, .detail_save_token {
+#detail_mySelect {
+	margin-left: -5px;
+    width: 78.5%;
+}
+
+.detail_save_list div > span {
+    display: inline-block;
+    width: 20%;
+    font-size: 0.12rem;
+    color: #555;
+}
+
+.detail_save_button, .detail_sort_button, .detail_save_token, .detail_save_weid {
     min-width: 20%;
     height: 0.25rem;
-    border: 1px solid #ccc;
+    border: 1px solid #ffa626;
     border-radius: 3px;
     margin: 0.05rem 0;
-}
-
-.detail_token {
-	float: left;
-}
-
-.detail_save_token {
-	float: left;
-	margin: 0.01rem 0.05rem;
+    position: relative;
+    margin-left: 20%;
+    background-color: #ffb03f;
+    color: #fff;
 }
 /* 保存商品结束 */
 
