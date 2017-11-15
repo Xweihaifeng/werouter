@@ -544,7 +544,7 @@ $(document).ready(function(){
                     }
 
                     var numbers = setInterval(function(){
-                        if (i < (nums / 2)) {
+                        if (i < (nums)) {
                             wefriends(i, []);
                             i += m;
                         } else {
