@@ -147,8 +147,8 @@ function makeMapOption() {
                 {start: 0, end: 0, color: '#EEEEEE'}
             ]
         },
-        layoutCenter: ['45%', '50%'],
-        layoutSize: 450,
+        layoutCenter: ['40%', '70%'],
+        layoutSize: 700,
 
         series: [
             {

@@ -1,15 +1,23 @@
 html{
 	/*font-size: 31.25vw;*/
 	font-size: 26.66vw;
+	font-family: -apple-system-font,"Helvetica Neue","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+	background-color: #EBEBEB;
 }
 body{
 	margin:0;
 	padding:0;
 	background: #f1f1f1;
-	font-size: 0.12rem;
+	font-size: 0.14rem;
 }
+
+a {
+	text-decoration: none;
+	color: black;
+}
+
 .myInfo{
-	padding: 0.2rem 0.2rem;
+	padding: 0.2rem 0.17rem;
 }
 .myInfo .name{
 	font-size: 0.14rem;
@@ -24,6 +32,8 @@ body{
 	border-radius: 0.3rem;
 	background: gray;
 	margin-right: 0.2rem;
+	background: url(../img/noavatar.jpg) no-repeat center;
+	background-size: 100%;
 }
 
 .img img{
@@ -32,51 +42,60 @@ body{
 	border-radius: 0.3rem;
 }
 
+.des {
+	background: white;
+}
+
 .des,.user_select,.history{
 	margin-bottom: 0.16rem;
 }
 .user_select{
 	overflow: hidden;
 }
-.des div,.user_select div,.history{
+.user_select div,.history{
 	background: white;
 	padding: 0.1rem 0.2rem;
 }
-.des div:first-child{
-	padding: 0.1rem 0.2rem;
+.des div{
+	margin: 0rem 0.2rem;
+	padding: 0.1rem 0;
 	/*display: table;*/
 }
 
 .des div:nth-child(2),.user_select div:nth-child(2){
 	/*border-bottom: 1px solid #f1f1f1;*/
 }
-.box label{
-	padding-right: 0.2rem;
+
+.wid {
 	font-size: 0.13rem;
 }
+
+.box label{
+	padding-right: 0.25rem;
+	font-size: 0.14rem;
+}
 .des div:first-child label{
-	width: 0.6rem;
 	vertical-align: top;
 }
 .des div {
-	border-bottom: 1px solid #eeeeee;
+	border-bottom: 1px solid #f1f1f1;
 }
 .foot div{
 	margin: 0 0.14rem;
 }
 .foot p{
 	width: 100%;
-	height: 0.35rem;
+	height: 0.4rem;
 	background: white;
-	line-height: 0.35rem;
+	line-height: 0.4rem;
 	text-align: center;
 	border-radius: 0.02rem;
 	margin: 0.18rem 0;
-	font-size: 0.16rem;
+	font-size: 0.15rem;
 }
 .foot .enter{
-	height: 0.35rem;
-	background: #04ae02;
+	height: 0.4rem;
+	background: #04be02;
 	color: white;
 }
 .myInfo .wid, .des span{
@@ -100,4 +119,8 @@ body{
 	width: 0.2rem;
 	height: 0.2rem;
 	margin-right: 0.05rem;
+}
+
+.cert, .work, .wecard {
+	border-bottom: none!important;
 }

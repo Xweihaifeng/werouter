@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,viewport-fit=cover">
+	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <title></title>
     <link rel="stylesheet" href="{{PATH_TML}}wepage/lib/weui.css" />
     <link rel="stylesheet" href="{{PATH_TML}}wepage/css/info.css"/>
@@ -21,21 +21,28 @@
 	</div>
 	<div class="des">
 		<div>
-			<label style="display:table-cell">个人介绍</label>
+			<label style="display:table-cell">功能介绍</label>
 			<span style="display:table-cell">{{motto}}</span>
 		</div>
 		<div>
 			<label>账号主体</label>
-			<span>{{domain}}</span>
+			<span>{{account}}</span>
 		</div>
-		<div>
+		<div class="cert">
 			<label>认证信息</label>
-			<span>{{domain}}</span>
+			<span>{{cert}}</span>
 		</div>
 		<!--<div>
 			<label>所在地</label>
 			<span style="padding-left: 0.13rem;">陕西&nbsp;&nbsp;西安</span>
 		</div>-->
+	</div>
+
+	<div class="des">
+		<div class="work">
+			<label>经营范围</label>
+			<span>{{work}}</span>
+		</div>
 	</div>
 	
 	<!--<div class="user_select">
@@ -48,11 +55,33 @@
 			<input class="weui-switch" type="checkbox"/>
 		</div>
 	</div>-->
-	<div class="history">
+	<div class="des">
+		<div>
 		<label>
-			查看历史消息
+			<a href="/wecard">我的微主页</a>
 		</label>
+		</div>
+		<div>
+		<label>
+			<a>查看历史消息</a>
+		</label>
+		</div>
+		<div class="wecard">
+		<label>
+			<a>查看我的微名片</a>
+		</label>
+		</div>
 	</div>
+
+	<div class="des">
+		<div>
+			<label>
+				<a>申请查看手机号</a>
+			</label>
+		</div>
+	</div>
+
+
 	<!--<div class="history" style="display: flex;">
 		<label>
 			功能模块
@@ -80,9 +109,6 @@
 			$('html').css('font-size', 100*scale + 'px')
 		})*/
 
-
-
-
 	})
 
 	var init = function(url, ref) {
@@ -105,8 +131,10 @@
 			avatar: '',
 			nickname: '',
 			domain: '',
-			motto: '',
-
+			account: '个人',
+			cert: '官方认证',
+			motto: '暂无内容',
+			work: '互联网'
 		},
 		created: function(){
 			var _self = this;
