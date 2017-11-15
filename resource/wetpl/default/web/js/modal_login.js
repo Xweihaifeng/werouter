@@ -364,11 +364,15 @@ $(function() {
     })
 
     //用户登录
-    var login = function(phoneNum, checkNum/*, imageCode, imageCodeID*/){
+    var login = function(phoneNum, checkNum, ref_id, ref_url, domain/*, imageCode, imageCodeID*/){
         $.ajax({
             url: LOGIN,
             type: 'post',
-            data: {'phone': phoneNum, 'code': checkNum/* , 'imagecode': imageCode, 'imagecode_id': imageCodeID*/ },
+            data: {'phone': phoneNum, 'code': checkNum,
+                'ref_id': ref_id,
+                'ref_url': ref_url,
+                'domain': domain
+            /* , 'imagecode': imageCode, 'imagecode_id': imageCodeID*/ },
             success: function(data){
                 console.log(data);
                 if (data.code != -200) {
@@ -393,13 +397,17 @@ $(function() {
 
     //点击登录按钮
     var logBt = function(){
+        var ref_id = localStorage.getItem('ref_id');
+        var ref_url = localStorage.getItem('ref_url');
+        var domain = localStorage.getItem('domain');
+        //console.log(ref_id, ref_url, domain);
         phoneNum = $(".phone-num").val();
         checkNum = $(".check-num").val();
         // imageCode = $(".image_code").val();
         var regexp = /^(13|14|17|15|18)/;
         var reg =  new RegExp(regexp);
         if (reg.test(phoneNum) && phoneNum.length == 11 && checkNum.length == 6 && isCheckNum && isChecked/* && imageCode && imageCodeID*/) {
-            login(phoneNum, checkNum/*, imageCode, imageCodeID*/);
+            login(phoneNum, checkNum, ref_id, ref_url, domain/*, imageCode, imageCodeID*/);
         } else {
             if (!(phoneNum.length == 11) || !reg.test(phoneNum)){
                 layer.msg("手机号码错误", { time: 2500 });

@@ -321,12 +321,24 @@ $(function() {
         }
     })
 
+    //保存用户访问记录
+    var saveInfo = function(domain, pathname, plat_userid){
+        //console.log(domain, pathname, plat_userid);
+        localStorage.setItem('domain', domain);
+        localStorage.setItem('ref_url', pathname);
+        localStorage.setItem('ref_id', plat_userid);
+    }
+
     //用户登录
-    var login = function(phoneNum, checkNum/*, imageCode, imageCodeID*/){
+    var login = function(phoneNum, checkNum, ref_id, ref_url, domain/*, imageCode, imageCodeID*/){
         $.ajax({
             url: LOGIN,
             type: 'post',
-            data: {'phone': phoneNum, 'code': checkNum , 'luo_response': luo_response},
+            data: {'phone': phoneNum, 'code': checkNum , 'luo_response': luo_response,
+                'ref_id': ref_id,
+                'ref_url': ref_url,
+                'domain': domain
+            },
             success: function(data){
                 console.log(data);
                 if (data.code != -200) {
@@ -349,13 +361,16 @@ $(function() {
 
     //点击登录按钮
     var logBt = function(){
+        var ref_id = localStorage.getItem('ref_id');
+        var ref_url = localStorage.getItem('ref_url');
+        var domain = localStorage.getItem('domain');
         phoneNum = $(".phone-num").val();
         checkNum = $(".check-num").val();
         // imageCode = $(".image_code").val();
         var regexp = /^(13|14|17|15|18)/;
         var reg =  new RegExp(regexp);
         if (reg.test(phoneNum) && phoneNum.length == 11 && checkNum.length == 6 && isCheckNum && isChecked ) {
-            login(phoneNum, checkNum/*, imageCode, imageCodeID*/);
+            login(phoneNum, checkNum, ref_id, ref_url, domain/*, imageCode, imageCodeID*/);
         } else {
             if (!(phoneNum.length == 11) || !reg.test(phoneNum)){
                 layer.msg("手机号码错误", { time: 2500 });
