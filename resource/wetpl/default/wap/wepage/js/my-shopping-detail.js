@@ -116,7 +116,7 @@ $(function() {
 				layer.msg(data.message, { time: 1500 });
 				return false;
 			}
-			layer.msg(data.message, { time: 1500 });
+			layer.msg("成功加入购物车", { time: 1500 });
 		});
 		options2.fail(function(error) {
 			console.error(error);
@@ -131,6 +131,10 @@ $(function() {
 	$(".detail_icon_img_menu").click(function() {
 		$(".save_shopping").slideToggle("slow");
 	})
+
+	$(".detail_preservate_switch").click(function() {
+		$(".detail_shop_classify").slideToggle("slow");
+	});
 
 	$(".detail_save_token").click(function() {
 		window.localStorage.setItem("token", $(".detail_token").val());
@@ -154,28 +158,6 @@ $(function() {
 		$("#user_weid").slideUp();
 	})
 
-
-	$(".detail_sort_button").click(function() {
-		var body1 = {}, get_weid;
-		body1.name = $(".detail_save_s").val();
-		body1.sort = $(".detail_save_0").val();
-
-		var options = $.post(apiUrl + "goods/cates/store", body1);
-		options.done(function(data) {
-			console.log("分类：", data);
-			if(data.code == 200) {
-				layer.msg(data.message, { time: 1500 });
-				classify();
-			} else {
-				layer.msg(data.message, { time: 1500 });
-				return false;				
-			}
-		});
-		options.fail(function(error) {
-			console.error(error);
-		});		
-	})
-
 	$("#detail_mySelect").change(function() { SelectChange(); });
 
     function SelectChange() {
@@ -184,6 +166,7 @@ $(function() {
     }
 
 	function classify() {
+		$("#detail_mySelect").children().gt(0).remove();
 		var optionss = $.get(apiUrl + "goods/cates/listsbyuser/" + user_weid);
 		optionss.done(function(data0) {
 			if(data0.code != 200) {
@@ -206,9 +189,30 @@ $(function() {
 		classify();
 	}
 
-	$(".detail_preservate_switch").click(function() {
-		$(".detail_shop_classify").slideToggle("slow");
-	});
+	$(".detail_sort_button").click(function() {
+		var body1 = {}, get_weid;
+		body1.name = $(".detail_save_s").val();
+		body1.sort = $(".detail_save_0").val();
+
+		var options = $.post(apiUrl + "goods/cates/store", body1);
+		options.done(function(data) {
+			console.log("分类：", data);
+			if(data.code == 200) {
+				if(data.data >= 0) {
+					layer.msg("商品分类保存成功", { time: 1500 });
+				} else {
+					layer.msg("商品分类保存失败", { time: 1500 });
+				}				
+				classify();
+			} else {
+				layer.msg(data.message, { time: 1500 });
+				return false;				
+			}
+		});
+		options.fail(function(error) {
+			console.error(error);
+		});		
+	})
 
 	$(".detail_save_button").click(function() {
 		var body = {}
@@ -238,7 +242,7 @@ $(function() {
 				return false;
 			}
 
-			layer.msg(data.message, { time: 1500 });
+			layer.msg("商品保存成功", { time: 1500 });
 			$(".save_shopping").slideToggle("slow");
 		});
 	})
