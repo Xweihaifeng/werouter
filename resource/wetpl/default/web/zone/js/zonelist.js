@@ -439,7 +439,7 @@ $(document).ready(function(){
             },
             success: function (data) {
                 $(".fans").html(`<a>Ta的粉丝(${data.data.fnums})</a>`);
-                $(".friends").html(`<a>Ta的粉丝(${data.data.gnums})</a>`);
+                $(".friends").html(`<a>Ta的关注(${data.data.gnums})</a>`);
                 $("#fans").html('');
                 $("#friends").html('');
                 data.data.flist.map(x => $("#fans").append(listTpl('fans-head', x)));
