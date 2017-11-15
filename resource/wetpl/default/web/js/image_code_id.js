@@ -321,14 +321,6 @@ $(function() {
         }
     })
 
-    //保存用户访问记录
-    var saveInfo = function(domain, pathname, plat_userid){
-        //console.log(domain, pathname, plat_userid);
-        localStorage.setItem('domain', domain);
-        localStorage.setItem('ref_url', pathname);
-        localStorage.setItem('ref_id', plat_userid);
-    }
-
     //用户登录
     var login = function(phoneNum, checkNum, ref_id, ref_url, domain/*, imageCode, imageCodeID*/){
         $.ajax({
@@ -364,6 +356,7 @@ $(function() {
         var ref_id = localStorage.getItem('ref_id');
         var ref_url = localStorage.getItem('ref_url');
         var domain = localStorage.getItem('domain');
+        //console.log(ref_id, ref_url, domain);
         phoneNum = $(".phone-num").val();
         checkNum = $(".check-num").val();
         // imageCode = $(".image_code").val();
