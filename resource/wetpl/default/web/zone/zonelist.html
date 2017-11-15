@@ -262,14 +262,14 @@
                         mapData = genMap(spread);
 //                        console.log(mapData)
                         if (slen == 0) {
-                            $(".rcmd span").css("background", "#eeeeee");
                             $(".rcmd").html("<span></span>看哈，Ta成为网红潜力很大，大家帮Ta加加油！")
+                            $(".rcmd span").css("background", "#eeeeee");
                         } else if (slen < 34 && slen > 0) {
-                            $(".rcmd span").css("background", "#ff0000");
                             $(".rcmd").html("<span></span>Ta已经红遍中国" + slen + "省，是名副其实的小网红！")
-                        } else if (slen >= 34) {
                             $(".rcmd span").css("background", "#ff0000");
+                        } else if (slen >= 34) {
                             $(".rcmd").html("<span></span>Ta已经红遍中国，是名副其实的网红！")
+                            $(".rcmd span").css("background", "#ff0000");
                         }
                         makeChart();
                     }
