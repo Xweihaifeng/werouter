@@ -544,9 +544,14 @@ $(document).ready(function(){
                     }
 
                     var numbers = setInterval(function(){
-                        if (i < (nums)) {
-                            wefriends(i, []);
-                            i += m;
+                        if (i < nums) {
+                            if ((nums - i) < parseInt(nums / 20)) {
+                                wefriends(i, []);
+                                i += parseInt(m / 20);
+                            } else {
+                                wefriends(i, []);
+                                i += m;
+                            }
                         } else {
                             wefriends(nums, []);
                             clearInterval(numbers);
