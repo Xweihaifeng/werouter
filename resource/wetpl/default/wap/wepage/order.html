@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title>下单页面</title>
+
+    <link rel="stylesheet" href="css/order.css">
+
+    <script src="js/vue.min.js"></script>
+    <script src="js/vue-resource.min.js"></script>
+
+</head>
+<body>
+<div id="myOrder">
+    <header>
+        <span>确认订单</span>
+        <a class="back"></a>
+    </header>
+    <div class="main">
+        <div class="address">
+            <p>买家abc 13225888888</p>
+            <p>陕西省西安市高新区锦业路1号</p>
+        </div>
+
+        <div class="store" v-for="(store,pIndex) in list">
+            <div class="name">
+                <p>
+                    <i></i>
+                    <span>{{store.mall.title}}</span>
+                </p>
+            </div>
+            <ul>
+                <li v-for="(item,index) in store.goods">
+                    <img :src="'http://images.new.wezchina.com/' + item.cover" alt="">
+                    <div class="product">
+                        <p class="des">{{item.title}}</p>
+                        <p class="price">
+                            <span>{{item.price}}</span>
+                            <label>
+                                <span>已选：{{item.selectNum}}件</span>
+                            </label>
+                        </p>
+                        <p class="operation">
+                            <span>删除</span>
+                            <span>移入关注</span>
+                        </p>
+                    </div>
+                </li>
+            </ul>
+            <div class="store-count">
+                <p>
+                    <span>
+                        总计：
+                        <strong>￥{{storeAll}}</strong>
+                    </span>
+                    <span>总额￥{{storeAll}} 立减￥0.00</span>
+                </p>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <div>微信支付</div>
+    </footer>
+</div>
+
+<script>
+
+    var app = new Vue({
+        el: "#myOrder",
+        data: {
+            list: []
+        },
+        mounted: function () {
+            this.$http.get('mock/order.json').then(function (res) {
+                this.list = res.data.data.list;
+            })
+        },
+        computed : {
+            storeAll : function () {
+                var money = 0;
+                var store = this.list[0];
+                for(var a=0; a< store.goods.length; a++){
+                    money += store.goods[a].price * store.goods[a].selectNum
+                }
+                return money;
+            }
+        }
+
+    })
+</script>
+</body>
+</html>
