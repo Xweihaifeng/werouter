@@ -23,7 +23,10 @@
 				<p>文章标题 北京轻松筹率先推出基于社交网络北京轻松筹率先推出基于社交网络</p>
 				<div class="art-content">
 					<span><img src="img/slice.jpg" alt=""></span>
-					<span class="art-des-text">文章描述 北京轻北京轻松络北京轻松筹率先推出基于社交网络北京轻北京轻松络北京轻松筹率先推出</span>
+					<span class="art-des-text">
+						<strong>这里是一个文章的标题</strong>
+						<pre>北京轻松筹率先推出基于社交网络北京轻松筹率先推出基于社交网络北京轻松筹率先推出基于社交网络北京轻松筹率先推出基于社交网络</pre>
+					</span>
 				</div>
 				<div class="art-other">
 					<span>14分钟前</span>
@@ -66,8 +69,8 @@
 	<footer></footer>
 	<script>
 		$(document).ready(function(){
-			$(".art-temp1 .art-des-text").each(function(){
-				var maxLength = 24;
+			$(".art-temp1 .art-des-text strong").each(function(){
+				var maxLength = 10;
 				if($(this).text().length > maxLength){
 					$(this).text($(this).text().substring(0,maxLength)+"...")
 				}
