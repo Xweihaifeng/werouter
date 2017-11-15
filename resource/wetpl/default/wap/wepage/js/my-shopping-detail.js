@@ -166,7 +166,7 @@ $(function() {
     }
 
 	function classify() {
-		$("#detail_mySelect").children().gt(0).remove();
+		$("#detail_mySelect option:gt(0):not()").remove();
 		var optionss = $.get(apiUrl + "goods/cates/listsbyuser/" + user_weid);
 		optionss.done(function(data0) {
 			if(data0.code != 200) {
