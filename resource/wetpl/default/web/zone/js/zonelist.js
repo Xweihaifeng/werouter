@@ -545,7 +545,7 @@ $(document).ready(function(){
 
                     var numbers = setInterval(function(){
                         if (i < nums) {
-                            if ((nums - i) < parseInt(nums / 20)) {
+                            if ((nums - i) < parseInt(nums / 30)) {
                                 wefriends(i, []);
                                 i += parseInt(m / 20);
                             } else {

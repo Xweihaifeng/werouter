@@ -103,7 +103,7 @@
                                     <li style="margin-top: 5px;"><span style="background: #cccccc"></span><1人</li>
                                     <li style="margin-top: 5px;"><span style="background: #eeeeee"></span><0人</li>
                                 </ul>
-                                <p style="margin-top: 10px"><span></span>看哈，Ta成为网红潜力很大，大家帮Ta加加油！</p>
+                                <p class="rcmd" style="margin-top: 10px"><span></span></p>
                             </div>
                             <p class="y">数据来源：全球秦商总会</p>
                         </div>
@@ -249,6 +249,7 @@
                     success: function(data){
                         let curve = data.data.wcurve;
                         let spread = data.data.wspread;
+                        let slen = spread.length;
                         let arr = [0,0,0,0,0,0,0,0,0,0,0,0];
                         // 折线图
                         lineTheme = {color:['#C23531','#17C295']};
@@ -260,6 +261,16 @@
                         mapChart = echarts.init(document.getElementById('lanuch_main'));
                         mapData = genMap(spread);
 //                        console.log(mapData)
+                        if (slen == 0) {
+                            $(".rcmd span").css("background", "#eeeeee");
+                            $(".rcmd").html("<span></span>看哈，Ta成为网红潜力很大，大家帮Ta加加油！")
+                        } else if (slen < 34 && slen > 0) {
+                            $(".rcmd span").css("background", "#ff0000");
+                            $(".rcmd").html("<span></span>Ta已经红遍中国" + slen + "省，是名副其实的小网红！")
+                        } else if (slen >= 34) {
+                            $(".rcmd span").css("background", "#ff0000");
+                            $(".rcmd").html("<span></span>Ta已经红遍中国，是名副其实的网红！")
+                        }
                         makeChart();
                     }
                 })
