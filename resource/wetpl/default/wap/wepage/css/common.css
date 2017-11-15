@@ -37,8 +37,7 @@
 
 .art-content {
     display: flex;
-    padding: 0.15rem 0 0.15rem 0.05rem;
-    padding-left: 0.12rem;
+    padding: 0.15rem 0.1rem 0.15rem 0.12rem;
     background: #ffffff;
     border-bottom: 1px solid #e6e6e6;
 }
@@ -51,14 +50,19 @@
     width: 1rem;
     height: 0.625rem;
     display: block;
+    margin-top:0.05rem;
 }
 
 .art-content span:last-child {
-    font-size: 0.13rem;
-    padding-left: 0.64rem;
-    padding-right: 0.1rem;
+    font-size: 0.14rem;
+    padding-left: 0.3rem;
 }
-
+.art-content span:last-child pre{
+    color: #999999;
+}
+.art-content span:last-child strong{
+    color: #4d4d4d;   
+}
 #container {
     padding-top: 0!important;
     background: white;
@@ -151,12 +155,12 @@
     padding-left: 0.12rem;
 }
 
-.lii_sold { padding: 0.05rem 0.05rem 0.1rem 0.07rem; background-color: #ffffff; border-bottom: 1px solid #e6e6e6;}
+.lii_sold { padding: 0.15rem 0.05rem 0.15rem 0.12rem; background-color: #ffffff; border-bottom: 1px solid #e6e6e6;}
 .lii_sold > a { display: flex; color: #333; }
 .lii_sold > a > slide.li_img_wap { display: inline-flex; align-items: center; }
-.lii_sold > a > slide.li_img_wap > img { width: 1rem; height: 0.625rem; border: 1px solid #eee; margin: 0 0.05rem; background-color: #fff; }
+.lii_sold > a > slide.li_img_wap > img { width: 1rem; height: 0.625rem; margin: 0 0.10rem 0 0; background-color: #fff; }
 .lii_sold > a > slide.li_info { overflow: hidden; }
-.lii_sold > a > slide.li_info > h3 { font-size: 0.14rem; font-weight: unset; max-height: 0.32rem; overflow-y: hidden; padding: 0.025rem 0.05rem 0.025rem 0; height: 0.16rem;
-.lii_sold > a > slide.li_info > .lii_price { font-size: 0.11rem; color: #f00; }
-.lii_sold > a > slide.li_info > .lii_sold { font-size: 0.11rem;  color: #9b9b9b; }
+.lii_sold > a > slide.li_info > h3 { font-size: 0.13rem; font-weight: unset; max-height: 0.32rem; overflow-y: hidden; padding: 0.025rem 0.05rem 0.025rem 0; height: 0.16rem; }
+.lii_sold > a > slide.li_info > .lii_price { font-size: 0.15rem; color: #f63434; margin-top: 0.04rem; }
+.lii_sold > a > slide.li_info > .lii_sold1 { font-size: 0.12rem;  color: #999999; }
 .lii_sold span { padding-right: 0.1rem; }

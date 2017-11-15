@@ -10,30 +10,51 @@
 		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 		<title> 商城 </title>
 
-		<link rel="stylesheet" href="css/home.css" />
-		<link rel="stylesheet" href="css/swiper.min.css"/>
-		<link rel="stylesheet" href="css/my-shopping.css" />
+		<link rel="stylesheet" href="{{PATH_TML}}wepage/css/home.css" />
+		<link rel="stylesheet" href="{{PATH_TML}}wepage/css/swiper.min.css"/>
+		<link rel="stylesheet" href="{{PATH_TML}}wepage/css/my-shopping.css" />
 
-		<script type="text/javascript" src="js/zepto.min.js" ></script>
-		<script src="interface/my-shopping.json"></script>
-		<script type="text/javascript" src="js/home.js" ></script>
-		<script src="js/swiper-3.3.1.min.js"></script>
-		<script>
-			window.onload = function() {
-				console.log(my_shopping);
-				var menu_title = document.getElementById("menu_title");
-				var oUl = document.createElement("ul");
-				oUl.id = "shop_type";
-				menu_title.appendChild(oUl);
-				var shop_type = document.getElementById('shop_type');
-				for (var i = 0; i <= my_shopping.type.length - 1; i++) {
-					var oLi = document.createElement("li");
-					var text = document.createTextNode(my_shopping.type[i]);
-					oLi.appendChild(text);
-					shop_type.appendChild(oLi);
-				}
-			}
-		</script>
+		<script type="text/javascript" src="{{PATH_TML}}wepage/js/jquery-3.2.1.min.js"></script>
+		<!-- <script type="text/javascript" src="{{PATH_TML}}wepage/interface/my-shopping.json"></script> -->
+		<script type="text/javascript" src="{{PATH_TML}}wepage/js/zepto.min.js" ></script>
+		<script type="text/javascript" src="{{PATH_TML}}wepage/js/swiper-3.3.1.min.js"></script>
+		<script type="text/javascript" src="{{PATH_CONFIG}}"></script>
+
+	</head>
+
+	<body>
+		<div id="carousel">
+			<div class="swiper-container" id="my-swiper">
+				<div class="swiper-wrapper carousel">
+					<div class="swiper-slide">
+						<img src="{{PATH_TML}}wepage/img/default.png" alt=""/>
+					</div>
+					<div class="swiper-slide">
+						<img src="{{PATH_TML}}wepage/img/bg.png" alt=""/>
+					</div>
+				</div>
+				<div class="swiper-pagination"></div>
+			</div>
+		</div>
+		<nav></nav>
+		<div id="art-type">
+			<ul>
+				<li><img src="{{PATH_TML}}wepage/img/default.png" alt=""/><p>活动</p></li>
+				<li><img src="{{PATH_TML}}wepage/img/bg.png" alt=""/><p>活动</p></li>
+				<li><img src="{{PATH_TML}}wepage/img/bg1.png" alt=""/><p>活动</p></li>
+				<li><img src="{{PATH_TML}}wepage/img/bg3.jpg" alt=""/><p>活动</p></li>
+			</ul>
+		</div>
+		<div class="container mall">
+			<menu class="menu" id="menu_title"><ul id="shop_type"></ul></menu>
+			<article class="shop">
+				<ul></ul>
+			</article>
+		</div>
+		<footer></footer>
+
+		<script type="text/javascript" src="{{PATH_TML}}wepage/js/my-shopping.js"></script>
+		<script type="text/javascript" src="{{PATH_TML}}wepage/js/home.js" ></script>
 		<script>
 			function shop(key, value) {
 				var template = `
@@ -55,108 +76,11 @@
 
 			var genShop = function(my_shopping) {
 				var result = my_shopping.shop;
+				console.log("shopping:", result);
 				$.each(result, function (key, value) {
 					$(".shop ul").append(shop(key, value));
 				});
 			}
 		</script>
-	</head>
-
-	<body>
-		<style>
-			#carousel {
-				width: 100%;
-				height: 1.9rem;
-				margin-top: 0.365rem;
-				display: flex;
-			}
-
-			.swiper-slide img {
-				width: 100%;
-				height: 1.9rem;
-				display: block;
-			}
-
-			#art-type {
-				margin-bottom: 0.1rem;
-				background: white;
-				display: none;
-			}
-			#art-type ul {
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-				padding: 0.12rem 0.2rem;
-			}
-
-			#art-type ul li img {
-				border-radius: 0.45rem;
-				border: 1px solid #e6e6e6;
-				width: 0.35rem;
-				height: 0.35rem;
-				/*padding: 0.05rem;*/
-				display: block;
-			}
-
-			#art-type ul li p {
-				font-size: 0.12rem;
-				padding: 0.06rem 0 0 0.06rem;
-			}
-
-			.mall {
-				margin-bottom: 0.5rem;
-			}
-		</style>
-		<div id="carousel">
-			<div class="swiper-container" id="my-swiper">
-				<div class="swiper-wrapper carousel">
-					<div class="swiper-slide">
-						<img src="img/default.png" alt=""/>
-					</div>
-					<div class="swiper-slide">
-						<img src="img/bg.png" alt=""/>
-					</div>
-				</div>
-				<div class="swiper-pagination"></div>
-			</div>
-		</div>
-		<nav></nav>
-		<div id="art-type">
-			<ul>
-				<li><img src="img/default.png" alt=""/><p>活动</p></li>
-				<li><img src="img/bg.png" alt=""/><p>活动</p></li>
-				<li><img src="img/bg1.png" alt=""/><p>活动</p></li>
-				<li><img src="img/bg3.jpg" alt=""/><p>活动</p></li>
-			</ul>
-		</div>
-		<div class="container mall">
-			<menu class="menu" id="menu_title"></menu>
-			<article class="shop">
-				<ul></ul>
-			</article>
-		</div>
-		<footer></footer>
 	</body>
-
-	<script>
-		var mySwiper = new Swiper ('#my-swiper', {
-			direction: 'horizontal',
-			loop: true,
-			speed: 1000,
-			autoplay : 3000,
-			autoplayDisableOnInteraction : false,
-			pagination: '.swiper-pagination',
-			paginationClickable :true,
-			nextButton: '.swiper-button-next',
-			prevButton: '.swiper-button-prev',
-			grabCursor : true
-		})
-
-		$("#my-swiper").hover(function(){
-			$(".swiper-button-prev, .swiper-button-next").css("opacity", "0.6");
-		}, function(){
-			$(".swiper-button-prev, .swiper-button-next").css("opacity", "0");
-		});
-	</script>
-
 </html>
