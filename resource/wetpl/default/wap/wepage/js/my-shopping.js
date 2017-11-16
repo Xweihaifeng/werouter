@@ -68,6 +68,7 @@ function shopping_classify() {
 	option_one.done(function(data) {
 	    if(data.code == 200) {
 	        var result = data.data;
+	        console.info("商品分类：", result);
 	        $.each(result, function(index, value) {
 	            $("#shop_type").append(`<li id="`+ value.weid +`">`+ value.name +`</li>`);
 	        });
