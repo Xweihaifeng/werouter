@@ -82,9 +82,9 @@ function shopping_list() {
 	var first_weid = $("#shop_type li").first().attr("id");
 	var body = {};
 
-	body.user_id = plat_user_id;
+	body.userId = plat_user_id;
 
-	var options_two = $.post(apiUrl + "goods/list", body);
+	var options_two = $.post(apiUrl + "goods/lists/user", body);
 	options_two.done(function(data) {
 		if(data.code == 200) {
 			var result = data.data.list;
