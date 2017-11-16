@@ -27,10 +27,10 @@
 			<div class="swiper-container" id="my-swiper">
 				<div class="swiper-wrapper carousel">
 					<div class="swiper-slide">
-						<img src="{{PATH_TML}}wepage/img/default.png" alt=""/>
+						<img src="/common/img/default.png" alt=""/>
 					</div>
 					<div class="swiper-slide">
-						<img src="{{PATH_TML}}wepage/img/bg.png" alt=""/>
+						<img src="/common/img/bg.png" alt=""/>
 					</div>
 				</div>
 				<div class="swiper-pagination"></div>
@@ -57,11 +57,15 @@
 		<script type="text/javascript" src="{{PATH_TML}}wepage/js/home.js" ></script>
 		<script>
 			function shop(key, value) {
+				var imgUrl = value.cover;
+				if (imgUrl.indexOf('http') === -1){
+		            imgUrl = imgSet(imgUrl, 100, 100, 3);
+		        }
 				var template = `
 				<li>
 					<a href="">
 						<slide class="li_img_wap">
-							<img src="`+ value.thumb +`">
+							<img src="`+ imgUrl +`">
 						</slide>
 						<slide class="li_info">
 							<h3>`+ value.title +`</h3>
