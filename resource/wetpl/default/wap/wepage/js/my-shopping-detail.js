@@ -6,8 +6,9 @@ $(function() {
 
 	// 公用部分变量声明
     var token = window.localStorage.getItem('token');
-    var user_weid = window.localStorage.getItem("user_weid");
-    var weid = "21aea730-abec-11e7-a919-9b1d4a41c921";
+    var user_weid = window.localStorage.getItem("weid");
+    var shop_weid = window.localStorage.getItem("shopping_weid");
+    // var shop_weid = "21aea730-abec-11e7-a919-9b1d4a41c921";
 
     // 用户token验证部分
     if(token) {
@@ -42,7 +43,7 @@ $(function() {
 		$.each(price, function(index, value) {
 
 			if(!value) {
-                value = "/common/img/news_top_img.png";
+                value = "/common/img/img9.jpg";
 
             } else if (value.indexOf('http') != 0 && value != "") {
                 value = imgSet(value, 414, 408, 3);
@@ -58,6 +59,24 @@ $(function() {
 			<div class="swiper-wrapper carousel">`+ temp_img +`</div>
 			<div class="swiper-pagination detail_pagination"></div>
 		</div>`
+		return template;
+	}
+
+	var detail_evaluate = function(result) {
+		var price = result.picture.split(","), temp_img = '';
+		$.each(price, function(index, value) {
+
+			if(!value) {
+                value = "/common/img/img6.png";
+
+            } else if (value.indexOf('http') != 0 && value != "") {
+                value = imgSet(value, 88, 88, 3);
+            }
+
+			temp_img += `
+				<div><img src="`+ value +`" alt="" /></div>`;
+		});
+		var template = temp_img;
 		return template;
 	}
 
@@ -81,7 +100,7 @@ $(function() {
 	});
 	// 套餐选择蒙层显示与否结束
 
-	var options1 = $.get(GOODS_DETAIL + "/" + weid);
+	var options1 = $.get(GOODS_DETAIL + "/" + shop_weid);
 	options1.done(function(data) {
 		console.log("商品详情：", data)
 		if(data.code != 200) {
@@ -91,6 +110,7 @@ $(function() {
 		var result = data.data;
 		$(".detail_title").html(detail_title(result));
 		$(".detail_swiper").html(detail_swiper(result));
+		$(".detail_evaluate_imgs").html(detail_evaluate(result));
 		
 		// 商城详情内容轮播
 		var mySwiper = new Swiper('#detail_swiper_img', {
@@ -159,7 +179,7 @@ $(function() {
 	})
 
 	$(".detail_save_weid").click(function() {
-		window.localStorage.setItem("user_weid", $(".detail_weid").val());
+		window.localStorage.setItem("weid", $(".detail_weid").val());
 		layer.msg("user_weid保存成功", { time: 1500 });
 		$("#user_weid").slideUp();
 	})

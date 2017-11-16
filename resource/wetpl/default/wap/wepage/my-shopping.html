@@ -64,7 +64,7 @@
 
 		        // <a href="/shopping/`+ value.weid +`">
 				var template = `
-				<li>
+				<li class="`+ value.weid +`">
 					<a href="/shopping/detail">
 						<slide class="li_img_wap">
 							<img src="`+ imgUrl +`">
@@ -87,6 +87,14 @@
 					$(".shop ul").append(shop(key, value));
 				});
 			}
+		</script>
+		<script>
+			$(function() {
+				$(".shop ul li").click(function() {
+					$(this).attr("class");
+					window.localStorage.setItem("shopping_weid", $(this).attr("class"));
+				});
+			})
 		</script>
 	</body>
 </html>

@@ -5,7 +5,7 @@
 // 公用部分变量声明
 var shop = [], number = 1, domain, plat_user_id;
 var token = window.localStorage.getItem('token');
-var user_weid = window.localStorage.getItem("user_weid");
+var user_weid = window.localStorage.getItem("weid");
 
 // 用户token验证部分
 if(token) {
@@ -19,7 +19,7 @@ if(token) {
 }
 
 // Pages - 主页 - 详情(用户ID)
-var options_0 = $.get(apiUrl + "pages/page/getDetailByUser/" + window.localStorage.getItem("user_weid"));
+var options_0 = $.get(apiUrl + "pages/page/getDetailByUser/" + user_weid);
 options_0.done(function(data) {
 	if(data.code == 200) {
 		var result = data.data;
