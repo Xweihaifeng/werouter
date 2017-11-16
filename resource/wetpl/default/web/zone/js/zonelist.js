@@ -430,20 +430,21 @@ $(document).ready(function(){
         return tpl;
     }
 
-    var genFans = function(url) {
+    var genFans = function(url, domain, page, limit, type) {
         $.ajax({
-            url: url,
+            url: url + '?domain=' + domain + '&page=' + page + '&limit=' + limit + '&type=' + type,
             type: 'GET',
             headers: {
                 'Token': window.localStorage.getItem("token")
             },
             success: function (data) {
-                $(".fans").html(`<a>Ta的粉丝(${data.data.fnums})</a>`);
-                $(".friends").html(`<a>Ta的关注(${data.data.gnums})</a>`);
+                console.log(data)
+                $(".fans").html(`<a>Ta的粉丝(${data.data.list.length})</a>`);
+                //$(".friends").html(`<a>Ta的关注(${data.data.gnums})</a>`);
                 $("#fans").html('');
-                $("#friends").html('');
-                data.data.flist.map(x => $("#fans").append(listTpl('fans-head', x)));
-                data.data.glist.map(x => $("#friends").append(listTpl('friends-head', x)));
+                //$("#friends").html('');
+                data.data.list.map(x => $("#fans").append(listTpl('fans-head', x)));
+                //data.data.glist.map(x => $("#friends").append(listTpl('friends-head', x)));
             }
         })
     }
@@ -468,7 +469,7 @@ $(document).ready(function(){
                     layer.msg("关注成功", {
                         time: 1500
                     });
-                    genFans(apiUrl + 'circel/index?domain=' + domain.substr(1))
+                    genFans(apiUrl + 'circel/flist', domain.substr(1), 1, 12, 1);
                 }
             },
             error: function(xhr) {
@@ -497,7 +498,7 @@ $(document).ready(function(){
                     layer.msg("取消关注成功", {
                         time: 1500
                     })
-                    genFans(apiUrl + 'circel/index?domain=' + domain.substr(1))
+                    genFans(apiUrl + 'circel/flist', domain.substr(1), 1, 12, 1);
                 }
             },
             error: function(xhr) {
