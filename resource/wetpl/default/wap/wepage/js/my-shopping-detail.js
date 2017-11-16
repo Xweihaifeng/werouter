@@ -4,10 +4,12 @@
 
 $(function() {
 
+	// 公用部分变量声明
     var token = window.localStorage.getItem('token');
     var user_weid = window.localStorage.getItem("user_weid");
     var weid = "21aea730-abec-11e7-a919-9b1d4a41c921";
 
+    // 用户token验证部分
     if(token) {
         $.ajaxSetup({
             global: true,
@@ -34,6 +36,7 @@ $(function() {
 		return template;
 	}
 
+	// 商品详情页置顶轮播
 	var detail_swiper = function(result) {
 		var price = result.picture.split(","), temp_img = '';
 		$.each(price, function(index, value) {
@@ -58,6 +61,7 @@ $(function() {
 		return template;
 	}
 
+	// 套餐选择蒙层显示与否开始
 	$(".detail_selected_switch").click(function() {
 		$(".detail_address_mask").fadeIn("slow");
 		$(".detail_rddress_mask_content").animate({
@@ -75,6 +79,7 @@ $(function() {
 			$(".detail_rddress_mask_content").hide();
 		});
 	});
+	// 套餐选择蒙层显示与否结束
 
 	var options1 = $.get(GOODS_DETAIL + "/" + weid);
 	options1.done(function(data) {
@@ -104,6 +109,7 @@ $(function() {
 		console.error(error);
 	});
 
+	// Mall - 购物车 - 添加购物车
 	$(".detail_footer_join").click(function() {
 		var body = {
 			goods_id : weid,
@@ -165,6 +171,7 @@ $(function() {
         get_weid = $("#detail_mySelect").val();
     }
 
+    // Mall - 分类 - 列表(根据用户)
 	function classify() {
 		$("#detail_mySelect option:gt(0):not()").remove();
 		var optionss = $.get(apiUrl + "goods/cates/listsbyuser/" + user_weid);
@@ -174,6 +181,7 @@ $(function() {
 				return false;
 			}
 
+			console.info("商品分类:", data0);
 			$.each(data0.data, function(index, value) {
 				$("#detail_mySelect").append("<option value="+ value.weid +" sort="+ value.sort +">"+ value.name +"</options>");
 			});
@@ -189,6 +197,7 @@ $(function() {
 		classify();
 	}
 
+	// Mall - 分类 - 保存
 	$(".detail_sort_button").click(function() {
 		var body1 = {}, get_weid;
 		body1.name = $(".detail_save_s").val();
@@ -214,6 +223,7 @@ $(function() {
 		});		
 	})
 
+	// Mall - 分类 - 提交
 	$(".detail_save_button").click(function() {
 		var body = {}
 
