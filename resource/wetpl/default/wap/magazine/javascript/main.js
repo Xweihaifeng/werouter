@@ -99,9 +99,9 @@ $.ajax({
             });
 
             wx.ready(function() {                
-                setTimeout(function(){
+                /*setTimeout(function(){
                     initWx(title, cover, summary);
-                }, 200);
+                }, 200);*/
             })
         }
     }
