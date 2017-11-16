@@ -4,12 +4,12 @@
 	<meta charset="UTF-8">
 	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <title>文章页面</title>
-    <link rel="stylesheet" href="css/home.css"/>
-    <link rel="stylesheet" href="css/article.css"/>
-    <link rel="stylesheet" href="css/act.css"/>
-    <script src="js/zepto.min.js"></script>
-	<script src="interface/article.json"></script>
-    <script src="js/home.js"></script>
+    <link rel="stylesheet" href="{{PATH_TML}}wepage/css/home.css"/>
+    <link rel="stylesheet" href="{{PATH_TML}}wepage/css/article.css"/>
+    <link rel="stylesheet" href="{{PATH_TML}}wepage/css/act.css"/>
+    <script src="{{PATH_TML}}wepage/js/zepto.min.js"></script>
+	<script src="{{PATH_TML}}wepage/interface/article.json"></script>
+    <script src="{{PATH_TML}}wepage/js/home.js"></script>
 </head>
 <body>
 	<nav></nav>
@@ -22,7 +22,7 @@
 				<span class="art-title">内蒙古风干牛肉干</span>
 				<p>文章标题 北京轻松筹率先推出基于社交网络北京轻松筹率先推出基于社交网络</p>
 				<div class="art-content">
-					<span><img src="img/slice.jpg" alt=""></span>
+					<span><img src="/common/img/slice.jpg" alt=""></span>
 					<span class="art-des-text">
 						<strong>这里是一个文章的标题</strong>
 						<pre>北京轻松筹率先推出基于社交网络北京轻松筹率先推出基于社交网络北京轻松筹率先推出基于社交网络北京轻松筹率先推出基于社交网络</pre>
@@ -75,6 +75,10 @@
 					$(this).text($(this).text().substring(0,maxLength)+"...")
 				}
 			})
+
+			$(".art-content").on('click',function () {
+				window.location.href = "http://m.new.wezchina.com/kezunping/article/e00abf70-b659-11e7-90ed-ddc55cdfd250"
+            })
 	    })
 	</script>
 </body>
