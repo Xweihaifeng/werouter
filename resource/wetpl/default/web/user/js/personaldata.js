@@ -199,7 +199,7 @@ $(document).ready(function() {
 	$('.phone input').change(function() {
 		var phone = $('.phone input').val();
 		//正则验证
-		var myreg = /^1[0-9]{10}$/;
+		var myreg = /^1[3|4|5|7|8][0-9]{9}$/;
 		var result = myreg.test(phone);
 		if(!result) {
 			$('.phone span').css("display", "block")

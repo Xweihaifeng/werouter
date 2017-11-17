@@ -244,7 +244,8 @@ function sendRequest(requestData, timeType, year, month) {
             Active = genArr(curve, arr);
         } else {
             layer.msg("没有查询到数据", {
-                time: 1500
+                time: 1500,
+                offset: ['640px', '500px'],
             })
         }
 

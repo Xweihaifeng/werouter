@@ -176,7 +176,7 @@ $(document).ready(function(){
                     // artTypeList(weid);
                 } else {
                     layer.msg("请登录后浏览", {
-                        time: 3500
+                        time: 1500,
                     })
                     window.location.href = '/login';
                 }
