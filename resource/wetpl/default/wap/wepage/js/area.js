@@ -1,3 +1,20 @@
+function city_block() {
+	$(".dqld_div").animate({
+	    height: "50%",
+	}, 300, function() {
+		$(".dqld_div").slideDown(300);
+	});
+}
+
+function city_none() {
+	$(".dqld_div").animate({
+	    height: "0",
+	}, 300, function() {
+		$(".dqld_div").slideUp(300);
+		$("body .dqld_div").remove();
+	});
+}
+
 function getProvinceBuy(){
 	$("body .dqld_div").remove();
 	var province=eval(proStr);
@@ -8,7 +25,8 @@ function getProvinceBuy(){
 		newStr.push("<li onclick=\"getCityBuy("+i+")\">"+province[i].NAME+"</li>");
 	}
 	newStr.push("</ul></div>");
-	$("body").append(newStr.join(""));
+	$("body").append(newStr.join(""))
+	city_block();
 }
 
 function getCityBuy(val){
@@ -23,6 +41,7 @@ function getCityBuy(val){
 	newStr.push("</ul></div>");
 	$("body .dqld_div").remove();
 	$("body").append(newStr.join(""));
+	$(".dqld_div").show();
 }
 
 function getAreaBuy(val,val1){
@@ -47,6 +66,7 @@ function getAreaBuy(val,val1){
 	else{
 		$("body .dqld_div").remove();
 		$("body").append(newStr.join(""));
+		$(".dqld_div").show();
 	}
 }
 
@@ -57,5 +77,5 @@ function getallArea(val,val1,val2){
 	var allarea=province[val].NAME+city[val1].NAME+area[val2].NAME;
 	$("#shengshi").attr({"SS":province[val].NAME,"SQ":city[val1].NAME,"XS":area[val2].NAME});
 	$("#shengshi").val(allarea);
-	$("body .dqld_div").remove();
+	city_none();
 }
