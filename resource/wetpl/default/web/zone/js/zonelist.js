@@ -305,6 +305,7 @@ $(document).ready(function(){
         })
     }
 
+    //problem
     if (domain == 'article') {
         domain = '';
         getUserInfo(FOUNDER, '');
@@ -507,6 +508,46 @@ $(document).ready(function(){
         })
     }
 
+    //数据分页
+    var reqUrl = apiUrl + 'circel/flist';
+    var pages = function(url, domain, type, page) {
+        $.ajax({
+            url: url + '?domain=' + domain + '&page=' + page + '&type=' + type,
+            type: 'GET',
+            headers: {
+                'Token': window.localStorage.getItem("token")
+            },
+            success: function (data) {
+                let totalPage = data.data.params.pageCount;
+                if (page <= totalPage) {
+                    if (type == 1) {
+                        sessionStorage.setItem('fansPages', page + 1);
+                        data.data.list.map(x => $("#fans").append(listTpl('fans-head', x)));
+                    } else {
+                        sessionStorage.setItem('friendsPages', page + 1);
+                        data.data.list.map(x => $("#friends").append(listTpl('friends-head', x)));
+                    }
+                } else {
+                    $("#more").text("没有更多");
+                }
+            }
+        })
+    }
+
+    $("#more").click(function(){
+        let state = $(".fans").attr("class").indexOf('active');
+        let domain = window.location.pathname.split('/').slice(1, 2)[0];
+        if (state != -1) {
+            //'fans' 请求fans分页
+            let page = sessionStorage.getItem('fansPages')
+            pages(reqUrl, domain, 1, page);
+        } else {
+            //'friends'
+            let page = sessionStorage.getItem('friendsPages')
+            pages(reqUrl, domain, 2, page);
+        }
+    })
+
     //写入圈子页面数据
     var genListTpl = function(url) {
         $.ajax({
@@ -564,6 +605,8 @@ $(document).ready(function(){
                     $(".friends").html(`<a>Ta的关注(${data.data.gnums})</a>`);
                     data.data.flist.map(x => $("#fans").append(listTpl('fans-head', x)));
                     data.data.glist.map(x => $("#friends").append(listTpl('friends-head', x)));
+                    sessionStorage.setItem('fansPages', 2);
+                    sessionStorage.setItem('friendsPages', 2);
 
                     $(".fans-head, .friends-head").click(function(e){
                         let domain = $(e.target).attr('id');
@@ -609,10 +652,6 @@ $(document).ready(function(){
             wefriends(nums.substr(0, len - 1), res);
         }
     }
-
-    $("#more").click(function(){
-        $(this).text("没有更多");
-    })
 
     //用户认证 user_cert != null
 
