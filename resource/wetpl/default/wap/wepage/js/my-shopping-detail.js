@@ -176,6 +176,10 @@ $(function() {
 		$(".detail_shop_classify").slideToggle("slow");
 	});
 
+	$(".detail_promotion_switch").click(function() {
+		$(".detail_promotion_sub li").toggle(300);
+	});
+
 	$(".detail_save_token").click(function() {
 		window.localStorage.setItem("token", $(".detail_token").val());
 		layer.msg("token已经保存", { time: 1500 });
