@@ -205,19 +205,23 @@ function changeTime(timeType, fromUrl) {
     var requestData;
     switch (timeType) {
         case 1:
-            requestData = ['year'];
+            //requestData = ['year'];
+            sendRequest(requestData, 1, fromUrl); //今年
             break;
         case 2:
-            requestData = ['year'];
+            //requestData = ['year'];
+            sendRequest(requestData, 1, fromUrl); //去年
             break;
         case 3:
-            requestData = ['month'];
+            //requestData = ['month'];
+            sendRequest(requestData, 2, fromUrl); //本年本月
             break;
         case 4:
-            requestData = ['month', getPreMonth()];
+            //requestData = ['month', getPreMonth()];
+            sendRequest(requestData, 2, fromUrl); //本年上月
             break;
     }
-    sendRequest(requestData, timeType, fromUrl);
+    //sendRequest(requestData, timeType, fromUrl);
 }
 
 
@@ -227,7 +231,8 @@ function changeTime(timeType, fromUrl) {
  */
 function sendRequest(requestData, timeType, fromUrl) {
     //$.post(requestUrl, {titleData:requestData, timeType:timeType, fromUrl:fromUrl}, function (data) {
-    $.get(requestUrl, function (data) {
+    //console.log(requestUrl)
+    $.get(requestUrl + '&type=' + timeType, function (data) {
         console.log('echarts: ', data);
         eval(" var data = " + data);
         var resopnse = data.data;
