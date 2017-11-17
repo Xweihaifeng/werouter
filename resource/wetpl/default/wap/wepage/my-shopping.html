@@ -55,46 +55,5 @@
 
         <script type="text/javascript" src="{{PATH_TML}}wepage/js/my-shopping.js"></script>
         <script type="text/javascript" src="{{PATH_TML}}wepage/js/home.js" ></script>
-        <script>
-            function shop(key, value) {
-                var imgUrl = value.cover;
-                if (imgUrl.indexOf('http') === -1){
-                    imgUrl = imgSet(imgUrl, 100, 100, 3);
-                }
-
-                // <a href="/shopping/`+ value.weid +`">
-                var template = `
-                <li class="`+ value.weid +`">
-                    <a href="/shopping/detail">
-                        <slide class="li_img_wap">
-                            <img src="`+ imgUrl +`">
-                        </slide>
-                        <slide class="li_info">
-                            <h3>`+ value.title +`</h3>
-                            <div class="lii_price">`+ value.price +`</div>
-                            <p class="lii_sold"><span>已售：`+ value.sales_num +`</span><span>收藏：`+ value.collections +`</span></p>
-                        </slide>
-                    </a>
-                </li>`
-
-                return template;
-            }
-
-            var genShop = function(my_shopping) {
-                var result = my_shopping.shop;
-                console.log("shopping:", result);
-                $.each(result, function (key, value) {
-                    $(".shop ul").append(shop(key, value));
-                });
-            }
-        </script>
-        <script>
-            $(function() {
-                $(".shop ul li").click(function() {
-                    $(this).attr("class");
-                    window.localStorage.setItem("shopping_weid", $(this).attr("class"));
-                });
-            })
-        </script>
     </body>
 </html>
