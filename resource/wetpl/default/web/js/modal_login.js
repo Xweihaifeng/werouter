@@ -492,11 +492,4 @@ $(function() {
         $(".login-body").show();
         $(".wexin").hide();
     })
-    $("#more").click(function(){
-        $(this).text("没有更多");
-    })
-
-
-    
-   
 })

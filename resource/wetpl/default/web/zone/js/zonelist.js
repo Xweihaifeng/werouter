@@ -610,7 +610,9 @@ $(document).ready(function(){
         }
     }
 
-
+    $("#more").click(function(){
+        $(this).text("没有更多");
+    })
 
     //用户认证 user_cert != null
 
