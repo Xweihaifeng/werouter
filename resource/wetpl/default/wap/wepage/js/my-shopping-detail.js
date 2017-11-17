@@ -95,20 +95,20 @@ $(function() {
 
 	// 套餐选择蒙层显示与否开始
 	$(".detail_selected_switch").click(function() {
-		$(".detail_address_mask").fadeIn("slow");
 		$(".detail_rddress_mask_content").animate({
 		    height: "70%",
-		}, "slow", function() {
-			$(".detail_rddress_mask_content").show();
+		}, 300, function() {
+			$(".detail_rddress_mask_content").slideDown(300);
 		});
+		$(".detail_address_mask").fadeIn("slow");
 	});
 
-	$(".detail_mask_close").click(function() {
+	$(".detail_mask_close, .detail_address_mask").click(function() {
 		$(".detail_address_mask").fadeOut("slow");				
 		$(".detail_rddress_mask_content").animate({
 		    height: "0",
-		}, "slow", function() {
-			$(".detail_rddress_mask_content").hide();
+		}, 300, function() {
+			$(".detail_rddress_mask_content").slideUp(300);
 		});
 	});
 	// 套餐选择蒙层显示与否结束
