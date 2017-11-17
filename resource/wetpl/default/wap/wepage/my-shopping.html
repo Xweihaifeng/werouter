@@ -5,96 +5,96 @@
 <!DOCTYPE html>
 <html>
 
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-		<title> 商城 </title>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <title> 商城 </title>
 
-		<link rel="stylesheet" href="{{PATH_TML}}wepage/css/home.css" />
-		<link rel="stylesheet" href="{{PATH_TML}}wepage/css/swiper.min.css"/>
-		<link rel="stylesheet" href="{{PATH_TML}}wepage/css/my-shopping.css" />
+        <link rel="stylesheet" href="{{PATH_TML}}wepage/css/home.css" />
+        <link rel="stylesheet" href="{{PATH_TML}}wepage/css/swiper.min.css"/>
+        <link rel="stylesheet" href="{{PATH_TML}}wepage/css/my-shopping.css" />
 
-		<script type="text/javascript" src="{{PATH_TML}}wepage/js/jquery-3.2.1.min.js"></script>
-		<!-- <script type="text/javascript" src="{{PATH_TML}}wepage/interface/my-shopping.json"></script> -->
-		<script type="text/javascript" src="{{PATH_TML}}wepage/js/zepto.min.js" ></script>
-		<script type="text/javascript" src="{{PATH_TML}}wepage/js/swiper-3.3.1.min.js"></script>
-		<script type="text/javascript" src="{{PATH_CONFIG}}"></script>
+        <script type="text/javascript" src="{{PATH_TML}}wepage/js/jquery-3.2.1.min.js"></script>
+        <!-- <script type="text/javascript" src="{{PATH_TML}}wepage/interface/my-shopping.json"></script> -->
+        <script type="text/javascript" src="{{PATH_TML}}wepage/js/zepto.min.js" ></script>
+        <script type="text/javascript" src="{{PATH_TML}}wepage/js/swiper-3.3.1.min.js"></script>
+        <script type="text/javascript" src="{{PATH_CONFIG}}"></script>
 
-	</head>
+    </head>
 
-	<body>
-		<div id="carousel">
-			<div class="swiper-container" id="my-swiper">
-				<div class="swiper-wrapper carousel">
-					<div class="swiper-slide">
-						<img src="/common/img/default.png" alt=""/>
-					</div>
-					<div class="swiper-slide">
-						<img src="/common/img/bg.png" alt=""/>
-					</div>
-				</div>
-				<div class="swiper-pagination"></div>
-			</div>
-		</div>
-		<nav></nav>
-		<div id="art-type">
-			<ul>
-				<li><img src="/common/img/default.png" alt=""/><p>活动</p></li>
-				<li><img src="/common/img/bg.png" alt=""/><p>活动</p></li>
-				<li><img src="/common/img/bg1.png" alt=""/><p>活动</p></li>
-				<li><img src="/common/img/bg3.jpg" alt=""/><p>活动</p></li>
-			</ul>
-		</div>
-		<div class="container mall">
-			<menu class="menu" id="menu_title"><ul id="shop_type"></ul></menu>
-			<article class="shop">
-				<ul></ul>
-			</article>
-		</div>
-		<footer></footer>
+    <body>
+        <div id="carousel">
+            <div class="swiper-container" id="my-swiper">
+                <div class="swiper-wrapper carousel">
+                    <div class="swiper-slide">
+                        <img src="/common/img/default.png" alt=""/>
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="/common/img/bg.png" alt=""/>
+                    </div>
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+        <nav></nav>
+        <div id="art-type">
+            <ul>
+                <li><img src="/common/img/default.png" alt=""/><p>活动</p></li>
+                <li><img src="/common/img/bg.png" alt=""/><p>活动</p></li>
+                <li><img src="/common/img/bg1.png" alt=""/><p>活动</p></li>
+                <li><img src="/common/img/bg3.jpg" alt=""/><p>活动</p></li>
+            </ul>
+        </div>
+        <div class="container mall">
+            <menu class="menu" id="menu_title"><ul id="shop_type"></ul></menu>
+            <article class="shop">
+                <ul></ul>
+            </article>
+        </div>
+        <footer></footer>
 
-		<script type="text/javascript" src="{{PATH_TML}}wepage/js/my-shopping.js"></script>
-		<script type="text/javascript" src="{{PATH_TML}}wepage/js/home.js" ></script>
-		<script>
-			function shop(key, value) {
-				var imgUrl = value.cover;
-				if (imgUrl.indexOf('http') === -1){
-		            imgUrl = imgSet(imgUrl, 100, 100, 3);
-		        }
+        <script type="text/javascript" src="{{PATH_TML}}wepage/js/my-shopping.js"></script>
+        <script type="text/javascript" src="{{PATH_TML}}wepage/js/home.js" ></script>
+        <script>
+            function shop(key, value) {
+                var imgUrl = value.cover;
+                if (imgUrl.indexOf('http') === -1){
+                    imgUrl = imgSet(imgUrl, 100, 100, 3);
+                }
 
-		        // <a href="/shopping/`+ value.weid +`">
-				var template = `
-				<li class="`+ value.weid +`">
-					<a href="/shopping/detail">
-						<slide class="li_img_wap">
-							<img src="`+ imgUrl +`">
-						</slide>
-						<slide class="li_info">
-							<h3>`+ value.title +`</h3>
-							<div class="lii_price">`+ value.price +`</div>
-							<p class="lii_sold"><span>已售：`+ value.sales_num +`</span><span>收藏：`+ value.collections +`</span></p>
-						</slide>
-					</a>
-				</li>`
+                // <a href="/shopping/`+ value.weid +`">
+                var template = `
+                <li class="`+ value.weid +`">
+                    <a href="/shopping/detail">
+                        <slide class="li_img_wap">
+                            <img src="`+ imgUrl +`">
+                        </slide>
+                        <slide class="li_info">
+                            <h3>`+ value.title +`</h3>
+                            <div class="lii_price">`+ value.price +`</div>
+                            <p class="lii_sold"><span>已售：`+ value.sales_num +`</span><span>收藏：`+ value.collections +`</span></p>
+                        </slide>
+                    </a>
+                </li>`
 
-				return template;
-			}
+                return template;
+            }
 
-			var genShop = function(my_shopping) {
-				var result = my_shopping.shop;
-				console.log("shopping:", result);
-				$.each(result, function (key, value) {
-					$(".shop ul").append(shop(key, value));
-				});
-			}
-		</script>
-		<script>
-			$(function() {
-				$(".shop ul li").click(function() {
-					$(this).attr("class");
-					window.localStorage.setItem("shopping_weid", $(this).attr("class"));
-				});
-			})
-		</script>
-	</body>
+            var genShop = function(my_shopping) {
+                var result = my_shopping.shop;
+                console.log("shopping:", result);
+                $.each(result, function (key, value) {
+                    $(".shop ul").append(shop(key, value));
+                });
+            }
+        </script>
+        <script>
+            $(function() {
+                $(".shop ul li").click(function() {
+                    $(this).attr("class");
+                    window.localStorage.setItem("shopping_weid", $(this).attr("class"));
+                });
+            })
+        </script>
+    </body>
 </html>
