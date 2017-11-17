@@ -80,6 +80,19 @@ $(function() {
 		return template;
 	}
 
+	var detail_set_meal = function(result) {
+		var temp_img = result.cover;
+		if(!temp_img) {
+            temp_img = "/common/img/img6.png";
+
+        } else if (temp_img.indexOf('http') != 0 && temp_img != "") {
+            temp_img = imgSet(temp_img, 88, 88, 3);
+        }
+
+        var template = `<img src="`+ temp_img +`" alt="">`
+        return template;
+	}
+
 	// 套餐选择蒙层显示与否开始
 	$(".detail_selected_switch").click(function() {
 		$(".detail_address_mask").fadeIn("slow");
@@ -111,6 +124,7 @@ $(function() {
 		$(".detail_title").html(detail_title(result));
 		$(".detail_swiper").html(detail_swiper(result));
 		$(".detail_evaluate_imgs").html(detail_evaluate(result));
+		$(".detail_mask_pic").html(detail_set_meal(result));
 		
 		// 商城详情内容轮播
 		var mySwiper = new Swiper('#detail_swiper_img', {
@@ -132,7 +146,7 @@ $(function() {
 	// Mall - 购物车 - 添加购物车
 	$(".detail_footer_join").click(function() {
 		var body = {
-			goods_id : weid,
+			goods_id : shop_weid,
 			goods_num: 1
 		}
 		var options2 =  $.post(apiUrl + "cart/store", body);

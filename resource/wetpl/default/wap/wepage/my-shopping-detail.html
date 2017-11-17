@@ -20,6 +20,9 @@
 		<script type="text/javascript" src="{{PATH_CONFIG}}"></script>
 		<script type="text/javascript" src="/common/layer-v3.0.3/layer-v3.0.3/layer/layer.js"></script>
 		<script type="text/javascript" src="{{PATH_TML}}wepage/js/swiper-3.3.1.min.js"></script>
+	    <!-- <script type="text/javascript" src="{{PATH_TML}}wepage/js/protect.js"></script> -->
+	    <script type="text/javascript" src="{{PATH_TML}}wepage/js/jquery-region.js"></script>
+	    <script type="text/javascript" src="{{PATH_TML}}wepage/js/area.js"></script>
 		<script type="text/javascript" src="{{PATH_TML}}wepage/js/my-shopping-detail.js"></script>
 	</head>
 
@@ -125,9 +128,7 @@
 			<slide class="detail_address_mask"></slide>
 			<slide class="detail_rddress_mask_content" style="height: 0;">
 				<div class="detail_mask_top">
-					<div class="detail_mask_pic">
-						<img src="{{PATH_TML}}wepage/img/img6.jpg" alt="">
-					</div>
+					<div class="detail_mask_pic"></div>
 					<div class="detail_mask_price">￥<span>450.00 </span></div>
 					<div class="detail_mask_close"><em class="detail_btn2"></em></div>
 				</div>
@@ -174,9 +175,10 @@
 			<slide class="detail_address">
 				<div class="detail_sendto"> 送至 </div>
 				<div class="detail_sendto_sub">
-					<li> 北京.朝阳区.三里屯（12号） </li>
-					<li></li>
-					<li></li>
+					<div id="addAddress">
+					    <div class="address_input"><input class="address_input1" type="text" placeholder="省市区" id="shengshi" onClick="getProvinceBuy()" readonly="readonly"></div>
+					</div>
+					<!-- <li> 北京.朝阳区.三里屯（12号） </li> -->
 				</div>
 				<div class="detail_sendto_switch">
 					<em class="detail_btn2"></em>
