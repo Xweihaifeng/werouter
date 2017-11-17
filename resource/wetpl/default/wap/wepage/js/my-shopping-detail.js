@@ -254,12 +254,12 @@ $(function() {
                 classify();
             } else {
                 layer.msg(data.message, { time: 1500 });
-                return false;                
+                return false;
             }
         });
         options.fail(function(error) {
             console.error(error);
-        });        
+        });
     })
 
     // Mall - 分类 - 提交

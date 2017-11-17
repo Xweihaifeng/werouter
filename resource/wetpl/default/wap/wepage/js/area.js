@@ -1,3 +1,7 @@
+/**
+ * Created by weifeng on 2017/11/17.
+*/
+
 const city_block = function() {
     $(".detail_address_mask").fadeIn("slow");
     $(".dqld_div").animate({
