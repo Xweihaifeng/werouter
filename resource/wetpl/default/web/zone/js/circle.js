@@ -206,19 +206,19 @@ function changeTime(timeType, fromUrl) {
     switch (timeType) {
         case 1:
             //requestData = ['year'];
-            sendRequest(requestData, 1, fromUrl); //今年
+            sendRequest(requestData, 1, new Date().getFullYear(), ''); //今年
             break;
         case 2:
             //requestData = ['year'];
-            sendRequest(requestData, 1, fromUrl); //去年
+            sendRequest(requestData, 1, new Date().getFullYear() - 1, ''); //去年
             break;
         case 3:
             //requestData = ['month'];
-            sendRequest(requestData, 2, fromUrl); //本年本月
+            sendRequest(requestData, 2, new Date().getFullYear(), new Date().getMonth() + 1); //本年本月
             break;
         case 4:
             //requestData = ['month', getPreMonth()];
-            sendRequest(requestData, 2, fromUrl); //本年上月
+            sendRequest(requestData, 2, new Date().getFullYear(), new Date().getMonth()); //本年上月
             break;
     }
     //sendRequest(requestData, timeType, fromUrl);
@@ -229,18 +229,30 @@ function changeTime(timeType, fromUrl) {
  * 发送请求
  * @param requestData
  */
-function sendRequest(requestData, timeType, fromUrl) {
+function sendRequest(requestData, timeType, year, month) {
     //$.post(requestUrl, {titleData:requestData, timeType:timeType, fromUrl:fromUrl}, function (data) {
     //console.log(requestUrl)
-    $.get(requestUrl + '&type=' + timeType, function (data) {
+    $.get(requestUrl + '&type=' + timeType + '&y=' + year + '&m=' + month, function (data) {
         console.log('echarts: ', data);
-        eval(" var data = " + data);
-        var resopnse = data.data;
-        eval(" xTitle =" + resopnse.xTitle);
-        eval(" newlyAdded =" + resopnse.newlyAdded);
-        eval(" Active =" + resopnse.active);
-        eval(" mapData =" + resopnse.mapData);
-        friendNum = resopnse.friendNum;
+        //eval(" var data = " + data);
+        let resopnse = data.data;
+        let arr = [0,0,0,0,0,0,0,0,0,0,0,0];
+        let curve = data.data;
+        if (curve != '') {
+            xTitle = eval('["1\u6708","2\u6708","3\u6708","4\u6708","5\u6708","6\u6708","7\u6708","8\u6708","9\u6708","10\u6708","11\u6708","12\u6708"]');
+            newlyAdded = genArr(curve, arr);
+            Active = genArr(curve, arr);
+        } else {
+            layer.msg("没有查询到数据", {
+                time: 1500
+            })
+        }
+
+        //eval(" xTitle =" + resopnse.xTitle);
+        //eval(" newlyAdded =" + resopnse.newlyAdded);
+        //eval(" Active =" + resopnse.active);
+        //eval(" mapData =" + resopnse.mapData);
+        //friendNum = resopnse.friendNum;
         makeChart();
     })
 }
