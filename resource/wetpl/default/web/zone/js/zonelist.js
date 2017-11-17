@@ -510,9 +510,9 @@ $(document).ready(function(){
 
     //数据分页
     var reqUrl = apiUrl + 'circel/flist';
-    var pages = function(url, domain, type, page) {
+    var pages = function(url, domain, type, page, limit) {
         $.ajax({
-            url: url + '?domain=' + domain + '&page=' + page + '&type=' + type,
+            url: url + '?domain=' + domain + '&page=' + page + '&type=' + type + '&limit=' + limit,
             type: 'GET',
             headers: {
                 'Token': window.localStorage.getItem("token")
@@ -540,11 +540,11 @@ $(document).ready(function(){
         if (state != -1) {
             //'fans' 请求fans分页
             let page = sessionStorage.getItem('fansPages')
-            pages(reqUrl, domain, 1, page);
+            pages(reqUrl, domain, 1, page, 12);
         } else {
             //'friends'
             let page = sessionStorage.getItem('friendsPages')
-            pages(reqUrl, domain, 2, page);
+            pages(reqUrl, domain, 2, page, 12);
         }
     })
 
