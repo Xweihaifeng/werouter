@@ -73,7 +73,7 @@ var url = window.location.pathname.split('/');
                 
                     
                     
-                    qrcodefun(domain,logoimg);
+                    qrcodefun(domain, logoimg, id);
 
                     
                 }
@@ -85,9 +85,10 @@ var url = window.location.pathname.split('/');
     }
 
        // 二维码插件
-    var qrcodefun=function(domain,logoimg){
+    var qrcodefun=function(domain,logoimg,platuserid){
         $(".oline-3 div:first-child").children().remove();
-        var qrcode_val=localhostPath+"/"+domain+"/wecard";
+        //var qrcode_val=localhostPath+"/"+domain+"/wecard";
+        var qrcode_val=localhostPath+platuserid+"/wecard";
         $(".oline-3 div:first-child").attr("ref",qrcode_val);
         // if ($.browser.msie && $.browser.version <= 8){
         if ($.support.msie && $.support.version <= 8){

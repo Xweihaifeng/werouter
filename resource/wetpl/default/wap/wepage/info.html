@@ -26,7 +26,7 @@
 		</div>
 		<div>
 			<label>账号主体</label>
-			<span><img src="img/idcard.png" width="32" alt=""/>{{account}}</span>
+			<span><img src="/common/img/idcard.png" width="32" alt=""/>{{account}}</span>
 		</div>
 		<div class="cert">
 			<label>认证信息</label>
@@ -138,7 +138,8 @@
 		},
 		created: function(){
 			var _self = this;
-			init(apiUrl + 'circel/wcard/' + '983ad200-7698-11e7-87c1-41f823b6258c', _self);
+			var platuserid = window.location.pathname.split('/')[1];
+			init(apiUrl + 'circel/wcard/' + platuserid, _self);
 		},
 		methods: {
 			care: function(){
