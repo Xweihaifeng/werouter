@@ -3,8 +3,11 @@
              */
 
             // 公用部分变量声明
-            var user_weid = window.localStorage.getItem("weid");
-            var token = window.localStorage.getItem('token');
+            // var user_weid = window.localStorage.getItem("weid");
+            // var token = window.localStorage.getItem('token');
+
+            var user_weid = "e432d880-c9c6-11e7-9416-ff2a866c0676";
+            var token = "eyJpdiI6IlwvWEFXRG5XR2IwTExYNDNyV2RmRnRRPT0iLCJ2YWx1ZSI6IlBHa2pPcWR5cndXV0lnMnIwYXJacHZ1WU9QWnB0VTFqUVwvSnRWbTMxajdWQ3lJTEQrdnRwYXREZzhZQUMwSW5UUit1RzZ1c2lSV3dHQktuVlMrR0JuY2NGQ0d2RER4MVpraFdBTm4rYzUzWT0iLCJtYWMiOiIxN2E3NWRiMTkyN2NhMzFkYWFlMmZjMTc3ZDZkNTJkMmQyYWU0NGY3NzUzNWU2ZmYwMDM2OTJkNDAxMDg2NDYxIn0=";
             var number = 1, domain, plat_user_id;
             var shop = new Array();
             var my_shopping = {shop: shop};
