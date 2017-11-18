@@ -16,6 +16,7 @@ const city_none = function() {
         height: "0",
     }, 300, function() {
         $(".dqld_div").slideUp(300);
+        $(".detail_address_mask").fadeOut("slow");
         $("body .dqld_div").remove();
     });
 }
