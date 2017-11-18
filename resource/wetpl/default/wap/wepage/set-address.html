@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <title>收货地址</title>
+
+    <link rel="stylesheet" href="{{PATH_TML}}wepage/css/set-address.css">
+
+    <script src="{{PATH_TML}}wepage/js/jquery-3.2.1.min.js"></script>
+    <script src="{{PATH_CONFIG}}"></script>
+    <script src="{{PATH_TML}}wepage/js/vue.min.js"></script>
+    <script src="{{PATH_TML}}wepage/js/vue-resource.min.js"></script>
+    <script src="{{PATH_TML}}wepage/js/layui/layui.all.js"></script>
+</head>
+<body>
+<div id="addressPage" v-cloak>
+    <header>
+        <span>收货地址</span>
+        <a class="back"></a>
+    </header>
+    <div class="form">
+        <div>
+            <span>收货人</span>
+            <input type="text" v-model="name">
+        </div>
+        <div>
+            <span>联系方式</span>
+            <input type="text" v-model="phone">
+        </div>
+        <div class="select-address" @click="choose()">
+            <span>所在地区</span>
+            <span>{{currentPro + currentCity ? currentPro + currentCity : "请添加收货地址"}}</span>
+        </div>
+        <div class="detail">
+            <span>详细地址</span>
+            <textarea v-model="detailAddr"></textarea>
+        </div>
+        <div>
+            <span>邮政编码</span>
+            <input type="text" v-model="zip">
+        </div>
+    </div>
+    <div class="submit" @click="onSubmit()">确认并使用该地址</div>
+    <transition name="fade">
+        <div class="modal-bg" v-show="showModel">
+            <div class="modal" v-show="showModel">
+                <div class="modal-top">
+                    <span>所在地区</span>
+                    <i @click="showModel=false">×</i>
+                </div>
+                <div class="list">
+                    <div>
+                        <span>{{currentPro}}</span>
+                        <span>{{currentCity}}</span>
+                    </div>
+                    <div>
+                        <ul>
+                            <li v-for="item in proList" :class="{'font-red' : item.id == pro}" @click="getPro(item,$event)">{{item.name}}</li>
+                        </ul>
+                        <ul>
+                            <li v-for="city in cityList" :class="{'font-red' : city.id == chooseCity}" @click="getCity(city,$event)">{{city.name}}</li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </transition>
+</div>
+<script>
+    var app = new Vue({
+        el: "#addressPage",
+        data: {
+            pro: 27,
+            chooseCity: 294,
+            info: "",
+            name : '',
+            phone : '',
+            detailAddr : '',
+            proList: [],
+            cityList: [],
+            currentPro: '',
+            currentCity: '',
+            zip : '',
+            showModel: false
+        },
+        mounted: function () {
+            var hasWeid = localStorage.getItem('weid');
+            var weid = hasWeid ? hasWeid : "aafc6a60-c2b6-11e7-804f-2b2e90492ab4";
+            var self = this;
+            this.$http.get(USERDETAIL + '/' + weid).then(function (res) {
+                console.log(res);
+                this.info = res.data.data;
+
+                this.$http.get(apiUrl + "province/list").then(function (res) {
+                    console.log(res);
+                    this.proList = res.data.data.list;
+                    var isFind = this.proList.filter(function (one) {
+                        if (self.info.province_id) {
+                            return one.id === self.info.province_id
+                        } else {
+                            return one.id === self.pro
+                        }
+                    });
+                    if (isFind.length) {
+                        this.pro = isFind[0].id;
+                        this.currentPro = isFind[0].name;
+                    }
+
+                    this.$http.get(apiUrl + "area/list/" + this.pro).then(function (res) {
+                        this.cityList = res.data.data.list;
+                        this.chooseCity = this.cityList[0].id;
+                        this.currentCity = this.cityList[0].name;
+                    })
+
+
+                }, function (err) {
+                    console.log(err)
+                })
+
+
+            }, function (err) {
+                console.log(err)
+            });
+
+
+        },
+        methods: {
+            choose: function () {
+                this.showModel = true;
+            },
+            getPro: function (item, ev) {
+                this.pro = item.id;
+                this.currentPro = item.name;
+                var self = this;
+                this.$http.get(apiUrl + "area/list/" + this.pro).then(function (res) {
+                    this.cityList = res.data.data.list;
+                    this.chooseCity = this.cityList[0].id;
+                    this.currentCity = this.cityList[0].name;
+                })
+            },
+            getCity: function (item, ev) {
+                this.chooseCity = item.id;
+                this.currentCity = item.name;
+                this.showModel = false;
+            },
+            onSubmit : function () {
+                var data = {
+                    name : this.name,
+                    province_id : this.pro,
+                    area_id : this.chooseCity,
+                    county_id : null,
+                    detail : this.detailAddr,
+                    zipcode : this.zip,
+                    telophone : this.phone,
+                    stats : 2
+                };
+
+                this.$http.post(apiUrl + 'users/address/store',data).then(function (res) {
+                    console.log(res);
+                    if(res.data.code === 200){
+                        layer.msg('保存成功');
+                    }else{
+                        layer.msg('保存失败 '+ res.data.message);
+                    }
+                },function (err) {
+                    console.log(err)
+                })
+
+            }
+        }
+    })
+    Vue.http.headers.common['token'] = 'eyJpdiI6IndneCtvXC9lbElBNmNvYUN2SnlFNXV3PT0iLCJ2YWx1ZSI6IkcwVGVJS21LTmRsVXpnU3Q0S3RjVDBrcUhhTmRFU3p0TEJXTGlCWUk1TVZ6bnRSYlRlc1h2OHJWUDJQclwveml2M3dObk5qVTFIbENLZmxlQTNyck1IZDJGaFdhdFRzQkFEclBLYk1tWW8wTT0iLCJtYWMiOiIzMTdlMTcwOWJlOTA0ZTQxY2I2NGM2YmI4ZDMyMDNlYzJjMGU2ZjI3ZDAxZTc3NDBjOTdmYzk2NTA2M2ZhODE0In0='
+</script>
+</body>
+</html>
