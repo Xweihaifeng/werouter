@@ -94,3 +94,13 @@ goods_list.done(function(data) {
 goods_list.fail(function(error) {
     console.error(error);
 });
+
+$("#container").scroll(function(){
+    var $this =$(this),
+    viewH =$(this).height(),
+    contentH =$(this).get(0).scrollHeight,
+    scrollTop =$(this).scrollTop();
+    if(scrollTop / (contentH - viewH) >= 0.95){
+        console.log("到底了");
+    }
+});
