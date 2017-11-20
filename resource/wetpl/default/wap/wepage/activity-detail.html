@@ -10,13 +10,15 @@
     <link rel="stylesheet" href="{{PATH_TML}}wepage/css/common.css"/>
     <script src="{{PATH_TML}}wepage/js/zepto.min.js"></script>
     <script src="{{PATH_TML}}wepage/js/vue.min.js"></script>
+    <script type="text/javascript" src="{{PATH_CONFIG}}"></script>
     <script src="{{PATH_TML}}wepage/js/swiper-3.3.1.min.js"></script>
     <script src="{{PATH_TML}}wepage/js/layui/layui.all.js"></script>
     <title></title>
 </head>
 <body>
+<div id="app">
     <div id="title">
-        <a href="my-activity"><img id="goback" src="/common/img/return.png" /></a>
+        <a href="/my-activity"><img id="goback" src="/common/img/return.png" /></a>
         <p>活动详情</p>
         <img id="user" src="/common/img/user.svg" width="20" />
     </div>
@@ -25,10 +27,7 @@
         <div class="swiper-container" id="my-swiper">
             <div class="swiper-wrapper carousel">
                 <div class="swiper-slide">
-                    <img src="/common/img/mountain.png" alt=""/>
-                </div>
-                <div class="swiper-slide">
-                    <img src="/common/img/bg2.jpg" alt=""/>
+                    <img :src="cover" alt=""/>
                 </div>
             </div>
             <div class="swiper-pagination"></div>
@@ -38,43 +37,32 @@
     <div id="container">
         <div class="actd-title">活动简介</div>
         <ul>
-            <li class="actd-theme"><img src="/common/img/theme.png" alt=""/><p>相约珠峰：一起攀登珠穆朗玛峰</p></li>
-            <li class="actd-time"><img src="/common/img/clock.png" alt=""/><p>11-15 00:00 至 11-30 00:00 报名截止</p></li>
-            <li class="actd-map"><img src="/common/img/location.png" alt=""/><p><a href="activity-map">中国西藏定日县扎西宗乡</a></p><img class="arrow" src="/common/img/arrow-right.png" alt=""/></li>
-            <li class="actd-zb"><img src="/common/img/company.png" alt=""/><p>微众中国</p></li>
+            <li class="actd-theme"><img src="/common/img/theme.png" alt=""/><p>{{title}}</p></li>
+            <li class="actd-time"><img src="/common/img/clock.png" alt=""/><p>{{start}} 至 {{end}} 报名截止</p></li>
+            <li class="actd-map">
+                <img src="/common/img/location.png" alt=""/>
+                <p><a href="/activity-map">{{address}}</a></p>
+                <!--<img class="arrow" src="/common/img/arrow-right.png" alt=""/>-->
+            </li>
+            <li class="actd-zb"><img src="/common/img/company.png" alt=""/><p>{{sponsor}}</p></li>
             <li class="actd-bm" style="background: #f0f0f0">已报名用户</li>
             <li class="actd-users">
-                <img src="/common/img/avatar3.png" alt=""/>
-                <img src="/common/img/avatar4.png" alt=""/>
-                <img src="/common/img/avatar5.png" alt=""/>
-                <img src="/common/img/avatar6.png" alt=""/>
-                <img src="/common/img/avatar7.png" alt=""/>
+                <img :src="user.avatar" v-for="user in users" alt=""/>
             </li>
             <li style="background: #f0f0f0">活动嘉宾</li>
-            <li class="actd-guest">
-                <img src="/common/img/avatar1.png" alt=""/>
+            <li class="actd-guest" v-for="guest in guests">
+                <img :src="guest.avatar" alt=""/>
                 <div>
-                    <p>刘政</p>
-                    <p style="font-size: 0.12rem; color: #a6a6a6">领队</p>
-                </div>
-            </li>
-            <li class="actd-guest">
-                <img src="/common/img/avatar2.png" alt=""/>
-                <div>
-                    <p>李海红</p>
-                    <p style="font-size: 0.12rem; color: #a6a6a6">副队长</p>
+                    <p>{{guest.name}}</p>
+                    <p style="font-size: 0.12rem; color: #a6a6a6">{{guest.position}}</p>
                 </div>
             </li>
             <li style="background: #f0f0f0">活动详情</li>
-            <li class="actd-detail">
-                珠穆朗玛峰（珠峰）是喜马拉雅山脉的主峰，位于中国与尼泊尔边境线上，它的北部在中国西藏定日县境内（西坡在定日县扎西宗乡，东坡在定日县曲当乡，有珠峰大本营），南部在尼泊尔境内，而顶峰位于中国境内，是世界最高峰。是中国跨越四个县的珠穆朗玛峰自然保护区和尼泊尔国家公园的中心所在。
-                藏语中“珠穆”是女神的意思，“朗玛”是第三的意思。因为在珠穆朗玛峰的附近还有四座山峰，珠峰位居第三，所以称为珠穆朗玛峰。
-                珠穆朗玛峰是世界海拔最高的山峰，按2005年中国国家测绘局测量的岩面高为8844.43米，尼泊尔则使用传统的雪盖高8848米（29029英尺），2010年起两国官方互相承认对方的测量数据。除了是海拔最高的山峰之外，它也是距离地心第五远的高峰[1]  。
-            </li>
+            <li class="actd-detail" v-html="content"></li>
         </ul>
         <div class="actd-apply">立即报名</div>
-
     </div>
+</div>
 
     <script>
         var mySwiper = new Swiper ('#my-swiper', {
@@ -97,11 +85,97 @@
         })
 
         $("#user").click(function(){
-            window.location.href = "wcard";
+//            window.location.href = "wcard";
         })
 
-        new Vue({
+        const reqData = (url, ref) => {
+            $.ajax({
+                url: url,
+                type: 'GET',
+                success: function(data) {
+                    console.log(data)
+                    if (data.code == 200) {
+                        let p = data.data;
+                        ref.title = p.title;
+                        ref.cover = ApiMaterPlatQiniuDomain + p.cover;
+                        ref.sponsor = p.Sponsor;
+                        ref.content = p.content;
+                        ref.address = p.area_name + p.address;
+                        ref.start = p.created_at.substr(5);
+                        ref.end = p.enroll_deadline.substr(5);
+                    }
+                }
+            })
+        }
 
+        const reqUsers = (url, data, ref) => {
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: data,
+                success: function(data) {
+                    console.log(data);
+                    if (data.code == 200) {
+                        data.data.list.map(x => ref.users.push(
+                            {
+                                avatar: x.avatar != null ? ApiMaterPlatQiniuDomain + x.avatar : '/common/img/vote_front_cover.png',
+                            }));
+                        if (ref.users == '') {
+                            $(".actd-users").text('暂无');
+                        }
+                    }
+                }
+            })
+        }
+
+        const reqGuest = (url, data, ref) => {
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: data,
+                success: function(data) {
+                    console.log(data);
+                    if (data.code == 200) {
+                        data.data.list.map(x => ref.guests.push(
+                            {
+                                avatar: x.avatar != null ? ApiMaterPlatQiniuDomain + x.avatar : '/common/img/vote_front_cover.png',
+                                name: x.name,
+                                position: x.position,
+                            }));
+                        if (ref.guests == '') {
+                            ref.guests.push({avatar: '', name: '暂无', position: ''})
+                        }
+                    }
+                }
+            })
+        }
+
+        new Vue({
+            el: '#app',
+            data: {
+                title: '',
+                cover: '',
+                sponsor: '',
+                content: '',
+                start: '',
+                end: '',
+                address: '',
+                users: [],
+                guests: [],
+            },
+            created: function () {
+                var _self = this;
+                const weid = window.location.pathname.split('/').pop();
+                const url_info = 'http://new.wezchina.com/api/activity/detail/' + weid;
+                const url_users = 'http://new.wezchina.com/api/activity/enroll/lists';
+                const url_guests = 'http://new.wezchina.com/api/activity/guest/lists';
+                reqData(url_info, _self);
+                reqUsers(url_users, {activity_id: weid}, _self);
+                reqGuest(url_guests, {activity_id: weid}, _self);
+            },
+            methods: {
+
+            }
         })
     </script>
 </body>

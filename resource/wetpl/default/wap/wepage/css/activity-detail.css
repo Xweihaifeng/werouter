@@ -1,3 +1,7 @@
+html, body {
+    overflow-x: hidden;
+}
+
 #carousel {
     margin-top: 0.45rem!important;
 }
@@ -7,6 +11,9 @@
     padding: 0.15rem;
     color: black;
     background: white;
+}
+
+#container ul {
 }
 
 #container ul li {
@@ -21,8 +28,12 @@
 }
 
 #container ul li p {
-    padding: 0 0.15rem;
+    padding: 0 0.1rem;
     line-height: 0.2rem;
+    width: 88%;
+    text-overflow:ellipsis;
+    overflow:hidden;
+    white-space:nowrap;
 }
 
 #container ul li img {
