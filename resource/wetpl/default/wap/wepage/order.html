@@ -7,10 +7,10 @@
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
     <title>下单页面</title>
 
-    <link rel="stylesheet" href="css/order.css">
+    <link rel="stylesheet" href="{{PATH_TML}}wepage/css/order.css">
 
-    <script src="js/vue.min.js"></script>
-    <script src="js/vue-resource.min.js"></script>
+    <script src="{{PATH_TML}}wepage/js/vue.min.js"></script>
+    <script src="{{PATH_TML}}wepage/js/vue-resource.min.js"></script>
 
 </head>
 <body>
@@ -74,7 +74,7 @@
             list: []
         },
         mounted: function () {
-            this.$http.get('mock/order.json').then(function (res) {
+            this.$http.get('{{PATH_TML}}wepage/mock/order.json').then(function (res) {
                 this.list = res.data.data.list;
             })
         },

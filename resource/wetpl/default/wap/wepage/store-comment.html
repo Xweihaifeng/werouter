@@ -8,39 +8,216 @@
         <title> 评价 </title>
 
         <link href="{{PATH_TML}}wepage/css/store-comment.css" rel="stylesheet">
+
+        <script src="{{PATH_TML}}wepage/js/jquery-3.2.1.min.js"></script>
+        <script src="{{PATH_CONFIG}}"></script>
+        <script src="{{PATH_TML}}wepage/js/vue.min.js"></script>
+        <script src="{{PATH_TML}}wepage/js/vue-resource.min.js"></script>
     </head>
     <body>
-        <header>
-            <span> 评价 </span>
-            <a class="back" href="javascript:void(0)" onclick="javascript:history.back(-1)"></a>
-        </header>
-        <div class="list-content">
-            <div class="list-top">
-                <div class="head-img">
-                    <label>
-                        <img src="{{PATH_TML}}wepage/img/slice.jpg" alt="">
-                        <a>买家abc</a>
-                    </label>
-                    <span>2017-08-10</span>
-                </div>
-                <div class="main">
-                    <span class="star"></span>
-                    <p class="comment">奶粉日期新鲜，婴儿吃了不上火，相信大品牌的质量，已经推荐给朋友同学很多次，他们买了也是感觉超级赞，和卖场比起来价格便宜了一半，但是确实是正品带正规发票。希望京东依旧做好质量检测报告，不要让忠实消费者失望?支持京东自营正品下次还会再来买，物流速度快啊</p>
-                    <ul>
-                        <li><img src="{{PATH_TML}}wepage/img/slice.jpg" alt=""></li>
-                        <li><img src="{{PATH_TML}}wepage/img/slice.jpg" alt=""></li>
-                        <li><img src="{{PATH_TML}}wepage/img/slice.jpg" alt=""></li>
-                    </ul>
-                    <p class="text unique">购买日期：2017-07-28 15:37:44</p>
-                    <p class="text">颜色：3段2700克</p>
+        <div id="comment-app">
+            <header>
+                <span> 评价 </span>
+                <a class="back" href="javascript:void(0)" onclick="javascript:history.back(-1)"></a>
+            </header>
+            <div class="list-content" v-if="!comList.length">
+                <p class="no-comment">暂无评价</p>
+            </div>
+            <div class="list-content" v-if="comList.length > 0">
+                <div v-for="c in comList">
+                    <div class="list-top">
+                        <div class="head-img">
+                            <label>
+                                <img :src="'http://images.new.wezchina.com/'+c.avatar" alt="">
+                                <a>{{c.nickname}}</a>
+                            </label>
+                            <span>{{c.created_at | timeFormat}}</span>
+                        </div>
+                        <div class="main">
+                            <div>
+                                <span class="star" :class="{'red-star' : c.grade >=1}"></span>
+                                <span class="star" :class="{'red-star' : c.grade >=2}"></span>
+                                <span class="star" :class="{'red-star' : c.grade >=3}"></span>
+                                <span class="star" :class="{'red-star' : c.grade >=4}"></span>
+                                <span class="star" :class="{'red-star' : c.grade >=5}"></span>
+                            </div>
+                            <p class="comment">{{c.content}}</p>
+                            <!--<ul>-->
+                                <!--<li><img src="{{PATH_TML}}wepage/img/slice.jpg" alt=""></li>-->
+                                <!--<li><img src="{{PATH_TML}}wepage/img/slice.jpg" alt=""></li>-->
+                                <!--<li><img src="{{PATH_TML}}wepage/img/slice.jpg" alt=""></li>-->
+                            <!--</ul>-->
+                            <!--<p class="text unique">购买日期：2017-07-28 15:37:44</p>-->
+                            <!--<p class="text">颜色：3段2700克</p>-->
+                        </div>
+                    </div>
+                    <div class="count">
+                        <span><i></i>({{c.likes ? c.likes : 0}})</span>
+                    </div>
                 </div>
             </div>
-            <div class="count">
-                <span><i></i>(19)</span>
-
-                <span><i></i>(7)</span>
-            </div>
+            <p>{{loadingText}}</p>
         </div>
+        <script>
+            var commentApp = new Vue({
+                el : "#comment-app",
+                data : {
+                    "comList" :[],
+                    "loadingText" : ''
+                },
+                mounted : function () {
+                    var mockData = {
+                        "data" : {
+                            "data" : {
+                                "list": [
+                                    {
+                                        "plat_id": "88e41d20-72ad-11e7-8825-933924ec5999",
+                                        "plat_user_id": "a91a93a0-8bc4-11e7-b783-1548c79a6502",
+                                        "goods_id": "4ba726b0-af15-11e7-90db-c7d4b6d354de",
+                                        "order_id": null,
+                                        "title": "差评",
+                                        "content": "啥嘛",
+                                        "status": 1,
+                                        "created_at": "2017-10-13 17:22:19",
+                                        "updated_at": "2017-10-13 17:22:19",
+                                        "weid": "03207ee0-aff8-11e7-b9c7-95bff0e0fc45",
+                                        "likes": 8,
+                                        "grade": 1,
+                                        "avatar": "pages/article/1506830485259.jpg",
+                                        "nickname": "aa"
+                                    },
+                                    {
+                                        "plat_id": "88e41d20-72ad-11e7-8825-933924ec5999",
+                                        "plat_user_id": "a91a93a0-8bc4-11e7-b783-1548c79a6502",
+                                        "goods_id": "4ba726b0-af15-11e7-90db-c7d4b6d354de",
+                                        "order_id": null,
+                                        "title": "好的很",
+                                        "content": "看看看看扩",
+                                        "status": 1,
+                                        "created_at": "2017-10-13 17:21:52",
+                                        "updated_at": "2017-10-13 17:21:52",
+                                        "weid": "f31aea60-aff7-11e7-99a7-fb2b8a72a0c2",
+                                        "likes": 10,
+                                        "grade": 4,
+                                        "avatar": "pages/article/1506830485259.jpg",
+                                        "nickname": "aa"
+                                    },{
+                                        "plat_id": "88e41d20-72ad-11e7-8825-933924ec5999",
+                                        "plat_user_id": "a91a93a0-8bc4-11e7-b783-1548c79a6502",
+                                        "goods_id": "4ba726b0-af15-11e7-90db-c7d4b6d354de",
+                                        "order_id": null,
+                                        "title": "差评",
+                                        "content": "啥嘛",
+                                        "status": 1,
+                                        "created_at": "2017-10-13 17:22:19",
+                                        "updated_at": "2017-10-13 17:22:19",
+                                        "weid": "03207ee0-aff8-11e7-b9c7-95bff0e0fc45",
+                                        "likes": 8,
+                                        "grade": 1,
+                                        "avatar": "pages/article/1506830485259.jpg",
+                                        "nickname": "aa"
+                                    },
+                                    {
+                                        "plat_id": "88e41d20-72ad-11e7-8825-933924ec5999",
+                                        "plat_user_id": "a91a93a0-8bc4-11e7-b783-1548c79a6502",
+                                        "goods_id": "4ba726b0-af15-11e7-90db-c7d4b6d354de",
+                                        "order_id": null,
+                                        "title": "好的很",
+                                        "content": "看看看看扩",
+                                        "status": 1,
+                                        "created_at": "2017-10-13 17:21:52",
+                                        "updated_at": "2017-10-13 17:21:52",
+                                        "weid": "f31aea60-aff7-11e7-99a7-fb2b8a72a0c2",
+                                        "likes": 10,
+                                        "grade": 4,
+                                        "avatar": "pages/article/1506830485259.jpg",
+                                        "nickname": "aa"
+                                    },{
+                                        "plat_id": "88e41d20-72ad-11e7-8825-933924ec5999",
+                                        "plat_user_id": "a91a93a0-8bc4-11e7-b783-1548c79a6502",
+                                        "goods_id": "4ba726b0-af15-11e7-90db-c7d4b6d354de",
+                                        "order_id": null,
+                                        "title": "差评",
+                                        "content": "啥嘛",
+                                        "status": 1,
+                                        "created_at": "2017-10-13 17:22:19",
+                                        "updated_at": "2017-10-13 17:22:19",
+                                        "weid": "03207ee0-aff8-11e7-b9c7-95bff0e0fc45",
+                                        "likes": 8,
+                                        "grade": 1,
+                                        "avatar": "pages/article/1506830485259.jpg",
+                                        "nickname": "aa"
+                                    },
+                                    {
+                                        "plat_id": "88e41d20-72ad-11e7-8825-933924ec5999",
+                                        "plat_user_id": "a91a93a0-8bc4-11e7-b783-1548c79a6502",
+                                        "goods_id": "4ba726b0-af15-11e7-90db-c7d4b6d354de",
+                                        "order_id": null,
+                                        "title": "好的很",
+                                        "content": "看看看看扩",
+                                        "status": 1,
+                                        "created_at": "2017-10-13 17:21:52",
+                                        "updated_at": "2017-10-13 17:21:52",
+                                        "weid": "f31aea60-aff7-11e7-99a7-fb2b8a72a0c2",
+                                        "likes": 10,
+                                        "grade": 4,
+                                        "avatar": "pages/article/1506830485259.jpg",
+                                        "nickname": "aa"
+                                    }
+                                ]
+                            }
+                        }
+                    };
+                    var data = {
+//                      "goods_id" : window.location.pathname.split('/').pop(),
+                        "goods_id" : "4ba726b0-af15-11e7-90db-c7d4b6d354de",
+                        "limit" : 10,
+                        "page" : 1
+                    };
+                    this.$http.post(apiUrl +'goods/comment/list',data).then(function (res) {
+//                      res = mockData;
+                        console.log(res);
+                        this.comList = res.data.data.list
+                    });
+                    window.addEventListener('scroll',this.handleScroll)
+                },
+                methods : {
+                    handleScroll : function () {
+                        var self = this;
+                        if(window.pageYOffset + window.innerHeight >= document.documentElement.scrollHeight){
+                            var data = {
+                                "goods_id" : "4ba726b0-af15-11e7-90db-c7d4b6d354de",
+                                "limit" : 10,
+                                "page" : (self.comList.length/10)+1
+                            }
+                            this.loadingText = '加载中...';
+                            this.$http.post(apiUrl +'goods/comment/list',data).then(function (res) {
+                                console.log(res)
+                                self.loadingText = '';
+                                if(res.data.code === 200){
+                                    var appendData = res.data.data.list;
+                                    if(!appendData.length) {
+                                        self.loadingText = '已无更多数据';
+                                    }else{
+                                        for(var i=0;i<appendData.length;i++){
+                                            self.comList.push(appendData[i])
+                                        }
+                                    }
+                                }else{
+                                    self.loadingText = '数据加载出错';
+                                }
 
+                            })
+                        }
+                    }
+                }
+            });
+            Vue.filter('timeFormat',function (val) {
+                var ind = val.indexOf(' ');
+                if(ind){
+                    return val.substring(0,ind)
+                }
+            })
+        </script>
     </body>
 </html>
