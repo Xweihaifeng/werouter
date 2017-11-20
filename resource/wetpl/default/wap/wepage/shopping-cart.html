@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="{{PATH_TML}}wepage/css/shopping-cart.css">
 
     <script src="{{PATH_TML}}wepage/js/jquery-3.2.1.min.js"></script>
+    <script src="{{PATH_CONFIG}}"></script>
     <script src="{{PATH_TML}}wepage/js/vue.min.js"></script>
     <script src="{{PATH_TML}}wepage/js/vue-resource.min.js"></script>
 
@@ -32,7 +33,7 @@
         <div class="store" v-for="(store,pIndex) in list">
             <div class="name">
                 <label class="circle" :class="{'checked-item-circle' : store.mall.pCheck}" :for="pIndex"><input
-                        @click="selectStore(store);" v-model="store.mall.pCheck" :id="pIndex" :value="pIndex"
+                        @click="selectStore(store);" v-model="store.mall.pCheck" :id="pIndex"
                         type="checkbox"></label>
                 <p>
                     <i></i>
@@ -46,12 +47,12 @@
                                :id="pIndex+''+index" type="checkbox"></label>
                     <img :src="'http://images.new.wezchina.com/' + item.cover" alt="">
                     <div class="product">
-                        <p class="des">{{item.title}}</p>
+                        <p class="des">{{item.summary}}</p>
                         <p class="price">
-                            <span>{{item.price * item.selectNum ? item.price * item.selectNum : item.price}}</span>
+                            <span>{{item.price * item.goods_num ? item.price * item.goods_num : item.price}}</span>
                             <label>
                                 <span @click="operNum(item,store,'reduce')">-</span>
-                                <span>{{item.selectNum ? item.selectNum : 1}}</span>
+                                <span>{{item.goods_num ? item.goods_num : 1}}</span>
                                 <span @click="operNum(item,store,'add')">+</span>
                             </label>
                         </p>
@@ -79,15 +80,27 @@
 </div>
 
 <script>
-
+    Vue.http.headers.common['token'] = window.localStorage.getItem("token");
     var app = new Vue({
         el: "#shopCart",
         data: {
             list: []
         },
         mounted: function () {
-            this.$http.get('{{PATH_TML}}wepage/mock/cart.json').then(function (res) {
+            var data = {
+                "user_id" : window.localStorage.getItem("weid")
+            }
+            console.log(data);
+            this.$http.post(apiUrl+'cart/lists',data).then(function (res) {
+                var resList = res.data.data.list;
+                for(var i=0;i<resList.length;i++){
+                    resList[i].mall["pCheck"] = false;
+                    for(var a = 0; a < resList[i].goods.length; a++){
+                        resList[i].goods[a]["checked"] = false
+                    }
+                }
                 this.list = res.data.data.list;
+                console.log(this.list)
             })
         },
         methods: {
@@ -100,7 +113,7 @@
                         storeObj.goods[i].checked = storeObj.mall.pCheck;
                     }
                     if (storeObj.goods[i].checked) {
-                        storeObj.storeAllMoney += storeObj.goods[i].price * storeObj.goods[i].selectNum;
+                        storeObj.storeAllMoney += storeObj.goods[i].price * storeObj.goods[i].goods_num;
                         storeObj.num++
                     }
                 }
@@ -121,15 +134,15 @@
             operNum: function (item, storeObj,oper) {
                 item.checked = true;
                 if(oper === "add"){
-                    item.selectNum++;
-                    if (item.selectNum > item.stock) {
-                        item.selectNum = item.stock
+                    item.goods_num++;
+                    if (item.goods_num > item.stock) {
+                        item.goods_num = item.stock
                     }
                 }
                 if(oper === "reduce"){
-                    item.selectNum--;
-                    if (item.selectNum <= 0) {
-                        item.selectNum = 1;
+                    item.goods_num--;
+                    if (item.goods_num <= 0) {
+                        item.goods_num = 1;
                     }
                 }
 
