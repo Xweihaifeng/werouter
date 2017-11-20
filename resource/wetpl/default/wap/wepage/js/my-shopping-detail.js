@@ -189,6 +189,24 @@ $(function() {
         console.error(error);
     });
 
+    $(".detail_footer_follow").click(function() {
+        var options4 = $.get(apiUrl + "goods/collectionincrement/" + shop_weid);
+        options4.done(function(data) {
+            if(data.code == 200) {
+                if(!data.data) {
+                    layer.msg(data.message, { time: 1500 });
+                    return false;
+                }
+                layer.msg("收藏成功", { time: 1500 });
+            } else {
+                console.error(data.message);
+            }
+        });
+        options4.fail(function(error) {
+            console.error(error);
+        });
+    });
+
     // Mall - 购物车 - 添加购物车
     $(".detail_footer_join").click(function() {
         var body = {
