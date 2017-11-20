@@ -71,7 +71,7 @@
                     </span>
                     <span>总额￥{{store.storeAllMoney ? store.storeAllMoney : 0.00}} 立减￥0.00</span>
                 </p>
-                <a :class="{'red-bg' : store.storeAllMoney>0}">去结算
+                <a disabled="disabled" :class="{'red-bg' : store.storeAllMoney>0 }" @click="goOrder(store)">去结算
                     <small>({{store.num ? store.num : 0}})件</small>
                 </a>
             </div>
@@ -93,14 +93,16 @@
             console.log(data);
             this.$http.post(apiUrl+'cart/lists',data).then(function (res) {
                 var resList = res.data.data.list;
-                for(var i=0;i<resList.length;i++){
-                    resList[i].mall["pCheck"] = false;
-                    for(var a = 0; a < resList[i].goods.length; a++){
-                        resList[i].goods[a]["checked"] = false
+                if(resList && resList.length){
+                    for(var i=0;i<resList.length;i++){
+                        resList[i].mall["pCheck"] = false;
+                        for(var a = 0; a < resList[i].goods.length; a++){
+                            resList[i].goods[a]["checked"] = false
+                        }
                     }
+                    this.list = res.data.data.list;
+                    console.log(this.list)
                 }
-                this.list = res.data.data.list;
-                console.log(this.list)
             })
         },
         methods: {
@@ -151,6 +153,24 @@
                 });
                 storeObj.mall.pCheck = (isAllCheck.length === 0);
                 this.getNumber(storeObj)
+            },
+            goOrder : function (storeObj) {
+                var orderObj = {
+                    name : storeObj.mall.title,
+                    goodsList : []
+                };
+                for(var i=0; i<storeObj.goods.length; i++){
+                    if(storeObj.goods[i].checked){
+                        orderObj.goodsList.push(storeObj.goods[i])
+                    }
+                }
+
+                window.localStorage.setItem('orderObj',JSON.stringify(orderObj));
+
+                if(storeObj.storeAllMoney > 0){
+                    window.location.href = 'http://m.cnew.wezchina.com/shopping/order'
+                }
+
             }
         }
     })

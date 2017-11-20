@@ -17,7 +17,7 @@
 <div id="myOrder">
     <header>
         <span>确认订单</span>
-        <a class="back"></a>
+        <a class="back" href="javascript:void(0)" onclick="javascript:history.back(-1)"></a>
     </header>
     <div class="main">
         <div class="address">
@@ -25,22 +25,22 @@
             <p>陕西省西安市高新区锦业路1号</p>
         </div>
 
-        <div class="store" v-for="(store,pIndex) in list">
+        <div class="store">
             <div class="name">
                 <p>
                     <i></i>
-                    <span>{{store.mall.title}}</span>
+                    <span>{{list.name}}</span>
                 </p>
             </div>
             <ul>
-                <li v-for="(item,index) in store.goods">
+                <li v-for="(item,index) in list.goodsList">
                     <img :src="'http://images.new.wezchina.com/' + item.cover" alt="">
                     <div class="product">
                         <p class="des">{{item.title}}</p>
                         <p class="price">
-                            <span>{{item.price}}</span>
+                            <span>{{item.price * item.goods_num}}</span>
                             <label>
-                                <span>已选：{{item.selectNum}}件</span>
+                                <span>已选：{{item.goods_num}}件</span>
                             </label>
                         </p>
                         <p class="operation">
@@ -66,7 +66,7 @@
         </div>
         <div class="order_total">
             <div> 商品总计 </div>
-            <div> ￥4503.00 </div>
+            <div> ￥{{storeAll}} </div>
         </div>
         <div class="order_freight">
             <div> 运费 </div>
@@ -75,8 +75,8 @@
     </div>
     <footer class="order_footer">
         <a href="javascript:void(0)" class="order_footer_follow">
-            <div><span> 应付金额：</span><span class="order_count">￥4518.00</span></div>
-            <div><span>总额￥120 立减￥0.00</span></div>
+            <div><span> 应付金额：</span><span class="order_count">￥{{storeAll}}</span></div>
+            <div><span>总额￥{{storeAll}} 立减￥0.00</span></div>
         </a>
         <a href="javascript:void(0)" class="order_footer_pay">立即购买</a>
     </footer>
@@ -87,19 +87,14 @@
     var app = new Vue({
         el: "#myOrder",
         data: {
-            list: []
-        },
-        mounted: function () {
-            this.$http.get('{{PATH_TML}}wepage/mock/order.json').then(function (res) {
-                this.list = res.data.data.list;
-            })
+            list: JSON.parse(window.localStorage.getItem('orderObj'))
         },
         computed : {
             storeAll : function () {
+                console.log(this.list)
                 var money = 0;
-                var store = this.list[0];
-                for(var a=0; a< store.goods.length; a++){
-                    money += store.goods[a].price * store.goods[a].selectNum
+                for(var a=0; a< this.list.goodsList.length; a++){
+                    money += this.list.goodsList[a].price * this.list.goodsList[a].goods_num
                 }
                 return money;
             }
