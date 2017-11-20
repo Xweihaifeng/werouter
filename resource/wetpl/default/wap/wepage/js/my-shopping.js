@@ -34,7 +34,7 @@ var shops = function(key, value) {
     }
 
     var template = `
-    <li id="`+ value.weid +`">
+    <a id="`+ value.weid +`" href="/shopping/`+ value.weid +`">
         <div>
             <slide class="li_img_wap">
                 <img src="`+ imgUrl +`">
@@ -45,7 +45,7 @@ var shops = function(key, value) {
                 <p class="lii_sold"><span>已售：`+ value.sales_num +`</span><span>收藏：`+ value.collections +`</span></p>
             </slide>
         </div>
-    </li>`
+    </a>`
 
     return template;
 }
@@ -54,7 +54,7 @@ var genShop = function(shopping) {
     var result = shopping.shop;
     $.each(result, function (key, value) {
         $(".shop ul").append(shops(key, value));            
-        $(".shop > ul > li").click(function() {
+        $(".shop > ul > a").click(function() {
             var li_id = $(this).attr("id");
             window.localStorage.setItem("shopping_weid", li_id);
             window.location.pathname = "/shopping/detail";

@@ -8,7 +8,7 @@ $(function() {
     var token = window.localStorage.getItem('token');
     var user_weid = window.localStorage.getItem("weid");
     var shop_weid = window.localStorage.getItem("shopping_weid");
-    // var shop_weid = "21aea730-abec-11e7-a919-9b1d4a41c921";
+    // var shop_weid = window.location.pathname.split('/').slice(1,3).pop();
 
     // 用户token验证部分
     if(token) {
@@ -22,6 +22,11 @@ $(function() {
         $("#token").slideUp();
     }
 
+    $(".detail_nav_title").html(`
+        <a href="javascript:void(0)"> 商品 </a>
+        <a href="javascript:void(0)"> 详情 </a>
+        <a href="/shopping/store/`+ shop_weid +`"> 评价 </a>`);
+    // 商品描述开始
     var detail_title = function(result) {
         var template = `
         <slide class="detail_title_h1">
@@ -62,6 +67,7 @@ $(function() {
         return template;
     }
 
+    // 商品评论开始
     var detail_evaluate = function(result) {
         var price = result.picture.split(","), temp_img = '';
         $.each(price, function(index, value) {
@@ -114,6 +120,7 @@ $(function() {
     });
     // 套餐选择蒙层显示与否结束
 
+    // 商品详情内容显示
     var options1 = $.get(GOODS_DETAIL + "/" + shop_weid);
     options1.done(function(data) {
         console.log("商品详情：", data)
