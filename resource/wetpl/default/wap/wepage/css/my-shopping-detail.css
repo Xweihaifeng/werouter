@@ -518,6 +518,11 @@ li {
     color: #232326;
 }
 
+.selected_red {
+    border: 1px solid #f23030 !important;
+    color: #f23030 !important;
+}
+
 .spec-menu-show {
     -webkit-animation: spec-menu-move .5s 1 ease 0s;
     -moz-animation: spec-menu-move .5s 1 ease 0s;
@@ -693,6 +698,7 @@ li {
     height: 20px;
     display: inline-flex;
     align-items: center;
+    color: #81838e;
 }
 
 .detail_evaluate_switch_num {
@@ -713,7 +719,13 @@ li {
 }
 
 .detail_evaluate_list {
+    border-top: 1px solid #eee;
+    padding-top: 0.1rem;
+}
 
+.detail_evaluate_list:nth-child(1) {
+    border-top: none;
+    padding-top: 0;
 }
 
 .detail_evaluate_star {

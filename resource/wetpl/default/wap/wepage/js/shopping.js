@@ -50,7 +50,7 @@ var goods_list_dom = function(result) {
                 <h3>`+ result.title +`</h3>
                 <div class="lii_img">`+ lii_img +`</div>
                 <div class="lii_sold">
-                    <a href="">
+                    <a href="/shopping/`+ result.weid +`">
                         <slide class="li_img_wap">
                             <img src="`+ thum_img +`">
                         </slide>

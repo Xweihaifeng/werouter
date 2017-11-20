@@ -7,8 +7,8 @@ $(function() {
     // 公用部分变量声明
     var token = window.localStorage.getItem('token');
     var user_weid = window.localStorage.getItem("weid");
-    var shop_weid = window.localStorage.getItem("shopping_weid");
-    // var shop_weid = window.location.pathname.split('/').slice(1,3).pop();
+    var shop_weid = window.location.pathname.split('/').pop();
+    // var shop_weid = window.localStorage.getItem("shopping_weid");
 
     // 用户token验证部分
     if(token) {
@@ -22,10 +22,13 @@ $(function() {
         $("#token").slideUp();
     }
 
+    // 商品评价跳转
     $(".detail_nav_title").html(`
         <a href="javascript:void(0)"> 商品 </a>
         <a href="javascript:void(0)"> 详情 </a>
         <a href="/shopping/store/`+ shop_weid +`"> 评价 </a>`);
+    $(".detail_evaluate_switch").attr("href", `/shopping/store/`+ shop_weid +``);
+
     // 商品描述开始
     var detail_title = function(result) {
         var template = `
@@ -34,7 +37,7 @@ $(function() {
         </slide>
         <slide class="detail_price">
             <div class="detail_price_count">￥<span>`+ result.price +`</span></div>
-            <div class="detail_price_cut"><button>降价通知</button></div>
+            <div class="detail_price_cut" style="display: none"><button>降价通知</button></div>
         </slide>
         <slide class="detail_art">
             <div>`+ result.note +`<a href="#"> 点击查看详情 </a></div>
@@ -99,8 +102,23 @@ $(function() {
         return template;
     }
 
+    var shop_eval_all = function(result) {
+        var template = `
+        <div class="detail_evaluate_list">
+            <div class="detail_evaluate_star ">
+                <div class="detail_btn31"><span class="detail_btn32"></span></div>
+                <span> 好奇害死猫 </span>
+            </div>
+            <div class="detail_evaluate_cont"> 宝贝质量很好，是我喜欢的款式，大爱，要入手的亲们可以下手了，真的质量非常好，很值这个价钱。 </div>
+            <div class="detail_evaluate_imgs clearfix"></div>
+            <div class="detail_evaluate_time"> 2017-11-11 </div>
+        </div>`
+        return template;
+    }
+
     // 套餐选择蒙层显示与否开始
     $(".detail_selected_switch").click(function() {
+        return false;
         $(".detail_rddress_mask_content").animate({
             height: "70%",
         }, 300, function() {
@@ -119,6 +137,26 @@ $(function() {
         });
     });
     // 套餐选择蒙层显示与否结束
+
+    // 商品评价
+    var options3_body = {};
+    options3_body.goods_id = shop_weid;
+    options3_body.limit = 3;
+    options3_body.page = 1;
+
+    var options3 = $.post(apiUrl + "goods/comment/list", options3_body);
+    options3.done(function(data) {
+        if(data.code == 200) {
+            var result = data.data;
+            console.info("评论列表：", result);
+            $(".detail_eval_list").html(shop_eval_all(result));
+        } else {
+            console.warn(data.message);
+        }
+    });
+    options3.fail(function(error) {
+        console.error(error);
+    });
 
     // 商品详情内容显示
     var options1 = $.get(GOODS_DETAIL + "/" + shop_weid);
@@ -203,6 +241,10 @@ $(function() {
 
         $("#token").slideUp();
     })
+
+    $(".mask_color span, .mask_size span").click(function() {
+        $(this).addClass("selected_red").siblings().removeClass("selected_red");
+    });
 
     $(".detail_save_weid").click(function() {
         window.localStorage.setItem("weid", $(".detail_weid").val());
