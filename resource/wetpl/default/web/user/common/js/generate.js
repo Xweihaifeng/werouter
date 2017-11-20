@@ -95,7 +95,7 @@ var genMenu = function(mark, domain) {
     var template = '';
     
     $.ajax({
-        url: 'http://api.mp.wezchina.com/menu_config?mark=' + mark + '&domain=' + domain,
+        url: 'http://mp.wezchina.com/api/menu_config?mark=' + mark + '&domain=' + domain,
         type: 'GET',
         async: false,
         success: function(data) {

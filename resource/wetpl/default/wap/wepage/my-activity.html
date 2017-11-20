@@ -10,15 +10,15 @@
     <link rel="stylesheet" href="{{PATH_TML}}wepage/css/common.css"/>
     <link rel="stylesheet" href="{{PATH_TML}}wepage/css/swiper.min.css"/>
     <script src="{{PATH_TML}}wepage/js/zepto.min.js"></script>
-    <script src="{{PATH_TML}}wepage/interface/activity.json"></script>
-    <!--<script src="interface/my-activity.json"></script>-->
+    <!--<script src="{{PATH_TML}}wepage/interface/activity.json"></script>-->
+    <script src="{{PATH_TML}}wepage/interface/my-activity.js"></script>
     <!--<script src="js/my-activity.js"></script>-->
     <script src="{{PATH_TML}}wepage/js/home.js"></script>
     <script src="{{PATH_TML}}wepage/js/swiper-3.3.1.min.js"></script>
     <title></title>
 </head>
 <body>
-    <div id="carousel">
+    <!--<div id="carousel">
         <div class="swiper-container" id="my-swiper">
             <div class="swiper-wrapper carousel">
                 <div class="swiper-slide">
@@ -30,10 +30,10 @@
             </div>
             <div class="swiper-pagination"></div>
         </div>
-    </div>
+    </div>-->
     <nav></nav>
 
-    <div id="art-type">
+    <!--<div id="art-type">
         <ul>
             <a href="/my-article"><li><img src="/common/img/art.png" alt=""/><p>文章</p></li></a>
             <a href="/my-activity"><li><img src="/common/img/act.png" alt=""/><p>活动</p></li></a>
@@ -49,20 +49,20 @@
     <div id="art-rcmd">
         <ul>
             <li>
-                <!--<p>双十一特惠</p>-->
+                &lt;!&ndash;<p>双十一特惠</p>&ndash;&gt;
                 <img src="/common/img/adv_left.png" alt="" style="margin-left: 0.06rem;"/>
             </li>
             <li>
-                <!--<p>天降大红包</p>-->
+                &lt;!&ndash;<p>天降大红包</p>&ndash;&gt;
                 <img src="/common/img/adv_right.png" alt="" style="margin-left: -0.04rem;"/>
             </li>
         </ul>
-    </div>
+    </div>-->
 
-    <div id="container"></div>
+    <div id="container" style="padding-top: 0.44rem!important;"></div>
     <footer></footer>
 
-    <script>
+    <!--<script>
         var mySwiper = new Swiper ('#my-swiper', {
             direction: 'horizontal',
             loop: true,
@@ -81,6 +81,6 @@
         }, function(){
             $(".swiper-button-prev, .swiper-button-next").css("opacity", "0");
         });
-    </script>
+    </script>-->
 </body>
 </html>

@@ -117,7 +117,9 @@
 			type: 'get',
 			success: function(data){
 				console.log(data);
-				ref.avatar = 'http://images.new.wezchina.com/' + data.data.user.avatar;
+				if (data.data.user.avatar != null) {
+					ref.avatar = 'http://images.new.wezchina.com/' + data.data.user.avatar;
+				}
 				ref.nickname = data.data.user.nickname;
 				ref.domain = data.data.user.domain;
 				ref.motto = data.data.user.motto;
