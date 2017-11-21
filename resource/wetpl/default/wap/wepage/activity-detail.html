@@ -60,7 +60,7 @@
             <li style="background: #f0f0f0">活动详情</li>
             <li class="actd-detail" v-html="content"></li>
         </ul>
-        <div class="actd-apply">立即报名</div>
+        <div class="actd-apply" @click="apply">立即报名</div>
     </div>
 </div>
 
@@ -76,12 +76,6 @@
             nextButton: '.swiper-button-next',
             prevButton: '.swiper-button-prev',
             grabCursor : true
-        })
-
-        $(".actd-apply").click(function(){
-            layer.msg('活动暂未开始', {
-                time: 1500
-            })
         })
 
         $("#user").click(function(){
@@ -174,7 +168,11 @@
                 reqGuest(url_guests, {activity_id: weid}, _self);
             },
             methods: {
-
+                apply: function(){
+                    layer.msg('活动暂未开始', {
+                        time: 1500
+                    })
+                }
             }
         })
     </script>
