@@ -37,7 +37,7 @@ checkdomain(domain);*/
     }*/
     //route
     var isLogin; //判断用户登陆与否
-    var router = function(route){
+    /*var router = function(route){
         if(!window.localStorage.getItem("token")) {
             isLogin = false;
         } else {
@@ -96,7 +96,7 @@ checkdomain(domain);*/
     //$("#home, #login, #article, #active, #zan").click(function(){
         var id = $(this).attr("id");
         router(id);
-    })
+    })*/
 
     //left-navbar show words
     $("#login, #article, #project, #active, #shopping, #zone").hover(function(e){

@@ -23,7 +23,7 @@ var qiniu_bucket_domain = ApiMaterPlatQiniuDomain;
 
     //route
     var isLogin; //判断用户登陆与否
-    var router = function(route){
+    /*var router = function(route){
         if(!window.localStorage.getItem("token")) {
             isLogin = false;
         } else {
@@ -103,7 +103,7 @@ var qiniu_bucket_domain = ApiMaterPlatQiniuDomain;
         $(this).find(".word").hide();
         $(this).css("line-height", "65px");
         $("#" + id + " .word").css("margin-top", "-55px");
-    })
+    })*/
 
     //主页初始化
     var init = function(token){

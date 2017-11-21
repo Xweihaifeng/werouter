@@ -711,7 +711,6 @@ var hasDomain = function(weid){
                     //存在个性域名
                     domain = "/" + data.data.domain;
                 }
-
             } else {
                 layer.msg(data.message, {
                     time: 1500

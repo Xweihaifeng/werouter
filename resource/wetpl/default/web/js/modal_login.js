@@ -191,7 +191,7 @@ $(function() {
 
     //route
     var isLogin; //判断用户登陆与否
-    var router = function(route){
+    var router = function(route, domain){
         if(!window.localStorage.getItem("token")) {
             isLogin = false;
         } else {
@@ -247,8 +247,12 @@ $(function() {
     }
 
     $("#home, #login, #article, #active, #project, #shopping, #zone, #zan").click(function(){
+        let path = window.location.pathname.split('/');
+        if (path[1] == '' || path[1] == 'index' || path.indexOf('index') != -1) {
+            domain = '/index'
+        }
         var id = $(this).attr("id");
-        router(id);
+        router(id, domain);
     })
 
     //关闭登录模态框

@@ -36,30 +36,29 @@ checkdomain(domain);*/
         domain = "/" + domain;
     }*/
     //route
-    var isLogin = false; //判断用户登陆与否
+    /*var isLogin = false; //判断用户登陆与否
     var router = function(route){
-         var routerList = ['home', 'login', 'article','active','project','zone', 'shopping'];
-        //var routerList = ['home', 'login', 'article','active'];
+        if(!window.localStorage.getItem("token")) {
+            isLogin = false;
+        } else {
+            isLogin = true;
+        }
+        var routerList = ['home', 'login', 'article', 'active', 'project', 'shopping', 'zone', 'zan'];
 
         var isMember = function(routerList, route){
             return routerList.filter(x => x === route);
         }
 
         var home = function(){
-            window.location.href = '/index';
+            window.location.href = '/';
         }
-
-        var top = $(window).scrollTop();
 
         var login = function(){
             if (!isLogin) {
                 showLogin = true;
-                $("#modal").show();
-
-                $(".show-login").fadeIn(300);
-                $("body").css("overflow", "hidden");
+                $("#modal_login").fadeIn(300);
             } else {
-                window.location.href = "/user/";
+                window.location.href = "/user";
             }
         }
 
@@ -68,19 +67,24 @@ checkdomain(domain);*/
             window.location.href = domain + "/article";
         }
 
-         var active = function(){
+        var active = function(){
             showLogin = false;
             window.location.href = domain + "/activity";
         }
-
-         var project = function(){
+        var project = function(){
             showLogin = false;
             window.location.href = domain + "/project";
         }
 
+
         var shopping = function(){
             showLogin = false;
             window.location.href = domain + "/wemall";
+        }
+
+        var zone = function(){
+            showLogin = false;
+            window.location.href = domain + "/quan";
         }
 
         if (isMember(routerList, route) != ""){
@@ -91,10 +95,10 @@ checkdomain(domain);*/
     $("#home, #login, #article, #active, #project, #shopping, #zone, #zan").click(function(){
         var id = $(this).attr("id");
         router(id);
-    })
+    })*/
 
     //left-navbar show words
-    $("#login, #article, #project, #active, #shopping, #zone").hover(function(e){
+    /*$("#login, #article, #project, #active, #shopping, #zone").hover(function(e){
         var id = $(this).attr("id");
         if (id != 'login') {
             $(this).find(".word").show();
@@ -112,7 +116,7 @@ checkdomain(domain);*/
         $(this).find(".word").hide();
         $(this).css("line-height", "65px");
         $("#" + id + " .word").css("margin-top", "-55px");
-    })
+    })*/
 
     //主页初始化
     var init = function(token){

@@ -22,7 +22,7 @@ $(document).ready(function(){
 
     //route
     var isLogin; //判断用户登陆与否
-    var router = function(route){
+    /*var router = function(route){
         if(!window.localStorage.getItem("token")) {
             isLogin = false;
         } else {
@@ -101,7 +101,7 @@ $(document).ready(function(){
         $(this).find(".word").hide();
         $(this).css("line-height", "65px");
         $("#" + id + " .word").css("margin-top", "-55px");
-    })
+    })*/
 
 
     //获取通用用户信息
