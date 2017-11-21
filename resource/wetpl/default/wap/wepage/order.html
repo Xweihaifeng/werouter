@@ -9,8 +9,12 @@
 
     <link rel="stylesheet" href="{{PATH_TML}}wepage/css/order.css">
 
+    <script type="text/javascript" src="{{PATH_TML}}wepage/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="{{PATH_CONFIG}}"></script>
     <script src="{{PATH_TML}}wepage/js/vue.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="{{PATH_TML}}wepage/js/vue-resource.min.js"></script>
+    <script src="{{PATH_TML}}wepage/js/layui/layui.all.js"></script>
 
 </head>
 <body>
@@ -72,34 +76,105 @@
             <div> 运费 </div>
             <div> ￥15.00 </div>
         </div>
+        <div> {{address_default.detail}} </div>
     </div>
     <footer class="order_footer">
         <a href="javascript:void(0)" class="order_footer_follow">
             <div><span> 应付金额：</span><span class="order_count">￥{{storeAll}}</span></div>
             <div><span>总额￥{{storeAll}} 立减￥0.00</span></div>
         </a>
-        <a href="javascript:void(0)" class="order_footer_pay">立即购买</a>
+        <a href="javascript:void(0)" class="order_footer_pay" @click="order_footer_pay()">立即购买</a>
     </footer>
 </div>
 
 <script>
 
+    Vue.http.headers.common['token'] = window.localStorage.getItem("token");
+
     var app = new Vue({
         el: "#myOrder",
         data: {
-            list: JSON.parse(window.localStorage.getItem('orderObj'))
+            list: JSON.parse(window.localStorage.getItem('orderObj')),
+            address_default : '',
+            store_num: '',
+        },
+        mounted: function() {
+            // 添加地址
+            // var ddd = {};
+            // ddd.name        = "好奇害死猫";
+            // ddd.province_id = "陕西省";
+            // ddd.area_id     = "西安市";
+            // ddd.county_id   = "莲湖区";
+            // ddd.detail      = "未央路时代大厦45楼1545室";
+            // ddd.zipcode     = "110023";
+            // ddd.telophone   = "18811722364";
+            // ddd.status       = 1;
+
+            // this.$http.post(apiUrl +'users/address/store', ddd).then(function (data) {
+            //     if(data.data >= 0) {
+            //         alert("成功")
+            //     }
+            // })
+
+            // 设置默认地址
+            // var body_default = {}
+            // body_default.default_weid = "551d82a0-cea6-11e7-ac3a-895991a8896f";
+
+            // this.$http.post(apiUrl +'users/address/setNotDefault', body_default).then(function (data) {
+            //     console.info("设置默认地址", data);
+            // })
+
+            // 获取默认地址
+            this.$http.post(apiUrl +'users/address/getDefault').then(function (data) {
+                if(data.data.code == 200) {
+                    if(!data.data) {
+                        console.warn("无默认地址");
+                    } else {
+                        this.address_default = data.data.data;                        
+                        console.info("获取默认地址", data.data.data);
+                    }
+                } else {
+                    return false;
+                }
+            })
         },
         computed : {
             storeAll : function () {
-                console.log(this.list)
+                console.log(this.list);
                 var money = 0;
                 for(var a=0; a< this.list.goodsList.length; a++){
                     money += this.list.goodsList[a].price * this.list.goodsList[a].goods_num
                 }
                 return money;
+            },
+        },
+        methods : {
+            order_footer_pay: function() {
+                var self = this;
+                console.log("获取默认地址", self.address_default);
+                var goods_list = new Array();
+                this.list.goodsList.forEach(function(value, index, array) {
+                    var data = new Object();
+                    data.goods_id  = value.weid;
+                    data.goods_num = value.goods_num;
+                    goods_list.push(data);
+                })
+                var body = {};
+                body.goods_list     = goods_list;
+                body.address_id     = self.address_default.weid;
+                body.username       = self.address_default.name;
+                body.phone          = self.address_default.telophone;
+                body.address_detail = self.address_default.detail;
+                body.note           = "";
+
+                this.$http.post(apiUrl +'order/store', body).then(function (data) {
+                    if(data.body.code == 200) {
+                        layer.msg("订单保存成功！", { time: 1500 });
+                        this.store_num = data.body.data;
+                    }
+                })
             }
         }
-
     })
 </script>
 </body>
