@@ -38,8 +38,8 @@ checkdomain(domain);*/
     //route
     var isLogin = false; //判断用户登陆与否
     var router = function(route){
-        // var routerList = ['home', 'login', 'article','active','project','zone', 'shopping'];
-        var routerList = ['home', 'login', 'article','active'];
+         var routerList = ['home', 'login', 'article','active','project','zone', 'shopping'];
+        //var routerList = ['home', 'login', 'article','active'];
 
         var isMember = function(routerList, route){
             return routerList.filter(x => x === route);
@@ -88,7 +88,7 @@ checkdomain(domain);*/
         }
     }
 
-    $("#home, #login, #article,#active").click(function(){
+    $("#home, #login, #article, #active, #project, #shopping, #zone, #zan").click(function(){
         var id = $(this).attr("id");
         router(id);
     })
