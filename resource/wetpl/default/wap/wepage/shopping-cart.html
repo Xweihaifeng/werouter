@@ -22,14 +22,6 @@
         <a class="back" href="javascript:void(0)" onclick="javascript:history.back(-1)"></a>
     </header>
     <div class="main">
-        <div class="address">
-                    <span>
-                        <img src="{{PATH_TML}}wepage/img/location.png" alt="">
-                        西安
-                    </span>
-            <span>编辑商品</span>
-        </div>
-
         <div class="store" v-for="(store,pIndex) in list">
             <div class="name">
                 <label class="circle" :class="{'checked-item-circle' : store.mall.pCheck}" :for="pIndex"><input
@@ -80,7 +72,9 @@
 </div>
 
 <script>
-    Vue.http.headers.common['token'] = window.localStorage.getItem("token");
+    //Vue.http.headers.common['token'] = window.localStorage.getItem("token");
+    Vue.http.headers.common['token'] = 'eyJpdiI6IlwvTFZlRU5lQ2FlMHE3MW16dkFmNUVnPT0iLCJ2YWx1ZSI6Ijc2ZWt3M1o5U2RcL2tWNTlYazBSVDVsMDIwaHpcL2dWZ2VwSVY1V2hib3o0RmxTMzBvU2o1SEMyZ2U2UjRVV0xielFBWlROb1ArbGhyRTY3VHBXTlwvenZwUXF6aHBpUmROeFJJNE5CRUh2YyswPSIsIm1hYyI6ImIzYjBiYzM2YjBlMjkxNDAzMjZlYzM5YWJmMWNhOGEzMDJkY2FjMzFiNGQwMGM0NGFlYTRkMTVlMzNhZGU1N2EifQ=='
+
     var app = new Vue({
         el: "#shopCart",
         data: {

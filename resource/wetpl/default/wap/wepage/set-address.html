@@ -30,7 +30,7 @@
         </div>
         <div class="select-address" @click="choose()">
             <span>所在地区</span>
-            <span>{{currentPro + currentCity ? currentPro + currentCity : "请添加收货地址"}}</span>
+            <span>{{currentPro + currentCity + currentCounty ? currentPro + currentCity + currentCounty : "请添加收货地址"}}</span>
         </div>
         <div class="detail">
             <span>详细地址</span>
@@ -51,15 +51,19 @@
                 </div>
                 <div class="list">
                     <div>
-                        <span>{{currentPro}}</span>
-                        <span>{{currentCity}}</span>
+                        <span>{{selectPro ? selectPro : '请选择'}}</span>
+                        <span v-show="selectPro">{{selectCity ? selectCity : '请选择'}}</span>
+                        <span v-show="selectCity">{{selectCounty ? selectCounty : '请选择'}}</span>
                     </div>
                     <div>
                         <ul>
                             <li v-for="item in proList" :class="{'font-red' : item.id == pro}" @click="getPro(item,$event)">{{item.name}}</li>
                         </ul>
-                        <ul>
+                        <ul v-show="selectPro">
                             <li v-for="city in cityList" :class="{'font-red' : city.id == chooseCity}" @click="getCity(city,$event)">{{city.name}}</li>
+                        </ul>
+                        <ul v-show="selectCity">
+                            <li v-for="county in countyList" :class="{'font-red' : county.id == chooseCounty}" @click="getCounty(county,$event)">{{county.name}}</li>
                         </ul>
                     </div>
 
@@ -72,16 +76,22 @@
     var app = new Vue({
         el: "#addressPage",
         data: {
-            pro: 27,
-            chooseCity: 294,
+            pro: null,
+            chooseCity: null,
+            chooseCounty: null,
             info: "",
             name : '',
             phone : '',
             detailAddr : '',
             proList: [],
             cityList: [],
+            countyList:[],
             currentPro: '',
             currentCity: '',
+            currentCounty: '',
+            selectPro: '',
+            selectCity: '',
+            selectCounty: '',
             zip : '',
             showModel: false
         },
@@ -90,17 +100,17 @@
             var weid = hasWeid ? hasWeid : "aafc6a60-c2b6-11e7-804f-2b2e90492ab4";
             var self = this;
             this.$http.get(USERDETAIL + '/' + weid).then(function (res) {
-                console.log(res);
+                console.log("用户信息",res);
                 this.info = res.data.data;
 
                 this.$http.get(apiUrl + "province/list").then(function (res) {
-                    console.log(res);
+                    console.log("省列表",res);
                     this.proList = res.data.data.list;
                     var isFind = this.proList.filter(function (one) {
                         if (self.info.province_id) {
                             return one.id === self.info.province_id
                         } else {
-                            return one.id === self.pro
+                            return one.id === 27
                         }
                     });
                     if (isFind.length) {
@@ -109,9 +119,29 @@
                     }
 
                     this.$http.get(apiUrl + "area/list/" + this.pro).then(function (res) {
+                        console.log("市列表",res);
                         this.cityList = res.data.data.list;
-                        this.chooseCity = this.cityList[0].id;
-                        this.currentCity = this.cityList[0].name;
+                        var isFind = this.cityList.filter(function (t) {
+                            if(self.info.area_id){
+                                return t.id === self.info.area_id
+                            }else{
+                                return t.id === 294
+                            }
+                        })
+                        if(isFind.length){
+                            this.chooseCity = isFind[0].id;
+                            this.currentCity = isFind[0].name;
+                        }
+
+                        this.$http.get(apiUrl + "county/list/" + this.chooseCity).then(function (res) {
+                            console.log("乡镇列表",res);
+                            this.countyList = res.data.data.list;
+                            this.chooseCounty = this.countyList[0].id;
+                            this.currentCounty = this.countyList[0].name;
+                        })
+
+
+
                     })
 
 
@@ -130,9 +160,14 @@
             choose: function () {
                 this.showModel = true;
             },
-            getPro: function (item, ev) {
+            getPro: function (item) {
+                this.currentCity = '';
+                this.currentCounty = '';
+                this.selectCity = '';
+                this.selectCounty = '';
                 this.pro = item.id;
                 this.currentPro = item.name;
+                this.selectPro = item.name;
                 var self = this;
                 this.$http.get(apiUrl + "area/list/" + this.pro).then(function (res) {
                     this.cityList = res.data.data.list;
@@ -140,9 +175,22 @@
                     this.currentCity = this.cityList[0].name;
                 })
             },
-            getCity: function (item, ev) {
+            getCity: function (item) {
+                this.chooseCounty = '';
+                this.selectCounty = '';
                 this.chooseCity = item.id;
                 this.currentCity = item.name;
+                this.selectCity = item.name;
+                this.$http.get(apiUrl + "county/list/" + this.chooseCity).then(function (res) {
+                    this.countyList = res.data.data.list;
+                    this.chooseCounty = this.countyList[0].id;
+                    this.currentCounty = this.countyList[0].name;
+                })
+            },
+            getCounty: function (item) {
+                this.chooseCounty = item.id;
+                this.currentCounty = item.name;
+                this.selectCounty = item.name;
                 this.showModel = false;
             },
             onSubmit : function () {
@@ -150,7 +198,7 @@
                     name : this.name,
                     province_id : this.pro,
                     area_id : this.chooseCity,
-                    county_id : null,
+                    county_id : this.chooseCounty,
                     detail : this.detailAddr,
                     zipcode : this.zip,
                     telophone : this.phone,
@@ -171,7 +219,8 @@
             }
         }
     })
-    Vue.http.headers.common['token'] = 'eyJpdiI6IndneCtvXC9lbElBNmNvYUN2SnlFNXV3PT0iLCJ2YWx1ZSI6IkcwVGVJS21LTmRsVXpnU3Q0S3RjVDBrcUhhTmRFU3p0TEJXTGlCWUk1TVZ6bnRSYlRlc1h2OHJWUDJQclwveml2M3dObk5qVTFIbENLZmxlQTNyck1IZDJGaFdhdFRzQkFEclBLYk1tWW8wTT0iLCJtYWMiOiIzMTdlMTcwOWJlOTA0ZTQxY2I2NGM2YmI4ZDMyMDNlYzJjMGU2ZjI3ZDAxZTc3NDBjOTdmYzk2NTA2M2ZhODE0In0='
+    Vue.http.headers.common['token'] = 'eyJpdiI6IlwvTFZlRU5lQ2FlMHE3MW16dkFmNUVnPT0iLCJ2YWx1ZSI6Ijc2ZWt3M1o5U2RcL2tWNTlYazBSVDVsMDIwaHpcL2dWZ2VwSVY1V2hib3o0RmxTMzBvU2o1SEMyZ2U2UjRVV0xielFBWlROb1ArbGhyRTY3VHBXTlwvenZwUXF6aHBpUmROeFJJNE5CRUh2YyswPSIsIm1hYyI6ImIzYjBiYzM2YjBlMjkxNDAzMjZlYzM5YWJmMWNhOGEzMDJkY2FjMzFiNGQwMGM0NGFlYTRkMTVlMzNhZGU1N2EifQ=='
+
 </script>
 </body>
 </html>
