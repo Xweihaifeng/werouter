@@ -29,8 +29,7 @@ var qiniu_bucket_domain = ApiMaterPlatQiniuDomain;
         } else {
             isLogin = true;
         }
-        // var routerList = ['home', 'login', 'article', 'active', 'project', 'shopping', 'zone', 'zan'];
-        var routerList = ['home', 'login', 'article', 'active', 'zan'];
+        var routerList = ['home', 'login', 'article', 'active', 'project', 'shopping', 'zone', 'zan'];
 
         var isMember = function(routerList, route){
             return routerList.filter(x => x === route);
@@ -51,27 +50,27 @@ var qiniu_bucket_domain = ApiMaterPlatQiniuDomain;
 
         var article = function(){
             showLogin = false;
-            window.location.href = "/index/article";
+            window.location.href = domain + "/article";
         }
 
         var active = function(){
             showLogin = false;
-            window.location.href = "/index/activity";
+            window.location.href = domain + "/activity";
         }
         var project = function(){
             showLogin = false;
-            window.location.href = "/index/project";
+            window.location.href = domain + "/project";
         }
 
 
         var shopping = function(){
             showLogin = false;
-            window.location.href = "/index/wemall";
+            window.location.href = domain + "/wemall";
         }
 
         var zone = function(){
             showLogin = false;
-            window.location.href = "/index/quan";
+            window.location.href = domain + "/quan";
         }
 
         if (isMember(routerList, route) != ""){
@@ -79,8 +78,8 @@ var qiniu_bucket_domain = ApiMaterPlatQiniuDomain;
         }
     }
 
-    // $("#home, #login, #article, #active, #project, #shopping, #zone, #zan").click(function(){
-    $("#home, #login, #article, #active, #zan").click(function(){
+    $("#home, #login, #article, #active, #project, #shopping, #zone, #zan").click(function(){
+    // $("#home, #login, #article, #active, #zan").click(function(){
         var id = $(this).attr("id");
         router(id);
     })
