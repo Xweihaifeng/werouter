@@ -36,7 +36,16 @@
 
     <!-- <script src="{{PATH_TML}}project/js/projectList.js"></script> -->
 
-    <style>::-webkit-scrollbar { width: 0; }</style>
+    <style>
+    ::-webkit-scrollbar { width: 0; height: 0; }
+            .dropdown-toggle, .get-check { height: 40px !important; }
+
+            html {
+                position: absolute!important;
+                overflow-y: auto!important;
+            }
+
+    </style>
 </head>
 <body style="width: 1366px;background: url(/common/img/dibu.jpg)">
     <!-- 登录部分 -->

@@ -446,8 +446,8 @@ hasDomain(weid);
         } else {
             isLogin = true;
         }
-        // var routerList = ['home', 'login', 'article', 'active', 'project', 'shopping', 'zone', 'zan'];
-        var routerList = ['home', 'login', 'article', 'active', 'zan'];
+         var routerList = ['home', 'login', 'article', 'active', 'project', 'shopping', 'zone', 'zan'];
+        //var routerList = ['home', 'login', 'article', 'active', 'zan'];
 
         var isMember = function(routerList, route){
             return routerList.filter(x => x === route);
@@ -496,8 +496,8 @@ hasDomain(weid);
         }
     }
 
-    // $("#home, #login, #article, #active, #project, #shopping, #zone, #zan").click(function(){
-    $("#home, #login, #article, #active, #zan").click(function(){
+    $("#home, #login, #article, #active, #project, #shopping, #zone, #zan").click(function(){
+    //$("#home, #login, #article, #active, #zan").click(function(){
         var id = $(this).attr("id");
         router(id);
     })
