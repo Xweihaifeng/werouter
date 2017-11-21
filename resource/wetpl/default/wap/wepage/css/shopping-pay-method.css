@@ -1,0 +1,48 @@
+/**
+* Created by weifeng on 2017/11/12.
+*/
+
+@charset "utf-8";
+
+* { margin: 0; padding: 0; list-style: none; }
+::-webkit-scrollbar { width: 0; height: 0; }
+html, body { width: 100%; height: 100%; text-align: justify; font-size: 26.66vw; background: #eeeeee; font-family: -apple-system-font, "PingFang SC", "Helvetica Neue", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
+a, span { text-decoration: none; display: inline-block; }
+li { list-style: none; }
+.block { display: block !important; }
+.none { display: none !important; }
+.background { background-size: cover; background-position: center; background-repeat: no-repeat; }
+.clearfix:after{ visibility: hidden; display: block; font-size: 0; content: " "; clear: both; height: 0; }
+.clearfix{ *zoom: 1; }
+.pay_header, .pay_section, .pay_footer { position: fixed; width: 100%; right: 0; left: 0; background-color: #efefef; }
+.pay_header { height: 0.44rem; top: 0; display: flex; align-items: center; border: 1px solid #eee; }
+.pay_section { top: 0.44rem; bottom: 0; background-color: #f0f2f5; overflow-y: scroll; -webkit-overflow-scrolling: touch; z-index: 1; font-size: 0.14rem; color: #333; }
+
+/* 支付头部开始 */
+/*.pay_nav { flex: 1; display: flex; justify-content: space-between; align-items: center; height: 0.44rem; background: #efefef url(../img/we-header-bg.png) repeat-x 0 0; background-size: 100% 0.4rem; }*/
+.pay_nav { flex: 1; display: flex; justify-content: space-between; align-items: center; height: 0.44rem; background-color: #fafafa; }
+.pay_nav_title { display: flex; font-size: 0.16rem; height: 0.44rem; align-items: center; color: #4d4d4d; }
+.pay_nav_title > a { width: 0.7rem; color: #252525; display: inline-flex; justify-content: center; align-items: center; }
+.pay_icon_img { display: block; background-image: url("../img/we-sprites.png") !important; background-repeat: no-repeat !important; background-size: 200px 200px !important; }
+.pay_btn1 { display: block; background-image: url("../img/we-sprites1.png") !important; background-repeat: no-repeat !important; background-size: 100px 100px !important; }
+.pay_btn2 { display: block; background-image: url("../img/we-sprites2.png") !important; background-repeat: no-repeat !important; background-size: 150px 150px !important; }
+.pay_btn31 { display: block; background-image: url("../img/we-sprites3.png") !important; background-repeat: repeat-x !important; background-size: 15px 22px !important; }
+.pay_btn32 { display: block; background-image: url("../img/we-sprites3.png") !important; background-repeat: repeat-x !important; background-size: 15px 22px !important; }
+.pay_icon_img_clear { width: 20px; height: 20px; background-position: -20px 0; margin: 0 0 0 0.05rem; }
+.pay_icon_img_menu { width: 20px; height: 20px; background-position: -60px 0; margin: 0 0.1rem 0 0; }
+/* 支付头部结束 */
+
+.pay_order { height: 0.75rem; display: flex; justify-content: flex-start; align-items: center; font-size: 0.12rem; background-image: url(../img/pay_order_img.png); }
+.pay_order_img { width: 0.3rem; height: 0.4rem; background-image: url(../img/pay_order.png); background-size: cover; margin-left: 0.12rem; margin-right: 0.15rem;  }
+.pay_order_info > li:last-child > em, .pay_order_info > li:last-child > span { color: #f63434; }
+
+.pay_wechat { height: 0.50rem; display: flex; justify-content: space-between; align-items: center; background-color: #fff; }
+.pay_wechat_img { width: 0.2rem; height: 0.2rem; background-image: url(../img/pay_wechat.png); margin-left: 0.12rem; margin-right: 0.15rem; }
+.pay_wechat_title { flex: 1; color: #4d4d4d; font-size: 0.14rem; }
+.pay_wechat_select { width: 0.2rem; height: 0.2rem; margin-left: 0.12rem; margin-right: 0.15rem; border: 1px solid #ddd; background-color: #eee; border-radius: 50%; overflow: hidden; cursor: pointer; outline: none; }
+.pay_recommend { width: 0.25rem; height: 0.14rem; font-size: 0.10rem; background-color: #f63434; color: #fff; border-radius: 0.03rem; text-align: center; line-height: 0.14rem; }
+
+.pay_select { background-image: url(../img/pay_select.png); background-size: cover; border: none; }
+
+.pay_immediately { height: 0.44rem; display: flex; justify-content: center; align-items: center; margin: 0.3rem 0.15rem 0 0.15rem; background-color: #f63434; border-radius: 0.10rem; }
+.pay_immediately > a { width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; font-size: 0.17rem; color: #fff; }
