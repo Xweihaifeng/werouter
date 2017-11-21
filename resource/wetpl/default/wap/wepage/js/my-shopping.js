@@ -41,7 +41,7 @@ var shops = function(key, value) {
             </slide>
             <slide class="li_info">
                 <h3>`+ value.title +`</h3>
-                <div class="lii_price">`+ value.price +`</div>
+                <div class="lii_price">￥`+ value.price +`</div>
                 <p class="lii_sold"><span>已售：`+ value.sales_num +`</span><span>收藏：`+ value.collections +`</span></p>
             </slide>
         </div>
