@@ -53,7 +53,7 @@ if(sessionStorage.lastname == "we_title_1") {
 
     //route
     var isLogin; //判断用户登陆与否
-    var router = function(route){
+    /*var router = function(route){
         if(!window.localStorage.getItem("token")) {
             isLogin = false;
         } else {
@@ -107,13 +107,13 @@ if(sessionStorage.lastname == "we_title_1") {
         if (isMember(routerList, route) != ""){
             eval(route)();
         }
-    }
+    }*/
 
     // $("#home, #login, #article, #active, #project, #shopping, #zone, #zan").click(function(){
-    $("#home, #login, #article, #active, #zan").click(function(){
+    /*$("#home, #login, #article, #active, #zan").click(function(){
         var id = $(this).attr("id");
         router(id);
-    })
+    })*/
     
     var favicon = ApiMaterPlatQiniuDomain + localStorage.getItem('fav');
 	// console.log('logo:',favicon);

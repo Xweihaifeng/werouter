@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="{{PATH_TML}}wepage/css/common.css"/>
     <script src="{{PATH_TML}}wepage/js/zepto.min.js"></script>
     <script src="{{PATH_TML}}wepage/js/vue.min.js"></script>
+    <script src="{{PATH_TML}}wepage/js/layui/layui.all.js"></script>
     <script type="text/javascript" src="{{PATH_CONFIG}}"></script>
     <script src="{{PATH_TML}}wepage/js/home.js"></script>
     <title>登录</title>
@@ -23,10 +24,10 @@
             <ul>
                 <li id="phonenum">
                     <span>+86 <img src="/common/img/downarrow.png" alt=""/></span>
-                    <input type="text" placeholder="请输入手机号码" maxlength="11" :val="phone"/>
+                    <input type="text" placeholder="请输入手机号码" maxlength="11" v-model="phone"/>
                 </li>
                 <li id="checknum">
-                    <input type="text" placeholder="请输入手机验证码" maxlength="6" :val="check"/>
+                    <input type="text" placeholder="请输入手机验证码" maxlength="6" v-model="check"/>
                     <span @click="getCheck">{{ info }}</span>
                 </li>
                 <li id="forget">
@@ -54,13 +55,12 @@
             methods: {
                 getCheck: function() {
                     let self = this;
-                    let count = 60;
+                    let count = 59;
                     if (!self.lock) {
                         let evt = setInterval(function () {
                             self.lock = true;
                             if (count > 0) {
                                 self.info = count-- + '秒';
-                                console.log(self.info)
                             } else {
                                 self.info = '重新发送验证码';
                                 self.lock = false;
@@ -70,6 +70,15 @@
                     }
                 },
                 login: function() {
+                    let self = this;
+                    let phonenum = self.phone;
+                    if (/^1[3|4|5|7|8][0-9]{9}$/.test(phonenum)) {
+                        //request login api
+                    } else {
+                        layer.msg("请输入正确的手机号码", {
+                            time: 1500
+                        })
+                    }
 
                 }
 

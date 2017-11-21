@@ -412,7 +412,6 @@ var hasDomain = function(weid){
         success: function(data){
             console.log(data)
             if (data.data != null && data.code == 200){
-                // console.log(data);
                 if (data.data.domain == null) {
                     //没有个性域名
                     domain = '/index';
@@ -469,27 +468,27 @@ hasDomain(weid);
 
         var article = function(){
             showLogin = false;
-            window.location.href = "/index/article";
+            window.location.href = domain + "/article";
         }
 
         var active = function(){
             showLogin = false;
-            window.location.href = "/index/activity";
+            window.location.href = domain + "/activity";
         }
         var project = function(){
             showLogin = false;
-            window.location.href = "/index/project";
+            window.location.href = domain + "/project";
         }
 
 
         var shopping = function(){
             showLogin = false;
-            window.location.href = "/index/wemall";
+            window.location.href = domain + "/wemall";
         }
 
         var zone = function(){
             showLogin = false;
-            window.location.href = "/index/quan";
+            window.location.href = domain + "/quan";
         }
 
         if (isMember(routerList, route) != ""){

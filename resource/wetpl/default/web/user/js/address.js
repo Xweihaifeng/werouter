@@ -418,7 +418,7 @@ var wElist = function() {
 												time: 2000
 											});
 
-											$.ajax({
+											/*$.ajax({
 												type: "GET",
 												headers: {
 													'Token': localStorage.getItem('token')
@@ -432,7 +432,7 @@ var wElist = function() {
 													window.history.go(0);
 												}
 
-											})
+											})*/
 
 										}
 									},
