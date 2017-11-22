@@ -101,17 +101,7 @@
 	</div>
 </div>	
 <script>
-	$(document).ready(function(){
-		/*var scale = $('body').width()/320;
-		$('html').css('font-size', 100*scale + 'px')
-		$(window).resize(function(){
-			var scale = $('body').width()/320;
-			$('html').css('font-size', 100*scale + 'px')
-		})*/
-
-	})
-
-	var init = function(url, ref) {
+	const init = function(url, ref) {
 		$.ajax({
 			url: url,
 			type: 'get',
@@ -127,6 +117,46 @@
 		})
 	}
 
+	//获取参数
+	function getUrlParam(name) {
+		var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+		var r = window.location.search.substr(1).match(reg); //匹配目标参数
+		if (r != null) return unescape(r[2]);
+		return null; //返回参数值
+	}
+
+	//判断为空
+	function isNull(data) {
+		return (data == "" || data == undefined || data == null || data == 'null') ? true: false;
+	}
+
+	//判断是否在微信中打开
+	function is_weixn() {
+		var ua = navigator.userAgent.toLowerCase();
+		if (ua.match(/MicroMessenger/i) == "micromessenger") {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	//检查openid是否过期(有效期1天)
+	cosnt isExpire = (oldTime) => {
+		var day = 86400000;
+		var now = new Date().getTime();
+		if (oldTime != null) {
+			if (now - oldTime < 86400000) {
+				return false;
+			} else {
+				localStorage.removeItem('setopenid-date')
+				localStorage.removeItem('user-token')
+				return true;
+			}
+		} else {
+			return true;
+		}
+	}
+
 	new Vue({
 		el: '#app',
 		data: {
@@ -140,8 +170,44 @@
 		},
 		created: function(){
 			var _self = this;
-			var platuserid = window.location.pathname.split('/')[1];
+			var platuserid = window.location.pathname.split('/')[2];
 			init(apiUrl + 'circel/wcard/' + platuserid, _self);
+			if (is_weixn()) {
+				var oldTime = localStorage.getItem('setopenid-date');
+				if (!isExpire(oldTime)) { //没过期
+					//var usertoken = localStorage.getItem('user-token');
+					var usertoken = localStorage.getItem('setopenid');
+					if (usertoken == 'true') {
+						openid = getUrlParam("openid");
+						//alert('openid: ' + openid)
+						//微信登录
+						$.ajax({
+							url: apiUrl + 'wxlogin',
+							type: 'POST',
+							data: {
+								openid: openid,
+								ref_url: window.location.pathname,
+								ref_type: 2,
+								ref_id: plat_userid,
+								domain: domain
+							},
+							success: function (data) {
+								if (data.code == 200) {
+									if (isNull(data.token) == false) { //非空
+										localStorage.setItem('token-date', new Date().getTime())
+										localStorage.setItem('user-token', data.token);
+									}
+								}
+							}
+						})
+					}
+				} else {
+					//微信未跳转时
+					localStorage.setItem('setopenid', true);
+					localStorage.setItem('setopenid-date', new Date().getTime())
+					window.location.href = encodeURI(apiUrl + '/openid?url=' + window.location.href);
+				}
+			}
 		},
 		methods: {
 			care: function(){
@@ -149,7 +215,6 @@
 				$(".enter").text("进入公众号");
 			}
 		}
-
 	})
 </script>
 </body>
