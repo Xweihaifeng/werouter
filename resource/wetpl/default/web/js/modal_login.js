@@ -248,8 +248,11 @@ $(function() {
 
     $("#home, #login, #article, #active, #project, #shopping, #zone, #zan").click(function(){
         let path = window.location.pathname.split('/');
+        //  首页              官方微主页             官方各模块
         if (path[1] == '' || path[1] == 'index' || path.indexOf('index') != -1) {
             domain = '/index'
+        } else {
+            domain = '/' + path[1]; //当前域名
         }
         var id = $(this).attr("id");
         router(id, domain);
