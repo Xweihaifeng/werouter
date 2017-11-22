@@ -129,6 +129,7 @@
 						var usertoken = localStorage.getItem('setopenid');
 						if (usertoken == 'true') {
 							openid = getUrlParam("openid");
+							alert(openid)
 							//微信登录
 							$.ajax({
 								url: apiUrl + 'wxlogin',
