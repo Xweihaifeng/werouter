@@ -81,11 +81,11 @@
                     body1.order_id = self.store_num;
                     body1.openid   = openid;
                     if(!openid) {
-                        console.info("openid", openid);
+                        alert("缺失openid", openid);
                         return false;
                     } else {
                         self.$http.post(apiUrl + '/pages/wechatPay/mallOrderPhonePay', body1).then(function (data) {
-                            var result = data.data;
+                            var result = data.data.data;
                             alert(result);
                             wx.chooseWXPay({
                                 appId    : result.appId,     // 时间戳
