@@ -68,8 +68,8 @@
                 },
                 mounted : function () {
                     var data = {
-//                      "goods_id" : window.location.pathname.split('/').pop(),
-                        "goods_id" : "4ba726b0-af15-11e7-90db-c7d4b6d354de",
+                        "goods_id" : window.location.pathname.split('/').pop(),
+//                        "goods_id" : "4ba726b0-af15-11e7-90db-c7d4b6d354de",
                         "limit" : 10,
                         "page" : 1
                     };
@@ -84,7 +84,7 @@
                         var self = this;
                         if(window.pageYOffset + window.innerHeight === document.documentElement.scrollHeight && this.isBottom){
                             var data = {
-                                "goods_id" : "4ba726b0-af15-11e7-90db-c7d4b6d354de",
+                                "goods_id" : window.location.pathname.split('/').pop(),
                                 "limit" : 10,
                                 "page" : (self.comList.length/10)+1
                             };

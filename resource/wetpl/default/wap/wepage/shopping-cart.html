@@ -72,8 +72,8 @@
 </div>
 
 <script>
-    //Vue.http.headers.common['token'] = window.localStorage.getItem("token");
-    Vue.http.headers.common['token'] = 'eyJpdiI6IlwvTFZlRU5lQ2FlMHE3MW16dkFmNUVnPT0iLCJ2YWx1ZSI6Ijc2ZWt3M1o5U2RcL2tWNTlYazBSVDVsMDIwaHpcL2dWZ2VwSVY1V2hib3o0RmxTMzBvU2o1SEMyZ2U2UjRVV0xielFBWlROb1ArbGhyRTY3VHBXTlwvenZwUXF6aHBpUmROeFJJNE5CRUh2YyswPSIsIm1hYyI6ImIzYjBiYzM2YjBlMjkxNDAzMjZlYzM5YWJmMWNhOGEzMDJkY2FjMzFiNGQwMGM0NGFlYTRkMTVlMzNhZGU1N2EifQ=='
+    Vue.http.headers.common['token'] = window.localStorage.getItem("token");
+//    Vue.http.headers.common['token'] = 'eyJpdiI6IlwvTFZlRU5lQ2FlMHE3MW16dkFmNUVnPT0iLCJ2YWx1ZSI6Ijc2ZWt3M1o5U2RcL2tWNTlYazBSVDVsMDIwaHpcL2dWZ2VwSVY1V2hib3o0RmxTMzBvU2o1SEMyZ2U2UjRVV0xielFBWlROb1ArbGhyRTY3VHBXTlwvenZwUXF6aHBpUmROeFJJNE5CRUh2YyswPSIsIm1hYyI6ImIzYjBiYzM2YjBlMjkxNDAzMjZlYzM5YWJmMWNhOGEzMDJkY2FjMzFiNGQwMGM0NGFlYTRkMTVlMzNhZGU1N2EifQ=='
 
     var app = new Vue({
         el: "#shopCart",
@@ -83,7 +83,7 @@
         mounted: function () {
             var data = {
                 "user_id" : window.localStorage.getItem("weid")
-            }
+            };
             console.log(data);
             this.$http.post(apiUrl+'cart/lists',data).then(function (res) {
                 var resList = res.data.data.list;
@@ -162,7 +162,7 @@
                 window.localStorage.setItem('orderObj',JSON.stringify(orderObj));
 
                 if(storeObj.storeAllMoney > 0){
-                    window.location.href = 'http://m.cnew.wezchina.com/shopping/order'
+                    window.location.href = '/shopping/order'
                 }
 
             }

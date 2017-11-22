@@ -60,7 +60,9 @@
     </section>
 </div>
 <script>
-    Vue.http.headers.common['token'] = 'eyJpdiI6IlwvTFZlRU5lQ2FlMHE3MW16dkFmNUVnPT0iLCJ2YWx1ZSI6Ijc2ZWt3M1o5U2RcL2tWNTlYazBSVDVsMDIwaHpcL2dWZ2VwSVY1V2hib3o0RmxTMzBvU2o1SEMyZ2U2UjRVV0xielFBWlROb1ArbGhyRTY3VHBXTlwvenZwUXF6aHBpUmROeFJJNE5CRUh2YyswPSIsIm1hYyI6ImIzYjBiYzM2YjBlMjkxNDAzMjZlYzM5YWJmMWNhOGEzMDJkY2FjMzFiNGQwMGM0NGFlYTRkMTVlMzNhZGU1N2EifQ=='
+//    Vue.http.headers.common['token'] = 'eyJpdiI6IlwvTFZlRU5lQ2FlMHE3MW16dkFmNUVnPT0iLCJ2YWx1ZSI6Ijc2ZWt3M1o5U2RcL2tWNTlYazBSVDVsMDIwaHpcL2dWZ2VwSVY1V2hib3o0RmxTMzBvU2o1SEMyZ2U2UjRVV0xielFBWlROb1ArbGhyRTY3VHBXTlwvenZwUXF6aHBpUmROeFJJNE5CRUh2YyswPSIsIm1hYyI6ImIzYjBiYzM2YjBlMjkxNDAzMjZlYzM5YWJmMWNhOGEzMDJkY2FjMzFiNGQwMGM0NGFlYTRkMTVlMzNhZGU1N2EifQ=='
+
+    Vue.http.headers.common['token'] = window.localStorage.getItem("token");
 
     var app = new Vue({
         el: "#addressApp",
@@ -82,14 +84,14 @@
                 this.checked = addr.weid;
                 var data = {"default_weid" : this.checked};
                 this.$http.post(apiUrl+'users/address/setNotDefault',data);
-                window.location.href = "http://m.cnew.wezchina.com/shopping/order"
+                window.location.href = "/shopping/order"
             },
             operate : function (addr,oper) {
                 var self = this;
                 var data = addr ? addr : {};
                 if(oper !== 'delete'){
                     window.localStorage.setItem('modify',JSON.stringify(data));
-                    window.location.href = 'http://m.cnew.wezchina.com/my-shop-car-address'
+                    window.location.href = '/my-shop-car-address'
                 }else{
                     layer.confirm('确认删除该条地址吗？', {
                         title: false,
