@@ -628,7 +628,6 @@ $(document).ready(function() {
                 name: name,
                 telphone: telphone,
                 poistion: poistion,
-                status: 1,
                 company: company
             }
             console.log(sendData);
