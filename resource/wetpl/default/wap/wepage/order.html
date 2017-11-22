@@ -155,7 +155,7 @@
                         layer.msg("订单保存成功！", {time: 1500});
                         this.store_num = data.body.data;
                         window.sessionStorage.setItem('store_num', data.body.data);
-                        window.location.href = "/shopping/pay/method";
+                        window.location.href = `/shopping/pay/`+ data.body.data +``;
                     }
                 })
             }
