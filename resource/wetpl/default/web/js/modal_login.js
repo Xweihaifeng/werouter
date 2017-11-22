@@ -173,9 +173,9 @@ $(function() {
                     }
 
                 } else {
-                    layer.msg(data.message, {
+                    /*layer.msg(data.message, {
                         time: 1500
-                    });
+                    });*/
                     // window.localStorage.removeItem('token')
                     // window.location.href = '/login'
                 }

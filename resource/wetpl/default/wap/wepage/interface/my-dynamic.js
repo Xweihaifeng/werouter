@@ -3,14 +3,14 @@
  */
 
 let resp;
-const reqArtList = (url, userid) => {
+const reqDynamicList = (url) => {
     $.ajax({
-        url: url + userid,
+        url: url,
         type: 'GET',
         async: false,
         success: function(data){
             if (data.code == 200) {
-                //console.log(data)
+                console.log(data)
                 resp = data;
             }
         },
@@ -20,5 +20,6 @@ const reqArtList = (url, userid) => {
     })
 }
 
+reqDynamicList('http://new.wezchina.com/api/circel/dynamic');
 
-const my_article = resp;
+const my_dynamic = resp;
