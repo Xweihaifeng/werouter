@@ -316,11 +316,10 @@ $(document).ready(function() {
         });
     }
     var PaymentQR = function(qr_url) {
-        console.log(qr_url);
         var paymentLayer = layer.open({
             skin: 'winning-class',
             type: 1,
-            area: ['500px', '650px'],
+            area: ['300px', '650px'],
             title: '微信扫码支付',
             closeBtn: 0,
             shadeClose: true,
