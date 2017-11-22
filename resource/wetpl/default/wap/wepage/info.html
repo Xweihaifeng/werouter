@@ -141,7 +141,7 @@
 	}
 
 	//检查openid是否过期(有效期1天)
-	cosnt isExpire = (oldTime) => {
+	const isExpire = function(oldTime) {
 		var day = 86400000;
 		var now = new Date().getTime();
 		if (oldTime != null) {
