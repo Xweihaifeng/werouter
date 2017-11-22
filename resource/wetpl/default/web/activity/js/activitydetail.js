@@ -220,6 +220,29 @@ $(document).ready(function() {
         })
     }
 
+    //微信扫码支付下单
+    var wechat_scan_pay = function(number) {
+        $.ajax({
+            url: ACTIVITY_WX_ORDER,
+            type: 'post',
+            data: {
+                number: number
+            },
+            headers: {
+                'Token': localStorage.getItem('token')
+            },
+            success: function(data) {
+                if (data.code == 200) {
+                    PaymentQR(data.data.number, number);
+                }
+
+            },
+            error: function(xhr) {
+                console.log(xhr);
+            }
+        })
+    }
+
     //判断是否报名
     var isEnroll = function() {
         var sendData = { 'user_id': localStorage.getItem('weid'), 'activity_id': activityid_all[0] };
@@ -301,7 +324,7 @@ $(document).ready(function() {
             closeBtn: 0,
             shadeClose: true,
             scrollbar: false,
-            content: '<img src="' + qr_url + '" width="300">',
+            content: '<img src="' + QRCODE + '?url=' + qr_url + '" width="300">',
             end: function() {
                 location.reload();
             },
@@ -625,8 +648,8 @@ $(document).ready(function() {
                         layer.close(closeindex);
                         if (data, data.status == 2)
                             activity_ebroll_detail(data.data.enroll_id);
-                        else
-                            PaymentQR('dhdhd', 'dhdh');
+                        else if (data.data.status == 1)
+                            wechat_scan_pay(data.data.number);
                     } else {
                         layer.msg(data.message);
                         //location.reload();
