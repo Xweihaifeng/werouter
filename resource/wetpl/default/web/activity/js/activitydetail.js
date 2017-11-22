@@ -233,7 +233,7 @@ $(document).ready(function() {
             },
             success: function(data) {
                 if (data.code == 200) {
-                    PaymentQR(data.data.qrcode_url, number);
+                    PaymentQR(data.data.qrcode_url);
                 }
 
             },
@@ -316,6 +316,7 @@ $(document).ready(function() {
         });
     }
     var PaymentQR = function(qr_url) {
+        console.log(qr_url);
         var paymentLayer = layer.open({
             skin: 'winning-class',
             type: 1,
