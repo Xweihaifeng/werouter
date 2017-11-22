@@ -113,6 +113,44 @@
 				ref.nickname = data.data.user.nickname;
 				ref.domain = data.data.user.domain;
 				ref.motto = data.data.user.motto;
+
+				if (is_weixn()) {
+					alert('hi')
+					var oldTime = localStorage.getItem('setopenid-date');
+					if (!isExpire(oldTime)) { //没过期
+						//var usertoken = localStorage.getItem('user-token');
+						var usertoken = localStorage.getItem('setopenid');
+						if (usertoken == 'true') {
+							openid = getUrlParam("openid");
+							//alert('openid: ' + openid)
+							//微信登录
+							$.ajax({
+								url: apiUrl + 'wxlogin',
+								type: 'POST',
+								data: {
+									openid: openid,
+									ref_url: window.location.pathname,
+									ref_type: 2,
+									ref_id: plat_userid,
+									domain: domain
+								},
+								success: function (data) {
+									if (data.code == 200) {
+										if (isNull(data.token) == false) { //非空
+											localStorage.setItem('token-date', new Date().getTime())
+											localStorage.setItem('user-token', data.token);
+										}
+									}
+								}
+							})
+						}
+					} else {
+						//微信未跳转时
+						localStorage.setItem('setopenid', true);
+						localStorage.setItem('setopenid-date', new Date().getTime())
+						window.location.href = encodeURI(apiUrl + '/openid?url=' + window.location.href);
+					}
+				}
 			}
 		})
 	}
@@ -172,42 +210,6 @@
 			var _self = this;
 			var platuserid = window.location.pathname.split('/')[2];
 			init(apiUrl + 'circel/wcard/' + platuserid, _self);
-			if (is_weixn()) {
-				var oldTime = localStorage.getItem('setopenid-date');
-				if (!isExpire(oldTime)) { //没过期
-					//var usertoken = localStorage.getItem('user-token');
-					var usertoken = localStorage.getItem('setopenid');
-					if (usertoken == 'true') {
-						openid = getUrlParam("openid");
-						//alert('openid: ' + openid)
-						//微信登录
-						$.ajax({
-							url: apiUrl + 'wxlogin',
-							type: 'POST',
-							data: {
-								openid: openid,
-								ref_url: window.location.pathname,
-								ref_type: 2,
-								ref_id: plat_userid,
-								domain: domain
-							},
-							success: function (data) {
-								if (data.code == 200) {
-									if (isNull(data.token) == false) { //非空
-										localStorage.setItem('token-date', new Date().getTime())
-										localStorage.setItem('user-token', data.token);
-									}
-								}
-							}
-						})
-					}
-				} else {
-					//微信未跳转时
-					localStorage.setItem('setopenid', true);
-					localStorage.setItem('setopenid-date', new Date().getTime())
-					window.location.href = encodeURI(apiUrl + '/openid?url=' + window.location.href);
-				}
-			}
 		},
 		methods: {
 			care: function(){
