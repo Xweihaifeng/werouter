@@ -154,10 +154,12 @@ $(function() {
 
     //route
     var domain;
+    var aru = false;
     var hasDomain = function(weid){
         $.ajax({
             url: PAGES_PAGE_GETDETAILBYUSER + weid,
             type: 'GET',
+            async: false,
             headers: {
                 'Token': localStorage.getItem('token')
             },
@@ -167,9 +169,11 @@ $(function() {
                     if (data.data.domain == null) {
                         //没有个性域名
                         domain = '/index';
+                        aru = false;
                     } else {
                         //存在个性域名
                         domain = "/" + data.data.domain;
+                        aru = true;
                     }
 
                 } else {
@@ -254,6 +258,10 @@ $(function() {
         } else {
             if (('/' + path[1]) != domain && path[1].length > 4) { //排除频道
                 domain = '/' + path[1];
+            } else {
+                if (!aru) {
+                    domain = '/index'
+                }
             }
         }
         var id = $(this).attr("id");
