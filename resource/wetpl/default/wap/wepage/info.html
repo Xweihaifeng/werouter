@@ -131,15 +131,16 @@
 						alert("usertoken")
 						if (usertoken == 'true') {
 							openid = getUrlParam("openid");
-							alert('openid', openid)
+							alert('openid' + openid)
 							//微信登录
 							$.ajax({
 								url: apiUrl + 'wxlogin',
 								type: 'POST',
 								data: {
-									openid: openid,
+									openid: openid
 								},
 								success: function (data) {
+									alert(3)
 									alert(JSON.stringify(data))
 									if (data.code == 200) {
 										if (isNull(data.token) == false) { //非空
