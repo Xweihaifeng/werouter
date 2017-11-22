@@ -471,6 +471,10 @@ $(document).ready(function(){
                         time: 1500
                     });
                     genFans(apiUrl + 'circel/flist', domain.substr(1), 1, 12, 1);
+                } else {
+                    layer.msg(data.message, {
+                        time: 1500
+                    })
                 }
             },
             error: function(xhr) {
@@ -500,6 +504,8 @@ $(document).ready(function(){
                         time: 1500
                     })
                     genFans(apiUrl + 'circel/flist', domain.substr(1), 1, 12, 1);
+                } else {
+                    console.log(data.message)
                 }
             },
             error: function(xhr) {

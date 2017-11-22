@@ -252,7 +252,9 @@ $(function() {
         if (path[1] == '' || path[1] == 'index' || path.indexOf('index') != -1) {
             domain = '/index'
         } else {
-            domain = '/' + path[1]; //当前域名
+            if (('/' + path[1]) != domain && path[1].length > 4) { //排除频道
+                domain = '/' + path[1];
+            }
         }
         var id = $(this).attr("id");
         router(id, domain);
