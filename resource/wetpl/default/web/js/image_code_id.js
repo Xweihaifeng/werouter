@@ -144,27 +144,27 @@ $(function() {
 
         var article = function(){
             showLogin = false;
-            window.location.href = domain + "/article";
+            window.location.href = "/index/article";
         }
 
         var active = function(){
             showLogin = false;
-            window.location.href = domain + "/activity";
+            window.location.href = "/index/activity";
         }
         var project = function(){
             showLogin = false;
-            window.location.href = domain + "/project";
+            window.location.href = "/index/project";
         }
 
 
         var shopping = function(){
             showLogin = false;
-            window.location.href = domain + "/wemall";
+            window.location.href = "/index/wemall";
         }
 
         var zone = function(){
             showLogin = false;
-            window.location.href = domain + "/quan";
+            window.location.href = "/index/quan";
         }
 
         if (isMember(routerList, route) != ""){
