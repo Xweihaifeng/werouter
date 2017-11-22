@@ -330,25 +330,6 @@ $(document).ready(function() {
             },
             shade: 0.7
         });
-        tmr = setInterval(function() {
-            $.ajax({
-                url: ACTIVITY_ENROLL_ORDER_DETECT,
-                type: 'post',
-                dataType: 'json',
-                data: {
-                    number: number
-                },
-                success: function(rep) {
-                    if (rep.data.state == 2) {
-                        clearInterval(tmr);
-                        Ticket(number);
-                    }
-                },
-                error: function(xhr) {
-                    console.log(xhr);
-                }
-            });
-        }, 1000)
     }
 
     var Support = function(id, nickname, imgUrl, applyid) {
