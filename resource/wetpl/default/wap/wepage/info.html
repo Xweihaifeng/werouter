@@ -58,7 +58,7 @@
 	<div class="des">
 		<div>
 		<label>
-			<a href="/wecard">我的微主页</a>
+			<a :href="wepage">我的微主页</a>
 		</label>
 		</div>
 		<div>
@@ -126,14 +126,12 @@
 						var usertoken = localStorage.getItem('setopenid');
 						if (usertoken == 'true') {
 							openid = getUrlParam("openid");
-							alert('openid: ' + openid)
 							//微信登录
 							$.ajax({
 								url: apiUrl + 'wxlogin',
 								type: 'POST',
 								data: {
 									openid: openid,
-									domain: domain
 								},
 								success: function (data) {
 									if (data.code == 200) {
@@ -147,7 +145,6 @@
 						}
 					} else {
 						//微信未跳转时
-						alert('setopenid')
 						localStorage.setItem('setopenid', true);
 						localStorage.setItem('setopenid-date', new Date().getTime())
 						window.location.href = encodeURI(apiUrl + '/openid?url=' + window.location.href);
@@ -174,6 +171,7 @@
 
 							wx.ready(function() {
 								var link = window.location.href;
+								alert('cover:', cover)
 								wx.onMenuShareTimeline({
 									title: title,
 									// 分享标题
@@ -267,7 +265,8 @@
 			account: '个人',
 			cert: '官方认证',
 			motto: '暂无内容',
-			work: '互联网'
+			work: '互联网',
+			wepage: ''
 		},
 		created: function(){
 			var _self = this;
