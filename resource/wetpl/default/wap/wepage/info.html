@@ -56,11 +56,13 @@
 		</div>
 	</div>-->
 	<div class="des">
-		<div>
-		<label>
-			<a :href="wepage">我的微主页</a>
-		</label>
-		</div>
+		<a :href="wepage">
+			<div>
+			<label>
+				我的微主页
+			</label>
+			</div>
+		</a>
 		<div>
 		<label>
 			<a>查看历史消息</a>
@@ -114,6 +116,7 @@
 				ref.nickname = data.data.user.nickname;
 				ref.domain = data.data.user.domain;
 				ref.motto = data.data.user.motto;
+				ref.wepage = '/' + ref.domain + '/my-dynamic';
 
 				let title = ref.nickname;
 				let summary = ref.motto;
