@@ -74,7 +74,9 @@
     </transition>
 </div>
 <script>
-    Vue.http.headers.common['token'] = 'eyJpdiI6IlwvTFZlRU5lQ2FlMHE3MW16dkFmNUVnPT0iLCJ2YWx1ZSI6Ijc2ZWt3M1o5U2RcL2tWNTlYazBSVDVsMDIwaHpcL2dWZ2VwSVY1V2hib3o0RmxTMzBvU2o1SEMyZ2U2UjRVV0xielFBWlROb1ArbGhyRTY3VHBXTlwvenZwUXF6aHBpUmROeFJJNE5CRUh2YyswPSIsIm1hYyI6ImIzYjBiYzM2YjBlMjkxNDAzMjZlYzM5YWJmMWNhOGEzMDJkY2FjMzFiNGQwMGM0NGFlYTRkMTVlMzNhZGU1N2EifQ=='
+//    Vue.http.headers.common['token'] = 'eyJpdiI6IlwvTFZlRU5lQ2FlMHE3MW16dkFmNUVnPT0iLCJ2YWx1ZSI6Ijc2ZWt3M1o5U2RcL2tWNTlYazBSVDVsMDIwaHpcL2dWZ2VwSVY1V2hib3o0RmxTMzBvU2o1SEMyZ2U2UjRVV0xielFBWlROb1ArbGhyRTY3VHBXTlwvenZwUXF6aHBpUmROeFJJNE5CRUh2YyswPSIsIm1hYyI6ImIzYjBiYzM2YjBlMjkxNDAzMjZlYzM5YWJmMWNhOGEzMDJkY2FjMzFiNGQwMGM0NGFlYTRkMTVlMzNhZGU1N2EifQ=='
+
+    Vue.http.headers.common['token'] = window.localStorage.getItem("token");
 
     var app = new Vue({
         el: "#addressPage",
@@ -231,7 +233,7 @@
                 this.$http.post(apiUrl + 'users/address/store',data).then(function (res) {
                     console.log(res);
                     if(res.data.code === 200){
-                        window.location.href = 'http://m.cnew.wezchina.com/shopping/pay/address';
+                        window.location.href = '/shopping/pay/address';
                     }else{
                         layer.msg('保存失败');
                     }
@@ -255,7 +257,7 @@
                 this.$http.post(apiUrl + 'users/address/update',data).then(function (res) {
                     console.log(res);
                     if(res.data && res.data.code === 200){
-                        window.location.href = "http://m.cnew.wezchina.com/shopping/order"
+                        window.location.href = "/shopping/order"
                     }else{
                         layer.msg('保存失败');
                     }
