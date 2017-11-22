@@ -1,5 +1,4 @@
 var hosts = window.location.protocol + '//' + window.location.host + '/api/';
-//var hosts = 'http://api.qqxqs.com/';
 var ApiUrl = hosts + 'backend/';
 //七牛配置
 var ApiMaterPlatQiniuDomain;
