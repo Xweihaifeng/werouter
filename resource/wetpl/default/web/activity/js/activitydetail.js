@@ -1137,7 +1137,7 @@ $(document).ready(function() {
                     }
                     // console.log(data.data.phone)
                 } else {
-                    //layer.mag(massage);
+                    layer.mag(massage);
                 }
             },
             error: function(xhr) {
