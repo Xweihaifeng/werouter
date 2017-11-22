@@ -623,9 +623,10 @@ $(document).ready(function() {
                         localStorage.setItem('realName', "");
                         //location.reload();
                         layer.close(closeindex);
-                        activity_ebroll_detail(data.data.enroll_id)
-
-
+                        if (data, data.status == 2)
+                            activity_ebroll_detail(data.data.enroll_id);
+                        else
+                            PaymentQR('dhdhd', 'dhdh');
                     } else {
                         layer.msg(data.message);
                         //location.reload();
