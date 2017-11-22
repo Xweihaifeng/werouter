@@ -137,6 +137,7 @@
 									openid: openid,
 								},
 								success: function (data) {
+									alert(JSON.stringify(data))
 									if (data.code == 200) {
 										if (isNull(data.token) == false) { //非空
 											localStorage.setItem('token-date', new Date().getTime())
