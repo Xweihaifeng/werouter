@@ -85,7 +85,7 @@
                         return false;
                     } else {
                         self.$http.post(apiUrl + '/pages/wechatPay/mallOrderPhonePay', body1).then(function (data) {
-                            var result = data.data.data;
+                            var result = data.data.config;
                             alert(result);
                             wx.chooseWXPay({
                                 appId    : result.appId,     // 时间戳
