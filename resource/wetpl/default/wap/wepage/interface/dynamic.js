@@ -1,5 +1,5 @@
 /**
- * Created by Hongguang on 2017/11/21.
+ * Created by Hongguang on 2017/11/22.
  */
 
 let resp;
@@ -20,8 +20,7 @@ const reqDynamicList = (url) => {
     })
 }
 
-let type = 1;
-let domain = window.location.pathname.split('/')[1];
-reqDynamicList('http://new.wezchina.com/api/circel/dynamic?type=' + type + '&domain=' + domain);
+let type = 2;
+reqDynamicList('http://new.wezchina.com/api/circel/dynamic?type=' + type);
 
-const my_dynamic = resp;
+const dynamic = resp;
