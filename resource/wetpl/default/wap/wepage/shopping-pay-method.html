@@ -84,7 +84,7 @@
                     body1.openid   = "oBAbkwEfrEdh4oiK3IBs6fclRVwA";
                     alert("微信openid", body1);
                     self.$http.post(apiUrl + 'pages/wechatPay/mallOrderPhonePay', body1).then(function (data) {
-                        var result = data.data.config;
+                        var result = data.data.data.config;
                         wx.chooseWXPay({
                             appId    : result.appId,     // 时间戳
                             timestamp: result.timestamp, // 时间戳
