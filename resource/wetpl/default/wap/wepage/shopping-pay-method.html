@@ -84,7 +84,7 @@
                         alert("缺失openid", openid);
                         return false;
                     } else {
-                        alert("微信openid", body1);
+                        alert("微信openid", window.location.href.split("=").pop());
                         self.$http.post(apiUrl + '/pages/wechatPay/mallOrderPhonePay', body1).then(function (data) {
                             var result = data.data.config;
                             wx.chooseWXPay({
