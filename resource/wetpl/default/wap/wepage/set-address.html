@@ -17,31 +17,32 @@
 <div id="addressPage" v-cloak>
     <header>
         <span>收货地址</span>
-        <a class="back"></a>
+        <a class="back" href="javascript:history.back(-1)"></a>
     </header>
     <div class="form">
         <div>
             <span>收货人</span>
-            <input type="text" v-model="name">
+            <input type="text" v-model="name" placeholder="姓名">
         </div>
         <div>
             <span>联系方式</span>
-            <input type="text" v-model="phone">
+            <input type="text" v-model="phone" placeholder="手机号码">
         </div>
         <div class="select-address" @click="choose()">
             <span>所在地区</span>
-            <span>{{currentPro + currentCity + currentCounty ? currentPro + currentCity + currentCounty : "请添加收货地址"}}</span>
+            <span>{{currentPro + currentCity + currentCounty}}</span>
         </div>
         <div class="detail">
             <span>详细地址</span>
-            <textarea v-model="detailAddr"></textarea>
+            <textarea v-model="detailAddr" placeholder="详细地址需要写楼栋楼层或房间号信息"></textarea>
         </div>
         <div>
             <span>邮政编码</span>
-            <input type="text" v-model="zip">
+            <input type="text" v-model="zip" placeholder="邮政编码">
         </div>
     </div>
-    <div class="submit" @click="onSubmit()">确认并使用该地址</div>
+    <div class="submit" v-if="!isModify" @click="onSubmit()">确认并使用该地址</div>
+    <div class="submit" v-if="isModify" @click="onModify()">确认</div>
     <transition name="fade">
         <div class="modal-bg" v-show="showModel">
             <div class="modal" v-show="showModel">
@@ -73,6 +74,8 @@
     </transition>
 </div>
 <script>
+    Vue.http.headers.common['token'] = 'eyJpdiI6IlwvTFZlRU5lQ2FlMHE3MW16dkFmNUVnPT0iLCJ2YWx1ZSI6Ijc2ZWt3M1o5U2RcL2tWNTlYazBSVDVsMDIwaHpcL2dWZ2VwSVY1V2hib3o0RmxTMzBvU2o1SEMyZ2U2UjRVV0xielFBWlROb1ArbGhyRTY3VHBXTlwvenZwUXF6aHBpUmROeFJJNE5CRUh2YyswPSIsIm1hYyI6ImIzYjBiYzM2YjBlMjkxNDAzMjZlYzM5YWJmMWNhOGEzMDJkY2FjMzFiNGQwMGM0NGFlYTRkMTVlMzNhZGU1N2EifQ=='
+
     var app = new Vue({
         el: "#addressPage",
         data: {
@@ -93,12 +96,30 @@
             selectCity: '',
             selectCounty: '',
             zip : '',
-            showModel: false
+            showModel: false,
+            isModify: false,
+            modifyObj:{}
         },
         mounted: function () {
             var hasWeid = localStorage.getItem('weid');
             var weid = hasWeid ? hasWeid : "aafc6a60-c2b6-11e7-804f-2b2e90492ab4";
             var self = this;
+            this.modifyObj = JSON.parse(window.localStorage.getItem("modify"));
+            console.log(this.modifyObj);
+            if(!this.isEmptyObj(this.modifyObj)){
+                this.isModify = true;
+                this.name = this.modifyObj.name;
+                this.phone = this.modifyObj.telophone;
+                this.currentPro = this.modifyObj.province_name;
+                this.currentCity = this.modifyObj.area_name;
+                this.currentCounty = this.modifyObj.county_name;
+                this.detailAddr = this.modifyObj.detail;
+                this.zip = this.modifyObj.zipcode;
+                this.pro = this.modifyObj.province_id;
+                this.chooseCity = this.modifyObj.area_id;
+                this.chooseCounty = this.modifyObj.county_id;
+            }
+
             this.$http.get(USERDETAIL + '/' + weid).then(function (res) {
                 console.log("用户信息",res);
                 this.info = res.data.data;
@@ -106,55 +127,53 @@
                 this.$http.get(apiUrl + "province/list").then(function (res) {
                     console.log("省列表",res);
                     this.proList = res.data.data.list;
-                    var isFind = this.proList.filter(function (one) {
-                        if (self.info.province_id) {
-                            return one.id === self.info.province_id
-                        } else {
-                            return one.id === 27
+                    if(!this.isModify){
+                        var isFind = this.proList.filter(function (one) {
+                            if (self.info.province_id) {
+                                return one.id === self.info.province_id
+                            } else {
+                                return one.id === 27
+                            }
+                        });
+                        if (isFind.length) {
+                            this.pro = isFind[0].id;
+                            this.currentPro = isFind[0].name;
                         }
-                    });
-                    if (isFind.length) {
-                        this.pro = isFind[0].id;
-                        this.currentPro = isFind[0].name;
                     }
 
                     this.$http.get(apiUrl + "area/list/" + this.pro).then(function (res) {
                         console.log("市列表",res);
                         this.cityList = res.data.data.list;
-                        var isFind = this.cityList.filter(function (t) {
-                            if(self.info.area_id){
-                                return t.id === self.info.area_id
-                            }else{
-                                return t.id === 294
+                        if(!this.isModify){
+                            var isFind = this.cityList.filter(function (t) {
+                                if(self.info.area_id){
+                                    return t.id === self.info.area_id
+                                }else{
+                                    return t.id === 294
+                                }
+                            })
+                            if(isFind.length){
+                                this.chooseCity = isFind[0].id;
+                                this.currentCity = isFind[0].name;
                             }
-                        })
-                        if(isFind.length){
-                            this.chooseCity = isFind[0].id;
-                            this.currentCity = isFind[0].name;
                         }
+
 
                         this.$http.get(apiUrl + "county/list/" + this.chooseCity).then(function (res) {
                             console.log("乡镇列表",res);
                             this.countyList = res.data.data.list;
-                            this.chooseCounty = this.countyList[0].id;
-                            this.currentCounty = this.countyList[0].name;
+                            if(!this.isModify && this.countyList.length){
+                                this.chooseCounty = this.countyList[0].id;
+                                this.currentCounty = this.countyList[0].name;
+                            }
                         })
-
-
-
                     })
-
-
                 }, function (err) {
                     console.log(err)
                 })
-
-
             }, function (err) {
                 console.log(err)
             });
-
-
         },
         methods: {
             choose: function () {
@@ -171,8 +190,10 @@
                 var self = this;
                 this.$http.get(apiUrl + "area/list/" + this.pro).then(function (res) {
                     this.cityList = res.data.data.list;
-                    this.chooseCity = this.cityList[0].id;
-                    this.currentCity = this.cityList[0].name;
+                    if(this.cityList.length){
+                        this.chooseCity = this.cityList[0].id;
+                        this.currentCity = this.cityList[0].name;
+                    }
                 })
             },
             getCity: function (item) {
@@ -183,8 +204,10 @@
                 this.selectCity = item.name;
                 this.$http.get(apiUrl + "county/list/" + this.chooseCity).then(function (res) {
                     this.countyList = res.data.data.list;
-                    this.chooseCounty = this.countyList[0].id;
-                    this.currentCounty = this.countyList[0].name;
+                    if(this.countyList.length){
+                        this.chooseCounty = this.countyList[0].id;
+                        this.currentCounty = this.countyList[0].name;
+                    }
                 })
             },
             getCounty: function (item) {
@@ -208,18 +231,47 @@
                 this.$http.post(apiUrl + 'users/address/store',data).then(function (res) {
                     console.log(res);
                     if(res.data.code === 200){
-                        layer.msg('保存成功');
+                        window.location.href = 'http://m.cnew.wezchina.com/shopping/pay/address';
                     }else{
-                        layer.msg('保存失败 '+ res.data.message);
+                        layer.msg('保存失败');
                     }
                 },function (err) {
                     console.log(err)
                 })
 
+            },
+            onModify : function () {
+                var data = {
+                    weid : this.modifyObj.weid,
+                    name : this.name,
+                    province_id : this.pro,
+                    area_id : this.chooseCity,
+                    county_id : this.chooseCounty,
+                    detail : this.detailAddr,
+                    zipcode : this.zip,
+                    telophone : this.phone,
+                    status : this.modifyObj.status
+                };
+                this.$http.post(apiUrl + 'users/address/update',data).then(function (res) {
+                    console.log(res);
+                    if(res.data && res.data.code === 200){
+                        window.location.href = "http://m.cnew.wezchina.com/shopping/order"
+                    }else{
+                        layer.msg('保存失败');
+                    }
+                })
+
+            },
+            isEmptyObj:function (obj) {
+                for(var key in obj){
+                    if(key){
+                        return false;
+                    }
+                }
+                return true;
             }
         }
     })
-    Vue.http.headers.common['token'] = 'eyJpdiI6IlwvTFZlRU5lQ2FlMHE3MW16dkFmNUVnPT0iLCJ2YWx1ZSI6Ijc2ZWt3M1o5U2RcL2tWNTlYazBSVDVsMDIwaHpcL2dWZ2VwSVY1V2hib3o0RmxTMzBvU2o1SEMyZ2U2UjRVV0xielFBWlROb1ArbGhyRTY3VHBXTlwvenZwUXF6aHBpUmROeFJJNE5CRUh2YyswPSIsIm1hYyI6ImIzYjBiYzM2YjBlMjkxNDAzMjZlYzM5YWJmMWNhOGEzMDJkY2FjMzFiNGQwMGM0NGFlYTRkMTVlMzNhZGU1N2EifQ=='
 
 </script>
 </body>
