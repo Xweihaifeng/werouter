@@ -292,6 +292,22 @@ $(document).ready(function() {
             shade: 0.7
         });
     }
+    var PaymentQR = function(qr_url) {
+        var paymentLayer = layer.open({
+            skin: 'winning-class',
+            type: 1,
+            area: ['500px', '650px'],
+            title: '微信扫码支付',
+            closeBtn: 0,
+            shadeClose: true,
+            scrollbar: false,
+            content: '<img src="' + qr_url + '" width="300">',
+            end: function() {
+                location.reload();
+            },
+            shade: 0.7
+        });
+    }
 
     var Support = function(id, nickname, imgUrl, applyid) {
         var datauser = '';

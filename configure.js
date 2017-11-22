@@ -25,7 +25,7 @@ const ApiMaterPlatQiniuDomain = qiniu;
 //七牛图片配置
 var imgSet = function(path, width, height, mode) {
     if (mode != undefined) {
-        return ApiMaterPlatQiniuDomain + path + '?imageView2/' + mode + '/w/' + width + '/h/' + height;    
+        return ApiMaterPlatQiniuDomain + path + '?imageView2/' + mode + '/w/' + width + '/h/' + height;
     } else {
         return ApiMaterPlatQiniuDomain + path + '?imageView2/3/w/' + width + '/h/' + height;
     }
