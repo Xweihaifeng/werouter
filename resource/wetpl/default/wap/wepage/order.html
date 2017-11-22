@@ -150,7 +150,9 @@
                 body.address_detail = self.selectAddr.detail;
                 body.note = "";
 
+                alert(body)
                 this.$http.post(apiUrl + 'order/store', body).then(function (data) {
+                    alert(data)
                     if (data.body.code == 200) {
                         layer.msg("订单保存成功！", {time: 1500});
                         this.store_num = data.body.data;
