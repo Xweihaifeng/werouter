@@ -88,7 +88,8 @@ var url = window.location.pathname.split('/');
     var qrcodefun=function(domain,logoimg,platuserid){
         $(".oline-3 div:first-child").children().remove();
         //var qrcode_val=localhostPath+"/"+domain+"/wecard";
-        var qrcode_val=localhostPath + "wecard/" + platuserid;
+        console.log(localhostPath)
+        var qrcode_val=localhostPath + "/wecard" + platuserid;
         $(".oline-3 div:first-child").attr("ref",qrcode_val);
         // if ($.browser.msie && $.browser.version <= 8){
         if ($.support.msie && $.support.version <= 8){
