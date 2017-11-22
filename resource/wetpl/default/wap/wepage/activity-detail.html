@@ -62,8 +62,8 @@
             <li class="actd-detail" v-html="content"></li>
         </ul>
 
-        <div class="site-demo-button" id="layerDemo" style="margin-bottom: 0;">
-            <button data-method="notice" class="layui-btn">示范一个公告层</button>
+        <div class="actd-apply">
+            <button data-method="notice" @click="apply" class="layui-btn" style="background: transparent; width: 100%;">立即报名</button>
         </div>
 
         <script>
@@ -75,7 +75,6 @@
                         var that = this;
                     }
                     ,notice: function(){
-                        //示范一个公告层
                         layer.open({
                             type: 1
                             ,title: false //不显示标题栏
@@ -83,14 +82,36 @@
                             ,area: '300px;'
                             ,shade: 0.8
                             ,id: 'LAY_layuipro' //设定一个id，防止重复弹出
-                            ,btn: ['火速围观', '残忍拒绝']
+                            ,btn: ['提交申请', '回到详情']
                             ,btnAlign: 'c'
                             ,moveType: 1 //拖拽模式，0或者1
-                            ,content: '<div style="padding: 50px; line-height: 22px; background-color: #393D49; color: #fff; font-weight: 300;">你知道吗？亲！<br>layer ≠ layui<br><br>layer只是作为Layui的一个弹层模块，由于其用户基数较大，所以常常会有人以为layui是layerui<br><br>layer虽然已被 Layui 收编为内置的弹层模块，但仍然会作为一个独立组件全力维护、升级。<br><br>我们此后的征途是星辰大海 ^_^</div>'
+                            ,content:
+                                `<div style="padding: 30px; line-height: 22px; background-color: #393D49; color: #fafafa; font-weight: 300;">
+                                 <p style="font-size: 0.16rem;">请填写您的个人信息</p>
+                                    <ul id="application" style="margin-top: 0.25rem;">
+                                        <li style="display: flex; align-items: center; margin-top: 0.15rem;">
+                                            <img src="/common/img/name.png" style="display: block; width: 0.2rem; margin-right: 0.15rem;"/>
+                                            <input class="uname" type="text" placeholder="请输入您的姓名" maxlength="12" style="border: none; outline: none; font-size: 0.13rem; border-radius: 0.1rem; height: 0.21rem; padding-left: 0.1rem;"/>
+                                        </li>
+                                        <li style="display: flex; align-items: center; margin-top: 0.15rem;">
+                                            <img src="/common/img/position.png" style="display: block; width: 0.2rem; margin-right: 0.15rem;"/>
+                                            <input class="upos" type="text" placeholder="请输入您所在的职位" maxlength="20" style="border: none; outline: none; font-size: 0.13rem; border-radius: 0.1rem; height: 0.21rem; padding-left: 0.1rem;"/>
+                                        </li>
+                                        <li style="display: flex; align-items: center; margin-top: 0.15rem;">
+                                            <img src="/common/img/company.png" style="display: block; width: 0.2rem; margin-right: 0.15rem;"/>
+                                            <input class="ucom" type="text" placeholder="请输入您所在的公司" maxlength="20" style="border: none; outline: none; font-size: 0.13rem; border-radius: 0.1rem; height: 0.21rem; padding-left: 0.1rem;"/>
+                                        </li>
+                                    </ul>
+                                </div>`
                             ,success: function(layero){
+                                $('.layui-layer-btn0').click(function(){
+                                    let name = $('.uname').val();
+                                    let position = $('.position').val();
+                                    let ucom = $('.ucom').val()
+                                })
                                 var btn = layero.find('.layui-layer-btn');
                                 btn.find('.layui-layer-btn0').attr({
-                                    href: 'http://www.layui.com/'
+                                    href: '#'
                                     ,target: '_blank'
                                 });
                             }
@@ -98,14 +119,12 @@
                     }
                 };
 
-                $('#layerDemo .layui-btn').on('click', function(){
+                $('.layui-btn').on('click', function(){
                     var othis = $(this), method = othis.data('method');
                     active[method] ? active[method].call(this, othis) : '';
                 });
             });
         </script>
-
-        <div class="actd-apply" data-method="notice" @click="apply">立即报名</div>
     </div>
 </div>
 
@@ -201,6 +220,9 @@
                 address: '',
                 users: [],
                 guests: [],
+                name: '',
+                position: '',
+                company: ''
             },
             created: function () {
                 var _self = this;
