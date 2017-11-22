@@ -232,6 +232,7 @@ const PAGES_PAGE_COUNTAGEINFO = apiUrl + 'pages/page/countpageinfo'; // 用户 -
 const ACTIVITY_DOMAINISTRUE = apiUrl + 'activity/domainistrue'; //  活动 - 判断域名合法
 
 const ACTIVITY_WX_ORDER = apiUrl + 'pages/wechatpay/enroll_order_pc_pay'; //  微信扫码下单
+const ACTIVITY_ENROLL_ORDER_DETECT = apiUrl + 'activity/enroll_order_detect'; //  订单轮询
 
 //项目接口
 const PROJECT_CATE_LIST = apiUrl + 'project/cate/list'; //项目 -分类列表（根据用户ID）
