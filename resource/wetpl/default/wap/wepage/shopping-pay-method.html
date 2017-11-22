@@ -84,19 +84,19 @@
                         return false;
                     } else {
                         self.$http.post(apiUrl + '/pages/wechatPay/mallOrderPhonePay', body1).then(function (data) {
-                            console.log(data);
-
-                            // wx.chooseWXPay({
-                            //     appId    : data.appId,     // 时间戳
-                            //     timestamp: data.timestamp, // 时间戳
-                            //     nonceStr : data.nonceStr,  // 签名字符串
-                            //     package  : data.package,   // 包数据
-                            //     signType : data.signType,  // 签名加密方式
-                            //     paySign  : data.paySign,   // 支付签名
-                            //     success  : function (res) {// 支付成功后的回调函数
-                            //         layer.msg("交易成功！", { time: 1500 });
-                            //     }
-                            // });
+                            var result = data.data;
+                            alert(result);
+                            wx.chooseWXPay({
+                                appId    : result.appId,     // 时间戳
+                                timestamp: result.timestamp, // 时间戳
+                                nonceStr : result.nonceStr,  // 签名字符串
+                                package  : result.package,   // 包数据
+                                signType : result.signType,  // 签名加密方式
+                                paySign  : result.paySign,   // 支付签名
+                                success  : function (res) {  // 支付成功后的回调函数
+                                    layer.msg("交易成功！", { time: 1500 });
+                                }
+                            });
                         });
                     }                    
                 },
