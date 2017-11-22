@@ -58,8 +58,8 @@
         <script>
         $(function() {
 
-            wx.ready(function() {
-                alert(result)
+            // wx.ready(function() {
+            //     alert(result)
                 wx.chooseWXPay({
                     appId: "wx2d6cba70d9e1535b",
                     timestamp: "1511356270", // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符  
@@ -81,7 +81,7 @@
                         alert('支付取消');  
                     }  
                 });  
-            });
+            // });
 
             
         })
