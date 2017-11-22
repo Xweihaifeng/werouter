@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+
+    <head lang="en">
+        <title> 微信配置 </title>
+        <meta charset="UTF-8">
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+        <link rel="shortcut icon" id="favicon" href="" />
+        <link rel="stylesheet" href="/common/css/main.css">
+        <link rel="stylesheet" href="/common/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/common/css/buttons.css">
+        <link rel="stylesheet" href="/common/css/swiper.min.css">
+        <link rel="stylesheet" href="{{PATH_TML}}user/css/wechat-update.css">
+
+        <script src="/common/js/jquery-3.2.1.min.js"></script>
+        <script src="/common/js/layer/layer.js"></script>
+        <script src="{{PATH_CONFIG}}"></script>
+
+        <style>
+            /*个性域名模块*/
+            #right {
+                background-color: #fff;
+                font-size: 14px;
+                /*top: 120px;*/
+            }
+
+            #brand {
+                color: red;
+                background: #f7f7f7;
+            }
+
+            #look {
+                margin-left: 15px;
+            }
+
+            .con-hd {
+                width: 95%;
+                margin: 30px auto 0;
+            }
+
+            .con-hd .panel {
+                height: auto;
+                border-radius: 5px;
+                border: none;
+                box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+            }
+
+            .con-hd .panel-footer {
+                display: flex;
+                height: 40px;
+                background-color: #fff;
+                border: none;
+                padding-bottom: 0;
+                border-bottom: 1px solid #ddd;
+                justify-content: flex-start;
+                padding: 0;
+                margin-left: -10px;
+            }
+
+            .con-hd .panel-footer a {
+                font-size: 15px;
+            }
+
+            .con-hd .panel-footer  li {
+                width: 100px;
+                text-align: center;
+                padding: 10px 5px;
+                cursor: pointer;
+                font-size: 15px;
+            }
+
+            .con-hd .panel-footer > li:nth-child(1) {
+                margin-right: 15px;
+            }
+
+            .panel li.active {
+                border-bottom: 1px solid #e60000;
+                margin: 0 0 -1px;
+                color: #e60000;
+            }
+
+            .jumbotron {
+                display: flex;
+                background-color: #fff;
+                border: 1px solid #ddd;
+            }
+
+
+            .form-group {
+                position: relative;
+                display: flex;
+                align-items: baseline;
+            }
+
+            .form-group .control-label {
+                font-weight: 100;
+            }
+
+            .brandlogo {
+                display: flex;
+                align-items: flex-start;
+            }
+
+            #wechat_save {
+                margin-left: -38px;
+            }
+        </style>
+    </head>
+
+    <body style="width: 100%; background: #F7F6F2;">
+        <div class="login">
+            <div class="left-nav">
+                
+            </div>
+            <div id="top">
+               
+            </div>
+            <div id="middle">
+            
+            </div>
+            <div id="right">
+                <div class="container1">
+                    <div class="we-art-nav">
+                        <ol class="breadcrumb" style="margin-bottom:0;">
+                            <li class="homepage"><a> 微信配置 </a></li>
+                        </ol>
+                    </div>
+                    <div class="con-hd">
+                        <div class="panel panel-default">
+                            <div class="panel-body" style="display: none;">
+                                <span class="name">183****9939</span>
+                                <span class="lv">普通会员</span>
+                                <span class="auth"></span>
+                            </div>
+                        </div>
+                        <div class="jumbotron">
+                            <div class="col-md-12">
+                                <div class="form-group row">
+                                    <label for="app_id" class="col-sm-2 control-label" style="width:130px;"> 公众号ID：</label>
+                                    <div class="col-sm-5">
+                                        <input type="text" class="form-control" id="app_id" placeholder="公众号ID">
+                                    </div>
+                                    <span style="color:#f00;">*</span>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="app_cert" class="col-sm-2 control-label" style="width:130px;"> 公众号密钥：</label>
+                                    <div class="col-sm-5">
+                                        <input type="text" class="form-control" id="app_cert" placeholder="公众号密钥">
+                                    </div>
+                                    <span style="color:#f00;">*</span>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="merchant_id" class="col-sm-2 control-label" style="width:130px;"> 商户号ID：</label>
+                                    <div class="col-sm-5">
+                                        <input type="text" class="form-control" id="merchant_id" placeholder="商户号ID">
+                                    </div>
+                                    <span style="color:#f00;">*</span>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="merchant_key" class="col-sm-2 control-label" style="width:130px;"> 商户号密钥：</label>
+                                    <div class="col-sm-5">
+                                        <input type="text" class="form-control" id="merchant_key" placeholder="商户号密钥">
+                                    </div>
+                                    <span style="color:#f00;">*</span>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="apiclient_cert" class="col-sm-2 control-label" style="width:130px;"> api证书：</label>
+                                    <div class="col-sm-10">
+                                        <textarea type="text" class="form-control" id="apiclient_cert" placeholder="api证书"></textarea>
+                                    </div>
+                                    <span style="color:#f00;">*</span>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="apiclient_key" class="col-sm-2 control-label" style="width:130px;"> api证书密钥：</label>
+                                    <div class="col-sm-10">
+                                        <textarea type="text" class="form-control" id="apiclient_key" placeholder="api证书密钥"></textarea>
+                                    </div>
+                                    <span style="color:#f00;">*</span>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-4">
+                                        <button id="wechat_save" type="button" class="btn btn-warning col-md-12"> 保存设置 </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="/common/js/control.js"></script>
+        <script src="{{PATH_TML}}user/js/common.js"></script>
+        <script src="{{PATH_TML}}user/common/js/generate_manage.js"></script>
+        <!-- <script src="{{PATH_TML}}user/js/trademark.js"></script> -->
+    </body>
+</html>
