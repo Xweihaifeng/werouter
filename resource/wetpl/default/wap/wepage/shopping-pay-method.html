@@ -83,7 +83,7 @@
                     body1.order_id = "3ab772d0-cf79-11e7-9bf4-8173ba741f45";
                     body1.openid   = "oBAbkwEfrEdh4oiK3IBs6fclRVwA";
                     alert("微信openid", body1);
-                    self.$http.post(apiUrl + '/pages/wechatPay/mallOrderPhonePay', body1).then(function (data) {
+                    self.$http.post(apiUrl + 'pages/wechatPay/mallOrderPhonePay', body1).then(function (data) {
                         var result = data.data.config;
                         wx.chooseWXPay({
                             appId    : result.appId,     // 时间戳
