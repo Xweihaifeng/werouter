@@ -1,184 +1,165 @@
 <!DOCTYPE html>
 
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-        <title>下单页面</title>
 
-        <link rel="stylesheet" href="{{PATH_TML}}wepage/css/order.css">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title>下单页面</title>
 
-        <script type="text/javascript" src="{{PATH_TML}}wepage/js/jquery-3.2.1.min.js"></script>
-        <script type="text/javascript" src="{{PATH_CONFIG}}"></script>
-        <script src="{{PATH_TML}}wepage/js/vue.min.js"></script>
-        <script src="{{PATH_TML}}wepage/js/vue-resource.min.js"></script>
-        <script src="{{PATH_TML}}wepage/js/layui/layui.all.js"></script>
-    </head>
-    <body>
-        <div id="myOrder">
-            <header>
-                <span>确认订单</span>
-                <a class="back" href="javascript:void(0)" onclick="javascript:history.back(-1)"></a>
-            </header>
-            <div class="main">
-                <div class="address" @click="order_address">
-                    <p><span>{{address_default.name}}</span><span>{{address_default.telophone}}</span></p>
-                    <p>{{address_default.detail}}</p>
-                </div>
-                <div class="store">
-                    <div class="name">
-                        <p>
-                            <i></i>
-                            <span>{{list.name}}</span>
-                        </p>
-                    </div>
-                    <ul>
-                        <li v-for="(item,index) in list.goodsList">
-                            <img :src="'http://images.new.wezchina.com/' + item.cover" alt="">
-                            <div class="product">
-                                <p class="des">{{item.title}}</p>
-                                <p class="price">
-                                    <span>{{item.price * item.goods_num}}</span>
-                                    <label>
-                                        <span>已选：{{item.goods_num}}件</span>
-                                    </label>
-                                </p>
-                                <p class="operation">
-                                    <span>删除</span>
-                                    <span>移入关注</span>
-                                </p>
-                            </div>
-                        </li>
-                    </ul>
-                    <div class="store-count">
-                        <p>
-                            <span>
-                                总计：
-                                <strong>￥{{storeAll}}</strong>
-                            </span>
-                            <span>总额￥{{storeAll}} 立减￥0.00</span>
-                        </p>
-                    </div>
-                </div>
-                <div class="order_invoice">
-                    <div> 发票 </div>
-                    <div><span>不开发票</span><em class="detail_btn2"></em></div>
-                </div>
-                <div class="order_total">
-                    <div> 商品总计 </div>
-                    <div> ￥{{storeAll}} </div>
-                </div>
-                <div class="order_freight">
-                    <div> 运费 </div>
-                    <div> ￥15.00 </div>
-                </div>
+    <link rel="stylesheet" href="{{PATH_TML}}wepage/css/order.css">
+
+    <script type="text/javascript" src="{{PATH_TML}}wepage/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="{{PATH_CONFIG}}"></script>
+    <script src="{{PATH_TML}}wepage/js/vue.min.js"></script>
+    <script src="{{PATH_TML}}wepage/js/vue-resource.min.js"></script>
+    <script src="{{PATH_TML}}wepage/js/layui/layui.all.js"></script>
+
+</head>
+<body>
+<div id="myOrder" v-cloak>
+    <header>
+        <span>确认订单</span>
+        <a class="back" href="javascript:void(0)" onclick="javascript:history.back(-1)"></a>
+    </header>
+    <div class="main">
+        <div @click="goAddrList()" class="address">
+            <p v-if="!isDefault">请选择默认收货地址</p>
+            <div v-if="isDefault">
+                <p>{{selectAddr.name + ' ' + selectAddr.telophone}}</p>
+                <p>{{selectAddr.province_name + selectAddr.area_name + selectAddr.county_name + selectAddr.detail}}</p>
             </div>
-            <footer class="order_footer">
-                <a href="javascript:void(0)" class="order_footer_follow">
-                    <div><span> 应付金额：</span><span class="order_count">￥{{storeAll}}</span></div>
-                    <div><span>总额￥{{storeAll}} 立减￥0.00</span></div>
-                </a>
-                <a href="javascript:void(0)" class="order_footer_pay" @click="order_footer_pay()">立即购买</a>
-            </footer>
+
         </div>
 
-        <script>
-            // 全局请求添加token
-            Vue.http.headers.common['token'] = window.localStorage.getItem("token");
+        <div class="store">
+            <div class="name">
+                <p>
+                    <i></i>
+                    <span>{{list.name}}</span>
+                </p>
+            </div>
+            <ul>
+                <li v-for="(item,index) in list.goodsList">
+                    <img :src="'http://images.new.wezchina.com/' + item.cover" alt="">
+                    <div class="product">
+                        <p class="des">{{item.title}}</p>
+                        <p class="price">
+                            <span>{{item.price * item.goods_num}}</span>
+                            <label>
+                                <span>已选：{{item.goods_num}}件</span>
+                            </label>
+                        </p>
+                        <p class="operation">
+                            <span>删除</span>
+                            <span>移入关注</span>
+                        </p>
+                    </div>
+                </li>
+            </ul>
+            <div class="store-count">
+                <p>
+                    <span>
+                        总计：
+                        <strong>￥{{storeAll}}</strong>
+                    </span>
+                    <span>总额￥{{storeAll}} 立减￥0.00</span>
+                </p>
+            </div>
+        </div>
+        <div class="order_invoice">
+            <div> 发票</div>
+            <div><span>不开发票</span><em class="detail_btn2"></em></div>
+        </div>
+        <div class="order_total">
+            <div> 商品总计</div>
+            <div> ￥{{storeAll}}</div>
+        </div>
+        <div class="order_freight">
+            <div> 运费</div>
+            <div> ￥15.00</div>
+        </div>
+    </div>
+    <footer class="order_footer">
+        <a href="javascript:void(0)" class="order_footer_follow">
+            <div><span> 应付金额：</span><span class="order_count">￥{{storeAll}}</span></div>
+            <div><span>总额￥{{storeAll}} 立减￥0.00</span></div>
+        </a>
+        <a href="javascript:void(0)" class="order_footer_pay" @click="order_footer_pay()">立即购买</a>
+    </footer>
+</div>
 
-            // 创建vue根实例
-            var app = new Vue({
-                el: "#myOrder",
-                data: {
-                    list: JSON.parse(window.localStorage.getItem('orderObj')),
-                    address_default : '',
-                    store_num: '',
-                },
-                mounted: function() {
-                    // 添加地址
-                    // var ddd = {};
-                    // ddd.name        = "好奇害死猫";
-                    // ddd.province_id = "陕西省";
-                    // ddd.area_id     = "西安市";
-                    // ddd.county_id   = "莲湖区";
-                    // ddd.detail      = "未央路时代大厦45楼1545室";
-                    // ddd.zipcode     = "110023";
-                    // ddd.telophone   = "18811722364";
-                    // ddd.status       = 1;
+<script>
 
-                    // this.$http.post(apiUrl +'users/address/store', ddd).then(function (data) {
-                    //     if(data.data >= 0) {
-                    //         alert("成功")
-                    //     }
-                    // })
+//    Vue.http.headers.common['token'] = window.localStorage.getItem("token");
 
-                    // 设置默认地址
-                    // var body_default = {}
-                    // body_default.default_weid = "551d82a0-cea6-11e7-ac3a-895991a8896f";
+Vue.http.headers.common['token'] = 'eyJpdiI6IlwvTFZlRU5lQ2FlMHE3MW16dkFmNUVnPT0iLCJ2YWx1ZSI6Ijc2ZWt3M1o5U2RcL2tWNTlYazBSVDVsMDIwaHpcL2dWZ2VwSVY1V2hib3o0RmxTMzBvU2o1SEMyZ2U2UjRVV0xielFBWlROb1ArbGhyRTY3VHBXTlwvenZwUXF6aHBpUmROeFJJNE5CRUh2YyswPSIsIm1hYyI6ImIzYjBiYzM2YjBlMjkxNDAzMjZlYzM5YWJmMWNhOGEzMDJkY2FjMzFiNGQwMGM0NGFlYTRkMTVlMzNhZGU1N2EifQ=='
 
-                    // this.$http.post(apiUrl +'users/address/setNotDefault', body_default).then(function (data) {
-                    //     console.info("设置默认地址", data);
-                    // })
 
-                    // 获取默认地址
-                    this.$http.post(apiUrl +'users/address/getDefault').then(function (data) {
-                        if(data.data.code == 200) {
-                            if(!data.data) {
-                                console.warn("无默认地址");
-                            } else {
-                                this.address_default = data.data.data;
-                                console.info("获取默认地址", data.data.data);
-                            }
-                        } else {
-                            return false;
-                        }
-                    })
-                },
-                computed : {
-                    storeAll : function () {
-                        console.log(this.list);
-                        var money = 0;
-                        for(var a=0; a< this.list.goodsList.length; a++){
-                            money += this.list.goodsList[a].price * this.list.goodsList[a].goods_num
-                        }
-                        return money;
-                    },
-                },
-                methods : {
-                    // 创建订单-提取订单号
-                    order_footer_pay: function() {
-                        var self = this;
-                        console.log("获取默认地址", self.address_default);
-                        var goods_list = new Array();
-                        this.list.goodsList.forEach(function(value, index, array) {
-                            var data = new Object();
-                            data.goods_id  = value.weid;
-                            data.goods_num = value.goods_num;
-                            goods_list.push(data);
-                        })
-                        var body = {};
-                        body.goods_list     = goods_list;
-                        body.address_id     = self.address_default.weid;
-                        body.username       = self.address_default.name;
-                        body.phone          = self.address_default.telophone;
-                        body.address_detail = self.address_default.detail;
-                        body.note           = "";
-
-                        this.$http.post(apiUrl +'order/store', body).then(function (data) {
-                            if(data.body.code == 200) {
-                                layer.msg("订单保存成功！", { time: 1500 });
-                                this.store_num = data.body.data;
-                                window.sessionStorage.setItem('store_num', data.body.data);
-                            }
-                        })
-                    },
-                    order_address: function() {
-                        var self = this;
-                        window.sessionStorage.setItem('address_default', self.address_default);
-                        window.location.pathname = "/shopping/pay/address";
-                    }
+    var app = new Vue({
+        el: "#myOrder",
+        data: {
+            list: JSON.parse(window.localStorage.getItem('orderObj')),
+            store_num: '',
+            isDefault: false,
+            selectAddr: {}
+        },
+        mounted: function () {
+            // 获取默认地址
+            this.$http.post(apiUrl + 'users/address/getDefault').then(function (res) {
+                console.log(res);
+                if(res.data && res.data.code===200){
+                    this.isDefault = true;
+                    this.selectAddr = res.data.data;
+                }else{
+                    this.isDefault = false;
                 }
             })
-        </script>
-    </body>
+        },
+        computed: {
+            storeAll: function () {
+                console.log(this.list);
+                var money = 0;
+                for (var a = 0; a < this.list.goodsList.length; a++) {
+                    money += this.list.goodsList[a].price * this.list.goodsList[a].goods_num
+                }
+                return money;
+            }
+        },
+        methods: {
+            goAddrList: function () {
+                window.location.pathname = "/shopping/pay/address";
+            },
+            order_footer_pay: function () {
+                if(!this.isDefault){
+                    return
+                }
+                var self = this;
+                var goods_list = new Array();
+                this.list.goodsList.forEach(function (value, index, array) {
+                    var data = new Object();
+                    data.goods_id = value.weid;
+                    data.goods_num = value.goods_num;
+                    goods_list.push(data);
+                });
+                var body = {};
+                body.goods_list = goods_list;
+                body.address_id = self.selectAddr.weid;
+                body.username = self.selectAddr.name;
+                body.phone = self.selectAddr.telophone;
+                body.address_detail = self.selectAddr.detail;
+                body.note = "";
+
+                this.$http.post(apiUrl + 'order/store', body).then(function (data) {
+                    if (data.body.code == 200) {
+                        layer.msg("订单保存成功！", {time: 1500});
+                        this.store_num = data.body.data;
+                        window.sessionStorage.setItem('store_num', data.body.data);
+                    }
+                })
+            }
+        }
+    })
+</script>
+</body>
 </html>
