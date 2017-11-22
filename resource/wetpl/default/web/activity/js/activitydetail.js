@@ -233,7 +233,7 @@ $(document).ready(function() {
             },
             success: function(data) {
                 if (data.code == 200) {
-                    PaymentQR(data.data.number, number);
+                    PaymentQR(data.data.qrcode_url, number);
                 }
 
             },
