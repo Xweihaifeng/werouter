@@ -78,28 +78,30 @@
                     let body1 = new Object();
                     // let openid = window.location.search.split("&").pop().split("=").pop();
                     let openid = window.location.search.split("=").pop();
-                    body1.order_id = self.store_num;
-                    body1.openid   = openid;
-                    if(!openid) {
-                        alert("缺失openid", openid);
-                        return false;
-                    } else {
-                        alert("微信openid", body1);
-                        self.$http.post(apiUrl + '/pages/wechatPay/mallOrderPhonePay', body1).then(function (data) {
-                            var result = data.data.config;
-                            wx.chooseWXPay({
-                                appId    : result.appId,     // 时间戳
-                                timestamp: result.timestamp, // 时间戳
-                                nonceStr : result.nonceStr,  // 签名字符串
-                                package  : result.package,   // 包数据
-                                signType : result.signType,  // 签名加密方式
-                                paySign  : result.paySign,   // 支付签名
-                                success  : function (res) {  // 支付成功后的回调函数
-                                    layer.msg("交易成功！", { time: 1500 });
-                                }
-                            });
+                    // body1.order_id = self.store_num;
+                    // body1.openid   = openid;
+                    body1.order_id = "3ab772d0-cf79-11e7-9bf4-8173ba741f45";
+                    body1.openid   = "oBAbkwEfrEdh4oiK3IBs6fclRVwA";
+                    alert("微信openid", body1);
+                    self.$http.post(apiUrl + 'pages/wechatPay/mallOrderPhonePay', body1).then(function (data) {
+                        var result = data.data.config;
+                        wx.chooseWXPay({
+                            appId    : result.appId,     // 时间戳
+                            timestamp: result.timestamp, // 时间戳
+                            nonceStr : result.nonceStr,  // 签名字符串
+                            package  : result.package,   // 包数据
+                            signType : result.signType,  // 签名加密方式
+                            paySign  : result.paySign,   // 支付签名
+                            success  : function (res) {  // 支付成功后的回调函数
+                                layer.msg("交易成功！", { time: 1500 });
+                            }
                         });
-                    }                    
+                    });
+                    // if(!openid) {
+                    //     alert("缺失openid", openid);
+                    //     return false;
+                    // } else {
+                    // }                    
                 },
                 computed : {
 
