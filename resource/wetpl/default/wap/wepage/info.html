@@ -116,23 +116,19 @@
 				ref.motto = data.data.user.motto;
 
 				if (is_weixn()) {
-					alert('hi')
 					var oldTime = localStorage.getItem('setopenid-date');
 					if (!isExpire(oldTime)) { //没过期
 						//var usertoken = localStorage.getItem('user-token');
 						var usertoken = localStorage.getItem('setopenid');
 						if (usertoken == 'true') {
 							openid = getUrlParam("openid");
-							//alert('openid: ' + openid)
+							alert('openid: ' + openid)
 							//微信登录
 							$.ajax({
 								url: apiUrl + 'wxlogin',
 								type: 'POST',
 								data: {
 									openid: openid,
-									ref_url: window.location.pathname,
-									ref_type: 2,
-									ref_id: plat_userid,
 									domain: domain
 								},
 								success: function (data) {
