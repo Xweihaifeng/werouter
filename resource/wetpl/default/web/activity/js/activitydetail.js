@@ -607,7 +607,7 @@ $(document).ready(function() {
                         localStorage.setItem('realName', "");
                         //location.reload();
                         layer.close(closeindex);
-                        activity_ebroll_detail(data.enroll_id)
+                        activity_ebroll_detail(data.data.enroll_id)
 
 
                     } else {
