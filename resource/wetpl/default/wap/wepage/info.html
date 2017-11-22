@@ -143,6 +143,7 @@
 						}
 					} else {
 						//微信未跳转时
+						alert('setopenid')
 						localStorage.setItem('setopenid', true);
 						localStorage.setItem('setopenid-date', new Date().getTime())
 						window.location.href = encodeURI(apiUrl + '/openid?url=' + window.location.href);
