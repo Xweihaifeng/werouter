@@ -56,66 +56,7 @@
 		</section>
 
         <script>
-            // 全局请求添加token
-            Vue.http.headers.common['token'] = window.localStorage.getItem("token");
-
-            // 创建vue根实例
-            var app = new Vue({
-                el: "#pay_section",
-                data: {
-                    address_default : JSON.parse(window.sessionStorage.getItem('address_default')),
-                    store_num: window.sessionStorage.getItem('store_num'),
-                    order_detail: '',
-                },
-                mounted: function() {
-                    // 获取默认地址
-                    var self = this;
-                    self.$http.get(apiUrl + 'order/detail/' + self.store_num).then(function (data) {
-                        this.order_detail = data.data.data;
-                        console.log(this.order_detail);
-                    });
-
-                    let body1 = new Object();
-                    // let openid = window.location.search.split("&").pop().split("=").pop();
-                    let openid = window.location.search.split("=").pop();
-                    // body1.order_id = self.store_num;
-                    // body1.openid   = openid;
-                    body1.order_id = "3ab772d0-cf79-11e7-9bf4-8173ba741f45";
-                    body1.openid   = "oBAbkwEfrEdh4oiK3IBs6fclRVwA";
-                    alert("微信openid", body1);
-                    self.$http.post(apiUrl + 'pages/wechatPay/mallOrderPhonePay', body1).then(function (data) {
-                        var result = data.data.data.config;
-
-
-
-
-                        // wx.chooseWXPay({
-                        //     appId    : result.appId,     // 时间戳
-                        //     timestamp: result.timestamp, // 时间戳
-                        //     nonceStr : result.nonceStr,  // 签名字符串
-                        //     package  : result.package,   // 包数据
-                        //     signType : result.signType,  // 签名加密方式
-                        //     paySign  : result.paySign,   // 支付签名
-                        //     success  : function (res) {  // 支付成功后的回调函数
-                        //         layer.msg("交易成功！", { time: 1500 });
-                        //     }
-                        // });
-                    });
-                    // if(!openid) {
-                    //     alert("缺失openid", openid);
-                    //     return false;
-                    // } else {
-                    // }    
-                    // 
-                    //                 
-                    //                                 
-                    //                                                 
-                    //                                                                 
-
-
-
-
-                    wx.ready(function() {
+wx.ready(function() {
                         alert(result)
                         wx.chooseWXPay({
                             appId: "wx2d6cba70d9e1535b",
@@ -141,36 +82,8 @@
                     });
 
 
-
-
-
-
-                                                                                                            
-                },
-                computed : {
-
-                },
-                methods : {
-                    order_pay: function() {
-                        // Mall - 商城 - 下单页返回openid
-                        var self = this;
-                        var body = new Object();
-                        body.url = window.location.href;
-                        body.orderid = self.store_num;
-                        window.location.href = apiUrl + 'mall/getMallOpenid?url=' + window.location.href + '&orderid=' + self.store_num;
-
-                        // window.location.href = encodeURI(globalHost + '/openid?url=' + window.location.href);
-                    },
-                    is_weixn: function() {
-                        var ua = navigator.userAgent.toLowerCase();
-                        if (ua.match(/MicroMessenger/i) == "micromessenger") {
-                            return true;
-                        } else {
-                            return false;
-                        }
-                    }
-                }
-            })
         </script>
+
+
 	</body>
 </html>
