@@ -77,6 +77,7 @@
 
                     let body1 = new Object();
                     let openid = window.location.search.split("&").pop().split("=").pop();
+                    alert("微信openid", openid);
                     body1.order_id = self.store_num;
                     body1.openid   = openid;
                     if(!openid) {
