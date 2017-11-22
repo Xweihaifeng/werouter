@@ -20,6 +20,6 @@ const reqDynamicList = (url) => {
     })
 }
 
-reqDynamicList('http://new.wezchina.com/api/circel/dynamic');
+reqDynamicList('http://new.wezchina.com/api/circel/dynamic?domain=' + window.location.pathname.split('/')[1]);
 
 const my_dynamic = resp;
