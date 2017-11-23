@@ -405,13 +405,13 @@ $(document).ready(function() {
                     '<p class="act_title activity_title_apply"></p>' +
                     '<p class="act_ttt">' +
                     '<span class="act_time">' +
-                    '时间： <span class=" act_time_all" >04-21 13:30 ~ 04-21 17:00</span>' +
+                    '时间： <span class=" act_time_all" >' + rep.data.begain_time + ' ~ ' + rep.data.end_time + '</span>' +
                     '</span>' +
                     '<span class="act_time">' +
-                    '<span class="act_time_deadline">04-21 17:00</span> 报名截止' +
+                    '<span class="act_time_deadline">' + rep.data.enroll_deadline + '</span> 报名截止' +
                     '</span>' +
                     '</p>' +
-                    '<p class="act_dress">地点：北京海淀区海淀银丰大厦3层·纳什空间</p>' +
+                    '<p class="act_dress">地点：' + rep.data.address + '</p>' +
                     '</div>' +
                     '</div>' +
 
@@ -421,7 +421,8 @@ $(document).ready(function() {
                     '<div class="clon1"></div>' +
                     '<div class="sign_head_contain">' +
                     '<div class="act_title">' +
-                    '<img src="\/common\/img\/ticket-jia.png" ></div>' +
+                    (rep.data.type == 1 ? '<img src="\/common\/img\/ticket-jia.png" ></div>' : `<p>￥<b>`
+                        rep.data.price `</b></p>`) +
                     '</div>' +
                     '</div>' +
 
