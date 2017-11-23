@@ -620,88 +620,92 @@ $(document).ready(function() {
                     logBt();
             }
         });
-        $(document).on("click", ".apply_submit", function() {
-            console.log(localStorage.getItem('dataPhone'))
-
-            var name = $('#username').val();
-            var telphone = $('#phone').val();
-            var poistion = $("#zhiw").val();
-            var company = $("#gongsi").val();
-            console.log(localStorage.getItem("phone"), telphone);
-            console.log();
-            if (name == "") {
-                layer.msg("请输入名字", {
-                    time: 1000
-                });
-                return;
-            }
-            if (telphone == "") {
-                layer.msg("请输入电话号码", {
-                    time: 1000
-                });
-                return;
-            }
+        setTimeout(function() {
 
 
+                $(".apply_submit").bind("click", function() {
+                    console.log(localStorage.getItem('dataPhone'))
 
-            if (isNull(localStorage.getItem('weid')) || isNull(localStorage.getItem('token'))) {
-                layer.msg("请验证您的手机号", {
-                    time: 1000
-                });
-                return;
-            }
-
-            if (poistion == "") {
-                layer.msg("请输入职位", {
-                    time: 1000
-                });
-                return;
-            }
-            if (company == "") {
-                layer.msg("请输入公司", {
-                    time: 1000
-                });
-                return;
-            }
-            var sendData = {
-                activity_id: activityid,
-                name: name,
-                telphone: telphone,
-                poistion: poistion,
-                company: company
-            }
-            console.log(sendData);
-            $.ajax({
-                url: ACTIVITY_ENROLL_STORE,
-                type: 'post',
-                data: sendData,
-                headers: {
-                    'Token': localStorage.getItem('token')
-                },
-                success: function(data) {
-                    console.log(data);
-                    if (data.code == 200) {
-                        localStorage.setItem("phone", "");
-                        localStorage.setItem('dataPhone', "");
-                        localStorage.setItem('realName', "");
-                        //location.reload();
-                        layer.close(closeindex);
-                        if (data.data.status == 2)
-                            activity_ebroll_detail(data.data.enroll_id);
-                        else if (data.data.status == 1)
-                            wechat_scan_pay(data.data.number);
-                    } else {
-                        layer.msg(data.message);
-                        //location.reload();
-                        // Ticket(localStorage.getItem(weid));
+                    var name = $('#username').val();
+                    var telphone = $('#phone').val();
+                    var poistion = $("#zhiw").val();
+                    var company = $("#gongsi").val();
+                    console.log(localStorage.getItem("phone"), telphone);
+                    console.log();
+                    if (name == "") {
+                        layer.msg("请输入名字", {
+                            time: 1000
+                        });
+                        return;
                     }
-                },
-                error: function(xhr) {
-                    console.log(xhr);
-                }
-            })
-        })
-    }
+                    if (telphone == "") {
+                        layer.msg("请输入电话号码", {
+                            time: 1000
+                        });
+                        return;
+                    }
+
+
+
+                    if (isNull(localStorage.getItem('weid')) || isNull(localStorage.getItem('token'))) {
+                        layer.msg("请验证您的手机号", {
+                            time: 1000
+                        });
+                        return;
+                    }
+
+                    if (poistion == "") {
+                        layer.msg("请输入职位", {
+                            time: 1000
+                        });
+                        return;
+                    }
+                    if (company == "") {
+                        layer.msg("请输入公司", {
+                            time: 1000
+                        });
+                        return;
+                    }
+                    var sendData = {
+                        activity_id: activityid,
+                        name: name,
+                        telphone: telphone,
+                        poistion: poistion,
+                        company: company
+                    }
+                    console.log(sendData);
+                    $.ajax({
+                        url: ACTIVITY_ENROLL_STORE,
+                        type: 'post',
+                        data: sendData,
+                        headers: {
+                            'Token': localStorage.getItem('token')
+                        },
+                        success: function(data) {
+                            console.log(data);
+                            if (data.code == 200) {
+                                localStorage.setItem("phone", "");
+                                localStorage.setItem('dataPhone', "");
+                                localStorage.setItem('realName', "");
+                                //location.reload();
+                                layer.close(closeindex);
+                                if (data.data.status == 2)
+                                    activity_ebroll_detail(data.data.enroll_id);
+                                else if (data.data.status == 1)
+                                    wechat_scan_pay(data.data.number);
+                            } else {
+                                layer.msg(data.message);
+                                //location.reload();
+                                // Ticket(localStorage.getItem(weid));
+                            }
+                        },
+                        error: function(xhr) {
+                            console.log(xhr);
+                        }
+                    })
+                })
+            }
+        }, 2000);
 
 
 
