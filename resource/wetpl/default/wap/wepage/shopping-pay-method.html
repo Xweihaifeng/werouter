@@ -18,7 +18,8 @@
         <script type="text/javascript" src="{{PATH_CONFIG}}"></script>
         <script src="{{PATH_TML}}wepage/js/vue.min.js"></script>
         <script src="{{PATH_TML}}wepage/js/vue-resource.min.js"></script>
-        <script src="{{PATH_TML}}wepage/js/layui/layui.all.js"></script>
+        <script src="/common/layer-v3.0.3/layer-v3.0.3/layer/layer.js"></script>
+        <!-- <script src="{{PATH_TML}}wepage/js/layui/layui.all.js"></script> -->
         <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
 
     </head>
@@ -89,21 +90,21 @@
                         openid  : getQueryString("openid")
                     };
 
-                    self.$http.post('http://new.wezchina.com/api/pages/wechatPay/mallOrderPhonePay', body1).then(function (data) {
-                    // self.$http.post(apiUrl + 'pages/wechatPay/mallOrderPhonePay', body1).then(function (data) {
+                    self.$http.post(apiUrl + 'pages/wechatPay/mallOrderPhonePay', body1).then(function (data) {
                         self.config = data.data.data.config;
 
                         var onBridgeReady = function() {
                             if (res.err_msg == "get_brand_wcpay_request:ok") {
-                                MessageBox.alert(commonToast["paySuccess"]).then(action => {
+                                layer.msg("微信支付完成", { time: 1500 });
+                                // MessageBox.alert(commonToast["paySuccess"]).then(action => {
                                     //支付成功 回到首页
-                                    alert("支付成功");
-                                });
+                                //     alert("支付成功");
+                                // });
                             } else if (res.err_msg == "get_brand_wcpay_request:cancel") {
                                 //取消支付!
-                                alert("取消支付");
+                                layer.msg("已取消支付", { time: 1500 });
                             } else {
-                                alert("未知");
+                                layer.msg("微信支付失败！", { time: 1500 });
                             }
                         }
 
