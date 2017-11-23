@@ -233,7 +233,7 @@ $(document).ready(function() {
             },
             success: function(data) {
                 if (data.code == 200) {
-                    PaymentQR(data.data.qrcode_url);
+                    PaymentQR(data.data.qrcode_url, data.data.number);
                 } else {
                     console.log(number);
                 }
@@ -333,9 +333,7 @@ $(document).ready(function() {
                 },
                 shade: 0.7
             });
-            console.log(number);
             tmr = setInterval(function() {
-                console.log(number + 'dddd');
                 $.ajax({
                     url: ACTIVITY_ENROLL_ORDER_DETECT,
                     type: 'post',
