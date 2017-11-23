@@ -13,7 +13,7 @@
     <script src="{{PATH_TML}}wepage/js/home.js"></script>
     <title>激活</title>
 </head>
-<body style="background: #ffffff; overflow: hidden;">
+<body style="background: #ffffff; overflow-y: hidden;">
     <div id="app">
         <div id="login">
             <a :href="backurl"><img id="goback" src="/common/img/return.png" /></a>
@@ -151,6 +151,7 @@
                     let checknum = self.check;
                     if (/^1[3|4|5|7|8][0-9]{9}$/.test(phonenum)) {
                         if (/^[0-9]{6}$/.test(checknum)) { //发送手机和验证码验证成功
+                            alert(1)
                             tologin(phonenum, checknum, self.weid, self.token);
                         } else {
                             layer.msg("手机验证码输入错误", {
