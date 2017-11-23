@@ -1008,6 +1008,7 @@ $(function() {
     var formObj = {
         init: function(node) {
             data = this.formatData($(node).data('status'));
+            console.log(data);
             return this.validate();
         },
         validate: function() {
