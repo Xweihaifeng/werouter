@@ -333,7 +333,9 @@ $(document).ready(function() {
                 },
                 shade: 0.7
             });
-            tmr = setInterval(function(number) {
+            console.log(number);
+            tmr = setInterval(function() {
+                console.log(number + 'dddd');
                 $.ajax({
                     url: ACTIVITY_ENROLL_ORDER_DETECT,
                     type: 'post',
