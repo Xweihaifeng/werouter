@@ -152,10 +152,9 @@
                     let checknum = self.check;
                     if (/^1[3|4|5|7|8][0-9]{9}$/.test(phonenum)) {
                         if (/^[0-9]{6}$/.test(checknum)) { //发送手机和验证码验证成功
-                            alert('phone:' + phonenum)
-                            alert('check:' + checknum)
-                            alert('weid:' + self.weid)
-
+//                            alert('phone:' + phonenum)
+//                            alert('check:' + checknum)
+//                            alert('weid:' + self.weid)
                             tologin(phonenum, checknum, self.weid);
                         } else {
                             layer.msg("手机验证码输入错误", {
