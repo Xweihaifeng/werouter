@@ -762,7 +762,6 @@ $(document).ready(function() {
                 'Token': localStorage.getItem('token')
             },
             success: function(data) {
-                console.log(data);
                 if (data.code == 200) {
                     console.log(applyid);
                     $('title').text(data.data.title);
@@ -786,7 +785,7 @@ $(document).ready(function() {
                         $(".view_num").text(data.data.view_num);
                         $(".city").text(data.data.area_name);
                         $(".apply_num").text(data.data.enroll_num);
-                        if (data.data.type = 1 || parseFloadt(data.data.price) == 0) {
+                        if (data.data.type = 1 || parseFloat(data.data.price) == 0) {
                             $(".pay-type span").text('免费');
                         } else {
                             $(".pay-type span").html('￥<b>' + data.data.price + '</b>');
