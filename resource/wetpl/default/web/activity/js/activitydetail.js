@@ -772,7 +772,6 @@ $(document).ready(function() {
                         $(".act_time_deadline").text(data.data.enroll_deadline);
                         $(".act_dress").text(data.data.area_name + data.data.address);
                     } else {
-                        alert('dd');
                         $(".activity_title").text(data.data.title);
                         $(".activity_title_x").attr('title', data.data.title)
                         $(".activity_title_x").text(data.data.title);
@@ -786,6 +785,7 @@ $(document).ready(function() {
                         $(".view_num").text(data.data.view_num);
                         $(".city").text(data.data.area_name);
                         $(".apply_num").text(data.data.enroll_num);
+                        alert(parseFloat(data.data.price));
                         if (data.data.type = 1 || parseFloat(data.data.price) == 0) {
                             $(".pay-type span").text('免费');
                         } else {
