@@ -25,7 +25,7 @@
         <div class="singleOrder" v-for="order in orderList">
             <div class="order-number">
                 <span>订单号：{{order.order_num}}</span>
-                <i>×</i>
+                <i @click="deleteOrder(order)">×</i>
             </div>
             <div class="order-status">
                 <div>
@@ -60,7 +60,7 @@
             init : function () {
                 var data = {
                     "plat_user_id" : window.localStorage.getItem('weid')
-//                    "plat_user_id" : 'aafc6a60-c2b6-11e7-804f-2b2e90492ab4'
+                    //"plat_user_id" : 'aafc6a60-c2b6-11e7-804f-2b2e90492ab4'
                 };
                 this.$http.post(apiUrl+'order/list',data).then(function (res) {
                     console.log(res);
@@ -172,7 +172,7 @@
                 if(oper){
                     switch (oper){
                         case 'pay':
-                            this.pay();
+                            this.pay(order);
                             break;
                         case 'cancel':
                             this.cancel(order);
@@ -184,16 +184,16 @@
                             this.distribution(order);
                             break;
                         case 'comment':
-                            this.comment();
+                            this.comment(order);
                             break;
                         case 'deal':
-                            this.deal();
+                            this.deal(order);
                             break;
                         case 'refund':
-                            this.refund();
+                            this.refund(order);
                             break;
                         case 'delete':
-                            this.delete(order);
+                            this.deleteOrder(order);
                             break;
                     }
                 }
@@ -220,7 +220,7 @@
 
             },
 //            删除订单
-            delete : function (order) {
+            deleteOrder : function (order) {
                 var self = this;
                 var data = {
                     "order_id" : order.weid
@@ -257,13 +257,25 @@
             },
 //            查看物流
             distribution : function (order) {
-                this.$http.get('order/detail/{id}').then(function (res) {
+                this.$http.get(apiUrl + 'order/detail/'+order.weid).then(function (res) {
+                    console.log(res);
+                    var obj = {};
+                    if(res.data && res.data.code === 200){
+                        if(!res.data.data.send || !res.data.data.send.logistics_no || !res.data.data.send.logistics_company_code){
+//                            后台接口未开通 先用模拟数据
+                            obj.logistics_NO = '12345678';
+                            obj.company_code = 'yuantong';
+                            window.localStorage.setItem('sendObj',JSON.stringify(obj));
+                            window.location.href = '/distribution/detail'
+                        }
+                    }
 
                 })
             },
 //            评价
             comment : function (order) {
-
+                window.localStorage.setItem('orderObj',JSON.stringify(order));
+                window.location.href = '/shopping/edit_comment'
             },
 //            确认交易
             deal : function (order) {
@@ -297,7 +309,7 @@
             },
 //            付款
             pay : function (order) {
-
+                window.location.href = `/pay/shopping?store_num=`+ order.weid +``;
             }
         }
     });

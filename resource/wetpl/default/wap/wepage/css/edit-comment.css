@@ -1,0 +1,108 @@
+html{
+    font-size:26.66vw;
+}
+*{
+    margin:0;
+    padding:0;
+}
+body{
+    font-size:0.14rem;
+    background-color: #e8e8ed;
+}
+[v-cloak] {
+    display:none;
+}
+body::-webkit-scrollbar {
+    display: none;
+}
+a{
+    text-decoration: none;
+}
+header{
+    width:100%;
+    height:0.45rem;
+    line-height:0.45rem;
+    background: linear-gradient(180deg,#fff,#efefef);
+    text-align: center;
+    position: fixed;
+}
+header a{
+    display: inline-block;
+    width:0.42rem;
+    height:0.45rem;
+    position: absolute;
+    left:0;
+    top:0;
+}
+header a:after{
+    content: '';
+    display: block;
+    width:0.12rem;
+    height:0.12rem;
+    border-top:1px solid #848689;
+    border-left:1px solid #848689;
+    -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    -o-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+    position: absolute;
+    top:50%;
+    left:0.18rem;
+    margin-top:-0.06rem;
+}
+header span{
+    font-size:0.16rem;
+    color: #333;
+}
+.comment-container{
+    padding-top:0.45rem;
+}
+.comment-container>div{
+    background: #fff;
+    margin-bottom:0.1rem;
+    padding:0 0.1rem;
+}
+.good{
+    padding:0.1rem 0;
+    border-bottom:1px solid #eee;
+    border-top:1px solid #eee;
+}
+.good img{
+    display: inline-block;
+    width:0.4rem;
+    height:0.4rem;
+    vertical-align: middle;
+    margin-right:0.1rem;
+}
+.good span{
+    display: inline-block;
+    vertical-align: middle;
+}
+.good .star{
+    height:0.12rem;
+    width:0.14rem;
+    background: url("../img/comment-star.png") repeat-x 0 0;
+    -webkit-background-size: 0.15rem 0.22rem;
+    background-size: 0.15rem 0.22rem;
+}
+.good .not-red{
+    background-position: 0 -0.1rem;
+}
+textarea{
+    width:100%;
+    height:2rem;
+    outline:none;
+    padding-top:0.1rem;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: none;
+    resize: none;
+}
+.comment-container>.commit-btn{
+    padding:0.1rem;
+    margin-bottom:0;
+    text-align: right;
+    color: orange;
+}
