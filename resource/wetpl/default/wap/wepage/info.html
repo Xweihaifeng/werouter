@@ -142,11 +142,11 @@
 								success: function (data) {
 //									alert(3)
 //									alert(JSON.stringify(data))
+									alert('token:' + data.token);
+									alert('act:' + data.data.activation_status);
+									localStorage.setItem('token', data.token);
+									localStorage.setItem('activation', data.data.activation_status);
 									if (data.code == 200) {
-										alert('token:' + data.token);
-										alert('act:' + data.data.activation_status);
-										localStorage.setItem('token', data.token);
-										localStorage.setItem('activation', data.data.activation_status);
 										if (isNull(data.token) == false) { //非空
 											localStorage.setItem('token-date', new Date().getTime())
 											localStorage.setItem('user-token', data.token);
