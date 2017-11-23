@@ -436,7 +436,7 @@
              Sponsor: Sponsor,
              content: content,
              type: type,
-             price: price
+             price: price,
              status: status,
              is_private: is_private
          }
