@@ -789,6 +789,8 @@ $(document).ready(function() {
                                 mess_tusi("时间已截至");
 
                             } else {
+                                alert(id);
+                                alert($(this).data('id'));
                                 if (data.data.enroll_num < data.data.enroll_limit || data.data.enroll_limit == 0) {
                                     Support(id, nickname, imgUrl, $(this).data('id'));
                                     $('#phone').val(localStorage.getItem('dataPhone'));
