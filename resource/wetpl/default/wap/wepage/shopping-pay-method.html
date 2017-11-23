@@ -155,14 +155,15 @@
                             }
                         } else {
                             alert(self.config.appId, self.config.timestamp, self.config.nonceStr, self.config.package, self.config.signType, self.config.paySign)
-                            WeixinJSBridge.invoke('getBrandWCPayRequest', {
-                                "appId"    : self.config.appId,     // 时间戳
-                                "timestamp": self.config.timestamp, // 时间戳
-                                "nonceStr" : self.config.nonceStr,  // 签名字符串
-                                "package"  : self.config.package,   // 包数据
-                                "signType" : self.config.signType,  // 签名加密方式
-                                "paySign"  : self.config.paySign,   // 支付签名
-                            }, function (res) {
+                            WeixinJSBridge.invoke('getBrandWCPayRequest',
+                                self.config,
+                                // "appId"    : self.config.appId,     // 时间戳
+                                // "timestamp": self.config.timestamp, // 时间戳
+                                // "nonceStr" : self.config.nonceStr,  // 签名字符串
+                                // "package"  : self.config.package,   // 包数据
+                                // "signType" : self.config.signType,  // 签名加密方式
+                                // "paySign"  : self.config.paySign,   // 支付签名
+                            function (res) {
                                 onBridgeReady();
                             })
                         }
