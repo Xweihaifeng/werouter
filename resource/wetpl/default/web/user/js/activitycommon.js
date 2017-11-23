@@ -1,4 +1,3 @@
-
 $(function() {
     //图片上传接口
     var ajaxImageUploadUrl = $('#J_ImageUploadUrl').val();
@@ -22,7 +21,7 @@ $(function() {
     var TAG_BUTTON_ANIM_TIME = 500;
     //本地存储key
     var KEY_DATA_ACTIVITY = 'activityData';
-    var interval='';
+    var interval = '';
     //缓存时间间隔
     var CACHE_TIME = 5000;
     //编辑器对象
@@ -92,10 +91,10 @@ $(function() {
                 opacity: 0.5
             });
             //初始化编辑器
-           /* um = UE.getEditor('J_ActivityDetail', {
-                serverUrl: editorContorllerUrl,
-                autoClearinitialContent: autoClearinitialContent
-            });*/
+            /* um = UE.getEditor('J_ActivityDetail', {
+                 serverUrl: editorContorllerUrl,
+                 autoClearinitialContent: autoClearinitialContent
+             });*/
             template.config('openTag', '((');
             template.config('closeTag', '))');
         },
@@ -165,16 +164,16 @@ $(function() {
                 $('#J_ActivityAddr').focus();
             });
             //活动保存和发布按钮
-           /* $('.J_BtnActivitySave').click(function() {
-                
-                if (formObj.init(this)) {
-                    if (isFillAcccountInfo == 0 && data.type == 1) {
-                        dialog.show('#J_DialogAccount');
-                    } else {
-                        _self.submitData();
-                    }
-                }
-            });*/
+            /* $('.J_BtnActivitySave').click(function() {
+                 
+                 if (formObj.init(this)) {
+                     if (isFillAcccountInfo == 0 && data.type == 1) {
+                         dialog.show('#J_DialogAccount');
+                     } else {
+                         _self.submitData();
+                     }
+                 }
+             });*/
             //添加主办方输入框获得焦点是显示历史列表
             $('#J_InputSponor').focus(function() {
                 $('#J_SponorHistoryList').slideDown(ANIM_TIME);
@@ -195,14 +194,15 @@ $(function() {
             });
             //收费和免费切换事件
             $('input[name=type]').change(function() {
-                $('.J_LayoutFree').toggle();
-                $('.J_LayoutFee').toggle();
-                $('.J_FeeTips').toggle();
                 var type = $('input[name=type]:checked').val();
                 //alert(type);
                 if (type == 1) {
+                    $('.J_LayoutFree').hide();
+                    $('.J_FeeTips').hide();
                     $('.J_audit').hide();
-                }else{
+                } else {
+                    $('.J_LayoutFree').show();
+                    $('.J_FeeTips').show();
                     $('.J_audit').show();
                 }
 
@@ -290,13 +290,13 @@ $(function() {
                         hideLoading();
                         notice.alert(res.msg, function() {
                             if (res.status == 1) {
-                                clearInterval(interval);//清除定时器
-                                cache.clean();//清除缓存
+                                clearInterval(interval); //清除定时器
+                                cache.clean(); //清除缓存
                                 isSave = true;
                                 setTimeout(function() {
                                     document.location.href = res.data.url;
                                 }, 500);
-                            }else if (res.status == 2){
+                            } else if (res.status == 2) {
                                 setTimeout(function() {
                                     window.location.href = res.data.url;
                                 }, 500);
@@ -608,7 +608,7 @@ $(function() {
                 $('#J_TicketPrice').removeClass('readonly');
                 $('.J_TicketForm').find('input').removeClass('error');
                 $('.J_TicketForm').get(0).reset();
-                $('#J_TicketId').val(0);//新增 清除上次打开的id
+                $('#J_TicketId').val(0); //新增 清除上次打开的id
             });
         },
         //保存门票并验证
@@ -663,7 +663,8 @@ $(function() {
                     var reg = /^\d+(\.\d{1,2})?$/;
                     if (!reg.test(data.price)) {
                         repeatFlag = false;
-                        notice.alert('活动票价格不允许超过两位小数');return;
+                        notice.alert('活动票价格不允许超过两位小数');
+                        return;
                     }
                     data.result = JsonObj.encode(data);
                     if (_self._isNew) //将门票添加到表单信息中
@@ -1035,17 +1036,15 @@ $(function() {
                 notice.alert('请选择活动结束时间');
                 $('#J_ActivityOverDate').focus();
             } else if (!data.entryEndTime) {
-                   notice.alert('请选择活动报名截止时间');
-                   $('#J_ActivityEntryOverDate').focus();
+                notice.alert('请选择活动报名截止时间');
+                $('#J_ActivityEntryOverDate').focus();
             } else if (data.beginTime >= data.endTime) {
                 notice.alert('活动结束时间不能早于活动开始时间');
                 $('#J_ActivityOverTime').focus();
-            }
-            else if (data.entryEndTime > data.endTime) {
+            } else if (data.entryEndTime > data.endTime) {
                 notice.alert('报名截止时间不能晚于活动结束时间');
                 $('#J_ActivityEntryOverTime').focus();
-            }
-            else if (data.sponors.length < 1) {
+            } else if (data.sponors.length < 1) {
                 notice.alert('请填写主办方');
                 $('.form-group-sponors').focus();
             } else if (!data.content) {
@@ -1072,7 +1071,7 @@ $(function() {
 
             var beginDate = this.parseDate($('#J_ActivityStartDate').val(), $('#J_ActivityStartTime').val());
             var endDate = this.parseDate($('#J_ActivityOverDate').val(), $('#J_ActivityOverTime').val());
-            var entryEndDate = this.parseDate($('#J_ActivityEntryOverDate').val(), $('#J_ActivityEntryOverTime').val()); 
+            var entryEndDate = this.parseDate($('#J_ActivityEntryOverDate').val(), $('#J_ActivityEntryOverTime').val());
 
             var ticketArr = [];
             var guestArr = [];
@@ -1120,17 +1119,17 @@ $(function() {
             }
             /*********end*********/
             //判断编辑器是否是提示内容
-          /*  if (um.getContentTxt() != PLACEHOLDER_CONTENT) {
-                content = um.getContent();
-            }*/
+            /*  if (um.getContentTxt() != PLACEHOLDER_CONTENT) {
+                  content = um.getContent();
+              }*/
             //获取是否公开活动
             /*if ($('#J_ActivityProperty').get(0).checked) {
                 isPrivacy = 1;
             }*/
-           /* //获取是否配置群聊
-            if ($('#J_GroupChat').get(0).checked) {
-                groupChart = 1;
-            }*/
+            /* //获取是否配置群聊
+             if ($('#J_GroupChat').get(0).checked) {
+                 groupChart = 1;
+             }*/
             //数据对象
             return {
                 id: $('#J_ActivityId').val(),
@@ -1155,18 +1154,18 @@ $(function() {
                 isPrivacy: isPrivacy,
                 isAgreeProtocal: $('#J_ActivityProtocal').get(0).checked ? 1 : 0,
                 status: status,
-                audit:$('input[name=audit]:checked').val(),
+                audit: $('input[name=audit]:checked').val(),
             };
         },
-       /* //格式化时间对象
-        parseDate: function(yearStr, hourStr) {
-            yearStr = yearStr.split('-');
-            hourStr = hourStr.split(':');
-            var date = new Date();
-            date.setFullYear(yearStr[0], yearStr[1] - 1, yearStr[2]);
-            date.setHours(hourStr[0], hourStr[1], 0, 0);
-            return date;
-        },*/
+        /* //格式化时间对象
+         parseDate: function(yearStr, hourStr) {
+             yearStr = yearStr.split('-');
+             hourStr = hourStr.split(':');
+             var date = new Date();
+             date.setFullYear(yearStr[0], yearStr[1] - 1, yearStr[2]);
+             date.setHours(hourStr[0], hourStr[1], 0, 0);
+             return date;
+         },*/
         formatDate: function(time) {
             var oDate = new Date(time);
             return {
@@ -1258,7 +1257,7 @@ $(function() {
                 var item = data.fields[i];
                 other.createTag($('.J_BtnAddTag[data-type="field"]'), 'field', item);
             }
-             //配置群聊
+            //配置群聊
             if (data.groupChart) {
                 $('#J_GroupChat').attr('checked', 'true');
             } else {
@@ -1411,11 +1410,11 @@ $(function() {
                 },
                 //验证完毕后提交事件
                 submitHandler: function(form) {
-                    if($('input[name="payType"]:checked').val() == null) {
+                    if ($('input[name="payType"]:checked').val() == null) {
                         notice.alert('收款方式不能为空');
                         return false;
                     }
-                    if(!$('#J_AccountIdcard').val() && !$('#J_AccountLicense').val()) {
+                    if (!$('#J_AccountIdcard').val() && !$('#J_AccountLicense').val()) {
                         notice.alert('请上传证件');
                         return false;
                     }
@@ -1437,25 +1436,25 @@ $(function() {
                 $('.J_CacheTips').fadeOut();
             });
             if (window.localStorage) {
-               /* um.ready(function() {
-                    _self._defaultData = JsonObj.encode(formObj.formatData(2));
-                    var activityData = localStorage.getItem(KEY_DATA_ACTIVITY);
-                    if (activityData != null && activityData != _self._defaultData) {
-                        $('.J_CacheTips').fadeIn();
-                        activityData = JsonObj.decode(activityData);
-                        formObj.fill(activityData);
-                    } else {
-                        $('#J_GroupChat').attr('checked', 'true');
-                    }
-                    interval = setInterval(function() {
-                        _self.save();
-                    }, CACHE_TIME);
-                });*/
+                /* um.ready(function() {
+                     _self._defaultData = JsonObj.encode(formObj.formatData(2));
+                     var activityData = localStorage.getItem(KEY_DATA_ACTIVITY);
+                     if (activityData != null && activityData != _self._defaultData) {
+                         $('.J_CacheTips').fadeIn();
+                         activityData = JsonObj.decode(activityData);
+                         formObj.fill(activityData);
+                     } else {
+                         $('#J_GroupChat').attr('checked', 'true');
+                     }
+                     interval = setInterval(function() {
+                         _self.save();
+                     }, CACHE_TIME);
+                 });*/
             }
         },
         save: function() {
             var data = formObj.formatData(2);
-                data = JsonObj.encode(data);
+            data = JsonObj.encode(data);
             var _cache = localStorage.getItem(KEY_DATA_ACTIVITY);
             if (data != _cache) {
                 localStorage.setItem(KEY_DATA_ACTIVITY, data);
@@ -1470,101 +1469,101 @@ $(function() {
         }
     };
 
-   /* var map = {
-        _init: 0,
-        city: "",
-        point: null,
-        init: function() {
-            this.city = $.trim($('#J_ActivityCity').val());
-            if (window.baiduMap == undefined) {
-                // 百度地图API功能
-                var baiduMap = new BMap.Map("J_ActivityAddressMap");
-                baiduMap.centerAndZoom(this.city, 16);
-                baiduMap.setCurrentCity(this.city);
-                baiduMap.addControl(new BMap.OverviewMapControl());
-                baiduMap.addControl(new BMap.NavigationControl());
-                baiduMap.enableScrollWheelZoom(true);
-                window.baiduMap = baiduMap;
-            }
-            window.baiduMap.clearOverlays();
-        },
-        loadMap: function() {
-            var _self = this;
-            _self.init()
-            try {
-                var city = $('#J_ActivityCity').val();
-                var address = $.trim($('#J_ActivityAddr').val());
-                //创建地址解析器实例
-                var geocoder = new BMap.Geocoder();
-                //将地址解析结果显示在地图上，并调整地图视野
-                geocoder.getPoint(city + address, function(point) {
-                    if (point) {
-                        _self.point = point;
-                    }
-                    if (null == _self.point || (_self.point.lng == 0 && _self.point.lat == 0)) {
-                        _self.point = window.baiduMap.getCenter();
-                    }
-                    var excuTime = 10;
-                    if (_self._init == 0) {
-                        _self._init = 1;
-                        excuTime = 500;
-                    }
-                    setTimeout(function() {
-                        _self.setMapEvent();
-                    }, excuTime);
-                    if (_self.point != null) {
-                        $('#J_ActivityMapLng').val(_self.point.lng);
-                        $('#J_ActivityMapLat').val(_self.point.lat);
-                    }
-                }, _self.city);
-            } catch (e) {}
-        },
-        setMapEvent: function() {
-            var _self = this;
-            if (null == _self.point || (_self.point.lng == 0 && _self.point.lat == 0)) {
-                setTimeout(function() {
-                    _self.loadMap();
-                }, 1000)
-                return false;
-            }
-            window.baiduMap.centerAndZoom(_self.point, 16);
-            var options = {
-                "anchor": new BMap.Size(12, 38)
-            };
-            var size = new BMap.Size(24, 38);
-            var mark1 = "http://fed.welian.com/common/mark1.png";
-            var mark2 = "http://fed.welian.com/common/mark2.png";
-            var icon1 = new BMap.Icon(mark1, size, options);
-            var icon2 = new BMap.Icon(mark2, size, options);
-            var baiduMapMarker = new BMap.Marker(_self.point, {
-                icon: icon1
-            });
-            baiduMapMarker.enableDragging();
-            baiduMapMarker.addEventListener("dragend", function(e) {
-                $('#J_ActivityMapLng').val(e.point.lng);
-                $('#J_ActivityMapLat').val(e.point.lat);
-                //创建地址解析器实例
-                var geocoder = new BMap.Geocoder();
-                //将地址解析结果显示在地图上，并调整地图视野
-                geocoder.getLocation(e.point, function(data) {
-                    var address = data.addressComponents;
-                    $('#J_ActivityAddr').val(address.district + address.street + address.streetNumber);
-                });
-            });
-            baiduMapMarker.addEventListener("onmouseover", function() {
-                baiduMapMarker.setIcon(icon2);
-            });
-            baiduMapMarker.addEventListener("onmouseout", function() {
-                baiduMapMarker.setIcon(icon1);
-            });
-            window.baiduMap.addOverlay(baiduMapMarker);
-        }
-    };*/
+    /* var map = {
+         _init: 0,
+         city: "",
+         point: null,
+         init: function() {
+             this.city = $.trim($('#J_ActivityCity').val());
+             if (window.baiduMap == undefined) {
+                 // 百度地图API功能
+                 var baiduMap = new BMap.Map("J_ActivityAddressMap");
+                 baiduMap.centerAndZoom(this.city, 16);
+                 baiduMap.setCurrentCity(this.city);
+                 baiduMap.addControl(new BMap.OverviewMapControl());
+                 baiduMap.addControl(new BMap.NavigationControl());
+                 baiduMap.enableScrollWheelZoom(true);
+                 window.baiduMap = baiduMap;
+             }
+             window.baiduMap.clearOverlays();
+         },
+         loadMap: function() {
+             var _self = this;
+             _self.init()
+             try {
+                 var city = $('#J_ActivityCity').val();
+                 var address = $.trim($('#J_ActivityAddr').val());
+                 //创建地址解析器实例
+                 var geocoder = new BMap.Geocoder();
+                 //将地址解析结果显示在地图上，并调整地图视野
+                 geocoder.getPoint(city + address, function(point) {
+                     if (point) {
+                         _self.point = point;
+                     }
+                     if (null == _self.point || (_self.point.lng == 0 && _self.point.lat == 0)) {
+                         _self.point = window.baiduMap.getCenter();
+                     }
+                     var excuTime = 10;
+                     if (_self._init == 0) {
+                         _self._init = 1;
+                         excuTime = 500;
+                     }
+                     setTimeout(function() {
+                         _self.setMapEvent();
+                     }, excuTime);
+                     if (_self.point != null) {
+                         $('#J_ActivityMapLng').val(_self.point.lng);
+                         $('#J_ActivityMapLat').val(_self.point.lat);
+                     }
+                 }, _self.city);
+             } catch (e) {}
+         },
+         setMapEvent: function() {
+             var _self = this;
+             if (null == _self.point || (_self.point.lng == 0 && _self.point.lat == 0)) {
+                 setTimeout(function() {
+                     _self.loadMap();
+                 }, 1000)
+                 return false;
+             }
+             window.baiduMap.centerAndZoom(_self.point, 16);
+             var options = {
+                 "anchor": new BMap.Size(12, 38)
+             };
+             var size = new BMap.Size(24, 38);
+             var mark1 = "http://fed.welian.com/common/mark1.png";
+             var mark2 = "http://fed.welian.com/common/mark2.png";
+             var icon1 = new BMap.Icon(mark1, size, options);
+             var icon2 = new BMap.Icon(mark2, size, options);
+             var baiduMapMarker = new BMap.Marker(_self.point, {
+                 icon: icon1
+             });
+             baiduMapMarker.enableDragging();
+             baiduMapMarker.addEventListener("dragend", function(e) {
+                 $('#J_ActivityMapLng').val(e.point.lng);
+                 $('#J_ActivityMapLat').val(e.point.lat);
+                 //创建地址解析器实例
+                 var geocoder = new BMap.Geocoder();
+                 //将地址解析结果显示在地图上，并调整地图视野
+                 geocoder.getLocation(e.point, function(data) {
+                     var address = data.addressComponents;
+                     $('#J_ActivityAddr').val(address.district + address.street + address.streetNumber);
+                 });
+             });
+             baiduMapMarker.addEventListener("onmouseover", function() {
+                 baiduMapMarker.setIcon(icon2);
+             });
+             baiduMapMarker.addEventListener("onmouseout", function() {
+                 baiduMapMarker.setIcon(icon1);
+             });
+             window.baiduMap.addOverlay(baiduMapMarker);
+         }
+     };*/
 
     /*window.onload = function() {
         console.log("ccbbaa");
         activity.init();
     }*/
-        activity.init();
+    activity.init();
 
 });
