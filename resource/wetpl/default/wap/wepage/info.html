@@ -123,14 +123,14 @@
 				let cover = ref.avatar;
 
 				if (is_weixn()) {
-					alert(1)
+//					alert(1)
 					var oldTime = localStorage.getItem('setopenid-date');
 					if (!isExpire(oldTime)) { //没过期
 						//var usertoken = localStorage.getItem('user-token');
 						var usertoken = localStorage.getItem('setopenid');
 						if (usertoken == 'true') {
 							openid = getUrlParam("openid");
-							alert('openid' + openid)
+							sessionStorage.setItem('openid', openid);
 							//微信登录
 							$.ajax({
 								url: apiUrl + 'wxlogin',
@@ -139,8 +139,10 @@
 									openid: openid
 								},
 								success: function (data) {
-									alert(3)
-									alert(JSON.stringify(data))
+//									alert(3)
+//									alert(JSON.stringify(data))
+									sessionStorage.setItem('token', data.token);
+									sessionStorage.setItem('activation', data.data.activation_status);
 									if (data.code == 200) {
 										if (isNull(data.token) == false) { //非空
 											localStorage.setItem('token-date', new Date().getTime())
@@ -152,7 +154,7 @@
 						}
 					} else {
 						//微信未跳转时
-						alert(2)
+//						alert(2)
 						localStorage.setItem('setopenid', true);
 						localStorage.setItem('setopenid-date', new Date().getTime())
 						window.location.href = encodeURI(apiUrl + '/openid?url=' + window.location.href);
