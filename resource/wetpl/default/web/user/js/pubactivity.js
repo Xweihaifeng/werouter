@@ -747,11 +747,8 @@
 
                          CKEDITOR.instances.editor1.setData(data.data.content);
                          if (data.data.type == 1) {
-                             $("input[name=type]").val(1);
                              $("input[name=price]").val(data.data.price);
                          } else {
-                             $("input[name=type]").val(2);
-                             $("input[name=price]").show();
                              $("input[name=price]").val(data.data.price);
                          }
                          $("#J_ActivityLimit").val(data.data.enroll_limit);
