@@ -685,7 +685,7 @@ $(document).ready(function() {
                         localStorage.setItem('realName', "");
                         //location.reload();
                         layer.close(closeindex);
-                        if (data, data.status == 2)
+                        if (data.data.status == 2)
                             activity_ebroll_detail(data.data.enroll_id);
                         else if (data.data.status == 1)
                             wechat_scan_pay(data.data.number);
