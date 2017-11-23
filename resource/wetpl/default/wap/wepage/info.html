@@ -139,7 +139,7 @@
 								url: apiUrl + 'wxlogin',
 								type: 'POST',
 								data: {
-//									openid: openid
+									openid: openid,
 									ref_url: window.location.pathname,
 									ref_type: 2,
 									ref_id: window.location.pathname.split('/')[2],
@@ -147,7 +147,7 @@
 								},
 								success: function (data) {
 //									alert(3)
-//									alert(JSON.stringify(data))
+									alert(JSON.stringify(data))
 //									alert('token:' + data.token);
 //									alert('act:' + data.data.activation_status);
 									localStorage.setItem('weid', data.data.weid);
