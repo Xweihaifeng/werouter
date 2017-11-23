@@ -386,98 +386,98 @@ $(document).ready(function() {
             disa = '';
         }
 
-
-        console.log(datauser)
-        var closeindex = layer.open({
-            type: 1,
-            area: ['600px', '740px'],
-            title: 0,
-            closeBtn: 0,
-            shadeClose: true,
-            scrollbar: false,
-            content: '<div id="signBg">' +
-                '<div class="signBox">' +
-                '<div class="sign_head">' +
-                '<div class="sign_head_title">' +
-                '确认报名' +
-                '</div>' +
-                '<div class="clon1"></div>' +
-                '<div class="sign_head_contain">' +
-                '<p class="act_title activity_title_apply"></p>' +
-                '<p class="act_ttt">' +
-                '<span class="act_time">' +
-                '时间： <span class=" act_time_all" >04-21 13:30 ~ 04-21 17:00</span>' +
-                '</span>' +
-                '<span class="act_time">' +
-                '<span class="act_time_deadline">04-21 17:00</span> 报名截止' +
-                '</span>' +
-                '</p>' +
-                '<p class="act_dress">地点：北京海淀区海淀银丰大厦3层·纳什空间</p>' +
-                '</div>' +
-                '</div>' +
-
-
-                '<div class="sign_head">' +
-                '<div class="sign_head_title">门票信息</div>' +
-                '<div class="clon1"></div>' +
-                '<div class="sign_head_contain">' +
-                '<div class="act_title">' +
-                '<img src="\/common\/img\/ticket-jia.png" ></div>' +
-                '</div>' +
-                '</div>' +
+        GetActivity(id, function(rep) {
+            var closeindex = layer.open({
+                type: 1,
+                area: ['600px', '740px'],
+                title: 0,
+                closeBtn: 0,
+                shadeClose: true,
+                scrollbar: false,
+                content: '<div id="signBg">' +
+                    '<div class="signBox">' +
+                    '<div class="sign_head">' +
+                    '<div class="sign_head_title">' +
+                    '确认报名' +
+                    '</div>' +
+                    '<div class="clon1"></div>' +
+                    '<div class="sign_head_contain">' +
+                    '<p class="act_title activity_title_apply"></p>' +
+                    '<p class="act_ttt">' +
+                    '<span class="act_time">' +
+                    '时间： <span class=" act_time_all" >04-21 13:30 ~ 04-21 17:00</span>' +
+                    '</span>' +
+                    '<span class="act_time">' +
+                    '<span class="act_time_deadline">04-21 17:00</span> 报名截止' +
+                    '</span>' +
+                    '</p>' +
+                    '<p class="act_dress">地点：北京海淀区海淀银丰大厦3层·纳什空间</p>' +
+                    '</div>' +
+                    '</div>' +
 
 
+                    '<div class="sign_head">' +
+                    '<div class="sign_head_title">门票信息</div>' +
+                    '<div class="clon1"></div>' +
+                    '<div class="sign_head_contain">' +
+                    '<div class="act_title">' +
+                    '<img src="\/common\/img\/ticket-jia.png" ></div>' +
+                    '</div>' +
+                    '</div>' +
 
-                '<div class="sign_section">' +
-                '<div class="">' +
-                '<div class="sign_section_title">' +
-                '确认信息' +
-                '</div>' +
-                '<div class="clon2"></div>' +
-                '<div class="sign_section_contain">' +
-                '<div class="sign_name sign_input">' +
-                '<div class="text">' +
-                '<input id="username" type="text" ' + disa + ' placeholder="' + realname + '">' +
-                '</div>' +
-                '</div>' +
 
-                '<div class="sign_phone sign_input" style="width: 540px;height: 38px;">' +
-                '<div class="text">' +
-                '<input id="phone" type="text"  ' + disa + '  placeholder="' + datauser + '">' +
-                '</div>' +
-                '<button class="sign_code" style="display: none" ">获取验证码</button>' +
-                '</div>' +
-                '<div class="sign_yz sign_input" style="display: none;">' +
-                '<div class="text">' +
-                '<input type="text" class="check-num-apply" placeholder="请输入验证码">' +
-                '</div>' +
-                '<button class="sign_yz_on">在线验证</button>' +
-                '</div>' +
-                '<div class="sign_zw sign_input" >' +
-                '<div class="text">' +
-                '<input id="zhiw" type="text" placeholder="请填写您的所在职位">' +
-                '</div>' +
-                '</div>' +
-                '<div class="sign_com sign_input">' +
-                '<div class="text">' +
-                '<input id="gongsi" type="text" placeholder="请填写您的所在公司">' +
-                '</div>' +
-                '</div>' +
-                '</div>' +
-                '</div>' +
-                '</div>' +
 
-                '<div class="sign_foot">' +
-                '<div class="sign_foot_contn">' +
-                '<span class="apply_submit" ">确认</span>' +
-                '</div>' +
-                '</div>' +
-                '</div>' +
-                '</div>',
-            success: function() {
+                    '<div class="sign_section">' +
+                    '<div class="">' +
+                    '<div class="sign_section_title">' +
+                    '确认信息' +
+                    '</div>' +
+                    '<div class="clon2"></div>' +
+                    '<div class="sign_section_contain">' +
+                    '<div class="sign_name sign_input">' +
+                    '<div class="text">' +
+                    '<input id="username" type="text" ' + disa + ' placeholder="' + realname + '">' +
+                    '</div>' +
+                    '</div>' +
 
-            },
-            shade: 0.7
+                    '<div class="sign_phone sign_input" style="width: 540px;height: 38px;">' +
+                    '<div class="text">' +
+                    '<input id="phone" type="text"  ' + disa + '  placeholder="' + datauser + '">' +
+                    '</div>' +
+                    '<button class="sign_code" style="display: none" ">获取验证码</button>' +
+                    '</div>' +
+                    '<div class="sign_yz sign_input" style="display: none;">' +
+                    '<div class="text">' +
+                    '<input type="text" class="check-num-apply" placeholder="请输入验证码">' +
+                    '</div>' +
+                    '<button class="sign_yz_on">在线验证</button>' +
+                    '</div>' +
+                    '<div class="sign_zw sign_input" >' +
+                    '<div class="text">' +
+                    '<input id="zhiw" type="text" placeholder="请填写您的所在职位">' +
+                    '</div>' +
+                    '</div>' +
+                    '<div class="sign_com sign_input">' +
+                    '<div class="text">' +
+                    '<input id="gongsi" type="text" placeholder="请填写您的所在公司">' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>' +
+
+                    '<div class="sign_foot">' +
+                    '<div class="sign_foot_contn">' +
+                    '<span class="apply_submit" ">确认</span>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>',
+                success: function() {
+
+                },
+                shade: 0.7
+            });
         });
 
         activitydetail(id, nickname, imgUrl, applyid);
@@ -755,87 +755,106 @@ $(document).ready(function() {
     iscollection(localStorage.getItem("weid"), activityid);
     // 1获取活动详情
     var activitydetail = function(id, nickname, imgUrl, applyid = 0) {
-        $.ajax({
-            url: ACTIVITY_DETAIL + "/" + id,
-            type: 'get',
-            headers: {
-                'Token': localStorage.getItem('token')
-            },
-            success: function(data) {
-                if (data.code == 200) {
-                    console.log(applyid);
-                    $('title').text(data.data.title);
+            $.ajax({
+                url: ACTIVITY_DETAIL + "/" + id,
+                type: 'get',
+                headers: {
+                    'Token': localStorage.getItem('token')
+                },
+                success: function(data) {
+                    if (data.code == 200) {
+                        console.log(applyid);
+                        $('title').text(data.data.title);
 
-                    if (applyid == 1) {
-                        $(".activity_title_apply").text(data.data.title);
-                        $(".act_time_all").text(data.data.begain_time.substr(5) + " ~~ " + data.data.end_time.substr(5));
-                        $(".act_time_deadline").text(data.data.enroll_deadline);
-                        $(".act_dress").text(data.data.area_name + data.data.address);
-                    } else {
-                        $(".activity_title").text(data.data.title);
-                        $(".activity_title_x").attr('title', data.data.title)
-                        $(".activity_title_x").text(data.data.title);
-
-                        $(".cover img").attr("src", qiniu_bucket_domain + data.data.cover);
-                        $(".username").text(nickname);
-
-                        $(".end_time").text(data.data.end_time);
-                        $(".activity_time").text(data.data.begain_time.split(" ")[0] + " -- " + data.data.end_time.split(" ")[0]);
-                        $(".deadline").text(data.data.enroll_deadline);
-                        $(".view_num").text(data.data.view_num);
-                        $(".city").text(data.data.area_name);
-                        $(".apply_num").text(data.data.enroll_num);
-                        if (data.data.type == 1 || parseFloat(data.data.price) === 0) {
-                            $(".pay-type span").text('免费');
+                        if (applyid == 1) {
+                            $(".activity_title_apply").text(data.data.title);
+                            $(".act_time_all").text(data.data.begain_time.substr(5) + " ~~ " + data.data.end_time.substr(5));
+                            $(".act_time_deadline").text(data.data.enroll_deadline);
+                            $(".act_dress").text(data.data.area_name + data.data.address);
                         } else {
-                            $(".pay-type span").html('￥<b>' + data.data.price + '</b>');
-                        }
-                        if (data.data.enroll_limit > 0) {
-                            $(".enroll_limit").text(data.data.enroll_limit);
+                            $(".activity_title").text(data.data.title);
+                            $(".activity_title_x").attr('title', data.data.title)
+                            $(".activity_title_x").text(data.data.title);
 
-                        } else {
-                            $(".enroll_limit").text("多");
-                        }
-                        $("#acitivty-detail").html(data.data.content);
+                            $(".cover img").attr("src", qiniu_bucket_domain + data.data.cover);
+                            $(".username").text(nickname);
 
-                        $("#acitivty-detail img").css({
-                            "max-width": $(".project-box").width() - 30
-                        });
-                        $(".enroll_num").text(data.data.enroll_num);
-
-                        if (data.data.onStatus == "已结束") {
-                            $(".support").css("background", "#ccc");
-
-                        }
-                        $(".support").bind("click", function() {
-
-
-                            if (data.data.onStatus == "已结束") {
-                                mess_tusi("时间已截至");
+                            $(".end_time").text(data.data.end_time);
+                            $(".activity_time").text(data.data.begain_time.split(" ")[0] + " -- " + data.data.end_time.split(" ")[0]);
+                            $(".deadline").text(data.data.enroll_deadline);
+                            $(".view_num").text(data.data.view_num);
+                            $(".city").text(data.data.area_name);
+                            $(".apply_num").text(data.data.enroll_num);
+                            if (data.data.type == 1 || parseFloat(data.data.price) === 0) {
+                                $(".pay-type span").text('免费');
+                            } else {
+                                $(".pay-type span").html('￥<b>' + data.data.price + '</b>');
+                            }
+                            if (data.data.enroll_limit > 0) {
+                                $(".enroll_limit").text(data.data.enroll_limit);
 
                             } else {
-                                GetOrder(id, function(rep) {
-                                    if (rep.data.status == 1) {
-                                        if (data.data.enroll_num < data.data.enroll_limit || data.data.enroll_limit == 0) {
-                                            Support(id, nickname, imgUrl, $(this).data('id'));
-                                            $('#phone').val(localStorage.getItem('dataPhone'));
-                                            $('#username').val(localStorage.getItem('realName'));
-                                        } else {
-                                            mess_tusi("报名人数已到上限");
-                                        }
-                                    } else if (rep.data.status == 2) {
-                                        wechat_scan_pay(rep.data.number);
-                                    } else if (rep.data.status == 3) {
-                                        mess_tusi(rep.data.msg);
-                                    }
-                                });
+                                $(".enroll_limit").text("多");
+                            }
+                            $("#acitivty-detail").html(data.data.content);
+
+                            $("#acitivty-detail img").css({
+                                "max-width": $(".project-box").width() - 30
+                            });
+                            $(".enroll_num").text(data.data.enroll_num);
+
+                            if (data.data.onStatus == "已结束") {
+                                $(".support").css("background", "#ccc");
 
                             }
+                            $(".support").bind("click", function() {
 
-                        })
-                        qrcodefun(id);
+
+                                if (data.data.onStatus == "已结束") {
+                                    mess_tusi("时间已截至");
+
+                                } else {
+                                    GetOrder(id, function(rep) {
+                                        if (rep.data.status == 1) {
+                                            if (data.data.enroll_num < data.data.enroll_limit || data.data.enroll_limit == 0) {
+                                                Support(id, nickname, imgUrl, $(this).data('id'));
+                                                $('#phone').val(localStorage.getItem('dataPhone'));
+                                                $('#username').val(localStorage.getItem('realName'));
+                                            } else {
+                                                mess_tusi("报名人数已到上限");
+                                            }
+                                        } else if (rep.data.status == 2) {
+                                            wechat_scan_pay(rep.data.number);
+                                        } else if (rep.data.status == 3) {
+                                            mess_tusi(rep.data.msg);
+                                        }
+                                    });
+
+                                }
+
+                            })
+                            qrcodefun(id);
+                        }
+
+                    } else {
+                        mess_tusi(data.message);
                     }
-
+                },
+                error: function(xhr) {
+                    console.log(xhr);
+                }
+            })
+        }
+        // 根据id查询活动
+    var GetActivity = function(id, callback) {
+        $.ajax({
+                url: ACTIVITY_DETAIL + "/" + id,
+                type: 'get',
+                headers: {
+                    'Token': localStorage.getItem('token')
+                },
+                success: function(data) {
+                    callback(data);
                 } else {
                     mess_tusi(data.message);
                 }
@@ -844,542 +863,537 @@ $(document).ready(function() {
                 console.log(xhr);
             }
         })
-    }
+}
 
-    var startactivitydetail = function(id, nickname, imgUrl) {
-            if (id != null && id != '' && id.length == 36) {
-                activitydetail(id, nickname, imgUrl);
-                guestlistdetail(id);
-                applylistdetail(id);
-            }
-            /*$(".support").bind("click",function(){
-                Support(id,nickname,imgUrl,$(this).data('id'));
-            })*/
+var startactivitydetail = function(id, nickname, imgUrl) {
+        if (id != null && id != '' && id.length == 36) {
+            activitydetail(id, nickname, imgUrl);
+            guestlistdetail(id);
+            applylistdetail(id);
         }
-        // 二维码插件
-    var qrcodefun = function(id) {
-        var qrcode_val = localhostPath + domain + "/activity/" + id;
-        // if ($.browser.msie && $.browser.version <= 8){
-        if ($.support.msie && $.support.version <= 8) {
-
-            $("#activity_code").qrcode({
-                render: "table",
-                width: 110,
-                height: 110,
-                text: qrcode_val
-            });
-        } else {
-            jQuery("#activity_code").qrcode({
-                width: 110,
-                height: 110,
-                text: qrcode_val
-            });
-        }
-
+        /*$(".support").bind("click",function(){
+            Support(id,nickname,imgUrl,$(this).data('id'));
+        })*/
     }
-    var qrcodefun1 = function(id) {
-        var qrcode_val = localhostPath + domain + "/activity/" + id;
-        // if ($.browser.msie && $.browser.version <= 8){
-        if ($.support.msie && $.support.version <= 8) {
+    // 二维码插件
+var qrcodefun = function(id) {
+    var qrcode_val = localhostPath + domain + "/activity/" + id;
+    // if ($.browser.msie && $.browser.version <= 8){
+    if ($.support.msie && $.support.version <= 8) {
 
-            $(".ticket-qr").qrcode({
-                render: "table",
-                width: 110,
-                height: 110,
-                text: qrcode_val
-            });
-        } else {
-            jQuery(".ticket-qr").qrcode({
-                width: 110,
-                height: 110,
-                text: qrcode_val
-            });
-        }
-
-    }
-
-
-    // 2.1嘉宾模板
-    var guestlist = function(data) {
-            var guesthtml = '<div class="actvity-supporter col-sm-12">' +
-                '<div class="supporter_img col-xs-6">' +
-                '<img class="img-circle " src="' + qiniu_bucket_domain + data.avatar + '">' +
-                '</div>' +
-                '<div class="supporter_user">' +
-                '<span class="supporter_user_log">' + data.name + '</span>' +
-                '<div class="supporter_user_color">' + data.position + '</div>' +
-                '<div class="supporter_user_color">' + data.company + '</div>' +
-                '</div>' +
-                '</div>';
-            return guesthtml;
-        }
-        // 2.活动嘉宾   //查找嘉宾列表根据活动id
-    var guestlistdetail = function(id) {
-        //ACTIVITY_GUEST_LISTS
-        var limit = "";
-        var page = "";
-        var sendData = {
-            activity_id: id,
-            limit: limit,
-            page: page
-        }
-        $.ajax({
-            url: ACTIVITY_GUEST_LISTS,
-            type: 'post',
-            data: sendData,
-            headers: {
-                'Token': localStorage.getItem('token')
-            },
-            success: function(data) {
-                console.log(data);
-                if (data.code == 200) {
-                    $(".guest_num").text(data.data.total);
-                    console.log(data.data.total);
-                    if (data.data.total > 0) {
-                        $("#acitivty-honored").children().remove();
-                        data.data.list.map(x => {
-                            $("#acitivty-honored").append(guestlist(x));
-
-                        })
-                    }
-
-                } else {
-                    mess_tusi(data.message);
-                }
-            },
-            error: function(xhr) {
-                console.log(xhr);
-            }
-        })
-    }
-
-    $(".collect-btn-click").bind("click", function() {
-        console.log($(this).data("id"));
-        if ($(this).data("id") == 1) {
-            $(this).data("id", 2);
-            like(activityid);
-        } else if ($(this).data("id") == 2) {
-            canclecollect($(this).attr("id"));
-            $(this).data("id", 1);
-
-        }
-
-    })
-    $(".see-more").bind("click", function() {
-            applylistdetail(activityid, "");
-        })
-        //3.1活动成员模板
-    var applylist = function(data) {
-            var avatarsrc = "";
-            if (data.avatar == null || data.avatar == "") {
-                avatarsrc = "/common/img/avatar.png";
-            } else {
-                avatarsrc = qiniu_bucket_domain + data.avatar;
-            }
-            var applyhtml = '<div class="z">' +
-                '<p class="">' +
-                '<img class="" src="' + avatarsrc + '">' +
-                '</p>' +
-                '<p class="">' +
-                '<span class="" style="width: 57px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;display: block;">' + data.name + '</span>' +
-                '</p>' +
-                '</div>';
-            return applyhtml;
-        }
-        //3.活动成员
-    var applylistdetail = function(id, limit = 10) {
-        var limit = limit;
-        var page = "";
-        var sendData = {
-            activity_id: id,
-            limit: limit,
-            page: page
-        }
-        console.log(sendData);
-        $.ajax({
-            url: ACTIVITY_ENROLL_LISTS,
-            type: 'post',
-            data: sendData,
-            headers: {
-                'Token': localStorage.getItem('token')
-            },
-            success: function(data) {
-                console.log(data);
-                if (data.code == 200) {
-                    if (data.data.total > 0) {
-                        $("#acitivty-guests").children().remove();
-                        data.data.list.map(x => {
-                            $("#acitivty-guests").append(applylist(x));
-
-                        })
-                    }
-                    if (limit == "" || data.data.total <= 10) {
-                        $(".see-more").text("没有更多");
-                    }
-
-                } else {
-                    mess_tusi(data.message);
-                }
-            },
-            error: function(xhr) {
-                console.log(xhr);
-            }
-        })
-    }
-
-    //收藏
-    var like = function(weid) {
-        console.log(weid);
-        $.ajax({
-            url: ACTIVITY_COLLECTION_STORE,
-            type: 'post',
-            data: { activity_id: weid },
-            dataType: 'json',
-            headers: {
-                'Token': localStorage.getItem('token')
-            },
-            success: function(data) {
-                console.log(data);
-                if (data.code == 200) {
-                    /*console.log(data.data[0].praise_num);
-                    $(".like-count").text(data.data[0].praise_num);
-                    $(".read-like img").attr("src", "../common/img/good+.png");*/
-                    $(".collect-btn-click").css({
-                        "background": '#d4d4d4',
-                        "cursor": 'default'
-                    });
-                    $(".collect-btn-click").text("已收藏");
-                    $(".collect-btn-click").attr("id", data.data);
-                    // $(".collect-btn-click").unbind("click");
-                    /* data.data.map(x => {
-                         $("#collectnum").text(x.collections);
-
-                     })*/
-                    likeState = true;
-                } else {
-                    mess_tusi("请登录");
-                }
-            },
-            error: function(xhr) {
-                console.log(xhr);
-            }
-        })
-    }
-    var canclecollect = function(id) {
-        $.ajax({
-            // url: ACTIVITY_LIST,
-            url: ACTIVITY_COLLECTION_DESTROY + "/" + id,
-            type: 'get',
-            success: function(data) {
-                console.log(data);
-                if (data.code == 200) {
-                    $(".collect-btn-click").css({
-                        "background": '#80ccf4',
-                        "cursor": 'pointer'
-                    });
-                    $(".collect-btn-click").text("+收藏");
-                }
-            },
-            error: function(xhr) {
-                console.log(xhr);
-            }
-        })
-    }
-
-
-    /* var iscollect=function(id){
-         $.ajax({
-             url: GOODS_COLLECTION_ISCOLLECTION+'/' + id,
-             type:'get',
-             headers: {
-                     'Token': localStorage.getItem('token')
-                 },
-             success:function(data){
-                 console.log(data);
-                 if(data.code!=401){
-                     if(data.code!=200 ){
-                     $(".collect-btn-click").css({
-                         "background":'#d4d4d4',
-                         "cursor":'default'
-                     });
-                     // $(".collect-btn-click").unbind("click");
-                     $(".collect-btn-click").data("id",2);
-                 }
-                 }
-
-             }
-         })
-     }*/
-    var activityinfo = function(weid) {
-        $.ajax({
-            url: ACTIVITY_ACTIVITYINFO + '/' + weid,
-            type: 'get',
-            headers: {
-                'Token': localStorage.getItem('token')
-            },
-            success: function(data) {
-                console.log(data);
-                if (data.code == 200) {
-                    $(".act_num").text(data.data.count);
-                    $(".act_per_num").text(data.data.countmember);
-                }
-
-            }
-        })
-    }
-
-
-    //back to top
-    $("#toTop").hide();
-    $(".read").scroll(function() {
-        if ($(".read").scrollTop() > $(window).height() / 2) {
-            $("#toTop").fadeIn(500);
-            $("#toTop").hover(function() {
-                $(this).css("background-color", "#eeeeee");
-            }, function() {
-                $(this).css("background-color", "white");
-            });
-        } else {
-            $("#toTop").fadeOut(500);
-        }
-    })
-
-    $("#toTop").click(function() {
-        $('.read').animate({ scrollTop: 0 }, 300);
-    })
-
-
-    //获取通用用户信息
-    var host = ApiMaterPlatQiniuDomain;
-    console.log(localStorage.getItem('weid'))
-    var getUserDomain = function(id) {
-        $.ajax({
-            url: USERDETAIL + '/' + id,
-            type: 'get',
-            success: function(data) {
-                console.log(data);
-                if (data.code == 200) {
-                    if (data.data != null) {
-                        localStorage.setItem('dataPhone', data.data.phone);
-                        localStorage.setItem('realName', data.data.real_name);
-
-                    } else {
-                        localStorage.setItem('dataPhone', '');
-                        localStorage.setItem('realName', '');
-                    }
-                    // console.log(data.data.phone)
-                } else {
-                    layer.mag(massage);
-                }
-            },
-            error: function(xhr) {
-                console.log(xhr);
-            }
-        })
-    }
-    getUserDomain(localStorage.getItem('weid'));
-    var getUserInfo = function(url, id) {
-        $.ajax({
-            url: url + id,
-            type: 'get',
-            /*headers: {
-                'Token': localStorage.getItem('token')
-            },*/
-            success: function(data) {
-
-                console.log(data);
-                if (data.code == 200) {
-                    var info = data.data;
-
-                    var weid = info.weid;
-                    console.log(weid)
-                    var imgUrl = info.avatar;
-                    if (imgUrl.indexOf('http') === -1) {
-                        imgUrl = host + imgUrl;
-                    }
-                    if (info.avatar != "") {
-                        // $("#head-icon, .user-head").css({
-                        //     "background": "url(" + imgUrl + ") no-repeat center",
-                        //     "background-size": "100%"
-                        // });
-                        $(".top_avatar>img").attr("src", imgUrl);
-
-
-
-                    } else {
-                        // $("#head-icon, .user-head").css({
-                        //     "background": "url(/common/img/avatar.png) no-repeat center",
-                        //     "background-size": "110%"
-                        // });
-                        $(".top_avatar>img").attr("src", "/common/img/avatar.png");
-
-                    }
-                    if (info.nickname == null) {
-                        var nickname = info.real_name;
-                    } else {
-                        var nickname = info.nickname;
-                    }
-                    $(".line-0,.linkto").html(
-                        nickname + '<img src="/common/img/vrenzheng.png" alt="">'
-                    );
-                    $(".oline-2").find("span").eq(1).text(info.motto);
-                    $(".user-cnt").text(info.real_name);
-                    artCount(weid);
-                    //artTypeList(weid);
-                    // catesfun(weid);
-                    startactivitydetail(activityid, nickname, imgUrl);
-                    activityinfo(weid);
-
-                }
-            },
-            error: function(xhr) {
-                console.log(xhr);
-            }
-        })
-    }
-
-    var hasDomain = function(weid) {
-        $.ajax({
-            url: PAGES_PAGE_GETDETAILBYUSER + weid,
-            type: 'GET',
-            headers: {
-                'Token': localStorage.getItem('token')
-            },
-            success: function(data) {
-                if (data.code == 200) {
-                    console.log(data);
-                    if (data.data == null) {
-
-                    } else {
-                        //微主页banner图
-                        var bgLogo = data.data.background;
-                        if (bgLogo != null) {
-                            $("#art-head").css({
-                                "background": "url(" + imgSet(bgLogo, 1100, 235, 3) + ") no-repeat center",
-                                "background-size": "100%"
-                            });
-                        }
-                        //微名片背景
-                        var bgUser = data.data.background_user;
-                        if (bgUser != null) {
-                            $(".user-info").css({
-                                "background": "url(" + imgSet(bgUser, 328, 130, 3) + ") no-repeat center",
-                                "background-size": "100%"
-                            });
-                        }
-                        if (data.data.is_brand == 1) {
-                            hasBrand(userId);
-                        }
-                    }
-                } else {
-                    /*layer.msg(data.message, {
-                        time: 1500
-                    });*/
-                }
-            },
-            error: function(xhr) {
-                console.log(xhr);
-            }
-        })
-    }
-
-    var hasBrand = function(weid) {
-        $.ajax({
-            url: BRAND_DETAIL_USER + '/' + weid,
-            type: 'GET',
-            headers: {
-                'Token': localStorage.getItem('token')
-            },
-            success: function(data) {
-                console.log(data);
-                if (data.code == 200) {
-                    console.log(data);
-                    if (data.data == null) {
-
-                    } else {
-                        $(".line-0").html(
-                            data.data.title + '<img src="/user/img/vrenzheng.png" alt="">'
-                        );
-                        $(".line-1").text("品牌介绍");
-                        var logo = data.data.logo;
-                        if (logo != null) {
-                            $("#head-icon").css({
-                                "background": "url(" + logo + ") no-repeat center",
-                                "background-size": "100%"
-                            });
-                        }
-                    }
-
-                } else {
-                    layer.msg(data.message, {
-                        time: 1500
-                    });
-                }
-            },
-            error: function(xhr) {
-                console.log(xhr);
-            }
-        })
-    }
-
-    //个性域名用户weid
-    var userId;
-    var __init = function(domain) {
-        $.ajax({
-            url: PAGES_DETAIL_DOMAIN + domain,
-            type: 'GET',
-            success: function(data) {
-                if (data.code == 200) {
-                    //var domain = data.data.domain;
-                    console.log(data);
-                    if (data.data != null) {
-                        userId = data.data.plat_user_id;
-                        console.log('userId:', userId);
-                        console.log('userDetail')
-                        getUserInfo(USERDETAIL, "/" + userId);
-                        hasDomain(userId);
-                    } else {
-                        domain = '';
-                        getUserInfo(FOUNDER, '');
-                        console.log('router error')
-                    }
-                } else {
-                    // window.location.href = "/*";
-                }
-            },
-            error: function(xhr) {
-                console.log(xhr);
-            }
-        })
-    }
-
-    if (domain == 'wemall') {
-        domain = '';
+        $("#activity_code").qrcode({
+            render: "table",
+            width: 110,
+            height: 110,
+            text: qrcode_val
+        });
     } else {
-        domain = "/" + domain;
+        jQuery("#activity_code").qrcode({
+            width: 110,
+            height: 110,
+            text: qrcode_val
+        });
     }
 
-    if (domain != '') {
-        __init(domain);
+}
+var qrcodefun1 = function(id) {
+    var qrcode_val = localhostPath + domain + "/activity/" + id;
+    // if ($.browser.msie && $.browser.version <= 8){
+    if ($.support.msie && $.support.version <= 8) {
+
+        $(".ticket-qr").qrcode({
+            render: "table",
+            width: 110,
+            height: 110,
+            text: qrcode_val
+        });
+    } else {
+        jQuery(".ticket-qr").qrcode({
+            width: 110,
+            height: 110,
+            text: qrcode_val
+        });
     }
 
-    var artCount = function(weid) {
-        $.ajax({
-            url: ARTICLES_LISTCOUNT + "?userId=" + weid,
-            type: 'get',
-            success: function(data) {
-                //console.log(data);
-                if (data.code == 200) {
-                    $(".user-art").children('div:eq(0)').text(data.data);
+}
+
+
+// 2.1嘉宾模板
+var guestlist = function(data) {
+        var guesthtml = '<div class="actvity-supporter col-sm-12">' +
+            '<div class="supporter_img col-xs-6">' +
+            '<img class="img-circle " src="' + qiniu_bucket_domain + data.avatar + '">' +
+            '</div>' +
+            '<div class="supporter_user">' +
+            '<span class="supporter_user_log">' + data.name + '</span>' +
+            '<div class="supporter_user_color">' + data.position + '</div>' +
+            '<div class="supporter_user_color">' + data.company + '</div>' +
+            '</div>' +
+            '</div>';
+        return guesthtml;
+    }
+    // 2.活动嘉宾   //查找嘉宾列表根据活动id
+var guestlistdetail = function(id) {
+    //ACTIVITY_GUEST_LISTS
+    var limit = "";
+    var page = "";
+    var sendData = {
+        activity_id: id,
+        limit: limit,
+        page: page
+    }
+    $.ajax({
+        url: ACTIVITY_GUEST_LISTS,
+        type: 'post',
+        data: sendData,
+        headers: {
+            'Token': localStorage.getItem('token')
+        },
+        success: function(data) {
+            console.log(data);
+            if (data.code == 200) {
+                $(".guest_num").text(data.data.total);
+                console.log(data.data.total);
+                if (data.data.total > 0) {
+                    $("#acitivty-honored").children().remove();
+                    data.data.list.map(x => {
+                        $("#acitivty-honored").append(guestlist(x));
+
+                    })
                 }
-            },
-            error: function(xhr) {
-                console.log(xhr);
+
+            } else {
+                mess_tusi(data.message);
             }
-        })
+        },
+        error: function(xhr) {
+            console.log(xhr);
+        }
+    })
+}
+
+$(".collect-btn-click").bind("click", function() {
+    console.log($(this).data("id"));
+    if ($(this).data("id") == 1) {
+        $(this).data("id", 2);
+        like(activityid);
+    } else if ($(this).data("id") == 2) {
+        canclecollect($(this).attr("id"));
+        $(this).data("id", 1);
+
     }
 
-    var favicon = ApiMaterPlatQiniuDomain + localStorage.getItem('fav');
-    $('#favicon').attr('href', favicon);
+}) $(".see-more").bind("click", function() {
+    applylistdetail(activityid, "");
+})
+//3.1活动成员模板
+var applylist = function(data) {
+        var avatarsrc = "";
+        if (data.avatar == null || data.avatar == "") {
+            avatarsrc = "/common/img/avatar.png";
+        } else {
+            avatarsrc = qiniu_bucket_domain + data.avatar;
+        }
+        var applyhtml = '<div class="z">' +
+            '<p class="">' +
+            '<img class="" src="' + avatarsrc + '">' +
+            '</p>' +
+            '<p class="">' +
+            '<span class="" style="width: 57px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;display: block;">' + data.name + '</span>' +
+            '</p>' +
+            '</div>';
+        return applyhtml;
+    }
+    //3.活动成员
+var applylistdetail = function(id, limit = 10) {
+    var limit = limit;
+    var page = "";
+    var sendData = {
+        activity_id: id,
+        limit: limit,
+        page: page
+    }
+    console.log(sendData);
+    $.ajax({
+        url: ACTIVITY_ENROLL_LISTS,
+        type: 'post',
+        data: sendData,
+        headers: {
+            'Token': localStorage.getItem('token')
+        },
+        success: function(data) {
+            console.log(data);
+            if (data.code == 200) {
+                if (data.data.total > 0) {
+                    $("#acitivty-guests").children().remove();
+                    data.data.list.map(x => {
+                        $("#acitivty-guests").append(applylist(x));
+
+                    })
+                }
+                if (limit == "" || data.data.total <= 10) {
+                    $(".see-more").text("没有更多");
+                }
+
+            } else {
+                mess_tusi(data.message);
+            }
+        },
+        error: function(xhr) {
+            console.log(xhr);
+        }
+    })
+}
+
+//收藏
+var like = function(weid) {
+    console.log(weid);
+    $.ajax({
+        url: ACTIVITY_COLLECTION_STORE,
+        type: 'post',
+        data: { activity_id: weid },
+        dataType: 'json',
+        headers: {
+            'Token': localStorage.getItem('token')
+        },
+        success: function(data) {
+            console.log(data);
+            if (data.code == 200) {
+                /*console.log(data.data[0].praise_num);
+                $(".like-count").text(data.data[0].praise_num);
+                $(".read-like img").attr("src", "../common/img/good+.png");*/
+                $(".collect-btn-click").css({
+                    "background": '#d4d4d4',
+                    "cursor": 'default'
+                });
+                $(".collect-btn-click").text("已收藏");
+                $(".collect-btn-click").attr("id", data.data);
+                // $(".collect-btn-click").unbind("click");
+                /* data.data.map(x => {
+                     $("#collectnum").text(x.collections);
+
+                 })*/
+                likeState = true;
+            } else {
+                mess_tusi("请登录");
+            }
+        },
+        error: function(xhr) {
+            console.log(xhr);
+        }
+    })
+}
+var canclecollect = function(id) {
+    $.ajax({
+        // url: ACTIVITY_LIST,
+        url: ACTIVITY_COLLECTION_DESTROY + "/" + id,
+        type: 'get',
+        success: function(data) {
+            console.log(data);
+            if (data.code == 200) {
+                $(".collect-btn-click").css({
+                    "background": '#80ccf4',
+                    "cursor": 'pointer'
+                });
+                $(".collect-btn-click").text("+收藏");
+            }
+        },
+        error: function(xhr) {
+            console.log(xhr);
+        }
+    })
+}
+
+
+/* var iscollect=function(id){
+     $.ajax({
+         url: GOODS_COLLECTION_ISCOLLECTION+'/' + id,
+         type:'get',
+         headers: {
+                 'Token': localStorage.getItem('token')
+             },
+         success:function(data){
+             console.log(data);
+             if(data.code!=401){
+                 if(data.code!=200 ){
+                 $(".collect-btn-click").css({
+                     "background":'#d4d4d4',
+                     "cursor":'default'
+                 });
+                 // $(".collect-btn-click").unbind("click");
+                 $(".collect-btn-click").data("id",2);
+             }
+             }
+
+         }
+     })
+ }*/
+var activityinfo = function(weid) {
+    $.ajax({
+        url: ACTIVITY_ACTIVITYINFO + '/' + weid,
+        type: 'get',
+        headers: {
+            'Token': localStorage.getItem('token')
+        },
+        success: function(data) {
+            console.log(data);
+            if (data.code == 200) {
+                $(".act_num").text(data.data.count);
+                $(".act_per_num").text(data.data.countmember);
+            }
+
+        }
+    })
+}
+
+
+//back to top
+$("#toTop").hide(); $(".read").scroll(function() {
+    if ($(".read").scrollTop() > $(window).height() / 2) {
+        $("#toTop").fadeIn(500);
+        $("#toTop").hover(function() {
+            $(this).css("background-color", "#eeeeee");
+        }, function() {
+            $(this).css("background-color", "white");
+        });
+    } else {
+        $("#toTop").fadeOut(500);
+    }
+})
+
+$("#toTop").click(function() {
+    $('.read').animate({ scrollTop: 0 }, 300);
+})
+
+
+//获取通用用户信息
+var host = ApiMaterPlatQiniuDomain; console.log(localStorage.getItem('weid')) var getUserDomain = function(id) {
+    $.ajax({
+        url: USERDETAIL + '/' + id,
+        type: 'get',
+        success: function(data) {
+            console.log(data);
+            if (data.code == 200) {
+                if (data.data != null) {
+                    localStorage.setItem('dataPhone', data.data.phone);
+                    localStorage.setItem('realName', data.data.real_name);
+
+                } else {
+                    localStorage.setItem('dataPhone', '');
+                    localStorage.setItem('realName', '');
+                }
+                // console.log(data.data.phone)
+            } else {
+                layer.mag(massage);
+            }
+        },
+        error: function(xhr) {
+            console.log(xhr);
+        }
+    })
+}
+getUserDomain(localStorage.getItem('weid'));
+var getUserInfo = function(url, id) {
+    $.ajax({
+        url: url + id,
+        type: 'get',
+        /*headers: {
+            'Token': localStorage.getItem('token')
+        },*/
+        success: function(data) {
+
+            console.log(data);
+            if (data.code == 200) {
+                var info = data.data;
+
+                var weid = info.weid;
+                console.log(weid)
+                var imgUrl = info.avatar;
+                if (imgUrl.indexOf('http') === -1) {
+                    imgUrl = host + imgUrl;
+                }
+                if (info.avatar != "") {
+                    // $("#head-icon, .user-head").css({
+                    //     "background": "url(" + imgUrl + ") no-repeat center",
+                    //     "background-size": "100%"
+                    // });
+                    $(".top_avatar>img").attr("src", imgUrl);
+
+
+
+                } else {
+                    // $("#head-icon, .user-head").css({
+                    //     "background": "url(/common/img/avatar.png) no-repeat center",
+                    //     "background-size": "110%"
+                    // });
+                    $(".top_avatar>img").attr("src", "/common/img/avatar.png");
+
+                }
+                if (info.nickname == null) {
+                    var nickname = info.real_name;
+                } else {
+                    var nickname = info.nickname;
+                }
+                $(".line-0,.linkto").html(
+                    nickname + '<img src="/common/img/vrenzheng.png" alt="">'
+                );
+                $(".oline-2").find("span").eq(1).text(info.motto);
+                $(".user-cnt").text(info.real_name);
+                artCount(weid);
+                //artTypeList(weid);
+                // catesfun(weid);
+                startactivitydetail(activityid, nickname, imgUrl);
+                activityinfo(weid);
+
+            }
+        },
+        error: function(xhr) {
+            console.log(xhr);
+        }
+    })
+}
+
+var hasDomain = function(weid) {
+    $.ajax({
+        url: PAGES_PAGE_GETDETAILBYUSER + weid,
+        type: 'GET',
+        headers: {
+            'Token': localStorage.getItem('token')
+        },
+        success: function(data) {
+            if (data.code == 200) {
+                console.log(data);
+                if (data.data == null) {
+
+                } else {
+                    //微主页banner图
+                    var bgLogo = data.data.background;
+                    if (bgLogo != null) {
+                        $("#art-head").css({
+                            "background": "url(" + imgSet(bgLogo, 1100, 235, 3) + ") no-repeat center",
+                            "background-size": "100%"
+                        });
+                    }
+                    //微名片背景
+                    var bgUser = data.data.background_user;
+                    if (bgUser != null) {
+                        $(".user-info").css({
+                            "background": "url(" + imgSet(bgUser, 328, 130, 3) + ") no-repeat center",
+                            "background-size": "100%"
+                        });
+                    }
+                    if (data.data.is_brand == 1) {
+                        hasBrand(userId);
+                    }
+                }
+            } else {
+                /*layer.msg(data.message, {
+                    time: 1500
+                });*/
+            }
+        },
+        error: function(xhr) {
+            console.log(xhr);
+        }
+    })
+}
+
+var hasBrand = function(weid) {
+    $.ajax({
+        url: BRAND_DETAIL_USER + '/' + weid,
+        type: 'GET',
+        headers: {
+            'Token': localStorage.getItem('token')
+        },
+        success: function(data) {
+            console.log(data);
+            if (data.code == 200) {
+                console.log(data);
+                if (data.data == null) {
+
+                } else {
+                    $(".line-0").html(
+                        data.data.title + '<img src="/user/img/vrenzheng.png" alt="">'
+                    );
+                    $(".line-1").text("品牌介绍");
+                    var logo = data.data.logo;
+                    if (logo != null) {
+                        $("#head-icon").css({
+                            "background": "url(" + logo + ") no-repeat center",
+                            "background-size": "100%"
+                        });
+                    }
+                }
+
+            } else {
+                layer.msg(data.message, {
+                    time: 1500
+                });
+            }
+        },
+        error: function(xhr) {
+            console.log(xhr);
+        }
+    })
+}
+
+//个性域名用户weid
+var userId;
+var __init = function(domain) {
+    $.ajax({
+        url: PAGES_DETAIL_DOMAIN + domain,
+        type: 'GET',
+        success: function(data) {
+            if (data.code == 200) {
+                //var domain = data.data.domain;
+                console.log(data);
+                if (data.data != null) {
+                    userId = data.data.plat_user_id;
+                    console.log('userId:', userId);
+                    console.log('userDetail')
+                    getUserInfo(USERDETAIL, "/" + userId);
+                    hasDomain(userId);
+                } else {
+                    domain = '';
+                    getUserInfo(FOUNDER, '');
+                    console.log('router error')
+                }
+            } else {
+                // window.location.href = "/*";
+            }
+        },
+        error: function(xhr) {
+            console.log(xhr);
+        }
+    })
+}
+
+if (domain == 'wemall') {
+    domain = '';
+} else {
+    domain = "/" + domain;
+}
+
+if (domain != '') {
+    __init(domain);
+}
+
+var artCount = function(weid) {
+    $.ajax({
+        url: ARTICLES_LISTCOUNT + "?userId=" + weid,
+        type: 'get',
+        success: function(data) {
+            //console.log(data);
+            if (data.code == 200) {
+                $(".user-art").children('div:eq(0)').text(data.data);
+            }
+        },
+        error: function(xhr) {
+            console.log(xhr);
+        }
+    })
+}
+
+var favicon = ApiMaterPlatQiniuDomain + localStorage.getItem('fav'); $('#favicon').attr('href', favicon);
 
 })
