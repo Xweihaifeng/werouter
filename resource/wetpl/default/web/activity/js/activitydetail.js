@@ -755,7 +755,6 @@ $(document).ready(function() {
     iscollection(localStorage.getItem("weid"), activityid);
     // 1获取活动详情
     var activitydetail = function(id, nickname, imgUrl, applyid = 0) {
-        alert('ss');
         $.ajax({
             url: ACTIVITY_DETAIL + "/" + id,
             type: 'get',
@@ -773,6 +772,7 @@ $(document).ready(function() {
                         $(".act_time_deadline").text(data.data.enroll_deadline);
                         $(".act_dress").text(data.data.area_name + data.data.address);
                     } else {
+                        alert('dd');
                         $(".activity_title").text(data.data.title);
                         $(".activity_title_x").attr('title', data.data.title)
                         $(".activity_title_x").text(data.data.title);
