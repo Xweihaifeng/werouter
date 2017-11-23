@@ -185,7 +185,6 @@
 				$.ajax({
 					url: apiUrl + 'wxjssdk',
 					type: 'POST',
-					async: false,
 					data: {
 						currenturl: window.location.href
 					},
@@ -381,9 +380,11 @@
 				let _self = this;
 				if (!state) {
 					_self.status = '已关注';
+					_self.state = 'true';
 					//账户是否激活，没激活则请求激活页
 				} else {
 					_self.status = '关注'
+					_self.state = 'false';
 				}
 
 			}
