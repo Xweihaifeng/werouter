@@ -373,6 +373,7 @@ $(document).ready(function() {
 
 
     var Support = function(id, nickname, imgUrl, applyid) {
+        alert(112);
         var datauser = '';
         var realname = '';
         var disa = '';
@@ -478,7 +479,7 @@ $(document).ready(function() {
 
                 },
                 end: function() {
-                    layer.close(closeindex);
+                    location.reload();
                 },
                 shade: 0.7
             });
