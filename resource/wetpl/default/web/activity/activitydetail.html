@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head lang="en">
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -10,10 +11,10 @@
     <link rel="stylesheet" href="/common/AdminLTE-2.4.0-rc/bower_components/font-awesome/css/font-awesome.min.css">
     <title>全球秦商总会</title>
     <link rel="stylesheet" href="{{PATH_TML}}css/public_main.css">
-        <link rel="stylesheet" href="{{PATH_TML}}font/iconfont.css" />
-        <link rel="stylesheet" href="{{PATH_TML}}css/news_base.css" />
-        <link rel="stylesheet" href="{{PATH_TML}}css/modal_login.css" />
-        <link rel="stylesheet" href="{{PATH_TML}}css/article.css">
+    <link rel="stylesheet" href="{{PATH_TML}}font/iconfont.css" />
+    <link rel="stylesheet" href="{{PATH_TML}}css/news_base.css" />
+    <link rel="stylesheet" href="{{PATH_TML}}css/modal_login.css" />
+    <link rel="stylesheet" href="{{PATH_TML}}css/article.css">
 
     <link rel="stylesheet" href="/common/css/bootstrap.min.css">
     <link rel="stylesheet" href="/common/css/buttons.css">
@@ -22,19 +23,23 @@
     <link rel="stylesheet" type="text/css" href="{{PATH_TML}}activity/css/activity.css">
     <link rel="stylesheet" type="text/css" href="{{PATH_TML}}activity/css/activitydetail.css">
 
-     <script src="{{PATH_CONFIG}}"></script>
+    <script src="{{PATH_CONFIG}}"></script>
     <script src="{{PATH_TML}}js/modal_login.js"></script>
     <script src="/common/js/swiper-3.3.1.min.js"></script>
     <script src="/common/js/buttons.js"></script>
-     <script type="text/javascript" src="{{PATH_TML}}shopping/js/jquery.qrcode.min.js"></script>
+    <script type="text/javascript" src="{{PATH_TML}}shopping/js/jquery.qrcode.min.js"></script>
     <style>
-    ::-webkit-scrollbar { width: 0; }
-    html {
-        position: absolute!important;
-        overflow-y: auto!important;
-    }
+         ::-webkit-scrollbar {
+            width: 0;
+        }
+        
+        html {
+            position: absolute!important;
+            overflow-y: auto!important;
+        }
     </style>
 </head>
+
 <body style="width: 1366px;background: url(/common/img/dibu.jpg)">
     <!-- 登录部分 -->
     <div class="modal_login" id="modal_login"></div>
@@ -43,7 +48,7 @@
     <!-- 导航部分结束 -->
 
     <div class="article">
-       <!--  <div id="art-head">
+        <!--  <div id="art-head">
            <a class='linkto' href=''><div id="head-icon"></div></a>
            <div id="user-name">
                <div class="line-0"></div>
@@ -64,12 +69,15 @@
                                     <p class="title activity_title_x"></p>
                                     <p class="shi-jian">
                                         <span class="username"></span>
-                                        <span><i class="fa fa-clock-o "></i><span class="end_time"></span></span> <span><i class="fa fa-eye"></i><span class="view_num"></span></span></p>
+                                        <span><i class="fa fa-clock-o "></i><span class="end_time"></span></span> <span><i class="fa fa-eye"></i><span class="view_num"></span></span>
+                                    </p>
                                     <div class="line"></div>
-                                    <div class="time"><span><i class="fa fa-clock-o"></i>时间 :</span><span class="activity_time" style="color: #111"></span><span></span><span style="margin-left: 10px"><span class="deadline"></span> 报名截止</span></div>
-                                    <div class="didian"><i class="fa fa-map-marker"></i>地点 ：<span  class="city"></span></div>
-                                    <p class="baomingrenshu"><i class=" fa fa-user"></i>报名人数 : <span>已有 <span class="apply_num"></span> 人报名</span> <span style="margin-left: 10px">限 <span class="enroll_limit"></span> 人报名</span></p>
-                                    <p class="pay-type"><i class="fa fa-cny"></i>收费类型 :<span style="padding-left: 10px;color:#f7b026"><!-- ￥<b>0.00</b> --> 免费</span></p>
+                                    <div class="time"><span><i class="fa fa-clock-o"></i>时间 :</span><span class="activity_time" style="color: #111"></span><span></span><span style="margin-left: 10px"><span class="deadline"></span> 报名截止</span>
+                                    </div>
+                                    <div class="didian"><i class="fa fa-map-marker"></i>地点 ：<span class="city"></span></div>
+                                    <p class="baomingrenshu"><i class=" fa fa-user"></i>报名人数 : <span>已有 <span class="apply_num"></span> 人报名</span> <span style="margin-left: 10px">限 <span class="enroll_limit"></span> 人报名</span>
+                                    </p>
+                                    <p class="pay-type"><i class="fa fa-cny"></i>费用 :<span style="padding-left: 10px;color:#f7b026">￥<b>0.00</b></span></p>
 
                                     <div class="bbbao"><span> <a href="javascript:" data-id="1" class="support">我要报名</a></span></div>
                                 </div>
@@ -77,59 +85,57 @@
                         </div>
                         <div class="left col-sm-8" style="width: 765px">
                             <div class="activity-main-center">
-                            <div class="project-box clearfix">
-                                <div style="height: 56px">
-                                    <ul class="project_t" role="tablist"
-
-                                    >
-                                        <li role="presentation" class="menuItem active" id="projectDe">
-                                            <a class="a-none" href="#acitivty-detail">活动详情</a>
-                                        </li>
-                                        <li role="presentation" class="menuItem">
-                                            <a class="a-none" href="#acitivty-honored">活动嘉宾(<span class="guest_num"></span>)</a>
-                                        </li>
-                                        <li role="presentation" class="menuItem ">
-                                            <a class="a-none" href="#acitivty-guests">活动成员(<span class="enroll_num"></span>)</a>
-                                        </li>
-                                    </ul>
-                                </div>
-
-                                <div class="show-content project_con panel panel_color" id="panel_top1" style="border-radius: 0;border-top: none">
-                                    <div class="show-content" id="acitivty-detail">
-
+                                <div class="project-box clearfix">
+                                    <div style="height: 56px">
+                                        <ul class="project_t" role="tablist">
+                                            <li role="presentation" class="menuItem active" id="projectDe">
+                                                <a class="a-none" href="#acitivty-detail">活动详情</a>
+                                            </li>
+                                            <li role="presentation" class="menuItem">
+                                                <a class="a-none" href="#acitivty-honored">活动嘉宾(<span class="guest_num"></span>)</a>
+                                            </li>
+                                            <li role="presentation" class="menuItem ">
+                                                <a class="a-none" href="#acitivty-guests">活动成员(<span class="enroll_num"></span>)</a>
+                                            </li>
+                                        </ul>
                                     </div>
-                                    <p class="main-title">活动嘉宾 (<span class="guest_num"></span>)</p>
-                                    <div class="line"></div>
-                                    <div class="clearfix" id="acitivty-honored">
 
-                                        <div class="actvity-supporter col-sm-12 text-center">
-                                            暂无嘉宾
+                                    <div class="show-content project_con panel panel_color" id="panel_top1" style="border-radius: 0;border-top: none">
+                                        <div class="show-content" id="acitivty-detail">
+
                                         </div>
+                                        <p class="main-title">活动嘉宾 (<span class="guest_num"></span>)</p>
+                                        <div class="line"></div>
+                                        <div class="clearfix" id="acitivty-honored">
 
-                                    </div>
-                                    <p class="main-title">活动成员 (<span class="enroll_num"></span>)</p>
-                                    <div class="line"></div>
-                                    <div class="huodongchengyuan clearfix" id="acitivty-guests">
+                                            <div class="actvity-supporter col-sm-12 text-center">
+                                                暂无嘉宾
+                                            </div>
 
-                                        <div class="text-center">
-                                           暂无成员
                                         </div>
+                                        <p class="main-title">活动成员 (<span class="enroll_num"></span>)</p>
+                                        <div class="line"></div>
+                                        <div class="huodongchengyuan clearfix" id="acitivty-guests">
+
+                                            <div class="text-center">
+                                                暂无成员
+                                            </div>
 
 
+                                        </div>
+                                        <div id="folding"> </div>
+                                        <div class="clearfix"></div>
+                                        <div class="see-more text-center">展开更多报名 <i class="fa fa-caret-down"></i></div>
                                     </div>
-                                    <div id="folding"> </div>
-                                    <div class="clearfix"></div>
-                                    <div class="see-more text-center">展开更多报名 <i class="fa fa-caret-down"></i></div>
                                 </div>
                             </div>
-                        </div>
                         </div>
                         <div class="right p0 col-sm-3">
                             <div class="right-box right-intro activity-detail" style="margin-top: 0">
                                 <div class="top top_avatar">
                                     <img src="" alt="">
                                     <div class="jubanfang">
-                                      <a class='linkto ' href=''> <img src="/common/img/vrenzheng.png" alt=""></a>
+                                        <a class='linkto ' href=''> <img src="/common/img/vrenzheng.png" alt=""></a>
 
                                     </div>
 
@@ -149,10 +155,14 @@
                                 </div>
                                 <div class="erweima">
                                     <div class="row m0">
-                                         <div class="oline-detail">
+                                        <div class="oline-detail">
                                             <!-- <div><img src="/common/img/wecard_qrcode.png" alt="" width="100"/></div> -->
                                             <div id="activity_code" rel=""></div>
-                                            <div><p>微信扫描二维码</p><p>支持Ta</p><p>或分享给好友</p></div>
+                                            <div>
+                                                <p>微信扫描二维码</p>
+                                                <p>支持Ta</p>
+                                                <p>或分享给好友</p>
+                                            </div>
                                         </div>
 
                                     </div>
@@ -172,7 +182,7 @@
 
 
 
-           <!--  <div id="art-main">
+            <!--  <div id="art-main">
                 <div class="art-title">Ta发布的文章</div>
                 <div class="art-part row">
                     <ul class="nav nav-tabs col-md-8 art-type"></ul>
@@ -187,85 +197,84 @@
     <script src="{{PATH_TML}}activity/js/activitydetail.js"></script>
 
 </body>
+
 </html>
 <script src="https://cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.js"></script>
 <script>
-$(function(){
-    $(".fancybox").fancybox({
-    'width': '500px',
-     'height': 'auto',
-    'zoomSpeedIn': 300,
-    'zoomSpeedOut': 300,
-    'overlayShow': false
-    });
-    $(".menuItem").click(function(){
-         $(this).addClass("active").siblings().removeClass("active");
-    });
-    var offsetTop = 550;
-     $('.article').scroll(function() {
-      //console.log('a')
-        if ($('.article').scrollTop() >= offsetTop) {
-            $(".project_t").eq(0).css({
-                "position": "fixed",
-                "top": 0,
-                "width":"713px"
-            })
-        }
-        else {
-            $(".project_t").css({
-                "position": "static"
-            });
-            $(".main").css("margin-top", 0);
-        }
-    });
+    $(function() {
+        $(".fancybox").fancybox({
+            'width': '500px',
+            'height': 'auto',
+            'zoomSpeedIn': 300,
+            'zoomSpeedOut': 300,
+            'overlayShow': false
+        });
+        $(".menuItem").click(function() {
+            $(this).addClass("active").siblings().removeClass("active");
+        });
+        var offsetTop = 550;
+        $('.article').scroll(function() {
+            //console.log('a')
+            if ($('.article').scrollTop() >= offsetTop) {
+                $(".project_t").eq(0).css({
+                    "position": "fixed",
+                    "top": 0,
+                    "width": "713px"
+                })
+            } else {
+                $(".project_t").css({
+                    "position": "static"
+                });
+                $(".main").css("margin-top", 0);
+            }
+        });
 
-    $('.see-more').click(function () {
+        $('.see-more').click(function() {
             $('#folding').fadeIn();
+        })
     })
-})
 
 
-// 光标离开事件
-    $(document).on('focus', '#phone', function(){
+    // 光标离开事件
+    $(document).on('focus', '#phone', function() {
         console.log($('.layui-layer').height());
         $('.layui-layer-content').height('760px');
         $('.layui-layer').height('760px');
         $('.sign_section').height('350px');
         $('.sign_code').css('display', 'block');
         $('.sign_yz').css('display', 'block');
-        $('.signBox .sign_foot span').css('top','24px');
-        $('.signBox .sign_foot').css('top','3px')
+        $('.signBox .sign_foot span').css('top', '24px');
+        $('.signBox .sign_foot').css('top', '3px')
     });
-    $(document).on('focus', '#username', function(){
+    $(document).on('focus', '#username', function() {
         $('.sign_code').css('display', 'none');
         $('.sign_yz').css('display', 'none');
         $('.layui-layer-content').height('740px');
         $('.layui-layer').height('740px');
         $('.sign_section').height('300px');
-        $('.signBox .sign_foot span').css('top','32px');
+        $('.signBox .sign_foot span').css('top', '32px');
     });
-    $(document).on('focus', '#zhiw', function(){
+    $(document).on('focus', '#zhiw', function() {
         $('.sign_code').css('display', 'none');
         $('.sign_yz').css('display', 'none');
         $('.layui-layer-content').height('740px');
         $('.layui-layer').height('740px');
         $('.sign_section').height('320px');
-        $('.signBox .sign_foot').css('top','18px');
-        $('.signBox .sign_foot span').css('top','14px');
+        $('.signBox .sign_foot').css('top', '18px');
+        $('.signBox .sign_foot span').css('top', '14px');
     });
-    $(document).on('focus', '#gongsi', function(){
-        $('.sign_code').css('display', 'none');
-        $('.sign_yz').css('display', 'none');
-        $('.layui-layer-content').height('740px');
-        $('.layui-layer').height('740px');
-        $('.sign_section').height('320px');
-    });
-        $(document).on('focus', '#gongsi', function(){
+    $(document).on('focus', '#gongsi', function() {
         $('.sign_code').css('display', 'none');
         $('.sign_yz').css('display', 'none');
         $('.layui-layer-content').height('740px');
         $('.layui-layer').height('740px');
         $('.sign_section').height('320px');
     });
-
+    $(document).on('focus', '#gongsi', function() {
+        $('.sign_code').css('display', 'none');
+        $('.sign_yz').css('display', 'none');
+        $('.layui-layer-content').height('740px');
+        $('.layui-layer').height('740px');
+        $('.sign_section').height('320px');
+    });
 </script>
