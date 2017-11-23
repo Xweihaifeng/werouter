@@ -98,7 +98,7 @@
 	</div>-->
 	<div class="foot">
 		<div>
-			<p class="enter" @click="enjoy">关注</p>
+			<p class="enter" @click="enjoy(state)">{{status}}</p>
 			<p>投诉</p>
 		</div>		
 	</div>
@@ -191,6 +191,7 @@
 					},
 					success: function(data) {
 						if (data.code == 200) {
+							alert(1)
 							console.log(data)
 							wx.config({
 								debug: false,
@@ -288,6 +289,70 @@
 		}
 	}
 
+	//关注
+	const follow = function(url, domain) {
+		$.ajax({
+			url: url,
+			type: 'POST',
+			data: {
+				'domain': domain,
+				'type': 2
+			},
+			headers: {
+				'Token': window.localStorage.getItem("token")
+			},
+			success: function(data) {
+				console.log(data)
+				if (data.code == 200) {
+					$(".ct").attr('src', '/common/img/collected.svg');
+					$(".wd").text('已关注');
+					layer.msg("关注成功", {
+						time: 1500
+					});
+					genFans(apiUrl + 'circel/flist', domain.substr(1), 1, 12, 1);
+				} else {
+					layer.msg(data.message, {
+						time: 1500
+					})
+				}
+			},
+			error: function(xhr) {
+				console.log(xhr)
+			}
+		})
+	}
+
+	//取消关注
+	const cancelFollow = function(url, domain) {
+		$.ajax({
+			url: url,
+			type: 'POST',
+			data: {
+				'domain': domain,
+				'type': 2
+			},
+			headers: {
+				'Token': window.localStorage.getItem("token")
+			},
+			success: function(data) {
+				console.log(data)
+				if (data.code == 200) {
+					$(".ct").attr('src', '/common/img/collect.svg');
+					$(".wd").text('关注');
+					layer.msg("取消关注成功", {
+						time: 1500
+					})
+					genFans(apiUrl + 'circel/flist', domain.substr(1), 1, 12, 1);
+				} else {
+					console.log(data.message)
+				}
+			},
+			error: function(xhr) {
+				console.log(xhr)
+			}
+		})
+	}
+
 	new Vue({
 		el: '#app',
 		data: {
@@ -298,7 +363,9 @@
 			cert: '官方认证',
 			motto: '暂无内容',
 			work: '互联网',
-			wepage: ''
+			wepage: '',
+			state: false, //未关注
+			status: '关注'
 		},
 		created: function(){
 			var _self = this;
@@ -307,10 +374,17 @@
 		},
 		methods: {
 			care: function(){
-				var _self = this;
+				let _self = this;
 				$(".enter").text("进入公众号");
 			},
-			enjoy: function(){
+			enjoy: function(state){
+				let _self = this;
+				if (!state) {
+					_self.status = '已关注';
+					//账户是否激活，没激活则请求激活页
+				} else {
+					_self.status = '关注'
+				}
 
 			}
 		}
