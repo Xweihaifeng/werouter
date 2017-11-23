@@ -130,7 +130,8 @@
 						var usertoken = localStorage.getItem('setopenid');
 						if (usertoken == 'true') {
 							openid = getUrlParam("openid");
-							sessionStorage.setItem('openid', openid);
+							alert('openid:' + openid);
+							localStorage.setItem('openid', openid);
 							//微信登录
 							$.ajax({
 								url: apiUrl + 'wxlogin',
@@ -141,12 +142,11 @@
 								success: function (data) {
 //									alert(3)
 //									alert(JSON.stringify(data))
-									alert('openid:' + openid);
-									alert('token:' + data.token);
-									alert('act:' + data.data.activation_status);
-									sessionStorage.setItem('token', data.token);
-									sessionStorage.setItem('activation', data.data.activation_status);
 									if (data.code == 200) {
+										alert('token:' + data.token);
+										alert('act:' + data.data.activation_status);
+										localStorage.setItem('token', data.token);
+										localStorage.setItem('activation', data.data.activation_status);
 										if (isNull(data.token) == false) { //非空
 											localStorage.setItem('token-date', new Date().getTime())
 											localStorage.setItem('user-token', data.token);
