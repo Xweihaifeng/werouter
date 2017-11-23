@@ -8,6 +8,9 @@ const reqDynamicList = (url) => {
         url: url,
         type: 'GET',
         async: false,
+        headers: {
+          'Token': sessionStorage.getItem('token')
+        },
         success: function(data){
             if (data.code == 200) {
                 console.log(data)
