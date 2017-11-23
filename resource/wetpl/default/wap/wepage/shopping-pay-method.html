@@ -64,13 +64,21 @@
                 el: "#pay_section",
                 data: {
                     address_default : JSON.parse(window.sessionStorage.getItem('address_default')),
-                    store_num       : window.location.search.split("=").pop(),
+                    store_num       : '',
                     order_detail    : '',
                     config          : ''
                 },
                 mounted: function() {
-                    // 获取默认地址
                     var self = this;
+                    var getQueryString = function(name) {  
+                        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");  
+                        var r = window.location.search.substr(1).match(reg);  
+                        if (r != null) return unescape(r[2]);  
+                        return null;  
+                    }
+                    self.store_num = getQueryString("store_num");
+
+                    // 获取默认地址
                     self.$http.get(apiUrl + 'order/detail/' + self.store_num).then(function (data) {
                         self.order_detail = data.data.data;
                         console.log(self.order_detail);
@@ -124,11 +132,10 @@
 
                     var body1 = {
                         order_id: self.store_num,
-                        openid  : window.location.search.split("=").pop()
+                        openid  : getQueryString("openid")
                     };
                     // body1.order_id = self.store_num;
                     // body1.openid   = openid;
-                    alert("微信openid", body1);
                     self.$http.post(apiUrl + 'pages/wechatPay/mallOrderPhonePay', body1).then(function (data) {
                         self.config = data.data.data.config;
 
