@@ -1083,6 +1083,7 @@ $(function() {
             var title = $('#J_ActivityTitle').val();
             var address = $('#J_ActivityAddr').val();
             var limit = $('#J_ActivityLimit').val();
+            var price = $('#J_ActivityPrice').val();
             var content = '';
             var groupChart = 0;
             var isPrivacy = 0;
@@ -1149,6 +1150,7 @@ $(function() {
                 content: content,
                 type: $('input[name=type]:checked').val(),
                 limit: limit,
+                price: price,
                 tickets: ticketArr,
                 guests: guestArr,
                 sponors: sponorArr,
