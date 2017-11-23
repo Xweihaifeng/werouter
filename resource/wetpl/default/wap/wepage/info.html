@@ -130,7 +130,7 @@
 						var usertoken = localStorage.getItem('setopenid');
 						if (usertoken == 'true') {
 							openid = getUrlParam("openid");
-							alert('openid:' + openid)
+//							alert('openid:' + openid)
 							if (openid != null) {
 								localStorage.setItem('openid', openid);
 							}
@@ -148,7 +148,7 @@
 								},
 								success: function (data) {
 //									alert(3)
-									alert(JSON.stringify(data))
+//									alert(JSON.stringify(data))
 //									alert('token:' + data.token);
 //									alert('act:' + data.data.activation_status);
 									localStorage.setItem('weid', data.data.weid);
