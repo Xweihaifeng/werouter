@@ -89,7 +89,8 @@
                         openid  : getQueryString("openid")
                     };
 
-                    self.$http.post(apiUrl + 'pages/wechatPay/mallOrderPhonePay', body1).then(function (data) {
+                    self.$http.post('http://new.wezchina.com/api/pages/wechatPay/mallOrderPhonePay', body1).then(function (data) {
+                    // self.$http.post(apiUrl + 'pages/wechatPay/mallOrderPhonePay', body1).then(function (data) {
                         self.config = data.data.data.config;
 
                         var onBridgeReady = function() {
