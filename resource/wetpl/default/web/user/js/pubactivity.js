@@ -366,6 +366,7 @@
          var content = CKEDITOR.instances.editor1.getData();
 
          var type = $("input[name=type]:checked").val();
+         var price = $("#J_ActivityPrice").val();
          var is_private = $('#J_ActivityProperty').get(0).checked ? 2 : 1;
          if (!$("#J_ActivityProtocal").get(0).checked) {
              mess_tusi("请选择阅读并同意");
@@ -435,6 +436,7 @@
              Sponsor: Sponsor,
              content: content,
              type: type,
+             price: price
              status: status,
              is_private: is_private
          }
