@@ -55,13 +55,13 @@
             })
         }
 
-        const tologin = (phoneNum, checkNum, weid, token) => {
+        const tologin = (phoneNum, checkNum, weid) => {
             $.ajax({
                 url:  apiUrl + 'userAct',
                 type: 'post',
-                headers: {
+                /*headers: {
                     'Token': token
-                },
+                },*/
                 data: {
                     'phone': phoneNum,
                     'code': checkNum,
@@ -71,6 +71,7 @@
                     },
                 success: function(data){
                     console.log(data);
+                    alert(2)
                     if (data.code == 200) {
                         layer.msg('激活成功', {
                             time: 1500
@@ -151,8 +152,11 @@
                     let checknum = self.check;
                     if (/^1[3|4|5|7|8][0-9]{9}$/.test(phonenum)) {
                         if (/^[0-9]{6}$/.test(checknum)) { //发送手机和验证码验证成功
-                            alert(1)
-                            tologin(phonenum, checknum, self.weid, self.token);
+                            alert('phone:' + phonenum)
+                            alert('check:' + checknum)
+                            alert('weid:' + self.weid)
+
+                            tologin(phonenum, checknum, self.weid);
                         } else {
                             layer.msg("手机验证码输入错误", {
                                 time: 1500
