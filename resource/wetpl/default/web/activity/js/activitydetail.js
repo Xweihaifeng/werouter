@@ -1168,7 +1168,8 @@ $(document).ready(function() {
 
     //获取通用用户信息
     var host = ApiMaterPlatQiniuDomain;
-    console.log(localStorage.getItem('weid')) var getUserDomain = function(id) {
+    console.log(localStorage.getItem('weid'))
+    var getUserDomain = function(id) {
         $.ajax({
             url: USERDETAIL + '/' + id,
             type: 'get',
