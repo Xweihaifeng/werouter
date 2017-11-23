@@ -693,7 +693,7 @@ $(document).ready(function() {
                             localStorage.setItem('dataPhone', "");
                             localStorage.setItem('realName', "");
                             //location.reload();
-                            layer.close(closeindex);
+                            //layer.close(closeindex);
                             if (data.data.status == 2)
                                 activity_ebroll_detail(data.data.enroll_id);
                             else if (data.data.status == 1)
