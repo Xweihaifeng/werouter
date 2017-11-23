@@ -64,9 +64,9 @@
                 el: "#pay_section",
                 data: {
                     address_default : JSON.parse(window.sessionStorage.getItem('address_default')),
-                    store_num: window.location.pathname.split("/").pop(),
-                    order_detail: '',
-                    config: ''
+                    store_num       : window.location.search.split("=").pop(),
+                    order_detail    : '',
+                    config          : ''
                 },
                 mounted: function() {
                     // 获取默认地址
