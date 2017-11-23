@@ -23,7 +23,7 @@ const reqDynamicList = (url) => {
     })
 }
 
-alert(sessionStorage.getItem('token'))
+alert(localStorage.getItem('token'))
 let type = 2;
 reqDynamicList('http://new.wezchina.com/api/circel/dynamic?type=' + type);
 
