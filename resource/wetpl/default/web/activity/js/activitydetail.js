@@ -785,7 +785,7 @@ $(document).ready(function() {
                         $(".view_num").text(data.data.view_num);
                         $(".city").text(data.data.area_name);
                         $(".apply_num").text(data.data.enroll_num);
-                        alert(parseFloat(data.data.price));
+                        alert(data.data.type);
                         if (data.data.type = 1 || parseFloat(data.data.price) == 0) {
                             $(".pay-type span").text('免费');
                         } else {
