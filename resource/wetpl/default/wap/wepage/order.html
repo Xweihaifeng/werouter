@@ -13,7 +13,6 @@
     <script type="text/javascript" src="{{PATH_CONFIG}}"></script>
     <script src="{{PATH_TML}}wepage/js/vue.min.js"></script>
     <script src="{{PATH_TML}}wepage/js/vue-resource.min.js"></script>
-    <script src="{{PATH_TML}}wepage/js/layui/layui.all.js"></script>
 
 </head>
 <body>
@@ -45,7 +44,7 @@
                     <div class="product">
                         <p class="des">{{item.title}}</p>
                         <p class="price">
-                            <span>{{item.price * item.goods_num}}</span>
+                            <span>￥{{item.price * item.goods_num}}</span>
                             <label>
                                 <span>已选：{{item.goods_num}}件</span>
                             </label>
@@ -77,7 +76,7 @@
         </div>
         <div class="order_freight">
             <div> 运费</div>
-            <div> ￥15.00</div>
+            <div> ￥0.00</div>
         </div>
     </div>
     <footer class="order_footer">
@@ -91,10 +90,7 @@
 
 <script>
 
-   Vue.http.headers.common['token'] = window.localStorage.getItem("token");
-
-// Vue.http.headers.common['token'] = 'eyJpdiI6IlwvTFZlRU5lQ2FlMHE3MW16dkFmNUVnPT0iLCJ2YWx1ZSI6Ijc2ZWt3M1o5U2RcL2tWNTlYazBSVDVsMDIwaHpcL2dWZ2VwSVY1V2hib3o0RmxTMzBvU2o1SEMyZ2U2UjRVV0xielFBWlROb1ArbGhyRTY3VHBXTlwvenZwUXF6aHBpUmROeFJJNE5CRUh2YyswPSIsIm1hYyI6ImIzYjBiYzM2YjBlMjkxNDAzMjZlYzM5YWJmMWNhOGEzMDJkY2FjMzFiNGQwMGM0NGFlYTRkMTVlMzNhZGU1N2EifQ=='
-
+    Vue.http.headers.common['token'] = window.localStorage.getItem("token");
 
     var app = new Vue({
         el: "#myOrder",
@@ -152,7 +148,6 @@
 
                 this.$http.post(apiUrl + 'order/store', body).then(function (data) {
                     if (data.body.code == 200) {
-                        layer.msg("订单保存成功！", {time: 1500});
                         this.store_num = data.body.data;
                         window.sessionStorage.setItem('store_num', data.body.data);
                         window.location.href = `/pay/shopping?store_num=`+ data.body.data +``;
