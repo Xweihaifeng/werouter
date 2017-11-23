@@ -849,13 +849,117 @@ $(document).ready(function() {
         // 根据id查询活动
     var GetActivity = function(id, callback) {
         $.ajax({
-                url: ACTIVITY_DETAIL + "/" + id,
-                type: 'get',
-                headers: {
-                    'Token': localStorage.getItem('token')
-                },
-                success: function(data) {
-                    callback(data);
+            url: ACTIVITY_DETAIL + "/" + id,
+            type: 'get',
+            headers: {
+                'Token': localStorage.getItem('token')
+            },
+            success: function(data) {
+                callback(data);
+            },
+            error: function(xhr) {
+                console.log(xhr);
+            }
+        });
+    }
+
+    var startactivitydetail = function(id, nickname, imgUrl) {
+            if (id != null && id != '' && id.length == 36) {
+                activitydetail(id, nickname, imgUrl);
+                guestlistdetail(id);
+                applylistdetail(id);
+            }
+            /*$(".support").bind("click",function(){
+                Support(id,nickname,imgUrl,$(this).data('id'));
+            })*/
+        }
+        // 二维码插件
+    var qrcodefun = function(id) {
+        var qrcode_val = localhostPath + domain + "/activity/" + id;
+        // if ($.browser.msie && $.browser.version <= 8){
+        if ($.support.msie && $.support.version <= 8) {
+
+            $("#activity_code").qrcode({
+                render: "table",
+                width: 110,
+                height: 110,
+                text: qrcode_val
+            });
+        } else {
+            jQuery("#activity_code").qrcode({
+                width: 110,
+                height: 110,
+                text: qrcode_val
+            });
+        }
+
+    }
+    var qrcodefun1 = function(id) {
+        var qrcode_val = localhostPath + domain + "/activity/" + id;
+        // if ($.browser.msie && $.browser.version <= 8){
+        if ($.support.msie && $.support.version <= 8) {
+
+            $(".ticket-qr").qrcode({
+                render: "table",
+                width: 110,
+                height: 110,
+                text: qrcode_val
+            });
+        } else {
+            jQuery(".ticket-qr").qrcode({
+                width: 110,
+                height: 110,
+                text: qrcode_val
+            });
+        }
+
+    }
+
+
+    // 2.1嘉宾模板
+    var guestlist = function(data) {
+            var guesthtml = '<div class="actvity-supporter col-sm-12">' +
+                '<div class="supporter_img col-xs-6">' +
+                '<img class="img-circle " src="' + qiniu_bucket_domain + data.avatar + '">' +
+                '</div>' +
+                '<div class="supporter_user">' +
+                '<span class="supporter_user_log">' + data.name + '</span>' +
+                '<div class="supporter_user_color">' + data.position + '</div>' +
+                '<div class="supporter_user_color">' + data.company + '</div>' +
+                '</div>' +
+                '</div>';
+            return guesthtml;
+        }
+        // 2.活动嘉宾   //查找嘉宾列表根据活动id
+    var guestlistdetail = function(id) {
+        //ACTIVITY_GUEST_LISTS
+        var limit = "";
+        var page = "";
+        var sendData = {
+            activity_id: id,
+            limit: limit,
+            page: page
+        }
+        $.ajax({
+            url: ACTIVITY_GUEST_LISTS,
+            type: 'post',
+            data: sendData,
+            headers: {
+                'Token': localStorage.getItem('token')
+            },
+            success: function(data) {
+                console.log(data);
+                if (data.code == 200) {
+                    $(".guest_num").text(data.data.total);
+                    console.log(data.data.total);
+                    if (data.data.total > 0) {
+                        $("#acitivty-honored").children().remove();
+                        data.data.list.map(x => {
+                            $("#acitivty-honored").append(guestlist(x));
+
+                        })
+                    }
+
                 } else {
                     mess_tusi(data.message);
                 }
@@ -864,537 +968,433 @@ $(document).ready(function() {
                 console.log(xhr);
             }
         })
-}
+    }
 
-var startactivitydetail = function(id, nickname, imgUrl) {
-        if (id != null && id != '' && id.length == 36) {
-            activitydetail(id, nickname, imgUrl);
-            guestlistdetail(id);
-            applylistdetail(id);
+    $(".collect-btn-click").bind("click", function() {
+            console.log($(this).data("id"));
+            if ($(this).data("id") == 1) {
+                $(this).data("id", 2);
+                like(activityid);
+            } else if ($(this).data("id") == 2) {
+                canclecollect($(this).attr("id"));
+                $(this).data("id", 1);
+
+            }
+
+        }) $(".see-more").bind("click", function() {
+            applylistdetail(activityid, "");
+        })
+        //3.1活动成员模板
+    var applylist = function(data) {
+            var avatarsrc = "";
+            if (data.avatar == null || data.avatar == "") {
+                avatarsrc = "/common/img/avatar.png";
+            } else {
+                avatarsrc = qiniu_bucket_domain + data.avatar;
+            }
+            var applyhtml = '<div class="z">' +
+                '<p class="">' +
+                '<img class="" src="' + avatarsrc + '">' +
+                '</p>' +
+                '<p class="">' +
+                '<span class="" style="width: 57px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;display: block;">' + data.name + '</span>' +
+                '</p>' +
+                '</div>';
+            return applyhtml;
         }
-        /*$(".support").bind("click",function(){
-            Support(id,nickname,imgUrl,$(this).data('id'));
-        })*/
-    }
-    // 二维码插件
-var qrcodefun = function(id) {
-    var qrcode_val = localhostPath + domain + "/activity/" + id;
-    // if ($.browser.msie && $.browser.version <= 8){
-    if ($.support.msie && $.support.version <= 8) {
+        //3.活动成员
+    var applylistdetail = function(id, limit = 10) {
+        var limit = limit;
+        var page = "";
+        var sendData = {
+            activity_id: id,
+            limit: limit,
+            page: page
+        }
+        console.log(sendData);
+        $.ajax({
+            url: ACTIVITY_ENROLL_LISTS,
+            type: 'post',
+            data: sendData,
+            headers: {
+                'Token': localStorage.getItem('token')
+            },
+            success: function(data) {
+                console.log(data);
+                if (data.code == 200) {
+                    if (data.data.total > 0) {
+                        $("#acitivty-guests").children().remove();
+                        data.data.list.map(x => {
+                            $("#acitivty-guests").append(applylist(x));
 
-        $("#activity_code").qrcode({
-            render: "table",
-            width: 110,
-            height: 110,
-            text: qrcode_val
-        });
-    } else {
-        jQuery("#activity_code").qrcode({
-            width: 110,
-            height: 110,
-            text: qrcode_val
-        });
-    }
+                        })
+                    }
+                    if (limit == "" || data.data.total <= 10) {
+                        $(".see-more").text("没有更多");
+                    }
 
-}
-var qrcodefun1 = function(id) {
-    var qrcode_val = localhostPath + domain + "/activity/" + id;
-    // if ($.browser.msie && $.browser.version <= 8){
-    if ($.support.msie && $.support.version <= 8) {
-
-        $(".ticket-qr").qrcode({
-            render: "table",
-            width: 110,
-            height: 110,
-            text: qrcode_val
-        });
-    } else {
-        jQuery(".ticket-qr").qrcode({
-            width: 110,
-            height: 110,
-            text: qrcode_val
-        });
+                } else {
+                    mess_tusi(data.message);
+                }
+            },
+            error: function(xhr) {
+                console.log(xhr);
+            }
+        })
     }
 
-}
+    //收藏
+    var like = function(weid) {
+        console.log(weid);
+        $.ajax({
+            url: ACTIVITY_COLLECTION_STORE,
+            type: 'post',
+            data: { activity_id: weid },
+            dataType: 'json',
+            headers: {
+                'Token': localStorage.getItem('token')
+            },
+            success: function(data) {
+                console.log(data);
+                if (data.code == 200) {
+                    /*console.log(data.data[0].praise_num);
+                    $(".like-count").text(data.data[0].praise_num);
+                    $(".read-like img").attr("src", "../common/img/good+.png");*/
+                    $(".collect-btn-click").css({
+                        "background": '#d4d4d4',
+                        "cursor": 'default'
+                    });
+                    $(".collect-btn-click").text("已收藏");
+                    $(".collect-btn-click").attr("id", data.data);
+                    // $(".collect-btn-click").unbind("click");
+                    /* data.data.map(x => {
+                         $("#collectnum").text(x.collections);
 
-
-// 2.1嘉宾模板
-var guestlist = function(data) {
-        var guesthtml = '<div class="actvity-supporter col-sm-12">' +
-            '<div class="supporter_img col-xs-6">' +
-            '<img class="img-circle " src="' + qiniu_bucket_domain + data.avatar + '">' +
-            '</div>' +
-            '<div class="supporter_user">' +
-            '<span class="supporter_user_log">' + data.name + '</span>' +
-            '<div class="supporter_user_color">' + data.position + '</div>' +
-            '<div class="supporter_user_color">' + data.company + '</div>' +
-            '</div>' +
-            '</div>';
-        return guesthtml;
+                     })*/
+                    likeState = true;
+                } else {
+                    mess_tusi("请登录");
+                }
+            },
+            error: function(xhr) {
+                console.log(xhr);
+            }
+        })
     }
-    // 2.活动嘉宾   //查找嘉宾列表根据活动id
-var guestlistdetail = function(id) {
-    //ACTIVITY_GUEST_LISTS
-    var limit = "";
-    var page = "";
-    var sendData = {
-        activity_id: id,
-        limit: limit,
-        page: page
+    var canclecollect = function(id) {
+        $.ajax({
+            // url: ACTIVITY_LIST,
+            url: ACTIVITY_COLLECTION_DESTROY + "/" + id,
+            type: 'get',
+            success: function(data) {
+                console.log(data);
+                if (data.code == 200) {
+                    $(".collect-btn-click").css({
+                        "background": '#80ccf4',
+                        "cursor": 'pointer'
+                    });
+                    $(".collect-btn-click").text("+收藏");
+                }
+            },
+            error: function(xhr) {
+                console.log(xhr);
+            }
+        })
     }
-    $.ajax({
-        url: ACTIVITY_GUEST_LISTS,
-        type: 'post',
-        data: sendData,
-        headers: {
-            'Token': localStorage.getItem('token')
-        },
-        success: function(data) {
-            console.log(data);
-            if (data.code == 200) {
-                $(".guest_num").text(data.data.total);
-                console.log(data.data.total);
-                if (data.data.total > 0) {
-                    $("#acitivty-honored").children().remove();
-                    data.data.list.map(x => {
-                        $("#acitivty-honored").append(guestlist(x));
 
-                    })
+
+    /* var iscollect=function(id){
+         $.ajax({
+             url: GOODS_COLLECTION_ISCOLLECTION+'/' + id,
+             type:'get',
+             headers: {
+                     'Token': localStorage.getItem('token')
+                 },
+             success:function(data){
+                 console.log(data);
+                 if(data.code!=401){
+                     if(data.code!=200 ){
+                     $(".collect-btn-click").css({
+                         "background":'#d4d4d4',
+                         "cursor":'default'
+                     });
+                     // $(".collect-btn-click").unbind("click");
+                     $(".collect-btn-click").data("id",2);
+                 }
+                 }
+
+             }
+         })
+     }*/
+    var activityinfo = function(weid) {
+        $.ajax({
+            url: ACTIVITY_ACTIVITYINFO + '/' + weid,
+            type: 'get',
+            headers: {
+                'Token': localStorage.getItem('token')
+            },
+            success: function(data) {
+                console.log(data);
+                if (data.code == 200) {
+                    $(".act_num").text(data.data.count);
+                    $(".act_per_num").text(data.data.countmember);
                 }
 
-            } else {
-                mess_tusi(data.message);
             }
-        },
-        error: function(xhr) {
-            console.log(xhr);
-        }
-    })
-}
-
-$(".collect-btn-click").bind("click", function() {
-    console.log($(this).data("id"));
-    if ($(this).data("id") == 1) {
-        $(this).data("id", 2);
-        like(activityid);
-    } else if ($(this).data("id") == 2) {
-        canclecollect($(this).attr("id"));
-        $(this).data("id", 1);
-
+        })
     }
 
-}) $(".see-more").bind("click", function() {
-    applylistdetail(activityid, "");
-})
-//3.1活动成员模板
-var applylist = function(data) {
-        var avatarsrc = "";
-        if (data.avatar == null || data.avatar == "") {
-            avatarsrc = "/common/img/avatar.png";
+
+    //back to top
+    $("#toTop").hide();
+    $(".read").scroll(function() {
+        if ($(".read").scrollTop() > $(window).height() / 2) {
+            $("#toTop").fadeIn(500);
+            $("#toTop").hover(function() {
+                $(this).css("background-color", "#eeeeee");
+            }, function() {
+                $(this).css("background-color", "white");
+            });
         } else {
-            avatarsrc = qiniu_bucket_domain + data.avatar;
-        }
-        var applyhtml = '<div class="z">' +
-            '<p class="">' +
-            '<img class="" src="' + avatarsrc + '">' +
-            '</p>' +
-            '<p class="">' +
-            '<span class="" style="width: 57px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;display: block;">' + data.name + '</span>' +
-            '</p>' +
-            '</div>';
-        return applyhtml;
-    }
-    //3.活动成员
-var applylistdetail = function(id, limit = 10) {
-    var limit = limit;
-    var page = "";
-    var sendData = {
-        activity_id: id,
-        limit: limit,
-        page: page
-    }
-    console.log(sendData);
-    $.ajax({
-        url: ACTIVITY_ENROLL_LISTS,
-        type: 'post',
-        data: sendData,
-        headers: {
-            'Token': localStorage.getItem('token')
-        },
-        success: function(data) {
-            console.log(data);
-            if (data.code == 200) {
-                if (data.data.total > 0) {
-                    $("#acitivty-guests").children().remove();
-                    data.data.list.map(x => {
-                        $("#acitivty-guests").append(applylist(x));
-
-                    })
-                }
-                if (limit == "" || data.data.total <= 10) {
-                    $(".see-more").text("没有更多");
-                }
-
-            } else {
-                mess_tusi(data.message);
-            }
-        },
-        error: function(xhr) {
-            console.log(xhr);
+            $("#toTop").fadeOut(500);
         }
     })
-}
 
-//收藏
-var like = function(weid) {
-    console.log(weid);
-    $.ajax({
-        url: ACTIVITY_COLLECTION_STORE,
-        type: 'post',
-        data: { activity_id: weid },
-        dataType: 'json',
-        headers: {
-            'Token': localStorage.getItem('token')
-        },
-        success: function(data) {
-            console.log(data);
-            if (data.code == 200) {
-                /*console.log(data.data[0].praise_num);
-                $(".like-count").text(data.data[0].praise_num);
-                $(".read-like img").attr("src", "../common/img/good+.png");*/
-                $(".collect-btn-click").css({
-                    "background": '#d4d4d4',
-                    "cursor": 'default'
-                });
-                $(".collect-btn-click").text("已收藏");
-                $(".collect-btn-click").attr("id", data.data);
-                // $(".collect-btn-click").unbind("click");
-                /* data.data.map(x => {
-                     $("#collectnum").text(x.collections);
-
-                 })*/
-                likeState = true;
-            } else {
-                mess_tusi("请登录");
-            }
-        },
-        error: function(xhr) {
-            console.log(xhr);
-        }
+    $("#toTop").click(function() {
+        $('.read').animate({ scrollTop: 0 }, 300);
     })
-}
-var canclecollect = function(id) {
-    $.ajax({
-        // url: ACTIVITY_LIST,
-        url: ACTIVITY_COLLECTION_DESTROY + "/" + id,
-        type: 'get',
-        success: function(data) {
-            console.log(data);
-            if (data.code == 200) {
-                $(".collect-btn-click").css({
-                    "background": '#80ccf4',
-                    "cursor": 'pointer'
-                });
-                $(".collect-btn-click").text("+收藏");
-            }
-        },
-        error: function(xhr) {
-            console.log(xhr);
-        }
-    })
-}
 
 
-/* var iscollect=function(id){
-     $.ajax({
-         url: GOODS_COLLECTION_ISCOLLECTION+'/' + id,
-         type:'get',
-         headers: {
-                 'Token': localStorage.getItem('token')
-             },
-         success:function(data){
-             console.log(data);
-             if(data.code!=401){
-                 if(data.code!=200 ){
-                 $(".collect-btn-click").css({
-                     "background":'#d4d4d4',
-                     "cursor":'default'
-                 });
-                 // $(".collect-btn-click").unbind("click");
-                 $(".collect-btn-click").data("id",2);
-             }
-             }
-
-         }
-     })
- }*/
-var activityinfo = function(weid) {
-    $.ajax({
-        url: ACTIVITY_ACTIVITYINFO + '/' + weid,
-        type: 'get',
-        headers: {
-            'Token': localStorage.getItem('token')
-        },
-        success: function(data) {
-            console.log(data);
-            if (data.code == 200) {
-                $(".act_num").text(data.data.count);
-                $(".act_per_num").text(data.data.countmember);
-            }
-
-        }
-    })
-}
-
-
-//back to top
-$("#toTop").hide(); $(".read").scroll(function() {
-    if ($(".read").scrollTop() > $(window).height() / 2) {
-        $("#toTop").fadeIn(500);
-        $("#toTop").hover(function() {
-            $(this).css("background-color", "#eeeeee");
-        }, function() {
-            $(this).css("background-color", "white");
-        });
-    } else {
-        $("#toTop").fadeOut(500);
-    }
-})
-
-$("#toTop").click(function() {
-    $('.read').animate({ scrollTop: 0 }, 300);
-})
-
-
-//获取通用用户信息
-var host = ApiMaterPlatQiniuDomain; console.log(localStorage.getItem('weid')) var getUserDomain = function(id) {
-    $.ajax({
-        url: USERDETAIL + '/' + id,
-        type: 'get',
-        success: function(data) {
-            console.log(data);
-            if (data.code == 200) {
-                if (data.data != null) {
-                    localStorage.setItem('dataPhone', data.data.phone);
-                    localStorage.setItem('realName', data.data.real_name);
-
-                } else {
-                    localStorage.setItem('dataPhone', '');
-                    localStorage.setItem('realName', '');
-                }
-                // console.log(data.data.phone)
-            } else {
-                layer.mag(massage);
-            }
-        },
-        error: function(xhr) {
-            console.log(xhr);
-        }
-    })
-}
-getUserDomain(localStorage.getItem('weid'));
-var getUserInfo = function(url, id) {
-    $.ajax({
-        url: url + id,
-        type: 'get',
-        /*headers: {
-            'Token': localStorage.getItem('token')
-        },*/
-        success: function(data) {
-
-            console.log(data);
-            if (data.code == 200) {
-                var info = data.data;
-
-                var weid = info.weid;
-                console.log(weid)
-                var imgUrl = info.avatar;
-                if (imgUrl.indexOf('http') === -1) {
-                    imgUrl = host + imgUrl;
-                }
-                if (info.avatar != "") {
-                    // $("#head-icon, .user-head").css({
-                    //     "background": "url(" + imgUrl + ") no-repeat center",
-                    //     "background-size": "100%"
-                    // });
-                    $(".top_avatar>img").attr("src", imgUrl);
-
-
-
-                } else {
-                    // $("#head-icon, .user-head").css({
-                    //     "background": "url(/common/img/avatar.png) no-repeat center",
-                    //     "background-size": "110%"
-                    // });
-                    $(".top_avatar>img").attr("src", "/common/img/avatar.png");
-
-                }
-                if (info.nickname == null) {
-                    var nickname = info.real_name;
-                } else {
-                    var nickname = info.nickname;
-                }
-                $(".line-0,.linkto").html(
-                    nickname + '<img src="/common/img/vrenzheng.png" alt="">'
-                );
-                $(".oline-2").find("span").eq(1).text(info.motto);
-                $(".user-cnt").text(info.real_name);
-                artCount(weid);
-                //artTypeList(weid);
-                // catesfun(weid);
-                startactivitydetail(activityid, nickname, imgUrl);
-                activityinfo(weid);
-
-            }
-        },
-        error: function(xhr) {
-            console.log(xhr);
-        }
-    })
-}
-
-var hasDomain = function(weid) {
-    $.ajax({
-        url: PAGES_PAGE_GETDETAILBYUSER + weid,
-        type: 'GET',
-        headers: {
-            'Token': localStorage.getItem('token')
-        },
-        success: function(data) {
-            if (data.code == 200) {
+    //获取通用用户信息
+    var host = ApiMaterPlatQiniuDomain;
+    console.log(localStorage.getItem('weid')) var getUserDomain = function(id) {
+        $.ajax({
+            url: USERDETAIL + '/' + id,
+            type: 'get',
+            success: function(data) {
                 console.log(data);
-                if (data.data == null) {
+                if (data.code == 200) {
+                    if (data.data != null) {
+                        localStorage.setItem('dataPhone', data.data.phone);
+                        localStorage.setItem('realName', data.data.real_name);
 
+                    } else {
+                        localStorage.setItem('dataPhone', '');
+                        localStorage.setItem('realName', '');
+                    }
+                    // console.log(data.data.phone)
                 } else {
-                    //微主页banner图
-                    var bgLogo = data.data.background;
-                    if (bgLogo != null) {
-                        $("#art-head").css({
-                            "background": "url(" + imgSet(bgLogo, 1100, 235, 3) + ") no-repeat center",
-                            "background-size": "100%"
-                        });
-                    }
-                    //微名片背景
-                    var bgUser = data.data.background_user;
-                    if (bgUser != null) {
-                        $(".user-info").css({
-                            "background": "url(" + imgSet(bgUser, 328, 130, 3) + ") no-repeat center",
-                            "background-size": "100%"
-                        });
-                    }
-                    if (data.data.is_brand == 1) {
-                        hasBrand(userId);
-                    }
+                    layer.mag(massage);
                 }
-            } else {
-                /*layer.msg(data.message, {
-                    time: 1500
-                });*/
+            },
+            error: function(xhr) {
+                console.log(xhr);
             }
-        },
-        error: function(xhr) {
-            console.log(xhr);
-        }
-    })
-}
+        })
+    }
+    getUserDomain(localStorage.getItem('weid'));
+    var getUserInfo = function(url, id) {
+        $.ajax({
+            url: url + id,
+            type: 'get',
+            /*headers: {
+                'Token': localStorage.getItem('token')
+            },*/
+            success: function(data) {
 
-var hasBrand = function(weid) {
-    $.ajax({
-        url: BRAND_DETAIL_USER + '/' + weid,
-        type: 'GET',
-        headers: {
-            'Token': localStorage.getItem('token')
-        },
-        success: function(data) {
-            console.log(data);
-            if (data.code == 200) {
                 console.log(data);
-                if (data.data == null) {
+                if (data.code == 200) {
+                    var info = data.data;
 
-                } else {
-                    $(".line-0").html(
-                        data.data.title + '<img src="/user/img/vrenzheng.png" alt="">'
+                    var weid = info.weid;
+                    console.log(weid)
+                    var imgUrl = info.avatar;
+                    if (imgUrl.indexOf('http') === -1) {
+                        imgUrl = host + imgUrl;
+                    }
+                    if (info.avatar != "") {
+                        // $("#head-icon, .user-head").css({
+                        //     "background": "url(" + imgUrl + ") no-repeat center",
+                        //     "background-size": "100%"
+                        // });
+                        $(".top_avatar>img").attr("src", imgUrl);
+
+
+
+                    } else {
+                        // $("#head-icon, .user-head").css({
+                        //     "background": "url(/common/img/avatar.png) no-repeat center",
+                        //     "background-size": "110%"
+                        // });
+                        $(".top_avatar>img").attr("src", "/common/img/avatar.png");
+
+                    }
+                    if (info.nickname == null) {
+                        var nickname = info.real_name;
+                    } else {
+                        var nickname = info.nickname;
+                    }
+                    $(".line-0,.linkto").html(
+                        nickname + '<img src="/common/img/vrenzheng.png" alt="">'
                     );
-                    $(".line-1").text("品牌介绍");
-                    var logo = data.data.logo;
-                    if (logo != null) {
-                        $("#head-icon").css({
-                            "background": "url(" + logo + ") no-repeat center",
-                            "background-size": "100%"
-                        });
+                    $(".oline-2").find("span").eq(1).text(info.motto);
+                    $(".user-cnt").text(info.real_name);
+                    artCount(weid);
+                    //artTypeList(weid);
+                    // catesfun(weid);
+                    startactivitydetail(activityid, nickname, imgUrl);
+                    activityinfo(weid);
+
+                }
+            },
+            error: function(xhr) {
+                console.log(xhr);
+            }
+        })
+    }
+
+    var hasDomain = function(weid) {
+        $.ajax({
+            url: PAGES_PAGE_GETDETAILBYUSER + weid,
+            type: 'GET',
+            headers: {
+                'Token': localStorage.getItem('token')
+            },
+            success: function(data) {
+                if (data.code == 200) {
+                    console.log(data);
+                    if (data.data == null) {
+
+                    } else {
+                        //微主页banner图
+                        var bgLogo = data.data.background;
+                        if (bgLogo != null) {
+                            $("#art-head").css({
+                                "background": "url(" + imgSet(bgLogo, 1100, 235, 3) + ") no-repeat center",
+                                "background-size": "100%"
+                            });
+                        }
+                        //微名片背景
+                        var bgUser = data.data.background_user;
+                        if (bgUser != null) {
+                            $(".user-info").css({
+                                "background": "url(" + imgSet(bgUser, 328, 130, 3) + ") no-repeat center",
+                                "background-size": "100%"
+                            });
+                        }
+                        if (data.data.is_brand == 1) {
+                            hasBrand(userId);
+                        }
                     }
-                }
-
-            } else {
-                layer.msg(data.message, {
-                    time: 1500
-                });
-            }
-        },
-        error: function(xhr) {
-            console.log(xhr);
-        }
-    })
-}
-
-//个性域名用户weid
-var userId;
-var __init = function(domain) {
-    $.ajax({
-        url: PAGES_DETAIL_DOMAIN + domain,
-        type: 'GET',
-        success: function(data) {
-            if (data.code == 200) {
-                //var domain = data.data.domain;
-                console.log(data);
-                if (data.data != null) {
-                    userId = data.data.plat_user_id;
-                    console.log('userId:', userId);
-                    console.log('userDetail')
-                    getUserInfo(USERDETAIL, "/" + userId);
-                    hasDomain(userId);
                 } else {
-                    domain = '';
-                    getUserInfo(FOUNDER, '');
-                    console.log('router error')
+                    /*layer.msg(data.message, {
+                        time: 1500
+                    });*/
                 }
-            } else {
-                // window.location.href = "/*";
+            },
+            error: function(xhr) {
+                console.log(xhr);
             }
-        },
-        error: function(xhr) {
-            console.log(xhr);
-        }
-    })
-}
+        })
+    }
 
-if (domain == 'wemall') {
-    domain = '';
-} else {
-    domain = "/" + domain;
-}
+    var hasBrand = function(weid) {
+        $.ajax({
+            url: BRAND_DETAIL_USER + '/' + weid,
+            type: 'GET',
+            headers: {
+                'Token': localStorage.getItem('token')
+            },
+            success: function(data) {
+                console.log(data);
+                if (data.code == 200) {
+                    console.log(data);
+                    if (data.data == null) {
 
-if (domain != '') {
-    __init(domain);
-}
+                    } else {
+                        $(".line-0").html(
+                            data.data.title + '<img src="/user/img/vrenzheng.png" alt="">'
+                        );
+                        $(".line-1").text("品牌介绍");
+                        var logo = data.data.logo;
+                        if (logo != null) {
+                            $("#head-icon").css({
+                                "background": "url(" + logo + ") no-repeat center",
+                                "background-size": "100%"
+                            });
+                        }
+                    }
 
-var artCount = function(weid) {
-    $.ajax({
-        url: ARTICLES_LISTCOUNT + "?userId=" + weid,
-        type: 'get',
-        success: function(data) {
-            //console.log(data);
-            if (data.code == 200) {
-                $(".user-art").children('div:eq(0)').text(data.data);
+                } else {
+                    layer.msg(data.message, {
+                        time: 1500
+                    });
+                }
+            },
+            error: function(xhr) {
+                console.log(xhr);
             }
-        },
-        error: function(xhr) {
-            console.log(xhr);
-        }
-    })
-}
+        })
+    }
 
-var favicon = ApiMaterPlatQiniuDomain + localStorage.getItem('fav'); $('#favicon').attr('href', favicon);
+    //个性域名用户weid
+    var userId;
+    var __init = function(domain) {
+        $.ajax({
+            url: PAGES_DETAIL_DOMAIN + domain,
+            type: 'GET',
+            success: function(data) {
+                if (data.code == 200) {
+                    //var domain = data.data.domain;
+                    console.log(data);
+                    if (data.data != null) {
+                        userId = data.data.plat_user_id;
+                        console.log('userId:', userId);
+                        console.log('userDetail')
+                        getUserInfo(USERDETAIL, "/" + userId);
+                        hasDomain(userId);
+                    } else {
+                        domain = '';
+                        getUserInfo(FOUNDER, '');
+                        console.log('router error')
+                    }
+                } else {
+                    // window.location.href = "/*";
+                }
+            },
+            error: function(xhr) {
+                console.log(xhr);
+            }
+        })
+    }
+
+    if (domain == 'wemall') {
+        domain = '';
+    } else {
+        domain = "/" + domain;
+    }
+
+    if (domain != '') {
+        __init(domain);
+    }
+
+    var artCount = function(weid) {
+        $.ajax({
+            url: ARTICLES_LISTCOUNT + "?userId=" + weid,
+            type: 'get',
+            success: function(data) {
+                //console.log(data);
+                if (data.code == 200) {
+                    $(".user-art").children('div:eq(0)').text(data.data);
+                }
+            },
+            error: function(xhr) {
+                console.log(xhr);
+            }
+        })
+    }
+
+    var favicon = ApiMaterPlatQiniuDomain + localStorage.getItem('fav');
+    $('#favicon').attr('href', favicon);
 
 })
