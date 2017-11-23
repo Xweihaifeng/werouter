@@ -477,6 +477,9 @@ $(document).ready(function() {
                 success: function() {
 
                 },
+                end: function() {
+                    location.reload();
+                },
                 shade: 0.7
             });
         });
