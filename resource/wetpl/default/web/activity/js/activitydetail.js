@@ -271,85 +271,102 @@ $(document).ready(function() {
         $('.bbbao').append('<span> <a href="javascript:" data-id="1" class="support1" disabled="disabled" style="background: #ccc">已经报名</a></span>')
     }
     var Ticket = function(data) {
-        layer.config({
-            skin: 'winning-class' //自定义样式demo-class
-        })
-        var closeticket = layer.open({
-            skin: 'winning-class',
-            type: 1,
-            area: ['500px', '650px'],
-            title: 0,
-            closeBtn: 0,
-            shadeClose: true,
-            scrollbar: false,
-            content: '<div class="ticket-box">' +
-                '<div class="ticket-box-top">' +
-                '<div class="t_blank"></div>' +
-                '<div class="ticket-qr"></div>' +
+            layer.config({
+                skin: 'winning-class' //自定义样式demo-class
+            })
+            var closeticket = layer.open({
+                skin: 'winning-class',
+                type: 1,
+                area: ['500px', '650px'],
+                title: 0,
+                closeBtn: 0,
+                shadeClose: true,
+                scrollbar: false,
+                content: '<div class="ticket-box">' +
+                    '<div class="ticket-box-top">' +
+                    '<div class="t_blank"></div>' +
+                    '<div class="ticket-qr"></div>' +
 
-                '<div style="width:92%;text-align:center;padding:10px 0;margin:0 auto;">票号：' + data.ticket_num + '</div>' +
-                '</div>' +
-                '<div class="ticket-box-bottom">' +
-                '<div class="ticket-title">' + data.title + '</div>' +
-                '<div class="ticket-time">' + data.begain_time + '&nbsp;' + data.begain_week + '&nbsp;' + data.begain_hour + '~~' + data.begain_time + '&nbsp;' + data.begain_week + '&nbsp;' + data.end_hour + '</div>' +
-                '<div class="ticket-addr"><span><i class="fa fa-map-marker"></i></span>&nbsp;：' + data.address + '</div>' +
-                '<div class="ticket-detail">' +
-                '<div class="ticket-name">' +
-                '<span class="sign_ticname"></span>：' + data.name +
-                '</div>' +
-                '<div class="ticket-phone">' +
-                '<span class="sign_telphone"></span>：' + data.telphone +
-                '</div>' +
-                '<div class="ticket-position">' +
-                '<span class="sign-ticzw"></span>：' + data.poistion +
-                '</div>' +
-                '<div class="ticket-company">' +
-                '<span class="sign-ticcom"></span>：' + data.company +
-                '</div>' +
-                '</div>' +
-                '</div>' +
-                '</div>',
-            end: function() {
-                location.reload();
-            },
-            shade: 0.7
-        });
-    }
-    var PaymentQR = function(qr_url, number) {
-        var paymentLayer = layer.open({
-            skin: 'winning-class',
-            type: 1,
-            area: ['300px', '650px'],
-            title: '微信扫码支付',
-            closeBtn: 0,
-            shadeClose: true,
-            scrollbar: false,
-            content: '<img src="' + QRCODE + '?url=' + qr_url + '" width="300">',
-            end: function() {
-                location.reload();
-            },
-            shade: 0.7
-        });
-        tmr = setInterval(function() {
-            $.ajax({
-                url: ACTIVITY_ENROLL_ORDER_DETECT,
-                type: 'post',
-                dataType: 'json',
-                data: {
-                    number: number
+                    '<div style="width:92%;text-align:center;padding:10px 0;margin:0 auto;">票号：' + data.ticket_num + '</div>' +
+                    '</div>' +
+                    '<div class="ticket-box-bottom">' +
+                    '<div class="ticket-title">' + data.title + '</div>' +
+                    '<div class="ticket-time">' + data.begain_time + '&nbsp;' + data.begain_week + '&nbsp;' + data.begain_hour + '~~' + data.begain_time + '&nbsp;' + data.begain_week + '&nbsp;' + data.end_hour + '</div>' +
+                    '<div class="ticket-addr"><span><i class="fa fa-map-marker"></i></span>&nbsp;：' + data.address + '</div>' +
+                    '<div class="ticket-detail">' +
+                    '<div class="ticket-name">' +
+                    '<span class="sign_ticname"></span>：' + data.name +
+                    '</div>' +
+                    '<div class="ticket-phone">' +
+                    '<span class="sign_telphone"></span>：' + data.telphone +
+                    '</div>' +
+                    '<div class="ticket-position">' +
+                    '<span class="sign-ticzw"></span>：' + data.poistion +
+                    '</div>' +
+                    '<div class="ticket-company">' +
+                    '<span class="sign-ticcom"></span>：' + data.company +
+                    '</div>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>',
+                end: function() {
+                    location.reload();
                 },
-                success: function(rep) {
-                    if (rep.data.state == 2) {
-                        clearInterval(tmr);
-                        Ticket(number);
-                    }
-                },
-                error: function(xhr) {
-                    console.log(xhr);
-                }
+                shade: 0.7
             });
-        }, 1000)
+        }
+        // 调起支付
+    var PaymentQR = function(qr_url, number) {
+            var paymentLayer = layer.open({
+                skin: 'winning-class',
+                type: 1,
+                area: ['300px', '650px'],
+                title: '微信扫码支付',
+                closeBtn: 0,
+                shadeClose: true,
+                scrollbar: false,
+                content: '<img src="' + QRCODE + '?url=' + qr_url + '" width="300">',
+                end: function() {
+                    location.reload();
+                },
+                shade: 0.7
+            });
+            tmr = setInterval(function() {
+                $.ajax({
+                    url: ACTIVITY_ENROLL_ORDER_DETECT,
+                    type: 'post',
+                    dataType: 'json',
+                    data: {
+                        number: number
+                    },
+                    success: function(rep) {
+                        if (rep.data.state == 2) {
+                            clearInterval(tmr);
+                            Ticket(number);
+                        }
+                    },
+                    error: function(xhr) {
+                        console.log(xhr);
+                    }
+                });
+            }, 1000)
+        }
+        // 获取我的订单<针对本活动>
+    var GetOrder = function(activity_id, callback) {
+        $.ajax({
+            url: ACTIVITY_ENROLL_MYORDER,
+            type: 'post',
+            dataType: 'json',
+            data: {
+                activity_id: activity_id
+            },
+            success: callback(rep),
+            error: function(xhr) {
+                console.log(xhr);
+            }
+        });
     }
+
 
     var Support = function(id, nickname, imgUrl, applyid) {
         var datauser = '';
@@ -789,17 +806,20 @@ $(document).ready(function() {
                                 mess_tusi("时间已截至");
 
                             } else {
-                                alert(id);
-                                alert($(this).data('id'));
-                                if (data.data.enroll_num < data.data.enroll_limit || data.data.enroll_limit == 0) {
-                                    Support(id, nickname, imgUrl, $(this).data('id'));
-                                    $('#phone').val(localStorage.getItem('dataPhone'));
-                                    $('#username').val(localStorage.getItem('realName'));
+                                getOrder(function($rep) {
+                                    if (rep.data.status == 1) {
+                                        if (data.data.enroll_num < data.data.enroll_limit || data.data.enroll_limit == 0) {
+                                            Support(id, nickname, imgUrl, $(this).data('id'));
+                                            $('#phone').val(localStorage.getItem('dataPhone'));
+                                            $('#username').val(localStorage.getItem('realName'));
+                                        } else {
+                                            mess_tusi("报名人数已到上限");
+                                        }
+                                    } else {
+                                        PaymentQR(data.data.number);
+                                    }
+                                });
 
-
-                                } else {
-                                    mess_tusi("报名人数已到上限");
-                                }
                             }
 
                         })
