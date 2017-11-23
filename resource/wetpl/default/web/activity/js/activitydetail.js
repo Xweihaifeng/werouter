@@ -620,7 +620,7 @@ $(document).ready(function() {
                     logBt();
             }
         });
-        $(".apply_submit").bind("click", function() {
+        $(document).on("click", ".apply_submit", function() {
             console.log(localStorage.getItem('dataPhone'))
 
             var name = $('#username').val();
