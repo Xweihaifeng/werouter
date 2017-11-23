@@ -158,6 +158,20 @@ $(function() {
         console.error(error);
     });
 
+    var quantity = $("#quantity");  
+    $("#add").click(function(){  
+        quantity.val(parseInt(quantity.val()) + 1);  
+        $("#min").removeAttr("disabled");                  //当按加1时，解除$("#min")不可读状态
+    })
+
+    $("#min").click(function(){  
+        if (parseInt(quantity.val())>1) {                  //判断数量值大于1时才可以减少  
+            quantity.val(parseInt(quantity.val()) - 1)  
+        } else {  
+            $("#min").attr("disabled","disabled")          //当$("#min")为1时，$("#min")不可读状态  
+        }  
+    })
+
     // 商品详情内容显示
     var options1 = $.get(GOODS_DETAIL + "/" + shop_weid);
     options1.done(function(data) {
@@ -184,6 +198,32 @@ $(function() {
             grabCursor: true
         })
 
+        $(".detail_footer_pay").click(function() {
+
+            var options12 = $.get(apiUrl + "mall/detail/" + result.mall_id), name;
+            options12.done(function(data) {
+                if(data.code == 200) {
+                    name = data.data.title
+                    if(!name) {
+                        name = "";
+                    }
+                }
+            });
+            options12.fail(function(error) {
+                console.error(error);
+            });
+
+            result.goods_num = $("#quantity").val();
+            var goodsList    = new Array();
+            var orderObj = {
+                name     : name,
+                goodsList: goodsList,
+            };
+            goodsList.push(result);
+
+            window.localStorage.setItem('orderObj',JSON.stringify(orderObj));
+            window.location.href = '/shopping/order';
+        });
     });
     options1.fail(function(error) {
         console.error(error);
