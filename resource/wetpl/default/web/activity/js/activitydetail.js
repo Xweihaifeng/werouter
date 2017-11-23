@@ -571,59 +571,10 @@ $(document).ready(function() {
                 }
             })
         }
-
-        //点击在线验证按钮
-        var logBt = function() {
-            phoneNum = $("#phone").val();
-            checkNum = $(".check-num-apply").val();
-            console.log(checkNum, phoneNum);
-            var regexp = /^(13|14|17|15|18)/;
-            var reg = new RegExp(regexp);
-            if (reg.test(phoneNum) && phoneNum.length == 11 && checkNum.length == 5) {
-                login(phoneNum, checkNum);
-            } else {
-                if (!(phoneNum.length == 11) || !reg.test(phoneNum)) {
-
-                    layer.msg("手机号码错误", {
-                        time: 1000
-                    });
-                    return;
-                }
-                if (!(checkNum.length == 5) || !isCheckNum) {
-                    layer.msg("手机验证码错误", {
-                        time: 1000
-                    });
-                    return;
-                }
-                /*if (!isChecked) {
-                    mess_tusi("请确认服务条款");
-                    return;
-                }*/
-            }
-        }
-
-        $(".sign_yz_on").click(function() {
-
-            logBt();
-        })
-
-        $("#phone").keydown(function(evt) {
-            switch (evt.keyCode) {
-                case 13:
-                    $(".check-num-apply").select();
-            }
-        });
-
-        $(".check-num-apply").keydown(function(evt) {
-            switch (evt.keyCode) {
-                case 13:
-                    logBt();
-            }
-        });
         setTimeout(function() {
 
 
-            $(".apply_submit").unbind().bind("click", function() {
+            $(".apply_submit").bind("click", function() {
                 console.log(localStorage.getItem('dataPhone'))
 
                 var name = $('#username').val();
@@ -704,7 +655,56 @@ $(document).ready(function() {
                     }
                 })
             })
-        }, 2000);
+        }, 1000);
+
+        //点击在线验证按钮
+        var logBt = function() {
+            phoneNum = $("#phone").val();
+            checkNum = $(".check-num-apply").val();
+            console.log(checkNum, phoneNum);
+            var regexp = /^(13|14|17|15|18)/;
+            var reg = new RegExp(regexp);
+            if (reg.test(phoneNum) && phoneNum.length == 11 && checkNum.length == 5) {
+                login(phoneNum, checkNum);
+            } else {
+                if (!(phoneNum.length == 11) || !reg.test(phoneNum)) {
+
+                    layer.msg("手机号码错误", {
+                        time: 1000
+                    });
+                    return;
+                }
+                if (!(checkNum.length == 5) || !isCheckNum) {
+                    layer.msg("手机验证码错误", {
+                        time: 1000
+                    });
+                    return;
+                }
+                /*if (!isChecked) {
+                    mess_tusi("请确认服务条款");
+                    return;
+                }*/
+            }
+        }
+
+        $(".sign_yz_on").click(function() {
+
+            logBt();
+        })
+
+        $("#phone").keydown(function(evt) {
+            switch (evt.keyCode) {
+                case 13:
+                    $(".check-num-apply").select();
+            }
+        });
+
+        $(".check-num-apply").keydown(function(evt) {
+            switch (evt.keyCode) {
+                case 13:
+                    logBt();
+            }
+        });
 
     }
 
