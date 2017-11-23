@@ -77,7 +77,9 @@
             init : function () {
                 this.$http.get(apiUrl + 'users/address/list').then(function (res) {
                     console.log(res);
-                    this.addrList = res.data.data.list;
+                    if(res.data && res.data.code === 200){
+                        this.addrList = res.data.data.list;
+                    }
                 })
             },
             selectDefault :function (addr) {
