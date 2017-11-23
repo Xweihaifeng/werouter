@@ -746,6 +746,12 @@
                          })
 
                          CKEDITOR.instances.editor1.setData(data.data.content);
+                         if (data.data.type == 1) {
+                             $("input[name=type]").eq(0).click();
+                             $("input[name=price]").val(data.data.price);
+                         } else {
+                             $("input[name=price]").val(data.data.price);
+                         }
                          $("#J_ActivityLimit").val(data.data.enroll_limit);
                          if (data.data.is_private == 2) {
                              $('#J_ActivityProperty').get(0).checked = true;
