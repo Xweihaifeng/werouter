@@ -817,8 +817,10 @@ $(document).ready(function() {
                                         } else {
                                             mess_tusi("报名人数已到上限");
                                         }
-                                    } else {
+                                    } else if (rep.data.status == 2) {
                                         wechat_scan_pay(data.data.number);
+                                    } else if (rep.data.status == 3) {
+                                        mess_tusi(rep.data.msg);
                                     }
                                 });
 
