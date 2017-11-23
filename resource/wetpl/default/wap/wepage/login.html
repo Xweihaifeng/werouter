@@ -71,14 +71,18 @@
                     },
                 success: function(data){
                     console.log(data);
-                    alert(2)
+//                    alert(2)
                     if (data.code == 200) {
                         layer.msg('激活成功', {
                             time: 1500
                         })
+                        alert('token:' + data.data.token);
+                        sessionStorage.setItem('token', data.data.token);
                         let next = sessionStorage.getItem('nextPage');
                         alert(next);
-                        window.location.href = next;
+                        setTimeout(function(){
+                            window.location.href = next;
+                        }, 1500)
                     } else {
                         layer.msg(data.message, {
                             time: 1500
