@@ -808,7 +808,7 @@ $(document).ready(function() {
                                 mess_tusi("时间已截至");
 
                             } else {
-                                GetOrder(function(rep) {
+                                GetOrder(id, function(rep) {
                                     if (rep.data.status == 1) {
                                         if (data.data.enroll_num < data.data.enroll_limit || data.data.enroll_limit == 0) {
                                             Support(id, nickname, imgUrl, $(this).data('id'));
