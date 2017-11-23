@@ -422,7 +422,7 @@ $(document).ready(function() {
                     '<div class="sign_head_contain">' +
                     '<div class="act_title">' +
                     (rep.data.type == 1 ? '<img src="\/common\/img\/ticket-jia.png" ></div>' : '<p>￥<b>' +
-                        rep.data.price `</b></p>`) +
+                        rep.data.price + `</b></p>`) +
                     '</div>' +
                     '</div>' +
 
