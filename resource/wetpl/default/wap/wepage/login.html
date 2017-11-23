@@ -76,11 +76,11 @@
                         layer.msg('激活成功', {
                             time: 1500
                         })
-                        alert('token:' + data.token);
+//                        alert('token:' + data.token);
                         localStorage.setItem('token', data.token);
                         localStorage.setItem('activation', 3);
                         let next = sessionStorage.getItem('nextPage');
-                        alert(next);
+//                        alert(next);
                         setTimeout(function(){
                             window.location.href = '/' + next;
                         }, 1500)

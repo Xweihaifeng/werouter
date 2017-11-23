@@ -9,7 +9,7 @@ const reqDynamicList = (url) => {
         type: 'GET',
         async: false,
         headers: {
-          'Token': sessionStorage.getItem('token')
+          'Token': localStorage.getItem('token')
         },
         success: function(data){
             if (data.code == 200) {
@@ -23,7 +23,7 @@ const reqDynamicList = (url) => {
     })
 }
 
-alert(localStorage.getItem('token'))
+//alert(localStorage.getItem('token'))
 let type = 2;
 reqDynamicList('http://new.wezchina.com/api/circel/dynamic?type=' + type);
 
