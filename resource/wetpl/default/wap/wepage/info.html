@@ -6,6 +6,7 @@
     <title></title>
     <link rel="stylesheet" href="{{PATH_TML}}wepage/lib/weui.css" />
     <link rel="stylesheet" href="{{PATH_TML}}wepage/css/info.css"/>
+	<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
     <script src="{{PATH_TML}}wepage/lib/jquery.min.js"></script>
 	<script src="{{PATH_CONFIG}}"></script>
 	<script src="{{PATH_TML}}wepage/js/vue.min.js"></script>
@@ -97,7 +98,7 @@
 	</div>-->
 	<div class="foot">
 		<div>
-			<p class="enter" >关注</p>
+			<p class="enter" @click="enjoy">关注</p>
 			<p>投诉</p>
 		</div>		
 	</div>
@@ -118,7 +119,7 @@
 			},
 			success: function (data) {
 				//alert(3)
-				alert(JSON.stringify(data))
+				//alert(JSON.stringify(data))
 				//alert('token:' + data.token);
 				//alert('act:' + data.data.activation_status);
 				localStorage.setItem('weid', data.data.weid);
@@ -184,6 +185,7 @@
 				$.ajax({
 					url: apiUrl + 'wxjssdk',
 					type: 'POST',
+					async: false,
 					data: {
 						currenturl: window.location.href
 					},
@@ -201,7 +203,7 @@
 
 							wx.ready(function() {
 								var link = window.location.href;
-								alert('cover:', cover)
+//								alert('cover:', cover)
 								wx.onMenuShareTimeline({
 									title: title,
 									// 分享标题
@@ -307,6 +309,9 @@
 			care: function(){
 				var _self = this;
 				$(".enter").text("进入公众号");
+			},
+			enjoy: function(){
+
 			}
 		}
 	})
