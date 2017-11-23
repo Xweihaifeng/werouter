@@ -623,7 +623,7 @@ $(document).ready(function() {
         setTimeout(function() {
 
 
-            $(".apply_submit").ubind().bind("click", function() {
+            $(".apply_submit").unbind().bind("click", function() {
                 console.log(localStorage.getItem('dataPhone'))
 
                 var name = $('#username').val();
