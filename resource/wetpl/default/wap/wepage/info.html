@@ -130,13 +130,14 @@
 						var usertoken = localStorage.getItem('setopenid');
 						if (usertoken == 'true') {
 							openid = getUrlParam("openid");
+							alert('openid:' + openid)
 							if (openid != null) {
 								localStorage.setItem('openid', openid);
 							}
 //							alert('openid:' + localStorage.getItem('openid'));
 							//微信登录
 							$.ajax({
-								url: apiUrl + 'wxlogin',
+								url: 'http://new.wezchina.com/api/' + 'wxlogin',
 								type: 'POST',
 								data: {
 									openid: openid,
