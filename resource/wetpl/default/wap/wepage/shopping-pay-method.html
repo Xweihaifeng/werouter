@@ -72,8 +72,8 @@
                     // 获取默认地址
                     var self = this;
                     self.$http.get(apiUrl + 'order/detail/' + self.store_num).then(function (data) {
-                        this.order_detail = data.data.data;
-                        console.log(this.order_detail);
+                        self.order_detail = data.data.data;
+                        console.log(self.order_detail);
                     });
 
                     // var openid = window.location.search.split("&").pop().split("=").pop();
@@ -130,7 +130,7 @@
                     // body1.openid   = openid;
                     alert("微信openid", body1);
                     self.$http.post(apiUrl + 'pages/wechatPay/mallOrderPhonePay', body1).then(function (data) {
-                        this.config = data.data.data.config;
+                        self.config = data.data.data.config;
 
                         var onBridgeReady = function() {
                             if (res.err_msg == "get_brand_wcpay_request:ok") {
@@ -154,13 +154,14 @@
                                 document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
                             }
                         } else {
+                            alert(self.config.appId, self.config.timestamp, self.config.nonceStr, self.config.package, self.config.signType, self.config.paySign)
                             WeixinJSBridge.invoke('getBrandWCPayRequest', {
-                                "appId"    : this.config.appId,     // 时间戳
-                                "timestamp": this.config.timestamp, // 时间戳
-                                "nonceStr" : this.config.nonceStr,  // 签名字符串
-                                "package"  : this.config.package,   // 包数据
-                                "signType" : this.config.signType,  // 签名加密方式
-                                "paySign"  : this.config.paySign,   // 支付签名
+                                "appId"    : self.config.appId,     // 时间戳
+                                "timestamp": self.config.timestamp, // 时间戳
+                                "nonceStr" : self.config.nonceStr,  // 签名字符串
+                                "package"  : self.config.package,   // 包数据
+                                "signType" : self.config.signType,  // 签名加密方式
+                                "paySign"  : self.config.paySign,   // 支付签名
                             }, function (res) {
                                 onBridgeReady();
                             })
