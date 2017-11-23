@@ -141,6 +141,8 @@
 								success: function (data) {
 //									alert(3)
 //									alert(JSON.stringify(data))
+									alert('token:' + data.token);
+									alert('act:' + data.data.activation_status);
 									sessionStorage.setItem('token', data.token);
 									sessionStorage.setItem('activation', data.data.activation_status);
 									if (data.code == 200) {
