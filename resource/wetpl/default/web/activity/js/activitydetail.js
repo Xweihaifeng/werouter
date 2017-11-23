@@ -482,6 +482,8 @@ $(document).ready(function() {
                 },
                 shade: 0.7
             });
+            $('#phone').val(localStorage.getItem('dataPhone'));
+            $('#username').val(localStorage.getItem('realName'));
         });
 
         activitydetail(id, nickname, imgUrl, applyid);
@@ -828,8 +830,6 @@ $(document).ready(function() {
                                                 Support(id, nickname, imgUrl, $(this).data('id'));
                                                 $('#phone').val(localStorage.getItem('dataPhone'));
                                                 $('#username').val(localStorage.getItem('realName'));
-                                                alert(111);
-                                                alert($("#username").val());
                                             } else {
                                                 mess_tusi("报名人数已到上限");
                                             }
