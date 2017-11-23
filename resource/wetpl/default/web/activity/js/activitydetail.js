@@ -373,7 +373,6 @@ $(document).ready(function() {
 
 
     var Support = function(id, nickname, imgUrl, applyid) {
-        alert(112);
         var datauser = '';
         var realname = '';
         var disa = '';
@@ -813,7 +812,7 @@ $(document).ready(function() {
                                 $(".support").css("background", "#ccc");
 
                             }
-                            $(".support").bind("click", function() {
+                            $(".support").unbind().bind("click", function() {
 
 
                                 if (data.data.onStatus == "已结束") {
