@@ -344,7 +344,7 @@ $(document).ready(function() {
                     success: function(rep) {
                         if (rep.data.state == 2) {
                             clearInterval(tmr);
-                            activity_ebroll_detail(id);
+                            activity_ebroll_detail(rep.data.enroll_id);
                         }
                     },
                     error: function(xhr) {
