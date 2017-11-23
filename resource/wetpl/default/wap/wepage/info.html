@@ -139,6 +139,7 @@
 							$.ajax({
 								url: apiUrl + 'wxlogin',
 								type: 'POST',
+								async: false,
 								data: {
 									openid: openid,
 									ref_url: window.location.pathname,
