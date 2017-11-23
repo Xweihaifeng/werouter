@@ -109,22 +109,22 @@
                     let phonenum = self.phone;
                     if (/^1[3|4|5|7|8][0-9]{9}$/.test(phonenum)) {
                         getChecknum(phonenum);
+                        if (!self.lock) {
+                            let evt = setInterval(function () {
+                                self.lock = true;
+                                if (count > 0) {
+                                    self.info = count-- + '秒';
+                                } else {
+                                    self.info = '重新发送验证码';
+                                    self.lock = false;
+                                    clearInterval(evt);
+                                }
+                            }, 1000)
+                        }
                     } else {
                         layer.msg("请输入正确的手机号码", {
                             time: 1500
                         })
-                    }
-                    if (!self.lock) {
-                        let evt = setInterval(function () {
-                            self.lock = true;
-                            if (count > 0) {
-                                self.info = count-- + '秒';
-                            } else {
-                                self.info = '重新发送验证码';
-                                self.lock = false;
-                                clearInterval(evt);
-                            }
-                        }, 1000)
                     }
                 },
                 login: function() {
