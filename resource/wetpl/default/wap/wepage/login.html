@@ -78,6 +78,7 @@
                         })
                         alert('token:' + data.token);
                         sessionStorage.setItem('token', data.token);
+                        sessionStorage.setItem('activation', 3);
                         let next = sessionStorage.getItem('nextPage');
                         alert(next);
                         setTimeout(function(){
