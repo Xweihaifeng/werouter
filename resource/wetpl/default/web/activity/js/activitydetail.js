@@ -755,6 +755,7 @@ $(document).ready(function() {
     iscollection(localStorage.getItem("weid"), activityid);
     // 1获取活动详情
     var activitydetail = function(id, nickname, imgUrl, applyid = 0) {
+        alert('ss');
         $.ajax({
             url: ACTIVITY_DETAIL + "/" + id,
             type: 'get',
