@@ -746,10 +746,10 @@
                          })
 
                          CKEDITOR.instances.editor1.setData(data.data.content);
-                         if (data.data.type == 1) {
-                             $("input[name=price]").val(data.data.price);
-                         } else {
-                             $("input[name=price]").val(data.data.price);
+                         $("input[name='type'][value=" + data.data.type + "]").attr("checked", true);
+                         $("input[name=price]").val(data.data.price);
+                         if (data.data.type == 2) {
+                             $("input[name=price]").show();
                          }
                          $("#J_ActivityLimit").val(data.data.enroll_limit);
                          if (data.data.is_private == 2) {
