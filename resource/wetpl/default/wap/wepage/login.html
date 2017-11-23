@@ -76,7 +76,9 @@
                         layer.msg('激活成功', {
                             time: 1500
                         })
-                        window.location.href = sessionStorage.getItem('nextPage');
+                        let next = sessionStorage.getItem('nextPage');
+                        alert(next);
+                        window.location.href = next;
                     } else {
                         layer.msg(data.message, {
                             time: 1500
