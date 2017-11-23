@@ -103,6 +103,37 @@
 	</div>
 </div>	
 <script>
+	const wxlogin = (openid, ref) => {
+		//微信登录
+		$.ajax({
+			url: apiUrl + 'wxlogin',
+			type: 'POST',
+			async: false,
+			data: {
+				openid: openid,
+				ref_url: window.location.pathname,
+				ref_type: 2,
+				ref_id: window.location.pathname.split('/')[2],
+				domain: ref.domain
+			},
+			success: function (data) {
+				//alert(3)
+				alert(JSON.stringify(data))
+				//alert('token:' + data.token);
+				//alert('act:' + data.data.activation_status);
+				localStorage.setItem('weid', data.data.weid);
+				localStorage.setItem('token', data.token);
+				localStorage.setItem('activation', data.data.activation_status);
+				if (data.code == 200) {
+					if (isNull(data.token) == false) { //非空
+						localStorage.setItem('token-date', new Date().getTime())
+						localStorage.setItem('user-token', data.token);
+					}
+				}
+			}
+		})
+	}
+
 	const init = function(url, ref) {
 		$.ajax({
 			url: url,
@@ -133,36 +164,13 @@
 							alert('openid:' + openid)
 							if (openid != null) {
 								localStorage.setItem('openid', openid);
+								wxlogin(openid, ref);
+							} else {
+								let openid = localStorage.setItem('openid', openid);
+								wxlogin(openid, ref);
 							}
-							alert('store openid:' + localStorage.getItem('openid'));
-							//微信登录
-							$.ajax({
-								url: apiUrl + 'wxlogin',
-								type: 'POST',
-								async: false,
-								data: {
-									openid: openid,
-									ref_url: window.location.pathname,
-									ref_type: 2,
-									ref_id: window.location.pathname.split('/')[2],
-									domain: ref.domain
-								},
-								success: function (data) {
-//									alert(3)
-									alert(JSON.stringify(data))
-//									alert('token:' + data.token);
-//									alert('act:' + data.data.activation_status);
-									localStorage.setItem('weid', data.data.weid);
-									localStorage.setItem('token', data.token);
-									localStorage.setItem('activation', data.data.activation_status);
-									if (data.code == 200) {
-										if (isNull(data.token) == false) { //非空
-											localStorage.setItem('token-date', new Date().getTime())
-											localStorage.setItem('user-token', data.token);
-										}
-									}
-								}
-							})
+//							alert('store openid:' + localStorage.getItem('openid'));
+
 						}
 					} else {
 						//微信未跳转时
