@@ -140,12 +140,17 @@
 								type: 'POST',
 								data: {
 //									openid: openid
+									ref_url: window.location.pathname,
+									ref_type: 2,
+									ref_id: window.location.pathname.split('/')[2],
+									domain: ref.domain
 								},
 								success: function (data) {
 //									alert(3)
 //									alert(JSON.stringify(data))
 //									alert('token:' + data.token);
 //									alert('act:' + data.data.activation_status);
+									localStorage.setItem('weid', data.data.weid);
 									localStorage.setItem('token', data.token);
 									localStorage.setItem('activation', data.data.activation_status);
 									if (data.code == 200) {
