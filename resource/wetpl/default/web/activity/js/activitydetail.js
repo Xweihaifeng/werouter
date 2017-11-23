@@ -971,17 +971,18 @@ $(document).ready(function() {
     }
 
     $(".collect-btn-click").bind("click", function() {
-            console.log($(this).data("id"));
-            if ($(this).data("id") == 1) {
-                $(this).data("id", 2);
-                like(activityid);
-            } else if ($(this).data("id") == 2) {
-                canclecollect($(this).attr("id"));
-                $(this).data("id", 1);
+        console.log($(this).data("id"));
+        if ($(this).data("id") == 1) {
+            $(this).data("id", 2);
+            like(activityid);
+        } else if ($(this).data("id") == 2) {
+            canclecollect($(this).attr("id"));
+            $(this).data("id", 1);
 
-            }
+        }
 
-        }) $(".see-more").bind("click", function() {
+    })
+    $(".see-more").bind("click", function() {
             applylistdetail(activityid, "");
         })
         //3.1活动成员模板
