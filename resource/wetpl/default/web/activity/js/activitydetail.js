@@ -344,7 +344,7 @@ $(document).ready(function() {
                     success: function(rep) {
                         if (rep.data.state == 2) {
                             clearInterval(tmr);
-                            Ticket(number);
+                            activity_ebroll_detail(id);
                         }
                     },
                     error: function(xhr) {
