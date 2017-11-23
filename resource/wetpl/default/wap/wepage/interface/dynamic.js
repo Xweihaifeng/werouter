@@ -10,7 +10,7 @@ const reqDynamicList = (url) => {
         async: false,
         success: function(data){
             if (data.code == 200) {
-                //console.log(data.data.list)
+                console.log(data)
                 resp = data;
             }
         },

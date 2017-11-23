@@ -64,44 +64,113 @@
                 el: "#pay_section",
                 data: {
                     address_default : JSON.parse(window.sessionStorage.getItem('address_default')),
-                    store_num: window.sessionStorage.getItem('store_num'),
+                    store_num: window.location.pathname.split("/").pop(),
                     order_detail: '',
+                    config: ''
                 },
                 mounted: function() {
                     // 获取默认地址
                     var self = this;
                     self.$http.get(apiUrl + 'order/detail/' + self.store_num).then(function (data) {
-                        this.order_detail = data.data.data;
-                        console.log(this.order_detail);
+                        self.order_detail = data.data.data;
+                        console.log(self.order_detail);
                     });
 
-                    let body1 = new Object();
-                    // let openid = window.location.search.split("&").pop().split("=").pop();
-                    let openid = window.location.search.split("=").pop();
+                    // var openid = window.location.search.split("&").pop().split("=").pop();
+                    // var body1 = new Object();
+                    // var openid = window.location.search.split("=").pop();
+                    // body1.order_id = "3ab772d0-cf79-11e7-9bf4-8173ba741f45";
+                    // body1.openid   = "oBAbkwEfrEdh4oiK3IBs6fclRVwA";
+/*                    var body1 = {
+                        order_id: self.store_num,
+                        openid  : window.location.search.split("=").pop()
+                    };
                     // body1.order_id = self.store_num;
                     // body1.openid   = openid;
-                    body1.order_id = "3ab772d0-cf79-11e7-9bf4-8173ba741f45";
-                    body1.openid   = "oBAbkwEfrEdh4oiK3IBs6fclRVwA";
                     alert("微信openid", body1);
                     self.$http.post(apiUrl + 'pages/wechatPay/mallOrderPhonePay', body1).then(function (data) {
-                        var result = data.data.config;
-                        wx.chooseWXPay({
-                            appId    : result.appId,     // 时间戳
-                            timestamp: result.timestamp, // 时间戳
-                            nonceStr : result.nonceStr,  // 签名字符串
-                            package  : result.package,   // 包数据
-                            signType : result.signType,  // 签名加密方式
-                            paySign  : result.paySign,   // 支付签名
-                            success  : function (res) {  // 支付成功后的回调函数
-                                layer.msg("交易成功！", { time: 1500 });
-                            }
+                        var result = data.data.data.config;
+
+                        wx.config({
+                            // debug: true， // 开启调试模式，调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                            appId: result.appId， // 必填，公众号的唯一标识
+                            timestamp: result.timestamp， // 必填，生成签名的时间戳
+                            nonceStr: result.nonceStr， // 必填，生成签名的随机串
+                            signature: result.paySign，// 必填，签名，
+                            jsApiList: ["chooseWXPay"]//必填，需要使用的JS接口列表(权限)，所有JS接口列表下面会给出本人已经摘录好的!!!
                         });
-                    });
+
+                        wx.ready(function(){
+                            wx.chooseWXPay({
+                                appId    : result.appId,     // 时间戳
+                                timestamp: result.timestamp, // 时间戳
+                                nonceStr : result.nonceStr,  // 签名字符串
+                                package  : result.package,   // 包数据
+                                signType : result.signType,  // 签名加密方式
+                                paySign  : result.paySign,   // 支付签名
+                                success  : function (res) {  // 支付成功后的回调函数
+                                    layer.msg("交易成功！", { time: 1500 });
+                                }
+                            });
+                        });
+                    });*/
                     // if(!openid) {
                     //     alert("缺失openid", openid);
                     //     return false;
                     // } else {
-                    // }                    
+                    // }    
+
+
+
+                    var body1 = {
+                        order_id: self.store_num,
+                        openid  : window.location.search.split("=").pop()
+                    };
+                    // body1.order_id = self.store_num;
+                    // body1.openid   = openid;
+                    alert("微信openid", body1);
+                    self.$http.post(apiUrl + 'pages/wechatPay/mallOrderPhonePay', body1).then(function (data) {
+                        self.config = data.data.data.config;
+
+                        var onBridgeReady = function() {
+                            if (res.err_msg == "get_brand_wcpay_request:ok") {
+                                MessageBox.alert(commonToast["paySuccess"]).then(action => {
+                                    //支付成功 回到首页
+                                    alert("支付成功");
+                                });
+                            } else if (res.err_msg == "get_brand_wcpay_request:cancel") {
+                                //取消支付!
+                                alert("取消支付");
+                            } else {
+                                alert("未知");
+                            }
+                        }
+
+                        if (typeof WeixinJSBridge == "undefined") {
+                            if (document.addEventListener) {
+                                document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+                            } else if (document.attachEvent) {
+                                document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
+                                document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+                            }
+                        } else {
+                            alert(self.config.appId, self.config.timestamp, self.config.nonceStr, self.config.package, self.config.signType, self.config.paySign)
+                            WeixinJSBridge.invoke('getBrandWCPayRequest',
+                                self.config,
+                                // "appId"    : self.config.appId,     // 时间戳
+                                // "timestamp": self.config.timestamp, // 时间戳
+                                // "nonceStr" : self.config.nonceStr,  // 签名字符串
+                                // "package"  : self.config.package,   // 包数据
+                                // "signType" : self.config.signType,  // 签名加密方式
+                                // "paySign"  : self.config.paySign,   // 支付签名
+                            function (res) {
+                                onBridgeReady();
+                            })
+                        }
+                    });
+                },
+                ready: function() {
+
                 },
                 computed : {
 
@@ -116,14 +185,6 @@
                         window.location.href = apiUrl + 'mall/getMallOpenid?url=' + window.location.href + '&orderid=' + self.store_num;
 
                         // window.location.href = encodeURI(globalHost + '/openid?url=' + window.location.href);
-                    },
-                    is_weixn: function() {
-                        var ua = navigator.userAgent.toLowerCase();
-                        if (ua.match(/MicroMessenger/i) == "micromessenger") {
-                            return true;
-                        } else {
-                            return false;
-                        }
                     }
                 }
             })
