@@ -747,8 +747,9 @@
 
                          CKEDITOR.instances.editor1.setData(data.data.content);
                          if (data.data.type == 1) {
-                             $("input[name=type]").eq(0).click();
+                             $("input[name=type]").val(1);
                              $("input[name=price]").val(data.data.price);
+                             $("input[name=price]").show();
                          } else {
                              $("input[name=price]").val(data.data.price);
                          }
