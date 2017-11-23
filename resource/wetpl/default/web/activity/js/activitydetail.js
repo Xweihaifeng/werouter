@@ -829,7 +829,7 @@ $(document).ready(function() {
                                                 $('#phone').val(localStorage.getItem('dataPhone'));
                                                 $('#username').val(localStorage.getItem('realName'));
                                                 alert(111);
-                                                alert(("#username").val());
+                                                alert($("#username").val());
                                             } else {
                                                 mess_tusi("报名人数已到上限");
                                             }
