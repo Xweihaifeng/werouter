@@ -478,7 +478,7 @@ $(document).ready(function() {
 
                 },
                 end: function() {
-                    location.reload();
+                    layer.close(closeindex);
                 },
                 shade: 0.7
             });
