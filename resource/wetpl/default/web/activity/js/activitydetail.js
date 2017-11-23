@@ -234,6 +234,8 @@ $(document).ready(function() {
             success: function(data) {
                 if (data.code == 200) {
                     PaymentQR(data.data.qrcode_url);
+                } else {
+                    console.log(number);
                 }
 
             },
