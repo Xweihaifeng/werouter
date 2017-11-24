@@ -104,6 +104,7 @@ $(document).ready(function() {
                 act_title = data.title;
             }
         }
+        alert(data.is_expired);
         if (data.is_attend == 1)
             var mark = `<div class="show-tiket">已参与</div>`;
         else {
