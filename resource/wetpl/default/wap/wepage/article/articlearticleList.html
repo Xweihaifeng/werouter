@@ -4,43 +4,106 @@
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link rel="shortcut icon" id="favicon" href="" />
-    <link rel="stylesheet" href="{{PATH_TML}}wepage/css/home.css"/>
-    <link rel="stylesheet" href="{{PATH_TML}}wepage/css/common.css"/>
-    <script src="{{PATH_TML}}wepage/js/zepto.min.js"></script>
-    <script src="{{PATH_TML}}wepage/js/vue.min.js"></script>
-    <script src="{{PATH_TML}}wepage/js/layui/layui.all.js"></script>
+    <link rel="stylesheet" href="{{PATH_TML}}css/home.css"/>
+    <link rel="stylesheet" href="{{PATH_TML}}css/act.css"/>
+    <link rel="stylesheet" href="{{PATH_TML}}css/article.css"/>
+    <link rel="stylesheet" href="{{PATH_TML}}css/shopping.css"/>
+    <link rel="stylesheet" href="{{PATH_TML}}css/common.css"/>
+    <link rel="stylesheet" href="{{PATH_TML}}css/swiper.min.css"/>
+    <link rel="stylesheet" href="/common/jquery.animsition/css/animsition.min.css">
+    <!--<link rel="stylesheet" href="/common/magazine/css/iview.css">-->
+    <!--<script src="{{PATH_TML}}wepage/js/zepto.min.js"></script>-->
+    <script src="{{PATH_TML}}js/jquery-3.2.1.min.js"></script>
+    <script src="{{PATH_TML}}js/vue.min.js"></script>
+    <!--<script src="/common/magazine/js/iview.min.js"></script>-->
     <script type="text/javascript" src="{{PATH_CONFIG}}"></script>
-    <script src="{{PATH_TML}}wepage/js/home.js"></script>
-    <title>登录</title>
+    <script src="{{PATH_TML}}interface/my-dynamic.js"></script>
+    <script src="{{PATH_TML}}js/home.js"></script>
+    <script src="{{PATH_TML}}js/swiper-3.3.1.min.js"></script>
+    <script src="/common/jquery.animsition/js/jquery.animsition.min.js"></script>
+    <link rel="stylesheet" href="{{PATH_TML}}wepage/js/layui/css/layui.css"/>
+    <script src="{{PATH_TML}}js/layui/layui.js"></script>
+    <title>动态</title>
 </head>
-<body style="background: #ffffff; overflow-y: hidden;">
-    <div id="app">
-        <div id="login">
-            <a :href="backurl"><img id="goback" src="/common/img/return.png" /></a>
-            <p>手机号码登录</p>
-            <img id="user" src="/common/img/user.svg" width="20" />
-        </div>
-        <div id="login-title"><img src="/common/img/we-logo.png" alt=""/></div>
-        <div id="login-info-1">
-            <ul>
-                <li id="phonenum-1">
-                    <span>+86 <img src="/common/img/downarrow.png" alt=""/></span>
-                    <input type="text" placeholder="请输入手机号码" maxlength="11" v-model="phone"/>
-                </li>
-                <li id="checknum-1">
-                    <input type="text" placeholder="请输入手机验证码" maxlength="6" v-model="check"/>
-                    <span @click="getCheck">{{ info }}</span>
-                </li>
-                <li id="forget">
-                    <span></span>
-                    <span>忘记密码？</span>
-                </li>
-                <li id="login-bt" @click="login"><p>登录</p></li>
-            </ul>
+<body class="animsition">
+    <div id="carousel">
+        <div class="swiper-container" id="my-swiper">
+            <div class="swiper-wrapper carousel">
+                <div class="swiper-slide">
+                    <img src="/common/img/banner.png" alt=""/>
+                </div>
+                <div class="swiper-slide">
+                    <img src="/common/img/banner.png" alt=""/>
+                </div>
+            </div>
+            <div class="swiper-pagination"></div>
         </div>
     </div>
+    <nav></nav>
+    <div id="art-type">
+        <ul>
+            <a href="/my-article"><li><img src="/common/img/art.png" alt=""/><p>文章</p></li></a>
+            <a href="/my-activity"><li><img src="/common/img/act.png" alt=""/><p>活动</p></li></a>
+            <li><img src="/common/img/proj.png" alt=""/><p>项目</p></li>
+            <a href="/my-shopping"><li><img src="/common/img/shop.png" alt=""/><p>商品</p></li></a>
+        </ul>
+    </div>
+    <div id="art-rcmd">
+        <ul>
+            <li>
+                <!--<p>双十一特惠</p>-->
+                <img src="/common/img/adv_left.png" alt="" style="margin-left: 0.06rem;"/>
+            </li>
+            <li>
+                <!--<p>天降大红包</p>-->
+                <img src="/common/img/adv_right.png" alt="" style="margin-left: -0.04rem;"/>
+            </li>
+        </ul>
+    </div>
+    <div class="latest">最新动态</div>
+    <div id="container" class="my_container"></div>
+    <footer></footer>
 
     <script>
+        var mySwiper = new Swiper ('#my-swiper', {
+            direction: 'horizontal',
+            loop: true,
+            speed: 1000,
+            autoplay : 3000,
+            autoplayDisableOnInteraction : false,
+            pagination: '.swiper-pagination',
+            paginationClickable :true,
+            nextButton: '.swiper-button-next',
+            prevButton: '.swiper-button-prev',
+            grabCursor : true
+        })
+
+        $(function() {
+            $(".animsition").animsition({
+                inClass               :   'fade-in',
+                outClass              :   'fade-out',
+                inDuration            :    1500,
+                outDuration           :    800,
+                linkElement           :   '.animsition-link',
+                // e.g. linkElement   :   'a:not([target="_blank"]):not([href^=#])'
+                loading               :    true,
+                loadingParentElement  :   'body', //animsition wrapper element
+                loadingClass          :   'animsition-loading',
+                unSupportCss          : [ 'animation-duration',
+                    '-webkit-animation-duration',
+                    '-o-animation-duration'
+                ],
+                //"unSupportCss" option allows you to disable the "animsition" in case the css property in the array is not supported by your browser.
+                //The default setting is to disable the "animsition" in a browser that does not support "animation-duration".
+                overlay               :   false,
+
+                overlayClass          :   'animsition-overlay-slide',
+                overlayParentElement  :   'body'
+            });
+        });
+
+
+
         const getChecknum = (phone) => {
             $.ajax({
                 url: CODES,
@@ -61,15 +124,15 @@
                 url:  apiUrl + 'userAct',
                 type: 'post',
                 /*headers: {
-                    'Token': token
-                },*/
+                 'Token': token
+                 },*/
                 data: {
                     'phone': phoneNum,
                     'code': checkNum,
                     'weid': weid,
                     'type': 1,
                     'from_type': 2
-                    },
+                },
                 success: function(data){
                     console.log(data);
 //                    alert(2)
@@ -129,6 +192,11 @@
                     }
                 });
             },
+            mounted: function(){
+                $("#login-bt").click(function(){
+                    alert(1)
+                })
+            },
             methods: {
                 getCheck: function() {
                     let self = this;
@@ -177,6 +245,7 @@
                 }
             }
         })
+
     </script>
 </body>
 </html>
