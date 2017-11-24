@@ -348,16 +348,16 @@ $(document).ready(function() {
             paymentLayer = layer.open({
                 skin: 'layui-layer-rim',
                 type: 1,
-                area: ['450px', '450px'],
+                area: ['400px', '430px'],
                 title: '微信扫码支付',
-                closeBtn: 0,
-                shadeClose: true,
+                closeBtn: 2,
+                shadeClose: false,
                 scrollbar: false,
                 //content: '<img src="' + QRCODE + '?url=' + qr_url + '" width="300">',
                 content: `<div class="payment-block">
                             <div class="payment-qrcode"><img src="` + QRCODE + `?url=` + qr_url + `" width="300"></div>
                             <div class="payment-desc">
-                                <p>付款金额：<b>0.00</b></p>
+                                <p>付款金额：<b>` + CurrentActivity.price + `</b></p>
                             </div>
                         </div>`,
                 end: function() {
@@ -509,7 +509,7 @@ $(document).ready(function() {
                     '</div>' +
                     '</div>',
                 success: function() {
-
+                    CurrentActivity = rep.data;
                 },
                 end: function() {
                     //location.reload();
@@ -822,6 +822,7 @@ $(document).ready(function() {
                 success: function(data) {
                     if (data.code == 200) {
                         console.log(applyid);
+                        CurrentActivity = data.data;
                         $('title').text(data.data.title);
 
                         if (applyid == 1) {
