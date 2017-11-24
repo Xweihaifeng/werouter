@@ -28,6 +28,7 @@ $(document).ready(function() {
             '<div class="ticket-qr"></div>' +
 
             '<div style="width:92%;text-align:center;padding:10px 0;margin:0 auto;">票号：' + data.ticket_num + '</div>' +
+            '<div style="width:92%;text-align:center;padding:10px 0;margin:0 auto;">活动时请向发起人展示</div>' +
             '</div>' +
             '<div class="ticket-box-bottom">' +
             '<div class="ticket-title">' + data.title + '</div>' +
