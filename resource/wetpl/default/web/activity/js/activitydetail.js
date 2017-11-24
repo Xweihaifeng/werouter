@@ -348,7 +348,7 @@ $(document).ready(function() {
             paymentLayer = layer.open({
                 skin: 'winning-class',
                 type: 1,
-                area: ['300px', '650px'],
+                area: ['500px', '700px'],
                 title: '微信扫码支付',
                 closeBtn: 0,
                 shadeClose: true,
