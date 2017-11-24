@@ -849,7 +849,6 @@ $(document).ready(function() {
 
                                 } else {
                                     GetOrder(id, function(rep) {
-                                        layer.closeAll('loading');
                                         if (rep.code == 401 || rep.data.status == 1) {
                                             if (data.data.enroll_num < data.data.enroll_limit || data.data.enroll_limit == 0) {
                                                 Support(id, nickname, imgUrl, $(this).data('id'));
@@ -864,7 +863,6 @@ $(document).ready(function() {
                                             mess_tusi(rep.data.msg);
                                         }
                                     });
-                                    layer.load();
 
                                 }
 
