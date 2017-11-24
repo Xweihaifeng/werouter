@@ -346,7 +346,7 @@ $(document).ready(function() {
         // 调起支付
     var PaymentQR = function(qr_url, number) {
             paymentLayer = layer.open({
-                skin: 'winning-class',
+                skin: 'layui-layer-rim',
                 type: 1,
                 area: ['500px', '700px'],
                 title: '微信扫码支付',
