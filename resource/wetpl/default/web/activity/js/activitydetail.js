@@ -705,7 +705,6 @@ $(document).ready(function() {
                         'Token': localStorage.getItem('token')
                     },
                     success: function(data) {
-                        layer.closeAll('loading');
                         if (data.code == 200) {
                             localStorage.setItem("phone", "");
                             localStorage.setItem('dataPhone', "");
@@ -727,11 +726,9 @@ $(document).ready(function() {
                         }
                     },
                     error: function(xhr) {
-                        layer.closeAll('loading');
                         console.log(xhr);
                     }
                 });
-                layer.load();
             })
         }, 1000);
     }
