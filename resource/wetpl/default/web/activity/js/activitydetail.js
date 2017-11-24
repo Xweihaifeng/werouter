@@ -357,7 +357,7 @@ $(document).ready(function() {
                 content: `<div class="payment-block">
                             <div class="payment-qrcode"><img src="` + QRCODE + `?url=` + qr_url + `" width="300"></div>
                             <div class="payment-desc">
-                                <p>付款金额：<b>` + CurrentActivity.price + `</b></p>
+                                <p>付款金额：<b>￥` + CurrentActivity.price + `</b></p>
                             </div>
                         </div>`,
                 end: function() {
