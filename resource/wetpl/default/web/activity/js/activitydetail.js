@@ -319,7 +319,7 @@ $(document).ready(function() {
         }
         // 调起支付
     var PaymentQR = function(qr_url, number) {
-            var paymentLayer = layer.open({
+            paymentLayer = layer.open({
                 skin: 'winning-class',
                 type: 1,
                 area: ['300px', '650px'],
@@ -344,6 +344,7 @@ $(document).ready(function() {
                     success: function(rep) {
                         if (rep.data.state == 2) {
                             clearInterval(tmr);
+                            layer.close(paymentLayer);
                             activity_ebroll_detail(rep.data.enroll_id);
                         }
                     },
