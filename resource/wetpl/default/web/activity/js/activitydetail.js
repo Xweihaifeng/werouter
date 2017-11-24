@@ -478,7 +478,7 @@ $(document).ready(function() {
 
                 },
                 end: function() {
-                    location.reload();
+                    //location.reload();
                 },
                 shade: 0.7
             });
