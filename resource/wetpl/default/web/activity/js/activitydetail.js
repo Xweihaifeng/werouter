@@ -348,7 +348,7 @@ $(document).ready(function() {
             paymentLayer = layer.open({
                 skin: 'layui-layer-rim',
                 type: 1,
-                area: ['500px', '700px'],
+                area: ['450px', '450px'],
                 title: '微信扫码支付',
                 closeBtn: 0,
                 shadeClose: true,
