@@ -359,6 +359,7 @@ $(document).ready(function() {
                             <div class="payment-desc">
                                 <p>付款金额：<b>￥` + CurrentActivity.price + `</b></p>
                             </div>
+                            <div class="payment-mark"><img src="/common/img/wepay-logo.png"></div>
                         </div>`,
                 end: function() {
                     clearInterval(tmr);
