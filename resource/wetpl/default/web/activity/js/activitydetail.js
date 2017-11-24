@@ -15,6 +15,8 @@ var domain = url.slice(1, 2)[0];
 console.log('domain', domain);
 $(".linkto").attr('href', '/' + domain)
 $(document).ready(function() {
+    $(".top_avatar img").trigger("mouseover");
+    $(".top_avatar img").trigger("mouseenter");
     var qiniu_bucket_domain = ApiMaterPlatQiniuDomain;
     //获取当前网址，如： http://localhost:8083/proj/meun.jsp
     var curWwwPath = window.document.location.href;
@@ -204,7 +206,7 @@ $(document).ready(function() {
         document.cookie = "token=" + escape(token) + ";expires=" + exp.toGMTString() + ";path=/";
     }
     // avatar animation
-    $(".top_avatar img").trigger("mouseenter");
+    $(".top_avatar img").trigger("mouseover");
     var AvatarInterval = 0;
     var AvatarFlag = 0;
     var AvatarTimer = setInterval(function() {
