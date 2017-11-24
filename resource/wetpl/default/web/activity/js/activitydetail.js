@@ -319,7 +319,7 @@ $(document).ready(function() {
         }
         // 调起支付
     var PaymentQR = function(qr_url, number) {
-            var paymentLayer = layer.open({
+            paymentLayer = layer.open({
                 skin: 'winning-class',
                 type: 1,
                 area: ['300px', '650px'],
@@ -344,6 +344,7 @@ $(document).ready(function() {
                     success: function(rep) {
                         if (rep.data.state == 2) {
                             clearInterval(tmr);
+                            layer.close(paymentLayer);
                             activity_ebroll_detail(rep.data.enroll_id);
                         }
                     },
@@ -387,7 +388,7 @@ $(document).ready(function() {
         }
 
         GetActivity(id, function(rep) {
-            var closeindex = layer.open({
+            closeindex = layer.open({
                 type: 1,
                 area: ['600px', '740px'],
                 title: 0,
@@ -556,12 +557,23 @@ $(document).ready(function() {
                 type: 'post',
                 data: { 'phone': phoneNum, 'code': checkNum },
                 success: function(data) {
-                    console.log(data);
                     if (data.code != -200) {
 
                         localStorage.setItem('token', data.token);
                         localStorage.setItem('weid', data.data.weid);
                         localStorage.setItem('phone', data.data.phone);
+                        $.ajaxSetup({
+                            global: true,
+                            dataType: 'json',
+                            headers: {
+                                'Token': data.token
+                            },
+                            error: function() {
+                                layer.msg("系统错误，请稍后再试", {
+                                    time: 1000
+                                });
+                            }
+                        });
                         $(".sign_code,.sign_yz").css("display", "none");
                         isCheckNum = false;
                     } else {
@@ -695,7 +707,7 @@ $(document).ready(function() {
                             localStorage.setItem('dataPhone', "");
                             localStorage.setItem('realName', "");
                             //location.reload();
-                            //layer.close(closeindex);
+                            layer.close(closeindex);
                             if (data.data.status == 2)
                                 activity_ebroll_detail(data.data.enroll_id);
                             else if (data.data.status == 1)
