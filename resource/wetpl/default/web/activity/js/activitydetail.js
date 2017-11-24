@@ -527,7 +527,8 @@ $(document).ready(function() {
 
         var phoneNum = 0;
         var checkNum = 0;
-        $(".sign_code").bind("click", function() {
+        setTimeout(function() {
+            $(".sign_code").bind("click", function() {
 
                 console.log(!lock);
                 if (!lock) {
@@ -547,7 +548,8 @@ $(document).ready(function() {
                 }
 
             })
-            //在线验证
+        }, 1000);
+        //在线验证
         var login = function(phoneNum, checkNum) {
             $.ajax({
                 url: LOGIN,
@@ -606,11 +608,12 @@ $(document).ready(function() {
                 }*/
             }
         }
+        setTimeout(function() {
+            $(".sign_yz_on").click(function() {
 
-        $(".sign_yz_on").click(function() {
-
-            logBt();
-        })
+                logBt();
+            })
+        }, 1000);
 
         $("#phone").keydown(function(evt) {
             switch (evt.keyCode) {
