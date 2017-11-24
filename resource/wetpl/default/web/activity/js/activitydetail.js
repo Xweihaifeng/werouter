@@ -387,7 +387,7 @@ $(document).ready(function() {
         }
 
         GetActivity(id, function(rep) {
-            var closeindex = layer.open({
+            closeindex = layer.open({
                 type: 1,
                 area: ['600px', '740px'],
                 title: 0,
@@ -478,6 +478,7 @@ $(document).ready(function() {
 
                 },
                 end: function() {
+                    layer.close(closeindex);
                     //location.reload();
                 },
                 shade: 0.7
