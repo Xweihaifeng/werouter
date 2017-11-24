@@ -31,7 +31,7 @@ $(document).ready(function() {
             '</div>' +
             '<div class="ticket-box-bottom">' +
             '<div class="ticket-title">' + data.title + '</div>' +
-            '<div class="ticket-time">' + data.begain_time + '&nbsp;' + data.begain_week + '&nbsp;' + data.begain_hour + '~~' + data.begain_time + '&nbsp;' + data.begain_week + '&nbsp;' + data.end_hour + '</div>' +
+            '<div class="ticket-time">' + data.begain_time + '&nbsp;' + data.begain_week + '&nbsp;' + data.begain_hour + '~~' + data.end_time + '&nbsp;' + data.end_week + '&nbsp;' + data.end_hour + '</div>' +
             '<div class="ticket-addr"><span><i class="fa fa-map-marker"></i></span>&nbsp;：' + data.address + '</div>' +
             '<div class="ticket-detail">' +
             '<div class="ticket-name">' +
