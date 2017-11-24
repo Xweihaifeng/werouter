@@ -556,12 +556,23 @@ $(document).ready(function() {
                 type: 'post',
                 data: { 'phone': phoneNum, 'code': checkNum },
                 success: function(data) {
-                    console.log(data);
                     if (data.code != -200) {
 
                         localStorage.setItem('token', data.token);
                         localStorage.setItem('weid', data.data.weid);
                         localStorage.setItem('phone', data.data.phone);
+                        $.ajaxSetup({
+                            global: true,
+                            dataType: 'json',
+                            headers: {
+                                'Token': data.token
+                            },
+                            error: function() {
+                                layer.msg("系统错误，请稍后再试", {
+                                    time: 1000
+                                });
+                            }
+                        });
                         $(".sign_code,.sign_yz").css("display", "none");
                         isCheckNum = false;
                     } else {
