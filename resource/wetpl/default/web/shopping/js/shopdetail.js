@@ -28,7 +28,7 @@
             isLogin = true;
             //加载用户头像
             $("#login a").css({
-                'background': 'url(../common/img/p2240276035.jpg) no-repeat center',
+                'background': 'url(/common/img/p2240276035.jpg) no-repeat center',
                 'background-size': '100%'
             });
             $("#login a").addClass("i-header").html("");
@@ -382,7 +382,7 @@
     }
     var messtemplete=function(data){
         if(data.avatar==null || data.avatar==""){
-            var imgsrc="/common/img/bbd.png";
+            var imgsrc="/common/img/default_head.png";
         }else{
             var imgsrc=data.avatar;
         }
