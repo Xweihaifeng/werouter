@@ -204,9 +204,10 @@ $(document).ready(function() {
         document.cookie = "token=" + escape(token) + ";expires=" + exp.toGMTString() + ";path=/";
     }
     // avatar animation
+    $(".top_avatar img").trigger("mouseenter");
     var AvatarInterval = 0;
     var AvatarFlag = 0;
-    var AvatarTimer = setTimeout(function() {
+    var AvatarTimer = setInterval(function() {
         if (AvatarInterval % 5 == 0) {
             if (AvatarFlag == 0) {
                 AvatarFlag = 1;
