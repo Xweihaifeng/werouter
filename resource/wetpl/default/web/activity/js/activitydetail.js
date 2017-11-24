@@ -316,11 +316,12 @@ $(document).ready(function() {
                     '<div class="ticket-qr"></div>' +
 
                     '<div style="width:92%;text-align:center;padding:10px 0;margin:0 auto;">票号：' + data.ticket_num + '</div>' +
+                    '<div style="width:92%;text-align:center;padding:10px 0;margin:0 auto;">活动时请向发起人展示，该码可在个人中心查看</div>' +
                     '</div>' +
                     '<div class="ticket-box-bottom">' +
                     '<div class="ticket-title">' + data.title + '</div>' +
-                    '<div class="ticket-time">' + data.begain_time + '&nbsp;' + data.begain_week + '&nbsp;' + data.begain_hour + '~~' + data.begain_time + '&nbsp;' + data.begain_week + '&nbsp;' + data.end_hour + '</div>' +
-                    '<div class="ticket-addr"><span><i class="fa fa-map-marker"></i></span>&nbsp;：' + data.address + '</div>' +
+                    '<div class="ticket-time">' + data.begain_time + '&nbsp;' + data.begain_week + '&nbsp;' + data.begain_hour + '~~' + data.end_time + '&nbsp;' + data.end_week + '&nbsp;' + data.end_hour + '</div>' +
+                    '<div class="ticket-addr"><span><i class="fa fa-map-marker"></i></span>&nbsp;：' + data.area_name + data.address + '</div>' +
                     '<div class="ticket-detail">' +
                     '<div class="ticket-name">' +
                     '<span class="sign_ticname"></span>：' + data.name +
