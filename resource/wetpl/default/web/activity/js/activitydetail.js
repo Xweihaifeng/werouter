@@ -872,7 +872,7 @@ $(document).ready(function() {
 
 
                                 if (data.data.onStatus == "已结束") {
-                                    mess_tusi("时间已截至");
+                                    mess_tusi("来晚啦，该活动报名时间已过");
 
                                 } else {
                                     GetOrder(id, function(rep) {
@@ -883,7 +883,7 @@ $(document).ready(function() {
                                                 $('#phone').val(localStorage.getItem('dataPhone'));
                                                 $('#username').val(localStorage.getItem('realName'));
                                             } else {
-                                                mess_tusi("报名人数已到上限");
+                                                mess_tusi("来晚啦，该活动报名人数已满");
                                             }
                                         } else if (rep.data.status == 2) {
                                             wechat_scan_pay(rep.data.number);
