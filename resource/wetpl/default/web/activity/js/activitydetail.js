@@ -825,7 +825,7 @@ $(document).ready(function() {
 
                                 } else {
                                     GetOrder(id, function(rep) {
-                                        if (rep.data.status == 1) {
+                                        if (rep.code == 401 || rep.data.status == 1) {
                                             if (data.data.enroll_num < data.data.enroll_limit || data.data.enroll_limit == 0) {
                                                 Support(id, nickname, imgUrl, $(this).data('id'));
                                                 $('#phone').val(localStorage.getItem('dataPhone'));
