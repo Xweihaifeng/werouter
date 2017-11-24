@@ -196,12 +196,30 @@ $(document).ready(function() {
         console.log(domain);
     }
 
+    // 设置token cookie
     function setCookie(token, expiredays) {
         var Days = expiredays;
         var exp = new Date();
         exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000);
         document.cookie = "token=" + escape(token) + ";expires=" + exp.toGMTString() + ";path=/";
     }
+    // avatar animation
+    var AvatarInterval = 0;
+    var AvatarFlag = 0;
+    var AvatarTimer = setTimeout(function() {
+        if (AvatarInterval % 5 == 0) {
+            if (AvatarFlag == 0) {
+                AvatarFlag = 1;
+                $(".top_avatar img").trigger("mouseover");
+            } else {
+                AvatarFlag = 0;
+                $(".top_avatar img").trigger("mouseout");
+            }
+        }
+        AvatarInterval++;
+    }, 5000);
+
+
     checkdomain(domain, activityid)
 
     //报名成功弹出票据模态框
