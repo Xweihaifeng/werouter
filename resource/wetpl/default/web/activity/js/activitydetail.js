@@ -690,7 +690,6 @@ $(document).ready(function() {
                         'Token': localStorage.getItem('token')
                     },
                     success: function(data) {
-                        console.log(data);
                         if (data.code == 200) {
                             localStorage.setItem("phone", "");
                             localStorage.setItem('dataPhone', "");
@@ -701,6 +700,10 @@ $(document).ready(function() {
                                 activity_ebroll_detail(data.data.enroll_id);
                             else if (data.data.status == 1)
                                 wechat_scan_pay(data.data.number);
+                        } else if (data.code == 401) {
+                            layer.msg("请先登录在进行操作", {
+                                time: 1000
+                            });
                         } else {
                             layer.msg(data.message);
                             //location.reload();
