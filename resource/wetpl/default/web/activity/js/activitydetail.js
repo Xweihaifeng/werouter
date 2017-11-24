@@ -195,6 +195,13 @@ $(document).ready(function() {
         }
         console.log(domain);
     }
+
+    function setCookie(token, expiredays) {
+        var Days = expiredays;
+        var exp = new Date();
+        exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000);
+        document.cookie = "token=" + escape(token) + ";expires=" + exp.toGMTString() + ";path=/";
+    }
     checkdomain(domain, activityid)
 
     //报名成功弹出票据模态框
@@ -562,6 +569,7 @@ $(document).ready(function() {
                         localStorage.setItem('token', data.token);
                         localStorage.setItem('weid', data.data.weid);
                         localStorage.setItem('phone', data.data.phone);
+                        setCookie(data.token, 7);
                         $.ajaxSetup({
                             global: true,
                             dataType: 'json',
