@@ -76,13 +76,13 @@
 		</div>
 	</div>
 
-	<div class="des">
+	<!--<div class="des">
 		<div>
 			<label>
 				<a>申请查看手机号</a>
 			</label>
 		</div>
-	</div>
+	</div>-->
 
 
 	<!--<div class="history" style="display: flex;">
@@ -370,6 +370,7 @@
 			var _self = this;
 			var platuserid = window.location.pathname.split('/')[2];
 			init(apiUrl + 'circel/wcard/' + platuserid, _self);
+			//根据wxlogin接口返回激活与否和token,请求关注关系接口判断是否关注该用户
 		},
 		methods: {
 			care: function(){
