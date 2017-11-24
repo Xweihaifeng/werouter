@@ -336,7 +336,8 @@ $(document).ready(function() {
                 scrollbar: false,
                 content: '<img src="' + QRCODE + '?url=' + qr_url + '" width="300">',
                 end: function() {
-                    location.reload();
+                    clearInterval(tmr);
+                    //location.reload();
                 },
                 shade: 0.7
             });
@@ -649,17 +650,11 @@ $(document).ready(function() {
             }
         });
         setTimeout(function() {
-
-
             $(".apply_submit").bind("click", function() {
-                console.log(localStorage.getItem('dataPhone'))
-
                 var name = $('#username').val();
                 var telphone = $('#phone').val();
                 var poistion = $("#zhiw").val();
                 var company = $("#gongsi").val();
-                console.log(localStorage.getItem("phone"), telphone);
-                console.log();
                 if (name == "") {
                     layer.msg("请输入名字", {
                         time: 1000
@@ -701,7 +696,6 @@ $(document).ready(function() {
                     poistion: poistion,
                     company: company
                 }
-                console.log(sendData);
                 $.ajax({
                     url: ACTIVITY_ENROLL_STORE,
                     type: 'post',
@@ -710,6 +704,7 @@ $(document).ready(function() {
                         'Token': localStorage.getItem('token')
                     },
                     success: function(data) {
+                        layer.closeAll('loading');
                         if (data.code == 200) {
                             localStorage.setItem("phone", "");
                             localStorage.setItem('dataPhone', "");
@@ -731,9 +726,11 @@ $(document).ready(function() {
                         }
                     },
                     error: function(xhr) {
+                        layer.closeAll('loading');
                         console.log(xhr);
                     }
-                })
+                });
+                layer.load();
             })
         }, 1000);
     }
@@ -851,6 +848,7 @@ $(document).ready(function() {
 
                                 } else {
                                     GetOrder(id, function(rep) {
+                                        layer.closeAll('loading');
                                         if (rep.code == 401 || rep.data.status == 1) {
                                             if (data.data.enroll_num < data.data.enroll_limit || data.data.enroll_limit == 0) {
                                                 Support(id, nickname, imgUrl, $(this).data('id'));
@@ -865,6 +863,7 @@ $(document).ready(function() {
                                             mess_tusi(rep.data.msg);
                                         }
                                     });
+                                    layer.load();
 
                                 }
 
