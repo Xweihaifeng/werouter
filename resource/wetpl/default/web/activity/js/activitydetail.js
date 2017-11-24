@@ -15,8 +15,6 @@ var domain = url.slice(1, 2)[0];
 console.log('domain', domain);
 $(".linkto").attr('href', '/' + domain)
 $(document).ready(function() {
-    $(".top_avatar img").trigger("mouseover");
-    $(".top_avatar img").trigger("mouseenter");
     var qiniu_bucket_domain = ApiMaterPlatQiniuDomain;
     //获取当前网址，如： http://localhost:8083/proj/meun.jsp
     var curWwwPath = window.document.location.href;
@@ -355,7 +353,13 @@ $(document).ready(function() {
                 closeBtn: 0,
                 shadeClose: true,
                 scrollbar: false,
-                content: '<img src="' + QRCODE + '?url=' + qr_url + '" width="300">',
+                //content: '<img src="' + QRCODE + '?url=' + qr_url + '" width="300">',
+                content: `<div class="payment-block">
+                            <div class="payment-qrcode"><img src="` + QRCODE + `?url=` + qr_url + `" width="300"></div>
+                            <div class="payment-desc">
+                                <p>付款金额：<b>0.00</b></p>
+                            </div>
+                        </div>`,
                 end: function() {
                     clearInterval(tmr);
                     //location.reload();
