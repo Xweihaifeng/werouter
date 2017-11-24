@@ -68,7 +68,8 @@ $(document).ready(function(){
 	    options107.done(function(data) {
 	    	if(data.code == 200 && data.data) {
 	    		console.info(data.data);
-                $("#myModal").hide();
+                $("body").removeClass("modal-open");
+                $("#myModal").removeClass("in").hide();
                 $(".modal-backdrop.fade.in").remove();
 	    		layer.msg("修改成功！", { time: 1500 });
 	    	}
