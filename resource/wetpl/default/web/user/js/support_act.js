@@ -104,6 +104,15 @@ $(document).ready(function() {
                 act_title = data.title;
             }
         }
+        if (data.is_attend == 1)
+            var mark = `<div class="show-tiket">已参与</div>`;
+        else {
+            if (data.is_expired == 1)
+                var mark = `<div class="show-tiket">已过期</div>`;
+            else
+                var mark = `<div class="show-tiket" data-toggle="modal" data-target="#myModal">查看门票</div>`;
+        }
+
         var template =
             `<div class="show-art" id=` + data.activity_id + `>
             <div class="show-title" id=` + data.domain + `>
@@ -115,10 +124,7 @@ $(document).ready(function() {
             <div class="show-bottom text-center">
                 <div class="show-read">
                     <img class="show-read-img" src="/common/img/icon_see_normal.png" width="20" alt="" />
-                </div>
-                <div class="show-tiket" data-toggle="modal" data-target="#myModal">
-                    查看门票
-                </div>
+                </div>` + mark + `
             </div>
             <div class="show-shade" style="display: none;"><p>预览活动</p></div>
             </div>`
