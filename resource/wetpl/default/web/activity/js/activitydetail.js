@@ -232,11 +232,10 @@ $(document).ready(function() {
                 'Token': localStorage.getItem('token')
             },
             success: function(data) {
-                console.log(data)
                 if (data.code == 200) {
                     console.log(urlall[0])
                     Ticket(data.data);
-                    qrcodefun1(id)
+                    qrcodefun1(data.data.ticket_num);
                 }
 
             },
@@ -956,8 +955,8 @@ $(document).ready(function() {
         }
 
     }
-    var qrcodefun1 = function(id) {
-        var qrcode_val = localhostPath + domain + "/activity/" + id;
+    var qrcodefun1 = function(ticket_num) {
+        var qrcode_val = ACTIVITY_ENROLL_CHECK + "?e_number=" + ticket_num;
         // if ($.browser.msie && $.browser.version <= 8){
         if ($.support.msie && $.support.version <= 8) {
 
