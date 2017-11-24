@@ -68,9 +68,10 @@ $(document).ready(function(){
 	    options107.done(function(data) {
 	    	if(data.code == 200 && data.data) {
 	    		console.info(data.data);
+                $("#myModal").hide();
+                $(".modal-backdrop.fade.in").remove();
 	    		layer.msg("修改成功！", { time: 1500 });
 	    	}
-	    	alert(0)
 	    });
 	    options107.fail(function(fail) {
 	    	console.error(error);
