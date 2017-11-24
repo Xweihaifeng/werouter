@@ -1,0 +1,190 @@
+<!--
+  Created by weifeng on 2017/11/23.
+-->
+
+<!DOCTYPE html>
+<html>
+    <head lang="en">
+        <title>应用市场</title>
+        <meta charset="UTF-8">
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+        <link rel="shortcut icon" id="favicon" href="" />
+        <link rel="stylesheet" href="{{PATH_TML}}user/common/css/main.css">
+        <link rel="stylesheet" href="/common/css/bootstrap.min.css">
+        <link rel="stylesheet" href="{{PATH_TML}}user/css/logistics_company.css">
+
+        <script src="/common/js/jquery-3.2.1.min.js"></script>
+        <script src="/common/js/bootstrap.min.js"></script>
+        <script src="{{PATH_CONFIG}}"></script>
+        <script src="/common/js/buttons.js"></script>
+        <script src="/common/js/layer/layer.js"></script>
+    </head>
+    <body style="width: 100%; background: #F7F6F2;">
+    <div class="left-nav" id="public_main_news_menu"></div>
+        <div class="login">
+            <div class="left-nav">
+                <div id="home">
+                    <img src="/common/img/main_logo.png" width='90' alt="HOME" />
+                </div>
+                <div id="login">
+                    <div class="log-head"></div>
+                    <div><img src="/common/img/bbd.png" width='29' alt="article" /></div>
+                    <div class="word">登录</div>
+                </div>
+                <div id="article">
+                    <div><img src="/common/img/wz.png" width='29' alt="article" /></div>
+                    <div class="word">文章</div>
+                </div>
+                <div id="project">
+                    <div><img src="/common/img/pj.png" width='29' alt="project" /></div>
+                    <div class="word">项目</div>
+                </div>
+                <div id="active">
+                    <div><img src="/common/img/at.png" width='29' alt="active" /></div>
+                    <div class="word">活动</div>
+                </div>
+                <div id="shopping">
+                    <div><img src="/common/img/sp.png" width='29' alt="shopping" /></div>
+                    <div class="word">商城</div>
+                </div>
+                <div id="zone">
+                    <div><img src="/common/img/qz.png" width='29' alt="zone" /></div>
+                    <div class="word">圈子</div>
+                </div>
+            </div>
+            <div id="top">
+                <div id="dropdown"><div></div></div>
+                <div id="avatar">
+                    <div class="avatar-icon"></div>
+                    <div class="avatar" style="text-align: left; ">
+                        <style type="text/css" media="screen">
+                            #avatar-user:hover {
+                                background: #eeeeee;
+                            }
+                            #avatar-user {
+                                line-height: 35px;
+                                padding-left: 5px;
+                            }
+                        </style>
+                        <a href="/user/">
+                            <div id="avatar-user">
+                                <!-- <span><img src="/common/img/set.png" alt="" width="20" /></span> -->
+                                <span>用户中心</span>
+                            </div>
+                        </a>
+                        <div id="avatar-logout" style="padding-left: 5px;">
+                            <!-- <span><img src="/common/img/skip.png" alt="" width="20" /></span> -->
+                            <span><a href="/login">安全退出</a></span>
+                        </div>
+                    </div>
+                </div>
+                <div id="alert"><div class="alert-icon"></div>
+                    <div class="alert-num"> 5 </div></div>
+            </div>
+            <div id="middle">
+                <div class="we-title we-set">
+                    <img src="/common/img/set.png" width="18" alt=""/>
+                    <span>系统设置</span>
+                    <span><img src="/common/img/more1.png" width="18"/></span>
+                </div>
+                <div class="we-cont we-set" style="display: none;">
+                    <a href="/user/admin/settings/base"><div id="base">基本设置</div></a>
+                    <a href="/user/admin/settings/brand"><div id="brand">品牌设置</div></a>
+                    <a href="/user/admin/settings/domain"><div id="domain">个性域名</div></a>
+                </div>
+                <div class="we-title we-art" style="display: none;">
+                    <img src="/common/img/form.png" width="18" alt=""/>
+                    <span>文章管理</span>
+                    <span><img src="/common/img/more1.png" width="18"/></span>
+                </div>
+                <div class="we-cont we-art" style="display: none;">
+                    <a href="/user/admin/article/add"><div id="we-release">发布文章</div></a>
+                    <a href="/user/admin/article/list"><div id="art-manage">管理文章</div></a>
+                </div>
+                <div class="we-title we-project" style="display: none;">
+                    <img src="/common/img/pj.png" width="18" alt=""/>
+                    <span>项目管理</span>
+                    <span><img src="/common/img/more1.png" width="18"/></span>
+                </div>
+                <div class="we-cont we-project" style="display: none;">
+                     <a href="/user/admin/project/add"><div id="project-add">发布项目</div></a>
+                    <a href="/user/admin/project/list"><div id="prject-list">管理项目</div></a>
+                </div>
+
+                <div class="we-title we-active" style="display: none;">
+                    <img src="/common/img/active.png" width="18" alt=""/>
+                    <span>活动管理</span>
+                    <span><img src="/common/img/more1.png" width="18"/></span>
+                </div>
+                <div class="we-cont we-active" style="display: none;">
+                    <a href="/user/admin/activity/add"><div id="activity-add">发布活动</div></a>
+                    <a href="/user/admin/activity/list"><div id="activity-list">活动管理</div></a>
+                </div>
+                <div class="we-title we-shop" style="display: block;">
+                    <img src="/common/img/store.png" width="18" alt=""/>
+                    <span>商城管理</span>
+                    <span><img src="/common/img/more1.png" width="18"/></span>
+                </div>
+                <div class="we-cont we-shop" style="display: block;">
+                    <a href="/user/admin/wemall/goods/add"><div id="pub-shopping">发布商品</div></a>
+                    <a href="/user/admin/wemall/goods/list">
+                        <div id="pub-shopping-manage">商品管理</div>
+                    </a>
+                    <a href="/user/admin/wemall/cate">
+                        <div id="pub-shopping-cate">商品分类</div>
+                    </a>
+                    <a href="/user/admin/wemall/order"><div id="order-manage">订单管理</div></a>
+                    <a href="/user/admin/wemall/district"><div id="distributions">区域管理</div></a>
+                    <a href="/user/admin/logistics/company"><div id="logistics">物流列表</div></a>
+                </div>
+
+                <div class="we-title we-crm" style="display: none;">
+                    <img src="/common/img/zone.png" width="18" alt=""/>
+                    <span>圈子管理</span>
+                    <span><img src="/common/img/more1.png" width="18"/></span>
+                </div>
+                <div class="we-cont we-crm" style="display: none;">
+                    <a href="/user/admin/quan/crm"><div id="zone-crm">CRM管理</div></a>
+                    <a href="/user/admin/quan/crm/list"><div id="zone-associator-list">会员列表</div></a>
+                </div>
+                <div class="we-title we-app">
+                    <img src="/common/img/box.png" width="18" alt=""/>
+                    <span>应用管理</span>
+                    <span><img src="/common/img/more1.png" width="18"/></span>
+                </div>
+                <div class="we-cont we-app" style="display: none;">
+                    <a href="/user/admin/apps/base"><div id="my-bag">基础应用</div></a>
+                    <a href="/user/admin/apps/store"><div id="my-order">主页应用</div></a>
+                </div>
+
+                <div class="we-title we-log"  style="border: 1px solid #eeeeee;">
+                    <img src="/common/img/information.png" width="18" alt=""/>
+                    <span>系统日志</span>
+                    <span><img src="/common/img/more1.png" width="18"/></span>
+                </div>
+                <div class="we-cont we-log" style="display: none;">
+                    <a href="/user/admin/logs/operation"><div id="my-logo">系统日志</div></a>
+                </div>
+            </div>
+            <div id="right">
+                 <div class="we-art-nav">
+                    <ol class="breadcrumb" style="margin-bottom:0;">
+                        <li class="homepage"><a>商城管理</a></li>
+                        <li class="active">物流列表</li>
+                    </ol>
+                </div>
+                <div id="center">
+                    <div class="center_top">
+                        <div><h5>个人物流公司列表</h5></div>
+                    </div>
+                    <div class="bottom">
+                        <ul class="list-group" id="logistics_address"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="/common/js/control.js"></script>
+        <script src="{{PATH_TML}}user/js/logistics_company.js"></script>
+    </body>
+</html>
