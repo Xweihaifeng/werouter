@@ -21,7 +21,7 @@ class router_index
     private $_domain_config = '';
     // 网站目录集合
     private $_directory = [
-        'm' => 'wap',
+        'm' => 'wap/wepage',
         'pc' => 'web'
     ];
     
