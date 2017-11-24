@@ -334,8 +334,7 @@ $(document).ready(function() {
                 closeBtn: 0,
                 shadeClose: true,
                 scrollbar: false,
-                //content: '<img src="' + QRCODE + '?url=' + qr_url + '" width="300">',
-                content: ``,
+                content: '<img src="' + QRCODE + '?url=' + qr_url + '" width="300">',
                 end: function() {
                     clearInterval(tmr);
                     //location.reload();
@@ -705,6 +704,7 @@ $(document).ready(function() {
                         'Token': localStorage.getItem('token')
                     },
                     success: function(data) {
+                        layer.closeAll('loading');
                         if (data.code == 200) {
                             localStorage.setItem("phone", "");
                             localStorage.setItem('dataPhone', "");
@@ -726,9 +726,11 @@ $(document).ready(function() {
                         }
                     },
                     error: function(xhr) {
+                        layer.closeAll('loading');
                         console.log(xhr);
                     }
                 });
+                layer.load();
             })
         }, 1000);
     }
@@ -846,6 +848,7 @@ $(document).ready(function() {
 
                                 } else {
                                     GetOrder(id, function(rep) {
+                                        layer.closeAll('loading');
                                         if (rep.code == 401 || rep.data.status == 1) {
                                             if (data.data.enroll_num < data.data.enroll_limit || data.data.enroll_limit == 0) {
                                                 Support(id, nickname, imgUrl, $(this).data('id'));
@@ -860,6 +863,7 @@ $(document).ready(function() {
                                             mess_tusi(rep.data.msg);
                                         }
                                     });
+                                    layer.load();
 
                                 }
 
