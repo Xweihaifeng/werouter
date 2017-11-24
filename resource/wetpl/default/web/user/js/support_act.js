@@ -127,7 +127,7 @@ $(document).ready(function() {
                     <img class="show-read-img" src="/common/img/icon_see_normal.png" width="20" alt="" />
                 </div>` + mark + `
             </div>
-            <div class="show-shade" style="display: none;"><p>预览活动</p></div>
+            <div class="show-shade" style="display: none;"><p>预览活</p></div>
             </div>`
 
         return template;
