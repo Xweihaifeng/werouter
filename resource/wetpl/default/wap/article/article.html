@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,viewport-fit=cover">
+    <title>文章</title>
+    <link rel="stylesheet" href="{{PATH_TML}}css/home.css"/>
+    <link rel="stylesheet" href="{{PATH_TML}}css/list.css"/>
+    <link rel="stylesheet" href="/common/jquery.animsition/css/animsition.min.css">
+    <script src="{{PATH_TML}}lib/jquery.min.js"></script>
+    <!--<script src="{{PATH_TML}}wepage/js/zepto.min.js"></script>-->
+	<script type="text/javascript" src="{{PATH_CONFIG}}"></script>
+    <link rel="stylesheet" href="{{PATH_TML}}js/layui/css/layui.css"/>
+    <script src="{{PATH_TML}}js/layui/layui.js"></script>
+	<script src="{{PATH_TML}}js/my-article.js"></script>
+    <script src="{{PATH_TML}}interface/my-article.js"></script>
+	<script src="{{PATH_TML}}js/home.js"></script>
+    <script src="/common/jquery.animsition/js/jquery.animsition.min.js"></script>
+</head>
+<body class="animsition">
+	<nav></nav>
+	<div id="container" class="section my_container"></div>
+	<footer></footer>
+
+    <script>
+        $(function() {
+            $(".animsition").animsition({
+                inClass               :   'fade-in',
+                outClass              :   'fade-out',
+                inDuration            :    1500,
+                outDuration           :    800,
+                linkElement           :   '.animsition-link',
+                // e.g. linkElement   :   'a:not([target="_blank"]):not([href^=#])'
+                loading               :    true,
+                loadingParentElement  :   'body', //animsition wrapper element
+                loadingClass          :   'animsition-loading',
+                unSupportCss          : [ 'animation-duration',
+                    '-webkit-animation-duration',
+                    '-o-animation-duration'
+                ],
+                //"unSupportCss" option allows you to disable the "animsition" in case the css property in the array is not supported by your browser.
+                //The default setting is to disable the "animsition" in a browser that does not support "animation-duration".
+                overlay               :   false,
+
+                overlayClass          :   'animsition-overlay-slide',
+                overlayParentElement  :   'body'
+            });
+        });
+    </script>
+</body>
+</html>
