@@ -22,10 +22,12 @@
         <a class="back" href="javascript:void(0)" onclick="javascript:history.back(-1)"></a>
     </header>
     <div class="order-container">
+        <ul>
+            <li :class="{'red-line':sortNum === index}" v-for="(sort,index) in sortList" @click="getSort(index)">{{sort}}</li>
+        </ul>
         <div class="singleOrder" v-for="order in orderList">
             <div class="order-number">
                 <span>订单号：{{order.order_num}}</span>
-                <i @click="deleteOrder(order)">×</i>
             </div>
             <div class="order-status">
                 <div>
@@ -45,23 +47,31 @@
     </div>
 </div>
 <script>
-//    Vue.http.headers.common['token'] = 'eyJpdiI6IlwvTFZlRU5lQ2FlMHE3MW16dkFmNUVnPT0iLCJ2YWx1ZSI6Ijc2ZWt3M1o5U2RcL2tWNTlYazBSVDVsMDIwaHpcL2dWZ2VwSVY1V2hib3o0RmxTMzBvU2o1SEMyZ2U2UjRVV0xielFBWlROb1ArbGhyRTY3VHBXTlwvenZwUXF6aHBpUmROeFJJNE5CRUh2YyswPSIsIm1hYyI6ImIzYjBiYzM2YjBlMjkxNDAzMjZlYzM5YWJmMWNhOGEzMDJkY2FjMzFiNGQwMGM0NGFlYTRkMTVlMzNhZGU1N2EifQ=='
+    //Vue.http.headers.common['token'] = 'eyJpdiI6IlFzb1wveHJVRDJ3Vk9SOVVLcngwVU53PT0iLCJ2YWx1ZSI6IkhjdTFRdUQ0eHlcL0VCeVFlbW10eTQ0OHRJVDl4R3hiSGR0dzE0Z042MlBnWXYxa0pXRzByWjhCMjFQbWtXeEZHeVJrZXVrS1dvOXVGNHQ5WjR1emtmSVRnY1VpRHRWRVhGb3l2SVpLZmpvOD0iLCJtYWMiOiI5ZDZkZWYxMTA3NTI0MjhjZGQ1OTM5YjZjMjNhYjk5NzM0ZjBjMThjMmI2ZDk0ZjdjYmE1NTIyZjUyOGI2ZTk4In0='
 
     Vue.http.headers.common['token'] = window.localStorage.getItem("token");
     var commentApp = new Vue({
         el : "#order-app",
         data : {
-            orderList : []
+            sortNum : 0,
+            orderList : [],
+            sortList : ["全部","待付款","待发货","待收货","已取消"]
         },
         mounted : function () {
-            this.init();
+            var data = {
+                "plat_user_id" : window.localStorage.getItem('weid')
+                //"plat_user_id" : 'aafc6a60-c2b6-11e7-804f-2b2e90492ab4'
+            };
+            this.init(data);
         },
         methods : {
-            init : function () {
-                var data = {
-                    "plat_user_id" : window.localStorage.getItem('weid')
-                    //"plat_user_id" : 'aafc6a60-c2b6-11e7-804f-2b2e90492ab4'
-                };
+            init : function (data) {
+                if(!data){
+                    data = {
+                        "plat_user_id" : window.localStorage.getItem('weid')
+                        //"plat_user_id" : 'aafc6a60-c2b6-11e7-804f-2b2e90492ab4'
+                    }
+                }
                 this.$http.post(apiUrl+'order/list',data).then(function (res) {
                     console.log(res);
                     if(res.data && res.data.code === 200){
@@ -212,6 +222,7 @@
                         if(res.data && res.data.code === 200){
                             layer.close(index);
                             this.init();
+                            this.sortNum = 0;
                         }else{
                             layer.msg('取消订单失败');
                         }
@@ -234,6 +245,7 @@
                         if(res.data && res.data.code === 200){
                             layer.close(index);
                             this.init();
+                            this.sortNum = 0;
                         }else{
                             layer.msg('删除订单失败');
                         }
@@ -250,6 +262,7 @@
                     if(res.data && res.data.code === 200){
                         layer.msg("已收货");
                         this.init();
+                        this.sortNum = 0;
                     }else{
                         layer.msg('删除订单失败');
                     }
@@ -287,6 +300,7 @@
                     if(res.data && res.data.code === 200){
                         layer.msg("交易成功");
                         this.init();
+                        this.sortNum = 0;
                     }else{
                         layer.msg('确认交易失败');
                     }
@@ -302,6 +316,7 @@
                     if(res.data && res.data.code === 200){
                         layer.msg("申请退款成功");
                         this.init();
+                        this.sortNum = 0;
                     }else{
                         layer.msg('申请退款失败');
                     }
@@ -310,6 +325,29 @@
 //            付款
             pay : function (order) {
                 window.location.href = `/pay/shopping?store_num=`+ order.weid +``;
+            },
+            getSort : function(ind){
+                this.sortNum = ind;
+                var data = {
+                    "plat_user_id" : window.localStorage.getItem('weid')
+                    //"plat_user_id" : 'aafc6a60-c2b6-11e7-804f-2b2e90492ab4'
+                };
+                switch (ind) {
+                    case 1:
+                        data.order_status = 1;
+                        break;
+                    case 2:
+                        data.order_status = 2;
+                        break;
+                    case 3:
+                        data.order_status = 3;
+                        break;
+                    case 4:
+                        data.order_status = 6;
+                        break;
+                }
+
+                this.init(data);
             }
         }
     });
