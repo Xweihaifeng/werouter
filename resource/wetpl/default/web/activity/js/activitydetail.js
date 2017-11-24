@@ -586,7 +586,7 @@ $(document).ready(function() {
             console.log(checkNum, phoneNum);
             var regexp = /^(13|14|17|15|18)/;
             var reg = new RegExp(regexp);
-            if (reg.test(phoneNum) && phoneNum.length == 11 && checkNum.length == 5) {
+            if (reg.test(phoneNum) && phoneNum.length == 11 && checkNum.length == 6) {
                 login(phoneNum, checkNum);
             } else {
                 if (!(phoneNum.length == 11) || !reg.test(phoneNum)) {
@@ -596,7 +596,7 @@ $(document).ready(function() {
                     });
                     return;
                 }
-                if (!(checkNum.length == 5) || !isCheckNum) {
+                if (!(checkNum.length == 6) || !isCheckNum) {
                     layer.msg("手机验证码错误", {
                         time: 1000
                     });
