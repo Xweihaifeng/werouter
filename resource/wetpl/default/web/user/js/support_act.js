@@ -65,7 +65,7 @@ $(document).ready(function() {
                     // console.log(urlall[0])
                     $(".modal-body .ticket_apply").children().remove();
                     $(".modal-body .ticket_apply").append(tickettemplate(data.data));
-                    qrcodefun1(activityid, domainid, );
+                    qrcodefun1(activityid, domainid, data.data.ticket_num);
                 }
 
             },
@@ -74,8 +74,8 @@ $(document).ready(function() {
             }
         })
     }
-    var qrcodefun1 = function(id, domainid) {
-        var qrcode_val = localhostPath + "/" + domainid + "/activity/" + id;
+    var qrcodefun1 = function(id, domainid, ticket_num) {
+        var qrcode_val = ACTIVITY_ENROLL_CHECK + "?e_number=" + ticket_num;
         $(".ticket-qr").attr("data-ref", qrcode_val);
         // if ($.browser.msie && $.browser.version <= 8){
         if ($.support.msie && $.support.version <= 8) {
