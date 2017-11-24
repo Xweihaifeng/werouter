@@ -168,8 +168,6 @@ $(document).ready(function(){
 
 })
 
-
-
 function logistics_run_id(weid) {
     var options101 = $.post(apiUrl + "pages/logistics/setStatus?logistics_run_id=" + weid);
     options101.done(function(data) {
@@ -250,27 +248,3 @@ var moduleState = function() {
 }
 
 moduleState();
-// var changeStatus = function(mid) {
-//        $.ajax({
-//            url: apiUrl+'pages/modulerun/setModuleStatus',
-//            type: 'POST',
-//            data: {moduleId: mid},
-//            headers: {
-//                'Token': localStorage.getItem('token')
-//            },
-//            success: function (data) {
-//                if (data.code == 200) {
-//                    // console.log('open:', data);
-//                    sessionStorage.moduledata="";
-//                    sessionStorage.statedata="";
-//                } else {
-//                    // layer.msg(data.message, {
-//                    //     time: 1500
-//                    // });
-//                }
-//            },
-//            error: function (xhr) {
-//                console.error(xhr);
-//            }
-//        })
-//    }

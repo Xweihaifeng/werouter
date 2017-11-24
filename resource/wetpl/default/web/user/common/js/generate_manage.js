@@ -3,7 +3,7 @@
 var listchange=function(curr){
     var curr = curr;
     var status = true;
-    var list = ['we-set','we-art','we-shop','we-active','we-project','we-app','we-crm','we-log'];
+    var list = ['we-set','we-art','we-mall','we-active','we-project','we-app','we-crm','we-log'];
 
     var remove = function(id, list) {
         return list.filter(x => x != id);
