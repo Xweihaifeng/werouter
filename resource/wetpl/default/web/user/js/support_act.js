@@ -104,7 +104,6 @@ $(document).ready(function() {
                 act_title = data.title;
             }
         }
-        alert(data.is_expired);
         if (data.is_attend == 1)
             var mark = `<div class="show-tiket">已参与</div>`;
         else {
@@ -127,7 +126,7 @@ $(document).ready(function() {
                     <img class="show-read-img" src="/common/img/icon_see_normal.png" width="20" alt="" />
                 </div>` + mark + `
             </div>
-            <div class="show-shade" style="display: none;"><p>预览活</p></div>
+            <div class="show-shade" style="display: none;"><p>预览活动</p></div>
             </div>`
 
         return template;
