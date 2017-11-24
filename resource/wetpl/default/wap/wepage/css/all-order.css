@@ -9,6 +9,9 @@ body{
     font-size:0.14rem;
     background-color: #e8e8ed;
 }
+ul,li{
+    list-style: none;
+}
 [v-cloak] {
     display:none;
 }
@@ -58,13 +61,25 @@ header span{
 .order-container{
     padding-top:0.45rem;
 }
+.order-container ul{
+    border-bottom:1px solid #eee;
+    background: #fff;
+}
+.order-container ul li{
+    display: inline-block;
+    padding:0.1rem 0.16rem;
+}
+.order-container ul .red-line{
+    color: #f19325;
+    border-bottom:1px solid #f19325;
+}
 .singleOrder{
     padding:0 0.1rem;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     background-color: #fff;
-    margin: 0.1rem 0;
+    margin-bottom: 0.1rem;
 }
 .singleOrder:first-child{
     margin-top:0;
@@ -128,10 +143,7 @@ header span{
 }
 
 /*覆盖layer弹窗的样式*/
-.layui-layer-dialog{
-    width:3.3rem !important;
-    left:0.22rem !important;
-}
+
 .layui-layer-btn{
     line-height: 0.36rem !important;
     text-align: center !important;
