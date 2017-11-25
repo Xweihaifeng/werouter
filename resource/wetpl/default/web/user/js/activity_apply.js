@@ -208,7 +208,7 @@ $(document).ready(function() {
             '<td class="chk"><input type="checkbox" class="boxsty J_CkbItem" data-id="' + data.weid + '"></td>' +
             '<td class="queue">' + num + '</td>' +
             `<td class="user">
-            <div class="user-avatar"><img src="` + ApiMaterPlatQiniuDomain + data.avatar + `" width="30"></div>` +
+            <div class="user-avatar"><img src="` + ApiMaterPlatQiniuDomain + data.avatar + `" width="45"></div>` +
             `<div class="user-desc">
                 <div class="username">` + data.name + `</div>` +
             `<div class="company"><span>` + data.company + `</span><span>` + data.poistion + `</span></div>
@@ -431,45 +431,55 @@ $(document).ready(function() {
     var flagapply = 0;
     $('.J_BtnDelAllRecord').click(function() {
 
-        var activeid = $('#aid').val();
-        var ids = [],
-            type = parseInt($(this).data('type'), 10);
-        $('.J_CkbItem').each(function() {
-            if (this.checked) {
-                ids[ids.length] = $(this).data('id');
-                console.log($(this).data('id'));
+        layer.confirm('确认要批量删除？', {
+            title: '删除报名',
+            btn: ['确认删除', '取消']
+        }, function() {
+            var activeid = $('#aid').val();
+            var ids = [],
+                type = parseInt($(this).data('type'), 10);
+            $('.J_CkbItem').each(function() {
+                if (this.checked) {
+                    ids[ids.length] = $(this).data('id');
+                    console.log($(this).data('id'));
+                }
+
+
+            });
+            if (ids.length > 0) {
+                console.log(ids);
+                ids.map(x => {
+                    flagapply++;
+                    console.log(x);
+                    $.ajax({
+                        type: 'get',
+                        url: ACTIVITY_ENROLL_DESTROY + "/" + x,
+                        headers: {
+                            'Token': localStorage.getItem('token')
+                        },
+                        success: function(data) {
+                            console.log(data);
+                            if (data.code == 200) {
+                                if (flagapply >= ids.length) {
+                                    mess_tusi('删除成功');
+                                    location.reload();
+                                }
+                            } else {
+                                mess_tusi('删除失败');
+                            }
+                        }
+                    })
+                })
+
+            } else {
+                mess_tusi('请至少勾选一个');
             }
 
+        }, function() {
 
         });
-        if (ids.length > 0) {
-            console.log(ids);
-            ids.map(x => {
-                flagapply++;
-                console.log(x);
-                $.ajax({
-                    type: 'get',
-                    url: ACTIVITY_ENROLL_DESTROY + "/" + x,
-                    headers: {
-                        'Token': localStorage.getItem('token')
-                    },
-                    success: function(data) {
-                        console.log(data);
-                        if (data.code == 200) {
-                            if (flagapply >= ids.length) {
-                                mess_tusi('删除成功');
-                                location.reload();
-                            }
-                        } else {
-                            mess_tusi('删除失败');
-                        }
-                    }
-                })
-            })
 
-        } else {
-            mess_tusi('请至少勾选一个');
-        }
+
     });
 
 
