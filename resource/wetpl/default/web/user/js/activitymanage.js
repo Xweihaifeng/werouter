@@ -288,12 +288,12 @@
          } else if (type == 1) {
              // 未发布
              //disabled = 'disabled="disabled"';
-             btn_active = 'btn-default acv-btn';
-             btn_cancle_pub = '<button type="button"  ' + disabled + ' class="btn ' + btn_active + '  J_CancelPublishActivity" onclick="activitypublish(this)">设为发布</button> ';
+             btn_cancle_pub = '<button type="button"  ' + disabled + ' class="btn ' + btn_active + '  J_CancelPublishActivity" onclick="activitypublish(this)">立即发布</button> ';
              ing = "未发布";
          } else if (type == 2) {
              // 进行中
              // btn_active='';
+             btn_active = 'btn-default acv-btn';
              btn_cancle_pub = '<button type="button"  ' + disabled + ' class="btn ' + btn_active + ' J_CancelPublishActivity"  onclick="activitycancel(this)" >取消发布</button> ';
 
          } else if (type == 3) {
