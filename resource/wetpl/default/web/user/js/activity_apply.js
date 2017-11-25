@@ -224,7 +224,7 @@ $(document).ready(function() {
             '<td class="operate">' +
 
 
-            ' <span style="color:#34b0df;">已通过</span>' +
+            ' <span style="color:#34b0df;">报名成功</span>' +
 
 
             '</td>' +
