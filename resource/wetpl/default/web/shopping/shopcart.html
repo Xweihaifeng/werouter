@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+    <head lang="en">
+        <title> 我的购物车 </title>
+        <meta charset="UTF-8">
+        <link rel="shortcut icon" id="favicon" href="" />
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+        
+        <link rel="stylesheet" type="text/css" href="/common/css/main.css">
+        <link rel="stylesheet" type="text/css" href="/common/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="{{PATH_TML}}shopping/css/shopcart.css">
+
+        <script src="/common/js/jquery-3.2.1.min.js"></script>
+        <script src="/common/layer-v3.0.3/layer-v3.0.3/layer/layer.js"></script>
+        <script src="{{PATH_CONFIG}}"></script>
+        <script src="/common/js/vue/vue.min.js"></script>
+        <script src="/common/js/vue/vue-resource.min.js"></script>
+    </head>
+    <body>
+        <div class="left-nav"></div>
+        <div class="login">
+            <div id="top"></div>
+            <div id="middle"></div>
+            <div id="right">
+                <div class="container1" id="cart_shopping">
+                    <div class="con-hd">
+                        <nav class="navbar navbar-default display-head">
+                            <div class="container-fluid">
+                                <div class="navbar-header">
+                                    <ol class="breadcrumb">
+                                        <li>
+                                            <a href="javascript:void(0)"> 我的账户 </a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0)"> 购物车 </a>
+                                        </li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                    <!-- 商品列表 -->
+                    <div class="cart_title">
+                        <div class="cart_shop_business_all">
+                            <div class="cart_shop_select">
+                                <input type="checkbox" name="" disabled>选项
+                            </div>
+                            <div class="cart_shop_img"> 商品 </div>
+                            <div class="cart_shop_basic"> 套餐信息 </div>
+                            <div class="cart_shop_price"> 单价 </div>
+                            <div class="cart_shop_piece"> 数量 </div>
+                            <div class="cart_shop_price"> 总价 </div>
+                            <div class="cart_shop_operation"> 操作 </div>
+                        </div>
+                        <ul class="cart_shop_list" v-for="(item, index) in cart_list">
+                            <div class="cart_shop_business">
+                                <div class="cart_shop_select">
+                                    <input type="checkbox" name="" :class="'shop_number_'+index" v-model="item.mall.pCheck" @click="selectStore(item)">
+                                </div>
+                            </div>
+                            <li class="cart_shop" v-for="(values, key) in item.goods">
+                                <div class="cart_shop_select">
+                                    <input type="checkbox" name="" :class="'shop_' + key" v-model="values.checked" @click="selectItem(item,values,key)">
+                                </div>
+                                <div class="cart_shop_img">
+                                    <img src="/common/img/img1.jpg" alt="">
+                                </div>
+                                <div class="cart_shop_basic">
+                                    <span>{{values.title}}</span>
+                                    <span>Axent Wear</span>
+                                    <span>{{values.views}}</span>
+                                </div>
+                                <div class="cart_shop_price">￥<span class="cart_shop_unit_price"></span>{{values.price}}</div>
+                                <div class="cart_shop_piece">
+                                    <input id="count_min" name="" type="button" value="-" @click="count_add_min(item,values,values.goods_num,'count_min')" />  
+                                    <input id="quantity"  name="" type="text" v-model="values.goods_num" />  
+                                    <input id="count_add" name="" type="button" value="+" @click="count_add_min(item,values,values.goods_num,'count_add')" />&nbsp;件
+                                </div>
+                                <div class="cart_shop_price">￥<span class="cart_shop_total_price"></span>{{values.price * values.goods_num}}</div>
+                                <div class="cart_shop_operation">
+                                    <span class="cart_shop_delete"> 删除商品 </span>
+                                </div>
+                            </li>
+                            <slide class="cart_shop_order">
+                                <slide class="cart_shop_order_info">
+                                    <span>
+                                        已选商品({{numbers ? numbers : 0}})件 合计（不含运费）：￥ {{storeAllMoney ? storeAllMoney : 0.00}}
+                                    </span>
+                                </slide>
+                                <slide class="cart_shop_order_sub"> 结算 </slide>
+                            </slide>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--模块引入-->
+        <script src="{{PATH_TML}}user/common/js/generate.js"></script>
+        <script src="/common/js/control.js"></script>
+        <script src="{{PATH_TML}}user/js/common.js"></script>
+        <script>
+
+            Vue.http.headers.common['token'] = window.localStorage.getItem("token");
+
+            var app = new Vue({
+                el: "#cart_shopping",
+                data: {
+                    user_weid: window.localStorage.getItem("weid"),
+                    cart_list: '',
+                    numbers: 0,
+                    storeAllMoney: 0.00,
+
+                },
+                mounted: function () {
+                	var self = this;
+                    // 获取默认列表
+                    var body = new Object();
+                    body.user_id = self.user_weid;
+                    self.$http.post(apiUrl + 'cart/lists', body).then(function (res) {
+                        if(res.data && res.data.code===200){
+                            self.cart_list = res.data.data.list;
+                        }
+                    })
+                },
+                computed: {
+                    storeAll: function () {
+                        var money = 0;
+                        for (var a = 0; a < this.list.goodsList.length; a++) {
+                            money += this.list.goodsList[a].price * this.list.goodsList[a].goods_num
+                        }
+                        return money;
+                    }
+                },
+                methods: {
+                    count_add_min: function(item,values,count,names) {
+                    	if(names == "count_add") {
+                    		values.goods_num++;
+                    		if(values.goods_num > values.stock) {
+                    			values.goods_num = values.stock;
+                    		}
+                    	} else if(names == "count_min") {
+							values.goods_num--;
+		                    if (values.goods_num <= 0) {
+		                        values.goods_num = 1;
+		                    }
+                    	}
+                    },
+                    getNumber : function (storeObj,flag) {
+                    	var self = this;
+		                storeObj.goods.forEach(function(value, index, array) {
+		                	if(flag) {
+		                		storeObj.goods[index].checked = storeObj.mall.pCheck;
+		                	}
+		                	if(storeObj.goods[index].checked) {
+		                		self.storeAllMoney += storeObj.goods[index].price * storeObj.goods[index].goods_num;
+		                		self.numbers++;
+		                	}
+		                });
+		            },
+                    selectStore: function(item) {
+                    	var self = this;
+		                item.mall.pCheck = !item.mall.pCheck;
+		                this.getNumber(item, true)
+                    },
+                    selectItem: function(item,values,key) {
+                    	var self = this;
+		                values.checked = !values.checked;
+		                var isAllCheck = item.goods.filter(function (data) {
+		                    return data.checked === false;
+		                });
+		                item.mall.pCheck = (isAllCheck.length === 0);
+		                this.getNumber(item)
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>
