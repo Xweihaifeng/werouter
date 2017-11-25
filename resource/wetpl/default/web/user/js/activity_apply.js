@@ -207,9 +207,12 @@ $(document).ready(function() {
         var listhtml = '<tr data-id="' + data.weid + '">' +
             '<td class="chk"><input type="checkbox" class="boxsty J_CkbItem" data-id="' + data.weid + '"></td>' +
             '<td class="queue">' + num + '</td>' +
-            '<td class="user"><img src="' + ApiMaterPlatQiniuDomain + data.avatar + '" width="30">' +
-            '<div class="username">' + data.name + '</div>' +
-            '<div class="company"><span>' + data.company + '</span><span>' + data.poistion + '</span></div>' +
+            `<td class="user">
+            <div class="user-avatar"><img src="` + ApiMaterPlatQiniuDomain + data.avatar + `" width="30"></div>` +
+            `<div class="user-desc">
+                <div class="username">` + data.name + `</div>` +
+            `<div class="company"><span>` + data.company + `</span><span>` + data.poistion + `</span></div>
+            </div>` +
             '</td>' +
             '<td class="mobile">' + data.telphone + '</td>' +
             '<td class="ticket">' +
