@@ -4,10 +4,10 @@
 
 // 公用部分变量声明
 // var user_weid = window.localStorage.getItem("weid");
-// var token = window.localStorage.getItem('token');
+var token = window.localStorage.getItem('token');
 
 // var user_weid = "e432d880-c9c6-11e7-9416-ff2a866c0676";
-var token = "eyJpdiI6IlZxMUNlSTVKc3BkVkk0ejdoM25nV0E9PSIsInZhbHVlIjoiT0drWmdTSHJmbVBMdVhFUmRkSU1rbVVpS0dQQXZleWdCM1BpeFgxQ3NNYkMrdXZFcGJweU1vbW5KNnJKSms2QTd3RjlaRmlTSEJIOHk4U0JRa1lPN0FsbUJ4S29ad2N1UFZ5c0JaRWVtcHc9IiwibWFjIjoiODQyYmVlYzhhMjRjOWFkNjNkYmZjYThjNDEwMTY0Y2JkMzg3MWVmMGMwMjMwZjQ1OTI5ZGFiYTdmMDA4MTZiNiJ9";
+// var token = "eyJpdiI6IlZxMUNlSTVKc3BkVkk0ejdoM25nV0E9PSIsInZhbHVlIjoiT0drWmdTSHJmbVBMdVhFUmRkSU1rbVVpS0dQQXZleWdCM1BpeFgxQ3NNYkMrdXZFcGJweU1vbW5KNnJKSms2QTd3RjlaRmlTSEJIOHk4U0JRa1lPN0FsbUJ4S29ad2N1UFZ5c0JaRWVtcHc9IiwibWFjIjoiODQyYmVlYzhhMjRjOWFkNjNkYmZjYThjNDEwMTY0Y2JkMzg3MWVmMGMwMjMwZjQ1OTI5ZGFiYTdmMDA4MTZiNiJ9";
 
 // window.localStorage.setItem("weid", user_weid);
 // window.localStorage.setItem('token', token);
