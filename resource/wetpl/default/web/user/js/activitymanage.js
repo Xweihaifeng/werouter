@@ -348,6 +348,7 @@
              btn_cancle_pub +
              '<!--进行中或已结束活动都可查看报名签到管理-->' +
              '<a href="/user/admin/activity/apply/' + data.weid + '" class="btn btn-active">报名管理</a>' +
+             '<a href="/user/admin/activity/apply/' + data.weid + '" class="btn btn-active">签到列表</a>' +
              '</div>' +
              '</div>' +
              '<div class="operation">' +
