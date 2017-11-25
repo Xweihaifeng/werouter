@@ -64,8 +64,7 @@ function shopping_list(shop_classify_weid) {
     var options_two = $.post(apiUrl + "goods/lists/user", body);
     options_two.done(function(data) {
         if(data.code == 200) {
-            var result = data.data.list;                     
-            alert("商品列表:"+ result);
+            var result = data.data.list;
             $.each(result, function(index, value) {
                 shop.push(value);
             });
@@ -88,13 +87,11 @@ const shopping_classify = function(user_weid) {
     option_one.done(function(data) {
         if(data.code == 200) {
             var result = data.data;
-            alert("商品分类："+ result);
             $.each(result, function(index, value) {
                 $("#shop_type").append(`<li id="`+ value.weid +`">`+ value.name +`</li>`);
             });
 
             var first_weid = $("#shop_type li").first().attr("id");
-            alert("first_weid:"+ first_weid);
             shopping_list(first_weid);
         } else {
             console.warn(data.message);
