@@ -11,8 +11,8 @@
 
 // window.localStorage.setItem("weid", user_weid);
 // window.localStorage.setItem('token', token);
-alert("weid:", weid);
-alert("token:", token);
+alert("weid:" + weid);
+alert("token:" + token);
 
 var number = 1, domain, plat_user_id;
 var shop = new Array();
