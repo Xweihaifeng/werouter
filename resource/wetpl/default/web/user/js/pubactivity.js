@@ -760,7 +760,7 @@
                              $('#J_ActivityProperty').get(0).checked = false;
                          }
                          //if (data.data.status == 2) {
-                         // $(".btn-save").remove();
+                         $(".btn-save").remove();
                          ///}
                          $(".btn-pub").text("修改");
                          $(".btn-pub").data("id", 1);
