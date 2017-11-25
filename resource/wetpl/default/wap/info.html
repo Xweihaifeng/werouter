@@ -119,7 +119,7 @@
 			},
 			success: function (data) {
 				//alert(3)
-				alert(JSON.stringify(data))
+				//alert(JSON.stringify(data))
 				//alert('token:' + data.token);
 				//alert('act:' + data.data.activation_status);
 				localStorage.setItem('weid', data.data.weid);
@@ -180,6 +180,8 @@
 						localStorage.setItem('setopenid-date', new Date().getTime())
 						window.location.href = encodeURI(apiUrl + '/openid?url=' + window.location.href);
 					}
+				} else {
+					window.location.href = '/login';
 				}
 
 				$.ajax({
