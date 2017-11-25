@@ -17,7 +17,7 @@ alert("token:" + token);
 var number = 1, domain, plat_user_id;
 var shop = new Array();
 var my_shopping = {shop: shop};
-
+alert('my-shopping')
 // 用户token验证部分
 if(token) {
     $.ajaxSetup({
