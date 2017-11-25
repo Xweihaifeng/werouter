@@ -259,7 +259,7 @@ $(document).ready(function() {
         }
         console.log(sendData);
         $.ajax({
-            url: ACTIVITY_ENROLL_LISTS + '?status=1',
+            url: ACTIVITY_ENROLL_LISTS + '?status=1&is_attend=1',
             type: 'post',
             data: sendData,
             headers: {
