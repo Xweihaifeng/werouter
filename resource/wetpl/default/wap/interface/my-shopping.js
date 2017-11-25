@@ -1,4 +1,4 @@
-const my_shopping = {
+const my_wemall = {
     "type" : ["手机", "数码", "电脑", "办公", "家具", "家居", "家装", "厨具", "男装", "女装", "童装", "内衣", "宠物", "女鞋", "男鞋", "箱包", "钟表", "珠宝", "运动", "户外", "汽车", "母婴", "食品", "酒水", "生鲜", "特产", "鲜花", "保健", "情趣", "图书", "音影", "电子书"],
     "shop" : [
         {
@@ -67,3 +67,50 @@ const my_shopping = {
         }
     ]
 }
+
+
+
+
+let resp;
+const reqArtList = (url, userid) => {
+    $.ajax({
+        url: url + userid,
+        type: 'GET',
+        async: false,
+        success: function(data){
+            if (data.code == 200) {
+                //console.log(data)
+                resp = data;
+            }
+        },
+        error: function(xhr) {
+            console.log(xhr);
+        }
+    })
+}
+
+const reqUserId = (url, domain) => {
+    $.ajax({
+        url: url + domain,
+        type: 'GET',
+        async: false,
+        success: function(data) {
+            if (data.code == 200) {
+                //console.log(data)
+                let userid = data.data.plat_user_id;
+                let info = {
+                    user_id: userid
+                }
+                reqArtList(ARTICLE_LIST + '?userId=', userid);
+            }
+        },
+        error: function(xhr) {
+            console.log(xhr);
+        }
+    })
+}
+
+let domain = window.location.pathname.split('/')[1];
+reqUserId('http://new.wezchina.com/api/pages/page/getDetailByDomain/', domain);
+
+const my_wemall = resp;
