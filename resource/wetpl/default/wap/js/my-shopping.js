@@ -3,21 +3,21 @@
  */
 
 // 公用部分变量声明
-//var user_weid = window.localStorage.getItem("weid");
-//var token = window.localStorage.getItem('token');
+var user_weid = window.localStorage.getItem("weid");
+var token = window.localStorage.getItem('token');
 
 // var user_weid = "e432d880-c9c6-11e7-9416-ff2a866c0676";
 // var token = "eyJpdiI6IjVWMTdUVUFyMXgrdFZtRmc1VElYcFE9PSIsInZhbHVlIjoiazBZSmFITkU2VUNPdHkzWG9henJMM1FLeW1Ta1ZVc0tmYWd0ZUx0TGVuelBONmtvWDJrZXlaMkY0RkNoTFFJVXZVdk1TMzZTTFFPZ3JGNm1sZXpaYmlFNlY5RWhmRU5ReWVNMlVJVEtWMEU9IiwibWFjIjoiZmYzZDcwODRkOGNmZTZiYmFkMzcwNGMwMGVjNTdiMjU2OWM0N2Y4MTNhNDMxMDYxOTM1MGQxNTg5ODI4ODBjZCJ9";
 
 // window.localStorage.setItem("weid", user_weid);
 // window.localStorage.setItem('token', token);
-alert("weid:" + weid);
-alert("token:" + token);
+alert("weid:" + window.localStorage.getItem("weid"));
+alert("token:" + window.localStorage.getItem('token'));
 
 var number = 1, domain, plat_user_id;
 var shop = new Array();
 var my_shopping = {shop: shop};
-
+alert('my-shopping')
 // 用户token验证部分
 if(token) {
     $.ajaxSetup({
