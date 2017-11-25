@@ -56,8 +56,8 @@ $(document).ready(function(){
                     },  
                     StringLength:{  
                         min:2,  
-                        max:32,  
-                        message:'标题长度大于2位并且小于32位'  
+                        max:50,
+                        message:'标题长度大于2位并且小于50位'
                     }
                 }  
         }, 

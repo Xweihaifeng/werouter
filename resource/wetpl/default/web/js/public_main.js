@@ -637,6 +637,9 @@ $(document).ready(function(){
                 //会长
                 var chairman = setTimeout(function() {
                     if (data.data.leader != null) {
+                        if (data.data.leader.image.indexOf('http') == -1) {
+                            data.data.leader.image = ApiMaterPlatQiniuDomain + data.data.leader.image;
+                        }
                         $(".imgs-chairman").html('<a href=' + data.data.leader.url + '><img src=' + data.data.leader.image + ' width="80"/></a>');
                         $(".imgs-name").html(data.data.leader.title);
                     } else {
