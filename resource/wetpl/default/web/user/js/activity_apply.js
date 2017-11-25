@@ -430,24 +430,20 @@ $(document).ready(function() {
     //批量删除
     var flagapply = 0;
     $('.J_BtnDelAllRecord').click(function() {
-
-        layer.confirm('确认要批量删除？', {
-            title: '删除报名',
-            btn: ['确认删除', '取消']
-        }, function() {
-            var activeid = $('#aid').val();
-            var ids = [],
-                type = parseInt($(this).data('type'), 10);
-            $('.J_CkbItem').each(function() {
-                if (this.checked) {
-                    ids[ids.length] = $(this).data('id');
-                    console.log($(this).data('id'));
-                }
-
-
-            });
-            if (ids.length > 0) {
-                console.log(ids);
+        var activeid = $('#aid').val();
+        var ids = [],
+            type = parseInt($(this).data('type'), 10);
+        $('.J_CkbItem').each(function() {
+            if (this.checked) {
+                ids[ids.length] = $(this).data('id');
+                console.log($(this).data('id'));
+            }
+        });
+        if (ids.length > 0) {
+            layer.confirm('确认要批量删除？', {
+                title: '删除报名',
+                btn: ['确认删除', '取消']
+            }, function() {
                 ids.map(x => {
                     flagapply++;
                     console.log(x);
@@ -470,16 +466,12 @@ $(document).ready(function() {
                         }
                     })
                 })
+            }, function() {
 
-            } else {
-                mess_tusi('请至少勾选一个');
-            }
-
-        }, function() {
-
-        });
-
-
+            });
+        } else {
+            mess_tusi('请至少勾选一个');
+        }
     });
 
 
