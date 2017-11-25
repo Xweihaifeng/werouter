@@ -759,7 +759,7 @@
                          } else {
                              $('#J_ActivityProperty').get(0).checked = false;
                          }
-                         if (data.data.status == 2) {
+                         if (data.data.status == 1) {
                              $(".btn-save").remove();
                          }
                          $(".btn-pub").text("修改");
