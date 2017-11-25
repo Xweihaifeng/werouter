@@ -1,29 +1,37 @@
  //列表折叠
  sessionStorage.listname = 'we-active';
 
+
  // 3.删除
  var activitydel = function(obj) {
-         console.log($(obj).closest('li').data('id'));
-         $.ajax({
-             url: ACTIVITY_DESTROY + '/' + $(obj).closest('li').data('id'),
-             type: 'get',
-             headers: {
-                 'Token': localStorage.getItem('token')
-             },
-             success: function(data) {
-                 console.log(data);
-                 if (data.code == 200) {
-                     mess_tusi("删除成功");
-                     location.reload();
 
-                 } else {
-                     mess_tusi(data.message);
+         layer.confirm('确认要删除该活动？', {
+             btn: ['确认删除', '取消']
+         }, function() {
+             console.log($(obj).closest('li').data('id'));
+             $.ajax({
+                 url: ACTIVITY_DESTROY + '/' + $(obj).closest('li').data('id'),
+                 type: 'get',
+                 headers: {
+                     'Token': localStorage.getItem('token')
+                 },
+                 success: function(data) {
+                     console.log(data);
+                     if (data.code == 200) {
+                         mess_tusi("删除成功");
+                         location.reload();
+
+                     } else {
+                         mess_tusi(data.message);
+                     }
+                 },
+                 error: function(xhr) {
+                     console.log(xhr);
                  }
-             },
-             error: function(xhr) {
-                 console.log(xhr);
-             }
-         })
+             })
+         }, function() {
+
+         });
      }
      // 4.编辑
  var activityedit = function(obj) {
