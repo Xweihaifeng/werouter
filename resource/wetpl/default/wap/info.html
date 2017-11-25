@@ -4,12 +4,12 @@
 	<meta charset="UTF-8">
 	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <title></title>
-    <link rel="stylesheet" href="{{PATH_TML}}wepage/lib/weui.css" />
-    <link rel="stylesheet" href="{{PATH_TML}}wepage/css/info.css"/>
+    <link rel="stylesheet" href="{{PATH_TML}}lib/weui.css" />
+    <link rel="stylesheet" href="{{PATH_TML}}css/info.css"/>
 	<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
-    <script src="{{PATH_TML}}wepage/lib/jquery.min.js"></script>
+    <script src="{{PATH_TML}}lib/jquery.min.js"></script>
 	<script src="{{PATH_CONFIG}}"></script>
-	<script src="{{PATH_TML}}wepage/js/vue.min.js"></script>
+	<script src="{{PATH_TML}}js/vue.min.js"></script>
 </head>
 <body>
 <div id="app" class="box">
@@ -148,7 +148,7 @@
 				ref.nickname = data.data.user.nickname;
 				ref.domain = data.data.user.domain;
 				ref.motto = data.data.user.motto;
-				ref.wepage = '/' + ref.domain + '/my-dynamic';
+				ref.wepage = '/' + ref.domain + '/';
 
 				let title = ref.nickname;
 				let summary = ref.motto;
@@ -190,7 +190,7 @@
 					},
 					success: function(data) {
 						if (data.code == 200) {
-							alert(1)
+//							alert(1)
 							console.log(data)
 							wx.config({
 								debug: false,
@@ -379,7 +379,7 @@
 			},
 			enjoy: function(state){
 				let _self = this;
-				alert(state)
+//				alert(state)
 				if (!state) {
 					_self.status = '已关注';
 					_self.state = 'true';
