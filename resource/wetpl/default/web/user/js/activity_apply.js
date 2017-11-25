@@ -217,7 +217,7 @@ $(document).ready(function() {
             '<td class="mobile">' + data.telphone + '</td>' +
             '<td class="ticket">' +
 
-            data.type == 1 ? ' <img data-toggle="modal" data-target="#myModal" src="/common/img/ticket-apply.png">' : '<b>￥' + data.price + '<b>' +
+            (data.type == 1 ? ' <img data-toggle="modal" data-target="#myModal" src="/common/img/ticket-apply.png">' : '<b>￥' + data.price + '<b>') +
 
             '</td>' +
 
