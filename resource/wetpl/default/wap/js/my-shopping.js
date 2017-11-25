@@ -11,6 +11,8 @@ var token = window.localStorage.getItem('token');
 
 // window.localStorage.setItem("weid", user_weid);
 // window.localStorage.setItem('token', token);
+alert("weid:", user_weid);
+alert("token:", token);
 
 var number = 1, domain, plat_user_id;
 var shop = new Array();
@@ -69,6 +71,7 @@ if(user_weid) {
         if(data.code == 200) {
             var result = data.data;
             domain = result.domain;
+            alert("个性域名:", domain);
         } else {
             console.warn(data.message);
         }
@@ -85,6 +88,7 @@ if(domain) {
         if(data.code == 200) {
             var result = data.data;
             plat_user_id = result.plat_user_id;
+            alert("plat_user_id:", plat_user_id);
         } else {
             console.warn(data.message);
         }
@@ -121,7 +125,7 @@ function shopping_classify() {
     option_one.done(function(data) {
         if(data.code == 200) {
             var result = data.data;
-            console.info("商品分类：", result);
+            alert("商品分类：", result);
             $.each(result, function(index, value) {
                 $("#shop_type").append(`<li id="`+ value.weid +`">`+ value.name +`</li>`);
             });
@@ -141,7 +145,8 @@ function shopping_list(shop_classify_weid) {
     var options_two = $.post(apiUrl + "goods/lists/user", body);
     options_two.done(function(data) {
         if(data.code == 200) {
-            var result = data.data.list;
+            var result = data.data.list;                     
+            alert("商品列表:", result);
             $.each(result, function(index, value) {
                 shop.push(value);
             });
@@ -157,6 +162,7 @@ function shopping_list(shop_classify_weid) {
 }
 
 var first_weid = $("#shop_type li").first().attr("id");
+alert("first_weid:", first_weid);
 shopping_list(first_weid);
 
 $("#shop_type li").click(function() {
