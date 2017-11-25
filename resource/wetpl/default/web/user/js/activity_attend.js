@@ -205,7 +205,6 @@ $(document).ready(function() {
         console.log(num);
         num++;
         var listhtml = '<tr data-id="' + data.weid + '">' +
-            '<td class="chk"><input type="checkbox" class="boxsty J_CkbItem" data-id="' + data.weid + '"></td>' +
             '<td class="queue">' + num + '</td>' +
             `<td class="user">
             <div class="user-avatar"><img src="` + ApiMaterPlatQiniuDomain + data.avatar + `" width="45"></div>` +
@@ -215,16 +214,10 @@ $(document).ready(function() {
             </div>` +
             '</td>' +
             '<td class="mobile">' + data.telphone + '</td>' +
-            '<td class="ticket">' +
-
-            ' <img data-toggle="modal" data-target="#myModal" src="/common/img/ticket-apply.png">' +
-
-            '</td>' +
-
             '<td class="operate">' +
 
 
-            ' <span style="color:#34b0df;">已通过</span>' +
+            ' <span style="color:#34b0df;">已到场</span>' +
 
 
             '</td>' +
