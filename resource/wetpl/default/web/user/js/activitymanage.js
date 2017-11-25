@@ -31,19 +31,44 @@
      }
      // 5.取消发布
  var activitycancel = function(obj) {
-     console.log($(obj));
+         console.log($(obj));
+         var actiid = $(obj).closest("li").data("id");
+         $.ajax({
+             url: ACTIVITY_UPDATE,
+             type: 'post',
+             data: { weid: actiid, status: 1 },
+             headers: {
+                 'Token': localStorage.getItem('token')
+             },
+             success: function(data) {
+                 console.log(data);
+                 if (data.code == 200) {
+                     mess_tusi("取消发布成功！");
+                     location.reload();
+
+                 } else {
+                     mess_tusi(data.message);
+                 }
+             },
+             error: function(xhr) {
+                 console.log(xhr);
+             }
+         })
+     }
+     // 设为发布
+ var activitypublish = function(obj) {
      var actiid = $(obj).closest("li").data("id");
      $.ajax({
          url: ACTIVITY_UPDATE,
          type: 'post',
-         data: { weid: actiid, status: 1 },
+         data: { weid: actiid, status: 2 },
          headers: {
              'Token': localStorage.getItem('token')
          },
          success: function(data) {
              console.log(data);
              if (data.code == 200) {
-                 mess_tusi("取消发布成功");
+                 mess_tusi("发布成功！");
                  location.reload();
 
              } else {
@@ -264,7 +289,7 @@
              // 未发布
              disabled = 'disabled="disabled"';
              btn_active = 'btn-default acv-btn';
-             btn_cancle_pub = '<button type="button"  ' + disabled + ' class="btn ' + btn_active + '  J_CancelPublishActivity">取消发布</button> ';
+             btn_cancle_pub = '<button type="button"  ' + disabled + ' class="btn ' + btn_active + '  J_CancelPublishActivity" onclick="activitypublish(this)">设为发布</button> ';
              ing = "未发布";
          } else if (type == 2) {
              // 进行中
