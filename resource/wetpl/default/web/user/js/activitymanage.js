@@ -287,7 +287,7 @@
 
          } else if (type == 1) {
              // 未发布
-             disabled = 'disabled="disabled"';
+             //disabled = 'disabled="disabled"';
              btn_active = 'btn-default acv-btn';
              btn_cancle_pub = '<button type="button"  ' + disabled + ' class="btn ' + btn_active + '  J_CancelPublishActivity" onclick="activitypublish(this)">设为发布</button> ';
              ing = "未发布";
