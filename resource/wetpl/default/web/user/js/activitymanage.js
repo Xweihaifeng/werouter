@@ -6,6 +6,7 @@
  var activitydel = function(obj) {
 
          layer.confirm('确认要删除该活动？', {
+             title: '删除活动',
              btn: ['确认删除', '取消']
          }, function() {
              console.log($(obj).closest('li').data('id'));
