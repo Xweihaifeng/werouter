@@ -514,7 +514,7 @@ $(document).ready(function() {
 							localStorage.setItem("num", $("input[name='num']").val());
 							// window.location.href = "/shoporder/" + id;
 							var obj = {
-                                goodsList : [
+                                goods_list : [
 									{
                                         "goods_id" : id,
                                         "goods_num": $("input[name='num']").val()

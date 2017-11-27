@@ -166,7 +166,7 @@
                     },
                     goOrder: function (storeObj) {
                         var orderObj = {
-                            goodsList : []
+                            goods_list : []
                         };
                         for(var i=0; i<storeObj.goods.length; i++){
                             if(storeObj.goods[i].checked){
@@ -174,7 +174,7 @@
                                     "goods_id" : storeObj.goods[i].weid,
                                     "goods_num": storeObj.goods[i].goods_num
                                 };
-                                orderObj.goodsList.push(data)
+                                orderObj.goods_list.push(data)
                             }
                         }
                         this.$http.get(apiUrl + 'users/imagecodeid').then(function (res) {
