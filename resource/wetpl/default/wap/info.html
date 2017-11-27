@@ -457,7 +457,9 @@
 			var platuserid = window.location.pathname.split('/')[2];
 		},
 		mounted: function(){
-			init(apiUrl + 'circel/wcard/' + platuserid, _self);
+			this.$nextTick(function () {
+				this.init(apiUrl + 'circel/wcard/' + platuserid, _self);
+			}
 		},
 		methods: {
 			care: function(){
