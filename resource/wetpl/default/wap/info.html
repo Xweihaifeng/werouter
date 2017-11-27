@@ -468,7 +468,7 @@
 			enjoy: function(){
 				let _self = this;
 				alert('act:' + _self.activation)
-				if (_self.activation == 4 || _self.activation == null) {
+				if (_self.activation == 4 || _self.activation == null || _self.activation == '') {
 					$(".layui-btn").show();
 					layui.use('layer', function(){ //独立版的layer无需执行这一句
 						var $ = layui.jquery, layer = layui.layer; //独立版的layer无需执行这一句
@@ -628,8 +628,10 @@
 				} else {
 					alert(_self.state)
 					if (!_self.state) {
+						alert('follow')
 						follow('circel/relationship', _self.domain, _self);
 					} else {
+						alert('cancel')
 						cancelFollow('circel/quxiao', _self.domain, _self);
 					}
 				}
