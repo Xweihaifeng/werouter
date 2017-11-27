@@ -469,7 +469,6 @@
 			},
 			enjoy: function(){
 				let _self = this;
-				alert(_self.activation)
 				if (_self.activation == 4 || _self.activation == null || _self.activation == '') {
 					layui.use('layer', function(){ //独立版的layer无需执行这一句
 						var $ = layui.jquery, layer = layui.layer; //独立版的layer无需执行这一句
@@ -627,7 +626,6 @@
 						});
 					});
 				} else {
-					alert('req follow' + _self.state)
 					if (!_self.state) {
 						alert('follow')
 						follow('circel/relationship', _self.domain, _self);
