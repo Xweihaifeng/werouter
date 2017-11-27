@@ -117,7 +117,8 @@
                 let self = this;
                 localStorage.removeItem('token');
                 localStorage.removeItem('weid');
-                self.backurl = sessionStorage.getItem('currentPage');
+//                self.backurl = sessionStorage.getItem('currentPage');
+                self.backurl = self.next;
             },
             methods: {
                 getCheck: function() {
