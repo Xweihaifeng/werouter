@@ -513,7 +513,30 @@ $(document).ready(function() {
 						if(isLogin) {
 							localStorage.setItem("num", $("input[name='num']").val());
 							// window.location.href = "/shoporder/" + id;
-							window.location.href = url + "/wemall/order/" + id;
+							var obj = {
+                                goodsList : [
+									{
+                                        "goods_id" : id,
+                                        "goods_num": $("input[name='num']").val()
+									}
+								]
+							};
+
+							$.ajax({
+								url : apiUrl + 'users/imagecodeid',
+								type : 'get',
+								headers : {
+                                    'Token': localStorage.getItem('token')
+								},
+								dataType : 'json',
+								success : function (res) {
+									console.log(res);
+									if(res.code === 200){
+                                        window.localStorage.setItem(res.data,obj);
+                                        window.location.href = url + "/wemall/order/" + res.data;
+									}
+                                }
+							})
 						} else {
 							router('login');
 						}
