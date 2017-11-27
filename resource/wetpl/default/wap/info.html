@@ -172,12 +172,12 @@
 						var usertoken = localStorage.getItem('setopenid');
 						if (usertoken == 'true') {
 							openid = getUrlParam("openid");
+//							alert('openid:' + openid)
 							if (openid != null) {
 								localStorage.setItem('openid', openid);
 								wxlogin(openid, ref);
 							} else {
 								let openid = localStorage.getItem('openid');
-								alert('openid:' + openid)
 								wxlogin(openid, ref);
 							}
 //							alert('store openid:' + localStorage.getItem('openid'));
@@ -201,7 +201,6 @@
 					},
 					success: function(data) {
 						if (data.code == 200) {
-							alert(1)
 //							console.log(data)
 							wx.config({
 								debug: false,
@@ -214,7 +213,6 @@
 
 							wx.ready(function() {
 								var link = window.location.href;
-								alert('cover:' + cover)
 								wx.onMenuShareTimeline({
 									title: title,
 									// 分享标题
