@@ -81,13 +81,21 @@ var qiniu_bucket_domain = ApiMaterPlatQiniuDomain;
     });
     
 
+    var id = {
+        "goods_list": [{
+            "goods_id": "c36f9e20-d0eb-11e7-995e-d16d5975af33",
+            "goods_num": "1"
+        }],
+    };
     
+
+
     var id = window.location.href.split('/').pop();   
     
 
-    
+    var id=localStorage.getItem(id);
 
-    
+    var id=id.goods_list[0].goods_id;
 
 
     var url = window.location.href.split('/');
@@ -230,12 +238,7 @@ checkdomain(domain,id);
     //var id = window.location.href.split('/').pop();    
     
     //获取json数组
-    var id = {
-        "goods_list": [{
-            "goods_id": "c36f9e20-d0eb-11e7-995e-d16d5975af33",
-            "goods_num": "1"
-        }],
-    };
+    var id = localStorage.getItem(window.location.href.split('/').pop()); 
 
      // 产生地址模板
     var dizhiacitve='';
