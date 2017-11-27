@@ -313,7 +313,7 @@
 				console.log(data)
 				if (data.code == 200) {
 					ref.status = '已关注';
-					ref.state = 'true';
+					ref.state = true;
 					alert('已关注')
 					layer.msg("关注成功", {
 						time: 1500
@@ -346,7 +346,7 @@
 				console.log(data)
 				if (data.code == 200) {
 					ref.status = '关注';
-					ref.state = 'false';
+					ref.state = false;
 					alert('取消关注')
 					layer.msg("取消关注成功", {
 						time: 1500
