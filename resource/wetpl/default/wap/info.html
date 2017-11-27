@@ -131,12 +131,12 @@
 				localStorage.setItem('weid', data.data.weid);
 				localStorage.setItem('token', data.token);
 				localStorage.setItem('activation', data.data.activation_status);
+				ref.activation = data.data.activation_status;
+				alert('ref.act:' + ref.activation)
+				if (ref.activation == 4 || ref.activation == null || ref.activation == '') {
+					$(".layui-btn").show();
+				}
 				if (data.code == 200) {
-					ref.activation = data.data.activation_status;
-					alert('ref.act:' + ref.activation)
-					if (ref.activation == 4 || ref.activation == null || ref.activation == '') {
-						$(".layui-btn").show();
-					}
 					if (isNull(data.token) == false) { //非空
 						localStorage.setItem('token-date', new Date().getTime())
 						localStorage.setItem('user-token', data.token);
@@ -630,7 +630,7 @@
 						});
 					});
 				} else {
-					alert(_self.state)
+					alert('req follow' + _self.state)
 					if (!_self.state) {
 						alert('follow')
 						follow('circel/relationship', _self.domain, _self);
