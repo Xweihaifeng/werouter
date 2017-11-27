@@ -165,6 +165,7 @@
 		                this.getNumber(item)
                     },
                     goOrder: function (storeObj) {
+                        var self = this;
                         var orderObj = {
                             goods_list : []
                         };
@@ -180,10 +181,15 @@
                         this.$http.get(apiUrl + 'users/imagecodeid').then(function (res) {
                             console.log(res);
                             if(res.data && res.data.data){
-                                window.localStorage.setItem(res.data.data,JSON.stringify(orderObj));
+                                var uniqueKey = res.data.data;
+                                window.localStorage.setItem(uniqueKey,JSON.stringify(orderObj));
                                 if(storeObj.storeAllMoney > 0){
-                                    var domain = window.localStorage.getItem("domain");
-                                    window.location.href = domain + '/wemall/order/' + res.data.data
+                                    this.$http.get(apiUrl + 'pages/page/getDetailByUser/'+ storeObj.mall.plat_user_id).then(function (res) {
+                                            if(res.data && res.data.code === 200){
+                                                window.location.href = '/'+res.data.data.domain + '/wemall/order/' + uniqueKey
+                                            }
+                                    })
+
                                 }
                             }
                         });
