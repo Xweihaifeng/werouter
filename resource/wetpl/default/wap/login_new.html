@@ -65,7 +65,7 @@
 
         const tologin = (phoneNum, checkNum, next) => {
             $.ajax({
-                url:  LOGIN,
+                url: LOGIN,
                 type: 'POST',
                 data: {
                     'phone': phoneNum,
@@ -84,6 +84,7 @@
 //                        alert('token:' + data.token);
                         localStorage.setItem('token', data.token);
                         localStorage.setItem('weid', data.data.weid);
+                        localStorage.setItem('phone', data.data.phone);
                         setCookie(data.token, 7);
                         setTimeout(function(){
                             window.location.href = next;

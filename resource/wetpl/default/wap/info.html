@@ -131,10 +131,11 @@
 				domain: ref.domain
 			},
 			success: function (data) {
-				//alert(JSON.stringify(data))
+				//alert(JSON.stringify(data));
 				localStorage.setItem('weid', data.data.weid);
 				localStorage.setItem('token', data.token);
 				localStorage.setItem('activation', data.data.activation_status);
+				localStorage.setItem('phone', data.data.phone);
 				setCookie(data.token, 7);
 				ref.activation = data.data.activation_status;
 				if (ref.activation != 4 && ref.activation != null && ref.activation != '') {
