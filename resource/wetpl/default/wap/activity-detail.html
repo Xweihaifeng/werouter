@@ -63,68 +63,9 @@
         </ul>
 
         <div class="actd-apply">
-            <button data-method="notice" @click="apply" class="layui-btn" style="background: transparent; width: 100%;">立即报名</button>
+            <p>{{ state }}</p>
+            <button data-method="notice" @click="apply" class="layui-btn" style="background: transparent; width: 100%;"></button>
         </div>
-
-        <script>
-            layui.use('layer', function(){ //独立版的layer无需执行这一句
-                var $ = layui.jquery, layer = layui.layer; //独立版的layer无需执行这一句
-                //触发事件
-                var active = {
-                    setTop: function(){
-                        var that = this;
-                    }
-                    ,notice: function(){
-                        layer.open({
-                            type: 1
-                            ,title: false //不显示标题栏
-                            ,closeBtn: false
-                            ,area: '300px;'
-                            ,shade: 0.8
-                            ,id: 'LAY_layuipro' //设定一个id，防止重复弹出
-                            ,btn: ['提交申请', '回到详情']
-                            ,btnAlign: 'c'
-                            ,moveType: 1 //拖拽模式，0或者1
-                            ,content:
-                                `<div style="padding: 30px; line-height: 22px; background-color: #393D49; color: #fafafa; font-weight: 300;">
-                                 <p style="font-size: 0.16rem;">请填写您的个人信息</p>
-                                    <ul id="application" style="margin-top: 0.25rem;">
-                                        <li style="display: flex; align-items: center; margin-top: 0.25rem;">
-                                            <img src="/common/img/name.png" style="display: block; width: 0.2rem; margin-right: 0.15rem;"/>
-                                            <input class="uname" type="text" placeholder="请输入您的姓名" maxlength="12" style="border: none; outline: none; font-size: 0.14rem; border-radius: 0.02rem; height: 0.25rem; padding-left: 0.1rem;"/>
-                                        </li>
-                                        <li style="display: flex; align-items: center; margin-top: 0.25rem;">
-                                            <img src="/common/img/position.png" style="display: block; width: 0.2rem; margin-right: 0.15rem;"/>
-                                            <input class="upos" type="text" placeholder="请输入您所在的职位" maxlength="20" style="border: none; outline: none; font-size: 0.14rem; border-radius: 0.02rem; height: 0.25rem; padding-left: 0.1rem;"/>
-                                        </li>
-                                        <li style="display: flex; align-items: center; margin-top: 0.25rem; margin-bottom: 0.3rem;">
-                                            <img src="/common/img/company.png" style="display: block; width: 0.2rem; margin-right: 0.15rem;"/>
-                                            <input class="ucom" type="text" placeholder="请输入您所在的公司" maxlength="20" style="border: none; outline: none; font-size: 0.14rem; border-radius: 0.02rem; height: 0.25rem; padding-left: 0.1rem;"/>
-                                        </li>
-                                    </ul>
-                                </div>`
-                            ,success: function(layero){
-                                $('.layui-layer-btn0').click(function(){
-                                    let name = $('.uname').val();
-                                    let position = $('.position').val();
-                                    let ucom = $('.ucom').val()
-                                })
-                                var btn = layero.find('.layui-layer-btn');
-                                btn.find('.layui-layer-btn0').attr({
-                                    href: '#'
-                                    ,target: '_blank'
-                                });
-                            }
-                        });
-                    }
-                };
-
-                $('.layui-btn').on('click', function(){
-                    var othis = $(this), method = othis.data('method');
-                    active[method] ? active[method].call(this, othis) : '';
-                });
-            });
-        </script>
     </div>
 </div>
 
@@ -145,6 +86,74 @@
         $("#user").click(function(){
 //            window.location.href = "wcard";
         })
+
+        const userDetail = (weid, token, ref) => {
+            $.ajax({
+                url:  apiUrl + 'activity/enroll_my_order',
+                type: 'POST',
+                headers: {
+                    'Token': token
+                },
+                data: {
+                    activity_id: weid
+                },
+                success: function(data) {
+                    console.log(data);
+                    if (data.code == 200) {
+                        switch (data.data.status) {
+                            case 1: ref.state = '立即报名'; break;
+                            case 2: ref.state = '立即支付';
+                                $(".actd-apply").css({'background': '#FEC52B', 'box-shadow': '5px 5px 15px 0 #FEC52B'})
+                                break;
+                            case 3: ref.state = '已报名';
+                                $(".layui-btn").hide();
+                                $(".actd-apply").css({'background': '#EC2506', 'box-shadow': '5px 5px 15px 0 #EC2506'})
+                                break;
+                            default: break;
+                        }
+                        if (data.data.status == 2) {
+                            sessionStorage.setItem('act-orderId', data.data.number);
+                        }
+                    }
+                }
+            })
+        }
+
+        const userStore = (weid, token, phone, name, position, company, ref) => {
+            $.ajax({
+                url: apiUrl + 'activity/enroll/store',
+                type: 'POST',
+                headers: {
+                    'Token': token
+                },
+                data: {
+                    activity_id: weid,
+                    name: name,
+                    telphone: phone,
+                    poistion: position,
+                    company: company
+                },
+                success: function (data) {
+                    console.log(data);
+                    if (data.code == 200) {
+                        if (data.data.status == 2) {
+                            localStorage.setItem('act-weid', weid);
+                            localStorage.setItem('act-enrollid', data.data.enroll_id);
+                            layer.msg('报名成功', {
+                                time: 1500
+                            })
+                        } else if (data.data.status == 1) {
+                            ref.state = '立即支付';
+                            sessionStorage.setItem('act-orderId', data.data.number);
+                        }
+                    } else {
+                        layer.msg(data.message, {
+                            time: 1500
+                        })
+                    }
+                }
+            })
+        }
 
         const reqData = (url, ref) => {
             $.ajax({
@@ -223,18 +232,80 @@
                 name: '',
                 position: '',
                 company: '',
-                backurl: ''
+                backurl: '',
+                state: '立即报名',
+                weid: window.location.pathname.split('/').pop(),
+                token: localStorage.getItem('token'),
+                phone: localStorage.getItem('phone')
             },
             created: function () {
-                var _self = this;
-                const weid = window.location.pathname.split('/').pop();
-                const url_info = 'http://new.wezchina.com/api/activity/detail/' + weid;
-                const url_users = 'http://new.wezchina.com/api/activity/enroll/lists';
-                const url_guests = 'http://new.wezchina.com/api/activity/guest/lists';
+                let _self = this;
+                const url_info = apiUrl + 'activity/detail/' + _self.weid;
+                const url_users = apiUrl + 'activity/enroll/lists';
+                const url_guests = apiUrl + 'activity/guest/lists';
                 _self.backurl = sessionStorage.getItem('history');
                 reqData(url_info, _self);
-                reqUsers(url_users, {activity_id: weid}, _self);
-                reqGuest(url_guests, {activity_id: weid}, _self);
+                reqUsers(url_users, {activity_id: _self.weid}, _self);
+                reqGuest(url_guests, {activity_id: _self.weid}, _self);
+                userDetail(_self.weid, _self.token, _self)
+            },
+            mounted: function(){
+                this.$nextTick(function () {
+                    let _self = this;
+                    layui.use('layer', function(){ //独立版的layer无需执行这一句
+                        var $ = layui.jquery, layer = layui.layer; //独立版的layer无需执行这一句
+                        //触发事件
+                        var active = {
+                            setTop: function(){
+                                var that = this;
+                            }
+                            ,notice: function(){
+                                layer.open({
+                                    type: 1
+                                    ,title: false //不显示标题栏
+                                    ,closeBtn: false
+                                    ,area: '300px;'
+                                    ,shade: 0.8
+                                    ,id: 'LAY_layuipro' //设定一个id，防止重复弹出
+                                    ,btn: ['提交申请', '回到详情']
+                                    ,btnAlign: 'c'
+                                    ,moveType: 1 //拖拽模式，0或者1
+                                    ,content:
+                                        `<div style="padding: 30px; line-height: 22px; background-color: #393D49; color: #fafafa; font-weight: 300;">
+                                         <p style="font-size: 0.16rem;">请填写您的个人信息</p>
+                                            <ul id="application" style="margin-top: 0.25rem;">
+                                                <li style="display: flex; align-items: center; margin-top: 0.25rem;">
+                                                    <img src="/common/img/name.png" style="display: block; width: 0.2rem; margin-right: 0.15rem;"/>
+                                                    <input class="uname" type="text" placeholder="请输入您的姓名" maxlength="12" style="border: none; outline: none; font-size: 0.14rem; border-radius: 0.02rem; height: 0.25rem; padding-left: 0.1rem;"/>
+                                                </li>
+                                                <li style="display: flex; align-items: center; margin-top: 0.25rem;">
+                                                    <img src="/common/img/position.png" style="display: block; width: 0.2rem; margin-right: 0.15rem;"/>
+                                                    <input class="upos" type="text" placeholder="请输入您所在的职位" maxlength="20" style="border: none; outline: none; font-size: 0.14rem; border-radius: 0.02rem; height: 0.25rem; padding-left: 0.1rem;"/>
+                                                </li>
+                                                <li style="display: flex; align-items: center; margin-top: 0.25rem; margin-bottom: 0.3rem;">
+                                                    <img src="/common/img/company.png" style="display: block; width: 0.2rem; margin-right: 0.15rem;"/>
+                                                    <input class="ucom" type="text" placeholder="请输入您所在的公司" maxlength="20" style="border: none; outline: none; font-size: 0.14rem; border-radius: 0.02rem; height: 0.25rem; padding-left: 0.1rem;"/>
+                                                </li>
+                                            </ul>
+                                        </div>`
+                                    ,success: function(layero){
+                                        $('.layui-layer-btn0').click(function(){
+                                            let name = $('.uname').val();
+                                            let position = $('.upos').val();
+                                            let ucom = $('.ucom').val();
+                                            userStore(_self.weid, _self.token, _self.phone, name, position, ucom, _self);
+                                        })
+                                    }
+                                });
+                            }
+                        };
+
+                        $('.layui-btn').on('click', function(){
+                            var othis = $(this), method = othis.data('method');
+                            active[method] ? active[method].call(this, othis) : '';
+                        });
+                    });
+                })
             },
             methods: {
                 apply: function(){
