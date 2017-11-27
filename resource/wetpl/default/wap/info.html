@@ -455,8 +455,9 @@
 		created: function(){
 			var _self = this;
 			var platuserid = window.location.pathname.split('/')[2];
+		},
+		mounted: function(){
 			init(apiUrl + 'circel/wcard/' + platuserid, _self);
-			//根据wxlogin接口返回激活与否和token,请求关注关系接口判断是否关注该用户
 		},
 		methods: {
 			care: function(){
