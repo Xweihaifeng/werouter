@@ -532,7 +532,7 @@ $(document).ready(function() {
 								success : function (res) {
 									console.log(res);
 									if(res.code === 200){
-                                        window.localStorage.setItem(res.data,obj);
+                                        window.localStorage.setItem(res.data,JSON.stringify(obj));
                                         window.location.href = url + "/wemall/order/" + res.data;
 									}
                                 }
