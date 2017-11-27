@@ -170,6 +170,8 @@
 				let cover = ref.avatar;
 
 				isFollow('circel/if_follow', ref.domain, ref);
+				//确保登录成功后能返回当前页
+				sessionStorage.setItem('nextPage', window.location.href);
 
 				if (is_weixn()) {
 //					alert(1)
@@ -197,7 +199,8 @@
 						window.location.href = encodeURI(apiUrl + '/openid?url=' + window.location.href);
 					}
 				} else {
-//					window.location.href = '/login';
+					$(".layui-btn").hide();
+//					window.location.href = '/login'; //不需要在此处强制登录
 				}
 
 				$.ajax({
@@ -609,14 +612,18 @@
 			},
 			enjoy: function(){
 				let _self = this;
-				if (_self.activation == 4 || _self.activation == null || _self.activation == '') {
+				if (localStorage.getItem('token') != null) {
+					if (is_weixn() && (_self.activation == 4 || _self.activation == null || _self.activation == '')) {
 
-				} else {
-					if (!_self.state) {
-						follow('circel/relationship', _self.domain, _self);
 					} else {
-						cancelFollow('circel/quxiao', _self.domain, _self);
+						if (!_self.state) {
+							follow('circel/relationship', _self.domain, _self);
+						} else {
+							cancelFollow('circel/quxiao', _self.domain, _self);
+						}
 					}
+				} else {
+					window.location.href = '/login';
 				}
 			}
 		}
