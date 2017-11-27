@@ -107,7 +107,7 @@
                 check: '',
                 info: '获取验证码',
                 lock: false,
-                backurl: '',
+                backurl: sessionStorage.getItem('currentPage'),
                 isCheck: false,
                 weid: '',
                 token: '',
@@ -117,8 +117,6 @@
                 let self = this;
                 localStorage.removeItem('token');
                 localStorage.removeItem('weid');
-//                self.backurl = sessionStorage.getItem('currentPage');
-                self.backurl = self.next;
             },
             methods: {
                 getCheck: function() {
