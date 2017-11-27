@@ -459,6 +459,7 @@
 		},
 		mounted: function(){
 			this.$nextTick(function () {
+				var _self = this;
 				layui.use('layer', function(){ //独立版的layer无需执行这一句
 					var $ = layui.jquery, layer = layui.layer; //独立版的layer无需执行这一句
 					//触发事件
@@ -509,18 +510,6 @@
 										'color': '#333',
 										'margin-right': '30px'
 									})
-
-									$("#phone").keydown(function(evt){
-										switch (evt.keyCode){
-											case 13: $("#check").select();
-										}
-									});
-
-									$("#check").keydown(function(evt){
-										switch (evt.keyCode){
-											case 13: tologin(phone, check, weid, _self);
-										}
-									});
 
 									new Vue({
 										el: '#inner',
@@ -621,7 +610,7 @@
 			enjoy: function(){
 				let _self = this;
 				if (_self.activation == 4 || _self.activation == null || _self.activation == '') {
-					
+
 				} else {
 					if (!_self.state) {
 						follow('circel/relationship', _self.domain, _self);
