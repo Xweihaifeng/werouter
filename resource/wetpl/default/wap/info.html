@@ -124,10 +124,7 @@
 				domain: ref.domain
 			},
 			success: function (data) {
-				//alert(3)
 				//alert(JSON.stringify(data))
-				//alert('token:' + data.token);
-				//alert('act:' + data.data.activation_status);
 				localStorage.setItem('weid', data.data.weid);
 				localStorage.setItem('token', data.token);
 				localStorage.setItem('activation', data.data.activation_status);
@@ -205,8 +202,8 @@
 					},
 					success: function(data) {
 						if (data.code == 200) {
-//							alert(1)
-							console.log(data)
+							alert(1)
+//							console.log(data)
 							wx.config({
 								debug: false,
 								appId: data.data.appId,
@@ -218,7 +215,7 @@
 
 							wx.ready(function() {
 								var link = window.location.href;
-//								alert('cover:', cover)
+								alert('cover:' + cover)
 								wx.onMenuShareTimeline({
 									title: title,
 									// 分享标题
@@ -471,9 +468,7 @@
 			},
 			enjoy: function(){
 				let _self = this;
-				alert('act:' + _self.activation)
 				if (_self.activation == 4 || _self.activation == null || _self.activation == '') {
-					alert('inner')
 					layui.use('layer', function(){ //独立版的layer无需执行这一句
 						var $ = layui.jquery, layer = layui.layer; //独立版的layer无需执行这一句
 						//触发事件
