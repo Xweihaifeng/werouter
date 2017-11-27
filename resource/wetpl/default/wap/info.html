@@ -172,16 +172,15 @@
 						var usertoken = localStorage.getItem('setopenid');
 						if (usertoken == 'true') {
 							openid = getUrlParam("openid");
-//							alert('openid:' + openid)
 							if (openid != null) {
 								localStorage.setItem('openid', openid);
 								wxlogin(openid, ref);
 							} else {
-								let openid = localStorage.setItem('openid', openid);
+								let openid = localStorage.getItem('openid');
+								alert('openid:' + openid)
 								wxlogin(openid, ref);
 							}
 //							alert('store openid:' + localStorage.getItem('openid'));
-
 						}
 					} else {
 						//微信未跳转时
