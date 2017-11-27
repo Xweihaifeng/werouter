@@ -80,7 +80,15 @@ var qiniu_bucket_domain = ApiMaterPlatQiniuDomain;
         }
     });
     
+
+    
     var id = window.location.href.split('/').pop();   
+    
+
+    
+
+    
+
 
     var url = window.location.href.split('/');
     var domain = url.slice(3, 4)[0];
@@ -219,8 +227,15 @@ checkdomain(domain,id);
 
     init(localStorage.getItem('token'));
 
-    var id = window.location.href.split('/').pop();    
- 
+    //var id = window.location.href.split('/').pop();    
+    
+    //获取json数组
+    var id = {
+        "goods_list": [{
+            "goods_id": "c36f9e20-d0eb-11e7-995e-d16d5975af33",
+            "goods_num": "1"
+        }],
+    };
 
      // 产生地址模板
     var dizhiacitve='';
@@ -235,16 +250,84 @@ checkdomain(domain,id);
                 colorred='';
              // }
 
+        if(data.status==1){
+            var addrdivhtml='<div class="list-item" data="'+data.weid+'" style="color: rgb(66, 153, 216);" >'+
+                   '<p class="m0">'+
+                       '<div class="xinming dizhi-active" >'+data.name+'&nbsp;&nbsp;&nbsp;<span class="provname provname'+data.province_id+'" data-id=""></span></div>'+
 
-        var addrdivhtml='<div class="list-item" data="'+data.weid+'" >'+
+                       '<div class="dizhi" style="color: rgb(255, 0, 0);">&nbsp;&nbsp;&nbsp;<span class="provname provname'+data.province_id+'"></span>&nbsp;&nbsp;&nbsp;<span class="cityname cityname'+data.area_id+'"></span>&nbsp;&nbsp;&nbsp;<span class="detailname">'+data.detail+'</span>&nbsp;&nbsp;&nbsp;<span class="buyname">'+data.name+'</span>&nbsp;&nbsp;&nbsp;<span class="telname">'+data.telophone+'</span></div>'+
+                       '<span class="clearfix"></span>'+
+                   '</p>'+
+                '</div>'; 
+
+        }else{
+            var addrdivhtml='<div class="list-item" data="'+data.weid+'" >'+
                    '<p class="m0">'+
                        '<div class="xinming '+dizhiacitve+'" >'+data.name+'&nbsp;&nbsp;&nbsp;<span class="provname provname'+data.province_id+'" data-id=""></span></div>'+
 
                        '<div class="dizhi" style="'+colorred+'">&nbsp;&nbsp;&nbsp;<span class="provname provname'+data.province_id+'"></span>&nbsp;&nbsp;&nbsp;<span class="cityname cityname'+data.area_id+'"></span>&nbsp;&nbsp;&nbsp;<span class="detailname">'+data.detail+'</span>&nbsp;&nbsp;&nbsp;<span class="buyname">'+data.name+'</span>&nbsp;&nbsp;&nbsp;<span class="telname">'+data.telophone+'</span></div>'+
                        '<span class="clearfix"></span>'+
                    '</p>'+
-                '</div>';
-                return addrdivhtml;
+                '</div>'; 
+        }     
+        return addrdivhtml;
+    }
+    //获取默认收货地址
+    var defaultaddr=function(){
+        $.ajax({
+            url:ADDRESS_LIST,
+            type: 'get',
+            headers: {
+                'Token': localStorage.getItem('token')
+            },
+            success: function(data) {
+                if (data.code == 200){
+                    useraddrdata=data.data;
+                   if(useraddrdata.total==0){
+                    $("#address-lists").append("<div class='text-center'>暂无地址</div>");        
+                }else{
+                    // 循环展示地址
+                    useraddrdata.list.map(x=>{
+                        // getprovincedetail(x.province_id);
+                        // x.province_id=provincename;
+
+                        // console.log(provincename ,":"+x.province_id);
+                        $("#address-lists").append(addrdiv(x));
+                        
+                        getprovincedetail(x.province_id);
+                        getcitydetail(x.area_id);
+
+                        if(x.status==1){
+                            $(".shouhuodizhi-default").append('<div>寄送至：<span class="provname-defalt"></span>&nbsp;&nbsp;&nbsp;<span class="cityname-defalt"></span>&nbsp;&nbsp;&nbsp;<span class="address-defalt">'+x.detail+'</span>&nbsp;&nbsp;&nbsp;收货人：<span class="buyname-defalt">'+x.name+'</span>&nbsp;&nbsp;&nbsp;<span class="phone-defalt">'+x.telophone+'</span></div>');
+                            getprovincedetail(x.province_id,x.status);
+                            getcitydetail(x.area_id,x.status);
+
+
+                        }
+
+                         // $('.list-item').eq(0).css({'color':'#4299D8'}).find('.xinming').eq(0).addClass("dizhi-active");
+                            // $(".dizhi").eq(0).css("color","red");
+
+                            // $('#address_id').val($('.list-item').eq(0).attr('data'));
+                            
+
+                    })
+                    var i = 1;
+                      $('.list-item').click(function(){
+                            i = 0;
+                            // 判断收货地址是否在配送范围之内
+                            //console.log($(this).attr('data'));
+                            setdefaultaddr($(this));        
+                            //israngetrue(range_id,$(this).attr('data'),$(this));
+                              
+                      });        
+                }    
+            }   
+        },
+        error: function(xhr){
+                console.log(xhr);
+            }
+        })    
     }
     // 获取用户个人名下所有地址
     var useraddr=function(range_id){
@@ -290,7 +373,7 @@ checkdomain(domain,id);
                                 i = 0;
                                 // 判断收货地址是否在配送范围之内
                                 console.log($(this).attr('data'));
-
+                                
                                 israngetrue(range_id,$(this).attr('data'),$(this));
                                   
                           });
@@ -304,6 +387,19 @@ checkdomain(domain,id);
         })
     }
     // useraddr();
+    //设置默认地址高量
+    var setdefaultaddr=function(obj){
+        $(".xinming").removeClass("dizhi-active");
+            $(obj).css({'color':'#4299D8'}).siblings().find(".dizhi").css({'color':'#000'});
+            $(obj).find(".xinming").addClass("dizhi-active");
+            $(obj).find(".dizhi").css({'color':'#ff0000'});
+            // $('#address_id').val($(this).attr('data'));
+            $(".provname-defalt").text($(obj).find('.dizhi-active .provname').text());
+            $(".cityname-defalt").text($(obj).find('.cityname').text());
+            $(".address-defalt").text($(obj).find('.detailname').text());
+            $(".buyname-defalt").text($(obj).find('.buyname').text());
+            $(".phone-defalt").text($(obj).find('.telname').text());
+    }
     // 判断收货地址是否在配送范围之内
     var israngetrue=function(range_weid,address_weid,obj){
         $.ajax({
@@ -340,12 +436,13 @@ checkdomain(domain,id);
              var consignee = $('.product_buy_input input[name = consignee]').val(),
                 province = $('#province').find("option:selected").val(),
                 city = $('#city').find("option:selected").val(),
+                county = $('#county').find("option:selected").val(),
                 address = $('input[name = address]').val(),
                 zip = $('input[name = zip]').val(),
                 mobile = $('input[name = mobile]').val();
                 var defaultaddr=$('input[name = defaultaddr]').val();
                
-                if (consignee == '' || province == '请选择省份' || city == '请选择城市' || address == '' || mobile == '' || zip == '') {
+                if (consignee == '' || province == '请选择省份' || city == '请选择城市' || county == '请选择区县' ||address == '' || mobile == '' || zip == '') {
                     layer.msg('请输入完整的收货人信息');
                 }else if (!(/^1[3|4|5|7|8]\d{9}$/.test(mobile))) {
                     layer.msg('请输入正确的手机号');
@@ -360,7 +457,7 @@ checkdomain(domain,id);
                         headers: {
                             'Token': localStorage.getItem('token')
                         },
-                        data:{name:consignee,province_id:province,area_id:city,detail:address,zipcode:zip,telophone:mobile,status:defaultaddr},
+                        data:{name:consignee,province_id:province,area_id:city,county_id:county,detail:address,zipcode:zip,telophone:mobile,status:defaultaddr},
                         success:function(data){
                             if(data.code == 200){
                                 $('.product_buy_frame').hide() ;
@@ -378,6 +475,7 @@ checkdomain(domain,id);
                     })
 
                 }
+
               });
      // 添加收货人按钮
      var buyaddr=function(){
@@ -393,10 +491,9 @@ checkdomain(domain,id);
 
 
     // 确认订单信息模板
-     console.log(localStorage.getItem("num"));
-    var shopnum=localStorage.getItem("num");
-    var orderstorehtml=function(data){
-        var orderhtml='<li class="col-sm-2">'+
+     
+    var orderstorehtml=function(data,num){
+        var orderhtml='<div class="goods_list" weid="'+data.weid+'"><li class="col-sm-2">'+
                 '<p class=""></p>'+
                 '<img src="'+qiniu_bucket_domain +data.cover+'" alt=""> </li>'+
             '<li class="col-sm-4">'+
@@ -408,11 +505,11 @@ checkdomain(domain,id);
             '<li class="col-sm-3">'+
                 '<span class="amount-num">'+
                     '<span class="amount-num-jian">-</span>'+
-                    '<input type="text" value="'+shopnum+'" id="numm" name="nums">'+
+                    '<input type="text" value="'+num+'" id="numm" name="nums">'+
                     '<span class="amount-num-jia">+</span>'+
                     '<input type="hidden" value="'+data.stock+'" id="num_kc" class="num_kc" name="num_kc" >'+
                 '</span>'+
-            '</li>';
+            '</li></div>';
             return orderhtml;
     }
 
@@ -420,7 +517,35 @@ checkdomain(domain,id);
     // 获取商品详情
     var init = function(id){
     // useraddr();
+        //生成默认收货地址
+        defaultaddr();
+        console.log(id.goods_list);
 
+        $(id.goods_list).each(function(index,goodsdata){
+            $.ajax({
+                url: GOODS_DETAIL+'/' + goodsdata.goods_id,
+                type:'get',
+                headers: {
+                        'Token': localStorage.getItem('token')
+                    },
+                dataType: 'json', 
+                success: function(data){
+                    if (data.code == 200) {
+                        var goods = data.data;
+                        //useraddr(goods.range_id);
+                    $(".product-buy-list").append(orderstorehtml(goods,goodsdata.goods_num));
+                        if(index==id.goods_list.length-1){
+                            associatorNotDiscount();    
+                        }
+                    }
+                }               
+            })        
+            
+        });
+        getprovincenotRange();
+        buyaddr();
+        return false;
+        
         $.ajax({
             url: GOODS_DETAIL+'/' + id,
             type:'get',
@@ -465,6 +590,34 @@ checkdomain(domain,id);
     })
 
     }
+    //不计入折扣提交
+    var associatorNotDiscount=function(){
+        numjian();
+        numjia();
+        numchange();
+        buynumfunNotDiscount();
+
+        var goods_list=[];
+
+        var obj=$(".product-buy-list").find(".goods_list");
+        obj.each(function(index,element){
+            var obj={"goods_id":$(element).attr("weid"),"goods_num":$(element).attr("weid")};
+            goods_list.push(obj);  
+        });
+        $("#submit").bind("click",function(){
+           var sendData = {
+                "goods_list":goods_list,
+                "address_id": $(".dizhi-active").parent().attr('data'),
+                "username": $(".dizhi-active").parent().find(".dizhi .buyname").text(),
+                "phone": $(".dizhi-active").parent().find(".dizhi .telname").text(),
+                "note": $("textarea[name='remark']").val()
+            }
+            submitorder(sendData);
+        })    
+        
+
+    }
+
     var associator=function(userid,mallid,price,goods){
         var sendData={mallId:mallid,memberId:userid};
         console.log(sendData);
@@ -529,7 +682,8 @@ checkdomain(domain,id);
                         var address_detail=$(".dizhi-active").parent().find(".dizhi .provname").text()+"省"+
                     $(".dizhi-active").parent().find(".dizhi .cityname").text()+"市"+
                     $(".dizhi-active").parent().find(".dizhi .detailname").text();
-                         var sendData = {
+                        //原有逻辑    
+                        var sendData = {
                             address_id:$(".dizhi-active").parent().attr('data'),
                             username:$(".dizhi-active").parent().find(".dizhi .buyname").text(),
                             phone:$(".dizhi-active").parent().find(".dizhi .telname").text(),
@@ -549,6 +703,7 @@ checkdomain(domain,id);
                             mall_id:goods.mall_id
                         }
                         console.log(sendData);
+                        
                         submitorder(sendData);
 
                     })
@@ -587,7 +742,7 @@ checkdomain(domain,id);
                     
                 }else{
                     // console.log('SHOPORDER  ERROR');
-                    mess_tusi("请填写收货地址");
+                    mess_tusi(data.message);
                 }
             },
             error: function(xhr){
@@ -595,8 +750,92 @@ checkdomain(domain,id);
             }
         })
     }
-   
+    //获取省列表（不包括配送范围）
+    var getprovincenotRange = function() {
+        $.ajax({
+            url: PROVINCE_LIST,
+            type: 'get',
+            headers: {
+                'Token': localStorage.getItem('token')
+            },
+            success: function(data) {
+                if (data.code == 200) {
+                    var provincedata = data.data.list;
+                        provincedata.map(x => {
+                                $("#province").append("<option value='"+x.id+"'>"+x.name+"</option>");                           
 
+                        })
+                        $("#province").bind("change",function(){
+                                $("#city").children().remove(); 
+                                $("#city").append("<option value=''>请选择城市</option>");
+                                getcitynotRange($(this).val());
+                            })
+                        
+                    }else{
+                        console.log('PROVINCE LIST ERROR');
+                    }
+            },
+            error: function(xhr){
+                console.log(xhr);
+            }
+
+        })
+    }
+    //获取省下市列表（不包括配送范围）
+    var getcitynotRange=function(pid){
+        $.ajax({
+            // url:apiUrl+'/area/list/'+pid,
+            url:AREA_LIST+'/'+pid,
+            type:'get',
+            headers: {
+                'Token': localStorage.getItem('token')
+            },
+            success: function(data){
+                if (data.code == 200) {
+                    var citydata = data.data.list;
+                    citydata.map(x => {
+                        $("#city").append("<option value='"+x.id+"'>"+x.name+"</option>");
+                    })
+                    $("#city").bind("change",function(){
+                        $("#county").children().remove(); 
+                        $("#county").append("<option value=''>请选择区县</option>");
+                        getcountynotRange($(this).val());
+                    })
+
+                }else{
+                    console.log('CITYS  LIST ERROR');
+                }
+            },
+            error: function(xhr){
+                console.log(xhr);
+            }
+        })
+
+    }
+
+    var getcountynotRange=function(pid){
+        $.ajax({
+            // url:apiUrl+'/area/list/'+pid,
+            url:apiUrl+'county/list'+'/'+pid,
+            type:'get',
+            headers: {
+                'Token': localStorage.getItem('token')
+            },
+            success: function(data){
+                if (data.code == 200) {
+                    var countydata = data.data.list;
+                    countydata.map(x => {
+                        $("#county").append("<option value='"+x.id+"'>"+x.name+"</option>");
+                    })
+                }else{
+                    console.log('COUNTY LIST ERROR');
+                }
+            },
+            error: function(xhr){
+                console.log(xhr);
+            }
+        })
+    }
     // 获取省下市(配送范围)
     var getprovince=function(weid){
         $.ajax({
@@ -774,10 +1013,64 @@ checkdomain(domain,id);
     }
 
     getUserInfo();*/
-
+    //计算金额
+    var buynumfunNotDiscount=function(){
+        var obj=$(".product-buy-list").find(".goods_list");
+        var price=0;
+        obj.each(function(index,element){
+           price=price+parseInt($(element).find("#one_price").find("span").text())*parseInt($(element).find("#numm").val());
+        });
+        $("#sum_price").html("￥" + price);
+        $('#pay_price').html(price);    
+    }
+    //数量减
+    var numjian=function(){
+        $(".amount-num-jian").on('click',function(){
+            var obj=$(this).parent('.amount-num');
+            if(parseInt($(obj).find("#numm").val())>2){
+                $(obj).find("#numm").val(parseInt($(obj).find("#numm").val())-1);
+                numchange(obj);    
+            }else{
+                mess_tusi("数量小于1");    
+            }
+            buynumfunNotDiscount();
+        });    
+    }
+    //数量加
+    var numjia=function(){
+        $(".amount-num-jia").on('click',function(){
+            var obj=$(this).parent('.amount-num');
+            if(parseInt($(obj).find("#numm").val())<parseInt($(obj).find('.num_kc').val())){
+                $(obj).find("#numm").val(parseInt($(obj).find("#numm").val())+1);
+                numchange(obj);    
+            }else{
+                mess_tusi("数量大于库存");    
+            }
+            buynumfunNotDiscount();
+        });
+    }
+    //输入数量
+    var numchange=function(){
+        $("input[name='nums']").change(function(){
+            var obj=$(this).parent('.amount-num');
+            var re =  /^[0-9]*[1-9][0-9]*$/;
+            if(!re.test(obj).find("#numm").val()){
+                mess_tusi("数量格式有误");          
+                return false;
+            } 
+            if(parseInt($(obj).find("#numm").val())<1){
+                $(obj).find("#numm").val(1)
+                mess_tusi("数量小于0");   
+            } 
+            if(parseInt($(obj).find("#numm").val())>parseInt($(obj).find('.num_kc').val())){
+                $(obj).find("#numm").val(parseInt($(obj).find('.num_kc').val()))
+                mess_tusi("数量大于库存");         
+            }
+            buynumfunNotDiscount();   
+        })
+    }
    
     // 购买数量
-
     var buynumfun=function(one_price,disc){
         // 购买数量
          // 购买数量
