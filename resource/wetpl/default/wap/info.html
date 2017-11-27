@@ -132,8 +132,8 @@
 				localStorage.setItem('token', data.token);
 				localStorage.setItem('activation', data.data.activation_status);
 				ref.activation = data.data.activation_status;
-				alert('ref.act:' + ref.activation)
 				if (ref.activation == 4 || ref.activation == null || ref.activation == '') {
+					alert('ref.act:' + ref.activation)
 					$(".layui-btn").show();
 				}
 				if (data.code == 200) {
