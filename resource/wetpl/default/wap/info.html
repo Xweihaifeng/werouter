@@ -101,8 +101,8 @@
 	</div>-->
 	<div class="foot">
 		<div>
-			<p class="enter" @click="enjoy">
-				<button data-method="notice" class="layui-btn" style="position: absolute; background: transparent;width: 100%; left: 0; display: none;"></button>
+			<p class="enter">
+				<button @click="enjoy" data-method="notice" class="layui-btn" style="position: absolute; background: transparent;width: 100%; left: 0; display: none;"></button>
 				{{status}}
 			</p>
 			<p>投诉</p>
@@ -133,6 +133,7 @@
 				localStorage.setItem('activation', data.data.activation_status);
 				if (data.code == 200) {
 					ref.activation = data.data.activation_status;
+					alert('ref.act:' + ref.activation)
 					if (ref.activation == 4 || ref.activation == null || ref.activation == '') {
 						$(".layui-btn").show();
 					}
@@ -472,6 +473,7 @@
 				let _self = this;
 				alert('act:' + _self.activation)
 				if (_self.activation == 4 || _self.activation == null || _self.activation == '') {
+					alert('inner')
 					layui.use('layer', function(){ //独立版的layer无需执行这一句
 						var $ = layui.jquery, layer = layui.layer; //独立版的layer无需执行这一句
 						//触发事件
