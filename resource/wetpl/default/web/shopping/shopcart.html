@@ -177,10 +177,17 @@
                                 orderObj.goodsList.push(data)
                             }
                         }
-                        window.localStorage.setItem('orderObj',JSON.stringify(orderObj));
-                        if(storeObj.storeAllMoney > 0){
-                            window.location.href = '/shopping/order'
-                        }
+                        this.$http.get(apiUrl + 'users/imagecodeid').then(function (res) {
+                            console.log(res);
+                            if(res.data && res.data.data){
+                                window.localStorage.setItem(res.data.data,JSON.stringify(orderObj));
+                                if(storeObj.storeAllMoney > 0){
+                                    var domain = window.localStorage.getItem("domain");
+                                    window.location.href = domain + '/wemall/order/' + res.data.data
+                                }
+                            }
+                        });
+
                     }
                 }
             })
