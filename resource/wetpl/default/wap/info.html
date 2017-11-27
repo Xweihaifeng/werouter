@@ -110,6 +110,13 @@
 	</div>
 </div>	
 <script>
+	const setCookie = (token, expiredays) => {
+		var Days = expiredays;
+		var exp = new Date();
+		exp.setTime(exp.getTime() + Days*24*60*60*1000);
+		document.cookie = "token="+ escape (token) + ";expires=" + exp.toGMTString() +";path=/";
+	}
+
 	const wxlogin = (openid, ref) => {
 		//微信登录
 		$.ajax({
@@ -128,9 +135,9 @@
 				localStorage.setItem('weid', data.data.weid);
 				localStorage.setItem('token', data.token);
 				localStorage.setItem('activation', data.data.activation_status);
+				setCookie(data.token, 7);
 				ref.activation = data.data.activation_status;
 				if (ref.activation != 4 && ref.activation != null && ref.activation != '') {
-//					alert('ref.act:' + ref.activation)
 					$(".layui-btn").hide();
 				}
 				if (data.code == 200) {
@@ -190,7 +197,7 @@
 						window.location.href = encodeURI(apiUrl + '/openid?url=' + window.location.href);
 					}
 				} else {
-//					window.location.href = '/login';
+					window.location.href = '/login';
 				}
 
 				$.ajax({
@@ -414,6 +421,7 @@
 					})
 					$(".layui-btn").hide();
 //                        alert('token:' + data.token);
+					setCookie(data.token, 7);
 					localStorage.setItem('token', data.token);
 					localStorage.setItem('activation', 3);
 					ref.activation = 3;
@@ -609,7 +617,6 @@
 								});
 							}
 						};
-
 						$('.layui-btn').on('click', function(){
 							var othis = $(this), method = othis.data('method');
 							active[method] ? active[method].call(this, othis) : '';
