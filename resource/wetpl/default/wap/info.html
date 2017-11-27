@@ -133,6 +133,9 @@
 				localStorage.setItem('activation', data.data.activation_status);
 				if (data.code == 200) {
 					ref.activation = data.data.activation_status;
+					if (ref.activation == 4 || ref.activation == null || ref.activation == '') {
+						$(".layui-btn").show();
+					}
 					if (isNull(data.token) == false) { //非空
 						localStorage.setItem('token-date', new Date().getTime())
 						localStorage.setItem('user-token', data.token);
@@ -469,7 +472,6 @@
 				let _self = this;
 				alert('act:' + _self.activation)
 				if (_self.activation == 4 || _self.activation == null || _self.activation == '') {
-					$(".layui-btn").show();
 					layui.use('layer', function(){ //独立版的layer无需执行这一句
 						var $ = layui.jquery, layer = layui.layer; //独立版的layer无需执行这一句
 						//触发事件
