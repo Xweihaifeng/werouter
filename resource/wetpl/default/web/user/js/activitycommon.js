@@ -1051,7 +1051,7 @@ $(function() {
                 notice.alert('请填写活动详情');
                 $('.form-group-detail').focus();
             } else if (data.type == 1 && data.limit && isNaN(data.limit)) {
-                notice.alert('人数限制必须为数字s');
+                notice.alert('人数限制必须为数字');
                 $('#J_ActivityLimit').focus();
             } else if (data.type == 2 && isNaN(data.price)) {
                 notice.alert('票价必须为数字');
