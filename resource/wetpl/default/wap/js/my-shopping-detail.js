@@ -222,7 +222,10 @@ $(function() {
             goodsList.push(result);
 
             window.localStorage.setItem('orderObj',JSON.stringify(orderObj));
-            window.location.href = '/shopping/order';
+            // window.location.href = '/shopping/order';
+            var domain = window.location.pathname.split("/")[1];
+            var macth_weid = window.location.pathname.split("/").pop();
+            window.location.href = `/`+ domain +`/wemall/order/`+ macth_weid +``;
         });
     });
     options1.fail(function(error) {
