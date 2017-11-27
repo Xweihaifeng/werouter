@@ -21,13 +21,14 @@ if(token) {
 }
 
 var shops = function(key, value) {
+	var domain = window.location.pathname.split("/")[1];
     var imgUrl = value.cover;
     if (imgUrl.indexOf('http') === -1){
         imgUrl = imgSet(imgUrl, 100, 100, 3);
     }
 
     var template = `
-    <a id="`+ value.weid +`" href="/shopping/`+ value.weid +`">
+    <a id="`+ value.weid +`" href="/`+ domain +`/wemall/goods/`+ value.weid +`">
         <div>
             <slide class="li_img_wap">
                 <img src="`+ imgUrl +`">
@@ -50,7 +51,7 @@ var genShop = function(shopping) {
         $(".shop > ul > a").click(function() {
             var li_id = $(this).attr("id");
             window.localStorage.setItem("shopping_weid", li_id);
-            window.location.pathname = "/shopping/detail";
+            // window.location.pathname = "/shopping/detail";
         });
     });
 }
