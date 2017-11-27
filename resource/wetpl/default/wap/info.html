@@ -102,7 +102,7 @@
 	<div class="foot">
 		<div>
 			<p class="enter" @click="enjoy">
-				<button data-method="notice" class="layui-btn" style="position: absolute; background: transparent;width: 100%; left: 0; display: none;"></button>
+				<button data-method="notice" class="layui-btn" style="position: absolute; background: transparent;width: 100%; left: 0;"></button>
 				{{status}}
 			</p>
 			<p>投诉</p>
@@ -129,9 +129,9 @@
 				localStorage.setItem('token', data.token);
 				localStorage.setItem('activation', data.data.activation_status);
 				ref.activation = data.data.activation_status;
-				if (ref.activation == 4 || ref.activation == null || ref.activation == '') {
+				if (ref.activation != 4 && ref.activation != null && ref.activation != '') {
 //					alert('ref.act:' + ref.activation)
-					$(".layui-btn").show();
+					$(".layui-btn").hide();
 				}
 				if (data.code == 200) {
 					if (isNull(data.token) == false) { //非空
@@ -542,8 +542,6 @@
 												self.backurl = sessionStorage.getItem('currentPage');
 												self.weid = localStorage.getItem('weid');
 												self.token = localStorage.getItem('token');
-												//alert(localStorage.getItem('token'))
-												//alert(localStorage.getItem('weid'))
 
 												$("#phonenum").keydown(function(evt){
 													switch (evt.keyCode){
@@ -619,10 +617,8 @@
 					});
 				} else {
 					if (!_self.state) {
-//						alert('follow')
 						follow('circel/relationship', _self.domain, _self);
 					} else {
-//						alert('cancel')
 						cancelFollow('circel/quxiao', _self.domain, _self);
 					}
 				}
