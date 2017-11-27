@@ -217,7 +217,7 @@ $(document).ready(function() {
             '<td class="operate">' +
 
 
-            ' <span style="color:#34b0df;">已到场</span>' +
+            ' <span style="color:#34b0df;">' + data.attend_at + '</span>' +
 
 
             '</td>' +
