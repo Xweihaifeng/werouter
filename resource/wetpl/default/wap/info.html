@@ -469,6 +469,7 @@
 			},
 			enjoy: function(){
 				let _self = this;
+				alert(_self.activation)
 				if (_self.activation == 4 || _self.activation == null || _self.activation == '') {
 					layui.use('layer', function(){ //独立版的layer无需执行这一句
 						var $ = layui.jquery, layer = layui.layer; //独立版的layer无需执行这一句
@@ -495,7 +496,7 @@
 										<div id="login-info">
 											<ul>
 												<li id="phonenum">
-													<span>+86 <img src="/common/img/downarrow.png" alt=""/></span>
+													<span>+86 </span>
 													<input type="text" placeholder="请输入手机号码" maxlength="11" id="phone" v-model="phone" />
 												</li>
 												<li id="checknum">
