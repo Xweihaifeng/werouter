@@ -101,7 +101,7 @@
 	</div>-->
 	<div class="foot">
 		<div>
-			<p class="enter" @click="enjoy(state)">
+			<p class="enter" @click="enjoy()">
 				<button data-method="notice" class="layui-btn" style="position: absolute; background: transparent;width: 100%; left: 0; display: none;"></button>
 				{{status}}
 			</p>
@@ -462,7 +462,7 @@
 				let _self = this;
 				$(".enter").text("进入公众号");
 			},
-			enjoy: function(state){
+			enjoy: function(){
 				let _self = this;
 //				alert(state)
 				if (_self.activation == 4 || _self.activation == null) {
@@ -623,7 +623,7 @@
 						});
 					});
 				} else {
-					if (!state) {
+					if (!_self.state) {
 						follow('circel/relationship', _self.domain, _self);
 					} else {
 						cancelFollow('circel/quxiao', _self.domain, _self);
