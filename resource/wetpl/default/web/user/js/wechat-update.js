@@ -43,8 +43,16 @@ $(document).ready(function(){
     options105.fail(function(fail) {
     	console.error(error);
     });
-
-    $("#wechat_save").click(function() {
+    
+    function clear() {
+    	$("#myModal").hide();
+		$("body").removeClass("modal-open");
+		$("#myModal").removeClass("in").hide();
+		$(".modal-backdrop.fade.in").remove();
+	}
+    
+    $("#save_setup").click(function() {
+    	$("#myModal").show();
     	var body107 = new Object();
     		body107.weid            = get_weid;
 	    	body107.app_id 			= $("#app_id")		 	.val();
@@ -61,21 +69,29 @@ $(document).ready(function(){
     	|| !body107.merchant_key
     	|| !body107.apiclient_cert
     	|| !body107.apiclient_key) {
-	    	confirm("本次提交为重要信息\r\n请谨慎提交")
+    		$("#wechat_save").hide();
+    		$(".modal_info").html("信息都是必填项，请完善信息后重新提交").css("color", "#f00");
 	    	return false;
-	    }
-    	var options107 = $.post(apiUrl + "pages/wechat/update", body107);
-	    options107.done(function(data) {
-	    	if(data.code == 200 && data.data) {
-	    		console.info(data.data);
-                $("body").removeClass("modal-open");
-                $("#myModal").removeClass("in").hide();
-                $(".modal-backdrop.fade.in").remove();
-	    		layer.msg("修改成功！", { time: 1500 });
-	    	}
+		}
+    	$("#wechat_save").show();    	
+    	$(".modal_info").html("本次提交为重要信息，请确认后谨慎操作！").css("color", "");    	
+	    $("#wechat_save").click(function() {
+	    	var options107 = $.post(apiUrl + "pages/wechat/update", body107);
+		    options107.done(function(data) {
+		    	if(data.code == 200 && data.data) {
+		    		console.info(data.data);
+	                clear();
+		    		layer.msg("修改成功！", { time: 1500 });
+		    	}
+		    });
+		    options107.fail(function(fail) {
+		    	console.error(error);
+		    });
 	    });
-	    options107.fail(function(fail) {
-	    	console.error(error);
-	    });
+	    
+    });
+
+	$(".close_modal").click(function() {
+    	clear();
     });
 })
