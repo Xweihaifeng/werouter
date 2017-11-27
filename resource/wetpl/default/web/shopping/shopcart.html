@@ -42,9 +42,7 @@
                     <!-- 商品列表 -->
                     <div class="cart_title">
                         <div class="cart_shop_business_all">
-                            <div class="cart_shop_select">
-                                <input type="checkbox" name="" disabled>选项
-                            </div>
+                            <div class="cart_shop_select">选项</div>
                             <div class="cart_shop_img"> 商品 </div>
                             <div class="cart_shop_basic"> 套餐信息 </div>
                             <div class="cart_shop_price"> 单价 </div>
@@ -55,26 +53,27 @@
                         <ul class="cart_shop_list" v-for="(item, index) in cart_list">
                             <div class="cart_shop_business">
                                 <div class="cart_shop_select">
-                                    <input type="checkbox" name="" :class="'shop_number_'+index" v-model="item.mall.pCheck" @click="selectStore(item)">
+                                    <input type="checkbox" v-model="item.mall.pCheck" @click="selectStore(item)">
                                 </div>
+                                <span>{{item.mall.title}}</span>
                             </div>
                             <li class="cart_shop" v-for="(values, key) in item.goods">
                                 <div class="cart_shop_select">
-                                    <input type="checkbox" name="" :class="'shop_' + key" v-model="values.checked" @click="selectItem(item,values,key)">
+                                    <input type="checkbox"  v-model="values.checked" @click="selectItem(item,values)">
                                 </div>
                                 <div class="cart_shop_img">
-                                    <img src="/common/img/img1.jpg" alt="">
+                                    <img :src="'http://images.new.wezchina.com/' +values.cover" alt="">
                                 </div>
                                 <div class="cart_shop_basic">
                                     <span>{{values.title}}</span>
                                     <span>Axent Wear</span>
-                                    <span>{{values.views}}</span>
+                                    <span>库存：{{values.stock}}</span>
                                 </div>
                                 <div class="cart_shop_price">￥<span class="cart_shop_unit_price"></span>{{values.price}}</div>
                                 <div class="cart_shop_piece">
-                                    <input id="count_min" name="" type="button" value="-" @click="count_add_min(item,values,values.goods_num,'count_min')" />  
+                                    <input id="count_min" name="" type="button" value="-" @click="count_add_min(values,'count_min')" />
                                     <input id="quantity"  name="" type="text" v-model="values.goods_num" />  
-                                    <input id="count_add" name="" type="button" value="+" @click="count_add_min(item,values,values.goods_num,'count_add')" />&nbsp;件
+                                    <input id="count_add" name="" type="button" value="+" @click="count_add_min(values,'count_add')" />&nbsp;件
                                 </div>
                                 <div class="cart_shop_price">￥<span class="cart_shop_total_price"></span>{{values.price * values.goods_num}}</div>
                                 <div class="cart_shop_operation">
@@ -84,10 +83,10 @@
                             <slide class="cart_shop_order">
                                 <slide class="cart_shop_order_info">
                                     <span>
-                                        已选商品({{numbers ? numbers : 0}})件 合计（不含运费）：￥ {{storeAllMoney ? storeAllMoney : 0.00}}
+                                        已选商品({{item.numbers ? item.numbers : 0}})件 合计（不含运费）：￥ {{item.storeAllMoney ? item.storeAllMoney : 0.00}}
                                     </span>
                                 </slide>
-                                <slide class="cart_shop_order_sub"> 结算 </slide>
+                                <slide class="cart_shop_order_sub" @click="goOrder(item)"> 结算 </slide>
                             </slide>
                         </ul>
                     </div>
@@ -105,34 +104,29 @@
             var app = new Vue({
                 el: "#cart_shopping",
                 data: {
-                    user_weid: window.localStorage.getItem("weid"),
-                    cart_list: '',
-                    numbers: 0,
-                    storeAllMoney: 0.00,
-
+                    cart_list: []
                 },
                 mounted: function () {
-                	var self = this;
                     // 获取默认列表
-                    var body = new Object();
-                    body.user_id = self.user_weid;
-                    self.$http.post(apiUrl + 'cart/lists', body).then(function (res) {
+                    var body = {
+                        user_id : window.localStorage.getItem("weid")
+                    };
+                    this.$http.post(apiUrl + 'cart/lists', body).then(function (res) {
                         if(res.data && res.data.code===200){
-                            self.cart_list = res.data.data.list;
+                            var list = res.data.data.list;
+                            for(var i=0; i<list.length; i++){
+                                list[i].mall["pCheck"] = false;
+                                for(var a=0; a<list[i].goods.length; a++){
+                                    list[i].goods[a]["checked"] = false;
+                                }
+                            }
+                            this.cart_list = list;
+                            console.log(this.cart_list)
                         }
                     })
                 },
-                computed: {
-                    storeAll: function () {
-                        var money = 0;
-                        for (var a = 0; a < this.list.goodsList.length; a++) {
-                            money += this.list.goodsList[a].price * this.list.goodsList[a].goods_num
-                        }
-                        return money;
-                    }
-                },
                 methods: {
-                    count_add_min: function(item,values,count,names) {
+                    count_add_min: function(values,names) {
                     	if(names == "count_add") {
                     		values.goods_num++;
                     		if(values.goods_num > values.stock) {
@@ -146,30 +140,47 @@
                     	}
                     },
                     getNumber : function (storeObj,flag) {
-                    	var self = this;
-		                storeObj.goods.forEach(function(value, index, array) {
+                        storeObj.storeAllMoney = 0.00;
+                        storeObj.numbers = 0;
+		                storeObj.goods.forEach(function(item) {
 		                	if(flag) {
-		                		storeObj.goods[index].checked = storeObj.mall.pCheck;
+		                		item.checked = storeObj.mall.pCheck;
 		                	}
-		                	if(storeObj.goods[index].checked) {
-		                		self.storeAllMoney += storeObj.goods[index].price * storeObj.goods[index].goods_num;
-		                		self.numbers++;
+		                	if(item.checked) {
+                                storeObj.storeAllMoney += item.price * item.goods_num;
+                                storeObj.numbers++;
 		                	}
 		                });
 		            },
                     selectStore: function(item) {
-                    	var self = this;
 		                item.mall.pCheck = !item.mall.pCheck;
 		                this.getNumber(item, true)
                     },
-                    selectItem: function(item,values,key) {
-                    	var self = this;
+                    selectItem: function(item,values) {
 		                values.checked = !values.checked;
 		                var isAllCheck = item.goods.filter(function (data) {
 		                    return data.checked === false;
 		                });
 		                item.mall.pCheck = (isAllCheck.length === 0);
 		                this.getNumber(item)
+                    },
+                    goOrder: function (storeObj) {
+                        var orderObj = {
+                            goodsList : []
+                        };
+                        for(var i=0; i<storeObj.goods.length; i++){
+                            if(storeObj.goods[i].checked){
+                                var data = {
+                                    "goods_id" : storeObj.goods[i].weid,
+                                    "goods_num": storeObj.goods[i].goods_num
+                                };
+                                orderObj.goodsList.push(data)
+                            }
+                        }
+                        window.localStorage.setItem('orderObj',JSON.stringify(orderObj));
+                        if(storeObj.storeAllMoney > 0){
+                            window.location.href = '/shopping/order'
+                        }
                     }
                 }
             })
