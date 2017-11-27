@@ -174,12 +174,23 @@ var qiniu_bucket_domain =ApiMaterPlatQiniuDomain;
                     $(".order-title1 span").text(order.order_num);
                     $('.cope-with span').text(order.order_price);
 
-                    if(data.data.status==2){
+                    if(data.data.order_status==2){
                         clearInterval(t);
                         // console.log("status:"+data.data.status);
                         // 修改商品库存量
-                        shopstock(data.data.goods_id,order.goods_num);
+                            
+                        mess_tusi("支付成功");
+                        // window.location="/shopping";
+                        if (domain == '') {
+                            var url = '';
+                        } else {
+                            var url = domain
+                        }
+                        window.location.href ="/"+ url+"/wemall";
 
+                        //shopstock(data.data.goods_id,order.goods_num);
+                        //shopstock(data.data.goods);    
+                          
 
                     }
                 }
@@ -187,6 +198,7 @@ var qiniu_bucket_domain =ApiMaterPlatQiniuDomain;
         })
     }
     // 商品详情
+    /*
     var shopstock=function(weid,num){
 
         $.ajax({
@@ -216,6 +228,7 @@ var qiniu_bucket_domain =ApiMaterPlatQiniuDomain;
             }
         })
     }
+    */
     // 修改商品库存量
     var shopstockupdate=function(sendData){
         if (domain == '') {
@@ -234,6 +247,7 @@ var qiniu_bucket_domain =ApiMaterPlatQiniuDomain;
             success: function(data){
                 console.log(data);
                 if (data.code == 200) {
+
                          mess_tusi("支付成功");
                         // window.location="/shopping";
                     window.location.href ="/"+ url+"/wemall";
@@ -248,9 +262,10 @@ var qiniu_bucket_domain =ApiMaterPlatQiniuDomain;
     // 支付二维码链接
     var t="";
     var shoppay=function(id){
-         $.ajax({
-            url:WECHATPAY_NATIVEPAY+'/'+id,
-            type:'get',
+        $.ajax({
+            url:apiUrl+'pages/wechatPay/mallOrderPcPay',
+            type:'post',
+            data:{"order_id":id},
             headers: {
                 'Token': localStorage.getItem('token')
             },
