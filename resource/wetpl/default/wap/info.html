@@ -130,7 +130,7 @@
 				localStorage.setItem('activation', data.data.activation_status);
 				ref.activation = data.data.activation_status;
 				if (ref.activation == 4 || ref.activation == null || ref.activation == '') {
-					alert('ref.act:' + ref.activation)
+//					alert('ref.act:' + ref.activation)
 					$(".layui-btn").show();
 				}
 				if (data.code == 200) {
@@ -314,10 +314,6 @@
 				if (data.code == 200) {
 					ref.status = '已关注';
 					ref.state = true;
-					alert('已关注')
-					layer.msg("关注成功", {
-						time: 1500
-					});
 				} else {
 					layer.msg(data.message, {
 						time: 1500
@@ -347,10 +343,6 @@
 				if (data.code == 200) {
 					ref.status = '关注';
 					ref.state = false;
-					alert('取消关注')
-					layer.msg("取消关注成功", {
-						time: 1500
-					})
 				} else {
 					console.log(data.message)
 				}
@@ -627,10 +619,10 @@
 					});
 				} else {
 					if (!_self.state) {
-						alert('follow')
+//						alert('follow')
 						follow('circel/relationship', _self.domain, _self);
 					} else {
-						alert('cancel')
+//						alert('cancel')
 						cancelFollow('circel/quxiao', _self.domain, _self);
 					}
 				}
