@@ -389,6 +389,56 @@
 		})
 	}
 
+	const getChecknum = (phone) => {
+		$.ajax({
+			url: CODES,
+			dataType: 'json',
+			type: 'post',
+			data: {'phone': phone},
+			success: function(data){
+				console.log(data);
+			},
+			error: function(err){
+				console.log(err);
+			}
+		})
+	}
+
+	const tologin = (phoneNum, checkNum, weid, ref) => {
+		$.ajax({
+			url:  apiUrl + 'userAct',
+			type: 'post',
+			data: {
+				'phone': phoneNum,
+				'code': checkNum,
+				'weid': weid,
+				'type': 1,
+				'from_type': 2
+			},
+			success: function(data){
+				console.log(data);
+//                    alert(2)
+				if (data.code == 200) {
+					layer.msg('激活成功', {
+						time: 1500
+					})
+					$(".layui-btn").hide();
+//                        alert('token:' + data.token);
+					localStorage.setItem('token', data.token);
+					localStorage.setItem('activation', 3);
+					ref.activation = 3;
+				} else {
+					layer.msg(data.message, {
+						time: 1500
+					})
+				}
+			},
+			error: function(err){
+				console.log(err);
+			}
+		})
+	}
+
 	new Vue({
 		el: '#app',
 		data: {
@@ -409,55 +459,6 @@
 			var platuserid = window.location.pathname.split('/')[2];
 			init(apiUrl + 'circel/wcard/' + platuserid, _self);
 			//根据wxlogin接口返回激活与否和token,请求关注关系接口判断是否关注该用户
-			const getChecknum = (phone) => {
-				$.ajax({
-					url: CODES,
-					dataType: 'json',
-					type: 'post',
-					data: {'phone': phone},
-					success: function(data){
-						console.log(data);
-					},
-					error: function(err){
-						console.log(err);
-					}
-				})
-			}
-
-			const tologin = (phoneNum, checkNum, weid, ref) => {
-				$.ajax({
-					url:  apiUrl + 'userAct',
-					type: 'post',
-					data: {
-						'phone': phoneNum,
-						'code': checkNum,
-						'weid': weid,
-						'type': 1,
-						'from_type': 2
-					},
-					success: function(data){
-						console.log(data);
-//                    alert(2)
-						if (data.code == 200) {
-							layer.msg('激活成功', {
-								time: 1500
-							})
-							$(".layui-btn").hide();
-//                        alert('token:' + data.token);
-							localStorage.setItem('token', data.token);
-							localStorage.setItem('activation', 3);
-							ref.activation = 3;
-						} else {
-							layer.msg(data.message, {
-								time: 1500
-							})
-						}
-					},
-					error: function(err){
-						console.log(err);
-					}
-				})
-			}
 		},
 		methods: {
 			care: function(){
