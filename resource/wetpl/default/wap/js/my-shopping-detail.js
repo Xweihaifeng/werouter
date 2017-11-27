@@ -270,6 +270,11 @@ $(function() {
         });
     })
 
+    $(".detail_footer_cart").click(function() {
+        var domain = window.location.pathname.split("/")[1];
+        window.location.href = "/" + domain + "/wemall/cart"
+    });
+
 
 
 
