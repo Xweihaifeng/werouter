@@ -590,12 +590,10 @@ checkdomain(domain,id);
         numjia();
         numchange();
         buynumfunNotDiscount();
-
         var goods_list=[];
-
         var obj=$(".product-buy-list").find(".goods_list");
         obj.each(function(index,element){
-            var obj={"goods_id":$(element).attr("weid"),"goods_num":$(element).attr("weid")};
+            var obj={"goods_id":$(element).attr("weid"),"goods_num":$(element).find("input[name='nums']").val()};
             goods_list.push(obj);  
         });
         $("#submit").bind("click",function(){
