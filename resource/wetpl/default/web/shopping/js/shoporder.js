@@ -80,17 +80,9 @@ var qiniu_bucket_domain = ApiMaterPlatQiniuDomain;
         }
     });
     
-
-    
-    
-
-
-    var id = window.location.href.split('/').pop();   
-    
-
-    var id=localStorage.getItem(id);
-    var id=jQuery.parseJSON(id);
-    var id=id.goods_list[0].goods_id;
+     
+    var id=JSON.parse(localStorage.getItem(window.location.href.split('/').pop()));
+     id=id.goods_list[0].goods_id;
 
 
     var url = window.location.href.split('/');
@@ -235,7 +227,10 @@ checkdomain(domain,id);
     //获取json数组
     
     var id = jQuery.parseJSON(localStorage.getItem(window.location.href.split('/').pop())); 
+
+
     
+
      // 产生地址模板
     var dizhiacitve='';
          var colorred='';
