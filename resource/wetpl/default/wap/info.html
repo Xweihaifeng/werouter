@@ -119,7 +119,7 @@
 			},
 			success: function (data) {
 				//alert(3)
-//				alert(JSON.stringify(data))
+				//alert(JSON.stringify(data))
 				//alert('token:' + data.token);
 				//alert('act:' + data.data.activation_status);
 				localStorage.setItem('weid', data.data.weid);
@@ -153,6 +153,8 @@
 				let title = ref.nickname;
 				let summary = ref.motto;
 				let cover = ref.avatar;
+
+				isFollow('circel/if_follow', ref.domain, ref);
 
 				if (is_weixn()) {
 //					alert(1)
@@ -350,6 +352,32 @@
 			},
 			error: function(xhr) {
 				console.log(xhr)
+			}
+		})
+	}
+
+	const isFollow = function(url, domain, ref) {
+		$.ajax({
+			url: apiUrl + url,
+			type: "POST",
+			data: {
+				'domain': domain
+			},
+			headers: {
+				'Token': window.localStorage.getItem("token")
+			},
+			success: function(data) {
+				console.log(data);
+				if (data.code == 200) {
+					alert('isFollow:' + data.data)
+					if (data.data == 1) {
+						ref.state = true;
+						ref.status = '已关注';
+					} else {
+						ref.state = false;
+						ref.status = '关注';
+					}
+				}
 			}
 		})
 	}
