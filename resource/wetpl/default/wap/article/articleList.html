@@ -23,7 +23,7 @@
     <script src="/common/jquery.animsition/js/jquery.animsition.min.js"></script>
     <link rel="stylesheet" href="{{PATH_TML}}js/layui/css/layui.css"/>
     <script src="{{PATH_TML}}js/layui/layui.js"></script>
-    <title>动态</title>
+    <title>主页</title>
 </head>
 <body class="animsition">
     <div id="carousel">
@@ -78,7 +78,7 @@
             grabCursor : true
         })
 
-        const getChecknum = (phone) => {
+        /*const getChecknum = (phone) => {
             $.ajax({
                 url: CODES,
                 dataType: 'json',
@@ -97,9 +97,9 @@
             $.ajax({
                 url:  apiUrl + 'userAct',
                 type: 'post',
-                /*headers: {
+                /!*headers: {
                  'Token': token
-                 },*/
+                 },*!/
                 data: {
                     'phone': phoneNum,
                     'code': checkNum,
@@ -218,7 +218,7 @@
                     }
                 }
             }
-        })
+        })*/
 
     </script>
 </body>

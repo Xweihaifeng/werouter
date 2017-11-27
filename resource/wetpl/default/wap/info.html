@@ -4,12 +4,15 @@
 	<meta charset="UTF-8">
 	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <title></title>
+	<link rel="stylesheet" href="{{PATH_TML}}css/common.css"/>
     <link rel="stylesheet" href="{{PATH_TML}}lib/weui.css" />
     <link rel="stylesheet" href="{{PATH_TML}}css/info.css"/>
 	<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
     <script src="{{PATH_TML}}lib/jquery.min.js"></script>
-	<script src="{{PATH_CONFIG}}"></script>
 	<script src="{{PATH_TML}}js/vue.min.js"></script>
+	<script src="{{PATH_CONFIG}}"></script>
+	<link rel="stylesheet" href="{{PATH_TML}}js/layui/css/layui.css"/>
+	<script src="{{PATH_TML}}js/layui/layui.js"></script>
 </head>
 <body>
 <div id="app" class="box">
@@ -98,7 +101,10 @@
 	</div>-->
 	<div class="foot">
 		<div>
-			<p class="enter" @click="enjoy(state)">{{status}}</p>
+			<p class="enter" @click="enjoy(state)">
+				<button data-method="notice" class="layui-btn" style="position: absolute; background: transparent;width: 100%; left: 0; display: none;"></button>
+				{{status}}
+			</p>
 			<p>投诉</p>
 		</div>		
 	</div>
@@ -126,6 +132,7 @@
 				localStorage.setItem('token', data.token);
 				localStorage.setItem('activation', data.data.activation_status);
 				if (data.code == 200) {
+					ref.activation = data.data.activation_status;
 					if (isNull(data.token) == false) { //非空
 						localStorage.setItem('token-date', new Date().getTime())
 						localStorage.setItem('user-token', data.token);
@@ -183,7 +190,7 @@
 						window.location.href = encodeURI(apiUrl + '/openid?url=' + window.location.href);
 					}
 				} else {
-					window.location.href = '/login';
+//					window.location.href = '/login';
 				}
 
 				$.ajax({
@@ -293,9 +300,9 @@
 	}
 
 	//关注
-	const follow = function(url, domain) {
+	const follow = function(url, domain, ref) {
 		$.ajax({
-			url: url,
+			url: apiUrl + url,
 			type: 'POST',
 			data: {
 				'domain': domain,
@@ -307,12 +314,11 @@
 			success: function(data) {
 				console.log(data)
 				if (data.code == 200) {
-					$(".ct").attr('src', '/common/img/collected.svg');
-					$(".wd").text('已关注');
+					ref.status = '已关注';
+					ref.state = 'true';
 					layer.msg("关注成功", {
 						time: 1500
 					});
-					genFans(apiUrl + 'circel/flist', domain.substr(1), 1, 12, 1);
 				} else {
 					layer.msg(data.message, {
 						time: 1500
@@ -326,9 +332,9 @@
 	}
 
 	//取消关注
-	const cancelFollow = function(url, domain) {
+	const cancelFollow = function(url, domain, ref) {
 		$.ajax({
-			url: url,
+			url: apiUrl + url,
 			type: 'POST',
 			data: {
 				'domain': domain,
@@ -340,12 +346,11 @@
 			success: function(data) {
 				console.log(data)
 				if (data.code == 200) {
-					$(".ct").attr('src', '/common/img/collect.svg');
-					$(".wd").text('关注');
+					ref.status = '关注';
+					ref.state = 'false';
 					layer.msg("取消关注成功", {
 						time: 1500
 					})
-					genFans(apiUrl + 'circel/flist', domain.substr(1), 1, 12, 1);
 				} else {
 					console.log(data.message)
 				}
@@ -385,6 +390,7 @@
 	new Vue({
 		el: '#app',
 		data: {
+			activation: '',
 			avatar: '',
 			nickname: '',
 			domain: '',
@@ -401,6 +407,55 @@
 			var platuserid = window.location.pathname.split('/')[2];
 			init(apiUrl + 'circel/wcard/' + platuserid, _self);
 			//根据wxlogin接口返回激活与否和token,请求关注关系接口判断是否关注该用户
+			const getChecknum = (phone) => {
+				$.ajax({
+					url: CODES,
+					dataType: 'json',
+					type: 'post',
+					data: {'phone': phone},
+					success: function(data){
+						console.log(data);
+					},
+					error: function(err){
+						console.log(err);
+					}
+				})
+			}
+
+			const tologin = (phoneNum, checkNum, weid, ref) => {
+				$.ajax({
+					url:  apiUrl + 'userAct',
+					type: 'post',
+					data: {
+						'phone': phoneNum,
+						'code': checkNum,
+						'weid': weid,
+						'type': 1,
+						'from_type': 2
+					},
+					success: function(data){
+						console.log(data);
+//                    alert(2)
+						if (data.code == 200) {
+							layer.msg('激活成功', {
+								time: 1500
+							})
+							$(".layui-btn").hide();
+//                        alert('token:' + data.token);
+							localStorage.setItem('token', data.token);
+							localStorage.setItem('activation', 3);
+							ref.activation = 3;
+						} else {
+							layer.msg(data.message, {
+								time: 1500
+							})
+						}
+					},
+					error: function(err){
+						console.log(err);
+					}
+				})
+			}
 		},
 		methods: {
 			care: function(){
@@ -410,15 +465,170 @@
 			enjoy: function(state){
 				let _self = this;
 //				alert(state)
-				if (!state) {
-					_self.status = '已关注';
-					_self.state = 'true';
-					//账户是否激活，没激活则请求激活页
-				} else {
-					_self.status = '关注'
-					_self.state = 'false';
-				}
+				if (_self.activation == 4 || _self.activation == null) {
+					$(".layui-btn").show();
+					layui.use('layer', function(){ //独立版的layer无需执行这一句
+						var $ = layui.jquery, layer = layui.layer; //独立版的layer无需执行这一句
+						//触发事件
+						var active = {
+							setTop: function(){
+								var that = this;
+							}
+							,notice: function(){
+								layer.open({
+									type: 1
+									,title: false //不显示标题栏
+									,closeBtn: false
+									,area: ['320px', '250px']
+									,shade: 0.8
+									,id: 'LAY_layuipro' //设定一个id，防止重复弹出
+									,btn: ['返回', '激活']
+									,btnAlign: 'c'
+									,moveType: 1 //拖拽模式，0或者1
+									,content:
+										`
+										<div id="inner">
+										<p style="font-size: 16px; margin-top: 25px; text-align: center;">请激活您的账号</p>
+										<div id="login-info">
+											<ul>
+												<li id="phonenum">
+													<span>+86 <img src="/common/img/downarrow.png" alt=""/></span>
+													<input type="text" placeholder="请输入手机号码" maxlength="11" id="phone" v-model="phone" />
+												</li>
+												<li id="checknum">
+													<input type="text" placeholder="请输入手机验证码" maxlength="6" id="check" v-model="check" />
+													<span @click="getCheck">{{ info }}</span>
+												</li>
+											</ul>
+										</div>
+										</div>
+										`
+									,success: function(layero){
+										$("#layui-layer1").css('overflow', 'hidden');
+										$(".layui-layer-btn1").css({
+											'border-color': '#1E9FFF',
+											'background-color': '#1E9FFF',
+											'color': '#fff'
+										})
 
+										$(".layui-layer-btn0").css({
+											'border': '1px solid #dedede',
+											'background-color': '#fff',
+											'color': '#333',
+											'margin-right': '30px'
+										})
+
+										$("#phone").keydown(function(evt){
+											switch (evt.keyCode){
+												case 13: $("#check").select();
+											}
+										});
+
+										$("#check").keydown(function(evt){
+											switch (evt.keyCode){
+												case 13: tologin(phone, check, weid, _self);
+											}
+										});
+
+										new Vue({
+											el: '#inner',
+											data: {
+												phone: '',
+												check: '',
+												info: '获取验证码',
+												lock: false,
+												backurl: '',
+												isCheck: false,
+												weid: '',
+												token: ''
+											},
+											created: function() {
+												let self = this;
+												self.backurl = sessionStorage.getItem('currentPage');
+												self.weid = localStorage.getItem('weid');
+												self.token = localStorage.getItem('token');
+												//alert(localStorage.getItem('token'))
+												//alert(localStorage.getItem('weid'))
+
+												$("#phonenum").keydown(function(evt){
+													switch (evt.keyCode){
+														case 13: $(".checknum").select();
+													}
+												});
+
+												$("#checknum").keydown(function(evt){
+													switch (evt.keyCode){
+														case 13: tologin(phone, check, weid, _self);
+													}
+												});
+
+												$('.layui-layer-btn1').click(function(){
+													let phonenum = $('#phone').val();
+													let checknum = $('#check').val();
+													if (/^1[3|4|5|7|8][0-9]{9}$/.test(phonenum)) {
+														if (/^[0-9]{6}$/.test(checknum)) { //发送手机和验证码验证成功
+															tologin(phonenum, checknum, self.weid, _self);
+														} else {
+															layer.msg("手机验证码输入错误", {
+																time: 1500
+															})
+														}
+													} else {
+														layer.msg("请输入正确的手机号码", {
+															time: 1500
+														})
+													}
+												})
+											},
+											methods: {
+												getCheck: function() {
+													let self = this;
+													let count = 59;
+													let phonenum = self.phone;
+													if (/^1[3|4|5|7|8][0-9]{9}$/.test(phonenum)) {
+														getChecknum(phonenum);
+														if (!self.lock) {
+															let evt = setInterval(function () {
+																self.lock = true;
+																if (count > 0) {
+																	self.info = count-- + '秒';
+																} else {
+																	self.info = '重新发送验证码';
+																	self.lock = false;
+																	clearInterval(evt);
+																}
+															}, 1000)
+														}
+													} else {
+														layer.msg("请输入正确的手机号码", {
+															time: 1500
+														})
+													}
+												},
+												login: function() {
+													let self = this;
+													let phonenum = self.phone;
+													let checknum = self.check;
+												}
+											}
+										})
+									}
+								});
+							}
+						};
+
+						$('.layui-btn').on('click', function(){
+							var othis = $(this), method = othis.data('method');
+							active[method] ? active[method].call(this, othis) : '';
+						});
+					});
+				} else {
+					if (!state) {
+						follow('circel/relationship', _self.domain, _self);
+					} else {
+						cancelFollow('circel/quxiao', _self.domain, _self);
+					}
+				}
 			}
 		}
 	})
