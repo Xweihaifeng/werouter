@@ -101,7 +101,7 @@
 	</div>-->
 	<div class="foot">
 		<div>
-			<p class="enter" @click="enjoy()">
+			<p class="enter" @click="enjoy">
 				<button data-method="notice" class="layui-btn" style="position: absolute; background: transparent;width: 100%; left: 0; display: none;"></button>
 				{{status}}
 			</p>
@@ -467,7 +467,7 @@
 			},
 			enjoy: function(){
 				let _self = this;
-//				alert(state)
+				alert('act:' + _self.activation)
 				if (_self.activation == 4 || _self.activation == null) {
 					$(".layui-btn").show();
 					layui.use('layer', function(){ //独立版的layer无需执行这一句
