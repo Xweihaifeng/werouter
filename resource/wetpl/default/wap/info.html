@@ -620,15 +620,15 @@
 			},
 			enjoy: function(){
 				let _self = this;
-				/*if (_self.activation == 4 || _self.activation == null || _self.activation == '') {
-
-				} else {*/
+				if (_self.activation == 4 || _self.activation == null || _self.activation == '') {
+					
+				} else {
 					if (!_self.state) {
 						follow('circel/relationship', _self.domain, _self);
 					} else {
 						cancelFollow('circel/quxiao', _self.domain, _self);
 					}
-//				}
+				}
 			}
 		}
 	})
