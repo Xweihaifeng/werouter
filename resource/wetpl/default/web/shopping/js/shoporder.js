@@ -1047,9 +1047,10 @@ checkdomain(domain,id);
     var numchange=function(){
         $("input[name='nums']").change(function(){
             var obj=$(this).parent('.amount-num');
-            var re =  /^[0-9]*[1-9][0-9]*$/;
-            if(!re.test(obj).find("#numm").val()){
-                mess_tusi("数量格式有误");          
+            var re = /^[1-9]\d*$/;
+            if(!re.test(parseInt($(obj).find("#numm").val()))){
+                mess_tusi("数量格式有误"); 
+                $(obj).find("#numm").val(1)         
                 return false;
             } 
             if(parseInt($(obj).find("#numm").val())<1){
