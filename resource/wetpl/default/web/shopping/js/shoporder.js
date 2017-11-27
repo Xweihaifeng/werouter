@@ -229,7 +229,7 @@ checkdomain(domain,id);
     var id = jQuery.parseJSON(localStorage.getItem(window.location.href.split('/').pop())); 
 
 
-    
+
 
      // 产生地址模板
     var dizhiacitve='';
@@ -1021,7 +1021,7 @@ checkdomain(domain,id);
     var numjian=function(){
         $(".amount-num-jian").on('click',function(){
             var obj=$(this).parent('.amount-num');
-            if(parseInt($(obj).find("#numm").val())>2){
+            if(parseInt($(obj).find("#numm").val())>=2){
                 $(obj).find("#numm").val(parseInt($(obj).find("#numm").val())-1);
                 numchange(obj);    
             }else{
