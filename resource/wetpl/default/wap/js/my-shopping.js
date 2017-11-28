@@ -149,5 +149,4 @@ $("#shop_type li").click(function() {
     shop = [];
     first_weid = $(this).attr("id");
     shopping_list(first_weid);
-    genShop(my_wemall)
 });
