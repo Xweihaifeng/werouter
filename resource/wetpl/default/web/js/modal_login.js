@@ -437,7 +437,7 @@ $(function() {
                     lock = false;
                     clearInterval(count);
                     layer.msg(data.message, { time: 2500 });
-                    image_code_id();
+                    // image_code_id();
                     $(".get-check").text("重新获取验证码");
                 }
             },
