@@ -285,7 +285,7 @@ var qiniu_bucket_domain =ApiMaterPlatQiniuDomain;
 
                 }else{
                     // console.log('PAY  ERROR');
-                    mess_tusi('商户平台信息有误,稍后处理，请耐心等候！')
+                    mess_tusi(data.message);
                 }
             },
             error: function(xhr){
