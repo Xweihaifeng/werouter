@@ -111,7 +111,9 @@ $(document).ready(function() {
             if (data.is_expired == 1)
                 var mark = `<div class="show-tiket">已过期</div>`;
             else if (data.status == 2)
-                var mark = `<div class="support show-tiket" data-activity-id="` + data.activity_id + `" >立即支付</div>`;
+                var mark = `<div class="show-tiket support" data-activity-id="` + data.activity_id + `">去支付</div>`;
+            else
+                var mark = `<div class="show-tiket" data-toggle="modal" data-target="#myModal">查看门票</div>`;
         }
 
         var template =
