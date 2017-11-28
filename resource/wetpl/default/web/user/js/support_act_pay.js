@@ -517,7 +517,7 @@ var Support = function(id) {
                 return;
             }
             var sendData = {
-                activity_id: activityid,
+                activity_id: id,
                 name: name,
                 telphone: telphone,
                 poistion: poistion,
