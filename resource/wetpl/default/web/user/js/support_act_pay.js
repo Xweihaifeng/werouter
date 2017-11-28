@@ -72,7 +72,6 @@ var activity_ebroll_detail = function(id) {
         },
         success: function(data) {
             if (data.code == 200) {
-                console.log(urlall[0])
                 Ticket(data.data);
                 qrcodefun1(data.data.ticket_num);
             }
