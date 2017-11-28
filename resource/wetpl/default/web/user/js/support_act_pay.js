@@ -28,7 +28,7 @@ var init = function() {
         });
         layer.load();
     })
-    qrcodefun(id);
+
 
 }
 
