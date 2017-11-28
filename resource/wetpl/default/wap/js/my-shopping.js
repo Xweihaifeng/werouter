@@ -145,6 +145,7 @@ $("#my-swiper").hover(function(){
 });
 
 $("#shop_type li").click(function() {
+    alert(0);
     $(".shop ul").children().remove();
     shop = [];
     first_weid = $(this).attr("id");
