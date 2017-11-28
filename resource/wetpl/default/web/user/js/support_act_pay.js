@@ -9,7 +9,7 @@ if (token) {
 }
 var init = function() {
     $(document).on("click", ".support", function() {
-        var id = $(this.data('activity_id'));
+        var id = $(this).data('activity_id');
         GetOrder(id, function(rep) {
             layer.closeAll('loading');
             if (rep.code == 401 || rep.data.status == 1) {
@@ -109,33 +109,7 @@ var wechat_scan_pay = function(number) {
     })
 }
 
-//判断是否报名
-var isEnroll = function() {
-    var sendData = { 'user_id': localStorage.getItem('weid'), 'activity_id': activityid_all[0] };
-    $.ajax({
-        url: ACTIVITY_ENROLL_ISENROLL,
-        dataType: 'json',
-        type: 'post',
-        data: sendData,
-        success: function(data) {
-            console.log(data)
-            if (data.code == 200) {
-                suported();
-            } else {
-                // layer.msg(data.message)
-            }
-        },
-        error: function(err) {
-            console.log(err);
-        }
-    })
-}
-isEnroll();
-//报名之后的状态
-var suported = function() {
-    $('.bbbao').empty();
-    $('.bbbao').append('<span> <a href="javascript:" data-id="1" class="support1" disabled="disabled" style="background: #ccc">已经报名</a></span>')
-}
+
 var Ticket = function(data) {
         layer.config({
             skin: 'winning-class' //自定义样式demo-class
