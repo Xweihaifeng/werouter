@@ -248,7 +248,7 @@ var Support = function(id) {
                 '<span class="act_time_deadline">' + rep.data.enroll_deadline + '</span> 报名截止' +
                 '</span>' +
                 '</p>' +
-                '<p class="act_dress">地点：' + rep.data.address + '</p>' +
+                '<p class="act_dress">地点：' + rep.data.area_name + rep.data.address + '</p>' +
                 '</div>' +
                 '</div>' +
 
