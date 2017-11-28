@@ -110,8 +110,8 @@ $(document).ready(function() {
         else {
             if (data.is_expired == 1)
                 var mark = `<div class="show-tiket">已过期</div>`;
-            else
-                var mark = `<div class="show-tiket" data-toggle="modal" data-target="#myModal">查看门票</div>`;
+            else if (data.status == 2)
+                var mark = `<div class="show-tiket" data-activity-id="` + data.activity_id + `" class="support">立即支付</div>`;
         }
 
         var template =
@@ -230,7 +230,7 @@ $(document).ready(function() {
         }
         $.ajax({
             // url: ACTIVITY_LIST,
-            url: ACTIVITY_ENROLL_LISTS + '?status=1',
+            url: ACTIVITY_ENROLL_LISTS,
             type: 'post',
             data: sendData,
             success: function(data) {
