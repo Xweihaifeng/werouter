@@ -10,21 +10,23 @@ if (token) {
 var init = function() {
     $(document).on("click", ".support", function() {
         id = $(this).data('activity-id');
-        GetOrder(id, function(rep) {
-            layer.closeAll('loading');
-            if (rep.code == 401 || rep.data.status == 1) {
-                if (data.data.enroll_num < data.data.enroll_limit || data.data.enroll_limit == 0) {
-                    Support(id);
-                    $('#phone').val(localStorage.getItem('dataPhone'));
-                    $('#username').val(localStorage.getItem('realName'));
-                } else {
-                    mess_tusi("来晚啦，该活动报名人数已满");
+        GetActivity(id, function(data) {
+            GetOrder(id, function(rep) {
+                layer.closeAll('loading');
+                if (rep.code == 401 || rep.data.status == 1) {
+                    if (data.data.enroll_num < data.data.enroll_limit || data.data.enroll_limit == 0) {
+                        Support(id);
+                        $('#phone').val(localStorage.getItem('dataPhone'));
+                        $('#username').val(localStorage.getItem('realName'));
+                    } else {
+                        mess_tusi("来晚啦，该活动报名人数已满");
+                    }
+                } else if (rep.data.status == 2) {
+                    wechat_scan_pay(rep.data.number);
+                } else if (rep.data.status == 3) {
+                    mess_tusi(rep.data.msg);
                 }
-            } else if (rep.data.status == 2) {
-                wechat_scan_pay(rep.data.number);
-            } else if (rep.data.status == 3) {
-                mess_tusi(rep.data.msg);
-            }
+            });
         });
         layer.load();
     })
