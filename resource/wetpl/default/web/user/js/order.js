@@ -100,7 +100,7 @@ $(document).ready(function(){
                 'Token': localStorage.getItem('token')
             },
             success: function(data){
-                if (data.code == 401) {            
+                if (data.code == 401) {
                     // domain = '/index';
                     localStorage.removeItem('token')
                     // window.location.href = '/login'
@@ -243,41 +243,27 @@ $(document).ready(function(){
             }
         })
     }
-usermall();
+    usermall();
     console.log(mall_id);
 
     //获取订单列表
-        var flag=true;
+    var flag=true;
     var  orderlist=function(mall_id,page,type=0,dataobj=""){
-        /*// var page="";
-        var keywords="";
-        var sendData={
-            mall_id:  mall_id,
-            limit:limit,
-            page:page,
-            keywords:keywords
-        }*/
          var limit="5";
-        // var page="";
         var keywords=time_start=time_end="";
         var status=order_num="";
-        var logistics_status="";
         if(type==1 ){
             // 未支付
             status=type;
-            logistics_status="";
         }else if(type==2){
             //待发货
             status=type;
-            logistics_status=1;
         }else if(type==3){
             // 已发货
             status="";
-            logistics_status=2;
         }else if(type==4){
             // 已完成
             status="";
-            logistics_status=3;
         }else{
             /*// 订单号筛选
             time_start=type.time_start;
@@ -292,18 +278,15 @@ usermall();
             order_num=dataobj.order_num;
         }
         var sendData={
-            // mall_id:  mall_id,
             limit:limit,
-            mall_id:mall_id,
+            plat_user_id:localStorage.getItem('weid'),
             page:page,
-            status:status,
-            logistics_status:logistics_status,
+            order_status:status,
             time_start:time_start,
             time_end:time_end,
             order_num:order_num,
             keywords:keywords
         }
-        console.log(sendData);
         $.ajax({
             url:ORDER_LIST,
             type:'post',
@@ -313,7 +296,7 @@ usermall();
                 },
             dataType: 'json',
             success: function(data){
-                console.log(data);
+                console.log("订单列表：",data);
                 if (data.code == 200) {
                     var listdata=data.data.list;
                     $(".ordertable").children().remove();
@@ -449,41 +432,51 @@ usermall();
                                 '</div>'+
                             '</td>'+
                         '</tr>'+
-                        '<tr class="orders_list_content" id="'+data.weid+'">'+
-                           ' <td width="40%">'+
-                                '<div class="orders_list_pic">'+
-                                    '<a href="wemall/goods/'+data.goods_id+'" target="_blank">'+
-                                        '<img class="img" src="'+qiniu_bucket_domain+data.goods_cover+'" alt="">'+
-                                        '<p class="txt">'+data.goods_title+'</p>'+
-                                    '</a>'+
-                                '</div>'+
-                            '</td>'+
-                            '<td width="10%">'+
-                                '<div class="orders_list_buy">'+
-                                    '<span>x'+data.goods_num+'</span>'+
-                                '</div>'+
-                            '</td>'+
-                            '<td width="15%">'+
-                               '<div class="orders_list_buy">'+
-                                    '<span class="list_right_gj"><p>￥'+data.order_price+'</p><p>(含运费:0.00)</p></span>'+
-                                '</div>'+
-                            '</td>'+
-                            '<td width="25%">'+
-                                '<div class="orders_list_addr">'+
-                                    '<p>'+data.username+'<em>'+data.phone+'</em></p>'+
-                                    '<p>'+data.address_detail+'</p>'+
-                                    '<p>备注:<span>'+data.note+'</span></p>'+
-                                '</div>'+
-                            '</td>'+
-                            '<td width="10%" class="status_pay" id="'+data.status+'"">'+
-                               ' <div class="orders_list_details">'+
-                                    '<a href="/user/order/detail/'+data.weid+'" target="_blank">订单详情</a>'+
-                                        '<div class="orderstatus">'+ sendgoods+'</div>'+
-                                     '</div>'+
-                            '</td>'+
-                        '</tr>'+
                     '</tbody>'+
-                    '</table>'
+                    '</table>';
+        if(data.goods.length){
+            for(var i=0; i<data.goods.length; i++){
+                var goodItem =
+                    '<tr class="orders_list_content" id="'+data.weid+'">'+
+                        ' <td width="40%">'+
+                            '<div class="orders_list_pic">'+
+                                '<a href="wemall/goods/'+data.goods[i].goods_id+'" target="_blank">'+
+                                    '<img class="img" src="'+qiniu_bucket_domain+data.goods[i].goods_cover+'" alt="">'+
+                                    '<p class="txt">'+data.goods[i].goods_title+'</p>'+
+                                '</a>'+
+                            '</div>'+
+                        '</td>'+
+                        '<td width="10%">'+
+                            '<div class="orders_list_buy">'+
+                                '<span>x'+data.goods[i].goods_num+'</span>'+
+                            '</div>'+
+                        '</td>'+
+                        '<td width="15%">'+
+                            '<div class="orders_list_buy">'+
+                                '<span class="list_right_gj"><p>￥'+data.order_price+'</p><p>(含运费:0.00)</p></span>'+
+                            '</div>'+
+                        '</td>'+
+                        '<td width="25%">'+
+                            '<div class="orders_list_addr">'+
+                                '<p>'+data.username+'<em>'+data.phone+'</em></p>'+
+                                '<p>'+data.address_detail+'</p>'+
+                                '<p>备注:<span>'+data.note+'</span></p>'+
+                            '</div>'+
+                        '</td>'+
+                        '<td width="10%" class="status_pay" id="'+data.status+'"">'+
+                            ' <div class="orders_list_details">'+
+                                '<a href="/user/order/detail/'+data.weid+'" target="_blank">订单详情</a>'+
+                                '<div class="orderstatus">'+ sendgoods+'</div>'+
+                            '</div>'+
+                        '</td>'+
+                    '</tr>'
+            }
+
+
+        }
+
+
+
         return listhtml;
     }
   // var selectorder=function(){
@@ -548,6 +541,30 @@ usermall();
             // var status_pay=$(this).parent().parent().find(".status_pay").attr("id");
             var status_pay=$(this).closest('tr').attr("id");
                 console.log(orderid);
+
+                $.ajax({
+                    url : apiUrl + 'pages/logistics/lists',
+                    type : 'post',
+                    data : {
+                        'user_id' : localStorage.getItem('weid'),
+                        'status' : 1
+                    },
+                    headers : {
+                        "Token" : localStorage.getItem('token')
+                    },
+                    dataType : 'json',
+                    success : function (res) {
+                        console.log(res)
+                        if(res.data && res.code===200){
+                            var optionList = res.data.list;
+                            for(var i=0; i<optionList.length; i++){
+                                var optionDom =
+                                    '<option value='+ optionList[i].logistics_id +'>'+optionList[i].logistics_company+'</option>';
+                                $('#exampleInputEmail1').append(optionDom)
+                            }
+                        }
+                    }
+                })
         })
       company(orderid,status_pay);
 
@@ -555,16 +572,15 @@ usermall();
     // 填写物流公司
     var company=function(orderid,status_pay){
         $('.save').bind('click', function() {
-            var l_company = $("input[name=wuliu_company]").val();
+            var l_company = $("select[name=wuliu_company]").val();
             var l_card = $("input[name=wuliu_card]").val();
             var id = $("#myModal_input").val();
-            var l_status=2;
+            // var l_status=2;
             // var a = csrf.csrfToken;
             var sendData={
-                weid:id,
-                logistics_status:l_status,
-                logistics_NO:l_card,
-                logistics_company:l_company
+                order_id:id,
+                logistics_id:l_company,
+                logistics_no:l_card
                 // status:
                 // pay_way:
             }
@@ -572,7 +588,7 @@ usermall();
 
             //console.log(sendData);
             $.ajax({
-                url: ORDER_UPDATE,
+                url: apiUrl + 'order/send',
                 type:'post',
                 data:sendData,
                 headers: {
@@ -582,7 +598,7 @@ usermall();
                 success: function(data){
                     console.log(data);
                     if (data.code == 200) {
-                        mess_tusi("发货成功");
+                        layer.msg("发货成功");
 
                          $('#myModal').modal('hide');
                         // $("#"+id).find(".log_company").text(l_company);
@@ -592,7 +608,7 @@ usermall();
                         $("#"+id).find(".orderstatus").children().remove();
                         console.log($("#"+id).find(".orderstatus"));
                          $("#"+id).find(".orderstatus").append("<div>已发货</div>");
-                        $("#"+id).find(".status_pay").attr("id",l_status);
+                        // $("#"+id).find(".status_pay").attr("id",l_status);
                         // $("#"+id).find(".btn-sendgoods").text('');
 
                         $("input[name=wuliu_company]").val('');
@@ -606,7 +622,7 @@ usermall();
 
 
                     }else {
-                        mess_tusi(data.message);
+                        layer.msg(data.message);
                     }
                 }
             })
@@ -761,7 +777,7 @@ usermall();
                                 //$(".we-shop").slideDown(500)
                                 $(".we-active").show();
                                 $('#toggle-button-2').prop("checked", true);
-                                
+
                             }
                         }
                         if (x.module_id === 'c30c2160-a4e2-11e7-a2ad-35371a8cf051') {
@@ -769,7 +785,7 @@ usermall();
                                 //$(".we-shop").slideDown(500)
                                 $(".we-project").show();
                                 $('#toggle-button-1').prop("checked", true);
-                                
+
                             }
                         }
                     })
