@@ -9,7 +9,7 @@ if (token) {
 }
 var init = function() {
     $(document).on("click", ".support", function() {
-        var id = $(this).data('activity_id');
+        var id = $(this).data('activity-id');
         GetOrder(id, function(rep) {
             layer.closeAll('loading');
             if (rep.code == 401 || rep.data.status == 1) {
