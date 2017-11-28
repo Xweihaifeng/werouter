@@ -9,11 +9,12 @@ if (token) {
 }
 var init = function() {
     $(document).on("click", ".support", function() {
-        GetOrder($(this.data('activity_id')), function(rep) {
+        var id = $(this.data('activity_id'));
+        GetOrder(id, function(rep) {
             layer.closeAll('loading');
             if (rep.code == 401 || rep.data.status == 1) {
                 if (data.data.enroll_num < data.data.enroll_limit || data.data.enroll_limit == 0) {
-                    Support(id, nickname, imgUrl, $(this).data('id'));
+                    Support(id);
                     $('#phone').val(localStorage.getItem('dataPhone'));
                     $('#username').val(localStorage.getItem('realName'));
                 } else {
@@ -245,20 +246,7 @@ var GetOrder = function(activity_id, callback) {
 }
 
 
-var Support = function(id, nickname, imgUrl, applyid) {
-    var datauser = '';
-    var realname = '';
-    var disa = '';
-    if (localStorage.getItem('weid') != null && localStorage.getItem('token') != null) {
-        datauser = localStorage.getItem('dataPhone');
-        realname = localStorage.getItem('realName');
-        disa = 'disabled="disabled"';
-    } else {
-        datauser = '请输入手机号码';
-        realname = '请输入姓名';
-        disa = '';
-    }
-
+var Support = function(id) {
     GetActivity(id, function(rep) {
         closeindex = layer.open({
             type: 1,
@@ -359,7 +347,6 @@ var Support = function(id, nickname, imgUrl, applyid) {
         $('#username').val(localStorage.getItem('realName'));
     });
 
-    activitydetail(id, nickname, imgUrl, applyid);
 
     //获取验证码
     var lock = false;
@@ -600,92 +587,7 @@ var Support = function(id, nickname, imgUrl, applyid) {
 }
 
 
-// 1获取活动详情
-var activitydetail = function(id, nickname, imgUrl, applyid = 0) {
-        $.ajax({
-            url: ACTIVITY_DETAIL + "/" + id,
-            type: 'get',
-            headers: {
-                'Token': localStorage.getItem('token')
-            },
-            success: function(data) {
-                if (data.code == 200) {
-                    CurrentActivity = data.data;
-                    $('title').text(data.data.title);
-
-                    if (applyid == 1) {
-                        $(".activity_title_apply").text(data.data.title);
-                        $(".act_time_all").text(data.data.begain_time.substr(5) + " ~~ " + data.data.end_time.substr(5));
-                        $(".act_time_deadline").text(data.data.enroll_deadline);
-                        $(".act_dress").text(data.data.area_name + data.data.address);
-                    } else {
-                        $(".activity_title").text(data.data.title);
-                        $(".activity_title_x").attr('title', data.data.title)
-                        $(".activity_title_x").text(data.data.title);
-
-                        $(".cover img").attr("src", qiniu_bucket_domain + data.data.cover);
-                        $(".username").text(nickname);
-
-                        $(".end_time").text(data.data.end_time);
-                        $(".activity_time").text(data.data.begain_time.split(" ")[0] + " -- " + data.data.end_time.split(" ")[0]);
-                        $(".deadline").text(data.data.enroll_deadline);
-                        $(".view_num").text(data.data.view_num);
-                        $(".city").text(data.data.area_name);
-                        $(".apply_num").text(data.data.enroll_num);
-                        if (data.data.type == 1 || parseFloat(data.data.price) === 0) {
-                            $(".pay-type span").text('免费');
-                        } else {
-                            $(".pay-type span").html('￥<b>' + data.data.price + '</b>');
-                        }
-                        if (data.data.enroll_limit > 0) {
-                            $(".enroll_limit").text(data.data.enroll_limit);
-
-                        } else {
-                            $(".enroll_limit").text("多");
-                        }
-                        $("#acitivty-detail").html(data.data.content);
-
-                        $("#acitivty-detail img").css({
-                            "max-width": $(".project-box").width() - 30
-                        });
-                        $(".enroll_num").text(data.data.enroll_num);
-
-                        if (data.data.onStatus == "已结束") {
-                            $(".support").css("background", "#ccc");
-
-                        }
-                        $(".support").unbind().bind("click", function() {
-                            GetOrder(id, function(rep) {
-                                layer.closeAll('loading');
-                                if (rep.code == 401 || rep.data.status == 1) {
-                                    if (data.data.enroll_num < data.data.enroll_limit || data.data.enroll_limit == 0) {
-                                        Support(id, nickname, imgUrl, $(this).data('id'));
-                                        $('#phone').val(localStorage.getItem('dataPhone'));
-                                        $('#username').val(localStorage.getItem('realName'));
-                                    } else {
-                                        mess_tusi("来晚啦，该活动报名人数已满");
-                                    }
-                                } else if (rep.data.status == 2) {
-                                    wechat_scan_pay(rep.data.number);
-                                } else if (rep.data.status == 3) {
-                                    mess_tusi(rep.data.msg);
-                                }
-                            });
-                            layer.load();
-                        })
-                        qrcodefun(id);
-                    }
-
-                } else {
-                    mess_tusi(data.message);
-                }
-            },
-            error: function(xhr) {
-                console.log(xhr);
-            }
-        })
-    }
-    // 根据id查询活动
+// 根据id查询活动
 var GetActivity = function(id, callback) {
     $.ajax({
         url: ACTIVITY_DETAIL + "/" + id,
