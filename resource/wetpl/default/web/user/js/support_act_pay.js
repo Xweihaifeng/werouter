@@ -274,13 +274,13 @@ var Support = function(id) {
                 '<div class="sign_section_contain">' +
                 '<div class="sign_name sign_input">' +
                 '<div class="text">' +
-                '<input id="username" type="text" ' + disa + ' placeholder="' + realname + '">' +
+                '<input id="username" type="text" disabled>' +
                 '</div>' +
                 '</div>' +
 
                 '<div class="sign_phone sign_input" style="width: 540px;height: 38px;">' +
                 '<div class="text">' +
-                '<input id="phone" type="text"  ' + disa + '  placeholder="' + datauser + '">' +
+                '<input id="phone" type="text" disabled>' +
                 '</div>' +
                 '<button class="sign_code" style="display: none" ">获取验证码</button>' +
                 '</div>' +
