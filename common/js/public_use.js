@@ -96,15 +96,15 @@ var url = window.location.pathname.split('/');
 
             $(".oline-3 div:first-child").qrcode({
                 render  : "table",
-                width   : 90,
-                height  : 90,
+                width   : 160,
+                height  : 160,
                 text    : qrcode_val,
                 src: logoimg  
             });
         }else{
             jQuery(".oline-3 div:first-child").qrcode({
-                width   : 90,
-                height  : 90,
+                width   : 160,
+                height  : 160,
                 text    : qrcode_val,
                 src: logoimg  
             });
