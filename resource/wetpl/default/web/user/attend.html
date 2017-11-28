@@ -151,18 +151,6 @@
                 <p>我的活动 &gt; 签到列表</p>
             </div>
             <div class="right-con">
-                <!-- 埋点区域 -->
-                <!-- 获取报名列表接口 -->
-                <input type="hidden" id="J_GetEntryListUrl" value="http://my.welian.com/event/jsonJoin/NDIxNjM=">
-                <!-- 通过报名人员接口 -->
-                <input type="hidden" id="J_PassUrl" value="http://my.welian.com/event/pass/NDIxNjM=">
-                <!-- 拒绝报名人员接口 -->
-                <input type="hidden" id="J_RefusetUrl" value="http://my.welian.com/event/refuse/NDIxNjM=">
-                <!-- 发送信息接口 -->
-                <input type="hidden" id="J_SendMessageUrl" value="http://my.welian.com/event/notice/NDIxNjM=">
-                <input type="hidden" id='J_TicketType' value='0'>
-                <!--图表接口-->
-                <input type="hidden" id="J_GetChartDataUrl" value="http://my.welian.com/event/joinerAnalysis/NDIxNjM=">
                 <div class="wrap">
                     <div class="container">
                         <div class="manage">
@@ -227,7 +215,7 @@
                                     </tr>
                                 </tbody>
                             </table>
-                            <!-- <div class="loadlist J_LoadList"><img src="http://fed.welian.com/loading.gif"></div> -->
+                            <!-- <div class="loadlist J_LoadList"><img src="http://new.wezchina.com/loading.gif"></div> -->
                             <div class="pagination" data-total="2" data-size="15">
                                 <ul></ul>
                             </div>
@@ -251,12 +239,12 @@
                                 </div>
                                 <div class="word">
                                     <p>下载签到二维码</p>
-                                    <p><a href="http://my.welian.com/download/qrcode/aHR0cDovL2g1LndlbGlhbi5jb20vc2lnbi9pL05ESXhOak09">点击下载</a></p>
+                                    <p><a href="#">点击下载</a></p>
                                 </div>
                             </div>
                             <div class="block">
                                 <div class="pic">
-                                    <img src="http://fed.welian.com/0_icon/icon_scan.png">
+                                    <img src="{{PATH_TML}}user/img/icon_scan.png">
                                 </div>
                                 <div class="word">
                                     <p>使用微信扫描签到</p>
@@ -270,16 +258,16 @@
                         <div class="intro">
                             <div class="block">
                                 <div class="pic">
-                                    <img src="http://fed.welian.com/0_icon/icon_phone.png">
+                                    <img src="{{PATH_TML}}icon_phone.png">
                                 </div>
                                 <div class="word">
                                     <p>登录移动版活动下载</p>
-                                    <p><a href="http://www.welian.com" target="_blank">点击下载</a></p>
+                                    <p><a href="#" target="_blank">点击下载</a></p>
                                 </div>
                             </div>
                             <div class="block">
                                 <div class="pic">
-                                    <img src="http://fed.welian.com/0_icon/icon_scan.png">
+                                    <img src="{{PATH_TML}}icon_scan.png">
                                 </div>
                                 <div class="word">
                                     <p>主办方微信扫描电子票</p>
@@ -287,7 +275,7 @@
                             </div>
                             <div class="block">
                                 <div class="pic">
-                                    <img src="http://fed.welian.com/0_icon/icon_confirm.png">
+                                    <img src="{{PATH_TML}}icon_confirm.png">
                                 </div>
                                 <div class="word">
                                     <p>确认签到</p>
