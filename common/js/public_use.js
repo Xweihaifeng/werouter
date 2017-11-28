@@ -57,7 +57,8 @@ var url = window.location.pathname.split('/');
                     var weid = info.weid;
                     // console.log(weid)
                     var imgUrl = info.avatar;
-                    var logoimg="/common/img/avatar.png";
+                    var logoimg = ''
+                    //var logoimg="/common/img/avatar.png";
                     if ((imgUrl != null && imgUrl != "") && imgUrl.indexOf('http') === -1){
                         imgUrl = host + imgUrl;
                        logoimg=imgUrl;
@@ -66,7 +67,7 @@ var url = window.location.pathname.split('/');
                             logoimg=imgUrl;
                             
                         } else {
-                            logoimg="/common/img/avatar.png";
+                            //logoimg="/common/img/avatar.png";
                            
                         }
                     }
