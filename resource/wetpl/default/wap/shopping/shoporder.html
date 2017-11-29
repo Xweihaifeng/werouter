@@ -11,6 +11,7 @@
 
     <script type="text/javascript" src="{{PATH_TML}}js/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="{{PATH_CONFIG}}"></script>
+    <script src="/common/js/layer/layer.js"></script>
     <script src="{{PATH_TML}}js/vue.min.js"></script>
     <script src="{{PATH_TML}}js/vue-resource.min.js"></script>
 
@@ -128,7 +129,8 @@
             },
             order_footer_pay: function () {
                 if(!this.isDefault){
-                    return
+                    layer.msg("请添加收货地址", { time: 2500 });
+                    return false;
                 }
                 var self = this;
                 var goods_list = new Array();
