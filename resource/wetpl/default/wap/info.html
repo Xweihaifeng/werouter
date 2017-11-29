@@ -131,7 +131,7 @@
 				domain: ref.domain
 			},
 			success: function (data) {
-				alert(JSON.stringify(data));
+//				alert(JSON.stringify(data));
 				localStorage.setItem('weid', data.data.weid);
 				localStorage.setItem('token', data.token);
 				localStorage.setItem('activation', data.data.activation_status);
@@ -176,7 +176,7 @@
 				sessionStorage.setItem('currentPage', window.location.href);
 
 				if (is_weixn()) {
-					alert(1)
+//					alert(1)
 					var oldTime = localStorage.getItem('setopenid-date');
 					if (!isExpire(oldTime)) { //没过期
 						//var usertoken = localStorage.getItem('user-token');
@@ -378,7 +378,7 @@
 			success: function(data) {
 				console.log(data);
 				if (data.code == 200) {
-					alert('isFollow:' + data.data)
+//					alert('isFollow:' + data.data)
 					if (data.data == 1) {
 						ref.state = true;
 						ref.status = '已关注';
