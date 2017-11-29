@@ -15,11 +15,11 @@
 </head>
 <body style="background: #ffffff; overflow-y: hidden;">
     <div id="app">
-        <div id="login">
+        <!--<div id="login">
             <a :href="backurl"><img id="goback" src="/common/img/return.png" /></a>
             <p>手机号码登录</p>
             <img id="user" src="/common/img/user.svg" width="20" />
-        </div>
+        </div>-->
         <div id="login-title"><img src="/common/img/we-logo.png" alt=""/></div>
         <div id="login-info-1">
             <ul>
@@ -87,7 +87,8 @@
                         localStorage.setItem('phone', data.data.phone);
                         setCookie(data.token, 7);
                         setTimeout(function(){
-                            window.location.href = next;
+//                            window.location.href = next;
+                            window.location.href = '/index/';
                         }, 1500)
                     } else {
                         layer.msg(data.message, {
