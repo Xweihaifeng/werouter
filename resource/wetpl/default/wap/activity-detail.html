@@ -238,7 +238,7 @@
             mounted: function(){
                 this.$nextTick(function () {
                     let _self = this;
-                    layui.use('layer', function(){ //独立版的layer无需执行这一句
+                    /*layui.use('layer', function(){ //独立版的layer无需执行这一句
                         var $ = layui.jquery, layer = layui.layer; //独立版的layer无需执行这一句
                         //触发事件
                         var active = {
@@ -290,7 +290,7 @@
                             var othis = $(this), method = othis.data('method');
                             active[method] ? active[method].call(this, othis) : '';
                         });
-                    });
+                    });*/
                 })
             },
             methods: {
