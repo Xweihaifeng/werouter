@@ -198,11 +198,13 @@ $(function() {
                 //alert(type);
                 if (type == 1) {
                     $('.J_LayoutFree').hide();
-                    $('.J_FeeTips').hide();
+                    $('.J_LayoutFee').show();
+                    $('.J_FeeTips').show();
                     $('.J_audit').hide();
                 } else {
+                    $('.J_LayoutFee').hide();
                     $('.J_LayoutFree').show();
-                    $('.J_FeeTips').show();
+                    $('.J_FeeTips').hide();
                     $('.J_audit').show();
                 }
 

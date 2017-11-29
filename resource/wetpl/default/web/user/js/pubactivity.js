@@ -680,6 +680,29 @@
 
      // 嘉宾模板
      var guestlist = function(data, type = 0) {
+             var dataweid = "0";
+             if (type > 0) {
+                 data.i = type;
+                 i = type;
+                 dataweid = data.weid;
+             }
+             var guesthtml = '<div class="row J_ActivityGuest" data-result="' + data.i + '" data-id="' + dataweid + '">' +
+                 '<div class="cell drag"><span></span></div>' +
+                 '<div class="cell avatar1">' +
+                 '<input type="hidden" name="thumb_avatar1" class="thumb_avatar1" value="' + data.avatar + '" >' +
+                 '<img src="' + qiniu_bucket_domain + data.avatar + '"></div>' +
+                 '<div class="cell name">' + data.name + '</div>' +
+                 '<div class="cell company">' + data.company + '</div>' +
+                 '<div class="cell position">' + data.position + '</div>' +
+                 '<div class="cell operate">' +
+                 '<i class="fa fa-pencil-square-o J_GuestEdit" onclick="guestedit(this)"></i>' +
+                 '<i class="fa fa-close J_GuestDelete" onclick="guestdel(this)"></i>' +
+                 '</div>' +
+                 '</div>';
+             return guesthtml;
+         }
+         // 票模板
+     var ticketlist = function(data, type = 0) {
          var dataweid = "0";
          if (type > 0) {
              data.i = type;
@@ -688,15 +711,13 @@
          }
          var guesthtml = '<div class="row J_ActivityGuest" data-result="' + data.i + '" data-id="' + dataweid + '">' +
              '<div class="cell drag"><span></span></div>' +
-             '<div class="cell avatar1">' +
-             '<input type="hidden" name="thumb_avatar1" class="thumb_avatar1" value="' + data.avatar + '" >' +
-             '<img src="' + qiniu_bucket_domain + data.avatar + '"></div>' +
              '<div class="cell name">' + data.name + '</div>' +
-             '<div class="cell company">' + data.company + '</div>' +
-             '<div class="cell position">' + data.position + '</div>' +
+             '<div class="cell info">' + data.description + '</div>' +
+             '<div class="cell price">' + data.price + '</div>' +
+             '<div class="cell num">' + data.total_num + '</div>' +
              '<div class="cell operate">' +
-             '<i class="fa fa-pencil-square-o J_GuestEdit" onclick="guestedit(this)"></i>' +
-             '<i class="fa fa-close J_GuestDelete" onclick="guestdel(this)"></i>' +
+             '<i class="fa fa-pencil-square-o J_TicketEdit"></i>' +
+             '<i class="fa fa-close J_TicketDelete"></i>' +
              '</div>' +
              '</div>';
          return guesthtml;
@@ -749,9 +770,15 @@
                          $("input[name='type'][value=" + data.data.type + "]").attr("checked", true);
                          $("input[name=price]").val(data.data.price);
                          if (data.data.type == 2) {
-                             $('.J_LayoutFree').show();
+                             $('.J_LayoutFee').show();
                              $('.J_FeeTips').show();
                              $('.J_audit').show();
+                             $('.J_LayoutFree').hide();
+                         } else {
+                             $('.J_LayoutFee').hide();
+                             $('.J_FeeTips').hide();
+                             $('.J_audit').hide();
+                             $('.J_LayoutFree').show();
                          }
                          $("#J_ActivityLimit").val(data.data.enroll_limit);
                          if (data.data.is_private == 2) {
@@ -766,6 +793,8 @@
                          $(".btn-pub").data("id", 1);
                          // 查找嘉宾
                          guestlistdetail(data.data.weid);
+                         // 查找门票
+                         ticketlistdetail(data.data.weid);
 
                      } else {
                          mess_tusi(data.message);
@@ -806,6 +835,43 @@
                              data.data.list.map(x => {
                                  index++;
                                  $(".J_GuestList").append(guestlist(x, index));
+
+                             })
+                         }
+
+                     } else {
+                         mess_tusi(data.message);
+                     }
+                 },
+                 error: function(xhr) {
+                     console.log(xhr);
+                 }
+             })
+         }
+         // 查票
+     var ticketlistdetail = function(id) {
+             var limit = "";
+             var page = "";
+             var sendData = {
+                 activity_id: id,
+                 limit: limit,
+                 page: page
+             }
+             $.ajax({
+                 url: ACTIVITY_TICKET_LISTS,
+                 type: 'post',
+                 data: sendData,
+                 headers: {
+                     'Token': localStorage.getItem('token')
+                 },
+                 success: function(data) {
+                     console.log(data);
+                     if (data.code == 200) {
+                         if (data.data.total > 0) {
+                             var index = 0;
+                             data.data.list.map(x => {
+                                 index++;
+                                 $(".J_TicketList").append(ticketlist(x, index));
 
                              })
                          }

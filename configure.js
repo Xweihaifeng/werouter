@@ -217,6 +217,7 @@ const ACTIVITY_DETAIL = apiUrl + 'activity/detail'; // 活动 - 详情
 const ACTIVITY_UPDATE = apiUrl + 'activity/update'; // 活动 - 修改
 const ACTIVITY_GUEST_LISTS = apiUrl + 'activity/guest/lists'; // 嘉宾 - 列表
 const ACTIVITY_GUEST_UPDATE = apiUrl + 'activity/guest/update'; // 嘉宾 - 修改
+const ACTIVITY_TICKET_LISTS = apiUrl + 'activity/ticket/lists'; // 门票 - 列表
 const ACTIVITY_ADDVIEW = apiUrl + 'activity/addview'; // 活动 - 增加用户浏览量
 const ACTIVITY_COLLECTION_STORE = apiUrl + 'activity/collection/store'; // 活动 - 收藏 - 保存
 const ACTIVITY_COLLECTION_ISCOLLECTION = apiUrl + 'activity/collection/iscollection'; // 活动 - 收藏 - 用户是否收藏
