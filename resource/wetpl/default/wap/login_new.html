@@ -87,7 +87,8 @@
                         localStorage.setItem('phone', data.data.phone);
                         setCookie(data.token, 7);
                         setTimeout(function(){
-                            window.location.href = next;
+//                            window.location.href = next;
+                            window.location.href = '/index/';
                         }, 1500)
                     } else {
                         layer.msg(data.message, {
