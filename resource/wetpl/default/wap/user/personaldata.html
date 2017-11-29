@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="{{PATH_TML}}css/iconfont.css"/>
     <link rel="stylesheet" href="/common/jquery.animsition/css/animsition.min.css">
     <script src="{{PATH_TML}}js/jquery-3.2.1.min.js"></script>
+    <script src="{{PATH_TML}}js/vue.min.js"></script>
     <!--<script src="{{PATH_TML}}js/zepto.min.js"></script>-->
     <script src="/common/jquery.animsition/js/jquery.animsition.min.js"></script>
     <link rel="stylesheet" href="{{PATH_TML}}js/layui/css/layui.css"/>
@@ -16,15 +17,16 @@
     <script src="{{PATH_TML}}js/home.js"></script>
 </head>
 <body>
+<div id="app">
     <div id="container">
         <div class="about-me">
             <div class="personal">
                 <div class="my-left">
                     <img src="/common/img/slice.jpg" alt="">
                     <p>
-                        <strong>阿尔卑斯山</strong>
+                        <strong>{{ name }}</strong>
                         <label>
-                            <span>Alps</span>
+                            <span>{{ motto }}</span>
                             <i class="iconfont icon-mingpian1"></i>
                         </label>
 
@@ -121,5 +123,19 @@
         </div>
     </div>
     <footer></footer>
+</div>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                name: '阿尔卑斯山',
+                motto: 'Alps'
+            },
+            created: function () {
+
+            }
+        })
+    </script>
 </body>
 </html>
