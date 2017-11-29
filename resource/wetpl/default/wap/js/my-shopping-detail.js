@@ -40,7 +40,7 @@ $(function() {
             <div class="detail_price_cut" style="display: none"><button>降价通知</button></div>
         </slide>
         <slide class="detail_art">
-            <div>`+ result.note +`<a href="#"> 点击查看详情 </a></div>
+            <div>`+ result.note +`<a href="javascript:void(0)" id="goods_detail"> 点击查看详情 </a></div>
         </slide>`
         return template;
     }
@@ -116,6 +116,11 @@ $(function() {
         return template;
     }
 
+    var goods_detail = function(result) {
+        var template = result.content;
+        return template;
+    }
+
     // 套餐选择蒙层显示与否开始
     $(".detail_selected_switch").click(function() {
         return false;
@@ -182,6 +187,7 @@ $(function() {
 
         var result = data.data;
         $(".detail_title").html(detail_title(result));
+        $(".detail_goods_detail").html(goods_detail(result));
         $(".detail_swiper").html(detail_swiper(result));
         $(".detail_evaluate_imgs").html(detail_evaluate(result));
         $(".detail_mask_pic").html(detail_set_meal(result));
