@@ -9,6 +9,9 @@
  //列表折叠
  sessionStorage.listname = 'we-active';
  ///////////////////////吐丝层start/////////////////////////////////////
+
+ var ANIM_TIME = 200;
+
  var tusitemp = "";
 
  function mess_tusi(strs) {
@@ -872,6 +875,31 @@
                              data.data.list.map(x => {
                                  index++;
                                  $(".J_TicketList").append(ticketlist(x, index));
+                                 $edit = $('.J_TicketEdit');
+                                 $del = $('.J_TicketDelete');
+                                 $edit.click(function() {
+                                     alert(123);
+                                     var $p = $(this).parent().parent();
+                                     var data = $p.data('result');
+                                     if (typeof data == 'string') {
+                                         data = JsonObj.decode(data);
+                                     }
+                                     _self._isNew = false;
+                                     _self._editNode = $p;
+                                     _self.edit(data);
+                                 });
+                                 $del.click(function() {
+                                     var $p = $(this).parent().parent();
+                                     var joined = parseInt($p.data('joined'), 10);
+                                     if (joined > 0) {
+                                         notice.alert('此票种已经有人报名，不可删除');
+                                         return;
+                                     }
+                                     $p.slideUp(ANIM_TIME, function() {
+                                         //删除表单数据中的门票
+                                         $p.remove();
+                                     });
+                                 });
 
                              })
                          }

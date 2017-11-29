@@ -141,11 +141,11 @@ $(function() {
             $('#J_ActivityAddr').keyup($.debounce(250, function() {
                 var address = $.trim($('#J_ActivityAddr').val());
                 if (address) {
-                    // map.loadMap();
+                    map.loadMap();
                     $('#J_ActivityAddressHistory').hide();
-                    // $('#J_ActivityAddressMap').fadeIn(ANIM_TIME);
+                    $('#J_ActivityAddressMap').fadeIn(ANIM_TIME);
                 } else {
-                    // $('#J_ActivityAddressMap').hide();
+                    $('#J_ActivityAddressMap').hide();
                     $('#J_ActivityAddressHistory').fadeIn(ANIM_TIME);
                 }
 
@@ -153,7 +153,7 @@ $(function() {
             //失去活动地址输入框的焦点时隐藏活动历史地址
             $('#J_ActivityAddr').blur(function() {
                 $('#J_ActivityAddressHistory').fadeOut(ANIM_TIME);
-                //$('#J_ActivityAddressMap').fadeOut(ANIM_TIME);
+                $('#J_ActivityAddressMap').fadeOut(ANIM_TIME);
             });
             //选择城市列表
             $('.J_ActivityAddressHistoryItem').click(function() {
@@ -1478,96 +1478,96 @@ $(function() {
         }
     };
 
-    /* var map = {
-         _init: 0,
-         city: "",
-         point: null,
-         init: function() {
-             this.city = $.trim($('#J_ActivityCity').val());
-             if (window.baiduMap == undefined) {
-                 // 百度地图API功能
-                 var baiduMap = new BMap.Map("J_ActivityAddressMap");
-                 baiduMap.centerAndZoom(this.city, 16);
-                 baiduMap.setCurrentCity(this.city);
-                 baiduMap.addControl(new BMap.OverviewMapControl());
-                 baiduMap.addControl(new BMap.NavigationControl());
-                 baiduMap.enableScrollWheelZoom(true);
-                 window.baiduMap = baiduMap;
-             }
-             window.baiduMap.clearOverlays();
-         },
-         loadMap: function() {
-             var _self = this;
-             _self.init()
-             try {
-                 var city = $('#J_ActivityCity').val();
-                 var address = $.trim($('#J_ActivityAddr').val());
-                 //创建地址解析器实例
-                 var geocoder = new BMap.Geocoder();
-                 //将地址解析结果显示在地图上，并调整地图视野
-                 geocoder.getPoint(city + address, function(point) {
-                     if (point) {
-                         _self.point = point;
-                     }
-                     if (null == _self.point || (_self.point.lng == 0 && _self.point.lat == 0)) {
-                         _self.point = window.baiduMap.getCenter();
-                     }
-                     var excuTime = 10;
-                     if (_self._init == 0) {
-                         _self._init = 1;
-                         excuTime = 500;
-                     }
-                     setTimeout(function() {
-                         _self.setMapEvent();
-                     }, excuTime);
-                     if (_self.point != null) {
-                         $('#J_ActivityMapLng').val(_self.point.lng);
-                         $('#J_ActivityMapLat').val(_self.point.lat);
-                     }
-                 }, _self.city);
-             } catch (e) {}
-         },
-         setMapEvent: function() {
-             var _self = this;
-             if (null == _self.point || (_self.point.lng == 0 && _self.point.lat == 0)) {
-                 setTimeout(function() {
-                     _self.loadMap();
-                 }, 1000)
-                 return false;
-             }
-             window.baiduMap.centerAndZoom(_self.point, 16);
-             var options = {
-                 "anchor": new BMap.Size(12, 38)
-             };
-             var size = new BMap.Size(24, 38);
-             var mark1 = "http://fed.welian.com/common/mark1.png";
-             var mark2 = "http://fed.welian.com/common/mark2.png";
-             var icon1 = new BMap.Icon(mark1, size, options);
-             var icon2 = new BMap.Icon(mark2, size, options);
-             var baiduMapMarker = new BMap.Marker(_self.point, {
-                 icon: icon1
-             });
-             baiduMapMarker.enableDragging();
-             baiduMapMarker.addEventListener("dragend", function(e) {
-                 $('#J_ActivityMapLng').val(e.point.lng);
-                 $('#J_ActivityMapLat').val(e.point.lat);
-                 //创建地址解析器实例
-                 var geocoder = new BMap.Geocoder();
-                 //将地址解析结果显示在地图上，并调整地图视野
-                 geocoder.getLocation(e.point, function(data) {
-                     var address = data.addressComponents;
-                     $('#J_ActivityAddr').val(address.district + address.street + address.streetNumber);
-                 });
-             });
-             baiduMapMarker.addEventListener("onmouseover", function() {
-                 baiduMapMarker.setIcon(icon2);
-             });
-             baiduMapMarker.addEventListener("onmouseout", function() {
-                 baiduMapMarker.setIcon(icon1);
-             });
-             window.baiduMap.addOverlay(baiduMapMarker);
-         }
-     };*/
+    var map = {
+        _init: 0,
+        city: "",
+        point: null,
+        init: function() {
+            this.city = $.trim($('#J_ActivityCity').val());
+            if (window.baiduMap == undefined) {
+                // 百度地图API功能
+                var baiduMap = new BMap.Map("J_ActivityAddressMap");
+                baiduMap.centerAndZoom(this.city, 16);
+                baiduMap.setCurrentCity(this.city);
+                baiduMap.addControl(new BMap.OverviewMapControl());
+                baiduMap.addControl(new BMap.NavigationControl());
+                baiduMap.enableScrollWheelZoom(true);
+                window.baiduMap = baiduMap;
+            }
+            window.baiduMap.clearOverlays();
+        },
+        loadMap: function() {
+            var _self = this;
+            _self.init()
+            try {
+                var city = $('#J_ActivityCity').val();
+                var address = $.trim($('#J_ActivityAddr').val());
+                //创建地址解析器实例
+                var geocoder = new BMap.Geocoder();
+                //将地址解析结果显示在地图上，并调整地图视野
+                geocoder.getPoint(city + address, function(point) {
+                    if (point) {
+                        _self.point = point;
+                    }
+                    if (null == _self.point || (_self.point.lng == 0 && _self.point.lat == 0)) {
+                        _self.point = window.baiduMap.getCenter();
+                    }
+                    var excuTime = 10;
+                    if (_self._init == 0) {
+                        _self._init = 1;
+                        excuTime = 500;
+                    }
+                    setTimeout(function() {
+                        _self.setMapEvent();
+                    }, excuTime);
+                    if (_self.point != null) {
+                        $('#J_ActivityMapLng').val(_self.point.lng);
+                        $('#J_ActivityMapLat').val(_self.point.lat);
+                    }
+                }, _self.city);
+            } catch (e) {}
+        },
+        setMapEvent: function() {
+            var _self = this;
+            if (null == _self.point || (_self.point.lng == 0 && _self.point.lat == 0)) {
+                setTimeout(function() {
+                    _self.loadMap();
+                }, 1000)
+                return false;
+            }
+            window.baiduMap.centerAndZoom(_self.point, 16);
+            var options = {
+                "anchor": new BMap.Size(12, 38)
+            };
+            var size = new BMap.Size(24, 38);
+            var mark1 = "http://fed.welian.com/common/mark1.png";
+            var mark2 = "http://fed.welian.com/common/mark2.png";
+            var icon1 = new BMap.Icon(mark1, size, options);
+            var icon2 = new BMap.Icon(mark2, size, options);
+            var baiduMapMarker = new BMap.Marker(_self.point, {
+                icon: icon1
+            });
+            baiduMapMarker.enableDragging();
+            baiduMapMarker.addEventListener("dragend", function(e) {
+                $('#J_ActivityMapLng').val(e.point.lng);
+                $('#J_ActivityMapLat').val(e.point.lat);
+                //创建地址解析器实例
+                var geocoder = new BMap.Geocoder();
+                //将地址解析结果显示在地图上，并调整地图视野
+                geocoder.getLocation(e.point, function(data) {
+                    var address = data.addressComponents;
+                    $('#J_ActivityAddr').val(address.district + address.street + address.streetNumber);
+                });
+            });
+            baiduMapMarker.addEventListener("onmouseover", function() {
+                baiduMapMarker.setIcon(icon2);
+            });
+            baiduMapMarker.addEventListener("onmouseout", function() {
+                baiduMapMarker.setIcon(icon1);
+            });
+            window.baiduMap.addOverlay(baiduMapMarker);
+        }
+    };
 
     /*window.onload = function() {
         console.log("ccbbaa");
