@@ -9,10 +9,12 @@
 		<link rel="shortcut icon" id="favicon" href="" />
 		<link rel="stylesheet" href="/common/css/main.css">
 		<link rel="stylesheet" href="/common/css/bootstrap.min.css">
+		<link rel="stylesheet" href="{{PATH_TML}}user/css/laydate.css">
 		<link rel="stylesheet" href="{{PATH_TML}}user/css/comment_bomb_box.css" />
 
 		<script src="/common/js/jquery-3.2.1.min.js"></script>
 		<script src="{{PATH_CONFIG}}"></script>
+		<script src="{{PATH_TML}}user/js/laydate.js"></script>
 		<script src="/common/js/jquery.raty.js"></script>
 	</head>
 
@@ -39,10 +41,17 @@
 	            	</ul>
 	            	<ul class="my_order_time">
 	            		<li>成交时间：</li>
-	            		<li><input type="date" value="" placeholder="开始时间"></li>
-	            		<li><input type="date" value="" placeholder="结束时间"></li>
+	            		<li><input value="" placeholder="开始时间" name="start_time" class="laydate-icon" id="start_time"></li>
+	            		<li><input value="" placeholder="结束时间" name="end_time" class="laydate-icon" id="end_time"></li>
 	            		<li><input type="text" value="" placeholder="订单号搜索"></li>
 	            		<li><button>筛选</button></li>
+	            	</ul>
+	            	<ul class="my_order_state">
+	            		<li>宝贝</li>
+	            		<li>单价</li>
+	            		<li>数量</li>
+	            		<li>实付款</li>
+	            		<li>商品操作</li>
 	            	</ul>
 				</div>
 				<div class="my_order_content">
@@ -52,6 +61,7 @@
 							<div class="my_order_store_number"> 20171128156161685 </div>
 							<div class="my_order_store_name"><span>好奇害死猫</span><span>15804564654</span></div>
 							<div class="my_order_store_address">北京市朝阳区三里屯永茂大厦华语间</div>
+							<div class="my_order_store_clear">删除</div>
 						</div>
 						<ul class="my_order_store_list">
 							<li class="my_order_img_info">
@@ -73,8 +83,8 @@
 							</li>
 							<li class="my_order_operation">
 								<div class="my_order_order_operation">
-									<div>订单详情</div>
-									<div>待发货</div>
+									<a href="">订单详情</a>
+									<a href="">待发货</a>
 								</div>
 							</li>
 						</ul>
@@ -142,6 +152,37 @@
 					}
 				});
 			}
+
+			var start = {
+		        elem: '#start_time',
+		        format: 'YYYY-MM-DD',
+		        max: '2099-06-16', //最大日期
+		        istime: true,
+		        istoday: false,
+		        choose: function(datas){
+		             end.min = datas; //开始日选好后，重置结束日的最小日期
+		             end.start = datas //将结束日的初始值设定为开始日
+		        }
+		    };
+		    var end = {
+		        elem: '#end_time',
+		        format: 'YYYY-MM-DD',
+		        max: '2099-06-16',
+		        istime: true,
+		        istoday: false,
+		        choose: function(datas){
+		            start.max = datas; //结束日选好后，重置开始日的最大日期
+		        }
+		    };
+		    laydate(start);
+		    laydate(end);
+			$('.datetimepicker').datetimepicker({
+				autoclose: true
+			});
+
+			$('.datetimepicker').blur(function() {
+				// $('.dropdown-menu').hide();
+			})
 		</script>
 	</body>
 
