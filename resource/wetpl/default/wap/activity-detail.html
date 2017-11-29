@@ -5,13 +5,11 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link rel="shortcut icon" id="favicon" href="" />
     <link rel="stylesheet" href="{{PATH_TML}}css/home.css"/>
-    <link rel="stylesheet" href="{{PATH_TML}}css/swiper.min.css"/>
-    <link rel="stylesheet" href="{{PATH_TML}}css/activity-detail.css"/>
     <link rel="stylesheet" href="{{PATH_TML}}css/common.css"/>
+    <link rel="stylesheet" href="{{PATH_TML}}css/activity-detail.css"/>
     <script src="{{PATH_TML}}js/zepto.min.js"></script>
     <script src="{{PATH_TML}}js/vue.min.js"></script>
     <script type="text/javascript" src="{{PATH_CONFIG}}"></script>
-    <script src="{{PATH_TML}}js/swiper-3.3.1.min.js"></script>
     <link rel="stylesheet" href="{{PATH_TML}}js/layui/css/layui.css"/>
     <script src="{{PATH_TML}}js/layui/layui.js"></script>
     <title></title>
@@ -25,41 +23,42 @@
     </div>-->
 
     <div id="carousel">
-        <div class="swiper-container" id="my-swiper">
+        <img :src="cover" alt=""/>
+        <!--<div class="swiper-container" id="my-swiper">
             <div class="swiper-wrapper carousel">
                 <div class="swiper-slide">
                     <img :src="cover" alt=""/>
                 </div>
             </div>
             <div class="swiper-pagination"></div>
-        </div>
+        </div>-->
     </div>
 
     <div id="container">
-        <div class="actd-title">活动简介</div>
+        <div class="actd-title">{{title}}</div>
         <ul>
-            <li class="actd-theme"><img src="/common/img/theme.png" alt=""/><p>{{title}}</p></li>
-            <li class="actd-time"><img src="/common/img/clock.png" alt=""/><p>{{start}} 至 {{end}} 报名截止</p></li>
+            <!--<li class="actd-theme"><img src="/common/img/theme.png" alt=""/><p>{{title}}</p></li>-->
+            <li class="actd-time"><img src="/common/img/icon_time.png" alt=""/><p>{{start}} 至 {{end}} 报名截止</p></li>
             <li class="actd-map">
-                <img src="/common/img/location.png" alt=""/>
+                <img src="/common/img/icon_map.png" alt=""/>
                 <p><a href="/activity-map">{{address}}</a></p>
                 <!--<img class="arrow" src="/common/img/arrow-right.png" alt=""/>-->
             </li>
-            <li class="actd-zb"><img src="/common/img/company.png" alt=""/><p>{{sponsor}}</p></li>
-            <li class="actd-bm" style="background: #f0f0f0">已报名用户</li>
+            <li class="actd-zb" style="box-shadow: 5px 5px 5px #eee;"><img src="/common/img/icon_host.png"/><p style="border-bottom: none!important;">{{sponsor}}</p></li>
+            <li class="actd-bm" style="margin-top: 0.12rem;border-bottom: 1px solid #eee;height: 0.38rem;">已报名用户</li>
             <li class="actd-users">
                 <img :src="user.avatar" v-for="user in users" alt=""/>
             </li>
-            <li style="background: #f0f0f0">活动嘉宾</li>
+            <!--<li style="background: #f0f0f0">活动嘉宾</li>
             <li class="actd-guest" v-for="guest in guests">
                 <img :src="guest.avatar" alt=""/>
                 <div>
                     <p>{{guest.name}}</p>
                     <p style="font-size: 0.12rem; color: #a6a6a6">{{guest.position}}</p>
                 </div>
-            </li>
-            <li style="background: #f0f0f0">活动详情</li>
-            <li class="actd-detail" v-html="content"></li>
+            </li>-->
+            <li style="margin-top: 0.12rem;border-bottom: 1px solid rgb(238, 238, 238);height: 0.38rem;">活动详情</li>
+            <li class="actd-detail" style="padding-right: 0.15rem;" v-html="content"></li>
         </ul>
 
         <div class="actd-apply">
@@ -70,19 +69,6 @@
 </div>
 
     <script>
-        var mySwiper = new Swiper ('#my-swiper', {
-            direction: 'horizontal',
-            loop: true,
-            speed: 1000,
-            autoplay : 3000,
-            autoplayDisableOnInteraction : false,
-            pagination: '.swiper-pagination',
-            paginationClickable :true,
-            nextButton: '.swiper-button-next',
-            prevButton: '.swiper-button-prev',
-            grabCursor : true
-        })
-
         $("#user").click(function(){
 //            window.location.href = "wcard";
         })
@@ -168,8 +154,8 @@
                         ref.sponsor = p.Sponsor;
                         ref.content = p.content;
                         ref.address = p.area_name + p.address;
-                        ref.start = p.created_at.substr(5);
-                        ref.end = p.enroll_deadline.substr(5);
+                        ref.start = p.created_at;
+                        ref.end = p.enroll_deadline;
                     }
                 }
             })
