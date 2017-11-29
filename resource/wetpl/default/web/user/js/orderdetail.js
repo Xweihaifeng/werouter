@@ -99,7 +99,7 @@ var qiniu_bucket_domain =ApiMaterPlatQiniuDomain;
 
     var weid = localStorage.getItem('weid');
     hasDomain(weid);
-
+    
     //route
     var isLogin; //判断用户登陆与否
     var router = function(route){
@@ -130,27 +130,27 @@ var qiniu_bucket_domain =ApiMaterPlatQiniuDomain;
 
         var article = function(){
             showLogin = false;
-            window.location.href = "/index/article";
+            window.location.href = domain +"/article";
         }
 
         var active = function(){
             showLogin = false;
-            window.location.href = "/index/activity";
+            window.location.href = domain +"/activity";
         }
         var project = function(){
             showLogin = false;
-            window.location.href = "/index/project";
+            window.location.href = domain +"/project";
         }
 
 
         var shopping = function(){
             showLogin = false;
-            window.location.href = "/index/wemall";
+            window.location.href = domain +"/wemall";
         }
 
         var zone = function(){
             showLogin = false;
-            window.location.href = "/index/quan";
+            window.location.href = domain +"/quan";
         }
 
         if (isMember(routerList, route) != ""){
@@ -185,7 +185,7 @@ var qiniu_bucket_domain =ApiMaterPlatQiniuDomain;
     }
 
     init(localStorage.getItem('token'));
-
+    
     var id = window.location.href.split('/').pop();
 
 
@@ -200,59 +200,136 @@ var qiniu_bucket_domain =ApiMaterPlatQiniuDomain;
              }else{
                 payway="支付宝支付";
              }
-
-        // var addrdivhtml='<div class="od_about_order_left od_w50 ">'+
-        //                 '<p><span class="t">收货地址:</span><span class="txt">'+data.address_detail+'</span></p>'+
-        //                 '<p><span class="t">买家留言:</span><span class="txt">'+data.note+'</span></p>'+
-        //             '</div>'+
-        //             '<div class="od_about_order_left od_w50 ">'+
-        //                 '<p><span class="t">订单编号:</span><span class="txt">'+data.order_num+'</span></p>'+
-        //                 ' <p><span class="t">支付方式:</span><span class="txt">'+payway+' </span></p>'+
-        //                  '<!--<p><span class="t">支付交易号:</span><span class="txt">'+weid+'</span></p>-->'+
-
-        //             '</div>';
-
-
-         var addrdivhtml='<table class="orders_list_title">'+
+        if(data.note==null||data.note==''||data.note=="undefined"){
+            data.note='还未留言';        
+        }
+        var logistics_flag=false;
+        var refund_flag=false;
+        var pay_flag=false;
+        switch(data.order_status)
+        {
+        case 1:
+          data.order_status_str='订单已下单';
+          break;
+        case 2:
+          data.order_status_str='订单已经支付';
+          pay_flag=true;
+          break;
+        case 3:
+          data.order_status_str='订单已经发货';
+          //订单物流信息
+          pay_flag=true;
+          logistics_flag=true;
+           
+          break;
+        case 4:
+          pay_flag=true;  
+          data.order_status_str='订单已经确认收货';
+          logistics_flag=true;
+          break;
+        case 5:
+          pay_flag=true;  
+          data.order_status_str='订单商品已经评论';
+          logistics_flag=true;
+          break;
+        case 6:
+          data.order_status_str='订单已经取消';
+          break;
+        case 7:
+          pay_flag=true;
+          data.order_status_str='订单已经确认交易完成';
+          logistics_flag=true;
+          break;
+        case 8:
+          pay_flag=true;
+          data.order_status_str='订单已经申请退款';
+          logistics_flag=true;
+          break;
+        case 9:
+          pay_flag=true;
+          data.order_status_str='订单已经申请退款通过';
+          logistics_flag=true;
+          refund_flag=true;
+          break;
+        case 10:
+          data.order_status_str='订单已经删除';
+          break;    
+        default:
+          break;
+        }
+        var addrdivhtml='<table class="orders_list_title">'+
                 '<tbody>'+
                 '<tr class="orders_list_msg">'+
                     '<td class="list_left" colspan="4">'+
                         '<span class="list_left_date">订单信息</span>'+
-
                     '</td>'+
-
                 '</tr>'+
                 '<tr class="orders_list_content" id="'+data.weid+'" data-id="'+data.goods_id+'">'+
                    ' <td width="50%">'+
-                        '<div class="od_about_order_left od_w50 order_x">'+
+                        '<div class="od_about_order_left od_w50">'+
                           '<p><span class="t">收货地址:</span><span class="txt">'+data.address_detail+'</span></p>'+
                           '<p><span class="t">买家留言:</span><span class="txt">'+data.note+'</span></p>'+
                         '</div>'+
                     '</td>'+
                     '<td width="50%">'+
-                        '<div class="od_about_order_left od_w50 ">'+
+                        '<div class="od_about_order_left">'+
                          '<p><span class="t">订单编号:</span><span class="txt">'+data.order_num+'</span></p>'+
-                         ' <p><span class="t">支付方式:</span><span class="txt">'+payway+' </span></p>'+
-                          '<!--<p><span class="t">支付交易号:</span><span class="txt">'+weid+'</span></p>-->'+
-                       '</div>'+
+                         '<p><span class="t">支付方式:</span><span class="txt">'+payway+' </span></p>'+
+                         '<p><span class="t">订单状态:</span><span class="txt">'+data.order_status_str+' </span></p>';
+                         if(pay_flag){
+                            addrdivhtml+='<p><span class="t">交易单号:</span><span class="txt">'+data.pay_num+'</span></p>';
+                         }  
+                         if(logistics_flag){
+                            addrdivhtml+='<p><span class="t">物流单号:</span><span class="txt">'+data.send.logistics_no+'</span></p><p><span class="t">物流公司:</span><span class="txt">'+data.send.logistics_company+'</span></p>';
+                         }
+                         if(refund_flag){
+                            addrdivhtml+='<p><span class="t">退款单号:</span><span class="txt">'+data.refund[0].order_refund_num+'</span></p>';
+                            addrdivhtml+='<p><span class="t">退款金额:</span><span class="txt">'+data.refund[0].order_refund_money+'</span></p>';
+                            addrdivhtml+='<p><span class="t">退款日期:</span><span class="txt">'+data.refund[0].created_at+'</span></p>';
+                         }   
+                        addrdivhtml+='</div>'+
                     '</td>'+
-
-                    // '<td width="10%">'+
-                    //    ' <div class="orders_list_details" id="'+data.status+'">'+
-                    //         '<a href="/user/order/detail/'+data.weid+'" target="_blank">订单详情</a>'+sendgoods+
-                    //          '</div>'+
-                    // '</td>'+
                 '</tr>'+
             '</tbody>'+
             '</table>';
-
-
-
-
-
-                return addrdivhtml;
+            $(".orderdetail").append(addrdivhtml);
+            if(logistics_flag){
+                //已经发货
+                InitLogisticsTable(data);
+            }
+            
     }
-
+    //初始物流列表
+    var InitLogisticsTable=function(data){
+        /*
+        data.send.logistics_no
+        data.send.logistics_company
+        data.send.logistics_company_code*/
+        $.ajax({
+            url: apiUrl+'pages/logistics/getLogisticsInfo',  
+            type:'post',
+            data:{logistics_NO:data.send.logistics_no,company_code:data.send.logistics_company_code},
+            headers: {
+                    'Token': localStorage.getItem('token')
+                },
+            dataType: 'json',
+            success: function(data){
+                if (data.code == 200) {
+                 var html='<table class="orders_list_title"><tbody>'+
+                    '<tr class="orders_list_msg">'+
+                    '<td class="list_left" colspan="4">'+
+                        '<span class="list_left_date">物流信息</span>'+
+                    '</td>'+
+                    '</tr><tr class="orders_list_content" id="914087f0-d0e1-11e7-ae66-c11b9b4ee3b1" data-id="undefined"> <td width="40%" colspan="4"><div class="od_about_order_left  od_bgwrite">';
+                    data.data.data.map(x=>{
+                        html+='<p><span>日期:'+x.ftime+'</span>&nbsp&nbsp&nbsp&nbsp<span class="txt">'+x.context+'</span></p>';
+                    })
+                    html+='</div></td></tbody></table>';
+                    $(".orderdetail").append(html);
+                }
+            }
+        })
+    }
 
     // 产生商家信息模板
     var mallusertemplate=function(data){
@@ -263,9 +340,14 @@ var qiniu_bucket_domain =ApiMaterPlatQiniuDomain;
             nickname=data.nickname;
         }
         var phone=data.phone
-        phone="没有电话";
-        var addr="没有地址";
-          var malluserdivhtml='<table class="orders_list_title">'+
+        var addr='';
+        if(data.province!=''||data.province!='undefined'||data.province!=null){
+            addr+=data.province;
+        }
+        if(data.city!=''||data.city!='undefined'||data.city!=null){
+            addr+=data.city;
+        }
+        var malluserdivhtml='<table class="orders_list_title">'+
                 '<tbody>'+
                 '<tr class="orders_list_msg">'+
                     '<td class="list_left" colspan="4">'+
@@ -286,15 +368,49 @@ var qiniu_bucket_domain =ApiMaterPlatQiniuDomain;
                 '</tr>'+
             '</tbody>'+
             '</table>';
-
-        // var malluserdivhtml='<div class="od_about_order_left  od_bgwrite">'+
-        //                 '<p><span class="t">商家昵称:</span><span class="txt">'+nickname+'</span></p>'+
-        //                 '<p><span class="t">所在地址:</span><span class="txt">'+addr+'</span></p>'+
-        //                 '<p><span class="t">联系电话:</span><span class="txt">'+phone+'</span></p>'+
-        //             '</div>';
-
-                return malluserdivhtml;
+            return malluserdivhtml;
     }
+    //买家信息模块
+    var usertemplate=function(data){
+        var nickname="";
+        if(data.nickname==null){
+            nickname="没有昵称";
+        }else{
+            nickname=data.nickname;
+        }
+        var phone=data.phone
+        var addr='';
+        if(data.province!=''||data.province!='undefined'||data.province!=null){
+            addr+=data.province;
+        }
+        if(data.city!=''||data.city!='undefined'||data.city!=null){
+            addr+=data.city;
+        }
+        var userdivhtml='<table class="orders_list_title">'+
+                '<tbody>'+
+                '<tr class="orders_list_msg">'+
+                    '<td class="list_left" colspan="4">'+
+                        '<span class="list_left_date">买家信息</span>'+
+
+                    '</td>'+
+
+                '</tr>'+
+                '<tr class="orders_list_content" id="'+data.weid+'" data-id="'+data.goods_id+'">'+
+                   ' <td width="40%" colspan="4">'+
+                        '<div class="od_about_order_left  od_bgwrite">'+
+                        '<p><span class="t">商家昵称:</span><span class="txt">'+nickname+'</span></p>'+
+                        '<p><span class="t">所在地址:</span><span class="txt">'+addr+'</span></p>'+
+                        '<p><span class="t">联系电话:</span><span class="txt">'+phone+'</span></p>'+
+                        '<p><span class="t">收货地址:</span><span class="txt">'+data.address+'</span></p>'+
+                         '</div>'+
+                    '</td>'+
+
+                '</tr>'+
+            '</tbody>'+
+            '</table>';
+            return userdivhtml;
+    }
+
     // 购买的商品模板
     var mallshoptemplate=function(data){
          var mallshopdivhtml='<table class="orders_list_title">'+
@@ -310,78 +426,44 @@ var qiniu_bucket_domain =ApiMaterPlatQiniuDomain;
                             '<span style="display: none;">联系电话：'+data.phone+'</span>'+
                         '</div>'+
                     '</td>-->'+
-                '</tr>'+
-                '<tr class="orders_list_content" id="'+data.weid+'" data-id="'+data.goods_id+'">'+
-                   ' <td width="40%">'+
-                        '<div class="orders_list_pic">'+
-                            '<a href="'+data.domain_order+'wemall/goods/'+data.goods_id+'" target="_blank">'+
-                                '<img class="img" src="'+qiniu_bucket_domain+data.goods_cover+'" alt="">'+
-                                '<p class="txt">'+data.goods_title+'</p>'+
-                            '</a>'+
-                        '</div>'+
-                    '</td>'+
-                    '<td width="10%">'+
-                        '<div class="orders_list_buy">'+
-                            '<span>x'+data.goods_num+'</span>'+
-                        '</div>'+
-                    '</td>'+
-                    '<td width="15%">'+
-                       '<div class="orders_list_buy">'+
-                            '<span class="list_right_gj"><p>￥'+data.order_price+'</p><p>(含运费:0.00)</p></span>'+
-                        '</div>'+
-                    '</td>'+
-                    '<td width="25%">'+
-                        '<div class="orders_list_addr">'+
-                            '<p>'+data.username+'<em>'+data.phone+'</em></p>'+
-                            '<p>'+data.address_detail+'</p>'+
-                            '<p>备注:<span>'+data.note+'</span></p>'+
-                        '</div>'+
-                    '</td>'+
-                    // '<td width="10%">'+
-                    //    ' <div class="orders_list_details" id="'+data.status+'">'+
-                    //         '<a href="/user/order/detail/'+data.weid+'" target="_blank">订单详情</a>'+sendgoods+
-                    //          '</div>'+
-                    // '</td>'+
-                '</tr>'+
-            '</tbody>'+
+                '</tr>';
+
+
+                data.map(x=>{
+                    mallshopdivhtml+='<tr class="orders_list_content" style="height:100px;" id="'+x.weid+'" data-id="'+x.goods_id+'">'+
+                       ' <td width="40%">'+
+                            '<div class="orders_list_pic">'+
+                                '<a href="'+domain_order+'wemall/goods/'+x.goods_id+'" target="_blank">'+
+                                    '<img class="img" src="'+qiniu_bucket_domain+x.goods_cover+'" alt="">'+
+                                    '<p class="txt">'+x.goods_title+'</p>'+
+                                '</a>'+
+                            '</div>'+
+                        '</td>'+
+                        '<td width="10%">'+
+                            '<div class="orders_list_buy">'+
+                                '<span>x'+x.goods_num+'</span>'+
+                            '</div>'+
+                        '</td>'+
+                        '<td width="15%">'+
+                           '<div class="orders_list_buy">'+
+                                '<span class="list_right_gj"><p>￥'+x.goods_price+'</p><p>(含运费:0.00)</p></span>'+
+                            '</div>'+
+                        '</td>'+
+                    '</tr>';
+                })
+
+                
+
+
+
+             mallshopdivhtml+='</tbody>'+
             '</table>';
-
-        // var mallshopdivhtml='<tr class="orders_list_content">'+
-        //                         '<td width="40%">'+
-        //                             '<div class="orders_list_pic">'+
-        //                                 '<a href="wemall/goods/'+data.goods_id+'" target="_blank">'+
-        //                                     '<img class="img" src="'+qiniu_bucket_domain+data.goods_cover+'" alt="">'+
-        //                                     '<p class="txt">'+data.goods_title+'</p>'+
-        //                                 '</a>'+
-        //                             '</div>'+
-        //                         '</td>'+
-        //                         '<td width="10%">'+
-        //                             '<div class="orders_list_buy">'+
-        //                                 '<span>x'+data.goods_num+'</span>'+
-        //                             '</div>'+
-        //                         '</td>'+
-        //                         '<td width="15%">'+
-        //                            ' <div class="orders_list_buy">'+
-        //                                ' <span class="list_right_gj"><p>￥'+data.order_price+'</p><p>(含运费:0.00)</p></span>'+
-        //                             '</div>'+
-        //                         '</td>'+
-        //                         '<td width="25%">'+
-        //                             '<div class="orders_list_addr">'+
-        //                                 '<p>'+data.username+'<em>18966700695</em></p>'+
-        //                                 '<p>'+data.address_detail+'</p>'+
-        //                                 '<p>备注:<span>'+data.note+'</span></p>'+
-        //                             '</div>'+
-        //                         '</td>'+
-        //                     '</tr>';
-
-                return mallshopdivhtml;
+            return mallshopdivhtml;
     }
 
 
     // 获取订单详情
     var init = function(id){
-    // useraddr();
-    console.log(id);
         $.ajax({
             url: ORDER_DETAIL+'/' + id,
             type:'get',
@@ -390,24 +472,18 @@ var qiniu_bucket_domain =ApiMaterPlatQiniuDomain;
                 },
             dataType: 'json',
             success: function(data){
-                console.log(data);
                 if (data.code == 200) {
                     var orders = data.data;
-                    $(".orderdetail").append(addrdiv(orders));
-                    $(".goodsdetail").append(mallshoptemplate(orders));
-                    malluserdetail(orders.plat_user_id);
-                    $(".totalgoodsprice").text(orders.order_price);
+                    addrdiv(orders);
+                    $(".goodsdetail").append(mallshoptemplate(orders.goods));
+                    malldetail(orders.mall_id);
+                    userdetail(orders.plat_user_id,orders.address_detail);
+                    //$(".totalgoodsprice").text(orders.order_price);
                     $(".totalorderprice").text(orders.order_price);
                     $(".totalprice").text(orders.order_price);
-                    malldetail(orders.mall_id);
-                    // goodsdetail(orders.goods_id);
-
-
-
                 }
             }
         })
-
     }
     // 获取商城详情
     var malldetail=function(mall_id){
@@ -422,12 +498,10 @@ var qiniu_bucket_domain =ApiMaterPlatQiniuDomain;
                 console.log(data);
                 if (data.code == 200) {
                     var orders = data.data;
-                    // $(".malldetail").append(malluserdivhtml(orders));
-                    /*malldetail(orders.mall_id);
-                    goodsdetail(orders.goods_id);*/
-
+                    
+                   //商品链接产生     
                    __init(orders.plat_user_id);
-                   // __init("1acc8080-769f-11e7-afe9-a1e618177dd9");
+                   malluserdetail(orders.plat_user_id);
 
 
                 }
@@ -447,12 +521,78 @@ var qiniu_bucket_domain =ApiMaterPlatQiniuDomain;
                 console.log(data);
                 if (data.code == 200) {
                     var orders = data.data;
-                    $(".malldetail").append(mallusertemplate(orders));
-                    /*malldetail(orders.mall_id);
-                    goodsdetail(orders.goods_id);*/
-
-
-
+                    if(orders.province_id!=''){
+                         $.ajax({
+                            url: apiUrl+'province/detail/' + orders.province_id,
+                            type:'get',
+                            dataType: 'json',
+                            success: function(data){
+                                if (data.code == 200) {
+                                    orders.province=data.data.name;
+                                    if(orders.area_id){
+                                        $.ajax({
+                                            url: apiUrl+'area/detail/' + orders.area_id,
+                                            type:'get',
+                                            dataType: 'json',
+                                            success: function(data){
+                                                if (data.code == 200) {
+                                                    orders.city=data.data.name;
+                                                    $(".malldetail").append(mallusertemplate(orders));
+                                                }
+                                            }
+                                        })
+                                    }else{
+                                        $(".malldetail").append(mallusertemplate(orders));
+                                    }
+                                }
+                            }
+                        })   
+                    }
+                }
+            }
+        })
+    }
+    //卖家信息
+    var userdetail=function(userid,address){
+        $.ajax({
+            url: USERDETAIL+'/' + userid,
+            type:'get',
+            headers: {
+                    'Token': localStorage.getItem('token')
+                },
+            dataType: 'json',
+            success: function(data){
+                console.log(data);
+                if (data.code == 200) {
+                    var orders = data.data;
+                    orders.address=address;
+                    if(orders.province_id!=''){
+                         $.ajax({
+                            url: apiUrl+'province/detail/' + orders.province_id,
+                            type:'get',
+                            dataType: 'json',
+                            success: function(data){
+                                if (data.code == 200) {
+                                    orders.province=data.data.name;
+                                    if(orders.area_id){
+                                        $.ajax({
+                                            url: apiUrl+'area/detail/' + orders.area_id,
+                                            type:'get',
+                                            dataType: 'json',
+                                            success: function(data){
+                                                if (data.code == 200) {
+                                                    orders.city=data.data.name;
+                                                    $(".userdetail").append(usertemplate(orders));
+                                                }
+                                            }
+                                        })
+                                    }else{
+                                        $(".userdetail").append(usertemplate(orders));
+                                    }
+                                }
+                            }
+                        })   
+                    }
                 }
             }
         })
@@ -498,12 +638,7 @@ var qiniu_bucket_domain =ApiMaterPlatQiniuDomain;
                         console.log('userId:', userId);
                         console.log(data.data.domain);
                         domain_order="/"+data.data.domain+"/";
-
-                        // getUserInfo(USERDETAIL, "/" + userId);
                     } else {
-                        /*$(".orders_list_pic a").each(function(){
-                            $(this).attr("href","/index/"+$(this).attr("href"));
-                        })*/
                         domain_order="/index/";
                     }
                    $(".orders_list_pic a").attr("href",domain_order+$(".orders_list_pic a").attr("href"));
@@ -518,145 +653,7 @@ var qiniu_bucket_domain =ApiMaterPlatQiniuDomain;
             }
         })
     }
-
-
-
-    // 提交订单
-    var submitorder=function(sendData){
-        if (domain == '') {
-            var url = '';
-        } else {
-            var url = domain
-        }
-         $.ajax({
-            url:ORDER_STORE,
-            type:'post',
-            data:sendData,
-            headers: {
-                'Token': localStorage.getItem('token')
-            },
-            success: function(data){
-                console.log(data);
-                if (data.code == 200) {
-                   // window.location='/shopbuy/'+data.data;//提交成功后跳转到支付页面
-                    window.location.href ="/"+ url+"/wemall/pay/" +data.data;
-
-
-                }else{
-                    console.log('SHOPORDER  ERROR');
-                }
-            },
-            error: function(xhr){
-                console.log(xhr);
-            }
-        })
-    }
-
-
-    // 获取省下市
-    var getprovince=function(){
-        $.ajax({
-            url:PROVINCE_LIST,
-            type:'get',
-            success: function(data){
-                if (data.code == 200) {
-                    var provincedata = data.data.list;
-                    provincedata.map(x => {
-                            $("#province").append("<option value='"+x.id+"'>"+x.name+"</option>");
-                            $("#province").bind("change",function(){
-                            $("#city").children().remove();
-                            getcity($(this).val());
-                        })
-
-                    })
-
-                }else{
-                    console.log('PROVINCE LIST ERROR');
-                }
-            },
-            error: function(xhr){
-                console.log(xhr);
-            }
-        })
-    }
-    var getcity=function(pid){
-        $.ajax({
-            url:AREA_LIST+'/'+pid,
-            type:'get',
-            success: function(data){
-                if (data.code == 200) {
-                    var citydata = data.data.list;
-                    citydata.map(x => {
-                        $("#city").append("<option value='"+x.id+"'>"+x.name+"</option>");
-
-
-                    })
-
-                }else{
-                    console.log('CITYS  LIST ERROR');
-                }
-            },
-            error: function(xhr){
-                console.log(xhr);
-            }
-        })
-    }
-
-    // 获取省详情
-    var provincename="";
-    var getprovincedetail=function(id,status=0){
-        $.ajax({
-            url:PROVINCE_DETAIL+'/'+id,
-            type:'get',
-            success: function(data){
-                if (data.code == 200) {
-                     provincename=data.data.name;
-                     $(".provname"+id).text(provincename);
-                     if(status){
-                        $(".provname-defalt").text(provincename);
-
-                     }
-
-                }else{
-                    console.log('PROVINCE LIST ERROR');
-                }
-            },
-            error: function(xhr){
-                console.log(xhr);
-            }
-        })
-    }
-    // 获取市详情
-    var getcitydetail=function(pid,status=0){
-        $.ajax({
-            url:AREA_DETAIL+'/'+pid,
-            type:'get',
-            success: function(data){
-                if (data.code == 200) {
-                    cityname=data.data.name;
-                     $(".cityname"+pid).text(cityname);
-                     if(status){
-                        $(".cityname-defalt").text(cityname);
-
-                     }
-
-
-                }else{
-                    console.log('CITYS  LIST ERROR');
-                }
-            },
-            error: function(xhr){
-                console.log(xhr);
-            }
-        })
-    }
-
-
-    // id="e3d88210-8e37-11e7-a380-9dd18b8ffa23";//默认值
-    // id="f8d013e0-8e37-11e7-bb7c-21bfeaac3ae2";
     init(id);
-
-    //back to top
     $("#toTop").hide();
     $(".read").scroll(function(){
         if ($(".read").scrollTop() > $(window).height() / 2) {
@@ -674,99 +671,6 @@ var qiniu_bucket_domain =ApiMaterPlatQiniuDomain;
     $("#toTop").click(function(){
         $('.read').animate({scrollTop:0}, 300);
     })
-
-
-
-
-
-    /* //获取通用用户信息
-    var getUserInfo = function(){
-        $.ajax({
-            url: FOUNDER,
-            type: 'get',
-            success: function(data){
-                //console.log(data);
-                if (data.code == 200){
-                    var info = data.data;
-                    var weid = info.weid;
-                    if (info.avatar != "") {
-                        $("#head-icon, .user-head").css({
-                            "background": "url(" + info.avatar + ") no-repeat center",
-                            "background-size": "100%"
-                        });
-                    } else {
-                        $("#head-icon, .user-head").css({
-                            "background": "url(../common/img/avatar.png) no-repeat center",
-                            "background-size": "110%"
-                        });
-                    }
-
-                    $(".line-0").html(
-                        info.nickname + '<img src="http://next.wezchina.com/images/vrenzheng.png" alt="">'
-                    );
-                    $(".line-1").text(info.motto);
-                    $(".user-cnt").text(info.nickname);
-                    // artCount(weid);
-                    // artTypeList(weid);
-
-
-
-                }
-            },
-            error: function(xhr){
-                console.log(xhr);
-            }
-        })
-    }
-
-    getUserInfo();*/
-
-
-    // 购买数量
-    var buynumfun=function(one_price){
-        // 购买数量
-         // 购买数量
-        var buy_num = parseInt($('#numm').val());
-        // 商品单价
-        // var one_price = parseInt($('#one_price').html());
-
-        $("#sum_price").html("￥" + buy_num * one_price)
-        $('#pay_price').html(buy_num * one_price + parseInt($('#freight').html()));
-
-        // 商品数量加减
-        $(".amount-num-jia").on('click',function(){
-            buy_num++;
-
-            $("#numm").val(buy_num);
-              $("#sum_price").html("￥" + buy_num * one_price);
-              $('#pay_price').html(buy_num * one_price + parseInt($('#freight').html()));
-
-        });
-        $(".amount-num-jian").on('click',function(){
-            buy_num--;
-            if(buy_num < 1 ){
-                buy_num = 1;
-            }
-            $("#numm").val(buy_num);
-              $("#sum_price").html("￥" + buy_num * one_price);
-              $('#pay_price').html(buy_num * one_price + parseInt($('#freight').html()));
-        })
-        //根据用户的输入改变价格
-        $("#numm").change(function(){
-            buy_num = parseInt($('#numm').val());
-          if(buy_num>0){
-            $("#sum_price").html("￥" + buy_num * one_price);
-            $('#pay_price').html(buy_num * one_price + parseInt($('#freight').html()));
-        }else{
-            buy_num = 1;
-            $("#numm").val(buy_num)
-        }
-
-
-        })
-    }
-
-
 })
 $(function(){
     var currWidth = $(window).height() - 90;
