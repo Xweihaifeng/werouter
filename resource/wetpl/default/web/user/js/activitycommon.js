@@ -196,7 +196,7 @@ $(function() {
             $('input[name=type]').change(function() {
                 var type = $('input[name=type]:checked').val();
                 //alert(type);
-                if (type == 1) {
+                if (type == 2) {
                     $('.J_LayoutFree').hide();
                     $('.J_LayoutFee').show();
                     $('.J_FeeTips').show();
