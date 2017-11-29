@@ -415,11 +415,6 @@
                     success: function(data) {
                         $('input[name=title]').val(data.data.title);
                         $('input[name=domain]').val(data.data.domain);
-                        if (data.data.init == 1) {
-                            alert(data.data.init);
-                            $('input[name=title]').attr("disabled", true);
-                            $('input[name=domain]').attr("disabled", true);
-                        }
                         if (data.data.thumb_image) {
                             $('#img').attr("src", ApiMaterPlatQiniuDomain + data.data.thumb_image);
                             $('input[name=thumb_image]').val(data.data.thumb_image);
@@ -440,6 +435,10 @@
                                 console.log(xhr);
                             }
                         });
+                        if (data.data.init == 1) {
+                            $('input[name=title]').attr("disabled", true);
+                            $('input[name=domain]').attr("disabled", true);
+                        }
                     },
                     error: function(xhr) {
                         console.log(xhr);
