@@ -507,9 +507,10 @@
                         $('input[name=domain]').val(data.data.domain);
                         $('select[name=type]').val(data.data.type);
                         if (data.data.init == 1) {
+                            $('select[name=channel_id]').attr("disabled", true);
+                            $('input[name=title]').attr("disabled", true);
                             $('input[name=domain]').attr("disabled", true);
-                            $('input[name=domain]').attr("disabled", true);
-                            $('input[name=type]').attr("disabled", true);
+                            $('select[name=type]').attr("disabled", true);
                         }
                         if (data.data.thumb_image) {
                             $('#img').attr("src", ApiMaterPlatQiniuDomain + data.data.thumb_image);
