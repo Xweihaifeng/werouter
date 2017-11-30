@@ -232,13 +232,14 @@
 .ordertable table{
 	width:100%;
 	border: 1px solid #eee;
+	margin-bottom:10px;
 }
 .ordertable table th,.ordertable table td{
 	padding:8px;
 	vertical-align: top;
 }
 .ordertable table td{
-	padding-top:26px;
+	padding:26px 8px;
 }
 .ordertable table thead{
 	background: #eee;
@@ -264,16 +265,22 @@
 	border-left:1px solid #eee;
 	text-align: center;
 }
+
+.ordertable table tbody tr:not(:first-child)>td.oper,
+.ordertable table tbody tr:not(:first-child)>td.price{
+	display: none;
+}
+
 .ordertable table tbody tr td a{
 	cursor: pointer;
 }
-.ordertable ul{
+ul.list-header{
 	width:100%;
 	background: #f5f5f5;
 	border: 1px solid #e8e8e8;
 	margin-bottom: 10px;
 }
-.ordertable ul li{
+ul.list-header li{
 	display: inline-block;
 	text-align: center;
 	padding:8px 0;

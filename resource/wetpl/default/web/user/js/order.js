@@ -8,7 +8,6 @@ sessionStorage.listname='we-shop';
 var qiniu_bucket_domain = ApiMaterPlatQiniuDomain;
 //const ApiMaterPlatQiniuDomain  = 'http://images.new.wezchina.com/';
 
-
 $(document).ready(function(){
     var favicon = ApiMaterPlatQiniuDomain + localStorage.getItem('fav');
     console.log('logo:',favicon);
@@ -17,34 +16,6 @@ $(document).ready(function(){
     var logo = ApiMaterPlatQiniuDomain + localStorage.getItem('logo');
     console.log('logo:',logo);
     $('#home img').attr('src', logo);
-
-    var tusitemp="";
-    function mess_tusi(strs){
-        //清除事件
-        clearTimeout(tusitemp);
-        $("#mess_tusi").remove();
-        //创建吐丝层并写入内容
-        if(!$("#mess_tusi").attr("id")){ //吐丝层不存在创建
-            $("body").append("<div id='mess_tusi' style='z-index: 100002;position:fixed;font-size:16px;border-radius:4px !important;background:rgba(0,0,0,.7);color:#fff;display:none;'><span style='display:block;padding:5px 15px;'>"+strs+"</span></div>"); //写入内容
-        }else{
-            $("#mess_tusi").html(strs);  //写入内容
-        }
-
-        //定义吐丝层位置
-        var left=($(window).width()-$("#mess_tusi").width())/2 -180;//居中
-        var top=$(window).height()*0.5;
-        $("#mess_tusi").css({"left":left+"px","top":top+"px"});
-
-        //显示吐丝层
-        $("#mess_tusi").css("display",'');
-
-        //2秒后关闭
-        tusitemp =  setTimeout(function (){
-            $("#mess_tusi").remove();
-            $("#mess_tusi").html("");
-        },2000);
-        return false;
-    }
 
     var saveUserInfo = function(token) {
         localStorage.setItem('token', token);
@@ -129,90 +100,6 @@ $(document).ready(function(){
     var weid = localStorage.getItem('weid');
     hasDomain(weid);
 
-   /* var isLogin = false; //判断用户登陆与否
-    var router = function(route){
-        var routerList = ['home', 'login', 'article','project','active','zone', 'shopping'];
-
-        var isMember = function(routerList, route){
-            return routerList.filter(x => x === route);
-        }
-
-        var home = function(){
-            window.location.href = '/';
-        }
-
-        var login = function(){
-            if (!isLogin) {
-                showLogin = true;
-                $("#modal").show();
-                $(".show-login").css({
-                    "margin-left": width,
-                    "margin-top": height
-                });
-                $(".show-login").fadeIn(300);
-                $("body").css("overflow", "hidden");
-            } else {
-                window.location.href = "/user";
-            }
-        }
-
-        var article = function(){
-
-            showLogin = false;
-            window.location.href = domain + "/article";
-//          window.history.go(0);
-        }
-
-        var shopping = function(){
-            showLogin = false;
-            window.location.href = domain + "/wemall";
-        }
-        var active = function(){
-            showLogin = false;
-            window.location.href = domain + "/activity";
-        }
-        var project = function(){
-            showLogin = false;
-            window.location.href = domain + "/project";
-        }
-        var zone = function(){
-            showLogin = false;
-            window.location.href = domain + "/quan";
-        }
-
-        if (isMember(routerList, route) != ""){
-            eval(route)();
-        }
-    }
-
-    $("#home, #login, #article,#active,#project,#zone, #shopping").click(function(){
-        var id = $(this).attr("id");
-        router(id);
-    })*/
-
-    /* //主页初始化
-    var isLogin = false;
-    var init = function(token){
-        if (token != 'null' && token != undefined) {
-            isLogin = true;
-            $(".left-nav, .login, #middle, #right").show();
-
-            //加载用户头像
-
-            $("#login div img").hide();
-            $(".log-head").css({
-                'background': 'url(../../common/img/p2240276035.jpg) no-repeat center',
-                'background-size': '100% 100%'
-            })
-            $(".log-head").show();
-        } else {
-            login();
-        }
-
-    }
-
-    init(localStorage.getItem('token'));*/
-
     // 获取个人商城信息
     var mall_id="";
     var usermall=function(){
@@ -248,29 +135,16 @@ $(document).ready(function(){
 
     //获取订单列表
     var flag=true;
-    var  orderlist=function(mall_id,page,type=0,dataobj=""){
-         var limit="5";
+    var  orderlist=function(mall_id,page,type,dataobj){
+        if(!type){
+            type = 0;
+        }
+        if(!dataobj){
+            dataobj = ''
+        }
+        var limit="5";
         var keywords=time_start=time_end="";
         var status=order_num="";
-        if(type==1 ){
-            // 未支付
-            status=type;
-        }else if(type==2){
-            //待发货
-            status=type;
-        }else if(type==3){
-            // 已发货
-            status="";
-        }else if(type==4){
-            // 已完成
-            status="";
-        }else{
-            /*// 订单号筛选
-            time_start=type.time_start;
-            time_end=type.time_end;
-            order_num=type.order_num;*/
-
-        }
         if(dataobj!=""){
             // 订单号筛选
             time_start=dataobj.time_start;
@@ -279,14 +153,14 @@ $(document).ready(function(){
         }
         var sendData={
             limit:limit,
-            plat_user_id:localStorage.getItem('weid'),
+            mall_id:mall_id,
             page:page,
-            order_status:status,
+            order_status:type,
             time_start:time_start,
             time_end:time_end,
             order_num:order_num,
             keywords:keywords
-        }
+        };
         $.ajax({
             url:ORDER_LIST,
             type:'post',
@@ -302,6 +176,82 @@ $(document).ready(function(){
                     $(".ordertable").children().remove();
                     listdata.map(x => {
                         $(".ordertable").append(orderlisthtml(x));
+                    $('#'+x.weid).children().remove();
+                    if(x.goods.length){
+                        for(var i=0; i<x.goods.length; i++){
+                            var goodItem =
+                                '<tr id="'+x.weid+'">'+
+                                    '<td style="width: 106px;padding-top: 8px;"><img src="'+qiniu_bucket_domain+x.goods[i].goods_cover+'" alt=""></td>'+
+                                    '<td style="width: 460px;"><a href="/'+x.domain +'/wemall/goods/'+x.goods[i].goods_id+'" target="_blank">'+x.goods[i].goods_summary+'</a></td>'+
+                                    '<td>￥'+x.goods[i].goods_price+'</td>'+
+                                    '<td>'+x.goods[i].goods_num+'</td>'+
+                                    '<td rowspan="'+x.goods.length+'" class="price">￥'+x.order_price+'</td>'+
+                                    '<td rowspan="'+x.goods.length+'" class="oper" style="width: 92px;" id="'+x.status+'">'+
+                                        ' <div class="orders_list_details">'+
+                                            '<a href="/user/order/detail/'+x.weid+'" target="_blank">订单详情</a>'+
+                                            '<div class="status-oper"></div>'+
+                                        '</div>'+
+                                    '</td>'+
+                                '</tr>';
+                            $('#'+x.weid).append(goodItem);
+                        }
+                    }
+                    $('#'+x.weid+' .status-oper').children().remove();
+                    var operList = [];
+                        switch (x.order_status){
+                            case 2:
+                                operList.push({
+                                    name : '发货',
+                                    oper : 'deliver'
+                                });
+                                break;
+                            case 3:
+                                operList.push({
+                                    name : '查看物流',
+                                    oper : 'distribute'
+                                });
+                                break;
+                            case 4:
+                                operList.push({
+                                    name : '查看物流',
+                                    oper : 'distribute'
+                                });
+                                break;
+                            case 5:
+                                operList.push({
+                                    name : '查看物流',
+                                    oper : 'distribute'
+                                });
+                                break;
+                            case 7:
+                                operList.push({
+                                    name : '查看物流',
+                                    oper : 'distribute'
+                                });
+                                break;
+                            case 8:
+                                operList.push({
+                                    name : '确认退款',
+                                    oper : 'confirmRefund'
+                                },{
+                                    name : '查看物流',
+                                    oper : 'distribute'
+                                });
+                                break;
+                            case 9:
+                                operList.push({
+                                    name : '查看物流',
+                                    oper : 'distribute'
+                                });
+                                break;
+                        }
+                        if(operList.length){
+                            for(var i=0;i<operList.length;i++){
+                                var operDom =
+                                    '<a class="'+ operList[i].oper +'">'+operList[i].name+'</a>';
+                                $('#'+x.weid+' .status-oper').append(operDom);
+                            }
+                        }
                     })
                     var pagenum=Math.ceil(data.data.total/limit);
                     // console.log(page+":page");
@@ -352,12 +302,10 @@ $(document).ready(function(){
 
                         })
                     }
-
-                    sendshop();
                      // 1acc8080-769f-11e7-afe9-a1e618177dd9
                     __init(localStorage.getItem("weid"));
                     // __init("1acc8080-769f-11e7-afe9-a1e618177dd9");
-
+                    sendshop();
                 }
             }
         })
@@ -370,39 +318,36 @@ $(document).ready(function(){
         return pagelisthtml;
     }
     //订单列表模板
-    var status_pay=sendgoods=log_company=log_num="";
+    var status_pay="";
     var orderlisthtml=function(data){
-        if(data.status>1){
-            if(data.logistics_status==1){
-                status_pay="发货";
-                // sendgoods='<button type="button" class="btn btn-info btn-primary id btn-send" data-toggle="modal" data-id="486" data-target=".bs-example-modal-sm" >发货</button>';
-               sendgoods= '<div class="list_details_btn btn-send" type="" id="'+data.status+'" data-toggle="modal"  data-target=".bs-example-modal-sm" data-no="'+data.order_num+'">'+status_pay+' </div>';
-
-            } else if(data.logistics_status==2){
-                status_pay="已发货";
-                sendgoods=status_pay;
- // '<div class="list_details_btn" type="" id="'+data.status+'" data-no="'+data.order_num+'">'+status_pay+sendgoods+' </div>'+
-
-
-            }else if(data.logistics_status==3){
-                status_pay="已完成";
-                sendgoods=status_pay;
-
-            }
-        }else{
-            status_pay="未支付";
-            sendgoods=status_pay;
-        }
-
-        if(data.logistics_company==null || data.logistics_company==""){
-            log_company="";
-        }else{
-            log_company=data.logistics_company;
-        }
-        if(data.logistics_NO==null || data.logistics_NO==""){
-            log_num="";
-        }else{
-            log_num=data.logistics_NO;
+        switch (data.order_status){
+            case 1:
+                status_pay = '已下单';
+                break;
+            case 2:
+                status_pay = '已付款';
+                break;
+            case 3:
+                status_pay = '已发货';
+                break;
+            case 4:
+                status_pay = '已收货';
+                break;
+            case 5:
+                status_pay = '已评价';
+                break;
+            case 6:
+                status_pay = '已取消';
+                break;
+            case 7:
+                status_pay = '已完成';
+                break;
+            case 8:
+                status_pay = '已申请退款';
+                break;
+            case 9:
+                status_pay = '已确认退款';
+                break;
         }
         /*var listhtml='<tr id="'+data.weid+'">'+
                 '<td>'+data.order_num+'</td>'+
@@ -417,72 +362,85 @@ $(document).ready(function(){
                 '<td class="btn-sendgoods">'+sendgoods+'</td>'+
             '</tr>';
 */
-
-        var listhtml='<table class="orders_list_title">'+
-                        '<tbody>'+
-                        '<tr class="orders_list_msg">'+
-                            '<td class="list_left" colspan="3">'+
-                                '<span class="list_left_date">'+data.created_at+'</span>'+
-                                '<span class="list_left_num">订单号:<em>'+data.order_num+'</em></span>'+
-                            '</td>'+
-                            '<td class="list_right" colspan="2" align="right">'+
-                                '<div class="contact_seller" data-mobile="18966700695" onmouseover="$(this).find(\'span\').show();" onmouseout="$(this).find(\'span\').hide();">'+
-                                    '<i></i>联系买家'+
-                                    '<span style="display: none;">联系电话：'+data.phone+'</span>'+
-                                '</div>'+
-                            '</td>'+
-                        '</tr>'+
-                    '</tbody>'+
-                    '</table>';
-        if(data.goods.length){
-            for(var i=0; i<data.goods.length; i++){
-                var goodItem =
-                    '<tr class="orders_list_content" id="'+data.weid+'">'+
-                        ' <td width="40%">'+
-                            '<div class="orders_list_pic">'+
-                                '<a href="wemall/goods/'+data.goods[i].goods_id+'" target="_blank">'+
-                                    '<img class="img" src="'+qiniu_bucket_domain+data.goods[i].goods_cover+'" alt="">'+
-                                    '<p class="txt">'+data.goods[i].goods_title+'</p>'+
-                                '</a>'+
+        var listhtml=
+            '<table>'+
+                '<thead>'+
+                    '<tr>'+
+                        '<th>'+data.created_at.substring(0,data.created_at.indexOf(" "))+'</th>'+
+                        '<th class="order" colspan="3">订单号:'+data.order_num+'<a style="margin-left:10px">'+ status_pay+'</a></th>'+
+                        '<th style="text-align: right" colspan="2">'+
+                            '<div class="contact_seller" data-mobile="18966700695" onmouseover="$(this).find(\'span\').show();" onmouseout="$(this).find(\'span\').hide();">'+
+                                '<i></i>联系买家'+
+                                '<span style="display: none;">联系电话：'+data.phone+'</span>'+
                             '</div>'+
-                        '</td>'+
-                        '<td width="10%">'+
-                            '<div class="orders_list_buy">'+
-                                '<span>x'+data.goods[i].goods_num+'</span>'+
-                            '</div>'+
-                        '</td>'+
-                        '<td width="15%">'+
-                            '<div class="orders_list_buy">'+
-                                '<span class="list_right_gj"><p>￥'+data.order_price+'</p><p>(含运费:0.00)</p></span>'+
-                            '</div>'+
-                        '</td>'+
-                        '<td width="25%">'+
-                            '<div class="orders_list_addr">'+
-                                '<p>'+data.username+'<em>'+data.phone+'</em></p>'+
-                                '<p>'+data.address_detail+'</p>'+
-                                '<p>备注:<span>'+data.note+'</span></p>'+
-                            '</div>'+
-                        '</td>'+
-                        '<td width="10%" class="status_pay" id="'+data.status+'"">'+
-                            ' <div class="orders_list_details">'+
-                                '<a href="/user/order/detail/'+data.weid+'" target="_blank">订单详情</a>'+
-                                '<div class="orderstatus">'+ sendgoods+'</div>'+
-                            '</div>'+
-                        '</td>'+
-                    '</tr>'
-            }
+                        '</th>'+
+                    '</tr>'+
+                '</thead>'+
+                '<tbody class="list-dom" id="'+data.weid+'">'+
+                '</tbody>'+
+            '</table>';
 
-
-        }
-
-
-
+        // var listhtml='<table class="orders_list_title">'+
+        //                 '<tbody>'+
+        //                 '<tr class="orders_list_msg">'+
+        //                     '<td class="list_left" colspan="3">'+
+        //                         '<span class="list_left_date">'+data.created_at+'</span>'+
+        //                         '<span class="list_left_num">订单号:<em>'+data.order_num+'</em></span>'+
+        //                     '</td>'+
+        //                     '<td class="list_right" colspan="2" align="right">'+
+        //                         '<div class="contact_seller" data-mobile="18966700695" onmouseover="$(this).find(\'span\').show();" onmouseout="$(this).find(\'span\').hide();">'+
+        //                             '<i></i>联系买家'+
+        //                             '<span style="display: none;">联系电话：'+data.phone+'</span>'+
+        //                         '</div>'+
+        //                     '</td>'+
+        //                 '</tr>'+
+        //             '</tbody>'+
+        //             '</table>';
+        // if(data.goods.length){
+        //     for(var i=0; i<data.goods.length; i++){
+        //         var goodItem =
+        //             '<tr class="orders_list_content" id="'+data.weid+'">'+
+        //                 ' <td width="40%">'+
+        //                     '<div class="orders_list_pic">'+
+        //                         '<a href="wemall/goods/'+data.goods[i].goods_id+'" target="_blank">'+
+        //                             '<img class="img" src="'+qiniu_bucket_domain+data.goods[i].goods_cover+'" alt="">'+
+        //                             '<p class="txt">'+data.goods[i].goods_title+'</p>'+
+        //                         '</a>'+
+        //                     '</div>'+
+        //                 '</td>'+
+        //                 '<td width="10%">'+
+        //                     '<div class="orders_list_buy">'+
+        //                         '<span>x'+data.goods[i].goods_num+'</span>'+
+        //                     '</div>'+
+        //                 '</td>'+
+        //                 '<td width="15%">'+
+        //                     '<div class="orders_list_buy">'+
+        //                         '<span class="list_right_gj"><p>￥'+data.order_price+'</p><p>(含运费:0.00)</p></span>'+
+        //                     '</div>'+
+        //                 '</td>'+
+        //                 '<td width="25%">'+
+        //                     '<div class="orders_list_addr">'+
+        //                         '<p>'+data.username+'<em>'+data.phone+'</em></p>'+
+        //                         '<p>'+data.address_detail+'</p>'+
+        //                         '<p>备注:<span>'+data.note+'</span></p>'+
+        //                     '</div>'+
+        //                 '</td>'+
+        //                 '<td width="10%" class="status_pay" id="'+data.status+'"">'+
+        //                     ' <div class="orders_list_details">'+
+        //                         '<a href="/user/order/detail/'+data.weid+'" target="_blank">订单详情</a>'+
+        //                         '<div class="orderstatus">'+ sendgoods+'</div>'+
+        //                     '</div>'+
+        //                 '</td>'+
+        //             '</tr>'
+        //     }
+        //
+        //
+        // }
         return listhtml;
     }
   // var selectorder=function(){
     $(".btn-select").bind("click",function(){
         flag=true;
-        // $(this).addClass("btn_active").siblings().removeClass("btn_active");
         $(this).closest("li").addClass("current").siblings().removeClass("current");
         var statusid=$(this).data("id");
         if(statusid==0){
@@ -502,7 +460,6 @@ $(document).ready(function(){
         var time_start=$("input[name='start_time']").val();
         var time_end=$("input[name='end_time']").val();
         var order_num=$("input[name='no']").val();
-        // var statusid=$(".btn-select.btn_active").data("id");
         var statusid=$(".current .btn-select").data("id");
         console.log(statusid);
 
@@ -530,18 +487,16 @@ $(document).ready(function(){
     $("#toTop").click(function(){
         $('.read').animate({scrollTop:0}, 300);
     })
-
     var sendshop=function(){
         var orderid="";
-        $(".btn-send").bind("click",function(){
+        $(".deliver").bind("click",function(){
             console.log($(this));
-            // orderid=$(this).parent().parent().attr("id");
+            $(".deliver").attr('data-toggle','modal');
+            $(".deliver").attr('data-target','#myModal');
             orderid=$(this).closest('tr').attr("id");
             $("#myModal_input").val(orderid);
-            // var status_pay=$(this).parent().parent().find(".status_pay").attr("id");
             var status_pay=$(this).closest('tr').attr("id");
                 console.log(orderid);
-
                 $.ajax({
                     url : apiUrl + 'pages/logistics/lists',
                     type : 'post',
@@ -554,20 +509,77 @@ $(document).ready(function(){
                     },
                     dataType : 'json',
                     success : function (res) {
-                        console.log(res)
+                        console.log("物流列表：",res)
                         if(res.data && res.code===200){
                             var optionList = res.data.list;
+                            $('#exampleInputEmail1').children().remove();
                             for(var i=0; i<optionList.length; i++){
                                 var optionDom =
                                     '<option value='+ optionList[i].logistics_id +'>'+optionList[i].logistics_company+'</option>';
                                 $('#exampleInputEmail1').append(optionDom)
                             }
+                            company(orderid,status_pay);
                         }
                     }
                 })
         })
-      company(orderid,status_pay);
 
+        $(".confirmRefund").bind("click",function () {
+            var orderId = $(this).closest('tr').attr("id");
+            console.log(orderId)
+            $.ajax({
+                url : apiUrl + '/pages/wechatPay/orderPayRefund',
+                type : 'post',
+                data : {
+                    order_id : orderId
+                },
+                headers: {
+                    'Token': localStorage.getItem('token')
+                },
+                dataType: 'json',
+                success : function (data) {
+                    console.log(data);
+                    if(data.code===200){
+                        layer.msg(data.data);
+                        window.location.reload();
+                    }else{
+                        layer.msg('退款失败  ' + data.message);
+                    }
+                }
+            })
+        })
+
+        $(".distribute").bind('click',function () {
+            var orderId = $(this).closest('tr').attr("id");
+            $.ajax({
+                url : apiUrl + 'order/detail/'+orderId,
+                type : 'get',
+                headers : {
+                    "Token": localStorage.getItem('token')
+                },
+                dataType : 'json',
+                success : function (data) {
+                    console.log("订单详情：",data);
+                    $.ajax({
+                        url : apiUrl + 'pages/logistics/getLogisticsInfo',
+                        type : 'post',
+                        data : {
+                            logistics_NO : data.data.send.logistics_no,
+                            company_code : data.data.send.logistics_company_code
+                        },
+                        headers : {
+                            "Token": localStorage.getItem('token')
+                        },
+                        dataType : 'json',
+                        success : function (res) {
+                            console.log("查看物流信息",res)
+                        }
+                    })
+
+                }
+            })
+
+        })
     }
     // 填写物流公司
     var company=function(orderid,status_pay){
@@ -586,7 +598,7 @@ $(document).ready(function(){
             }
                          // $('#myModal').modal('hide');
 
-            //console.log(sendData);
+            console.log("发货字段：",sendData);
             $.ajax({
                 url: apiUrl + 'order/send',
                 type:'post',
@@ -601,26 +613,10 @@ $(document).ready(function(){
                         layer.msg("发货成功");
 
                          $('#myModal').modal('hide');
-                        // $("#"+id).find(".log_company").text(l_company);
-                        // $("#"+id).find(".log_num").text(l_card);
-                        console.log($("#"+id).find(".status_pay .orders_list_details .btn-send"));
-
-                        $("#"+id).find(".orderstatus").children().remove();
-                        console.log($("#"+id).find(".orderstatus"));
-                         $("#"+id).find(".orderstatus").append("<div>已发货</div>");
-                        // $("#"+id).find(".status_pay").attr("id",l_status);
-                        // $("#"+id).find(".btn-sendgoods").text('');
 
                         $("input[name=wuliu_company]").val('');
                         $("input[name=wuliu_card]").val('');
-                        // var l_company = $("input[name=wuliu_company]").val('');
-                        // var l_card = $("input[name=wuliu_card]").val('');
-
-                        // layer.alert('订单填写成功', function() {
-                        //     location.reload();
-                        // });
-
-
+                        // window.location.reload();
                     }else {
                         layer.msg(data.message);
                     }
@@ -743,134 +739,5 @@ $(document).ready(function(){
             }
         })
     }
-
-  /*  var modeleName = [];
-    var moduleState = function() {
-        $.ajax({
-            url: PAGES_MODULERUN_LIST,
-            type: 'GET',
-            headers: {
-                'Token': localStorage.getItem('token')
-            },
-            success: function(data){
-                if (data.code == 200){
-                    console.log('module:', data.data.list);
-                    var state = data.data.list;
-                    state.map(x => {
-                        modeleName.push(x.module_id);
-                        if (x.module_id === '4009ea20-8ede-11e7-83a8-156d1da77933') {
-                            if (x.status == 1) {
-                                //$(".we-art").slideDown(500)
-                                $(".we-art").show();
-                                $('#toggle-button').prop("checked", true);
-                            }
-                        }
-                        if (x.module_id === '44fd5620-8d7f-11e7-9e08-e356d0b019f1') {
-                            if (x.status == 1) {
-                                //$(".we-shop").slideDown(500)
-                                $(".we-shop").show();
-                                $('#toggle-button-4').prop("checked", true);
-                            }
-                        }
-						if (x.module_id === 'b3c00b00-a4e2-11e7-b542-2d038cc12c12') {
-                            if (x.status == 1) {
-                                //$(".we-shop").slideDown(500)
-                                $(".we-active").show();
-                                $('#toggle-button-2').prop("checked", true);
-
-                            }
-                        }
-                        if (x.module_id === 'c30c2160-a4e2-11e7-a2ad-35371a8cf051') {
-                            if (x.status == 1) {
-                                //$(".we-shop").slideDown(500)
-                                $(".we-project").show();
-                                $('#toggle-button-1').prop("checked", true);
-
-                            }
-                        }
-                    })
-                } else {
-                    layer.msg(data.message, {
-                        time: 1500
-                    });
-                }
-
-                //列表折叠
-                var curr = 'we-shop';
-                var status = true;
-				var list = ['we-set', 'we-art', 'we-shop','we-active','we-project', 'we-app', 'we-log'];
-
-                var remove = function(id, list) {
-                    return list.filter(x => x != id);
-                }
-
-                $("." + curr + ":eq(0)").css("border-bottom", "1px solid #eeeeee");
-                remove(curr, list).map(x => $("." + x + ":eq(1)").hide());
-
-                var showList = function(state, id) {
-                    var id = "." + id;
-                    if (state) {
-                        $(id + ":eq(1)").hide(500);
-                        if (id != ".we-log") {
-                            $(id + ":eq(0)").css("border-bottom", "0");
-                        }
-                        $(id + " span img").attr('src', '/common/img/more1.png');
-                        status = false;
-                    } else {
-                        $(id + ":eq(1)").show(500);
-                        $(id + " span img").attr('src', '/common/img/more_unfold.png');
-                        $(id + ":eq(0)").css("border-bottom", "1px solid #eeeeee");
-                        status = true;
-                    }
-                }
-
-                list.map(x => {
-                    $("." + x).click(function() {
-                        if (curr == x) {
-                            remove(x, list).map(x => {
-                                $("." + x + ":eq(1)").hide(500)
-                                $("." + x + " span img").attr('src', '/common/img/more1.png');
-                            });
-                            showList(status, x);
-                        } else {
-                            status = false;
-                            $("." + curr + ":eq(0)").css("border-bottom", "0");
-                            curr = x;
-                            remove(x, list).map(x => {
-                                $("." + x + ":eq(1)").hide(500)
-                                $("." + x + " span img").attr('src', '/common/img/more1.png');
-                            });
-                            showList(status, x);
-                        }
-                    })
-                })
-            },
-            error: function(xhr){
-                console.log(xhr);
-            }
-        })
-    }
-*/
-  /* //主页初始化
-    var init__ = function(token){
-        moduleState();
-      if (token != 'null' && token != undefined) {
-        showLogin = false;
-        isLogin = true;
-        //加载用户头像
-        $("#login div img").hide();
-        $(".log-head").css({
-          'background': 'url(' + localStorage.getItem('avatar') + ') no-repeat center',
-          'background-size': '100% 100%'
-        })
-        $("#avatar .avatar-icon").css({
-          'background': 'url(' + localStorage.getItem('avatar') + ') no-repeat center',
-          'background-size': '100% 100%'
-        })
-        $(".log-head").show();
-      }
-    }
-
-    init__(localStorage.getItem('token'));*/
 
 })
