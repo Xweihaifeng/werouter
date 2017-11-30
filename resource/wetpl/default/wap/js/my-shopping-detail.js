@@ -47,11 +47,20 @@ $(function() {
 
     // 商品详情页置顶轮播
     var detail_swiper = function(result) {
-        var price = result.picture.split(","), temp_img = '';
+        var price; 
+        var temp_img = '';
+
+        if(!result.picture) {
+            price = new Array();
+            price.push(result.cover);
+        } else {
+            price = result.picture.split(",");
+        }
+
         $.each(price, function(index, value) {
 
             if(!value) {
-                value = "/common/img/img9.jpg";
+                value = result.cover;
 
             } else if (value.indexOf('http') != 0 && value != "") {
                 value = imgSet(value, 414, 408, 3);
@@ -71,7 +80,7 @@ $(function() {
     }
 
     // 商品评论开始
-    var detail_evaluate = function(result) {
+/*    var detail_evaluate = function(result) {
         var price = result.picture.split(","), temp_img = '';
         $.each(price, function(index, value) {
 
@@ -87,7 +96,7 @@ $(function() {
         });
         var template = temp_img;
         return template;
-    }
+    }*/
 
     var detail_set_meal = function(result) {
         var temp_img = result.cover;
@@ -194,7 +203,7 @@ $(function() {
         $(".detail_title").html(detail_title(result));
         $(".detail_goods_detail").html(goods_detail(result));
         $(".detail_swiper").html(detail_swiper(result));
-        $(".detail_evaluate_imgs").html(detail_evaluate(result));
+        // $(".detail_evaluate_imgs").html(detail_evaluate(result));
         $(".detail_mask_pic").html(detail_set_meal(result));
         
         // 商城详情内容轮播
