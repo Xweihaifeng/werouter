@@ -192,16 +192,16 @@ $(function() {
 
     var quantity = $("#quantity");
     $("#add").click(function(){
-        if(quantity.val() >= stock) {
+        if(quantity.text() >= stock) {
             return false;
         }
-        quantity.val(parseInt(quantity.val()) + 1);
+        quantity.text(parseInt(quantity.text()) + 1);
         $("#min").removeAttr("disabled");                  //当按加1时，解除$("#min")不可读状态
     })
 
     $("#min").click(function(){
-        if (parseInt(quantity.val()) > 1) {                  //判断数量值大于1时才可以减少  
-            quantity.val(parseInt(quantity.val()) - 1)
+        if (parseInt(quantity.text()) > 1) {                  //判断数量值大于1时才可以减少  
+            quantity.text(parseInt(quantity.text()) - 1)
         } else {
             $("#min").attr("disabled","disabled")          //当$("#min")为1时，$("#min")不可读状态  
         }

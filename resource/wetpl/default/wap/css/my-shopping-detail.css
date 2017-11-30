@@ -384,7 +384,7 @@ li {
     align-items: center;
 }
 
-.detail_selected_sub > li > input, #min, #add {
+#min, #add, #quantity {
     display: inline-block;
     width: 0.22rem;
     height: 0.20rem;
@@ -393,13 +393,16 @@ li {
     outline: none;
 }
 
-.detail_selected_sub > li > input#quantity {
+#quantity {
     border: none;
-    box-shadow: inset 0px 0px 0px 1px #ddd;
+    /*box-shadow: inset 0px 0px 0px 1px #ddd;*/
     min-width: 0.30rem;
     padding: 0;
+    font-size: 12px;
     text-align: center;
     background-color: #fff;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
 }
 
 .detail_selected_switch {
