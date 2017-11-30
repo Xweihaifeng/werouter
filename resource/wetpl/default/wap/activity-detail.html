@@ -42,13 +42,13 @@
                 <img :src="user.avatar" v-for="user in users" alt=""/>
             </li>
             <li style="margin-top: 0.12rem;border-bottom: 1px solid #eee;height: 0.38rem;">活动嘉宾</li>
-            <li class="actd-guest" @click="detail('guests')">
+            <li class="actd-guest" @click="detail('guests')" style="padding-bottom: 0.1rem;">
                 <div v-for="guest in guests" style="display: inline-flex;">
-                <img :src="guest.avatar" alt=""/>
-                <!--<div>-->
-                    <p>{{guest.name}}</p>
+                <img :src="guest.avatar" style="margin-top: 0.1rem!important;display: block;"/>
+                <div>
+                    <p style="padding-top: 0.1rem!important;">{{guest.name}}</p>
                     <p style="font-size: 0.12rem; color: #a6a6a6">{{guest.position}}</p>
-                <!--</div>-->
+                </div>
                 </div>
             </li>
             <li style="margin-top: 0.12rem;border-bottom: 1px solid rgb(238, 238, 238);height: 0.38rem;">活动详情</li>
