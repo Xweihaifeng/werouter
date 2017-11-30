@@ -263,7 +263,6 @@ $(function() {
             goodsList.push(result);
 
             window.localStorage.setItem('orderObj',JSON.stringify(orderObj));
-            // window.location.href = '/shopping/order';
             var domain = window.location.pathname.split("/")[1];
             var macth_weid = window.location.pathname.split("/").pop();
             window.location.href = `/`+ domain +`/wemall/order/`+ macth_weid +``;
@@ -273,6 +272,7 @@ $(function() {
         console.error(error);
     });
 
+    // Mall - 商品 - 收藏
     $(".detail_footer_follow").click(function() {
         var options4 = $.get(apiUrl + "goods/collectionincrement/" + shop_weid);
         options4.done(function(data) {
@@ -282,6 +282,8 @@ $(function() {
                     return false;
                 }
                 layer.msg("收藏成功", { time: 1500 });
+            } else if(data.code == 401) {
+                window.location.href = '/login';
             } else {
                 console.error(data.message);
             }
@@ -300,11 +302,14 @@ $(function() {
         var options2 =  $.post(apiUrl + "cart/store", body);
         options2.done(function(data) {
             console.log(data);
-            if(data.code != 200) {
+            if(data.code == 200) {
+                layer.msg("成功加入购物车", { time: 1500 });
+            } else if(data.code == 401) {
+                window.location.href = '/login';
+            } else {
                 layer.msg(data.message, { time: 1500 });
                 return false;
             }
-            layer.msg("成功加入购物车", { time: 1500 });
         });
         options2.fail(function(error) {
             console.error(error);
