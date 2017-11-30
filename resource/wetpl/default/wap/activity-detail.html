@@ -24,14 +24,6 @@
 
     <div id="carousel">
         <img :src="cover" alt=""/>
-        <!--<div class="swiper-container" id="my-swiper">
-            <div class="swiper-wrapper carousel">
-                <div class="swiper-slide">
-                    <img :src="cover" alt=""/>
-                </div>
-            </div>
-            <div class="swiper-pagination"></div>
-        </div>-->
     </div>
 
     <div id="container">
@@ -44,35 +36,31 @@
                 <p><a href="/activity-map">{{address}}</a></p>
                 <!--<img class="arrow" src="/common/img/arrow-right.png" alt=""/>-->
             </li>
-            <li class="actd-zb" style="box-shadow: 5px 5px 5px #eee;"><img src="/common/img/icon_host.png"/><p style="border-bottom: none!important;">{{sponsor}}</p></li>
+            <li class="actd-zb" style="box-shadow: 5px 5px 5px #eee;"><img src="/common/img/icon_host.png"/><p>{{sponsor}}</p></li>
             <li class="actd-bm" style="margin-top: 0.12rem;border-bottom: 1px solid #eee;height: 0.38rem;">已报名用户</li>
-            <li class="actd-users">
+            <li class="actd-users" @click="detail('users')">
                 <img :src="user.avatar" v-for="user in users" alt=""/>
             </li>
-            <!--<li style="background: #f0f0f0">活动嘉宾</li>
-            <li class="actd-guest" v-for="guest in guests">
+            <li style="margin-top: 0.12rem;border-bottom: 1px solid #eee;height: 0.38rem;">活动嘉宾</li>
+            <li class="actd-guest" @click="detail('guests')" v-for="guest in guests">
                 <img :src="guest.avatar" alt=""/>
                 <div>
                     <p>{{guest.name}}</p>
                     <p style="font-size: 0.12rem; color: #a6a6a6">{{guest.position}}</p>
                 </div>
-            </li>-->
+            </li>
             <li style="margin-top: 0.12rem;border-bottom: 1px solid rgb(238, 238, 238);height: 0.38rem;">活动详情</li>
             <li class="actd-detail" style="padding-right: 0.15rem;" v-html="content"></li>
         </ul>
 
-        <div class="actd-apply">
+        <div class="actd-apply" @click="apply">
             <p>{{ state }}</p>
-            <button data-method="notice" @click="apply" class="layui-btn" style="background: transparent; width: 100%; position: absolute; bottom: 0; left: 0;"></button>
+            <!--<button data-method="notice" @click="apply" class="layui-btn" style="background: transparent; width: 100%; position: absolute; bottom: 0; left: 0;"></button>-->
         </div>
     </div>
 </div>
 
     <script>
-        $("#user").click(function(){
-//            window.location.href = "wcard";
-        })
-
         const userDetail = (weid, token, ref) => {
             $.ajax({
                 url:  apiUrl + 'activity/enroll_my_order',
@@ -297,7 +285,7 @@
                 apply: function(){
                     //获取token 如不存在则跳转登录页 如存在则显示活动申请框
                     if (true) {
-
+                        window.location.href = '/activity/apply'
                     } else {
                         //login
                     }
@@ -306,6 +294,13 @@
                         layer.msg('活动暂未开始', {
                             time: 1500
                         })
+                    }
+                },
+                detail: function(type){
+                    switch(type) {
+                        case 'users': window.location.href = '/activity/users'; break;
+                        case 'guests': window.location.href = '/activity/guests'; break;
+                        default: break;
                     }
                 }
             }
