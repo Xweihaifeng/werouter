@@ -90,12 +90,15 @@
                         openid  : getQueryString("openid")
                     };
 
+                    if(!getQueryString("openid")) {
+                        return false;
+                    }
                     self.$http.post(apiUrl + 'pages/wechatPay/mallOrderPhonePay', body1).then(function (data) {
                         self.config = data.data.data.config;
 
                         var onBridgeReady = function(res) {
                             if (res.err_msg == "get_brand_wcpay_request:ok") {
-                                var domain = window.sessionStorage.getItem("goods_domain");
+                                var domain = window.sessionStorage.getItem("domain");
                                 alert(domain);
                                 window.location.href = `/`+ domain +`/wemall`;
                                 layer.msg("微信支付完成", { time: 1500 });
@@ -139,7 +142,6 @@
                         var body = new Object();
                         body.url = window.location.href;
                         body.orderid = self.store_num;
-                        debugger;
                         window.location.href = apiUrl + 'mall/getMallOpenid?url=' + window.location.href + '&orderid=' + self.store_num + '&style=1';
                     }
                 }
