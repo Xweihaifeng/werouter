@@ -99,9 +99,9 @@
                         var onBridgeReady = function(res) {
                             if (res.err_msg == "get_brand_wcpay_request:ok") {
                                 layer.msg("微信支付完成", { time: 1500 });
-                                var domain = window.sessionStorage.getItem("domain");
-                                alert(domain);
-                                window.location.href = `/`+ domain +`/wemall`;
+                                // var domain = window.sessionStorage.getItem("domain");
+                                // alert(domain);
+                                // window.location.href = `/`+ domain +`/wemall`;
                                 // 支付成功 回到首页
                                 // alert("支付成功");
                                 // MessageBox.alert(commonToast["paySuccess"]).then(action => {
