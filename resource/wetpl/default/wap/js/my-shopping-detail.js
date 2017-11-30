@@ -144,10 +144,11 @@ $(function() {
     // 套餐选择蒙层显示与否结束
 
     // 商品评价
-    var options3_body = {};
-    options3_body.goods_id = shop_weid;
-    options3_body.limit = 3;
-    options3_body.page = 1;
+    var stock, 
+        options3_body = {};
+        options3_body.goods_id = shop_weid;
+        options3_body.limit = 3;
+        options3_body.page = 1;
 
     var options3 = $.post(apiUrl + "goods/comment/list", options3_body);
     options3.done(function(data) {
@@ -163,18 +164,21 @@ $(function() {
         console.error(error);
     });
 
-    var quantity = $("#quantity");  
-    $("#add").click(function(){  
-        quantity.val(parseInt(quantity.val()) + 1);  
+    var quantity = $("#quantity");
+    $("#add").click(function(){
+        if(quantity.val() >= stock) {
+            return false;
+        }
+        quantity.val(parseInt(quantity.val()) + 1);
         $("#min").removeAttr("disabled");                  //当按加1时，解除$("#min")不可读状态
     })
 
-    $("#min").click(function(){  
-        if (parseInt(quantity.val())>1) {                  //判断数量值大于1时才可以减少  
-            quantity.val(parseInt(quantity.val()) - 1)  
-        } else {  
+    $("#min").click(function(){
+        if (parseInt(quantity.val()) > 1) {                  //判断数量值大于1时才可以减少  
+            quantity.val(parseInt(quantity.val()) - 1)
+        } else {
             $("#min").attr("disabled","disabled")          //当$("#min")为1时，$("#min")不可读状态  
-        }  
+        }
     })
 
     // 商品详情内容显示
@@ -186,6 +190,7 @@ $(function() {
         }
 
         var result = data.data;
+        stock = result.stock;
         $(".detail_title").html(detail_title(result));
         $(".detail_goods_detail").html(goods_detail(result));
         $(".detail_swiper").html(detail_swiper(result));
@@ -203,6 +208,10 @@ $(function() {
             paginationClickable: true,
             grabCursor: true
         })
+
+        $("#goods_detail").click(function() {
+            $(".detail_goods_detail").slideToggle("slow");
+        });
 
         $(".detail_footer_pay").click(function() {
 

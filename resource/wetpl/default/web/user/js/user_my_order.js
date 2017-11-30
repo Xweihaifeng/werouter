@@ -38,61 +38,62 @@ var all_price = 0, order_goods = function(key, value, index) {
 }
 
 var orderlist = function(key, index) {    
+    var goods_status = new Object();
     var order_status = new Object();
 
     switch(key.order_status) {
         case 1:
             order_status.title   = `已下单`;
-            order_status.state_1 = order_status.state_3 = order_status.state_4 = order_status.state_5 = order_status.state_7 = order_status.state_8 = order_status.state_9 = order_status.state_10 = '';
-            order_status.state_2 = ``;
-            order_status.state_6 = ``;
+            goods_status.state_1 = goods_status.state_3 = goods_status.state_4 = goods_status.state_5 = goods_status.state_7 = goods_status.state_8 = goods_status.state_9 = goods_status.state_10 = '';
+            goods_status.state_2 = `<a href="javascript:void(0)">付款</a>`;
+            goods_status.state_6 = `<a href="javascript:void(0)">取消订单</a>`;
             break;
         case 2:
             order_status.title   = `已付款`;
-            order_status.state_1 = order_status.state_3 = order_status.state_4 = order_status.state_5 = order_status.state_6 = order_status.state_7 = order_status.state_8 = order_status.state_9 = order_status.state_10 = '';
-            order_status.state_3 = ``;
+            goods_status.state_1 = goods_status.state_3 = goods_status.state_4 = goods_status.state_5 = goods_status.state_6 = goods_status.state_7 = goods_status.state_8 = goods_status.state_9 = goods_status.state_10 = '';
+            goods_status.state_3 = `<a href="javascript:void(0)">发货</a>`;
             break;
         case 3:
             order_status.title   = `已发货`;
-            order_status.state_1 = order_status.state_2 = order_status.state_3 = order_status.state_5 = order_status.state_6 = order_status.state_7 = order_status.state_8 = order_status.state_9 = order_status.state_10 = '';
-            order_status.state_4 = ``;
+            goods_status.state_1 = goods_status.state_2 = goods_status.state_3 = goods_status.state_5 = goods_status.state_6 = goods_status.state_7 = goods_status.state_8 = goods_status.state_9 = goods_status.state_10 = '';
+            goods_status.state_4 = `<a href="javascript:void(0)">确认收货</a>`;
             break;
         case 4:
             order_status.title   = `确认收货`;
-            order_status.state_1 = order_status.state_2 = order_status.state_3 = order_status.state_4 = order_status.state_6 = order_status.state_9 = order_status.state_10 = '';
-            order_status.state_5 = ``;
-            order_status.state_7 = ``;
-            order_status.state_8 = ``;
+            goods_status.state_1 = goods_status.state_2 = goods_status.state_3 = goods_status.state_4 = goods_status.state_6 = goods_status.state_9 = goods_status.state_10 = '';
+            goods_status.state_5 = `<a href="javascript:void(0)">待评价</a>`;
+            goods_status.state_7 = `<a href="javascript:void(0)">确认交易</a>`;
+            goods_status.state_8 = `<a href="javascript:void(0)">退款</a>`;
             break;
         case 5:
             order_status.title   = `待评价`;
-            order_status.state_1 = order_status.state_2 = order_status.state_3 = order_status.state_4 = order_status.state_5 = order_status.state_6 = order_status.state_9 = order_status.state_10 = '';
-            order_status.state_7 = ``;
-            order_status.state_8 = ``;
+            goods_status.state_1 = goods_status.state_2 = goods_status.state_3 = goods_status.state_4 = goods_status.state_5 = goods_status.state_6 = goods_status.state_9 = goods_status.state_10 = '';
+            goods_status.state_7 = `<a href="javascript:void(0)">确认交易</a>`;
+            goods_status.state_8 = `<a href="javascript:void(0)">退款</a>`;
             break;
         case 6:
             order_status.title   = `取消订单`;
-            order_status.state_1 = order_status.state_2 = order_status.state_3 = order_status.state_4 = order_status.state_5 = order_status.state_6 = order_status.state_7 = order_status.state_8 = order_status.state_9 = '';
-            order_status.state_10= `<div class="my_order_store_clear" id="`+ key.weid +`">删除</div>`;
+            goods_status.state_1 = goods_status.state_2 = goods_status.state_3 = goods_status.state_4 = goods_status.state_5 = goods_status.state_6 = goods_status.state_7 = goods_status.state_8 = goods_status.state_9 = '';
+            goods_status.state_10= `<div class="my_order_store_clear" id="`+ key.weid +`">删除</div>`;
             break;
         case 7:
             order_status.title   = `确定交易`;
-            order_status.state_1 = order_status.state_2 = order_status.state_3 = order_status.state_4 = order_status.state_5 = order_status.state_6 = order_status.state_7 = order_status.state_8 = order_status.state_9 = '';
-            order_status.state_10= `<div class="my_order_store_clear" id="`+ key.weid +`">删除</div>`;
+            goods_status.state_1 = goods_status.state_2 = goods_status.state_3 = goods_status.state_4 = goods_status.state_5 = goods_status.state_6 = goods_status.state_7 = goods_status.state_8 = goods_status.state_9 = '';
+            goods_status.state_10= `<div class="my_order_store_clear" id="`+ key.weid +`">删除</div>`;
             break;
         case 8:
             order_status.title   = `退款申请`;
-            order_status.state_1 = order_status.state_2 = order_status.state_3 = order_status.state_4 = order_status.state_5 = order_status.state_6 = order_status.state_7 = order_status.state_8 = order_status.state_10 = '';
-            order_status.state_9 = ``;
+            goods_status.state_1 = goods_status.state_2 = goods_status.state_3 = goods_status.state_4 = goods_status.state_5 = goods_status.state_6 = goods_status.state_7 = goods_status.state_8 = goods_status.state_10 = '';
+            goods_status.state_9 = `<a href="javascript:void(0)">确认退款</a>`;
             break;
         case 9:
             order_status.title   = `确认退款`;
-            order_status.state_1 = order_status.state_2 = order_status.state_3 = order_status.state_4 = order_status.state_5 = order_status.state_6 = order_status.state_7 = order_status.state_8 = order_status.state_9 = '';
-            order_status.state_10= `<div class="my_order_store_clear" id="`+ key.weid +`">删除</div>`;
+            goods_status.state_1 = goods_status.state_2 = goods_status.state_3 = goods_status.state_4 = goods_status.state_5 = goods_status.state_6 = goods_status.state_7 = goods_status.state_8 = goods_status.state_9 = '';
+            goods_status.state_10= `<div class="my_order_store_clear" id="`+ key.weid +`">删除</div>`;
             break;
         case 10:
             order_status.title   = `已删除`;
-            order_status.state_1 = order_status.state_2 = order_status.state_3 = order_status.state_4 = order_status.state_5 = order_status.state_6 = order_status.state_7 = order_status.state_8 = order_status.state_9 = order_status.state_10 = '';
+            goods_status.state_1 = goods_status.state_2 = goods_status.state_3 = goods_status.state_4 = goods_status.state_5 = goods_status.state_6 = goods_status.state_7 = goods_status.state_8 = goods_status.state_9 = goods_status.state_10 = '';
             break;
     }
 
@@ -101,7 +102,7 @@ var orderlist = function(key, index) {
         <div class="my_order_store_title">
             <div class="my_order_store_title_time">`+ key.updated_at.substr(0, 10) +`</div>订单号：
             <div class="my_order_store_number">`+ key.order_num +`</div>
-            <div class="my_order_store_status">`+ order_status.title +`</div>`+ order_status.state_10 +`
+            <div class="my_order_store_status">`+ order_status.title +`</div>`+ goods_status.state_10 +`
         </div>
         <ul class="my_order_store_list">
             <li class="my_order_img_info">`
@@ -118,8 +119,13 @@ var orderlist = function(key, index) {
             </li>
             <li class="my_order_operation">
                 <div class="my_order_order_operation">
-                    <a href="/user/order/detail/`+ key.weid +`" target="_blank">订单详情</a>
-                    <a href="javascript:void(0)">待发货</a>
+                    <a href="/user/order/detail/`+ key.weid +`" target="_blank">订单详情</a>`
+                    $.map(goods_status, function(data, j) {
+                        template += data;
+                        goods_status = ''
+                    });
+                    
+                    template +=`                    
                 </div>
             </li>
         </ul>
