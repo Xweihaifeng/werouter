@@ -6,9 +6,9 @@ $(function() {
 
     // 公用部分变量声明
     var token = window.localStorage.getItem('token');
-    var user_weid = window.localStorage.getItem("weid");
+    var user_weid = '';
+    // var user_weid = window.localStorage.getItem("weid");
     var shop_weid = window.location.pathname.split('/').pop();
-    // var shop_weid = window.localStorage.getItem("shopping_weid");
 
     // 用户token验证部分
     if(token) {
@@ -21,6 +21,25 @@ $(function() {
         });
         $("#token").slideUp();
     }
+
+    var reqUserId = (url, domain) => {
+        $.ajax({
+            url: url + domain,
+            type: 'GET',
+            async: false,
+            success: function(data) {
+                if (data.code == 200) {
+                    user_weid = data.data.plat_user_id;
+                }
+            },
+            error: function(xhr) {
+                console.log(xhr);
+            }
+        })
+    }
+
+    let domain = window.location.pathname.split('/')[1];
+    reqUserId(apiUrl + 'pages/page/getDetailByDomain/', domain);
 
     // 商品评价跳转
     $(".detail_nav_title").html(`
