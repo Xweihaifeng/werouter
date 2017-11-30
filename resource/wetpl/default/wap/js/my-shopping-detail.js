@@ -288,6 +288,7 @@ $(function() {
     $(".detail_footer_cart").click(function() {
         var domain = window.location.pathname.split("/")[1];
         alert(domain);
+        layer.msg(domain, { time: 1500 });
         window.location.href = "/" + domain + "/wemall/cart"
     });
 
