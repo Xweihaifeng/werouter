@@ -81,11 +81,11 @@
             list: []
         },
         mounted: function () {
-            
+
             var domain = window.location.pathname.split("/")[1];
     
-            layer.msg(domain, { time: 1500 });
-
+            // layer.msg(domain, { time: 1500 });
+            layer.msg(window.localStorage.getItem("weid"),{time:1500})
 
             var data = {
                 "user_id" : window.localStorage.getItem("weid")
