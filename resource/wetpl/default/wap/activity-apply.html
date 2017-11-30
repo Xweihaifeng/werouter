@@ -24,12 +24,13 @@
 </head>
 
 <body>
+<div id="app">
 <div class="wrap" id="J_wrap">
     <div class="activity-info">
         <header>
-            <h3>2017年全国新能源智能汽车项目路演活动</h3>
-            <p><span>2017/11/30</span> <span>周四</span> <span>14:00 ~ 17:00</span></p>
-            <p>北京北京市瀚海文化大厦负一层众创空间路演厅</p>
+            <h3>{{title}}</h3>
+            <p><span>{{start.replace(/-/g, '/')}}</span> <span>至</span> <span>{{end.replace(/-/g, '/')}}</span></p>
+            <p>{{address}}</p>
         </header>
     </div>
     <div class="split"></div>
@@ -63,12 +64,12 @@
                 </div>
             </div>
             <!-- 用户自定义字段 -->
-            <div class="inline">
+            <!--<div class="inline">
                 <div class="form-label"><span>邮箱</span><span class="remain">100</span></div>
                 <div class="form-group">
                     <input class="form-control" maxlength="100" name="field1" id="field1" for="label" value="">
                 </div>
-            </div>
+            </div>-->
 
             <aside class="btn-group">
                 <a class="wl-btn wl-btn-blue go J_GoPay" href="javascript:;">提交</a>
@@ -108,7 +109,148 @@
     window.onunload = function() {
         isRepeat = false;
     }
+
+    const userDetail = (weid, token, ref) => {
+        $.ajax({
+            url:  apiUrl + 'activity/enroll_my_order',
+            type: 'POST',
+            headers: {
+                'Token': token
+            },
+            data: {
+                activity_id: weid
+            },
+            success: function(data) {
+                console.log(data);
+                if (data.code == 200) {
+                    switch (data.data.status) {
+                        case 1: ref.state = '立即报名'; break;
+                        case 2: ref.state = '立即支付';
+                            $(".actd-apply").css({'background': '#FEC52B', 'box-shadow': '5px 5px 15px 0 #FEC52B'})
+                            break;
+                        case 3: ref.state = '已报名';
+                            $(".layui-btn").hide();
+                            $(".actd-apply").css({'background': '#EC2506', 'box-shadow': '5px 5px 15px 0 #EC2506'})
+                            break;
+                        default: break;
+                    }
+                    if (data.data.status == 2) {
+                        sessionStorage.setItem('act-orderId', data.data.number);
+                    }
+                }
+            }
+        })
+    }
+
+    const userStore = (weid, token, phone, name, position, company, ref) => {
+        $.ajax({
+            url: apiUrl + 'activity/enroll/store',
+            type: 'POST',
+            headers: {
+                'Token': token
+            },
+            data: {
+                activity_id: weid,
+                name: name,
+                telphone: phone,
+                poistion: position,
+                company: company
+            },
+            success: function (data) {
+                console.log(data);
+                if (data.code == 200) {
+                    if (data.data.status == 2) {
+                        localStorage.setItem('act-weid', weid);
+                        localStorage.setItem('act-enrollid', data.data.enroll_id);
+                        layer.msg('报名成功', {
+                            time: 1500
+                        })
+                    } else if (data.data.status == 1) {
+                        ref.state = '立即支付';
+                        sessionStorage.setItem('act-orderId', data.data.number);
+                    }
+                } else {
+                    layer.msg(data.message, {
+                        time: 1500
+                    })
+                }
+            }
+        })
+    }
+
+    const reqData = (url, ref) => {
+        $.ajax({
+            url: url,
+            type: 'GET',
+            success: function(data) {
+                console.log(data)
+                if (data.code == 200) {
+                    let p = data.data;
+                    ref.title = p.title;
+                    ref.address = p.area_name + p.address;
+                    ref.start = p.begain_time;
+                    ref.end = p.end_time;
+                }
+            }
+        })
+    }
+
+    new Vue({
+        el: '#app',
+        data: {
+            title: '',
+            start: '',
+            end: '',
+            address: '',
+            name: '',
+            position: '',
+            company: '',
+            backurl: '',
+            map: '/activity/map/',
+            state: '立即报名',
+            weid: window.location.pathname.split('/').pop(),
+            token: localStorage.getItem('token'),
+            phone: localStorage.getItem('phone')
+        },
+        created: function () {
+            let _self = this;
+            const url_info = apiUrl + 'activity/detail/' + _self.weid;
+            _self.backurl = sessionStorage.getItem('history');
+            _self.map += _self.weid;
+            reqData(url_info, _self);
+            userDetail(_self.weid, _self.token, _self)
+        },
+        mounted: function(){
+            this.$nextTick(function () {
+                let _self = this;
+            })
+        },
+        methods: {
+            apply: function(){
+                //获取token 如不存在则跳转登录页 如存在则显示活动申请框
+                if (true) {
+                    window.location.href = '/activity/apply/' + this.weid;
+                } else {
+                    //login
+                }
+
+                if (false) {
+                    layer.msg('活动暂未开始', {
+                        time: 1500
+                    })
+                }
+            },
+            detail: function(type){
+                switch(type) {
+                    case 'users': window.location.href = '/activity/users/' + this.weid; break;
+                    case 'guests': window.location.href = '/activity/guests/' + this.weid; break;
+                    default: break;
+                }
+            }
+        }
+    })
 </script>
+</div>
 
 
 
