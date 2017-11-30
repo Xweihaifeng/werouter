@@ -5,25 +5,12 @@
     <meta charset="utf-8">
     <meta name="apple-touch-fullscreen" content="yes">
     <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
-    <title>报名列表（11）</title>
+    <title>报名列表</title>
     <meta name="format-detection" content="telephone=no" />
-    <link href="http://g.welian.com/h5/common/common.css?v=3.2.3" rel="stylesheet">
-    <!--<script>
-        function onBridgeReady() {
-            WeixinJSBridge.call('hideOptionMenu');
-        }
-
-        if (typeof WeixinJSBridge == "undefined") {
-            if (document.addEventListener) {
-                document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
-            } else if (document.attachEvent) {
-                document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
-                document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
-            }
-        } else {
-            onBridgeReady();
-        }
-    </script>-->
+    <link rel="stylesheet" href="{{PATH_TML}}css/users.css"/>
+    <script src="{{PATH_TML}}lib/jquery.min.js"></script>
+    <script src="{{PATH_TML}}js/vue.min.js"></script>
+    <script src="{{PATH_CONFIG}}"></script>
     <style type="text/css">
         .wrap>ul>li.tips {
             padding: 0;
@@ -48,111 +35,57 @@
 </head>
 
 <body>
-<div class="wrap">
-    <!-- 埋点区域 -->
+<div id="app" class="wrap">
     <input type="hidden" id="J_Limit" value="15">
     <input type="hidden" id="J_AjaxListLoadUrl" value="http://h5.welian.com/event/join_list/43155?page=2">
-    <ul class="join-list J_List">
+    <ul class="join-list J_List" v-for="user in users">
         <li class="wl-user">
-            <figure><img class="wl-user-avatar" src="http://image.welian.com/rcit1508461344543_476_476_56.jpg" onerror="javascript:this.src='http://fed.welian.com/3_welian/zhangyu.png';"></figure>
-            <div class="wl-user-name">王志魁</div>
+            <figure><a :href="user.wecard"><img class="wl-user-avatar" :src="user.avatar" onerror="javascript:this.src='http://fed.welian.com/3_welian/zhangyu.png';"></a></figure>
+            <div class="wl-user-name">{{user.name}}</div>
             <div class="wl-user-company">
-                <span>渠道总监</span><span>风险投资</span>
+                <span>{{user.position}}</span><!--<span>风险投资</span>-->
             </div>
-            <a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.csm.welian" class="wl-btn wl-btn-white">+好友</a>             </li>
-        <li class="wl-user">
-            <figure><img class="wl-user-avatar" src="http://image.welian.com/zfrr1442315406977_640_640_50.jpg" onerror="javascript:this.src='http://fed.welian.com/3_welian/zhangyu.png';"></figure>
-            <div class="wl-user-name">Tony</div>
-            <div class="wl-user-company">
-                <span>CEO</span><span>杭州来点花草信息技术有限公司</span>
-            </div>
-            <a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.csm.welian" class="wl-btn wl-btn-white">+好友</a>             </li>
-        <li class="wl-user">
-            <figure><img class="wl-user-avatar" src="http://image.welian.com/qpln1466576571308_638_618_108.jpg" onerror="javascript:this.src='http://fed.welian.com/3_welian/zhangyu.png';"></figure>
-            <div class="wl-user-name">intime</div>
-            <div class="wl-user-company">
-                <span>投资经理</span><span>中国银泰投资有限公司</span>
-            </div>
-            <a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.csm.welian" class="wl-btn wl-btn-white">+好友</a>             </li>
-        <li class="wl-user">
-            <figure><img class="wl-user-avatar" src="http://image.welian.com/ovcg1490693671671_1239_1242_266.jpg" onerror="javascript:this.src='http://fed.welian.com/3_welian/zhangyu.png';"></figure>
-            <div class="wl-user-name">李日升</div>
-            <div class="wl-user-company">
-                <span>合伙人</span><span>钦一资本</span>
-            </div>
-            <a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.csm.welian" class="wl-btn wl-btn-white">+好友</a>             </li>
-        <li class="wl-user">
-            <figure><img class="wl-user-avatar" src="http://image.welian.com/surname/%E9%AB%98.png" onerror="javascript:this.src='http://fed.welian.com/3_welian/zhangyu.png';"></figure>
-            <div class="wl-user-name">高源</div>
-            <div class="wl-user-company">
-                <span>主任</span><span>京津冀科技金融联盟</span>
-            </div>
-            <a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.csm.welian" class="wl-btn wl-btn-white">+好友</a>             </li>
-        <li class="wl-user">
-            <figure><img class="wl-user-avatar" src="http://image.welian.com/xmlk1510469584566_640_640_266.jpg" onerror="javascript:this.src='http://fed.welian.com/3_welian/zhangyu.png';"></figure>
-            <div class="wl-user-name">汪婷婷</div>
-            <div class="wl-user-company">
-                <span>CEO助理</span><span>云鲸网</span>
-            </div>
-            <a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.csm.welian" class="wl-btn wl-btn-white">+好友</a>             </li>
-        <li class="wl-user">
-            <figure><img class="wl-user-avatar" src="http://image.welian.com/owdw1508139895643_950_949_70.jpg" onerror="javascript:this.src='http://fed.welian.com/3_welian/zhangyu.png';"></figure>
-            <div class="wl-user-name">高浩贵</div>
-            <div class="wl-user-company">
-                <span>商务负责人</span><span>上海创蓝</span>
-            </div>
-            <a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.csm.welian" class="wl-btn wl-btn-white">+好友</a>             </li>
-        <li class="wl-user">
-            <figure><img class="wl-user-avatar" src="http://image.welian.com/cwfm1442921846976_320_320_74.jpg" onerror="javascript:this.src='http://fed.welian.com/3_welian/zhangyu.png';"></figure>
-            <div class="wl-user-name">祁玉林</div>
-            <div class="wl-user-company">
-                <span>院长</span><span>华夏邦交研究院</span>
-            </div>
-            <a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.csm.welian" class="wl-btn wl-btn-white">+好友</a>             </li>
-        <li class="wl-user">
-            <figure><img class="wl-user-avatar" src="http://image.welian.com/surname/%E5%88%98.png" onerror="javascript:this.src='http://fed.welian.com/3_welian/zhangyu.png';"></figure>
-            <div class="wl-user-name">刘丽君</div>
-            <div class="wl-user-company">
-                <span>总经理</span><span>桂林华邦文化传播有限公司</span>
-            </div>
-            <a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.csm.welian" class="wl-btn wl-btn-white">+好友</a>             </li>
-        <li class="wl-user">
-            <figure><img class="wl-user-avatar" src="http://image.welian.com/rhpn1482204606629_1239_930_136.jpg" onerror="javascript:this.src='http://fed.welian.com/3_welian/zhangyu.png';"></figure>
-            <div class="wl-user-name">康贺龙</div>
-            <div class="wl-user-company">
-                <span>总经理</span><span>北京强龙伟业科技有限公司</span>
-            </div>
-            <a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.csm.welian" class="wl-btn wl-btn-white">+好友</a>             </li>
-        <li class="wl-user">
-            <figure><img class="wl-user-avatar" src="http://image.welian.com/ptfa1497886532058_1260_1260_117.jpg" onerror="javascript:this.src='http://fed.welian.com/3_welian/zhangyu.png';"></figure>
-            <div class="wl-user-name">壹号</div>
-            <div class="wl-user-company">
-                <span>总经理</span><span>君为（天津）文化传播有限公司</span>
-            </div>
-            <a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.csm.welian" class="wl-btn wl-btn-white">+好友</a>             </li>
-
+            <a :href="user.wecard" class="wl-btn wl-btn-white">+好友</a>
+        </li>
     </ul>
 </div>
-</body>
-<script src="http://g.welian.com/h5/common/zepto.min.js?v=3.2.3"></script>
-<script src="http://g.welian.com/h5/common/sea.js?v=3.2.3"></script>
-<script src="http://g.welian.com/h5/common/config.js?v=3.2.3"></script>
-<script>
-    seajs.use(['common'], function(common) {
-        var limit = parseInt($('#J_Limit').val(), 10);
-        common.scrollLoad('.J_List', limit);
-    });
-</script>
-<script>
-    var _hmt = _hmt || [];
-    (function() {
-        var hm = document.createElement("script");
-        hm.src = "https://hm.baidu.com/hm.js?f430a726aa13a0d9a7de431b2ac735c6";
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(hm, s);
-    })();
-</script>
-<!--页面刷新跳转app-->
-<script src="http://g.welian.com/common/js/locationapp.js?v=3.2.3"></script>
 
+<script>
+    const reqUsers = (url, data, ref) => {
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: data,
+            success: function(data) {
+                console.log(data);
+                if (data.code == 200) {
+                    data.data.list.map(x => ref.users.push(
+                            {
+                                avatar: x.avatar != null ? ApiMaterPlatQiniuDomain + x.avatar : '/common/img/vote_front_cover.png',
+                                name: x.name,
+                                position: x.poistion,
+                                wecard: '/wecard/' + x.plat_user_id
+                            }));
+                    if (ref.users == '') {
+                        $(".actd-users").text('暂无');
+                    }
+                }
+            }
+        })
+    }
+
+    new Vue({
+        el: '#app',
+        data: {
+            weid: window.location.pathname.split('/').pop(),
+            users: []
+        },
+        created: function () {
+            let _self = this;
+            const url_users = apiUrl + 'activity/enroll/lists';
+            reqUsers(url_users, {activity_id: _self.weid}, _self);
+        }
+    })
+</script>
+</body>
 </html>

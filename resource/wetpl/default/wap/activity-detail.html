@@ -33,7 +33,7 @@
             <li class="actd-time"><img src="/common/img/icon_time.png" alt=""/><p>{{start}} 至 {{end}} 报名截止</p></li>
             <li class="actd-map">
                 <img src="/common/img/icon_map.png" alt=""/>
-                <p><a href="/activity-map">{{address}}</a></p>
+                <p><a :href="map">{{address}}</a></p>
                 <!--<img class="arrow" src="/common/img/arrow-right.png" alt=""/>-->
             </li>
             <li class="actd-zb" style="box-shadow: 5px 5px 5px #eee;"><img src="/common/img/icon_host.png"/><p>{{sponsor}}</p></li>
@@ -42,11 +42,13 @@
                 <img :src="user.avatar" v-for="user in users" alt=""/>
             </li>
             <li style="margin-top: 0.12rem;border-bottom: 1px solid #eee;height: 0.38rem;">活动嘉宾</li>
-            <li class="actd-guest" @click="detail('guests')" v-for="guest in guests">
+            <li class="actd-guest" @click="detail('guests')">
+                <div v-for="guest in guests" style="display: inline-flex;">
                 <img :src="guest.avatar" alt=""/>
-                <div>
+                <!--<div>-->
                     <p>{{guest.name}}</p>
                     <p style="font-size: 0.12rem; color: #a6a6a6">{{guest.position}}</p>
+                <!--</div>-->
                 </div>
             </li>
             <li style="margin-top: 0.12rem;border-bottom: 1px solid rgb(238, 238, 238);height: 0.38rem;">活动详情</li>
@@ -207,6 +209,7 @@
                 position: '',
                 company: '',
                 backurl: '',
+                map: '/activity/map/',
                 state: '立即报名',
                 weid: window.location.pathname.split('/').pop(),
                 token: localStorage.getItem('token'),
@@ -218,6 +221,7 @@
                 const url_users = apiUrl + 'activity/enroll/lists';
                 const url_guests = apiUrl + 'activity/guest/lists';
                 _self.backurl = sessionStorage.getItem('history');
+                _self.map += _self.weid;
                 reqData(url_info, _self);
                 reqUsers(url_users, {activity_id: _self.weid}, _self);
                 reqGuest(url_guests, {activity_id: _self.weid}, _self);
@@ -226,66 +230,13 @@
             mounted: function(){
                 this.$nextTick(function () {
                     let _self = this;
-                    /*layui.use('layer', function(){ //独立版的layer无需执行这一句
-                        var $ = layui.jquery, layer = layui.layer; //独立版的layer无需执行这一句
-                        //触发事件
-                        var active = {
-                            setTop: function(){
-                                var that = this;
-                            }
-                            ,notice: function(){
-                                layer.open({
-                                    type: 1
-                                    ,title: false //不显示标题栏
-                                    ,closeBtn: false
-                                    ,area: '300px;'
-                                    ,shade: 0.8
-                                    ,id: 'LAY_layuipro' //设定一个id，防止重复弹出
-                                    ,btn: ['提交申请', '回到详情']
-                                    ,btnAlign: 'c'
-                                    ,moveType: 1 //拖拽模式，0或者1
-                                    ,content:
-                                        `<div style="padding: 30px; line-height: 22px; background-color: #393D49; color: #fafafa; font-weight: 300;">
-                                         <p style="font-size: 0.16rem;">请填写您的个人信息</p>
-                                            <ul id="application" style="margin-top: 0.25rem;">
-                                                <li style="display: flex; align-items: center; margin-top: 0.25rem;">
-                                                    <img src="/common/img/name.png" style="display: block; width: 0.2rem; margin-right: 0.15rem;"/>
-                                                    <input class="uname" type="text" placeholder="请输入您的姓名" maxlength="12" style="border: none; outline: none; font-size: 0.14rem; border-radius: 0.02rem; height: 0.25rem; padding-left: 0.1rem;"/>
-                                                </li>
-                                                <li style="display: flex; align-items: center; margin-top: 0.25rem;">
-                                                    <img src="/common/img/position.png" style="display: block; width: 0.2rem; margin-right: 0.15rem;"/>
-                                                    <input class="upos" type="text" placeholder="请输入您所在的职位" maxlength="20" style="border: none; outline: none; font-size: 0.14rem; border-radius: 0.02rem; height: 0.25rem; padding-left: 0.1rem;"/>
-                                                </li>
-                                                <li style="display: flex; align-items: center; margin-top: 0.25rem; margin-bottom: 0.3rem;">
-                                                    <img src="/common/img/company.png" style="display: block; width: 0.2rem; margin-right: 0.15rem;"/>
-                                                    <input class="ucom" type="text" placeholder="请输入您所在的公司" maxlength="20" style="border: none; outline: none; font-size: 0.14rem; border-radius: 0.02rem; height: 0.25rem; padding-left: 0.1rem;"/>
-                                                </li>
-                                            </ul>
-                                        </div>`
-                                    ,success: function(layero){
-                                        $('.layui-layer-btn0').click(function(){
-                                            let name = $('.uname').val();
-                                            let position = $('.upos').val();
-                                            let ucom = $('.ucom').val();
-                                            userStore(_self.weid, _self.token, _self.phone, name, position, ucom, _self);
-                                        })
-                                    }
-                                });
-                            }
-                        };
-
-                        $('.layui-btn').on('click', function(){
-                            var othis = $(this), method = othis.data('method');
-                            active[method] ? active[method].call(this, othis) : '';
-                        });
-                    });*/
                 })
             },
             methods: {
                 apply: function(){
                     //获取token 如不存在则跳转登录页 如存在则显示活动申请框
                     if (true) {
-                        window.location.href = '/activity/apply'
+                        window.location.href = '/activity/apply/' + this.weid;
                     } else {
                         //login
                     }
@@ -298,8 +249,8 @@
                 },
                 detail: function(type){
                     switch(type) {
-                        case 'users': window.location.href = '/activity/users'; break;
-                        case 'guests': window.location.href = '/activity/guests'; break;
+                        case 'users': window.location.href = '/activity/users/' + this.weid; break;
+                        case 'guests': window.location.href = '/activity/guests/' + this.weid; break;
                         default: break;
                     }
                 }
