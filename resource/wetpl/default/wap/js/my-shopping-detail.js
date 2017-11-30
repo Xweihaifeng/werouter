@@ -51,13 +51,16 @@ $(function() {
         var temp_img = '';
 
         if(!result.picture) {
+            alert(result.cover);
             price.push(result.cover);
+            alert("price0"+ price);
         } else {
             price = result.picture.split(",");
+            alert("price1"+ price);
         }
 
         $.each(price, function(index, value) {
-
+            alert("index"+ index + value);
             if(!value) {
                 value = result.cover;
 
