@@ -98,14 +98,14 @@
 
                         var onBridgeReady = function(res) {
                             if (res.err_msg == "get_brand_wcpay_request:ok") {
-                                var domain = window.sessionStorage.getItem("domain");
-                                alert(domain);
-                                window.location.href = `/`+ domain +`/wemall`;
                                 layer.msg("微信支付完成", { time: 1500 });
-                                // MessageBox.alert(commonToast["paySuccess"]).then(action => {
+                                MessageBox.alert(commonToast["paySuccess"]).then(action => {
+                                    var domain = window.sessionStorage.getItem("domain");
+                                    alert(domain);
+                                    window.location.href = `/`+ domain +`/wemall`;
                                     //支付成功 回到首页
                                 //     alert("支付成功");
-                                // });
+                                });
                             } else if (res.err_msg == "get_brand_wcpay_request:cancel") {
                                 //取消支付!
                                 layer.msg("已取消支付", { time: 1500 });
