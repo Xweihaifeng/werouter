@@ -14,13 +14,7 @@
     <script src="{{PATH_TML}}js/vue.min.js"></script>
     <script type="text/javascript" src="{{PATH_CONFIG}}"></script>
     <link rel="stylesheet" href="{{PATH_TML}}js/layui/css/layui.css"/>
-    <script src="{{PATH_TML}}js/layui/layui.js"></script>
-    <script>
-        document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
-            // 通过下面这个API显示右上角按钮
-            WeixinJSBridge.call('hideOptionMenu');
-        });
-    </script>
+    <script src="{{PATH_TML}}js/layui/layui.all.js"></script>
 </head>
 
 <body>
@@ -42,25 +36,25 @@
             <div class="inline">
                 <div class="form-label"><span>姓名</span><span class="remain">20</span></div>
                 <div class="form-group">
-                    <input class="form-control" name="username" id="username" for="label" value="" maxlength="20">
+                    <input v-mode="name" class="form-control" name="username" id="username" for="label" :value="name" maxlength="20">
                 </div>
             </div>
             <div class="inline">
                 <div class="form-label"><span>公司</span><span class="remain">50</span></div>
                 <div class="form-group">
-                    <input class="form-control" name="unit" id="unit" for="label" value="" maxlength="50">
+                    <input v-mode="company" class="form-control" name="unit" id="unit" for="label" :value="company" maxlength="50">
                 </div>
             </div>
             <div class="inline">
                 <div class="form-label"><span>职务</span><span class="remain">50</span></div>
                 <div class="form-group">
-                    <input class="form-control" name="position" id="position" for="label" value="" maxlength="50">
+                    <input v-mode="position" class="form-control" name="position" id="position" for="label" :value="position" maxlength="50">
                 </div>
             </div>
             <div class="inline">
                 <div class="form-label"><span>手机</span><span class="remain">11</span></div>
                 <div class="form-group">
-                    <input class="form-control" name="mobile" id="J_UserMobile" for="label" value="" maxlength="11">
+                    <input v-mode="phone" class="form-control" name="mobile" id="J_UserMobile" for="label" :value="phone" maxlength="11">
                 </div>
             </div>
             <!-- 用户自定义字段 -->
@@ -71,18 +65,18 @@
                 </div>
             </div>-->
 
-            <aside class="btn-group">
+            <aside class="btn-group" @click="apply">
                 <a class="wl-btn wl-btn-blue go J_GoPay" href="javascript:;">提交</a>
             </aside>
-            <input type="hidden" name="json" id="json" value='{"actId":"44703","unionid":"","openid":"","ticket_type":"0","uid":"0"}'>
+            <!--<input type="hidden" name="json" id="json" value='{"actId":"44703","unionid":"","openid":"","ticket_type":"0","uid":"0"}'>
             <input type="hidden" name="ticket_type" id="ticket_type" value="0">
             <input type="hidden" name="active_id" id="active_id" value="44703">
             <input type="hidden" id="encry_id" value="eyJhaWQiOjQ0NzAzfQ==">
             <input type="hidden" name="amount" id="amount" value="">
-            <input type="hidden" id="api" value="http://h5.welian.com/">
+            <input type="hidden" id="api" value="http://h5.welian.com/">-->
         </form>
     </div>
-    <form id="gopay" method="post" action="http://pay.welian.com/" style="display: none;">
+    <!--<form id="gopay" method="post" action="http://pay.welian.com/" style="display: none;">
         <input type="text" name="order" id="J_Order">
         <input type="text" name="origin" value="http://h5.welian.com/event/i/eyJhaWQiOjQ0NzAzfQ==">
         <input type="text" name="complete" value="http://h5.welian.com/event/complete/eyJhaWQiOjQ0NzAzfQ==">
@@ -90,7 +84,7 @@
         <input type="text" name="notify" value="http://h5.welian.com/notify/wapdirect">
         <input type="text" name="safe_token" value="TnBoQkN3aE1URythNEt5VTBNZkk2aTZCVUpQMDJGZDdvUmI3WDlqdEh5VT0">
         <input type="text" name="pay_channel" value="active">
-    </form>
+    </form>-->
 </div>
 
 <!--<script src="http://g.welian.com/h5/common/zepto.min.js"></script>-->
@@ -98,7 +92,7 @@
 <script src="http://g.welian.com/h5/common/config.js"></script>
 <script>
     //下单
-    var isRepeat = false;
+    /*var isRepeat = false;
     seajs.use('order', function(order) {
         //初始化
         order.init();
@@ -108,7 +102,7 @@
 
     window.onunload = function() {
         isRepeat = false;
-    }
+    }*/
 
     const userDetail = (weid, token, ref) => {
         $.ajax({
@@ -205,9 +199,6 @@
             name: '',
             position: '',
             company: '',
-            backurl: '',
-            map: '/activity/map/',
-            state: '立即报名',
             weid: window.location.pathname.split('/').pop(),
             token: localStorage.getItem('token'),
             phone: localStorage.getItem('phone')
@@ -219,6 +210,7 @@
             _self.map += _self.weid;
             reqData(url_info, _self);
             userDetail(_self.weid, _self.token, _self)
+
         },
         mounted: function(){
             this.$nextTick(function () {
@@ -227,24 +219,25 @@
         },
         methods: {
             apply: function(){
+                let _self = this;
+                let name = $("#username").val()
+                let unit = $("#unit").val()
+                let position = $("#position").val()
+                let phone = $("#phone").val()
+
                 //获取token 如不存在则跳转登录页 如存在则显示活动申请框
-                if (true) {
-                    window.location.href = '/activity/apply/' + this.weid;
+                if (phone != '' && name != '' && position != '' && unit != '') {
+                    userStore(_self.weid, _self.token, phone, name, position, unit, _self);
                 } else {
-                    //login
+                    layer.msg('请完善信息', {
+                        time: 1500
+                    })
                 }
 
                 if (false) {
                     layer.msg('活动暂未开始', {
                         time: 1500
                     })
-                }
-            },
-            detail: function(type){
-                switch(type) {
-                    case 'users': window.location.href = '/activity/users/' + this.weid; break;
-                    case 'guests': window.location.href = '/activity/guests/' + this.weid; break;
-                    default: break;
                 }
             }
         }
