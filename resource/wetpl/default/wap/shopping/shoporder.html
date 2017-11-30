@@ -125,6 +125,8 @@
         },
         methods: {
             goAddrList: function () {
+                var domain = window.location.pathname.split("/")[1];
+                
                 window.location.href = "/shopping/pay/address";
             },
             order_footer_pay: function () {
