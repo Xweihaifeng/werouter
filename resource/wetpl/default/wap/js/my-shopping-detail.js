@@ -47,6 +47,7 @@ $(function() {
 
     // 商品详情页置顶轮播
     var detail_swiper = function(result) {
+        alert("result"+ result);
         var price = []; 
         var temp_img = '';
 
