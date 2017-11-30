@@ -74,20 +74,12 @@
 
 <script>
     Vue.http.headers.common['token'] = window.localStorage.getItem("token");
-//    Vue.http.headers.common['token'] = 'eyJpdiI6IlwvTFZlRU5lQ2FlMHE3MW16dkFmNUVnPT0iLCJ2YWx1ZSI6Ijc2ZWt3M1o5U2RcL2tWNTlYazBSVDVsMDIwaHpcL2dWZ2VwSVY1V2hib3o0RmxTMzBvU2o1SEMyZ2U2UjRVV0xielFBWlROb1ArbGhyRTY3VHBXTlwvenZwUXF6aHBpUmROeFJJNE5CRUh2YyswPSIsIm1hYyI6ImIzYjBiYzM2YjBlMjkxNDAzMjZlYzM5YWJmMWNhOGEzMDJkY2FjMzFiNGQwMGM0NGFlYTRkMTVlMzNhZGU1N2EifQ=='
-
     var app = new Vue({
         el: "#shopCart",
         data: {
             list: []
         },
         mounted: function () {
-
-            var domain = window.location.pathname.split("/")[1];
-    
-            // layer.msg(domain, { time: 1500 });
-            layer.msg(window.localStorage.getItem("weid"),{time:1500})
-
             var data = {
                 "user_id" : window.localStorage.getItem("weid")
             };

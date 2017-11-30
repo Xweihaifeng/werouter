@@ -154,6 +154,8 @@
                         window.sessionStorage.setItem('store_num', data.body.data);
 
                         window.location.href = `/pay/shopping?store_num=`+ data.body.data +``;
+                    } else {
+                        layer.msg(data.body.message, { time: 2500 });
                     }
                 })
             }
