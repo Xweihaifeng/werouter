@@ -254,7 +254,7 @@ $(function() {
                 console.error(error);
             });
 
-            result.goods_num = $("#quantity").val();
+            result.goods_num = $("#quantity").text();
             var goodsList    = new Array();
             var orderObj = {
                 name     : name,
