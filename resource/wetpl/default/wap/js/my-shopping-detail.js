@@ -281,6 +281,8 @@ $(function() {
                     layer.msg(data.message, { time: 1500 });
                     return false;
                 }
+
+                $(".detail_footer_follow_img").css("background-position", "-50px -24px")
                 layer.msg("收藏成功", { time: 1500 });
             } else if(data.code == 401) {
                 window.location.href = '/login';
