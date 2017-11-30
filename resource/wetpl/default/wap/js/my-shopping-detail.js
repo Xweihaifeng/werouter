@@ -66,21 +66,16 @@ $(function() {
 
     // 商品详情页置顶轮播
     var detail_swiper = function(result) {
-        alert("result"+ result);
         var price = []; 
         var temp_img = '';
 
         if(!result.picture) {
-            alert(result.cover);
             price.push(result.cover);
-            alert("price0"+ price);
         } else {
             price = result.picture.split(",");
-            alert("price1"+ price);
         }
 
         $.each(price, function(index, value) {
-            alert("index"+ index + value);
             if(!value) {
                 value = result.cover;
 
@@ -221,12 +216,9 @@ $(function() {
         }
 
         var result = data.data;
-        alert("result**********"+ result);
         stock = result.stock;
         $(".detail_title").html(detail_title(result));
-        alert("result__________"+ result);
         $(".detail_goods_detail").html(goods_detail(result));
-        alert("result++++++++++"+ result);
         $(".detail_swiper").html(detail_swiper(result));
         // $(".detail_evaluate_imgs").html(detail_evaluate(result));
         $(".detail_mask_pic").html(detail_set_meal(result));
