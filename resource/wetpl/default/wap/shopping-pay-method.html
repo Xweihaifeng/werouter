@@ -93,7 +93,7 @@
                     self.$http.post(apiUrl + 'pages/wechatPay/mallOrderPhonePay', body1).then(function (data) {
                         self.config = data.data.data.config;
 
-                        var onBridgeReady = function() {
+                        var onBridgeReady = function(res) {
                             if (res.err_msg == "get_brand_wcpay_request:ok") {
                                 layer.msg("微信支付完成", { time: 1500 });
                                 // MessageBox.alert(commonToast["paySuccess"]).then(action => {
@@ -116,9 +116,9 @@
                                 document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
                             }
                         } else {
-                            alert(self.config.appId, self.config.timestamp, self.config.nonceStr, self.config.package, self.config.signType, self.config.paySign)
+                            // alert(self.config.appId, self.config.timestamp, self.config.nonceStr, self.config.package, self.config.signType, self.config.paySign)
                             WeixinJSBridge.invoke('getBrandWCPayRequest', self.config, function (res) {
-                                onBridgeReady();
+                                onBridgeReady(res);
                             })
                         }
                     });
