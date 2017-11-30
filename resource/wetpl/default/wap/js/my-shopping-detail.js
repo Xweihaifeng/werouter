@@ -47,11 +47,10 @@ $(function() {
 
     // 商品详情页置顶轮播
     var detail_swiper = function(result) {
-        var price; 
+        var price = []; 
         var temp_img = '';
 
         if(!result.picture) {
-            price = new Array();
             price.push(result.cover);
         } else {
             price = result.picture.split(",");
