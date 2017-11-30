@@ -78,37 +78,36 @@
         el: "#shopCart",
         data: {
             list   : [],
-            user_id: '',
+            user_id: window.localStorage.getItem("weid"),
         },
         mounted: function () {
             var self = this;
-
-            var domain = window.sessionStorage.getItem("goods_domain");
+/*            var domain = window.sessionStorage.getItem("goods_domain");
             this.$http.get(apiUrl + 'pages/page/getDetailByDomain/' + domain).then(function (res) {
                 console.log(res);
                 if(res.data.code == 200) {
                     this.user_id = res.data.data.plat_user_id;
 
-                    var data = {
-                        "user_id" : self.user_id,
-                    };
-                    console.log(data);
-                    this.$http.post(apiUrl+'cart/lists', data).then(function (res) {
-                        var resList = res.data.data.list;
-                        if(resList && resList.length){
-                            for(var i=0;i<resList.length;i++){
-                                resList[i].mall["pCheck"] = false;
-                                for(var a = 0; a < resList[i].goods.length; a++){
-                                    resList[i].goods[a]["checked"] = false
-                                }
-                            }
-                            this.list = res.data.data.list;
-                            console.log(this.list)
+                }
+            })*/
+            
+            var data = {
+                "user_id" : self.user_id,
+            };
+            console.log(data);
+            this.$http.post(apiUrl+'cart/lists', data).then(function (res) {
+                var resList = res.data.data.list;
+                if(resList && resList.length){
+                    for(var i=0;i<resList.length;i++){
+                        resList[i].mall["pCheck"] = false;
+                        for(var a = 0; a < resList[i].goods.length; a++){
+                            resList[i].goods[a]["checked"] = false
                         }
-                    })
+                    }
+                    this.list = res.data.data.list;
+                    console.log(this.list)
                 }
             })
-            
         },
         methods: {
             getNumber : function (storeObj,flag) {
