@@ -419,7 +419,7 @@ $(document).ready(function(){
             if (member == null || member == '') {
                 domain = '';
             } else {
-                domain = member;
+                domain = '/u/' + member;
             }
         }
         let avatar = '';
