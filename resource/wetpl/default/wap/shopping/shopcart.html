@@ -50,8 +50,8 @@
                             </label>
                         </p>
                         <p class="operation">
-                            <span>删除</span>
-                            <span>移入关注</span>
+                            <span @click="deletePro(item)">删除</span>
+                            <!--<span>移入关注</span>-->
                         </p>
                     </div>
                 </li>
@@ -180,6 +180,9 @@
                     window.location.href = '/'+ domain +'/wemall/order/'+ shopping_weid;
                 }
 
+            },
+            deletePro : function (pro) {
+                console.log(pro)
             }
         }
     })

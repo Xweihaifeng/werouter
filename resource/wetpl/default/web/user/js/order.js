@@ -550,6 +550,9 @@ $(document).ready(function(){
         })
 
         $(".distribute").bind('click',function () {
+            $('.comment_mongolia_layer, .comment_bomb_box').fadeIn("slow");
+            $('.comment_bomb_box_content').children().remove();
+            $('.comment_bomb_box_content').text('正在加载...')
             var orderId = $(this).closest('tr').attr("id");
             $.ajax({
                 url : apiUrl + 'order/detail/'+orderId,
@@ -572,13 +575,37 @@ $(document).ready(function(){
                         },
                         dataType : 'json',
                         success : function (res) {
-                            console.log("查看物流信息",res)
+                            console.log("根据订单详情查看物流信息",res);
+                            $('.comment_bomb_box_content').text('')
+                            if(res.code === 200){
+                                var logistList = res.data.data;
+                                for(var i=0; i<logistList.length;i++){
+                                    var dom =
+                                        '<p>' +
+                                            '<span>'+logistList[i].time+'</span>' +
+                                            '<span>'+logistList[i].context+'</span>'+
+                                        '</p>';
+                                    $('.comment_bomb_box_content').append(dom)
+                                }
+                            }else{
+                                $('.comment_bomb_box_content').text('加载失败')
+                            }
+
                         }
                     })
 
                 }
             })
 
+        closeModel();
+        })
+    }
+    var closeModel = function () {
+        $('.comment_bomb_box_close').click(function () {
+            $('.comment_mongolia_layer, .comment_bomb_box').fadeOut("slow");
+        });
+        $(".comment_mongolia_layer").click(function () {
+            $('.comment_mongolia_layer, .comment_bomb_box').fadeOut("slow");
         })
     }
     // 填写物流公司
@@ -596,7 +623,6 @@ $(document).ready(function(){
                 // status:
                 // pay_way:
             }
-                         // $('#myModal').modal('hide');
 
             console.log("发货字段：",sendData);
             $.ajax({
@@ -616,7 +642,7 @@ $(document).ready(function(){
 
                         $("input[name=wuliu_company]").val('');
                         $("input[name=wuliu_card]").val('');
-                        // window.location.reload();
+                        window.location.reload();
                     }else {
                         layer.msg(data.message);
                     }
