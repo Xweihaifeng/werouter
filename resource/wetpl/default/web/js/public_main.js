@@ -911,24 +911,43 @@ $(document).ready(function(){
                 var bar3 = setting.bar3;
                 var bar4 = setting.bar4;
                 var bgRight = setting.background_right;
-                if (bgImg.indexOf('http') === -1){
-                    bgImg = ApiMaterPlatQiniuDomain + bgImg;
+
+                if(!bgImg) {
+                    bgImg = "/common/img/news_top_img.png";
+                } else if (bgImg.indexOf('http') != 0 && bgImg != "") {
+                    bgImg = imgSet(bgImg, 960, 560, 3);
                 }
-                if (bar1.indexOf('http') === -1){
-                    bar1 = ApiMaterPlatQiniuDomain + bar1;
+
+                if(!bgRight) {
+                    bgRight = "/common/img/news_top_img.png";
+                } else if (bgRight.indexOf('http') != 0 && bgRight != "") {
+                    bgRight = imgSet(bgRight, 960, 960, 3);
                 }
-                if (bar2.indexOf('http') === -1){
-                    bar2 = ApiMaterPlatQiniuDomain + bar2;
+
+                if(!bar1) {
+                    bar1 = "/common/img/news_top_img.png";
+                } else if (bar1.indexOf('http') != 0 && bar1 != "") {
+                    bar1 = imgSet(bar1, 105, 960, 3);
                 }
-                if (bar3.indexOf('http') === -1){
-                    bar3 = ApiMaterPlatQiniuDomain + bar3;
+
+                if(!bar2) {
+                    bar2 = "/common/img/news_top_img.png";
+                } else if (bar2.indexOf('http') != 0 && bar2 != "") {
+                    bar2 = imgSet(bar2, 105, 960, 3);
                 }
-                if (bar4.indexOf('http') === -1){
-                    bar4 = ApiMaterPlatQiniuDomain + bar4;
+
+                if(!bar3) {
+                    bar3 = "/common/img/news_top_img.png";
+                } else if (bar3.indexOf('http') != 0 && bar3 != "") {
+                    bar3 = imgSet(bar3, 105, 960, 3);
                 }
-                if (bgRight.indexOf('http') === -1){
-                    bgRight = ApiMaterPlatQiniuDomain + bgRight;
+
+                if(!bar4) {
+                    bar4 = "/common/img/news_top_img.png";
+                } else if (bar4.indexOf('http') != 0 && bar4 != "") {
+                    bar4 = imgSet(bar4, 105, 960, 3);
                 }
+
                 $("#home-body").css({ "background": "url(" + bgImg + ") no-repeat center", "background-size": "100%", "opacity": "1", })                
                 $("#beijing")  .css({ "background-image": "url(" + bgRight + ")"})
                 $("#nav-news") .css({ "background-image": "url(" + bar1 + ")","background-size": "cover","background-repeat": "no-repeat","background-position": "center" })
