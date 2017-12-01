@@ -1,4 +1,4 @@
-/**
+*
  * Created by weifeng on 2017/11/12.
  */
 
@@ -231,6 +231,7 @@ li {
 .detail_art a {
     font-size: 0.11rem;
     color: #f23030;
+    display: none;
 }
 
 .detail_title_text {
@@ -347,6 +348,19 @@ li {
 }
 /* 保存商品结束 */
 
+/* 商品详情展示开始 */
+.detail_goods_detail {
+    display: block;
+    padding: 0.11rem;
+    background-color: #fff;
+}
+
+.detail_goods_detail * {
+    width: 100%!important;
+    height: auto!important;
+}
+/* 商品详情展示结束 */
+
 /* 购买套餐开始 */
 .detail_purchase {
     display: flex;
@@ -370,20 +384,26 @@ li {
     align-items: center;
 }
 
-.detail_selected_sub > li > input {
+#min, #add, #quantity {
     display: inline-block;
-    width: 0.2rem;
+    width: 0.22rem;
     height: 0.20rem;
     border: 1px solid #ddd;
+    padding: 0;
     color: #666;
     outline: none;
+    text-align: center;
+    background-color: #ddd;
 }
 
-.detail_selected_sub > li > input#quantity {
+#quantity {
     border: none;
-    box-shadow: inset 0px 0px 0px 1px #ddd;
+    /*box-shadow: inset 0px 0px 0px 1px #ddd;*/
     min-width: 0.30rem;
-    text-align: center;
+    font-size: 12px;
+    background-color: #fff;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
 }
 
 .detail_selected_switch {
@@ -857,4 +877,4 @@ li {
     height: 20px;
     background-position: 0px -21px;
 }
-/* 商品详情页底部结束 */
+/* 商品详情页底部结束 

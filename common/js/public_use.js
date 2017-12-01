@@ -96,11 +96,11 @@ var url = window.location.pathname.split('/');
         if ($.support.msie && $.support.version <= 8){
 
             $(".oline-3 div:first-child").qrcode({
-                render  : "table",
+                render  : "canvas",
                 width   : 160,
                 height  : 160,
                 text    : qrcode_val,
-                src: logoimg  
+                src: logoimg
             });
         }else{
             jQuery(".oline-3 div:first-child").qrcode({

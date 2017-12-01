@@ -257,7 +257,12 @@
                 this.$http.post(apiUrl + 'users/address/update',data).then(function (res) {
                     console.log(res);
                     if(res.data && res.data.code === 200){
-                        window.location.href = "/shopping/order"
+                        var domain = window.sessionStorage.getItem("domain");
+                        var shopping_weid = window.localStorage.getItem("shopping_weid");
+                        if(!domain) {
+                            domain = 'index';
+                        }
+                        window.location.href = '/'+ domain +'/wemall/order/'+ shopping_weid;
                     }else{
                         layer.msg('保存失败');
                     }

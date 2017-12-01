@@ -11,81 +11,177 @@ var domain,
 if(token) {
     $.ajaxSetup({
         global: true,
+        async:  false,
         headers: {
             'Token': token,
         }
     });
 }
 
-var orderlist = function(key, index) {
-	var template = `
-	<div class="my_order_store">
-		<div class="my_order_store_title">
-			<div class="my_order_store_title_time"> 2017-11-28 </div>订单号：
-			<div class="my_order_store_number"> 20171128156161685 </div>
-			<div class="my_order_store_name"><span>好奇害死猫</span><span>15804564654</span></div>
-			<div class="my_order_store_address">北京市朝阳区三里屯永茂大厦华语间</div>
-			<div class="my_order_store_clear">删除</div>
-		</div>
-		<ul class="my_order_store_list">
-			<li class="my_order_img_info">
-				<div class="my_order_goods">
-					<div class="my_order_goods_cover"><img src="/common/img/avatar6.png" alt=""></div>
-					<div class="my_order_goods_title">【天猫超市】黑人牙膏超白竹炭倍健190g*4口腔清洁家庭套装清新 </div>
-					<div class="my_order_order_price">￥1564</div>
-					<div class="my_order_goods_num">1561346</div>
-				</div>
-				<div class="my_order_goods">
-					<div class="my_order_goods_cover"><img src="/common/img/avatar6.png" alt=""></div>
-					<div class="my_order_goods_title">【天猫超市】黑人牙膏超白竹炭倍健190g*4口腔清洁家庭套装清新 </div>
-					<div class="my_order_order_price">￥1564</div>
-					<div class="my_order_goods_num">1561346</div>
-				</div>
-			</li>
-			<li class="my_order_price">
-				<div class="my_order_order_price">￥1564<div> (含运费：0.00) </div></div>
-			</li>
-			<li class="my_order_operation">
-				<div class="my_order_order_operation">
-					<a href="">订单详情</a>
-					<a href="">待发货</a>
-				</div>
-			</li>
-		</ul>
-	</div>`
-	return template;
+var all_price = 0, order_goods = function(key, value, index) {
+    var thumb_image = value.goods_cover;
+    all_price += value.goods_price * value.goods_num;
+    if(!thumb_image) {
+        thumb_image = "/common/img/news_default.jpg";
+    } else if (thumb_image.indexOf('http') != 0 && thumb_image != "") {
+        thumb_image = imgSet(thumb_image, 80, 80, 3);
+    }
+
+    var template = `
+    <div class="my_order_goods">
+        <div class="my_order_goods_cover"><a href="/`+ key.domain +`/wemall/goods/`+ value.goods_id +`" target="_blank"><img src="`+ thumb_image +`" alt=""></a></div>
+        <div class="my_order_goods_title">`+ value.goods_title +`</div>
+        <div class="my_order_order_price">￥`+ value.goods_price +`</div>
+        <div class="my_order_goods_num">`+ value.goods_num +`</div>
+    </div>`
+    return template;
 }
 
-var orderlisthtml = function(plat_user_id) {
+var orderlist = function(key, index) {    
+    var goods_status = new Object();
+    var order_status = new Object();
+
+    switch(key.order_status) {
+        case 1:
+            order_status.title   = `已下单`;
+            goods_status.state_1 = goods_status.state_3 = goods_status.state_4 = goods_status.state_5 = goods_status.state_7 = goods_status.state_8 = goods_status.state_9 = goods_status.state_10 = '';
+            goods_status.state_2 = `<a href="javascript:void(0)">付款</a>`;
+            goods_status.state_6 = `<a href="javascript:void(0)">取消订单</a>`;
+            break;
+        case 2:
+            order_status.title   = `已付款`;
+            goods_status.state_1 = goods_status.state_3 = goods_status.state_4 = goods_status.state_5 = goods_status.state_6 = goods_status.state_7 = goods_status.state_8 = goods_status.state_9 = goods_status.state_10 = '';
+            goods_status.state_3 = `<a href="javascript:void(0)">发货</a>`;
+            break;
+        case 3:
+            order_status.title   = `已发货`;
+            goods_status.state_1 = goods_status.state_2 = goods_status.state_3 = goods_status.state_5 = goods_status.state_6 = goods_status.state_7 = goods_status.state_8 = goods_status.state_9 = goods_status.state_10 = '';
+            goods_status.state_4 = `<a href="javascript:void(0)">确认收货</a>`;
+            break;
+        case 4:
+            order_status.title   = `确认收货`;
+            goods_status.state_1 = goods_status.state_2 = goods_status.state_3 = goods_status.state_4 = goods_status.state_6 = goods_status.state_9 = goods_status.state_10 = '';
+            goods_status.state_5 = `<a href="javascript:void(0)">待评价</a>`;
+            goods_status.state_7 = `<a href="javascript:void(0)">确认交易</a>`;
+            goods_status.state_8 = `<a href="javascript:void(0)">退款</a>`;
+            break;
+        case 5:
+            order_status.title   = `待评价`;
+            goods_status.state_1 = goods_status.state_2 = goods_status.state_3 = goods_status.state_4 = goods_status.state_5 = goods_status.state_6 = goods_status.state_9 = goods_status.state_10 = '';
+            goods_status.state_7 = `<a href="javascript:void(0)">确认交易</a>`;
+            goods_status.state_8 = `<a href="javascript:void(0)">退款</a>`;
+            break;
+        case 6:
+            order_status.title   = `取消订单`;
+            goods_status.state_1 = goods_status.state_2 = goods_status.state_3 = goods_status.state_4 = goods_status.state_5 = goods_status.state_6 = goods_status.state_7 = goods_status.state_8 = goods_status.state_9 = '';
+            goods_status.state_10= `<div class="my_order_store_clear" id="`+ key.weid +`">删除</div>`;
+            break;
+        case 7:
+            order_status.title   = `确定交易`;
+            goods_status.state_1 = goods_status.state_2 = goods_status.state_3 = goods_status.state_4 = goods_status.state_5 = goods_status.state_6 = goods_status.state_7 = goods_status.state_8 = goods_status.state_9 = '';
+            goods_status.state_10= `<div class="my_order_store_clear" id="`+ key.weid +`">删除</div>`;
+            break;
+        case 8:
+            order_status.title   = `退款申请`;
+            goods_status.state_1 = goods_status.state_2 = goods_status.state_3 = goods_status.state_4 = goods_status.state_5 = goods_status.state_6 = goods_status.state_7 = goods_status.state_8 = goods_status.state_10 = '';
+            goods_status.state_9 = `<a href="javascript:void(0)">确认退款</a>`;
+            break;
+        case 9:
+            order_status.title   = `确认退款`;
+            goods_status.state_1 = goods_status.state_2 = goods_status.state_3 = goods_status.state_4 = goods_status.state_5 = goods_status.state_6 = goods_status.state_7 = goods_status.state_8 = goods_status.state_9 = '';
+            goods_status.state_10= `<div class="my_order_store_clear" id="`+ key.weid +`">删除</div>`;
+            break;
+        case 10:
+            order_status.title   = `已删除`;
+            goods_status.state_1 = goods_status.state_2 = goods_status.state_3 = goods_status.state_4 = goods_status.state_5 = goods_status.state_6 = goods_status.state_7 = goods_status.state_8 = goods_status.state_9 = goods_status.state_10 = '';
+            break;
+    }
+
+    var template = `
+    <div class="my_order_store">
+        <div class="my_order_store_title">
+            <div class="my_order_store_title_time">`+ key.updated_at.substr(0, 10) +`</div>订单号：
+            <div class="my_order_store_number">`+ key.order_num +`</div>
+            <div class="my_order_store_status">`+ order_status.title +`</div>`+ goods_status.state_10 +`
+        </div>
+        <ul class="my_order_store_list">
+            <li class="my_order_img_info">`
+
+                $.map(key.goods, function(value, i) {
+                    template += order_goods(key, value, i);
+                })
+
+                template +=`
+
+            </li>
+            <li class="my_order_price">
+                <div class="my_order_order_price">￥`+ all_price.toFixed(2) +`<div> (含运费：0.00) </div></div>
+            </li>
+            <li class="my_order_operation">
+                <div class="my_order_order_operation">
+                    <a href="/user/order/detail/`+ key.weid +`" target="_blank">订单详情</a>`
+                    $.map(goods_status, function(data, j) {
+                        template += data;
+                        goods_status = ''
+                    });
+                    
+                    template +=`                    
+                </div>
+            </li>
+        </ul>
+    </div>`
+    return template;
+}
+
+var no_goods = function() {
+    layer.msg("暂无商家商铺，请前往添加", { time: 2500 });
+}
+
+var orderlisthtml = function(plat_user_id, order_num, status, order_status, logistics_status, time_start, time_end, page, keywords) {
     var body2 = new Object();
-    body2.plat_user_id     = plat_user_id;
+        body2.plat_user_id     = plat_user_id;
+        body2.order_num        = order_num;
+        body2.status           = status;
+        body2.order_status     = order_status;
+        body2.logistics_status = logistics_status;
+        body2.time_start       = time_start;
+        body2.time_end         = time_end;
+        body2.page             = page;
+        body2.keywords         = keywords;
 
     var options2 = $.post(apiUrl + "order/list", body2);
     options2.done(function(data) {
         if(data.code == 200) {
             var result = data.data;
             if(!result) {
-            	no_goods();
-            	return false;
+                no_goods();
+                return false;
             }
 
-            // 
             $.map(result.list, function(key, index) {
-            	console.log("商家店铺：", key);
-            	$(".my_order_content").append(orderlist(key, index));
+                console.log("商家店铺：", key);
+                all_price = 0;
+                $(".my_order_content").append(orderlist(key, index));
             });
-        }
-    });
-    options2.fail(function(error) {
-        console.error(error);
-    });
-}
 
-function mall_userdetail() {
-    var options2 = $.get(apiUrl + "mall/userdetail");
-    options2.done(function(data) {
-        if(data.code == 200) {
-            console.log(data);
+            $(".my_order_store_clear").click(function() {
+                var shop_id = $(this).attr("id"),
+                    body3 = new Object();
+                    body3.order_id = shop_id;
+                console.log($(this).attr("id"));
+                var options3 = $.post(apiUrl + "order/delete", body3);
+                options3.done(function(body) {
+                    if(body.code == 200 && body.data > 0) {
+                        console.log(body.data);
+                        layer.msg("删除成功！", { time: 2500 });
+                    } else {
+                        layer.msg(body.message, { time: 1500 });
+                    }
+                });
+                options3.fail(function(error) {
+                    console.error(error);
+                })
+            })
         }
     });
     options2.fail(function(error) {
@@ -98,7 +194,7 @@ var hasDomain = function(weid) {
     var options1 = $.get(apiUrl + "pages/page/getDetailByUser/" + weid);
     options1.done(function(data) {
         if(data.code == 200) {
-            console.log("主页详情", data.data);
+            // console.log("主页详情", data.data);
             if(!data.data) {
                 weid = data.data.plat_user_id;
                 domain = "/" + data.data.domain + "/";
@@ -120,4 +216,3 @@ var hasDomain = function(weid) {
     });
 }
 hasDomain(weid);
-

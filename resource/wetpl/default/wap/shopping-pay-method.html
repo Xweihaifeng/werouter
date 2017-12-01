@@ -90,15 +90,21 @@
                         openid  : getQueryString("openid")
                     };
 
+                    if(!getQueryString("openid")) {
+                        return false;
+                    }
                     self.$http.post(apiUrl + 'pages/wechatPay/mallOrderPhonePay', body1).then(function (data) {
                         self.config = data.data.data.config;
 
-                        var onBridgeReady = function() {
+                        var onBridgeReady = function(res) {
                             if (res.err_msg == "get_brand_wcpay_request:ok") {
                                 layer.msg("微信支付完成", { time: 1500 });
+                                // var domain = window.sessionStorage.getItem("domain");
+                                // alert(domain);
+                                // window.location.href = `/`+ domain +`/wemall`;
+                                // 支付成功 回到首页
+                                // alert("支付成功");
                                 // MessageBox.alert(commonToast["paySuccess"]).then(action => {
-                                    //支付成功 回到首页
-                                //     alert("支付成功");
                                 // });
                             } else if (res.err_msg == "get_brand_wcpay_request:cancel") {
                                 //取消支付!
@@ -116,9 +122,9 @@
                                 document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
                             }
                         } else {
-                            alert(self.config.appId, self.config.timestamp, self.config.nonceStr, self.config.package, self.config.signType, self.config.paySign)
+                            // alert(self.config.appId, self.config.timestamp, self.config.nonceStr, self.config.package, self.config.signType, self.config.paySign)
                             WeixinJSBridge.invoke('getBrandWCPayRequest', self.config, function (res) {
-                                onBridgeReady();
+                                onBridgeReady(res);
                             })
                         }
                     });
@@ -136,7 +142,6 @@
                         var body = new Object();
                         body.url = window.location.href;
                         body.orderid = self.store_num;
-                        debugger;
                         window.location.href = apiUrl + 'mall/getMallOpenid?url=' + window.location.href + '&orderid=' + self.store_num + '&style=1';
                     }
                 }

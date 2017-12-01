@@ -1010,7 +1010,7 @@ checkdomain(domain,id);
         var obj=$(".product-buy-list").find(".goods_list");
         var price=0;
         obj.each(function(index,element){
-           price=price+parseInt($(element).find("#one_price").find("span").text())*parseInt($(element).find("#numm").val());
+           price=price+parseFloat($(element).find("#one_price").find("span").text())*parseFloat($(element).find("#numm").val());
         });
         $("#sum_price").html("￥" + price);
         $('#pay_price').html(price);    
@@ -1019,8 +1019,8 @@ checkdomain(domain,id);
     var numjian=function(){
         $(".amount-num-jian").on('click',function(){
             var obj=$(this).parent('.amount-num');
-            if(parseInt($(obj).find("#numm").val())>=2){
-                $(obj).find("#numm").val(parseInt($(obj).find("#numm").val())-1);
+            if(parseFloat($(obj).find("#numm").val())>=2){
+                $(obj).find("#numm").val(parseFloat($(obj).find("#numm").val())-1);
                 numchange(obj);    
             }else{
                 mess_tusi("数量小于1");    
@@ -1032,8 +1032,8 @@ checkdomain(domain,id);
     var numjia=function(){
         $(".amount-num-jia").on('click',function(){
             var obj=$(this).parent('.amount-num');
-            if(parseInt($(obj).find("#numm").val())<parseInt($(obj).find('.num_kc').val())){
-                $(obj).find("#numm").val(parseInt($(obj).find("#numm").val())+1);
+            if(parseFloat($(obj).find("#numm").val())<parseFloat($(obj).find('.num_kc').val())){
+                $(obj).find("#numm").val(parseFloat($(obj).find("#numm").val())+1);
                 numchange(obj);    
             }else{
                 mess_tusi("数量大于库存");    
@@ -1046,17 +1046,17 @@ checkdomain(domain,id);
         $("input[name='nums']").change(function(){
             var obj=$(this).parent('.amount-num');
             var re = /^[1-9]\d*$/;
-            if(!re.test(parseInt($(obj).find("#numm").val()))){
+            if(!re.test(parseFloat($(obj).find("#numm").val()))){
                 mess_tusi("数量格式有误"); 
                 $(obj).find("#numm").val(1)         
                 return false;
             } 
-            if(parseInt($(obj).find("#numm").val())<1){
+            if(parseFloat($(obj).find("#numm").val())<1){
                 $(obj).find("#numm").val(1)
                 mess_tusi("数量小于0");   
             } 
-            if(parseInt($(obj).find("#numm").val())>parseInt($(obj).find('.num_kc').val())){
-                $(obj).find("#numm").val(parseInt($(obj).find('.num_kc').val()))
+            if(parseFloat($(obj).find("#numm").val())>parseFloat($(obj).find('.num_kc').val())){
+                $(obj).find("#numm").val(parseFloat($(obj).find('.num_kc').val()))
                 mess_tusi("数量大于库存");         
             }
             buynumfunNotDiscount();   

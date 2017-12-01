@@ -20,13 +20,11 @@
     <!--<script src="{{PATH_TML}}interface/my-activity.js"></script>-->
     <script src="{{PATH_TML}}js/home.js"></script>
     <script src="/common/jquery.animsition/js/jquery.animsition.min.js"></script>
-    <title></title>
+    <script src="/common/jquery-lazyload/jquery.lazyload.js"></script>
+    <title>活动</title>
 </head>
-<body>
+<body class="animsition">
     <style>
-        /*#container {
-            padding-top: 0.57rem!important;
-        }*/
         .act-cont-title {
             width: 1.7rem;
         }
@@ -43,15 +41,9 @@
 
         .act-cont-time {
             width: 1.7rem;
-        }
-
-        .act-cont-time p:nth-child(1) {
-            width: 2.3rem;
-        }
-
-        .act-cont-time p:nth-child(2) {
-            /*padding-left: 0.45rem;*/
-            width: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
     </style>
     <nav></nav>

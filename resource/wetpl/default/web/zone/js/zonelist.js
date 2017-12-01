@@ -413,6 +413,15 @@ $(document).ready(function(){
     //TA的粉丝/TA他的关注
     var listTpl = function(cid, data) {
         //let avatar = apiUrl + data.avatar;
+        let domain = data.domain;
+        let member = data.member_weid;
+        if (domain == null || domain == '') {
+            if (member == null || member == '') {
+                domain = '';
+            } else {
+                domain = '/u/' + member;
+            }
+        }
         let avatar = '';
         let nickname = ''
         if (data.nickname != null) {
@@ -425,7 +434,7 @@ $(document).ready(function(){
         }
         let tpl = `
             <div class="${cid}" title="${nickname}">
-                <img id="${data.domain}" style="border: 1px solid #ccc; border-radius: 50%; height: 100%;  width: 100%; " src="${avatar}" width="54" />
+                <img id="${domain}" style="border: 1px solid #ccc; border-radius: 50%; height: 100%;  width: 100%; " src="${avatar}" width="54" />
             </div>
         `
         return tpl;
@@ -616,7 +625,9 @@ $(document).ready(function(){
 
                     $(".fans-head, .friends-head").click(function(e){
                         let domain = $(e.target).attr('id');
-                        window.location.href = '/' + domain;
+                        if (domain != '') {
+                            window.location.href = '/' + domain;
+                        }
                         //console.log(domain);
                     });
 

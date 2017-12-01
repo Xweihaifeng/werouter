@@ -5,13 +5,11 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link rel="shortcut icon" id="favicon" href="" />
     <link rel="stylesheet" href="{{PATH_TML}}css/home.css"/>
-    <link rel="stylesheet" href="{{PATH_TML}}css/swiper.min.css"/>
-    <link rel="stylesheet" href="{{PATH_TML}}css/activity-detail.css"/>
     <link rel="stylesheet" href="{{PATH_TML}}css/common.css"/>
+    <link rel="stylesheet" href="{{PATH_TML}}css/activity-detail.css"/>
     <script src="{{PATH_TML}}js/zepto.min.js"></script>
     <script src="{{PATH_TML}}js/vue.min.js"></script>
     <script type="text/javascript" src="{{PATH_CONFIG}}"></script>
-    <script src="{{PATH_TML}}js/swiper-3.3.1.min.js"></script>
     <link rel="stylesheet" href="{{PATH_TML}}js/layui/css/layui.css"/>
     <script src="{{PATH_TML}}js/layui/layui.js"></script>
     <title></title>
@@ -25,68 +23,48 @@
     </div>-->
 
     <div id="carousel">
-        <div class="swiper-container" id="my-swiper">
-            <div class="swiper-wrapper carousel">
-                <div class="swiper-slide">
-                    <img :src="cover" alt=""/>
-                </div>
-            </div>
-            <div class="swiper-pagination"></div>
-        </div>
+        <img :src="cover" alt=""/>
     </div>
 
     <div id="container">
-        <div class="actd-title">活动简介</div>
+        <div class="actd-title">{{title}}</div>
         <ul>
-            <li class="actd-theme"><img src="/common/img/theme.png" alt=""/><p>{{title}}</p></li>
-            <li class="actd-time"><img src="/common/img/clock.png" alt=""/><p>{{start}} 至 {{end}} 报名截止</p></li>
-            <li class="actd-map">
-                <img src="/common/img/location.png" alt=""/>
-                <p><a href="/activity-map">{{address}}</a></p>
-                <!--<img class="arrow" src="/common/img/arrow-right.png" alt=""/>-->
+            <!--<li class="actd-theme"><img src="/common/img/theme.png" alt=""/><p>{{title}}</p></li>-->
+            <li class="actd-time"><img src="/common/img/icon_time.png" alt=""/><p>{{start}} 至 {{end}} 报名截止</p></li>
+            <li class="actd-map" style="">
+                <img src="/common/img/icon_map.png" alt=""/>
+            	<p style="display: flex; border-bottom: 1px solid #eee; justify-content: space-between; align-items: center;">
+                    <a :href="map">{{address}}</a>
+                    <img class="arrow" src="/common/img/arrow-right.png" alt=""/>
+                </p>
             </li>
-            <li class="actd-zb"><img src="/common/img/company.png" alt=""/><p>{{sponsor}}</p></li>
-            <li class="actd-bm" style="background: #f0f0f0">已报名用户</li>
-            <li class="actd-users">
+            <li class="actd-zb" style="box-shadow: 5px 5px 5px #eee;"><img src="/common/img/icon_host.png"/><p>{{sponsor}}</p></li>
+            <li class="actd-bm" style="margin-top: 0.12rem;border-bottom: 1px solid #eee;height: 0.38rem;">已报名用户</li>
+            <li class="actd-users" @click="detail('users')">
                 <img :src="user.avatar" v-for="user in users" alt=""/>
             </li>
-            <li style="background: #f0f0f0">活动嘉宾</li>
-            <li class="actd-guest" v-for="guest in guests">
-                <img :src="guest.avatar" alt=""/>
+            <li style="margin-top: 0.12rem;border-bottom: 1px solid #eee;height: 0.38rem;">活动嘉宾</li>
+            <li class="actd-guest" @click="detail('guests')" style="padding-bottom: 0.1rem;">
+                <div v-for="guest in guests" style="display: inline-flex;">
+                <img :src="guest.avatar" style="margin-top: 0.1rem!important;display: block;"/>
                 <div>
-                    <p>{{guest.name}}</p>
+                    <p style="padding-top: 0.1rem!important;">{{guest.name}}</p>
                     <p style="font-size: 0.12rem; color: #a6a6a6">{{guest.position}}</p>
                 </div>
+                </div>
             </li>
-            <li style="background: #f0f0f0">活动详情</li>
-            <li class="actd-detail" v-html="content"></li>
+            <li style="margin-top: 0.12rem;border-bottom: 1px solid rgb(238, 238, 238);height: 0.38rem;">活动详情</li>
+            <li class="actd-detail" style="padding-right: 0.15rem;" v-html="content"></li>
         </ul>
 
-        <div class="actd-apply">
+        <div class="actd-apply" @click="apply">
             <p>{{ state }}</p>
-            <button data-method="notice" @click="apply" class="layui-btn" style="background: transparent; width: 100%; position: absolute; bottom: 0; left: 0;"></button>
+            <!--<button data-method="notice" @click="apply" class="layui-btn" style="background: transparent; width: 100%; position: absolute; bottom: 0; left: 0;"></button>-->
         </div>
     </div>
 </div>
 
     <script>
-        var mySwiper = new Swiper ('#my-swiper', {
-            direction: 'horizontal',
-            loop: true,
-            speed: 1000,
-            autoplay : 3000,
-            autoplayDisableOnInteraction : false,
-            pagination: '.swiper-pagination',
-            paginationClickable :true,
-            nextButton: '.swiper-button-next',
-            prevButton: '.swiper-button-prev',
-            grabCursor : true
-        })
-
-        $("#user").click(function(){
-//            window.location.href = "wcard";
-        })
-
         const userDetail = (weid, token, ref) => {
             $.ajax({
                 url:  apiUrl + 'activity/enroll_my_order',
@@ -107,7 +85,7 @@
                                 break;
                             case 3: ref.state = '已报名';
                                 $(".layui-btn").hide();
-                                $(".actd-apply").css({'background': '#EC2506', 'box-shadow': '5px 5px 15px 0 #EC2506'})
+                                $(".actd-apply").css({'background': '#ff7105', 'box-shadow': '5px 5px 15px 0 #ff7105'})
                                 break;
                             default: break;
                         }
@@ -168,8 +146,8 @@
                         ref.sponsor = p.Sponsor;
                         ref.content = p.content;
                         ref.address = p.area_name + p.address;
-                        ref.start = p.created_at.substr(5);
-                        ref.end = p.enroll_deadline.substr(5);
+                        ref.start = p.created_at;
+                        ref.end = p.enroll_deadline;
                     }
                 }
             })
@@ -233,6 +211,7 @@
                 position: '',
                 company: '',
                 backurl: '',
+                map: '/activity/map/',
                 state: '立即报名',
                 weid: window.location.pathname.split('/').pop(),
                 token: localStorage.getItem('token'),
@@ -244,6 +223,7 @@
                 const url_users = apiUrl + 'activity/enroll/lists';
                 const url_guests = apiUrl + 'activity/guest/lists';
                 _self.backurl = sessionStorage.getItem('history');
+                _self.map += _self.weid;
                 reqData(url_info, _self);
                 reqUsers(url_users, {activity_id: _self.weid}, _self);
                 reqGuest(url_guests, {activity_id: _self.weid}, _self);
@@ -252,66 +232,13 @@
             mounted: function(){
                 this.$nextTick(function () {
                     let _self = this;
-                    layui.use('layer', function(){ //独立版的layer无需执行这一句
-                        var $ = layui.jquery, layer = layui.layer; //独立版的layer无需执行这一句
-                        //触发事件
-                        var active = {
-                            setTop: function(){
-                                var that = this;
-                            }
-                            ,notice: function(){
-                                layer.open({
-                                    type: 1
-                                    ,title: false //不显示标题栏
-                                    ,closeBtn: false
-                                    ,area: '300px;'
-                                    ,shade: 0.8
-                                    ,id: 'LAY_layuipro' //设定一个id，防止重复弹出
-                                    ,btn: ['提交申请', '回到详情']
-                                    ,btnAlign: 'c'
-                                    ,moveType: 1 //拖拽模式，0或者1
-                                    ,content:
-                                        `<div style="padding: 30px; line-height: 22px; background-color: #393D49; color: #fafafa; font-weight: 300;">
-                                         <p style="font-size: 0.16rem;">请填写您的个人信息</p>
-                                            <ul id="application" style="margin-top: 0.25rem;">
-                                                <li style="display: flex; align-items: center; margin-top: 0.25rem;">
-                                                    <img src="/common/img/name.png" style="display: block; width: 0.2rem; margin-right: 0.15rem;"/>
-                                                    <input class="uname" type="text" placeholder="请输入您的姓名" maxlength="12" style="border: none; outline: none; font-size: 0.14rem; border-radius: 0.02rem; height: 0.25rem; padding-left: 0.1rem;"/>
-                                                </li>
-                                                <li style="display: flex; align-items: center; margin-top: 0.25rem;">
-                                                    <img src="/common/img/position.png" style="display: block; width: 0.2rem; margin-right: 0.15rem;"/>
-                                                    <input class="upos" type="text" placeholder="请输入您所在的职位" maxlength="20" style="border: none; outline: none; font-size: 0.14rem; border-radius: 0.02rem; height: 0.25rem; padding-left: 0.1rem;"/>
-                                                </li>
-                                                <li style="display: flex; align-items: center; margin-top: 0.25rem; margin-bottom: 0.3rem;">
-                                                    <img src="/common/img/company.png" style="display: block; width: 0.2rem; margin-right: 0.15rem;"/>
-                                                    <input class="ucom" type="text" placeholder="请输入您所在的公司" maxlength="20" style="border: none; outline: none; font-size: 0.14rem; border-radius: 0.02rem; height: 0.25rem; padding-left: 0.1rem;"/>
-                                                </li>
-                                            </ul>
-                                        </div>`
-                                    ,success: function(layero){
-                                        $('.layui-layer-btn0').click(function(){
-                                            let name = $('.uname').val();
-                                            let position = $('.upos').val();
-                                            let ucom = $('.ucom').val();
-                                            userStore(_self.weid, _self.token, _self.phone, name, position, ucom, _self);
-                                        })
-                                    }
-                                });
-                            }
-                        };
-
-                        $('.layui-btn').on('click', function(){
-                            var othis = $(this), method = othis.data('method');
-                            active[method] ? active[method].call(this, othis) : '';
-                        });
-                    });
                 })
             },
             methods: {
                 apply: function(){
                     //获取token 如不存在则跳转登录页 如存在则显示活动申请框
                     if (true) {
-
+                        window.location.href = '/activity/apply/' + this.weid;
                     } else {
                         //login
                     }
@@ -320,6 +247,13 @@
                         layer.msg('活动暂未开始', {
                             time: 1500
                         })
+                    }
+                },
+                detail: function(type){
+                    switch(type) {
+                        case 'users': window.location.href = '/activity/users/' + this.weid; break;
+                        case 'guests': window.location.href = '/activity/guests/' + this.weid; break;
+                        default: break;
                     }
                 }
             }

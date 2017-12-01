@@ -87,7 +87,27 @@ a {
 	vertical-align: top;
 }
 .des div {
-	border-bottom: 1px solid #f1f1f1;
+	border-bottom: 1px solid #eee;
+}
+.des a>div{
+	position: relative;
+}
+.des a>div:after{
+	display: block;
+	content: '';
+	width:8px;
+	height:8px;
+	position: absolute;
+	top:50%;
+	right:0;
+	margin-top:-4px;
+	border-top: 1px solid #bbb;
+	border-right:1px solid #bbb;
+	-webkit-transform: rotate(45deg);
+	-moz-transform: rotate(45deg);
+	-ms-transform: rotate(45deg);
+	-o-transform: rotate(45deg);
+	transform: rotate(45deg);
 }
 .foot div{
 	margin: 0 0.14rem;

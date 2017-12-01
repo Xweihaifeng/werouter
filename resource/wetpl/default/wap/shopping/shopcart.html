@@ -11,6 +11,7 @@
 
     <script src="{{PATH_TML}}js/jquery-3.2.1.min.js"></script>
     <script src="{{PATH_CONFIG}}"></script>
+    <script src="/common/js/layer/layer.js"></script>
     <script src="{{PATH_TML}}js/vue.min.js"></script>
     <script src="{{PATH_TML}}js/vue-resource.min.js"></script>
 
@@ -49,8 +50,8 @@
                             </label>
                         </p>
                         <p class="operation">
-                            <span>删除</span>
-                            <span>移入关注</span>
+                            <span @click="deletePro(item)">删除</span>
+                            <!--<span>移入关注</span>-->
                         </p>
                     </div>
                 </li>
@@ -73,33 +74,47 @@
 
 <script>
     Vue.http.headers.common['token'] = window.localStorage.getItem("token");
-//    Vue.http.headers.common['token'] = 'eyJpdiI6IlwvTFZlRU5lQ2FlMHE3MW16dkFmNUVnPT0iLCJ2YWx1ZSI6Ijc2ZWt3M1o5U2RcL2tWNTlYazBSVDVsMDIwaHpcL2dWZ2VwSVY1V2hib3o0RmxTMzBvU2o1SEMyZ2U2UjRVV0xielFBWlROb1ArbGhyRTY3VHBXTlwvenZwUXF6aHBpUmROeFJJNE5CRUh2YyswPSIsIm1hYyI6ImIzYjBiYzM2YjBlMjkxNDAzMjZlYzM5YWJmMWNhOGEzMDJkY2FjMzFiNGQwMGM0NGFlYTRkMTVlMzNhZGU1N2EifQ=='
-
     var app = new Vue({
         el: "#shopCart",
         data: {
-            list: []
+            list   : [],
+            user_id: window.localStorage.getItem("weid")
         },
         mounted: function () {
-            var data = {
-                "user_id" : window.localStorage.getItem("weid")
-            };
-            console.log(data);
-            this.$http.post(apiUrl+'cart/lists',data).then(function (res) {
-                var resList = res.data.data.list;
-                if(resList && resList.length){
-                    for(var i=0;i<resList.length;i++){
-                        resList[i].mall["pCheck"] = false;
-                        for(var a = 0; a < resList[i].goods.length; a++){
-                            resList[i].goods[a]["checked"] = false
-                        }
-                    }
-                    this.list = res.data.data.list;
-                    console.log(this.list)
+
+/*            var domain = window.sessionStorage.getItem("goods_domain");
+            this.$http.get(apiUrl + 'pages/page/getDetailByDomain/' + domain).then(function (res) {
+                console.log(res);
+                if(res.data.code == 200) {
+                    this.user_id = res.data.data.plat_user_id;
+
                 }
-            })
+            })*/
+
+            this.init()
+
         },
         methods: {
+            init : function () {
+                var self = this;
+                var data = {
+                    "user_id" : self.user_id,
+                };
+                console.log(data);
+                this.$http.post(apiUrl+'cart/lists', data).then(function (res) {
+                    var resList = res.data.data.list;
+                    if(resList && resList.length){
+                        for(var i=0;i<resList.length;i++){
+                            resList[i].mall["pCheck"] = false;
+                            for(var a = 0; a < resList[i].goods.length; a++){
+                                resList[i].goods[a]["checked"] = false
+                            }
+                        }
+                        this.list = res.data.data.list;
+                        console.log(this.list)
+                    }
+                })
+            },
             getNumber : function (storeObj,flag) {
                 storeObj.storeAllMoney = 0.00;
                 storeObj.num = 0;
@@ -162,9 +177,32 @@
                 window.localStorage.setItem('orderObj',JSON.stringify(orderObj));
 
                 if(storeObj.storeAllMoney > 0){
-                    window.location.href = '/shopping/order'
+                    var domain = window.sessionStorage.getItem("domain");
+                    var shopping_weid = window.localStorage.getItem("shopping_weid");
+                    if(!domain) {
+                        domain = 'index';
+                    }
+                    window.location.href = '/'+ domain +'/wemall/order/'+ shopping_weid;
                 }
 
+            },
+            deletePro : function (pro) {
+                console.log(pro);
+                var self = this;
+                layer.confirm('确认删除该条商品吗？', {
+                    title: false,
+                    btn: ['确定','取消']
+                }, function(index){
+                    self.$http.post(apiUrl+'cart/destroy',{'weid' : pro.cartweid}).then(function (res) {
+                        console.log(res);
+                        if(res.data.code === 200){
+                            this.init()
+                        }else{
+                            layer.msg('删除失败')
+                        }
+                        layer.close(index);
+                    })
+                });
             }
         }
     })

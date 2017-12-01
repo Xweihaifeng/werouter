@@ -112,9 +112,9 @@
                 <div class="detail_selected"> 已选 </div>
                 <div class="detail_selected_sub">
                     <li>
-                        <input id="min" name="" type="button" value="-" />  
-                        <input id="quantity" name="" type="text" value="1" />  
-                        <input id="add" name="" type="button" value="+" />&nbsp;件
+                        <button id="min">-</button>
+                        <button id="quantity">1</button>
+                        <button id="add">+</button>&nbsp;件
                     </li>
                 </div>
                 <div class="detail_selected_switch" style="display: none">
@@ -122,6 +122,8 @@
                     <!-- <em class="">•••</em> -->
                 </div>
             </slide>
+            <slide class="detail_goods_detail"></slide>
+
             <slide class="detail_address_mask"></slide>
             <slide class="detail_rddress_mask_content" style="height: 0;">
                 <div class="detail_mask_top">
@@ -227,7 +229,7 @@
 
         <!-- 商城详情底部开始 -->
         <footer class="detail_footer">
-            <a href="javascript:void(0)" class="detail_footer_follow">
+            <a href="javascript:void(0)" class="detail_footer_follow" style="display: none">
                 <div class="detail_footer_follow_img detail_btn1"></div>
                 收藏
             </a>

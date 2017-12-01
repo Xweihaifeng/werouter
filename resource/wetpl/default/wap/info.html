@@ -131,7 +131,7 @@
 				domain: ref.domain
 			},
 			success: function (data) {
-				alert(JSON.stringify(data));
+//				alert(JSON.stringify(data));
 				localStorage.setItem('weid', data.data.weid);
 				localStorage.setItem('token', data.token);
 				localStorage.setItem('activation', data.data.activation_status);
@@ -230,7 +230,7 @@
 									// 分享标题
 									link: link,
 									// 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-									desc: summary,
+									desc: ref.motto,
 									//分享描述
 									imgUrl: cover,
 									// 分享图标
@@ -244,7 +244,7 @@
 								wx.onMenuShareAppMessage({
 									title: title,
 									// 分享标题
-									desc: summary,
+									desc: ref.motto,
 									// 分享描述
 									link: link,
 									// 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
@@ -378,7 +378,7 @@
 			success: function(data) {
 				console.log(data);
 				if (data.code == 200) {
-					alert('isFollow:' + data.data)
+//					alert('isFollow:' + data.data)
 					if (data.data == 1) {
 						ref.state = true;
 						ref.status = '已关注';

@@ -6,9 +6,9 @@ $(function() {
 
     // 公用部分变量声明
     var token = window.localStorage.getItem('token');
-    var user_weid = window.localStorage.getItem("weid");
+    var user_weid = '';
+    // var user_weid = window.localStorage.getItem("weid");
     var shop_weid = window.location.pathname.split('/').pop();
-    // var shop_weid = window.localStorage.getItem("shopping_weid");
 
     // 用户token验证部分
     if(token) {
@@ -21,6 +21,25 @@ $(function() {
         });
         $("#token").slideUp();
     }
+
+    var reqUserId = (url, domain) => {
+        $.ajax({
+            url: url + domain,
+            type: 'GET',
+            async: false,
+            success: function(data) {
+                if (data.code == 200) {
+                    user_weid = data.data.plat_user_id;
+                }
+            },
+            error: function(xhr) {
+                console.log(xhr);
+            }
+        })
+    }
+
+    let domain = window.location.pathname.split('/')[1];
+    reqUserId(apiUrl + 'pages/page/getDetailByDomain/', domain);
 
     // 商品评价跳转
     $(".detail_nav_title").html(`
@@ -40,18 +59,25 @@ $(function() {
             <div class="detail_price_cut" style="display: none"><button>降价通知</button></div>
         </slide>
         <slide class="detail_art">
-            <div>`+ result.note +`<a href="#"> 点击查看详情 </a></div>
+            <div>`+ result.note +`<a href="javascript:void(0)" id="goods_detail"> 点击查看详情 </a></div>
         </slide>`
         return template;
     }
 
     // 商品详情页置顶轮播
     var detail_swiper = function(result) {
-        var price = result.picture.split(","), temp_img = '';
-        $.each(price, function(index, value) {
+        var price = []; 
+        var temp_img = '';
 
+        if(!result.picture) {
+            price.push(result.cover);
+        } else {
+            price = result.picture.split(",");
+        }
+
+        $.each(price, function(index, value) {
             if(!value) {
-                value = "/common/img/img9.jpg";
+                value = result.cover;
 
             } else if (value.indexOf('http') != 0 && value != "") {
                 value = imgSet(value, 414, 408, 3);
@@ -71,7 +97,7 @@ $(function() {
     }
 
     // 商品评论开始
-    var detail_evaluate = function(result) {
+/*    var detail_evaluate = function(result) {
         var price = result.picture.split(","), temp_img = '';
         $.each(price, function(index, value) {
 
@@ -87,7 +113,7 @@ $(function() {
         });
         var template = temp_img;
         return template;
-    }
+    }*/
 
     var detail_set_meal = function(result) {
         var temp_img = result.cover;
@@ -116,6 +142,11 @@ $(function() {
         return template;
     }
 
+    var goods_detail = function(result) {
+        var template = result.content;
+        return template;
+    }
+
     // 套餐选择蒙层显示与否开始
     $(".detail_selected_switch").click(function() {
         return false;
@@ -139,10 +170,11 @@ $(function() {
     // 套餐选择蒙层显示与否结束
 
     // 商品评价
-    var options3_body = {};
-    options3_body.goods_id = shop_weid;
-    options3_body.limit = 3;
-    options3_body.page = 1;
+    var stock, 
+        options3_body = {};
+        options3_body.goods_id = shop_weid;
+        options3_body.limit = 3;
+        options3_body.page = 1;
 
     var options3 = $.post(apiUrl + "goods/comment/list", options3_body);
     options3.done(function(data) {
@@ -158,18 +190,21 @@ $(function() {
         console.error(error);
     });
 
-    var quantity = $("#quantity");  
-    $("#add").click(function(){  
-        quantity.val(parseInt(quantity.val()) + 1);  
+    var quantity = $("#quantity");
+    $("#add").click(function(){
+        if(quantity.text() >= stock) {
+            return false;
+        }
+        quantity.text(parseInt(quantity.text()) + 1);
         $("#min").removeAttr("disabled");                  //当按加1时，解除$("#min")不可读状态
     })
 
-    $("#min").click(function(){  
-        if (parseInt(quantity.val())>1) {                  //判断数量值大于1时才可以减少  
-            quantity.val(parseInt(quantity.val()) - 1)  
-        } else {  
+    $("#min").click(function(){
+        if (parseInt(quantity.text()) > 1) {                  //判断数量值大于1时才可以减少  
+            quantity.text(parseInt(quantity.text()) - 1)
+        } else {
             $("#min").attr("disabled","disabled")          //当$("#min")为1时，$("#min")不可读状态  
-        }  
+        }
     })
 
     // 商品详情内容显示
@@ -181,9 +216,11 @@ $(function() {
         }
 
         var result = data.data;
+        stock = result.stock;
         $(".detail_title").html(detail_title(result));
+        $(".detail_goods_detail").html(goods_detail(result));
         $(".detail_swiper").html(detail_swiper(result));
-        $(".detail_evaluate_imgs").html(detail_evaluate(result));
+        // $(".detail_evaluate_imgs").html(detail_evaluate(result));
         $(".detail_mask_pic").html(detail_set_meal(result));
         
         // 商城详情内容轮播
@@ -197,6 +234,10 @@ $(function() {
             paginationClickable: true,
             grabCursor: true
         })
+
+        $("#goods_detail").click(function() {
+            $(".detail_goods_detail").slideToggle("slow");
+        });
 
         $(".detail_footer_pay").click(function() {
 
@@ -213,7 +254,7 @@ $(function() {
                 console.error(error);
             });
 
-            result.goods_num = $("#quantity").val();
+            result.goods_num = $("#quantity").text();
             var goodsList    = new Array();
             var orderObj = {
                 name     : name,
@@ -222,7 +263,6 @@ $(function() {
             goodsList.push(result);
 
             window.localStorage.setItem('orderObj',JSON.stringify(orderObj));
-            // window.location.href = '/shopping/order';
             var domain = window.location.pathname.split("/")[1];
             var macth_weid = window.location.pathname.split("/").pop();
             window.location.href = `/`+ domain +`/wemall/order/`+ macth_weid +``;
@@ -232,6 +272,7 @@ $(function() {
         console.error(error);
     });
 
+    // Mall - 商品 - 收藏
     $(".detail_footer_follow").click(function() {
         var options4 = $.get(apiUrl + "goods/collectionincrement/" + shop_weid);
         options4.done(function(data) {
@@ -240,7 +281,11 @@ $(function() {
                     layer.msg(data.message, { time: 1500 });
                     return false;
                 }
+
+                $(".detail_footer_follow_img").css("background-position", "-50px -24px")
                 layer.msg("收藏成功", { time: 1500 });
+            } else if(data.code == 401) {
+                window.location.href = '/login';
             } else {
                 console.error(data.message);
             }
@@ -259,11 +304,14 @@ $(function() {
         var options2 =  $.post(apiUrl + "cart/store", body);
         options2.done(function(data) {
             console.log(data);
-            if(data.code != 200) {
+            if(data.code == 200) {
+                layer.msg("成功加入购物车", { time: 1500 });
+            } else if(data.code == 401) {
+                window.location.href = '/login';
+            } else {
                 layer.msg(data.message, { time: 1500 });
                 return false;
             }
-            layer.msg("成功加入购物车", { time: 1500 });
         });
         options2.fail(function(error) {
             console.error(error);
@@ -272,6 +320,7 @@ $(function() {
 
     $(".detail_footer_cart").click(function() {
         var domain = window.location.pathname.split("/")[1];
+        window.sessionStorage.setItem("goods_domain", domain);
         window.location.href = "/" + domain + "/wemall/cart"
     });
 

@@ -11,6 +11,7 @@
 
     <script type="text/javascript" src="{{PATH_TML}}js/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="{{PATH_CONFIG}}"></script>
+    <script src="/common/js/layer/layer.js"></script>
     <script src="{{PATH_TML}}js/vue.min.js"></script>
     <script src="{{PATH_TML}}js/vue-resource.min.js"></script>
 
@@ -124,11 +125,14 @@
         },
         methods: {
             goAddrList: function () {
+                var domain = window.location.pathname.split("/")[1];
+                
                 window.location.href = "/shopping/pay/address";
             },
             order_footer_pay: function () {
                 if(!this.isDefault){
-                    return
+                    layer.msg("请添加收货地址", { time: 2500 });
+                    return false;
                 }
                 var self = this;
                 var goods_list = new Array();
@@ -152,6 +156,8 @@
                         window.sessionStorage.setItem('store_num', data.body.data);
 
                         window.location.href = `/pay/shopping?store_num=`+ data.body.data +``;
+                    } else {
+                        layer.msg(data.body.message, { time: 2500 });
                     }
                 })
             }
