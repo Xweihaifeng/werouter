@@ -12,12 +12,15 @@ $(function() {
     options.done(function(data) {
         if(data.code === 200) {
             var thumb_image = data.data.thumb_image;
-            if (thumb_image.indexOf('http') != 0 && thumb_image != "") {
+
+            if(!thumb_image) {
+                thumb_image = "/common/img/org_banner01.jpg";
+
+            } else if (thumb_image.indexOf('http') != 0 && thumb_image != "") {
                 thumb_image = imgSet(thumb_image, 1100, 320, 3);
             }
-            if(thumb_image != ""){
-                $("#thumb_image").attr("src", thumb_image);
-            }
+            $("#thumb_image").css("background-image", `url(`+ thumb_image + `)`);
+
             get_param = data.data.weid;
         } else {
             console.error(data.message);
@@ -32,12 +35,15 @@ $(function() {
         options.done(function(data) {
             if(data.code === 200) {
                 var thumb_image = data.data.thumb_image;
-                if (thumb_image.indexOf('http') != 0 && thumb_image != "") {
+
+                if(!thumb_image) {
+                    thumb_image = "/common/img/org_banner01.jpg";
+
+                } else if (thumb_image.indexOf('http') != 0 && thumb_image != "") {
                     thumb_image = imgSet(thumb_image, 1100, 320, 3);
                 }
-                if(thumb_image != ""){
-                    $("#thumb_image").attr("src", thumb_image);
-                }
+                $("#thumb_image").css("background-image", `url(`+ thumb_image + `)`);
+
             } else {
                 console.error(data.message);
             }
@@ -82,7 +88,6 @@ $(function() {
                 $("#menuY").html($('#' + li_name).text());
             }
 
-            prev_next_page();
         } else {
             console.error(data.message);
         }
@@ -157,7 +162,7 @@ $(function() {
                     if(data.code === 200) {
                         $.map(data.data, function(item, index) {
                             if(item.domain == pathname[1]) {
-                                $(".paging").slideUp();
+                                $(".paging").fadeOut(30);
                                 $(".article_list").text(item.title);
                                 $(".list-article-ul").html("<div class='org_content'><div>"+ item.content +"</div></div>");
                             }
@@ -168,6 +173,18 @@ $(function() {
             $(body.data.list).each(function(index, value) {
                 $(".list-article-ul").append(news_contents(value));
             });
+
+            var setTotalCount = total;
+            $('#box').paging({
+                initPageNo: 1,                                 // 初始页码
+                totalPages: Math.ceil(setTotalCount/limit),    //总页数
+                totalCount: '合计' + setTotalCount + '条数据', // 条目总数
+                slideSpeed: 600,                               // 缓动速度。单位毫秒
+                jump: true,                                    //是否支持跳转
+                callback: function(page) {                     // 回调函数
+                    page_tab(page);
+                }
+            })
         });
         options3.fail(function(error) {
             console.error(error)
@@ -177,37 +194,6 @@ $(function() {
     function channel_detail(body, get_param) {
         $(body.data.list).each(function(index, value) {
             $(".list-article-ul").append(news_contents(value));
-        });
-    }
-
-    // 上下翻页
-    function prev_next_page() {
-
-        //  点击加载更多后显示出上一页的数据
-        $('.prev-page').click(function() {
-            pageNum--; //  页码+1
-            if(pageNum <= 0) {
-                pageNum = 1;
-                $(this).attr("disabled", true).siblings().attr("disabled", false);
-                layer.msg("我已经是第一页了！", { time: 2500 });
-                return false;
-            }
-            window.localStorage.setItem("pageNum", pageNum)
-            $(this).attr("disabled", false).siblings().attr("disabled", false);
-            page_tab(pageNum);
-        });
-
-        //  点击加载更多后显示出下一页的数据
-        $('.next-page').click(function() {
-            if(limit * pageNum > total) {
-                $(this).attr("disabled", true).siblings().attr("disabled", false);
-                layer.msg("我是最后一页了！", { time: 2500 });
-                return false;
-            }
-            $(this).attr("disabled", false).siblings().attr("disabled", false);
-            pageNum++; //  页码+1
-            window.localStorage.setItem("pageNum", pageNum)
-            page_tab(pageNum);
         });
     }
 
