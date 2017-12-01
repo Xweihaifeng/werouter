@@ -182,7 +182,14 @@
 
             },
             deletePro : function (pro) {
-                console.log(pro)
+                console.log(pro);
+
+                layer.confirm('确认删除该条商品吗？', {
+                    title: false,
+                    btn: ['确定','取消']
+                }, function(index){
+
+                });
             }
         }
     })
