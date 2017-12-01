@@ -299,7 +299,7 @@ $(function() {
     $(".detail_footer_join").click(function() {
         var body = {
             goods_id : shop_weid,
-            goods_num: 1
+            goods_num: $("#quantity").text()
         }
         var options2 =  $.post(apiUrl + "cart/store", body);
         options2.done(function(data) {

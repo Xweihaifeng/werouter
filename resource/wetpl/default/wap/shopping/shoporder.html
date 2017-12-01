@@ -53,6 +53,7 @@
                         <p class="operation">
                             <span>删除</span>
                             <span>移入关注</span>
+                            <span>运费￥{{getSinglePostage(item)}}</span>
                         </p>
                     </div>
                 </li>
@@ -77,13 +78,13 @@
         </div>
         <div class="order_freight">
             <div> 运费</div>
-            <div> ￥0.00</div>
+            <div> ￥{{postage}}</div>
         </div>
     </div>
     <footer class="order_footer">
         <a href="javascript:void(0)" class="order_footer_follow">
-            <div><span> 应付金额：</span><span class="order_count">￥{{storeAll}}</span></div>
-            <div><span>总额￥{{storeAll}} 立减￥0.00</span></div>
+            <div><span> 应付金额：</span><span class="order_count">￥{{storeAll + postage}}</span></div>
+            <div><span>总额￥{{storeAll + postage}} 立减￥0.00</span></div>
         </a>
         <a href="javascript:void(0)" class="order_footer_pay" @click="order_footer_pay()">提交订单</a>
     </footer>
@@ -115,10 +116,26 @@
         },
         computed: {
             storeAll: function () {
-                console.log(this.list);
+                console.log('数据打包：',this.list);
                 var money = 0;
                 for (var a = 0; a < this.list.goodsList.length; a++) {
                     money += this.list.goodsList[a].price * this.list.goodsList[a].goods_num
+                }
+                return money;
+            },
+            postage : function () {
+                var money = 0.00;
+                var goods = this.list.goodsList;
+                for (var a = 0; a < goods.length; a++) {
+                    if(goods[a].postage_status === 2){
+                        if(goods[a].postage_max_money){
+                            if(parseFloat(goods[a].price * goods[a].goods_num) < parseFloat(goods[a].postage_max_money)){
+                                money += parseFloat(goods[a].postage * goods[a].goods_num)
+                            }
+                        }else{
+                            money += parseFloat(goods[a].postage * goods[a].goods_num)
+                        }
+                    }
                 }
                 return money;
             }
@@ -160,6 +177,22 @@
                         layer.msg(data.body.message, { time: 2500 });
                     }
                 })
+            },
+            getSinglePostage : function (item) {
+                if(item.postage_status === 1){
+                    return '0.00'
+                }
+                if(item.postage_status === 2){
+                    if(item.postage_max_money){
+                        if(parseFloat(item.price * item.goods_num) >= parseFloat(item.postage_max_money)){
+                            return '0.00'
+                        }else{
+                            return parseFloat(item.postage * item.goods_num)
+                        }
+                    }else{
+                        return parseFloat(item.postage * item.goods_num)
+                    }
+                }
             }
         }
     })
