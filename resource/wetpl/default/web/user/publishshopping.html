@@ -206,6 +206,38 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <div class="inline bfc">
+                                <label for="" class="col-sm-2 control-label"><span class="star">*</span>是否包邮:</label>    
+                                    <div class="form-group-type" tabindex="1" style="display:inline-block;padding-top:8px;">
+                                        <div class="radio-group" style="display: inline-block;">
+                                            <input type="radio" id="J_RadioFree" name="postage_status" value="1" checked="checked" style="width:auto; height: auto; display: inherit;margin: 0;">
+                                            <label for="J_RadioFree" style="padding: 0 10px;font-weight: 700;">包邮</label>
+                                        </div>
+                                        <div class="radio-group" style="display: inline-block;">
+                                            <input type="radio" id="J_RadioFee" name="postage_status" value="2" style="width:auto; height: auto; display: inherit;margin: 0;">
+                                            <label for="J_RadioFee" style="padding: 0 10px;font-weight: 700;" >不包</label>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group postage" style="display: none;">
+                            <label for="" class="col-sm-2 control-label"><span class="star">*</span>邮费金额:</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control" name="postage" value="" placeholder="">
+                                
+                            </div>
+                            <span style="color: #999;padding: 0;line-height: 35px;">邮费费用按数量计算</span>
+                        </div>
+                        <div class="form-group postage_max_money" style="display: none;">
+                            <label for="" class="col-sm-2 control-label"><span class="star"></span>最大免邮:</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control" name="postage_max_money" value="" placeholder="">
+                            </div>
+                            <span style="color: #999;padding: 0;line-height: 35px;">超过固定金额免邮费（如果不填按邮费计算全部不免邮）</span>
+                        </div>
+                        <!--先做隐藏以后再用-->
+                        <div class="form-group" style="display: none;">
                             <label for="" class="col-sm-2 control-label"><span class="star">*</span>配送范围:</label>
 
                             <div class="pro_sort sendarea col-sm-10" id="pro_ship_address">

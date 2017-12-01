@@ -491,6 +491,14 @@ malldetail();
                     $("[name='reserve']").val(goods.stock);
                     $("[name='floor']").val(goods.sort);
                     $("[name='note']").val(goods.note);
+                    $("[name='note']").val(goods.note);    
+                    $("[name='postage']").val(goods.postage);
+                    $("[name='postage_max_money']").val(goods.postage_max_money);
+                    $("[input[name='postage_status']").attr("checked",goods.postage_status);
+                    if(goods.postage_status==2){
+                        $(".postage").show();
+                        $(".postage_max_money").show();
+                    }    
                         CKEDITOR.instances.editor1.setData(goods.content);
                     $("select[name='cate_id']").find("#"+goods.cate_id).attr("selected","selected");
                     if(goods.picture!=null){
@@ -581,6 +589,9 @@ malldetail();
             var range_id=$("[name='distribution_id']").val();
             var picture=filesnamestr;
             var addimglength=$(".addimg").length;
+            var postage_status=$("input[name='postage_status']:checked").val();
+            var postage=$("[name='postage']").val();
+            var postage_max_money=$("[name='postage_max_money']").val();
             $(".addimg").each(function(index){
                 if(index+1<addimglength){
 
@@ -605,11 +616,18 @@ malldetail();
                 mess_tusi('请输入库存');
                 return;
             }
+            /* 配送地址先注释
             if (range_id == ''|| range_id==null) {
                 mess_tusi('请选择配送范围');
                 return;
             }
-
+            */
+            if(postage_status==2){
+                if(postage == ''|| postage==null){
+                    mess_tusi('请输入邮费');
+                    return;    
+                }   
+            }
             var sendData = {
                 title: title,
                 price: price,
@@ -624,7 +642,10 @@ malldetail();
                 cate_id: cate_id,
                 page_id:page_id,
                 mall_id:mall_id,
-                range_id:range_id
+                range_id:range_id,
+                postage_status:postage_status,
+                postage:postage,
+                postage_max_money:postage_max_money,
             }
             // console.log(sendData);
 
@@ -942,8 +963,16 @@ getprovincedetail();
 
 // 外部js文件
 $(function(){
-
-
+    //邮费事件不包邮是弹出需要填写的邮费信息
+    $('input[name="postage_status"]').click(function(){
+        if($('input[name="postage_status"]:checked').val()==2){
+            $(".postage").show();
+            $(".postage_max_money").show();       
+        }else{
+            $(".postage").hide();
+            $(".postage_max_money").hide();    
+        }
+    });
     //添加商品页面---添加修改配送范围
         //添加配送范围
         $(".set_adr").click(function(){
