@@ -274,13 +274,10 @@
                     console.log(res);
                     var obj = {};
                     if(res.data && res.data.code === 200){
-                        if(!res.data.data.send || !res.data.data.send.logistics_no || !res.data.data.send.logistics_company_code){
-//                            后台接口未开通 先用模拟数据
-                            obj.logistics_NO = '12345678';
-                            obj.company_code = 'yuantong';
-                            window.localStorage.setItem('sendObj',JSON.stringify(obj));
-                            window.location.href = '/distribution/detail'
-                        }
+                        obj.logistics_NO = res.data.data.send.logistics_no;
+                        obj.company_code = res.data.data.send.logistics_company_code;
+                        window.localStorage.setItem('sendObj',JSON.stringify(obj));
+                        window.location.href = '/distribution/detail'
                     }
 
                 })
