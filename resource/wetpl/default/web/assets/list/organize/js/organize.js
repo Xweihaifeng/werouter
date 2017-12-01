@@ -141,6 +141,20 @@ $(function() {
         return template;
     }
 
+    var paging = function(total, limit) {
+        var setTotalCount = total;
+        $('#box').paging({
+            initPageNo: 1,                                 // 初始页码
+            totalPages: Math.ceil(setTotalCount/limit),    //总页数
+            totalCount: '合计' + setTotalCount + '条数据', // 条目总数
+            slideSpeed: 600,                               // 缓动速度。单位毫秒
+            jump: true,                                    //是否支持跳转
+            callback: function(page) {                     // 回调函数
+                page_tab(page);
+            }
+        })
+    }
+
     // 栏目列表内容
     function column(li_name, page) {
         var options3 = $.get(CMS_DETAIL_CONTENTS_CATE_ID + li_name + "&page=" + page);
@@ -174,17 +188,7 @@ $(function() {
                 $(".list-article-ul").append(news_contents(value));
             });
 
-            var setTotalCount = total;
-            $('#box').paging({
-                initPageNo: 1,                                 // 初始页码
-                totalPages: Math.ceil(setTotalCount/limit),    //总页数
-                totalCount: '合计' + setTotalCount + '条数据', // 条目总数
-                slideSpeed: 600,                               // 缓动速度。单位毫秒
-                jump: true,                                    //是否支持跳转
-                callback: function(page) {                     // 回调函数
-                    page_tab(page);
-                }
-            })
+            paging(total, limit);
         });
         options3.fail(function(error) {
             console.error(error)
