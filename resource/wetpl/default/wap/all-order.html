@@ -220,12 +220,12 @@
                 }, function(index){
                     self.$http.post(apiUrl+'order/cancel',data).then(function (res) {
                         if(res.data && res.data.code === 200){
-                            layer.close(index);
                             this.init();
                             this.sortNum = 0;
                         }else{
                             layer.msg('取消订单失败');
                         }
+                        layer.close(index);
                     })
                 });
 
@@ -243,12 +243,12 @@
                     self.$http.post(apiUrl+'order/delete',data).then(function (res) {
                         console.log(res);
                         if(res.data && res.data.code === 200){
-                            layer.close(index);
                             this.init();
                             this.sortNum = 0;
                         }else{
                             layer.msg('删除订单失败');
                         }
+                        layer.close(index);
                     })
                 });
             },
