@@ -12,7 +12,7 @@ if(sessionStorage.lastname == "we_title_1") {
  //    exp.setTime(exp.getTime() + Days*24*60*60*1000);
  //    document.cookie = "token="+ localStorage.getItem('token') + ";expires=" + exp.toGMTString();
 
-	 var domain;
+	 /*var domain;
 	 var hasDomain = function(weid){
 		 $.ajax({
 			 url: PAGES_PAGE_GETDETAILBYUSER + weid,
@@ -36,11 +36,11 @@ if(sessionStorage.lastname == "we_title_1") {
 						 domain = "/" + data.data.domain;
 					 }
 				 }
-				 /*else {
+				 /!*else {
 					 layer.msg(data.message, {
 						 time: 1500
 					 });
-				 }*/
+				 }*!/
 			 },
 			 error: function(xhr){
 				 console.log(xhr);
@@ -49,7 +49,7 @@ if(sessionStorage.lastname == "we_title_1") {
 	 }
 
 	 var weid = localStorage.getItem('weid');
-	 hasDomain(weid);
+	 hasDomain(weid);*/
 
     //route
     var isLogin; //判断用户登陆与否

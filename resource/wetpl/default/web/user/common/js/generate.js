@@ -66,11 +66,11 @@ $("#top").append(mainLeft_p);
 
 //generate mainHeader
 var mark = 'user';
-var domain = window.location.host;
+var host = window.location.host;
 var currPage = window.location.pathname.split('/').pop();
 var parentPage = window.location.pathname.split('/').slice(2,3)[0];
 
-var genMenu = function(mark, domain) {
+var genMenu = function(mark, host) {
     var genCont = function(data) {
         var template = `
             <a href="/user/` + data.url + `">
@@ -95,7 +95,7 @@ var genMenu = function(mark, domain) {
     var template = '';
     
     $.ajax({
-        url: 'https://mp.wezchina.com/api/menu_config?mark=' + mark + '&domain=' + domain,
+        url: 'https://mp.wezchina.com/api/menu_config?mark=' + mark + '&domain=' + host,
         type: 'GET',
         async: false,
         success: function(data) {
@@ -410,27 +410,29 @@ var hasDomain = function(weid){
             'Token': localStorage.getItem('token')
         },
         success: function(data){
-            console.log(data)
-            if (data.data != null && data.code == 200){
-                if (data.data.domain == null) {
+            // if (data.code == 401) {
+            // domain = '/index';
+            // localStorage.removeItem('token')
+            // window.location.href = '/login'
+            // }
+            if (data.code == 200){
+                // console.log(data);
+                if (data.data == null) {
                     //没有个性域名
                     domain = '/index';
                 } else {
                     //存在个性域名
                     domain = "/" + data.data.domain;
                 }
-
-            } else {
-                // layer.msg(data.message, {
-                //     time: 1500
-                // });
-                console.info(data.message);
-                // window.localStorage.removeItem('token')
-                // window.location.href = '/login'
             }
+            /*else {
+             layer.msg(data.message, {
+             time: 1500
+             });
+             }*/
         },
         error: function(xhr){
-            console.error(xhr);
+            console.log(xhr);
         }
     })
 }

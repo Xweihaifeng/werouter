@@ -693,41 +693,44 @@ var init = function(token){
 
 init(localStorage.getItem('token'));
 
-var domain;
-var hasDomain = function(weid){
-    $.ajax({
-        url: PAGES_PAGE_GETDETAILBYUSER + weid,
-        type: 'GET',
-        headers: {
-            'Token': localStorage.getItem('token')
-        },
-        success: function(data){
-            if (data.code == 200){
-                console.log(data);
-                if (data.data.domain == null) {
-                    //没有个性域名
-                    domain = '/index';
-                } else {
-                    //存在个性域名
-                    domain = "/" + data.data.domain;
-                }
-                window.localStorage.setItem("domain", domain);
-            } else {
-                layer.msg(data.message, {
-                    time: 1500
-                });
-                // window.localStorage.removeItem('token')
+    var domain;
+    var hasDomain = function(weid){
+        $.ajax({
+            url: PAGES_PAGE_GETDETAILBYUSER + weid,
+            type: 'GET',
+            headers: {
+                'Token': localStorage.getItem('token')
+            },
+            success: function(data){
+                // if (data.code == 401) {
+                // domain = '/index';
+                // localStorage.removeItem('token')
                 // window.location.href = '/login'
+                // }
+                if (data.code == 200){
+                    // console.log(data);
+                    if (data.data == null) {
+                        //没有个性域名
+                        domain = '/index';
+                    } else {
+                        //存在个性域名
+                        domain = "/" + data.data.domain;
+                    }
+                }
+                /*else {
+                 layer.msg(data.message, {
+                 time: 1500
+                 });
+                 }*/
+            },
+            error: function(xhr){
+                console.log(xhr);
             }
-        },
-        error: function(xhr){
-            console.log(xhr);
-        }
-    })
-}
+        })
+    }
 
-var weid = localStorage.getItem('weid');
-hasDomain(weid);
+    var weid = localStorage.getItem('weid');
+    hasDomain(weid);
 
     //route
     var isLogin; //判断用户登陆与否
