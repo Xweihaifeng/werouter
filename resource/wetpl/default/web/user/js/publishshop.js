@@ -491,10 +491,10 @@ malldetail();
                     $("[name='reserve']").val(goods.stock);
                     $("[name='floor']").val(goods.sort);
                     $("[name='note']").val(goods.note);
-                    $("[name='note']").val(goods.note);    
-                    $("[name='postage']").val(goods.postage);
-                    $("[name='postage_max_money']").val(goods.postage_max_money);
-                    $("[input[name='postage_status']").attr("checked",goods.postage_status);
+                    $("[name='note']").val(goods.note);
+                    $("input[name='postage']").val(goods.postage);
+                    $("input[name='postage_max_money']").val(goods.postage_max_money);
+                    $("input[name='postage_status']").attr("checked",goods.postage_status);
                     if(goods.postage_status==2){
                         $(".postage").show();
                         $(".postage_max_money").show();
