@@ -33,6 +33,10 @@
         .table>tbody>tr>td:first-child {
             text-align: center;
         }
+        
+        .action.label {
+            cursor: pointer;
+        }
     </style>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -476,16 +480,24 @@
                     'render': function(data, type, full) {
                         var label = '';
                         if (full.is_original == 1) {
-                            label += '<span class="label label-primary">原创</span> ';
+                            label += '<span title="点击切换"  data-id="' + full.weid + '" data-label="is_original" data-state="1" class="label label-success action">原创</span> ';
+                        } else {
+                            label += '<span title="点击切换" data-id="' + full.weid + '" data-label="is_original" data-state="2" class="label label-default action">原创</span> ';
                         }
                         if (full.is_hot == 1) {
-                            label += '<span class="label label-info">头条</span> ';
+                            label += '<span title="点击切换" data-id="' + full.weid + '" data-label="is_hot" data-state="1" class="label label-success action">头条</span> ';
+                        } else {
+                            label += '<span title="点击切换" data-id="' + full.weid + '" data-label="is_hot" data-state="2" class="label label-default action">头条</span> ';
                         }
                         if (full.is_pose == 1) {
-                            label += '<span class="label label-default">特荐</span> ';
+                            label += '<span title="点击切换" data-id="' + full.weid + '" data-label="is_pose" data-state="1" class="label label-success action">特荐</span> ';
+                        } else {
+                            label += '<span title="点击切换" data-id="' + full.weid + '" data-label="is_pose" data-state="2" class="label label-default action">特荐</span> ';
                         }
                         if (full.index_show == 1) {
-                            label += '<span class="label label-success">推荐</span> ';
+                            label += '<span title="点击切换" data-id="' + full.weid + '" data-label="index_show" data-state="1" class="label label-success action">推荐</span> ';
+                        } else {
+                            label += '<span title="点击切换" data-id="' + full.weid + '" data-label="index_show" data-state="2" class="label label-default action">推荐</span> ';
                         }
                         return label;
                     }
@@ -497,7 +509,7 @@
                 }, {
                     "mData": 'status',
                     'render': function(data, type, full) {
-                        return full.status == 1 ? '<span class="label label-success">启用</span>' : full.status == 2 ? '<span class="label label-default">草稿</span>' : '<span class="label label-danger">禁用</span>';
+                        return full.status == 1 ? '<span class="label label-success status">已启用</span>' : full.status == 2 ? '<span class="label label-default status">草稿</span>' : '<span class="label label-danger status">已禁用</span>';
                     }
                 }, {
                     "mData": 'operation',
@@ -506,7 +518,7 @@
 						<button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							设置 <span class="caret"></span>
 							</button>
-							<ul class="dropdown-menu">` +
+							<ul class="dropdown-menu status-menu-ul">` +
                             (full.status != 1 ? `<li><a href="#" class="set-status" data-type="1" data-id="` + full.weid + `" >启用</a></li>` : ``) +
                             (full.status != 2 ? `<li><a href="#" class="set-status" data-type="2" data-id="` + full.weid + `" >草稿</a></li>` : ``) +
                             (full.status != 3 ? `<li><a href="#" class="set-status" data-type="3" data-id="` + full.weid + `" >禁用</a></li>` : ``) +
@@ -594,12 +606,12 @@
             dt_table.fnDraw();
             setTimeout(function() {
                 $('[data-toggle="popover"]').popover();
-            }, 500);
+            }, 1000);
         });
         $(document).on('click', '.pagination a', function() {
             setTimeout(function() {
                 $('[data-toggle="popover"]').popover();
-            }, 500);
+            }, 1000);
         });
         $(document).on('click', '.btn-delete-confirm', function() {
             $.ajax({
@@ -617,7 +629,43 @@
                 }
             });
         });
+        $(document).on('click', '.action.label', function() {
+            var the = this;
+            var id = $(the).data('id');
+            var state = $(the).data('state') == 1 ? 2 : 1;
+            var label = $(the).data('label');
+            $.ajax({
+                url: ApiUrl + 'cms/contents/change_label_state',
+                type: 'post',
+                data: {
+                    content_id: id,
+                    state: state,
+                    label: label,
+                },
+                dataType: 'json',
+                success: function(data) {
+                    if (data.code == 200) {
+                        $(the).data("state", data.data.state);
+                        if (data.data.state == 1) {
+                            $(the).removeClass('label-default').addClass('label-success').attr('title', '关闭');
+                        } else {
+                            $(the).removeClass('label-success').addClass('label-default').attr('title', '激活');
+                        }
+                    } else {
+                        swal({
+                            text: data.message,
+                            type: 'error',
+                            timer: 15000
+                        });
+                    }
+                },
+                error: function(xhr) {
+                    console.log(xhr);
+                }
+            });
+        });
         $(document).on('click', '.set-status', function() {
+            var the = this;
             var id = $(this).data('id');
             var type = $(this).data('type');
             $.ajax({
@@ -635,7 +683,17 @@
                         timer: 20000
                     }).then(
                         function() {
-                            location.reload();
+                            if (type == 1) {
+                                $(the).closest('tr').find('.label').filter('.status').text('已启用').removeClass("label-default").removeClass("label-danger").addClass('label-success');
+                            } else if (type == 2) {
+                                $(the).closest('tr').find('.label').filter('.status').text('草稿').removeClass("label-success").removeClass("label-danger").addClass('label-default');
+                            } else {
+                                $(the).closest('tr').find('.label').filter('.status').text('已禁用').removeClass("label-success").removeClass("label-danger").addClass('label-danger');
+                            }
+                            $(the).closest('tr').find('.status-menu-ul').html();
+                            $(the).closest('tr').find('.status-menu-ul').html((data.data.status != 1 ? `<li><a href="#" class="set-status" data-type="1" data-id="` + data.data.weid + `" >启用</a></li>` : ``) +
+                                (data.data.status != 2 ? `<li><a href="#" class="set-status" data-type="2" data-id="` + data.data.weid + `" >草稿</a></li>` : ``) +
+                                (data.data.status != 3 ? `<li><a href="#" class="set-status" data-type="3" data-id="` + data.data.weid + `" >禁用</a></li>` : ``));
                         },
                         // handling the promise rejection
                         function(dismiss) {
