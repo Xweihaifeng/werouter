@@ -31,12 +31,12 @@
         <ul>
             <!--<li class="actd-theme"><img src="/common/img/theme.png" alt=""/><p>{{title}}</p></li>-->
             <li class="actd-time"><img src="/common/img/icon_time.png" alt=""/><p>{{start}} 至 {{end}} 报名截止</p></li>
-            <li class="actd-map">
-            	<p style="display: flex; border-bottom: none;">
+            <li class="actd-map" style="">
                 <img src="/common/img/icon_map.png" alt=""/>
-                <a :href="map" style="border-bottom: 1px solid #eee;margin-left: 0.12rem;">{{address}}</a>
+            	<p style="display: flex; border-bottom: 1px solid #eee; justify-content: space-between; align-items: center;">
+                    <a :href="map">{{address}}</a>
+                    <img class="arrow" src="/common/img/arrow-right.png" alt=""/>
                 </p>
-                <span><img class="arrow" src="/common/img/arrow-right.png" alt=""/></span>
             </li>
             <li class="actd-zb" style="box-shadow: 5px 5px 5px #eee;"><img src="/common/img/icon_host.png"/><p>{{sponsor}}</p></li>
             <li class="actd-bm" style="margin-top: 0.12rem;border-bottom: 1px solid #eee;height: 0.38rem;">已报名用户</li>
