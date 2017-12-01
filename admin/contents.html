@@ -480,24 +480,24 @@
                     'render': function(data, type, full) {
                         var label = '';
                         if (full.is_original == 1) {
-                            label += '<span title="点击切换"  data-id="' + full.weid + '" data-label="is_original" data-state="1" class="label label-success action">原创</span> ';
+                            label += '<span title="点击关闭"  data-id="' + full.weid + '" data-label="is_original" data-state="1" class="label label-success action">原创</span> ';
                         } else {
-                            label += '<span title="点击切换" data-id="' + full.weid + '" data-label="is_original" data-state="2" class="label label-default action">原创</span> ';
+                            label += '<span title="点击激活" data-id="' + full.weid + '" data-label="is_original" data-state="2" class="label label-default action">原创</span> ';
                         }
                         if (full.is_hot == 1) {
-                            label += '<span title="点击切换" data-id="' + full.weid + '" data-label="is_hot" data-state="1" class="label label-success action">头条</span> ';
+                            label += '<span title="点击关闭" data-id="' + full.weid + '" data-label="is_hot" data-state="1" class="label label-success action">头条</span> ';
                         } else {
-                            label += '<span title="点击切换" data-id="' + full.weid + '" data-label="is_hot" data-state="2" class="label label-default action">头条</span> ';
+                            label += '<span title="点击激活" data-id="' + full.weid + '" data-label="is_hot" data-state="2" class="label label-default action">头条</span> ';
                         }
                         if (full.is_pose == 1) {
-                            label += '<span title="点击切换" data-id="' + full.weid + '" data-label="is_pose" data-state="1" class="label label-success action">特荐</span> ';
+                            label += '<span title="点击关闭" data-id="' + full.weid + '" data-label="is_pose" data-state="1" class="label label-success action">特荐</span> ';
                         } else {
-                            label += '<span title="点击切换" data-id="' + full.weid + '" data-label="is_pose" data-state="2" class="label label-default action">特荐</span> ';
+                            label += '<span title="点击激活" data-id="' + full.weid + '" data-label="is_pose" data-state="2" class="label label-default action">特荐</span> ';
                         }
                         if (full.index_show == 1) {
-                            label += '<span title="点击切换" data-id="' + full.weid + '" data-label="index_show" data-state="1" class="label label-success action">推荐</span> ';
+                            label += '<span title="点击关闭" data-id="' + full.weid + '" data-label="index_show" data-state="1" class="label label-success action">推荐</span> ';
                         } else {
-                            label += '<span title="点击切换" data-id="' + full.weid + '" data-label="index_show" data-state="2" class="label label-default action">推荐</span> ';
+                            label += '<span title="点击激活" data-id="' + full.weid + '" data-label="index_show" data-state="2" class="label label-default action">推荐</span> ';
                         }
                         return label;
                     }
@@ -647,9 +647,9 @@
                     if (data.code == 200) {
                         $(the).data("state", data.data.state);
                         if (data.data.state == 1) {
-                            $(the).removeClass('label-default').addClass('label-success').attr('title', '关闭');
+                            $(the).removeClass('label-default').addClass('label-success').attr('title', '点击关闭');
                         } else {
-                            $(the).removeClass('label-success').addClass('label-default').attr('title', '激活');
+                            $(the).removeClass('label-success').addClass('label-default').attr('title', '点击激活');
                         }
                     } else {
                         swal({
