@@ -445,6 +445,18 @@ var qiniu_bucket_domain =ApiMaterPlatQiniuDomain;
 
 
                 data.map(x=>{
+                    //运费计算    
+                    var postage=0;
+                    if(x.postage_status==2){
+                        if(parseFloat(x.postage_max_money)>=(parseFloat(x.goods_price)*parseInt(x.goods_num))&&parseInt(x.postage_max_money)!=0){
+                            postage=0;        
+                        }else{
+                            postage=parseFloat(x.postage)*parseInt(x.goods_num); 
+                        }
+                    }else{
+                        postage=0;
+                    }
+                    var goods_price=parseInt(x.goods_num)*parseFloat(x.goods_price); 
                     mallshopdivhtml+='<tr class="orders_list_content" style="height:100px;" id="'+x.weid+'" data-id="'+x.goods_id+'">'+
                        ' <td width="40%">'+
                             '<div class="orders_list_pic">'+
@@ -456,22 +468,22 @@ var qiniu_bucket_domain =ApiMaterPlatQiniuDomain;
                         '</td>'+
                         '<td width="10%">'+
                             '<div class="orders_list_buy">'+
+                                '<span>￥'+x.goods_price+'</span>'+
+                            '</div>'+
+                        '</td>'+
+                        '<td width="10%">'+
+                            '<div class="orders_list_buy">'+
                                 '<span>x'+x.goods_num+'</span>'+
                             '</div>'+
                         '</td>'+
                         '<td width="15%">'+
                            '<div class="orders_list_buy">'+
-                                '<span class="list_right_gj"><p>￥'+x.goods_price+'</p><p>(含运费:0.00)</p></span>'+
+                                '<span class="list_right_gj"><p>￥'+goods_price+'</p><p>(运费:'+postage+')</p></span>'+
                             '</div>'+
                         '</td>'+
                     '</tr>';
                 })
-
-                
-
-
-
-             mallshopdivhtml+='</tbody>'+
+            mallshopdivhtml+='</tbody>'+
             '</table>';
             return mallshopdivhtml;
     }
