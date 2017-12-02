@@ -20,21 +20,24 @@
 		<span class="img"><img :src="avatar" alt=""/></span>
 		<span>
 			<p class="name">{{nickname}}</p>
-			<p class="wid">WEID：{{domain}}</p>
+			<p class="wid">WEID:{{domain}}</p>
 		</span>
 	</div>
 	<div class="des">
 		<div>
 			<label>功能介绍</label>
-			<span style="display:inline-block;width: 73%;">{{motto}}</span>
+			<span style="display:inline-block;width: 73%; font-size: 0.11rem;">{{motto}}</span>
 		</div>
 		<div class="img-div">
 			<label>账号主体</label>
-			<span><img src="/common/img/idcard.png" width="25" alt=""/>{{account}}</span>
+			<span style="font-size: 0.11rem;">
+				<!--<img src="/common/img/idcard.png" width="25" alt=""/>-->
+				{{account}}
+			</span>
 		</div>
 		<div class="cert">
 			<label>认证信息</label>
-			<span>{{cert}}</span>
+			<span style="font-size: 0.11rem;">{{cert}}</span>
 		</div>
 		<!--<div>
 			<label>所在地</label>
@@ -42,12 +45,12 @@
 		</div>-->
 	</div>
 
-	<div class="des">
+	<!--<div class="des">
 		<div class="work">
 			<label>经营范围</label>
 			<span>{{work}}</span>
 		</div>
-	</div>
+	</div>-->
 	
 	<!--<div class="user_select">
 		<div>
@@ -62,21 +65,25 @@
 	<div class="des">
 		<a :href="wepage">
 			<div>
-			<label>
-				我的微主页
-			</label>
+				<label>
+					我的微主页
+				</label>
 			</div>
 		</a>
-		<div>
-		<label>
-			<a>查看历史消息</a>
-		</label>
-		</div>
-		<div class="wecard">
-		<label>
-			<a>查看我的微名片</a>
-		</label>
-		</div>
+		<a :href="wecard">
+			<div>
+				<label>
+					我的微名片
+				</label>
+			</div>
+		</a>
+		<a>
+			<div>
+				<label>
+					查看历史消息
+				</label>
+			</div>
+		</a>
 	</div>
 
 	<!--<div class="des">
@@ -110,6 +117,73 @@
 	</div>
 </div>	
 <script>
+	const userId = (domain) => {
+		return new Promise((resolve, reject) => {
+			$.ajax({
+				url: PAGES_DETAIL_DOMAIN + "/" + domain,
+				type: 'GET',
+				success: function (data) {
+					if (data.code == 200) {
+						console.log(data);
+						if (data.data != null) {
+							let uid = data.data.plat_user_id;
+							console.log('userId:', uid);
+							resolve(uid);
+						}
+					} else {
+						//window.location.href = "/*";
+						console.log("error", data.code)
+					}
+				},
+				error: function (xhr) {
+					console.log(xhr);
+				}
+			})
+		})
+	}
+
+	const getUserInfo = function(url, id){
+		let tid = window.location.pathname.split('/').pop();
+		let list = [{id: '', val: '首页'}, {id: 'article', val: '文章'}, {id: 'activity', val: '活动'}, {id: 'wemall', val: '商城'}];
+		$.ajax({
+			url: url + id,
+			type: 'GET',
+			success: function(data){
+				console.log(data);
+				if (data.data != null){
+					var info = data.data;
+					if (info.nickname != null) {
+						$('title').text(find(tid, list) + '-' + info.nickname + '的官方微主页');
+					} else {
+						if (info.real_name != null) {
+							$('title').text(find(tid, list) + '-' + info.real_name + '的官方微主页');
+						} else {
+							$('title').text(find(tid, list) + '-' + localStorage.getItem('title') + '官方微主页');
+						}
+					}
+					$("#favicon").attr('href', localStorage.getItem('fav'));
+				}
+			},
+			error: function(xhr){
+				console.log(xhr);
+			}
+		})
+	}
+
+	const hasDomain = function(weid, ref) {
+		$.ajax({
+			url: PAGES_PAGE_GETDETAILBYUSER + weid,
+			type: 'GET',
+			headers: {
+				'Token': localStorage.getItem('token')
+			},
+			success: function (data) {
+				console.log(data);
+
+			}
+		})
+	}
+
 	const setCookie = (token, expiredays) => {
 		var Days = expiredays;
 		var exp = new Date();
@@ -136,6 +210,9 @@
 				localStorage.setItem('token', data.token);
 				localStorage.setItem('activation', data.data.activation_status);
 				localStorage.setItem('phone', data.data.phone);
+
+				hasDomain(data.data.weid, ref);
+
 				setCookie(data.token, 7);
 				ref.activation = data.data.activation_status;
 				if (ref.activation != 4 && ref.activation != null && ref.activation != '') {
@@ -454,6 +531,7 @@
 			motto: '暂无内容',
 			work: '互联网',
 			wepage: '',
+			wecard: '',
 			state: false, //未关注
 			status: '关注'
 		},

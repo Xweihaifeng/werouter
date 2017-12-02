@@ -94,6 +94,13 @@ const shopping_classify = function(user_weid) {
 
             var first_weid = $("#shop_type li").first().attr("id");
             shopping_list(first_weid);
+
+            $("#shop_type li").click(function() {
+                $(".shop ul").children().remove();
+                shop = [];
+                first_weid = $(this).attr("id");
+                shopping_list(first_weid);
+            });
         } else {
             console.warn(data.message);
         }
@@ -142,11 +149,4 @@ $("#my-swiper").hover(function(){
     $(".swiper-button-prev, .swiper-button-next").css("opacity", "0.6");
 }, function(){
     $(".swiper-button-prev, .swiper-button-next").css("opacity", "0");
-});
-
-$("#shop_type li").click(function() {
-    $(".shop ul").children().remove();
-    shop = [];
-    first_weid = $(this).attr("id");
-    shopping_list(first_weid);
 });
