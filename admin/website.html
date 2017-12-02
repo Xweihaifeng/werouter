@@ -73,7 +73,7 @@
                     <div class="box box-info">
                         <div class="box-header with-border">
                             <h3 class="box-title"><a href="javascript:void;" data="1">基本信息</a></h3>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<h3 class="box-title"><a href="javascript:void;" data="2">发布样式</a></h3>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<h3 class="box-title"><a href="javascript:void;" data="2">发布样式</a></h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<h3 class="box-title"><a href="javascript:void;" data="3">板块设置</a></h3>
                         </div>
 
                         <!--基本信息-->
@@ -250,6 +250,52 @@
                         </div>
                          <!--发布样式-->
 
+                         <!--板块设置-->
+                        <div class="box-body" id="bksz">
+                            <form  id="form" class="form-horizontal" enctype="multipart/form-data">  
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">新闻</label>
+                                    <div class="col-sm-5">
+                                        <div class="checkbox">
+                                         显示<input type="radio" name="xw_radio" value="1" checked> &nbsp;&nbsp;&nbsp;&nbsp;隐藏 <input type="radio" name="xw_radio" value="2">
+                                         &nbsp;&nbsp; &nbsp;&nbsp;排序:<select name="xw_select"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option></select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">组织</label>
+                                    <div class="col-sm-5">
+                                        <div class="checkbox">
+                                         显示<input type="radio" name="zz_radio" value="1" checked> &nbsp;&nbsp;&nbsp;&nbsp;隐藏 <input type="radio" name="zz_radio" value="2">
+                                         &nbsp;&nbsp; &nbsp;&nbsp;排序:<select name="zz_select"><option value="1">1</option><option value="2" selected="selected">2</option><option value="3">3</option><option value="4">4</option></select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">互助</label>
+                                    <div class="col-sm-5">
+                                        <div class="checkbox">
+                                         显示<input type="radio" name="hz_radio" value="1" checked> &nbsp;&nbsp;&nbsp;&nbsp;隐藏 <input type="radio" name="hz_radio" value="2">
+                                         &nbsp;&nbsp; &nbsp;&nbsp;排序:<select name="hz_select"><option value="1">1</option><option value="2">2</option><option value="3" selected="selected">3</option><option value="4">4</option></select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">共享</label>
+                                    <div class="col-sm-5">
+                                        <div class="checkbox">
+                                         显示<input type="radio" name="gx_radio" value="1" checked> &nbsp;&nbsp;&nbsp;&nbsp;隐藏 <input type="radio" name="gx_radio" value="2">
+                                         &nbsp;&nbsp; &nbsp;&nbsp;排序:<select name="gx_select"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4" selected="selected">4</option></select>
+                                        </div>
+                                    </div>
+                                </div>
+                                 <div class="col-sm-7" style="margin-bottom: 35px;">
+                                    <button type="button" class="btn btn-info pull-right" id="updateBksz">保存</button>
+                                     <div class="popover fade left in"  id="message_bksz" style="top: -200px;left: 600px; display: none;"><div class="arrow" style="top: 50%;"></div><h3 class="popover-title" style="display: none;"></h3><div class="popover-content">保存成功</div></div>
+                                </div>
+                            </form>
+                        </div>
+                        <!--板块设置-->
                     </div>
 
                 </div>
