@@ -113,7 +113,7 @@ $(function() {
                     } else {
                         $(".paging").hide();
                     }
-                    channel_detail(data, pathname);
+                    paging(total, limit);
                 }
             },
             error: function(error) {
@@ -204,7 +204,22 @@ $(function() {
     var page_tab = function(pageNum) {
         if((pathname.length == 2 && pathname[1] == "") || pathname.length == 1) {
             $(".list-article-ul").html("");
-            cms_content(pageNum);
+            $.ajax({
+                url: CMS_CONTENTS + pathname[0] + "&page=" + pageNum,
+                dataType: 'JSON',
+                type: 'get',
+                success: function(data) {
+                    if(data.code == 200) {
+                        // $(".list-article-ul").html("");
+                        $(data.data.list).each(function(index, value) {
+                            $(".list-article-ul").append(news_contents(value));
+                        });
+                    }
+                },
+                error: function(error) {
+                    console.error(error);
+                }
+            })
         } else {
             var option4 = $.get(CMS_DETAIL_CONTENTS_CATE_ID + li_name + "&page=" + pageNum);
             option4.done(function(body) {

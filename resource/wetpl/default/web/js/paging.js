@@ -34,7 +34,7 @@
             that.options.jump ? jumpDom = '<input type="text" placeholder="1" class="jump-text" id="jumpText"><button type="button" class="jump-button" id="jumpBtn">跳转</button>' : jumpDom = '';
             content = '<button type="button" id="firstPage" class="turnPage first-page">首页</button>' +
                 '<button class="turnPage" id="prePage">上一页</button>' +
-                '<div class="pageWrap" style="width:' + wrapLength + 'px">' +
+                '<div class="pageWrap" style="width:' + wrapLength + 'px;margin:0 -4px">' +
                 '<ul id="pageSelect" style="transition:all ' + that.options.slideSpeed + 'ms">' +
                 ulDom +
                 '</ul></div>' +
@@ -106,9 +106,9 @@
                     that.options.callback(pageIndex);
                     return false;
                 }
-                if (pageIndex >= 3 && pageIndex <= totalPages - 2) distance = (pageIndex - 3) * liWidth;
+                if (pageIndex >= 3 && pageIndex <= totalPages - 2) distance = (pageIndex - 3) * (liWidth + 4);
                 if (pageIndex == 2 || pageIndex == 1) distance = 0;
-                if (pageIndex > totalPages - 2) distance = (totalPages - 5) * liWidth;
+                if (pageIndex > totalPages - 2) distance = (totalPages - 5) * (liWidth + 4);
                 pageSelect.css('transform', 'translateX(' + (-distance) + 'px)');
                 pageIndex == 1 ? firstPage.attr('disabled', true) : firstPage.attr('disabled', false);
                 pageIndex == 1 ? prePage.attr('disabled', true) : prePage.attr('disabled', false);
