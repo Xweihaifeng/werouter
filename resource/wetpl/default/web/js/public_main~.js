@@ -1,6 +1,192 @@
 /**
  * Created by Hongguang on 2017/7/27.
  */
+
+const home = `<div class="home" style="display: none;">
+                <div id="home-head">
+                    <div id="carousel">
+                        <div class="swiper-container" id="my-swiper">
+                            <div class="swiper-wrapper carousel"></div>
+                            <div class="swiper-pagination"></div>
+                            <div class="swiper-button-prev"></div>
+                            <div class="swiper-button-next"></div>
+                        </div>
+                    </div>
+                    <div id="blue"></div>
+                    <div id="news"></div>
+                    <div class="main-news"></div>
+                    <div class="news-center">
+                        <ul class="nav nav-tabs">
+                            <li role="presentation" class="center active"><a href="news">新闻中心</a></li>
+                            <li role="presentation" class="sirase"><a href="org">公示公告</a></li>
+                            <li role="presentation" class="release"><a>官方发布</a></li>
+                        </ul>
+                    </div>
+                    <script>
+                        $(".center a").css("color", "black!important");
+                    </script>
+                    <div class="news-link">
+                        <div id="center"></div>
+                        <div id="sirase" style="display: none;"></div>
+                        <div id="release"></div>
+                    </div>
+                    <div id="recommend"></div>
+                    <div class="rcd-bt">
+                        <div class="tb">特别推荐<div class="triangle-right"></div></div>
+                        <div class="hy">会员推荐<div class="triangle-right-1"></div></div>
+                        <div class="circle-tb"><div class="sm-circle-tb"></div></div>
+                        <div class="circle-hy"><div class="sm-circle-hy"></div></div>
+                    </div>
+                    <div class="rcd-news">
+                        <div class="rcd-tb"></div>
+                        <div class="rcd-hy" style="display: none;"></div>
+                    </div>
+                    <div id="adv"></div>
+                    <div class="adv-left">
+                        <div class="adv-left-0" style="background: dodgerblue"></div>
+                        <div class="adv-left-1" style="background: green"></div>
+                        <div class="adv-left-2" style="background: orange"></div>
+                        <div class="adv-left-3" style="background: lightskyblue"></div>
+                    </div>
+                    <div class="adv-right">
+                        <div class="swiper-container" id="my-swiper2"><div class="swiper-wrapper adv-right-0"></div></div>
+                        <div class="swiper-container" id="my-swiper3"><div class="swiper-wrapper adv-right-1"></div></div>
+                        <div class="swiper-container" id="my-swiper4"><div class="swiper-wrapper adv-right-2"></div></div>
+                    </div>
+                </div>
+                <div id="home-body">
+                    <div id="bar"></div>
+                    <div id="bg"></div>
+                </div>
+                <div id="imgs" class="clearfix">
+                    <div class="imgs-title"></div>
+                    <div class="imgs-style">
+                        <div class="imgs-chairman"></div>
+                        <div class="imgs-name"></div>
+                    </div>
+                    <div class="imgs-active">
+                        <div id="my-swiper1">
+                            <div class="swiper_rolling clearfix"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>`
+const organization = `<div class="organization" style="display: none;">
+                <!-- 组织 -->
+                <dd  class="organize" id="organize">
+                    <div class="zuzhi-top">
+                        <div class="flex" style="display: none">
+                            <img src="/common/img/zuzhi-log.png" alt="">
+                            <div class="chuanchengbainian">
+                                <p>传承百年精神</p>
+                                <span>繁荣产业生态，共建网络强国</span>
+                            </div>
+                        </div>
+                        <div class="shanghuijieshao"></div>
+                    </div>
+                    <div class="zuzhi-bottom">
+                        <div class="fazhanbaogao">
+                            <div class="diyi">
+                                <p class="title"></p>
+                                <div class="report">
+                                    <div class="swiper-container swiper-report">
+                                        <div class="pagination pagination-report"></div>
+                                        <div class="swiper-wrapper report_swiper"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dier"></div>
+                            <div class="disan">
+                                <p class="title"></p>
+                                <div class="lunbo">
+                                    <div class="swiper-container swiper-nested">
+                                        <div class="pagination pagination-nested"></div>
+                                        <div class="swiper-wrapper lunbo_swiper"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <img alt="" id="org_bottom_big_img" style="">
+                    </div>
+                </dd>
+                <!-- 组织 -->
+            </div>`
+const huzhu = `<div class="huzhu" style="display: none; left:210px;">
+                <div class="huzhu-top-img">
+                    <div class="huzhu-top-img-title">
+                        <!--<p class="t1">互助平台</p>-->
+                        <!--<p class="t2">共筑众筹梦想朋友圈</p>-->
+                    </div>
+                    <img src="http://next.wezchina.com/images/project-banner.jpg" alt="" style="height: 235px;width: 960px">
+                </div>
+                <div class="huzhu-top">
+                    <div class="big-title">
+                        <span id="xiangmu-btn" style="background: rgb(213, 213, 213); color: rgb(85, 85, 85);">互助项目</span>
+                        <span id="huodong-btn" style="background: rgb(0, 124, 211); color: rgb(255, 255, 255);">线下活动</span>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="little-title" id="xiamgmu-title" style="display: none;">
+                        <a href="http://next.wezchina.com?p=3&amp;c=1"><span class="title-active" style="margin-left: 10px">互助众筹</span></a>
+                        <a href="http://next.wezchina.com?p=3&amp;c=2"><span>回报众筹</span></a>
+                        <a href="http://next.wezchina.com?p=3&amp;c=3"><span>产品众筹</span></a>
+                        <a href="http://next.wezchina.com?p=3&amp;c=4"><span>一元众筹</span></a>
+                    </div>
+                    <!-- <div class="little-title" id="huodong-title" style="display: block;">
+                        <a href="http://next.wezchina.com?p=3&amp;a=1"><span style="margin-left: 10px">线下活动</span></a>
+                        <a href="http://next.wezchina.com?p=3&amp;a=2"><span>最新活动</span></a>
+                    </div> -->
+                </div>
+                <div class="clearfix"></div>
+                <div class="line"></div>
+                <div class="person-article-lists" id="xiangmu" style="display: none;">
+                    <div class="article-item">
+                        <div class="row m0 huzhubox"></div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="weizhuye-activity" id="huodong" style="display: block;">
+                    <div class="person-article-lists row m0"></div>
+                </div>
+            </div>`
+const goodsBox = `<div class="goodsBox" id="goodsBox" style="display:none;">
+                <div style="width: 100%;height:235px; background:url(/common/img/0158.jpg) no-repeat center;">
+                    <img src="http://next.wezchina.com/images/gongxiangtop.png" alt="" style="height: 235px">
+                </div>
+                <p class="huiyuantegong">会<span>/</span>员<span>/</span>特<span>/</span>供</p>
+                <div class="person-goods-lists">
+                    <div class="row p-t-3"></div>
+                </div>
+            </div>`
+const seqlist = ['nav-news', 'nav-org', 'nav-help', 'nav-share'];
+const content = [
+    {pos: 0, name: '新闻', cont: ['视频新闻', '图片新闻', '专题', '微新闻'], val: 'home'},
+    {pos: 1, name: '组织', cont: ['银商服务', '科商服务', '校商服务', '法商服务'], val: 'organization'},
+    {pos: 2, name: '互助', cont: ['工商联', '商会', '其他组织'], val: 'huzhu'},
+    {pos: 3, name: '共享', cont: ['优秀民企', '企业家'], val: 'goodsBox'}
+];
+
+//index => id, val => pos
+const seq = [1,3,0,2];
+
+const findId = (pos, c) => c.filter(x => x.pos == pos)
+const findPos = (id, s) => s.filter(x => x.id == id)
+const newSeq = (seq) => {
+    return seq.map(x => findId(x, content)[0])
+}
+const genSideBar = (ns) => {
+    return ns.map((x, i) => {
+        $("." + seqlist[i] + '-title').text(x.name);
+        $("." + seqlist[i] + '-content ul').append(
+            x.cont.map(x => `<li>${x}</li>`).join('')
+        )
+        $(".main").append(eval(x.val));
+    })
+}
+
+genSideBar(newSeq(seq))
+
 $(document).ready(function(){
 
     //resize
@@ -910,43 +1096,24 @@ $(document).ready(function(){
                 var bar3 = setting.bar3;
                 var bar4 = setting.bar4;
                 var bgRight = setting.background_right;
-
-                if(!bgImg) {
-                    bgImg = "/common/img/news_top_img.png";
-                } else if (bgImg.indexOf('http') != 0 && bgImg != "") {
-                    bgImg = imgSet(bgImg, 960, 560, 3);
+                if (bgImg.indexOf('http') === -1){
+                    bgImg = ApiMaterPlatQiniuDomain + bgImg;
                 }
-
-                if(!bgRight) {
-                    bgRight = "/common/img/news_top_img.png";
-                } else if (bgRight.indexOf('http') != 0 && bgRight != "") {
-                    bgRight = imgSet(bgRight, 960, 960, 3);
+                if (bar1.indexOf('http') === -1){
+                    bar1 = ApiMaterPlatQiniuDomain + bar1;
                 }
-
-                if(!bar1) {
-                    bar1 = "/common/img/news_top_img.png";
-                } else if (bar1.indexOf('http') != 0 && bar1 != "") {
-                    bar1 = imgSet(bar1, 105, 960, 3);
+                if (bar2.indexOf('http') === -1){
+                    bar2 = ApiMaterPlatQiniuDomain + bar2;
                 }
-
-                if(!bar2) {
-                    bar2 = "/common/img/news_top_img.png";
-                } else if (bar2.indexOf('http') != 0 && bar2 != "") {
-                    bar2 = imgSet(bar2, 105, 960, 3);
+                if (bar3.indexOf('http') === -1){
+                    bar3 = ApiMaterPlatQiniuDomain + bar3;
                 }
-
-                if(!bar3) {
-                    bar3 = "/common/img/news_top_img.png";
-                } else if (bar3.indexOf('http') != 0 && bar3 != "") {
-                    bar3 = imgSet(bar3, 105, 960, 3);
+                if (bar4.indexOf('http') === -1){
+                    bar4 = ApiMaterPlatQiniuDomain + bar4;
                 }
-
-                if(!bar4) {
-                    bar4 = "/common/img/news_top_img.png";
-                } else if (bar4.indexOf('http') != 0 && bar4 != "") {
-                    bar4 = imgSet(bar4, 105, 960, 3);
+                if (bgRight.indexOf('http') === -1){
+                    bgRight = ApiMaterPlatQiniuDomain + bgRight;
                 }
-
                 $("#home-body").css({ "background": "url(" + bgImg + ") no-repeat center", "background-size": "100%", "opacity": "1", })                
                 $("#beijing")  .css({ "background-image": "url(" + bgRight + ")"})
                 $("#nav-news") .css({ "background-image": "url(" + bar1 + ")","background-size": "cover","background-repeat": "no-repeat","background-position": "center" })
@@ -959,6 +1126,7 @@ $(document).ready(function(){
 
                 //right side control
                 var script_status = false;
+
 
                 // 首页新闻模块
                 $("#nav-news").click(function(){
