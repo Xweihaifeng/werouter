@@ -372,6 +372,8 @@
     <script src="bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
     <script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
     <script src="/common/sweetalert2/dist/sweetalert2.min.js"></script>
+    <script src="/common/layer-v3.0.3/layer-v3.0.3/layer/layer.js"></script>
+
     <script src="/common/zoom/zoom.js"></script>
     <!-- Include a polyfill for ES6 Promises (optional) for IE11 and Android browser -->
 
@@ -528,7 +530,7 @@
                 }],
                 "aoColumnDefs": [{
                     "bSortable": false,
-                    "aTargets": [1, 2, 3, 4, 5, 6, 7]
+                    "aTargets": [0, 1, 2, 3, 4, 6, 7]
                 }, {
                     "bSearchable": false,
                     "aTargets": [0, 1, 2, 3, 4, 5, 6, 7]
@@ -539,10 +541,10 @@
                 "fnRowCallback": function(nRow, aData, iDisplayIndex) {
                     return nRow;
                 },
-                "fnInitComplete": function(oSettings, json) {
+                "fnInitComplete": function(oSettings, json) {},
+                "drawCallback": function(settings) {
                     $('[data-toggle="popover"]').popover();
                 }
-
             });
         };
 
@@ -604,14 +606,6 @@
         $(document).on('change', 'select[name=channel],select[name=cate],input[name=title],select[name=is_original],select[name=is_hot],select[name=is_pose],select[name=index_show],select[name=status]', function() {
             dt_table.fnSettings().sAjaxSource = ApiUrl + 'cms/contents/lists';
             dt_table.fnDraw();
-            setTimeout(function() {
-                $('[data-toggle="popover"]').popover();
-            }, 1000);
-        });
-        $(document).on('click', '.pagination a', function() {
-            setTimeout(function() {
-                $('[data-toggle="popover"]').popover();
-            }, 1000);
         });
         $(document).on('click', '.btn-delete-confirm', function() {
             $.ajax({
@@ -622,7 +616,9 @@
                 },
                 dataType: 'json',
                 success: function(data) {
-                    location.reload();
+                    layer.msg('删除成功！');
+                    dt_table.fnSettings().sAjaxSource = ApiUrl + 'cms/contents/lists';
+                    dt_table.fnDraw();
                 },
                 error: function(xhr) {
                     console.log(xhr);
@@ -645,6 +641,7 @@
                 dataType: 'json',
                 success: function(data) {
                     if (data.code == 200) {
+                        layer.closeAll('loading');
                         $(the).data("state", data.data.state);
                         if (data.data.state == 1) {
                             $(the).removeClass('label-default').addClass('label-success').attr('title', '点击关闭');
@@ -663,6 +660,7 @@
                     console.log(xhr);
                 }
             });
+            layer.load();
         });
         $(document).on('click', '.set-status', function() {
             var the = this;
@@ -677,36 +675,27 @@
                 },
                 dataType: 'json',
                 success: function(data) {
-                    swal({
-                        text: '设置成功！',
-                        type: 'success',
-                        timer: 20000
-                    }).then(
-                        function() {
-                            if (type == 1) {
-                                $(the).closest('tr').find('.label').filter('.status').text('已启用').removeClass("label-default").removeClass("label-danger").addClass('label-success');
-                            } else if (type == 2) {
-                                $(the).closest('tr').find('.label').filter('.status').text('草稿').removeClass("label-success").removeClass("label-danger").addClass('label-default');
-                            } else {
-                                $(the).closest('tr').find('.label').filter('.status').text('已禁用').removeClass("label-success").removeClass("label-danger").addClass('label-danger');
-                            }
-                            $(the).closest('tr').find('.status-menu-ul').html();
-                            $(the).closest('tr').find('.status-menu-ul').html((data.data.status != 1 ? `<li><a href="#" class="set-status" data-type="1" data-id="` + data.data.weid + `" >启用</a></li>` : ``) +
-                                (data.data.status != 2 ? `<li><a href="#" class="set-status" data-type="2" data-id="` + data.data.weid + `" >草稿</a></li>` : ``) +
-                                (data.data.status != 3 ? `<li><a href="#" class="set-status" data-type="3" data-id="` + data.data.weid + `" >禁用</a></li>` : ``));
-                        },
-                        // handling the promise rejection
-                        function(dismiss) {
-                            if (dismiss === 'timer') {
-                                location.reload();
-                            }
+                    if (data.code == 200) {
+                        layer.closeAll('loading');
+                        layer.msg('设置成功！');
+                        if (type == 1) {
+                            $(the).closest('tr').find('.label').filter('.status').text('已启用').removeClass("label-default").removeClass("label-danger").addClass('label-success');
+                        } else if (type == 2) {
+                            $(the).closest('tr').find('.label').filter('.status').text('草稿').removeClass("label-success").removeClass("label-danger").addClass('label-default');
+                        } else {
+                            $(the).closest('tr').find('.label').filter('.status').text('已禁用').removeClass("label-success").removeClass("label-danger").addClass('label-danger');
                         }
-                    )
+                        $(the).closest('tr').find('.status-menu-ul').html();
+                        $(the).closest('tr').find('.status-menu-ul').html((data.data.status != 1 ? `<li><a href="#" class="set-status" data-type="1" data-id="` + data.data.weid + `" >启用</a></li>` : ``) +
+                            (data.data.status != 2 ? `<li><a href="#" class="set-status" data-type="2" data-id="` + data.data.weid + `" >草稿</a></li>` : ``) +
+                            (data.data.status != 3 ? `<li><a href="#" class="set-status" data-type="3" data-id="` + data.data.weid + `" >禁用</a></li>` : ``));
+                    }
                 },
                 error: function(xhr) {
                     console.log(xhr);
                 }
             });
+            layer.load();
         });
     </script>
 </body>
