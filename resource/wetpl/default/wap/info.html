@@ -20,21 +20,24 @@
 		<span class="img"><img :src="avatar" alt=""/></span>
 		<span>
 			<p class="name">{{nickname}}</p>
-			<p class="wid">WEID：{{domain}}</p>
+			<p class="wid">WEID:{{domain}}</p>
 		</span>
 	</div>
 	<div class="des">
 		<div>
 			<label>功能介绍</label>
-			<span style="display:inline-block;width: 73%;">{{motto}}</span>
+			<span style="display:inline-block;width: 73%; font-size: 0.11rem;">{{motto}}</span>
 		</div>
 		<div class="img-div">
 			<label>账号主体</label>
-			<span><img src="/common/img/idcard.png" width="25" alt=""/>{{account}}</span>
+			<span style="font-size: 0.11rem;">
+				<!--<img src="/common/img/idcard.png" width="25" alt=""/>-->
+				{{account}}
+			</span>
 		</div>
 		<div class="cert">
 			<label>认证信息</label>
-			<span>{{cert}}</span>
+			<span style="font-size: 0.11rem;">{{cert}}</span>
 		</div>
 		<!--<div>
 			<label>所在地</label>
@@ -42,12 +45,12 @@
 		</div>-->
 	</div>
 
-	<div class="des">
+	<!--<div class="des">
 		<div class="work">
 			<label>经营范围</label>
 			<span>{{work}}</span>
 		</div>
-	</div>
+	</div>-->
 	
 	<!--<div class="user_select">
 		<div>
@@ -67,16 +70,20 @@
 			</label>
 			</div>
 		</a>
+		<a :href="wecard">
 		<div>
 		<label>
-			<a>查看历史消息</a>
+			<a>我的微名片</a>
 		</label>
 		</div>
-		<div class="wecard">
-		<label>
-			<a>查看我的微名片</a>
-		</label>
+		</a>
+		<a>
+		<div>
+			<label>
+				<a>查看历史消息</a>
+			</label>
 		</div>
+		</a>
 	</div>
 
 	<!--<div class="des">
@@ -454,6 +461,7 @@
 			motto: '暂无内容',
 			work: '互联网',
 			wepage: '',
+			wecard: '',
 			state: false, //未关注
 			status: '关注'
 		},
