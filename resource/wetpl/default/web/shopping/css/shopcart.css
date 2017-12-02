@@ -1,6 +1,6 @@
 
 /*个人认证模块*/
-* {}
+* { color: #4d4d4d; }
 html, body { background: #F7F6F2; }
 [v-cloak] {  display:none;  }
 #form_list { display: none; background-color: #FFF; }
@@ -14,6 +14,7 @@ html, body { background: #F7F6F2; }
 .breadcrumb li a { color: #FFF!important; }
 .navbar { min-height: 37px; }
 .display-head { margin: 0; border: none; height: 30px; min-height: 30px; }
+#right * { font-size: 13px; }
 
 .cart_shop_list { overflow: hidden; border-top: 1px solid #eee; }
 .cart_shop_business_all { display: flex; align-items: center; justify-content: space-between; margin: 15px 25px; padding: 15px; border: 1px solid #eee; text-align: center; }
@@ -27,7 +28,8 @@ html, body { background: #F7F6F2; }
 .cart_shop_select { flex: 1; width: 48px; max-width: 48px; display: inline-flex; align-items: center; }
 .cart_shop_select input { vertical-align: middle; margin: 0; padding: 0; }
 .cart_shop_business_all > .cart_shop_img { flex: 1; max-width: 150px; }
-.cart_shop > .cart_shop_img { flex: 1; height: 150px; max-height: 150px; max-width: 150px; }
+.cart_shop > .cart_shop_img { flex: 1; height: 150px; max-height: 150px; max-width: 150px; line-height: 150px; position: relative; }
+.cart_shop > .cart_shop_img > img { width: 100px; height: auto!important; position: absolute; left: 0; transform: translateY(-50%); top: 50% }
 
 .cart_shop > .cart_shop_img  > img { height: 150px; max-height: 150px; max-width: 150px; }
 .cart_shop > .cart_shop_piece > input { display: inline-block; width: 20px; height: 20px; border: 1px solid #ddd; color: #666; outline: none; }
@@ -37,4 +39,4 @@ html, body { background: #F7F6F2; }
 
 .cart_shop_order { display: flex; align-items: center; justify-content: space-between; margin: 15px 25px; height: 45px; border: 1px solid #eee;  }
 .cart_shop_order_info { flex: 1; padding: 0 15px; }
-.cart_shop_order_sub { flex: 1; max-width: 150px; line-height: 45px; text-align: center; background-color: #e54346; color: #fff; font-size: 18px; font-family: "Microsoft YaHei"; cursor: pointer; }
+.cart_shop_order_sub { flex: 1; max-width: 150px; line-height: 45px; text-align: center; background-color: #e54346; color: #fff; font-size: 18px!important; font-family: "Microsoft YaHei"; cursor: pointer; }
