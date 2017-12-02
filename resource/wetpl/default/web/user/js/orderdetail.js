@@ -280,7 +280,7 @@ var qiniu_bucket_domain =ApiMaterPlatQiniuDomain;
                             addrdivhtml+='<p><span class="t">交易单号:</span><span class="txt">'+data.pay_num+'</span></p>';
                          }  
                          if(logistics_flag){
-                            addrdivhtml+='<p><span class="t">物流单号:</span><span class="txt">'+data.send.logistics_no+'</span></p><p><span class="t">物流公司:</span><span class="txt">'+data.send.logistics_company+'</span></p>';
+                            //addrdivhtml+='<p><span class="t">物流单号:</span><span class="txt">'+data.send.logistics_no+'</span></p><p><span class="t">物流公司:</span><span class="txt">'+data.send.logistics_company+'</span></p>';
                          }
                          if(refund_flag){
                             addrdivhtml+='<p><span class="t">退款单号:</span><span class="txt">'+data.refund[0].order_refund_num+'</span></p>';
@@ -305,29 +305,44 @@ var qiniu_bucket_domain =ApiMaterPlatQiniuDomain;
         data.send.logistics_no
         data.send.logistics_company
         data.send.logistics_company_code*/
-        $.ajax({
-            url: apiUrl+'pages/logistics/getLogisticsInfo',  
-            type:'post',
-            data:{logistics_NO:data.send.logistics_no,company_code:data.send.logistics_company_code},
-            headers: {
-                    'Token': localStorage.getItem('token')
-                },
-            dataType: 'json',
-            success: function(data){
-                if (data.code == 200) {
-                 var html='<table class="orders_list_title"><tbody>'+
-                    '<tr class="orders_list_msg">'+
-                    '<td class="list_left" colspan="4">'+
-                        '<span class="list_left_date">物流信息</span>'+
-                    '</td>'+
-                    '</tr><tr class="orders_list_content" id="914087f0-d0e1-11e7-ae66-c11b9b4ee3b1" data-id="undefined"> <td width="40%" colspan="4"><div class="od_about_order_left  od_bgwrite">';
-                    data.data.data.map(x=>{
-                        html+='<p><span>日期:'+x.ftime+'</span>&nbsp&nbsp&nbsp&nbsp<span class="txt">'+x.context+'</span></p>';
-                    })
-                    html+='</div></td></tbody></table>';
-                    $(".orderdetail").append(html);
+        var goods=data.goods;
+        var obj=data.send;
+        obj.map(x=>{
+            $.ajax({
+                url: apiUrl+'pages/logistics/getLogisticsInfo',  
+                type:'post',
+                data:{logistics_NO:x.logistics_no,company_code:x.logistics_company_code},
+                headers: {
+                        'Token': localStorage.getItem('token')
+                    },
+                dataType: 'json',
+                success: function(data){
+                    if (data.code == 200) {
+                     var html='<table class="orders_list_title"><tbody>'+
+                        '<tr class="orders_list_msg">'+
+                        '<td class="list_left" colspan="4">'+
+                            '<span class="list_left_date">物流信息</span>'+
+                        '</td>'+
+                        '</tr><tr class="orders_list_content" id="914087f0-d0e1-11e7-ae66-c11b9b4ee3b1" data-id="undefined"> <td width="40%" colspan="4"><div class="od_about_order_left  od_bgwrite">';
+                        data.data.data.map(x=>{
+                            html+='<p><span>日期:'+x.ftime+'</span>&nbsp&nbsp&nbsp&nbsp<span class="txt">'+x.context+'</span></p>';
+                        });
+                        html+='<span>商品信息<span>';
+                        //分割字符串        
+                        var order_goods_list=x.order_goods_id.split(",");
+                        order_goods_list.map(y=>{
+                            goods.map(z=>{
+                                if(z.weid==y){
+                                    html+='<div><div ><a href="'+domain_order+'wemall/goods/'+z.goods_id+'" target="_blank"><img  src="'+qiniu_bucket_domain+z.goods_cover+'" style="width: 80px;" alt=""><span>'+z.goods_title+'</span></a></div></div>';        
+                                }        
+                            });
+                        });
+                        html+='</div></td></tbody></table>';
+                        $(".orderdetail").append(html);
+                    }
                 }
-            }
+            })
+            
         })
     }
 
