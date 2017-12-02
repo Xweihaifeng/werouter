@@ -226,7 +226,7 @@ checkdomain(domain,id);
     
     //获取json数组
     
-    var id = jQuery.parseJSON(localStorage.getItem(window.location.href.split('/').pop())); 
+    var id = jQuery.parseJSON(localStorage.getItem(window.location.href.split('/').pop()));
 
 
 
@@ -486,8 +486,8 @@ checkdomain(domain,id);
 
     // 确认订单信息模板
      
-    var orderstorehtml=function(data,num){
-        var orderhtml='<div class="goods_list" weid="'+data.weid+'"><li class="col-sm-2">'+
+    var orderstorehtml=function(data,num,postMoney){
+        var orderhtml='<div class="goods_list" weid="'+data.weid+'" postage="'+data.postage+'" postage_max_money="'+data.postage_max_money+'" postage_status="'+data.postage_status+'"><li class="col-sm-2">'+
                 '<p class=""></p>'+
                 '<img src="'+qiniu_bucket_domain +data.cover+'" alt=""> </li>'+
             '<li class="col-sm-4">'+
@@ -495,7 +495,10 @@ checkdomain(domain,id);
                 '<p>'+data.title+'</p>'+
                 '<p><img src="/common/img/qitian.png" alt="">该商品不支持7天无理由退货</p>'+
             '</li>'+
-            '<li class="col-sm-3"><p id="one_price"> 单价：<span>'+data.price+'</span></p></li>'+
+            '<li class="col-sm-3">' +
+                '<p id="one_price"> 单价：<span>'+data.price+'</span></p>' +
+                '<p id="postage_price">邮费：￥<span>'+postMoney+'</span></p>' +
+            '</li>'+
             '<li class="col-sm-3">'+
                 '<span class="amount-num">'+
                     '<span class="amount-num-jian">-</span>'+
@@ -526,8 +529,21 @@ checkdomain(domain,id);
                 success: function(data){
                     if (data.code == 200) {
                         var goods = data.data;
+                        console.log("商品详情：",goods)
+                        //判断商品邮费
+                        var postMoney = 0.00;
+                        if(goods.postage_status == 2){
+                            if(goods.postage_max_money){
+                                if(parseFloat(goods.price * goodsdata.goods_num) < parseFloat(goods.postage_max_money)){
+                                    postMoney = parseFloat(goods.postage * goodsdata.goods_num)
+                                }
+                            }else{
+                                postMoney = parseFloat(goods.postage * goodsdata.goods_num)
+                            }
+
+                        }
                         //useraddr(goods.range_id);
-                    $(".product-buy-list").append(orderstorehtml(goods,goodsdata.goods_num));
+                    $(".product-buy-list").append(orderstorehtml(goods,goodsdata.goods_num,postMoney));
                         if(index==id.goods_list.length-1){
                             associatorNotDiscount();    
                         }
@@ -540,48 +556,48 @@ checkdomain(domain,id);
         buyaddr();
         return false;
         
-        $.ajax({
-            url: GOODS_DETAIL+'/' + id,
-            type:'get',
-            headers: {
-                    'Token': localStorage.getItem('token')
-                },
-            dataType: 'json',
-            success: function(data){
-                console.log(data);
-                if (data.code == 200) {
-                    var goods = data.data;
-                        useraddr(goods.range_id);
-
-                    $(".product-buy-list").append(orderstorehtml(goods));
-
-                    $('#pay_price').text(goods.price);   
-                    var goodsdata={
-                            title: goods.title,
-                            price: goods.price,
-                            marketprice:goods.marketprice,
-                            cover: goods.cover,
-                            content: goods.content,           
-                            summary: goods.summary,
-                            weid: goods.weid,
-                           page_id:goods.page_id,
-                           mall_id:goods.mall_id
-                    }                 
-                    //获取会员折扣
-                    associator(localStorage.getItem("weid"),goods.mall_id,goods.price,goodsdata);
-                    // buynumfun(goods.price*localStorage.getItem("discount"));
-                    // buynumfun($('#pay_price').text());
-
-                    getprovince(goods.range_id);
-
-                    buyaddr();
-                    // loadGoods('', goods.weid, goods.cate_id, goods);
-
-
-                  
-                }
-            }
-    })
+    //     $.ajax({
+    //         url: GOODS_DETAIL+'/' + id,
+    //         type:'get',
+    //         headers: {
+    //                 'Token': localStorage.getItem('token')
+    //             },
+    //         dataType: 'json',
+    //         success: function(data){
+    //             console.log(data);
+    //             if (data.code == 200) {
+    //                 var goods = data.data;
+    //                     useraddr(goods.range_id);
+    //
+    //                 $(".product-buy-list").append(orderstorehtml(goods));
+    //
+    //                 $('#pay_price').text(goods.price);
+    //                 var goodsdata={
+    //                         title: goods.title,
+    //                         price: goods.price,
+    //                         marketprice:goods.marketprice,
+    //                         cover: goods.cover,
+    //                         content: goods.content,
+    //                         summary: goods.summary,
+    //                         weid: goods.weid,
+    //                        page_id:goods.page_id,
+    //                        mall_id:goods.mall_id
+    //                 }
+    //                 //获取会员折扣
+    //                 associator(localStorage.getItem("weid"),goods.mall_id,goods.price,goodsdata);
+    //                 // buynumfun(goods.price*localStorage.getItem("discount"));
+    //                 // buynumfun($('#pay_price').text());
+    //
+    //                 getprovince(goods.range_id);
+    //
+    //                 buyaddr();
+    //                 // loadGoods('', goods.weid, goods.cate_id, goods);
+    //
+    //
+    //
+    //             }
+    //         }
+    // })
 
     }
     //不计入折扣提交
@@ -1009,11 +1025,27 @@ checkdomain(domain,id);
     var buynumfunNotDiscount=function(){
         var obj=$(".product-buy-list").find(".goods_list");
         var price=0;
+        var postPrice = 0;
         obj.each(function(index,element){
+            var singlePrice = 0;
            price=price+parseFloat($(element).find("#one_price").find("span").text())*parseFloat($(element).find("#numm").val());
+           if($(element).attr('postage_status') == 2){
+               if($(element).attr('postage_max_money')){
+                   if(parseFloat($(element).find("#one_price").find("span").text() * $(element).find("#numm").val()) < parseFloat($(element).attr('postage_max_money'))){
+                       singlePrice = parseFloat($(element).attr('postage') * $(element).find("#numm").val())
+                   }
+               }else{
+                   singlePrice = parseFloat($(element).attr('postage') * $(element).find("#numm").val())
+               }
+           }
+            postPrice += singlePrice;
+            $(element).find("#postage_price").find("span").text(singlePrice)
+
+
         });
         $("#sum_price").html("￥" + price);
-        $('#pay_price').html(price);    
+        $('#pay_price').html(price + postPrice);
+        $('#freight').html(postPrice);
     }
     //数量减
     var numjian=function(){

@@ -1,6 +1,7 @@
 function mhide(){
     $('#message').hide();
     $('#message_fbys').hide();
+    $('#message_bksz').hide();
  }
 $(document).ready(function(){
     start();
@@ -43,6 +44,19 @@ $(document).ready(function(){
                     if(info.bar3!=''){$('#img_bar3').attr('src',ApiMaterPlatQiniuDomain+info.bar3);}
                     if(info.bar4!=''){$('#img_bar4').attr('src',ApiMaterPlatQiniuDomain+info.bar4);}
                     if(info.background_right!=''){$('#img_background_right').attr('src',ApiMaterPlatQiniuDomain+info.background_right);}
+
+                    var jsond=$.parseJSON(info.block);
+                    $("input[name=xw_radio][value=" + jsond.xw.show +  "]").attr('checked', true);
+                    $("select[name=xw_select] option[value='"+jsond.xw.sort+"']").attr("selected", "selected"); 
+
+                    $("input[name=zz_radio][value=" + jsond.zz.show +  "]").attr('checked', true);
+                    $("select[name=zz_select] option[value='"+jsond.zz.sort+"']").attr("selected", "selected"); 
+
+                    $("input[name=hz_radio][value=" + jsond.hz.show +  "]").attr('checked', true);
+                     $("select[name=hz_select] option[value='"+jsond.hz.sort+"']").attr("selected", "selected"); 
+
+                    $("input[name=gx_radio][value=" + jsond.gx.show +  "]").attr('checked', true);
+                     $("select[name=gx_select] option[value='"+jsond.gx.sort+"']").attr("selected", "selected"); 
                 } else {
                     console.log('error: -200');
                 }
@@ -56,14 +70,21 @@ init();
 //基本信息  发布样式
     $('#jbxx').show();
     $('#fbys').hide();
+    $('#bksz').hide();
     $('.box-header a').each(function(i){
     $(this).click(function(){
         if($(this).attr('data')==1){
           $('#jbxx').show();
           $('#fbys').hide();
-        }else{
+          $('#bksz').hide();
+        }else if($(this).attr('data')==2){
           $('#jbxx').hide();
           $('#fbys').show();
+          $('#bksz').hide();
+        }else{
+          $('#bksz').show();
+          $('#jbxx').hide();
+          $('#fbys').hide();
         }
 
      })
@@ -156,7 +177,7 @@ init();
                 });
         });
        //发布样式
-            $("#updateFbys").click(function () {
+       $("#updateFbys").click(function () {
             var data = {
               bar1:$('input[name=bar1]').val(),
               bar2:$('input[name=bar2]').val(),
@@ -172,6 +193,37 @@ init();
                     success: function (data) {
                       if (data.code === 200){
                           $('#message_fbys').show();
+                          setTimeout("mhide()",3000);
+                      }else {
+                        //alert(data.message); 
+                           console.log('error: -200');
+                      }
+                    },
+                    error: function(xhr) {
+                         console.log(xhr);
+                     }
+                });
+        });
+       //板块设置
+       $("#updateBksz").click(function () {
+            var xw='"xw":{"show":'+$("input[name='xw_radio']:checked").val()+',"sort":'+$("select[name=xw_select]").val()+'},';
+            var zz='"zz":{"show":'+$("input[name='zz_radio']:checked").val()+',"sort":'+$("select[name=zz_select]").val()+'},';
+            var hz='"hz":{"show":'+$("input[name='hz_radio']:checked").val()+',"sort":'+$("select[name=hz_select]").val()+'},';
+            var gx='"gx":{"show":'+$("input[name='gx_radio']:checked").val()+',"sort":'+$("select[name=gx_select]").val()+'}';
+            var jsonData='{'+xw+zz+hz+gx+'}';
+            //alert(jsonData);
+            var data = {
+              block:jsonData,
+            };  
+                $.ajax({
+                    type: "POST",
+
+                    dataType: "json",
+                    data:data,
+                    url: ApiUrl + 'cms/setting/'+weid,
+                    success: function (data) {
+                      if (data.code === 200){
+                          $('#message_bksz').show();
                           setTimeout("mhide()",3000);
                       }else {
                         //alert(data.message); 
