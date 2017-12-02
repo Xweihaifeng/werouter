@@ -266,7 +266,7 @@ var qiniu_bucket_domain =ApiMaterPlatQiniuDomain;
                 '</tr>'+
                 '<tr class="orders_list_content" id="'+data.weid+'" data-id="'+data.goods_id+'">'+
                    ' <td width="50%">'+
-                        '<div class="od_about_order_left od_w50">'+
+                        '<div class="od_about_order_left">'+
                           '<p><span class="t">收货地址:</span><span class="txt">'+data.address_detail+'</span></p>'+
                           '<p><span class="t">买家留言:</span><span class="txt">'+data.note+'</span></p>'+
                         '</div>'+
