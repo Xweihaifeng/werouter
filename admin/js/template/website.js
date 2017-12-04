@@ -164,10 +164,12 @@ init();
                     url: ApiUrl + 'cms/setting/'+weid,
                     success: function (data) {
                     	if (data.code === 200){
-                          $('#message').show();
-                          setTimeout("mhide()",3000);
+                           swal({text: '保存成功',type: 'success', timer: 20000});
+                          // $('#message').show();
+                          // setTimeout("mhide()",3000);
                     	}else {
                     		//alert(data.message); 
+                           swal({text: '保存失败',type: 'error', timer: 20000});
                            console.log('error: -200');
                       }
                     },
@@ -192,11 +194,13 @@ init();
                     url: ApiUrl + 'cms/setting/'+weid,
                     success: function (data) {
                       if (data.code === 200){
-                          $('#message_fbys').show();
-                          setTimeout("mhide()",3000);
+                         swal({text: '保存成功',type: 'success', timer: 20000});
+                          // $('#message_fbys').show();
+                          // setTimeout("mhide()",3000);
                       }else {
                         //alert(data.message); 
-                           console.log('error: -200');
+                        swal({text: '保存失败',type: 'error', timer: 20000});
+                        console.log('error: -200');
                       }
                     },
                     error: function(xhr) {
@@ -223,10 +227,12 @@ init();
                     url: ApiUrl + 'cms/setting/'+weid,
                     success: function (data) {
                       if (data.code === 200){
-                          $('#message_bksz').show();
-                          setTimeout("mhide()",3000);
+                           swal({text: '保存成功',type: 'success', timer: 20000});
+                          // $('#message_bksz').show();
+                          // setTimeout("mhide()",3000);
                       }else {
                         //alert(data.message); 
+                           swal({text: '保存失败',type: 'error', timer: 20000});
                            console.log('error: -200');
                       }
                     },
