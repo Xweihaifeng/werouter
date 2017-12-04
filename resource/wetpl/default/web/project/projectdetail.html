@@ -1,407 +1,376 @@
 <!DOCTYPE html>
 <html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <link rel="shortcut icon" id="favicon" href="" />
-    <script src="/common/js/jquery-3.2.1.min.js"></script>
+    <head lang="en">
+        <meta charset="UTF-8">
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+        <link rel="shortcut icon" id="favicon" href="" />
+        <script src="/common/js/jquery-3.2.1.min.js"></script>
 
 
-    <script type="text/javascript" src="/common/layer-v3.0.3/layer-v3.0.3/layer/layer.js"></script>
-    <script src="/common/js/browser.min.js"></script>
-    <link rel="stylesheet" href="/common/AdminLTE-2.4.0-rc/bower_components/font-awesome/css/font-awesome.min.css">
-    <title>全球秦商总会</title>
-    <!-- <link rel="stylesheet" href="{{PATH_TML}}css/public_main.css"> -->
+        <script type="text/javascript" src="/common/layer-v3.0.3/layer-v3.0.3/layer/layer.js"></script>
+        <script src="/common/js/browser.min.js"></script>
+        <link rel="stylesheet" href="/common/AdminLTE-2.4.0-rc/bower_components/font-awesome/css/font-awesome.min.css">
+        <title>全球秦商总会</title>
+        <!-- <link rel="stylesheet" href="{{PATH_TML}}css/public_main.css"> -->
         <link rel="stylesheet" href="{{PATH_TML}}font/iconfont.css" />
         <link rel="stylesheet" href="{{PATH_TML}}css/news_base.css" />
         <link rel="stylesheet" href="{{PATH_TML}}css/modal_login.css" />
         <link rel="stylesheet" href="{{PATH_TML}}css/article.css">
 
-    <link rel="stylesheet" href="/common/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/common/css/buttons.css">
-    <link rel="stylesheet" href="/common/layer-v3.0.3/layer-v3.0.3/layer/skin/default/layer.css">
-    <!-- <link rel="stylesheet" type="text/css" href="css/shopcommon.css"> -->
+        <link rel="stylesheet" href="/common/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/common/css/buttons.css">
+        <link rel="stylesheet" href="/common/layer-v3.0.3/layer-v3.0.3/layer/skin/default/layer.css">
+        <!-- <link rel="stylesheet" type="text/css" href="css/shopcommon.css"> -->
 
-    <link rel="stylesheet" type="text/css" href="{{PATH_TML}}project/css/projectdetail.css">
-    <link rel="stylesheet" type="text/css" href="{{PATH_TML}}project/css/project.css">
-    <!-- <link rel="stylesheet" type="text/css" href="{{PATH_TML}}project/css/zc.css"> -->
+        <link rel="stylesheet" type="text/css" href="{{PATH_TML}}project/css/projectdetail.css">
+        <link rel="stylesheet" type="text/css" href="{{PATH_TML}}project/css/project.css">
+        <!-- <link rel="stylesheet" type="text/css" href="{{PATH_TML}}project/css/zc.css"> -->
 
-     <script src="{{PATH_CONFIG}}"></script>
-     <script type="text/javascript" src="{{PATH_TML}}shopping/js/jquery.qrcode.min.js"></script>
-    <script src="{{PATH_TML}}js/modal_login.js"></script>
-    <script src="/common/js/swiper-3.3.1.min.js"></script>
-    <script src="/common/js/buttons.js"></script>
- <script src="{{PATH_TML}}project/js/projectdetail.js"></script>
-    <script src="/common/js/control.js"></script>
-
-
-<!-- 列表详情 -->
-
-    <style>::-webkit-scrollbar { width: 0; }
-    .page-content{
-    padding-top: 20px!important;
-}
-
-    </style>
-
-</head>
-<body style="background: url(/common/img/dibu.jpg);">
-    <!-- 登录部分 -->
-    <div class="modal_login" id="modal_login"></div>
-    <!-- 导航部分开始 -->
-    <ul class="news_menu" id="public_main_news_menu"></ul>
-    <!-- 导航部分结束 -->
-      <div class="index-content ">
-        <div class=" page-content container">
-
-            <div class="row">
-                <!-- <script src="http://next.wezchina.com/static/jquery/jquery.min.js"></script> -->
-<!-- <script src="http://next.wezchina.com/static/layer/layer.js"></script> -->
+        <script src="{{PATH_CONFIG}}"></script>
+        <script type="text/javascript" src="{{PATH_TML}}shopping/js/jquery.qrcode.min.js"></script>
+        <script src="{{PATH_TML}}js/modal_login.js"></script>
+        <script src="/common/js/swiper-3.3.1.min.js"></script>
+        <script src="/common/js/buttons.js"></script>
+        <script src="{{PATH_TML}}project/js/projectdetail.js"></script>
+        <script src="/common/js/control.js"></script>
 
 
+    <!-- 列表详情 -->
+
+        <style>
+            ::-webkit-scrollbar { width: 0; }
+            .page-content{
+                padding-top: 20px!important;
+            }
+        </style>
+    </head>
+    <body style="background: url(/common/img/dibu.jpg);">
+        <!-- 登录部分 -->
+        <div class="modal_login" id="modal_login"></div>
+        <!-- 导航部分开始 -->
+        <ul class="news_menu" id="public_main_news_menu"></ul>
+        <!-- 导航部分结束 -->
+          <div class="index-content ">
+            <div class=" page-content container">
+
+                <div class="row">
+                    <!-- <script src="http://next.wezchina.com/static/jquery/jquery.min.js"></script> -->
+    <!-- <script src="http://next.wezchina.com/static/layer/layer.js"></script> -->
+                    <div class="left col-sm-8" style="width: 765px">
 
 
 
-
-
-
-
-
-                                <div class="left col-sm-8" style="width: 765px">
-
-
-
-        <h3 class="title" style="display: block;height: 90px;margin-top: -20px;line-height: 90px;margin-bottom:0 ">我的爱好111333</h3>
-         <div class="project-box project-show-project-box-top">
-        <div style="height: 56px">
-            <ul class="project_t" role="tablist" style="position: relative;">
-                <li role="presentation" class="menuItem active">
-                    <a href="#project-detail" class="a-none" id="projectDe">
-                        项目详情
-                    </a>
-                </li>
-                <li role="presentation" class="menuItem">
-                    <a href="#project-supporter" class="a-none">
-                        Ta的支持者
-                    </a>
-                </li>
-            </ul></div>
-
-
-
-            <div class="show-content project_con panel panel_color" id="project-detail" style="border-top: none;padding-left: 15px;padding-right: 0">
-                <div id="projectMsg" style="margin-bottom: 0;font-size: 16px;line-height: 28px"><p>&nbsp;春耕·精心种植·三七，参天地苍穹之下，弯腰朴实的七农人，翻动的泥土气息清新扑鼻，一年之计在于春，历经三年，每一株三七，都是自然的模样。这里有一眼看不到边的蓝到这里，需要用心、用脚对话天地，沿途美景，便是天堂。</p><p>&nbsp;春耕·精心种植·三七，参天地苍穹之下，弯腰朴实的七农人，翻动的泥土气息清新扑鼻，一年之计在于春，历经三年，每一株三七，都是自然的模样。这里有一眼看不到边的蓝到这里，需要用心、用脚对话天地，沿途美景，便是天堂。</p></div>
-                <div class="project_p row ">
-                           <!--  <a class="col-sm-3 fancybox" href="http://next.wezchina.com/storage/images/temp/avatar-c24bc7ec346ef228abdd6cd2ef759be2.jpeg" data-fancybox-group="gallery">
-                                <img src="http://next.wezchina.com/storage/images/temp/avatar-c24bc7ec346ef228abdd6cd2ef759be2.jpeg" alt=" ">
-                            </a>
-                                                    <a class="col-sm-3 fancybox" href="http://next.wezchina.com/storage/images/temp/avatar-f1b594d478d81cdcabf5c59e18f3832d.jpeg" data-fancybox-group="gallery">
-                                <img src="http://next.wezchina.com/storage/images/temp/avatar-f1b594d478d81cdcabf5c59e18f3832d.jpeg" alt=" ">
-                            </a>
-                                                    <a class="col-sm-3 fancybox" href="../common/img/p2240256385.jpg" data-fancybox-group="gallery">
-                                <img src="../common/img/p2240256385.jpg" alt=" ">
-                            </a>
-                                            <a class="col-sm-3 fancybox" href="http://next.wezchina.com/storage/images/temp/9d377b10ce778c4938b3c7e2c63a229a.jpeg" data-fancybox-group="gallery">
-                                <img src="http://next.wezchina.com/storage/images/temp/9d377b10ce778c4938b3c7e2c63a229a.jpeg" alt=" ">
-                            </a>
-                             <a class="col-sm-3 fancybox" href="../common/img/p2240259264.jpg" data-fancybox-group="gallery">
-                                <img src="../common/img/p2240259264.jpg" alt=" ">
-                            </a>
-                             <a class="col-sm-3 fancybox" href="../common/img/p2220094585+.jpg" data-fancybox-group="gallery">
-                                <img src="../common/img/p2220094585+.jpg" alt=" ">
-                            </a>
-                             <a class="col-sm-3 fancybox" href="http://next.wezchina.com/storage/images/temp/9d377b10ce778c4938b3c7e2c63a229a.jpeg" data-fancybox-group="gallery">
-                                <img src="http://next.wezchina.com/storage/images/temp/9d377b10ce778c4938b3c7e2c63a229a.jpeg" alt=" ">
-                            </a>
-                             <a class="col-sm-3 fancybox" href="../common/img/p2240269579.jpg" data-fancybox-group="gallery">
-                                <img src="../common/img/p2240269579.jpg" alt=" ">
-                            </a> -->
-                </div>
-            </div>
-    </div>
-<!-- 统筹动态开始 -->
-            <div class="panel panel_color project-show-panel-color" style="padding-bottom: 20px;width: 735px;">
-                <div class="trends_title_h" id="project-detail">
-                    项目动态
-                </div>
-                <!-- <div class="trends">
-                     <div class="trends1">
-                        <div class="trends_img">
-                            <img class="img-circle" src="../common/img/avatar-389bc9635a9096bb709e3c26bfdac8a8.png">
-                        </div>
-                        <div class="trends_title">
-                            <div class="trends_title_top">
-                                <span class="trends_title_text">22 </span>
-                                <small class="trends_title_color">项目发起</small>
-                                <div class="trends_title_size">2017-02-04</div>
+                        <h3 class="title" style="display: block;height: 90px;margin-top: -20px;line-height: 90px;margin-bottom:0 ">我的爱好111333</h3>
+                        <div class="project-box project-show-project-box-top">
+                            <div style="height: 56px">
+                                <ul class="project_t" role="tablist" style="position: relative;">
+                                    <li role="presentation" class="menuItem active">
+                                        <a href="#project-detail" class="a-none" id="projectDe">
+                                            项目详情
+                                        </a>
+                                    </li>
+                                    <li role="presentation" class="menuItem">
+                                        <a href="#project-supporter" class="a-none">
+                                            Ta的支持者
+                                        </a>
+                                    </li>
+                                </ul>
                             </div>
-                            <div class="trends_title_bottom">
-                                <span class="trends_title_text">目标金额:</span>
-                                <small class="trends_title_color">￥1999</small>
+
+
+
+                            <div class="show-content project_con panel panel_color" id="project-detail" style="border-top: none;padding-left: 15px;padding-right: 0">
+                                <div id="projectMsg" style="margin-bottom: 0;font-size: 16px;line-height: 28px"><p>&nbsp;春耕·精心种植·三七，参天地苍穹之下，弯腰朴实的七农人，翻动的泥土气息清新扑鼻，一年之计在于春，历经三年，每一株三七，都是自然的模样。这里有一眼看不到边的蓝到这里，需要用心、用脚对话天地，沿途美景，便是天堂。</p><p>&nbsp;春耕·精心种植·三七，参天地苍穹之下，弯腰朴实的七农人，翻动的泥土气息清新扑鼻，一年之计在于春，历经三年，每一株三七，都是自然的模样。这里有一眼看不到边的蓝到这里，需要用心、用脚对话天地，沿途美景，便是天堂。</p>
+                                </div>
+                                <div class="project_p row ">
+                               <!--  <a class="col-sm-3 fancybox" href="http://next.wezchina.com/storage/images/temp/avatar-c24bc7ec346ef228abdd6cd2ef759be2.jpeg" data-fancybox-group="gallery">
+                                    <img src="http://next.wezchina.com/storage/images/temp/avatar-c24bc7ec346ef228abdd6cd2ef759be2.jpeg" alt=" ">
+                                </a>
+                                                        <a class="col-sm-3 fancybox" href="http://next.wezchina.com/storage/images/temp/avatar-f1b594d478d81cdcabf5c59e18f3832d.jpeg" data-fancybox-group="gallery">
+                                    <img src="http://next.wezchina.com/storage/images/temp/avatar-f1b594d478d81cdcabf5c59e18f3832d.jpeg" alt=" ">
+                                </a>
+                                                        <a class="col-sm-3 fancybox" href="../common/img/p2240256385.jpg" data-fancybox-group="gallery">
+                                    <img src="../common/img/p2240256385.jpg" alt=" ">
+                                </a>
+                                                <a class="col-sm-3 fancybox" href="http://next.wezchina.com/storage/images/temp/9d377b10ce778c4938b3c7e2c63a229a.jpeg" data-fancybox-group="gallery">
+                                    <img src="http://next.wezchina.com/storage/images/temp/9d377b10ce778c4938b3c7e2c63a229a.jpeg" alt=" ">
+                                </a>
+                                 <a class="col-sm-3 fancybox" href="../common/img/p2240259264.jpg" data-fancybox-group="gallery">
+                                    <img src="../common/img/p2240259264.jpg" alt=" ">
+                                </a>
+                                 <a class="col-sm-3 fancybox" href="../common/img/p2220094585+.jpg" data-fancybox-group="gallery">
+                                    <img src="../common/img/p2220094585+.jpg" alt=" ">
+                                </a>
+                                 <a class="col-sm-3 fancybox" href="http://next.wezchina.com/storage/images/temp/9d377b10ce778c4938b3c7e2c63a229a.jpeg" data-fancybox-group="gallery">
+                                    <img src="http://next.wezchina.com/storage/images/temp/9d377b10ce778c4938b3c7e2c63a229a.jpeg" alt=" ">
+                                </a>
+                                 <a class="col-sm-3 fancybox" href="../common/img/p2240269579.jpg" data-fancybox-group="gallery">
+                                    <img src="../common/img/p2240269579.jpg" alt=" ">
+                                </a> -->
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 统筹动态开始 -->
+                        <div class="panel panel_color project-show-panel-color" style="padding-bottom: 20px;width: 735px;">
+                            <div class="trends_title_h" id="project-detail">
+                                项目动态
+                            </div>
+                            <!-- <div class="trends">
+                                 <div class="trends1">
+                                    <div class="trends_img">
+                                        <img class="img-circle" src="../common/img/avatar-389bc9635a9096bb709e3c26bfdac8a8.png">
+                                    </div>
+                                    <div class="trends_title">
+                                        <div class="trends_title_top">
+                                            <span class="trends_title_text">22 </span>
+                                            <small class="trends_title_color">项目发起</small>
+                                            <div class="trends_title_size">2017-02-04</div>
+                                        </div>
+                                        <div class="trends_title_bottom">
+                                            <span class="trends_title_text">目标金额:</span>
+                                            <small class="trends_title_color">￥1999</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                    <div class="project-img">
+                                       <img class="" src="../common/img/p2240269161.jpg">
+                                       <img class="" src="../common/img/p2240262034.jpg">
+                                       <img class="" src="../common/img/avatar-389bc9635a9096bb709e3c26bfdac8a8.png">
+                                       <img class="" src="../common/img/p2240269659.jpg">
+                                    </div>
+
+                            </div>
+                            <div class="trends">
+                                 <div class="trends1">
+                                    <div class="trends_img">
+                                        <img class="img-circle" src="../common/img/avatar-389bc9635a9096bb709e3c26bfdac8a8.png">
+                                    </div>
+                                    <div class="trends_title">
+                                        <div class="trends_title_top">
+                                            <span class="trends_title_text">22 </span>
+                                            <small class="trends_title_color">项目发起</small>
+                                            <div class="trends_title_size">2017-02-04</div>
+                                        </div>
+                                        <div class="trends_title_bottom">
+                                            <span class="trends_title_text">目标金额:</span>
+                                            <small class="trends_title_color">￥1999</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                    <div class="project-img">
+                                       <img class="" src="../common/img/p2240275992.jpg">
+                                       <img class="" src="../common/img/p2240279889.jpg">
+                                       <img class="" src="../common/img/p2240256385.jpg">
+                                       <img class="" src="../common/img/p2240269579.jpg">
+                                    </div>
+
+                            </div>
+                            <div class="trends">
+                                 <div class="trends1">
+                                    <div class="trends_img">
+                                        <img class="img-circle" src="../common/img/avatar-389bc9635a9096bb709e3c26bfdac8a8.png">
+                                    </div>
+                                    <div class="trends_title">
+                                        <div class="trends_title_top">
+                                            <span class="trends_title_text">22 </span>
+                                            <small class="trends_title_color">项目发起</small>
+                                            <div class="trends_title_size">2017-02-04</div>
+                                        </div>
+                                        <div class="trends_title_bottom">
+                                            <span class="trends_title_text">目标金额:</span>
+                                            <small class="trends_title_color">￥1999</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                    <div class="project-img">
+                                       <img class="" src="../common/img/p2240269161.jpg">
+                                       <img class="" src="../common/img/p2240262034.jpg">
+                                       <img class="" src="../common/img/avatar-389bc9635a9096bb709e3c26bfdac8a8.png">
+                                       <img class="" src="../common/img/p2240269659.jpg">
+                                    </div>
+
+                            </div> -->
+
+
+
+                        </div>
+                        <!-- 统筹动态结束 -->
+                        <!-- 支持者 -->
+                        <div class="panel panel_color project-show-panel-color-2" style="width: 735px;">
+                            <!-- <a name="project-supporter"><a> -->
+                            <div class="trends_title_h" id="project-supporter">
+                                Ta的支持者
+                            </div>
+                            <div class="supporter">
+                                <div class="supporter_img ">
+
+                                    <img class="img-circle" src="/common/img/avatar-389bc9635a9096bb709e3c26bfdac8a8.png">
+                                </div>
+                                <div class="supporter_user">
+                                    <span class="supporter_user_log">22</span>
+                                    <span class="supporter_user_mid">支持了</span>
+                                    <span class="supporter_user_sm">0.01</span>
+                                    <div class="supporter_user_color">2017/04/14</div>
+                                    <div class="supporter_user_liuyan">
+                                    <i></i>
+                                    <span>22</span>: 支持 </div>
+                                </div>
+                            </div>
+                            <div class="supporter">
+                                <div class="supporter_img ">
+
+                                    <img class="img-circle" src="/common/img/avatar-389bc9635a9096bb709e3c26bfdac8a8.png">
+                                </div>
+                                <div class="supporter_user">
+                                    <span class="supporter_user_log">22</span>
+                                    <span class="supporter_user_mid">支持了</span>
+                                    <span class="supporter_user_sm">0.01</span>
+                                    <div class="supporter_user_color">2017/04/14</div>
+                                    <div class="supporter_user_liuyan"><i></i> <span>22</span>: 支持加油加油加油加油加油加油加油加油加油加油加油加油 </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                        <div class="project-img">
-                           <img class="" src="../common/img/p2240269161.jpg">
-                           <img class="" src="../common/img/p2240262034.jpg">
-                           <img class="" src="../common/img/avatar-389bc9635a9096bb709e3c26bfdac8a8.png">
-                           <img class="" src="../common/img/p2240269659.jpg">
-                        </div>
-
-                </div>
-                <div class="trends">
-                     <div class="trends1">
-                        <div class="trends_img">
-                            <img class="img-circle" src="../common/img/avatar-389bc9635a9096bb709e3c26bfdac8a8.png">
-                        </div>
-                        <div class="trends_title">
-                            <div class="trends_title_top">
-                                <span class="trends_title_text">22 </span>
-                                <small class="trends_title_color">项目发起</small>
-                                <div class="trends_title_size">2017-02-04</div>
+                    <div class="right p0 col-sm-3">
+                        <div class="project-show-right">
+                            <div class="right-box right-intro project-rightinfo-right-box">
+                            <div class="top">
+                                <div class="row m0">
+                                    <div class="col-sm-6">
+                                        <div class="project-num">1999元</div>
+                                        <p class="project-mubiao">目标金额</p>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="project-num">111元</div>
+                                        <p class="project-mubiao">已筹金额</p>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="project-num">0人</div>
+                                        <p class="project-mubiao">支持人数</p>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="project-num">已超时</div>
+                                        <p class="project-mubiao">剩余时间</p>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="trends_title_bottom">
-                                <span class="trends_title_text">目标金额:</span>
-                                <small class="trends_title_color">￥1999</small>
+                            <div class="row m0 bottom">
+                                <div class="col-sm-5   Qr" style="" id="project_qr" rel="">
+                                <!--?xml version="1.0" encoding="UTF-8"?-->
+                                </div>
+                                <div class="col-sm-7">
+                                    <p class="m0"  onclick="window.location='/wapsupport/'">扫描微信二维码</p>
+                                    <div>
+                                        <p class="m0">支持Ta</p>
+                                        <p class="m0">或分享给好友</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            </div>
+                            <div class="prject-right-user right-box">
+                                <p class="right-box-title-style">项目发起人</p>
+                                <div class="m0 row">
+                                    <div class="col-sm-3"><img class="img-circle" src="../common/img/avatar-389bc9635a9096bb709e3c26bfdac8a8.png"></div>
+                                    <div class="col-sm-5 ">
+                                        <p style="font-size: 16px;margin-bottom: 5px;margin-top: 5px">22</p>
+                                        <p class="time">2017/02/04</p>
+                                    </div>
+                                    <div class="col-sm-4 ">
+                                       <div class="collection">立即关注</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="project-right-item-lists">
+                                <div class="right-box chan-ping-hui-bao-box">
+                                    <p style="padding-left: 0;padding-top: 0 ;margin-bottom: 20px" class="right-box-title-style">项目回报</p>
+                                    <!-- <a href="/project/project-sup" class="a-none">
+
+                                            <div class="chanpinghuibao row m0">
+                                                <div class="col-sm-6 p0">支持<span> 0</span> 元 </div>
+
+                                                <div class="xiamg-mu-hui-bao m0 row col-sm-12 p0">
+                                                        <div class="col-sm-2 p0"><img src="http://next.wezchina.com/storage/images/temp/bb844793103ef775f12143856a31855a.jpeg"></div>
+                                                <div class="col-sm-10">过分过分</div>
+                                                        <div class="lijizhichi">立即支持</div>
+                                                </div>
+                                            </div>
+                                        </a> -->
+
+                                    <!-- <a href="/project/project-sup" class="a-none">
+
+                                            <div class="chanpinghuibao row m0">
+                                                <div class="col-sm-6 p0">支持<span> 1</span> 元 </div>
+
+                                                <div class="xiamg-mu-hui-bao m0 row col-sm-12 p0">
+                                                        <div class="col-sm-2 p0"><img src="http://next.wezchina.com/storage/uploads/2017-04-26/hdmxubyoreagwsjpikcfqzntvl.jpg"></div>
+                                                <div class="col-sm-10">苟富贵</div>
+                                                        <div class="lijizhichi">立即支持</div>
+                                                </div>
+                                            </div>
+                                        </a> -->
+                                </div>
                             </div>
                         </div>
                     </div>
-                        <div class="project-img">
-                           <img class="" src="../common/img/p2240275992.jpg">
-                           <img class="" src="../common/img/p2240279889.jpg">
-                           <img class="" src="../common/img/p2240256385.jpg">
-                           <img class="" src="../common/img/p2240269579.jpg">
-                        </div>
-
-                </div>
-                <div class="trends">
-                     <div class="trends1">
-                        <div class="trends_img">
-                            <img class="img-circle" src="../common/img/avatar-389bc9635a9096bb709e3c26bfdac8a8.png">
-                        </div>
-                        <div class="trends_title">
-                            <div class="trends_title_top">
-                                <span class="trends_title_text">22 </span>
-                                <small class="trends_title_color">项目发起</small>
-                                <div class="trends_title_size">2017-02-04</div>
-                            </div>
-                            <div class="trends_title_bottom">
-                                <span class="trends_title_text">目标金额:</span>
-                                <small class="trends_title_color">￥1999</small>
-                            </div>
-                        </div>
-                    </div>
-                        <div class="project-img">
-                           <img class="" src="../common/img/p2240269161.jpg">
-                           <img class="" src="../common/img/p2240262034.jpg">
-                           <img class="" src="../common/img/avatar-389bc9635a9096bb709e3c26bfdac8a8.png">
-                           <img class="" src="../common/img/p2240269659.jpg">
-                        </div>
-
-                </div> -->
-
-
-
-                </div>
-<!-- 统筹动态结束 -->
-           <!-- 支持者 -->
-<div class="panel panel_color project-show-panel-color-2" style="width: 735px;">
-              <!-- <a name="project-supporter"><a> -->
-                 <div class="trends_title_h" id="project-supporter">
-                        Ta的支持者
-                </div>
-                 <div class="supporter">
-                         <div class="supporter_img ">
-
-                             <img class="img-circle" src="/common/img/avatar-389bc9635a9096bb709e3c26bfdac8a8.png">
-                         </div>
-                    <div class="supporter_user">
-                        <span class="supporter_user_log">22</span>
-                        <span class="supporter_user_mid">支持了</span>
-                        <span class="supporter_user_sm">0.01</span>
-                        <div class="supporter_user_color">2017/04/14</div>
-                        <div class="supporter_user_liuyan">
-                        <i></i>
-                        <span>22</span>: 支持 </div>
-                    </div>
-                </div>
-                                 <div class="supporter">
-                         <div class="supporter_img ">
-
-                             <img class="img-circle" src="/common/img/avatar-389bc9635a9096bb709e3c26bfdac8a8.png">
-                         </div>
-                    <div class="supporter_user">
-                        <span class="supporter_user_log">22</span>
-                        <span class="supporter_user_mid">支持了</span>
-                        <span class="supporter_user_sm">0.01</span>
-                        <div class="supporter_user_color">2017/04/14</div>
-                        <div class="supporter_user_liuyan"><i></i> <span>22</span>: 支持加油加油加油加油加油加油加油加油加油加油加油加油 </div>
-                    </div>
-                </div>
-
-            </div>
-
-
-                </div>
-                <div class="right p0 col-sm-3">
-
-                    <div class="project-show-right">
-    <div class="right-box right-intro project-rightinfo-right-box">
-    <div class="top">
-            <div class="row m0">
-                <div class="col-sm-6">
-                    <div class="project-num">1999元</div>
-                    <p class="project-mubiao">目标金额</p>
-
-                </div>
-                <div class="col-sm-6">
-                    <div class="project-num">111元</div>
-                    <p class="project-mubiao">已筹金额</p>
-            </div>
-                <div class="col-sm-6">
-                    <div class="project-num">0人</div>
-                    <p class="project-mubiao">支持人数</p>
-
-                </div>
-                <div class="col-sm-6">
-                    <div class="project-num">已超时</div>
-                    <p class="project-mubiao">剩余时间</p>
-
-                </div>
-
-            </div>
-
-
-
-    </div>
-    <div class="row m0 bottom">
-
-
-
-        <div class="col-sm-5   Qr" style="" id="project_qr" rel="">
-            <!--?xml version="1.0" encoding="UTF-8"?-->
-
-
-
-        </div>
-        <div class="col-sm-7">
-            <p class="m0"  onclick="window.location='/wapsupport/'">扫描微信二维码</p>
-            <div>
-                <p class="m0">支持Ta</p>
-                <p class="m0">或分享给好友</p>
-            </div>
-        </div>
-    </div>
-
-
-</div>
-<div class="prject-right-user right-box">
-    <p class="right-box-title-style">项目发起人</p>
-    <div class="m0 row">
-          <div class="col-sm-3"><img class="img-circle" src="../common/img/avatar-389bc9635a9096bb709e3c26bfdac8a8.png"></div>
-            <div class="col-sm-5 ">
-                <p style="font-size: 16px;margin-bottom: 5px;margin-top: 5px">22</p>
-                <p class="time">2017/02/04</p>
-            </div>
-            <div class="col-sm-4 ">
-               <div class="collection">立即关注</div>
-            </div>
-    </div>
-</div>
-        <div class="project-right-item-lists">
-        <div class="right-box chan-ping-hui-bao-box">
-            <p style="padding-left: 0;padding-top: 0 ;margin-bottom: 20px" class="right-box-title-style">项目回报</p>
-            <!-- <a href="/project/project-sup" class="a-none">
-
-            <div class="chanpinghuibao row m0">
-                <div class="col-sm-6 p0">支持<span> 0</span> 元 </div>
-
-                <div class="xiamg-mu-hui-bao m0 row col-sm-12 p0">
-                        <div class="col-sm-2 p0"><img src="http://next.wezchina.com/storage/images/temp/bb844793103ef775f12143856a31855a.jpeg"></div>
-                <div class="col-sm-10">过分过分</div>
-                        <div class="lijizhichi">立即支持</div>
-                </div>
-            </div>
-                    </a> -->
-
-            <!-- <a href="/project/project-sup" class="a-none">
-
-                    <div class="chanpinghuibao row m0">
-                        <div class="col-sm-6 p0">支持<span> 1</span> 元 </div>
-
-                        <div class="xiamg-mu-hui-bao m0 row col-sm-12 p0">
-                                <div class="col-sm-2 p0"><img src="http://next.wezchina.com/storage/uploads/2017-04-26/hdmxubyoreagwsjpikcfqzntvl.jpg"></div>
-                        <div class="col-sm-10">苟富贵</div>
-                                <div class="lijizhichi">立即支持</div>
-            </div>
-                    </div>
-                </a> -->
-    </div>
-    </div>
-    </div>
                 </div>
             </div>
         </div>
-    </div>
-
-
-
-
-</body>
+        <!-- 右侧大背景图 -->
+        <div id="public_main_right_bg" style="position:fixed;top:0;bottom:0;left:1190px;width:100%;"></div>
+        <script src="{{PATH_TML}}js/public_main_right_bg.js"></script>
+    </body>
 </html>
 
 <script src="{{PATH_TML}}project/js/fancy-box.js"></script>
 
 <!-- <script src="{{PATH_TML}}activity/js/activity.js"></script> -->
 <script>
-$(function(){
-// $(".fancybox").fancybox({
-//     'width': '500px',
-//      'height': 'auto',
+    $(function(){
+        // $(".fancybox").fancybox({
+        //     'width': '500px',
+        //      'height': 'auto',
 
-//     'zoomSpeedIn': 300,
-//     'zoomSpeedOut': 300,
-//     'overlayShow': true
-// });
-    $(".menuItem").click(function(){
-            $(this).addClass("active").siblings().removeClass("active");
-    });
+        //     'zoomSpeedIn': 300,
+        //     'zoomSpeedOut': 300,
+        //     'overlayShow': true
+        // });
+        $(".menuItem").click(function(){
+                $(this).addClass("active").siblings().removeClass("active");
+        });
 
-  //获取当前网址，如： http://localhost:8083/proj/meun.jsp
-    var curWwwPath = window.document.location.href;
-    //获取主机地址之后的目录，如： proj/meun.jsp
-    var pathName = window.document.location.pathname;
-    var pos = curWwwPath.indexOf(pathName);
-    //获取主机地址，如： http://localhost:8083
-    var localhostPath = curWwwPath.substring(0, pos);
-
-
-
-// $('.Qr').bind('click',function(data){
-//     window.location.href='/user/wap/'
-// })
-
-//  滚动置顶
-    var offsetTop = 100;
+        //获取当前网址，如： http://localhost:8083/proj/meun.jsp
+        var curWwwPath = window.document.location.href;
+        //获取主机地址之后的目录，如： proj/meun.jsp
+        var pathName = window.document.location.pathname;
+        var pos = curWwwPath.indexOf(pathName);
+        //获取主机地址，如： http://localhost:8083
+        var localhostPath = curWwwPath.substring(0, pos);
 
 
-    $('.index-content').scroll(function() {
-        if ($('.index-content').scrollTop() > offsetTop) {
 
-            $(".project_t").eq(0).css({
-                "position": "fixed",
-                "top": 0,
-                "width":"735px"
-            })
-        } else {
-            $(".project_t").css({
-                "position": "relative"
-            });
+        // $('.Qr').bind('click',function(data){
+        //     window.location.href='/user/wap/'
+        // })
 
-        }
+        //  滚动置顶
+        var offsetTop = 100;
+
+
+        $('.index-content').scroll(function() {
+            if ($('.index-content').scrollTop() > offsetTop) {
+
+                $(".project_t").eq(0).css({
+                    "position": "fixed",
+                    "top": 0,
+                    "width":"735px"
+                })
+            } else {
+                $(".project_t").css({
+                    "position": "relative"
+                });
+
+            }
+        })
     })
-
-
-})
-
 </script>

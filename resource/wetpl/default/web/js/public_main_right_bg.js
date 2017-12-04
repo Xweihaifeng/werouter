@@ -6,7 +6,7 @@ options200.done(function(data) {
 		if(!bgRight) {
             bgRight = "/common/img/dibu.jpg";
         } else if (bgRight.indexOf('http') != 0 && bgRight != "") {
-            bgRight = imgSet(bgRight, 1200, 960, 3);
+            bgRight = imgSet(bgRight, 1200, 1200, 3);
         }
         $("#public_main_right_bg")  .css({ "background-image": "url(" + bgRight + ")"})
 	}
