@@ -220,8 +220,10 @@ req().then((data) => {
     }
 
     if (channel != '') {
-        seq = [...[content.filter(c => channel == c.ename)[0].pos], ...seq].reduce((r, e) => r.indexOf(e) != -1 ? r : [...r, e], []);
-        remb = [...[content.filter(c => channel == c.ename)[0].pos], ...remb].reduce((r, e) => r.indexOf(e) != -1 ? r : [...r, e], []);
+        // seq = [...[content.filter(c => channel == c.ename)[0].pos], ...seq].reduce((r, e) => r.indexOf(e) != -1 ? r : [...r, e], []);
+        // remb = [...[content.filter(c => channel == c.ename)[0].pos], ...remb].reduce((r, e) => r.indexOf(e) != -1 ? r : [...r, e], []);
+        seq = [content.filter(c => channel == c.ename)[0].pos]
+        remb = [content.filter(c => channel == c.ename)[0].pos]
     }
 
     fill(seq); //填充seq;
