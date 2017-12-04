@@ -195,7 +195,7 @@ const req = () => {
             url: apiUrl + "cms/setting/show",
             dataType: 'json',
             success: function(data){
-                resolve(JSON.parse(data.data.block));
+                resolve(JSON.parse(data.data.blocks));
             }
         })
     })
@@ -1212,8 +1212,8 @@ req().then((data) => {
                         $(".home, #nav-help, #nav-share, #nav-org").show();
                         $("#nav-help,#nav-share").css("margin-left", "0");
                         $("#nav-org,#nav-help,#nav-share").css({ "position":"static", "left":"0" });
-                        var temp = mySwiper.width;
-                        mySwiper.startAutoplay();
+                        // var temp = mySwiper.width;
+                        // mySwiper.startAutoplay();
                     })
 
                     // 首页组织模块
@@ -1222,7 +1222,7 @@ req().then((data) => {
                         $("#nav-news, #nav-help, #nav-share, .organization").show();
                         $("#nav-org,#nav-share").css({ "margin-left": "0", "position":"static" });
                         $("#nav-help").css({ "position":"static", "left":"0", "margin-left":"105px" });
-                        mySwiper.stopAutoplay();
+                        // mySwiper.stopAutoplay();
                     })
 
                     // 首页互助模块
@@ -1233,7 +1233,7 @@ req().then((data) => {
                         $("#nav-org").css({ "position":"absolute", "left":"-855px" });
                         $("#nav-help").css({ "margin-left": "0", "position":"static" });
                         $("#nav-share").css({ "position":"static", "left":"0", "margin-left":"210px" });
-                        mySwiper.stopAutoplay();
+                        // mySwiper.stopAutoplay();
 
                     })
 
@@ -1245,7 +1245,7 @@ req().then((data) => {
                         $("#nav-share,#nav-help").css("margin-left", "0");
                         $("#nav-org").css({ "position":"absolute", "left":"-855px" });
                         $("#nav-help").css({ "position":"absolute", "left":"-750px" });
-                        mySwiper.stopAutoplay();
+                        // mySwiper.stopAutoplay();
 
                     })
                 }
