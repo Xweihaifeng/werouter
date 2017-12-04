@@ -224,7 +224,7 @@ req().then((data) => {
         remb = [...[content.filter(c => channel == c.ename)[0].pos], ...remb].reduce((r, e) => r.indexOf(e) != -1 ? r : [...r, e], []);
     }
 
-    fill(seq); //填充seq;  
+    fill(seq); //填充seq;
     let len = hd.length; //背景图填充宽度
     remb.map(x => $("#" + seqlist[x]).show());
     $("#beijing").css("left", 1365 - (105 * len) + 'px');
