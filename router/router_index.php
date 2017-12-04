@@ -24,9 +24,14 @@ class router_index
         'm' => 'wap',
         'pc' => 'web'
     ];
+
+    private $_db;
+
+    // 重定向的链接
+    private $_rest_url = '';
     
     public function __construct()
-    {
+    {	
 
         $this->_domain = $_SERVER['HTTP_HOST'];
         //$this->_domain = 'new.wezchina.com';
@@ -36,6 +41,8 @@ class router_index
         $this->_method = $_SERVER['REQUEST_METHOD'];
 
         $this->_domain_config = $this->_domain_init();
+
+        $this->_db = new EasyDB();
     }
 
     // 分解域名标识 手机版 PC版 API
@@ -43,7 +50,15 @@ class router_index
     {
         $mark_array = ['m'];
         $domain_array = explode('.' , $this->_domain);
+
+        $count_domain_array = count($domain_array);
         $mark_domain = current($domain_array);
+
+        if($count_domain_array == 4 || $count_domain_array == 3 && $mark_domain == 'www')
+        {
+        	$this->_domain = substr( $this->_domain , 4);
+        	$this->_rest_url = $this->_domain;
+        }
         
         $domain_config = $this->_domain;
         if($mark_domain == 'm') 
@@ -52,18 +67,32 @@ class router_index
         }        
         $this->_mark_domain = (in_array($mark_domain, $mark_array)) ? $mark_domain : 'pc' ;
 
-        $this->_is_wap($domain_config);
-
+        // $this->_is_wap($domain_config);
         return $domain_config;
+    }
+
+    private function _www_domain($domain_array , $count_domain_array ,$mark_domain)
+    {
+    	if($count_domain_array == 4 && $mark_domain == 'www')
+    	{
+    		header("Location: ".$this->http."://".$this->_domain.$this->_request_uri); 
+            exit;
+    	}
     }
 
     private function _is_wap($domain_config)
     {
+    	if(!empty($this->_rest_url))
+    	{
+
+    		header("Location: ".$this->http."://".$this->_rest_url.$this->_request_uri); 
+            exit;
+    	}
         if($this->_mark_domain == 'pc' && is_mobile() == TRUE){
-            header("Location: http://m.".$domain_config.$this->_request_uri); 
+            header("Location: ".$this->http."://m.".$domain_config.$this->_request_uri); 
             exit;
         }elseif ($this->_mark_domain == 'm' && is_mobile() == FALSE) {
-            header("Location: http://".$domain_config.$this->_request_uri); 
+            header("Location: ".$this->http."://".$domain_config.$this->_request_uri); 
             exit;
         }
     }
@@ -72,11 +101,11 @@ class router_index
     private function _get_domain()
     {
         $domain_router_file = './config/domain/'.md5($this->_domain_config);
-
         if(!file_exists($domain_router_file))
         {
             // 获取路由信息和路由正则信息
             $data_stirng = curl_action(config::$config_api_url.$this->_domain_config);
+			
             $data = json_decode($data_stirng , TRUE);
 
             if($data['code'] !== 200)
@@ -89,9 +118,17 @@ class router_index
         {
             $data = file_get_contents($domain_router_file);
             $data = json_decode($data , TRUE);
-        } 
+        }
 
         return $data;
+    }
+
+    private function _initHttpType()
+    {
+        $sql = 'SELECT http_type FROM we_plats WHERE domain=?';
+        $row = $this->_db->queryOne($sql , array($this->_domain));
+
+        return !empty($row['http_type']) ? $row['http_type'] : false;
     }
     
     public  function  index()
@@ -106,9 +143,24 @@ class router_index
         {
             error(404);
         }
+
         $this->data = $this->data['data'];
 
+        $this->data['http_type'] = $this->_initHttpType();
+
+        $protocol = empty($_SERVER['HTTPS']) ? 'http' : 'https';
+
+        $this->http = ($this->data['http_type'] == 1) ? 'http' : 'https';
+
+        if ($protocol != $this->http) {
+            header("location: {$this->http}://{$this->_domain}");
+            exit;
+        }
+        
         if(empty($this->data['router'])) error (404);
+
+         // 手机版 && 电脑版相互跳转
+        $this->_is_wap($this->_domain_config);
 
         (new main($this->data))->index($this->_directory[$this->_mark_domain] , $this->data['weid'] , $this->_domain_config, $this->_mark_domain);
         
@@ -181,6 +233,7 @@ class main
     	{
     		$domain = 'm.'.$domain;
     	}
+
         $config = file_get_contents('configure.js');
 
         $config = str_replace('{{url}}', $domain , $config);

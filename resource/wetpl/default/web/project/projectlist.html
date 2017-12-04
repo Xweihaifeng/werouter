@@ -1,252 +1,249 @@
 <!DOCTYPE html>
 <html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <link rel="shortcut icon" id="favicon" href="" />
+    <head lang="en">
+        <meta charset="UTF-8">
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+        <link rel="shortcut icon" id="favicon" href="" />
 
-    <title>全球秦商总会</title>
-     <link rel="stylesheet" href="{{PATH_TML}}css/public_main.css">
+        <title>全球秦商总会</title>
+        <link rel="stylesheet" href="{{PATH_TML}}css/public_main.css">
         <link rel="stylesheet" href="{{PATH_TML}}font/iconfont.css" />
         <link rel="stylesheet" href="{{PATH_TML}}css/news_base.css" />
         <link rel="stylesheet" href="{{PATH_TML}}css/modal_login.css" />
 
-    <link rel="stylesheet" href="/common/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/common/css/buttons.css">
+        <link rel="stylesheet" href="/common/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/common/css/buttons.css">
         <link rel="stylesheet" href="{{PATH_TML}}css/article.css">
-    
-    <!-- <link rel="stylesheet" type="text/css" href="css/shopcommon.css"> -->
-    <link rel="stylesheet" type="text/css" href="{{PATH_TML}}project/css/project.css">
-    <link rel="stylesheet" type="text/css" href="{{PATH_TML}}project/css/projectdetail.css">
-    <link rel="stylesheet" type="text/css" href="{{PATH_TML}}project/css/zc.css">
+        
+        <!-- <link rel="stylesheet" type="text/css" href="css/shopcommon.css"> -->
+        <link rel="stylesheet" type="text/css" href="{{PATH_TML}}project/css/project.css">
+        <link rel="stylesheet" type="text/css" href="{{PATH_TML}}project/css/projectdetail.css">
+        <link rel="stylesheet" type="text/css" href="{{PATH_TML}}project/css/zc.css">
 
-    <script src="/common/js/jquery-3.2.1.min.js"></script>
-    <!-- <script type="text/javascript" src="/common/js/layer.js"></script> -->
-    <script src="/common/js/browser.min.js"></script>
-    <script src="{{PATH_CONFIG}}"></script>
-    <!-- <script type="text/javascript" src="{{PATH_TML}}shopping/js/jquery.qrcode.min.js"></script> -->
-     <script src="/common/js/utf.js"></script>
-    <script src="/common/js/qrcode.new.js"></script>
-    <script src="/common/js/public_use.js"></script>    
-    <script src="{{PATH_TML}}js/modal_login.js"></script>
-    <script src="/common/js/swiper-3.3.1.min.js"></script>
-    <script src="/common/js/buttons.js"></script>
-    <script src="/common/js/control.js"></script>
+        <script src="/common/js/jquery-3.2.1.min.js"></script>
+        <!-- <script type="text/javascript" src="/common/js/layer.js"></script> -->
+        <script src="/common/js/browser.min.js"></script>
+        <script src="{{PATH_CONFIG}}"></script>
+        <!-- <script type="text/javascript" src="{{PATH_TML}}shopping/js/jquery.qrcode.min.js"></script> -->
+        <script src="/common/js/utf.js"></script>
+        <script src="/common/js/qrcode.new.js"></script>
+        <script src="/common/js/public_use.js"></script>    
+        <script src="{{PATH_TML}}js/modal_login.js"></script>
+        <script src="/common/js/swiper-3.3.1.min.js"></script>
+        <script src="/common/js/buttons.js"></script>
+        <script src="/common/js/control.js"></script>
 
-    <!-- <script src="{{PATH_TML}}project/js/projectList.js"></script> -->
+        <!-- <script src="{{PATH_TML}}project/js/projectList.js"></script> -->
 
-    <style>
-    ::-webkit-scrollbar { width: 0; height: 0; }
+        <style>
+            ::-webkit-scrollbar { width: 0; height: 0; }
             .dropdown-toggle, .get-check { height: 40px !important; }
 
             html {
                 position: absolute!important;
                 overflow-y: auto!important;
             }
+        </style>
+    </head>
+    <body style="width: 1366px;">
+        <!-- 登录部分 -->
+        <div class="modal_login" id="modal_login"></div>
+        <!-- 导航部分开始 -->
+        <ul class="news_menu" id="public_main_news_menu"></ul>
+        <!-- 导航部分结束 -->
 
-    </style>
-</head>
-<body style="width: 1366px;background: url(/common/img/dibu.jpg)">
-    <!-- 登录部分 -->
-    <div class="modal_login" id="modal_login"></div>
-    <!-- 导航部分开始 -->
-    <ul class="news_menu" id="public_main_news_menu"></ul>
-    <!-- 导航部分结束 -->
+        <div class="article" >
+            <div id="art-head">
+                <a class='linkto' href=''><div id="head-icon"></div></a>
+                <div id="user-name">
+                    <div class="line-0"></div>
+                    <div class="line-1"></div>
+                </div>
+            </div>
+            <div id="art-body">
+                <!-- 活动列表部分start -->
+                <div id="art-main">
+                    <div class="left col-sm-8" style="width: 735px;padding-right: 0;margin-right: 15px;padding-bottom: 15px;margin-bottom: 23px">
+                        <div class="weizhuye-project">
+                            <p>Ta发起的项目</p>
+                            <div class="line"></div>
+                            <div class="little-title">
 
-    <div class="article" >
-        <div id="art-head">
-            <a class='linkto' href=''><div id="head-icon"></div></a>
-            <div id="user-name">
-                <div class="line-0"></div>
-                <div class="line-1"></div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="person-article-lists">
+                                <div class="article-item row project-index-article-item">
+
+                                </div>
+
+                                <div align="center" id="crowd_uloadingsImg" style="display: none;height: 40px;margin-top: 40px;color:#929292;" class="col-sm-12">
+                                    <img src="http://next.wezchina.com/images/loading.gif" width="20px" alt=""> 加载显示更多
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                 </div>
+            
+                <!-- 活动列表部分end -->
+                <div id="art-info">
+                    <div id="user" style="margin-bottom: 20px;">
+                        <div class="panel panel-default user">
+                            <div class="panel-body">
+                            <div class="user-info"></div>
+                            <a class='linkto' href=''> <div class="user-head"><img src="/common/img/vrenzheng.png" alt=""></div></a>
+
+                                <div class="user-cnt"></div>
+                                <div class="user-part">
+                                    <div class="user-art">
+                                        <div></div>
+                                        <div>文章</div>
+                                    </div>
+                                    <div class="user-proj">
+                                        <div>4</div>
+                                        <div>项目</div>
+                                    </div>
+                                    <div class="user-type">
+                                        <div>9</div>
+                                        <div>活动</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="other">
+                        <div class="panel panel-default other">
+                            <div class="panel-body">
+                                <div class="oline-0">
+                                    <div class="ocont-0">
+                                        <div>
+                                            <!-- <span><img src="../common/img/we_on.png" alt="" width="80" /></span> -->
+                                             <span id="huiyuanrengzheng"><img src="/common/img/vrenzheng.png" alt="">&nbsp;官方认证</span>
+                                        </div>
+                                        <div>
+                                            <span><img src="/common/img/shiming.png" alt="已实名认证" width="35" /></span>
+                                        </div>
+                                        <div>
+                                            <img src="/common/img/sixin.png" width="60"/>
+                                        </div>
+                                        <div><span class="vren_message">暂无认证信息</span></div>
+                                    </div>
+                                </div>
+                                <div class="oline-1">
+                                    <span><img src="/common/img/coordinates_fill.png" alt="" width="25"/></span>
+                                    <p>陕西 西安</p>
+                                </div>
+                                <div class="oline-2">
+                                    <span><img src="/common/img/document.png" alt="" width="22"/></span>
+                                    <span>微众中国CEO，工业与信息化部信息通信经济专家委员会专家委员、陕西省青年创业导师协会副会长兼项目委员会主任委员、陕西省互联网协会副秘书长。</span>
+                                </div>
+                                <div class="oline-3">
+                                    <div><img src="/common/img/wecard_qrcode.png" alt="" width="100"/></div>
+                                    <div><p>微信扫描二维码</p><p>支持Ta</p><p>或分享给好友</p></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="friend"  style="margin-top: 5px;">
+                        <div class="panel panel-default friend">
+                            <div class="panel-body">
+                                <div class="row">
+                                    <ul class="nav nav-tabs fri-sty">
+                                        <li role="presentation" class="fans active"><a>Ta的粉丝(21)</a></li>
+                                        <li role="presentation" class="friends"><a>Ta的关注(45)</a></li>
+                                    </ul>
+                                </div>
+
+                                <div id="fans">
+                                    <div class="fans-head">
+                                        <img style="border: 1px solid #ccc; border-radius: 50%; height: 100%;  width: 100%; " src="/common/img/avatar-389bc9635a9096bb709e3c26bfdac8a8.png" width="54" />
+                                    </div>
+                                    <div class="fans-head">
+                                        <img style="border: 1px solid #ccc; border-radius: 50%; height: 100%;  width: 100%; " src="/common/img/p2240259307.jpg" width="54" />
+                                    </div>
+                                    <div class="fans-head">
+                                        <img style="border: 1px solid #ccc; border-radius: 50%; height: 100%;  width: 100%; " src="/common/img/page.png" width="54" />
+                                    </div>
+                                    <div class="fans-head">
+                                        <img style="border: 1px solid #ccc; border-radius: 50%; height: 100%;  width: 100%; " src="/common/img/u_home_bg.png" width="54" />
+                                    </div>
+                                    <div class="fans-head">
+                                        <img style="border: 1px solid #ccc; border-radius: 50%; height: 100%;  width: 100%; " src="http://wx.qlogo.cn/mmopen/CbXm5H4HLoQTPO5D750WIhr5niaHSDmFj5oHa3iaITzDmRS7T87NX3wXYvcJtkKgxZGsV7MKEcUAEcjx1knP5xKts2jObVUtCic/0" width="54" />
+                                    </div>
+                                    <div class="fans-head">
+                                        <img style="border: 1px solid #ccc; border-radius: 50%; height: 100%;  width: 100%; " src="http://next.wezchina.com/storage/images/temp/avatar-cec281219a1ac7c548077c805a2221df.jpeg" width="54" />
+                                    </div>
+                                    <div class="fans-head">
+                                        <img style="border: 1px solid #ccc; border-radius: 50%; height: 100%;  width: 100%; " src="http://next.wezchina.com/storage/images/temp/avatar-493c206380f43ab5d998ffda155fb640.jpeg" width="54" />
+                                    </div>
+                                    <div class="fans-head">
+                                        <img style="border: 1px solid #ccc; border-radius: 50%; height: 100%;  width: 100%; " src="http://next.wezchina.com/storage/images/temp/avatar-fb8a771b610bda747e2590860df2b513.jpeg" width="54" />
+                                    </div>
+                                    <div class="fans-head">
+                                        <img style="border: 1px solid #ccc; border-radius: 50%; height: 100%;  width: 100%; " src="http://next.wezchina.com/storage/images/temp/avatar-6eb63543ba87eeaf9420b5f99aa2da0f.jpeg" width="54" />
+                                    </div>
+                                    <div class="fans-head">
+                                        <img style="border: 1px solid #ccc; border-radius: 50%; height: 100%;  width: 100%; " src="http://next.wezchina.com/storage/images/temp/avatar-6865acc207e0a86b77a414d2ec4c0b60.png" width="54" />
+                                    </div>
+                                    <div class="fans-head">
+                                        <img style="border: 1px solid #ccc; border-radius: 50%; height: 100%;  width: 100%; " src="http://next.wezchina.com/storage/images/temp/avatar-b5bcf06f9aad9fb8f98cc823862caa09.jpeg" width="54" />
+                                    </div>
+                                    <div class="fans-head">
+                                        <img style="border: 1px solid #ccc; border-radius: 50%; height: 100%;  width: 100%; " src="http://next.wezchina.com/storage/images/temp/avatar-dd889cefa6db93b6220014a3b8afb272.jpeg" width="54" />
+                                    </div>
+                                </div>
+
+                                <div id="friends">
+                                    <div class="friends-head">
+                                        <img style="border: 1px solid #ccc; border-radius: 50%; height: 100%;  width: 100%; " src="http://next.wezchina.com/storage/images/temp/avatar-2a8919670fc00f51583089a41e066ecc.jpeg" width="54" />
+                                    </div>
+                                    <div class="friends-head">
+                                        <img style="border: 1px solid #ccc; border-radius: 50%; height: 100%;  width: 100%; " src="/common/img/weizhuyebanner.png" width="54" />
+                                    </div>
+                                    <div class="friends-head">
+                                        <img style="border: 1px solid #ccc; border-radius: 50%; height: 100%;  width: 100%; " src="http://next.wezchina.com/storage/images/temp/avatar-b5bcf06f9aad9fb8f98cc823862caa09.jpeg" width="54" />
+                                    </div>
+                                    <div class="friends-head">
+                                        <img style="border: 1px solid #ccc; border-radius: 50%; height: 100%;  width: 100%; " src="http://next.wezchina.com/storage/images/temp/avatar-dd889cefa6db93b6220014a3b8afb272.jpeg" width="54" />
+                                    </div>
+                                    <div class="friends-head">
+                                        <img style="border: 1px solid #ccc; border-radius: 50%; height: 100%;  width: 100%; " src="http://next.wezchina.com/storage/images/temp/avatar-cec281219a1ac7c548077c805a2221df.jpeg" width="54" />
+                                    </div>
+                                    <div class="friends-head">
+                                        <img style="border: 1px solid #ccc; border-radius: 50%; height: 100%;  width: 100%; " src="http://next.wezchina.com/storage/images/temp/avatar-493c206380f43ab5d998ffda155fb640.jpeg" width="54" />
+                                    </div>
+                                    <div class="friends-head">
+                                        <img style="border: 1px solid #ccc; border-radius: 50%; height: 100%;  width: 100%; " src="http://next.wezchina.com/storage/images/temp/avatar-fb8a771b610bda747e2590860df2b513.jpeg" width="54" />
+                                    </div>
+                                    <div class="friends-head">
+                                        <img style="border: 1px solid #ccc; border-radius: 50%; height: 100%;  width: 100%; " src="http://next.wezchina.com/storage/images/temp/avatar-6eb63543ba87eeaf9420b5f99aa2da0f.jpeg" width="54" />
+                                    </div>
+                                    <div class="friends-head">
+                                        <img style="border: 1px solid #ccc; border-radius: 50%; height: 100%;  width: 100%; " src="/common/img/user_bg.jpg" width="54" />
+                                    </div>
+                                    <div class="friends-head">
+                                        <img style="border: 1px solid #ccc; border-radius: 50%; height: 100%;  width: 100%; " src="/common/img/p2233960011.jpg" width="54" />
+                                    </div>
+                                    <div class="friends-head">
+                                        <img style="border: 1px solid #ccc; border-radius: 50%; height: 100%;  width: 100%; " src="http://wx.qlogo.cn/mmopen/CbXm5H4HLoQTPO5D750WIhr5niaHSDmFj5oHa3iaITzDmRS7T87NX3wXYvcJtkKgxZGsV7MKEcUAEcjx1knP5xKts2jObVUtCic/0" width="54" />
+                                    </div>
+                                    <div class="friends-head">
+                                        <img style="border: 1px solid #ccc; border-radius: 50%; height: 100%;  width: 100%; " src="http://next.wezchina.com/storage/images/temp/avatar-6865acc207e0a86b77a414d2ec4c0b60.png" width="54" />
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div id="more">查看更多>></div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
-        <div id="art-body">
-            <!-- 活动列表部分start -->
-            <div id="art-main">
-                <div class="left col-sm-8" style="width: 735px;padding-right: 0;margin-right: 15px;padding-bottom: 15px;margin-bottom: 23px">
-                    <div class="weizhuye-project">
-                        <p>Ta发起的项目</p>
-                        <div class="line"></div>
-                        <div class="little-title">
-
-                        </div>
-                        <div class="clearfix"></div>
-                        <div class="person-article-lists">
-                            <div class="article-item row project-index-article-item">
-
-                            </div>
-
-                            <div align="center" id="crowd_uloadingsImg" style="display: none;height: 40px;margin-top: 40px;color:#929292;" class="col-sm-12">
-                                <img src="http://next.wezchina.com/images/loading.gif" width="20px" alt=""> 加载显示更多
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-             </div>
-        
-            <!-- 活动列表部分end -->
-
-        <div id="art-info">
-            <div id="user" style="margin-bottom: 20px;">
-                <div class="panel panel-default user">
-                    <div class="panel-body">
-                    <div class="user-info"></div>
-                    <a class='linkto' href=''> <div class="user-head"><img src="/common/img/vrenzheng.png" alt=""></div></a>
-
-                        <div class="user-cnt"></div>
-                        <div class="user-part">
-                            <div class="user-art">
-                                <div></div>
-                                <div>文章</div>
-                            </div>
-                            <div class="user-proj">
-                                <div>4</div>
-                                <div>项目</div>
-                            </div>
-                            <div class="user-type">
-                                <div>9</div>
-                                <div>活动</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div id="other">
-                <div class="panel panel-default other">
-                    <div class="panel-body">
-                        <div class="oline-0">
-                            <div class="ocont-0">
-                                <div>
-                                    <!-- <span><img src="../common/img/we_on.png" alt="" width="80" /></span> -->
-                                     <span id="huiyuanrengzheng"><img src="/common/img/vrenzheng.png" alt="">&nbsp;官方认证</span>
-                                </div>
-                                <div>
-                                    <span><img src="/common/img/shiming.png" alt="已实名认证" width="35" /></span>
-                                </div>
-                                <div>
-                                    <img src="/common/img/sixin.png" width="60"/>
-                                </div>
-                                <div><span class="vren_message">暂无认证信息</span></div>
-                            </div>
-                        </div>
-                        <div class="oline-1">
-                            <span><img src="/common/img/coordinates_fill.png" alt="" width="25"/></span>
-                            <p>陕西 西安</p>
-                        </div>
-                        <div class="oline-2">
-                            <span><img src="/common/img/document.png" alt="" width="22"/></span>
-                            <span>微众中国CEO，工业与信息化部信息通信经济专家委员会专家委员、陕西省青年创业导师协会副会长兼项目委员会主任委员、陕西省互联网协会副秘书长。</span>
-                        </div>
-                        <div class="oline-3">
-                            <div><img src="/common/img/wecard_qrcode.png" alt="" width="100"/></div>
-                            <div><p>微信扫描二维码</p><p>支持Ta</p><p>或分享给好友</p></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div id="friend"  style="margin-top: 5px;">
-                <div class="panel panel-default friend">
-                    <div class="panel-body">
-                        <div class="row">
-                            <ul class="nav nav-tabs fri-sty">
-                                <li role="presentation" class="fans active"><a>Ta的粉丝(21)</a></li>
-                                <li role="presentation" class="friends"><a>Ta的关注(45)</a></li>
-                            </ul>
-                        </div>
-
-                        <div id="fans">
-                                <div class="fans-head">
-                                    <img style="border: 1px solid #ccc; border-radius: 50%; height: 100%;  width: 100%; " src="/common/img/avatar-389bc9635a9096bb709e3c26bfdac8a8.png" width="54" />
-                                </div>
-                                <div class="fans-head">
-                                    <img style="border: 1px solid #ccc; border-radius: 50%; height: 100%;  width: 100%; " src="/common/img/p2240259307.jpg" width="54" />
-                                </div>
-                                <div class="fans-head">
-                                    <img style="border: 1px solid #ccc; border-radius: 50%; height: 100%;  width: 100%; " src="/common/img/page.png" width="54" />
-                                </div>
-                                <div class="fans-head">
-                                    <img style="border: 1px solid #ccc; border-radius: 50%; height: 100%;  width: 100%; " src="/common/img/u_home_bg.png" width="54" />
-                                </div>
-                                <div class="fans-head">
-                                    <img style="border: 1px solid #ccc; border-radius: 50%; height: 100%;  width: 100%; " src="http://wx.qlogo.cn/mmopen/CbXm5H4HLoQTPO5D750WIhr5niaHSDmFj5oHa3iaITzDmRS7T87NX3wXYvcJtkKgxZGsV7MKEcUAEcjx1knP5xKts2jObVUtCic/0" width="54" />
-                                </div>
-                                <div class="fans-head">
-                                    <img style="border: 1px solid #ccc; border-radius: 50%; height: 100%;  width: 100%; " src="http://next.wezchina.com/storage/images/temp/avatar-cec281219a1ac7c548077c805a2221df.jpeg" width="54" />
-                                </div>
-                                <div class="fans-head">
-                                    <img style="border: 1px solid #ccc; border-radius: 50%; height: 100%;  width: 100%; " src="http://next.wezchina.com/storage/images/temp/avatar-493c206380f43ab5d998ffda155fb640.jpeg" width="54" />
-                                </div>
-                                <div class="fans-head">
-                                    <img style="border: 1px solid #ccc; border-radius: 50%; height: 100%;  width: 100%; " src="http://next.wezchina.com/storage/images/temp/avatar-fb8a771b610bda747e2590860df2b513.jpeg" width="54" />
-                                </div>
-                                <div class="fans-head">
-                                    <img style="border: 1px solid #ccc; border-radius: 50%; height: 100%;  width: 100%; " src="http://next.wezchina.com/storage/images/temp/avatar-6eb63543ba87eeaf9420b5f99aa2da0f.jpeg" width="54" />
-                                </div>
-                                <div class="fans-head">
-                                    <img style="border: 1px solid #ccc; border-radius: 50%; height: 100%;  width: 100%; " src="http://next.wezchina.com/storage/images/temp/avatar-6865acc207e0a86b77a414d2ec4c0b60.png" width="54" />
-                                </div>
-                                <div class="fans-head">
-                                    <img style="border: 1px solid #ccc; border-radius: 50%; height: 100%;  width: 100%; " src="http://next.wezchina.com/storage/images/temp/avatar-b5bcf06f9aad9fb8f98cc823862caa09.jpeg" width="54" />
-                                </div>
-                                <div class="fans-head">
-                                    <img style="border: 1px solid #ccc; border-radius: 50%; height: 100%;  width: 100%; " src="http://next.wezchina.com/storage/images/temp/avatar-dd889cefa6db93b6220014a3b8afb272.jpeg" width="54" />
-                                </div>
-                            </div>
-
-                            <div id="friends">
-                                <div class="friends-head">
-                                    <img style="border: 1px solid #ccc; border-radius: 50%; height: 100%;  width: 100%; " src="http://next.wezchina.com/storage/images/temp/avatar-2a8919670fc00f51583089a41e066ecc.jpeg" width="54" />
-                                </div>
-                                <div class="friends-head">
-                                    <img style="border: 1px solid #ccc; border-radius: 50%; height: 100%;  width: 100%; " src="/common/img/weizhuyebanner.png" width="54" />
-                                </div>
-                                <div class="friends-head">
-                                    <img style="border: 1px solid #ccc; border-radius: 50%; height: 100%;  width: 100%; " src="http://next.wezchina.com/storage/images/temp/avatar-b5bcf06f9aad9fb8f98cc823862caa09.jpeg" width="54" />
-                                </div>
-                                <div class="friends-head">
-                                    <img style="border: 1px solid #ccc; border-radius: 50%; height: 100%;  width: 100%; " src="http://next.wezchina.com/storage/images/temp/avatar-dd889cefa6db93b6220014a3b8afb272.jpeg" width="54" />
-                                </div>
-                                <div class="friends-head">
-                                    <img style="border: 1px solid #ccc; border-radius: 50%; height: 100%;  width: 100%; " src="http://next.wezchina.com/storage/images/temp/avatar-cec281219a1ac7c548077c805a2221df.jpeg" width="54" />
-                                </div>
-                                <div class="friends-head">
-                                    <img style="border: 1px solid #ccc; border-radius: 50%; height: 100%;  width: 100%; " src="http://next.wezchina.com/storage/images/temp/avatar-493c206380f43ab5d998ffda155fb640.jpeg" width="54" />
-                                </div>
-                                <div class="friends-head">
-                                    <img style="border: 1px solid #ccc; border-radius: 50%; height: 100%;  width: 100%; " src="http://next.wezchina.com/storage/images/temp/avatar-fb8a771b610bda747e2590860df2b513.jpeg" width="54" />
-                                </div>
-                                <div class="friends-head">
-                                    <img style="border: 1px solid #ccc; border-radius: 50%; height: 100%;  width: 100%; " src="http://next.wezchina.com/storage/images/temp/avatar-6eb63543ba87eeaf9420b5f99aa2da0f.jpeg" width="54" />
-                                </div>
-                                <div class="friends-head">
-                                    <img style="border: 1px solid #ccc; border-radius: 50%; height: 100%;  width: 100%; " src="/common/img/user_bg.jpg" width="54" />
-                                </div>
-                                <div class="friends-head">
-                                    <img style="border: 1px solid #ccc; border-radius: 50%; height: 100%;  width: 100%; " src="/common/img/p2233960011.jpg" width="54" />
-                                </div>
-                                <div class="friends-head">
-                                    <img style="border: 1px solid #ccc; border-radius: 50%; height: 100%;  width: 100%; " src="http://wx.qlogo.cn/mmopen/CbXm5H4HLoQTPO5D750WIhr5niaHSDmFj5oHa3iaITzDmRS7T87NX3wXYvcJtkKgxZGsV7MKEcUAEcjx1knP5xKts2jObVUtCic/0" width="54" />
-                                </div>
-                                <div class="friends-head">
-                                    <img style="border: 1px solid #ccc; border-radius: 50%; height: 100%;  width: 100%; " src="http://next.wezchina.com/storage/images/temp/avatar-6865acc207e0a86b77a414d2ec4c0b60.png" width="54" />
-                                </div>
-
-                            </div>
-                    </div>
-                    <div id="more">查看更多>></div>
-                </div>
-            </div>
-        </div>
-        </div>
-    </div>
-</div>
-
-    <script src="/common/js/control.js"></script>
-
-    <script src="{{PATH_TML}}project/js/projectList.js"></script>
-
-
-</body>
+        <!-- 右侧大背景图 -->
+        <div id="public_main_right_bg" style="position:fixed;top:0;bottom:0;left:1190px;width:100%;"></div>
+        <script src="{{PATH_TML}}js/public_main_right_bg.js"></script>
+        <script src="/common/js/control.js"></script>
+        <script src="{{PATH_TML}}project/js/projectList.js"></script>
+    </body>
 </html>

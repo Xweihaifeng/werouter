@@ -10,7 +10,6 @@ $(function() {
     }
     var get_weid, get_parse, get_param, li_name, total, limit = 10, pageNum = 1;
     var pathname = window.location.pathname.split('/').slice(1,3);
-    // var ApiMaterPlatQiniuDomain = 'http://oty3r3tmi.bkt.clouddn.com/';
 
     get_weid = pathname[0];
     var options1 = $.get(CMS_CHANNELS_DOMAIN_QUERY + get_weid);
@@ -21,13 +20,15 @@ $(function() {
         }
         if(data.code === 200) {
             var thumb_image = data.data.thumb_image;
-            if (thumb_image.indexOf('http') != 0 && thumb_image != "") {
-                thumb_image = ApiMaterPlatQiniuDomain + thumb_image;
+
+            if(!thumb_image) {
+                thumb_image = "/common/img/org_banner01.jpg";
+
+            } else if (thumb_image.indexOf('http') != 0 && thumb_image != "") {
+                thumb_image = imgSet(thumb_image, 1100, 320, 3);
             }
-            if(thumb_image != ""){
-                $("#thumb_image").attr("src", thumb_image);
-            }
-            console.log(data);
+            $("#thumb_image").css("background-image", `url(`+ thumb_image + `)`);
+
             get_weid = data.data.weid;
             categories(get_weid);
         } else {

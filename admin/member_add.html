@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.7 -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="bower_components/Ionicons/css/ionicons.min.css">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
+    <!-- Select2 -->
+    <link rel="stylesheet" href="bower_components/select2/dist/css/select2.min.css">
+    <link rel="stylesheet" href="/common/sweetalert2/dist/sweetalert2.min.css">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.min.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+    <!-- jQuery 3 -->
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/browser.min.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/template/settings.js"></script>
+    <!-- Google Font -->
+    <style>
+         ::-webkit-scrollbar {
+            width: 0;
+        }
+    </style>
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+    <div class="wrapper">
+        <aside class="main-sidebar">
+            <!-- sidebar: style can be found in sidebar.less -->
+            <section class="sidebar">
+                <!-- search form -->
+                <form action="#" method="get" class="sidebar-form">
+                    <div class="input-group">
+                        <input type="text" name="q" class="form-control" placeholder="Search...">
+                        <span class="input-group-btn">
+                    <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+                    </button>
+                  </span>
+                    </div>
+                </form>
+                <!-- /.search form -->
+                <ul id="root" class="sidebar-menu" data-widget="tree"></ul>
+            </section>
+            <!-- /.sidebar -->
+        </aside>
+        <!-- content-wrapper -->
+        <div class="content-wrapper">
+            <section class="content-header">
+                <h1>
+                    会员
+                </h1>
+            </section>
+            <!-- Main content -->
+            <section class="content">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="box">
+                            <div class="box-header">
+                                <h3 class="box-title">新增会员</h3>
+                            </div>
+                            <!-- /.box-header -->
+                            <form class="box-body form-horizontal" style="padding: 30px;">
+                                <div class="form-group">
+                                    <label class="control-label col-sm-4 col-md-4 col-lg-2">绑定用户</label>
+                                    <div class="col-sm-8 col-md-8 col-lg-10">
+                                        <input type="text" class="form-control" name="bind_user" placeholder="输入手机号码">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-4 col-md-4 col-lg-2">缴费方式</label>
+                                    <div class="col-sm-8 col-md-8 col-lg-10">
+                                        <select name="pay_type" class="form-control"> 
+                                        <option value="1">按年缴费</option>
+                                        <option value="2">按届缴费</option>
+                                    </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-4 col-md-4 col-lg-2">有效期</label>
+                                    <div class="col-sm-2 col-md-2 col-lg-3">
+                                        <input id="begin_time" type="text" class="form-control" name="begin_time" placeholder="开始">
+                                    </div>
+                                    <div class="col-sm-2 col-md-2 col-lg-3">
+                                        <input id="end_time" type="text" class="form-control" name="end_time" placeholder="截至">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-4 col-md-4 col-lg-2">风采图</label>
+                                    <div class="col-sm-5">
+                                        <p style="padding-top:7px" class="info"> 上传格式： .png、.jpg、 .gif</p>
+                                        <input name="photo" type="hidden" value="" class="form-control" />
+                                        <input id="pickfiles5" name="cover" type="file" class="form-control hide" />
+                                        <div id="look">
+                                            <img onclick="$('#pickfiles5').click()" id="img2" style="max-width:150px;" src="../common/img/upload.png" alt="暂无预览图片" class="thumbnail">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-4 col-md-4 col-lg-2">姓名</label>
+                                    <div class="col-sm-8 col-md-8 col-lg-10">
+                                        <input type="text" class="form-control" name="real_name" placeholder="输入姓名">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-4 col-md-4 col-lg-2">简介</label>
+                                    <div class="col-sm-8 col-md-8 col-lg-10">
+                                        <textarea type="text" class="form-control" name="intro" placeholder="输入简介"></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-4 col-md-4 col-lg-2">业务范围</label>
+                                    <div class="col-sm-8 col-md-8 col-lg-10">
+                                        <textarea type="text" class="form-control" name="bussiness" placeholder="输入业务范围"></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-4 col-md-4 col-lg-2">社会职位</label>
+                                    <div class="col-sm-8 col-md-8 col-lg-10">
+                                        <textarea type="text" class="form-control" name="position" placeholder="输入社会职位"></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-4 col-md-4 col-lg-2">个人荣誉</label>
+                                    <div class="col-sm-8 col-md-8 col-lg-10">
+                                        <textarea type="text" class="form-control" name="honor" placeholder="输入个人荣誉"></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-4 col-md-4 col-lg-2">个人履历</label>
+                                    <div class="col-sm-8 col-md-8 col-lg-10">
+                                        <textarea type="text" class="form-control" name="resume" placeholder="输入个人履历"></textarea>
+                                    </div>
+                                </div>
+                                <div class="pull-right">
+                                    <button type="button" class="btn btn-success pull-right act-save">提交</button>
+                                </div>
+                            </form>
+                            <!-- /.box-body -->
+                        </div>
+                        <!-- /.box -->
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+            </section>
+        </div>
+        <!-- /.content-wrapper -->
+        <div class="control-sidebar-bg"></div>
+    </div>
+    <!-- ./wrapper -->
+
+    <!-- Bootstrap 3.3.7 -->
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="http://cdn.staticfile.org/jquery.bootstrapvalidator/0.5.3/js/bootstrapValidator.min.js"></script>
+    <!-- DataTables -->
+    <script src="bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <!-- SlimScroll -->
+    <script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+    <!-- FastClick -->
+    <script src="bower_components/fastclick/lib/fastclick.js"></script>
+    <!-- AdminLTE App -->
+    <script src="dist/js/adminlte.min.js"></script>
+    <script src="http://cdn.staticfile.org/plupload/2.1.8/moxie.js"></script>
+    <script src="http://cdn.staticfile.org/plupload/2.1.8/plupload.dev.js"></script>
+    <script src="http://cdn.staticfile.org/plupload/2.1.8/i18n/zh_CN.js"></script>
+    <script src="bower_components/qiniu/dist/qiniu.min.js"></script>
+    <script src="/common/sweetalert2/dist/sweetalert2.min.js"></script>
+    <script src="/common/js/bootstrap.autocomplete.js"></script>
+    <script src="/common/js/laydate/laydate.js"></script>
+    <script>
+        var __init = function() {
+            $('input[name=bind_user]').autocomplete({
+                source: function(query, process) {
+                    var matchCount = this.options.items;
+                    $.get(ApiUrl + "users", {
+                        "phone": query,
+                        "limit": matchCount
+                    }, function(respData) {
+                        respData = respData.data.list;
+                        if (!respData) {
+                            alert('输入格式不正确');
+                        }
+                        return process(respData);
+                    }, "json");
+                },
+                items: 15,
+                delay: 300,
+                formatItem: function(item) {
+                    return item["real_name"] + "(手机号:" + item["phone"] + ")";
+                },
+                setValue: function(item) {
+                    return {
+                        'data-value': item["phone"],
+                        'real-value': item["real_name"]
+                    };
+                }
+            });
+            // expires from
+            laydate.render({
+                elem: '#begin_time'
+            });
+            // expires to
+            laydate.render({
+                elem: '#end_time'
+            });
+        }
+        $('.act-save').click(function() {
+            var formList = {
+                'year_per_grade': $('select[name=year_per_grade]').val(),
+            };
+            $.ajax({
+                url: ApiUrl + 'member/add',
+                type: 'post',
+                dataType: 'json',
+                data: {
+                    formList: formList
+                },
+                success: function(data) {
+                    if (data.code === 200) {
+                        swal('提示', '保存成功', 'success');
+                    } else {
+                        swal('提示', data.message, 'error');
+                    }
+                },
+                error: function(xhr) {
+                    console.log(xhr);
+                }
+            });
+        });
+        $(function() {
+            __init();
+            // 证书印章
+            var uploader5 = Qiniu.uploader({
+                runtimes: 'html5,flash,html4',
+                browse_button: 'pickfiles5',
+                uptoken_url: ApiUrl + 'file/qiniu_token',
+                get_new_uptoken: false,
+                domain: ApiMaterPlatQiniuDomain,
+                container: 'look',
+                max_file_size: '100mb',
+                flash_swf_url: 'http://cdn.staticfile.org/plupload/2.1.8/Moxie.swf',
+                max_retries: 3,
+                dragdrop: true,
+                drop_element: 'look',
+                chunk_size: '4mb',
+                auto_start: true,
+                filters: {
+                    max_file_size: '5mb',
+                    prevent_duplicates: true,
+                    // Specify what files to browse for
+                    mime_types: [{
+                        title: "Image File",
+                        extensions: "png,jpg,jpeg,gif"
+                    }, ]
+                },
+                init: {
+                    'FileUploaded': function(up, file, info) {
+                        var domain = up.getOption('domain');
+                        res = JSON.parse(info.response);
+                        $("input[name=photo]").val(res.key);
+                        var sourceLink = domain + res.key;
+                        $("#img2").attr('src', sourceLink);
+                    },
+                    'Key': function(up, file) {
+                        var key = "member/resource/";
+                        key += new Date().valueOf() + '.' + file.name.substring(file.name.indexOf('.') + 1);
+                        return key;
+                    }
+                }
+            });
+        })
+    </script>
+</body>
+
+</html>

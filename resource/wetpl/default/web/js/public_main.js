@@ -1,8 +1,235 @@
 /**
  * Created by Hongguang on 2017/7/27.
  */
-$(document).ready(function(){
 
+const home = `
+                <div id="home-head">
+                    <div id="carousel">
+                        <div class="swiper-container" id="my-swiper">
+                            <div class="swiper-wrapper carousel"></div>
+                            <div class="swiper-pagination"></div>
+                            <div class="swiper-button-prev"></div>
+                            <div class="swiper-button-next"></div>
+                        </div>
+                    </div>
+                    <div id="blue"></div>
+                    <div id="news"></div>
+                    <div class="main-news"></div>
+                    <div class="news-center">
+                        <ul class="nav nav-tabs">
+                            <li role="presentation" class="center active"><a href="news">新闻中心</a></li>
+                            <li role="presentation" class="sirase"><a href="org">公示公告</a></li>
+                            <li role="presentation" class="release"><a>官方发布</a></li>
+                        </ul>
+                    </div>
+                    <script>
+                        $(".center a").css("color", "black!important");
+                    </script>
+                    <div class="news-link">
+                        <div id="center"></div>
+                        <div id="sirase" style="display: none;"></div>
+                        <div id="release"></div>
+                    </div>
+                    <div id="recommend"></div>
+                    <div class="rcd-bt">
+                        <div class="tb">特别推荐<div class="triangle-right"></div></div>
+                        <div class="hy">会员推荐<div class="triangle-right-1"></div></div>
+                        <div class="circle-tb"><div class="sm-circle-tb"></div></div>
+                        <div class="circle-hy"><div class="sm-circle-hy"></div></div>
+                    </div>
+                    <div class="rcd-news">
+                        <div class="rcd-tb"></div>
+                        <div class="rcd-hy" style="display: none;"></div>
+                    </div>
+                    <div id="adv"></div>
+                    <div class="adv-left">
+                        <div class="adv-left-0" style="background: dodgerblue"></div>
+                        <div class="adv-left-1" style="background: green"></div>
+                        <div class="adv-left-2" style="background: orange"></div>
+                        <div class="adv-left-3" style="background: lightskyblue"></div>
+                    </div>
+                    <div class="adv-right">
+                        <div class="swiper-container" id="my-swiper2"><div class="swiper-wrapper adv-right-0"></div></div>
+                        <div class="swiper-container" id="my-swiper3"><div class="swiper-wrapper adv-right-1"></div></div>
+                        <div class="swiper-container" id="my-swiper4"><div class="swiper-wrapper adv-right-2"></div></div>
+                    </div>
+                </div>
+                <div id="home-body">
+                    <div id="bar"></div>
+                    <div id="bg"></div>
+                </div>
+                <div id="imgs" class="clearfix">
+                    <div class="imgs-title"></div>
+                    <div class="imgs-style">
+                        <div class="imgs-chairman"></div>
+                        <div class="imgs-name"></div>
+                    </div>
+                    <div class="imgs-active">
+                        <div id="my-swiper1">
+                            <div class="swiper_rolling clearfix"></div>
+                        </div>
+                    </div>
+                </div>
+            `
+const organization = `
+
+                <dd  class="organize" id="organize">
+                    <div class="zuzhi-top">
+                        <div class="flex" style="display: none">
+                            <img src="/common/img/zuzhi-log.png" alt="">
+                            <div class="chuanchengbainian">
+                                <p>传承百年精神</p>
+                                <span>繁荣产业生态，共建网络强国</span>
+                            </div>
+                        </div>
+                        <div class="shanghuijieshao"></div>
+                    </div>
+                    <div class="zuzhi-bottom">
+                        <div class="fazhanbaogao">
+                            <div class="diyi">
+                                <p class="title"></p>
+                                <div class="report">
+                                    <div class="swiper-container swiper-report">
+                                        <div class="pagination pagination-report"></div>
+                                        <div class="swiper-wrapper report_swiper"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dier"></div>
+                            <div class="disan">
+                                <p class="title"></p>
+                                <div class="lunbo">
+                                    <div class="swiper-container swiper-nested">
+                                        <div class="pagination pagination-nested"></div>
+                                        <div class="swiper-wrapper lunbo_swiper"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <img alt="" id="org_bottom_big_img" style="">
+                    </div>
+                </dd>
+
+            `
+const huzhu = `
+                <div class="huzhu-top-img">
+                    <div class="huzhu-top-img-title">
+                        <!--<p class="t1">互助平台</p>-->
+                        <!--<p class="t2">共筑众筹梦想朋友圈</p>-->
+                    </div>
+                    <img src="http://next.wezchina.com/images/project-banner.jpg" alt="" style="height: 235px;width: 960px">
+                </div>
+                <div class="huzhu-top">
+                    <div class="big-title">
+                        <span id="xiangmu-btn" style="background: rgb(213, 213, 213); color: rgb(85, 85, 85);">互助项目</span>
+                        <span id="huodong-btn" style="background: rgb(0, 124, 211); color: rgb(255, 255, 255);">线下活动</span>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="little-title" id="xiamgmu-title" style="display: none;">
+                        <a href="http://next.wezchina.com?p=3&amp;c=1"><span class="title-active" style="margin-left: 10px">互助众筹</span></a>
+                        <a href="http://next.wezchina.com?p=3&amp;c=2"><span>回报众筹</span></a>
+                        <a href="http://next.wezchina.com?p=3&amp;c=3"><span>产品众筹</span></a>
+                        <a href="http://next.wezchina.com?p=3&amp;c=4"><span>一元众筹</span></a>
+                    </div>
+                    <!-- <div class="little-title" id="huodong-title" style="display: block;">
+                        <a href="http://next.wezchina.com?p=3&amp;a=1"><span style="margin-left: 10px">线下活动</span></a>
+                        <a href="http://next.wezchina.com?p=3&amp;a=2"><span>最新活动</span></a>
+                    </div> -->
+                </div>
+                <div class="clearfix"></div>
+                <div class="line"></div>
+                <div class="person-article-lists" id="xiangmu" style="display: none;">
+                    <div class="article-item">
+                        <div class="row m0 huzhubox"></div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="weizhuye-activity" id="huodong" style="display: block;">
+                    <div class="person-article-lists row m0"></div>
+                </div>
+            `
+const goodsBox = `
+                <div id="goodsBox">
+                <div style="width: 100%;height:235px; background:url(/common/img/0158.jpg) no-repeat center;">
+                    <img src="http://next.wezchina.com/images/gongxiangtop.png" alt="" style="height: 235px">
+                </div>
+                <p class="huiyuantegong">会<span>/</span>员<span>/</span>特<span>/</span>供</p>
+                <div class="person-goods-lists">
+                    <div class="row p-t-3" style="background: white;"></div>
+                </div>
+                </div>
+            `
+
+const channel = window.location.pathname.split('/').pop();
+const seqlist = ['nav-news', 'nav-org', 'nav-help', 'nav-share'];
+const district = ['home', 'organization', 'huzhu', 'goodsBox'];
+const content = [
+    {pos: 1, name: '新闻', ename: 'xw', cont: ['视频新闻', '图片新闻', '专题', '本会新闻'], val: 'home'},
+    {pos: 2, name: '组织', ename: 'zz', cont: ['商会介绍', '联席会议', '组委会', '总会党委'], val: 'organization'},
+    {pos: 3, name: '互助', ename: 'hz', cont: ['互助项目', '线下活动', '其他'], val: 'huzhu'},
+    {pos: 4, name: '共享', ename: 'gx', cont: ['秦商特供', '秦商项目', '秦商课堂', '秦商直播'], val: 'goodsBox'}
+];
+const init = [1,2,3,4];
+
+const genSideBar = (ns) => {
+    return ns.map((x, i) => {
+        $("." + seqlist[i] + '-title').text(x.name);
+        $("." + seqlist[i] + '-content ul').append(
+            x.cont.map(x => `<li>${x}</li>`).join('')
+        )
+        $("." + district[i]).append(eval(x.val));
+    })
+}
+
+const findId = (pos, c) => c.filter(x => x.pos == pos)
+const findPos = (id, s) => s.filter(x => x.id == id)
+const newSeq = (seq) => {
+    return seq.map(x => findId(x, content)[0])
+}
+
+const req = () => {
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            url: apiUrl + "cms/setting/show",
+            dataType: 'json',
+            success: function(data){
+                resolve(JSON.parse(data.data.block));
+            }
+        })
+    })
+}
+
+let seq = [], remb = [], hd = [];
+
+const fill = (seq) => init.map(x => {
+    if (seq.indexOf(x) == -1) {
+        seq.push(x);
+        hd.push(x);
+    }
+})
+
+req().then((data) => {
+    // console.log(data)
+    for (key in data) {
+        if (data[key].show == 1) {
+            seq[data[key].sort -1] = content.filter(c => key == c.ename)[0].pos;
+            remb[data[key].sort -1] = content.filter(c => key == c.ename)[0].pos;
+        }
+    }
+
+    if (channel != '') {
+        seq = [...[content.filter(c => channel == c.ename)[0].pos], ...seq].reduce((r, e) => r.indexOf(e) != -1 ? r : [...r, e], []);
+        remb = [...[content.filter(c => channel == c.ename)[0].pos], ...remb].reduce((r, e) => r.indexOf(e) != -1 ? r : [...r, e], []);
+    }
+
+    fill(seq); //填充seq;  
+    let len = hd.length; //背景图填充宽度
+    remb.map(x => $("#" + seqlist[x]).show());
+    $("#beijing").css("left", 1365 - (105 * len) + 'px');
+
+    // $(document).ready(function(){
     //resize
     var setHeight = function(ch){
         $(".left-nav").css("height", ch);
@@ -108,13 +335,14 @@ $(document).ready(function(){
         var href = "news/" + data.weid;
         var title = data.title.substring(0, 18);
         var dt = new Date(data.created_at * 1000);
-        var month = dt.getMonth() + 1;
+        var month = (dt.getMonth() + 1).toString().length == 1 ? '0' + (dt.getMonth() + 1) : dt.getMonth() + 1;
+        var day = dt.getDate().toString().length == 1 ? '0' + dt.getDate() : dt.getDate(); 
 
         var templete =
             '<div class="news-line">' +  //通过id获取文章内容
             '<div class="news-type" id=' + data.cate_id + '>[' + data.cate_title + ']</div>' +
             '<div class="news-title" id=' + data.weid + '><a href=' + href + ' target="_blank">' + title + '</div>' +
-            '<div class="news-date">' + dt.getFullYear() + '-' + month + '-' + dt.getDate() + '</div>' +
+            '<div class="news-date">' + dt.getFullYear() + '-' + month + '-' + day + '</div>' +
             '</div>'
 
         return templete;
@@ -142,12 +370,13 @@ $(document).ready(function(){
         var href = data.channel_domain + "/" + data.weid;
         var title = data.title.substring(0, 18);
         var dt = new Date(data.created_at * 1000);
-        var month = dt.getMonth() + 1;
+        var month = (dt.getMonth() + 1).toString().length == 1 ? '0' + (dt.getMonth() + 1) : dt.getMonth() + 1;
+        var day = dt.getDate().toString().length == 1 ? '0' + dt.getDate() : dt.getDate(); 
 
         var templete =
             '<div class="rcd-news-line" id=' + data.weid + '>' +
             '<div class="rcd-news-title" id=' + data.cate_id + '><a href=' + href + ' target="_blank">' + title + '</div>' +
-            '<div class="rcd-news-date">[' + dt.getFullYear() + '-' + month + '-' + dt.getDate() + ']</div>' +
+            '<div class="rcd-news-date">[' + dt.getFullYear() + '-' + month + '-' + day + ']</div>' +
             '</div>'
 
         return templete;
@@ -949,68 +1178,80 @@ $(document).ready(function(){
 
                 $("#home-body").css({ "background": "url(" + bgImg + ") no-repeat center", "background-size": "100%", "opacity": "1", })                
                 $("#beijing")  .css({ "background-image": "url(" + bgRight + ")"})
-                $("#nav-news") .css({ "background-image": "url(" + bar1 + ")","background-size": "cover","background-repeat": "no-repeat","background-position": "center" })
-                $("#nav-org")  .css({ "background-image": "url(" + bar2 + ")","background-size": "cover","background-repeat": "no-repeat","background-position": "center" })
-                $("#nav-help") .css({ "background-image": "url(" + bar3 + ")","background-size": "cover","background-repeat": "no-repeat","background-position": "center" })
-                $("#nav-share").css({ "background-image": "url(" + bar4 + ")","background-size": "cover","background-repeat": "no-repeat","background-position": "center" })
+                $("#nav-news") .css({ "background-image": "url(" + bar1 + ")","background-size": "100% 100%","background-repeat": "no-repeat","background-position": "center" })
+                $("#nav-org")  .css({ "background-image": "url(" + bar2 + ")","background-size": "100% 100%","background-repeat": "no-repeat","background-position": "center" })
+                $("#nav-help") .css({ "background-image": "url(" + bar3 + ")","background-size": "100% 100%","background-repeat": "no-repeat","background-position": "center" })
+                $("#nav-share").css({ "background-image": "url(" + bar4 + ")","background-size": "100% 100%","background-repeat": "no-repeat","background-position": "center" })
 
                 //官方发布
                 $("#release").html(setting.weibo_show);
-
-                //right side control
                 var script_status = false;
-
-                // 首页新闻模块
-                $("#nav-news").click(function(){
-                    homeState = "news";
-                    $("#nav-news, .huzhu, .organization, .goodsBox").hide();
-                    $(".home, #nav-help, #nav-share, #nav-org").show();
-                    $("#nav-help,#nav-share").css("margin-left", "0");
-                    $("#nav-org,#nav-help,#nav-share").css({ "position":"static", "left":"0" });
-                    var temp = mySwiper.width;
-                    mySwiper.startAutoplay();
-                })
-
-                // 首页组织模块
-                $("#nav-org").click(function(){
+                var org = () => {
                     if(!script_status) {
                         $.getScript("/common/js/organized.js");
                         script_status = true;
                     }
-                    homeState = "org";
-                    $(".home, #nav-org, .huzhu, .goodsBox").hide();
-                    $("#nav-news, #nav-help, #nav-share, .organization").show();
-                    $("#nav-org,#nav-share").css({ "margin-left": "0", "position":"static" });
-                    $("#nav-help").css({ "position":"static", "left":"0", "margin-left":"105px" });
-                    mySwiper.stopAutoplay();
-                })
+                }
 
-                // 首页互助模块
-                $("#nav-help").click(function(){
-                    homeState = "help";
-                    $(".home, #nav-help, .organization, .goodsBox").hide();
-                    $("#nav-news, #nav-org, #nav-share, .huzhu").show();
-                    $("#nav-org").css({ "position":"absolute", "left":"-855px" });
-                    $("#nav-help").css({ "margin-left": "0", "position":"static" });
-                    $("#nav-share").css({ "position":"static", "left":"0", "margin-left":"210px" });
-                    mySwiper.stopAutoplay();
+                var help = () => {
                     activitylist(localStorage.getItem("indexweid"),localStorage.getItem("nickname"),localStorage.getItem("avatar"),1,8);
                     projectcate(localStorage.getItem("indexweid"),localStorage.getItem("nickname"),localStorage.getItem("avatar"));
                     projectlist(localStorage.getItem("indexweid"),localStorage.getItem("nickname"),localStorage.getItem("avatar"),"",1);
+                }
 
-                })
-
-                // 首页共享模块
-                $("#nav-share").click(function(){
-                    homeState = "share";
-                    $(".home, .huzhu, #nav-share, .organization").hide();
-                    $("#nav-news, #nav-org, #nav-help, .goodsBox").show();
-                    $("#nav-share,#nav-help").css("margin-left", "0");
-                    $("#nav-org").css({ "position":"absolute", "left":"-855px" });
-                    $("#nav-help").css({ "position":"absolute", "left":"-750px" });
-                    mySwiper.stopAutoplay();
+                var share = () => {
                     shoppinglist(localStorage.getItem("indexweid"),1);
-                })
+                }
+                //right side control
+                var genEvt = () => {
+                    // 首页新闻模块
+                    $("#nav-news").click(function(){
+                        $("#nav-news, .huzhu, .organization, .goodsBox").hide();
+                        $(".home, #nav-help, #nav-share, #nav-org").show();
+                        $("#nav-help,#nav-share").css("margin-left", "0");
+                        $("#nav-org,#nav-help,#nav-share").css({ "position":"static", "left":"0" });
+                        var temp = mySwiper.width;
+                        mySwiper.startAutoplay();
+                    })
+
+                    // 首页组织模块
+                    $("#nav-org").click(function(){
+                        $(".home, #nav-org, .huzhu, .goodsBox").hide();
+                        $("#nav-news, #nav-help, #nav-share, .organization").show();
+                        $("#nav-org,#nav-share").css({ "margin-left": "0", "position":"static" });
+                        $("#nav-help").css({ "position":"static", "left":"0", "margin-left":"105px" });
+                        mySwiper.stopAutoplay();
+                    })
+
+                    // 首页互助模块
+                    $("#nav-help").click(function(){
+                        homeState = "help";
+                        $(".home, #nav-help, .organization, .goodsBox").hide();
+                        $("#nav-news, #nav-org, #nav-share, .huzhu").show();
+                        $("#nav-org").css({ "position":"absolute", "left":"-855px" });
+                        $("#nav-help").css({ "margin-left": "0", "position":"static" });
+                        $("#nav-share").css({ "position":"static", "left":"0", "margin-left":"210px" });
+                        mySwiper.stopAutoplay();
+
+                    })
+
+                    // 首页共享模块
+                    $("#nav-share").click(function(){
+                        homeState = "share";
+                        $(".home, .huzhu, #nav-share, .organization").hide();
+                        $("#nav-news, #nav-org, #nav-help, .goodsBox").show();
+                        $("#nav-share,#nav-help").css("margin-left", "0");
+                        $("#nav-org").css({ "position":"absolute", "left":"-855px" });
+                        $("#nav-help").css({ "position":"absolute", "left":"-750px" });
+                        mySwiper.stopAutoplay();
+
+                    })
+                }
+
+                genEvt();
+                org();
+                help();
+                share();
 
                 var title = setting.title;
                 var favicon = setting.favicon;
@@ -1042,8 +1283,6 @@ $(document).ready(function(){
             }
         })
     }
-
-    loadHome()
 
     //读取首页新闻
     var loadNews = function(){
@@ -1080,7 +1319,6 @@ $(document).ready(function(){
             }
         })
     }
-    loadNews();
 
     //读取会员推荐新闻
     var loadMemberNews = function(){
@@ -1102,6 +1340,10 @@ $(document).ready(function(){
             }
         })
     }
+
+    genSideBar(newSeq(seq))
+    loadHome()
+    loadNews();
     loadMemberNews();
 
     var newsItems = ['center', 'sirase', 'release'];
@@ -1195,9 +1437,9 @@ $(document).ready(function(){
          var sendData={
             user_id:weid, 
             limit:limit,
-            page:page,          
+            page:page,
             status:2,
-            is_private:1           
+            is_private:1
         }
         console.log(sendData);
         $.ajax({
@@ -1239,9 +1481,6 @@ $(document).ready(function(){
                         $("#huodong .person-article-lists ").append("<div class='more text-center col-sm-12' style='margin-top:20px;'>这是我的底线啦~~~</div>");
 
                     }
-                    
-
-
                 }
             },
             error: function(xhr){
@@ -1527,4 +1766,7 @@ $(document).ready(function(){
             }
         })
     }
+// })
 })
+
+

@@ -101,7 +101,7 @@ $(function() {
                 <a href="/`+ pathname[0] + "/" + result.category.domain +`" class="original" target="_blank">`+ result.category.title + `</a>
             </div>
             <hr class="hr" />
-            <p class="page-title"><img src="http://next.wezchina.com/images/daoyu.png" alt=""><span>` + result.summary + `</span></p>
+            <p class="page-title"><img src="/common/img/daoyu.png" alt=""><span>` + result.summary + `</span></p>
             <div class="page-info"><div class="page-details"><p>` + result.content + `</p></div></div>
             <div class="evaluate"><p class="readings"><a class="read_original" href="`+ result.source_url +`" target="_blank"> 阅读原文 </a><span>阅读 ` + result.views + `</span><span class="zan" id="zan"><i class="gesture"></i><span class="zanCount">` + result.praise_num + `<span></span></p></div>`
 

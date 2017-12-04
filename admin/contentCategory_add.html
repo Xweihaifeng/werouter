@@ -85,6 +85,15 @@
                                         <label class="control-label col-sm-2">所属频道*</label>
                                         <div class="col-sm-5">
                                             <select name="channel_id" class="form-control">
+                                                    <option value="">请选择</option>
+										</select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2">上级栏目</label>
+                                        <div class="col-sm-5">
+                                            <select name="parent_id" class="form-control">
+                                                    <option value="">设为顶级</option>
 										</select>
                                         </div>
                                     </div>
@@ -496,6 +505,28 @@
                 });
             };
             __init();
+
+            var __cate_init = function(channel_id) {
+                $.ajax({
+                    url: ApiUrl + 'cms/channel_categories?channel=' + channel_id,
+                    type: 'get',
+                    dataType: 'json',
+                    success: function(data) {
+                        var option = '<option value="">设为顶级</option>';
+                        $.each(data.data, function(k, v) {
+                            option += `<option value="` + v.weid + `">` + v.title + `</option>`;
+                        });
+                        $('select[name=parent_id]').html(option);
+                    },
+                    error: function(xhr) {
+                        console.log(xhr);
+                    }
+                });
+            }
+            $(document).on('change', 'select[name=channel_id]', function() {
+                var channel_id = $(this).val();
+                __cate_init(channel_id);
+            });
             var uploader = Qiniu.uploader({
                 runtimes: 'html5,flash,html4',
                 browse_button: 'pickfiles',
@@ -595,6 +626,7 @@
                     'thumb_image': $('input[name=thumb_image]').val(),
                     'content': CKEDITOR.instances.editor1.getData(),
                     'channel_id': $('select[name=channel_id]').val(),
+                    'parent_id': $('select[name=parent_id]').val(),
                     'list_id': $('input[name=list_field]').val(),
                     'show_id': $('input[name=show_field]').val(),
                     'page_id': $('input[name=page_field]').val(),

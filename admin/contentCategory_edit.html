@@ -82,10 +82,18 @@
                                 <form id="form" action="" method="post" class="form-horizontal" enctype="multipart/form-data">
                                     <input type="hidden" name="_token" value="pKw8le5hYJQSNk4EKWUGEs23SQPbqdGlZeQF94fZ">
                                     <div class="form-group">
-                                        <label class="control-label col-sm-2">所属频道*</label>
+                                        <label class="control-label col-sm-2">所属频道</label>
                                         <div class="col-sm-5">
-                                            <select name="channel_id" class="form-control">
+                                            <select name="channel_id" class="form-control" disabled>
 										</select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2">上级栏目</label>
+                                        <div class="col-sm-5">
+                                            <select name="parent_id" class="form-control" disabled>
+                                                        <option value="">设为顶级</option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -493,6 +501,7 @@
                                 $.each(data_.data.list, function(k_, v_) {
                                     if (v_.weid == data.data.channel_id) {
                                         var option = `<option value="` + v_.weid + `" selected>` + v_.title + `</option>`;
+                                        __cate_init(data.data.channel_id, data.data.parent_id);
                                     } else {
                                         var option = `<option value="` + v_.weid + `">` + v_.title + `</option>`;
                                     }
@@ -542,6 +551,30 @@
                 });
             }
             __init();
+            var __cate_init = function(channel_id, parent_id) {
+                $.ajax({
+                    url: ApiUrl + 'cms/channel_categories?channel=' + channel_id,
+                    type: 'get',
+                    dataType: 'json',
+                    success: function(rep) {
+                        var option = '<option value="">设为顶级</option>';
+                        $.each(rep.data, function(k, v) {
+                            if (v.weid == parent_id)
+                                option += `<option value="` + v.weid + `" selected>` + v.title + `</option>`;
+                            else
+                                option += `<option value="` + v.weid + `">` + v.title + `</option>`;
+                        });
+                        $('select[name=parent_id]').html(option);
+                    },
+                    error: function(xhr) {
+                        console.log(xhr);
+                    }
+                });
+            }
+            $(document).on('change', 'select[name=channel_id]', function() {
+                var channel_id = $(this).val();
+                __cate_init(channel_id);
+            });
             var uploader = Qiniu.uploader({
                 runtimes: 'html5,flash,html4',
                 browse_button: 'pickfiles',
@@ -636,6 +669,7 @@
                     'thumb_image': $('input[name=thumb_image]').val(),
                     'content': CKEDITOR.instances.editor1.getData(),
                     'channel_id': $('select[name=channel_id]').val(),
+                    'parent_id': $('select[name=parent_id]').val(),
                     'list_id': $('input[name=list_field]').val(),
                     'show_id': $('input[name=show_field]').val(),
                     'page_id': $('input[name=page_field]').val(),
