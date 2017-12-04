@@ -3,7 +3,8 @@
  */
 
 //接口配置
-const apiUrl = 'http://{{url}}/api/';
+const httpType = window.location.protocol;
+const apiUrl = httpType + '//{{url}}/api/';
 
 //七牛配置
 var qiniu;
@@ -13,7 +14,7 @@ $.ajax({
     async: false,
     success: function(data) {
         console.log('setting:', data)
-        qiniu = 'http://' + data.data.qiniu.domain_custom + '/';
+        qiniu = httpType + '//' + data.data.qiniu.domain_custom + '/';
     },
     error: function(xhr) {
         console.log(xhr);
@@ -87,7 +88,7 @@ const CMS_CATEGORIES_DOMAIN_QUERY = apiUrl + 'cms/categories/domain_query/';
 // 七牛图片上传插件接口调用
 const QINIU_UPTOKEN_URL = apiUrl + 'file/qiniu_token';
 // const ApiMaterPlatQiniuDomain 		= 'http://images.new.wezchina.com/';
-const qiniu_upload_domain = 'http://upload.qiniu.com';
+const qiniu_upload_domain = httpType + '//upload.qiniu.com';
 // const ApiMaterPlatQiniuDomain 		= 'http://oty3r3tmi.bkt.clouddn.com/';
 
 // 微主页个性域名接口调用
