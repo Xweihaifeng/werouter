@@ -1365,6 +1365,66 @@ req().then((data) => {
         res.map(x => $("." + x).css("border-bottom", "none"));
     })
 
+    //推荐新闻
+    var tb = true;
+    var hy = true;
+    $(".sm-circle-tb").css({"background": "#01a7ff", "border": "none"});
+    $(".tb").hover(function(){
+        if (hy) {
+            $(".hy").css({"background": "none", "color": "black"});
+            $(".hy").find(".triangle-right-1").hide();
+            $(".circle-hy").css("border", "1px solid #afafaf");
+            $(".sm-circle-hy").css({"background": "", "border": "1px solid #afafaf"});
+        }
+        $(this).css({"background": "#01a7ff", "color": "white"});
+        $(this).find(".triangle-right").show();
+        $(".circle-tb").css("border", "1px solid #01a7ff");
+        $(".sm-circle-tb").css({"background": "#01a7ff", "border": "none"});
+        $(".rcd-tb").show();
+        $(".rcd-hy").hide();
+    }, function(){
+    })
+
+    $(".hy").hover(function(){
+        if (tb) {
+            $(".tb").css({"background": "none", "color": "black"});
+            $(".tb").find(".triangle-right").hide();
+            $(".circle-tb").css("border", "1px solid #afafaf");
+            $(".sm-circle-tb").css({"background": "", "border": "1px solid #afafaf"});
+        }
+        $(this).css({"background": "#01a7ff", "color": "white"});
+        $(this).find(".triangle-right-1").show();
+        $(".circle-hy").css("border", "1px solid #01a7ff");
+        $(".sm-circle-hy").css({"background": "#01a7ff", "border": "none"});
+        $(".rcd-tb").hide();
+        $(".rcd-hy").show();
+    }, function(){
+    })
+
+    //friends
+    var type = "fans";
+    $("#friends").hide();
+    $(".fans, .friends").click(function(){
+        $("." + type).removeClass("active");
+        $("#" + type).hide();
+        type = $(this).attr("class");
+        $(this).addClass("active");
+        $("#" + type).show();
+    })
+
+    //news center
+    var curr = "center";
+    $("#sirase, #release").hide();
+    $(".center, .sirase, .release").hover(function(){
+        $("." + curr).removeClass("active");
+        $("#" + curr).hide();
+        curr = $(this).attr("class");
+        $(this).addClass("active");
+        $("#" + curr).show();
+    }, function(){
+
+    })
+
     //活动 start
      var listtemplate = function(data,nickname,avatar){
         var typetext="";
