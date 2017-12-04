@@ -9,6 +9,7 @@ var qiniu_bucket_domain = ApiMaterPlatQiniuDomain;
 //const ApiMaterPlatQiniuDomain  = 'http://images.new.wezchina.com/';
 
 $(document).ready(function(){
+    var domNum = 0;
     var favicon = ApiMaterPlatQiniuDomain + localStorage.getItem('fav');
     console.log('logo:',favicon);
     $('#favicon').attr('href', favicon);
@@ -497,6 +498,30 @@ $(document).ready(function(){
             $("#myModal_input").val(orderid);
             var status_pay=$(this).closest('tr').attr("id");
                 console.log(orderid);
+            $(".imgContainer").children().remove();
+            $.ajax({
+                url : apiUrl + 'order/detail/' + orderid,
+                type : 'get',
+                headers : {
+                    'Token' : localStorage.getItem('token')
+                },
+                dataType : 'json',
+                success : function (res) {
+                    console.log("订单详情：",res);
+                    if(res.code == 200){
+                        var goods = res.data.goods;
+                        for(var i=0; i<goods.length; i++){
+                            var imgDom =
+                                '<img weid="'+goods[i].weid+'" src="'+qiniu_bucket_domain + goods[i].goods_cover+'">';
+                            $(".imgContainer").append(imgDom)
+                        }
+
+                        $(".dynamic-dom").attr("id",domNum);
+                        operFormDom();
+
+                    }
+                }
+            })
                 $.ajax({
                     url : apiUrl + 'pages/logistics/lists',
                     type : 'post',
@@ -522,6 +547,7 @@ $(document).ready(function(){
                         }
                     }
                 })
+        closeSendModel()
         })
 
         $(".confirmRefund").bind("click",function () {
@@ -600,6 +626,116 @@ $(document).ready(function(){
         closeModel();
         })
     }
+    var closeSendModel = function () {
+        $('.sendModal .close').click(function(){
+            window.location.reload()
+        })
+    }
+    var operFormDom = function () {
+        var oper =
+            '<span id="addDom"> 添加+ </span>' +
+            '<span id="removeDom"> 删除- </span>';
+        var imgInfo = [];
+        var noSelectImgInfo = [];
+        $(".imgContainer img").click(function () {
+            if($(this).hasClass('has-border')){
+                $(this).removeClass('has-border');
+            }else{
+                $(this).addClass('has-border');
+            }
+            $(".dynamic-dom").eq(domNum).find($(".imgContainer img")).each(function (ind,item) {
+                var obj = {};
+                if($(item).hasClass('has-border')){
+                    var isHas = imgInfo.filter(function(i){return i == $(item).attr('weid')})
+                    if(!isHas.length){
+                        imgInfo.push($(item).attr('weid'))
+                    }
+                    for(var i=0; i<noSelectImgInfo.length; i++){
+                        if(noSelectImgInfo[i].weid == $(item).attr('weid') && noSelectImgInfo[i].src == $(item).attr('src')){
+                            noSelectImgInfo.splice(i,1)
+                        }
+                    }
+
+                }else{
+                    var equal = false;
+                    for(var i=0; i<noSelectImgInfo.length; i++){
+                        if(noSelectImgInfo[i].weid == $(item).attr('weid') && noSelectImgInfo[i].src == $(item).attr('src')){
+                            equal = true;
+                        }
+                    }
+                    if(!equal){
+                        obj.weid = $(item).attr('weid');
+                        obj.src = $(item).attr('src');
+                        noSelectImgInfo.push(obj);
+                    }
+
+                    for(var i=0; i<imgInfo.length; i++){
+                        if(imgInfo[i] == $(item).attr('weid')){
+                            imgInfo.splice(i,1)
+                        }
+                    }
+
+                }
+            });
+            console.log(imgInfo,noSelectImgInfo)
+            $(".dynamic-dom").eq(domNum).attr('weid',imgInfo.join(','));
+        });
+
+        $("#addDom").click(function () {
+            var hasCheck = false;
+            $(".dynamic-dom").eq(domNum).find($(".imgContainer img")).each(function (ind, item) {
+                if($(item).hasClass('has-border')){
+                    hasCheck = true
+                }
+            })
+            if(!hasCheck){
+                layer.msg('请先选择要发货的商品');
+                return
+            }
+            if(!$(".dynamic-dom").eq(domNum).find($("input[name=wuliu_card]")).val()){
+                layer.msg('请填写物流编号');
+                return
+            }
+            if(!noSelectImgInfo.length){
+                layer.msg('没有可选择的商品');
+                return;
+            }
+            $(".dynamic-dom").eq(domNum).find($('#addDom')).remove();
+            $(".dynamic-dom").eq(domNum).find($('#removeDom')).remove();
+            $(".dynamic-dom").eq(domNum).after($(".dynamic-dom").eq(domNum).clone(true).attr("id",domNum+1).append(oper));
+            $(".dynamic-dom").eq(domNum).find($(".imgContainer img")).each(function (ind, item) {
+                if(!$(item).hasClass('has-border')){
+                    $(item).remove()
+                }
+            });
+            domNum +=1;
+            $(".dynamic-dom").eq(domNum).find($("input[name=wuliu_card]")).val('');
+            $(".dynamic-dom").eq(domNum).find($(".imgContainer")).children().remove();
+            for(var i = 0; i < noSelectImgInfo.length; i++){
+                var imgDom =
+                    '<img weid="'+noSelectImgInfo[i].weid+'" src="'+noSelectImgInfo[i].src+'">';
+                $(".dynamic-dom").eq(domNum).find($(".imgContainer")).append(imgDom)
+            }
+            operFormDom()
+        });
+        $("#removeDom").click(function () {
+            var reduceImg = $(".dynamic-dom").eq(domNum).find($(".imgContainer")).children()
+            domNum -=1;
+            $(this).parent().remove();
+            if(domNum === 0){
+                $(".dynamic-dom").eq(0).append('<span id="addDom"> 添加+ </span>');
+            }else{
+                $(".dynamic-dom").eq(domNum).append(oper);
+            }
+            $(".dynamic-dom").eq(domNum).find($(".imgContainer")).append(reduceImg);
+            $(".dynamic-dom").eq(domNum).removeAttr('weid')
+            $(".dynamic-dom").eq(domNum).find($(".imgContainer img")).each(function (ind, item) {
+                $(item).removeClass('has-border')
+            })
+            operFormDom()
+        })
+
+    }
     var closeModel = function () {
         $('.comment_bomb_box_close').click(function () {
             $('.comment_mongolia_layer, .comment_bomb_box').fadeOut("slow");
@@ -611,20 +747,44 @@ $(document).ready(function(){
     // 填写物流公司
     var company=function(orderid,status_pay){
         $('.save').bind('click', function() {
-            var l_company = $("select[name=wuliu_company]").val();
-            var l_card = $("input[name=wuliu_card]").val();
+            var checkNoSelect = false;
+            var checkEmpty = false;
+            $('.dynamic-dom').each(function (ind, item) {
+                if(!$(item).find($("input[name=wuliu_card]")).val()){
+                    checkEmpty = true;
+                }
+                $(item).find($(".imgContainer img")).each(function (ind, img) {
+                    if(!$(img).hasClass('has-border')){
+                        checkNoSelect = true
+                    }
+                })
+            })
+
+            if(checkNoSelect){
+                layer.msg('请选择发货商品');
+                return
+            }
+
+            if(checkEmpty){
+                layer.msg('请完善物流单号信息')
+                return
+            }
+
+            var sendList = [];
+            $(".dynamic-dom").each(function (ind, elem) {
+                var obj = {}
+                obj.logistics_id = $(elem).find($("select[name=wuliu_company]")).val();
+                obj.logistics_no = $(elem).find($("input[name=wuliu_card]")).val();
+                obj.order_goods_id = $(elem).attr('weid');
+                sendList.push(obj)
+            })
             var id = $("#myModal_input").val();
             // var l_status=2;
             // var a = csrf.csrfToken;
             var sendData={
                 order_id:id,
-                logistics_id:l_company,
-                logistics_no:l_card
-                // status:
-                // pay_way:
+                logistics_list : sendList
             }
-
-            console.log("发货字段：",sendData);
             $.ajax({
                 url: apiUrl + 'order/send',
                 type:'post',
@@ -637,11 +797,7 @@ $(document).ready(function(){
                     console.log(data);
                     if (data.code == 200) {
                         layer.msg("发货成功");
-
-                         $('#myModal').modal('hide');
-
-                        $("input[name=wuliu_company]").val('');
-                        $("input[name=wuliu_card]").val('');
+                        $('#myModal').modal('hide');
                         window.location.reload();
                     }else {
                         layer.msg(data.message);

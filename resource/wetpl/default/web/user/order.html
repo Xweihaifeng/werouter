@@ -123,9 +123,9 @@
                 				</div>
 
 
-								<div class="modal fade bs-example-modal-sm" id="myModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
-									<div class="modal-dialog modal-sm" role="document">
-										<div class="modal-content">
+								<div class="modal fade bs-example-modal-md" id="myModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+									<div class="modal-dialog modal-md" role="document">
+										<div class="modal-content sendModal">
 											<div class="modal-header">
 												<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 												<h4 class="modal-title">填写发货信息</h4>
@@ -133,13 +133,17 @@
 											<div class="modal-body">
 												<form>
 													<input type="hidden" value="" id="myModal_input">
-													<div class="form-group">
-														<label for="exampleInputEmail1">物流公司</label>
-														<select name="wuliu_company" class="form-control" id="exampleInputEmail1"></select>
-													</div>
-													<div class="form-group">
-														<label for="exampleInputPassword1">物流编号</label>
-														<input type="text" name="wuliu_card" class="form-control" id="exampleInputPassword1">
+													<div class="dynamic-dom">
+														<div class="imgContainer"></div>
+														<div class="form-group">
+															<label for="exampleInputEmail1">物流公司</label>
+															<select name="wuliu_company" class="form-control" id="exampleInputEmail1"></select>
+														</div>
+														<div class="form-group">
+															<label for="exampleInputPassword1">物流编号</label>
+															<input type="text" name="wuliu_card" class="form-control" id="exampleInputPassword1">
+														</div>
+														<span id="addDom"> 添加+ </span>
 													</div>
 													<div class="modal-footer">
 														<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
