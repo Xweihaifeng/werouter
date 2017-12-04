@@ -151,12 +151,12 @@ class router_index
         $protocol = empty($_SERVER['HTTPS']) ? 'http' : 'https';
 
         $this->http = ($this->data['http_type'] == 1) ? 'http' : 'https';
-
+/*
         if ($protocol != $this->http) {
             header("location: {$this->http}://{$this->_domain}");
             exit;
         }
-        
+        */
         if(empty($this->data['router'])) error (404);
 
          // 手机版 && 电脑版相互跳转
