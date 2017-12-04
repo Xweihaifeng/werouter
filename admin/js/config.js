@@ -1,4 +1,5 @@
-var hosts = window.location.protocol + '//' + window.location.host + '/api/';
+const httpType = window.location.protocol;
+var hosts = httpType + '//' + window.location.host + '/api/';
 var ApiUrl = hosts + 'backend/';
 //七牛配置
 var ApiMaterPlatQiniuDomain;
@@ -7,13 +8,12 @@ $.ajax({
     type: 'get',
     async: false,
     success: function(data) {
-        ApiMaterPlatQiniuDomain = 'http://' + data.data.qiniu.domain_custom + '/';
+        ApiMaterPlatQiniuDomain = httpType + '//' + data.data.qiniu.domain_custom + '/';
     },
     error: function(xhr) {
         console.log(xhr);
     }
 })
-var siteUrl = 'http://new.wezchina.com/';
 
 var token = sessionStorage.getItem('token');
 
