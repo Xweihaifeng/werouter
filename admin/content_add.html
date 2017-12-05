@@ -171,7 +171,7 @@
                                                 <span class="add-on"><i class="icon-remove"></i></span>
                                                 <span class="add-on"><i class="icon-th"></i></span>
                                             </div> -->
-                                             <input type="text" name="publish_time"  class="form-control" value="" placeholder="发布时间" onfocus="WdatePicker({maxDate:'\'2099-11-20\''});">
+                                            <input type="text" name="publish_time" class="form-control" value="" placeholder="发布时间" onfocus="WdatePicker({maxDate:'\'2099-11-20\''});">
                                         </div>
                                         <div class="col-sm-2">
                                             <select name="status" class="form-control">
@@ -600,8 +600,8 @@
                                 },
                                 stringLength: {
                                     min: 1,
-                                    max: 32,
-                                    message: '标题长度为1-32位'
+                                    max: 64,
+                                    message: '标题长度为1-64位'
                                 }
                             }
                         },
