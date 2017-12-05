@@ -577,8 +577,9 @@ $(document).ready(function(){
 
         $(".distribute").bind('click',function () {
             $('.comment_mongolia_layer, .comment_bomb_box').fadeIn("slow");
-            $('.comment_bomb_box_content').children().remove();
             $('.comment_bomb_box_content').text('正在加载...')
+            $('.comment_bomb_box_content .goodImg').children().remove();
+            $('.comment_bomb_box_content .detail').children().remove();
             var orderId = $(this).closest('tr').attr("id");
             $.ajax({
                 url : apiUrl + 'order/detail/'+orderId,
@@ -589,42 +590,87 @@ $(document).ready(function(){
                 dataType : 'json',
                 success : function (data) {
                     console.log("订单详情：",data);
-                    $.ajax({
-                        url : apiUrl + 'pages/logistics/getLogisticsInfo',
-                        type : 'post',
-                        data : {
-                            logistics_NO : data.data.send.logistics_no,
-                            company_code : data.data.send.logistics_company_code
-                        },
-                        headers : {
-                            "Token": localStorage.getItem('token')
-                        },
-                        dataType : 'json',
-                        success : function (res) {
-                            console.log("根据订单详情查看物流信息",res);
-                            $('.comment_bomb_box_content').text('')
-                            if(res.code === 200){
-                                var logistList = res.data.data;
-                                for(var i=0; i<logistList.length;i++){
-                                    var dom =
-                                        '<p>' +
-                                            '<span>'+logistList[i].time+'</span>' +
-                                            '<span>'+logistList[i].context+'</span>'+
-                                        '</p>';
-                                    $('.comment_bomb_box_content').append(dom)
+                    $('.comment_bomb_box_content').text('');
+                    $('.comment_bomb_box_content').children().remove();
+                    if(data.data.send && data.data.send.length > 0){
+                        var sendList = data.data.send;
+                        var goodsList = data.data.goods;
+                        for(var i=0; i<sendList.length; i++){
+
+                            var domGroup =
+                                '<div class="send-group" id="group'+i+'" no="'+sendList[i].logistics_no+'" code="'+sendList[i].logistics_company_code+'">' +
+                                    '<div class="goodImg"></div>' +
+                                    '<div class="detail"></div>' +
+                                '</div>';
+
+
+                            $('.comment_bomb_box_content').append(domGroup);
+
+                            var goodsSendGroup = sendList[i].order_goods_id.split(',')
+                            for(var a=0; a<goodsList.length; a++){
+                                for(var good = 0; good<goodsSendGroup.length; good++){
+                                    if(goodsList[a].weid == goodsSendGroup[good]){
+                                        var imgDom =
+                                            '<img src="'+qiniu_bucket_domain+goodsList[a].goods_cover+'">';
+                                        $('#group'+i+' .goodImg').append(imgDom);
+                                    }
                                 }
-                            }else{
-                                $('.comment_bomb_box_content').text('加载失败')
                             }
 
+                            $('#group'+i+' .detail').text('正在加载，请稍候...')
+
                         }
-                    })
+
+                        getDistributionInfo()
+
+                    }
+
 
                 }
             })
 
         closeModel();
         })
+    }
+    var getDistributionInfo = function () {
+
+        $('.send-group').each(function (ind, ele) {
+            var no = $(ele).attr('no');
+            var code = $(ele).attr('code');
+
+            $.ajax({
+                url : apiUrl + 'pages/logistics/getLogisticsInfo',
+                type : 'post',
+                data : {
+                    logistics_NO : no,
+                    company_code : code
+                },
+                headers : {
+                    "Token": localStorage.getItem('token')
+                },
+                dataType : 'json',
+                success : function (res) {
+                    console.log("根据订单详情查看物流信息",res);
+                    $('#group'+ind+' .detail').text('')
+                    if(res.code === 200){
+                        var logistList = res.data.data;
+                        for(var i=0; i<logistList.length;i++){
+                            var dom =
+                                '<p>' +
+                                '<span>'+logistList[i].time+'</span>' +
+                                '<span>'+logistList[i].context+'</span>'+
+                                '</p>';
+                            $('#group'+ind+' .detail').append(dom)
+                        }
+                    }else{
+                        $('#group'+ind+' .detail').text('加载失败')
+                    }
+
+                }
+            })
+
+        })
+
     }
     var closeSendModel = function () {
         $('.sendModal .close').click(function(){

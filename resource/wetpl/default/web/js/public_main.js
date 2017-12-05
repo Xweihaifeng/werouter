@@ -119,7 +119,7 @@ const huzhu = `
                         <!--<p class="t1">互助平台</p>-->
                         <!--<p class="t2">共筑众筹梦想朋友圈</p>-->
                     </div>
-                    <img src="http://next.wezchina.com/images/project-banner.jpg" alt="" style="height: 235px;width: 960px">
+                    <img src="/common/img/012.jpg" alt="" style="height: 235px;width: 960px">
                 </div>
                 <div class="huzhu-top">
                     <div class="big-title">
@@ -184,21 +184,8 @@ const genSideBar = (ns) => {
 }
 
 const findId = (pos, c) => c.filter(x => x.pos == pos)
-const findPos = (id, s) => s.filter(x => x.id == id)
 const newSeq = (seq) => {
     return seq.map(x => findId(x, content)[0])
-}
-
-const req = () => {
-    return new Promise((resolve, reject) => {
-        $.ajax({
-            url: apiUrl + "cms/setting/show",
-            dataType: 'json',
-            success: function(data){
-                resolve(JSON.parse(data.data.block));
-            }
-        })
-    })
 }
 
 let seq = [], remb = [], hd = [];
@@ -210,27 +197,41 @@ const fill = (seq) => init.map(x => {
     }
 })
 
+const req = () => {
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            url: apiUrl + "cms/setting/show",
+            dataType: 'json',
+            success: function(data){
+                resolve(JSON.parse(data.data.blocks));
+            }
+        })
+    })
+}
+
 req().then((data) => {
     // console.log(data)
     for (key in data) {
         if (data[key].show == 1) {
             seq[data[key].sort -1] = content.filter(c => key == c.ename)[0].pos;
-            remb[data[key].sort -1] = content.filter(c => key == c.ename)[0].pos;
         }
     }
-
     if (channel != '') {
         // seq = [...[content.filter(c => channel == c.ename)[0].pos], ...seq].reduce((r, e) => r.indexOf(e) != -1 ? r : [...r, e], []);
-        // remb = [...[content.filter(c => channel == c.ename)[0].pos], ...remb].reduce((r, e) => r.indexOf(e) != -1 ? r : [...r, e], []);
         seq = [content.filter(c => channel == c.ename)[0].pos]
-        remb = [content.filter(c => channel == c.ename)[0].pos]
+        fill(seq); //填充seq;
+        let len = hd.length; //背景图填充宽度
+        genSideBar(newSeq(seq)); //生成栏目
+        $("#beijing").css("left", 1365 - (105 * len) + 'px');
+    } else {
+        let lid = new Array(seq.length).fill(0); //生成显示栏目对应序列的数组
+        fill(seq); //填充seq;
+        let len = hd.length; //背景图填充宽度
+        genSideBar(newSeq(seq)); //生成栏目
+        $("#beijing").css("left", 1365 - (105 * len) + 'px');
+        lid.map((x, i) => i).map((x, i) => i).map(x => $("#" + seqlist[x]).show());
     }
-
-    fill(seq); //填充seq;
-    let len = hd.length; //背景图填充宽度
-    remb.map(x => $("#" + seqlist[x]).show());
-    $("#beijing").css("left", 1365 - (105 * len) + 'px');
-
+    $("#nav-news").hide();
     // $(document).ready(function(){
     //resize
     var setHeight = function(ch){
@@ -1212,8 +1213,8 @@ req().then((data) => {
                         $(".home, #nav-help, #nav-share, #nav-org").show();
                         $("#nav-help,#nav-share").css("margin-left", "0");
                         $("#nav-org,#nav-help,#nav-share").css({ "position":"static", "left":"0" });
-                        var temp = mySwiper.width;
-                        mySwiper.startAutoplay();
+                        // var temp = mySwiper.width;
+                        // mySwiper.startAutoplay();
                     })
 
                     // 首页组织模块
@@ -1222,7 +1223,7 @@ req().then((data) => {
                         $("#nav-news, #nav-help, #nav-share, .organization").show();
                         $("#nav-org,#nav-share").css({ "margin-left": "0", "position":"static" });
                         $("#nav-help").css({ "position":"static", "left":"0", "margin-left":"105px" });
-                        mySwiper.stopAutoplay();
+                        // mySwiper.stopAutoplay();
                     })
 
                     // 首页互助模块
@@ -1233,7 +1234,7 @@ req().then((data) => {
                         $("#nav-org").css({ "position":"absolute", "left":"-855px" });
                         $("#nav-help").css({ "margin-left": "0", "position":"static" });
                         $("#nav-share").css({ "position":"static", "left":"0", "margin-left":"210px" });
-                        mySwiper.stopAutoplay();
+                        // mySwiper.stopAutoplay();
 
                     })
 
@@ -1245,7 +1246,7 @@ req().then((data) => {
                         $("#nav-share,#nav-help").css("margin-left", "0");
                         $("#nav-org").css({ "position":"absolute", "left":"-855px" });
                         $("#nav-help").css({ "position":"absolute", "left":"-750px" });
-                        mySwiper.stopAutoplay();
+                        // mySwiper.stopAutoplay();
 
                     })
                 }
@@ -1343,7 +1344,6 @@ req().then((data) => {
         })
     }
 
-    genSideBar(newSeq(seq))
     loadHome()
     loadNews();
     loadMemberNews();
@@ -1827,6 +1827,89 @@ req().then((data) => {
                 console.log(xhr);
             }
         })
+    }
+
+    $("#xiangmu-btn").on("click",function(){
+        $("#xiangmu").show();
+        $("#huodong").hide();
+        $("#xiamgmu-title").show();
+        $("#huodong-title").hide();
+        $(this).css({"background":"#007cd3","color":"#fff"});
+        $("#huodong-btn").css({"background":"#d5d5d5","color":"#555"})
+    });
+    $("#huodong-btn").on("click",function(){
+        $("#huodong").show();
+        $("#xiangmu").hide();
+        $("#xiamgmu-title").hide();
+        $("#huodong-title").show();
+        $(this).css({"background":"#007cd3","color":"#fff"});
+        $("#xiangmu-btn").css({"background":"#d5d5d5","color":"#555"})
+    });
+    // /!*导航*!/
+    $('.index-nav-esse').find('a').hover(function () {
+        $(this).css('background', 'rgb(217,217,217)');
+        $(this).find('span').css('top', '40%');
+        $(this).find('strong').css('display', 'block');
+    }, function () {
+        $(this).css('background', '');
+        $(this).find('span').css('top', '50%');
+        $(this).find('strong').css('display', 'none');
+    });
+
+    // /!*推荐新闻切换*!/
+    {
+        $('#zsyw').find('li').mouseover(function () {
+            $(this).addClass('at').siblings('li').removeClass('at');
+            $('.zsyw_nr').find('.pose_content').eq($(this).index()).show().siblings('.pose_content').hide();
+        })
+    }
+
+    // /!*列表tab切换*!/
+    $('#xwzx').find('li').mouseover(function () {
+        // /!*热点新闻*!/
+        //$('.syzx_rg').find('.syzx_rtj').eq($(this).index()).show().siblings('.syzx_rtj').hide();
+
+        // /!*显示菜单*!/
+        $(this).removeClass('not').addClass('at').siblings().removeClass('at').addClass('not');
+
+        // /!*显示列表*!/
+        $('.rnew_nr').find('.xwzx_c_0').eq($(this).index()).show().siblings('.xwzx_c_0').hide();
+    });
+
+    // /!*中部fadein图片自适应*!/
+    $('.slideBox').find('img').css({'width': '960px', 'height': $('.slideBox').height()});
+
+    // /!*中部fadein*!/
+    // $(".slideBox").slide({mainCell: ".bd ul", effect: "fade", autoPlay: true});
+
+    // /!*底部滚动*!/
+    // $(".picScroll-left").slide({mainCell:".bd ul",autoPlay:true,effect:"leftMarquee",vis:8,interTime:50,trigger:"click"});
+
+    // /!*整屏标签切换*!/
+    $(document).ready(function() { 
+        gongshanglian();
+       $(window).bind("resize", function () {
+            gongshanglian();
+        });
+        play_number(0);
+    });
+
+    function play_number(index) {
+        if (index >= $("#stat span").length) return;
+        var n = parseInt($("#stat span").eq(index).text(), 10);
+        n++;
+        if (n > $("#stat span").eq(index).attr("data-number")) {
+            play_number(index + 1);
+            return;
+        }
+        $("#stat span").eq(index).text(n);
+        setTimeout(function () {
+            play_number(index);
+        }, 50);
+    }
+
+    function gongshanglian() {
+        $(".huzhu").css("height", $("#main").height());
     }
 // })
 })
