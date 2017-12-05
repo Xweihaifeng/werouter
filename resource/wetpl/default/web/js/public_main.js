@@ -822,11 +822,15 @@ req().then((data) => {
                     speed: 1000,
                     autoplay : 3000,
                     autoplayDisableOnInteraction : false,
-                    pagination: '.swiper-pagination',
-                    paginationClickable :true,
+                    //pagination: '.swiper-pagination',
+                    //paginationClickable :true,
                     nextButton: '.swiper-button-next',
                     prevButton: '.swiper-button-prev',
-                    grabCursor : true
+                    grabCursor : true,
+                    longSwipesRatio: 0.3,
+                    touchRatio:1,
+                    observer:true,//修改swiper自己或子元素时，自动初始化swiper
+                    observeParents:true,//修改swiper的父元素时，自动初始化swiper
                 })
 
                 $("#my-swiper").hover(function(){
@@ -1218,8 +1222,7 @@ req().then((data) => {
                         $(".home, #nav-help, #nav-share, #nav-org").show();
                         $("#nav-help,#nav-share").css("margin-left", "0");
                         $("#nav-org,#nav-help,#nav-share").css({ "position":"static", "left":"0" });
-                        // var temp = mySwiper.width;
-                        // mySwiper.startAutoplay();
+                        mySwiper.startAutoplay();
                     })
 
                     // 首页组织模块
@@ -1228,7 +1231,7 @@ req().then((data) => {
                         $("#nav-news, #nav-help, #nav-share, .organization").show();
                         $("#nav-org,#nav-share").css({ "margin-left": "0", "position":"static" });
                         $("#nav-help").css({ "position":"static", "left":"0", "margin-left":"105px" });
-                        // mySwiper.stopAutoplay();
+                        mySwiper.stopAutoplay();
                     })
 
                     // 首页互助模块
@@ -1239,7 +1242,7 @@ req().then((data) => {
                         $("#nav-org").css({ "position":"absolute", "left":"-855px" });
                         $("#nav-help").css({ "margin-left": "0", "position":"static" });
                         $("#nav-share").css({ "position":"static", "left":"0", "margin-left":"210px" });
-                        // mySwiper.stopAutoplay();
+                        mySwiper.stopAutoplay();
 
                     })
 
@@ -1251,7 +1254,7 @@ req().then((data) => {
                         $("#nav-share,#nav-help").css("margin-left", "0");
                         $("#nav-org").css({ "position":"absolute", "left":"-855px" });
                         $("#nav-help").css({ "position":"absolute", "left":"-750px" });
-                        // mySwiper.stopAutoplay();
+                        mySwiper.stopAutoplay();
 
                     })
                 }
