@@ -1423,7 +1423,9 @@ req().then((data) => {
             }
         }
 
-         console.log(avatar)
+        if (avatar.indexOf('http') == -1) {
+            avatar = ApiMaterPlatQiniuDomain + avatar;
+        }
 
         var templete=
         '<div class="col-sm-3 p-r-0" style="margin-top: 15px;margin-bottom: 5px">'+
@@ -1434,7 +1436,7 @@ req().then((data) => {
                     '<a href="'+data.domain+'/activity/'+data.weid+'" target="_blank" class="hover-img-box">'+
                         '<div class="posi-div"><img src="'+ApiMaterPlatQiniuDomain+data.cover+'" class="person-left-img"></div>'+
                     '</a>'+
-                    '<img class="logo" src="'+ApiMaterPlatQiniuDomain+avatar+'" alt="">'+
+                    '<img class="logo" src="'+avatar+'" alt="">'+
                     '<div class="project-username">'+nickname+'</div>'+
                 '</div>'+
 
