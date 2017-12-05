@@ -223,6 +223,12 @@ req().then((data) => {
         let len = hd.length; //背景图填充宽度
         genSideBar(newSeq(seq)); //生成栏目
         $("#beijing").css("left", 1365 - (105 * len) + 'px');
+        if (channel == 'gx' || channel == 'hz') {
+            $(".main").css({
+                'height': '100%',
+                'overflow': 'auto'
+            })
+        }
     } else {
         let lid = new Array(seq.length).fill(0); //生成显示栏目对应序列的数组
         fill(seq); //填充seq;
