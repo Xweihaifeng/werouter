@@ -228,11 +228,16 @@ req().then((data) => {
         fill(seq); //填充seq;
         let len = hd.length; //背景图填充宽度
         genSideBar(newSeq(seq)); //生成栏目
-        $("#beijing").css("left", 1365 - (105 * len) + 'px');
+        if (len > 3) {
+            $("#beijing").css("left", 1365 - (105 * 3) + 'px');
+        } else {
+            $("#beijing").css("left", 1365 - (105 * len) + 'px');
+        }
         lid.map((x, i) => i).map((x, i) => i).map(x => $("#" + seqlist[x]).show());
     }
     $("#nav-news").hide();
     // $(document).ready(function(){
+
     //resize
     var setHeight = function(ch){
         $(".left-nav").css("height", ch);
@@ -1179,7 +1184,7 @@ req().then((data) => {
                     bar4 = imgSet(bar4, 105, 960, 3);
                 }
 
-                $("#home-body").css({ "background": "url(" + bgImg + ") no-repeat center", "background-size": "100%", "opacity": "1", })                
+                $("#home-body").css({ "background": "url(" + bgImg + ") ", "background-size": "100%", "opacity": "1"})
                 $("#beijing")  .css({ "background-image": "url(" + bgRight + ")"})
                 $("#nav-news") .css({ "background-image": "url(" + bar1 + ")","background-size": "100% 100%","background-repeat": "no-repeat","background-position": "center" })
                 $("#nav-org")  .css({ "background-image": "url(" + bar2 + ")","background-size": "100% 100%","background-repeat": "no-repeat","background-position": "center" })
