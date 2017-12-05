@@ -231,6 +231,7 @@ req().then((data) => {
         $("#beijing").css("left", 1365 - (105 * len) + 'px');
         lid.map((x, i) => i).map((x, i) => i).map(x => $("#" + seqlist[x]).show());
     }
+    $("#nav-news").hide();
     // $(document).ready(function(){
     //resize
     var setHeight = function(ch){
