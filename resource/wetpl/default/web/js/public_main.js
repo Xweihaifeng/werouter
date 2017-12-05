@@ -1423,6 +1423,8 @@ req().then((data) => {
             }
         }
 
+         console.log(avatar)
+
         var templete=
         '<div class="col-sm-3 p-r-0" style="margin-top: 15px;margin-bottom: 5px">'+
             '<div class="project-lists-one">'+
