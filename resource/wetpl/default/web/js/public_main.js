@@ -184,10 +184,18 @@ const genSideBar = (ns) => {
 }
 
 const findId = (pos, c) => c.filter(x => x.pos == pos)
-const findPos = (id, s) => s.filter(x => x.id == id)
 const newSeq = (seq) => {
     return seq.map(x => findId(x, content)[0])
 }
+
+let seq = [], remb = [], hd = [];
+
+const fill = (seq) => init.map(x => {
+    if (seq.indexOf(x) == -1) {
+        seq.push(x);
+        hd.push(x);
+    }
+})
 
 const req = () => {
     return new Promise((resolve, reject) => {
@@ -201,38 +209,26 @@ const req = () => {
     })
 }
 
-let seq = [], remb = [], hd = [];
-
-const fill = (seq) => init.map(x => {
-    if (seq.indexOf(x) == -1) {
-        seq.push(x);
-        hd.push(x);
-    }
-})
-
 req().then((data) => {
     // console.log(data)
     for (key in data) {
         if (data[key].show == 1) {
             seq[data[key].sort -1] = content.filter(c => key == c.ename)[0].pos;
-            remb[data[key].sort -1] = content.filter(c => key == c.ename)[0].pos;
         }
     }
-
-    // console.log(seq);
 
     if (channel != '') {
         // seq = [...[content.filter(c => channel == c.ename)[0].pos], ...seq].reduce((r, e) => r.indexOf(e) != -1 ? r : [...r, e], []);
         // remb = [...[content.filter(c => channel == c.ename)[0].pos], ...remb].reduce((r, e) => r.indexOf(e) != -1 ? r : [...r, e], []);
         seq = [content.filter(c => channel == c.ename)[0].pos]
-        remb = [content.filter(c => channel == c.ename)[0].pos]
     }
-    
-    // genSideBar(newSeq(seq))
+
+    let lid = new Array(seq.length).fill(0); //生成显示栏目对应序列的数组
     fill(seq); //填充seq;
     let len = hd.length; //背景图填充宽度
-    remb.map(x => $("#" + seqlist[x]).show());
+    genSideBar(newSeq(seq)); //生成栏目
     $("#beijing").css("left", 1365 - (105 * len) + 'px');
+    lid.map((x, i) => i).map((x, i) => i).map(x => $("#" + seqlist[x]).show());
 
     // $(document).ready(function(){
     //resize
@@ -1346,7 +1342,6 @@ req().then((data) => {
         })
     }
 
-    genSideBar(newSeq(seq))
     loadHome()
     loadNews();
     loadMemberNews();
