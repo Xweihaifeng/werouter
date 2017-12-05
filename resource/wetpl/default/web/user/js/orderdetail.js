@@ -294,8 +294,10 @@ var qiniu_bucket_domain =ApiMaterPlatQiniuDomain;
             '</table>';
             $(".orderdetail").append(addrdivhtml);
             if(logistics_flag){
-                //已经发货
-                InitLogisticsTable(data);
+                if (data.send) {
+                    //已经发货
+                    InitLogisticsTable(data);
+                }
             }
             
     }
