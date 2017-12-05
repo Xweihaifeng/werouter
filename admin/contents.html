@@ -120,7 +120,7 @@
                                             <div class="col-sm-1 col-xs-1 col-lg-1">
                                                 <div class="row row-fix tpl-category-container">
                                                     <select class="form-control" name="cate_child">
-                                                        <option>不限</option>
+                                                        <option value="">不限</option>
                                                 </select>
 
                                                 </div>
@@ -439,7 +439,7 @@
                     });
                     aoData.push({
                         "name": "cate",
-                        "value": $('select[name=cate_child]').val() ? $('select[name=cate_child]').val() : $('select[name=cate]').val()
+                        "value": ($('select[name=cate_child]').val() ? $('select[name=cate_child]').val() : $('select[name=cate]').val())
                     });
                     aoData.push({
                         "name": "title",
