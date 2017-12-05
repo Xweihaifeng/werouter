@@ -241,7 +241,7 @@ req().then((data) => {
     //resize
     var setHeight = function(ch){
         $(".left-nav").css("height", ch);
-        $("#right-nav, #nav-news, #nav-org, #nav-news, #nav-help, #nav-share").css("height", ch);
+        //$("#right-nav, #nav-news, #nav-org, #nav-news, #nav-help, #nav-share").css("height", ch);
     }
 
     var showLogin = false; //调整窗口大小时登陆框是否存在
@@ -1186,10 +1186,10 @@ req().then((data) => {
 
                 $("#home-body").css({ "background": "url(" + bgImg + ") ", "background-size": "100%", "opacity": "1"})
                 $("#beijing")  .css({ "background-image": "url(" + bgRight + ")"})
-                $("#nav-news") .css({ "background-image": "url(" + bar1 + ")","background-size": "100% 100%","background-repeat": "no-repeat","background-position": "center" })
-                $("#nav-org")  .css({ "background-image": "url(" + bar2 + ")","background-size": "100% 100%","background-repeat": "no-repeat","background-position": "center" })
-                $("#nav-help") .css({ "background-image": "url(" + bar3 + ")","background-size": "100% 100%","background-repeat": "no-repeat","background-position": "center" })
-                $("#nav-share").css({ "background-image": "url(" + bar4 + ")","background-size": "100% 100%","background-repeat": "no-repeat","background-position": "center" })
+                $("#nav-news") .css({ "background-image": "url(" + bar1 + ")","background-size": "100%","background-repeat": "no-repeat","background-position": "center" })
+                $("#nav-org")  .css({ "background-image": "url(" + bar2 + ")","background-size": "100%","background-repeat": "no-repeat","background-position": "center" })
+                $("#nav-help") .css({ "background-image": "url(" + bar3 + ")","background-size": "100%","background-repeat": "no-repeat","background-position": "center" })
+                $("#nav-share").css({ "background-image": "url(" + bar4 + ")","background-size": "100%","background-repeat": "no-repeat","background-position": "center" })
 
                 //官方发布
                 $("#release").html(setting.weibo_show);
