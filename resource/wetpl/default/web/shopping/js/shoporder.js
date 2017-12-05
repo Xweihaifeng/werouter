@@ -533,7 +533,7 @@ checkdomain(domain,id);
                         //判断商品邮费
                         var postMoney = 0.00;
                         if(goods.postage_status == 2){
-                            if(goods.postage_max_money){
+                            if(goods.postage_max_money && parseFloat(goods.postage_max_money) !== 0){
                                 if(parseFloat(goods.price * goodsdata.goods_num) < parseFloat(goods.postage_max_money)){
                                     postMoney = parseFloat(goods.postage * goodsdata.goods_num)
                                 }
@@ -606,21 +606,21 @@ checkdomain(domain,id);
         numjia();
         numchange();
         buynumfunNotDiscount();
-        var goods_list=[];
-        var obj=$(".product-buy-list").find(".goods_list");
-        obj.each(function(index,element){
-            var obj={"goods_id":$(element).attr("weid"),"goods_num":$(element).find("input[name='nums']").val()};
-            goods_list.push(obj);  
-        });
         $("#submit").bind("click",function(){
-           var sendData = {
+            var goods_list=[];
+            var obj=$(".product-buy-list").find(".goods_list");
+            obj.each(function(index,element){
+                var obj={"goods_id":$(element).attr("weid"),"goods_num":$(element).find("input[name='nums']").val()};
+                goods_list.push(obj);
+            });
+            var sendData = {
                 "goods_list":goods_list,
                 "address_id": $(".dizhi-active").parent().attr('data'),
                 "username": $(".dizhi-active").parent().find(".dizhi .buyname").text(),
                 "phone": $(".dizhi-active").parent().find(".dizhi .telname").text(),
                 "note": $("textarea[name='remark']").val()
-            }
-            submitorder(sendData);
+           }
+           submitorder(sendData);
         })    
         
 
@@ -1030,7 +1030,7 @@ checkdomain(domain,id);
             var singlePrice = 0;
            price=price+parseFloat($(element).find("#one_price").find("span").text())*parseFloat($(element).find("#numm").val());
            if($(element).attr('postage_status') == 2){
-               if($(element).attr('postage_max_money')){
+               if($(element).attr('postage_max_money') && parseFloat($(element).attr('postage_max_money')) !== 0 ){
                    if(parseFloat($(element).find("#one_price").find("span").text() * $(element).find("#numm").val()) < parseFloat($(element).attr('postage_max_money'))){
                        singlePrice = parseFloat($(element).attr('postage') * $(element).find("#numm").val())
                    }
