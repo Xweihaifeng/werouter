@@ -216,20 +216,21 @@ req().then((data) => {
             seq[data[key].sort -1] = content.filter(c => key == c.ename)[0].pos;
         }
     }
-
     if (channel != '') {
         // seq = [...[content.filter(c => channel == c.ename)[0].pos], ...seq].reduce((r, e) => r.indexOf(e) != -1 ? r : [...r, e], []);
-        // remb = [...[content.filter(c => channel == c.ename)[0].pos], ...remb].reduce((r, e) => r.indexOf(e) != -1 ? r : [...r, e], []);
         seq = [content.filter(c => channel == c.ename)[0].pos]
+        fill(seq); //填充seq;
+        let len = hd.length; //背景图填充宽度
+        genSideBar(newSeq(seq)); //生成栏目
+        $("#beijing").css("left", 1365 - (105 * len) + 'px');
+    } else {
+        let lid = new Array(seq.length).fill(0); //生成显示栏目对应序列的数组
+        fill(seq); //填充seq;
+        let len = hd.length; //背景图填充宽度
+        genSideBar(newSeq(seq)); //生成栏目
+        $("#beijing").css("left", 1365 - (105 * len) + 'px');
+        lid.map((x, i) => i).map((x, i) => i).map(x => $("#" + seqlist[x]).show());
     }
-
-    let lid = new Array(seq.length).fill(0); //生成显示栏目对应序列的数组
-    fill(seq); //填充seq;
-    let len = hd.length; //背景图填充宽度
-    genSideBar(newSeq(seq)); //生成栏目
-    $("#beijing").css("left", 1365 - (105 * len) + 'px');
-    lid.map((x, i) => i).map((x, i) => i).map(x => $("#" + seqlist[x]).show());
-
     // $(document).ready(function(){
     //resize
     var setHeight = function(ch){
