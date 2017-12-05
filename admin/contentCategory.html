@@ -96,12 +96,19 @@
                                         <input type="hidden" name="c" value="site">
                                         <div class="form-group">
                                             <label class="col-xs-12 col-sm-3 col-md-1 control-label">所属频道</label>
-                                            <div class="col-sm-8 col-xs-12">
+                                            <div class="col-sm-1 col-xs-1 col-lg-1">
                                                 <div class="row row-fix tpl-category-container">
-                                                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
-                                                        <select class="form-control" name="channel">
-                          </select>
-                                                    </div>
+                                                    <select class="form-control" name="channel">
+                                                </select>
+
+                                                </div>
+                                            </div>
+                                            <label class="col-xs-12 col-sm-3 col-md-1 control-label">所属栏目</label>
+                                            <div class="col-sm-1 col-xs-1 col-lg-1">
+                                                <div class="row row-fix tpl-category-container">
+                                                    <select class="form-control" name="cate">
+                                                </select>
+
                                                 </div>
                                             </div>
                                         </div>
@@ -324,13 +331,18 @@
                     type: 'get',
                     dataType: 'json',
                     success: function(data) {
+                        var option = '';
                         $.each(data.data.list, function(k, v) {
-                            if (v.weid == channel)
-                                var option = `<option value="` + v.weid + `" selected>` + v.title + `</option>`;
-                            else
-                                var option = `<option value="` + v.weid + `">` + v.title + `</option>`;
-                            $('select[name=channel]').append(option);
+                            if (k === 0 && !channel) {
+                                __cate_init(v.weid);
+                            }
+                            if (v.weid == channel) {
+                                __cate_init(v.weid);
+                                option += `<option value="` + v.weid + `" selected>` + v.title + `</option>`;
+                            } else
+                                option += `<option value="` + v.weid + `">` + v.title + `</option>`;
                         });
+                        $('select[name=channel]').append(option);
                     },
                     error: function(xhr) {
                         console.log(xhr);
@@ -338,6 +350,27 @@
                 });
             };
             __init();
+            var __cate_init = function(channel_id) {
+                $.ajax({
+                    url: ApiUrl + 'cms/channel_categories?channel=' + channel_id,
+                    type: 'get',
+                    dataType: 'json',
+                    success: function(data) {
+                        var option = '<option value=""><顶级></option>';
+                        $.each(data.data, function(k, v) {
+                            option += `<option value="` + v.weid + `">` + v.title + `</option>`;
+                        });
+                        $('select[name=cate]').html(option);
+                    },
+                    error: function(xhr) {
+                        console.log(xhr);
+                    }
+                });
+            }
+            $(document).on('change', 'select[name=channel]', function() {
+                var channel_id = $(this).val();
+                __cate_init(channel_id);
+            });
 
             if (cate) {
                 var apiType = "cate_categories";
@@ -412,8 +445,14 @@
                 $('[data-toggle="popover"]').popover();
             });
             tab = $('#listTable').dataTable($.datatableSetting);
-            $('select[name=channel]').change(function() {
-                $.datatableSetting.ajax.url = ApiUrl + "cms/channel_categories?channel=" + $('select[name=channel]').val();
+            $('select[name=channel],select[name=cate]').change(function() {
+                var cate = $('select[name=cate]').val();
+                if (cate) {
+                    var apiType = "cate_categories";
+                } else {
+                    var apiType = "channel_categories";
+                }
+                $.datatableSetting.ajax.url = ApiUrl + "cms/" + apiType + "?channel=" + $('select[name=channel]').val() + "&cate=" + $('select[name=cate]').val();
                 tab.fnDestroy(false);
                 tab = $("#listTable").dataTable($.datatableSetting);
                 tab.fnPageChange(0);

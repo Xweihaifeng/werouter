@@ -228,15 +228,20 @@ req().then((data) => {
         fill(seq); //填充seq;
         let len = hd.length; //背景图填充宽度
         genSideBar(newSeq(seq)); //生成栏目
-        $("#beijing").css("left", 1365 - (105 * len) + 'px');
+        if (len > 3) {
+            $("#beijing").css("left", 1365 - (105 * 3) + 'px');
+        } else {
+            $("#beijing").css("left", 1365 - (105 * len) + 'px');
+        }
         lid.map((x, i) => i).map((x, i) => i).map(x => $("#" + seqlist[x]).show());
     }
     $("#nav-news").hide();
     // $(document).ready(function(){
+
     //resize
     var setHeight = function(ch){
         $(".left-nav").css("height", ch);
-        $("#right-nav, #nav-news, #nav-org, #nav-news, #nav-help, #nav-share").css("height", ch);
+        //$("#right-nav, #nav-news, #nav-org, #nav-news, #nav-help, #nav-share").css("height", ch);
     }
 
     var showLogin = false; //调整窗口大小时登陆框是否存在
@@ -817,11 +822,15 @@ req().then((data) => {
                     speed: 1000,
                     autoplay : 3000,
                     autoplayDisableOnInteraction : false,
-                    pagination: '.swiper-pagination',
-                    paginationClickable :true,
+                    //pagination: '.swiper-pagination',
+                    //paginationClickable :true,
                     nextButton: '.swiper-button-next',
                     prevButton: '.swiper-button-prev',
-                    grabCursor : true
+                    grabCursor : true,
+                    longSwipesRatio: 0.3,
+                    touchRatio:1,
+                    observer:true,//修改swiper自己或子元素时，自动初始化swiper
+                    observeParents:true,//修改swiper的父元素时，自动初始化swiper
                 })
 
                 $("#my-swiper").hover(function(){
@@ -1179,7 +1188,7 @@ req().then((data) => {
                     bar4 = imgSet(bar4, 105, 960, 3);
                 }
 
-                $("#home-body").css({ "background": "url(" + bgImg + ") no-repeat center", "background-size": "100%", "opacity": "1", })                
+                $("#home-body").css({ "background": "url(" + bgImg + ") no-repeat center", "background-size": "100% 100%", "opacity": "1"})
                 $("#beijing")  .css({ "background-image": "url(" + bgRight + ")"})
                 $("#nav-news") .css({ "background-image": "url(" + bar1 + ")","background-size": "100% 100%","background-repeat": "no-repeat","background-position": "center" })
                 $("#nav-org")  .css({ "background-image": "url(" + bar2 + ")","background-size": "100% 100%","background-repeat": "no-repeat","background-position": "center" })
@@ -1213,8 +1222,7 @@ req().then((data) => {
                         $(".home, #nav-help, #nav-share, #nav-org").show();
                         $("#nav-help,#nav-share").css("margin-left", "0");
                         $("#nav-org,#nav-help,#nav-share").css({ "position":"static", "left":"0" });
-                        // var temp = mySwiper.width;
-                        // mySwiper.startAutoplay();
+                        mySwiper.startAutoplay();
                     })
 
                     // 首页组织模块
@@ -1223,7 +1231,7 @@ req().then((data) => {
                         $("#nav-news, #nav-help, #nav-share, .organization").show();
                         $("#nav-org,#nav-share").css({ "margin-left": "0", "position":"static" });
                         $("#nav-help").css({ "position":"static", "left":"0", "margin-left":"105px" });
-                        // mySwiper.stopAutoplay();
+                        mySwiper.stopAutoplay();
                     })
 
                     // 首页互助模块
@@ -1234,7 +1242,7 @@ req().then((data) => {
                         $("#nav-org").css({ "position":"absolute", "left":"-855px" });
                         $("#nav-help").css({ "margin-left": "0", "position":"static" });
                         $("#nav-share").css({ "position":"static", "left":"0", "margin-left":"210px" });
-                        // mySwiper.stopAutoplay();
+                        mySwiper.stopAutoplay();
 
                     })
 
@@ -1246,7 +1254,7 @@ req().then((data) => {
                         $("#nav-share,#nav-help").css("margin-left", "0");
                         $("#nav-org").css({ "position":"absolute", "left":"-855px" });
                         $("#nav-help").css({ "position":"absolute", "left":"-750px" });
-                        // mySwiper.stopAutoplay();
+                        mySwiper.stopAutoplay();
 
                     })
                 }

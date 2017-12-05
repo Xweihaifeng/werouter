@@ -99,12 +99,15 @@ class router_index
         return $data;
     }
 
-    private function _initHttpType()
+    private function _initHttpType($domain)
     {
         $sql = 'SELECT http_type FROM we_plats WHERE domain=?';
-        $row = $this->_db->queryOne($sql , array($this->_domain));
-
-        return !empty($row['http_type']) ? $row['http_type'] : false;
+        $row = $this->_db->queryOne($sql , array($domain));
+        if (!empty($row)) {
+            return $row['http_type'];
+        } else {
+            error (404);
+        }
     }
 
     public  function  index()
@@ -121,7 +124,7 @@ class router_index
         }
         $this->data = $this->data['data'];
 
-        $this->data['http_type'] = $this->_initHttpType();
+        $this->data['http_type'] = $this->_initHttpType($this->data['domain']);
 
         $protocol = empty($_SERVER['HTTPS']) ? 'http' : 'https';
 
