@@ -625,7 +625,11 @@ $(document).ready(function(){
                                     for(var good = 0; good<goodsSendGroup.length; good++){
                                         if(goodsList[a].weid == goodsSendGroup[good]){
                                             var imgDom =
-                                                '<img src="'+qiniu_bucket_domain+goodsList[a].goods_cover+'">';
+                                                '<div>' +
+                                                    '<img src="'+qiniu_bucket_domain+goodsList[a].goods_cover+'">'+
+                                                    '<span>'+goodsList[a].goods_title+'</span>'+
+                                                '</div>';
+
                                             $('#group'+i+' .goodImg').append(imgDom);
                                         }
                                     }
