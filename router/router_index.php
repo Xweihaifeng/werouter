@@ -128,7 +128,7 @@ class router_index
         $this->http = ($this->data['http_type'] == 1) ? 'http' : 'https';
 
         if ($protocol != $this->http) {
-            header("location: {$this->http}://{$this->_domain}");
+            header("location: " . $this->http . "://" . $this->_domain . $this->_request_uri);
             exit;
         }
 
