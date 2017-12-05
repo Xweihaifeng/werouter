@@ -323,7 +323,7 @@ var qiniu_bucket_domain =ApiMaterPlatQiniuDomain;
                      var html='<table class="orders_list_title"><tbody>'+
                         '<tr class="orders_list_msg">'+
                         '<td class="list_left" colspan="4">'+
-                            '<span class="list_left_date">物流信息</span>'+
+                            '<span class="list_left_date">物流信息  物流单号:'+x.logistics_no+'</span>'+
                         '</td>'+
                         '</tr><tr class="orders_list_content" id="914087f0-d0e1-11e7-ae66-c11b9b4ee3b1" data-id="undefined"> <td width="40%" colspan="4"><div class="od_about_order_left  od_bgwrite">';
                         data.data.data.map(x=>{
