@@ -261,10 +261,10 @@ req().then((data) => {
         width = $(window).width() / 2 - 180;
         height = $(window).height() / 2 - 165;
         setHeight(currHeight);
-        //console.log(currHeight)
-        if (currHeight > 768){
+        console.log(currHeight)
+        if (currHeight > 768 && currHeight < 1265){
             $(".nav-news-title, .nav-org-title, .nav-help-title, .nav-share-title").css("margin-top", currHeight * 0.75 + "px");
-        } else {
+        } else if (currHeight < 768) {
             $(".nav-news-title, .nav-org-title, .nav-help-title, .nav-share-title").css("margin-top", currHeight * 0.67 + "px");
         }
 
@@ -1119,7 +1119,8 @@ req().then((data) => {
                 }
 
                 $("#home-body").css({ "background": "url(" + bgImg + ") no-repeat center", "background-size": "100% 100%", "opacity": "1"})
-                $("#beijing")  .css({ "background-image": "url(" + bgRight + ")",  "background-size": "50%"})
+                //$("#beijing")  .css({ "background-image": "url(" + bgRight + ")",  "background-size": "50%"})
+                $("#beijing")  .css({ "background-image": "url(" + bgRight + ")"})
                 $("#nav-news") .css({ "background-image": "url(" + bar1 + ")","background-size": "100% 100%","background-repeat": "no-repeat","background-position": "center" })
                 $("#nav-org")  .css({ "background-image": "url(" + bar2 + ")","background-size": "100% 100%","background-repeat": "no-repeat","background-position": "center" })
                 $("#nav-help") .css({ "background-image": "url(" + bar3 + ")","background-size": "100% 100%","background-repeat": "no-repeat","background-position": "center" })
