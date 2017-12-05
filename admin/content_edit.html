@@ -100,6 +100,11 @@
                                                    <option value="">选择栏目</option>
                                              </select>
                                         </div>
+                                        <div class="col-sm-2">
+                                            <select name="cate_child" class="form-control">
+                                                   <option value="">选择栏目</option>
+                                             </select>
+                                        </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="col-sm-2">
@@ -549,9 +554,26 @@
                         });
                         $('select[name=cate]').html(option);
                         if (init) {
-                            $('select[name=cate]').val(__DATA.data.cate_id);
+                            $('select[name=cate_child]').html('<option value="' + __DATA.data.cate_id + '">不变更</option>');
                         }
 
+                    },
+                    error: function(xhr) {
+                        console.log(xhr);
+                    }
+                });
+            }
+            var __cate_child_init = function(parent_id) {
+                $.ajax({
+                    url: ApiUrl + 'cms/cate_categories?cate=' + parent_id,
+                    type: 'get',
+                    dataType: 'json',
+                    success: function(data) {
+                        var option = '<option value=""><顶级></option>';
+                        $.each(data.data, function(k, v) {
+                            option += `<option value="` + v.weid + `">` + v.title + `</option>`;
+                        });
+                        $('select[name=cate_child]').html(option);
                     },
                     error: function(xhr) {
                         console.log(xhr);
@@ -563,6 +585,10 @@
                 $(document).on('change', 'select[name=channel]', function() {
                     var channel_id = $(this).val();
                     __cate_init(channel_id, false);
+                });
+                $(document).on('change', 'select[name=cate]', function() {
+                    var parent_id = $(this).val();
+                    __cate_child_init(parent_id);
                 });
                 var uploader = Qiniu.uploader({
                     runtimes: 'html5,flash,html4',
@@ -610,7 +636,7 @@
                         'title': $('input[name=title]').val(),
                         'summary': $('textarea[name=summary]').val(),
                         'thumb_image': $('input[name=thumb_image]').val(),
-                        'cate_id': $('select[name=cate]').val(),
+                        'cate_id': $('select[name=cate_child]').val() ? $('select[name=cate_child]').val() : $('select[name=cate]').val(),
                         'auth': $('input[name=auth]').val(),
                         'content': CKEDITOR.instances.editor1.getData(),
                         'is_original': $('input[name="is_original"]').is(':checked') ? 1 : 2,
@@ -664,14 +690,6 @@
                             validators: {
                                 notEmpty: {
                                     message: '请选择频道'
-                                },
-                            }
-                        },
-                        cate: {
-                            message: '栏目无效',
-                            validators: {
-                                notEmpty: {
-                                    message: '请选择栏目'
                                 },
                             }
                         },
