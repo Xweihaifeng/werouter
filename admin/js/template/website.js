@@ -411,6 +411,25 @@ init();
           }
      });
      //发布样式
+     function updateBar(data){
+                    $.ajax({
+                    type: "POST",
+                    dataType: "json",
+                    data:data,
+                    url: ApiUrl + 'cms/setting/'+weid,
+                    success: function (data) {
+                      if (data.code === 200){
+                           swal({text: '保存成功',type: 'success', timer: 20000});
+                      }else {
+                           swal({text: '保存失败',type: 'error', timer: 20000});
+                           console.log('error: -200');
+                      }
+                    },
+                    error: function(xhr) {
+                         console.log(xhr);
+                     }
+                });
+    }
           var uploader = Qiniu.uploader({
           runtimes: 'html5,flash,html4', 
           browse_button: 'bar1file', 
@@ -440,6 +459,10 @@ init();
                      $("input[name=bar1]").val(res.key);
                      var sourceLink = domain + res.key;
                      $("#img_bar1").attr('src', sourceLink);
+                     var data = {
+                      bar1:res.key,
+                     };  
+                     updateBar(data);
               },
               'Error': function(up, err, errTip) {
               },
@@ -481,6 +504,11 @@ init();
                      $("input[name=bar2]").val(res.key);
                      var sourceLink = domain + res.key;
                      $("#img_bar2").attr('src', sourceLink);
+
+                      var data = {
+                       bar2:res.key,
+                      };  
+                     updateBar(data);
               },
               'Error': function(up, err, errTip) {
               },
@@ -522,6 +550,11 @@ init();
                      $("input[name=bar3]").val(res.key);
                      var sourceLink = domain + res.key;
                      $("#img_bar3").attr('src', sourceLink);
+
+                     var data = {
+                       bar3:res.key,
+                      };  
+                     updateBar(data);
               },
               'Error': function(up, err, errTip) {
               },
@@ -563,6 +596,11 @@ init();
                      $("input[name=bar4]").val(res.key);
                      var sourceLink = domain + res.key;
                      $("#img_bar4").attr('src', sourceLink);
+
+                     var data = {
+                       bar4:res.key,
+                      };  
+                     updateBar(data);
               },
               'Error': function(up, err, errTip) {
               },
@@ -604,6 +642,11 @@ init();
                      $("input[name=background_right]").val(res.key);
                      var sourceLink = domain + res.key;
                      $("#img_background_right").attr('src', sourceLink);
+
+                     var data = {
+                       background_right:res.key,
+                      };  
+                     updateBar(data);
               },
               'Error': function(up, err, errTip) {
               },

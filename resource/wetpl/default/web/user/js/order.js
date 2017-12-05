@@ -177,82 +177,95 @@ $(document).ready(function(){
                     $(".ordertable").children().remove();
                     listdata.map(x => {
                         $(".ordertable").append(orderlisthtml(x));
-                    $('#'+x.weid).children().remove();
-                    if(x.goods.length){
-                        for(var i=0; i<x.goods.length; i++){
-                            var goodItem =
-                                '<tr id="'+x.weid+'">'+
-                                    '<td style="width: 106px;padding-top: 8px;"><img src="'+qiniu_bucket_domain+x.goods[i].goods_cover+'" alt=""></td>'+
-                                    '<td style="width: 460px;"><a href="/'+x.domain +'/wemall/goods/'+x.goods[i].goods_id+'" target="_blank">'+x.goods[i].goods_summary+'</a></td>'+
-                                    '<td>￥'+x.goods[i].goods_price+'</td>'+
-                                    '<td>'+x.goods[i].goods_num+'</td>'+
-                                    '<td rowspan="'+x.goods.length+'" class="price">￥'+x.order_price+'</td>'+
-                                    '<td rowspan="'+x.goods.length+'" class="oper" style="width: 92px;" id="'+x.status+'">'+
-                                        ' <div class="orders_list_details">'+
-                                            '<a href="/user/order/detail/'+x.weid+'" target="_blank">订单详情</a>'+
-                                            '<div class="status-oper"></div>'+
-                                        '</div>'+
-                                    '</td>'+
-                                '</tr>';
-                            $('#'+x.weid).append(goodItem);
+                        if(x.order_status == 8){
+                            var refundDom = '';
+                            var reasonTip = '无退款原因';
+                            if(x.refund && x.refund.length>0 && x.refund[0].order_refund_reason){
+                                reasonTip = x.refund[0].order_refund_reason;
+                            }
+                            refundDom =
+                                '<p class="refund">' +
+                                '<span></span>'+
+                                '<span class="reason">'+ reasonTip +'</span>'+
+                                '</p>';
+                            $('#h'+x.weid+' .order').append(refundDom);
                         }
-                    }
-                    $('#'+x.weid+' .status-oper').children().remove();
-                    var operList = [];
-                        switch (x.order_status){
-                            case 2:
-                                operList.push({
-                                    name : '发货',
-                                    oper : 'deliver'
-                                });
-                                break;
-                            case 3:
-                                operList.push({
-                                    name : '查看物流',
-                                    oper : 'distribute'
-                                });
-                                break;
-                            case 4:
-                                operList.push({
-                                    name : '查看物流',
-                                    oper : 'distribute'
-                                });
-                                break;
-                            case 5:
-                                operList.push({
-                                    name : '查看物流',
-                                    oper : 'distribute'
-                                });
-                                break;
-                            case 7:
-                                operList.push({
-                                    name : '查看物流',
-                                    oper : 'distribute'
-                                });
-                                break;
-                            case 8:
-                                operList.push({
-                                    name : '确认退款',
-                                    oper : 'confirmRefund'
-                                },{
-                                    name : '查看物流',
-                                    oper : 'distribute'
-                                });
-                                break;
-                            case 9:
-                                operList.push({
-                                    name : '查看物流',
-                                    oper : 'distribute'
-                                });
-                                break;
-                        }
-                        if(operList.length){
-                            for(var i=0;i<operList.length;i++){
-                                var operDom =
-                                    '<a class="'+ operList[i].oper +'">'+operList[i].name+'</a>';
-                                $('#'+x.weid+' .status-oper').append(operDom);
+                        $('#'+x.weid).children().remove();
+                        if(x.goods.length){
+                            for(var i=0; i<x.goods.length; i++){
+                                var goodItem =
+                                    '<tr id="'+x.weid+'">'+
+                                        '<td style="width: 106px;padding-top: 8px;"><img src="'+qiniu_bucket_domain+x.goods[i].goods_cover+'" alt=""></td>'+
+                                        '<td style="width: 460px;"><a href="/'+x.domain +'/wemall/goods/'+x.goods[i].goods_id+'" target="_blank">'+x.goods[i].goods_summary+'</a></td>'+
+                                        '<td>￥'+x.goods[i].goods_price+'</td>'+
+                                        '<td>'+x.goods[i].goods_num+'</td>'+
+                                        '<td rowspan="'+x.goods.length+'" class="price">￥'+x.order_price+'</td>'+
+                                        '<td rowspan="'+x.goods.length+'" class="oper" style="width: 92px;" id="'+x.status+'">'+
+                                            ' <div class="orders_list_details">'+
+                                                '<a href="/user/order/detail/'+x.weid+'" target="_blank">订单详情</a>'+
+                                                '<div class="status-oper"></div>'+
+                                            '</div>'+
+                                        '</td>'+
+                                    '</tr>';
+                                $('#'+x.weid).append(goodItem);
                             }
                         }
+                        $('#'+x.weid+' .status-oper').children().remove();
+                        var operList = [];
+                            switch (x.order_status){
+                                case 2:
+                                    operList.push({
+                                        name : '发货',
+                                        oper : 'deliver'
+                                    });
+                                    break;
+                                case 3:
+                                    operList.push({
+                                        name : '查看物流',
+                                        oper : 'distribute'
+                                    });
+                                    break;
+                                case 4:
+                                    operList.push({
+                                        name : '查看物流',
+                                        oper : 'distribute'
+                                    });
+                                    break;
+                                case 5:
+                                    operList.push({
+                                        name : '查看物流',
+                                        oper : 'distribute'
+                                    });
+                                    break;
+                                case 7:
+                                    operList.push({
+                                        name : '查看物流',
+                                        oper : 'distribute'
+                                    });
+                                    break;
+                                case 8:
+                                    operList.push({
+                                        name : '确认退款',
+                                        oper : 'confirmRefund'
+                                    },{
+                                        name : '查看物流',
+                                        oper : 'distribute'
+                                    });
+                                    break;
+                                case 9:
+                                    operList.push({
+                                        name : '查看物流',
+                                        oper : 'distribute'
+                                    });
+                                    break;
+                            }
+                            if(operList.length){
+                                for(var i=0;i<operList.length;i++){
+                                    var operDom =
+                                        '<a class="'+ operList[i].oper +'">'+operList[i].name+'</a>';
+                                    $('#'+x.weid+' .status-oper').append(operDom);
+                                }
+                            }
                     })
                     var pagenum=Math.ceil(data.data.total/limit);
                     // console.log(page+":page");
@@ -366,9 +379,11 @@ $(document).ready(function(){
         var listhtml=
             '<table>'+
                 '<thead>'+
-                    '<tr>'+
+                    '<tr id="h'+data.weid+'">'+
                         '<th>'+data.created_at.substring(0,data.created_at.indexOf(" "))+'</th>'+
-                        '<th class="order" colspan="3">订单号:'+data.order_num+'<a style="margin-left:10px">'+ status_pay+'</a></th>'+
+                        '<th class="order" colspan="3">' +
+                            '订单号:'+data.order_num+'<a style="margin-left:10px">'+ status_pay+'</a>' +
+                        '</th>'+
                         '<th style="text-align: right" colspan="2">'+
                             '<div class="contact_seller" data-mobile="18966700695" onmouseover="$(this).find(\'span\').show();" onmouseout="$(this).find(\'span\').hide();">'+
                                 '<i></i>联系买家'+
@@ -380,7 +395,6 @@ $(document).ready(function(){
                 '<tbody class="list-dom" id="'+data.weid+'">'+
                 '</tbody>'+
             '</table>';
-
         // var listhtml='<table class="orders_list_title">'+
         //                 '<tbody>'+
         //                 '<tr class="orders_list_msg">'+
@@ -605,14 +619,15 @@ $(document).ready(function(){
 
 
                             $('.comment_bomb_box_content').append(domGroup);
-
-                            var goodsSendGroup = sendList[i].order_goods_id.split(',')
-                            for(var a=0; a<goodsList.length; a++){
-                                for(var good = 0; good<goodsSendGroup.length; good++){
-                                    if(goodsList[a].weid == goodsSendGroup[good]){
-                                        var imgDom =
-                                            '<img src="'+qiniu_bucket_domain+goodsList[a].goods_cover+'">';
-                                        $('#group'+i+' .goodImg').append(imgDom);
+                            if(sendList[i].order_goods_id){
+                                var goodsSendGroup = sendList[i].order_goods_id.split(',');
+                                for(var a=0; a<goodsList.length; a++){
+                                    for(var good = 0; good<goodsSendGroup.length; good++){
+                                        if(goodsList[a].weid == goodsSendGroup[good]){
+                                            var imgDom =
+                                                '<img src="'+qiniu_bucket_domain+goodsList[a].goods_cover+'">';
+                                            $('#group'+i+' .goodImg').append(imgDom);
+                                        }
                                     }
                                 }
                             }
@@ -657,8 +672,9 @@ $(document).ready(function(){
                         for(var i=0; i<logistList.length;i++){
                             var dom =
                                 '<p>' +
-                                '<span>'+logistList[i].time+'</span>' +
-                                '<span>'+logistList[i].context+'</span>'+
+                                '<i></i>'+
+                                '<span class="time">'+logistList[i].time+'</span>' +
+                                '<span class="content">'+logistList[i].context+'</span>'+
                                 '</p>';
                             $('#group'+ind+' .detail').append(dom)
                         }
