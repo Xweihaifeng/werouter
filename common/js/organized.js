@@ -2,17 +2,8 @@
 *     组织部分数据覆盖
 */
 
-// $(function() {
-
     var token = window.localStorage.getItem('token');
     var channels = window.location.pathname.split('/').slice(1,3);
-    $.ajaxSetup({
-        global: true,
-        async:  false,
-        headers: {
-            'Token': token,
-        }
-    });
 
     // 查询频道
     $.ajax({
@@ -64,7 +55,7 @@
                     $(".dier #ruhuishenqing").css({"background-image": "url("+ thumb_imgs +")"});
                 }
 
-                $.map(data.data.list, function(item, index) {
+                data.data.list.forEach(function(item, index) {
                     if(index <= 5) {
                         var thumb_image = item.thumb_image;
                         if (thumb_image.indexOf('http') != 0 && thumb_image != "") {
@@ -101,7 +92,7 @@
                     $(".diyi .report").css({"background-image": "url("+ thumb_imgs +")"});
                 }
 
-                $.map(data.data.list, function(item) {
+                data.data.list.forEach(function(item) {
                     var thumb_image = item.thumb_image;
                     if (thumb_image.indexOf('http') != 0 && thumb_image != "") {
                         thumb_image = imgSet(thumb_image, 280, 164, 3);
@@ -144,7 +135,7 @@
                     $(".disan .lunbo").css({"background-image": "url("+ thumb_imgs +")"});
                 }
 
-                $.map(data.data.list, function(item) {
+                data.data.list.forEach(function(item) {
                     var thumb_image = item.thumb_image;
                     if (thumb_image.indexOf('http') != 0 && thumb_image != "") {
                         thumb_image = imgSet(thumb_image, 280, 164, 3);
@@ -239,10 +230,8 @@
 
             // 移入加载栏目分类
             $(".list").hover(function() {
-                // $(this).find(".sub").addClass("list_selected").fadeIn(100);
                 $(this).find(".sub").addClass("list_selected").show();
             },function() {
-                // $(this).find(".sub").removeClass("list_selected").fadeOut(500);
                 $(this).find(".sub").removeClass("list_selected").hide();
             });
 
@@ -251,5 +240,3 @@
             console.log(xhr);
         }
     });
-
-// });
