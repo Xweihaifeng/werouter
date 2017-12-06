@@ -116,6 +116,15 @@
 
                                                 </div>
                                             </div>
+                                            <label class="col-xs-12 col-sm-3 col-md-1 control-label">子栏目</label>
+                                            <div class="col-sm-1 col-xs-1 col-lg-1">
+                                                <div class="row row-fix tpl-category-container">
+                                                    <select class="form-control" name="cate_child">
+                                                        <option value="">不限</option>
+                                                </select>
+
+                                                </div>
+                                            </div>
                                             <label class="col-xs-12 col-sm-3 col-md-1 control-label">状态</label>
                                             <div class="col-sm-1 col-xs-1 col-lg-1">
                                                 <div class="row row-fix tpl-category-container">
@@ -430,7 +439,7 @@
                     });
                     aoData.push({
                         "name": "cate",
-                        "value": $('select[name=cate]').val()
+                        "value": ($('select[name=cate_child]').val() ? $('select[name=cate_child]').val() : $('select[name=cate]').val())
                     });
                     aoData.push({
                         "name": "title",
@@ -594,6 +603,24 @@
             });
         }
 
+        var __cate_child_init = function(parent_id) {
+            $.ajax({
+                url: ApiUrl + 'cms/cate_categories?cate=' + parent_id,
+                type: 'get',
+                dataType: 'json',
+                success: function(data) {
+                    var option = '<option value="">不限</option>';
+                    $.each(data.data, function(k, v) {
+                        option += `<option value="` + v.weid + `">` + v.title + `</option>`;
+                    });
+                    $('select[name=cate_child]').html(option);
+                },
+                error: function(xhr) {
+                    console.log(xhr);
+                }
+            });
+        }
+
 
         $(document).ready(function() {
             __init();
@@ -603,7 +630,11 @@
             var channel_id = $(this).val();
             __cate_init(channel_id);
         });
-        $(document).on('change', 'select[name=channel],select[name=cate],input[name=title],select[name=is_original],select[name=is_hot],select[name=is_pose],select[name=index_show],select[name=status]', function() {
+        $(document).on('change', 'select[name=cate]', function() {
+            var parent_id = $(this).val();
+            __cate_child_init(parent_id);
+        });
+        $(document).on('change', 'select[name=channel],select[name=cate],select[name=cate_child],input[name=title],select[name=is_original],select[name=is_hot],select[name=is_pose],select[name=index_show],select[name=status]', function() {
             dt_table.fnSettings().sAjaxSource = ApiUrl + 'cms/contents/lists';
             dt_table.fnDraw();
         });

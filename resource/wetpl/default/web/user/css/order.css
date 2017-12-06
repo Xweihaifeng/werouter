@@ -315,17 +315,32 @@ ul.list-header li{
 .comment_bomb_box_footer { height: 45px; display: flex; justify-content: center; align-items: center; padding: 0 15px; }
 .comment_save { width: 80px; height: 30px; text-align: center; line-height: 30px; border: 1px solid #ccc; border-radius: 3px; outline: none; }
 .comment_bomb_box_content p{
-	margin-bottom:10px;
+	margin-bottom: 10px;
+	box-sizing: border-box;
+	padding-left: 40px;
+	display: inline-block;
+	position: relative;
 }
-.comment_bomb_box_content p span:first-child{
+.comment_bomb_box_content p i{
+	display: inline-block;
+	width: 18px;
+	height: 18px;
+	position: absolute;
+	background: url(/common/img/circle-time.png) no-repeat 0 0;
+	-webkit-background-size: contain;
+	background-size: contain;
+	left: -10px;
+	top: -6px;
+}
+.comment_bomb_box_content p:first-child>i{
+	background-image: url('/common/img/circle-red.png');
+}
+.comment_bomb_box_content p>.time{
 	margin-right:12px;
 }
-.comment_bomb_box_content p span{
+.comment_bomb_box_content p>span{
 	display: inline-block;
 	vertical-align: top;
-}
-.comment_bomb_box_content p span:last-child{
-	width:77%;
 }
 .imgContainer{
 	margin-bottom:10px;
@@ -345,9 +360,60 @@ form .form-group{
 	border:1px solid red;
 }
 .goodImg img{
-	display: inline-block;
+	display: block;
 	width:100px;
 	height:100px;
-	margin-right:10px;
+	margin-right:40px;
 }
-
+.goodImg>div{
+	margin-bottom:10px;
+}
+.goodImg>div span{
+	display: block;
+	width:100px;
+}
+.refund{
+	display: inline-block;
+	margin-left:10px;
+	position: relative;
+	width:40%;
+}
+.refund .reason{
+	display: none;
+	position: absolute;
+	left: 0;
+	top: 34px;
+	background: #eee;
+	color: #777777;
+	min-width: 82px;
+	text-align: left;
+	padding: 8px;
+	border-radius: 2px;
+	border: 1px solid #cecece;
+	font-size: 12px;
+	width:auto;
+}
+.refund span:first-child{
+	display: inline-block;
+	width:20px;
+	height:20px;
+	background: url('/common/img/refund.png') no-repeat center center;
+	-webkit-background-size: contain;
+	background-size: contain;
+	vertical-align: middle;
+}
+.refund span:first-child:hover+.reason{
+	display: block;
+}
+.send-group{
+	overflow: hidden;
+	margin-bottom:30px;
+	padding:14px 0;
+}
+.send-group>div{
+	float: left;
+}
+.send-group>.detail{
+	width:80%;
+	border-left: 1px solid #b4b4b4;
+}

@@ -171,7 +171,7 @@ const content = [
     {pos: 3, name: '互助', ename: 'hz', cont: ['互助项目', '线下活动', '其他'], val: 'huzhu'},
     {pos: 4, name: '共享', ename: 'gx', cont: ['秦商特供', '秦商项目', '秦商课堂', '秦商直播'], val: 'goodsBox'}
 ];
-const init = [1,2,3,4];
+const _init = [1,2,3,4];
 
 const genSideBar = (ns) => {
     return ns.map((x, i) => {
@@ -190,7 +190,7 @@ const newSeq = (seq) => {
 
 let seq = [], remb = [], hd = [];
 
-const fill = (seq) => init.map(x => {
+const fill = (seq) => _init.map(x => {
     if (seq.indexOf(x) == -1) {
         seq.push(x);
         hd.push(x);
@@ -223,6 +223,12 @@ req().then((data) => {
         let len = hd.length; //背景图填充宽度
         genSideBar(newSeq(seq)); //生成栏目
         $("#beijing").css("left", 1365 - (105 * len) + 'px');
+        if (channel == 'gx' || channel == 'hz') {
+            $(".main").css({
+                'height': '100%',
+                'overflow': 'auto'
+            })
+        }
     } else {
         let lid = new Array(seq.length).fill(0); //生成显示栏目对应序列的数组
         fill(seq); //填充seq;
@@ -261,10 +267,10 @@ req().then((data) => {
         width = $(window).width() / 2 - 180;
         height = $(window).height() / 2 - 165;
         setHeight(currHeight);
-        //console.log(currHeight)
-        if (currHeight > 768){
+        console.log(currHeight)
+        if (currHeight > 768 && currHeight < 1265){
             $(".nav-news-title, .nav-org-title, .nav-help-title, .nav-share-title").css("margin-top", currHeight * 0.75 + "px");
-        } else {
+        } else if (currHeight < 768) {
             $(".nav-news-title, .nav-org-title, .nav-help-title, .nav-share-title").css("margin-top", currHeight * 0.67 + "px");
         }
 
@@ -297,7 +303,7 @@ req().then((data) => {
             //currPage = 'read';
             $(".home").hide();
             $("#right-nav").hide();
-            mySwiper.stopAutoplay();
+            // mySwiper.stopAutoplay();
             // mySwiper1.stopAutoplay();
             //loadArticle('', '', '新闻中心');
             //$(".read").show();
@@ -918,88 +924,6 @@ req().then((data) => {
 
                 getUserInfo();
 
-                //会员
-                // if (users != '') {
-                //     if (users.length < 8) {
-                //         users.map(x => $(".imgs-active").append(memberTemplete(x, false)))
-                //     } else {
-                //         users.map(x => $("#my-swiper1 .swiper-wrapper").append(memberTemplete(x, true)))
-                //         var mySwiper1 = new Swiper ('#my-swiper1', {
-                //             direction: 'horizontal',
-                //             loop: true,
-                //             slidesPerView : 8,
-                //             slidesPerGroup : 1,
-                //             speed: 3000,
-                //             autoplay : 1,
-                //             autoplayDisableOnInteraction : false,
-                //             grabCursor : true,
-                //             freeMode:true
-                //         })
-                //         $("#my-swiper1").mouseenter(function () {
-                //             mySwiper1.stopAutoplay();
-                //         }).mouseleave(function(){
-                //             mySwiper1.startAutoplay();
-                //         });
-                //     }                    
-                // } else {
-                //     mainData.data.users.map(x => $("#my-swiper1 .swiper-wrapper").append(memberTemplete(x, true)))
-                //     var mySwiper1 = new Swiper ('#my-swiper1', {
-                //         direction: 'horizontal',
-                //         loop: true,
-                //         slidesPerView : 8,
-                //         slidesPerGroup : 1,
-                //         speed: 3000,
-                //         autoplay : 1,
-                //         autoplayDisableOnInteraction : false,
-                //         grabCursor : true,
-                //         freeMode:true
-                //     })
-                //     $("#my-swiper1").mouseenter(function () {
-                //         mySwiper1.stopAutoplay();
-                //     }).mouseleave(function(){
-                //         mySwiper1.startAutoplay();
-                //     });
-                // }
-                /*if (users != '') {
-                    if (users.length < 8) {
-                        users.map(x => $(".imgs-active").append(memberTemplete(x, false)))
-                    } else {
-                        users.map(x => $("#my-swiper1 .swiper-wrapper").append(memberTemplete(x, true)))
-                        var pcLoopObj = $("#my-swiper1 .swiper-wrapper");
-                        new loopFun(pcLoopObj).Start();
-                    }                    
-                } else {
-                    mainData.data.users.map(x => $("#my-swiper1 .swiper-wrapper").append(memberTemplete(x, true)))
-                    var pcLoopObj = $("#my-swiper1 .swiper-wrapper");
-                    new loopFun(pcLoopObj).Start();
-                }*/
-
-                /*function loopFun(obj) {
-                    this.maxLength = 9; //最低显示数   
-                    this.Timer = 2000; //计时器间隔时间
-                    this.Ul = obj;
-                    var timer; //计时器id
-                    var self = this;
-                    this.Start = function() {
-                        if (self.Ul.children().length < this.maxLength) {
-                            self.Ul.append(self.Ul.children().clone());
-                        }
-                        timer = setInterval(self.Play, self.Timer);
-                    }
-                    this.Play = function() {
-                        var img = self.Ul.children().eq(0);
-                        var left = img.children().eq(0).width();
-                        img.animate({
-                            // "marginLeft": (-1 * left) + "px"
-                            "marginLeft": "1px"
-                        }, 600, function() {
-                            //appendTo函数是实现走马灯一直不间断播放的秘诀。
-                            //目前网上看到的很多走马灯，走到最后一张的时候，会立马闪回第一张，而不是继续从后往前推进，即是没有明白该函数的作用的原因
-                            $(this).css("margin-left", "auto").appendTo(self.Ul);
-                        });
-                    }
-                }*/
-
                 var kayFrame = function(result) {
                     var loopObj_list = "";
                     result.map(x => loopObj_list += memberTemplete(x, false));
@@ -1110,6 +1034,10 @@ req().then((data) => {
                     autoplay : 2000,
                     autoplayDisableOnInteraction : false,
                     onlyExternal : true,
+                    longSwipesRatio: 0.3,
+                    touchRatio:1,
+                    observer:true,
+                    observeParents:true,
                 })
 
                 var mySwiper3 = new Swiper ('#my-swiper3', {
@@ -1121,6 +1049,10 @@ req().then((data) => {
                     autoplay : 2000,
                     autoplayDisableOnInteraction : false,
                     onlyExternal : true,
+                    longSwipesRatio: 0.3,
+                    touchRatio:1,
+                    observer:true,
+                    observeParents:true,
                 })
 
                 var mySwiper4 = new Swiper ('#my-swiper4', {
@@ -1132,6 +1064,10 @@ req().then((data) => {
                     autoplay : 2000,
                     autoplayDisableOnInteraction : false,
                     onlyExternal : true,
+                    longSwipesRatio: 0.3,
+                    touchRatio:1,
+                    observer:true,
+                    observeParents:true,
                 })
 
                 $(".adv-right").click(function(e){
@@ -1189,6 +1125,7 @@ req().then((data) => {
                 }
 
                 $("#home-body").css({ "background": "url(" + bgImg + ") no-repeat center", "background-size": "100% 100%", "opacity": "1"})
+                //$("#beijing")  .css({ "background-image": "url(" + bgRight + ")",  "background-size": "50%"})
                 $("#beijing")  .css({ "background-image": "url(" + bgRight + ")"})
                 $("#nav-news") .css({ "background-image": "url(" + bar1 + ")","background-size": "100% 100%","background-repeat": "no-repeat","background-position": "center" })
                 $("#nav-org")  .css({ "background-image": "url(" + bar2 + ")","background-size": "100% 100%","background-repeat": "no-repeat","background-position": "center" })
@@ -1222,7 +1159,11 @@ req().then((data) => {
                         $(".home, #nav-help, #nav-share, #nav-org").show();
                         $("#nav-help,#nav-share").css("margin-left", "0");
                         $("#nav-org,#nav-help,#nav-share").css({ "position":"static", "left":"0" });
+                        init();
+                        org();
                         mySwiper.startAutoplay();
+                        mySwiper9.startAutoplay();
+                        mySwiper10.startAutoplay();
                     })
 
                     // 首页组织模块
@@ -1231,7 +1172,12 @@ req().then((data) => {
                         $("#nav-news, #nav-help, #nav-share, .organization").show();
                         $("#nav-org,#nav-share").css({ "margin-left": "0", "position":"static" });
                         $("#nav-help").css({ "position":"static", "left":"0", "margin-left":"105px" });
-                        mySwiper.stopAutoplay();
+                        init();
+                        org();
+                        mySwiper.startAutoplay();
+                        mySwiper9.startAutoplay();
+                        mySwiper10.startAutoplay();
+                        //mySwiper.stopAutoplay();
                     })
 
                     // 首页互助模块
@@ -1242,7 +1188,12 @@ req().then((data) => {
                         $("#nav-org").css({ "position":"absolute", "left":"-855px" });
                         $("#nav-help").css({ "margin-left": "0", "position":"static" });
                         $("#nav-share").css({ "position":"static", "left":"0", "margin-left":"210px" });
-                        mySwiper.stopAutoplay();
+                        init();
+                        org();
+                        mySwiper.startAutoplay();
+                        mySwiper9.startAutoplay();
+                        mySwiper10.startAutoplay();
+                        //mySwiper.stopAutoplay();
 
                     })
 
@@ -1254,8 +1205,12 @@ req().then((data) => {
                         $("#nav-share,#nav-help").css("margin-left", "0");
                         $("#nav-org").css({ "position":"absolute", "left":"-855px" });
                         $("#nav-help").css({ "position":"absolute", "left":"-750px" });
-                        mySwiper.stopAutoplay();
-
+                        init();
+                        org();
+                        mySwiper.startAutoplay();
+                        mySwiper9.startAutoplay();
+                        mySwiper10.startAutoplay();
+                        //mySwiper.stopAutoplay();
                     })
                 }
 
@@ -1468,6 +1423,10 @@ req().then((data) => {
             }
         }
 
+        if (avatar.indexOf('http') == -1) {
+            avatar = ApiMaterPlatQiniuDomain + avatar;
+        }
+
         var templete=
         '<div class="col-sm-3 p-r-0" style="margin-top: 15px;margin-bottom: 5px">'+
             '<div class="project-lists-one">'+
@@ -1477,7 +1436,7 @@ req().then((data) => {
                     '<a href="'+data.domain+'/activity/'+data.weid+'" target="_blank" class="hover-img-box">'+
                         '<div class="posi-div"><img src="'+ApiMaterPlatQiniuDomain+data.cover+'" class="person-left-img"></div>'+
                     '</a>'+
-                    '<img class="logo" src="'+ApiMaterPlatQiniuDomain+avatar+'" alt="">'+
+                    '<img class="logo" src="'+avatar+'" alt="">'+
                     '<div class="project-username">'+nickname+'</div>'+
                 '</div>'+
 
