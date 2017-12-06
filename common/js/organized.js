@@ -4,6 +4,23 @@
 
     var token = window.localStorage.getItem('token');
     var channels = window.location.pathname.split('/').slice(1,3);
+    var domain_weid = '';
+
+    $.ajax({
+        url: apiUrl + "cms/channels",
+        dataType: 'json',
+        async: false,
+        success: function(data){
+            if(data.code == 200) {
+                data.data.list.forEach(function(value, index) {
+                    if(value.domain == "org") {
+                        domain_weid = value.weid;
+                        console.log(domain_weid);
+                    }
+                });
+            }
+        }
+    });
 
     // 查询频道
     $.ajax({
@@ -199,7 +216,7 @@
 
     // 查询组织栏目分类
     $.ajax({
-        url: apiUrl + "cms/cate_tree_by_channel?channel=9fa0bea0-7d7f-11e7-92a8-6585efb9cefe",
+        url: apiUrl + "cms/cate_tree_by_channel?channel=" + domain_weid,
         dataType: 'json',
         success: function(data){
             console.log(data.data);
