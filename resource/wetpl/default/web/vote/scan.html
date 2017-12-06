@@ -99,6 +99,8 @@
                       fav = imgHost + fav;
                   }
                   $("#fav").attr("href", fav);
+                  } else {
+                    window.location.href = '/404'
                   }
           },
           error: function(xhr){

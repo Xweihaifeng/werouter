@@ -157,6 +157,8 @@ $(function() {
               // 加载前的默认图片              
               placeholder: lazy_cover
             });
+          } else {
+            window.location.href = '/404'
           }
         }
       })
