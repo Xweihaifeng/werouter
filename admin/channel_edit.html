@@ -108,6 +108,17 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
+                                        <label class="col-sm-2 control-label">展示图</label>
+                                        <div class="col-sm-5">
+                                            <p style="padding-top:7px" class="info"> 上传格式： .png、.jpg、 .gif</p>
+                                            <input name="big_image" type="hidden" value="" class="form-control" />
+                                            <input id="pickfiles_3" name="cover" type="file" class="form-control hide" />
+                                            <div id="look">
+                                                <img onclick="$('#pickfiles_3').click()" id="img_3" width="100px;" src="//oty3r3tmi.bkt.clouddn.com/upload.png" alt="暂无预览图片" class="thumbnail">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
                                         <label class="col-sm-2 control-label">背景图</label>
                                         <div class="col-sm-5">
                                             <p style="padding-top:7px" class="info"> 上传格式： .png、.jpg、 .gif</p>
@@ -423,6 +434,10 @@
                             $('#img_2').attr("src", ApiMaterPlatQiniuDomain + data.data.back_image);
                             $('input[name=back_image]').val(data.data.back_image);
                         }
+                        if (data.data.big_image) {
+                            $('#img_3').attr("src", ApiMaterPlatQiniuDomain + data.data.big_image);
+                            $('input[name=big_image]').val(data.data.big_image);
+                        }
                         $('input[name=list_field]').val(data.data.list_id);
                         $.ajax({
                             url: ApiUrl + 'cms/template/' + data.data.list_id,
@@ -522,6 +537,44 @@
                     }
                 }
             });
+            var uploader_3 = Qiniu.uploader({
+                runtimes: 'html5,flash,html4',
+                browse_button: 'pickfiles_3',
+                uptoken_url: ApiUrl + 'file/qiniu_token',
+                get_new_uptoken: false,
+                domain: ApiMaterPlatQiniuDomain,
+                container: 'look',
+                max_file_size: '100mb',
+                flash_swf_url: '//cdn.staticfile.org/plupload/2.1.8/Moxie.swf',
+                max_retries: 3,
+                dragdrop: true,
+                drop_element: 'look',
+                chunk_size: '4mb',
+                auto_start: true,
+                filters: {
+                    max_file_size: '5mb',
+                    prevent_duplicates: true,
+                    // Specify what files to browse for
+                    mime_types: [{
+                        title: "Image files",
+                        extensions: "jpg,gif,png"
+                    }, ]
+                },
+                init: {
+                    'FileUploaded': function(up, file, info) {
+                        var domain = up.getOption('domain');
+                        res = JSON.parse(info.response);
+                        $("input[name=big_image]").val(res.key);
+                        var sourceLink = domain + res.key;
+                        $("#img_3").attr('src', sourceLink);
+                    },
+                    'Key': function(up, file) {
+                        var key = "plats/resource/";
+                        key += new Date().valueOf() + '.' + file.name.substring(file.name.indexOf('.') + 1);
+                        return key;
+                    }
+                }
+            });
             $('.pop-modal').click(function() {
                 $('#bootstrapModal').modal('show');
             });
@@ -561,6 +614,7 @@
                     'domain': $('input[name=domain]').val(),
                     'thumb_image': $('input[name=thumb_image]').val(),
                     'back_image': $('input[name=back_image]').val(),
+                    'big_image': $('input[name=big_image]').val(),
                     'list_id': $('input[name=list_field]').val(),
                 };
                 $.post(ApiUrl + 'cms/channels/' + id, data, function(ret) {
