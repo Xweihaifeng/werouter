@@ -6,9 +6,6 @@ $(function() {
     var get_weid = pathname[0], get_parse, total, limit, pageNum = 1;
     var domain_weid = '';
 
-    // apiUrl + "cms/cate_tree_by_channel?channel=" + domain_weid
-
-    alert(0)
     $.ajax({
         url: CMS_CHANNELS_DOMAIN_QUERY + get_weid,
         dataType: 'json',
