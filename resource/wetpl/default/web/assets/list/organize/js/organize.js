@@ -262,10 +262,15 @@ $(function() {
             });
 
             li_name = $(".chan_li").first().attr("id");
-            if($("#"+ pathname[1]).attr("type") == 1) {
-                single_page(get_param);
+            if(pathname[1]) {
+                if($("#"+ pathname[1]).attr("type") == 1) {
+                    single_page(get_param);                    
+                }
             } else {
-                var menu_two = $("#"+ pathname[1]).attr("name");
+                var menu_two = '';
+                if(pathname[1]) {
+                    menu_two = $("#"+ pathname[1]).attr("name");
+                }
                 var options4 = $.get(apiUrl + "cms/cate_categories?cate=" + menu_two);
                 options4.done(function(body4) {
                     if(body4.code == 200) {
@@ -294,6 +299,9 @@ $(function() {
             }
 
             // 最新发布样式呈现
+            if(!pathname[1]) {
+                li_name = "oooo";
+            }
             if(li_name == "oooo" || li_name == "") {
                 $('#oooo').addClass("cate-active-on").siblings().removeClass("cate-active-on");
                 $("#menuY").html($("#oooo").text());
