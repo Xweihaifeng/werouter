@@ -65,7 +65,7 @@
     <!-- <div class="alert alert-danger alert1" role="alert" style="text-align: center;z-index: 900;color:#fff;background: #f6383a;height: 46px;border-radius: inherit;border:none;">
         <h4 class="modal-title error" style="font-size: 14px;margin-top: -2px;"></h4>
     </div> -->
-<form method="post"  action="http://next.wezchina.com/m/goods/order/3b9bc9b0-233d-11e7-8623-d750865eb2e1" >
+<form method="post"  action="#" >
     <input type="hidden" name="_token" value="NcVALcZ99RRZfuFbQa2MIip2F7b5Hvhk02BLjh0r">
 <div class = "order">
     <ul class = "order-d">
@@ -81,70 +81,8 @@
     <div class = "order-back"></div>
 
     <div class = "order-con">
-        <!-- <div class = "order-con-c">
-            <img class="img1" src="images/avatar-9f9fe79996e4be2d7a24e7ca882d2341.jpeg"  />
-            <ul class = "order-con-text">
-                <li style="display: flex;height: 0.6rem;display:block;">
-                     <span class = "order-con-text-span">
-                        【洗洁剂】
-                          <span class = "order-con-text-span1">
-                                                       洗洁精中的领导品牌...
-                                                  </span>
-                     </span>
-        
-        
-                </li>
-                <li style="color:#ff9625;margin: 0.24rem 0;font-size: 0.26rem;">
-                    发货时间：卖家承诺48小时内发货
-                </li>
-                <li style="display: flex;justify-content: space-between;margin-top: -0.1rem;">
-                    <span class = "span1">￥：<span style="font-size: 0.30rem;" class="span3">20</span></span>
-                    <span class = "span2">x1</span>
-                </li>
-        
-            </ul>
-        </div>
-        <ul class = "order-con-ul">
-            <li class = "order-con-one">
-                <p>购买数量</p>
-                <div style="display: flex;margin-right: 0.24rem;" class = "order-com-one-divv">
-        
-                    <img src="http://next.wezchina.com/images/wap/order-a.png"  class = "amount-num-jian" />
-        
-                    <span style="margin-left:0.1rem;margin-right: 0.1rem;background-color: transparent" id="shuLiang">1</span>
-        
-                    <img src="http://next.wezchina.com/images/wap/order-aa.png" class="amount-num-jia" />
-        
-                </div>
-        
-            </li>
-            <li class = "order-con-two" style="display: flex;justify-content: space-between;">
-                <p>配送方式</p>
-                <div style="display: flex;margin-right: 0.24rem;">
-                    <span>快递  ￥10 </span>  <i class="fa fa-angle-right" aria-hidden="true"></i>
-                </div>
-            </li>
-            <li class = "order-con-two" style="display: flex;justify-content: space-between;">
-                <p>运险费</p>
-                <div style="display: flex;margin-right: 0.24rem;">
-                   <i class="fa fa-angle-right" aria-hidden="true"></i>
-                </div>
-        
-            </li>
-            <li class = "order-con-two" style="display: flex;justify-content: space-between;">
-                <p style="width: 100%">
-                    买家留言：
-                    <input type="text" style="background-color:transparent; color:#8d8d8d;font-size: 0.25rem;height: 100%;border: none;width: 76%;" placeholder=" 选填：对本次交易的说明（建议填写已和卖家...">
-        
-                </p>
-            </li>
-        
-            <li class = "order-con-two" style="text-align: end;margin-right: 0.24rem;font-size: 0.26rem;color:#1d1d1d;    font-weight: bolder;">
-                <p style="margin-bottom: 0;"> 共<span class="nums">1</span>件商品  &nbsp;&nbsp;&nbsp; 小计：<span class="price" style="color:#fd5501;">￥20</span></p>
-            </li>
-        </ul> -->
-    </div>
 
+    </div>
 
     <div class = "order-submit">
         <p style="font-weight: bold;margin-left: 37%;">合计：<span style="color:#fd5501;" class="numPrice">￥30</span></p>
@@ -254,7 +192,7 @@
         $('#pay_price').html(buy_num * 20 + parseInt($('#freight').html()));
         $("select[name='province']").change(function(){
             var pid = $(this).find("option:selected").data("id");
-            $.get("http://next.wezchina.com/m/ajax/region/region3/"+pid,function(data){
+            $.get("#"+pid,function(data){
                 if(data.status == 200){
                     $("select[name='city']").html("");
                     $(data.msg).each(function(index,city){
@@ -292,7 +230,7 @@
             formData.append('city',city);
             formData.append('address',address);
             formData.append('mobile',mobile);
-            xhr.open('POST',"http://next.wezchina.com/m/ajax/area/userAdd");
+            xhr.open('POST',"#");
             xhr.setRequestHeader('X-CSRF-TOKEN','NcVALcZ99RRZfuFbQa2MIip2F7b5Hvhk02BLjh0r');
             xhr.setRequestHeader('X-Requested-With','XMLHttpRequest');
             xhr.send(formData);
@@ -335,8 +273,6 @@
     });
 
 </script>
-
-<!-- <link rel='stylesheet' type='text/css' property='stylesheet' href='//next.wezchina.com/_debugbar/assets/stylesheets?v=1484813989'><script type='text/javascript' src='//next.wezchina.com/_debugbar/assets/javascript?v=1483605979'></script><script type="text/javascript">jQuery.noConflict(true);</script> -->
 
 </body>
 </html>

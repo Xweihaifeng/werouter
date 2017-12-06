@@ -1003,7 +1003,7 @@ checkdomain(domain,id);
                     }
 
                     $(".line-0").html(
-                        info.nickname + '<img src="http://next.wezchina.com/images/vrenzheng.png" alt="">'
+                        info.nickname + '<img src="/common/img/vrenzheng.png" alt="">'
                     );
                     $(".line-1").text(info.motto);
                     $(".user-cnt").text(info.nickname);

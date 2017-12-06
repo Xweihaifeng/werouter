@@ -65,7 +65,7 @@ $(function() {
             </div>
             <hr class="hr" />
             <p class="page-title">
-                <img src="http://next.wezchina.com/images/daoyu.png" alt="">
+                <img src="/common/img/home.png" alt="">
                 <span>` + result.summary + `</span>
             </p>
             <div class="page-info">

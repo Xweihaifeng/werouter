@@ -449,7 +449,7 @@ checkdomain(domain);*/
 
                     } else {
                         $(".line-0").html(
-                            data.data.title + '<img src="http://next.wezchina.com/images/vrenzheng.png" alt="">'
+                            data.data.title + '<img src="/common/img/vrenzheng.png" alt="">'
                         );
                         $(".line-1").text("品牌介绍");
                         var logo = data.data.logo;
