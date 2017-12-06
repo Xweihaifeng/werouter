@@ -53,25 +53,6 @@ $(function() {
         }
     });
 
-    // 查询栏目分类所有文章
-    function list_name(name) {
-        $.ajax({
-            url: apiUrl + "/cms/contents?cate_id=" + name,
-            dataType: 'json',
-            success: function(data){
-                $.map(data.data.list, function(item) {
-                    $(".list_selected").append(`
-                        <a href="/org/`+ item.weid +`" title="`+ item.title +`">
-                            <i class="iconfont">&#xe61a;</i>`+ item.title.substr(0, 4) +`
-                        </a>`);
-                });
-            },
-            error: function(xhr){
-                console.log(xhr);
-            }
-        });
-    }
-
     // 入会申请
     function column_rhsq(data, thumb_imgs) {
         $.ajax({
@@ -136,7 +117,7 @@ $(function() {
                     $(".report_swiper").append(template);
                 })
 
-                var mySwiper10 = new Swiper (".swiper-report", {
+                const mySwiper10 = new Swiper (".swiper-report", {
                     pagination: '.pagination-report',
                     direction: 'vertical',
                     autoplay: 3000,
@@ -179,7 +160,7 @@ $(function() {
                     $(".lunbo_swiper").append(template);
                 })
 
-                var mySwiper9 = new Swiper (".swiper-nested", {
+                const mySwiper9 = new Swiper (".swiper-nested", {
                     pagination: '.pagination-nested',
                     direction: 'horizontal',
                     autoplay: 3000,
@@ -195,20 +176,6 @@ $(function() {
         })
     }
 
-    // 二级分类
-    function cont_two(two_domain, result) {
-        var options12 = $.get(apiUrl + "cms/cate_categories?cate=" + result);
-        options12.done(function(body12) {
-            if(body12.code == 200 && body12.data.length > 0) {
-                $.map(body12.data, function(value, key) {
-                    if(key < 10) {
-                        $("#" + two_domain).append(`<a href="/org/`+ value.domain +`"> <i class="iconfont">&#xe61a;</i>`+ value.title +` </a>`)
-                    }
-                });
-            }
-        })
-    }
-
     // 一级分类
     var column_list = function(data) {
         var thumb_image = data.thumb_image;
@@ -216,9 +183,12 @@ $(function() {
             thumb_image = imgSet(thumb_image, 45, 40, 3);
         }
 
-        var template2 = function(value) {
-            template += `<a href="/org/`+ value.domain +`"> <i class="iconfont">&#xe61a;</i>`+ value.title +` </a>`
-            return template;
+        var template2 = function(children) {
+            var template21 = '';
+            $.map(children, function(value, key) {
+                template21 += `<a href="/org/`+ value.domain +`"> <i class="iconfont">&#xe61a;</i>`+ value.title +` </a>`
+            });
+            return template21;
         }
 
         var template = `
@@ -232,18 +202,16 @@ $(function() {
                 template = template + `
                 
             </a>
-            <div class="sub" id="`+ data.domain +`"></div>
+            <div class="sub" id="`+ data.domain +`">`+ template2(data.children) +`</div>
         </div>`
         return template;
     };
 
     // 查询组织栏目分类
     $.ajax({
-        url: apiUrl + "/cms/channel_categories?channel=org",
+        url: apiUrl + "cms/cate_tree_by_channel?channel=9fa0bea0-7d7f-11e7-92a8-6585efb9cefe",
         dataType: 'json',
         success: function(data){
-            console.log("所有栏目", data);
-
             $.map(data.data, function(item, index) {
                 if(item.title == '入会申请') {
                     $(".dier").append(`
@@ -258,22 +226,21 @@ $(function() {
                     $(".disan .title").text(item.title);
                     lunbo(item.weid, item.thumb_image);
                 } else {
-                    // if(index <= 8) {
+                    var i = 0;
+                    if(i <= 8) {
                         $(".shanghuijieshao").append(column_list(item));
-                        cont_two(item.domain, item.weid);
-                    // }
+                        i++;
+                    }
                 }
             });
 
             // 移入加载栏目分类
             $(".list").hover(function() {
-                $(this).find(".sub").addClass("list_selected").fadeIn(100);
-                var name = $(this).attr("name");
-                // $(".list_selected").html("");
-                // list_name(name);
-
+                // $(this).find(".sub").addClass("list_selected").fadeIn(100);
+                $(this).find(".sub").addClass("list_selected").show();
             },function() {
-                $(this).find(".sub").removeClass("list_selected").fadeOut(500);
+                // $(this).find(".sub").removeClass("list_selected").fadeOut(500);
+                $(this).find(".sub").removeClass("list_selected").hide();
             });
 
         },
