@@ -45,9 +45,9 @@
     });
 
     // 入会申请
-    function column_rhsq(data, thumb_imgs) {
+    function column_rhsq(thid_domain, thumb_imgs) {
         $.ajax({
-            url: apiUrl + "/cms/contents?cate_id=" + data,
+            url: apiUrl + "cms/contents?cate_id=" + thid_domain,
             dataType: 'json',
             success: function(data){
                 if((!data.data.list || data.data.list.length == 0) && thumb_imgs) {
@@ -55,6 +55,7 @@
                     $(".dier #ruhuishenqing").css({"background-image": "url("+ thumb_imgs +")"});
                 }
 
+                console.log(data.data.list);
                 data.data.list.forEach(function(item, index) {
                     if(index <= 5) {
                         var thumb_image = item.thumb_image;
@@ -84,7 +85,7 @@
     // 发展报告
     function report(bg_weid, thumb_imgs) {
         $.ajax({
-            url: apiUrl + "/cms/contents?cate_id=" + bg_weid,
+            url: apiUrl + "cms/contents?cate_id=" + bg_weid,
             dataType: 'json',
             success: function(data){
                 if((!data.data.list || data.data.list.length == 0) && thumb_imgs) {
@@ -92,6 +93,7 @@
                     $(".diyi .report").css({"background-image": "url("+ thumb_imgs +")"});
                 }
 
+                console.log(data.data.list);
                 data.data.list.forEach(function(item) {
                     var thumb_image = item.thumb_image;
                     if (thumb_image.indexOf('http') != 0 && thumb_image != "") {
@@ -127,7 +129,7 @@
     // 商会介绍
     function lunbo(gc_weid, thumb_imgs) {
         $.ajax({
-            url: apiUrl + "/cms/contents?cate_id=" + gc_weid,
+            url: apiUrl + "cms/contents?cate_id=" + gc_weid,
             dataType: 'json',
             success: function(data){
                 if((!data.data.list || data.data.list.length == 0) && thumb_imgs) {
@@ -135,6 +137,7 @@
                     $(".disan .lunbo").css({"background-image": "url("+ thumb_imgs +")"});
                 }
 
+                console.log(data.data.list);
                 data.data.list.forEach(function(item) {
                     var thumb_image = item.thumb_image;
                     if (thumb_image.indexOf('http') != 0 && thumb_image != "") {
@@ -210,13 +213,13 @@
                         <p class="title">`+ item.title +`</p>
                         <ul id="ruhuishenqing" name="`+ item.weid +`"></ul>`
                     );
-                    column_rhsq(item.weid, item.thumb_image);
+                    column_rhsq(item.domain, item.thumb_image);
                 } else if(item.title == "发展报告") {
                     $(".diyi .title").text(item.title);
-                    report(item.weid, item.thumb_image);
+                    report(item.domain, item.thumb_image);
                 } else if(item.title == "长青事业") {
                     $(".disan .title").text(item.title);
-                    lunbo(item.weid, item.thumb_image);
+                    lunbo(item.domain, item.thumb_image);
                 } else {
                     if(item.index_show == 1) {
                         var i = 0;
