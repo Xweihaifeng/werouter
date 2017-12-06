@@ -150,7 +150,7 @@ $(function() {
                 });
 
                 $(".source_url").hide();
-                if(data.data.is_original == 1) {
+                if(data.data.is_original == "原创" || data.data.is_original == 1) {
                     $(".original").show();
                 } else {
                     $(".original").hide();
