@@ -150,7 +150,7 @@ $(function() {
                 });
 
                 $(".source_url").hide();
-                if(!data.data.is_original) {
+                if(!data.data.is_original || data.data.is_original != 0) {
                     $(".original").show();
                 } else {
                     $(".original").hide();
