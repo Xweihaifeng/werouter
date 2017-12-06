@@ -709,7 +709,7 @@ init(localStorage.getItem('token'));
                 // }
                 if (data.code == 200){
                     // console.log(data);
-                    if (data.data == null) {
+                    if (data.data.domain == null) {
                         //没有个性域名
                         domain = '/index';
                     } else {
