@@ -228,7 +228,7 @@ $(function() {
             if(pathname.length == 2 && pathname[1] != ''){
                 li_name = pathname[1];
             }
-            $("#" + li_name + " a").addClass("csdf").siblings().removeClass("csdf");
+            $("#" + li_name).addClass("csdf").siblings().removeClass("csdf");
             document.title = $("#" + li_name).text();
             if($("#newN").attr("class").indexOf("csdf") != -1) {
                 $('#news_loadingsImg1').show().siblings("#news_loadingsImg").hide();
