@@ -2,7 +2,7 @@
 *     组织部分数据覆盖
 */
 
-$(function() {
+// $(function() {
 
     var token = window.localStorage.getItem('token');
     var channels = window.location.pathname.split('/').slice(1,3);
@@ -212,7 +212,8 @@ $(function() {
         url: apiUrl + "cms/cate_tree_by_channel?channel=9fa0bea0-7d7f-11e7-92a8-6585efb9cefe",
         dataType: 'json',
         success: function(data){
-            $.map(data.data, function(item, index) {
+            console.log(data.data);
+            data.data.forEach(function(item, index) {
                 if(item.title == '入会申请') {
                     $(".dier").append(`
                         <p class="title">`+ item.title +`</p>
@@ -222,14 +223,16 @@ $(function() {
                 } else if(item.title == "发展报告") {
                     $(".diyi .title").text(item.title);
                     report(item.weid, item.thumb_image);
-                } else if(item.title == "商会介绍") {
+                } else if(item.title == "长青事业") {
                     $(".disan .title").text(item.title);
                     lunbo(item.weid, item.thumb_image);
                 } else {
-                    var i = 0;
-                    if(i <= 8) {
-                        $(".shanghuijieshao").append(column_list(item));
-                        i++;
+                    if(item.index_show == 1) {
+                        var i = 0;
+                        if(i <= 8) {
+                            $(".shanghuijieshao").append(column_list(item));
+                            i++;
+                        }
                     }
                 }
             });
@@ -249,4 +252,4 @@ $(function() {
         }
     });
 
-});
+// });
