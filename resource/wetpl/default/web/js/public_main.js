@@ -1160,10 +1160,10 @@ req().then((data) => {
                         $("#nav-help,#nav-share").css("margin-left", "0");
                         $("#nav-org,#nav-help,#nav-share").css({ "position":"static", "left":"0" });
                         init();
-                        org();
+                        // org();
                         mySwiper.startAutoplay();
-                        mySwiper9.startAutoplay();
-                        mySwiper10.startAutoplay();
+                        // mySwiper9.startAutoplay();
+                        // mySwiper10.startAutoplay();
                     })
 
                     // 首页组织模块
@@ -1175,8 +1175,8 @@ req().then((data) => {
                         init();
                         org();
                         mySwiper.startAutoplay();
-                        mySwiper9.startAutoplay();
-                        mySwiper10.startAutoplay();
+                        // mySwiper9.startAutoplay();
+                        // mySwiper10.startAutoplay();
                         //mySwiper.stopAutoplay();
                     })
 
@@ -1189,10 +1189,10 @@ req().then((data) => {
                         $("#nav-help").css({ "margin-left": "0", "position":"static" });
                         $("#nav-share").css({ "position":"static", "left":"0", "margin-left":"210px" });
                         init();
-                        org();
+                        // org();
                         mySwiper.startAutoplay();
-                        mySwiper9.startAutoplay();
-                        mySwiper10.startAutoplay();
+                        // mySwiper9.startAutoplay();
+                        // mySwiper10.startAutoplay();
                         //mySwiper.stopAutoplay();
 
                     })
@@ -1206,16 +1206,16 @@ req().then((data) => {
                         $("#nav-org").css({ "position":"absolute", "left":"-855px" });
                         $("#nav-help").css({ "position":"absolute", "left":"-750px" });
                         init();
-                        org();
+                        // org();
                         mySwiper.startAutoplay();
-                        mySwiper9.startAutoplay();
-                        mySwiper10.startAutoplay();
+                        // mySwiper9.startAutoplay();
+                        // mySwiper10.startAutoplay();
                         //mySwiper.stopAutoplay();
                     })
                 }
 
                 genEvt();
-                org();
+                // org();
                 help();
                 share();
 
