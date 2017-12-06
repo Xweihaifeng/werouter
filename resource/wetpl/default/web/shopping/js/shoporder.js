@@ -775,9 +775,11 @@ checkdomain(domain,id);
                                 $("#province").append("<option value='"+x.id+"'>"+x.name+"</option>");                           
 
                         })
+                        $("#province").unbind();
                         $("#province").bind("change",function(){
                                 $("#city").children().remove(); 
                                 $("#city").append("<option value=''>请选择城市</option>");
+                                $("#city").unbind();
                                 getcitynotRange($(this).val());
                             })
                         
@@ -809,6 +811,7 @@ checkdomain(domain,id);
                     $("#city").bind("change",function(){
                         $("#county").children().remove(); 
                         $("#county").append("<option value=''>请选择区县</option>");
+                        $("#county").unbind();
                         getcountynotRange($(this).val());
                     })
 
