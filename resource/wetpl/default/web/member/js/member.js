@@ -23,7 +23,7 @@ options.done(function(data) {
         } else if (thumb_image.indexOf('http') != 0 && thumb_image != "") {
             thumb_image = imgSet(thumb_image, 1100, 320, 3);
         }
-        $("#thumb_image").css("background-image", `url(`+ thumb_image + `)`);
+        $(".weizhuye-title").css("background-image", `url(`+ thumb_image + `)`);
 
     } else {
         console.error(data.message);
