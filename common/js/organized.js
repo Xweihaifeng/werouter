@@ -53,33 +53,12 @@ $(function() {
         }
     });
 
-    // 查询栏目分类所有文章
-    function list_name(name) {
-        $.ajax({
-            url: apiUrl + "/cms/contents?cate_id=" + name,
-            dataType: 'json',
-            success: function(data){
-                $.map(data.data.list, function(item) {
-                    $(".list_selected").append(`
-                        <a href="/org/`+ item.weid +`" title="`+ item.title +`">
-                            <i class="iconfont">&#xe61a;</i>`+ item.title.substr(0, 4) +`
-                        </a>`);
-                });
-            },
-            error: function(xhr){
-                console.log(xhr);
-            }
-        });
-    }
-
     // 入会申请
     function column_rhsq(data, thumb_imgs) {
-            // debugger;
         $.ajax({
             url: apiUrl + "/cms/contents?cate_id=" + data,
             dataType: 'json',
             success: function(data){
-                // debugger;
                 if((!data.data.list || data.data.list.length == 0) && thumb_imgs) {
                     thumb_imgs = imgSet(thumb_imgs, 45, 40, 3);
                     $(".dier #ruhuishenqing").css({"background-image": "url("+ thumb_imgs +")"});
@@ -197,20 +176,6 @@ $(function() {
         })
     }
 
-    // 二级分类
-    function cont_two(two_domain, result) {
-        var options12 = $.get(apiUrl + "cms/cate_categories?cate=" + result);
-        options12.done(function(body12) {
-            if(body12.code == 200 && body12.data.length > 0) {
-                $.map(body12.data, function(value, key) {
-                    if(key < 10) {
-                        $("#" + two_domain).append(`<a href="/org/`+ value.domain +`"> <i class="iconfont">&#xe61a;</i>`+ value.title +` </a>`)
-                    }
-                });
-            }
-        })
-    }
-
     // 一级分类
     var column_list = function(data) {
         var thumb_image = data.thumb_image;
@@ -218,8 +183,6 @@ $(function() {
             thumb_image = imgSet(thumb_image, 45, 40, 3);
         }
 
-        debugger;
-        console.log(data.children);
         var template2 = function(children) {
             var template21 = '';
             $.map(children, function(value, key) {
@@ -249,8 +212,6 @@ $(function() {
         url: apiUrl + "cms/cate_tree_by_channel?channel=9fa0bea0-7d7f-11e7-92a8-6585efb9cefe",
         dataType: 'json',
         success: function(data){
-            console.log("所有栏目", data);
-
             $.map(data.data, function(item, index) {
                 if(item.title == '入会申请') {
                     $(".dier").append(`
