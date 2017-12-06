@@ -7,17 +7,15 @@
     var domain_weid = '';
 
     $.ajax({
-        url: apiUrl + "cms/channels",
+        url: CMS_CHANNELS_DOMAIN_QUERY + 'org',
         dataType: 'json',
         async: false,
         success: function(data){
-            if(data.code == 200) {
-                data.data.list.forEach(function(value, index) {
-                    if(value.domain == "org") {
-                        domain_weid = value.weid;
-                        console.log(domain_weid);
-                    }
-                });
+            if(data.code === 200) {
+                console.log(data.data);
+                domain_weid = data.data.weid;
+            } else {
+                console.error(data.message);
             }
         }
     });
