@@ -16,6 +16,7 @@ html,body {
 
 a {
     text-decoration: none;
+    display: inline-block;
 }
 
 li {
@@ -149,8 +150,8 @@ li {
 .details-content .news-center-main-title {
     min-height: 42px;
     margin: 0 15px;
-    overflow: hidden;
-    overflow-x: auto;
+    /*overflow: hidden;*/
+    /*overflow-x: auto;*/
     display: flex;
     justify-content: flex-start;
 }
@@ -184,6 +185,16 @@ li {
     cursor: pointer;
     color: #fff;
     background-color: rgba(0, 124, 211, 0.7);
+}
+
+.news-center-main-title > a {
+    position: relative;
+    height: 32px;
+}
+
+.news-center-main-title > span {
+    position: relative;
+    height: 42px;
 }
 
 .details-content .news-center-main {
@@ -316,4 +327,12 @@ li {
     text-align: center;
     line-height: 2.5rem;
     border-radius: 5px;
+}
+
+.sub_tab {
+    height: auto!important;
+    width: 93px;
+    position: absolute;
+    top: 42px;
+    display: none;  
 }

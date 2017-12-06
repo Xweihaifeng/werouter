@@ -4,45 +4,33 @@
 $(function() {
     var pathname = window.location.pathname.split('/').slice(1,3);
     var get_weid = pathname[0], get_parse, total, limit, pageNum = 1;
+    var domain_weid = '';
 
-    var options1 = $.get(CMS_CHANNELS_DOMAIN_QUERY + pathname[0]);
-    options1.done(function(data) {
-        if(data.code === 200) {
-            get_weid = data.data.weid;
-            var thumb_image = data.data.thumb_image;
+    // apiUrl + "cms/cate_tree_by_channel?channel=" + domain_weid
 
-            if(!thumb_image) {
-                thumb_image = "/common/img/news_top_img.png";
+    alert(0)
+    $.ajax({
+        url: CMS_CHANNELS_DOMAIN_QUERY + get_weid,
+        dataType: 'json',
+        async: false,
+        success: function(data){
+            if(data.code === 200) {
+                domain_weid = data.data.weid;
+                var thumb_image = data.data.thumb_image;
 
-            } else if (thumb_image.indexOf('http') != 0 && thumb_image != "") {
-                thumb_image = imgSet(thumb_image, 1100, 235, 3);
+                if(!thumb_image) {
+                    thumb_image = "/common/img/news_top_img.png";
+
+                } else if (thumb_image.indexOf('http') != 0 && thumb_image != "") {
+                    thumb_image = imgSet(thumb_image, 1100, 235, 3);
+                }
+
+                $(".new-top-images").css("backgroundImage", "url("+ thumb_image +")");
+            } else {
+                console.error(data.message);
             }
-
-            $(".new-top-images").css("backgroundImage", "url("+ thumb_image +")");
-        } else {
-            console.error(data.message);
         }
     });
-    options1.fail(function(error) {
-        console.error(error);
-    });
-
-    if(pathname.length == 2 && pathname[1] != '') {
-        get_parse = pathname[1];
-        var options2 = $.get(CMS_CATEGORIES_DOMAIN_QUERY + get_parse);
-
-        options2.done(function(data) {
-            if(data.code === 200) {
-                get_parse = data.data.weid;
-
-            } else {
-                console.warn(data.message);
-            }
-        })
-        options2.fail(function(error) {
-            console.error(error);
-        })
-    }
 
     $("#newN").attr("href", "/" + pathname[0]);
 
@@ -71,8 +59,20 @@ $(function() {
 
     // 栏目显示区
     var news_channel_categories = function(result) {
-        // if(pathname.length == 2 && pathname[1] != '') {}
-        var template = `<a class="chan_li" id="` + result.domain + `"  name="`+ result.weid +`" href="/`+ pathname[0] +"/"+ result.domain + `">`+ result.title +`</a>`
+        var template2 = function(children) {
+            var template21 = '';
+            if(children.length != 0) {
+                template21 += '<div class="sub_tab">';
+                $.map(children, function(value, key) {
+                    template21 += `<a href="/`+ pathname[0] +"/"+ value.domain + `">`+ value.title +` </a>`
+                });
+                template21 += '</div>';
+            }
+            return template21;
+        }
+
+        var template = `<span class="chan_li" id="` + result.domain + `"><a name="`+ result.weid +`" href="/`+ pathname[0] +"/"+ result.domain + `">
+            `+ result.title +`</a>`+ template2(result.children) +`</span>`
 
         return template;
     }
@@ -211,15 +211,21 @@ $(function() {
         console.info(error);
     });
 
-    //  显示栏目列表
-    var options4 = $.get(CMS_CHANNEL_CATEGORIES + get_weid);   
-    options4.done(function (data) {
-        if (data.code === 200 ) {            
+    var options18 = $.get(apiUrl + "cms/cate_tree_by_channel?channel=" + domain_weid);
+    options18.done(function (data) {
+        if (data.code === 200 ) {
+            console.log(data.data);
             $.map(data.data, function(item, index) {
                 if(index < 10) {
                     $(".news-center-main-title").append(news_channel_categories(item));
                 }
             });
+
+            $(".chan_li").hover(function() {
+                $(this).find(".sub_tab").slideDown();
+            }, function() {
+                $(this).find(".sub_tab").hide();
+            })
 
             var li_name = $(".chan_li").first().attr("id");
             if(pathname.length == 2 && pathname[1] != ''){
@@ -238,7 +244,7 @@ $(function() {
         }
 
     });
-    options4.fail(function (error) {
+    options18.fail(function (error) {
         console.info(error);
     })
 })
