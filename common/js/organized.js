@@ -82,7 +82,7 @@ $(function() {
                     thumb_imgs = imgSet(thumb_imgs, 45, 40, 3);
                     $(".dier #ruhuishenqing").css({"background-image": "url("+ thumb_imgs +")"});
                 }
-                debugger;
+
                 $.map(data.data.list, function(item, index) {
                     if(index <= 5) {
                         var thumb_image = item.thumb_image;
