@@ -461,19 +461,9 @@ checkdomain(domain,id);
                         success:function(data){
                             if(data.code == 200){
                                 $('#productBuySite').css("display","none");
-                                $('.product_buy_input input[name = consignee]').val('');
-                                $('#province').find("option:selected").val('');
-                                $('#city').find("option:selected").val('')
-                                $('#county').find("option:selected").val('')
-                                $('input[name = address]').val('')
-                                $('input[name = zip]').val('')
-                                $('input[name = mobile]').val('')
+                                $('#save-consignee-form')[0].reset();
                                 init(id);
                             }else{
-                                /*$('.product_buy_frame').hide() ;
-                                $('#save-consignee-form').hide();
-                                $('.product_buy_site').hide();*/
-                                // layer.alert('添加失败');
                                 mess_tusi(data.message);
                             }
                         }
