@@ -180,6 +180,9 @@ const genSideBar = (ns) => {
             x.cont.map(x => `<li>${x}</li>`).join('')
         )
         $("." + district[i]).append(eval(x.val));
+        if (x.ename == 'hz' || x.ename == 'gx') {
+            $("." + district[i]).css('padding-bottom', '180px');
+        }
     })
 }
 
