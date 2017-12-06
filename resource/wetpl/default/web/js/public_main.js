@@ -1162,8 +1162,8 @@ req().then((data) => {
                         init();
                         org();
                         mySwiper.startAutoplay();
-                        mySwiper9.startAutoplay();
-                        mySwiper10.startAutoplay();
+                        //mySwiper9.startAutoplay();
+                        //mySwiper10.startAutoplay();
                     })
 
                     // 首页组织模块
@@ -1175,8 +1175,8 @@ req().then((data) => {
                         init();
                         org();
                         mySwiper.startAutoplay();
-                        mySwiper9.startAutoplay();
-                        mySwiper10.startAutoplay();
+                        //mySwiper9.startAutoplay();
+                        //mySwiper10.startAutoplay();
                         //mySwiper.stopAutoplay();
                     })
 
@@ -1191,8 +1191,8 @@ req().then((data) => {
                         init();
                         org();
                         mySwiper.startAutoplay();
-                        mySwiper9.startAutoplay();
-                        mySwiper10.startAutoplay();
+                        //mySwiper9.startAutoplay();
+                        //mySwiper10.startAutoplay();
                         //mySwiper.stopAutoplay();
 
                     })
@@ -1208,14 +1208,14 @@ req().then((data) => {
                         init();
                         org();
                         mySwiper.startAutoplay();
-                        mySwiper9.startAutoplay();
-                        mySwiper10.startAutoplay();
+                        //mySwiper9.startAutoplay();
+                        //mySwiper10.startAutoplay();
                         //mySwiper.stopAutoplay();
                     })
                 }
 
                 genEvt();
-                org();
+                //org();
                 help();
                 share();
 

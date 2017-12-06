@@ -173,7 +173,7 @@ $(document).ready(function(){
                     genListTpl(apiUrl + 'circel/index?domain=' + domain.substr(1))
                     //artCount(weid);
                     //countinfo(weid);
-                    // artTypeList(weid);
+                    //artTypeList(weid);
                 } else {
                     layer.msg("请登录后浏览", {
                         time: 1500,
