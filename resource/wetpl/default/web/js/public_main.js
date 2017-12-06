@@ -152,7 +152,7 @@ const huzhu = `
             `
 const goodsBox = `
                 <div id="goodsBox">
-                <div style="width: 100%;height:235px; background:url(/common/img/0158.jpg) no-repeat center;">
+                <div style="width: 100%;height:235px; background:url(/common/img/0158.png) no-repeat center;">
                     <img src="http://next.wezchina.com/images/gongxiangtop.png" alt="" style="height: 235px">
                 </div>
                 <p class="huiyuantegong">会<span>/</span>员<span>/</span>特<span>/</span>供</p>
@@ -180,6 +180,9 @@ const genSideBar = (ns) => {
             x.cont.map(x => `<li>${x}</li>`).join('')
         )
         $("." + district[i]).append(eval(x.val));
+        if (x.ename == 'hz' || x.ename == 'gx') {
+            $("." + district[i]).css('padding-bottom', '180px');
+        }
     })
 }
 

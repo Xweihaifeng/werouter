@@ -94,20 +94,22 @@
   padding-bottom: 0;
 }
 .user-info .list-item {
-  padding-left: 15px;
   height: 30px;
-  margin-bottom: 10px;
+  margin-bottom: 4px;
+  overflow: hidden;
+}
+.user-info .list-item:hover .dizhi{
+  cursor: pointer;
 }
 .user-info .list-item .xinming {
   float: left;
-  font-size: 16px;
+  font-size: 14px;
   display: block;
   color: #585858;
   margin-right: 5px;
   height: 32px;
   line-height: 30px;
-  min-width: 140px;
-  text-align: center;
+  text-align: left;
 }
 .user-info .list-item .dizhi {
   font-size: 14px;
@@ -115,6 +117,19 @@
   display: block;
   height: 30px;
   line-height: 30px;
+  color: #585858;
+}
+.user-info .list-item .default-tip{
+  float: left;
+  margin-left: 10px;
+  height: 22px;
+  line-height: 22px;
+  text-align: center;
+  width: 62px;
+  background: #ddd;
+  border-radius: 2px;
+  font-size: 12px;
+  margin-top: 2px;
 }
 .user-info .list-item .dizhi-active {
   background: url(/new.wezchina.com/user/img/weixinzhifu.png);
@@ -157,6 +172,7 @@
 .user-info .product-msg p {
   margin: 20px 0;
   width: 80px;
+  font-size:14px;
 }
 .user-info .pay-list {
   text-align: right;
@@ -203,6 +219,13 @@
 .product_buy_site input {
   border: 1px solid #d7d7d7;
 }
+.product_buy_site input[type='text']{
+  width:332px;
+}
+.product_buy_site select{
+  border-color: #d7d7d7;
+  padding:6px;
+}
 .product_buy_frame {
   width: 709px;
     height: 420px;
@@ -213,7 +236,6 @@
 }
 .product_buy_title {
   height: 40px;
-  width: 709px;
   background-color: #EAEAEA;
 }
 .product_buy_title span {
@@ -235,7 +257,7 @@
 .product_buy_item {
   line-height: 25px;
   height: 25px;
-  margin-bottom: 22px;
+  margin-bottom: 16px;
 }
 .product_buy_item span {
   width: 78px;
@@ -244,6 +266,7 @@
   display: inline-block;
   float: left;
   margin-right: 20px;
+  font-size:14px;
 }
 .product_buy_item span em {
   color: #FF0000;

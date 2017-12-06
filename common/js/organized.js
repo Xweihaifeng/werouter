@@ -4,6 +4,23 @@
 
     var token = window.localStorage.getItem('token');
     var channels = window.location.pathname.split('/').slice(1,3);
+    var domain_weid = '';
+
+    $.ajax({
+        url: apiUrl + "cms/channels",
+        dataType: 'json',
+        async: false,
+        success: function(data){
+            if(data.code == 200) {
+                data.data.list.forEach(function(value, index) {
+                    if(value.domain == "org") {
+                        domain_weid = value.weid;
+                        console.log(domain_weid);
+                    }
+                });
+            }
+        }
+    });
 
     // 查询频道
     $.ajax({
@@ -45,124 +62,120 @@
     });
 
     // 入会申请
-    function column_rhsq(thid_domain, thumb_imgs) {
-        $.ajax({
-            url: apiUrl + "cms/contents?cate_id=" + thid_domain,
-            dataType: 'json',
-            success: function(data){
-                if((!data.data.list || data.data.list.length == 0) && thumb_imgs) {
-                    thumb_imgs = imgSet(thumb_imgs, 45, 40, 3);
-                    $(".dier #ruhuishenqing").css({"background-image": "url("+ thumb_imgs +")"});
-                }
+    function column_rhsq(data, thumb_imgs) {
+        if((!data || data.length == 0) && thumb_imgs) {
+            thumb_imgs = imgSet(thumb_imgs, 45, 40, 3);
+            $(".dier #ruhuishenqing").css({"background-image": "url("+ thumb_imgs +")"});
+        }
 
-                console.log(data.data.list);
-                data.data.list.forEach(function(item, index) {
-                    if(index <= 5) {
-                        var thumb_image = item.thumb_image;
-                        if (thumb_image.indexOf('http') != 0 && thumb_image != "") {
-                            thumb_image = imgSet(thumb_image, 34, 34, 3);
-                        }
-                        var template = `
-                        <li>
-                            <a href="/org/`+ item.weid +`">`
-                                if(thumb_image != "") {
-                                    template = template + `<img class="iconfont" src="`+ thumb_image +`" alt="">`;
-                                }
-                                template = template + `
-                                <p>`+ item.title.substr(0, 6) +`</p>
-                            </a>
-                        </li>`
-                        $("#ruhuishenqing").append(template);
-                    }
-                });
-            },
-            error: function(xhr){
-                console.log(xhr);
-            }
-        });
+        var thumb_image = data.thumb_image;
+        if (thumb_image.indexOf('http') != 0 && thumb_image != "") {
+            thumb_image = imgSet(thumb_image, 34, 34, 3);
+        }
+        var template = `
+        <li>
+            <a href="/org/`+ data.weid +`">`
+                if(thumb_image != "") {
+                    template = template + `<img class="iconfont" src="`+ thumb_image +`" alt="">`;
+                }
+                template = template + `
+                <p>`+ data.title.substr(0, 6) +`</p>
+            </a>
+        </li>`
+        $("#ruhuishenqing").append(template);
     }
 
     // 发展报告
-    function report(bg_weid, thumb_imgs) {
-        $.ajax({
-            url: apiUrl + "cms/contents?cate_id=" + bg_weid,
-            dataType: 'json',
-            success: function(data){
-                if((!data.data.list || data.data.list.length == 0) && thumb_imgs) {
-                    thumb_imgs = imgSet(thumb_imgs, 45, 40, 3);
-                    $(".diyi .report").css({"background-image": "url("+ thumb_imgs +")"});
-                }
+    function report(data, thumb_imgs) {
 
-                console.log(data.data.list);
-                data.data.list.forEach(function(item) {
-                    var thumb_image = item.thumb_image;
-                    if (thumb_image.indexOf('http') != 0 && thumb_image != "") {
-                        thumb_image = imgSet(thumb_image, 280, 164, 3);
-                    }
-                    var template = `
-                    <div class="swiper-slide">`
-                        if(thumb_image != "") {
-                            template = template + `<img class="iconfont" src="`+ thumb_image +`" alt="">`;
-                        }
-                        template = template + `
-                        <a href="/org/`+ item.weid +`" class="a btn-look">点击查看</a>
-                    </div>`;
-                    $(".report_swiper").append(template);
-                })
+        if((!data || data.length == 0) && thumb_imgs) {
+            thumb_imgs = imgSet(thumb_imgs, 45, 40, 3);
+            $(".diyi .report").css({"background-image": "url("+ thumb_imgs +")"});
+        }
 
-                const mySwiper10 = new Swiper (".swiper-report", {
-                    pagination: '.pagination-report',
-                    direction: 'vertical',
-                    autoplay: 3000,
-                    speed: 1000,
-                    loop : true,
-                    paginationClickable: true,
-                    autoplayDisableOnInteraction : false
-                })
-            },
-            error: function(xhr){
-                console.log(xhr);
+        var thumb_image = data.thumb_image;
+        if (thumb_image.indexOf('http') != 0 && thumb_image != "") {
+            thumb_image = imgSet(thumb_image, 280, 164, 3);
+        }
+        var template = `
+        <div class="swiper-slide">`
+            if(thumb_image != "") {
+                template = template + `<img class="iconfont" src="`+ thumb_image +`" alt="">`;
             }
+            template = template + `
+            <a href="/org/`+ data.weid +`" class="a btn-look">点击查看</a>
+        </div>`;
+        $(".report_swiper").append(template);
+        
+
+        const mySwiper10 = new Swiper (".swiper-report", {
+            pagination: '.pagination-report',
+            direction: 'vertical',
+            autoplay: 3000,
+            speed: 1000,
+            loop : true,
+            paginationClickable: true,
+            autoplayDisableOnInteraction : false
         })
+
     }
 
     // 商会介绍
-    function lunbo(gc_weid, thumb_imgs) {
+    function lunbo(data, thumb_imgs) {
+
+        if((!data || data.length == 0) && thumb_imgs) {
+            thumb_imgs = imgSet(thumb_imgs, 45, 40, 3);
+            $(".disan .lunbo").css({"background-image": "url("+ thumb_imgs +")"});
+        }
+
+        var thumb_image = data.thumb_image;
+        if (thumb_image.indexOf('http') != 0 && thumb_image != "") {
+            thumb_image = imgSet(thumb_image, 280, 164, 3);
+        }
+        var template = `
+        <div class="swiper-slide">`
+            if(thumb_image != "") {
+                template = template + `<img class="iconfont" src="`+ thumb_image +`" alt="">`;
+            }
+            template = template + `
+            <a href="/org/`+ data.weid +`" class="a btn-info">点击查看</a>
+        </div>`;
+        $(".lunbo_swiper").append(template);
+
+        const mySwiper9 = new Swiper (".swiper-nested", {
+            pagination: '.pagination-nested',
+            direction: 'horizontal',
+            autoplay: 3000,
+            speed: 1000,
+            loop : true,
+            paginationClickable: true,
+            autoplayDisableOnInteraction : false
+        })
+
+    }
+
+    // 下方三模块筛选
+    function cont_two(this_weid_two, name) {
         $.ajax({
-            url: apiUrl + "cms/contents?cate_id=" + gc_weid,
+            url: apiUrl + "cms/cate_categories?cate=" + this_weid_two,
             dataType: 'json',
             success: function(data){
-                if((!data.data.list || data.data.list.length == 0) && thumb_imgs) {
-                    thumb_imgs = imgSet(thumb_imgs, 45, 40, 3);
-                    $(".disan .lunbo").css({"background-image": "url("+ thumb_imgs +")"});
-                }
-
-                console.log(data.data.list);
-                data.data.list.forEach(function(item) {
-                    var thumb_image = item.thumb_image;
-                    if (thumb_image.indexOf('http') != 0 && thumb_image != "") {
-                        thumb_image = imgSet(thumb_image, 280, 164, 3);
+                if(data.code == 200) {
+                    var result = data.data;
+                    if(name == "fzbg") {
+                        result.forEach(function(value, index) {
+                            report(value, value.thumb_imgs)
+                        });
+                    } else if(name == "rhsq") {
+                        result.forEach(function(value, index) {
+                            column_rhsq(value, value.thumb_imgs)
+                        });
+                    } else if(name == "cqsy") {
+                        result.forEach(function(value, index) {
+                            lunbo(value, value.thumb_imgs)
+                        });
                     }
-                    var template = `
-                    <div class="swiper-slide">`
-                        if(thumb_image != "") {
-                            template = template + `<img class="iconfont" src="`+ thumb_image +`" alt="">`;
-                        }
-                        template = template + `
-                        <a href="/org/`+ item.weid +`" class="a btn-info">点击查看</a>
-                    </div>`;
-                    $(".lunbo_swiper").append(template);
-                })
-
-                const mySwiper9 = new Swiper (".swiper-nested", {
-                    pagination: '.pagination-nested',
-                    direction: 'horizontal',
-                    autoplay: 3000,
-                    speed: 1000,
-                    loop : true,
-                    paginationClickable: true,
-                    autoplayDisableOnInteraction : false
-                })
+                }
             },
             error: function(xhr){
                 console.log(xhr);
@@ -170,7 +183,7 @@
         })
     }
 
-    // 一级分类
+    // 组织一级分类
     var column_list = function(data) {
         var thumb_image = data.thumb_image;
         if (thumb_image.indexOf('http') != 0 && thumb_image != "") {
@@ -203,7 +216,7 @@
 
     // 查询组织栏目分类
     $.ajax({
-        url: apiUrl + "cms/cate_tree_by_channel?channel=9fa0bea0-7d7f-11e7-92a8-6585efb9cefe",
+        url: apiUrl + "cms/cate_tree_by_channel?channel=" + domain_weid,
         dataType: 'json',
         success: function(data){
             console.log(data.data);
@@ -213,13 +226,13 @@
                         <p class="title">`+ item.title +`</p>
                         <ul id="ruhuishenqing" name="`+ item.weid +`"></ul>`
                     );
-                    column_rhsq(item.domain, item.thumb_image);
+                    cont_two(item.weid, "rhsq");
                 } else if(item.title == "发展报告") {
                     $(".diyi .title").text(item.title);
-                    report(item.domain, item.thumb_image);
+                    cont_two(item.weid, "fzbg");
                 } else if(item.title == "长青事业") {
                     $(".disan .title").text(item.title);
-                    lunbo(item.domain, item.thumb_image);
+                    cont_two(item.weid, "cqsy");
                 } else {
                     if(item.index_show == 1) {
                         var i = 0;
@@ -237,7 +250,6 @@
             },function() {
                 $(this).find(".sub").removeClass("list_selected").hide();
             });
-
         },
         error: function(xhr){
             console.log(xhr);

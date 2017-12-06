@@ -69,13 +69,13 @@
                             <p class="biaoti">Ta的微友曲线</p>
                             <div class="line"></div>
                             <div style="display: inline-block;position: absolute;z-index: 1;left: 502px;">
-                                <button class="btn btn-default" onclick="changeTime(2,'http://next.wezchina.com/index/circle')" style="position: relative;">去年</button>
+                                <button class="btn btn-default" onclick="changeTime(2,'#')" style="position: relative;">去年</button>
                                 <a class="button-down-box-parent button-down-box-parent-p">
-                                    <button class="btn btn-default" onclick="changeTime(1,'http://next.wezchina.com/index/circle');$('.button-down-box').hide()" onmouseenter="$('.button-down-box').show()" >今年</button>
+                                    <button class="btn btn-default" onclick="changeTime(1,'#');$('.button-down-box').hide()" onmouseenter="$('.button-down-box').show()" >今年</button>
                                     <div  class="button-down-box-parent" style="display: inline-block; width: auto;height: auto">
                                         <ul class="button-down-box" onmouseleave="$('.button-down-box').hide()">
-                                            <li onclick="changeTime(3,'http://next.wezchina.com/index/circle')">当月</li>
-                                            <li onclick="changeTime(4,'http://next.wezchina.com/index/circle')">上月</li>
+                                            <li onclick="changeTime(3,'#')">当月</li>
+                                            <li onclick="changeTime(4,'#')">上月</li>
                                         </ul>
                                     </div>
                                 </a>
@@ -118,7 +118,7 @@
                         <div class="panel panel-default user">
                             <div class="panel-body">
                                 <div class="user-info"></div>
-                                <a class='linkto' href=''><div class="user-head"><!-- <img src="http://next.wezchina.com/images/vrenzheng.png" alt=""> --></div></a>
+                                <a class='linkto' href=''><div class="user-head"></div></a>
                                 <div class="user-cnt"></div>
                                 <div class="user-part">
                                     <div class="user-art">
@@ -288,15 +288,6 @@
             var url = window.location.pathname.split('/');
             var domain = url.slice(1, 2)[0];
             getLine(apiUrl + 'circel/index?domain=' + domain);
-
-            //echarts
-            //var lineChart,lineTheme,xTitle,newlyAdded,Active,mapChart,mapData,requestUrl = 'http://next.wezchina.com/ajax/circle/chart';
-            // 折线图
-//            lineTheme = {color:['#C23531','#17C295']};
-//            lineChart = echarts.init(document.getElementById('curve_count'), lineTheme);
-//            xTitle = eval('["1\u6708","2\u6708","3\u6708","4\u6708","5\u6708","6\u6708","7\u6708","8\u6708","9\u6708","10\u6708","11\u6708","12\u6708"]');
-//            newlyAdded = eval('[0,1,0,1,2,0,0,0,5,0,15,0]');
-//            Active = eval('[0,1,0,1,2,0,0,0,5,0,0,0]');
         </script>
     </body>
 </html>

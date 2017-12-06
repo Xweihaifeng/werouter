@@ -51,7 +51,7 @@ $(function() {
                 } else if(item.title == "发展报告") {
                     $(".diyi").append(`
                         <p class="title">`+item.title+`</p>
-                        <img src="http://next.wezchina.com/images/zuzhi-img.png" alt="">
+                        <img src="/common/img/zuzhi-img.png" alt="">
                         <button class="btn-look">点击查看</button>`
                     );
                 } else if(item.title == "光彩事业") {

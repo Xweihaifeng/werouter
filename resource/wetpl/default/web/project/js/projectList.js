@@ -202,7 +202,6 @@ var qiniu_bucket_domain = ApiMaterPlatQiniuDomain;
                     <div class="project-lists-one">
                         <div class="project-section">
                             <div class="shijian"> `+timetext+`</div>
-                            <!--<div class="yishou"><img src=" http://next.wezchina.com/images/defeat.png&#10 " alt=""></div>-->
                             <div class="yishou"><span class="span_left"></span><span class="span_status">`+data.onStatus+`</span><span class="span_right"></span></div>
                             <div class="zhonglei"><span> `+data.cate_name+` </span></div>
                             <a href="/`+data.domain+`/project/`+data.weid+`">
@@ -492,7 +491,7 @@ var qiniu_bucket_domain = ApiMaterPlatQiniuDomain;
 
                     } else {
                         $(".line-0").html(
-                            data.data.title + '<img src="http://next.wezchina.com/images/vrenzheng.png" alt="">'
+                            data.data.title + '<img src="/common/img/vrenzheng.png" alt="">'
                         );
                         $(".line-1").text("品牌介绍");
                         var logo = data.data.logo;

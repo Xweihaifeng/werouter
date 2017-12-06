@@ -192,17 +192,7 @@ $(document).ready(function(){
 var timer ;
         // 点击开关
         var _off = true;
-        var wechat_login = {"debug":false,"app_id":"wx9f067ceaa70375b2","secret":"d87679629b24e48e64d2b01f6a1ec47b","url":"http:\/\/next.wezchina.com\/wechat\/opencallback","oauth":{"only_wechat_browser":false,"scopes":["snsapi_login"],"callback":"\/wechat\/opencallback"}};
-        /*
-        var obj = new WxLogin({
-            id:"login_container",
-            appid: wechat_login['app_id'],
-            scope: "snsapi_login",
-            state: "next",
-            href:"https://next.wezchina.com/css/wxlogin.css",
-            redirect_uri: wechat_login['url']
-        });
-        */
+        var wechat_login = {"debug":false,"app_id":"wx9f067ceaa70375b2","secret":"d87679629b24e48e64d2b01f6a1ec47b","url":"#","oauth":{"only_wechat_browser":false,"scopes":["snsapi_login"],"callback":"\/wechat\/opencallback"}};
         // 定时器开关
         var onOff = true;
         $(function(){
@@ -230,7 +220,7 @@ var timer ;
 
 
                 $.ajax({
-                    url:"http://next.wezchina.com/api/sendVerfyCode" +  '/' + phone_num,
+                    url:"#" +  '/' + phone_num,
                     type:'get',
                     success:function(json){
                         if(json.status == 200)
@@ -306,7 +296,7 @@ var timer ;
                 xhr = new XMLHttpRequest(),
                 response,
                 loginLayer;
-                xhr.open('POST',"http://next.wezchina.com/login");
+                xhr.open('POST',"#");
                 xhr.setRequestHeader('X-CSRF-TOKEN','j01L3XvNZSuqsqegFdAi9MVTgGdAUa4DCZzJJ81x');
                 xhr.setRequestHeader('X-Requested-With','XMLHttpRequest');
                 xhr.send(formData);

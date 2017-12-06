@@ -53,11 +53,8 @@
 </script>
 
 
-
-
 </head>
 <body>
-
 
 <div class="wxalert alert-danger" role="alert" id="message-top">
 
@@ -65,7 +62,7 @@
     <!-- <div class="alert alert-danger alert1" role="alert" style="text-align: center;z-index: 900;color:#fff;background: #f6383a;height: 46px;border-radius: inherit;border:none;">
         <h4 class="modal-title error" style="font-size: 14px;margin-top: -2px;"></h4>
     </div> -->
-<form method="post"  action="http://next.wezchina.com/m/goods/order/3b9bc9b0-233d-11e7-8623-d750865eb2e1" >
+<form method="post"  action="#" >
     <input type="hidden" name="_token" value="NcVALcZ99RRZfuFbQa2MIip2F7b5Hvhk02BLjh0r">
 <div class = "order">
     <ul class = "order-d">
@@ -109,11 +106,11 @@
                 <p>购买数量</p>
                 <div style="display: flex;margin-right: 0.24rem;" class = "order-com-one-divv">
         
-                    <img src="http://next.wezchina.com/images/wap/order-a.png"  class = "amount-num-jian" />
+                    <img src="/common/img/wap/order-a.png"  class = "amount-num-jian" />
         
                     <span style="margin-left:0.1rem;margin-right: 0.1rem;background-color: transparent" id="shuLiang">1</span>
         
-                    <img src="http://next.wezchina.com/images/wap/order-aa.png" class="amount-num-jia" />
+                    <img src="/common/img/wap/order-aa.png" class="amount-num-jia" />
         
                 </div>
         
@@ -254,7 +251,7 @@
         $('#pay_price').html(buy_num * 20 + parseInt($('#freight').html()));
         $("select[name='province']").change(function(){
             var pid = $(this).find("option:selected").data("id");
-            $.get("http://next.wezchina.com/m/ajax/region/region3/"+pid,function(data){
+            $.get("#"+pid,function(data){
                 if(data.status == 200){
                     $("select[name='city']").html("");
                     $(data.msg).each(function(index,city){
@@ -292,7 +289,7 @@
             formData.append('city',city);
             formData.append('address',address);
             formData.append('mobile',mobile);
-            xhr.open('POST',"http://next.wezchina.com/m/ajax/area/userAdd");
+            xhr.open('POST',"#");
             xhr.setRequestHeader('X-CSRF-TOKEN','NcVALcZ99RRZfuFbQa2MIip2F7b5Hvhk02BLjh0r');
             xhr.setRequestHeader('X-Requested-With','XMLHttpRequest');
             xhr.send(formData);
@@ -317,8 +314,6 @@
 
         });
 
-
-
         // 添加收货人
         $('#addRess').on('click',function(){
 
@@ -327,16 +322,8 @@
         $('.products_buy_exit').on('click',function(){
             $('#productBuySite').css("display","none")
         });
-
-
-
-
-
     });
 
 </script>
-
-<!-- <link rel='stylesheet' type='text/css' property='stylesheet' href='//next.wezchina.com/_debugbar/assets/stylesheets?v=1484813989'><script type='text/javascript' src='//next.wezchina.com/_debugbar/assets/javascript?v=1483605979'></script><script type="text/javascript">jQuery.noConflict(true);</script> -->
-
 </body>
 </html>

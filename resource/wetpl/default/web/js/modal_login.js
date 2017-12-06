@@ -191,7 +191,10 @@ $(function() {
     }
 
     var weid = localStorage.getItem('weid');
-    hasDomain(weid);
+    if (weid != null) {
+        hasDomain(weid);    
+    }
+    
 
     //route
     var isLogin; //判断用户登陆与否

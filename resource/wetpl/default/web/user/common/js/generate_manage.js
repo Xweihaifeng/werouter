@@ -154,7 +154,7 @@ $(function(){
 
 let mainLeft = `
         <div id="home">
-            <img src="http://next.wezchina.com/storage/images/906f4f7c227f67a96a859bdf64cbd5c0.png" width='90' alt="HOME" />
+            <img src="/common/img/home.png" width='90' alt="HOME" />
         </div>
         <div id="login">
             <div class="log-head"></div>

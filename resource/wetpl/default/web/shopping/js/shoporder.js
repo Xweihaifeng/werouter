@@ -245,12 +245,12 @@ checkdomain(domain,id);
              // }
 
         if(data.status==1){
-            var addrdivhtml='<div class="list-item" data="'+data.weid+'" style="color: rgb(66, 153, 216);" >'+
+            var addrdivhtml='<div class="list-item" data="'+data.weid+'">'+
                    '<p class="m0">'+
                        '<div class="xinming dizhi-active" >'+data.name+'&nbsp;&nbsp;&nbsp;<span class="provname provname'+data.province_id+'" data-id=""></span></div>'+
 
                        '<div class="dizhi" style="color: rgb(255, 0, 0);">&nbsp;&nbsp;&nbsp;<span class="provname provname'+data.province_id+'"></span>&nbsp;&nbsp;&nbsp;<span class="cityname cityname'+data.area_id+'"></span>&nbsp;&nbsp;&nbsp;<span class="detailname">'+data.detail+'</span>&nbsp;&nbsp;&nbsp;<span class="buyname">'+data.name+'</span>&nbsp;&nbsp;&nbsp;<span class="telname">'+data.telophone+'</span></div>'+
-                       '<span class="clearfix"></span>'+
+                        '<div class="default-tip">默认地址</div>'+
                    '</p>'+
                 '</div>'; 
 
@@ -260,7 +260,6 @@ checkdomain(domain,id);
                        '<div class="xinming '+dizhiacitve+'" >'+data.name+'&nbsp;&nbsp;&nbsp;<span class="provname provname'+data.province_id+'" data-id=""></span></div>'+
 
                        '<div class="dizhi" style="'+colorred+'">&nbsp;&nbsp;&nbsp;<span class="provname provname'+data.province_id+'"></span>&nbsp;&nbsp;&nbsp;<span class="cityname cityname'+data.area_id+'"></span>&nbsp;&nbsp;&nbsp;<span class="detailname">'+data.detail+'</span>&nbsp;&nbsp;&nbsp;<span class="buyname">'+data.name+'</span>&nbsp;&nbsp;&nbsp;<span class="telname">'+data.telophone+'</span></div>'+
-                       '<span class="clearfix"></span>'+
                    '</p>'+
                 '</div>'; 
         }     
@@ -280,6 +279,8 @@ checkdomain(domain,id);
                    if(useraddrdata.total==0){
                     $("#address-lists").append("<div class='text-center'>暂无地址</div>");        
                 }else{
+                       $("#address-lists").find(".add-address").siblings('div').remove();
+                       $(".shouhuodizhi-default").children().remove();
                     // 循环展示地址
                     useraddrdata.list.map(x=>{
                         // getprovincedetail(x.province_id);
@@ -307,7 +308,7 @@ checkdomain(domain,id);
 
                     })
                     var i = 1;
-                      $('.list-item').click(function(){
+                      $('.list-item .dizhi').click(function(){
                             i = 0;
                             // 判断收货地址是否在配送范围之内
                             //console.log($(this).attr('data'));
@@ -383,16 +384,22 @@ checkdomain(domain,id);
     // useraddr();
     //设置默认地址高量
     var setdefaultaddr=function(obj){
+        var tip =
+            '<div class="default-tip">默认地址</div>';
         $(".xinming").removeClass("dizhi-active");
-            $(obj).css({'color':'#4299D8'}).siblings().find(".dizhi").css({'color':'#000'});
-            $(obj).find(".xinming").addClass("dizhi-active");
-            $(obj).find(".dizhi").css({'color':'#ff0000'});
-            // $('#address_id').val($(this).attr('data'));
-            $(".provname-defalt").text($(obj).find('.dizhi-active .provname').text());
-            $(".cityname-defalt").text($(obj).find('.cityname').text());
-            $(".address-defalt").text($(obj).find('.detailname').text());
-            $(".buyname-defalt").text($(obj).find('.buyname').text());
-            $(".phone-defalt").text($(obj).find('.telname').text());
+        $(obj).parent().siblings().find(".dizhi").css({'color':'#585858'});
+        $(obj).parent().siblings().find(".default-tip").remove();
+        $(obj).parent().find(".xinming").addClass("dizhi-active");
+        $(obj).css({'color':'#ff0000'});
+        if(!$(obj).parent().find(".default-tip").length){
+            $(obj).parent().append(tip)
+        }
+        // $('#address_id').val($(this).attr('data'));
+        $(".provname-defalt").text($(obj).find('.dizhi-active .provname').text());
+        $(".cityname-defalt").text($(obj).find('.cityname').text());
+        $(".address-defalt").text($(obj).find('.detailname').text());
+        $(".buyname-defalt").text($(obj).find('.buyname').text());
+        $(".phone-defalt").text($(obj).find('.telname').text());
     }
     // 判断收货地址是否在配送范围之内
     var israngetrue=function(range_weid,address_weid,obj){
@@ -434,8 +441,7 @@ checkdomain(domain,id);
                 address = $('input[name = address]').val(),
                 zip = $('input[name = zip]').val(),
                 mobile = $('input[name = mobile]').val();
-                var defaultaddr=$('input[name = defaultaddr]').val();
-               
+                var defaultaddr=$('input[name = defaultaddr]:checked').val();
                 if (consignee == '' || province == '请选择省份' || city == '请选择城市' || county == '请选择区县' ||address == '' || mobile == '' || zip == '') {
                     layer.msg('请输入完整的收货人信息');
                 }else if (!(/^1[3|4|5|7|8]\d{9}$/.test(mobile))) {
@@ -454,15 +460,10 @@ checkdomain(domain,id);
                         data:{name:consignee,province_id:province,area_id:city,county_id:county,detail:address,zipcode:zip,telophone:mobile,status:defaultaddr},
                         success:function(data){
                             if(data.code == 200){
-                                $('.product_buy_frame').hide() ;
-                                $('#save-consignee-form').hide();
-                                $('.product_buy_site').hide();
-                                location.reload();
+                                $('#productBuySite').css("display","none");
+                                $('#save-consignee-form')[0].reset();
+                                init(id);
                             }else{
-                                /*$('.product_buy_frame').hide() ;
-                                $('#save-consignee-form').hide();
-                                $('.product_buy_site').hide();*/
-                                // layer.alert('添加失败');
                                 mess_tusi(data.message);
                             }
                         }
@@ -476,7 +477,7 @@ checkdomain(domain,id);
          // 添加收货人
         $('#addRess').on('click',function(){
             
-            $('#productBuySite').css("display","block")
+            $('#productBuySite').css("display","block");
         });
         $('.products_buy_exit').on('click',function(){
             $('#productBuySite').css("display","none")
@@ -543,6 +544,7 @@ checkdomain(domain,id);
 
                         }
                         //useraddr(goods.range_id);
+                        $(".product-buy-list").children().remove()
                     $(".product-buy-list").append(orderstorehtml(goods,goodsdata.goods_num,postMoney));
                         if(index==id.goods_list.length-1){
                             associatorNotDiscount();    
@@ -773,9 +775,11 @@ checkdomain(domain,id);
                                 $("#province").append("<option value='"+x.id+"'>"+x.name+"</option>");                           
 
                         })
+                        $("#province").unbind();
                         $("#province").bind("change",function(){
                                 $("#city").children().remove(); 
                                 $("#city").append("<option value=''>请选择城市</option>");
+                                $("#city").unbind();
                                 getcitynotRange($(this).val());
                             })
                         
@@ -807,6 +811,7 @@ checkdomain(domain,id);
                     $("#city").bind("change",function(){
                         $("#county").children().remove(); 
                         $("#county").append("<option value=''>请选择区县</option>");
+                        $("#county").unbind();
                         getcountynotRange($(this).val());
                     })
 
@@ -1003,7 +1008,7 @@ checkdomain(domain,id);
                     }
 
                     $(".line-0").html(
-                        info.nickname + '<img src="http://next.wezchina.com/images/vrenzheng.png" alt="">'
+                        info.nickname + '<img src="/common/img/vrenzheng.png" alt="">'
                     );
                     $(".line-1").text(info.motto);
                     $(".user-cnt").text(info.nickname);

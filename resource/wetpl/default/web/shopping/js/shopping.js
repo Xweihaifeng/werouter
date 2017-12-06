@@ -593,7 +593,7 @@ checkdomain(domain);*/
                     }
 
                     $(".line-0").html(
-                        info.nickname + '<img src="http://next.wezchina.com/images/vrenzheng.png" alt="">'
+                        info.nickname + '<img src="/common/img/vrenzheng.png" alt="">'
                     );
                     $(".line-1").text(info.motto);
                     $(".user-cnt").text(info.nickname);
@@ -639,7 +639,7 @@ checkdomain(domain);*/
                     }
 
                     $(".line-0").html(
-                        info.nickname + '<img src="http://next.wezchina.com/images/vrenzheng.png" alt="">'
+                        info.nickname + '<img src="/common/img/vrenzheng.png" alt="">'
                     );
                     $(".line-1").text(info.motto);
                     $(".user-cnt").text(info.nickname);
@@ -766,16 +766,16 @@ checkdomain(domain);*/
 
                     if (info.nickname != null) {
                         $(".line-0").html(
-                            info.nickname + '<img src="http://next.wezchina.com/images/vrenzheng.png" alt="">'
+                            info.nickname + '<img src="/common/img/vrenzheng.png" alt="">'
                         );
                     } else {
                         if (info.real_name != null) {
                             $(".line-0").html(
-                                info.real_name + '<img src="http://next.wezchina.com/images/vrenzheng.png" alt="">'
+                                info.real_name + '<img src="/common/img/vrenzheng.png" alt="">'
                             );
                         } else {
                             $(".line-0").html(
-                                localStorage.getItem('title') + '官方微主页' + '<img src="http://next.wezchina.com/images/vrenzheng.png" alt="">'
+                                localStorage.getItem('title') + '官方微主页' + '<img src="/common/img/vrenzheng.png" alt="">'
                             );
                         }
                     }
@@ -866,7 +866,7 @@ checkdomain(domain);*/
 
                     } else {
                         $(".line-0").html(
-                            data.data.title + '<img src="http://next.wezchina.com/images/vrenzheng.png" alt="">'
+                            data.data.title + '<img src="/common/img/vrenzheng.png" alt="">'
                         );
                         $(".line-1").text("品牌介绍");
                         var logo = data.data.logo;
