@@ -149,7 +149,8 @@ $(document).ready(function(){
                     } else {
                         if (info.real_name != null) {
                             $(".line-0").html(
-                                info.real_name + '<img src="/common/img/vrenzheng.png" alt="">'
+                                info.nickname + '<img class="rz" src="/common/img/vrenzheng.png" alt="">' +
+                                '<div class="collection"><img class="ct" src="/common/img/collect.svg" alt=""/><span class="wd">关注</span></div>'
                             );
                             $('title').text('圈子-' + info.real_name + '的官方微主页');
                         } else {
