@@ -74,10 +74,12 @@ $(function() {
 
     // 入会申请
     function column_rhsq(data, thumb_imgs) {
+            // debugger;
         $.ajax({
             url: apiUrl + "/cms/contents?cate_id=" + data,
             dataType: 'json',
             success: function(data){
+                // debugger;
                 if((!data.data.list || data.data.list.length == 0) && thumb_imgs) {
                     thumb_imgs = imgSet(thumb_imgs, 45, 40, 3);
                     $(".dier #ruhuishenqing").css({"background-image": "url("+ thumb_imgs +")"});
@@ -136,7 +138,7 @@ $(function() {
                     $(".report_swiper").append(template);
                 })
 
-                var mySwiper10 = new Swiper (".swiper-report", {
+                const mySwiper10 = new Swiper (".swiper-report", {
                     pagination: '.pagination-report',
                     direction: 'vertical',
                     autoplay: 3000,
@@ -179,7 +181,7 @@ $(function() {
                     $(".lunbo_swiper").append(template);
                 })
 
-                var mySwiper9 = new Swiper (".swiper-nested", {
+                const mySwiper9 = new Swiper (".swiper-nested", {
                     pagination: '.pagination-nested',
                     direction: 'horizontal',
                     autoplay: 3000,
@@ -216,9 +218,14 @@ $(function() {
             thumb_image = imgSet(thumb_image, 45, 40, 3);
         }
 
-        var template2 = function(value) {
-            template += `<a href="/org/`+ value.domain +`"> <i class="iconfont">&#xe61a;</i>`+ value.title +` </a>`
-            return template;
+        debugger;
+        console.log(data.children);
+        var template2 = function(children) {
+            var template21 = '';
+            $.map(children, function(value, key) {
+                template21 += `<a href="/org/`+ value.domain +`"> <i class="iconfont">&#xe61a;</i>`+ value.title +` </a>`
+            });
+            return template21;
         }
 
         var template = `
@@ -232,14 +239,14 @@ $(function() {
                 template = template + `
                 
             </a>
-            <div class="sub" id="`+ data.domain +`"></div>
+            <div class="sub" id="`+ data.domain +`">`+ template2(data.children) +`</div>
         </div>`
         return template;
     };
 
     // 查询组织栏目分类
     $.ajax({
-        url: apiUrl + "/cms/channel_categories?channel=org",
+        url: apiUrl + "cms/cate_tree_by_channel?channel=9fa0bea0-7d7f-11e7-92a8-6585efb9cefe",
         dataType: 'json',
         success: function(data){
             console.log("所有栏目", data);
@@ -258,22 +265,21 @@ $(function() {
                     $(".disan .title").text(item.title);
                     lunbo(item.weid, item.thumb_image);
                 } else {
-                    // if(index <= 8) {
+                    var i = 0;
+                    if(i <= 8) {
                         $(".shanghuijieshao").append(column_list(item));
-                        cont_two(item.domain, item.weid);
-                    // }
+                        i++;
+                    }
                 }
             });
 
             // 移入加载栏目分类
             $(".list").hover(function() {
-                $(this).find(".sub").addClass("list_selected").fadeIn(100);
-                var name = $(this).attr("name");
-                // $(".list_selected").html("");
-                // list_name(name);
-
+                // $(this).find(".sub").addClass("list_selected").fadeIn(100);
+                $(this).find(".sub").addClass("list_selected").show();
             },function() {
-                $(this).find(".sub").removeClass("list_selected").fadeOut(500);
+                // $(this).find(".sub").removeClass("list_selected").fadeOut(500);
+                $(this).find(".sub").removeClass("list_selected").hide();
             });
 
         },
