@@ -119,7 +119,7 @@ const huzhu = `
                         <!--<p class="t1">互助平台</p>-->
                         <!--<p class="t2">共筑众筹梦想朋友圈</p>-->
                     </div>
-                    <img src="/common/img/012.jpg" alt="" style="height: 235px;width: 960px">
+                    <img src="/common/img/012.png" alt="" style="height: 235px;width: 960px">
                 </div>
                 <div class="huzhu-top">
                     <div class="big-title">
