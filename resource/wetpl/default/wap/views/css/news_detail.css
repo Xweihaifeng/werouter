@@ -25,15 +25,19 @@
 .page-content .page-left .clearfix {
     display: flex;
     justify-content: flex-start;
-    align-items: center;
-    font-size: 14px;
+    align-items: flex-start;
+    font-size: 17px;
 }
 .page-content .page-left .bts {
     margin: 20px 0;
     color: #8c8c8c;
 }
-.page-content .page-left .clearfix>span {
-    margin-right: 15px;
+.page-content .page-left .clearfix > span {
+    margin-right: 8px;
+}
+
+.clearfix.bts > span:not(:last-child){
+    line-height: 20px;
 }
 
 .page-content .page-left .clearfix .publisher {
@@ -46,18 +50,18 @@
     justify-content: space-between;
     flex-direction: column;
     align-items: flex-start;
-    font-size: 16px;
+    font-size: 17px;
     line-height: 28px;
 }
 .page-content .page-left .page-details {
     padding: 5px 0 10px;
-    font-family: "微软雅黑","PingFang SC","Helvetica Neue","Hiragino Sans GB","Segoe UI","Microsoft YaHei",sans-serif;
+    /*font-family: "微软雅黑","PingFang SC","Helvetica Neue","Hiragino Sans GB","Segoe UI","Microsoft YaHei",sans-serif;*/
 }
 .page-content .page-left .page-details p {
     text-indent: 2em;
     padding-bottom: 8px;
     margin: 0;
-    line-height: 28px;
+    line-height: 1.5em;
     color: #333;
     text-align: justify;
 }
@@ -68,9 +72,13 @@
     user-select: none;
     display: flex;
     justify-content: space-between;
-    padding: 1rem 0;
+    padding: 0;
+    line-height: 32px;
     color: #8c8c8c;
     font-size: 16px !important;
+}
+.page-content .page-left .evaluate .readings {
+    margin: 0;
 }
 .page-content .page-left .evaluate .readings span {
     padding-right: 1rem;
@@ -114,14 +122,14 @@
 .page-left {
     display: block;
     width: auto !important;
-    padding: 20px 15px !important;
+    padding: 20px 15px 15px !important;
     -webkit-overflow-scrolling : touch;
 }
 
 .page-left .rich_media_title {
     height: auto !important; 
-    line-height: normal !important;
-    font-size: 24px !important;
+    line-height: 1.4 !important;
+    font-size: 25px !important;
     margin: 0 0 10px !important;
     white-space: normal !important;
 }
@@ -142,7 +150,7 @@
 }
 
 .clearfix.bts span.publisher {
-    color: #607fa6;
+    /*color: #607fa6;*/
     font-weight: normal !important;
 }
 
@@ -159,11 +167,11 @@
 
 .original {
     display: block;
-    padding: 0px 10px;
+    padding: 0px 7.5px;
     line-height: 18px;
     border: 1px solid #9e9e9e;
     border-radius: 1rem;
-    font-size: 16px;
+    font-size: 15px;
     color: #8c8c8c;
 }
 

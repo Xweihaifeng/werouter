@@ -2,7 +2,7 @@
  *     组织部分数据覆盖
  */
 
-$(function() {
+// $(function() {
 
     window.localStorage.setItem("pageNum", 1);
     var token = window.localStorage.getItem('token');
@@ -322,4 +322,4 @@ $(function() {
         $("#menuY").html($("#oooo").text());
         document.title = $("#oooo").text();
     }
-});
+// });
