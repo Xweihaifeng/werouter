@@ -335,6 +335,7 @@ $(function() {
                                             async:  false,
                                             success: function(data){
                                                 if(data.code === 200) {
+                                                    document.title = $('#' + pathname[1]).text();
                                                     $('#' + data.data.domain).addClass("cate-active-on").siblings().removeClass("cate-active-on");
                                                     $("#menuY").text(data.data.title);
                                                 }
@@ -365,7 +366,7 @@ $(function() {
                                     } else {
                                         var menu_two = $("#"+ pathname[1]).attr("name");
                                         default_two2(menu_two, pathname[1]);
-
+                                        document.title = $('#' + pathname[1]).text();
                                         $('#' + pathname[1]).addClass("single_active").siblings().removeClass("single_active");
                                         $("#menuY").text($('#' + pathname[1]).text());
                                     }

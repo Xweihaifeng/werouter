@@ -72,7 +72,7 @@
         }
         var template = `
         <li>
-            <a href="/org/`+ data.weid +`">`
+            <a href="/org/`+ data.domain +`">`
                 if(thumb_image != "") {
                     template = template + `<img class="iconfont" src="`+ thumb_image +`" alt="">`;
                 }
