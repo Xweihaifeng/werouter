@@ -279,33 +279,34 @@ $(function() {
                             wx.ready(function() {
                                 var link = window.location.href;
                                 wx.onMenuShareTimeline({
-                                    title: atitle,
+                                    title: "atitle",
                                     // 分享标题
-                                    link: link,
+                                    link: window.location.href,
                                     // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-                                    desc: summary,
+                                    desc: "summary",
                                     //分享描述
-                                    imgUrl: cover,
+                                    imgUrl: "http://images.wezchina.com/plats/resource/1512464837182.png",
                                     // 分享图标
                                     success: function() {
                                         // 用户确认分享后执行的回调函数
+                                        alert("成功")
                                     },
                                     cancel: function() {
                                         // 用户取消分享后执行的回调函数
                                     }
                                 });
                                 wx.onMenuShareAppMessage({
-                                    title: atitle,
+                                    title: "atitle",
                                     // 分享标题
                                     // desc: data.summary,
                                     // imgUrl: data.detail.cover,
-                                    desc: summary,
+                                    desc: "summary",
                                     // 分享描述
-                                    link: link,
+                                    link: window.location.href,
                                     // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
                                     // imgUrl: ApiMaterPlatQiniuDomain + data.cover,
 
-                                    imgUrl: cover,
+                                    imgUrl: "http://images.wezchina.com/plats/resource/1512464837182.png",
                                     // 分享图标
                                     type: '',
                                     // 分享类型,music、video或link，不填默认为link
@@ -313,6 +314,7 @@ $(function() {
                                     // 如果type是music或video，则要提供数据链接，默认为空
                                     success: function() {
                                         // 用户确认分享后执行的回调函数
+                                        alert("成功")
                                     },
                                     cancel: function() {
                                         // 用户取消分享后执行的回调函数
