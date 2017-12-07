@@ -219,7 +219,7 @@ $(function() {
                     }
                 });
 
-/*                if (is_weixn()) {
+                if (is_weixn()) {
                     var oldTime = localStorage.getItem('setopenid-date');
 
                     if (!isExpire(oldTime)) { //没过期
@@ -235,9 +235,9 @@ $(function() {
                                 data: {
                                     openid: openid,
                                     ref_url: window.location.pathname,
-                                    ref_type: 2,
-                                    ref_id: plat_userid,
-                                    domain: domain
+                                    // ref_type: 2,
+                                    // ref_id: plat_userid,
+                                    // domain: domain
                                 },
                                 success: function (data) {
                                     //alert(JSON.stringify(data))
@@ -256,7 +256,7 @@ $(function() {
                         localStorage.setItem('setopenid-date', new Date().getTime())
                         window.location.href = encodeURI(apiUrl + '/openid?url=' + window.location.href);
                     }
-                }*/
+                }
 
                 $.ajax({
                     url: apiUrl + 'wxjssdk',
@@ -266,8 +266,7 @@ $(function() {
                     },
                     success: function(data) {
                         if (data.code == 200) {
-                            alert("000000001")
-                            alert(data)
+                            console.log(data)
                             wx.config({
                                 debug: false,
                                 appId: data.data.appId,
@@ -280,34 +279,33 @@ $(function() {
                             wx.ready(function() {
                                 var link = window.location.href;
                                 wx.onMenuShareTimeline({
-                                    title: "atitle",
+                                    title: atitle,
                                     // 分享标题
-                                    link: window.location.href,
+                                    link: link,
                                     // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-                                    desc: "summary",
+                                    desc: summary,
                                     //分享描述
-                                    imgUrl: "http://images.wezchina.com/plats/resource/1512464837182.png",
+                                    imgUrl: cover,
                                     // 分享图标
                                     success: function() {
                                         // 用户确认分享后执行的回调函数
-                                        alert("成功")
                                     },
                                     cancel: function() {
                                         // 用户取消分享后执行的回调函数
                                     }
                                 });
                                 wx.onMenuShareAppMessage({
-                                    title: "atitle",
+                                    title: atitle,
                                     // 分享标题
                                     // desc: data.summary,
                                     // imgUrl: data.detail.cover,
-                                    desc: "summary",
+                                    desc: summary,
                                     // 分享描述
-                                    link: window.location.href,
+                                    link: link,
                                     // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
                                     // imgUrl: ApiMaterPlatQiniuDomain + data.cover,
 
-                                    imgUrl: "http://images.wezchina.com/plats/resource/1512464837182.png",
+                                    imgUrl: cover,
                                     // 分享图标
                                     type: '',
                                     // 分享类型,music、video或link，不填默认为link
@@ -315,7 +313,6 @@ $(function() {
                                     // 如果type是music或video，则要提供数据链接，默认为空
                                     success: function() {
                                         // 用户确认分享后执行的回调函数
-                                        alert("成功")
                                     },
                                     cancel: function() {
                                         // 用户取消分享后执行的回调函数
