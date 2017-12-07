@@ -1,99 +1,55 @@
-<#include#>header_include.html</#include#>
-<script type="text/javascript">
-    header_scroll = 'no';
-</script>
-<body>
-<link rel="stylesheet" href="{{PATH_TML}}new/css/index.css" />
-<link rel="stylesheet" href="{{PATH_TML}}new/css/new.info.css">
-<div class="blank20">
+<!DOCTYPE html>
+<html>
 
-</div>
+    <head>
+        <title></title>
+        <meta charset="utf-8" />
+        <link rel="icon" href="" id="public_icon" />
 
-<div class="news_top_det_img">
+        <link rel="stylesheet" type="text/css" href="{{PATH_TML}}font/iconfont.css" />
+        <link rel="stylesheet" type="text/css" href="{{PATH_TML}}css/news_base.css" />
+        <link rel="stylesheet" type="text/css" href="{{PATH_TML}}assets/show/organize/css/organize.css" />
+        <link rel="stylesheet" type="text/css" href="{{PATH_TML}}css/modal_login.css" />
 
-</div>
+        <script src="/common/js/jquery-3.2.1.min.js"></script> 
+        <script src="/common/layer-v3.0.3/layer-v3.0.3/layer/layer.js"></script>
+        <script src="{{PATH_CONFIG}}"></script>
+        <script src="{{PATH_TML}}js/modal_login.js"></script>
+        <script src="{{PATH_TML}}assets/show/organize/js/organize.js"></script>
+    </head>
 
-<div class="info_news" >
-    <div id="colorfulPulse"  >
-        <span class="item-1"></span>
-        <span class="item-2"></span>
-        <span class="item-3"></span>
-        <span class="item-4"></span>
-        <span class="item-5"></span>
-        <span class="item-6"></span>
-        <span class="item-7"></span>
-    </div>
-    <div class="info_news_l" id="app">
-
-        <div class="info_l_tit">
-            <p class="title_new">{{content.title}}</p>
-            <div class="title_b">
-                <span class="news_sort">{{content.category.title}}</span>
-                <em class="title_line"></em>
-                <span class="news_pub_time">{{content.publish_time}}</span>
-                <em class="title_line"></em>
-                <div class="bdsharebuttonbox" style="float: right;position: relative;bottom: 3px;">
-                    <a href="#" class="bds_more" data-cmd="more"></a>
-                    <a href="#" class="bds_qzone" data-cmd="qzone"></a>
-                    <a href="#" class="bds_tsina" data-cmd="tsina"></a>
-                    <a href="#" class="bds_tqq" data-cmd="tqq"></a>
-                    <a href="#" class="bds_renren" data-cmd="renren"></a>
-                    <a href="#" class="bds_weixin" data-cmd="weixin"></a>
+    <body>
+        <!-- 登录部分 -->
+        <div class="modal_login" id="modal_login"></div>
+        <!-- 导航部分开始 -->
+        <ul class="news_menu" id="public_main_news_menu"></ul>
+        <!-- 导航部分结束 -->
+        <!-- 组织部分开始 -->
+        <div class="organize-content">
+            <div class="weizhuye-gerenfencai">
+                <div class="top-nav">
+                    <div id="thumb_image"></div>
+                    <ul class="center-disperse" id="menuX">
+                        <a class="chan_li" id="oooo" name="oooo">最新发布</a>
+                    </ul>
                 </div>
-                <script>
-                    window._bd_share_config = {
-                        "common": {
-                            "bdSnsKey": {},
-                            "bdText": "",
-                            "bdMini": "2",
-                            "bdPic": "",
-                            "bdStyle": "0",
-                            "bdSize": "16"
-                        },
-                        "share": {},
-                        "image": {
-                            "viewList": ["qzone", "tsina", "tqq", "renren", "weixin"],
-                            "viewText": "分享到：",
-                            "viewSize": "16"
-                        },
-                        "selectShare": {
-                            "bdContainerClass": null,
-                            "bdSelectMiniList": ["qzone", "tsina", "tqq", "renren", "weixin"]
-                        }
-                    };
-                    with(document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = '/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];
-                </script>
-
             </div>
+            <div class="weizhuye-gerenfencai" id="firstStage">
+                <div class="fengcai fengcai-main">
+                    <div class="main-top center-disperse">
+                        <div class="org_art_title"></div>
+                        <div class="y">当前位置：首页&gt; <a id="menuY" href="">商会介绍</a>&gt;<a></a></div>
+                    </div>
+                    <ul class="list-article-ul"></ul>
+                </div>
+            </div>
+            <div class="prompt-info"></div>
+            <div id="plat-two-back-top"><img src="{{PATH_TML}}images/gotop.png"></div>
         </div>
-        <div style="height: 1px;width: 120%;background: #ededed;position: relative;left: -44px;"></div>
-        <div class="news_content" v-html="content.content">
-        </div>
+        <!-- 组织部分结束 -->
+        <!-- 右侧大背景图 -->
+        <div id="public_main_right_bg" style="position:fixed;top:0;bottom:0;left:1190px;width:100%;"></div>
+        <script src="{{PATH_TML}}js/public_main_right_bg.js"></script>
+    </body>
 
-    </div>
-</div>
-<script>
-    new Vue({
-        el: '#app',
-        data: {
-            'content' : {},
-            'show':true,
-            'page':1,
-        },
-        mounted() {
-            this.$nextTick( function () {
-                this.get_data(window.location.pathname.split('/').pop());
-            });
-        },
-        methods:{
-            get_data : function(weid){
-                ajax.get(web_business.web_cms_contents+weid).then((res)=>{
-                    this.content = res.data;
-                set_title(this.content.title);
-                $('#colorfulPulse').hide();
-            });
-            }
-        }
-    });
-</script>
-<#include#>footer_include.html</#include#>
+</html>
