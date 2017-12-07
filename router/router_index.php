@@ -1,5 +1,5 @@
 <?php
-class router_index 
+class router_index
 {
     //路由配置信息
     public $params;
@@ -27,11 +27,8 @@ class router_index
 
     private $_db;
 
-    // 重定向的链接
-    private $_rest_url = '';
-    
     public function __construct()
-    {	
+    {
 
         $this->_domain = $_SERVER['HTTP_HOST'];
 
@@ -49,48 +46,29 @@ class router_index
     {
         $mark_array = ['m'];
         $domain_array = explode('.' , $this->_domain);
-
-        $count_domain_array = count($domain_array);
         $mark_domain = current($domain_array);
 
-        if($count_domain_array == 4 || $count_domain_array == 3 && $mark_domain == 'www')
-        {
-        	$this->_domain = substr( $this->_domain , 4);
-        	$this->_rest_url = $this->_domain;
-        }
-        
         $domain_config = $this->_domain;
-        if($mark_domain == 'm') 
+        if($mark_domain == 'm')
         {
             $domain_config = str_replace("m.","", $this->_domain );
-        }        
+        }
         $this->_mark_domain = (in_array($mark_domain, $mark_array)) ? $mark_domain : 'pc' ;
+
+        $this->_is_wap($domain_config);
 
         return $domain_config;
     }
 
-    private function _www_domain($domain_array , $count_domain_array ,$mark_domain)
-    {
-    	if($count_domain_array == 4 && $mark_domain == 'www')
-    	{
-    		header("Location: ".$this->http."://".$this->_domain.$this->_request_uri); 
-            exit;
-    	}
-    }
-
     private function _is_wap($domain_config)
     {
-    	if(!empty($this->_rest_url))
-    	{
-    		header("Location: ".$this->http."://".$this->_rest_url.$this->_request_uri); 
-            exit;
-    	}
+        $protocol = empty($_SERVER['HTTPS']) ? 'http' : 'https';
 
         if($this->_mark_domain == 'pc' && is_mobile() == TRUE){
-            header("Location: ".$this->http."://m.".$domain_config.$this->_request_uri); 
+            header("Location: {$protocol}://m.".$domain_config.$this->_request_uri);
             exit;
-        } elseif ($this->_mark_domain == 'm' && is_mobile() == FALSE) {
-            header("Location: ".$this->http."://".$domain_config.$this->_request_uri); 
+        }elseif ($this->_mark_domain == 'm' && is_mobile() == FALSE) {
+            header("Location: {$protocol}://".$domain_config.$this->_request_uri);
             exit;
         }
     }
@@ -99,11 +77,11 @@ class router_index
     private function _get_domain()
     {
         $domain_router_file = './config/domain/'.md5($this->_domain_config);
+
         if(!file_exists($domain_router_file))
         {
             // 获取路由信息和路由正则信息
             $data_stirng = curl_action(config::$config_api_url.$this->_domain_config);
-			
             $data = json_decode($data_stirng , TRUE);
 
             if($data['code'] !== 200)
@@ -131,7 +109,7 @@ class router_index
             error (404);
         }
     }
-    
+
     public  function  index()
     {
         //路由内置验证
@@ -144,7 +122,6 @@ class router_index
         {
             error(404);
         }
-
         $this->data = $this->data['data'];
 
         $this->data['http_type'] = $this->_initHttpType($this->data['domain']);
@@ -160,16 +137,13 @@ class router_index
 
         if(empty($this->data['router'])) error (404);
 
-         // 手机版 && 电脑版相互跳转
-        $this->_is_wap($this->_domain_config);
-
         (new main($this->data))->index($this->_directory[$this->_mark_domain] , $this->data['weid'] , $this->_domain_config, $this->_mark_domain);
-        
+
     }
 }
 
 class main
-{ 
+{
     //路由配置信息
     public $params;
     //获取data 数据
@@ -178,19 +152,19 @@ class main
     public $file;
 
     // 构造方法
-    public function __construct($data) 
+    public function __construct($data)
     {
         $this->data = $data;
     }
-    
+
     public function  index( $directory , $weid , $domain , $mark_domain)
     {
 
-		$router = $this->data['router'];
+        $router = $this->data['router'];
 
-    	$rule = $this->data['match'];
+        $rule = $this->data['match'];
 
-    	$uri =current(explode('?', $_SERVER['REQUEST_URI']));
+        $uri =current(explode('?', $_SERVER['REQUEST_URI']));
 
         $router_verify = new router_verify($router , $uri , $rule , $weid);
 
@@ -198,7 +172,7 @@ class main
 
             error(404);
         }
-        
+
         $router_map = $router_verify->router['router_map'];
         $controller_router_config = (!empty($router_verify->router['config'])) ? $router_verify->router['config']  : '' ;
 
@@ -230,11 +204,10 @@ class main
     // 生成配置文件
     private function _generate_config($additional_config , $domain , $mark_domain)
     {
-    	if($mark_domain == 'm')
-    	{
-    		$domain = 'm.'.$domain;
-    	}
-
+        if($mark_domain == 'm')
+        {
+            $domain = 'm.'.$domain;
+        }
         $config = file_get_contents('configure.js');
 
         $config = str_replace('{{url}}', $domain , $config);
@@ -267,6 +240,4 @@ class main
     {
         return Wez_template::init($this->file ,  $content , $config_file , $directory);
     }
-
 }
-
