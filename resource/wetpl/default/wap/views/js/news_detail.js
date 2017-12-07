@@ -266,7 +266,8 @@ $(function() {
                     },
                     success: function(data) {
                         if (data.code == 200) {
-                            console.log("000000001")
+                            alert("000000001")
+                            alert(data)
                             wx.config({
                                 debug: false,
                                 appId: data.data.appId,
