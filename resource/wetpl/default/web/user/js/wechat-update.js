@@ -74,7 +74,7 @@ $(document).ready(function(){
 	    	return false;
 		}
     	$("#wechat_save").show();    	
-    	$(".modal_info").html("本次提交为重要信息，请确认后谨慎操作！").css("color", "");    	
+    	$(".modal_info").html("本次提交为重要信息,请仔细检查确无误后再提交（如果有误平台支付模块将报错此信息必须和微信公众平台，商户平台信息保存一致并且是可用状态）请确认后谨慎操作！").css("color", "");    	
 	    $("#wechat_save").click(function() {
 	    	var options107 = $.post(apiUrl + "pages/wechat/update", body107);
 		    options107.done(function(data) {
