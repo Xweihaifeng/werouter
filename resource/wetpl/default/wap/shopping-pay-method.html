@@ -67,7 +67,8 @@
                     address_default : JSON.parse(window.sessionStorage.getItem('address_default')),
                     store_num       : '',
                     order_detail    : '',
-                    config          : ''
+                    config          : '',
+                    openid          : ''
                 },
                 mounted: function() {
                     var self = this;
@@ -81,8 +82,9 @@
 
                     // 获取默认地址
                     self.$http.get(apiUrl + 'order/detail/' + self.store_num).then(function (data) {
-                        self.order_detail = data.data.data;
-                        console.log(self.order_detail);
+                        if(data.data.code=='200'){
+                            self.order_detail = data.data.data;
+                        }
                     });
 
                     var body1 = {
@@ -92,22 +94,60 @@
 
                     if(!getQueryString("openid")) {
                         return false;
+                    }else{
+                        self.openid=getQueryString("openid");
                     }
-                    self.$http.post(apiUrl + 'pages/wechatPay/mallOrderPhonePay', body1).then(function (data) {
-                        self.config = data.data.data.config;
 
+
+                    self.$http.post(apiUrl + 'pages/wechatPay/mallOrderPhonePay', body1).then(function (data) {
+
+                        if(data.data.code=='200'){
+                            self.config = data.data.data.config;
+                            function onBridgeReady(){
+                                WeixinJSBridge.invoke('getNetworkType',self.config,
+                                    function(e){
+                                        WeixinJSBridge.log(e.err_msg);
+                                        if (e.err_msg == "get_brand_wcpay_request:ok") {
+                                            layer.msg("微信支付完成", { time: 1500 });
+
+                                        } else if (e.err_msg == "get_brand_wcpay_request:cancel") {
+                                            //取消支付!
+                                            layer.msg("已取消支付", { time: 1500 });
+                                        } else {
+                                            layer.msg("微信支付失败！", { time: 1500 });
+                                        }
+
+                                    });
+                            }
+
+                            if (typeof WeixinJSBridge == "undefined"){
+                                if( document.addEventListener ){
+                                    document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+                                }else if (document.attachEvent){
+                                    document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
+                                    document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+                                }
+                            }else{
+                                onBridgeReady();
+                            }
+
+                        }else{
+                            layer.msg(ata.data.message);
+                        }
+
+
+
+
+
+
+
+                        /*
                         var onBridgeReady = function(res) {
                             alert(res)
                             alert(res.err_msg)
                             if (res.err_msg == "get_brand_wcpay_request:ok") {
                                 layer.msg("微信支付完成", { time: 1500 });
-                                // var domain = window.sessionStorage.getItem("domain");
-                                // alert(domain);
-                                // window.location.href = `/`+ domain +`/wemall`;
-                                // 支付成功 回到首页
-                                // alert("支付成功");
-                                // MessageBox.alert(commonToast["paySuccess"]).then(action => {
-                                // });
+
                             } else if (res.err_msg == "get_brand_wcpay_request:cancel") {
                                 //取消支付!
                                 layer.msg("已取消支付", { time: 1500 });
@@ -124,11 +164,12 @@
                                 document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
                             }
                         } else {
-                            // alert(self.config.appId, self.config.timestamp, self.config.nonceStr, self.config.package, self.config.signType, self.config.paySign)
+
                             WeixinJSBridge.invoke('getBrandWCPayRequest', self.config, function (res) {
                                 onBridgeReady(res);
                             })
                         }
+                        */
                     });
                 },
                 ready: function() {
@@ -144,7 +185,11 @@
                         var body = new Object();
                         body.url = window.location.href;
                         body.orderid = self.store_num;
-                        window.location.href = apiUrl + 'mall/getMallOpenid?url=' + window.location.href + '&orderid=' + self.store_num + '&style=1';
+                        if(!self.openid){
+                            window.location.href = apiUrl + 'mall/getMallOpenid?url=' + window.location.href + '&orderid=' + self.store_num + '&style=1';
+                        }
+
+
                     }
                 }
             })
