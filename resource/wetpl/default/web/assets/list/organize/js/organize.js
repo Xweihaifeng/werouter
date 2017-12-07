@@ -260,8 +260,23 @@ $(function() {
                             }
                         });
 
-                        show_two = $("#menuTwo").children().first().attr("name");
-                        single_page(show_two); 
+                        show_two = $("#menuTwo").children().first().attr("id");
+                        $.ajax({
+                            url: apiUrl + "cms/categories/domain_query/" + show_two,
+                            dataType: 'JSON',
+                            async:  false,
+                            success: function(data) {
+                                if(data.code === 200) {
+                                    two_ul(data.data);
+                                    $(".paging").hide();
+                                } else {
+                                    console.error(data.message);
+                                }
+                            },
+                            error: function(error) {
+                                console.error(error);
+                            }
+                        }) 
 
                     } else {
 
