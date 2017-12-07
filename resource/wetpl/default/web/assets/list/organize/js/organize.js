@@ -208,7 +208,7 @@ $(function() {
         return template;
     }
 
-    // 二级判断
+    // 二级判断点击加载
     function default_two(menu_two, show_two) {
         $.ajax({
             url: apiUrl + "cms/cate_categories?cate=" + menu_two,
@@ -228,8 +228,40 @@ $(function() {
                             }
                         });
 
-                        show_two = $("#menuTwo").children().first().attr("name");
                         column(show_two, pageNum);
+
+                    } else {
+
+                        // 没有二级分类
+                        screen();
+                    }
+                }
+            }
+        })
+    }
+
+    // 二级判断默认加载
+    function default_two2(menu_two, show_two) {
+        $.ajax({
+            url: apiUrl + "cms/cate_categories?cate=" + menu_two,
+            dataType: 'json',
+            async:  false,
+            success: function(body4){
+                if(body4.code == 200) {
+
+                    if(body4.data.length > 0) {
+
+                        $("#menuTwo").html("");
+                        var result = body4.data;
+
+                        result.forEach(function(value, key) {
+                            if(key < 10) {
+                                $("#menuTwo").append(menuTwo(value));
+                            }
+                        });
+
+                        show_two = $("#menuTwo").children().first().attr("name");
+                        single_page(show_two); 
 
                     } else {
 
@@ -317,8 +349,7 @@ $(function() {
                                         }
                                     } else {
                                         var menu_two = $("#"+ pathname[1]).attr("name");
-                                        default_two(menu_two, pathname[1]);
-
+                                        default_two2(menu_two, pathname[1]);
 
                                         $('#' + pathname[1]).addClass("single_active").siblings().removeClass("single_active");
                                         $("#menuY").text($('#' + pathname[1]).text());
