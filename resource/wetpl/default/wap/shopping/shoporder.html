@@ -45,14 +45,14 @@
                     <div class="product">
                         <p class="des">{{item.title}}</p>
                         <p class="price">
-                            <span>￥{{item.price * item.goods_num}}</span>
+                            <span>￥{{parseFloat(item.price * item.goods_num).toFixed(2)}}</span>
                             <label>
                                 <span>已选：{{item.goods_num}}件</span>
                             </label>
                         </p>
                         <p class="operation">
-                            <span>删除</span>
-                            <span>移入关注</span>
+                            <!--<span>删除</span>-->
+                            <!--<span>移入关注</span>-->
                             <span>运费￥{{getSinglePostage(item)}}</span>
                         </p>
                     </div>
@@ -62,9 +62,9 @@
                 <p>
                     <span>
                         总计：
-                        <strong>￥{{storeAll}}</strong>
+                        <strong>￥{{parseFloat(storeAll + postage).toFixed(2)}}</strong>
                     </span>
-                    <span>总额￥{{storeAll}} 立减￥0.00</span>
+                    <span>总额￥{{parseFloat(storeAll + postage).toFixed(2)}} 立减￥0.00</span>
                 </p>
             </div>
         </div>
@@ -74,17 +74,17 @@
         </div>
         <div class="order_total">
             <div> 商品总计</div>
-            <div> ￥{{storeAll}}</div>
+            <div> ￥{{parseFloat(storeAll).toFixed(2)}}</div>
         </div>
         <div class="order_freight">
             <div> 运费</div>
-            <div> ￥{{postage}}</div>
+            <div> ￥{{parseFloat(postage).toFixed(2)}}</div>
         </div>
     </div>
     <footer class="order_footer">
         <a href="javascript:void(0)" class="order_footer_follow">
-            <div><span> 应付金额：</span><span class="order_count">￥{{storeAll + postage}}</span></div>
-            <div><span>总额￥{{storeAll + postage}} 立减￥0.00</span></div>
+            <div><span> 应付金额：</span><span class="order_count">￥{{parseFloat(storeAll + postage).toFixed(2)}}</span></div>
+            <div><span>总额￥{{parseFloat(storeAll + postage).toFixed(2)}} 立减￥0.00</span></div>
         </a>
         <a href="javascript:void(0)" class="order_footer_pay" @click="order_footer_pay()">提交订单</a>
     </footer>
@@ -128,7 +128,7 @@
                 var goods = this.list.goodsList;
                 for (var a = 0; a < goods.length; a++) {
                     if(goods[a].postage_status === 2){
-                        if(goods[a].postage_max_money){
+                        if(goods[a].postage_max_money && parseInt(goods[a].postage_max_money) > 0){
                             if(parseFloat(goods[a].price * goods[a].goods_num) < parseFloat(goods[a].postage_max_money)){
                                 money += parseFloat(goods[a].postage * goods[a].goods_num)
                             }
@@ -172,7 +172,7 @@
                         this.store_num = data.body.data;
                         window.sessionStorage.setItem('store_num', data.body.data);
 
-                        window.location.href = `/pay/shopping?store_num=`+ data.body.data +``;
+                        window.location.href = '/pay/shopping?store_num='+ data.body.data;
                     } else {
                         layer.msg(data.body.message, { time: 2500 });
                     }
@@ -183,14 +183,14 @@
                     return '0.00'
                 }
                 if(item.postage_status === 2){
-                    if(item.postage_max_money){
+                    if(item.postage_max_money && parseInt(item.postage_max_money) > 0){
                         if(parseFloat(item.price * item.goods_num) >= parseFloat(item.postage_max_money)){
                             return '0.00'
                         }else{
-                            return parseFloat(item.postage * item.goods_num)
+                            return parseFloat(item.postage * item.goods_num).toFixed(2)
                         }
                     }else{
-                        return parseFloat(item.postage * item.goods_num)
+                        return parseFloat(item.postage * item.goods_num).toFixed(2)
                     }
                 }
             }

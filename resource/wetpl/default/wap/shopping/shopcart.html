@@ -34,18 +34,20 @@
                 </p>
             </div>
             <ul>
-                <li v-for="(item,index) in store.goods">
+                <li v-for="(item,index) in store.goods" :class="{'no-exit' : item.status != 1}">
                     <label class="circle" :class="{'checked-item-circle' : item.checked}" :for="pIndex+''+index">
                         <input @click="selectItem(store,item,index)" v-model="item.checked" class="circle"
                                :id="pIndex+''+index" type="checkbox"></label>
                     <img :src="'http://images.new.wezchina.com/' + item.cover" alt="">
                     <div class="product">
-                        <p class="des">{{item.summary}}</p>
+                        <p class="des">{{item.title}}</p>
                         <p class="price">
-                            <span>{{item.price * item.goods_num ? item.price * item.goods_num : item.price}}</span>
+                            <span>{{item.price * item.goods_num ? parseFloat(item.price * item.goods_num).toFixed(2) : parseFloat(item.price).toFixed(2)}}</span>
+                            <span class="status-tip" v-if="item.status == 2">已下架</span>
+                            <span class="status-tip" v-if="item.status == 3">已删除</span>
                             <label>
                                 <span @click="operNum(item,store,'reduce')">-</span>
-                                <span>{{item.goods_num ? item.goods_num : 1}}</span>
+                                <span>{{item.goods_num ? (item.goods_num > item.stock ? item.stock : item.goods_num) : 1}}</span>
                                 <span @click="operNum(item,store,'add')">+</span>
                             </label>
                         </p>
@@ -60,9 +62,9 @@
                 <p>
                     <span>
                         总计：
-                        <strong>￥{{store.storeAllMoney ? store.storeAllMoney : 0.00}}</strong>
+                        <strong>￥{{store.storeAllMoney ? parseFloat(store.storeAllMoney).toFixed(2) : "0.00"}}</strong>
                     </span>
-                    <span>总额￥{{store.storeAllMoney ? store.storeAllMoney : 0.00}} 立减￥0.00</span>
+                    <span>总额￥{{store.storeAllMoney ?  parseFloat(store.storeAllMoney).toFixed(2) : "0.00"}} 立减￥0.00</span>
                 </p>
                 <a disabled="disabled" :class="{'red-bg' : store.storeAllMoney>0 }" @click="goOrder(store)">去结算
                     <small>({{store.num ? store.num : 0}})件</small>
@@ -120,20 +122,24 @@
                 storeObj.num = 0;
                 var len = storeObj.goods.length;
                 for (var i = 0; i < len; i++) {
-                    if(flag){
-                        storeObj.goods[i].checked = storeObj.mall.pCheck;
+                    if(storeObj.goods[i].status == 1){
+                        if(flag){
+                            storeObj.goods[i].checked = storeObj.mall.pCheck;
+                        }
+                        if (storeObj.goods[i].checked) {
+                            storeObj.storeAllMoney += storeObj.goods[i].price * storeObj.goods[i].goods_num;
+                            storeObj.num++
+                        }
                     }
-                    if (storeObj.goods[i].checked) {
-                        storeObj.storeAllMoney += storeObj.goods[i].price * storeObj.goods[i].goods_num;
-                        storeObj.num++
-                    }
-                }
-            },
+                }},
             selectStore: function (storeObj) {
                 storeObj.mall.pCheck = !storeObj.mall.pCheck;
                 this.getNumber(storeObj,true)
             },
             selectItem: function (storeObj, itemObj, index) {
+                if(itemObj.status != 1){
+                    return
+                }
                 itemObj.checked = !itemObj.checked;
                 var isAllCheck = storeObj.goods.filter(function (item) {
                     return item.checked === false;
@@ -143,16 +149,21 @@
 
             },
             operNum: function (item, storeObj,oper) {
+                if(item.status != 1){
+                    return
+                }
                 item.checked = true;
                 if(oper === "add"){
                     item.goods_num++;
                     if (item.goods_num > item.stock) {
+                        layer.msg('商品数量已经超过库存')
                         item.goods_num = item.stock
                     }
                 }
                 if(oper === "reduce"){
                     item.goods_num--;
                     if (item.goods_num <= 0) {
+                        layer.msg('商品数量不能小于1')
                         item.goods_num = 1;
                     }
                 }
@@ -169,8 +180,10 @@
                     goodsList : []
                 };
                 for(var i=0; i<storeObj.goods.length; i++){
-                    if(storeObj.goods[i].checked){
-                        orderObj.goodsList.push(storeObj.goods[i])
+                    if(storeObj.goods[i].status == 1){
+                        if(storeObj.goods[i].checked){
+                            orderObj.goodsList.push(storeObj.goods[i])
+                        }
                     }
                 }
 

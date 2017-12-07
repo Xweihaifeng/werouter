@@ -247,9 +247,9 @@ checkdomain(domain,id);
         if(data.status==1){
             var addrdivhtml='<div class="list-item" data="'+data.weid+'">'+
                    '<p class="m0">'+
-                       '<div class="xinming dizhi-active" >'+data.name+'&nbsp;&nbsp;&nbsp;<span class="provname provname'+data.province_id+'" data-id=""></span></div>'+
+                       '<div class="xinming dizhi-active" >'+data.name+'&nbsp;&nbsp;<span class="provname provname'+data.province_id+'" data-id=""></span></div>'+
 
-                       '<div class="dizhi" style="color: rgb(255, 0, 0);">&nbsp;&nbsp;&nbsp;<span class="provname provname'+data.province_id+'"></span>&nbsp;&nbsp;&nbsp;<span class="cityname cityname'+data.area_id+'"></span>&nbsp;&nbsp;&nbsp;<span class="detailname">'+data.detail+'</span>&nbsp;&nbsp;&nbsp;<span class="buyname">'+data.name+'</span>&nbsp;&nbsp;&nbsp;<span class="telname">'+data.telophone+'</span></div>'+
+                       '<div class="dizhi" style="color: rgb(255, 0, 0);">&nbsp;&nbsp;<span class="provname provname'+data.province_id+'"></span>&nbsp;&nbsp;<span class="cityname cityname'+data.area_id+'"></span>&nbsp;&nbsp;<span class="detailname">'+data.detail+'</span>&nbsp;&nbsp;<span class="buyname">'+data.name+'</span>&nbsp;&nbsp;<span class="telname">'+data.telophone+'</span></div>'+
                         '<div class="default-tip">默认地址</div>'+
                    '</p>'+
                 '</div>'; 
@@ -257,9 +257,9 @@ checkdomain(domain,id);
         }else{
             var addrdivhtml='<div class="list-item" data="'+data.weid+'" >'+
                    '<p class="m0">'+
-                       '<div class="xinming '+dizhiacitve+'" >'+data.name+'&nbsp;&nbsp;&nbsp;<span class="provname provname'+data.province_id+'" data-id=""></span></div>'+
+                       '<div class="xinming '+dizhiacitve+'" >'+data.name+'&nbsp;&nbsp;<span class="provname provname'+data.province_id+'" data-id=""></span></div>'+
 
-                       '<div class="dizhi" style="'+colorred+'">&nbsp;&nbsp;&nbsp;<span class="provname provname'+data.province_id+'"></span>&nbsp;&nbsp;&nbsp;<span class="cityname cityname'+data.area_id+'"></span>&nbsp;&nbsp;&nbsp;<span class="detailname">'+data.detail+'</span>&nbsp;&nbsp;&nbsp;<span class="buyname">'+data.name+'</span>&nbsp;&nbsp;&nbsp;<span class="telname">'+data.telophone+'</span></div>'+
+                       '<div class="dizhi" style="'+colorred+'">&nbsp;&nbsp;<span class="provname provname'+data.province_id+'"></span>&nbsp;&nbsp;<span class="cityname cityname'+data.area_id+'"></span>&nbsp;&nbsp;<span class="detailname">'+data.detail+'</span>&nbsp;&nbsp;<span class="buyname">'+data.name+'</span>&nbsp;&nbsp;<span class="telname">'+data.telophone+'</span></div>'+
                    '</p>'+
                 '</div>'; 
         }     
@@ -395,7 +395,7 @@ checkdomain(domain,id);
             $(obj).parent().append(tip)
         }
         // $('#address_id').val($(this).attr('data'));
-        $(".provname-defalt").text($(obj).find('.dizhi-active .provname').text());
+        $(".provname-defalt").text($(obj).find('.provname').text());
         $(".cityname-defalt").text($(obj).find('.cityname').text());
         $(".address-defalt").text($(obj).find('.detailname').text());
         $(".buyname-defalt").text($(obj).find('.buyname').text());

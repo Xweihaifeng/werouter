@@ -193,6 +193,7 @@ $(function() {
     var quantity = $("#quantity");
     $("#add").click(function(){
         if(quantity.text() >= stock) {
+            layer.msg('商品数量超过库存');
             return false;
         }
         quantity.text(parseInt(quantity.text()) + 1);
@@ -203,6 +204,7 @@ $(function() {
         if (parseInt(quantity.text()) > 1) {                  //判断数量值大于1时才可以减少  
             quantity.text(parseInt(quantity.text()) - 1)
         } else {
+            layer.msg('商品数量不能小于1');
             $("#min").attr("disabled","disabled")          //当$("#min")为1时，$("#min")不可读状态  
         }
     })
@@ -319,9 +321,10 @@ $(function() {
     })
 
     $(".detail_footer_cart").click(function() {
-        var domain = window.location.pathname.split("/")[1];
-        window.sessionStorage.setItem("goods_domain", domain);
-        window.location.href = "/" + domain + "/wemall/cart"
+        // var domain = window.location.pathname.split("/")[1];
+        // window.sessionStorage.setItem("goods_domain", domain);
+        //window.location.href = "/" + domain + "/wemall/cart"
+        window.location.href = "/user/wemall/cart"
     });
 
 
