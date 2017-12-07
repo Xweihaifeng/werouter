@@ -288,6 +288,21 @@ $(function() {
                                         });
                                         default_two(parend_id, pathname[1]);
                                         $('#' + pathname[1]).addClass("single_active").siblings().removeClass("single_active");
+                                        $.ajax({
+                                            url: CMS_CHANNELS_DOMAIN_QUERY + pathname[0],
+                                            dataType: 'JSON',
+                                            async:  false,
+                                            success: function(data) {
+                                                if(data.code === 200) {
+                                                    single_page(data.data.weid);
+                                                } else {
+                                                    console.error(data.message);
+                                                }
+                                            },
+                                            error: function(error) {
+                                                console.error(error);
+                                            }
+                                        })
                                     } else {
                                         var menu_two = $("#"+ pathname[1]).attr("name");
                                         default_two(menu_two, pathname[1]);
