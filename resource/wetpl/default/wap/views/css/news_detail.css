@@ -8,6 +8,7 @@
 html, body {
     padding: 0;
     margin: 0;
+    overflow-x: hidden;
 }
 
 ::-webkit-scrollbar {
@@ -54,19 +55,25 @@ html, body {
     line-height: 28px;
 }
 .page-content .page-left .page-details {
+    width: 100%;
     padding: 5px 0 10px;
     font-family: "微软雅黑","PingFang SC","Helvetica Neue","Hiragino Sans GB","Segoe UI","Microsoft YaHei",sans-serif;
 }
 .page-content .page-left .page-details * {
+    width: 100%;
+    font-size: 17px;
     color: #3e3e3e;
 }
 .page-content .page-left .page-details p {
     text-indent: 2em;
-    padding-bottom: 8px;
+    padding-bottom: 10px;
     margin: 0;
     line-height: 1.6;
     color: #3e3e3e;
-    /*text-align: justify;*/
+    text-align: left;
+}
+.page-content .page-left .page-details a{
+    word-wrap: break-word;
 }
 .page-content .page-left .page-details img {
     width: 90%;
@@ -155,15 +162,15 @@ html, body {
 }
 
 .clearfix.bts span.publisher {
-    color: #607fa6;
+    /*color: #607fa6;*/
     font-weight: normal !important;
-    font-size: 16.2px !important;
+    font-size: 17px !important;
     letter-spacing: 0.3px;
 }
 
 .clearfix.bts span.author {
     font-weight: normal !important;
-    font-size: 16.2px !important;
+    font-size: 17px !important;
     letter-spacing: 0.3px;
 }
 
