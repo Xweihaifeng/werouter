@@ -179,7 +179,7 @@ $(function() {
                     return false;
                 }
 
-                var cover = data.data.thumb_image;
+                var cover = ApiMaterPlatQiniuDomain + data.data.thumb_image;
                 var summary = data.data.summary;
                 var atitle = data.data.title;
 
