@@ -178,6 +178,11 @@ $(function() {
                     $("#default404").show().addClass("default404");
                     return false;
                 }
+
+                var cover = data.data.thumb_image;
+                var summary = data.data.summary;
+                var atitle = data.data.title;
+
                 $(".page-left").append(news_detail(data.data));
 
                 if(!data.data.source_url) {
