@@ -1,0 +1,277 @@
+<#extend#>user/business/business_extend.html</#extend#>
+<#include#>user/business/include/business_agreement_include.html</#include#>
+<script type="text/javascript" src="/common/public/qrcode.min.js"></script>
+    <row>
+        <i-col span="24">
+            <card>
+                <Steps :current="current">
+                    <Step title="选择版本"></Step>
+                    <Step title="支付费用"></Step>
+                    <Step title="完成"></Step>
+                </Steps>
+            </card>
+        </i-col>
+    </row>
+
+    <!--选择解决方案页面-->
+    <div id="divEdition" v-if="action=='divEdition'">
+        <card>
+            <row>
+                <col span="24">
+                <i-form ref="formInline" :model="formItem" >
+                    <form-item prop="solution_id" label="解决方案" required>
+                        <i-input v-model="dataList.solution_name" style="width: 300px" disabled ></i-input>
+                    </form-item>
+
+                    <form-item prop="edition"  label="解决方案版本" required>
+                        <radio-group v-model="formItem.edition_id" type="button" @on-change="selectEdition">
+                            <radio  v-for="val in dataList.edition" :label="val.edition_id">{{val.name}}</radio>
+                        </radio-group>
+                    </form-item>
+
+                    <form-item  v-if="formItem.edition_id!=''" >
+                        <row v-if="formItem.edition_id!=''">
+                            <i-col span="5">
+                                <Card>
+                                    <p slot="title">
+                                        功能亮点
+                                    </p>
+
+                                    <ul>
+                                        <li v-for="item in editionDetail.function">
+                                            <i class="ivu-icon ivu-icon-star"></i><a>{{ item }}</a>
+                                        </li>
+                                    </ul>
+                                </Card>
+                            </i-col>
+                        </row>
+                    </form-item>
+                     <!--提交信息-->
+                    <#include#>/user/business/include/business_order_button_include.html</#include#>
+                </i-form>
+                </col>
+            </row>
+        </card>
+    </div>
+    <!--成功页面-->
+    <#include#>/user/business/include/business_order_success_include.html</#include#>
+    
+    <!-- 支付确认页面 -->
+    <#include#>/user/business/include/business_order_pay_include.html</#include#>
+
+</div>
+
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            action: '',
+            agreement:false,
+            params: {},
+            // 订单数据
+            dataOrder:{},
+            // 获取被控端信息
+            dataControlled:{},
+            // 获取网站信息
+            dataWebInfo:{},
+            // 步骤
+            current: 0,
+            // 解决方案&&版本数据
+            dataList :[],
+            // 版本数据
+            editionList:[],
+            // 单个版本详情
+            editionDetail:[],
+            // 表单
+            formItem:{
+                // 解决方案ID
+                'solution_id': '',
+                // 版本号
+                'edition_id': '',
+                //老的版本ID
+                'old_id' : '',
+            },
+            // 开通解决方案表单
+            formItemSolution: {
+                // 开通解决方案的域名
+                'domain' : '',
+                // 开通平台的名称
+                'plat_name' : '',
+                // 订单编号
+                'number' : ''
+            }
+        },
+        mounted() {
+            this.$nextTick( function () {
+                // 获取页面参数
+                var  params = win.getParams();
+                console.log();
+
+                // 测试使用
+//                var params = {
+//                    number: '2017101310141234566',
+//                    action: 'divSuccess',
+//                    current: 3,
+//                };
+                if(params != false){
+                    this.solution_id = params.solution_id;
+                    this.edition_id = params.edition_id;
+                    this.formItem.solution_id = params.solution_id;
+                    this.formItem.old_id = params.weid;
+                    this.action = params.action;
+                    this.current = params.current;
+                }else{
+                    this.$Message.error('非法操作');
+                    this.backSolution();
+                    return false;
+                }
+            });
+        },
+        watch:{
+            action(val)
+            {
+                if(val == 'divEdition'){
+                    this.getEdition();
+                }else if(val == 'divPayOrder'){
+                    if(this.number == ''){
+                        this.$Message.error('无订单号');
+                        this.backSolution();
+                        return false;
+                    }
+                    // 获取订单数据
+                    this.getOrder(this.number , ()=>{
+                        if(this.dataOrder.status == 1){
+                            this.solution_order_pay(this.number);
+                        }else {
+                            this.$Message.error('订单状态异常');
+                            this.backSolution();
+                        }
+                    });
+                }else if(val == 'divSuccess'){
+                    this.getOrder(this.number , ()=>{
+                        if(this.dataOrder.status == 2 || this.dataOrder.status == 3){
+                            this.getWebInfo(this.number);
+                        }else {
+                            this.$Message.error('订单状态异常');
+                            this.backSolution();
+                        }
+                    });
+                }
+            },
+        },
+        methods: {
+            confirm_open()
+            {
+                this.$refs['formInline'].validate((valid) => {
+                    if (valid) {
+                        this.$Modal.confirm({
+                            title: '确定升级解决方案吗?',
+                            content: '<p>请确认升级解决方案信息.</p>',
+                            onOk: () => {
+                                this.handleSubmit();
+                            }
+                        });
+                    }else {
+                        this.$Message.error('表单验证失败!');
+                    }
+                });
+            },
+              // 创建二维码PAY
+            solution_order_pay(number)
+            {
+                ajax.get(business.solution_order_pay , {params : {'number' : number}}).then((res)=>{
+                    if(res.code !== 200)
+                    {
+                        this.$Message.error(res.message);
+                        this.backSolution();
+                    }
+
+                    this.wQrcode('qrimgs' ,res.data.code_url);
+                });
+            },
+            back_list(){
+                win.openWin('business_solution');
+            },
+            //  退回解决方案列表
+            backSolution()
+            {
+                setTimeout(()=>{
+                    win.openWin('business_solution');
+                } , 2000);
+            },
+            // 生成二维
+            wQrcode(id , url)
+            {
+                if(url != ''){
+                    var qrcode = new QRCode(document.getElementById(id), {width : 300,height : 300});
+                    qrcode.makeCode(url);
+                }
+            },
+            // 查询订单
+            getOrder(number ,fun)
+            {
+                ajax.get(business.solution_order_select , {params:{number , number , time: Date.parse(new Date())}}).then((res)=>{
+                    this.dataOrder = res.data.detail;
+                    fun();
+                });
+            },
+            // 获取网站信息
+            getWebInfo(number , fun)
+            {
+                ajax.get(business.solution_web_info ,  {params:{number , number}}).then((res)=>{
+                    if(res.code == 200) {
+                        var detail = res.data.detail;
+                        this.dataWebInfo = detail;
+                        this.current = 2;
+                        this.number = detail.number;
+                    }else{
+                        this.$Message.error('系统错误请稍后在尝试');
+                    }
+                });
+            },
+            // 获取可升级版本
+            getEdition()
+            {
+                ajax.get(business.solution_promotion_edition , {params :{solution_id: this.solution_id , edition_id:this.edition_id}}).then((res)=>{
+                    this.dataList = res.data.detail;
+                });
+            },
+            // 选择版本
+            selectEdition(val)
+            {
+                for(var item of this.dataList.edition)
+                {
+                    if(val == item.edition_id)
+                    {
+                        this.editionDetail = item;
+                        break;
+                    }
+                }
+            },
+            // 选择版本升级
+            handleSubmit () {
+                ajax.post(business.solution_promotion_order_create , this.formItem).then((res)=>{
+                    if(res.code == 200) {
+                        var detail = res.data.detail;
+                        this.current = (detail.status == 3) ? 2 : 1;
+                        this.action = (detail.status == 3) ? 'divSuccess' : 'divPayOrder' ;
+                        this.number = detail.number; 
+                    }else{
+                        this.$Message.error(res.message);
+                    }
+                });
+            },
+            // 用户点击已成功支付进行下一步
+            confirmPay(){
+                this.getOrder(this.number , ()=>{
+                    if(this.dataOrder.status == 2 || this.dataOrder.status == 3){
+                        this.action = 'divSuccess';
+                        this.current = 2;
+                    }else {
+                        this.$Message.error('没有支付成功,请扫码支付');
+                    }
+                });
+            }
+        }
+    })
+</script>
