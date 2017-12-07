@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+    <head lang="en">
+        <title>用户登录</title>
+        <meta charset="UTF-8">
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+        <link rel="shortcut icon" id="favicon" href="" />
+
+        <!-- <link rel="stylesheet" href="common/css/main.css"> -->
+        <link rel="stylesheet" href="/common/css/bootstrap.min.css">
+        <!-- <link rel="stylesheet" href="{{PATH_TML}}font/iconfont.css" /> -->
+        <!-- <link rel="stylesheet" href="{{PATH_TML}}css/news_base.css" /> -->
+        <!-- <link rel="stylesheet" href="/common/css/buttons.css"> -->
+        <link rel="stylesheet" href="/common/css/login_b.css">
+
+        <script src="/common/js/jquery-3.2.1.min.js"></script>
+        <script type="text/javascript" src="/common/layer-v3.0.3/layer-v3.0.3/layer/layer.js"></script>
+        <script src="/common/js/browser.min.js"></script>
+        <script src="/common/js/buttons.js"></script>
+    </head>
+    <body>
+    <!-- <body style="background: url(/common/img/dibu.jpg)"> -->
+        <!-- <ul class="news_menu" id="public_main_news_menu"></ul> -->
+        <div class="home_login">
+            <div class="home_login_top">
+                <ul class="login_top_wrap">
+                    <li>
+                        <a href="/" class="phone">
+                            <img id="group_img" src="/common/img/main_logo_cai.png">
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="home_login_center bg">
+                <div class="bg_top_img">
+                    <div class="show-login" style="display: block">
+                        <div class="login-cont">
+                            <div class="login-heading">快速登录</div>
+                            <div class="login-body">
+                                <div class="input-group" style="margin-top: 15px;">
+                                    <div class="input-group-btn">
+                                        <button type="button" class="btn btn-default dropdown-toggle" style="height: 44px;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">+86 中国 </button>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="active">+86 中国</a></li>
+                                            <li><a >美国</a></li>
+                                        </ul>
+                                    </div>
+                                    <input type="text" class="form-control phone-num" maxlength="11" style="height: 44px; line-height: 44px; font-size: medium;" placeholder="请输入手机号码">
+                                </div>
+
+                                <div class="input-group" style="margin-top: 15px;width: 320px;">
+                                    <div class="l-captcha"  data-site-key="f33ae969d27848afdaa3ff2c79c58476" data-width="320" data-callback="getResponse"></div>
+                                </div>
+
+                                <div class="input-group" style="margin-top: 15px;">
+                                    <input type="text" class="form-control check-num" maxlength="6" placeholder="请输入短信验证码" style="height: 44px; line-height: 44px; font-size: medium;">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default get-check" style="height: 44px;" type="button">获取验证码</button>
+                                    </span>
+                                </div>
+
+                                <div class="check" style="margin-top: 15px;">
+                                    <input type="checkbox" id="check" checked>
+                                    <span><a href="/company/term" target="_blank">已阅读并同意《<span id="corporation"></span>服务条款》</a></span>
+                                </div>
+
+                                <div id="log-in">
+                                    <a style="cursor: pointer;" class="button button-lowercase button-primary login-bt">登录</a>
+                                    <div id="qrcode"></div>
+                                </div>
+                            </div>
+                            <div class="wexin">
+                                <div class="wx">微信登录</div>
+                                <div class="qrcode"><!-- <img src="{{PATH_TML}}connect/qrcode/011jP-OhR6bhLw-i" alt=""/> --></div>
+                                <div class="to-login"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="home_login_bottom">
+                <div class="links">
+                    <a href="/company/about"   title="关于我们"> 关于我们 </a> <span>|</span>
+                    <a href="/company/contact" title="联系我们"> 联系我们 </a> <span>|</span>
+                    <a href="/company/partner" title="合作伙伴"> 合作伙伴 </a> <span>|</span>
+                    <a href="/company/term"    title="服务条款"> 服务条款 </a>
+                </div>
+                <div class="copyright">
+                    <span class="mobile-hide">本站由  大秦云  提供云加速与安全服务  </span>
+                    <span class="law"> Copyright © 2016 微众中国    wezchina.com  版权所有  陕ICP备15006570号</span>
+                </div>
+            </div>
+        </div>
+
+        <script src="{{PATH_CONFIG}}"></script>
+        <script src="{{PATH_TML}}js/image_code_id.js"></script>
+        <!-- <script src="/js/news_base.js"></script> -->
+        <script>
+            $("#favicon").attr("href", ApiMaterPlatQiniuDomain + window.localStorage.getItem("fav"));
+        </script>
+    </body>
+</html>
