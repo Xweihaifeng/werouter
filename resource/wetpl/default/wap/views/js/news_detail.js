@@ -278,8 +278,6 @@ $(function() {
 
                             wx.ready(function() {
                                 var link = window.location.href;
-                                alert(summary)
-                                alert(cover)
                                 wx.onMenuShareTimeline({
                                     title: atitle,
                                     // 分享标题
