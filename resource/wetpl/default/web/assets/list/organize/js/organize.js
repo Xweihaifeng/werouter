@@ -14,39 +14,20 @@ $(function() {
     // 同步执行函数
     $.ajaxSetup({
         global: true,
-        async:  false,
+        // async:  false,
         headers: {
             'Token': token,
         }
     });
 
-    // 根据别名获取频道详情
-    var options = $.get(CMS_CHANNELS_DOMAIN_QUERY + pathname[0]);
-    options.done(function(data) {
-        if(data.code === 200) {
-            domain_weid = data.data.weid;
-            var thumb_image = data.data.big_image;
-
-            if(!thumb_image) {
-                thumb_image = "/common/img/org_banner01.jpg";
-
-            } else if (thumb_image.indexOf('http') != 0 && thumb_image != "") {
-                thumb_image = imgSet(thumb_image, 1100, 320, 3);
-            }
-            $("#thumb_image").css("background-image", `url(`+ thumb_image + `)`);
-
-        } else {
-            console.error(data.message);
-        }
-    });
-    options.fail(function(error) {
-        console.error(error);
-    });
-
-    if(pathname.length == 2 && pathname[0] != '') {
-        var options1 = $.get(CMS_CATEGORIES_DOMAIN_QUERY + pathname[0]);
-        options.done(function(data) {
+    $.ajax({
+        url: CMS_CHANNELS_DOMAIN_QUERY + pathname[0],
+        dataType: 'JSON',
+        async:  false,
+        type: 'get',
+        success: function(data) {
             if(data.code === 200) {
+                domain_weid = data.data.weid;
                 var thumb_image = data.data.big_image;
 
                 if(!thumb_image) {
@@ -60,10 +41,40 @@ $(function() {
             } else {
                 console.error(data.message);
             }
-        });
-        options.fail(function(error) {
+        },
+        error: function(error) {
             console.error(error);
-        });
+        }
+    })
+
+    if(pathname.length == 2 && pathname[0] != '') {
+
+        $.ajax({
+            url: CMS_CHANNELS_DOMAIN_QUERY + pathname[0],
+            dataType: 'JSON',
+            async:  false,
+            type: 'get',
+            success: function(data) {
+                if(data.code === 200) {
+                    var thumb_image = data.data.big_image;
+
+                    if(!thumb_image) {
+                        thumb_image = "/common/img/org_banner01.jpg";
+
+                    } else if (thumb_image.indexOf('http') != 0 && thumb_image != "") {
+                        thumb_image = imgSet(thumb_image, 1100, 320, 3);
+                    }
+                    $("#thumb_image").css("background-image", `url(`+ thumb_image + `)`);
+
+                } else {
+                    console.error(data.message);
+                }
+            },
+            error: function(error) {
+                console.error(error);
+            }
+        })
+
     }
 
     // 栏目显示区
@@ -246,7 +257,7 @@ $(function() {
     $.ajax({
         url: CMS_CHANNEL_CATEGORIES + domain_weid,
         dataType: 'json',
-        async: false,
+        // async: false,
         success: function(data){
             if(data.code === 200) {
                 console.info(data.data);

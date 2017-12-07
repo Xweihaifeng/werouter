@@ -101,7 +101,7 @@
                 template = template + `<img class="iconfont" src="`+ thumb_image +`" alt="">`;
             }
             template = template + `
-            <a href="/org/`+ data.weid +`" class="a btn-look">点击查看</a>
+            <a href="/org/`+ data.domain +`" class="a btn-look">点击查看</a>
         </div>`;
         $(".report_swiper").append(template);
         
@@ -136,7 +136,7 @@
                 template = template + `<img class="iconfont" src="`+ thumb_image +`" alt="">`;
             }
             template = template + `
-            <a href="/org/`+ data.weid +`" class="a btn-info">点击查看</a>
+            <a href="/org/`+ data.domain +`" class="a btn-info">点击查看</a>
         </div>`;
         $(".lunbo_swiper").append(template);
 
