@@ -352,6 +352,7 @@ $(function() {
                                                 async:  false,
                                                 success: function(data) {
                                                     if(data.code === 200) {
+                                                        $("#menuY").text(data.data.title);
                                                         two_ul(data.data);
                                                         $(".paging").hide();
                                                     } else {
