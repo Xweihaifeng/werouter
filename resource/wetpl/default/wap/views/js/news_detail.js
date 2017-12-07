@@ -219,7 +219,7 @@ $(function() {
                     }
                 });
 
-                if (is_weixn()) {
+/*                if (is_weixn()) {
                     var oldTime = localStorage.getItem('setopenid-date');
 
                     if (!isExpire(oldTime)) { //没过期
@@ -256,7 +256,7 @@ $(function() {
                         localStorage.setItem('setopenid-date', new Date().getTime())
                         window.location.href = encodeURI(apiUrl + '/openid?url=' + window.location.href);
                     }
-                }
+                }*/
 
                 $.ajax({
                     url: apiUrl + 'wxjssdk',
