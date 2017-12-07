@@ -229,6 +229,8 @@ $(function() {
                 li_name = pathname[1];
             }
             $("#" + li_name).addClass("csdf").siblings().removeClass("csdf");
+            $("#" + li_name + " a").addClass("fgvg");
+
             document.title = $("#" + li_name).text();
             if($("#newN").attr("class").indexOf("csdf") != -1) {
                 $('#news_loadingsImg1').show().siblings("#news_loadingsImg").hide();
