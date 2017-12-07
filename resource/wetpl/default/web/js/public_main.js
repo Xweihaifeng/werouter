@@ -128,15 +128,11 @@ const huzhu = `
                     </div>
                     <div class="clearfix"></div>
                     <div class="little-title" id="xiamgmu-title" style="display: none;">
-                        <a href="http://next.wezchina.com?p=3&amp;c=1"><span class="title-active" style="margin-left: 10px">互助众筹</span></a>
-                        <a href="http://next.wezchina.com?p=3&amp;c=2"><span>回报众筹</span></a>
-                        <a href="http://next.wezchina.com?p=3&amp;c=3"><span>产品众筹</span></a>
-                        <a href="http://next.wezchina.com?p=3&amp;c=4"><span>一元众筹</span></a>
+                        <a href="#"><span class="title-active" style="margin-left: 10px">互助众筹</span></a>
+                        <a href="#"><span>回报众筹</span></a>
+                        <a href="#"><span>产品众筹</span></a>
+                        <a href="#"><span>一元众筹</span></a>
                     </div>
-                    <!-- <div class="little-title" id="huodong-title" style="display: block;">
-                        <a href="http://next.wezchina.com?p=3&amp;a=1"><span style="margin-left: 10px">线下活动</span></a>
-                        <a href="http://next.wezchina.com?p=3&amp;a=2"><span>最新活动</span></a>
-                    </div> -->
                 </div>
                 <div class="clearfix"></div>
                 <div class="line"></div>
@@ -153,7 +149,7 @@ const huzhu = `
 const goodsBox = `
                 <div id="goodsBox">
                 <div style="width: 100%;height:235px; background:url(/common/img/0158.png) no-repeat center;">
-                    <img src="http://next.wezchina.com/images/gongxiangtop.png" alt="" style="height: 235px">
+                    <img src="/common/img/0158.png" alt="" style="height: 235px">
                 </div>
                 <p class="huiyuantegong">会<span>/</span>员<span>/</span>特<span>/</span>供</p>
                 <div class="person-goods-lists">
