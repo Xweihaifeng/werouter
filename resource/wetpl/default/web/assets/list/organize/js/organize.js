@@ -2,7 +2,7 @@
  *     组织部分数据覆盖
  */
 
-// $(function() {
+$(function() {
 
     window.localStorage.setItem("pageNum", 1);
     var token = window.localStorage.getItem('token');
@@ -10,15 +10,6 @@
     var li_name, total, limit, pageNum = 1;
     var get_param = pathname[0];
     var domain_weid = '';
-
-    // 同步执行函数
-    $.ajaxSetup({
-        global: true,
-        // async:  false,
-        headers: {
-            'Token': token,
-        }
-    });
 
     $.ajax({
         url: CMS_CHANNELS_DOMAIN_QUERY + pathname[0],
@@ -48,7 +39,6 @@
     })
 
     if(pathname.length == 2 && pathname[0] != '') {
-
         $.ajax({
             url: CMS_CHANNELS_DOMAIN_QUERY + pathname[0],
             dataType: 'JSON',
@@ -218,97 +208,98 @@
         return template;
     }
 
-    // 上下翻页
-    // function prev_next_page() {
-    //     //  点击加载更多后显示出上一页的数据
-    //     $('#prev_btn').click(function() {
-    //         pages--; //  页码-1
+    // 二级判断
+    function default_two(menu_two, show_two) {
+        $.ajax({
+            url: apiUrl + "cms/cate_categories?cate=" + menu_two,
+            dataType: 'json',
+            async:  false,
+            success: function(body4){
+                if(body4.code == 200) {
 
-    //         if(pages <= 0) {
-    //             pages = 1;
-    //             $(this).attr("disabled", true).siblings().attr("disabled", false);
-    //             layer.msg("我已经是第一页了！", { time: 2500 });
-    //             return false;
-    //         }
-    //         window.localStorage.setItem("pageNum", pages)
-    //         $(this).attr("disabled", false).siblings().attr("disabled", false);
-    //         detail_content_cate(get_param, pages);
-    //     });
+                    if(body4.data.length > 0) {
 
-    //     //  点击加载更多后显示出下一页的数据
-    //     $('#next_btn').click(function() {
-    //         if(limit * pages > total) {
-    //             $(this).attr("disabled", true).siblings().attr("disabled", false);
-    //             layer.msg("我是最后一页了！", { time: 2500 });
-    //             return false;
-    //         }
-    //         $(this).attr("disabled", false).siblings().attr("disabled", false);
-    //         pages++; //  页码+1
-    //         window.localStorage.setItem("pageNum", pages)
-    //         detail_content_cate(get_param, pages);
-    //     });
-    // }
+                        $("#menuTwo").html("");
+                        var result = body4.data;
 
-    // 页面绑定分类栏目列表数据
-    // var options2 = $.get(CMS_CHANNEL_CATEGORIES + domain_weid);
-    // options2.done(function(data) {
+                        result.forEach(function(value, key) {
+                            if(key < 10) {
+                                $("#menuTwo").append(menuTwo(value));
+                            }
+                        });
+
+                        column(show_two, pageNum);
+                    } else {
+
+                        // 没有二级分类
+                        screen();
+                    }
+                }
+            }
+        })
+    }
 
     // Cms - 获取类目(根据频道weid)
     $.ajax({
         url: CMS_CHANNEL_CATEGORIES + domain_weid,
         dataType: 'json',
-        // async: false,
         success: function(data){
             if(data.code === 200) {
-                console.info(data.data);
-                $.map(data.data, function(item, index) {
+
+                // 一级分类
+                data.data.forEach(function(item, index) {
                     if(index < 13) {
                         $("#menuX").append(news_channel_categories(item));
                     }
                 });
 
-                li_name = $(".chan_li").first().attr("id");
+                li_name = $("#menuX .chan_li").first().attr("id");
                 if($("#"+ pathname[1]).attr("type") == 1) {
-                    single_page(domain_weid);                    
+
+                    // 单页执行
+                    single_page(domain_weid);
+                    $('#' + pathname[1]).addClass("single_active").siblings().removeClass("single_active");                    
                 } else {
-                    var menu_two = $("#"+ pathname[1]).attr("name");
-                    var options4 = $.get(apiUrl + "cms/cate_categories?cate=" + menu_two);
-                    options4.done(function(body4) {
-                        if(body4.code == 200) {
-                            if(body4.data.length > 0) {
-                                $("#menuTwo").html("");
-                                var result = body4.data;
-                                console.log(result);
-                                $.map(result, function(value, key) {
-                                    if(key < 10) {
-                                        $("#menuTwo").append(menuTwo(value));
+
+                    // 非单页执行
+                    // 二级分类
+                    if(pathname[1] == '' || pathname[1] == undefined || pathname[1] == null) {
+                        default_two("org");
+                    } else {
+                        $.ajax({
+                            url: apiUrl + "cms/categories/domain_query/" + pathname[1],
+                            dataType: 'json',
+                            success: function(body5){
+                                if(body5.code === 200) {
+                                    var parend_id = body5.data.parent_id;
+                                    if(parend_id != null && parend_id != undefined && parend_id != '') {
+
+                                        // 一级分类着色
+                                        $.ajax({
+                                            url: apiUrl + "cms/categories/" + parend_id,
+                                            dataType: 'json',
+                                            async:  false,
+                                            success: function(data){
+                                                if(data.code === 200) {
+                                                    $('#' + data.data.domain).addClass("cate-active-on").siblings().removeClass("cate-active-on");
+                                                    $("#menuY").text(data.data.title);
+                                                }
+                                            }
+                                        });
+                                        default_two(parend_id, pathname[1]);
+                                        $('#' + pathname[1]).addClass("single_active").siblings().removeClass("single_active");
+                                    } else {
+                                        var menu_two = $("#"+ pathname[1]).attr("name");
+                                        default_two(menu_two, pathname[1]);
+                                        $('#' + pathname[1]).addClass("single_active").siblings().removeClass("single_active");
+                                        $("#menuY").text($('#' + pathname[1]).text());
                                     }
-                                });
-
-                                li_name = $("#menuTwo").children().first().attr("id");
-                                $('#' + li_name).addClass("single_active").siblings().removeClass("single_active");
-                                column(li_name, pageNum);
-                            } else {
-                                screen();
+                                }
                             }
-                        }
-                    });
-                    options4.fail(function(error) {
-                        console.error(error);
-                    });                    
+                        })
+                    }
                 }
 
-                // 最新发布样式呈现
-                if(li_name == "oooo" || li_name == "") {
-                    $('#oooo').addClass("cate-active-on").siblings().removeClass("cate-active-on");
-                    $("#menuY").html($("#oooo").text());
-                    document.title = $("#oooo").text();
-                } else {
-                    li_name = window.location.pathname.split('/').slice(1,4)[1];
-                    $('#' + li_name).addClass("cate-active-on").siblings().removeClass("cate-active-on");
-                    $("#menuY").html($('#' + li_name).text());
-                    document.title = $("#" + li_name).text();
-                }
             } else {
                 console.error(data.message);
             }
@@ -316,10 +307,4 @@
     });
 
     $("#oooo").attr("href", "/" + pathname[0]);
-    if(pathname[1] == '' || pathname[1] == undefined) {
-        $("#menuTwo").html("文章列表");
-        $('#oooo').addClass("cate-active-on").siblings().removeClass("cate-active-on");
-        $("#menuY").html($("#oooo").text());
-        document.title = $("#oooo").text();
-    }
-// });
+});
