@@ -89,7 +89,7 @@ $(function() {
                 <span class="original">` + result.is_original + `</span>
             </div>
             <div class="page-info"><div class="page-details"><p>` + result.content + `</p></div></div>
-            <div class="evaluate"><p class="readings"><a class="read_original" href="`+ result.source_url +`" target="_blank"> 阅读原文 </a><span>阅读 ` + result.views + `</span><span class="zan" id="zan"><i class="gesture"></i><span class="zanCount">` + result.praise_num + `<span></span></p></div>`
+            <div class="evaluate"><p class="readings"><a class="read_original" href="`+ result.source_url +`" target="_blank">阅读原文</a><span>阅读 ` + result.views + `</span><span class="zan" id="zan"><i class="gesture"></i><span class="zanCount">` + result.praise_num + `<span></span></p><div class="read-complain">投诉</div></div>`
 
             if(result.is_original == 0) {
                 $(".original").hide();
@@ -125,6 +125,46 @@ $(function() {
         options0.fail(function(error) {
             console.error(error);
         });
+    }
+
+    //获取参数
+    function getUrlParam(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+        var r = window.location.search.substr(1).match(reg); //匹配目标参数
+        if (r != null) return unescape(r[2]);
+        return null; //返回参数值
+    }
+
+    //判断为空
+    function isNull(data) {
+        return (data == "" || data == undefined || data == null || data == 'null') ? true: false;
+    }
+
+    //判断是否在微信中打开
+    function is_weixn() {
+        var ua = navigator.userAgent.toLowerCase();
+        if (ua.match(/MicroMessenger/i) == "micromessenger") {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    //检查openid是否过期(有效期1天)
+    var isExpire = (oldTime) => {
+        var day = 86400000;
+        var now = new Date().getTime();
+        if (oldTime != null) {
+            if (now - oldTime < 86400000) {
+                return false;
+            } else {
+                localStorage.removeItem('setopenid-date')
+                localStorage.removeItem('token')
+                return true;
+            }
+        } else {
+            return true;
+        }
     }
 
     // 新闻详情数据获取
@@ -173,6 +213,110 @@ $(function() {
                         return false;
                     }
                 });
+
+                if (is_weixn()) {
+                    var oldTime = localStorage.getItem('setopenid-date');
+
+                    if (!isExpire(oldTime)) { //没过期
+                        //var usertoken = localStorage.getItem('token');
+                        var usertoken = localStorage.getItem('setopenid');
+                        if (usertoken == 'true') {
+                            openid = getUrlParam("openid");
+                            //alert('openid: ' + openid)
+                            //微信登录
+                            $.ajax({
+                                url: apiUrl + 'wxlogin',
+                                type: 'POST',
+                                data: {
+                                    openid: openid,
+                                    ref_url: window.location.pathname,
+                                    ref_type: 2,
+                                    ref_id: plat_userid,
+                                    domain: domain
+                                },
+                                success: function (data) {
+                                    //alert(JSON.stringify(data))
+                                    if (data.code == 200) {
+                                        if (isNull(data.token) == false) { //非空
+                                            localStorage.setItem('token-date', new Date().getTime())
+                                            localStorage.setItem('token', data.token);
+                                        }
+                                    }
+                                }
+                            })
+                        }
+                    } else {
+                        //微信未跳转时
+                        localStorage.setItem('setopenid', true);
+                        localStorage.setItem('setopenid-date', new Date().getTime())
+                        window.location.href = encodeURI(apiUrl + '/openid?url=' + window.location.href);
+                    }
+                }
+
+                $.ajax({
+                    url: apiUrl + 'wxjssdk',
+                    type: 'POST',
+                    data: {
+                        currenturl: window.location.href
+                    },
+                    success: function(data) {
+                        if (data.code == 200) {
+                            console.log(data)
+                            wx.config({
+                                debug: false,
+                                appId: data.data.appId,
+                                timestamp: data.data.timestamp,
+                                nonceStr: data.data.nonceStr,
+                                signature: data.data.signature,
+                                jsApiList: ["onMenuShareTimeline", "onMenuShareAppMessage"]
+                            });
+
+                            wx.ready(function() {
+                                var link = window.location.href;
+                                wx.onMenuShareTimeline({
+                                    title: atitle,
+                                    // 分享标题
+                                    link: link,
+                                    // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                                    desc: summary,
+                                    //分享描述
+                                    imgUrl: cover,
+                                    // 分享图标
+                                    success: function() {
+                                        // 用户确认分享后执行的回调函数
+                                    },
+                                    cancel: function() {
+                                        // 用户取消分享后执行的回调函数
+                                    }
+                                });
+                                wx.onMenuShareAppMessage({
+                                    title: atitle,
+                                    // 分享标题
+                                    // desc: data.summary,
+                                    // imgUrl: data.detail.cover,
+                                    desc: summary,
+                                    // 分享描述
+                                    link: link,
+                                    // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                                    // imgUrl: ApiMaterPlatQiniuDomain + data.cover,
+
+                                    imgUrl: cover,
+                                    // 分享图标
+                                    type: '',
+                                    // 分享类型,music、video或link，不填默认为link
+                                    dataUrl: '',
+                                    // 如果type是music或video，则要提供数据链接，默认为空
+                                    success: function() {
+                                        // 用户确认分享后执行的回调函数
+                                    },
+                                    cancel: function() {
+                                        // 用户取消分享后执行的回调函数
+                                    }
+                                });
+                            })
+                        }
+                    }
+                })
             } else {
                 console.warn(data.message)
             }
