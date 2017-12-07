@@ -166,14 +166,19 @@ $(function() {
             success: function(data){
                 if (data.code == 200){
                     console.log(data);
-                    if (data.data.domain == null) {
-                        //没有个性域名
+                    if (data.data != null) {
+                        if (data.data.domain == null) {
+                            //没有个性域名
+                            domain = '/index';
+                            aru = false;
+                        } else {
+                            //存在个性域名
+                            domain = "/" + data.data.domain;
+                            aru = true;
+                        }
+                    } else {
                         domain = '/index';
                         aru = false;
-                    } else {
-                        //存在个性域名
-                        domain = "/" + data.data.domain;
-                        aru = true;
                     }
 
                 } else {
