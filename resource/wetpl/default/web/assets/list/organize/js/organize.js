@@ -239,6 +239,11 @@ $(function() {
         })
     }
 
+    function two_ul(result) {
+        $(".list-article-ul").html("");
+        $(".list-article-ul").html(`<div class="org_content"><h3>` + result.summary + `</h3><div>` + result.content + `</div></div>`);
+    }
+
     // Cms - 获取类目(根据频道weid)
     $.ajax({
         url: CMS_CHANNEL_CATEGORIES + domain_weid,
@@ -286,23 +291,28 @@ $(function() {
                                                 }
                                             }
                                         });
+
                                         default_two(parend_id, pathname[1]);
                                         $('#' + pathname[1]).addClass("single_active").siblings().removeClass("single_active");
-                                        $.ajax({
-                                            url: apiUrl + "cms/categories/domain_query/" + pathname[1],
-                                            dataType: 'JSON',
-                                            async:  false,
-                                            success: function(data) {
-                                                if(data.code === 200) {
-                                                    single_page(data.data.weid);
-                                                } else {
-                                                    console.error(data.message);
+
+                                        if($("#"+ pathname[1]).attr("type") == 1) {
+                                            $.ajax({
+                                                url: apiUrl + "cms/categories/domain_query/" + pathname[1],
+                                                dataType: 'JSON',
+                                                async:  false,
+                                                success: function(data) {
+                                                    if(data.code === 200) {
+                                                        two_ul(data.data);
+                                                        $(".paging").hide();
+                                                    } else {
+                                                        console.error(data.message);
+                                                    }
+                                                },
+                                                error: function(error) {
+                                                    console.error(error);
                                                 }
-                                            },
-                                            error: function(error) {
-                                                console.error(error);
-                                            }
-                                        })
+                                            })                                            
+                                        }
                                     } else {
                                         var menu_two = $("#"+ pathname[1]).attr("name");
                                         default_two(menu_two, pathname[1]);
