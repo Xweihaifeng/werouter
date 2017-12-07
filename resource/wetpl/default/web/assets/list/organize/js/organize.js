@@ -383,5 +383,5 @@ $(function() {
         }
     });
 
-    $("#oooo").attr("href", "/" + pathname[0]);
+    $("#oooo").attr("href", "/zz");
 });
