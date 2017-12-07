@@ -10,7 +10,7 @@
 	</style>
     <script src="/common/iview/vue.min.js"></script>
     <!-- <link rel="stylesheet" type="text/css" href="https://www.wezchina.com/app/Tpl/wezchina/css/common_css/iconfont.css" /> -->
-    <link rel="stylesheet" type="text/css" href="{{PATH_TML}}font/iconfont1.css" />
+<!--     <link rel="stylesheet" type="text/css" href="{{PATH_TML}}font/iconfont1.css" /> -->
     <link rel="stylesheet" type="text/css" href="/common/css/loader.css" />
     <meta name="keywords" content="微众中国，微力量 ，众行远，众筹创业，众筹融资，天使投资人，丝路，互联网+，创投，创业项目，公益，科技，文化，出版，娱乐，艺术，农业，商铺，活动，好产品，好项目，陕西，西安，甘肃，兰州，宁夏，银川，新疆，乌鲁木齐" />
     <meta name="description" content="微众中国，专注于丝路互联网+创业众筹融资，为创业者提供私募股权、回报众筹、一元云筹、项目投融资一体化综合互联网金融服务，帮助创业者实现众筹融资。" />
@@ -170,7 +170,7 @@
             init(){
                 axios.all([this.settings() , this.config()])
                 .then(axios.spread(function (settings, config) {
-                    var settings_string = 'http://'+settings.data.qiniu.domain_custom+'/';
+                    var settings_string = '//'+settings.data.qiniu.domain_custom+'/';
                     win.setStorage('settings' , settings_string);
 
                     win.setStorage('config' , config.data);
