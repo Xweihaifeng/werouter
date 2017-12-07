@@ -5,20 +5,25 @@
     margin: 0;
 }
 
+html, body {
+    padding: 0;
+    margin: 0;
+}
+
 ::-webkit-scrollbar {
     width: 0px;
     height: 0;
 }
 
 .page-content {
-    position: fixed;
+/*    position: fixed;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    overflow-y: scroll;
+    overflow-y: scroll;*/
     -webkit-overflow-scrolling : touch;
 }
 
@@ -40,11 +45,6 @@
     line-height: 20px;
 }
 
-.page-content .page-left .clearfix .publisher {
-    font-size: 18px;
-    font-weight: 600;
-}
-
 .page-content .page-left .page-info {
     display: flex;
     justify-content: space-between;
@@ -55,15 +55,18 @@
 }
 .page-content .page-left .page-details {
     padding: 5px 0 10px;
-    /*font-family: "微软雅黑","PingFang SC","Helvetica Neue","Hiragino Sans GB","Segoe UI","Microsoft YaHei",sans-serif;*/
+    font-family: "微软雅黑","PingFang SC","Helvetica Neue","Hiragino Sans GB","Segoe UI","Microsoft YaHei",sans-serif;
+}
+.page-content .page-left .page-details * {
+    color: #3e3e3e;
 }
 .page-content .page-left .page-details p {
     text-indent: 2em;
     padding-bottom: 8px;
     margin: 0;
     line-height: 1.5em;
-    color: #333;
-    text-align: justify;
+    color: #3e3e3e;
+    /*text-align: justify;*/
 }
 .page-content .page-left .page-details img {
     width: 90%;
@@ -150,8 +153,16 @@
 }
 
 .clearfix.bts span.publisher {
-    /*color: #607fa6;*/
+    color: #607fa6;
     font-weight: normal !important;
+    font-size: 16.2px !important;
+    letter-spacing: 0.3px;
+}
+
+.clearfix.bts span.author {
+    font-weight: normal !important;
+    font-size: 16.2px !important;
+    letter-spacing: 0.3px;
 }
 
 .clearfix.bts span.updated_at {
@@ -173,6 +184,10 @@
     border-radius: 1rem;
     font-size: 15px;
     color: #8c8c8c;
+}
+
+.source_url {
+    font-size: 16px;
 }
 
 .read_original {

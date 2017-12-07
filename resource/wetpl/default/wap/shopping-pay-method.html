@@ -97,6 +97,8 @@
                         self.config = data.data.data.config;
 
                         var onBridgeReady = function(res) {
+                            alert(res)
+                            alert(res.err_msg)
                             if (res.err_msg == "get_brand_wcpay_request:ok") {
                                 layer.msg("微信支付完成", { time: 1500 });
                                 // var domain = window.sessionStorage.getItem("domain");
