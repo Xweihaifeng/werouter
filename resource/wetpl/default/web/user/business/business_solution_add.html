@@ -1,0 +1,351 @@
+<#extend#>user/business/business_extend.html</#extend#>
+<#include#>user/business/include/business_agreement_include.html</#include#>
+    <row>
+        <i-col span="24">
+            <card>
+                <Steps :current="current">
+                    <Step title="选择产品"></Step>
+                    <Step title="支付费用"></Step>
+                    <Step title="完成"></Step>
+                </Steps>
+            </card>
+        </i-col>
+    </row>
+
+    <!--选择产品页面-->
+    <div id="divSolution" v-if="action=='divSolution'">
+        <card>
+        <row>
+            <col span="24">
+                <i-form ref="formInline" :model="formItem" >
+                    <form-item prop="solution_id" label="选择解决方案" required>
+                        <radio-group v-model="formItem.solution_id" type="button" @on-change="selectSolution">
+                            <radio  v-for="val in dataList" :label="val.solution_id">{{val.name}}</radio>
+                        </radio-group>
+                    </form-item>
+
+                    <form-item prop="edition" v-if="formItem.solution_id!=''" label="方案版本" required>
+                        <radio-group v-model="formItem.edition_id" type="button" @on-change="selectEdition">
+                            <radio  v-for="val in editionList" :label="val.edition_id">{{val.name}}</radio>
+                        </radio-group>
+                    </form-item>
+
+                    <form-item  v-if="formItem.edition_id!=''" >
+                    <row v-if="formItem.edition_id!=''">
+                        <i-col span="5">
+                            <Card>
+                                <p slot="title">
+                                    功能亮点
+                                </p>
+
+                                <ul>
+                                    <li v-for="item in editionDetail.function">
+                                        <i class="ivu-icon ivu-icon-star"></i><a>{{ item }}</a>
+                                    </li>
+                                </ul>
+                            </Card>
+                        </i-col>
+                    </row>
+                    </form-item>
+
+                    <form-item v-if="formItem.edition_id!=''" prop="domain" label="域名" :rules="{required: true, message: '域名不能为空', trigger: 'blur'}">
+                        <i-input type="text" v-model="formItem.domain" placeholder="请输入域名" style="width: 300px">
+                        </i-input>
+                        <row style="background:#eee;padding:20px" v-if="formItem.domain!=''">
+                            <i-col span="20">
+                                <Card :bordered="false">
+                                    <p slot="title">请通过以下CNAME或IP方式进行解析</p>
+                                    <!--<p>api.{{formItem.domain}} - CNAME方式解析到:{{controlled_detail.api_domain}}</p>-->
+                                    <Row>
+                                        <i-col span="6">{{formItem.domain}}</i-col>
+                                        <i-col span="6">CNAME : {{domain.agent_domain}}</i-col>
+                                        <i-col span="6">IP : {{domain.agent_ip}}</i-col>
+                                    </Row>
+                                    <Row>
+                                        <i-col span="6">m.{{formItem.domain}}</i-col>
+                                        <i-col span="6">CNAME : {{domain.agent_domain}}</i-col>
+                                        <i-col span="6">IP : {{domain.agent_ip}}</i-col>
+                                    </Row>
+                                </Card>
+                            </i-col>
+                        </row>
+                    </form-item>
+
+                    <form-item label="名称" v-if="formItem.edition_id!=''"  prop="plat_name" :rules="{required: true, message: '平台名称不能为空', trigger: 'blur'}">
+                        <i-input type="text" v-model="formItem.plat_name" placeholder="请输入平台名称" style="width: 300px"></i-input>
+                    </form-item>
+
+                     <!--提交信息-->
+                    <#include#>/user/business/include/business_order_button_include.html</#include#>
+
+                </i-form>
+            </col>
+        </row>
+        </card>
+    </div>
+    
+    <!--成功页面-->
+    <#include#>/user/business/include/business_order_success_include.html</#include#>
+    
+    <!-- 支付确认页面 -->
+    <#include#>/user/business/include/business_order_pay_include.html</#include#>
+
+</div>
+
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            action: '',
+            confirm:[],
+            agreement: false,
+            confirm_order:false,
+            params: {},
+            // 订单数据
+            dataOrder:{},
+            // 获取被控端信息
+            dataControlled:{},
+            // 获取网站信息
+            dataWebInfo:{},
+            // 步骤
+            current: 0,
+            // 产品数据
+            dataList :[],
+            // 版本数据
+            editionList:[],
+            // 单个版本详情
+            editionDetail:[],
+            //获取产品默认域名
+            domain:[],
+            // 表单
+            formItem:{ 
+                // 产品ID
+                'solution_id': '', 
+                // 版本号
+                'edition_id': '',
+                // 开通产品的域名
+                'domain' : '',
+                // 开通平台的名称
+                'plat_name' : '',
+                //被控端ID
+                'agent_id' : '1',
+                'is_check' : 0
+            },
+            // 开通产品表单
+            formItemSolution: {
+                // 开通产品的域名
+                'domain' : '',
+                // 开通平台的名称
+                'plat_name' : '',
+                // 订单编号
+                'number' : ''
+            },
+            // 支付pay
+            order_pay_url : ''
+
+        },
+        mounted() {
+            this.$nextTick( function () {
+                // 获取页面参数
+                var params = win.getParams();
+
+                // 测试使用
+               //var params = {
+               //    number: '2017111055495150',
+               //    action: 'divSuccess',
+               //    current: 2,
+               //};
+                if(params != false){
+                    this.number = params.number;
+                    this.action = params.action;
+                    this.current = params.current;
+                }else{
+                    this.action = 'divSolution';
+                }
+            });
+        },
+        watch:{
+            action(val)
+            {
+                if(val == 'divSolution'){
+                    this.getSolutionAll();
+                }else if(val == 'divPayOrder'){
+                    if(this.number == ''){
+                        this.$Message.error('无订单号');
+                        this.backSolution();
+                        return false;
+                    }
+                    // 获取订单数据
+                    this.getOrder(this.number , ()=>{
+                        if(this.dataOrder.status == 1){
+                            this.solution_order_pay(this.number);
+                        }else {
+                            this.$Message.error('订单状态异常');
+                            this.backSolution();
+                        }
+                    });
+                }else if(val == 'divSuccess'){
+                    this.getOrder(this.number , ()=>{
+                        if(this.dataOrder.status == 3){
+                            this.getWebInfo(this.number);
+                        }else {
+                            this.$Message.error('订单状态异常');
+                            this.backSolution();
+                        }
+                    });
+                }
+            },
+        },
+        methods: {
+            confirm_open()
+            {
+                this.confirm['domain'] = this.formItem.domain;
+                this.confirm['name'] = this.formItem.plat_name;
+                this.$refs['formInline'].validate((valid) => {
+                    if (valid) {
+                        this.$Modal.confirm({
+                            title: '确定开通解决方案吗?',
+                            content: '<p>请确认开通信息.</p>',
+                            onOk: () => {
+                                this.handleSubmit();
+                            }
+                        });
+                    }else {
+                        this.$Message.error('表单验证失败!');
+                    }
+                });
+            },
+            back_list(){
+                win.openWin('business_solution');
+            },
+            //  退回产品列表
+            backSolution()
+            {
+                setTimeout(()=>{
+                    win.openWin('business_solution');
+                } , 2000);
+
+            },
+            // 生成二维
+            wQrcode(id , url)
+            {
+                if(url != ''){
+                    var qrcode = new QRCode(document.getElementById(id), {width : 300,height : 300});
+                    qrcode.makeCode(url);
+                }
+            },
+            // 根据订单查询,已成功支付的订单，应该开到那个被控端,并返回被控端信息
+            getControlled(number)
+            {
+                ajax.get(business.solution_order_controlled , {params:{number , number}}).then((res)=>{
+                    if(res.code != 200){
+                        this.$Message.error('未支付成功不能,创建产品!');
+                        this.backSolution();
+                    }
+                    this.dataControlled = res.data.detail;
+                });
+            },
+            // 查询订单
+            getOrder(number ,fun)
+            {
+                ajax.get(business.solution_order_select , {params:{number , number , time: Date.parse(new Date())}}).then((res)=>{
+                    this.dataOrder = res.data.detail;
+                    fun();
+                });
+            },
+            // 获取网站信息
+            getWebInfo(number , fun)
+            {
+                ajax.get(business.solution_web_info ,  {params:{number , number}}).then((res)=>{
+                    if(res.code == 200) {
+                        var detail = res.data.detail;
+                        this.dataWebInfo = detail;
+                        this.current = detail.current;
+                        this.number = detail.number;
+                    }else{
+                        this.$Message.error('系统错误请稍后在尝试');
+                    }
+                });
+            },
+            // 获取全部可开通功能
+            getSolutionAll()
+            {
+                ajax.get(business.solution_list_all_api).then((res)=>{
+                    this.dataList = res.data.list;
+                    console.log(this.dataList);
+                });
+            },
+
+            // 创建二维码PAY
+            solution_order_pay(number)
+            {
+                ajax.get(business.solution_order_pay , {params : {'number' : number}}).then((res)=>{
+                    if(res.code !== 200)
+                    {
+                        this.$Message.error(res.message);
+                        this.backSolution();
+                    }
+                    console.log(res);
+                    this.order_pay_url = res.data.code_url;
+                    console.log(this.order_pay_url);
+                    this.wQrcode('qrimgs' ,this.order_pay_url);
+                });
+            },
+            // 选择产品
+            selectSolution(val)
+            {
+                for(var item of this.dataList)
+                {
+                    if(val == item.solution_id)
+                    {
+                        this.confirm['zhutiu'] = item.name;
+                        this.domain['agent_domain'] = item.agent_domain;
+                        this.domain['agent_ip'] = item.agent_ip;
+                        this.formItem.controlled_id = item.controlled_id;
+                        this.editionList = item.edition;
+                        break;
+                    }
+                }
+            },
+            // 选择版本
+            selectEdition(val)
+            {
+                for(var item of this.editionList)
+                {
+                    if(val == item.edition_id)
+                    {
+                        this.confirm['banben'] = item.name;
+                        this.confirm['price'] = item.price + '元';
+                        this.confirm['time'] = (item.time == 0) ? '永久' : item.time+'年' ;
+                        this.editionDetail = item;
+                        break;
+                    }
+                }
+            },
+            // 选择产品提交POST
+            handleSubmit (name) {
+                ajax.post(business.solution_order_create , this.formItem).then((res)=>{
+                    if(res.code == 200) {
+                        var detail = res.data.detail;
+                        this.current = (detail.status == 3) ? 2 : 1;
+                        this.action = (detail.status == 3) ? 'divSuccess' : 'divPayOrder' ;
+                        this.number = detail.number; 
+                    }else{
+                        this.$Message.error(res.message);
+                    }
+                });
+            },
+            // 用户点击已成功支付进行下一步
+            confirmPay(){
+                this.getOrder(this.number , ()=>{
+                    if(this.dataOrder.status == 2 || this.dataOrder.status == 3){
+                        this.action = 'divSuccess';
+                        this.current = 2;
+                    }else {
+                        this.$Message.error('没有支付成功,请扫码支付');
+                    }
+                });
+            }
+        }
+    })
+</script>

@@ -178,6 +178,11 @@ $(function() {
                     $("#default404").show().addClass("default404");
                     return false;
                 }
+
+                var cover = ApiMaterPlatQiniuDomain + data.data.thumb_image;
+                var summary = data.data.summary;
+                var atitle = data.data.title;
+
                 $(".page-left").append(news_detail(data.data));
 
                 if(!data.data.source_url) {
@@ -230,9 +235,9 @@ $(function() {
                                 data: {
                                     openid: openid,
                                     ref_url: window.location.pathname,
-                                    ref_type: 2,
-                                    ref_id: plat_userid,
-                                    domain: domain
+                                    // ref_type: 2,
+                                    // ref_id: plat_userid,
+                                    // domain: domain
                                 },
                                 success: function (data) {
                                     //alert(JSON.stringify(data))
