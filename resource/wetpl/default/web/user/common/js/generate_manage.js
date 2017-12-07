@@ -709,12 +709,19 @@ init(localStorage.getItem('token'));
                 // }
                 if (data.code == 200){
                     // console.log(data);
-                    if (data.data.domain == null) {
-                        //没有个性域名
-                        domain = '/index';
-                    } else {
-                        //存在个性域名
-                        domain = "/" + data.data.domain;
+                    if (data.code == 200){
+                        console.log(data);
+                        if (data.data != null) {
+                            if (data.data.domain == null) {
+                                //没有个性域名
+                                domain = '/index';
+                            } else {
+                                //存在个性域名
+                                domain = "/" + data.data.domain;
+                            }
+                        } else {
+                            domain = '/index';
+                        }
                     }
                 }
                 /*else {
