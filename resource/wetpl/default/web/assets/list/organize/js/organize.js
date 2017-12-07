@@ -228,7 +228,9 @@ $(function() {
                             }
                         });
 
+                        show_two = $("#menuTwo").children().first().attr("name");
                         column(show_two, pageNum);
+
                     } else {
 
                         // 没有二级分类
@@ -241,7 +243,7 @@ $(function() {
 
     function two_ul(result) {
         $(".list-article-ul").html("");
-        $(".list-article-ul").html(`<div class="org_content"><h3>` + result.summary + `</h3><div>` + result.content + `</div></div>`);
+        $(".list-article-ul").html(`<div class="org_content"><h3>` + result.title + `</h3><div>` + result.content + `</div></div>`);
     }
 
     // Cms - 获取类目(根据频道weid)
@@ -311,11 +313,13 @@ $(function() {
                                                 error: function(error) {
                                                     console.error(error);
                                                 }
-                                            })                                            
+                                            })
                                         }
                                     } else {
                                         var menu_two = $("#"+ pathname[1]).attr("name");
                                         default_two(menu_two, pathname[1]);
+
+
                                         $('#' + pathname[1]).addClass("single_active").siblings().removeClass("single_active");
                                         $("#menuY").text($('#' + pathname[1]).text());
                                     }
