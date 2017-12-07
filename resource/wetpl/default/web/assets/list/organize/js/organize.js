@@ -289,7 +289,7 @@ $(function() {
                                         default_two(parend_id, pathname[1]);
                                         $('#' + pathname[1]).addClass("single_active").siblings().removeClass("single_active");
                                         $.ajax({
-                                            url: CMS_CHANNELS_DOMAIN_QUERY + pathname[0],
+                                            url: apiUrl + "cms/categories/domain_query/" + pathname[1],
                                             dataType: 'JSON',
                                             async:  false,
                                             success: function(data) {
