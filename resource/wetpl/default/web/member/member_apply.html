@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head lang="en">
-        <title> 会员申请 </title>
+        <title></title>
         <meta charset="UTF-8" />
         <link rel="shortcut icon" id="favicon" href="" />
         <!-- <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport" /> -->
@@ -46,7 +46,9 @@
 
                 <!-- 组织分类 -->
                 <div class="member_top_nav">
-                    <ul class="member_top_disperse" id="menuX"></ul>
+                    <ul class="member_top_disperse" id="menuX">
+                        <a class="chan_li" href="/zz"> 商会首页 </a>
+                    </ul>
                 </div>
 
                 <div class="member_center_disperse">
@@ -386,5 +388,14 @@
         <script src="{{PATH_TML}}member/js/member_process.js"></script>
         <script src="{{PATH_TML}}member/js/member_public.js"></script>
         <script src="{{PATH_TML}}member/js/member_apply.js"></script>
+
+        <script>
+            var title = window.localStorage.getItem("title");
+            if(!title) {
+                document.title = "入会申请";
+            } else {
+                document.title = "入会申请 — " + window.localStorage.getItem("title");                
+            }
+        </script>
     </body>
 </html>

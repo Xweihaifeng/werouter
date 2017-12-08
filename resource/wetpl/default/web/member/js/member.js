@@ -49,6 +49,14 @@ $.ajax({
 });
 
 function member_issue(result, result2, result3) {
+
+    var title_info = window.localStorage.getItem("title");
+    if(!title_info) {
+        document.title = result2.plat_name+``+result2.level_name+``+result3.real_name;
+    } else {
+        document.title = result2.plat_name+``+result2.level_name+``+result3.real_name + " — " + window.localStorage.getItem("title");
+    }
+
     console.log(result2, result3);
     var result_weid = "http://" + window.location.host +"/cert/"+ result;
     var template12;
