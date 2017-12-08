@@ -374,8 +374,8 @@ function avatar_admin() {
             }
 
             var weid = localStorage.getItem('weid');
-            //console.log(weid)
-            init(weid);
+            console.log(weid)
+            // init(weid);
 
             var store = function(sendData){
             $.ajax({
