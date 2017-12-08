@@ -314,7 +314,19 @@ function avatar_admin() {
         ,offset: type //具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
         ,area: ['400px', '300px']
         ,id: 'layerDemo'+type //防止重复弹出
-        ,content: '<div style="padding: 20px 100px;"><input type="text" /></div>'
+        ,content: `
+            <div class="con-hd">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        个性域名设置
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label id="host" style="margin-left: 10px; padding-top: 8px; padding-right: 5px; float: left;"></label>
+                    <input id="user-domain" type="text" class="form-control" name="domain" value="" style="width: 50%; float: left;">
+                </div>
+                <button id="submit" type="submit" class="btn btn-default" style="margin-left: 10px;">立即申请</button>
+            </div>`
         //,btn: '关闭全部'
         ,btnAlign: 'c' //按钮居中
         ,shade: 0 //不显示遮罩
