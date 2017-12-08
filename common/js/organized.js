@@ -236,7 +236,7 @@
                     if(item.index_show == 1) {
                         var i = 0;
                         if(i <= 8) {
-                            $(".shanghuijieshao").prepend(column_list(item));
+                            $(".shanghuijieshao").append(column_list(item));
                             i++;
                         }
                     }
