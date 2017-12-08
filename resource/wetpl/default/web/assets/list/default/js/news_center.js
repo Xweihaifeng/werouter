@@ -130,7 +130,11 @@ $(function() {
         column(li_name, pageNum);
     })
 
-    function column(li_name, pageNum) {
+    function() {
+
+    }
+
+    function column3(li_name, pageNum) {
         // 新闻列表
         var options6 = $.get(CMS_DETAIL_CONTENTS_CATE_ID + li_name + "&limit=10&page=" + pageNum );
         options6.done(function(data) {
@@ -142,16 +146,45 @@ $(function() {
                 if(total <= 10) {
                     $(".news-loadingsImg").slideUp();
                 }
-            }
 
-            if(data.data.list.length == 0) {
-
-            } else {
                 $(data.data.list).each(function(index, value) {
                     $(".news-center-main").append(news_contents(value));
                     $(".zhu-yao-nei-rong img").hide();
                 })
             }
+        });
+        options6.fail(function(error) {
+            console.warn(error)
+        });
+    }
+
+    function column(li_name, pageNum, result) {
+        // 新闻列表
+        var options6 = $.get(CMS_DETAIL_CONTENTS_CATE_ID + li_name + "&limit=10&page=" + pageNum );
+        options6.done(function(data) {
+            if(data.code === 200) {
+                total = data.data.total;
+                limit = data.data.params.limit;
+                pageNum = data.data.params.page // 显示初始页面
+
+                if(total <= 10) {
+                    $(".news-loadingsImg").slideUp();
+                }
+
+                if(data.data.list.length == 0) {
+                    result.forEach(function(value, index) {
+                        if(value.domain == li_name) {
+                            column3(value.domain, pageNum);
+                        }
+                    });
+                } else {
+                    $(data.data.list).each(function(index, value) {
+                        $(".news-center-main").append(news_contents(value));
+                        $(".zhu-yao-nei-rong img").hide();
+                    })
+                }
+            }
+
         });
         options6.fail(function(error) {
             console.warn(error)
@@ -238,7 +271,7 @@ $(function() {
                 $('#news_loadingsImg1').show().siblings("#news_loadingsImg").hide();
                 column1(pageNum);
             } else {
-                column(li_name, pageNum);
+                column(li_name, pageNum, data.data);
             }
         } else {
             console.warn(data.message);
