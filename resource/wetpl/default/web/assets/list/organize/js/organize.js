@@ -261,6 +261,7 @@ $(function() {
                         });
 
                         show_two = $("#menuTwo").children().first().attr("id");
+                        $('#' + show_two).addClass("single_active").siblings().removeClass("single_active");
                         $.ajax({
                             url: apiUrl + "cms/categories/domain_query/" + show_two,
                             dataType: 'JSON',
