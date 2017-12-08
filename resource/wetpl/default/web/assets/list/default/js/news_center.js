@@ -130,10 +130,6 @@ $(function() {
         column(li_name, pageNum);
     })
 
-    function() {
-
-    }
-
     function column3(li_name, pageNum) {
         // 新闻列表
         var options6 = $.get(CMS_DETAIL_CONTENTS_CATE_ID + li_name + "&limit=10&page=" + pageNum );
