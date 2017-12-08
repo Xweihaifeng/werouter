@@ -308,7 +308,7 @@ options1.fail(function(error) {
 // 判断是否开通微主页
 function avatar_admin() {
 
-    $("body").append(`<div class="alert_mask"></div>`)
+    $("body").append(`<div class="alert_mask"><div class="alert_mask_a"></div></div>`)
     return false;
     var options2 = $.post(PAGESTORE);
     options2.done(function(data) {
