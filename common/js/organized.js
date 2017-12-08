@@ -83,75 +83,6 @@
         $("#ruhuishenqing").append(template);
     }
 
-    // 发展报告
-    function report(data, thumb_imgs) {
-
-        if((!data || data.length == 0) && thumb_imgs) {
-            thumb_imgs = imgSet(thumb_imgs, 45, 40, 3);
-            $(".diyi .report").css({"background-image": "url("+ thumb_imgs +")"});
-        }
-
-        var thumb_image = data.thumb_image;
-        if (thumb_image.indexOf('http') != 0 && thumb_image != "") {
-            thumb_image = imgSet(thumb_image, 280, 164, 3);
-        }
-        var template = `
-        <div class="swiper-slide">`
-            if(thumb_image != "") {
-                template = template + `<img class="iconfont" src="`+ thumb_image +`" alt="">`;
-            }
-            template = template + `
-            <a href="/org/`+ data.domain +`" class="a btn-look">点击查看</a>
-        </div>`;
-        $(".report_swiper").append(template);
-        
-
-        const mySwiper10 = new Swiper (".swiper-report", {
-            pagination: '.pagination-report',
-            direction: 'vertical',
-            autoplay: 3000,
-            speed: 1000,
-            loop : true,
-            paginationClickable: true,
-            autoplayDisableOnInteraction : false
-        })
-
-    }
-
-    // 商会介绍
-    function lunbo(data, thumb_imgs) {
-
-        if((!data || data.length == 0) && thumb_imgs) {
-            thumb_imgs = imgSet(thumb_imgs, 45, 40, 3);
-            $(".disan .lunbo").css({"background-image": "url("+ thumb_imgs +")"});
-        }
-
-        var thumb_image = data.thumb_image;
-        if (thumb_image.indexOf('http') != 0 && thumb_image != "") {
-            thumb_image = imgSet(thumb_image, 280, 164, 3);
-        }
-        var template = `
-        <div class="swiper-slide">`
-            if(thumb_image != "") {
-                template = template + `<img class="iconfont" src="`+ thumb_image +`" alt="">`;
-            }
-            template = template + `
-            <a href="/org/`+ data.domain +`" class="a btn-info">点击查看</a>
-        </div>`;
-        $(".lunbo_swiper").append(template);
-
-        const mySwiper9 = new Swiper (".swiper-nested", {
-            pagination: '.pagination-nested',
-            direction: 'horizontal',
-            autoplay: 3000,
-            speed: 1000,
-            loop : true,
-            paginationClickable: true,
-            autoplayDisableOnInteraction : false
-        })
-
-    }
-
     // 下方三模块筛选
     function cont_two(this_weid_two, name) {
         $.ajax({
@@ -160,19 +91,9 @@
             success: function(data){
                 if(data.code == 200) {
                     var result = data.data;
-                    if(name == "fzbg") {
-                        result.forEach(function(value, index) {
-                            report(value, value.thumb_imgs)
-                        });
-                    } else if(name == "rhsq") {
-                        result.forEach(function(value, index) {
-                            column_rhsq(value, value.thumb_imgs)
-                        });
-                    } else if(name == "cqsy") {
-                        result.forEach(function(value, index) {
-                            lunbo(value, value.thumb_imgs)
-                        });
-                    }
+                    result.forEach(function(value, index) {
+                        column_rhsq(value, value.thumb_imgs)
+                    });
                 }
             },
             error: function(xhr){
@@ -180,6 +101,101 @@
             }
         })
     }
+
+    function org_left(result, index) {
+        console.log(result);
+        var image = result.image;
+        if (image.indexOf('http') != 0 && image != "") {
+            image = ApiMaterPlatQiniuDomain + image;
+        }
+
+        var template = `
+        <div class="swiper-slide" id='left`+ (index+1) +`' data='`+ result.title +`'>
+            <img class="iconfont" src="`+ image +`" alt="">
+            <a href="`+ result.url +`" class="a btn-look">点击查看</a>
+        </div>`;
+        $(".report_swiper").append(template);
+
+        return template;
+    }
+
+    function org_right(result, index) {
+        console.log(result);
+        var image = result.image;
+        if (image.indexOf('http') != 0 && image != "") {
+            image = ApiMaterPlatQiniuDomain + image;
+        }
+
+        var template = `
+        <div class="swiper-slide" id='right`+ (index+1) +`' data='`+ result.title +`'>
+            <img class="iconfont" src="`+ image +`" alt="">
+            <a href="`+ result.url +`" class="a btn-look">点击查看</a>
+        </div>`;
+        $(".lunbo_swiper").append(template);
+
+        return template;
+    }
+
+    var options12 = $.get(apiUrl + "cms/org_advs");
+    options12.done(function(data) {
+        if(data.code == 200) {
+            if(!data.data.org_left) {
+                return false
+            } else {
+                var resultx = data.data.org_left;
+                resultx.forEach(function(value, index) {
+                    org_left(value, index);
+                });
+
+                const mySwiper10 = new Swiper (".swiper-report", {
+                    pagination: '.pagination-report',
+                    direction: 'vertical',
+                    autoplay: 3000,
+                    speed: 1000,
+                    loop : true,
+                    paginationClickable: true,
+                    autoplayDisableOnInteraction : false,
+                    onSlideChangeStart: function(swiper) {
+                         if(swiper.activeIndex>resultx.length){
+                         $(".diyi .title").text($('#left'+(swiper.activeIndex-resultx.length)).attr('data'));
+                        }else{
+                         $(".diyi .title").text($('#left'+swiper.activeIndex).attr('data'));
+                        }
+                    }
+                })
+            }
+
+            if(!data.data.org_right) {
+                return false
+            } else {
+                var result = data.data.org_right;
+                result.forEach(function(value, index) {
+                    org_right(value, index);
+
+                });
+
+                const mySwiper10 = new Swiper (".swiper-nested", {
+                    pagination: '.pagination-nested',
+                    direction: 'horizontal',
+                    autoplay: 3000,
+                    speed: 1000,
+                    loop : true,
+                    paginationClickable: true,
+                    autoplayDisableOnInteraction : false,
+                    onSlideChangeStart: function(swiper) {
+                        if(swiper.activeIndex>result.length){
+                          $(".disan .title").text($('#right'+(swiper.activeIndex-result.length)).attr('data'));
+                        }else{
+                        $(".disan .title").text($('#right'+swiper.activeIndex).attr('data'));
+                        }
+                    }
+                })
+            }
+        }
+    });
+    options12.fail(function(error) {
+        console.error(error);
+    });
 
     // 组织一级分类
     var column_list = function(data) {
@@ -226,12 +242,6 @@
                         <ul id="ruhuishenqing" name="`+ item.weid +`"></ul>`
                     );
                     cont_two(item.weid, "rhsq");
-                } else if(item.title == "发展报告") {
-                    $(".diyi .title").text(item.title);
-                    cont_two(item.weid, "fzbg");
-                } else if(item.title == "长青事业") {
-                    $(".disan .title").text(item.title);
-                    cont_two(item.weid, "cqsy");
                 } else {
                     if(item.index_show == 1) {
                         var i = 0;
