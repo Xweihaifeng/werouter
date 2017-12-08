@@ -20,6 +20,11 @@ $(document).ready(function(){
 
     $(".linkto").attr('href', '/' + domain)
 
+    //$(".oline-3 div:first-child").html('<img src="http://yewu.4g9.cn/qrcode.php?url=https://wezchina.com/kezunping&logo=https://image.wezchina.com/pages/article/1512481062602.png&domain=kezunping&size=430" />')
+    var genQrcode = function(req, url, logo, domain, size) {
+        //$(".oline-3 div:first-child").html('<img src="' + req + 'url=' + url + '&logo=' + logo + '&domain=' + domain + '&size=' + size + '" width="175" height="175"/>')
+    }
+    //genQrcode('http://yewu.4g9.cn/qrcode.php?', 'https://wezchina.com/kezunping', 'https://image.wezchina.com/pages/article/1512481062602.png', 'kezunping', 175)
     //route
     var isLogin; //判断用户登陆与否
     /*var router = function(route){
