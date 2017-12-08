@@ -170,7 +170,7 @@ $(function() {
                 if(data.data.list.length == 0) {
                     result.forEach(function(value, index) {
                         if(value.domain == li_name) {
-                            column3(value.domain, pageNum);
+                            column3(value.children[0].domain, pageNum);
                         }
                     });
                 } else {
