@@ -4,7 +4,7 @@
 $(function() {
     var pathname = window.location.pathname.split('/').slice(1,3);
     var get_weid = pathname[0], get_parse, total, limit, pageNum = 1;
-    var domain_weid = '';
+    var domain_weid = '', li_name_1;
 
     $.ajax({
         url: CMS_CHANNELS_DOMAIN_QUERY + get_weid,
@@ -126,8 +126,7 @@ $(function() {
         }
 
         pageNum++;
-        var li_name = $('.csdf').attr('id');
-        column(li_name, pageNum);
+        column(li_name_1, pageNum);
     })
 
     function column3(li_name, pageNum) {
@@ -144,7 +143,7 @@ $(function() {
                 } else {
 
                     $(".news-loadingsImg").slideDown();
-                    $('.csdf').attr('id', li_name);
+                    li_name_1=li_name;
                 }
 
                 $(data.data.list).each(function(index, value) {
@@ -260,20 +259,19 @@ $(function() {
                 $(this).find(".sub_tab").hide();
             })
 
-            var li_name = pathname[1];
-            $('.csdf').attr('id', li_name);
+            li_name_1 = pathname[1];
             if(pathname.length == 2 && pathname[1] != ''){
-                li_name = pathname[1];
+                li_name_1 = pathname[1];
             }
-            $("#" + li_name).addClass("csdf").siblings().removeClass("csdf");
-            $("#" + li_name + " a").addClass("fgvg");
+            $("#" + li_name_1).addClass("csdf").siblings().removeClass("csdf");
+            $("#" + li_name_1 + " a").addClass("fgvg");
 
-            document.title = $("#" + li_name).text();
+            document.title = $("#" + li_name_1).text();
             if($("#newN").attr("class").indexOf("csdf") != -1) {
                 $('#news_loadingsImg1').show().siblings("#news_loadingsImg").hide();
                 column1(pageNum);
             } else {
-                column(li_name, pageNum, data.data);
+                column(li_name_1, pageNum, data.data);
             }
         } else {
             console.warn(data.message);
