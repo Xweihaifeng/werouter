@@ -31,20 +31,12 @@ $(function() {
     }
 
     $.ajax({
-        url: apiUrl + 'pages/page/getDetailByDomain/index',
+        url: apiUrl + 'cms/setting/show',
         type: 'GET',
         async: false,
         success: function(data) {
             pid = data.data.plat_user_id;
-            $.ajax({
-                url: apiUrl + 'users/' + pid,
-                type: 'GET',
-                async: false,
-                success: function(data) {
-                    nickname = data.data.nickname;
-                    
-                }
-            })
+            nickname = data.data.title;
         }
     })
 
