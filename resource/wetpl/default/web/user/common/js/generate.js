@@ -370,7 +370,6 @@ function avatar_admin() {
         $("#submit_domain").click(function () {
             var domain = $("#user-domain").val();
             var sendData = {weid: weid, domain: domain};
-            alert(1)
             if (domain != "") {
                 store(sendData);
             } else {
