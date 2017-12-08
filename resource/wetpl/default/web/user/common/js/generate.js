@@ -376,7 +376,7 @@ function avatar_admin() {
 
             var weid = localStorage.getItem('weid');
             console.log(weid)
-            init(weid);
+            // init(weid);
 
             var store = function(sendData){
             $.ajax({
@@ -406,7 +406,7 @@ function avatar_admin() {
             })
         }
 
-        var update = function(sendData){
+        /*var update = function(sendData){
             $.ajax({
                 url: PAGES_UPDATE,
                 type: 'POST',
@@ -431,15 +431,14 @@ function avatar_admin() {
                     console.log(xhr);
                 }
             })
-        }
+        }*/
 
         $("#submit_domain").click(function () {
             var domain = $("#user-domain").val();
-            var sendData = {weid: id, domain: domain};
+            var sendData = {weid: weid, domain: domain};
             alert(1)
             if (domain != "") {
-
-                // req(sendData);
+                store(sendData);
             } else {
                 layer.msg('请输入个性域名', {
                     time: 1500
