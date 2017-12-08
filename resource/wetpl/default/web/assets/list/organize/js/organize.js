@@ -183,6 +183,8 @@ $(function() {
             var two_type = $("#" + pathname[1]).attr("type");
             if(two_type == 0 && body.data.list.length == 0) {
                 $(".list-article-ul").html("<li>暂无内容</li>");
+
+                paging(total, limit);
             } else {
                 $(body.data.list).each(function(index, value) {
                     $(".list-article-ul").append(news_contents(value));
