@@ -31,7 +31,7 @@ $(function() {
     }
 
     $.ajax({
-        url: apiUrl + 'pages/page/getDetailByDomain/idnex',
+        url: apiUrl + 'pages/page/getDetailByDomain/index',
         type: 'GET',
         async: false,
         success: function(data) {
