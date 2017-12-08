@@ -324,7 +324,7 @@ function avatar_admin() {
                     <label id="host" style="margin-left: 10px; padding-top: 8px; padding-right: 5px; float: left;"></label>
                     <input id="user-domain" type="text" class="form-control" name="domain" value="" style="width: 50%; float: left;">
                 </div>
-                <button id="submit" type="submit" class="btn btn-default" style="margin-left: 10px;">立即申请</button>
+                <button id="submit_domain" type="submit" class="btn btn-default" style="margin-left: 10px;">立即申请</button>
             </div>`
         //,btn: '关闭全部'
         ,btnAlign: 'c' //按钮居中
@@ -339,6 +339,7 @@ function avatar_admin() {
             var req;
             var id;
             var init = function(weid) {
+                console.log(localStorage.getItem('token'))
                 // moduleState();
                 $.ajax({
                     url: PAGES_PAGE_GETDETAILBYUSER + weid,
@@ -375,7 +376,7 @@ function avatar_admin() {
 
             var weid = localStorage.getItem('weid');
             console.log(weid)
-            // init(weid);
+            init(weid);
 
             var store = function(sendData){
             $.ajax({
@@ -432,7 +433,7 @@ function avatar_admin() {
             })
         }
 
-        $("#submit").click(function () {
+        $("#submit_domain").click(function () {
             var domain = $("#user-domain").val();
             var sendData = {weid: id, domain: domain};
             alert(1)
