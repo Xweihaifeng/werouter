@@ -180,7 +180,8 @@ $(function() {
             limit = body.data.params.limit;
             pageNum = body.data.params.page // 显示初始页面
 
-            if(body.data.list.length == 0) {
+            var two_type = $("#" + pathname[1]);
+            if(two_type == 0 && body.data.list.length == 0) {
                 $(".list-article-ul").html("<li>暂无内容</li>");
             } else {
                 $(body.data.list).each(function(index, value) {
