@@ -308,7 +308,21 @@ options1.fail(function(error) {
 // 判断是否开通微主页
 function avatar_admin() {
 
-    $("body").append(`<div class="alert_mask"><div class="alert_mask_a"></div></div>`)
+    layer.open({
+        type: 1
+        ,title: '扫描二维码'
+        ,offset: type //具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
+        ,area: ['400px', '300px']
+        ,id: 'layerDemo'+type //防止重复弹出
+        ,content: '<div style="padding: 20px 100px;"><img width="100%" src=' + QRCODE + '?size=150&url=' + qrUrl + '></div>'
+        //,btn: '关闭全部'
+        ,btnAlign: 'c' //按钮居中
+        ,shade: 0 //不显示遮罩
+        ,yes: function(){
+            layer.closeAll();
+        }
+    });
+
     return false;
     var options2 = $.post(PAGESTORE);
     options2.done(function(data) {
