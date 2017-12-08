@@ -654,7 +654,7 @@ if (domain == 'wemall') {
             nickname = data.nickname;
         }
         if (data.avatar != null) {
-            avatar = 'http://images.new.wezchina.com/' + data.avatar;
+            avatar = ApiMaterPlatQiniuDomain + data.avatar;
         } else {
             avatar = '/common/img/page.png';
         }

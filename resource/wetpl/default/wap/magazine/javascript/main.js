@@ -30,7 +30,7 @@ if (currurl.indexOf('?') != -1) {
     }
 }
 var requrl= apiUrl + 'magazine/images?weid=' + weid;
-// var qiniu = 'http://images.new.wezchina.com/';
+// var qiniu = ApiMaterPlatQiniuDomain;
 var title = '';
 var cover = '';
 var summary = '';

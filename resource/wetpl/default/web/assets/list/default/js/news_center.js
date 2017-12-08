@@ -89,9 +89,7 @@ $(function() {
         }
 
         var template = `
-        <li class="article-item new-list-box flex">
-            `;
-
+        <li class="article-item new-list-box flex">`
                 if(thumb_image != ""){
                     template = template + `
                     <div class="details-header">
@@ -105,11 +103,11 @@ $(function() {
 
                 template= template+`<div class="details-title">
                 <h3 class="list-title"><a class="title_a" href="/`+ pathname[0] +"/"+ jumpUrl +`" target="_top" >`+ new_title +`</a></h3>
-                <div class="zhu-yao-nei-rong">`+ result.content +`</div>
+                <div class="zhu-yao-nei-rong">`+ result.summary +`</div>
                 <div class="a-none"><a class="a-none" style="color: #007cd3;" href="/`+ pathname[0] +"/"+ jumpUrl +`" target="_top" >查看全文</a></div>
                 <div class="pageviews center-disperse">
                     <div class="new-issuser "><span>`+ result.auth +` <b> · </b></span><span>`+ result.publish_time +`</span><span>浏览量：<span style="color: #007cd3;">`+ result.views +`</span></span></div>
-                    <div><a href="#"><span class="article-cate new-title">`+ result.cate_name +`</span></a></div>
+                    <div><a href="javascript:void(0)"><span class="article-cate new-title">`+ result.cate_name +`</span></a></div>
                 </div>
             </div>
         </li>`

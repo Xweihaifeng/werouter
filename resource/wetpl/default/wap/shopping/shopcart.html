@@ -38,7 +38,7 @@
                     <label class="circle" :class="{'checked-item-circle' : item.checked}" :for="pIndex+''+index">
                         <input @click="selectItem(store,item,index)" v-model="item.checked" class="circle"
                                :id="pIndex+''+index" type="checkbox"></label>
-                    <img :src="'http://images.new.wezchina.com/' + item.cover" alt="">
+                    <img :src="ApiMaterPlatQiniuDomain + item.cover" alt="">
                     <div class="product">
                         <p class="des">{{item.title}}</p>
                         <p class="price">

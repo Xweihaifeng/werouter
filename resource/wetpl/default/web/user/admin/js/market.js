@@ -3,7 +3,7 @@
  */
 
 $(document).ready(function(){
-    const ApiMaterPlatQiniuDomain       = 'http://images.new.wezchina.com/';
+    // const ApiMaterPlatQiniuDomain       = 'http://images.new.wezchina.com/';
 
     var favicon = ApiMaterPlatQiniuDomain + localStorage.getItem('fav');
     console.log('logo:',favicon);

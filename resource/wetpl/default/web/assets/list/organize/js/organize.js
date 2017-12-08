@@ -127,7 +127,7 @@ $(function() {
         $('#box').paging({
             initPageNo: 1,                                 // 初始页码
             totalPages: Math.ceil(setTotalCount/limit),    //总页数
-            totalCount: '合计' + setTotalCount + '条数据', // 条目总数
+            // totalCount: '合计' + setTotalCount + '条数据', // 条目总数
             slideSpeed: 600,                               // 缓动速度。单位毫秒
             jump: true,                                    //是否支持跳转
             callback: function(page) {                     // 回调函数
@@ -261,6 +261,8 @@ $(function() {
                         });
 
                         show_two = $("#menuTwo").children().first().attr("id");
+                        $('#' + show_two).addClass("single_active").siblings().removeClass("single_active");
+                        
                         $.ajax({
                             url: apiUrl + "cms/categories/domain_query/" + show_two,
                             dataType: 'JSON',
@@ -338,6 +340,7 @@ $(function() {
                                                     document.title = $('#' + pathname[1]).text();
                                                     $('#' + data.data.domain).addClass("cate-active-on").siblings().removeClass("cate-active-on");
                                                     $("#menuY").text(data.data.title);
+                                                    document.title = $('#' + pathname[1]).text();
                                                 }
                                             }
                                         });
@@ -367,9 +370,10 @@ $(function() {
                                     } else {
                                         var menu_two = $("#"+ pathname[1]).attr("name");
                                         default_two2(menu_two, pathname[1]);
-                                        document.title = $('#' + pathname[1]).text();
+
                                         $('#' + pathname[1]).addClass("single_active").siblings().removeClass("single_active");
                                         $("#menuY").text($('#' + pathname[1]).text());
+                                        document.title = $('#' + pathname[1]).text();
                                     }
                                 }
                             }
