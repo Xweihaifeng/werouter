@@ -71,13 +71,13 @@
                                 </div>
                                 <div class="cart_shop_price">￥<span class="cart_shop_unit_price"></span>{{parseFloat(values.price).toFixed(2)}}</div>
                                 <div class="cart_shop_piece">
-                                    <input id="count_min" name="" type="button" value="-" @click="count_add_min(values,'count_min')" />
+                                    <input id="count_min" name="" type="button" value="-" @click="count_add_min(values,item,'count_min')" />
                                     <input id="quantity"  name="" type="text" v-model="values.goods_num" />  
-                                    <input id="count_add" name="" type="button" value="+" @click="count_add_min(values,'count_add')" />&nbsp;件
+                                    <input id="count_add" name="" type="button" value="+" @click="count_add_min(values,item,'count_add')" />&nbsp;件
                                 </div>
                                 <div class="cart_shop_price">￥<span class="cart_shop_total_price"></span>{{parseFloat(values.price * values.goods_num).toFixed(2)}}</div>
                                 <div class="cart_shop_operation">
-                                    <span class="cart_shop_delete"> 删除商品 </span>
+                                    <span class="cart_shop_delete" @click="delectGood(values)"> 删除商品 </span>
                                 </div>
                             </li>
                             <slide class="cart_shop_order">
@@ -109,25 +109,28 @@
                 },
                 mounted: function () {
                     // 获取默认列表
-                    var body = {
-                        user_id : window.localStorage.getItem("weid")
-                    };
-                    this.$http.post(apiUrl + 'cart/lists', body).then(function (res) {
-                        if(res.data && res.data.code===200){
-                            var list = res.data.data.list;
-                            for(var i=0; i<list.length; i++){
-                                list[i].mall["pCheck"] = false;
-                                for(var a=0; a<list[i].goods.length; a++){
-                                    list[i].goods[a]["checked"] = false;
-                                }
-                            }
-                            this.cart_list = list;
-                            console.log(this.cart_list)
-                        }
-                    })
+                    this.init()
                 },
                 methods: {
-                    count_add_min: function(values,names) {
+                    init : function () {
+                        var body = {
+                            user_id : window.localStorage.getItem("weid")
+                        };
+                        this.$http.post(apiUrl + 'cart/lists', body).then(function (res) {
+                            if(res.data && res.data.code===200){
+                                var list = res.data.data.list;
+                                for(var i=0; i<list.length; i++){
+                                    list[i].mall["pCheck"] = false;
+                                    for(var a=0; a<list[i].goods.length; a++){
+                                        list[i].goods[a]["checked"] = false;
+                                    }
+                                }
+                                this.cart_list = list;
+                                console.log(this.cart_list)
+                            }
+                        })
+                    },
+                    count_add_min: function(values,obj,names) {
                     	if(names == "count_add") {
                     		values.goods_num++;
                     		if(values.goods_num > values.stock) {
@@ -141,6 +144,7 @@
 		                        values.goods_num = 1;
 		                    }
                     	}
+                    	this.getNumber(obj)
                     },
                     getNumber : function (storeObj,flag) {
                         storeObj.storeAllMoney = 0.00;
@@ -197,6 +201,24 @@
                             }
                         });
 
+                    },
+                    delectGood: function (good) {
+                        console.log(good);
+                        var self = this;
+                        layer.confirm('确认删除该条商品吗？', {
+                            title: false,
+                            btn: ['确定','取消']
+                        }, function(index){
+                            self.$http.post(apiUrl+'cart/destroy',{'weid' : good.cartweid}).then(function (res) {
+                                console.log(res);
+                                if(res.data.code === 200){
+                                    self.init()
+                                }else{
+                                    layer.msg('删除失败')
+                                }
+                                layer.close(index);
+                            })
+                        });
                     }
                 }
             })
