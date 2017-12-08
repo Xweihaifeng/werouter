@@ -335,6 +335,116 @@ function avatar_admin() {
         ,success: function(layero){
             var host = 'http://' + window.location.host;
             $("#host").text(host + "/");
+
+            var req;
+            var id;
+            var init = function(weid) {
+                // moduleState();
+                $.ajax({
+                    url: PAGES_PAGE_GETDETAILBYUSER + weid,
+                    type: 'GET',
+                    headers: {
+                        'Token': localStorage.getItem('token')
+                    },
+                    success: function(data){
+                        console.log(data)
+                        if (data.code == 200){
+                            id = data.data.weid;
+                            var domain = data.data.domain;
+                            $("#user-domain").val(domain);
+                            console.log(data);
+                            if (data == null) {
+                                console.log('store')
+                                req = store;
+                            } else {
+                                console.log('update')
+                                req = update;
+                            }
+
+                        } else {
+                            layer.msg(data.message, {
+                                time: 1500
+                            });
+                        }
+                    },
+                    error: function(xhr){
+                        console.log(xhr);
+                    }
+                })
+            }
+
+            var weid = localStorage.getItem('weid');
+            //console.log(weid)
+            init(weid);
+
+            var store = function(sendData){
+            $.ajax({
+                url: PAGESTORE,
+                type: 'POST',
+                data: sendData,
+                headers: {
+                    'Token': localStorage.getItem('token')
+                },
+                success: function(data){
+                    if (data.code == 200){
+                        console.log(data)
+                        //mess_tusi("保存设置成功");
+                        layer.msg('保存设置成功', {
+                            time: 1500
+                        });
+                        window.location.reload();
+                    } else {
+                        layer.msg(data.message, {
+                            time: 1500
+                        });
+                    }
+                },
+                error: function(xhr){
+                    console.log(xhr);
+                }
+            })
+        }
+
+        var update = function(sendData){
+            $.ajax({
+                url: PAGES_UPDATE,
+                type: 'POST',
+                data: sendData,
+                headers: {
+                    'Token': localStorage.getItem('token')
+                },
+                success: function(data){
+                    if (data.code == 200){
+                        console.log(data)
+                        layer.msg('保存设置成功', {
+                            time: 1500
+                        });
+                        window.location.reload();
+                    } else {
+                        layer.msg(data.message, {
+                            time: 1500
+                        });
+                    }
+                },
+                error: function(xhr){
+                    console.log(xhr);
+                }
+            })
+        }
+
+        $("#submit").click(function () {
+            var domain = $("#user-domain").val();
+            var sendData = {weid: id, domain: domain};
+            if (domain != "") {
+                alert(1)
+                // req(sendData);
+            } else {
+                layer.msg('请输入个性域名', {
+                    time: 1500
+                });
+            }
+        })
+
         }
     });
 
