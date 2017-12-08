@@ -450,27 +450,27 @@ function avatar_admin() {
     });
 
     return false;
-    var options2 = $.post(PAGESTORE);
-    options2.done(function(data) {
-        if(data.code == -200) {
-            layer.msg(data.message, { time: 2500 });
-            $(".av-on-line, #avatar-admin").show();
-            return false;
-        }
-        if(data.code == 200) {
-            if(!data.data) {
-                $("#avatar-admin").hide();
-                return false;
-            }
-            layer.msg("个人微主页开通成功", { time: 2500 });
-            $("#avatar-admin").show();
-            $(".av-on-line").hide();
-        }
-    });
-    options2.fail(function(error) {
-        $("#avatar-admin").hide();
-        cosole.error(error);
-    });
+    // var options2 = $.post(PAGESTORE);
+    // options2.done(function(data) {
+    //     if(data.code == -200) {
+    //         layer.msg(data.message, { time: 2500 });
+    //         $(".av-on-line, #avatar-admin").show();
+    //         return false;
+    //     }
+    //     if(data.code == 200) {
+    //         if(!data.data) {
+    //             $("#avatar-admin").hide();
+    //             return false;
+    //         }
+    //         layer.msg("个人微主页开通成功", { time: 2500 });
+    //         $("#avatar-admin").show();
+    //         $(".av-on-line").hide();
+    //     }
+    // });
+    // options2.fail(function(error) {
+    //     $("#avatar-admin").hide();
+    //     cosole.error(error);
+    // });
 }
 
 // 实名认证详情功能显示(是否开通实名认证)
