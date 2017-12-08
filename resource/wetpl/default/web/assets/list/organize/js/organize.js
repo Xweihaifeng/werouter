@@ -385,7 +385,7 @@ $(function() {
                                         var menu_two = $("#"+ pathname[1]).attr("name");
                                         default_two2(menu_two, pathname[1]);
 
-                                        $('#' + pathname[1]).addClass("single_active").siblings().removeClass("single_active");
+                                        $('#' + pathname[1]).addClass("cate-active-on").siblings().removeClass("cate-active-on");
                                         $("#menuY").text($('#' + pathname[1]).text());
                                         document.title = $('#' + pathname[1]).text() + " — " + window.localStorage.getItem("title");
                                     }
