@@ -266,7 +266,7 @@ req().then((data) => {
         width = $(window).width() / 2 - 180;
         height = $(window).height() / 2 - 165;
         setHeight(currHeight);
-        console.log(currHeight)
+        //console.log(currHeight)
         if (currHeight > 768 && currHeight < 1265){
             $(".nav-news-title, .nav-org-title, .nav-help-title, .nav-share-title").css("margin-top", currHeight * 0.75 + "px");
         } else if (currHeight < 768) {
