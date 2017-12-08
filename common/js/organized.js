@@ -189,7 +189,7 @@
         }
 
         var template2 = function(children) {
-            children = children.reverse();
+            // children = children.reverse();
             var template21 = '';
             $.map(children, function(value, key) {
                 template21 += `<a href="/org/`+ value.domain +`"> <i class="iconfont">&#xe61a;</i>`+ value.title +` </a>`
