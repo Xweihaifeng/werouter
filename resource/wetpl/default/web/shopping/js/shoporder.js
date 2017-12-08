@@ -235,15 +235,8 @@ checkdomain(domain,id);
     var dizhiacitve='';
          var colorred='';
     var addrdiv=function(data){         
-         // if(data.status==1){
-                // dizhiacitve='dizhi-active';
-                // colorred='color: red;';
-               
-             // }else{
-                dizhiacitve='';
-                colorred='';
-             // }
-
+        dizhiacitve='';
+        colorred='';
         if(data.status==1){
             var addrdivhtml='<div class="list-item" data="'+data.weid+'">'+
                    '<p class="m0">'+
@@ -283,12 +276,7 @@ checkdomain(domain,id);
                        $(".shouhuodizhi-default").children().remove();
                     // 循环展示地址
                     useraddrdata.list.map(x=>{
-                        // getprovincedetail(x.province_id);
-                        // x.province_id=provincename;
-
-                        // console.log(provincename ,":"+x.province_id);
                         $("#address-lists").append(addrdiv(x));
-                        
                         getprovincedetail(x.province_id);
                         getcitydetail(x.area_id);
 
@@ -299,23 +287,12 @@ checkdomain(domain,id);
 
 
                         }
-
-                         // $('.list-item').eq(0).css({'color':'#4299D8'}).find('.xinming').eq(0).addClass("dizhi-active");
-                            // $(".dizhi").eq(0).css("color","red");
-
-                            // $('#address_id').val($('.list-item').eq(0).attr('data'));
-                            
-
                     })
                     var i = 1;
                       $('.list-item .dizhi').click(function(){
                             i = 0;
-                            // 判断收货地址是否在配送范围之内
-                            //console.log($(this).attr('data'));
                             setdefaultaddr($(this));        
-                            //israngetrue(range_id,$(this).attr('data'),$(this));
-                              
-                      });        
+                       });        
                 }    
             }   
         },
@@ -341,26 +318,14 @@ checkdomain(domain,id);
                    }else{
                         // 循环展示地址
                         useraddrdata.list.map(x=>{
-                            // getprovincedetail(x.province_id);
-                            // x.province_id=provincename;
-
-                            // console.log(provincename ,":"+x.province_id);
                             $("#address-lists").append(addrdiv(x));
-                            
                             getprovincedetail(x.province_id);
                             getcitydetail(x.area_id);
-
                             if(x.status==1){
                                 $(".shouhuodizhi-default").append('<div>寄送至：<span class="provname-defalt"></span>&nbsp;&nbsp;&nbsp;<span class="cityname-defalt"></span>&nbsp;&nbsp;&nbsp;<span class="address-defalt">'+x.detail+'</span>&nbsp;&nbsp;&nbsp;收货人：<span class="buyname-defalt">'+x.name+'</span>&nbsp;&nbsp;&nbsp;<span class="phone-defalt">'+x.telophone+'</span></div>');
                                 getprovincedetail(x.province_id,x.status);
                                 getcitydetail(x.area_id,x.status);
                             }
-
-                             // $('.list-item').eq(0).css({'color':'#4299D8'}).find('.xinming').eq(0).addClass("dizhi-active");
-                                // $(".dizhi").eq(0).css("color","red");
-
-                                // $('#address_id').val($('.list-item').eq(0).attr('data'));
-                                
 
                         })
                         var i = 1;
@@ -497,7 +462,7 @@ checkdomain(domain,id);
                 '<p><img src="/common/img/qitian.png" alt="">该商品不支持7天无理由退货</p>'+
             '</li>'+
             '<li class="col-sm-3">' +
-                '<p id="one_price"> 单价：<span>'+data.price+'</span></p>' +
+                '<p id="one_price"> 单价：<span>'+parseFloat(data.price).toFixed(2)+'</span></p>' +
                 '<p id="postage_price">邮费：￥<span>'+postMoney+'</span></p>' +
             '</li>'+
             '<li class="col-sm-3">'+
@@ -532,14 +497,14 @@ checkdomain(domain,id);
                         var goods = data.data;
                         console.log("商品详情：",goods)
                         //判断商品邮费
-                        var postMoney = 0.00;
+                        var postMoney = "0.00";
                         if(goods.postage_status == 2){
-                            if(goods.postage_max_money && parseInt(goods.postage_max_money) !== 0){
+                            if(goods.postage_max_money && parseInt(goods.postage_max_money) > 0){
                                 if(parseFloat(goods.price * goodsdata.goods_num) < parseFloat(goods.postage_max_money)){
-                                    postMoney = parseFloat(goods.postage * goodsdata.goods_num)
+                                    postMoney = parseFloat(goods.postage * goodsdata.goods_num).toFixed(2)
                                 }
                             }else{
-                                postMoney = parseFloat(goods.postage * goodsdata.goods_num)
+                                postMoney = parseFloat(goods.postage * goodsdata.goods_num).toFixed(2)
                             }
 
                         }
@@ -556,51 +521,6 @@ checkdomain(domain,id);
         });
         getprovincenotRange();
         buyaddr();
-        return false;
-        
-    //     $.ajax({
-    //         url: GOODS_DETAIL+'/' + id,
-    //         type:'get',
-    //         headers: {
-    //                 'Token': localStorage.getItem('token')
-    //             },
-    //         dataType: 'json',
-    //         success: function(data){
-    //             console.log(data);
-    //             if (data.code == 200) {
-    //                 var goods = data.data;
-    //                     useraddr(goods.range_id);
-    //
-    //                 $(".product-buy-list").append(orderstorehtml(goods));
-    //
-    //                 $('#pay_price').text(goods.price);
-    //                 var goodsdata={
-    //                         title: goods.title,
-    //                         price: goods.price,
-    //                         marketprice:goods.marketprice,
-    //                         cover: goods.cover,
-    //                         content: goods.content,
-    //                         summary: goods.summary,
-    //                         weid: goods.weid,
-    //                        page_id:goods.page_id,
-    //                        mall_id:goods.mall_id
-    //                 }
-    //                 //获取会员折扣
-    //                 associator(localStorage.getItem("weid"),goods.mall_id,goods.price,goodsdata);
-    //                 // buynumfun(goods.price*localStorage.getItem("discount"));
-    //                 // buynumfun($('#pay_price').text());
-    //
-    //                 getprovince(goods.range_id);
-    //
-    //                 buyaddr();
-    //                 // loadGoods('', goods.weid, goods.cate_id, goods);
-    //
-    //
-    //
-    //             }
-    //         }
-    // })
-
     }
     //不计入折扣提交
     var associatorNotDiscount=function(){
@@ -628,106 +548,7 @@ checkdomain(domain,id);
 
     }
 
-    var associator=function(userid,mallid,price,goods){
-        var sendData={mallId:mallid,memberId:userid};
-        console.log(sendData);
-         $.ajax({
-            url:MEMBER_USER_DETAIL,
-            type:'post',
-            data:sendData,
-            headers: {
-                'Token': localStorage.getItem('token')
-            },
-            success: function(data){
-                console.log(data);
-                if (data.code == 200) {
-                    if(data.data!=null){
-                        $('#one_price span').text($('#one_price span').text()*data.data.discount);                    
-                        // localStorage.setItem("discount",data.data.discount);
-                        $('#one_price span').append("<span style='color:red;'>（折后价）</span>")
-                        $("#one_price").append("<p>会员等级：<span style='color:red;'>"+data.data.level+"</span></p><p>会员折扣：<span style='color:red;'>"+data.data.discount+"</span></p>")
-                        buynumfun(price*data.data.discount,data.data.discount);
-                    
-                    }else{
-                        buynumfun(price,"");
-
-                    }
-
-
-
-
-                    // 提交订单
-                    
-                    $("#submit").bind("click",function(){
-
-                        if(parseInt($("#numm").val())>parseInt($("#num_kc").val())){
-                            mess_tusi("订单数量超过库存");
-                            return;
-
-                        }else if(parseInt($("#num_kc").val())<=0){
-                            return;
-                        }else{
-                            if(data.data!=null && data.data.discount!=""){
-                                var one_price=goods.price*data.data.discount;
-
-                            }else{
-                                var one_price=goods.price;
-                            }
-                            buy_num = parseInt($('#numm').val());
-
-                            var kc = parseInt($('.num_kc').val()) ;
-                            if(buy_num < kc){
-                                $('#numm').val(parseInt($('#numm').val()));
-                                 if(buy_num>0){
-                                    $("#sum_price").html("￥" + buy_num * one_price);
-                                    $('#pay_price').html(buy_num * one_price + parseInt($('#freight').html()));
-                                }else{
-                                    buy_num = 1;
-                                    $("#numm").val(buy_num)
-                                }
-                            }else{
-                                $('#numm').val(kc);
-                            }        
-                        }
-                        var address_detail=$(".dizhi-active").parent().find(".dizhi .provname").text()+"省"+
-                    $(".dizhi-active").parent().find(".dizhi .cityname").text()+"市"+
-                    $(".dizhi-active").parent().find(".dizhi .detailname").text();
-                        //原有逻辑    
-                        var sendData = {
-                            address_id:$(".dizhi-active").parent().attr('data'),
-                            username:$(".dizhi-active").parent().find(".dizhi .buyname").text(),
-                            phone:$(".dizhi-active").parent().find(".dizhi .telname").text(),
-                            address_detail:address_detail,
-                            goods_num:$("#numm").val(),
-                            order_price:$("#pay_price").text(),
-                            pay_way:$(".radio-pay.active input[name='paystyle']").val(),
-                            note:$("textarea[name='remark']").val(),
-                            goods_title: goods.title,
-                            goods_price: goods.price,
-                            marketprice:goods.marketprice,
-                            goods_cover: goods.cover,
-                            content: goods.content,           
-                            goods_summary: goods.summary,
-                            goods_id: goods.weid,
-                            page_id:goods.page_id,
-                            mall_id:goods.mall_id
-                        }
-                        console.log(sendData);
-                        
-                        submitorder(sendData);
-
-                    })
-                    
-                }else{
-                    // console.log('SHOPORDER  ERROR');
-                    mess_tusi(data.message);
-                }
-            },
-            error: function(xhr){
-                console.log(xhr);
-            }
-        })
-    }
+    
     // 提交订单
     var submitorder=function(sendData){
         if (domain == '') {
@@ -849,64 +670,8 @@ checkdomain(domain,id);
             }
         })
     }
-    // 获取省下市(配送范围)
-    var getprovince=function(weid){
-        $.ajax({
-            // url:apiUrl+'/province/list',
-            url:GOODS_RANGE_PROVICELISTS+'/'+weid,
-            type:'get',
-            headers: {
-                'Token': localStorage.getItem('token')
-            },
-            success: function(data){
-                if (data.code == 200) {
-                    var provincedata = data.data;
-                    provincedata.map(x => {
-                            $("#province").append("<option value='"+x.id+"'>"+x.name+"</option>");                           
-
-                    })
-                    $("#province").bind("change",function(){
-                            $("#city").children().remove(); 
-                            $("#city").append("<option value=''>请选择城市</option>")                           
-                            getcity($(this).val(),weid);
-                        })
-                    
-                }else{
-                    console.log('PROVINCE LIST ERROR');
-                }
-            },
-            error: function(xhr){
-                console.log(xhr);
-            }
-        })
-    }
-    var getcity=function(pid,weid){
-        $.ajax({
-            // url:apiUrl+'/area/list/'+pid,
-            url:GOODS_RANGE_DREALISTS,
-            type:'post',
-            data:{weid:weid,province_id:pid},
-            headers: {
-                'Token': localStorage.getItem('token')
-            },
-            success: function(data){
-                if (data.code == 200) {
-                    var citydata = data.data;
-                    citydata.map(x => {
-                        $("#city").append("<option value='"+x.id+"'>"+x.name+"</option>");
-                        
-
-                    })
-                    
-                }else{
-                    console.log('CITYS  LIST ERROR');
-                }
-            },
-            error: function(xhr){
-                console.log(xhr);
-            }
-        })
-    }
+    
+    
 
     // 获取省详情
     var provincename="";
@@ -958,8 +723,7 @@ checkdomain(domain,id);
     }
 
 
-    // id="e3d88210-8e37-11e7-a380-9dd18b8ffa23";//默认值
-    // id="f8d013e0-8e37-11e7-bb7c-21bfeaac3ae2";
+    
     init(id);
 
     //back to top
@@ -985,47 +749,6 @@ checkdomain(domain,id);
 
 
 
-    /* //获取通用用户信息
-    var getUserInfo = function(){
-        $.ajax({
-            url: FOUNDER,
-            type: 'get',
-            success: function(data){
-                //console.log(data);
-                if (data.code == 200){
-                    var info = data.data;
-                    var weid = info.weid;
-                    if (info.avatar != "") {
-                        $("#head-icon, .user-head").css({
-                            "background": "url(" + info.avatar + ") no-repeat center",
-                            "background-size": "100%"
-                        });
-                    } else {
-                        $("#head-icon, .user-head").css({
-                            "background": "url(../common/img/avatar.png) no-repeat center",
-                            "background-size": "110%"
-                        });
-                    }
-
-                    $(".line-0").html(
-                        info.nickname + '<img src="/common/img/vrenzheng.png" alt="">'
-                    );
-                    $(".line-1").text(info.motto);
-                    $(".user-cnt").text(info.nickname);
-                    // artCount(weid);
-                    // artTypeList(weid);
-
-                    
-
-                }
-            },
-            error: function(xhr){
-                console.log(xhr);
-            }
-        })
-    }
-
-    getUserInfo();*/
     //计算金额
     var buynumfunNotDiscount=function(){
         var obj=$(".product-buy-list").find(".goods_list");
@@ -1035,7 +758,7 @@ checkdomain(domain,id);
             var singlePrice = 0;
            price=price+parseFloat($(element).find("#one_price").find("span").text())*parseFloat($(element).find("#numm").val());
            if($(element).attr('postage_status') == 2){
-               if($(element).attr('postage_max_money') && parseInt($(element).attr('postage_max_money')) !== 0 ){
+               if($(element).attr('postage_max_money') && parseInt($(element).attr('postage_max_money')) > 0 ){
                    if(parseFloat($(element).find("#one_price").find("span").text() * $(element).find("#numm").val()) < parseFloat($(element).attr('postage_max_money'))){
                        singlePrice = parseFloat($(element).attr('postage') * $(element).find("#numm").val())
                    }
@@ -1044,13 +767,13 @@ checkdomain(domain,id);
                }
            }
             postPrice += singlePrice;
-            $(element).find("#postage_price").find("span").text(singlePrice)
+            $(element).find("#postage_price").find("span").text(parseFloat(singlePrice).toFixed(2))
 
 
         });
-        $("#sum_price").html("￥" + price);
-        $('#pay_price').html(price + postPrice);
-        $('#freight').html(postPrice);
+        $("#sum_price").html("￥" + parseFloat(price).toFixed(2));
+        $('#pay_price').html(parseFloat(price + postPrice).toFixed(2));
+        $('#freight').html(parseFloat(postPrice).toFixed(2));
     }
     //数量减
     var numjian=function(){
@@ -1100,86 +823,7 @@ checkdomain(domain,id);
         })
     }
    
-    // 购买数量
-    var buynumfun=function(one_price,disc){
-        // 购买数量
-         // 购买数量
-        var buy_num = parseInt($('#numm').val());
-        // 商品单价
-        // var one_price = parseInt($('#one_price').html());
-       
-        $("#sum_price").html("￥" + buy_num * one_price)
-        $('#pay_price').html(buy_num * one_price + parseInt($('#freight').html()));
-       
-        // 商品数量加减
-        $(".amount-num-jia").on('click',function(){
-            numchange();
-            var buy_num = parseInt($('#numm').val());
-
-            var kc = parseInt($('.num_kc').val()) ;
-            console.log($('.num_kc').val());
-            if(buy_num < kc ){
-                    buy_num++;
-            // $('.mui-amount-input').val(num);
-            }
-            // buy_num++;
-            
-            $("#numm").val(buy_num);
-              $("#sum_price").html("￥" + buy_num * one_price);
-              $('#pay_price').html(buy_num * one_price + parseInt($('#freight').html()));
-
-        });
-        $(".amount-num-jian").on('click',function(){
-        var buy_num = parseInt($('#numm').val());
-            numchange();
-            buy_num--;
-            if(buy_num < 1 ){
-                buy_num = 1;
-            }
-            $("#numm").val(buy_num);
-              $("#sum_price").html("￥" + buy_num * one_price);
-              $('#pay_price').html(buy_num * one_price + parseInt($('#freight').html()));
-        })
-        //根据用户的输入改变价格
-        var numchange=function(){
-            // $("#numm").change(function(){
-            buy_num = parseInt($('#numm').val());
-
-            var kc = parseInt($('.num_kc').val()) ;
-            if(buy_num < kc){
-                $('#numm').val($('#numm').val());
-                 if(buy_num>0){
-                    $("#sum_price").html("￥" + buy_num * one_price);
-                    $('#pay_price').html(buy_num * one_price + parseInt($('#freight').html()));
-                }else{
-                    buy_num = 1;
-                    $("#numm").val(buy_num)
-                }
-            }else{
-                $('#numm').val(kc);
-            }        
-            
-
-        // })
-        }
-        $("#numm").change(function(){
-
-             buy_num = parseInt($('#numm').val());
-
-            var kc = parseInt($('.num_kc').val()) ;
-                $('#numm').val($('#numm').val());
-                 if(buy_num>0){
-                    $("#sum_price").html("￥" + buy_num * one_price);
-                    $('#pay_price').html(buy_num * one_price + parseInt($('#freight').html()));
-                }else{
-                    buy_num = 1;
-                    $("#numm").val(buy_num);
-                    $("#sum_price").html("￥" + buy_num * one_price);
-                    $('#pay_price').html(buy_num * one_price + parseInt($('#freight').html()));
-                }
-        })
-        
-    }
+    
 var favicon = ApiMaterPlatQiniuDomain + localStorage.getItem('fav');
     $('#favicon').attr('href', favicon);
 	if(localStorage.getItem('title')=="" || localStorage.getItem('title')==null ||localStorage.getItem('title')==undefined || localStorage.getItem('title')=="null"){

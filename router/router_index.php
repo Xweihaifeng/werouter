@@ -217,7 +217,17 @@ class main
         foreach ($additional_config as $key => $value) {
             if($value)
             {
-                $config .= "\n".$key .'="'.$value.'";';
+                $str_key = substr($key, 0 , 3);
+                if($str_key == 'var')
+                {
+
+                    $config .= "\n".$key .'="'.$value.'";';
+                }
+                else
+                {
+                    $config .= "\n".$key .'='.$value.';';
+                }
+                
             }
             else
             {
