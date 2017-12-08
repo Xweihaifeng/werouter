@@ -435,8 +435,9 @@ function avatar_admin() {
         $("#submit").click(function () {
             var domain = $("#user-domain").val();
             var sendData = {weid: id, domain: domain};
+            alert(1)
             if (domain != "") {
-                alert(1)
+
                 // req(sendData);
             } else {
                 layer.msg('请输入个性域名', {
