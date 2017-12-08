@@ -264,7 +264,7 @@ $(function() {
         if (path[1] == '' || path[1] == 'index' || path.indexOf('index') != -1) {
             domain = '/index'
         } else {
-            if (('/' + path[1]) != domain && path[1].length > 4) { //排除频道
+            if (('/' + path[1]) != domain && path[1].length > 4 && path[1] != 'magazine') { //排除频道，雜誌
                 domain = '/' + path[1];
             } else {
                 if (!aru) {
