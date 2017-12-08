@@ -262,6 +262,8 @@ $(function() {
             li_name_1 = pathname[1];
             if(pathname.length == 2 && pathname[1] != ''){
                 li_name_1 = pathname[1];
+            } else {
+                li_name_1 = "newN"
             }
             $("#" + li_name_1).addClass("csdf").siblings().removeClass("csdf");
             $("#" + li_name_1 + " a").addClass("fgvg");
