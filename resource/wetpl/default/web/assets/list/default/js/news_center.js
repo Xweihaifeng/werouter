@@ -141,12 +141,17 @@ $(function() {
 
                 if(total <= 10) {
                     $(".news-loadingsImg").slideUp();
+                } else {
+
+                    $(".news-loadingsImg").slideDown();
+                    $('.csdf').attr('id', li_name);
                 }
 
                 $(data.data.list).each(function(index, value) {
                     $(".news-center-main").append(news_contents(value));
                     $(".zhu-yao-nei-rong img").hide();
                 })
+
             }
         });
         options6.fail(function(error) {
