@@ -260,7 +260,8 @@ $(function() {
                 $(this).find(".sub_tab").hide();
             })
 
-            var li_name = $(".chan_li").first().attr("id");
+            var li_name = pathname[1];
+            $('.csdf').attr('id', li_name);
             if(pathname.length == 2 && pathname[1] != ''){
                 li_name = pathname[1];
             }
