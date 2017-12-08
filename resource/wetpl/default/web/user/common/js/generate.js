@@ -314,7 +314,7 @@ function avatar_admin() {
         ,offset: type //具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
         ,area: ['400px', '300px']
         ,id: 'layerDemo'+type //防止重复弹出
-        ,content: '<div style="padding: 20px 100px;"><img width="100%" src=' + QRCODE + '?size=150&url=' + qrUrl + '></div>'
+        ,content: '<div style="padding: 20px 100px;"><input type="text" /></div>'
         //,btn: '关闭全部'
         ,btnAlign: 'c' //按钮居中
         ,shade: 0 //不显示遮罩
