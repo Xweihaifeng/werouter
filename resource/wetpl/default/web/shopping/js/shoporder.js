@@ -497,7 +497,7 @@ checkdomain(domain,id);
                 '<p><img src="/common/img/qitian.png" alt="">该商品不支持7天无理由退货</p>'+
             '</li>'+
             '<li class="col-sm-3">' +
-                '<p id="one_price"> 单价：<span>'+data.price+'</span></p>' +
+                '<p id="one_price"> 单价：<span>'+parseFloat(data.price).toFixed(2)+'</span></p>' +
                 '<p id="postage_price">邮费：￥<span>'+postMoney+'</span></p>' +
             '</li>'+
             '<li class="col-sm-3">'+
@@ -532,14 +532,14 @@ checkdomain(domain,id);
                         var goods = data.data;
                         console.log("商品详情：",goods)
                         //判断商品邮费
-                        var postMoney = 0.00;
+                        var postMoney = "0.00";
                         if(goods.postage_status == 2){
-                            if(goods.postage_max_money && parseInt(goods.postage_max_money) !== 0){
+                            if(goods.postage_max_money && parseInt(goods.postage_max_money) > 0){
                                 if(parseFloat(goods.price * goodsdata.goods_num) < parseFloat(goods.postage_max_money)){
-                                    postMoney = parseFloat(goods.postage * goodsdata.goods_num)
+                                    postMoney = parseFloat(goods.postage * goodsdata.goods_num).toFixed(2)
                                 }
                             }else{
-                                postMoney = parseFloat(goods.postage * goodsdata.goods_num)
+                                postMoney = parseFloat(goods.postage * goodsdata.goods_num).toFixed(2)
                             }
 
                         }
@@ -1035,7 +1035,7 @@ checkdomain(domain,id);
             var singlePrice = 0;
            price=price+parseFloat($(element).find("#one_price").find("span").text())*parseFloat($(element).find("#numm").val());
            if($(element).attr('postage_status') == 2){
-               if($(element).attr('postage_max_money') && parseInt($(element).attr('postage_max_money')) !== 0 ){
+               if($(element).attr('postage_max_money') && parseInt($(element).attr('postage_max_money')) > 0 ){
                    if(parseFloat($(element).find("#one_price").find("span").text() * $(element).find("#numm").val()) < parseFloat($(element).attr('postage_max_money'))){
                        singlePrice = parseFloat($(element).attr('postage') * $(element).find("#numm").val())
                    }
@@ -1044,13 +1044,13 @@ checkdomain(domain,id);
                }
            }
             postPrice += singlePrice;
-            $(element).find("#postage_price").find("span").text(singlePrice)
+            $(element).find("#postage_price").find("span").text(parseFloat(singlePrice).toFixed(2))
 
 
         });
-        $("#sum_price").html("￥" + price);
-        $('#pay_price').html(price + postPrice);
-        $('#freight').html(postPrice);
+        $("#sum_price").html("￥" + parseFloat(price).toFixed(2));
+        $('#pay_price').html(parseFloat(price + postPrice).toFixed(2));
+        $('#freight').html(parseFloat(postPrice).toFixed(2));
     }
     //数量减
     var numjian=function(){

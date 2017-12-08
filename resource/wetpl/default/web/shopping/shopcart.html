@@ -69,13 +69,13 @@
                                     <span>Axent Wear</span>
                                     <span>库存：{{values.stock}}</span>
                                 </div>
-                                <div class="cart_shop_price">￥<span class="cart_shop_unit_price"></span>{{values.price}}</div>
+                                <div class="cart_shop_price">￥<span class="cart_shop_unit_price"></span>{{parseFloat(values.price).toFixed(2)}}</div>
                                 <div class="cart_shop_piece">
                                     <input id="count_min" name="" type="button" value="-" @click="count_add_min(values,'count_min')" />
                                     <input id="quantity"  name="" type="text" v-model="values.goods_num" />  
                                     <input id="count_add" name="" type="button" value="+" @click="count_add_min(values,'count_add')" />&nbsp;件
                                 </div>
-                                <div class="cart_shop_price">￥<span class="cart_shop_total_price"></span>{{values.price * values.goods_num}}</div>
+                                <div class="cart_shop_price">￥<span class="cart_shop_total_price"></span>{{parseFloat(values.price * values.goods_num).toFixed(2)}}</div>
                                 <div class="cart_shop_operation">
                                     <span class="cart_shop_delete"> 删除商品 </span>
                                 </div>
@@ -83,7 +83,7 @@
                             <slide class="cart_shop_order">
                                 <slide class="cart_shop_order_info">
                                     <span>
-                                        已选商品({{item.numbers ? item.numbers : 0}})件 合计（不含运费）：￥ {{item.storeAllMoney ? item.storeAllMoney : 0.00}}
+                                        已选商品({{item.numbers ? item.numbers : 0}})件 合计（不含运费）：￥ {{item.storeAllMoney ? parseFloat(item.storeAllMoney).toFixed(2) : "0.00"}}
                                     </span>
                                 </slide>
                                 <slide class="cart_shop_order_sub" @click="goOrder(item)"> 结算 </slide>
@@ -131,11 +131,13 @@
                     	if(names == "count_add") {
                     		values.goods_num++;
                     		if(values.goods_num > values.stock) {
+                    		    layer.msg('数量不能大于库存')
                     			values.goods_num = values.stock;
                     		}
                     	} else if(names == "count_min") {
 							values.goods_num--;
 		                    if (values.goods_num <= 0) {
+		                        layer.msg('数量不能小于1')
 		                        values.goods_num = 1;
 		                    }
                     	}
