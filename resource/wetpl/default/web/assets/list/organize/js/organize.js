@@ -364,6 +364,7 @@ $(function() {
                                                         $("#menuY").text(data.data.title);
                                                         two_ul(data.data);
                                                         $(".paging").hide();
+                                                        return false;
                                                     } else {
                                                         console.error(data.message);
                                                     }
