@@ -307,7 +307,6 @@ options1.fail(function(error) {
 
 // 判断是否开通微主页
 function avatar_admin() {
-
     layer.open({
         type: 1
         ,title: '请设置您的个性域名'
@@ -318,7 +317,7 @@ function avatar_admin() {
             <div class="cont-hd">
                 <div class="panel panel-default">
                     <div class="panel-body">
-                        个性域名设置
+                        请输入您专属的个性域名
                     </div>
                 </div>
                 <div class="form-group">
@@ -331,9 +330,53 @@ function avatar_admin() {
         ,btnAlign: 'c' //按钮居中
         ,shade: 0 //不显示遮罩
         ,yes: function(){
-            layer.closeAll();
+            layer.closeAll();        
+        }
+        ,success: function(layero){
+            var host = 'http://' + window.location.host;
+            $("#host").text(host + "/");
         }
     });
+
+    /*layui.use('layer', function(){ //独立版的layer无需执行这一句
+        var $ = layui.jquery, layer = layui.layer; //独立版的layer无需执行这一句
+        //触发事件
+        var active = {
+            setTop: function(){
+                var that = this;
+            }
+            ,notice: function(){
+                layer.open({
+                    type: 1
+                    ,title: false //不显示标题栏
+                    ,closeBtn: false
+                    ,area: ['320px', '250px']
+                    ,shade: 0.8
+                    ,id: 'LAY_layuipro' //设定一个id，防止重复弹出
+                    ,btn: ['返回', '激活']
+                    ,btnAlign: 'c'
+                    ,moveType: 1 //拖拽模式，0或者1
+                    ,content:
+                        `
+                        <div class="cont-hd">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    请输入您专属的个性域名
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label id="host" style="margin-left: 10px; padding-top: 8px; padding-right: 5px; float: left;"></label>
+                                <input id="user-domain" type="text" class="form-control" name="domain" value="" style="width: 50%; float: left;">
+                            </div>
+                            <button id="submit" type="submit" class="btn btn-default" style="margin-left: 10px;">立即申请</button>
+                        </div>
+                        `
+                    ,success: function(layero){
+
+                    }
+                }
+            }
+        })*/
 
     return false;
     var options2 = $.post(PAGESTORE);
