@@ -44,8 +44,9 @@ class controllerRouter
         //$this->config['template'] = '/login.html';
         //if($param == 'index') return TRUE;
 
-        $sql = 'SELECT domain FROM we_pages WHERE plat_id=? AND domain=? ';
+        $sql = 'SELECT domain,weid FROM we_pages WHERE plat_id=? AND domain=? ';
         $row = $this->_db->queryOne($sql , array($this->weid , $param));
+        $this->config['config']['const wezchina_domain_weid'] = $row['weid'];
         if(!empty($row))
         {
             return TRUE;
