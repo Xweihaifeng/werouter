@@ -95,7 +95,7 @@ var genMenu = function(mark, host) {
     var template = '';
     
     $.ajax({
-        url: 'https://mp.wezchina.com/api/menu_config?mark=' + mark + '&domain=' + host,
+        url: controlUrl + mark + '&domain=' + host,
         type: 'GET',
         async: false,
         success: function(data) {
@@ -111,7 +111,7 @@ var genMenu = function(mark, host) {
     return template;
 }
 
-$("#middle").append(genMenu(mark, "qqxqs.com")) // domain
+$("#middle").append(genMenu(mark, domainHost)) // domain
 console.log(currPage)
 if (currPage != '' && currPage != 'user') {
     $("#" + parentPage + "_" + currPage).parent().parent(".we-cont").show();

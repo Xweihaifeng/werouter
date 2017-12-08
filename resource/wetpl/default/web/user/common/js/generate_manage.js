@@ -86,7 +86,7 @@ var genMenu = function(mark, domain) {
     var template = '';
     
     $.ajax({
-        url: 'https://mp.wezchina.com/api/menu_config?mark=' + mark + '&domain=' + domain,
+        url: controlUrl + mark + '&domain=' + domain,
         type: 'GET',
         async: false,
         success: function(data) {
@@ -104,7 +104,7 @@ var genMenu = function(mark, domain) {
 
 // console.log(genMenu(mark, "qqxqs.com"))
 $(document).ready(function(){
-    $("#middle").append(genMenu(mark, "qqxqs.com"))
+    $("#middle").append(genMenu(mark, domainHost))
 
     console.log('currpage:', currPage)
 
