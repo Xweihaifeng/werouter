@@ -110,14 +110,14 @@ $(document).ready(function(){
 
 
     //获取通用用户信息
-    var host = ApiMaterPlatQiniuDomain;
+    /*var host = ApiMaterPlatQiniuDomain;
     var getUserInfo = function(url, id){
         $.ajax({
             url: url + id,
             type: 'get',
-            /*headers: {
+            /!*headers: {
                 'Token': localStorage.getItem('token')
-            },*/
+            },*!/
             success: function(data){
                 console.log(data);
                 if (data.data != null){
@@ -201,9 +201,9 @@ $(document).ready(function(){
                 'Token': localStorage.getItem('token')
             },
             success: function(data){
-                /*if (data.code == 401) {
+                /!*if (data.code == 401) {
                     localStorage.removeItem('token');
-                }*/
+                }*!/
                 if (data.code == 200){
                     //console.log(data);
                     if (data.data != null) {
@@ -247,9 +247,9 @@ $(document).ready(function(){
                 'Token': localStorage.getItem('token')
             },
             success: function(data){
-                /*if (data.code == 401) {
+                /!*if (data.code == 401) {
                     localStorage.removeItem('token');
-                }*/
+                }*!/
                 if (data.code == 200){
                     //console.log(data);
                     if (data.data != null) {
@@ -301,7 +301,7 @@ $(document).ready(function(){
                         //console.log('router error')
                     }
                 } else {
-                    //window.location.href = "/*";
+                    //window.location.href = "/!*";
                     console.log("error:", data.code);
                 }
             },
@@ -321,7 +321,7 @@ $(document).ready(function(){
 
     if (domain != '') {
         __init(domain);
-    }
+    }*/
 
     /*var artCount = function(weid){
         $.ajax({
@@ -373,8 +373,8 @@ $(document).ready(function(){
     init(localStorage.getItem('token'));*/
 
     //需要解决直接进入文章页的问题
-    var favicon = ApiMaterPlatQiniuDomain + localStorage.getItem('fav');
-    $('#favicon').attr('href', favicon);
+    /*var favicon = ApiMaterPlatQiniuDomain + localStorage.getItem('fav');
+    $('#favicon').attr('href', favicon);*/
     if(localStorage.getItem('title')=="" || localStorage.getItem('title')==null ||localStorage.getItem('title')==undefined || localStorage.getItem('title')=="null"){
          $.ajax({
             url: apiUrl+"cms/advs",
@@ -395,7 +395,7 @@ $(document).ready(function(){
     }
 
     //主页初始化
-    var init = function(token){
+    /*var init = function(token){
         if (token != 'null' && token != undefined) {
             showLogin = false;
             isLogin = true;
@@ -414,10 +414,10 @@ $(document).ready(function(){
         }
     }
 
-    init(localStorage.getItem('token'));
+    init(localStorage.getItem('token'));*/
 
     //TA的粉丝/TA他的关注
-    var listTpl = function(cid, data) {
+    /*var listTpl = function(cid, data) {
         //let avatar = apiUrl + data.avatar;
         let domain = data.domain;
         let member = data.member_weid;
@@ -674,7 +674,7 @@ $(document).ready(function(){
             res.push(`<li>${n % 10}</li>`);
             wefriends(nums.substr(0, len - 1), res);
         }
-    }
+    }*/
 
     //用户认证 user_cert != null
 

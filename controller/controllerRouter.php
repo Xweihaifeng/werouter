@@ -40,17 +40,48 @@ class controllerRouter
     {
 
         // 测试 CONFIG 配置了 config 参数会直接追加到 config 最下面
-        $this->config['config']['const title'] = 'yes';
+        $this->config['config']['var title'] = 'yes';
         //$this->config['template'] = '/login.html';
         //if($param == 'index') return TRUE;
 
-        $sql = 'SELECT domain,weid FROM we_pages WHERE plat_id=? AND domain=? ';
+        $sql = 'SELECT domain,weid,plat_id,plat_user_id,is_brand,summary,background,share_image FROM we_pages WHERE plat_id=? AND domain=? ';
         $row = $this->_db->queryOne($sql , array($this->weid , $param));
-
-
+        
         if(!empty($row))
         {
-            $this->config['config']['const wezchina_domain_weid'] = $row['weid'];
+
+            $wezchina_plats['plats_domian'] = $row;
+            //$this->config['config']['const wezchina_domain_weid'] = $row['weid'];
+            // 获取用户信息
+            $plats_user_sql = 'SELECT avatar,sex,real_name,nickname,motto,province_id,area_id FROM we_plats_user    WHERE plat_id=? AND weid=? ';
+
+            $wezchina_plats['plats_user'] = $this->_db->queryOne($plats_user_sql , array($this->weid , $row['plat_user_id']));
+
+            // 获取省份
+            $plats_province_sql = 'SELECT name FROM we_plats_province WHERE id=?';
+            $wezchina_plats['plats_user']['province'] = $this->_db->queryOne($plats_province_sql , array($wezchina_plats['plats_user']['province_id']));
+
+            // 获取市
+            $plats_area_sql = 'SELECT name FROM we_plats_area WHERE id=?';
+            $wezchina_plats['plats_user']['area'] = $this->_db->queryOne($plats_area_sql , array($wezchina_plats['plats_user']['area_id']));
+
+            // 获取品牌
+            $plats_brand_sql = 'SELECT title,business,logo FROM we_pages_brand WHERE plat_id=? AND plat_user_id=? ';
+            
+            $wezchina_plats['plats_brand'] = $this->_db->queryOne($plats_brand_sql , array($this->weid , $row['plat_user_id']));
+
+            // 实名认证
+            $plats_user_auth_sql = 'SELECT is_authenticated,origo,residential FROM we_plats_user_auth WHERE plat_id=? AND plat_user_id=? ';
+            
+            $wezchina_plats['plats_user_auth'] = $this->_db->queryOne($plats_user_auth_sql , array($this->weid , $row['plat_user_id']));
+
+            // 官方认证
+            $plats_user_cert_sql = 'SELECT is_authenticated FROM we_plats_user_cert WHERE plat_id=? AND plat_user_id=? ';
+            
+            $wezchina_plats['plats_user_cert'] = $this->_db->queryOne($plats_user_cert_sql , array($this->weid , $row['plat_user_id']));
+            
+            $this->config['config']['const wezchina_plats'] = json_encode($wezchina_plats);
+
             return TRUE;
         }   
         return FALSE;     
@@ -65,7 +96,7 @@ class controllerRouter
         $row = $this->_db->queryOne($sql , array($token));
         if(!empty($row['weid']))
         {
-        	return $this->_user_id = $row['weid'];
+            return $this->_user_id = $row['weid'];
         }
         return FALSE;
     }
@@ -82,7 +113,7 @@ class controllerRouter
         $user_weid = $this->_user_token();
         if($user_weid == FALSE)
         {
-        	redirect('/login');
+            redirect('/login');
         }
     }
 
@@ -92,14 +123,14 @@ class controllerRouter
     {
         if($this->_user_id == FALSE)
         {
-        	redirect('/login');
+            redirect('/login');
         }
 
-		$sql = 'SELECT weid FROM we_pages  WHERE plat_id=? AND plat_user_id =?';
+        $sql = 'SELECT weid FROM we_pages  WHERE plat_id=? AND plat_user_id =?';
         $row = $this->_db->queryOne($sql , array($this->weid , $this->_user_id));
         if(!empty($row['weid']))
         {
-        	return TRUE;
+            return TRUE;
         }
         redirect('/user/settings/realname');
 
@@ -115,10 +146,10 @@ class controllerRouter
 
         if(!empty($row['tml']))
         {   
-        	if($match['current'] == $match['total'])
-        	{
-        		$this->config['template'] = '/views/list/'.$row['tml'].'.html';
-        	}
+            if($match['current'] == $match['total'])
+            {
+                $this->config['template'] = '/views/list/'.$row['tml'].'.html';
+            }
             return TRUE;
         }
         return FALSE;
@@ -144,19 +175,19 @@ class controllerRouter
     // 频道详情页
     public function channel_detailid($param , $match = array())
     {
-    	$sql = 'SELECT C.template AS tml FROM we_plat_cms_content
-    		 A LEFT JOIN we_plat_cms_cate B ON A.cate_id=B.weid
-    		 LEFT JOIN we_plat_cms_template C ON B.show_id=C.weid
-    		 WHERE A.weid=?';
+        $sql = 'SELECT C.template AS tml FROM we_plat_cms_content
+             A LEFT JOIN we_plat_cms_cate B ON A.cate_id=B.weid
+             LEFT JOIN we_plat_cms_template C ON B.show_id=C.weid
+             WHERE A.weid=?';
 
-    	$row = $this->_db->queryOne($sql , array($param));
+        $row = $this->_db->queryOne($sql , array($param));
 
-		if(!empty($row['tml']))
+        if(!empty($row['tml']))
         {   
-        	if($match['current'] == $match['total'])
-        	{
-        		$this->config['template'] = '/views/show/'.$row['tml'].'.html';
-        	}
+            if($match['current'] == $match['total'])
+            {
+                $this->config['template'] = '/views/show/'.$row['tml'].'.html';
+            }
             return TRUE;
         }
         return FALSE;

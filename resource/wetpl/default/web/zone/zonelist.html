@@ -174,7 +174,7 @@
                                                             console.log(data);
                                                             if (data.code == 200){
                                                                 let avatar = ApiMaterPlatQiniuDomain + data.data.avatar;
-                                                                document.write('<script src="http://yewu.4g9.cn/qrcode.php?url=' + save + '&logo=' + avatar + '&domain=' + domain + '&size=175" type="text/javascript"></scr'+'ipt>');
+//                                                                document.write('<script src="http://yewu.4g9.cn/qrcode.php?url=' + save + '&logo=' + avatar + '&domain=' + domain + '&size=175" type="text/javascript"></scr'+'ipt>');
                                                             }
                                                         },
                                                         error: function(xhr){
@@ -195,7 +195,7 @@
                                                     }
                                                 })
                                             }).then((args) => {
-                                                getUserInfo(USERDETAIL, "/" +args.uid, args.url, args.domain)
+//                                                getUserInfo(USERDETAIL, "/" +args.uid, args.url, args.domain)
                                             })
                                         </script>
                                     </div>
@@ -246,6 +246,7 @@
         <script src="/common/js/echart/china.js"></script>
         <script src="/common/js/control.js"></script>
         <script src="{{PATH_TML}}zone/js/zonelist.js"></script>
+        <script src="/common/js/userinfo.js"></script>
         <script src="{{PATH_TML}}zone/js/circle.js"></script>
         <script>
             var lineChart,lineTheme,xTitle,newlyAdded,Active,mapChart,mapData,requestUrl = apiUrl + 'circel/wcurve?domain=' + domain;
