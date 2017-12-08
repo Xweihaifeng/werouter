@@ -330,10 +330,7 @@ function avatar_admin() {
         ,btnAlign: 'c' //按钮居中
         ,shade: 0 //不显示遮罩
         ,yes: function(){
-            layer.closeAll();
-            layer.msg('请设置个性域名', {
-                            time: 1500
-                        });
+            layer.closeAll();        
         }
         ,success: function(layero){
             var host = 'http://' + window.location.host;
@@ -354,7 +351,10 @@ function avatar_admin() {
                         layer.msg('保存设置成功', {
                             time: 1500
                         });
-                        window.location.reload();
+                        setTimeout(funtion(){
+                            window.location.reload();    
+                        }, 2000);
+                        
                     } else {
                         layer.msg(data.message, {
                             time: 1500
