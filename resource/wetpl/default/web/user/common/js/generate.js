@@ -310,9 +310,9 @@ function avatar_admin() {
 
     layer.open({
         type: 1
-        ,title: '扫描二维码'
+        ,title: '请设置您的个性域名'
         ,offset: type //具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
-        ,area: ['400px', '300px']
+        ,area: ['800px', '480px']
         ,id: 'layerDemo'+type //防止重复弹出
         ,content: `
             <div class="con-hd">
