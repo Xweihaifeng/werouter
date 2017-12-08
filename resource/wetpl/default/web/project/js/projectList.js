@@ -17,8 +17,8 @@ var qiniu_bucket_domain = ApiMaterPlatQiniuDomain;
     var url = window.location.pathname.split('/');
     var active = url.pop();
     var domain = url.slice(1, 2)[0];
-    console.log('domain', domain);
-    console.log(window.location.pathname);
+    //console.log('domain', domain);
+    //console.log(window.location.pathname);
 
 
     //route
@@ -106,7 +106,7 @@ var qiniu_bucket_domain = ApiMaterPlatQiniuDomain;
     })*/
 
     //主页初始化
-    var init = function(token){
+    /*var init = function(token){
         if (token != 'null' && token != undefined) {
             showLogin = false;
             isLogin = true;
@@ -124,7 +124,7 @@ var qiniu_bucket_domain = ApiMaterPlatQiniuDomain;
         }
     }
 
-    init(localStorage.getItem('token'));
+    init(localStorage.getItem('token'));*/
 
    var options0 = $.get(CMS_ADVS);
     options0.done(function(data) {
@@ -342,10 +342,8 @@ var qiniu_bucket_domain = ApiMaterPlatQiniuDomain;
         })
     }
 
-
-
-
-
+    projectcate(wezchina_plats.plats_domian.plat_user_id,wezchina_plats.plats_user.real_name,wezchina_plats.plats_user.avatar);
+    projectlist(wezchina_plats.plats_domian.plat_user_id,wezchina_plats.plats_user.real_name,wezchina_plats.plats_user.avatar);
 
 
  var url = window.location.pathname.split('/');
@@ -356,14 +354,14 @@ var qiniu_bucket_domain = ApiMaterPlatQiniuDomain;
     $(".linkto").attr('href', '/' + domain)
 
     //获取通用用户信息
-    var host = ApiMaterPlatQiniuDomain;
+    /*var host = ApiMaterPlatQiniuDomain;
     var getUserInfo = function(url, id){
         $.ajax({
             url: url + id,
             type: 'get',
-            /*headers: {
+            /!*headers: {
                 'Token': localStorage.getItem('token')
-            },*/
+            },*!/
             success: function(data){
                 // console.log(data);
                 if (data.code == 200){
@@ -420,9 +418,9 @@ var qiniu_bucket_domain = ApiMaterPlatQiniuDomain;
                          $(".oline-2").find("span").eq(1).text("暂无介绍");
                     }
                     $(".user-cnt").text(info.real_name);
-                    genListTpl(apiUrl + 'circel/index?domain=' + domain.substr(1))
-                    artCount(weid);
-                    countinfo(weid);
+                    //genListTpl(apiUrl + 'circel/index?domain=' + domain.substr(1))
+                    //artCount(weid);
+                    //countinfo(weid);
                     //artTypeList(weid);
                     projectcate(weid,user_name,data.data.avatar);
                     projectlist(weid,user_name,data.data.avatar);
@@ -469,9 +467,9 @@ var qiniu_bucket_domain = ApiMaterPlatQiniuDomain;
                         }
                     }
                 } else {
-                    /*layer.msg(data.message, {
+                    /!*layer.msg(data.message, {
                         time: 1500
-                    });*/
+                    });*!/
                 }
             },
             error: function(xhr){
@@ -540,14 +538,14 @@ var qiniu_bucket_domain = ApiMaterPlatQiniuDomain;
                         console.log('router error')
                     }
                 } else {
-                    // window.location.href = "/*";
+                    // window.location.href = "/!*";
                 }
             },
             error: function(xhr){
                 console.log(xhr);
             }
         })
-    }
+    }*/
    /*   var checkdomain=function(domain,id){
         if(domain!="index" && domain!="wemall"){
            console.log("a");
@@ -558,7 +556,7 @@ var qiniu_bucket_domain = ApiMaterPlatQiniuDomain;
 
     }
 checkdomain(domain);*/
-if (domain == 'wemall') {
+    /*if (domain == 'wemall') {
         domain = '';
     } else {
         domain = "/" + domain;
@@ -567,9 +565,9 @@ if (domain == 'wemall') {
 
     if (domain != '') {
         __init(domain);
-    }
+    }*/
 
-    var artCount = function(weid){
+    /*var artCount = function(weid){
         $.ajax({
             // url: apiUrl+"/articles/listCount?userId=" + weid,
             url: ARTICLES_LISTCOUNT+"?userId=" + weid,
@@ -601,7 +599,7 @@ if (domain == 'wemall') {
                 console.log(xhr);
             }
         })
-    }
+    }*/
 
 
 
@@ -614,285 +612,5 @@ if (domain == 'wemall') {
         })
     }
 
-    var favicon = ApiMaterPlatQiniuDomain + localStorage.getItem('fav');
-    $('#favicon').attr('href', favicon);
-    if(localStorage.getItem('title')=="" || localStorage.getItem('title')==null ||localStorage.getItem('title')==undefined || localStorage.getItem('title')=="null"){
-         $.ajax({
-            url: apiUrl+"cms/advs",
-            type: 'get',
-            success: function(data){
-                if (data.code == 200){
-                    $('title').text('项目-' + data.data.setting.title + '官方微主页');
-                   localStorage.setItem('title',data.data.setting.title);
-                   
-                }
-            },
-            error: function(xhr){
-                console.log(xhr);
-            }
-        })
-    }else{
-        $('title').text('项目-' + localStorage.getItem('title') + '官方微主页');
 
-    }
-
-    //TA的粉丝/TA他的关注
-    var listTpl = function(cid, data) {
-        //let avatar = apiUrl + data.avatar;
-        let domain = data.domain;
-        let member = data.member_weid;
-        if (domain == null || domain == '') {
-            if (member == null || member == '') {
-                domain = '';
-            } else {
-                domain = '/u/' + member;
-            }
-        }
-        let avatar = '';
-        let nickname = ''
-        if (data.nickname != null) {
-            nickname = data.nickname;
-        }
-        if (data.avatar != null) {
-            avatar = ApiMaterPlatQiniuDomain + data.avatar;
-        } else {
-            avatar = '/common/img/page.png';
-        }
-        let tpl = `
-            <div class="${cid}" title="${nickname}">
-                <img id="${domain}" style="border: 1px solid #ccc; border-radius: 50%; height: 100%;  width: 100%; " src="${avatar}" width="54" />
-            </div>
-        `
-        return tpl;
-    }
-
-    var genFans = function(url, domain, page, limit, type) {
-        $.ajax({
-            url: url + '?domain=' + domain + '&page=' + page + '&limit=' + limit + '&type=' + type,
-            type: 'GET',
-            headers: {
-                'Token': window.localStorage.getItem("token")
-            },
-            success: function (data) {
-                console.log(data)
-                $(".fans").html(`<a>Ta的粉丝(${data.data.list.length})</a>`);
-                //$(".friends").html(`<a>Ta的关注(${data.data.gnums})</a>`);
-                $("#fans").html('');
-                //$("#friends").html('');
-                data.data.list.map(x => $("#fans").append(listTpl('fans-head', x)));
-                //data.data.glist.map(x => $("#friends").append(listTpl('friends-head', x)));
-            }
-        })
-    }
-
-    //关注
-    var follow = function(url) {
-        $.ajax({
-            url: url,
-            type: 'POST',
-            data: {
-                'domain': domain.substr(1),
-                'type': 2
-            },
-            headers: {
-                'Token': window.localStorage.getItem("token")
-            },
-            success: function(data) {
-                console.log(data)
-                if (data.code == 200) {
-                    $(".ct").attr('src', '/common/img/collected.svg');
-                    $(".wd").text('已关注');
-                    layer.msg("关注成功", {
-                        time: 1500
-                    });
-                    genFans(apiUrl + 'circel/flist', domain.substr(1), 1, 12, 1);
-                } else {
-                    layer.msg(data.message, {
-                        time: 1500
-                    })
-                }
-            },
-            error: function(xhr) {
-                console.log(xhr)
-            }
-        })
-    }
-
-    //取消关注
-    var cancelFollow = function(url) {
-        $.ajax({
-            url: url,
-            type: 'POST',
-            data: {
-                'domain': domain.substr(1),
-                'type': 2
-            },
-            headers: {
-                'Token': window.localStorage.getItem("token")
-            },
-            success: function(data) {
-                console.log(data)
-                if (data.code == 200) {
-                    $(".ct").attr('src', '/common/img/collect.svg');
-                    $(".wd").text('关注');
-                    layer.msg("取消关注成功", {
-                        time: 1500
-                    })
-                    genFans(apiUrl + 'circel/flist', domain.substr(1), 1, 12, 1);
-                } else {
-                    console.log(data.message)
-                }
-            },
-            error: function(xhr) {
-                console.log(xhr)
-            }
-        })
-    }
-
-    //数据分页
-    var reqUrl = apiUrl + 'circel/flist';
-    var pages = function(url, domain, type, page, limit) {
-        $.ajax({
-            url: url + '?domain=' + domain + '&page=' + page + '&type=' + type + '&limit=' + limit,
-            type: 'GET',
-            headers: {
-                'Token': window.localStorage.getItem("token")
-            },
-            success: function (data) {
-                let totalPage = data.data.params.pageCount;
-                if (page <= totalPage) {
-                    if (type == 1) {
-                        sessionStorage.setItem('fansPages', page + 1);
-                        data.data.list.map(x => $("#fans").append(listTpl('fans-head', x)));
-                    } else {
-                        sessionStorage.setItem('friendsPages', page + 1);
-                        data.data.list.map(x => $("#friends").append(listTpl('friends-head', x)));
-                    }
-                } else {
-                    $("#more").text("没有更多");
-                }
-            }
-        })
-    }
-
-    $("#more").click(function(){
-        let state = $(".fans").attr("class").indexOf('active');
-        let domain = window.location.pathname.split('/').slice(1, 2)[0];
-        if (state != -1) {
-            //'fans' 请求fans分页
-            let page = sessionStorage.getItem('fansPages')
-            pages(reqUrl, domain, 1, page, 12);
-        } else {
-            //'friends'
-            let page = sessionStorage.getItem('friendsPages')
-            pages(reqUrl, domain, 2, page, 12);
-        }
-    })
-
-    //写入圈子页面数据
-    var genListTpl = function(url) {
-        $.ajax({
-            url: url,
-            type: 'GET',
-            headers: {
-                'Token': window.localStorage.getItem("token")
-            },
-            success: function(data) {
-                console.log(data)
-                if (data.code == 200) {
-                    var isLike;
-                    var isFollow = data.data.if_follow;
-                    if (isFollow == 0) {
-                        isLike = false;
-                    } else if (isFollow == 1) {
-                        isLike = true;
-                        $(".ct").attr('src', '/common/img/collected.svg');
-                        $(".wd").text('已关注');
-                    }
-                    $(".user-art").children('div:eq(0)').text(data.data.article_count);
-                    $(".user-proj").children('div:eq(0)').text(data.data.project_count);
-                    $(".user-type").children('div:eq(0)').text(data.data.activity_count);
-                    if (data.data.userPageInfo.province != null) {
-                        $(".oline-1 p").text(data.data.userPageInfo.province + ' ' + data.data.userPageInfo.city);
-                    }
-
-                    let m = 1; //倍率
-                    let n = 10; //时间
-                    let i = 0;
-                    let nums = data.data.wnums;
-                    var computeTime = function(sum, time) {
-                        if (sum > (time * 1000 / n)) {
-                            m = parseInt(sum / (time * 1000 / n));
-                        }
-                    }
-
-                    var numbers = setInterval(function(){
-                        if (i < nums) {
-                            if ((nums - i) < parseInt(nums / 30)) {
-                                wefriends(i, []);
-                                i += parseInt(m / 20);
-                            } else {
-                                wefriends(i, []);
-                                i += m;
-                            }
-                        } else {
-                            wefriends(nums, []);
-                            clearInterval(numbers);
-                        }
-                    }, n);
-
-                    computeTime(nums, 4);
-                    $(".fans").html(`<a>Ta的粉丝(${data.data.fnums})</a>`);
-                    $(".friends").html(`<a>Ta的关注(${data.data.gnums})</a>`);
-                    data.data.flist.map(x => $("#fans").append(listTpl('fans-head', x)));
-                    data.data.glist.map(x => $("#friends").append(listTpl('friends-head', x)));
-                    sessionStorage.setItem('fansPages', 2);
-                    sessionStorage.setItem('friendsPages', 2);
-
-                    $(".fans-head, .friends-head").click(function(e){
-                        let domain = $(e.target).attr('id');
-                        if (domain != '') {
-                            window.location.href = '/' + domain;
-                        }
-                        //console.log(domain);
-                    });
-
-                    //关注
-                    $(".line-0").click(function(e){
-                        var ls = ['ct', 'wd', 'collection'];
-                        var cid = $(e.target).attr('class');
-                        if (ls.indexOf(cid) != -1) {
-                            if(isFollow == -1) {
-                                $("#modal_login").fadeIn(300);
-                            } else {
-                                if (!isLike) {
-                                    isLike = true;
-                                    follow(apiUrl + 'circel/relationship');
-                                } else {
-                                    isLike = false;
-                                    cancelFollow(apiUrl + 'circel/quxiao');
-                                }
-                            }
-                        }
-                    })
-                }
-            },
-            error: function(xhr) {
-                console.log(xhr)
-            }
-        })
-    }
-
-    //微友
-    var wefriends = function(nums, res) {
-        let n = parseInt(nums);
-        nums = nums + '';
-        let len = nums.length;
-        if (len == 0) {
-            $(".red").html(res.reverse().join(''));
-        } else {
-            res.push(`<li>${n % 10}</li>`);
-            wefriends(nums.substr(0, len - 1), res);
-        }
-    }
 })
