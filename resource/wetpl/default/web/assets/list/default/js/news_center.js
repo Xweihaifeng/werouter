@@ -144,10 +144,14 @@ $(function() {
                 }
             }
 
-            $(data.data.list).each(function(index, value) {
-                $(".news-center-main").append(news_contents(value));
-                $(".zhu-yao-nei-rong img").hide();
-            })
+            if(data.data.list.length == 0) {
+
+            } else {
+                $(data.data.list).each(function(index, value) {
+                    $(".news-center-main").append(news_contents(value));
+                    $(".zhu-yao-nei-rong img").hide();
+                })
+            }
         });
         options6.fail(function(error) {
             console.warn(error)

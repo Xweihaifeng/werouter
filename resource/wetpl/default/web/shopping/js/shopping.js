@@ -1008,8 +1008,8 @@ if (domain == 'wemall') {
         })
    }
 
-   var favicon = ApiMaterPlatQiniuDomain + localStorage.getItem('fav');
-    $('#favicon').attr('href', favicon);
+   // var favicon = ApiMaterPlatQiniuDomain + localStorage.getItem('fav');
+   //  $('#favicon').attr('href', favicon);
     if(localStorage.getItem('title')=="" || localStorage.getItem('title')==null ||localStorage.getItem('title')==undefined || localStorage.getItem('title')=="null"){
          $.ajax({
             url: apiUrl+"cms/advs",
