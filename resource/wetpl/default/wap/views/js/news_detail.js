@@ -15,13 +15,12 @@ $(function() {
 
     // 全剧共用变量
     var get_param = window.location.pathname.split('/').pop();
-    // var ApiMaterPlatQiniuDomain = 'http://oty3r3tmi.bkt.clouddn.com/';
     var praise_if, original;
 
     $(".prompt-info").hide();
 
     // token 加载值请求头（Headers）
-    var token = window.localStorage.getItem('token'), isLogin = false;
+    var token = window.localStorage.getItem('token'), isLogin = false, pid, nickname;
     if(token) {
         $.ajaxSetup({
             global: true,
@@ -30,6 +29,24 @@ $(function() {
             }
         });
     }
+
+    $.ajax({
+        url: apiUrl + 'pages/page/getDetailByDomain/idnex',
+        type: 'GET',
+        async: false,
+        success: function(data) {
+            pid = data.data.plat_user_id;
+            $.ajax({
+                url: apiUrl + 'users/' + pid,
+                type: 'GET',
+                async: false,
+                success: function(data) {
+                    nickname = data.data.nickname;
+                    
+                }
+            })
+        }
+    })
 
     //主页初始化
     var init = function(token){
@@ -82,6 +99,7 @@ $(function() {
         var template = `
             <p class="rich_media_title" id="activity-name">` + result.title + `</p>
             <div class="clearfix bts">
+                <a href="/wecard/`+ pid +`">`+ nickname +`</span>
                 <span class="publisher">` + result.publisher.substr(0, 5) + `</span>
                 <span class="author">` + result.auth.substr(0, 5) + `</span>
                 <span class="source_url">`+ result.source_url +`</span>
