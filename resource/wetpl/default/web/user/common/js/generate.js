@@ -351,7 +351,7 @@ function avatar_admin() {
                         layer.msg('保存设置成功', {
                             time: 1500
                         });
-                        setTimeout(funtion(){
+                        setTimeout(function(){
                             window.location.reload();    
                         }, 2000);
                         
