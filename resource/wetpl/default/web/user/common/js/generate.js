@@ -315,7 +315,7 @@ function avatar_admin() {
         ,area: ['800px', '480px']
         ,id: 'layerDemo'+type //防止重复弹出
         ,content: `
-            <div class="con-hd">
+            <div class="cont-hd">
                 <div class="panel panel-default">
                     <div class="panel-body">
                         个性域名设置
