@@ -17,8 +17,10 @@
         <script type="text/javascript" src="/common/layer-v3.0.3/layer-v3.0.3/layer/layer.js"></script>
         <script src="/common/js/browser.min.js"></script>
         <script src="/common/js/buttons.js"></script>
+        <script src="{{PATH_CONFIG}}"></script>
+        
     </head>
-    <body style="background: url(/common/img/dibu.jpg)">
+    <body>
         <ul class="news_menu" id="public_main_news_menu"></ul>
         <div class="bg">
             <div class="bg_top_img">
@@ -79,7 +81,10 @@
 
         </div>
 
-        <script src="{{PATH_CONFIG}}"></script>
+        <!-- 右侧大背景图 -->
+        <div id="public_main_right_bg" style="position:fixed;top:0;bottom:0;left:1190px;width:100%;"></div>
+        <script src="{{PATH_TML}}js/public_main_right_bg.js"></script>
+
         <!-- <script src="//captcha.luosimao.com/static/js/api.js"></script> -->
         <script src="{{PATH_TML}}js/image_code_id.js"></script>
         <!-- <script src="/js/news_base.js"></script> -->
