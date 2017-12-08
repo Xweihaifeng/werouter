@@ -79,6 +79,21 @@ class controllerRouter
             $plats_user_cert_sql = 'SELECT is_authenticated FROM we_plats_user_cert WHERE plat_id=? AND plat_user_id=? ';
             
             $wezchina_plats['plats_user_cert'] = $this->_db->queryOne($plats_user_cert_sql , array($this->weid , $row['plat_user_id']));
+
+            $protocol = empty($_SERVER['HTTP_X_CLIENT_PROTO']) ? 'http://' : $_SERVER['HTTP_X_CLIENT_PROTO'] . '://';
+
+            $url = urldecode($protocol.$_SERVER['HTTP_HOST'].'/'.$row['domain']);
+
+            $logo = (!empty($wezchina_plats['plats_brand']['logo'])) ? $wezchina_plats['plats_brand']['logo'] : $wezchina_plats['plats_user']['avatar'];
+
+            if(strpos($logo , 'ttp://') == FALSE)
+            {
+                $logo = "https://images.wezchina.com/$logo";
+            }
+
+            $domain = $row['domain'];
+
+            $wezchina_plats['plats_user_qrcode'] = "/qrcode.php?url=$url&logo=$logo&domain=$domain";
             
             $this->config['config']['const wezchina_plats'] = json_encode($wezchina_plats);
 
