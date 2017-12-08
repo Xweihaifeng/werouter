@@ -307,30 +307,102 @@ options1.fail(function(error) {
 
 // 判断是否开通微主页
 function avatar_admin() {
+    layer.open({
+        type: 1
+        ,title: '请设置您的个性域名'
+        ,offset: type //具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
+        ,area: ['670px', '400px']
+        ,id: 'layerDemo'+type //防止重复弹出
+        ,content: `
+            <div class="cont-hd">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        请输入您专属的个性域名
+                    </div>
+                </div>
+                <div class="form-group" style="margin-top: 60px;">
+                    <label id="host" style="margin-left: 10px; padding-top: 8px; padding-right: 5px; float: left;"></label>
+                    <input id="user-domain" type="text" class="form-control" name="domain" value="" style="width: 50%; float: left;">
+                </div>
+                <button id="submit_domain" type="submit" class="btn btn-default" style="margin-left: 10px;">立即申请</button>
+            </div>`
+        //,btn: '关闭全部'
+        ,btnAlign: 'c' //按钮居中
+        ,shade: 0 //不显示遮罩
+        ,yes: function(){
+            layer.closeAll();        
+        }
+        ,success: function(layero){
+            var host = 'http://' + window.location.host;
+            $("#host").text(host + "/");
+            var weid = localStorage.getItem('weid');
+            var store = function(sendData){
+            $.ajax({
+                url: PAGESTORE,
+                type: 'POST',
+                data: sendData,
+                headers: {
+                    'Token': localStorage.getItem('token')
+                },
+                success: function(data){
+                    if (data.code == 200){
+                        console.log(data)
+                        //mess_tusi("保存设置成功");
+                        layer.msg('保存设置成功', {
+                            time: 1500
+                        });
+                        setTimeout(function(){
+                            window.location.reload();    
+                        }, 2000);
+                        
+                    } else {
+                        layer.msg(data.message, {
+                            time: 1500
+                        });
+                    }
+                },
+                error: function(xhr){
+                    console.log(xhr);
+                }
+            })
+        }
 
-    $("body").append(`<div class="alert_mask"><div class="alert_mask_a"></div></div>`)
-    return false;
-    var options2 = $.post(PAGESTORE);
-    options2.done(function(data) {
-        if(data.code == -200) {
-            layer.msg(data.message, { time: 2500 });
-            $(".av-on-line, #avatar-admin").show();
-            return false;
-        }
-        if(data.code == 200) {
-            if(!data.data) {
-                $("#avatar-admin").hide();
-                return false;
+        $("#submit_domain").click(function () {
+            var domain = $("#user-domain").val();
+            var sendData = {weid: weid, domain: domain};
+            if (domain != "") {
+                store(sendData);
+            } else {
+                layer.msg('请输入个性域名', {
+                    time: 1500
+                });
             }
-            layer.msg("个人微主页开通成功", { time: 2500 });
-            $("#avatar-admin").show();
-            $(".av-on-line").hide();
+        })
+
         }
     });
-    options2.fail(function(error) {
-        $("#avatar-admin").hide();
-        cosole.error(error);
-    });
+
+    // var options2 = $.post(PAGESTORE);
+    // options2.done(function(data) {
+    //     if(data.code == -200) {
+    //         layer.msg(data.message, { time: 2500 });
+    //         $(".av-on-line, #avatar-admin").show();
+    //         return false;
+    //     }
+    //     if(data.code == 200) {
+    //         if(!data.data) {
+    //             $("#avatar-admin").hide();
+    //             return false;
+    //         }
+    //         layer.msg("个人微主页开通成功", { time: 2500 });
+    //         $("#avatar-admin").show();
+    //         $(".av-on-line").hide();
+    //     }
+    // });
+    // options2.fail(function(error) {
+    //     $("#avatar-admin").hide();
+    //     cosole.error(error);
+    // });
 }
 
 // 实名认证详情功能显示(是否开通实名认证)
