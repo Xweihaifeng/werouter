@@ -164,8 +164,40 @@
                                 </div>
                                 <div class="oline-3">
                                     <div>
+                                        <script type="text/javascript">
+                                            const getUserInfo = function(req, id, save, domain){
+                                                new Promise((resolve, reject) => {
+                                                    $.ajax({
+                                                        url: req + id,
+                                                        type: 'GET',
+                                                        success: function(data){
+                                                            console.log(data);
+                                                            if (data.code == 200){
+                                                                let avatar = ApiMaterPlatQiniuDomain + data.data.avatar;
+                                                                document.write('<script src="http://yewu.4g9.cn/qrcode.php?url=' + save + '&logo=' + avatar + '&domain=' + domain + '&size=175" type="text/javascript"></scr'+'ipt>');
+                                                            }
+                                                        },
+                                                        error: function(xhr){
+                                                            console.log(xhr);
+                                                        }
+                                                    })
+                                                })
+                                            }
 
-                                        <!--<img src="/common/img/wecard_qrcode.png" alt="qrcode" width="100"/>-->
+                                            new Promise((resolve, reject) => {
+                                                let domain = window.location.pathname.split('/')[1];
+                                                let url = window.location.protocol + '//' + window.location.host + '/' + domain;
+                                                $.ajax({
+                                                    url: PAGES_DETAIL_DOMAIN + '/' + domain,
+                                                    success: function(data) {
+                                                        let uid = data.data.plat_user_id;
+                                                        resolve({uid, url, domain});
+                                                    }
+                                                })
+                                            }).then((args) => {
+                                                getUserInfo(USERDETAIL, "/" +args.uid, args.url, args.domain)
+                                            })
+                                        </script>
                                     </div>
                                     <div><p>微信扫描二维码</p><p>支持Ta</p><p>或分享给好友</p></div>
                                 </div>

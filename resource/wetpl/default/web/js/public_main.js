@@ -381,7 +381,7 @@ req().then((data) => {
     //特别推荐模板
     var specialRecommend = function(data, url){
         var href = data.channel_domain + "/" + data.weid;
-        var title = data.title.substring(0, 18);
+        var title = data.title.substring(0, 14);
         var dt = new Date(data.created_at * 1000);
         var month = (dt.getMonth() + 1).toString().length == 1 ? '0' + (dt.getMonth() + 1) : dt.getMonth() + 1;
         var day = dt.getDate().toString().length == 1 ? '0' + dt.getDate() : dt.getDate(); 
@@ -398,7 +398,7 @@ req().then((data) => {
     //会员推荐模板
     var memberRecommend = function(data, url){
         var href = "/" + data.domain + "/article/" + data.weid; //需要动态验证domain
-        var title = data.title.substring(0, 18);
+        var title = data.title.substring(0, 14);
 
         var templete =
             '<div class="rcd-news-line" id=' + data.weid + '>' +
