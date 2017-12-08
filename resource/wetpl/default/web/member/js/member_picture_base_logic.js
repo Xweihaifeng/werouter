@@ -383,4 +383,28 @@ $(document).ready(function(){
         }
     });
 
+    var options1 = $.get(CMS_CHANNELS_DOMAIN_QUERY + "org");
+    options1.done(function(data) {
+        if(data.code == -200) {
+            console.info(data.message);
+            return false;
+        }
+        if(data.code === 200) {
+            var thumb_image = data.data.big_image;
+
+            if(!thumb_image) {
+                thumb_image = "/common/img/org_banner01.jpg";
+
+            } else if (thumb_image.indexOf('http') != 0 && thumb_image != "") {
+                thumb_image = imgSet(thumb_image, 1100, 320, 3);
+            }
+            $(".member_top_nav").css("background-image", `url(`+ thumb_image + `)`);
+        } else {
+            console.error(data.message);
+        }
+    });
+    options1.fail(function(error) {
+        console.error(error);
+    });
+
 });
