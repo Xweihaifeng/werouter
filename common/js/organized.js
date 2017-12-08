@@ -28,7 +28,7 @@
             if(data.code == 200) {
                 var result = data.data;
                 if(!result.thumb_image) {
-                    $(".zuzhi-top").css({ "background-image": "url('http://images.new.wezchina.com/plat/cert/1505289973450.png')","background-size": "100% 100%","background-repeat": "no-repeat","background-position": "center" });
+                    $(".zuzhi-top").css({ "background-image": "url('/common/img/1505289973450.png')","background-size": "100% 100%","background-repeat": "no-repeat","background-position": "center" });
 
                 } else if (result.thumb_image.indexOf('http') != 0 && result.thumb_image != "") {
 
@@ -41,7 +41,7 @@
                 }
 
                 if(!result.back_image) {
-                    $("#org_bottom_big_img").css({ "background-image": "url('http://images.new.wezchina.com/plat/cert/1505289973450.png')" });
+                    $("#org_bottom_big_img").css({ "background-image": "url('/common/img/1505289973450.png')" });
 
                 } else if (result.back_image.indexOf('http') != 0 && result.back_image != "") {
 
