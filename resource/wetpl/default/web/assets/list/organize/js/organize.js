@@ -180,11 +180,15 @@ $(function() {
             limit = body.data.params.limit;
             pageNum = body.data.params.page // 显示初始页面
 
-            $(body.data.list).each(function(index, value) {
-                $(".list-article-ul").append(news_contents(value));
-            });
+            if(body.data.list.length == 0) {
+                $(".list-article-ul").html("<li>暂无内容</li>");
+            } else {
+                $(body.data.list).each(function(index, value) {
+                    $(".list-article-ul").append(news_contents(value));
+                });
 
-            paging(total, limit);
+                paging(total, limit);                
+            }
         });
         options3.fail(function(error) {
             console.error(error)
@@ -229,6 +233,7 @@ $(function() {
                         });
 
                         column(show_two, pageNum);
+                        document.title = $('#' + pathname[1]).text();
 
                     } else {
 
@@ -262,6 +267,7 @@ $(function() {
 
                         show_two = $("#menuTwo").children().first().attr("id");
                         $('#' + show_two).addClass("single_active").siblings().removeClass("single_active");
+                        document.title = $('#' + show_two).text();
                         
                         $.ajax({
                             url: apiUrl + "cms/categories/domain_query/" + show_two,
