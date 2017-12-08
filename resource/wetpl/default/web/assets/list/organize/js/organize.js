@@ -278,8 +278,12 @@ $(function() {
                             async:  false,
                             success: function(data) {
                                 if(data.code === 200) {
-                                    two_ul(data.data);
-                                    $(".paging").hide();
+                                    if(data.data.type == 1) {
+                                        two_ul(data.data);
+                                        $(".paging").hide();
+                                    } else {
+                                        column(data.data.domain, pageNum);
+                                    }
                                 } else {
                                     console.error(data.message);
                                 }
