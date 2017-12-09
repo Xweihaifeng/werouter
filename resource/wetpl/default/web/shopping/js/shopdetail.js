@@ -266,6 +266,7 @@ $(document).ready(function() {
 		return templete;
 	}
 	var messtemplete = function(data) {
+		console.log('测试data',data)
 		if(data.avatar == null || data.avatar == "") {
 			var imgsrc = "/common/img/default_head.png";
 		} else {
@@ -278,7 +279,7 @@ $(document).ready(function() {
 		}
 		var messhtml = '<li class="supporter">' +
 			'<div class="supporter_img ">' +
-			'<img class="img-circle" src="' + qiniu_bucket_domain + imgsrc + '">' +
+			'<img class="img-circle" src="' + imgsrc + '">' +
 			'</div>' +
 			'<div class="supporter_user">' +
 			'<span class="supporter_user_log"></span>' +
