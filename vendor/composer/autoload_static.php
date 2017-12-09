@@ -7,8 +7,8 @@ namespace Composer\Autoload;
 class ComposerStaticInit12ee2b605a52955f9fbbc7fe9166c45e
 {
     public static $files = array (
-        'd7f4f7522f962c095f835c50e6136087' => __DIR__ . '/..' . '/hprose/hprose/src/init.php',
         '841780ea2e1d6545ea3a253239d59c05' => __DIR__ . '/..' . '/qiniu/php-sdk/src/Qiniu/functions.php',
+        'd7f4f7522f962c095f835c50e6136087' => __DIR__ . '/..' . '/hprose/hprose/src/init.php',
     );
 
     public static $prefixLengthsPsr4 = array (
