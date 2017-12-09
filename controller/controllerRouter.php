@@ -35,12 +35,67 @@ class controllerRouter
         $this->config = array();
     }
 
+    // 个性域名公共数据调用
+    private function _domain_init($row)
+    {
+        $wezchina_plats['plats_domian'] = $row;
+        //$this->config['config']['const wezchina_domain_weid'] = $row['weid'];
+        // 获取用户信息
+        $plats_user_sql = 'SELECT weid,avatar,sex,real_name,nickname,motto,province_id,area_id FROM we_plats_user    WHERE plat_id=? AND weid=? ';
+
+        $wezchina_plats['plats_user'] = $this->_db->queryOne($plats_user_sql , array($this->weid , $row['plat_user_id']));
+
+        // 获取省份
+        $plats_province_sql = 'SELECT name FROM we_plats_province WHERE id=?';
+        $wezchina_plats['plats_user']['province'] = $this->_db->queryOne($plats_province_sql , array($wezchina_plats['plats_user']['province_id']));
+
+        // 获取市
+        $plats_area_sql = 'SELECT name FROM we_plats_area WHERE id=?';
+        $wezchina_plats['plats_user']['area'] = $this->_db->queryOne($plats_area_sql , array($wezchina_plats['plats_user']['area_id']));
+
+        $wezchina_plats['plats_brand'] = FALSE;
+        if($row['is_brand'] == 1)
+        {
+            // 获取品牌
+            $plats_brand_sql = 'SELECT title,business,logo,slogan FROM we_pages_brand WHERE plat_id=? AND plat_user_id=? ';
+            $wezchina_plats['plats_brand'] = $this->_db->queryOne($plats_brand_sql , array($this->weid , $row['plat_user_id']));
+
+        }
+        
+        // 实名认证
+        $plats_user_auth_sql = 'SELECT is_authenticated,origo,residential FROM we_plats_user_auth WHERE plat_id=? AND plat_user_id=? ';
+        
+        $wezchina_plats['plats_user_auth'] = $this->_db->queryOne($plats_user_auth_sql , array($this->weid , $row['plat_user_id']));
+
+        // 官方认证
+        $plats_user_cert_sql = 'SELECT is_authenticated FROM we_plats_user_cert WHERE plat_id=? AND plat_user_id=? ';
+        
+        $wezchina_plats['plats_user_cert'] = $this->_db->queryOne($plats_user_cert_sql , array($this->weid , $row['plat_user_id']));
+
+        $protocol = empty($_SERVER['HTTP_X_CLIENT_PROTO']) ? 'http://' : $_SERVER['HTTP_X_CLIENT_PROTO'] . '://';
+
+        $url = urldecode($protocol.$_SERVER['HTTP_HOST'].'/wecard/'.$row['plat_user_id']);
+
+        $logo = (!empty($wezchina_plats['plats_brand']['logo'])) ? $wezchina_plats['plats_brand']['logo'] : $wezchina_plats['plats_user']['avatar'];
+
+        if(strpos($logo , 'ttp://') == FALSE)
+        {
+            $logo = "https://images.wezchina.com/$logo";
+        }
+
+        $domain = $row['domain'];
+
+        $wezchina_plats['plats_user_qrcode'] = "/qrcode.php?url=$url&logo=$logo&domain=$domain";
+
+        return $wezchina_plats;
+    }
+
     // 验证个性域名
     public function domain($param)
     {
 
         // 测试 CONFIG 配置了 config 参数会直接追加到 config 最下面
-        $this->config['config']['var title'] = 'yes';
+        // $this->config['config']['var title'] = 'yes';
         //$this->config['template'] = '/login.html';
         //if($param == 'index') return TRUE;
 
@@ -50,50 +105,7 @@ class controllerRouter
         if(!empty($row))
         {
 
-            $wezchina_plats['plats_domian'] = $row;
-            //$this->config['config']['const wezchina_domain_weid'] = $row['weid'];
-            // 获取用户信息
-            $plats_user_sql = 'SELECT avatar,sex,real_name,nickname,motto,province_id,area_id FROM we_plats_user    WHERE plat_id=? AND weid=? ';
-
-            $wezchina_plats['plats_user'] = $this->_db->queryOne($plats_user_sql , array($this->weid , $row['plat_user_id']));
-
-            // 获取省份
-            $plats_province_sql = 'SELECT name FROM we_plats_province WHERE id=?';
-            $wezchina_plats['plats_user']['province'] = $this->_db->queryOne($plats_province_sql , array($wezchina_plats['plats_user']['province_id']));
-
-            // 获取市
-            $plats_area_sql = 'SELECT name FROM we_plats_area WHERE id=?';
-            $wezchina_plats['plats_user']['area'] = $this->_db->queryOne($plats_area_sql , array($wezchina_plats['plats_user']['area_id']));
-
-            // 获取品牌
-            $plats_brand_sql = 'SELECT title,business,logo FROM we_pages_brand WHERE plat_id=? AND plat_user_id=? ';
-            
-            $wezchina_plats['plats_brand'] = $this->_db->queryOne($plats_brand_sql , array($this->weid , $row['plat_user_id']));
-
-            // 实名认证
-            $plats_user_auth_sql = 'SELECT is_authenticated,origo,residential FROM we_plats_user_auth WHERE plat_id=? AND plat_user_id=? ';
-            
-            $wezchina_plats['plats_user_auth'] = $this->_db->queryOne($plats_user_auth_sql , array($this->weid , $row['plat_user_id']));
-
-            // 官方认证
-            $plats_user_cert_sql = 'SELECT is_authenticated FROM we_plats_user_cert WHERE plat_id=? AND plat_user_id=? ';
-            
-            $wezchina_plats['plats_user_cert'] = $this->_db->queryOne($plats_user_cert_sql , array($this->weid , $row['plat_user_id']));
-
-            $protocol = empty($_SERVER['HTTP_X_CLIENT_PROTO']) ? 'http://' : $_SERVER['HTTP_X_CLIENT_PROTO'] . '://';
-
-            $url = urldecode($protocol.$_SERVER['HTTP_HOST'].'/'.$row['domain']);
-
-            $logo = (!empty($wezchina_plats['plats_brand']['logo'])) ? $wezchina_plats['plats_brand']['logo'] : $wezchina_plats['plats_user']['avatar'];
-
-            if(strpos($logo , 'ttp://') == FALSE)
-            {
-                $logo = "https://images.wezchina.com/$logo";
-            }
-
-            $domain = $row['domain'];
-
-            $wezchina_plats['plats_user_qrcode'] = "/qrcode.php?url=$url&logo=$logo&domain=$domain";
+            $wezchina_plats = $this->_domain_init($row);
             
             $this->config['config']['const wezchina_plats'] = json_encode($wezchina_plats);
 

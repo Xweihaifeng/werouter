@@ -234,6 +234,7 @@ class main
                 $config .= "\n".$key;
             }
         }
+
         $cache_config_file = '/config/web/'.md5($domain).'.js';
 
         $config_file = fopen( './'.$cache_config_file , "w");
