@@ -5,6 +5,7 @@
 //接口配置
 const httpType = window.location.protocol;
 const apiUrl = httpType + '//{{url}}/api/';
+const siteUrl = httpType + '//{{url}}';
 
 const domainHost = window.location.host;
 
