@@ -38,6 +38,43 @@ function is_weixn() {
     }
 }
 
+const setCookie = (token, expiredays) => {
+    var Days = expiredays;
+    var exp = new Date();
+    exp.setTime(exp.getTime() + Days*24*60*60*1000);
+    document.cookie = "token="+ escape (token) + ";expires=" + exp.toGMTString() +";path=/";
+}
+
+const wxlogin = (openid, ref) => {
+    //微信登录
+    $.ajax({
+        url: apiUrl + 'wxlogin',
+        type: 'POST',
+        async: false,
+        data: {
+            openid: openid,
+            ref_url: window.location.pathname,
+            ref_type: 2,
+            ref_id: window.location.pathname.split('/')[2],
+            domain: 'index'
+        },
+        success: function (data) {
+//				alert(JSON.stringify(data));
+            localStorage.setItem('weid', data.data.weid);
+            localStorage.setItem('token', data.token);
+            localStorage.setItem('activation', data.data.activation_status);
+            localStorage.setItem('phone', data.data.phone);
+            setCookie(data.token, 7);
+            if (data.code == 200) {
+                if (isNull(data.token) == false) { //非空
+                    localStorage.setItem('token-date', new Date().getTime())
+                    localStorage.setItem('user-token', data.token);
+                }
+            }
+        }
+    })
+}
+
 $.ajax({
     url: requrl,
     type: 'GET',
@@ -60,6 +97,33 @@ $.ajax({
             localStorage.setItem('largePages', remLargePages);
             localStorage.setItem('smallPages', remSmallPages);
 
+            if (is_weixn()) {
+//					alert(1)
+                var oldTime = localStorage.getItem('setopenid-date');
+                if (!isExpire(oldTime)) { //没过期
+                    //var usertoken = localStorage.getItem('user-token');
+                    var usertoken = localStorage.getItem('setopenid');
+                    if (usertoken == 'true') {
+                        openid = getUrlParam("openid");
+//							alert('openid:' + openid)
+                        if (openid != null) {
+                            localStorage.setItem('openid', openid);
+                            wxlogin(openid);
+                        } else {
+                            let openid = localStorage.getItem('openid');
+                            wxlogin(openid);
+                        }
+//							alert('store openid:' + localStorage.getItem('openid'));
+                    }
+                } else {
+                    //微信未跳转时
+//						alert(2)
+                    localStorage.setItem('setopenid', true);
+                    localStorage.setItem('setopenid-date', new Date().getTime())
+                    window.location.href = encodeURI(apiUrl + '/openid?url=' + window.location.href);
+                }
+            }
+
             $.ajax({
                 url: apiUrl + 'wxjssdk',
                 type: 'POST',
@@ -78,6 +142,7 @@ $.ajax({
                         });
 
                         wx.ready(function() {
+                            alert(cover);
                             //微信分享
                             var link = currurl;
                             wx.onMenuShareTimeline({
