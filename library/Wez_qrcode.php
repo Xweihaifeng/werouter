@@ -50,9 +50,15 @@ class Wez_qrcode extends controller
 		imagedestroy($qrcode_img);
 		// imagedestroy($newImage);
 
+<<<<<<< HEAD
 		$logo_gd = imagecreatefrompng($logo.'?roundPic/radius/30|imageView2/5/w/91/h/91|imageMogr2/format/png');
 		
 		imagecopyresampled($newImage, $logo_gd, 170, 168, 0, 0, 90 , 90, 90, 90);
+=======
+		$logo_gd = imagecreatefrompng($logo.'?roundPic/radius/50|imageView2/5/w/95/h/95|imageMogr2/format/png');
+		
+		imagecopyresampled($newImage, $logo_gd, 167, 165, 0, 0, 95 , 95, 95, 95);
+>>>>>>> 更新二维码尺寸
 		ImagePng($newImage  , $storage_img );
 		imagedestroy($newImage);
 
