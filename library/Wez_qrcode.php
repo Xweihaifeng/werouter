@@ -50,7 +50,7 @@ class Wez_qrcode extends controller
 		imagedestroy($qrcode_img);
 		// imagedestroy($newImage);
 
-		$logo_gd = imagecreatefrompng($logo.'?roundPic/radius/16|imageView2/5/w/91/h/91|imageMogr2/format/png');
+		$logo_gd = imagecreatefrompng($logo.'?roundPic/radius/30|imageView2/5/w/91/h/91|imageMogr2/format/png');
 		
 		imagecopyresampled($newImage, $logo_gd, 170, 168, 0, 0, 90 , 90, 90, 90);
 		ImagePng($newImage  , $storage_img );
