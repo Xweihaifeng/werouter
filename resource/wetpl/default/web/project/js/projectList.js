@@ -342,8 +342,8 @@ var qiniu_bucket_domain = ApiMaterPlatQiniuDomain;
         })
     }
 
-    projectcate(wezchina_plats.plats_domian.plat_user_id,wezchina_plats.plats_user.real_name,wezchina_plats.plats_user.avatar);
-    projectlist(wezchina_plats.plats_domian.plat_user_id,wezchina_plats.plats_user.real_name,wezchina_plats.plats_user.avatar);
+    projectcate(pages_info.plats_domian.plat_user_id,pages_info.plats_user.real_name,pages_info.plats_user.avatar);
+    projectlist(pages_info.plats_domian.plat_user_id,pages_info.plats_user.real_name,pages_info.plats_user.avatar);
 
 
  var url = window.location.pathname.split('/');

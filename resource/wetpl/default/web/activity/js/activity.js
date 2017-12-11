@@ -204,7 +204,7 @@ var qiniu_bucket_domain = ApiMaterPlatQiniuDomain;
         })
     }
 
-    activitylist(wezchina_plats.plats_domian.plat_user_id,wezchina_plats.plats_user.real_name,wezchina_plats.plats_user.avatar);
+    activitylist(pages_info.plats_domian.plat_user_id,pages_info.plats_user.real_name,pages_info.plats_user.avatar);
 
     var url = window.location.pathname.split('/');
     var active = url.pop();
