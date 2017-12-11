@@ -53,30 +53,53 @@ $(document).ready(function(){
     
     $("#save_setup").click(function() {
     	$("#myModal").show();
-    	var body107 = new Object();
-    		body107.weid            = get_weid;
-	    	body107.app_id 			= $("#app_id")		 	.val();
-	    	body107.app_cert 		= $("#app_cert")	    .val();
-	    	body107.merchant_id 	= $("#merchant_id")	 	.val();
-	    	body107.merchant_key 	= $("#merchant_key")	.val();
-	    	body107.apiclient_cert 	= $("#apiclient_cert") 	.val();
-	    	body107.apiclient_key 	= $("#apiclient_key")	.val();
+        var body107 = new Object();
+        body107.weid = get_weid;
+        body107.app_id = $("#app_id").val();
+        body107.app_cert = $("#app_cert").val();
+        body107.merchant_id = $("#merchant_id").val();
+        body107.merchant_key = $("#merchant_key").val();
+        body107.apiclient_cert = $("#apiclient_cert").val();
+        body107.apiclient_key = $("#apiclient_key").val();
+        body107.verify_file = $("input[name=verify_file]").get(0).files[0];
+        body107.verify_file_name = $("#filename").text();
 
-	    if(!get_weid
-    	|| !body107.app_id
-    	|| !body107.app_cert
-    	|| !body107.merchant_id
-    	|| !body107.merchant_key
-    	|| !body107.apiclient_cert
-    	|| !body107.apiclient_key) {
-    		$("#wechat_save").hide();
-    		$(".modal_info").html("信息都是必填项，请完善信息后重新提交").css("color", "#f00");
-	    	return false;
+        if (!get_weid
+            || !body107.app_id
+            || !body107.app_cert
+            || !body107.merchant_id
+            || !body107.merchant_key
+            || !body107.apiclient_cert
+            || !body107.apiclient_key) {
+            $("#wechat_save").hide();
+            $(".modal_info").html("信息都是必填项，请完善信息后重新提交").css("color", "#f00");
+            return false;
+        }
+        if(body107.verify_file_name=='未上传文件'){
+            $("#wechat_save").hide();
+            $(".modal_info").html("信息都是必填项，请完善信息后重新提交").css("color", "#f00");
+            return false;
 		}
     	$("#wechat_save").show();    	
     	$(".modal_info").html("本次提交为重要信息,请仔细检查确无误后再提交（如果有误平台支付模块将报错此信息必须和微信公众平台，商户平台信息保存一致并且是可用状态）请确认后谨慎操作！").css("color", "");    	
 	    $("#wechat_save").click(function() {
-	    	var options107 = $.post(apiUrl + "pages/wechat/update", body107);
+				$.ajax({
+                type: "POST",
+                processData: false,
+                contentType: false,
+                url: apiUrl + "pages/wechat/update",
+                data: body107,// 要提交表单的ID
+                success: function (data) {
+                    if (data.code == 200) {
+                        clear();
+                        layer.msg("修改成功！", {time: 1500});
+                    } else {
+
+                    }
+                }
+            });
+			/*
+            var options107 = $.post(apiUrl + "pages/wechat/update", body107);
 		    options107.done(function(data) {
 		    	if(data.code == 200 && data.data) {
 		    		console.info(data.data);
@@ -87,11 +110,25 @@ $(document).ready(function(){
 		    options107.fail(function(fail) {
 		    	console.error(error);
 		    });
+		    */
 	    });
 	    
     });
 
 	$(".close_modal").click(function() {
     	clear();
+    });
+
+	//检验文件
+    $("input[name=verify_file]").change(function () {
+        var file = $("input[name=verify_file]").get(0).files[0];
+        if (file.type.indexOf("text") > -1) {
+            //允许上传的类型
+        } else {
+            $('input[name=verify_file]').val('');
+            layer.msg("类型有误必须为微信公众平台授权回调域名验证文件！", {time: 5000});
+            return false;
+        }
+        $("#filename").html(file.name);
     });
 })
