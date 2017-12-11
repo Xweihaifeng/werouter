@@ -427,26 +427,24 @@
              status = 1;
          }
          var sendData = {
-             title: title,
-             cover: cover,
-             area_id: area_id,
-             area_name: area_name,
-             address: address,
-             begain_time: begain_time,
-             end_time: end_time,
-             enroll_deadline: enroll_deadline,
-             enroll_limit: enroll_limit,
-             Sponsor: Sponsor,
-             content: content,
-             type: type,
-             price: price,
-             status: status,
-             is_private: is_private
-         }
-         console.log(sendData);
-         console.log($(this).data("id"));
-         // return;
-         // 判断是编辑还是发布
+                 title: title,
+                 cover: cover,
+                 area_id: area_id,
+                 area_name: area_name,
+                 address: address,
+                 begain_time: begain_time,
+                 end_time: end_time,
+                 enroll_deadline: enroll_deadline,
+                 enroll_limit: enroll_limit,
+                 Sponsor: Sponsor,
+                 content: content,
+                 type: type,
+                 price: price,
+                 status: status,
+                 is_private: is_private
+             }
+             // return;
+             // 判断是编辑还是发布
          if ($(this).data("id") == 1) {
              sendData.weid = id;
              // 编辑
@@ -462,7 +460,11 @@
                      if (data.code == 200) {
                          if ($(".J_ActivityGuest").length > 0) {
                              // 修改嘉宾
-                             saveGuest(id, btnstatus);
+                             //saveGuest(id, btnstatus);
+                             // 修改门票
+                             //alert(888);
+                             saveTicket(id, btnstatus);
+                             //alert(999);
 
                          } else {
                              mess_tusi("活动编辑成功");
@@ -492,10 +494,11 @@
                      if (data.code == 200) {
                          // if(btnstatus==2){
                          // mess_tusi("活动保存成功");
-                         // 保存嘉宾
+                         // 保存嘉宾和门票
                          console.log($(".J_ActivityGuest").length);
                          if ($(".J_ActivityGuest").length > 0) {
                              saveGuest(data.data, btnstatus);
+                             saveTicket(data.data, btnstatus);
 
                          } else {
                              mess_tusi("活动发布成功");
@@ -553,16 +556,16 @@
                              console.log("index:", index);
                              if (flag >= index) {
                                  if (btnstatus == 2) {
-                                     mess_tusi("活动保存成功");
+                                     //mess_tusi("活动保存成功");
 
 
                                  } else {
-                                     mess_tusi("活动修改成功");
+                                     //mess_tusi("活动修改成功");
 
                                  }
                                  //location.reload();
 
-                                 window.location = "/user/admin/activity/list";
+                                 // window.location = "/user/admin/activity/list";
                              }
 
                          } else {
@@ -586,8 +589,92 @@
                          console.log(data);
                          if (data.code == 200) {
                              flag++;
-                             console.log("flag:", flag);
-                             console.log("index:", index);
+                             if (flag >= index) {
+                                 if (btnstatus == 2) {
+                                     //mess_tusi("活动保存成功");
+
+
+                                 } else {
+                                     // mess_tusi("活动发布成功");
+
+                                 }
+                                 // location.reload();
+                                 //window.location = "/user/admin/activity/list";
+
+
+                             }
+
+                         } else {
+                             mess_tusi(data.message);
+                         }
+                     },
+                     error: function(xhr) {
+                         console.log(xhr);
+                     }
+                 })
+             }
+
+         })
+     }
+
+
+
+     //保存门票
+     var flag = 0;
+     var saveTicket = function(activityid, btnstatus) {
+         $(".J_ActivityTicket").each(function(index) {
+             var name = $(this).find(".name").text();
+             var info = $(this).find(".info").text();
+             var price = $(this).find(".price span").text();
+             var num = $(this).find(".num span").text();
+
+             var guid = $(this).data("id");
+
+             if (guid != 0 && guid != -1) {
+                 // 修改门票
+                 $.ajax({
+                     url: ACTIVITY_TICKET_UPDATE,
+                     type: 'post',
+                     data: { weid: guid, name: name, description: info, price: price, total_num: num },
+                     headers: {
+                         'Token': localStorage.getItem('token')
+                     },
+                     success: function(data) {
+                         if (data.code == 200) {
+                             flag++;
+                             if (flag >= index) {
+                                 if (btnstatus == 2) {
+                                     mess_tusi("活动保存成功");
+
+
+                                 } else {
+                                     mess_tusi("活动修改成功");
+
+                                 }
+
+                                 //window.location = "/user/admin/activity/list";
+                             }
+
+                         } else {
+                             mess_tusi(data.message);
+                         }
+                     },
+                     error: function(xhr) {
+                         console.log(xhr);
+                     }
+                 })
+             } else {
+                 // 保存门票
+                 $.ajax({
+                     url: ACTIVITY_TICKET_STORE,
+                     type: 'post',
+                     data: { activity_id: activityid, name: name, description: info, price: price, total_num: num },
+                     headers: {
+                         'Token': localStorage.getItem('token')
+                     },
+                     success: function(data) {
+                         if (data.code == 200) {
+                             flag++;
                              if (flag >= index) {
                                  if (btnstatus == 2) {
                                      mess_tusi("活动保存成功");
@@ -597,8 +684,7 @@
                                      mess_tusi("活动发布成功");
 
                                  }
-                                 // location.reload();
-                                 window.location = "/user/admin/activity/list";
+                                 //window.location = "/user/admin/activity/list";
 
 
                              }
@@ -712,7 +798,7 @@
              i = type;
              dataweid = data.weid;
          }
-         var guesthtml = '<div class="row J_ActivityGuest" data-result="' + data.i + '" data-id="' + dataweid + '">' +
+         var guesthtml = '<div class="row J_ActivityTicket" data-result="' + data.i + '" data-id="' + dataweid + '">' +
              '<div class="cell drag"><span></span></div>' +
              '<div class="cell name">' + data.name + '</div>' +
              '<div class="cell info">' + data.description + '</div>' +
