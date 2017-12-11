@@ -144,7 +144,7 @@ $.ajax({
     }
 })
 
-/*$.ajax({
+$.ajax({
     url: apiUrl + 'wxjssdk',
     type: 'POST',
     data: {
@@ -207,7 +207,7 @@ $.ajax({
             })
         }
     }
-})*/
+})
 
 var aliasConfig = {
     appName : ["", "", ""],
