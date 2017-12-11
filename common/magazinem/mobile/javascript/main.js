@@ -51,6 +51,23 @@ function is_weixn() {
     }
 }
 
+//检查openid是否过期(有效期1天)
+var isExpire = (oldTime) => {
+    var day = 86400000;
+    var now = new Date().getTime();
+    if (oldTime != null) {
+        if (now - oldTime < 86400000) {
+            return false;
+        } else {
+            localStorage.removeItem('setopenid-date')
+            localStorage.removeItem('user-token')
+            return true;
+        }
+    } else {
+        return true;
+    }
+}
+
 const setCookie = (token, expiredays) => {
     var Days = expiredays;
     var exp = new Date();
