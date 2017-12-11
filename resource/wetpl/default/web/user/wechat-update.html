@@ -29,48 +29,50 @@
                             <li class="homepage"><a> 微信配置 </a></li>
                         </ol>
                     </div>
+                    <form id="uploadForm" class="form-horizontal" onsubmit="return addWechatPost()" method= "post" enctype ="multipart/form-data">
                     <div class="con-hd">
                         <div class="jumbotron">
                             <div class="col-md-12">
+                                <input type="hidden" name="weid"  value="">
                                 <div class="form-group row">
                                     <label for="app_id" class="col-sm-2 control-label" style="width:130px;"> 公众号ID：</label>
                                     <div class="col-sm-5">
-                                        <input type="text" class="form-control" id="app_id" placeholder="公众号ID">
+                                        <input type="text" class="form-control" id="app_id" name="app_id" placeholder="公众号ID">
                                     </div>
                                     <span style="color:#f00;">*</span>
                                 </div>
                                 <div class="form-group row">
                                     <label for="app_cert" class="col-sm-2 control-label" style="width:130px;"> 公众号密钥：</label>
                                     <div class="col-sm-5">
-                                        <input type="text" class="form-control" id="app_cert" placeholder="公众号密钥">
+                                        <input type="text" class="form-control" id="app_cert" name="app_cert" placeholder="公众号密钥">
                                     </div>
                                     <span style="color:#f00;">*</span>
                                 </div>
                                 <div class="form-group row">
                                     <label for="merchant_id" class="col-sm-2 control-label" style="width:130px;"> 商户号ID：</label>
                                     <div class="col-sm-5">
-                                        <input type="text" class="form-control" id="merchant_id" placeholder="商户号ID">
+                                        <input type="text" class="form-control" id="merchant_id" name="merchant_id" placeholder="商户号ID">
                                     </div>
                                     <span style="color:#f00;">*</span>
                                 </div>
                                 <div class="form-group row">
                                     <label for="merchant_key" class="col-sm-2 control-label" style="width:130px;"> 商户号密钥：</label>
                                     <div class="col-sm-5">
-                                        <input type="text" class="form-control" id="merchant_key" placeholder="商户号密钥">
+                                        <input type="text" class="form-control" id="merchant_key" name="merchant_key" placeholder="商户号密钥">
                                     </div>
                                     <span style="color:#f00;">*</span>
                                 </div>
                                 <div class="form-group row">
                                     <label for="apiclient_cert" class="col-sm-2 control-label" style="width:130px;"> api证书：</label>
                                     <div class="col-sm-10">
-                                        <textarea type="text" class="form-control" id="apiclient_cert" placeholder="api证书"></textarea>
+                                        <textarea type="text" class="form-control" id="apiclient_cert" name="apiclient_cert" placeholder="api证书"></textarea>
                                     </div>
                                     <span style="color:#f00;">*</span>
                                 </div>
                                 <div class="form-group row">
                                     <label for="apiclient_key" class="col-sm-2 control-label" style="width:130px;"> api证书密钥：</label>
                                     <div class="col-sm-10">
-                                        <textarea type="text" class="form-control" id="apiclient_key" placeholder="api证书密钥"></textarea>
+                                        <textarea type="text" class="form-control" id="apiclient_key" name="apiclient_key" placeholder="api证书密钥"></textarea>
                                     </div>
                                     <span style="color:#f00;">*</span>
                                 </div>
@@ -82,6 +84,7 @@
                                             <input type="file" id="verify_file" name="verify_file"  style="position:absolute;top:0;left:0;font-size:34px; opacity:0">
                                         </div>
                                         <span id="filename" style="vertical-align: middle">未上传文件</span>
+                                        <input type="hidden" name="verify_file_name"  value="">
                                     </div>
                                     <span style="color:#f00;">*</span>
                                 </div>
@@ -108,6 +111,7 @@
                             </div>
                         </div>
                     </div>
+                    </form>
                 </div>
             </div>
         </div>
