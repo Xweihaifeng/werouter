@@ -230,10 +230,8 @@ $(function() {
                         var result = body4.data;
 
                         result.forEach(function(value, key) {
-                            if(key < 10) {
-                                if(value.index_show == 1) {
-                                    $("#menuTwo").append(menuTwo(value));
-                                }
+                            if(key < 10 && value.index_show == 1) {
+                                $("#menuTwo").append(menuTwo(value));
                             }
                         });
 
@@ -265,7 +263,7 @@ $(function() {
                         var result = body4.data;
 
                         result.forEach(function(value, key) {
-                            if(key < 10) {
+                            if(key < 10 && value.index_show == 1) {
                                 $("#menuTwo").append(menuTwo(value));
                             }
                         });
