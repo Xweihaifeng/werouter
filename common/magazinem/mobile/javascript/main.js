@@ -89,7 +89,7 @@ const wxlogin = (openid, ref) => {
             domain: 'index'
         },
         success: function (data) {
-            alert(JSON.stringify(data));
+            // alert(JSON.stringify(data));
             localStorage.setItem('weid', data.data.weid);
             localStorage.setItem('token', data.token);
             localStorage.setItem('activation', data.data.activation_status);
@@ -129,7 +129,7 @@ $.ajax({
             localStorage.setItem('smallPages', remSmallPages);
 
             if (is_weixn()) {
-                alert(1)
+                // alert(1)
                 var oldTime = localStorage.getItem('setopenid-date');
                 if (!isExpire(oldTime)) { //没过期
                     //var usertoken = localStorage.getItem('user-token');
@@ -149,7 +149,7 @@ $.ajax({
                     }
                 } else {
                     //微信未跳转时
-                    alert(2)
+                    // alert(2)
                     localStorage.setItem('setopenid', true);
                     localStorage.setItem('setopenid-date', new Date().getTime())
                     window.location.href = encodeURI(apiUrl + '/openid?url=' + window.location.href);
@@ -180,7 +180,6 @@ $.ajax({
             });
 
             wx.ready(function() {
-                alert(cover);
                 //微信分享
                 var link = currurl;
                 wx.onMenuShareTimeline({
