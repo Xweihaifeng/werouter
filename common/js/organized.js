@@ -207,7 +207,9 @@
             // children = children.reverse();
             var template21 = '';
             $.map(children, function(value, key) {
-                template21 += `<a href="/org/`+ value.domain +`"> <i class="iconfont">&#xe61a;</i>`+ value.title +` </a>`
+                if(value.index_show == 1) {
+                    template21 += `<a href="/org/`+ value.domain +`"> <i class="iconfont">&#xe61a;</i>`+ value.title +` </a>`
+                }
             });
             return template21;
         }
