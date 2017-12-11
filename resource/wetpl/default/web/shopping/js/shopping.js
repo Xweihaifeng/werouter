@@ -326,7 +326,7 @@ $(document).ready(function () {
             }
         })
     }
-    catesfun(weid);
+    catesfun(pages_info.plats_domian.plat_user_id);
     if (localStorage.getItem('title') == "" || localStorage.getItem('title') == null || localStorage.getItem('title') == undefined || localStorage.getItem('title') == "null") {
         $.ajax({
             url: apiUrl + "cms/advs",
