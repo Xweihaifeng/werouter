@@ -305,7 +305,7 @@ $(document).ready(function () {
         domain = "/" + domain;
     }
 
-    /*var artCount = function (weid) {
+    var artCount = function (weid) {
         $.ajax({
             // url: apiUrl+"/articles/listCount?userId=" + weid,
             url: ARTICLES_LISTCOUNT + "?userId=" + weid,
@@ -337,7 +337,7 @@ $(document).ready(function () {
                 console.log(xhr);
             }
         })
-    }*/
+    }
 
 
     // 鼠标滑动到列表时加hover
