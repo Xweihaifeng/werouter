@@ -52,15 +52,8 @@
         <!-- 导航部分结束 -->
 
         <div class="article" >
-            <div id="art-head">
-                <a class='linkto' href=''><div id="head-icon"></div><div id="head-bg"></div></a>
-                <div id="user-name">
-                    <div class="line-0"></div>
-                    <div class="line-1"></div>
-                </div>
-            </div>
+            <#include#>template-userhead.html</#include#>
             <div id="art-body">
-                <!-- 活动列表部分start -->
                 <div id="art-main">
                     <div class="left col-sm-8" style="width: 735px;padding-right: 0;margin-right: 15px;padding-bottom: 15px;margin-bottom: 23px">
                         <div class="weizhuye-project">
@@ -83,89 +76,7 @@
                         </div>
                     </div>
                  </div>
-            
-                <!-- 活动列表部分end -->
-                <div id="art-info">
-                    <div id="user" style="margin-bottom: 20px;">
-                        <div class="panel panel-default user">
-                            <div class="panel-body">
-                            <div class="user-info"></div>
-                            <a class='linkto' href=''> <div class="user-head" style="margin-top: -73px;"><img src="/common/img/vrenzheng.png" alt=""></div></a>
-
-                                <div class="user-cnt"></div>
-                                <div class="user-part">
-                                    <div class="user-art">
-                                        <div></div>
-                                        <div>文章</div>
-                                    </div>
-                                    <div class="user-proj">
-                                        <div>4</div>
-                                        <div>项目</div>
-                                    </div>
-                                    <div class="user-type">
-                                        <div>9</div>
-                                        <div>活动</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="other">
-                        <div class="panel panel-default other">
-                            <div class="panel-body">
-                                <div class="oline-0">
-                                    <div class="ocont-0">
-                                        <div>
-                                            <!-- <span><img src="../common/img/we_on.png" alt="" width="80" /></span> -->
-                                             <span id="huiyuanrengzheng"><img src="/common/img/vrenzheng.png" alt="">&nbsp;官方认证</span>
-                                        </div>
-                                        <div>
-                                            <span><img src="/common/img/shiming.png" alt="已实名认证" width="35" /></span>
-                                        </div>
-                                        <div>
-                                            <img src="/common/img/sixin.png" width="60"/>
-                                        </div>
-                                        <div><span class="vren_message">暂无认证信息</span></div>
-                                    </div>
-                                </div>
-                                <div class="oline-1">
-                                    <span><img src="/common/img/coordinates_fill.png" alt="" width="25"/></span>
-                                    <p></p>
-                                </div>
-                                <div class="oline-2">
-                                    <span><img src="/common/img/document.png" alt="" width="22"/></span>
-                                    <span></span>
-                                </div>
-                                <div class="oline-3">
-                                    <div id="qc"></div>
-                                    <div><p>微信扫描二维码</p><p>支持Ta</p><p>或分享给好友</p></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="friend" style="margin-top: 5px; margin-bottom: 20px;">
-                        <div class="panel panel-default friend">
-                            <div class="panel-body">
-                                <div class="row">
-                                    <ul class="nav nav-tabs fri-sty">
-                                        <li role="presentation" class="fans active"></li>
-                                        <li role="presentation" class="friends"></li>
-                                    </ul>
-                                </div>
-
-                                <div id="fans">
-
-                                </div>
-
-                                <div id="friends">
-
-                                </div>
-                            </div>
-                            <div id="more">查看更多>></div>
-                        </div>
-                    </div>
-                </div>
-
+                <#include#>template-userbody.html</#include#>
             </div>
         </div>
         <!-- 右侧大背景图 -->
