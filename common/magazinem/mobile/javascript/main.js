@@ -63,7 +63,7 @@ const wxlogin = (openid, ref) => {
     $.ajax({
         url: apiUrl + 'wxlogin',
         type: 'POST',
-        async: true,
+        async: false,
         data: {
             openid: openid,
             ref_url: window.location.pathname,
@@ -97,6 +97,7 @@ $.ajax({
         if (data.code == 200) {
             title = data.data.title;
             summary = data.data.summary;
+            cover = ApiMaterPlatQiniuDomain + data.data.cover;
             $("title").text(data.data.title);
             data.data.list.map(x => {
                 remSmallPages.push(ApiMaterPlatQiniuDomain + x.image);
@@ -105,12 +106,12 @@ $.ajax({
                 remLargePages.push(ApiMaterPlatQiniuDomain + x.big_image);
             })
             len = remPages.length;
-            cover = remPages[1];
+            // cover = remPages[1];
             localStorage.setItem('normalPages', remPages);
             localStorage.setItem('largePages', remLargePages);
             localStorage.setItem('smallPages', remSmallPages);
 
-            /*if (is_weixn()) {
+            if (is_weixn()) {
                 alert(1)
                 var oldTime = localStorage.getItem('setopenid-date');
                 if (!isExpire(oldTime)) { //没过期
@@ -136,7 +137,7 @@ $.ajax({
                     localStorage.setItem('setopenid-date', new Date().getTime())
                     window.location.href = encodeURI(apiUrl + '/openid?url=' + window.location.href);
                 }
-            }*/
+            }
         }
     },
     error: function(xhr) {
