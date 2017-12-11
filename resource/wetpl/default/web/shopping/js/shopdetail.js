@@ -657,184 +657,14 @@ $(document).ready(function() {
 
 	//获取通用用户信息
 	var host = ApiMaterPlatQiniuDomain;
-	var getUserInfo = function(url, id) {
-		$.ajax({
-			url: url + id,
-			type: 'get',
-			/*headers: {
-			    'Token': localStorage.getItem('token')
-			},*/
-			success: function(data) {
-				// console.log(data);
-				if(data.code == 200) {
-					var info = data.data;
-					var weid = info.weid;
-					// console.log(weid)
-					var imgUrl = info.avatar;
-					if((imgUrl != null && imgUrl != "") && imgUrl.indexOf('http') === -1) {
-						imgUrl = host + imgUrl;
-						$("#head-icon, .user-head").css({
-							"background": "url(" + imgUrl + ") no-repeat center",
-							"background-size": "100%"
-						});
-					} else {
-						if(imgUrl != null && imgUrl != "") {
-							$("#head-icon, .user-head").css({
-								"background": "url(" + imgUrl + ") no-repeat center",
-								"background-size": "110%"
-							});
-						} else {
-							$("#head-icon, .user-head").css({
-								"background": "url(/common/img/avatar.png) no-repeat center",
-								"background-size": "110%"
-							});
-						}
-					}
-					if(info.nickname != null) {
-						$(".line-0").html(
-							info.nickname + '<img src="/common/img/vrenzheng.png" alt="">'
-						);
-					} else {
-						if(info.real_name != null) {
-							$(".line-0").html(
-								info.real_name + '<img src="/common/img/vrenzheng.png" alt="">'
-							);
-						} else {
-							$(".line-0").html(
-								localStorage.getItem('title') + '官方微主页' + '<img src="/common/img/vrenzheng.png" alt="">'
-							);
-						}
-					}
-					if(info.motto != null && info.motto != "") {
-						$(".oline-2").find("span").eq(1).text(info.motto);
-
-					} else {
-						$(".oline-2").find("span").eq(1).text("暂无介绍");
-					}
-					$(".user-cnt").text(info.real_name);
-					artCount(weid);
-					countinfo(weid);
-
-				}
-			},
-			error: function(xhr) {
-				console.log(xhr);
-			}
-		})
-	}
-
-	var hasDomain = function(weid) {
-		$.ajax({
-			url: PAGES_PAGE_GETDETAILBYUSER + weid,
-			type: 'GET',
-			headers: {
-				'Token': localStorage.getItem('token')
-			},
-			success: function(data) {
-				if(data.code == 200) {
-					if(data.data == null) {
-
-					} else {
-						//微主页banner图
-						var bgLogo = data.data.background;
-						if(bgLogo != null) {
-							$("#art-head").css({
-								"background": "url(" + bgLogo + ") no-repeat center",
-								"background-size": "100%"
-							});
-						}
-						//微名片背景
-						var bgUser = data.data.background_user;
-						if(bgUser != null) {
-							$(".user-info").css({
-								"background": "url(" + bgUser + ") no-repeat center",
-								"background-size": "100%"
-							});
-						}
-						if(data.data.is_brand == 1) {
-							hasBrand(userId);
-						}
-					}
-				} else {
-					/*layer.msg(data.message, { time: 1500 });*/
-				}
-			},
-			error: function(xhr) {
-				console.log(xhr);
-			}
-		})
-	}
-
-	var hasBrand = function(weid) {
-		$.ajax({
-			url: BRAND_DETAIL_USER + '/' + weid,
-			type: 'GET',
-			headers: {
-				'Token': localStorage.getItem('token')
-			},
-			success: function(data) {
-				if(data.code == 200) {
-					if(data.data == null) {
-
-					} else {
-						$(".line-0").html(
-							data.data.title + '<img src="/user/img/vrenzheng.png" alt="">'
-						);
-						$(".line-1").text("品牌介绍");
-						var logo = data.data.logo;
-						if(logo != null) {
-							$("#head-icon").css({
-								"background": "url(" + logo + ") no-repeat center",
-								"background-size": "100%"
-							});
-						}
-					}
-
-				} else {
-					layer.msg(data.message, { time: 2500 });
-				}
-			},
-			error: function(xhr) {
-				console.log(xhr);
-			}
-		})
-	}
 
 	//个性域名用户weid
 	var userId;
-	var __init = function(domain) {
-		$.ajax({
-			url: PAGES_DETAIL_DOMAIN + domain,
-			type: 'GET',
-			success: function(data) {
-				if(data.code == 200) {
-					if(data.data != null) {
-						userId = data.data.plat_user_id;
-						getUserInfo(USERDETAIL, "/" + userId);
-						hasDomain(userId);
-					} else {
-						domain = '';
-						getUserInfo(FOUNDER, '');
-						console.log('router error')
-					}
-				} else {
-					// window.location.href = "/*";
-				}
-			},
-			error: function(xhr) {
-				console.log(xhr);
-			}
-		})
-	}
 
 	if(domain == 'wemall') {
 		domain = '';
 	} else {
 		domain = "/" + domain;
-	}
-
-	if(domain != '') {
-		__init(domain);
 	}
 
 	var artCount = function(weid) {
@@ -941,8 +771,6 @@ $(document).ready(function() {
 		$("head").append(scriptEle);
 
 	}
-	// var favicon = ApiMaterPlatQiniuDomain + localStorage.getItem('fav');
-	// $('#favicon').attr('href', favicon);
 
 	if(localStorage.getItem('title') == "" || localStorage.getItem('title') == null || localStorage.getItem('title') == undefined || localStorage.getItem('title') == "null") {
 		$.ajax({

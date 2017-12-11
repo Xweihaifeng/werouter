@@ -75,35 +75,18 @@ const organization = `
 
                 <dd  class="organize" id="organize">
                     <div class="zuzhi-top">
-                        <div class="flex" style="display: none">
-                            <img src="/common/img/zuzhi-log.png" alt="">
-                            <div class="chuanchengbainian">
-                                <p>传承百年精神</p>
-                                <span>繁荣产业生态，共建网络强国</span>
-                            </div>
-                        </div>
                         <div class="shanghuijieshao"></div>
                     </div>
                     <div class="zuzhi-bottom">
                         <div class="fazhanbaogao">
                             <div class="diyi">
-                                <p class="title"></p>
-                                <div class="report">
-                                    <div class="swiper-container swiper-report">
-                                        <div class="pagination pagination-report"></div>
-                                        <div class="swiper-wrapper report_swiper"></div>
-                                    </div>
-                                </div>
+                                <p class="title">发展报告</p>
+                                <div class="report"></div>
                             </div>
                             <div class="dier"></div>
                             <div class="disan">
-                                <p class="title"></p>
-                                <div class="lunbo">
-                                    <div class="swiper-container swiper-nested">
-                                        <div class="pagination pagination-nested"></div>
-                                        <div class="swiper-wrapper lunbo_swiper"></div>
-                                    </div>
-                                </div>
+                                <p class="title">商会项目</p>
+                                <div class="lunbo"> </div>
                             </div>
                         </div>
                     </div>

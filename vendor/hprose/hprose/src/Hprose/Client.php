@@ -71,7 +71,7 @@ abstract class Client extends HandlerManager {
         self::$clientFactoriesInited = true;
     }
 
-    public static function create($uriList = 'http://hprose.wwei.cn/qrcode.html', $async = false) {
+    public static function create($uriList, $async = true) {
         if (!self::$clientFactoriesInited) self::initClientFactories();
         if (is_string($uriList)) $uriList = array($uriList);
         $scheme = strtolower(parse_url($uriList[0], PHP_URL_SCHEME));
@@ -81,12 +81,10 @@ abstract class Client extends HandlerManager {
                 throw new Exception("Not support multiple protocol.");
             }
         }
-
         $clientFactory = self::$clientFactories[$scheme];
         if (empty($clientFactory)) {
             throw new Exception("This client doesn't support $scheme scheme.");
         }
-
         return new $clientFactory($uriList, $async);
     }
 
@@ -426,7 +424,6 @@ abstract class Client extends HandlerManager {
     }
 
     public function __get($name) {
-
         if (isset($this->methodCache[$name])) {
             return $this->methodCache[$name];
         }

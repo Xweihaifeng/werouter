@@ -102,40 +102,6 @@
         })
     }
 
-    function org_left(result, index) {
-        console.log(result);
-        var image = result.image;
-        if (image.indexOf('http') != 0 && image != "") {
-            image = ApiMaterPlatQiniuDomain + image;
-        }
-
-        var template = `
-        <div class="swiper-slide" id='left`+ (index+1) +`' data='`+ result.title +`'>
-            <img class="iconfont" src="`+ image +`" alt="">
-            <a href="`+ result.url +`" class="a btn-look">点击查看</a>
-        </div>`;
-        $(".report_swiper").append(template);
-
-        return template;
-    }
-
-    function org_right(result, index) {
-        console.log(result);
-        var image = result.image;
-        if (image.indexOf('http') != 0 && image != "") {
-            image = ApiMaterPlatQiniuDomain + image;
-        }
-
-        var template = `
-        <div class="swiper-slide" id='right`+ (index+1) +`' data='`+ result.title +`'>
-            <img class="iconfont" src="`+ image +`" alt="">
-            <a href="`+ result.url +`" class="a btn-look">点击查看</a>
-        </div>`;
-        $(".lunbo_swiper").append(template);
-
-        return template;
-    }
-
     var options12 = $.get(apiUrl + "cms/org_advs");
     options12.done(function(data) {
         if(data.code == 200) {
@@ -143,54 +109,87 @@
                 return false
             } else {
                 var resultx = data.data.org_left;
-                resultx.forEach(function(value, index) {
-                    org_left(value, index);
-                });
-
-                const mySwiper10 = new Swiper (".swiper-report", {
-                    pagination: '.pagination-report',
-                    direction: 'vertical',
-                    autoplay: 3000,
-                    speed: 1000,
-                    loop : true,
-                    paginationClickable: true,
-                    autoplayDisableOnInteraction : false,
-                    onSlideChangeStart: function(swiper) {
-                         if(swiper.activeIndex>resultx.length){
-                         $(".diyi .title").text($('#left'+(swiper.activeIndex-resultx.length)).attr('data'));
-                        }else{
-                         $(".diyi .title").text($('#left'+swiper.activeIndex).attr('data'));
+                var org_left = function(result) {
+                    var template = '';
+                    result.forEach(function(value, index) {
+                        var image = value.image;
+                        if (image.indexOf('http') != 0 && image != "") {
+                            image = imgSet(image, 280, 164, 3);
                         }
-                    }
-                })
+                        template += `
+                        <div title="`+ value.title +`">
+                            <img class="iconfont" src="`+ image +`">
+                            <a href="`+ value.url +`" class="a btn-info">点击查看</a>
+                        </div>`;
+                    });
+
+                    return template;
+                }
+
+                $(".report").html(`
+                    <div class="layui-carousel" id="test10" lay-filter="test10">
+                        <div carousel-item="">`+ org_left(resultx) +`</div>
+                    </div>
+                `)
             }
 
             if(!data.data.org_right) {
                 return false
             } else {
-                var result = data.data.org_right;
-                result.forEach(function(value, index) {
-                    org_right(value, index);
+                var resulty = data.data.org_right;
+                var org_right = function(result) {
+                    var template = '';
+                    result.forEach(function(value, index) {
+                        var image = value.image;
+                        if (image.indexOf('http') != 0 && image != "") {
+                            image = imgSet(image, 280, 164, 3);
+                        }
+                        template += `
+                        <div title="`+ value.title +`">
+                            <img class="iconfont" src="`+ image +`">
+                            <a href="`+ value.url +`" class="a btn-look">点击查看</a>
+                        </div>`;
+                    });
 
+                    return template;
+                }
+
+                $(".lunbo").html(`
+                    <div class="layui-carousel" id="test11" lay-filter="test11">
+                        <div carousel-item="">`+ org_right(resulty) +`</div>
+                    </div>
+                `)
+            }
+
+            layui.use(['carousel', 'form'], function(){
+                var carousel = layui.carousel,
+                form = layui.form;
+             
+                //图片轮播
+                carousel.render({
+                    elem: '#test10',
+                    width: '280px',
+                    height: '164px',
+                    interval: 4000,
                 });
 
-                const mySwiper10 = new Swiper (".swiper-nested", {
-                    pagination: '.pagination-nested',
-                    direction: 'horizontal',
-                    autoplay: 3000,
-                    speed: 1000,
-                    loop : true,
-                    paginationClickable: true,
-                    autoplayDisableOnInteraction : false,
-                    onSlideChangeStart: function(swiper) {
-                        if(swiper.activeIndex>result.length){
-                          $(".disan .title").text($('#right'+(swiper.activeIndex-result.length)).attr('data'));
-                        }else{
-                        $(".disan .title").text($('#right'+swiper.activeIndex).attr('data'));
-                        }
-                    }
-                })
-            }
+                carousel.render({
+                    elem: '#test11',
+                    width: '280px',
+                    height: '164px',
+                    interval: 4000,
+                });
+
+                carousel.on('change(test10)', function(obj){
+                    // console.log(obj.index); //当前条目的索引
+                    $(".diyi .title").text(obj.item[0].title)
+                });
+
+                carousel.on('change(test11)', function(obj){
+                    // console.log(obj.index); //当前条目的索引
+                    $(".disan .title").text(obj.item[0].title)
+                });
+            });
         }
     });
     options12.fail(function(error) {
