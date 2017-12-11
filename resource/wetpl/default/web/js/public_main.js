@@ -343,9 +343,9 @@ req().then((data) => {
         return templete;
     }
 
-    //新闻中心模板
-    var centerNews = function(data){
-        var href = "news/" + data.weid;
+    //新闻中心模板和公示公告模板
+    var centerNews = function(data, type){
+        var href = type + "/" + data.weid;
         var title = data.title.substring(0, 18);
         var dt = new Date(data.created_at * 1000);
         var month = (dt.getMonth() + 1).toString().length == 1 ? '0' + (dt.getMonth() + 1) : dt.getMonth() + 1;
@@ -361,22 +361,23 @@ req().then((data) => {
         return templete;
     }
 
-    //公示公告模板
-    var centerNotice = function(data){
+    //
+    /*var centerNotice = function(data){
         var href = "org/" + data.weid;
         var title = data.title.substring(0, 18);
         var dt = new Date(data.created_at * 1000);
-        var month = dt.getMonth() + 1;
+        var month = (dt.getMonth() + 1).toString().length == 1 ? '0' + (dt.getMonth() + 1) : dt.getMonth() + 1;
+        var day = dt.getDate().toString().length == 1 ? '0' + dt.getDate() : dt.getDate();
 
         var templete =
             '<div class="news-line">' +  //通过id获取文章内容
             '<div class="news-type" id=' + data.cate_id + '>[' + data.cate_title + ']</div>' +
             '<div class="news-title" id=' + data.weid + '><a href=' + href + ' target="_blank">' + title + '</div>' +
-            '<div class="news-date">' + dt.getFullYear() + '-' + month + '-' + dt.getDate() + '</div>' +
+            '<div class="news-date">' + dt.getFullYear() + '-' + month + '-' + day + '</div>' +
             '</div>'
 
         return templete;
-    }
+    }*/
 
     //特别推荐模板
     var specialRecommend = function(data, url){
@@ -1261,13 +1262,13 @@ req().then((data) => {
                 data.data.hot.map(x => $(".main-news").append(mainNews(x))); //头条新闻
                 data.data.news.map(x => {
                     if (newsCnt < 8) {
-                        $("#center").append(centerNews(x));
+                        $("#center").append(centerNews(x, "news"));
                         newsCnt++;
                     }
                 });//新闻中心
                 data.data.nitoce.map(x => {
                     if (noticeCnt < 8) {
-                        $("#sirase").append(centerNotice(x));
+                        $("#sirase").append(centerNews(x, "org"));
                         noticeCnt++;
                     }
                 });//公示公告
