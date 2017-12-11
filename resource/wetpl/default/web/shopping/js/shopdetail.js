@@ -666,39 +666,6 @@ $(document).ready(function() {
 	} else {
 		domain = "/" + domain;
 	}
-
-	var artCount = function(weid) {
-		$.ajax({
-			url: ARTICLES_LISTCOUNT + "?userId=" + weid,
-			type: 'get',
-			success: function(data) {
-				//console.log(data);
-				if(data.code == 200) {
-					$(".user-art").children('div:eq(0)').text(data.data);
-				}
-			},
-			error: function(xhr) {
-				console.log(xhr);
-			}
-		})
-	}
-	var countinfo = function(weid) {
-		$.ajax({
-			url: PAGES_PAGE_COUNTAGEINFO + "/" + weid,
-			type: 'get',
-			success: function(data) {
-				console.log(data);
-				if(data.code == 200) {
-					$(".user-proj").children('div:eq(0)').text(data.data.project_count);
-					$(".user-type").children('div:eq(0)').text(data.data.activity_count);
-				}
-			},
-			error: function(xhr) {
-				console.log(xhr);
-			}
-		})
-	}
-
 	// 放大镜插件
 	var zoomfun = function() {
 		$(".jqzoom").jqueryzoom({
