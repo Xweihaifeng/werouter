@@ -72,7 +72,7 @@
                     </div>
                     <div class="wexin">
                         <div class="wx">微信登录</div>
-                        <div class="qrcode"></div>
+                        <div id="qrcode-block" class="qrcode"></div>
                         <div class="to-login"></div>
                     </div>
                 </div>
@@ -89,13 +89,13 @@
     <script src="{{PATH_TML}}js/public_main_right_bg.js"></script>
 
     <!-- <script src="//captcha.luosimao.com/static/js/api.js"></script> -->
-    <script src="//res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js"></script>
+    <script src="https://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js"></script>
     <script src="{{PATH_TML}}js/image_code_id.js"></script>
     <!-- <script src="/js/news_base.js"></script> -->
     <script>
         $("#favicon").attr("href", ApiMaterPlatQiniuDomain + window.localStorage.getItem("fav"));
         var obj = new WxLogin({
-            id: "qrcode",
+            id: "qrcode-block",
             appid: "wx4b835b375578d1c0",
             scope: "snsapi_login",
             redirect_uri: "/sss",
