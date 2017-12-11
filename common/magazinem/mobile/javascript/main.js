@@ -110,7 +110,7 @@ $.ajax({
             localStorage.setItem('largePages', remLargePages);
             localStorage.setItem('smallPages', remSmallPages);
 
-            if (is_weixn()) {
+            /*if (is_weixn()) {
                 alert(1)
                 var oldTime = localStorage.getItem('setopenid-date');
                 if (!isExpire(oldTime)) { //没过期
@@ -136,7 +136,7 @@ $.ajax({
                     localStorage.setItem('setopenid-date', new Date().getTime())
                     window.location.href = encodeURI(apiUrl + '/openid?url=' + window.location.href);
                 }
-            }
+            }*/
         }
     },
     error: function(xhr) {
@@ -144,7 +144,7 @@ $.ajax({
     }
 })
 
-$.ajax({
+/*$.ajax({
     url: apiUrl + 'wxjssdk',
     type: 'POST',
     data: {
@@ -207,7 +207,7 @@ $.ajax({
             })
         }
     }
-})
+})*/
 
 var aliasConfig = {
     appName : ["", "", ""],
