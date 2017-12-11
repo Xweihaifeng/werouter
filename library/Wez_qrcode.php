@@ -22,7 +22,7 @@ class Wez_qrcode extends controller
 		$accessKey = config::$plats['qiniu']['access_key'];
 		$secretKey = config::$plats['qiniu']['secret_key'];
 
-		$qrcode_img = imagecreatefrompng("http://qr.liantu.com/api.php?&w=420&text=$url");
+		$qrcode_img = imagecreatefrompng("http://qr.liantu.com/api.php?&w=410&text=$url");
 		$border = imagecreatefrompng('./public/images/quanquan_09.png');
 		
 		list($qrcode_imgwidth, $qrcode_imgheight) = array(imagesx($qrcode_img), imagesy($qrcode_img));
@@ -33,8 +33,9 @@ class Wez_qrcode extends controller
 		$logo_qr_height = $boheight/$scale;
 		$from_width = ($qrcode_imgwidth - $logo_qr_width) / 2;
 
-		imagecopyresampled($qrcode_img, $border, $from_width, $from_width, 0, 0, $logo_qr_width,$logo_qr_height, $bowidth, $boheight);
+		imagecopyresampled($qrcode_img, $border, 156, 156, 0, 0, 102,102, 102, 102);
 		imagedestroy($border);
+
 
 		$newImage = imagecreatetruecolor(430,430);
 		$c = imagecolorallocatealpha($newImage , 255 , 255 , 255 , 0);//拾取一个完全透明的颜色
@@ -43,18 +44,19 @@ class Wez_qrcode extends controller
 		//增加一个白色的底，不然新建的画布是黑色的
 		imagesavealpha($newImage , true);//设置保存PNG时保留透明通道信息
 		
-		imagecopyresampled($newImage, $qrcode_img, 10, 10, 0 , 0, 410,410 , 420 , 420);
+		imagecopyresampled($newImage, $qrcode_img, 10, 10, 0 , 0, 410,410 , 410 , 410);
 		$storage_img = './storage/'.time().'_qrcode.png';
 		$linshi_time = time();
 
 		imagedestroy($qrcode_img);
 		// imagedestroy($newImage);
 
-		$logo_gd = imagecreatefrompng($logo.'?roundPic/radius/50|imageView2/5/w/95/h/95|imageMogr2/format/png');
+		$logo_gd = imagecreatefrompng($logo.'?roundPic/radius/!16p|imageView2/1/w/88/h/88|imageMogr2/format/png');
 		
-		imagecopyresampled($newImage, $logo_gd, 167, 165, 0, 0, 95 , 95, 95, 95);
+		imagecopyresampled($newImage, $logo_gd, 174, 172, 0, 0, 88 , 88, 88, 88);
 
 		ImagePng($newImage  , $storage_img );
+
 		imagedestroy($newImage);
 
 		// 七牛上传

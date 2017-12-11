@@ -305,41 +305,6 @@ $(document).ready(function () {
         domain = "/" + domain;
     }
 
-    var artCount = function (weid) {
-        $.ajax({
-            // url: apiUrl+"/articles/listCount?userId=" + weid,
-            url: ARTICLES_LISTCOUNT + "?userId=" + weid,
-            type: 'get',
-            success: function (data) {
-                console.log(data);
-                if (data.code == 200) {
-                    $(".user-art").children('div:eq(0)').text(data.data);
-                }
-            },
-            error: function (xhr) {
-                console.log(xhr);
-            }
-        })
-    }
-    var countinfo = function (weid) {
-        $.ajax({
-            // url: apiUrl+"/articles/listCount?userId=" + weid,
-            url: PAGES_PAGE_COUNTAGEINFO + "/" + weid,
-            type: 'get',
-            success: function (data) {
-                console.log(data);
-                if (data.code == 200) {
-                    $(".user-proj").children('div:eq(0)').text(data.data.project_count);
-                    $(".user-type").children('div:eq(0)').text(data.data.activity_count);
-                }
-            },
-            error: function (xhr) {
-                console.log(xhr);
-            }
-        })
-    }
-
-
     // 鼠标滑动到列表时加hover
     var lihover = function () {
         $(".ws_item li").mouseenter(function () {
@@ -361,9 +326,7 @@ $(document).ready(function () {
             }
         })
     }
-    artCount(weid);
     catesfun(weid);
-    countinfo(weid);
     if (localStorage.getItem('title') == "" || localStorage.getItem('title') == null || localStorage.getItem('title') == undefined || localStorage.getItem('title') == "null") {
         $.ajax({
             url: apiUrl + "cms/advs",
