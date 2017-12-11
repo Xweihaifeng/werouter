@@ -1,4 +1,5 @@
 <?php
+require_once "vendor/autoload.php";
 /* 
  *  微众项目路由路由
  */
