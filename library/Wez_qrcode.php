@@ -33,7 +33,7 @@ class Wez_qrcode extends controller
 		$logo_qr_height = $boheight/$scale;
 		$from_width = ($qrcode_imgwidth - $logo_qr_width) / 2;
 
-		imagecopyresampled($qrcode_img, $border, 156, 156, 0, 0, 102,102, 102, 102);
+		imagecopyresampled($qrcode_img, $border, 155, 155, 0, 0, 102,102, 102, 102);
 		imagedestroy($border);
 
 
@@ -53,7 +53,7 @@ class Wez_qrcode extends controller
 
 		$logo_gd = imagecreatefrompng($logo.'?roundPic/radius/!16p|imageView2/1/w/88/h/88|imageMogr2/format/png');
 		
-		imagecopyresampled($newImage, $logo_gd, 174, 172, 0, 0, 88 , 88, 88, 88);
+		imagecopyresampled($newImage, $logo_gd, 173, 171, 0, 0, 88 , 88, 88, 88);
 
 		ImagePng($newImage  , $storage_img );
 
@@ -61,7 +61,7 @@ class Wez_qrcode extends controller
 
 		// 七牛上传
 		$auth = new Auth($accessKey, $secretKey);
-		$bucket = 'wezc';
+		$bucket = config::$plats['qiniu']['bucket'];
 		// 生成上传Token
 		$token = $auth->uploadToken($bucket);
 		// 构建 UploadManager 对象
