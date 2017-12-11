@@ -231,7 +231,9 @@ $(function() {
 
                         result.forEach(function(value, key) {
                             if(key < 10) {
-                                $("#menuTwo").append(menuTwo(value));
+                                if(value.index_show == 1) {
+                                    $("#menuTwo").append(menuTwo(value));
+                                }
                             }
                         });
 
