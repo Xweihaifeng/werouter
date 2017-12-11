@@ -28,6 +28,19 @@ localStorage.setItem('normalPages', '');
 localStorage.setItem('largePages', '');
 localStorage.setItem('smallPages', '');
 
+//获取参数
+function getUrlParam(name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+    var r = window.location.search.substr(1).match(reg); //匹配目标参数
+    if (r != null) return unescape(r[2]);
+    return null; //返回参数值
+}
+
+//判断为空
+function isNull(data) {
+    return (data == "" || data == undefined || data == null || data == 'null') ? true: false;
+}
+
 //判断是否在微信中打开
 function is_weixn() {
     var ua = navigator.userAgent.toLowerCase();
@@ -50,7 +63,7 @@ const wxlogin = (openid, ref) => {
     $.ajax({
         url: apiUrl + 'wxlogin',
         type: 'POST',
-        async: false,
+        async: true,
         data: {
             openid: openid,
             ref_url: window.location.pathname,
@@ -59,7 +72,7 @@ const wxlogin = (openid, ref) => {
             domain: 'index'
         },
         success: function (data) {
-//              alert(JSON.stringify(data));
+            alert(JSON.stringify(data));
             localStorage.setItem('weid', data.data.weid);
             localStorage.setItem('token', data.token);
             localStorage.setItem('activation', data.data.activation_status);
@@ -98,7 +111,7 @@ $.ajax({
             localStorage.setItem('smallPages', remSmallPages);
 
             if (is_weixn()) {
-//                  alert(1)
+                alert(1)
                 var oldTime = localStorage.getItem('setopenid-date');
                 if (!isExpire(oldTime)) { //没过期
                     //var usertoken = localStorage.getItem('user-token');
@@ -117,7 +130,7 @@ $.ajax({
                     }
                 } else {
                     //微信未跳转时
-//                      alert(2)
+                    //alert(2)
                     localStorage.setItem('setopenid', true);
                     localStorage.setItem('setopenid-date', new Date().getTime())
                     window.location.href = encodeURI(apiUrl + '/openid?url=' + window.location.href);
