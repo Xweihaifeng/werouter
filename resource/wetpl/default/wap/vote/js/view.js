@@ -76,7 +76,7 @@
     }
     
     var globalHost = "http://api.new.wezchina.com";
-    var ApiMaterPlatQiniuDomain = 'http://images.new.wezchina.com/';
+    // var ApiMaterPlatQiniuDomain = 'http://images.new.wezchina.com/';
     var pages_total = 1;
     var lazy_cover;
     var now_time = Math.round(new Date().getTime() / 1000);
@@ -138,7 +138,7 @@
                 url: globalHost + '/cms/setting/show',
                 type: 'GET',
                 success: function(data){
-                    var imgHost = 'http://images.new.wezchina.com/';
+                    var imgHost = ApiMaterPlatQiniuDomain;
                     var fav = data.data.favicon;
                     if (fav.indexOf('http') === -1) {
                         fav = imgHost + fav;

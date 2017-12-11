@@ -166,14 +166,19 @@ $(function() {
             success: function(data){
                 if (data.code == 200){
                     console.log(data);
-                    if (data.data.domain == null) {
-                        //没有个性域名
+                    if (data.data != null) {
+                        if (data.data.domain == null) {
+                            //没有个性域名
+                            domain = '/index';
+                            aru = false;
+                        } else {
+                            //存在个性域名
+                            domain = "/" + data.data.domain;
+                            aru = true;
+                        }
+                    } else {
                         domain = '/index';
                         aru = false;
-                    } else {
-                        //存在个性域名
-                        domain = "/" + data.data.domain;
-                        aru = true;
                     }
 
                 } else {
@@ -259,7 +264,7 @@ $(function() {
         if (path[1] == '' || path[1] == 'index' || path.indexOf('index') != -1) {
             domain = '/index'
         } else {
-            if (('/' + path[1]) != domain && path[1].length > 4) { //排除频道
+            if (('/' + path[1]) != domain && path[1].length > 4 && path[1] != 'magazine' && path[1] != 'apply') { //排除频道，雜誌
                 domain = '/' + path[1];
             } else {
                 if (!aru) {

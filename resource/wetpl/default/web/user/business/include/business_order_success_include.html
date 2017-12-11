@@ -1,0 +1,19 @@
+<Card id="divSuccess" v-if="action=='divSuccess'" class="Absolute-Center"   style="width: 350px; height: 420px;  margin: 0 auto;margin-top: 100px;" >
+    <p slot="title">
+        <icon size="20"  color="#19be6b" type="checkmark"></icon>操作成功
+    </p>
+    <timeline>
+        <timeline-item>
+            <p class="time">订单号</p>
+            <p class="content">{{dataWebInfo.number}}</p>
+        </timeline-item>
+
+        <timeline-item v-for="val in dataWebInfo.config">
+            <p class="time">{{val.name}}</p>
+            <p class="content"><a href="{{val.url}}" target="_blank">{{val.url}}</a></p>
+        </timeline-item>
+    </timeline>
+    <p>
+        <i-button style="width: 301px;margin-top: 8px;" type="success" long @click="back_list();">返回管理列表</i-button>
+    </p>
+</Card>

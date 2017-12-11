@@ -37,7 +37,7 @@
                 <a v-for="item in operList(order.order_status)" @click="operation(item.oper,order)">{{item.text}}</a>
             </div>
             <div class="order-detail" v-for="good in order.goods">
-                <img :src="'http://images.new.wezchina.com/'+good.goods_cover" alt="">
+                <img :src="ApiMaterPlatQiniuDomain+good.goods_cover" alt="">
                 <div>
                     <p>{{good.goods_summary}}</p>
                     <p>{{good.goods_num}}件</p>

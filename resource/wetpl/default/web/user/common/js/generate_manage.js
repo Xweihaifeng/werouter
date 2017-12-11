@@ -86,7 +86,7 @@ var genMenu = function(mark, domain) {
     var template = '';
     
     $.ajax({
-        url: 'https://mp.wezchina.com/api/menu_config?mark=' + mark + '&domain=' + domain,
+        url: controlUrl + mark + '&domain=' + domain,
         type: 'GET',
         async: false,
         success: function(data) {
@@ -104,7 +104,7 @@ var genMenu = function(mark, domain) {
 
 // console.log(genMenu(mark, "qqxqs.com"))
 $(document).ready(function(){
-    $("#middle").append(genMenu(mark, "qqxqs.com"))
+    $("#middle").append(genMenu(mark, domainHost))
 
     console.log('currpage:', currPage)
 
@@ -709,12 +709,19 @@ init(localStorage.getItem('token'));
                 // }
                 if (data.code == 200){
                     // console.log(data);
-                    if (data.data == null) {
-                        //没有个性域名
-                        domain = '/index';
-                    } else {
-                        //存在个性域名
-                        domain = "/" + data.data.domain;
+                    if (data.code == 200){
+                        console.log(data);
+                        if (data.data != null) {
+                            if (data.data.domain == null) {
+                                //没有个性域名
+                                domain = '/index';
+                            } else {
+                                //存在个性域名
+                                domain = "/" + data.data.domain;
+                            }
+                        } else {
+                            domain = '/index';
+                        }
                     }
                 }
                 /*else {

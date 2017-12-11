@@ -19,7 +19,7 @@ $(function() {
             return false;
         }
         if(data.code === 200) {
-            var thumb_image = data.data.thumb_image;
+            var thumb_image = data.data.big_image;
 
             if(!thumb_image) {
                 thumb_image = "/common/img/org_banner01.jpg";

@@ -75,35 +75,18 @@ const organization = `
 
                 <dd  class="organize" id="organize">
                     <div class="zuzhi-top">
-                        <div class="flex" style="display: none">
-                            <img src="/common/img/zuzhi-log.png" alt="">
-                            <div class="chuanchengbainian">
-                                <p>传承百年精神</p>
-                                <span>繁荣产业生态，共建网络强国</span>
-                            </div>
-                        </div>
                         <div class="shanghuijieshao"></div>
                     </div>
                     <div class="zuzhi-bottom">
                         <div class="fazhanbaogao">
                             <div class="diyi">
-                                <p class="title"></p>
-                                <div class="report">
-                                    <div class="swiper-container swiper-report">
-                                        <div class="pagination pagination-report"></div>
-                                        <div class="swiper-wrapper report_swiper"></div>
-                                    </div>
-                                </div>
+                                <p class="title">发展报告</p>
+                                <div class="report"></div>
                             </div>
                             <div class="dier"></div>
                             <div class="disan">
-                                <p class="title"></p>
-                                <div class="lunbo">
-                                    <div class="swiper-container swiper-nested">
-                                        <div class="pagination pagination-nested"></div>
-                                        <div class="swiper-wrapper lunbo_swiper"></div>
-                                    </div>
-                                </div>
+                                <p class="title">商会项目</p>
+                                <div class="lunbo"> </div>
                             </div>
                         </div>
                     </div>
@@ -128,15 +111,11 @@ const huzhu = `
                     </div>
                     <div class="clearfix"></div>
                     <div class="little-title" id="xiamgmu-title" style="display: none;">
-                        <a href="http://next.wezchina.com?p=3&amp;c=1"><span class="title-active" style="margin-left: 10px">互助众筹</span></a>
-                        <a href="http://next.wezchina.com?p=3&amp;c=2"><span>回报众筹</span></a>
-                        <a href="http://next.wezchina.com?p=3&amp;c=3"><span>产品众筹</span></a>
-                        <a href="http://next.wezchina.com?p=3&amp;c=4"><span>一元众筹</span></a>
+                        <a href="#"><span class="title-active" style="margin-left: 10px">互助众筹</span></a>
+                        <a href="#"><span>回报众筹</span></a>
+                        <a href="#"><span>产品众筹</span></a>
+                        <a href="#"><span>一元众筹</span></a>
                     </div>
-                    <!-- <div class="little-title" id="huodong-title" style="display: block;">
-                        <a href="http://next.wezchina.com?p=3&amp;a=1"><span style="margin-left: 10px">线下活动</span></a>
-                        <a href="http://next.wezchina.com?p=3&amp;a=2"><span>最新活动</span></a>
-                    </div> -->
                 </div>
                 <div class="clearfix"></div>
                 <div class="line"></div>
@@ -153,7 +132,7 @@ const huzhu = `
 const goodsBox = `
                 <div id="goodsBox">
                 <div style="width: 100%;height:235px; background:url(/common/img/0158.png) no-repeat center;">
-                    <img src="http://next.wezchina.com/images/gongxiangtop.png" alt="" style="height: 235px">
+                    <img src="/common/img/0158.png" alt="" style="height: 235px">
                 </div>
                 <p class="huiyuantegong">会<span>/</span>员<span>/</span>特<span>/</span>供</p>
                 <div class="person-goods-lists">
@@ -270,7 +249,7 @@ req().then((data) => {
         width = $(window).width() / 2 - 180;
         height = $(window).height() / 2 - 165;
         setHeight(currHeight);
-        console.log(currHeight)
+        //console.log(currHeight)
         if (currHeight > 768 && currHeight < 1265){
             $(".nav-news-title, .nav-org-title, .nav-help-title, .nav-share-title").css("margin-top", currHeight * 0.75 + "px");
         } else if (currHeight < 768) {
@@ -347,9 +326,9 @@ req().then((data) => {
         return templete;
     }
 
-    //新闻中心模板
-    var centerNews = function(data){
-        var href = "news/" + data.weid;
+    //新闻中心模板和公示公告模板
+    var centerNews = function(data, type){
+        var href = type + "/" + data.weid;
         var title = data.title.substring(0, 18);
         var dt = new Date(data.created_at * 1000);
         var month = (dt.getMonth() + 1).toString().length == 1 ? '0' + (dt.getMonth() + 1) : dt.getMonth() + 1;
@@ -365,27 +344,28 @@ req().then((data) => {
         return templete;
     }
 
-    //公示公告模板
-    var centerNotice = function(data){
+    //
+    /*var centerNotice = function(data){
         var href = "org/" + data.weid;
         var title = data.title.substring(0, 18);
         var dt = new Date(data.created_at * 1000);
-        var month = dt.getMonth() + 1;
+        var month = (dt.getMonth() + 1).toString().length == 1 ? '0' + (dt.getMonth() + 1) : dt.getMonth() + 1;
+        var day = dt.getDate().toString().length == 1 ? '0' + dt.getDate() : dt.getDate();
 
         var templete =
             '<div class="news-line">' +  //通过id获取文章内容
             '<div class="news-type" id=' + data.cate_id + '>[' + data.cate_title + ']</div>' +
             '<div class="news-title" id=' + data.weid + '><a href=' + href + ' target="_blank">' + title + '</div>' +
-            '<div class="news-date">' + dt.getFullYear() + '-' + month + '-' + dt.getDate() + '</div>' +
+            '<div class="news-date">' + dt.getFullYear() + '-' + month + '-' + day + '</div>' +
             '</div>'
 
         return templete;
-    }
+    }*/
 
     //特别推荐模板
     var specialRecommend = function(data, url){
         var href = data.channel_domain + "/" + data.weid;
-        var title = data.title.substring(0, 18);
+        var title = data.title.substring(0, 14);
         var dt = new Date(data.created_at * 1000);
         var month = (dt.getMonth() + 1).toString().length == 1 ? '0' + (dt.getMonth() + 1) : dt.getMonth() + 1;
         var day = dt.getDate().toString().length == 1 ? '0' + dt.getDate() : dt.getDate(); 
@@ -402,7 +382,7 @@ req().then((data) => {
     //会员推荐模板
     var memberRecommend = function(data, url){
         var href = "/" + data.domain + "/article/" + data.weid; //需要动态验证domain
-        var title = data.title.substring(0, 18);
+        var title = data.title.substring(0, 14);
 
         var templete =
             '<div class="rcd-news-line" id=' + data.weid + '>' +
@@ -418,7 +398,7 @@ req().then((data) => {
     var memberTemplete = function(data, flag){        
         var memberId = 'member_' + memberCnt;    
         var imgUrl = data.avatar;
-        if (imgUrl != null && imgUrl.indexOf('http') === -1){
+        if (imgUrl != null && imgUrl.indexOf('http') === -1 && imgUrl.indexOf('common') === -1){
             imgUrl = imgSet(imgUrl, 80, 100);
         } else if (imgUrl == null) {
             imgUrl = '/common/img/avatar.png';
@@ -554,7 +534,7 @@ req().then((data) => {
                                     "plat_user_id": "11e41d20-72ad-11e7-8825-933924ec5999",
                                     "type_id": "8668f180-765b-11e7-b0b8-8fa37bb824de",
                                     "title": "风采",
-                                    "image": "http://images.new.wezchina.com/resource/adv/1501758711620.png",
+                                    "image": "/common/img/init/1501758711620.png",
                                     "url": "http://www.qqxqs.com",
                                     "created_at": "2017-08-03 19:12:39",
                                     "updated_at": "2017-08-15 09:40:05",
@@ -566,7 +546,7 @@ req().then((data) => {
                                     "plat_user_id": "11e41d20-72ad-11e7-8825-933924ec5999",
                                     "type_id": "8668f180-765b-11e7-b0b8-8fa37bb824de",
                                     "title": "秦人共携手，谱写新篇章",
-                                    "image": "http://images.new.wezchina.com/resource/adv/1501758672924.jpg",
+                                    "image": "/common/img/init/1501758672924.jpg",
                                     "url": "#",
                                     "created_at": "2017-08-03 19:11:35",
                                     "updated_at": "2017-08-03 19:11:35",
@@ -578,7 +558,7 @@ req().then((data) => {
                                     "plat_user_id": "11e41d20-72ad-11e7-8825-933924ec5999",
                                     "type_id": "8668f180-765b-11e7-b0b8-8fa37bb824de",
                                     "title": "梦想起航",
-                                    "image": "http://images.new.wezchina.com/common/1501750575778.png",
+                                    "image": "/common/img/init/1501750575778.png",
                                     "url": "#",
                                     "created_at": "2017-08-03 19:06:12",
                                     "updated_at": "2017-08-03 19:06:12",
@@ -595,7 +575,7 @@ req().then((data) => {
                                     "plat_user_id": "05d48da0-782b-11e7-8a40-2906333090db",
                                     "type_id": "9d8a2660-765b-11e7-98ed-4d002791c6ea",
                                     "title": "首页滚动碎片",
-                                    "image": "http://images.new.wezchina.com/resource/adv/1501761945347.png",
+                                    "image": "/common/img/init/1501761945347.png",
                                     "url": "#",
                                     "created_at": "2017-08-04 16:54:08",
                                     "updated_at": "2017-08-07 22:14:55",
@@ -607,7 +587,7 @@ req().then((data) => {
                                     "plat_user_id": "05d48da0-782b-11e7-8a40-2906333090db",
                                     "type_id": "9d8a2660-765b-11e7-98ed-4d002791c6ea",
                                     "title": "首页滚动碎片",
-                                    "image": "http://images.new.wezchina.com/resource/adv/1502194735999.jpg",
+                                    "image": "/common/img/init/1502194735999.jpg",
                                     "url": "#",
                                     "created_at": "2017-08-04 16:53:47",
                                     "updated_at": "2017-08-04 16:53:47",
@@ -619,7 +599,7 @@ req().then((data) => {
                                     "plat_user_id": "11e41d20-72ad-11e7-8825-933924ec5999",
                                     "type_id": "9d8a2660-765b-11e7-98ed-4d002791c6ea",
                                     "title": "首页滚动碎片",
-                                    "image": "http://images.new.wezchina.com/resource/adv/1502194432997.jpg",
+                                    "image": "/common/img/init/1502194432997.jpg",
                                     "url": "#",
                                     "created_at": "2017-08-03 20:07:32",
                                     "updated_at": "2017-08-03 20:07:32",
@@ -631,7 +611,7 @@ req().then((data) => {
                                     "plat_user_id": "11e41d20-72ad-11e7-8825-933924ec5999",
                                     "type_id": "9d8a2660-765b-11e7-98ed-4d002791c6ea",
                                     "title": "首页滚动碎片",
-                                    "image": "http://images.new.wezchina.com/resource/adv/1501762029987.png",
+                                    "image": "/common/img/init/1501762029987.png",
                                     "url": "#",
                                     "created_at": "2017-08-03 20:07:19",
                                     "updated_at": "2017-08-03 20:07:19",
@@ -643,7 +623,7 @@ req().then((data) => {
                                     "plat_user_id": "11e41d20-72ad-11e7-8825-933924ec5999",
                                     "type_id": "9d8a2660-765b-11e7-98ed-4d002791c6ea",
                                     "title": "首页滚动碎片",
-                                    "image": "http://images.new.wezchina.com/resource/adv/1501762014177.png",
+                                    "image": "/common/img/init/1501762014177.png",
                                     "url": "#",
                                     "created_at": "2017-08-03 20:07:02",
                                     "updated_at": "2017-08-03 20:07:02",
@@ -655,7 +635,7 @@ req().then((data) => {
                                     "plat_user_id": "11e41d20-72ad-11e7-8825-933924ec5999",
                                     "type_id": "9d8a2660-765b-11e7-98ed-4d002791c6ea",
                                     "title": "首页滚动碎片",
-                                    "image": "http://images.new.wezchina.com/resource/adv/1501761945347.png",
+                                    "image": "/common/img/init/1501761945347.png",
                                     "url": "#",
                                     "created_at": "2017-08-03 20:06:41",
                                     "updated_at": "2017-08-03 20:06:41",
@@ -672,7 +652,7 @@ req().then((data) => {
                                     "plat_user_id": "11e41d20-72ad-11e7-8825-933924ec5999",
                                     "type_id": "988a7980-765b-11e7-ac51-05d65085c74e",
                                     "title": "建设频道",
-                                    "image": "http://images.new.wezchina.com/plats/resource/1505287295640.jpeg",
+                                    "image": "/common/img/init/1505287295640.jpeg",
                                     "url": "",
                                     "created_at": "2017-09-13 15:14:04",
                                     "updated_at": "2017-09-13 15:14:04",
@@ -723,7 +703,7 @@ req().then((data) => {
                             "plat_user_id": "11e41d20-72ad-11e7-8825-933924ec5999",
                             "type_id": "94a9fc80-765b-11e7-b7cf-bdb6f064db85",
                             "title": "中间横幅",
-                            "image": "http://images.new.wezchina.com/resource/adv/1501761278964.png",
+                            "image": "/common/img/init/1501761278964.png",
                             "url": "http://new.wezchina.com/dw",
                             "created_at": "2017-08-03 19:56:32",
                             "updated_at": "2017-09-13 15:30:47",
@@ -747,7 +727,7 @@ req().then((data) => {
                             "plat_user_id": "11e41d20-72ad-11e7-8825-933924ec5999",
                             "type_id": "a139f5b0-765b-11e7-9a47-a55169e15a6d",
                             "title": "商会会长",
-                            "image": "http://images.new.wezchina.com/user/avatar/1501747945200.jpg",
+                            "image": "/common/img/init/1501747945200.jpg",
                             "url": "#",
                             "created_at": "2017-08-03 19:53:47",
                             "updated_at": "2017-08-03 19:53:47",
@@ -756,49 +736,49 @@ req().then((data) => {
                         "users": [
                             {
                                 "weid": "77e41d20-72ad-11e7-8825-933924ec5963",
-                                "avatar": "http://images.new.wezchina.com//user/avatar/1501747962172.jpg",
+                                "avatar": "/common/img/init/1501747962172.jpg",
                                 "real_name": "孙国栋",
                                 "nickname": "黄易"
                             },
                             {
                                 "weid": "f6ee5110-75a0-11e7-a8b2-7179f2349d50",
-                                "avatar": "http://images.new.wezchina.com//user/avatar/1501747874443.jpg",
+                                "avatar": "/common/img/init/1501747874443.jpg",
                                 "real_name": "张荣林",
                                 "nickname": "黄易"
                             },
                             {
                                 "weid": "f4e7c590-7686-11e7-bdd1-bd45557ed232",
-                                "avatar": "http://images.new.wezchina.com//user/avatar/1501747932796.jpg",
+                                "avatar": "/common/img/init/1501747932796.jpg",
                                 "real_name": "李国华",
                                 "nickname": "黄易"
                             },
                             {
                                 "weid": "983ad200-7698-11e7-87c1-41f823b6258c",
-                                "avatar": "http://images.new.wezchina.com//user/avatar/1501747945200.jpg",
+                                "avatar": "/common/img/init/1501747945200.jpg",
                                 "real_name": "康宁",
                                 "nickname": "黄易"
                             },
                             {
                                 "weid": "1acc8080-769f-11e7-afe9-a1e618177dd9",
-                                "avatar": "http://images.new.wezchina.com//user/avatar/1501747979135.jpg",
+                                "avatar": "/common/img/init/1501747979135.jpg",
                                 "real_name": "森朝",
                                 "nickname": "黄易"
                             },
                             {
                                 "weid": "6ffe16d0-7737-11e7-aa93-d54026432560",
-                                "avatar": "http://images.new.wezchina.com//user/avatar/1501747999786.jpg",
+                                "avatar": "/common/img/init/1501747999786.jpg",
                                 "real_name": "李雄",
                                 "nickname": "黄易"
                             },
                             {
                                 "weid": "349e6fa0-7837-11e7-b217-671a38e00778",
-                                "avatar": "http://images.new.wezchina.com//user/avatar/1501747999786.jpg",
+                                "avatar": "/common/img/init/1501747999786.jpg",
                                 "real_name": "康宁",
                                 "nickname": "黄易"
                             },
                             {
                                 "weid": "934c7b10-78dd-11e7-94c8-015cbd20044d",
-                                "avatar": "http://images.new.wezchina.com//user/avatar/1501837469772.jpg",
+                                "avatar": "/common/img/init/1501837469772.jpg",
                                 "real_name": "吕家劲",
                                 "nickname": "黄易"
                             }
@@ -1265,13 +1245,13 @@ req().then((data) => {
                 data.data.hot.map(x => $(".main-news").append(mainNews(x))); //头条新闻
                 data.data.news.map(x => {
                     if (newsCnt < 8) {
-                        $("#center").append(centerNews(x));
+                        $("#center").append(centerNews(x, "news"));
                         newsCnt++;
                     }
                 });//新闻中心
                 data.data.nitoce.map(x => {
                     if (noticeCnt < 8) {
-                        $("#sirase").append(centerNotice(x));
+                        $("#sirase").append(centerNews(x, "org"));
                         noticeCnt++;
                     }
                 });//公示公告

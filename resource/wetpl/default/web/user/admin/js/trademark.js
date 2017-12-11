@@ -2,7 +2,7 @@ var qiniu_uptoken = '';
 var saveto ='qiniu';
 var qiniu_upload_domain = 'http://upload.qiniu.com';
 var qiniu_bucket_domain = 'http://oty3r3tmi.bkt.clouddn.com/';
-const ApiMaterPlatQiniuDomain       = 'http://images.new.wezchina.com/';
+// const ApiMaterPlatQiniuDomain       = 'http://images.new.wezchina.com/';
 
 var favicon = ApiMaterPlatQiniuDomain + localStorage.getItem('fav');
 console.log('logo:',favicon);

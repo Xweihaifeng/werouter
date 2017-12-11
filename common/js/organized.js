@@ -7,17 +7,15 @@
     var domain_weid = '';
 
     $.ajax({
-        url: apiUrl + "cms/channels",
+        url: CMS_CHANNELS_DOMAIN_QUERY + 'org',
         dataType: 'json',
         async: false,
         success: function(data){
-            if(data.code == 200) {
-                data.data.list.forEach(function(value, index) {
-                    if(value.domain == "org") {
-                        domain_weid = value.weid;
-                        console.log(domain_weid);
-                    }
-                });
+            if(data.code === 200) {
+                console.log(data.data);
+                domain_weid = data.data.weid;
+            } else {
+                console.error(data.message);
             }
         }
     });
@@ -30,7 +28,7 @@
             if(data.code == 200) {
                 var result = data.data;
                 if(!result.thumb_image) {
-                    $(".zuzhi-top").css({ "background-image": "url('http://images.new.wezchina.com/plat/cert/1505289973450.png')","background-size": "100% 100%","background-repeat": "no-repeat","background-position": "center" });
+                    $(".zuzhi-top").css({ "background-image": "url('/common/img/1505289973450.png')","background-size": "100% 100%","background-repeat": "no-repeat","background-position": "center" });
 
                 } else if (result.thumb_image.indexOf('http') != 0 && result.thumb_image != "") {
 
@@ -43,7 +41,7 @@
                 }
 
                 if(!result.back_image) {
-                    $("#org_bottom_big_img").css({ "background-image": "url('http://images.new.wezchina.com/plat/cert/1505289973450.png')" });
+                    $("#org_bottom_big_img").css({ "background-image": "url('/common/img/1505289973450.png')" });
 
                 } else if (result.back_image.indexOf('http') != 0 && result.back_image != "") {
 
@@ -74,7 +72,7 @@
         }
         var template = `
         <li>
-            <a href="/org/`+ data.weid +`">`
+            <a href="/org/`+ data.domain +`">`
                 if(thumb_image != "") {
                     template = template + `<img class="iconfont" src="`+ thumb_image +`" alt="">`;
                 }
@@ -85,75 +83,6 @@
         $("#ruhuishenqing").append(template);
     }
 
-    // 发展报告
-    function report(data, thumb_imgs) {
-
-        if((!data || data.length == 0) && thumb_imgs) {
-            thumb_imgs = imgSet(thumb_imgs, 45, 40, 3);
-            $(".diyi .report").css({"background-image": "url("+ thumb_imgs +")"});
-        }
-
-        var thumb_image = data.thumb_image;
-        if (thumb_image.indexOf('http') != 0 && thumb_image != "") {
-            thumb_image = imgSet(thumb_image, 280, 164, 3);
-        }
-        var template = `
-        <div class="swiper-slide">`
-            if(thumb_image != "") {
-                template = template + `<img class="iconfont" src="`+ thumb_image +`" alt="">`;
-            }
-            template = template + `
-            <a href="/org/`+ data.weid +`" class="a btn-look">点击查看</a>
-        </div>`;
-        $(".report_swiper").append(template);
-        
-
-        const mySwiper10 = new Swiper (".swiper-report", {
-            pagination: '.pagination-report',
-            direction: 'vertical',
-            autoplay: 3000,
-            speed: 1000,
-            loop : true,
-            paginationClickable: true,
-            autoplayDisableOnInteraction : false
-        })
-
-    }
-
-    // 商会介绍
-    function lunbo(data, thumb_imgs) {
-
-        if((!data || data.length == 0) && thumb_imgs) {
-            thumb_imgs = imgSet(thumb_imgs, 45, 40, 3);
-            $(".disan .lunbo").css({"background-image": "url("+ thumb_imgs +")"});
-        }
-
-        var thumb_image = data.thumb_image;
-        if (thumb_image.indexOf('http') != 0 && thumb_image != "") {
-            thumb_image = imgSet(thumb_image, 280, 164, 3);
-        }
-        var template = `
-        <div class="swiper-slide">`
-            if(thumb_image != "") {
-                template = template + `<img class="iconfont" src="`+ thumb_image +`" alt="">`;
-            }
-            template = template + `
-            <a href="/org/`+ data.weid +`" class="a btn-info">点击查看</a>
-        </div>`;
-        $(".lunbo_swiper").append(template);
-
-        const mySwiper9 = new Swiper (".swiper-nested", {
-            pagination: '.pagination-nested',
-            direction: 'horizontal',
-            autoplay: 3000,
-            speed: 1000,
-            loop : true,
-            paginationClickable: true,
-            autoplayDisableOnInteraction : false
-        })
-
-    }
-
     // 下方三模块筛选
     function cont_two(this_weid_two, name) {
         $.ajax({
@@ -162,19 +91,9 @@
             success: function(data){
                 if(data.code == 200) {
                     var result = data.data;
-                    if(name == "fzbg") {
-                        result.forEach(function(value, index) {
-                            report(value, value.thumb_imgs)
-                        });
-                    } else if(name == "rhsq") {
-                        result.forEach(function(value, index) {
-                            column_rhsq(value, value.thumb_imgs)
-                        });
-                    } else if(name == "cqsy") {
-                        result.forEach(function(value, index) {
-                            lunbo(value, value.thumb_imgs)
-                        });
-                    }
+                    result.forEach(function(value, index) {
+                        column_rhsq(value, value.thumb_imgs)
+                    });
                 }
             },
             error: function(xhr){
@@ -182,6 +101,100 @@
             }
         })
     }
+
+    var options12 = $.get(apiUrl + "cms/org_advs");
+    options12.done(function(data) {
+        if(data.code == 200) {
+            if(!data.data.org_left) {
+                return false
+            } else {
+                var resultx = data.data.org_left;
+                var org_left = function(result) {
+                    var template = '';
+                    result.forEach(function(value, index) {
+                        var image = value.image;
+                        if (image.indexOf('http') != 0 && image != "") {
+                            image = imgSet(image, 280, 164, 3);
+                        }
+                        template += `
+                        <div title="`+ value.title +`">
+                            <img class="iconfont" src="`+ image +`">
+                            <a href="`+ value.url +`" class="a btn-info">点击查看</a>
+                        </div>`;
+                    });
+
+                    return template;
+                }
+
+                $(".report").html(`
+                    <div class="layui-carousel" id="test10" lay-filter="test10">
+                        <div carousel-item="">`+ org_left(resultx) +`</div>
+                    </div>
+                `)
+            }
+
+            if(!data.data.org_right) {
+                return false
+            } else {
+                var resulty = data.data.org_right;
+                var org_right = function(result) {
+                    var template = '';
+                    result.forEach(function(value, index) {
+                        var image = value.image;
+                        if (image.indexOf('http') != 0 && image != "") {
+                            image = imgSet(image, 280, 164, 3);
+                        }
+                        template += `
+                        <div title="`+ value.title +`">
+                            <img class="iconfont" src="`+ image +`">
+                            <a href="`+ value.url +`" class="a btn-look">点击查看</a>
+                        </div>`;
+                    });
+
+                    return template;
+                }
+
+                $(".lunbo").html(`
+                    <div class="layui-carousel" id="test11" lay-filter="test11">
+                        <div carousel-item="">`+ org_right(resulty) +`</div>
+                    </div>
+                `)
+            }
+
+            layui.use(['carousel', 'form'], function(){
+                var carousel = layui.carousel,
+                form = layui.form;
+             
+                //图片轮播
+                carousel.render({
+                    elem: '#test10',
+                    width: '280px',
+                    height: '164px',
+                    interval: 4000,
+                });
+
+                carousel.render({
+                    elem: '#test11',
+                    width: '280px',
+                    height: '164px',
+                    interval: 4000,
+                });
+
+                carousel.on('change(test10)', function(obj){
+                    // console.log(obj.index); //当前条目的索引
+                    $(".diyi .title").text(obj.item[0].title)
+                });
+
+                carousel.on('change(test11)', function(obj){
+                    // console.log(obj.index); //当前条目的索引
+                    $(".disan .title").text(obj.item[0].title)
+                });
+            });
+        }
+    });
+    options12.fail(function(error) {
+        console.error(error);
+    });
 
     // 组织一级分类
     var column_list = function(data) {
@@ -191,6 +204,7 @@
         }
 
         var template2 = function(children) {
+            // children = children.reverse();
             var template21 = '';
             $.map(children, function(value, key) {
                 template21 += `<a href="/org/`+ value.domain +`"> <i class="iconfont">&#xe61a;</i>`+ value.title +` </a>`
@@ -227,12 +241,6 @@
                         <ul id="ruhuishenqing" name="`+ item.weid +`"></ul>`
                     );
                     cont_two(item.weid, "rhsq");
-                } else if(item.title == "发展报告") {
-                    $(".diyi .title").text(item.title);
-                    cont_two(item.weid, "fzbg");
-                } else if(item.title == "长青事业") {
-                    $(".disan .title").text(item.title);
-                    cont_two(item.weid, "cqsy");
                 } else {
                     if(item.index_show == 1) {
                         var i = 0;

@@ -4,11 +4,11 @@
  *
  * @author Guanz
  */
-class router_verify {
+class router_verify{
     	
     private $_rouert_match;
     private $_rule;
-
+    
     public $router = FALSE;
     public $controllerRouter;
     public function __construct($router = array() , $uri = array() , $rule = array() , $weid = '') 

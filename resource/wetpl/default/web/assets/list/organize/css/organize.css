@@ -11,7 +11,6 @@ html,body {
     width: 100%;
     height: 100%;
     overflow-y: auto;
-    /*background-image: url(/common/img/dibu.jpg);*/
     background-attachment: fixed;
 }
 
@@ -59,14 +58,14 @@ li {
 
 .organize-content .weizhuye-gerenfencai .top-nav ul {
     position: relative;
-    margin-top: -46px;
+    margin-top: -45px;
     min-height: 45px;
-    background: rgba(255,255,255,0.75);
+    background: rgba(255,255,255,0.65);
 }
 
 .organize-content .weizhuye-gerenfencai .top-nav ul a {
     display: inline-block;
-    color: #333;
+    color: #000;
     flex: 1;
     height: 45px;
     line-height: 45px;
@@ -75,6 +74,10 @@ li {
     margin-bottom: 0px;
     text-align: center;
     cursor: pointer;
+}
+
+#menuX > a:last-child {
+    border-right: none;
 }
 
 .organize-content .weizhuye-gerenfencai .top-nav ul li a {
@@ -121,10 +124,11 @@ li {
     min-width: 70px;
     height: 45px;
     line-height: 45px;
+    text-align: center;
+    justify-content: center;
     padding: 0 10px;
     background: #007cd3;
     color: #fff;
-    text-align: center;
     cursor: pointer;
 }
 
@@ -274,8 +278,10 @@ li {
 }
 
 #menuTwo {
-    margin: 0 25px;
+    min-width: 80px;
     display: inline-flex;
+    text-align: center;
+    justify-content: center;
 }
 
 #menuTwo a {
@@ -285,15 +291,28 @@ li {
     min-width: 70px;
     height: 45px;
     line-height: 45px;
-    /*margin: 0 1px;*/
-    padding: 0 10px;
-    /*background: #007cd3;*/
+    padding: 0 5px;
     color: #666;
     text-align: center;
     cursor: pointer;
 }
 
 .single_active {
-    background: rgba(0, 124, 211, 0.7)!important;
+    background: #007cd3!important;
     color: #fff!important;
+}
+
+#menuTwo .single_active {
+    position: relative;
+}
+
+#menuTwo .single_active::after {
+    content: "";
+    position: absolute;
+    border-top: 10px solid #007cd3;
+    border-bottom: 10px solid rgba(0,0,0,0);
+    border-left: 10px solid rgba(0,0,0,0);
+    border-right: 10px solid rgba(0,0,0,0);
+    top: 45px;
+    left: 28px;
 }

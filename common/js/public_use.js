@@ -86,7 +86,10 @@ var url = window.location.pathname.split('/');
     }
 
        // 二维码插件
-    var qrcodefun=function(domain,logoimg,platuserid){
+    //$(".oline-3 div:first-child").children().remove();
+
+
+    /*var qrcodefun=function(domain,logoimg,platuserid){
         $(".oline-3 div:first-child").children().remove();
         //var qrcode_val=localhostPath+"/"+domain+"/wecard";
         console.log(localhostPath)
@@ -112,4 +115,4 @@ var url = window.location.pathname.split('/');
         }
 
     
-    }  
+    }*/

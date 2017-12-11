@@ -10,6 +10,7 @@
         <link rel="stylesheet" href="/common/css/buttons.css">
         <link rel="stylesheet" href="{{PATH_TML}}css/shopping.css">
         <link rel="stylesheet" href="{{PATH_TML}}font/iconfont.css" />
+        <link rel="stylesheet" href="{{PATH_TML}}css/public_main.css">
         <link rel="stylesheet" href="{{PATH_TML}}css/news_base.css" />
         <link rel="stylesheet" href="{{PATH_TML}}css/modal_login.css" />
         <link rel="stylesheet" href="/common/css/main.css">
@@ -26,7 +27,7 @@
         <script src="/common/js/buttons.js"></script>
         <script src="{{PATH_CONFIG}}"></script>
         <!-- 放大镜 -->
-        <script src="/common/js/public_use.js"></script>
+        <!--<script src="/common/js/public_use.js"></script>-->
         <script type="text/javascript" src="{{PATH_TML}}shopping/js/jquery.jqzoom.min.js"></script>
         <!-- 放大镜 end  -->
         <script src="/common/js/utf.js"></script>
@@ -64,6 +65,7 @@
             <div id="art-head">
                 <a class='linkto' href=''>
                     <div id="head-icon"></div>
+                    <div id="head-bg"></div>
                 </a>
                 <div id="user-name">
                     <div class="line-0"></div>
@@ -131,7 +133,7 @@
                                     <span>微众中国CEO，工业与信息化部信息通信经济专家委员会专家委员、陕西省青年创业导师协会副会长兼项目委员会主任委员、陕西省互联网协会副秘书长。</span>
                                 </div>
                                 <div class="oline-3">
-                                    <div><img src="/common/img/wecard_qrcode.png" alt="" width="100"/></div>
+                                    <div id="qc"></div>
                                     <div><p>微信扫描二维码</p><p>支持Ta</p><p>或分享给好友</p></div>
                                 </div>
                             </div>
@@ -247,6 +249,7 @@
 
         <script src="{{PATH_TML}}shopping/js/shopdetail.js"></script>
         <script src="{{PATH_TML}}shopping/js/jquery.lazyload.min.js"></script>
+        <script src="/common/js/userinfo.js"></script>
         <script>
             //lazyload
             $("img.lazy").lazyload({

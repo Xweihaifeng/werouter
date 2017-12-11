@@ -131,10 +131,12 @@ $(document).ready(function(){
             return false;
         }
 
+        $(this).attr("disabled", true);
         var options = $.post(CERT_ONLINEREALNAME, body);
         options.done(function(data) {
 
             if(data.code == -200) {
+                $(this).attr("disabled", false);
                 return false;
             }
             if(data.code === 200) {
@@ -142,6 +144,7 @@ $(document).ready(function(){
                     $(".cert-to-pass")   .show();
                     $(".media-heading")  .text("在线认证失败，重新提交...").css("color", "#ec2d2d");
                     $(".warn-img")       .attr("src", "/common/img/refuse.png");
+                    $(this).attr("disabled", false);
                     return false;
                 }
 

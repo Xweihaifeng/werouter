@@ -25,7 +25,7 @@
         <div class="commit-btn"><a @click="submitComment()">提交</a></div>
         <div v-for="item in orderObj.goods">
             <div class="good">
-                <img :src="'http://images.new.wezchina.com/'+item.goods_cover" alt="">
+                <img :src="ApiMaterPlatQiniuDomain+item.goods_cover" alt="">
                 <span>商品评分</span>
                 <span v-for="star in item.starList" class="star" :class="{'not-red' : !star.check}" @click="goStar(item,star)"></span>
             </div>

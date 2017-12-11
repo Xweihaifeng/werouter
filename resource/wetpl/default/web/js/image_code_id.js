@@ -1,7 +1,33 @@
+
 var luo_response = '';
-function getResponse(resp)
-{
+function getResponse(resp) {
     luo_response = resp;
+}
+
+// 临时放到这里
+function GetQueryString(name) {
+    var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+    var r = window.location.search.substr(1).match(reg);
+    if(r!=null)return  unescape(r[2]); return null;
+}
+
+function empty(params)
+{
+    if(params !== null && params !== undefined && params !== '')
+    {
+        return true;
+    }
+    return false;
+}
+
+function public_logon_link() {
+    var url_parama = GetQueryString('url');
+    if( url_parama !== null && url_parama !== undefined && url_parama !== '' ) {
+        window.location.href = url_parama;
+    }else{
+        window.location.href = '/user/';
+        // public_logon_link();
+    }
 }
 
 $(function() {
@@ -116,14 +142,9 @@ $(function() {
     })
 
     //route
-    var isLogin; //判断用户登陆与否
+    var isLogin = false; //判断用户登陆与否
     var router = function(route){
-        if(!window.localStorage.getItem("token")) {
-            isLogin = false;
-        } else {
-            isLogin = true;
-        }
-        var routerList = ['home', 'login', 'article', 'active', 'project', 'shopping', 'zone', 'zan'];
+        var routerList = ['home', 'login', 'article', 'shopping'];
 
         var isMember = function(routerList, route){
             return routerList.filter(x => x === route);
@@ -136,7 +157,8 @@ $(function() {
         var login = function(){
             if (!isLogin) {
                 showLogin = true;
-                $("#modal_login").fadeIn(300);
+                $("#modal").show();
+                $(".show-login").fadeIn(300);
             } else {
                 window.location.href = "/user";
             }
@@ -147,24 +169,9 @@ $(function() {
             window.location.href = "/index/article";
         }
 
-        var active = function(){
-            showLogin = false;
-            window.location.href = "/index/activity";
-        }
-        var project = function(){
-            showLogin = false;
-            window.location.href = "/index/project";
-        }
-
-
         var shopping = function(){
             showLogin = false;
-            window.location.href = "/index/wemall";
-        }
-
-        var zone = function(){
-            showLogin = false;
-            window.location.href = "/index/quan";
+            // window.location.href = "/index/wemall";
         }
 
         if (isMember(routerList, route) != ""){
@@ -172,7 +179,7 @@ $(function() {
         }
     }
 
-    $("#home, #login, #article, #active, #project, #shopping, #zone, #zan").click(function(){
+    $("#home, #login, #article, #shopping, #zan").click(function(){
         var id = $(this).attr("id");
         router(id);
     })
@@ -201,9 +208,10 @@ $(function() {
             document.cookie = keys[i]+'=0;expires=' + new Date(0).toUTCString()
         } 
     }
-    var saveUserInfo = function(token, weid, imgUrl) {
+    var saveUserInfo = function(token, weid, imgUrl , data) {
         localStorage.setItem('token', token);
         localStorage.setItem('weid', weid);
+        localStorage.setItem('phone', data.phone);
         setCookie(token, 7);
         if(!imgUrl) {
 
@@ -278,9 +286,9 @@ $(function() {
         })
     }
 
-    var phoneNum = 0, checkNum = 0, flag = false /*,imageCode = '', imageCodeID = ''*/;
+    var phoneNum = 0, checkNum = 0, imageCode = '', imageCodeID = '', flag = false;
 
-/*    $('#image_code_id_url').bind("click", image_code_id);
+    $('#image_code_id_url').bind("click", image_code_id);
     function image_code_id() {
         $.ajax({
             url: USER_IMAGECODEID,
@@ -297,12 +305,12 @@ $(function() {
             }
         })
     }
-    image_code_id();*/
+    image_code_id();
 
     $(".get-check").click(function(){
         if (!lock) {
             phoneNum = $(".phone-num").val();
-            // imageCode = $(".image_code").val();
+            imageCode = $(".image_code").val();
             var regexp = /^(13|14|17|15|18)/;
             var reg =  new RegExp(regexp);
             if(!luo_response){
@@ -320,23 +328,27 @@ $(function() {
     })
 
     //用户登录
-    var login = function(phoneNum, checkNum, ref_id, ref_url, domain/*, imageCode, imageCodeID*/){
+    var login = function(phoneNum, checkNum, imageCode, imageCodeID){
         $.ajax({
             url: LOGIN,
             type: 'post',
-            data: {'phone': phoneNum, 'code': checkNum , 'luo_response': luo_response,
-                'ref_id': ref_id,
-                'ref_url': ref_url,
-                'domain': domain
-            },
+            data: {'phone': phoneNum, 'code': checkNum , 'luo_response': luo_response},
             success: function(data){
                 console.log(data);
                 if (data.code != -200) {
-                    saveUserInfo(data.token, data.data.weid, data.data.avatar);
+                    saveUserInfo(data.token, data.data.weid, data.data.avatar , data.data);
                     showLogin = false;
                     isLogin = true;
                     isCheckNum = false;
-                    window.location.href = '/user/';
+
+                    public_logon_link();
+                    // var url_parama = GetQueryString('url');
+                    // if( url_parama !== null && url_parama !== undefined && url_parama !== '' ) {
+                    //      window.location.href = url_parama;
+                    // }else{
+                    //      window.location.href = '/user/';
+                    // }
+                   
                 } else {
                     lock = false;
                     clearInterval(count);
@@ -351,17 +363,13 @@ $(function() {
 
     //点击登录按钮
     var logBt = function(){
-        var ref_id = localStorage.getItem('ref_id');
-        var ref_url = localStorage.getItem('ref_url');
-        var domain = localStorage.getItem('domain');
-        //console.log(ref_id, ref_url, domain);
         phoneNum = $(".phone-num").val();
         checkNum = $(".check-num").val();
-        // imageCode = $(".image_code").val();
+        imageCode = $(".image_code").val();
         var regexp = /^(13|14|17|15|18)/;
         var reg =  new RegExp(regexp);
         if (reg.test(phoneNum) && phoneNum.length == 11 && checkNum.length == 6 && isCheckNum && isChecked ) {
-            login(phoneNum, checkNum, ref_id, ref_url, domain/*, imageCode, imageCodeID*/);
+            login(phoneNum, checkNum, imageCode, imageCodeID);
         } else {
             if (!(phoneNum.length == 11) || !reg.test(phoneNum)){
                 layer.msg("手机号码错误", { time: 2500 });

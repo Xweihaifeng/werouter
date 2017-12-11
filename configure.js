@@ -6,6 +6,10 @@
 const httpType = window.location.protocol;
 const apiUrl = httpType + '//{{url}}/api/';
 
+const domainHost = window.location.host;
+
+const controlUrl = 'https://mp.wezchina.com/api/menu_config?mark=';
+
 //七牛配置
 var qiniu;
 $.ajax({

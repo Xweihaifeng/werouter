@@ -1,0 +1,186 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="https://www.w3.org/1999/xhtml" ng-app="myApp">
+<head>
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="renderer" content="webkit" />
+    <style type="text/css">
+
+	</style>
+    <script src="/common/iview/vue.min.js"></script>
+    <!-- <link rel="stylesheet" type="text/css" href="https://www.wezchina.com/app/Tpl/wezchina/css/common_css/iconfont.css" /> -->
+<!--     <link rel="stylesheet" type="text/css" href="{{PATH_TML}}font/iconfont1.css" /> -->
+    <link rel="stylesheet" type="text/css" href="/common/css/loader.css" />
+    <meta name="keywords" content="微众中国，微力量 ，众行远，众筹创业，众筹融资，天使投资人，丝路，互联网+，创投，创业项目，公益，科技，文化，出版，娱乐，艺术，农业，商铺，活动，好产品，好项目，陕西，西安，甘肃，兰州，宁夏，银川，新疆，乌鲁木齐" />
+    <meta name="description" content="微众中国，专注于丝路互联网+创业众筹融资，为创业者提供私募股权、回报众筹、一元云筹、项目投融资一体化综合互联网金融服务，帮助创业者实现众筹融资。" />
+    <style type="text/css">
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+
+        <link rel="stylesheet" href="/common/css/base_1.css" />
+        <script src="/common/public/public.js"></script>
+        <script src="/common/js/jquery-3.2.1.min.js"></script>
+        <script src="/common/iview/axios.min.js"></script>
+        <script src="/common/iview/libs/win.js"></script>
+        <script src="/common/iview/libs/util.js"></script>
+        <script src="/common/model/web_business.js"></script>
+        
+        <script type="text/javascript">
+            var header_scroll = 'yes';
+            var header_news_string;
+
+            var config = win.getStorage('config');
+            var settings = win.getStorage('settings');
+
+            function set_title(title , if_t){
+            	if(if_t == false)
+            	{
+            		title = title;
+            	}
+            	else
+            	{
+            		title = title + '_'+ config.title;
+            	}
+            	
+                $('title').html(title);
+            }
+
+            Vue.filter('img_src', function (value , width , height) {
+                if (!value) return '';
+                if(empty(width) == false || empty(height) == false )
+                {
+                    return settings+value;
+                }
+                else
+                {
+                    return settings+value + '?imageView2/3/w/' + width + '/h/' + height;
+                }
+              
+            });
+        </script>
+</head>        
+<div class="head" id="header" v-cloak>
+    <div class="warp">
+        <span class="logo"><a href="/"><img src="https://image.wezchina.com/plats/resource/1512106023636.png"><!-- <img :src="logo" /><img :src="/common/img/main_logo.png" /> --></a></span>
+          <ul class="nav">
+                <li>
+                    <a href="/" class="t" title="首页">首页</a>   
+                </li>
+                <li><a href="#" class="t">解决方案</a>
+                    <div class="cont" >
+                        <a href="/solution/coc">商会解决方案</a>
+                    </div>
+                </li>
+
+                <li><a href="#" class="t">产品</a>
+                    <div class="cont" >
+                        <a href="/product/vote">投票系统</a>
+                        <a href="/product/magazine">杂志系统</a>
+                    </div>
+                </li>
+
+                <li><a href="#" class="t">帮助</a>
+                    <div class="cont" >
+                        <a v-for="item in header_help" :href="'/help/'+ item.domain"  >{{item.title}}</a>
+                    </div> 
+                </li>
+
+                <li>
+                    <a href="#" class="t" title="资讯">新闻</a>  
+                    <div  class="cont" >
+                        <a v-for="item in header_news"  :href="'/news/'+ item.domain"  >{{item.title}}</a>
+                    </div> 
+                </li>
+
+                <li><a href="" class="t">关于</a>
+                    <div class="cont" >
+                        <a v-for="item in header_about" :href="'/company/'+ item.domain"  >{{item.title}}</a>
+                    </div> 
+                </li>
+            </ul>
+            <div class="sing_in">
+                <a v-if="login_state==0" href="/login" class="go_sing_in">快速登录</a>
+                <a v-if="login_state==1" href="/user" class="go_sing_in">管理中心</a>
+            </div> 
+        </div>
+    </div> 
+</div>
+<script>
+    var header_data = {
+        'login_state':0,
+        'header_news': [],
+        'header_about': [],
+        'header_help' : [],
+        'logo' : ''
+    };
+    var header = new Vue({
+        el: '#header',
+        data: header_data,
+        mounted() {
+            this.$nextTick( function () {
+                var token = localStorage.getItem("token");
+                if (token !== null && token !== undefined && token !== '') { 
+                    this.login_state = 1;     
+                }
+
+                if(settings == false || config==false){
+                    this.init();
+                }
+                else
+                {
+                    this.logo = settings + config.logo;
+                }
+
+                this.header('header_about' , 'page' , (res)=>{
+                    this.header_about = res;
+                });
+
+                this.header('header_news' , 'news' , (res)=>{
+                    this.header_news = res;
+                });
+
+                this.header('header_help' , 'help' , (res)=>{
+                    this.header_help = res;
+                });
+            });
+        },
+        methods:{
+            settings(){
+                return ajax.get('settings');
+            },
+            config(){
+                return ajax.get('/cms/setting/show');
+            },
+            header(key , channel , val){
+                var header = win.getStorage(key);
+                if(header == false){
+                    ajax.get(web_business.web_cms_channel_categories , {params:{channel:channel}}).then((res)=>{
+                        win.setStorage(key , res.data);
+                        val(res.data);
+                    });
+                }
+                else
+                {
+                    val(header);
+                }
+            },
+            init(){
+                axios.all([this.settings() , this.config()])
+                .then(axios.spread(function (settings, config) {
+                    var settings_string = '//'+settings.data.qiniu.domain_custom+'/';
+                    win.setStorage('settings' , settings_string);
+
+                    win.setStorage('config' , config.data);
+
+                    set_title(config.data.title , false);
+
+                    this.logo = settings_string + config.data.logo;
+
+                }));
+            }
+        }
+    })
+</script> 
