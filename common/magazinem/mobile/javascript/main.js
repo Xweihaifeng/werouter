@@ -138,11 +138,11 @@ $.ajax({
                         openid = getUrlParam("openid");
                         if (openid != null) {
                             localStorage.setItem('openid', openid);
-                            alert('openid1:' + openid)
+                            // alert('openid1:' + openid)
                             wxlogin(openid);
                         } else {
                             let openid = localStorage.getItem('openid');
-                            alert('openid2:' + openid)
+                            // alert('openid2:' + openid)
                             wxlogin(openid);
                         }
 //                          alert('store openid:' + localStorage.getItem('openid'));
