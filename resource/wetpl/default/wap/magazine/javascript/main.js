@@ -1,17 +1,3 @@
-var qiniu;
-$.ajax({
-    url: apiUrl + 'settings',
-    type: 'get',
-    async: false,
-    success: function(data) {
-        console.log('setting:', data)
-        qiniu = 'http://' + data.data.qiniu.domain_custom + '/';
-    },
-    error: function(xhr) {
-        console.log(xhr);
-    }
-})
-
 var currurl = window.location.href;
 var weid;
 
@@ -30,7 +16,6 @@ if (currurl.indexOf('?') != -1) {
     }
 }
 var requrl= apiUrl + 'magazine/images?weid=' + weid;
-// var qiniu = ApiMaterPlatQiniuDomain;
 var title = '';
 var cover = '';
 var summary = '';
@@ -43,34 +28,6 @@ localStorage.setItem('normalPages', '');
 localStorage.setItem('largePages', '');
 localStorage.setItem('smallPages', '');
 
-$.ajax({
-    url: requrl,
-    type: 'GET',
-    async: false,
-    success: function(data) {
-        console.log(data);
-        if (data.code == 200) {
-            title = data.data.title;
-            summary = data.data.summary;
-            $("title").text(data.data.title);
-            data.data.list.map(x => {
-                remSmallPages.push(qiniu + x.image);
-                remPages.push(qiniu + x.image);
-                // remPages.push(qiniu + x.big_image);
-                remLargePages.push(qiniu + x.big_image);
-            })
-            len = remPages.length;
-            cover = remPages[1];
-            localStorage.setItem('normalPages', remPages);
-            localStorage.setItem('largePages', remLargePages);
-            localStorage.setItem('smallPages', remSmallPages);
-        }
-    },
-    error: function(xhr) {
-        console.log(xhr);
-    }
-})
-
 //判断是否在微信中打开
 function is_weixn() {
     var ua = navigator.userAgent.toLowerCase();
@@ -82,75 +39,99 @@ function is_weixn() {
 }
 
 $.ajax({
-    url: apiUrl + 'wxjssdk',
-    type: 'POST',
-    data: {
-        currenturl: window.location.href
-    },
+    url: requrl,
+    type: 'GET',
+    async: false,
     success: function(data) {
+        console.log(data);
         if (data.code == 200) {
-            wx.config({
-                debug: false,
-                appId: data.data.appId,
-                timestamp: data.data.timestamp,
-                nonceStr: data.data.nonceStr,
-                signature: data.data.signature,
-                jsApiList: ["onMenuShareTimeline", "onMenuShareAppMessage"]
-            });
+            title = data.data.title;
+            summary = data.data.summary;
+            $("title").text(data.data.title);
+            data.data.list.map(x => {
+                remSmallPages.push(ApiMaterPlatQiniuDomain + x.image);
+                remPages.push(ApiMaterPlatQiniuDomain + x.image);
+                // remPages.push(ApiMaterPlatQiniuDomain + x.big_image);
+                remLargePages.push(ApiMaterPlatQiniuDomain + x.big_image);
+            })
+            len = remPages.length;
+            cover = remPages[1];
+            localStorage.setItem('normalPages', remPages);
+            localStorage.setItem('largePages', remLargePages);
+            localStorage.setItem('smallPages', remSmallPages);
 
-            wx.ready(function() {                
-                /*setTimeout(function(){
-                    initWx(title, cover, summary);
-                }, 200);*/
+            $.ajax({
+                url: apiUrl + 'wxjssdk',
+                type: 'POST',
+                data: {
+                    currenturl: window.location.href
+                },
+                success: function(data) {
+                    if (data.code == 200) {
+                        wx.config({
+                            debug: false,
+                            appId: data.data.appId,
+                            timestamp: data.data.timestamp,
+                            nonceStr: data.data.nonceStr,
+                            signature: data.data.signature,
+                            jsApiList: ["onMenuShareTimeline", "onMenuShareAppMessage"]
+                        });
+
+                        wx.ready(function() {
+                            //微信分享
+                            var link = currurl;
+                            wx.onMenuShareTimeline({
+                                title: title,
+                                // 分享标题
+                                link: link,
+                                // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                                desc: summary,
+                                //分享描述
+                                imgUrl: cover,
+                                // 分享图标
+                                success: function() {
+                                    // 用户确认分享后执行的回调函数
+                                },
+                                cancel: function() {
+                                    // 用户取消分享后执行的回调函数
+                                }
+                            });
+                            wx.onMenuShareAppMessage({
+                                title: title,
+                                // 分享标题
+                                // desc: data.summary,
+                                // imgUrl: data.detail.cover,
+                                desc: summary,
+                                // 分享描述
+                                link: link,
+                                // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                                // imgUrl: ApiMaterPlatQiniuDomain + data.cover,
+
+                                imgUrl: cover,
+                                // 分享图标
+                                type: '',
+                                // 分享类型,music、video或link，不填默认为link
+                                dataUrl: '',
+                                // 如果type是music或video，则要提供数据链接，默认为空
+                                success: function() {
+                                    // 用户确认分享后执行的回调函数
+                                },
+                                cancel: function() {
+                                    // 用户取消分享后执行的回调函数
+                                }
+                            });
+                        })
+                    }
+                }
             })
         }
+    },
+    error: function(xhr) {
+        console.log(xhr);
     }
 })
 
-//微信分享
-function initWx(title, cover, summary) {
-    var link = currurl;
-    wx.onMenuShareTimeline({
-        title: title,
-        // 分享标题
-        link: link,
-        // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-        desc: summary,
-        //分享描述
-        imgUrl: cover,
-        // 分享图标
-        success: function() {
-            // 用户确认分享后执行的回调函数
-        },
-        cancel: function() {
-            // 用户取消分享后执行的回调函数
-        }
-    });
-    wx.onMenuShareAppMessage({
-        title: title,
-        // 分享标题
-        // desc: data.summary,
-        // imgUrl: data.detail.cover,
-        desc: summary,
-        // 分享描述
-        link: link,
-        // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-        // imgUrl: ApiMaterPlatQiniuDomain + data.cover,
 
-        imgUrl: cover,
-        // 分享图标
-        type: '',
-        // 分享类型,music、video或link，不填默认为link
-        dataUrl: '',
-        // 如果type是music或video，则要提供数据链接，默认为空
-        success: function() {
-            // 用户确认分享后执行的回调函数
-        },
-        cancel: function() {
-            // 用户取消分享后执行的回调函数
-        }
-    });
-}
 
 var aliasConfig = {
     appName : ["", "", ""],
