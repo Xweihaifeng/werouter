@@ -60,8 +60,6 @@ class router_verify{
         	$this->router['config'] = $this->controllerRouter->config;
 
         }
-
-
         return TRUE;
     }
 

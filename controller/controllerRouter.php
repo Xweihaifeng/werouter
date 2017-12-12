@@ -152,9 +152,9 @@ class controllerRouter extends controller
     public function user($param)
     {
 
-        $this->_user_id = $this->user_token();
-
-        if($this->_user_id == FALSE)
+        $user_info = $this->user_token();
+        $this->_user_id = $user_info['weid'];
+        if(empty($this->_user_id))
         {
             redirect('/login');
         }
