@@ -49,7 +49,7 @@ class controllerRouter extends controller
         {
             $wezchina_plats['plats_user']['nickname'] = '神秘人';
         }
-
+        
         // 获取省份
         $plats_province_sql = 'SELECT name FROM we_plats_province WHERE id=?';
         $wezchina_plats['plats_user']['province'] = $this->db->queryOne($plats_province_sql , array($wezchina_plats['plats_user']['province_id']));
