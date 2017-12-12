@@ -23,6 +23,14 @@ class controller
         $row = $this->db->queryOne($sql , array($token));
         if(!empty($row['weid']))
         {
+        	if(empty($row['real_name']))
+        	{
+        		$row['real_name'] = '神秘人';
+        	}
+        	if(empty($row['motto']))
+        	{
+        		$row['motto'] = '人懒什么都没有';
+        	}
             return $row;
         }
         return FALSE;
