@@ -228,7 +228,17 @@
 		ref.nickname = user_info.nickname;
 		ref.domain = pages_info.plats_domian.domain;
 		ref.motto = user_info.motto;
-		ref.wepage = '/' + ref.domain + '/';
+		var domain_index = '';
+		if(plats_user_info == false)
+		{
+			domain_index = pages_index;
+		}
+		else
+		{
+			domain_index = plats_user_info.domian;
+		}
+		ref.wepage = '/' + domain_index + '/';
+		ref.wecard = '/' + domain_index + '/wecard';
 
 		let title = ref.nickname;
 		let summary = ref.motto;
@@ -420,7 +430,7 @@
 			}
 		})
 	}
-	
+
 	const isFollow = function(url, domain, ref) {
 		$.ajax({
 			url: apiUrl + url,
