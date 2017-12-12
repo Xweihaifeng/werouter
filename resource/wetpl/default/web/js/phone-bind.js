@@ -148,6 +148,7 @@ var btgn_s = function() {
                     success: function(data) {
                         if (data.code == 200) {
                             localStorage.setItem('token', data.token);
+                            console.log(data.token);
                             setCookie(data.token, 7);
                             $(".fom-axx").hide();
                             $(".fom-axx1").show();
@@ -201,6 +202,7 @@ var btgn_s = function() {
                         success: function(data) {
                             if (data.code == 200) {
                                 localStorage.setItem('token', data.token);
+                                console.log(data.token);
                                 setCookie(data.token, 7);
                                 $(".btn-xinxi2").css({
                                     background: "#12ADFF",
