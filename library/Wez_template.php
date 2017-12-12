@@ -14,7 +14,8 @@ class Wez_template
 		$content = str_replace('</body>', '<script src="//captcha.luosimao.com/static/js/api.js"></script></body>' , $content);
 		$content = str_replace('<html>', '<html><script>'.$additional_config.'</script>' , $content);
 		$content = str_replace('<html lang="en">', '<html><script>'.$additional_config.'</script>' , $content);
-		return self::_compress_html($content);
+		return $content;
+		//return self::_compress_html($content);
 	}
 
 	public static function _compress_html($string) {

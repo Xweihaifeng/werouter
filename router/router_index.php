@@ -30,7 +30,7 @@ class router_index
     
     public function __construct()
     {	
-    	
+
         $this->_domain = $_SERVER['HTTP_HOST'];
         //$this->_domain = 'new.wezchina.com';
         
@@ -102,9 +102,10 @@ class router_index
 
         if(!file_exists($domain_router_file))
         {
+
             // 获取路由信息和路由正则信息
             $data_stirng = curl_action(config::$config_api_url.$this->_domain_config);
-			
+
             $data = json_decode($data_stirng , TRUE);
 
             if($data['code'] !== 200)
@@ -305,6 +306,7 @@ class main extends controller
     // 获取网站基本信息
     private function _domain_data($weid)
     {
+        $plats['var root_domian'] = $this->_get_domain($_SERVER['HTTP_HOST']);
         $plats['var is_domain'] = 'no';
     	//七牛相关信息
     	$sql = 'SELECT name , config FROM we_plats_setting
@@ -321,7 +323,7 @@ class main extends controller
             $plats['qiniu']['secret_key'] = $this->qiniu_cofing['secret_key'];
             $plats['qiniu']['buckut'] = $this->qiniu_cofing['buckut'];
 		}
-        
+
 		$plats_cms_sql = 'SELECT title , description , key_word
 						 , icp , favicon , logo , background , weibo_show 
 						 , background_up , bar1 , bar2 , bar3 , background_right
@@ -334,17 +336,19 @@ class main extends controller
         }
         else
         {
-            $user_id = $this->user_token();
-
-            if(!empty($user_id))
+            $user_info = $this->user_token();
+            $plats['plats_user_info'] = FALSE;
+            if(!empty($user_info['weid']))
             {
+                $plats['plats_user_info'] = $user_info;
                 $sql = 'SELECT domain FROM we_pages WHERE plat_id=? AND plat_user_id=? ';
-                $row = $this->db->queryOne($sql , array($weid , $user_id));
+                $row = $this->db->queryOne($sql , array($weid , $user_info['weid']));
 
                 $plats['var pages_index'] = 'index';
                 $plats['var is_login'] = 'yes';
                 if(!empty($row))
                 {
+                    $plats['plats_user_info']['domian'] = $row['domain'];
                     $plats['var pages_index'] = $row['domain'];
                 }       
             }
@@ -388,6 +392,28 @@ class main extends controller
         
         include $controller_file;  $c = new $file(); $c->public_data = $data; $c->{$action}(); exit();
      
+    }
+
+    /**
+     * 取得根域名
+     * @param type $domain 域名
+     * @return string 返回根域名
+     */
+    private function _get_domain($domain) {
+        $re_domain = '';
+        $domain_postfix_cn_array = array("com", "net", "org", "gov", "edu", "com.cn", "cn");
+        $array_domain = explode(".", $domain);
+        $array_num = count($array_domain) - 1;
+        if ($array_domain[$array_num] == 'cn') {
+            if (in_array($array_domain[$array_num - 1], $domain_postfix_cn_array)) {
+                $re_domain = $array_domain[$array_num - 2] . "." . $array_domain[$array_num - 1] . "." . $array_domain[$array_num];
+            } else {
+                $re_domain = $array_domain[$array_num - 1] . "." . $array_domain[$array_num];
+            }
+        } else {
+            $re_domain = $array_domain[$array_num - 1] . "." . $array_domain[$array_num];
+        }
+        return $re_domain;
     }
 
 }
