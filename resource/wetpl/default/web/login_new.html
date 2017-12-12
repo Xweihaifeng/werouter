@@ -125,13 +125,30 @@
                 }
             });
         }
-        var obj = new WxLogin({
-            id: "qrcode-block",
-            appid: "wx4b835b375578d1c0",
-            scope: "snsapi_login",
-            redirect_uri: siteUrl + "/login",
-            href: 'https://wezchina.com/common/css/wechat.css',
-            state: ""
+
+        $.ajax({
+            url: ApiUrl + 'setting/alias/weChatOpenConfig',
+            type: 'get',
+            dataType: 'json',
+            success: function(result) {
+                if (result.code === 200) {
+                    var obj = new WxLogin({
+                        id: "qrcode-block",
+                        appid: result.data.appid,
+                        scope: "snsapi_login",
+                        redirect_uri: siteUrl + "/login",
+                        href: 'https://wezchina.com/common/css/wechat.css',
+                        state: ""
+                    });
+                } else {
+                    parent.layer.msg(result.message);
+
+                    return false;
+                }
+            },
+            error: function(xhr) {
+                console.log(xhr);
+            }
         });
     </script>
 </body>
