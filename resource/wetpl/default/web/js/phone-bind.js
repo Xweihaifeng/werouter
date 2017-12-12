@@ -133,14 +133,16 @@ var btgn_s = function() {
 
                 Code_o = $("#code_as").val();
                 $.ajax({
-                    type: "GET",
+                    type: "POST",
                     headers: {
                         'Token': localStorage.getItem('token')
                     },
-                    url: apiUrl + "/common/verfycode",
+                    url: apiUrl + "/userAct",
                     data: {
                         phone: shouji,
                         code: Code_o,
+                        weid: localStorage.getItem('weid'),
+                        from_type: 3,
                     },
                     dataType: "json",
                     success: function(data) {
