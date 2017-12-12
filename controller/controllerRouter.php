@@ -41,9 +41,7 @@ class controllerRouter extends controller
         $wezchina_plats['plats_domian'] = $row;
         //$this->config['config']['const wezchina_domain_weid'] = $row['weid'];
         // 获取用户信息
-        $plats_user_sql = 'SELECT weid,avatar,sex,real_name,nickname,motto,province_id,area_id FROM we_plats_user    WHERE plat_id=? AND weid=? ';
-
-        $wezchina_plats['plats_user'] = $this->db->queryOne($plats_user_sql , array($this->weid , $row['plat_user_id']));
+        $wezchina_plats['plats_user'] = $this->user_token(array('plat_id' => $this->weid , 'weid' => $row['plat_user_id']));
 
         // 获取省份
         $plats_province_sql = 'SELECT name FROM we_plats_province WHERE id=?';
@@ -79,7 +77,7 @@ class controllerRouter extends controller
         $logo = (!empty($wezchina_plats['plats_brand']['logo']) && $row['is_brand'] == 1) ? $wezchina_plats['plats_brand']['logo'] : $wezchina_plats['plats_user']['avatar'];
         //二维码已存在图片  
         $qrcode_img = $row['qrcode_img'];
-
+        
         //Wez_template::init($logo);
 
          //二维码圆心图片
