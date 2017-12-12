@@ -22,6 +22,7 @@ class Wez_qrcode extends controller
 		$accessKey = config::$plats['qiniu']['access_key'];
 		$secretKey = config::$plats['qiniu']['secret_key'];
 
+		$linshi_time = time();
 		$storage_img = './storage/'.time().'_qrcode.png';
 
 		if(!empty($logo))
@@ -50,8 +51,7 @@ class Wez_qrcode extends controller
 			imagesavealpha($newImage , true);//设置保存PNG时保留透明通道信息
 			
 			imagecopyresampled($newImage, $qrcode_img, 10, 10, 0 , 0, 410,410 , 410 , 410);
-			
-			$linshi_time = time();
+
 
 			imagedestroy($qrcode_img);
 			// imagedestroy($newImage);
@@ -66,6 +66,7 @@ class Wez_qrcode extends controller
 		}
 		else
 		{
+			$logo_is = "$linshi_time.png";
 			$qrcode_img = imagecreatefrompng("http://qr.liantu.com/api.php?&w=430&text=$url");
 			ImagePng($qrcode_img  , $storage_img );
 		}
