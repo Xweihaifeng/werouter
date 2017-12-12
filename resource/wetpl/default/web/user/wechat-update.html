@@ -12,7 +12,7 @@
         <link rel="stylesheet" href="{{PATH_TML}}user/css/wechat-update.css">
 
         <script src="/common/js/jquery-3.2.1.min.js"></script>
-        <!--<script src="/common/js/bootstrap.min.js"></script>-->
+        <script src="/common/js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="{{PATH_TML}}user/css/application.css">
 
         <script src="/common/js/layer/layer.js"></script>
@@ -142,7 +142,7 @@
                                 <div class="sign_set">
                                     <p>公众平台配置</p>
                                 </div>
-                                <div class="open" id="open">收起</div>
+                                <div class="open" id="open">展开</div>
                             </div>
                             <div class="open_content open_content0" style="display: none;padding-top: 8px;">
                                 <form id="uploadForm" class="form-horizontal" method="post"
@@ -168,7 +168,7 @@
                                 <div class="sign_set">
                                     <p>商户平台配置</p>
                                 </div>
-                                <div class="open" id="open1">收起</div>
+                                <div class="open" id="open1">展开</div>
                             </div>
                             <div class="open_content open_content1" style="display: none;padding-top: 8px;">
                                 <form id="uploadForm1" class="form-horizontal" method="post"
@@ -200,7 +200,7 @@
                                 <div class="sign_set">
                                     <p>授权域名文件配置</p>
                                 </div>
-                                <div class="open" id="open2">收起</div>
+                                <div class="open" id="open2">展开</div>
                             </div>
                             <div class="open_content open_content2" style="display: none;padding-top: 8px;">
                                 <form id="uploadForm2" class="form-horizontal" method="post"
@@ -223,13 +223,18 @@
                             </div>
                             <div class="sign">
                                 <div class="sign_set">
-                                    <p>测试支付</p>
+                                    <p>测试支付功能</p>
                                 </div>
-                                <div class="open" id="open3">收起</div>
+                                <div class="open" id="open3">展开</div>
                             </div>
-                            <div class="open_content" style="display: none; padding-top: 8px;">
-
-
+                            <div class="open_content open_content3" style="display: none; padding-top: 8px;">
+                                <form id="uploadForm3" class="form-horizontal" method="post"
+                                      enctype="multipart/form-data">
+                                    <input type="hidden" name="weid"  value="">
+                                    <div class="input-group surplus ">
+                                        <button type="button" class="btn btn-primary" id="wechat_test_save"> 测试</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -242,3 +247,19 @@
         <script src="{{PATH_TML}}user/js/wechat-update.js"></script>
     </body>
 </html>
+
+<div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close close_modal" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel"> 微信配置信息提示 </h4>
+            </div>
+            <div class="modal-body modal_info">
+
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
