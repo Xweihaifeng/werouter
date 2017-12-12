@@ -37,9 +37,9 @@ $(function() {
     clearCookie();
 
 
-    var code = getQueryParam('code') ? getQueryParam('code') : '';
+    var code = GetQueryString('code');
 
-    if (code != null)
+    if (code !== null && code !== undefined && code !== '')
         alert(code);
 
     var token = window.localStorage.getItem('token'),
