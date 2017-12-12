@@ -308,6 +308,7 @@ class main extends controller
     {
         $plats['var root_domian'] = $this->_get_domain($_SERVER['HTTP_HOST']);
         $plats['var is_domain'] = 'no';
+        $plats['var plats_token'] = false;
     	//七牛相关信息
     	$sql = 'SELECT name , config FROM we_plats_setting
 				WHERE plat_id=? AND name = "qiNiuConfig"';
@@ -340,6 +341,7 @@ class main extends controller
             $plats['plats_user_info'] = FALSE;
             if(!empty($user_info['weid']))
             {
+                $plats['var plats_token'] = $_COOKIE['token'];
                 $plats['plats_user_info'] = $user_info;
                 $sql = 'SELECT domain FROM we_pages WHERE plat_id=? AND plat_user_id=? ';
                 $row = $this->db->queryOne($sql , array($weid , $user_info['weid']));
