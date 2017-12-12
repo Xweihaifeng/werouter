@@ -111,10 +111,12 @@
 	</div>-->
 	<div class="foot">
 		<div>
+			<a :href="goto" style="color: white">
 			<p class="enter" @click="enjoy">
-				<button data-method="notice" class="layui-btn" style="position: absolute; background: transparent;width: 100%; left: 0;"></button>
+				<button data-method="notice" class="layui-btn" style="position: absolute; background: transparent;width: 100%; left: 0; display: none;"></button>
 				{{status}}
 			</p>
+			</a>
 			<p>投诉</p>
 		</div>		
 	</div>
@@ -169,7 +171,7 @@
 			url: PAGES_PAGE_GETDETAILBYUSER + weid,
 			type: 'GET',
 			headers: {
-				'Token': localStorage.getItem('token')
+				'Token': plats_token
 			},
 			success: function (data) {
 				console.log(data);
@@ -223,7 +225,6 @@
 	}
 
 	const init = function(url, ref) {
-		
 		if (user_info.avatar != null) {
 			ref.avatar = ApiMaterPlatQiniuDomain + user_info.avatar;
 		}
@@ -273,7 +274,7 @@
 				window.location.href = encodeURI(apiUrl + '/openid?url=' + window.location.href);
 			}
 		} else {
-			$(".layui-btn").hide();
+//			$(".layui-btn").hide();
 		}
 		$.ajax({
 			url: apiUrl + 'wxjssdk',
@@ -388,7 +389,7 @@
 				'type': 2
 			},
 			headers: {
-				'Token': window.localStorage.getItem("token")
+				'Token': plats_token
 			},
 			success: function(data) {
 				console.log(data)
@@ -417,7 +418,7 @@
 				'type': 2
 			},
 			headers: {
-				'Token': window.localStorage.getItem("token")
+				'Token': plats_token
 			},
 			success: function(data) {
 				console.log(data)
@@ -442,7 +443,7 @@
 				'domain': domain
 			},
 			headers: {
-				'Token': window.localStorage.getItem("token")
+				'Token': plats_token
 			},
 			success: function(data) {
 				console.log(data);
@@ -450,7 +451,8 @@
 //					alert('isFollow:' + data.data)
 					if (data.data == 1) {
 						ref.state = true;
-						ref.status = '已关注';
+						ref.status = '进入微主页';
+						ref.goto = '/' + ref.domain + '/';
 					} else {
 						ref.state = false;
 						ref.status = '关注';
@@ -525,7 +527,8 @@
 			wepage: '',
 			wecard: '',
 			state: false, //未关注
-			status: '关注',
+			status: '',
+			goto: '', //进入我的微主页
 			pages_show : false,  // 我的微主页 我的微名片是否显示
 			card_show : false,   // 身份认证图标是否显示
 			auth_show: false,    //认证信息是否显示
@@ -533,7 +536,11 @@
 		},
 		created: function(){
 			var _self = this;
-			var platuserid = window.location.pathname.split('/')[2];
+			var platuserid = pages_info.plats_domian.plat_user_id;
+			if (is_login == 'no') {
+				_self.status = '关注';
+				$(".layui-btn").show();
+			}
 			init(apiUrl + 'circel/wcard/' + platuserid, _self);
 		},
 		mounted: function(){
@@ -576,131 +583,134 @@
 							var that = this;
 						}
 						,notice: function(){
-							layer.open({
-								type: 1
-								,title: false //不显示标题栏
-								,closeBtn: false
-								,area: ['320px', '250px']
-								,shade: 0.8
-								,id: 'LAY_layuipro' //设定一个id，防止重复弹出
-								,btn: ['返回', '激活']
-								,btnAlign: 'c'
-								,moveType: 1 //拖拽模式，0或者1
-								,content:
-										`
-										<div id="inner">
-										<p style="font-size: 16px; margin-top: 25px; text-align: center;">请激活您的账号</p>
-										<div id="login-info">
-											<ul>
-												<li id="phonenum">
-													<span>+86 </span>
-													<input type="text" placeholder="请输入手机号码" maxlength="11" id="phone" v-model="phone" />
-												</li>
-												<li id="checknum">
-													<input type="text" placeholder="请输入手机验证码" maxlength="6" id="check" v-model="check" />
-													<span @click="getCheck">{{ info }}</span>
-												</li>
-											</ul>
-										</div>
-										</div>
-										`
-								,success: function(layero){
-									$("#layui-layer1").css('overflow', 'hidden');
-									$(".layui-layer-btn1").css({
-										'border-color': '#1E9FFF',
-										'background-color': '#1E9FFF',
-										'color': '#fff'
-									})
-
-									$(".layui-layer-btn0").css({
-										'border': '1px solid #dedede',
-										'background-color': '#fff',
-										'color': '#333',
-										'margin-right': '30px'
-									})
-
-									new Vue({
-										el: '#inner',
-										data: {
-											phone: '',
-											check: '',
-											info: '获取验证码',
-											lock: false,
-											backurl: '',
-											isCheck: false,
-											weid: '',
-											token: ''
-										},
-										created: function() {
-											let self = this;
-											self.backurl = sessionStorage.getItem('currentPage');
-											self.weid = localStorage.getItem('weid');
-											self.token = localStorage.getItem('token');
-
-											$("#phone").keydown(function(evt){
-												switch (evt.keyCode){
-													case 13: $("#check").select();
-												}
-											});
-
-											$("#check").keydown(function(evt){
-												switch (evt.keyCode){
-													case 13: tologin(phone, check, weid, _self);
-												}
-											});
-
-											$('.layui-layer-btn1').click(function(){
-												let phonenum = $('#phone').val();
-												let checknum = $('#check').val();
-												if (/^1[3|4|5|7|8][0-9]{9}$/.test(phonenum)) {
-													if (/^[0-9]{6}$/.test(checknum)) { //发送手机和验证码验证成功
-														tologin(phonenum, checknum, self.weid, _self);
+							layer.confirm('仅需一步，即可激活您的账号', {
+								skin:'confirm-class',
+								title: false,
+								closeBtn: false,
+								btn: ['暂不','激活'],
+								shade: 0.5,
+								shadeClose: true,
+								area: ['2.25rem', 'auto']
+							}, function(index){
+								layer.close(index)
+							}, function (index) {
+								layer.close(index)
+								layer.open({
+									skin:'active-class'
+									,type: 1
+									,title: false //不显示标题栏
+									,closeBtn: false
+									,shadeClose: true
+									,area: ['320px', '250px']
+									,shade: 0.5
+									,id: 'LAY_layuipro' //设定一个id，防止重复弹出
+									,btn: ['激活']
+									,btnAlign: 'c'
+									,moveType: 1 //拖拽模式，0或者1
+									,content:
+											`
+											<div id="app">
+											<!--<p style="font-size: 16px; margin-top: 25px; text-align: center;">请激活您的账号</p>-->
+											<div id="login-info">
+												<ul>
+													<li id="phonenum">
+														<!--<span>+86 <img src="/common/img/downarrow.png" alt=""/></span>-->
+														<input type="text" placeholder="请输入手机号码" maxlength="11" id="phone" v-model="phone" />
+													</li>
+													<li id="checknum">
+														<input type="text" placeholder="请输入手机验证码" maxlength="6" id="check" v-model="check" />
+														<span @click="getCheck">{{ info }}</span>
+													</li>
+												</ul>
+											</div>
+											</div>
+											`
+									,success: function(layero){
+										$("#layui-layer1").css('overflow', 'hidden');
+										new Vue({
+											el: '#app',
+											data: {
+												phone: '',
+												check: '',
+												info: '获取验证码',
+												lock: false,
+												backurl: '',
+												isCheck: false,
+												weid: '',
+												token: ''
+											},
+											created: function() {
+												let self = this;
+												self.backurl = sessionStorage.getItem('currentPage');
+												self.weid = localStorage.getItem('weid');
+												self.token = localStorage.getItem('token');
+												$('.layui-layer-btn0').click(function(){
+													let phonenum = $('#phone').val();
+													let checknum = $('#check').val();
+													if (/^1[3|4|5|7|8][0-9]{9}$/.test(phonenum)) {
+														if (/^[0-9]{6}$/.test(checknum)) { //发送手机和验证码验证成功
+															function is_weixn() {
+																var ua = navigator.userAgent.toLowerCase();
+																if (ua.match(/MicroMessenger/i) == "micromessenger") {
+																	return true;
+																} else {
+																	return false;
+																}
+															}
+															if (is_weixn()) {
+															    tologin(apiUrl + 'userAct', phonenum, checknum, self.weid);
+															} else {
+																tologin(LOGIN, phonenum, checknum, self.weid);
+															}
+														} else {
+															layer.msg("手机验证码输入错误", {
+																time: 1500
+															})
+														}
 													} else {
-														layer.msg("手机验证码输入错误", {
+														layer.msg("请输入正确的手机号码", {
 															time: 1500
 														})
 													}
-												} else {
-													layer.msg("请输入正确的手机号码", {
-														time: 1500
-													})
-												}
-											})
-										},
-										methods: {
-											getCheck: function() {
-												let self = this;
-												let count = 59;
-												let phonenum = self.phone;
-												if (/^1[3|4|5|7|8][0-9]{9}$/.test(phonenum)) {
-													getChecknum(phonenum);
-													if (!self.lock) {
-														let evt = setInterval(function () {
-															self.lock = true;
-															if (count > 0) {
-																self.info = count-- + '秒';
-															} else {
-																self.info = '重新发送验证码';
-																self.lock = false;
-																clearInterval(evt);
-															}
-														}, 1000)
-													}
-												} else {
-													layer.msg("请输入正确的手机号码", {
-														time: 1500
-													})
-												}
+												})
 											},
-											login: function() {
-												let self = this;
-												let phonenum = self.phone;
-												let checknum = self.check;
+											methods: {
+												getCheck: function() {
+													let self = this;
+													let count = 59;
+													let phonenum = self.phone;
+													if (/^1[3|4|5|7|8][0-9]{9}$/.test(phonenum)) {
+														getChecknum(phonenum);
+														if (!self.lock) {
+															let evt = setInterval(function () {
+																self.lock = true;
+																if (count > 0) {
+																	self.info = count-- + '秒';
+																} else {
+																	self.info = '重新发送验证码';
+																	self.lock = false;
+																	clearInterval(evt);
+																}
+															}, 1000)
+														}
+													} else {
+														layer.msg("请输入正确的手机号码", {
+															time: 1500
+														})
+													}
+												},
+												login: function() {
+													let self = this;
+													let phonenum = self.phone;
+													let checknum = self.check;
+												}
 											}
-										}
-									})
-								}
+										})
+									}
+								});
+
 							});
+
 						}
 					};
 					$('.layui-btn').on('click', function(){
@@ -711,25 +721,24 @@
 			})
 		},
 		methods: {
-			care: function(){
-				let _self = this;
-				$(".enter").text("进入微主页");
-			},
 			enjoy: function(){
 				let _self = this;
-				if (localStorage.getItem('token') != null) {
-					if (is_weixn() && (_self.activation == 4 || _self.activation == null || _self.activation == '')) {
-
+//				if (plats_token != null && plats_token != undefined) {
+					if (is_login == 'no') { //未登录
+						$(".layui-btn").show();
 					} else {
 						if (!_self.state) {
 							follow('circel/relationship', pages_info.plats_domian.domain, _self);
+							layer.msg("关注成功", {
+								time: 1500
+							})
 						} else {
-							cancelFollow('circel/quxiao', _self.domain, _self);
+//							cancelFollow('circel/quxiao', _self.domain, _self);
 						}
 					}
-				} else {
+				/*} else {
 					window.location.href = '/login';
-				}
+				}*/
 			}
 		}
 	})
