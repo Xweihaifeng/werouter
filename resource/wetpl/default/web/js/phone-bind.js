@@ -146,9 +146,9 @@ var btgn_s = function() {
                     },
                     dataType: "json",
                     success: function(data) {
-                        console.log(data.code);
                         if (data.code == 200) {
-                            console.log("发送成功");
+                            localStorage.setItem('token', data.token);
+                            setCookie(data.token, 7);
                             $(".fom-axx").hide();
                             $(".fom-axx1").show();
                             //中途
@@ -200,6 +200,8 @@ var btgn_s = function() {
                         dataType: "json",
                         success: function(data) {
                             if (data.code == 200) {
+                                localStorage.setItem('token', data.token);
+                                setCookie(data.token, 7);
                                 $(".btn-xinxi2").css({
                                     background: "#12ADFF",
                                     color: "#FFF"
