@@ -37,7 +37,10 @@
 		</div>
 		<div class="cert" v-if="auth_show==true">
 			<label>认证信息</label>
-			<span style="font-size: 0.115rem;">{{cert}}</span>
+			<span style="font-size: 0.115rem;">
+				<img v-if="card_show==true" src="/common/img/duihao.png" width="15" alt=""/>
+				{{cert}}
+			</span>
 		</div>
 		<!--<div>
 			<label>所在地</label>
@@ -523,9 +526,10 @@
 			wecard: '',
 			state: false, //未关注
 			status: '关注',
-			pages_show : false,
-			card_show : false,
-			auth_show: false
+			pages_show : false,  // 我的微主页 我的微名片是否显示
+			card_show : false,   // 身份认证图标是否显示
+			auth_show: false,    //认证信息是否显示
+
 		},
 		created: function(){
 			var _self = this;
@@ -535,6 +539,10 @@
 		mounted: function(){
 			this.$nextTick(function () {
 				var _self = this;
+				if(plats_user_info != false)
+				{
+					this.pages_show = true;
+				}
 
 				if(pages_info.plats_user_auth != false)
 				{
