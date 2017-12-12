@@ -160,7 +160,7 @@ const genSideBar = (ns) => {
         )
         $("." + district[i]).append(eval(x.val));
         if (x.ename == 'hz' || x.ename == 'gx') {
-            $("." + district[i]).css('padding-bottom', '180px');
+            $("." + district[i]).css('padding-bottom', '45px');
         }
     })
 }
