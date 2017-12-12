@@ -105,22 +105,22 @@ class router_verify{
         return FALSE;
     }
 
-    
+
     // 计算单条路由与配置匹配度
     private function _router_one_match($uri , $router_one_match)
     {
         $value = $router_one_match['router'];
         $do_match = 0;
         for($i = 1; $i <= count($uri) ; $i++){
-            
+
         	$do_match_state = FALSE;
             $router_stirng = $value[$i];
-            
+
             $uri_string = $uri[$i];
-            
+
             if(strpos($router_stirng , ':') !== false){
                 $method = ltrim($router_stirng , ':');
-
+                $match = '';
                 // 当有设置正则验证事 需要做验证
                 if(!empty($match = $this->_rule[$method]))
                 {
