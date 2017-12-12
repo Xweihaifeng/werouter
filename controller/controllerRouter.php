@@ -47,7 +47,7 @@ class controllerRouter extends controller
 
         if(empty($wezchina_plats['plats_user']['nickname']))
         {
-            $wezchina_plats['plats_user']['nickname'] = '用户很懒,没有名字!';
+            $wezchina_plats['plats_user']['nickname'] = '神秘人';
         }
 
         // 获取省份
