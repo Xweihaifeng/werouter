@@ -192,12 +192,13 @@ $(function() {
         $("body").css("overflow", "auto");
     })
 
-    function setCookie(token, expiredays) {
+    function setCookie(token, expiredays)
+    {
         var Days = expiredays;
         var exp = new Date();
-        exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000);
-        document.cookie = "token=" + escape(token) + ";expires=" + exp.toGMTString() + ";path=/";
-        //document.cookie = "token="+ escape (token); 
+        var domain = '.'+root_domian;
+        exp.setTime(exp.getTime() + Days*24*60*60*1000);
+        document.cookie = "token="+ escape (token) + ";expires=" + exp.toGMTString() +";path=/;domain="+domain;
     }
 
     function clearCookie() {

@@ -393,7 +393,7 @@
 			success: function(data) {
 				console.log(data)
 				if (data.code == 200) {
-					ref.status = '已关注';
+					ref.status = '进入微主页';
 					ref.state = true;
 				} else {
 					layer.msg(data.message, {
@@ -713,7 +713,7 @@
 		methods: {
 			care: function(){
 				let _self = this;
-				$(".enter").text("进入公众号");
+				$(".enter").text("进入微主页");
 			},
 			enjoy: function(){
 				let _self = this;
@@ -722,7 +722,7 @@
 
 					} else {
 						if (!_self.state) {
-							follow('circel/relationship', _self.domain, _self);
+							follow('circel/relationship', pages_info.plats_domian.domain, _self);
 						} else {
 							cancelFollow('circel/quxiao', _self.domain, _self);
 						}
