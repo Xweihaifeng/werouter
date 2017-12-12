@@ -39,8 +39,18 @@ $(function() {
 
     var code = GetQueryString('code');
 
-    if (code !== null && code !== undefined && code !== '')
-        alert(code);
+    if (code !== null && code !== undefined && code !== '') {
+        $.ajax({
+            url: apiUrl + "wx/scan_callback",
+            data: {
+                'code': code,
+                'state': state
+            },
+            success: function(data) {
+                console.log(data);
+            }
+        });
+    }
 
     var token = window.localStorage.getItem('token'),
         get_weid
