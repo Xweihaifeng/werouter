@@ -148,7 +148,7 @@ var btgn_s = function() {
                     success: function(data) {
                         if (data.code == 200) {
                             localStorage.setItem('token', data.token);
-                            console.log(data.token);
+                            alert(data.token);
                             setCookie(data.token, 7);
                             $(".fom-axx").hide();
                             $(".fom-axx1").show();
