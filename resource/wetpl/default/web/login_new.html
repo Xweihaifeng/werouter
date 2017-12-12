@@ -118,8 +118,10 @@
                     setCookie(data.token, 7);
                     if (data.data.phone === null || data.data.phone === undefined || data.data.phone === '') {
                         location.href = siteUrl + "/bind";
+                    } else {
+                        location.href = siteUrl + "/user";
                     }
-                    //location.href = siteUrl + "/user";
+
                 }
             });
         }

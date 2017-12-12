@@ -153,6 +153,7 @@ var btgn_s = function() {
                             localStorage.setItem('avatar', data.data.user.avatar);
                             localStorage.setItem('user', data.data.user);
                             setCookie(data.token, 7);
+                            location.href = "/user";
                             $(".fom-axx").hide();
                             $(".fom-axx1").show();
                             //中途
@@ -210,6 +211,7 @@ var btgn_s = function() {
                                 localStorage.setItem('avatar', data.data.user.avatar);
                                 localStorage.setItem('user', data.data.user);
                                 setCookie(data.token, 7);
+                                location.href = "/user";
                                 $(".btn-xinxi2").css({
                                     background: "#12ADFF",
                                     color: "#FFF"
