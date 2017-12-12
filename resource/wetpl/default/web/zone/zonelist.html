@@ -71,7 +71,7 @@
                                 <li class="" style="background:#17c295"></li>
                                 <li style="width: 80px">活跃微友</li>
                             </ul>
-                            <p class = "y">数据来源：全球秦商总会</p>
+                            <p class = "y"></p>
                         </div>
                         <img src = "/common/img/group_bottom.png" width="98%"/>
                         <div class="ditu">
@@ -89,7 +89,7 @@
                                 </ul>
                                 <p class="rcmd" style="margin-top: 10px"><span></span></p>
                             </div>
-                            <p class="y">数据来源：全球秦商总会</p>
+                            <p class="y"></p>
                         </div>
                         <img src = "/common/img/group_bottom.png" width="98%"/>
                     </div>
@@ -110,7 +110,8 @@
         <script src="/common/js/userinfo.js"></script>
         <script src="{{PATH_TML}}zone/js/circle.js"></script>
         <script>
-            var lineChart,lineTheme,xTitle,newlyAdded,Active,mapChart,mapData,requestUrl = apiUrl + 'circel/wcurve?domain=' + domain;
+            $(".y").text('数据来源：' + localStorage.getItem('title'));
+            var lineChart,lineTheme,xTitle,newlyAdded,Active,mapChart,mapData,requestUrl = apiUrl + 'circel/wcurve?domain=' + pages_info.plats_domian.domain;
             //改变数组中固定位置的值
             var changeArr = function(arr, id, val) {
                 let cnt = 1;
@@ -151,6 +152,7 @@
                 $.ajax({
                     url: url,
                     success: function(data){
+                        console.log(data)
                         let curve = data.data.wcurve;
                         let spread = data.data.wspread;
                         let slen = checkRed(spread).length;
@@ -181,7 +183,7 @@
 
             var url = window.location.pathname.split('/');
             var domain = url.slice(1, 2)[0];
-            getLine(apiUrl + 'circel/index?domain=' + domain);
+            getLine(apiUrl + 'circel/index?domain=' + pages_info.plats_domian.domain);
         </script>
     </body>
 </html>
