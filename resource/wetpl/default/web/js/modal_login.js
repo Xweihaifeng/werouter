@@ -259,21 +259,8 @@ $(function() {
     }
 
     $("#home, #login, #article, #active, #project, #shopping, #zone, #zan").click(function(){
-        let path = window.location.pathname.split('/');
-        //  首页              官方微主页             官方各模块
-        if (path[1] == '' || path[1] == 'index' || path.indexOf('index') != -1) {
-            domain = '/index'
-        } else {
-            if (('/' + path[1]) != domain && path[1].length > 4 && path[1] != 'magazine' && path[1] != 'apply') { //排除频道，雜誌
-                domain = '/' + path[1];
-            } else {
-                if (!aru) {
-                    domain = '/index'
-                }
-            }
-        }
         var id = $(this).attr("id");
-        router(id, domain);
+        router(id, '/' + pages_index);
     })
 
     //关闭登录模态框
