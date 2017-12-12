@@ -216,12 +216,23 @@ class main extends controller
                 $key = 'plats_qiniu';
                 $value = ['domain_custom' => $value['domain_custom']];
             }
-            $add_public_config['const '.$key] = json_encode($value);
+
+            if (strpos($key , " ")) 
+            {
+                $add_public_config[$key] = $value;
+            }
+            else
+            {
+                $add_public_config['const '.$key] = json_encode($value);
+            }
         }
         
         if(!empty($additional_config))
         {
-        	$additional_config = array_merge($additional_config , $add_public_config);
+
+        	$additional_config = array_merge($add_public_config , $additional_config);
+
+
         }
         else
         {
@@ -289,7 +300,6 @@ class main extends controller
     // 获取网站基本信息
     private function _domain_data($weid)
     {
-
     	//七牛相关信息
     	$sql = 'SELECT name , config FROM we_plats_setting
 				WHERE plat_id=? AND name = "qiNiuConfig"';
@@ -312,6 +322,31 @@ class main extends controller
 						 ,bar4 , block FROM we_plat_cms WHERE plat_id=?';
 		$plats['plats_info'] = $this->db->queryOne($plats_cms_sql , array($weid));
 
+        if(empty($_COOKIE['token']))
+        {
+            $plats['var pages_index'] = 'index';
+        }
+        else
+        {
+            $user_id = $this->user_token();
+
+            if(!empty($user_id))
+            {
+                $sql = 'SELECT domain FROM we_pages WHERE plat_id=? AND plat_user_id=? ';
+                $row = $this->db->queryOne($sql , array($weid , $user_id));
+
+                $plats['var pages_index'] = 'index';
+
+                if(!empty($row))
+                {
+                    $plats['var pages_index'] = $row['domain'];
+                }       
+            }
+            else
+            {
+                $plats['var pages_index'] = 'index';
+            }
+        }
 		return $plats;
     }
 
