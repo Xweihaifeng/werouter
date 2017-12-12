@@ -30,7 +30,7 @@ class router_index
     
     public function __construct()
     {	
-    	
+
         $this->_domain = $_SERVER['HTTP_HOST'];
         //$this->_domain = 'new.wezchina.com';
         
@@ -102,9 +102,10 @@ class router_index
 
         if(!file_exists($domain_router_file))
         {
+
             // 获取路由信息和路由正则信息
             $data_stirng = curl_action(config::$config_api_url.$this->_domain_config);
-			
+
             $data = json_decode($data_stirng , TRUE);
 
             if($data['code'] !== 200)

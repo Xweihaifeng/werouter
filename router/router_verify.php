@@ -118,11 +118,11 @@ class router_verify{
 
             if(strpos($router_stirng , ':') !== false){
                 $method = ltrim($router_stirng , ':');
-                $match = '';
+
                 // 当有设置正则验证事 需要做验证
-                if(!empty($match = $this->_rule[$method]))
+                if(!empty($this->_rule[$method]))
                 {
-  
+                    $match = $this->_rule[$method];
                     //var_dump(preg_match("/^$match$/" , $uri_string));
                     if(preg_match("/^$match$/" , $uri_string))
                     {

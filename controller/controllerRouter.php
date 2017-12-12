@@ -115,11 +115,10 @@ class controllerRouter extends controller
 
         return $wezchina_plats;
     }
-
+    
     // 验证个性域名
     public function domain($param)
     {
-
         // 测试 CONFIG 配置了 config 参数会直接追加到 config 最下面
         // $this->config['config']['var title'] = 'yes';
         //$this->config['template'] = '/login.html';
@@ -128,7 +127,7 @@ class controllerRouter extends controller
         $sql = 'SELECT domain,weid,plat_id,plat_user_id,is_brand,summary,background,share_image,qrcode_img
                  FROM we_pages WHERE plat_id=? AND domain=? ';
         $row = $this->db->queryOne($sql , array($this->weid , $param));
-        
+
         if(!empty($row))
         {
 
