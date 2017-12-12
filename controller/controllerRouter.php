@@ -68,12 +68,12 @@ class controllerRouter extends controller
         }
         
         // 实名认证
-        $plats_user_auth_sql = 'SELECT is_authenticated,origo,residential,name FROM we_plats_user_auth WHERE plat_id=? AND plat_user_id=? ';
+        $plats_user_auth_sql = 'SELECT is_authenticated,origo,residential,name,type FROM we_plats_user_auth WHERE plat_id=? AND plat_user_id=? ';
         
         $wezchina_plats['plats_user_auth'] = $this->db->queryOne($plats_user_auth_sql , array($this->weid , $row['plat_user_id']));
 
         // 官方认证
-        $plats_user_cert_sql = 'SELECT is_authenticated,name,cert_info FROM we_plats_user_cert WHERE plat_id=? AND plat_user_id=? ';
+        $plats_user_cert_sql = 'SELECT is_authenticated,name,cert_info,type FROM we_plats_user_cert WHERE plat_id=? AND plat_user_id=? ';
         
         $wezchina_plats['plats_user_cert'] = $this->db->queryOne($plats_user_cert_sql , array($this->weid , $row['plat_user_id']));
 
@@ -115,7 +115,7 @@ class controllerRouter extends controller
 
         return $wezchina_plats;
     }
-    
+
     // 验证个性域名
     public function domain($param)
     {
@@ -124,7 +124,7 @@ class controllerRouter extends controller
         //$this->config['template'] = '/login.html';
         //if($param == 'index') return TRUE;
         $this->config['config']['var is_domain'] = 'yes';
-        $sql = 'SELECT domain,weid,plat_id,plat_user_id,is_brand,summary,background,share_image,qrcode_img
+        $sql = 'SELECT domain,weid,plat_id,plat_user_id,is_brand,summary,background,share_image,qrcode_img,background_user
                  FROM we_pages WHERE plat_id=? AND domain=? ';
         $row = $this->db->queryOne($sql , array($this->weid , $param));
 
