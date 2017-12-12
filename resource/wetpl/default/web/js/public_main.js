@@ -238,8 +238,10 @@ req().then((data) => {
     var currWidth = $(window).width();
     var currHeight = $(window).height();
     setHeight(currHeight + 10);
-    if (currHeight > 768){
+    if (currHeight > 768 && currHeight < 992){
         $(".nav-news-title, .nav-org-title, .nav-help-title, .nav-share-title").css("margin-top", currHeight * 0.75 + "px");
+    } else if (currHeight >= 992){
+        $(".nav-news-title, .nav-org-title, .nav-help-title, .nav-share-title").css("margin-top", currHeight * 0.72 + "px");
     } else {
         $(".nav-news-title, .nav-org-title, .nav-help-title, .nav-share-title").css("margin-top", currHeight * 0.67 + "px");
     }
@@ -250,8 +252,10 @@ req().then((data) => {
         height = $(window).height() / 2 - 165;
         setHeight(currHeight);
         //console.log(currHeight)
-        if (currHeight > 768 && currHeight < 1265){
+        if (currHeight > 768 && currHeight < 992){
             $(".nav-news-title, .nav-org-title, .nav-help-title, .nav-share-title").css("margin-top", currHeight * 0.75 + "px");
+        } else if (currHeight >= 992 && currHeight < 1265){
+            $(".nav-news-title, .nav-org-title, .nav-help-title, .nav-share-title").css("margin-top", currHeight * 0.72 + "px");
         } else if (currHeight < 768) {
             $(".nav-news-title, .nav-org-title, .nav-help-title, .nav-share-title").css("margin-top", currHeight * 0.67 + "px");
         }
