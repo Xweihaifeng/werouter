@@ -27,7 +27,7 @@ class controllerRouter extends controller
 
         $this->weid = $weid;
     }
-
+    
     
     public function clear()
     {
@@ -37,7 +37,7 @@ class controllerRouter extends controller
     // 个性域名公共数据调用
     private function _domain_init($row)
     {
-
+        
         $wezchina_plats['plats_domian'] = $row;
         //$this->config['config']['const wezchina_domain_weid'] = $row['weid'];
         // 获取用户信息
@@ -45,6 +45,11 @@ class controllerRouter extends controller
 
         $wezchina_plats['plats_user'] = $this->db->queryOne($plats_user_sql , array($this->weid , $row['plat_user_id']));
 
+        if(empty($wezchina_plats['plats_user']['nickname']))
+        {
+            $wezchina_plats['plats_user']['nickname'] = '用户很懒,没有名字!';
+        }
+        
         // 获取省份
         $plats_province_sql = 'SELECT name FROM we_plats_province WHERE id=?';
         $wezchina_plats['plats_user']['province'] = $this->db->queryOne($plats_province_sql , array($wezchina_plats['plats_user']['province_id']));
@@ -52,7 +57,7 @@ class controllerRouter extends controller
         // 获取市
         $plats_area_sql = 'SELECT name FROM we_plats_area WHERE id=?';
         $wezchina_plats['plats_user']['area'] = $this->db->queryOne($plats_area_sql , array($wezchina_plats['plats_user']['area_id']));
-
+        
         $wezchina_plats['plats_brand'] = FALSE;
         if($row['is_brand'] == 1)
         {
@@ -66,7 +71,7 @@ class controllerRouter extends controller
         $plats_user_auth_sql = 'SELECT is_authenticated,origo,residential,name FROM we_plats_user_auth WHERE plat_id=? AND plat_user_id=? ';
         
         $wezchina_plats['plats_user_auth'] = $this->db->queryOne($plats_user_auth_sql , array($this->weid , $row['plat_user_id']));
-
+        
         // 官方认证
         $plats_user_cert_sql = 'SELECT is_authenticated,name,cert_info FROM we_plats_user_cert WHERE plat_id=? AND plat_user_id=? ';
         
@@ -79,9 +84,9 @@ class controllerRouter extends controller
         $logo = (!empty($wezchina_plats['plats_brand']['logo']) && $row['is_brand'] == 1) ? $wezchina_plats['plats_brand']['logo'] : $wezchina_plats['plats_user']['avatar'];
         //二维码已存在图片  
         $qrcode_img = $row['qrcode_img'];
-
+        
         //Wez_template::init($logo);
-
+        
          //二维码圆心图片
         $logo_array = explode('/', $logo);
         $logo_is = end($logo_array);
@@ -105,7 +110,7 @@ class controllerRouter extends controller
             $where = array('plat_id' => $row['plat_id'] , 'domain' => $row['domain']);
             $this->db->update('we_pages' , $set , $where);
         }
-
+        
         $wezchina_plats['plats_user_qrcode'] = $qrcode_img;
 
         return $wezchina_plats;

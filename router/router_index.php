@@ -239,7 +239,8 @@ class main extends controller
             $additional_config = $add_public_config;
         }
 
-        $config_file = $this->_generate_config($additional_config , $domain , $mark_domain);
+        $config_file = $this->_generate_config($domain , $mark_domain);
+        $additional_config = $this->_additional_config($additional_config);
 
         if(!file_exists('.'.$this->file.$directory.$router_map))
         {
@@ -248,24 +249,14 @@ class main extends controller
 
         $content = file_get_contents('.'.$this->file.$directory.$router_map);
 
-        echo $this->_get_str_replace_content($content , $config_file , $directory);
+        echo $this->_get_str_replace_content($content , $config_file , $directory , $additional_config);
 
     }
 
-
-    // 生成配置文件
-    private function _generate_config($additional_config , $domain , $mark_domain)
+    //网站配置JS
+    private function _additional_config($additional_config)
     {
-        if($mark_domain == 'm')
-        {
-            $domain = 'm.'.$domain;
-        }
-        $config = file_get_contents('configure.js');
-
-        $config = str_replace('{{url}}', $domain , $config);
-
-        $config .= "\n".'const WWW_PATH= "'.$this->file.'";';
-
+        $config = '';
         foreach ($additional_config as $key => $value) {
             if($value)
             {
@@ -285,6 +276,23 @@ class main extends controller
                 $config .= "\n".$key;
             }
         }
+
+        return $config;
+    }
+
+
+    // 生成配置文件
+    private function _generate_config($domain , $mark_domain)
+    {
+        if($mark_domain == 'm')
+        {
+            $domain = 'm.'.$domain;
+        }
+        $config = file_get_contents('configure.js');
+
+        $config = str_replace('{{url}}', $domain , $config);
+
+        $config .= "\n".'const WWW_PATH= "'.$this->file.'";';
 
         $cache_config_file = '/config/web/'.md5($domain).'.js';
 
@@ -351,9 +359,9 @@ class main extends controller
     }
 
     // 网站元素要替换规则
-    private function _get_str_replace_content($content , $config_file , $directory)
+    private function _get_str_replace_content($content , $config_file , $directory ,$additional_config)
     {
-        return Wez_template::init($this->file ,  $content , $config_file , $directory);
+        return Wez_template::init($this->file ,  $content , $config_file , $directory ,$additional_config);
     }
 
     // 判断是否加载控制器
