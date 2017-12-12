@@ -229,10 +229,7 @@ class main extends controller
         
         if(!empty($additional_config))
         {
-
         	$additional_config = array_merge($add_public_config , $additional_config);
-
-
         }
         else
         {
@@ -308,6 +305,7 @@ class main extends controller
     // 获取网站基本信息
     private function _domain_data($weid)
     {
+        $plats['var is_domain'] = 'no';
     	//七牛相关信息
     	$sql = 'SELECT name , config FROM we_plats_setting
 				WHERE plat_id=? AND name = "qiNiuConfig"';
@@ -323,7 +321,7 @@ class main extends controller
             $plats['qiniu']['secret_key'] = $this->qiniu_cofing['secret_key'];
             $plats['qiniu']['buckut'] = $this->qiniu_cofing['buckut'];
 		}
-
+        
 		$plats_cms_sql = 'SELECT title , description , key_word
 						 , icp , favicon , logo , background , weibo_show 
 						 , background_up , bar1 , bar2 , bar3 , background_right
@@ -344,7 +342,7 @@ class main extends controller
                 $row = $this->db->queryOne($sql , array($weid , $user_id));
 
                 $plats['var pages_index'] = 'index';
-
+                $plats['var is_login'] = 'yes';
                 if(!empty($row))
                 {
                     $plats['var pages_index'] = $row['domain'];
@@ -352,6 +350,7 @@ class main extends controller
             }
             else
             {
+                $plats['var is_login'] = 'no';
                 $plats['var pages_index'] = 'index';
             }
         }

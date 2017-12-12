@@ -12,7 +12,7 @@ class Wez_template
 		$content = str_replace('{{PATH_CONFIG}}', $config_file.'?t='.time() , $content);
 		$content = str_replace('{{PATH_TML}}', $file.$directory.'/' , $content);
 		$content = str_replace('</body>', '<script src="//captcha.luosimao.com/static/js/api.js"></script></body>' , $content);
-		$content = str_replace('<head lang="en">', '<head lang="en"><script>'.$additional_config.'</script>' , $content);
+		$content = str_replace('<html>', '<html><script>'.$additional_config.'</script>' , $content);
 
 		return self::_compress_html($content);
 	}
