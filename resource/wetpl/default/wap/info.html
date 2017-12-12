@@ -20,7 +20,7 @@
 		<span class="img"><img :src="avatar" alt=""/></span>
 		<span>
 			<p class="name">{{nickname}}</p>
-			<p class="wid">WEID:{{domain}}</p>
+			<p class="wid">weid:{{domain}}</p>
 		</span>
 	</div>
 	<div class="des">
@@ -31,11 +31,11 @@
 		<div class="img-div">
 			<label>账号主体</label>
 			<span style="font-size: 0.115rem;">
-				<!--<img src="/common/img/idcard.png" width="25" alt=""/>-->
+				<img v-if="card_show==true" src="/common/img/shiming.png" width="25" alt=""/>
 				{{account}}
 			</span>
 		</div>
-		<div class="cert">
+		<div class="cert" v-if="auth_show==true">
 			<label>认证信息</label>
 			<span style="font-size: 0.115rem;">{{cert}}</span>
 		</div>
@@ -63,7 +63,7 @@
 		</div>
 	</div>-->
 	<div class="des">
-		<a :href="wepage">
+		<a :href="wepage" >
 			<div>
 				<label>
 					我的微主页
@@ -117,6 +117,7 @@
 	</div>
 </div>	
 <script>
+	var user_info = pages_info.plats_user;
 	const userId = (domain) => {
 		return new Promise((resolve, reject) => {
 			$.ajax({
@@ -145,29 +146,19 @@
 	const getUserInfo = function(url, id){
 		let tid = window.location.pathname.split('/').pop();
 		let list = [{id: '', val: '首页'}, {id: 'article', val: '文章'}, {id: 'activity', val: '活动'}, {id: 'wemall', val: '商城'}];
-		$.ajax({
-			url: url + id,
-			type: 'GET',
-			success: function(data){
-				console.log(data);
-				if (data.data != null){
-					var info = data.data;
-					if (info.nickname != null) {
-						$('title').text(find(tid, list) + '-' + info.nickname + '的官方微主页');
-					} else {
-						if (info.real_name != null) {
-							$('title').text(find(tid, list) + '-' + info.real_name + '的官方微主页');
-						} else {
-							$('title').text(find(tid, list) + '-' + localStorage.getItem('title') + '官方微主页');
-						}
-					}
-					$("#favicon").attr('href', localStorage.getItem('fav'));
-				}
-			},
-			error: function(xhr){
-				console.log(xhr);
+
+		var info = pages_info.plats_user;
+		if (info.nickname != null) {
+			$('title').text(find(tid, list) + '-' + info.nickname + '的官方微主页');
+		} else {
+			if (info.real_name != null) {
+				$('title').text(find(tid, list) + '-' + info.real_name + '的官方微主页');
+			} else {
+				$('title').text(find(tid, list) + '-' + localStorage.getItem('title') + '官方微主页');
 			}
-		})
+		}
+		$("#favicon").attr('href', localStorage.getItem('fav'));
+
 	}
 
 	const hasDomain = function(weid, ref) {
@@ -229,121 +220,119 @@
 	}
 
 	const init = function(url, ref) {
-		$.ajax({
-			url: url,
-			type: 'get',
-			success: function(data){
-				console.log(data);
-				if (data.data.user.avatar != null) {
-					ref.avatar = ApiMaterPlatQiniuDomain + data.data.user.avatar;
-				}
-				$('title').text(data.data.user.nickname + '的微名片')
-				ref.nickname = data.data.user.nickname;
-				ref.domain = data.data.user.domain;
-				ref.motto = data.data.user.motto;
-				ref.wepage = '/' + ref.domain + '/';
+		
+		if (user_info.avatar != null) {
+			ref.avatar = ApiMaterPlatQiniuDomain + user_info.avatar;
+		}
+		$('title').text(user_info.nickname + '的微名片')
+		ref.nickname = user_info.nickname;
+		ref.domain = pages_info.plats_domian.domain;
+		ref.motto = user_info.motto;
+		var domain_index = '';
+		if(plats_user_info == false)
+		{
+			domain_index = pages_index;
+		}
+		else
+		{
+			domain_index = plats_user_info.domian;
+		}
+		ref.wepage = '/' + domain_index + '/';
+		ref.wecard = '/' + domain_index + '/wecard';
 
-				let title = ref.nickname;
-				let summary = ref.motto;
-				let cover = ref.avatar;
+		let title = ref.nickname;
+		let summary = ref.motto;
+		let cover = ref.avatar;
 
-				isFollow('circel/if_follow', ref.domain, ref);
-				//确保登录成功后能返回当前页
-				sessionStorage.setItem('nextPage', window.location.href);
-				sessionStorage.setItem('currentPage', window.location.href);
-
-				if (is_weixn()) {
-//					alert(1)
-					var oldTime = localStorage.getItem('setopenid-date');
-					if (!isExpire(oldTime)) { //没过期
-						//var usertoken = localStorage.getItem('user-token');
-						var usertoken = localStorage.getItem('setopenid');
-						if (usertoken == 'true') {
-							openid = getUrlParam("openid");
+		isFollow('circel/if_follow', ref.domain, ref);
+		//确保登录成功后能返回当前页
+		sessionStorage.setItem('nextPage', window.location.href);
+		sessionStorage.setItem('currentPage', window.location.href);
+		if (is_weixn()) {
+			var oldTime = localStorage.getItem('setopenid-date');
+			if (!isExpire(oldTime)) { //没过期
+				//var usertoken = localStorage.getItem('user-token');
+				var usertoken = localStorage.getItem('setopenid');
+				if (usertoken == 'true') {
+					openid = getUrlParam("openid");
 //							alert('openid:' + openid)
-							if (openid != null) {
-								localStorage.setItem('openid', openid);
-								wxlogin(openid, ref);
-							} else {
-								let openid = localStorage.getItem('openid');
-								wxlogin(openid, ref);
-							}
-//							alert('store openid:' + localStorage.getItem('openid'));
-						}
+					if (openid != null) {
+						localStorage.setItem('openid', openid);
+						wxlogin(openid, ref);
 					} else {
-						//微信未跳转时
-//						alert(2)
-						localStorage.setItem('setopenid', true);
-						localStorage.setItem('setopenid-date', new Date().getTime())
-						window.location.href = encodeURI(apiUrl + '/openid?url=' + window.location.href);
+						let openid = localStorage.getItem('openid');
+						wxlogin(openid, ref);
 					}
-				} else {
-					$(".layui-btn").hide();
-//					window.location.href = '/login'; //不需要在此处强制登录
 				}
-
-				$.ajax({
-					url: apiUrl + 'wxjssdk',
-					type: 'POST',
-					data: {
-						currenturl: window.location.href
-					},
-					success: function(data) {
-						if (data.code == 200) {
+			} else {
+				localStorage.setItem('setopenid', true);
+				localStorage.setItem('setopenid-date', new Date().getTime())
+				window.location.href = encodeURI(apiUrl + '/openid?url=' + window.location.href);
+			}
+		} else {
+			$(".layui-btn").hide();
+		}
+		$.ajax({
+			url: apiUrl + 'wxjssdk',
+			type: 'POST',
+			data: {
+				currenturl: window.location.href
+			},
+			success: function(data) {
+				if (data.code == 200) {
 //							console.log(data)
-							wx.config({
-								debug: false,
-								appId: data.data.appId,
-								timestamp: data.data.timestamp,
-								nonceStr: data.data.nonceStr,
-								signature: data.data.signature,
-								jsApiList: ["onMenuShareTimeline", "onMenuShareAppMessage"]
-							});
+					wx.config({
+						debug: false,
+						appId: data.data.appId,
+						timestamp: data.data.timestamp,
+						nonceStr: data.data.nonceStr,
+						signature: data.data.signature,
+						jsApiList: ["onMenuShareTimeline", "onMenuShareAppMessage"]
+					});
 
-							wx.ready(function() {
-								var link = window.location.href;
-								wx.onMenuShareTimeline({
-									title: title,
-									// 分享标题
-									link: link,
-									// 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-									desc: ref.motto,
-									//分享描述
-									imgUrl: cover,
-									// 分享图标
-									success: function() {
-										// 用户确认分享后执行的回调函数
-									},
-									cancel: function() {
-										// 用户取消分享后执行的回调函数
-									}
-								});
-								wx.onMenuShareAppMessage({
-									title: title,
-									// 分享标题
-									desc: ref.motto,
-									// 分享描述
-									link: link,
-									// 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-									imgUrl: cover,
-									// 分享图标
-									type: '',
-									// 分享类型,music、video或link，不填默认为link
-									dataUrl: '',
-									// 如果type是music或video，则要提供数据链接，默认为空
-									success: function() {
-										// 用户确认分享后执行的回调函数
-									},
-									cancel: function() {
-										// 用户取消分享后执行的回调函数
-									}
-								});
-							})
-						}
-					}
-				})
+					wx.ready(function() {
+						var link = window.location.href;
+						wx.onMenuShareTimeline({
+							title: title,
+							// 分享标题
+							link: link,
+							// 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+							desc: ref.motto,
+							//分享描述
+							imgUrl: cover,
+							// 分享图标
+							success: function() {
+								// 用户确认分享后执行的回调函数
+							},
+							cancel: function() {
+								// 用户取消分享后执行的回调函数
+							}
+						});
+						wx.onMenuShareAppMessage({
+							title: title,
+							// 分享标题
+							desc: ref.motto,
+							// 分享描述
+							link: link,
+							// 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+							imgUrl: cover,
+							// 分享图标
+							type: '',
+							// 分享类型,music、video或link，不填默认为link
+							dataUrl: '',
+							// 如果type是music或video，则要提供数据链接，默认为空
+							success: function() {
+								// 用户确认分享后执行的回调函数
+							},
+							cancel: function() {
+								// 用户取消分享后执行的回调函数
+							}
+						});
+					})
+				}
 			}
 		})
+
 	}
 
 	//获取参数
@@ -533,7 +522,10 @@
 			wepage: '',
 			wecard: '',
 			state: false, //未关注
-			status: '关注'
+			status: '关注',
+			pages_show : false,
+			card_show : false,
+			auth_show: false
 		},
 		created: function(){
 			var _self = this;
@@ -543,6 +535,31 @@
 		mounted: function(){
 			this.$nextTick(function () {
 				var _self = this;
+
+				if(pages_info.plats_user_auth != false)
+				{
+					this.card_show = true;
+				}
+				if(pages_info.plats_user_cert != false && pages_info.plats_user_cert.type == 2)
+				{
+					this.account = pages_info.plats_user_cert.name;
+					this.card_show = false;
+					this.auth_show = true;
+				}
+				else
+				{
+					this.auth_show = true;
+				}
+				
+				if(pages_info.plats_user_auth != false)
+				{
+					this.cert = pages_info.plats_user_auth.name;
+				}
+				if(pages_info.plats_user_cert != false)
+				{
+					this.cert = pages_info.plats_user_cert.cert_info;
+				}
+
 				layui.use('layer', function(){ //独立版的layer无需执行这一句
 					var $ = layui.jquery, layer = layui.layer; //独立版的layer无需执行这一句
 					//触发事件
