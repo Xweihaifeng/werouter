@@ -147,9 +147,10 @@ var btgn_s = function() {
                     dataType: "json",
                     success: function(data) {
                         if (data.code == 200) {
-                            localStorage.setItem('token', data.data.token);
-                            localStorage.setItem('weid', data.data.weid);
+                            localStorage.setItem('token', data.data.user.token);
+                            localStorage.setItem('weid', data.data.user.weid);
                             localStorage.setItem('phone', data.data.user.phone);
+                            localStorage.setItem('avatar', data.data.user.avatar);
                             localStorage.setItem('user', data.data.user);
                             setCookie(data.token, 7);
                             $(".fom-axx").hide();
@@ -203,9 +204,10 @@ var btgn_s = function() {
                         dataType: "json",
                         success: function(data) {
                             if (data.code == 200) {
-                                localStorage.setItem('token', data.data.token);
-                                localStorage.setItem('weid', data.data.weid);
+                                localStorage.setItem('token', data.data.user.token);
+                                localStorage.setItem('weid', data.data.user.weid);
                                 localStorage.setItem('phone', data.data.user.phone);
+                                localStorage.setItem('avatar', data.data.user.avatar);
                                 localStorage.setItem('user', data.data.user);
                                 setCookie(data.token, 7);
                                 $(".btn-xinxi2").css({
