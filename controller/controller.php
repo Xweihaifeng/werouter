@@ -41,6 +41,10 @@ class controller
 
         if(!empty($row['weid']))
         {
+        	if(empty($row['nickname']))
+        	{
+        		$row['nickname'] = '神秘人';
+        	}
         	if(empty($row['real_name']))
         	{
         		$row['real_name'] = '神秘人';
