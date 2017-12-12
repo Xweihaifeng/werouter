@@ -109,7 +109,7 @@
                     localStorage.setItem('weid', data.data.weid);
                     localStorage.setItem('phone', data.data.phone);
                     setCookie(data.token, 7);
-                    if (!data.data.phone) {
+                    if (data.data.phone === null || data.data.phone === undefined || data.data.phone === '') {
                         location.href = siteUrl + "/bind"
                     }
                 }
