@@ -36,23 +36,6 @@ $(function() {
     setCookie('', -1);
     clearCookie();
 
-
-    var code = GetQueryString('code');
-    var state = GetQueryString('state');
-
-    if (code !== null && code !== undefined && code !== '') {
-        $.ajax({
-            url: apiUrl + "wx/scan_callback",
-            data: {
-                'code': code,
-                'state': state
-            },
-            success: function(data) {
-                console.log(data);
-            }
-        });
-    }
-
     var token = window.localStorage.getItem('token'),
         get_weid
     const template = `

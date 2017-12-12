@@ -94,6 +94,23 @@
     <!-- <script src="/js/news_base.js"></script> -->
     <script>
         $("#favicon").attr("href", ApiMaterPlatQiniuDomain + window.localStorage.getItem("fav"));
+
+        var code = GetQueryString('code');
+        var state = GetQueryString('state');
+        if (code !== null && code !== undefined && code !== '') {
+            $.ajax({
+                url: apiUrl + "wx/scan_callback",
+                data: {
+                    'code': code,
+                    'state': state
+                },
+                success: function(data) {
+                    if (!data.data.phone) {
+                        location.href = siteUrl + "/user/scan_bind"
+                    }
+                }
+            });
+        }
         var obj = new WxLogin({
             id: "qrcode-block",
             appid: "wx4b835b375578d1c0",
