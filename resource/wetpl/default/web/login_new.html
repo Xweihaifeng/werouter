@@ -105,8 +105,9 @@
                     'state': state
                 },
                 success: function(data) {
+                    console.log(data);
                     if (!data.data.phone) {
-                        location.href = siteUrl + "/bind"
+                        //location.href = siteUrl + "/bind"
                     }
                 }
             });
