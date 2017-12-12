@@ -38,7 +38,7 @@ const reqUserId = (url, domain) => {
 }
 
 let domain = window.location.pathname.split('/')[1];
-reqUserId('http://new.wezchina.com/api/pages/page/getDetailByDomain/', domain);
+reqUserId(apiUrl + 'pages/page/getDetailByDomain/', domain);
 
 const my_article = resp;
 
