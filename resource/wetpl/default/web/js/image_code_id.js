@@ -38,6 +38,7 @@ $(function() {
 
 
     var code = GetQueryString('code');
+    var state = GetQueryString('state');
 
     if (code !== null && code !== undefined && code !== '') {
         $.ajax({
