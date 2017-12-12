@@ -105,9 +105,12 @@
                     'state': state
                 },
                 success: function(data) {
-                    console.log(data);
+                    localStorage.setItem('token', data.token);
+                    localStorage.setItem('weid', data.data.weid);
+                    localStorage.setItem('phone', data.data.phone);
+                    setCookie(data.token, 7);
                     if (!data.data.phone) {
-                        //location.href = siteUrl + "/bind"
+                        location.href = siteUrl + "/bind"
                     }
                 }
             });
