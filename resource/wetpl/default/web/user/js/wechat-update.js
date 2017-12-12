@@ -4,7 +4,7 @@
 
 $(document).ready(function(){
     //  登录token参数
-    var token = window.localStorage.getItem('token'), get_weid = '';
+    var token = window.localStorage.getItem('token'), get_weid = '', mall_user_id = '';
     if(token) {
         $.ajaxSetup({
             global: true,
@@ -21,6 +21,7 @@ $(document).ready(function(){
 	    	if(data.code == 200 && data.data) {
 	    		var result105 = data.data;
                 get_weid=result105.weid;
+                mall_user_id=result105.plat_user_id;
                 $("input[name=weid]").val(result105.weid);
                 $("#app_id")		 .val(result105.app_id);
 	    		$("#app_cert")	     .val(result105.app_cert);
@@ -30,6 +31,7 @@ $(document).ready(function(){
 	    		$("#apiclient_key")	 .val(result105.apiclient_key);
                 $("#filename").html(result105.verify_file_name);
                 $("input[name=verify_file_name]").val(result105.verify_file_name);
+
 	    	}
 	    });
 	    options106.fail(function(fail) {
@@ -125,6 +127,7 @@ $(document).ready(function(){
             $('.open_content0').stop().slideDown(400);
             $(this).text("收起");
         }else {
+
             $('.open_content0').stop().slideUp(400);
             $(this).text("展开");
 
@@ -199,6 +202,42 @@ $(document).ready(function(){
         }
         addWechatPost(new FormData($("#uploadForm2")[0]));
     });
+    //测试
+    $("#wechat_test_save").click(function () {
+        var body107 = new Object();
+        body107.weid            = get_weid;
+        if(!body107.weid){
+            layer.msg("微信配置信息不存在！", {time: 5000});
+            return false;
+        }
+        addWechatTestPost();
+    });
+    //测试支付请求
+    function addWechatTestPost() {
+        $.ajax({
+            type: "POST",
+            url: apiUrl + "pages/wechatPay/wechatPayTest",
+            data:{mall_user_id:mall_user_id},// 要提交表单的ID
+            success: function (data) {
+                if (data.code == 200) {
+                    $('#myModal').find(".modal-title").text('配置成功');
+                    $('#myModal').find(".modal-body").css("text-align","center");
+                    $('#myModal').find(".modal-body").children().remove();
+                    $('#myModal').find(".modal-body").append("<img src='"+QRCODE+"?url="+data.data.url+"' />");
+                    $('#myModal').modal('show');
+                } else {
+                    if(data.message){
+                        layer.msg(data.message, {time: 1500});
+                    }else{
+                        layer.msg("配置有误请仔细检查", {time: 1500});
+                    }
+                }
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                layer.msg("配置有误请仔细检查", {time: 1500});
+            },
+        });
+    }
 
     //提交数据
     function addWechatPost(data) {

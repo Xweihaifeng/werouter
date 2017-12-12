@@ -45,6 +45,11 @@ class controllerRouter extends controller
 
         $wezchina_plats['plats_user'] = $this->db->queryOne($plats_user_sql , array($this->weid , $row['plat_user_id']));
 
+        if(empty($wezchina_plats['plats_user']['nickname']))
+        {
+            $wezchina_plats['plats_user']['nickname'] = '用户很懒,没有名字!';
+        }
+
         // 获取省份
         $plats_province_sql = 'SELECT name FROM we_plats_province WHERE id=?';
         $wezchina_plats['plats_user']['province'] = $this->db->queryOne($plats_province_sql , array($wezchina_plats['plats_user']['province_id']));
@@ -119,7 +124,7 @@ class controllerRouter extends controller
         // $this->config['config']['var title'] = 'yes';
         //$this->config['template'] = '/login.html';
         //if($param == 'index') return TRUE;
-
+        $this->config['config']['var is_domain'] = 'yes';
         $sql = 'SELECT domain,weid,plat_id,plat_user_id,is_brand,summary,background,share_image,qrcode_img
                  FROM we_pages WHERE plat_id=? AND domain=? ';
         $row = $this->db->queryOne($sql , array($this->weid , $param));

@@ -11,7 +11,7 @@ class Wez_qrcode extends controller
     public function __construct() 
     {
         parent::__construct();
-
+        
     }
 	public static function init($logo ,  $url , $logo_is)
 	{
@@ -21,7 +21,7 @@ class Wez_qrcode extends controller
 		// 用于签名的公钥和私钥
 		$accessKey = config::$plats['qiniu']['access_key'];
 		$secretKey = config::$plats['qiniu']['secret_key'];
-
+		
 		$linshi_time = time();
 		$storage_img = './storage/'.time().'_qrcode.png';
 
@@ -38,11 +38,11 @@ class Wez_qrcode extends controller
 			// $scale = $bowidth/$logo_qr_width;
 			// $logo_qr_height = $boheight/$scale;
 			// $from_width = ($qrcode_imgwidth - $logo_qr_width) / 2;
-
+			
 			imagecopyresampled($qrcode_img, $border, 155, 155, 0, 0, 102,102, 102, 102);
 			imagedestroy($border);
-
-
+			
+			
 			$newImage = imagecreatetruecolor(430,430);
 			$c = imagecolorallocatealpha($newImage , 255 , 255 , 255 , 0);//拾取一个完全透明的颜色
 			imagealphablending($newImage , false);//关闭混合模式，以便透明颜色能覆盖原画布
@@ -71,7 +71,7 @@ class Wez_qrcode extends controller
 			ImagePng($qrcode_img  , $storage_img );
 		}
 
-
+		
 		// 七牛上传
 		$auth = new Auth($accessKey, $secretKey);
 		$bucket = config::$plats['qiniu']['bucket'];

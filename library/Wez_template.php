@@ -6,13 +6,19 @@ class Wez_template
 {
 	private static $variable;
 
-	public static function init($file ,  $content , $config_file , $directory)
+	public static function init($file ,  $content , $config_file , $directory ,$additional_config)
 	{
 		$content = self::_replace($content , $file , $directory);
 		$content = str_replace('{{PATH_CONFIG}}', $config_file.'?t='.time() , $content);
 		$content = str_replace('{{PATH_TML}}', $file.$directory.'/' , $content);
 		$content = str_replace('</body>', '<script src="//captcha.luosimao.com/static/js/api.js"></script></body>' , $content);
-		return $content;
+		$content = str_replace('<html>', '<html><script>'.$additional_config.'</script>' , $content);
+		$content = str_replace('<html lang="en">', '<html><script>'.$additional_config.'</script>' , $content);
+		return self::_compress_html($content);
+	}
+
+	public static function _compress_html($string) {
+    	return ltrim(rtrim(preg_replace(array("/> *([^ ]*) *</","//","'/\*[^*]*\*/'","/\r\n/","/\n/","/\t/",'/>[ ]+</'),array(">\\1<",'','','','','','><'),$string)));
 	}
 
 	//解析模板

@@ -120,7 +120,7 @@ class router_verify{
 
             if(strpos($router_stirng , ':') !== false){
                 $method = ltrim($router_stirng , ':');
-
+                $match = '';
                 // 当有设置正则验证事 需要做验证
                 if(!empty($match = $this->_rule[$method]))
                 {
