@@ -9,6 +9,7 @@ function curl_action($url, $timeout = '2',$device = false)
 
     curl_setopt($ch, CURLOPT_TIMEOUT, $timeout);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查  
     //curl_setopt($ch, CURLOPT_HEADER, 0);
     //curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
     if($device){
