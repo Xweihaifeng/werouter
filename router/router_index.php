@@ -325,11 +325,18 @@ class main extends controller
             $plats['qiniu']['buckut'] = $this->qiniu_cofing['buckut'];
 		}
 
+        //平台信息相关
+        $plats_sql = 'SELECT plat_name FROM we_plats
+                WHERE weid=? ';
+        $plats_row = $this->db->queryOne($plats_sql , array($weid));
+        if(empty($plats_row)) error(404);
+
 		$plats_cms_sql = 'SELECT title , description , key_word
 						 , icp , favicon , logo , background , weibo_show 
 						 , background_up , bar1 , bar2 , bar3 , background_right
 						 ,bar4 , block FROM we_plat_cms WHERE plat_id=?';
 		$plats['plats_info'] = $this->db->queryOne($plats_cms_sql , array($weid));
+        $plats['plats_info']['plat_name'] = $plats_row['plat_name'];
 
         if(empty($_COOKIE['token']))
         {
