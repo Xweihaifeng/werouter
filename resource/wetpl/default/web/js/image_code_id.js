@@ -208,10 +208,11 @@ $(function() {
                 document.cookie = keys[i] + '=0;expires=' + new Date(0).toUTCString()
         }
     }
-    var saveUserInfo = function(token, weid, imgUrl, data) {
+    var saveUserInfo = function(token, weid, imgUrl, data, identity) {
         localStorage.setItem('token', token);
         localStorage.setItem('weid', weid);
         localStorage.setItem('phone', data.phone);
+        localStorage.setItem('identity', identity);
         setCookie(token, 7);
         if (!imgUrl) {
 
@@ -341,7 +342,7 @@ $(function() {
             success: function(data) {
                 console.log(data);
                 if (data.code != -200) {
-                    saveUserInfo(data.token, data.data.weid, data.data.avatar, data.data);
+                    saveUserInfo(data.token, data.data.weid, data.data.avatar, data.data, data.data.identity);
                     showLogin = false;
                     isLogin = true;
                     isCheckNum = false;

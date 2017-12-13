@@ -279,9 +279,10 @@ $(function() {
         document.cookie = "token="+ escape (token) + ";expires=" + exp.toGMTString() +";path=/;domain="+domain+";";
     }
 
-    var saveUserInfo = function(token, weid, imgUrl) {
+    var saveUserInfo = function(token, weid, imgUrl, identity) {
         localStorage.setItem('token', token);
         localStorage.setItem('weid', weid);
+        localStorage.setItem('identity', identity);
         setCookie(token, 7);
         if(!imgUrl) {
 
@@ -422,9 +423,8 @@ $(function() {
                 'domain': domain
             /* , 'imagecode': imageCode, 'imagecode_id': imageCodeID*/ },
             success: function(data){
-
                 if (data.code != -200) {
-                    saveUserInfo(data.token, data.data.weid, data.data.avatar);
+                    saveUserInfo(data.token, data.data.weid, data.data.avatar, data.data.identity);
                     showLogin = false;
                     isLogin = true;
                     isCheckNum = false;

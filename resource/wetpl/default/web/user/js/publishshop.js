@@ -72,9 +72,20 @@ var favicon = ApiMaterPlatQiniuDomain + localStorage.getItem('fav');
 $('#favicon').attr('href', favicon);
 
 
-
 $(function(){
      __init();
+
+    var memberDom = function(data){
+        var isPrice = data.price ? data.price : "";
+        var dom =
+            '<div class="form-group member" weid="'+data.weid+'">'+
+            '<label class="col-sm-2 control-label">'+data.name+'</label>'+
+            '<div class="col-sm-3">'+
+            '<input type="text" class="form-control" name="member-price" value="'+isPrice+'">'+
+                '</div>'+
+                '</div>';
+        return dom;
+    };
 
      $("input[name='price'],input[name='market_price'],input[name='reserve'],input[name='floor']").keyup(function(){
              var c=$(this);
@@ -88,8 +99,29 @@ $(function(){
              }
 
         })
-
-
+    $("input[name='discount_status']").click(function () {
+        $('.insert-member').children().remove();
+        if($("input[name='discount_status']:checked").val() == 1){
+            $.ajax({
+                url : apiUrl + 'plat/member_level',
+                type : 'get',
+                headers: {
+                    'Token': localStorage.getItem('token')
+                },
+                success : function (res) {
+                    console.log('dfsdfs',res);
+                    if(res.code == 200 && res.data.length){
+                        for(var i=0; i<res.data.length; i++){
+                            $('.insert-member').append(memberDom(res.data[i]))
+                        }
+                    }
+                },
+                error : function (xhr) {
+                    console.log(xhr)
+                }
+            })
+        }
+    })
    /* //route
     var isLogin = false; //判断用户登陆与否
     var router = function(route){
@@ -498,7 +530,15 @@ malldetail();
                     if(goods.postage_status==2){
                         $(".postage").show();
                         $(".postage_max_money").show();
-                    }    
+                    }
+                    $("input[name='discount_status']").attr("checked",goods.discount_status);
+                    $('.insert-member').children().remove();
+                    if(goods.discount_status == 1 && goods.discount.length){
+                        for(var i=0; i<goods.discount.length; i++){
+                             $('.insert-member').append(memberDom(goods.discount[i]))
+                        }
+                    }
+
                         CKEDITOR.instances.editor1.setData(goods.content);
                     $("select[name='cate_id']").find("#"+goods.cate_id).attr("selected","selected");
                     if(goods.picture!=null){
@@ -592,12 +632,13 @@ malldetail();
             var postage_status=$("input[name='postage_status']:checked").val();
             var postage=$("[name='postage']").val();
             var postage_max_money=$("[name='postage_max_money']").val();
+            var discount_status = $("input[name='discount_status']:checked").val();
             $(".addimg").each(function(index){
                 if(index+1<addimglength){
 
                     picture[index]=$(this).find("input[name='thumb_image_"+(index+1)+"']").val();
                 }
-            })
+            });
             if (title == '') {
                 mess_tusi('请输入标题');
                 return;
@@ -628,6 +669,18 @@ malldetail();
                     return;    
                 }   
             }
+            if(discount_status == 1){
+                var discount = []
+                $('.member').each(function (ind,item) {
+                    var obj = {};
+                    if($(item).find("input[name='member-price']").val()){
+                        obj.weid = $(item).attr('weid');
+                        obj.name = $(item).find("label")[0].innerText;
+                        obj.price = $(item).find("input[name='member-price']").val();
+                        discount.push(obj)
+                    }
+                })
+            }
             var sendData = {
                 title: title,
                 price: price,
@@ -646,6 +699,8 @@ malldetail();
                 postage_status:postage_status,
                 postage:postage,
                 postage_max_money:postage_max_money,
+                discount_status:discount_status,
+                discount:discount
             }
             // console.log(sendData);
 
