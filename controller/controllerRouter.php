@@ -158,7 +158,7 @@ class controllerRouter extends controller
         }
         return TRUE;
     }
-
+    
     //验证TOKEN
     public function user($param)
     {

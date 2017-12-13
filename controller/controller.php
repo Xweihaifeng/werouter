@@ -33,6 +33,7 @@ class controller
     	else
     	{
     		$token = $_COOKIE['token'];
+
 			$sql = 'SELECT weid,avatar,sex,real_name,nickname,motto,province_id,area_id FROM we_plats_user WHERE token=?';
 
 			$row = $this->db->queryOne($sql , array($token));
