@@ -4,6 +4,7 @@
 
 var url = window.location.pathname.split('/');
 var active = url.pop();
+
 var domain = url.slice(1, 2)[0];
 
 $(".linkto").attr('href', '/' + domain)
@@ -487,6 +488,7 @@ $(document).ready(function() {
 				console.log(data);
 				if(data.code == 200) {
 					var goods = data.data;
+
 					$('title').text(goods.title);
 
 					loadGoods('', goods.weid, goods.cate_id, goods);
@@ -736,21 +738,6 @@ $(document).ready(function() {
 		var scriptEle = $("<script></script>");
 		scriptEle.attr("src", "/common/js/focusimg.js");
 		$("head").append(scriptEle);
-
 	}
 
-	if(localStorage.getItem('title') == "" || localStorage.getItem('title') == null || localStorage.getItem('title') == undefined || localStorage.getItem('title') == "null") {
-		$.ajax({
-			url: apiUrl + "cms/advs",
-			type: 'get',
-			success: function(data) {
-				if(data.code == 200) {
-					localStorage.setItem('title', data.data.setting.title);
-				}
-			},
-			error: function(xhr) {
-				console.log(xhr);
-			}
-		})
-	}
 })

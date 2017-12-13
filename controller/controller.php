@@ -51,7 +51,7 @@ class controller
         	}
         	if(empty($row['motto']))
         	{
-        		$row['motto'] = '人懒什么都没有';
+        		$row['motto'] = '咱俩不太熟，暂时保密';
         	}
             return $row;
         }
