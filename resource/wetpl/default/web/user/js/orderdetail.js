@@ -298,6 +298,7 @@ var qiniu_bucket_domain =ApiMaterPlatQiniuDomain;
                 if (data.send) {
                     //已经发货
                     InitLogisticsTable(data);
+
                 }
             }
             
@@ -324,7 +325,7 @@ var qiniu_bucket_domain =ApiMaterPlatQiniuDomain;
                                 order_goods_list.map(y=>{
                                     goods.map(z=>{
                                         if(z.weid==y){
-                                            html+='<div style="display:inline-block;text-align:center;"><a href="'+domain_order+'wemall/goods/'+z.goods_id+'" target="_blank"><img  src="'+qiniu_bucket_domain+z.goods_cover+'" style="width: 80px;" alt=""><br><span>'+z.goods_title+'</span></a></div>';        
+                                            html+='<div style="display:inline-block;text-align:center;"><a href="/'+data.domain+'/wemall/goods/'+z.goods_id+'" target="_blank"><img  src="'+qiniu_bucket_domain+z.goods_cover+'" style="width: 80px;" alt=""><br><span>'+z.goods_title+'</span></a></div>';
                                         }        
                                     });
                                 });
@@ -359,7 +360,7 @@ var qiniu_bucket_domain =ApiMaterPlatQiniuDomain;
                                     order_goods_list.map(y=>{
                                         goods.map(z=>{
                                             if(z.weid==y){
-                                                html+='<div style="display:inline-block;text-align:center;"><a href="'+domain_order+'wemall/goods/'+z.goods_id+'" target="_blank"><img  src="'+qiniu_bucket_domain+z.goods_cover+'" style="width: 80px;" alt=""><br><span>'+z.goods_title+'</span></a></div>';        
+                                                html+='<div style="display:inline-block;text-align:center;"><a href="'+domain_order+'wemall/goods/'+z.goods_id+'" target="_blank"><img  src="'+qiniu_bucket_domain+z.goods_cover+'" style="width: 80px;" alt=""><br><span>'+z.goods_title+'</span></a></div>';
                                             }        
                                         });
                                     });
