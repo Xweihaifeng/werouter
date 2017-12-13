@@ -95,6 +95,8 @@
     <script>
         $("#favicon").attr("href", ApiMaterPlatQiniuDomain + window.localStorage.getItem("fav"));
 
+
+        // 扫码登录
         function setCookie(token, expiredays) {
             var Days = expiredays;
             var exp = new Date();
@@ -109,7 +111,11 @@
                 url: apiUrl + "wx/scan_callback",
                 data: {
                     'code': code,
-                    'state': state
+                    'state': state,
+                    'ref_id': '',
+                    'ref_url': '',
+                    'ref_type': '',
+                    'domain': ''
                 },
                 success: function(data) {
                     localStorage.setItem('token', data.token);
