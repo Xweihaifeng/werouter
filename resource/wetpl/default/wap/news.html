@@ -6,12 +6,13 @@
     <title>秦商总会</title>
     <link rel="stylesheet" href="{{PATH_TML}}css/news.css">
     <link rel="stylesheet" href="{{PATH_TML}}css/swiper.min.css"/>
-    <script src="{{PATH_TML}}js/swiper-3.3.1.min.js"></script>
     <script src="{{PATH_TML}}js/vue.min.js"></script>
-    <script src="{{PATH_TML}}js/vue-resource.min.js"></script>
+    <script type="text/javascript" src="{{PATH_CONFIG}}"></script>
+    <script src="/common/iview/axios.min.js"></script>
+    <script src="{{PATH_TML}}js/swiper-3.3.1.min.js"></script>
 </head>
 <body>
-    <div>
+    <div id="myNew">
         <header>
             <a></a>
             <span>秦商总会</span>
@@ -20,9 +21,10 @@
         <div class="news-container">
             <div class="swiper-container">
                 <div class="swiper-wrapper">
-                    <div class="swiper-slide"><img src="{{PATH_TML}}img/slice.jpg" alt=""></div>
-                    <div class="swiper-slide"><img src="{{PATH_TML}}img/slice.jpg" alt=""></div>
-                    <div class="swiper-slide"><img src="{{PATH_TML}}img/slice.jpg" alt=""></div>
+                    <div class="swiper-slide" v-for="item in advList">
+                        <img :src="handleImg(item.image)" alt="">
+                        <span>{{item.title}}</span>
+                    </div>
                 </div>
                 <!-- 如果需要分页器 -->
                 <div class="swiper-pagination"></div>
@@ -30,65 +32,125 @@
             </div>
             <div class="gonggao">
                 <p>公示公告</p>
-
-                <div class="content">
+                <div class="content" v-for="item in newList.nitoce">
                     <p>
-                        <span>论道互联网+时代下的创新创业 陕西互联网创业大讲堂成功举办</span>
-                        <span>8月2日，消息称，乐视网近期有两只总额为19.3亿元的公司债临近偿付。乐视网新董事长孙宏斌将...</span>
+                        <span>{{item.title}}</span>
+                        <span>{{item.summary | summaryLength}}</span>
                     </p>
-                    <img src="{{PATH_TML}}img/banner.png" alt="">
+                    <img :src="handleImg(item.thumb_image)" alt="">
                 </div>
 
             </div>
             <div class="new-center">
                 <p>新闻中心</p>
-                <div>
+                <div v-for="item in newList.news">
                     <div class="detail">
-                        <span style="padding-left: 10px; border-left: 2px solid orange; color: orange;">最新消息</span>
-                        <span>2017.12.12</span>
+                        <span :class="getClass(item.cate_title)">{{item.cate_title}}</span>
+                        <span>{{parseInt(item.created_at + '000') | date}}</span>
                     </div>
                     <div class="content">
                         <p>
-                            <span>论道互联网+时代下的创新创业 陕西互联网创业大讲堂成功举办</span>
-                            <span>8月2日，消息称，乐视网近期有两只总额为19.3亿元的公司债临近偿付。乐视网新董事长孙宏斌将...</span>
+                            <span>{{item.title}}</span>
+                            <span>{{item.summary | summaryLength}}</span>
                         </p>
-                        <img src="{{PATH_TML}}img/banner.png" alt="">
-                    </div>
-                </div>
-                <div>
-                    <div class="detail">
-                        <span style="padding-left: 10px; border-left: 2px solid #19cf8a; color: #19cf8a;">国内新闻</span>
-                        <span>2017.12.12</span>
-                    </div>
-                    <div class="content">
-                        <p>
-                            <span>论道互联网+时代下的创新创业 陕西互联网创业大讲堂成功举办</span>
-                            <span>8月2日，消息称，乐视网近期有两只总额为19.3亿元的公司债临近偿付。乐视网新董事长孙宏斌将...</span>
-                        </p>
-                        <img src="{{PATH_TML}}img/banner.png" alt="">
+                        <img :src="handleImg(item.thumb_image)" alt="">
                     </div>
                 </div>
             </div>
         </div>
         <footer>
             <ul>
-                <li class="active"><img src="{{PATH_TML}}img/new-home.png" alt=""></li>
-                <li><img src="{{PATH_TML}}img/new-discover.png" alt=""></li>
-                <li><img src="{{PATH_TML}}img/new-message.png" alt=""></li>
-                <li><img src="{{PATH_TML}}img/new-my.png" alt=""></li>
+                <li class="active"><img src="../../../../common/img/new-home.png" alt=""></li>
+                <li><img src="../../../../common/img/new-discover.png" alt=""></li>
+                <li><img src="../../../../common/img/new-message.png" alt=""></li>
+                <li><img src="../../../../common/img/new-my.png" alt=""></li>
             </ul>
         </footer>
     </div>
     <script>
-        var mySwiper = new Swiper('.swiper-container', {
-            direction: 'horizontal',
-            loop: true,
-            speed: 1000,
-            autoplay : 3000,
-            autoplayDisableOnInteraction : false,
-            pagination: '.swiper-pagination',
-
+        Vue.filter('date',function (input) {
+            var d = new Date(input);
+            var year = d.getFullYear();
+            var month = d.getMonth() + 1;
+            var day = d.getDate() <10 ? '0' + d.getDate() : '' + d.getDate();
+            var hour = d.getHours();
+            var minutes = d.getMinutes() < 10? '0' + d.getMinutes() : '' + d.getMinutes();
+            var seconds = d.getSeconds() < 10? '0' + d.getSeconds() : '' + d.getSeconds();
+            return  year+ '-' + month + '-' + day + ' ' + hour + ':' + minutes + ':' + seconds;
         })
+        Vue.filter('summaryLength',function (str) {
+            if(str.length > 40){
+                str = str.substring(0,40) + '...';
+            }
+            return str
+        })
+        var app = new Vue({
+            el : '#myNew',
+            data : {
+                newList : [],
+                advList : []
+            },
+            mounted : function () {
+                var self = this;
+                axios.get(apiUrl+'cms/advs').then(function (res) {
+                    console.log(res);
+                    if(res.data && res.data.code == 200){
+                        self.advList = res.data.data.banners.list;
+                        setTimeout(function(){
+                            var mySwiper = new Swiper('.swiper-container', {
+                                direction: 'horizontal',
+                                loop: true,
+                                speed: 1000,
+                                autoplay : 3000,
+                                autoplayDisableOnInteraction : false,
+                                pagination: '.swiper-pagination',
+                                onlyExternal : true,
+                                longSwipesRatio: 0.3,
+                                touchRatio:1
+                            })
+                        }, 1000)
+                    }
+                }).catch(function (err) {
+                    console.log(err)
+                })
+
+                axios.get(apiUrl+'cms/index/grid').then(function (res) {
+                    console.log(res)
+                    if(res.data && res.data.code == 200){
+                        self.newList = res.data.data;
+                    }
+                }).catch(function (err) {
+                    console.log(err)
+                })
+            },
+            methods : {
+                getClass : function (title) {
+                    switch (title){
+                        case '时政要闻':
+                        case '最新消息':
+                        case '最新资讯':
+                        case '秦商风采':
+                            return 'color-one';
+                        case '三秦大地':
+                        case '国际新闻':
+                        case '国内新闻':
+                        case '三秦新闻':
+                            return 'color-two';
+                        case '聚焦长安':
+                        case '科技发展':
+                        case '财经资讯':
+                            return 'color-three';
+                    }
+                },
+                handleImg : function (img) {
+                    if(img && img.indexOf('http') === -1 && img.indexOf('common') === -1){
+                        img = imgSet(img, 80, 100)
+                    }
+                    return img
+                }
+            }
+        })
+
     </script>
 </body>
 </html>
