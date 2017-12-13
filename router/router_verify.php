@@ -38,7 +38,7 @@ class router_verify{
         		$basics_router[] = $value;
         	}
         }
-
+        
         $rouert_match = $this->_router_count($basics_router , $uri);
 
         $is_router = $this->_router_match($rouert_match , $uri);

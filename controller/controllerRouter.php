@@ -77,7 +77,7 @@ class controllerRouter extends controller
         $logo = (!empty($wezchina_plats['plats_brand']['logo']) && $row['is_brand'] == 1) ? $wezchina_plats['plats_brand']['logo'] : $wezchina_plats['plats_user']['avatar'];
         //二维码已存在图片  
         $qrcode_img = $row['qrcode_img'];
-        
+
         //Wez_template::init($logo);
 
          //二维码圆心图片
@@ -94,11 +94,15 @@ class controllerRouter extends controller
             $qrcode_img_array = explode('/', $row['qrcode_img']);
             $qrcode_img_array_is = end($qrcode_img_array);
             if($qrcode_img_array_is != $logo_is) $qrset = TRUE;
+            if(!empty($qrcode_img_array_is) && empty($logo_is))
+            {
+                $qrset = FALSE;
+            }
         }
         //$qrset = TRUE;
         if($qrset == TRUE)
         {
-            $qrcode_img = Wez_qrcode::init($logo , $url , $logo_is);
+            $qrcode_img = Wez_qrcode::init($logo , $url , $logo_is , $qrcode_img);
             $set = array('qrcode_img' => $qrcode_img);
             $where = array('plat_id' => $row['plat_id'] , 'domain' => $row['domain']);
             $this->db->update('we_pages' , $set , $where);

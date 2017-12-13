@@ -13,7 +13,7 @@ class Wez_qrcode extends controller
         parent::__construct();
         
     }
-	public static function init($logo ,  $url , $logo_is)
+	public static function init($logo ,  $url , $logo_is , $qrcode_img_url)
 	{
 		$protocol = empty($_SERVER['HTTP_X_CLIENT_PROTO']) ? 'http://' : $_SERVER['HTTP_X_CLIENT_PROTO'] . '://';
 		
@@ -70,7 +70,7 @@ class Wez_qrcode extends controller
 			$qrcode_img = imagecreatefrompng("http://qr.liantu.com/api.php?&w=430&text=$url");
 			ImagePng($qrcode_img  , $storage_img );
 		}
-
+		
 		
 		// 七牛上传
 		$auth = new Auth($accessKey, $secretKey);
@@ -82,10 +82,14 @@ class Wez_qrcode extends controller
 
 		// 上传到七牛后保存的文件名
 		$key = "qrcode/$linshi_time/$logo_is";
-
 		$upload = $uploadMgr->putFile($token, $key, $storage_img);
 
+		// 删除以前的图片
+		$config = new \Qiniu\Config();
+		$bucketManager = new \Qiniu\Storage\BucketManager($auth, $config);
+		$bucketManager->delete($bucket, $qrcode_img_url);
 		unlink($storage_img);
+		
 		return $key;
 
 	}
