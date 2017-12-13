@@ -755,6 +755,8 @@ $(function () {
         })
     }
 
+
+
     var userId;
     var __init = function(weid) {
         $.ajax({
