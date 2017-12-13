@@ -144,28 +144,28 @@ $(function () {
                         }
                         $('#'+x.weid+' .status-oper').children().remove();
                     var operList = [];
+                    if(x.send!=''){
+                        operList.push({
+                            name : '查看物流',
+                            oper : 'distribute'
+                        })
+                    }
                     switch (x.order_status){
                         case 2:
                             break;
                         case 3:
-                            operList.push({
-                                name : '查看物流',
-                                oper : 'distribute'
-                            });
                             operList.push({
                                 name : '确认收货',
                                 oper : 'take_delivery',
                             });
                             break;
                         case 4:
-                            operList.push({
-                                name : '查看物流',
-                                oper : 'distribute',
-                            });
+                            /*
                             operList.push({
                                 name : '评论',
                                 oper : 'goods_comment',
                             });
+                            */
                             operList.push({
                                 name : '确定交易',
                                 oper : 'transaction_completion',
@@ -176,33 +176,19 @@ $(function () {
                             });
                             break;
                         case 5:
-                            operList.push({
-                                name : '查看物流',
-                                oper : 'distribute',
-                            });
                             break;
                         case 7:
                             operList.push({
-                                name : '查看物流',
-                                oper : 'distribute'
-                            },{
                                 name : '删除订单',
                                 oper : 'delete_order',
                             });
                             break;
                         case 8:
-                            operList.push({
-                                name : '确认退款',
-                                oper : 'confirmRefund'
-                            },{
-                                name : '查看物流',
-                                oper : 'distribute'
-                            });
                             break;
                         case 9:
                             operList.push({
-                                name : '查看物流',
-                                oper : 'distribute'
+                                name : '删除订单',
+                                oper : 'delete_order',
                             });
                             break;
                     }
@@ -316,7 +302,7 @@ $(function () {
             '<th style="text-align: right" colspan="2">'+
             '<div class="contact_seller" data-mobile="18966700695" onmouseover="$(this).find(\'span\').show();" onmouseout="$(this).find(\'span\').hide();">'+
             '<i></i>联系卖家'+
-            '<span style="display: none;">联系电话：'+data.phone+'</span>'+
+            '<span style="display: none;">联系电话：'+data.mallPhone+'</span>'+
             '</div>'+
             '</th>'+
             '</tr>'+
@@ -390,7 +376,7 @@ $(function () {
                                         for(var good = 0; good<goodsSendGroup.length; good++){
                                             if(goodsList[a].weid == goodsSendGroup[good]){
                                                 var imgDom =
-                                                    '<div>' +
+                                                    '<div style="text-align: center;">' +
                                                     '<img src="'+qiniu_bucket_domain+goodsList[a].goods_cover+'">'+
                                                     '<span>'+goodsList[a].goods_title+'</span>'+
                                                     '</div>';
@@ -414,7 +400,6 @@ $(function () {
                 closeModel();
             });
         }
-
 
 
         //确收货
