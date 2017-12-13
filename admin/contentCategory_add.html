@@ -597,10 +597,10 @@
             });
 
             $(document).on('change', 'select[name=type]', function() {
-                if ($(this).val() == 0) {
-                    $(".editor1").hide();
-                } else {
+                if ($(this).val() == 1) {
                     $(".editor1").show();
+                } else {
+                    $(".editor1").hide();
                 }
             });
             $(document).on('click', '.chs-btn', function() {

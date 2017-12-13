@@ -517,7 +517,7 @@
                         $('input[name=title]').val(data.data.title);
                         $('input[name=domain]').val(data.data.domain);
                         $('select[name=type]').val(data.data.type);
-                        if (data.data.type != 0) {
+                        if (data.data.type == 1) {
                             $(".editor1").show();
                         }
                         if (data.data.init == 1) {
@@ -640,10 +640,10 @@
             });
 
             $(document).on('change', 'select[name=type]', function() {
-                if ($(this).val() == 0) {
-                    $(".editor1").hide();
-                } else {
+                if ($(this).val() == 1) {
                     $(".editor1").show();
+                } else {
+                    $(".editor1").hide();
                 }
             });
             $('#bootstrapModal').on('hidden.bs.modal', function(e) {
