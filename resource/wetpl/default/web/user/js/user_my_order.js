@@ -237,18 +237,29 @@ $(function () {
                                         $(this).parent().find('.active').append('<a href="javascript:void(0)" id="'+prevactive+'">'+prevactive+'</a>').find("span").remove();
                                         $(this).parent().find('.active').prev().append('<span>'+(prevactive-1)+'</span>').find('a').remove();
                                         $(this).parent().find('.active').prev().addClass("active").siblings().removeClass('active');
-                                        orderlist(userId,prevactive-1,type);
+                                        var time_start=$("input[name='start_time']").val();
+                                        var time_end=$("input[name='end_time']").val();
+                                        var order_num=$("input[name='no']").val();
+                                        orderlist(userId,prevactive-1,type,{time_start:time_start,time_end:time_end,order_num:order_num});
                                     }
                                 }else if($(this).attr("id")=="next"){
                                     if(prevactive<pagenum){
                                         $(this).parent().find('.active').append('<a href="javascript:void(0)" id="'+prevactive+'">'+prevactive+'</a>').find("span").remove();
                                         $(this).parent().find('.active').next().append('<span>'+(prevactive+1)+'</span>').find('a').remove();
                                         $(this).parent().find('.active').next().addClass("active").siblings().removeClass('active');
-                                        orderlist(userId,prevactive+1,type);
+
+                                        var time_start=$("input[name='start_time']").val();
+                                        var time_end=$("input[name='end_time']").val();
+                                        var order_num=$("input[name='no']").val();
+                                        orderlist(userId,prevactive+1,type,{time_start:time_start,time_end:time_end,order_num:order_num});
+
                                     }
 
                                 }else{
-                                    orderlist(userId,$(this).find("a").text(),type);
+                                    var time_start=$("input[name='start_time']").val();
+                                    var time_end=$("input[name='end_time']").val();
+                                    var order_num=$("input[name='no']").val();
+                                    orderlist(userId,$(this).find("a").text(),type,{time_start:time_start,time_end:time_end,order_num:order_num});
                                     $(this).parent().find('.active').append('<a href="javascript:void(0)" id="'+prevactive+'">'+prevactive+'</a>').find("span").remove();
                                     $(this).addClass("active").siblings().removeClass('active');
                                     $(this).append('<span>'+curr+'</span>').find('a').remove();
@@ -431,7 +442,7 @@ $(function () {
                         console.log(data);
                         if (data.code == 200) {
                             //去支付
-                            window.location.href = "/" + order_domain + "/wemall/pay/" + orderId + "";
+                            window.open("/" + order_domain + "/wemall/pay/" + orderId + "");
                         } else {
                             layer.msg(data.message, {
                                 time: 1500
@@ -577,8 +588,17 @@ $(function () {
                     dataType : 'json',
                     success : function (data) {
                         if(data.code === 200){
+                            layer.msg("删除订单成功", {
+                                time: 1500
+                            });
                             //重新获取状
                             reloadOperation(orderId);
+                            var time_start=$("input[name='start_time']").val();
+                            var time_end=$("input[name='end_time']").val();
+                            var order_num=$("input[name='no']").val();
+                            var statusid=$(".current .btn-select").data("id");
+                            var page=$("pagination").find("active").find("span").text();
+                            orderlist(userId,page,statusid,{time_start:time_start,time_end:time_end,order_num:order_num});
                         }else{
                             layer.msg(data.message, {
                                 time: 1500
@@ -607,8 +627,7 @@ $(function () {
                             layer.msg("取消订单成功", {
                                 time: 1500
                             });
-                            //重新获取状
-                            window.location.reload();
+                            reloadOperation(orderId);
                         }else{
                             layer.msg(data.message, {
                                 time: 1500
