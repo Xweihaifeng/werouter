@@ -3,57 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <title>新闻中心</title>
-    <link rel="stylesheet" href="css/news.css">
-    <link rel="stylesheet" href="/werouter/common/css/swiper.min.css"/>
-    <script src="/werouter/common/js/swiper-3.3.1.min.js"></script>
-    <script src="/werouter/common/js/vue.min.js"></script>
-    <script src="/werouter/common/js/vue/vue-resource.min.js"></script>
+    <title>秦商总会</title>
+    <link rel="stylesheet" href="{{PATH_TML}}css/news.css">
+    <link rel="stylesheet" href="{{PATH_TML}}css/swiper.min.css"/>
+    <script src="{{PATH_TML}}js/swiper-3.3.1.min.js"></script>
+    <script src="{{PATH_TML}}js/vue.min.js"></script>
+    <script src="{{PATH_TML}}js/vue-resource.min.js"></script>
 </head>
 <body>
     <div>
-        <header>秦商总会</header>
-        <div class="swiper-container">
-            <div class="swiper-wrapper">
-                <div class="swiper-slide"><img src="img/slice.jpg" alt=""></div>
-                <div class="swiper-slide"><img src="img/slice.jpg" alt=""></div>
-                <div class="swiper-slide"><img src="img/slice.jpg" alt=""></div>
-            </div>
-            <!-- 如果需要分页器 -->
-            <div class="swiper-pagination"></div>
+        <header>
+            <a></a>
+            <span>秦商总会</span>
+            <i></i>
+        </header>
+        <div class="news-container">
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide"><img src="{{PATH_TML}}img/slice.jpg" alt=""></div>
+                    <div class="swiper-slide"><img src="{{PATH_TML}}img/slice.jpg" alt=""></div>
+                    <div class="swiper-slide"><img src="{{PATH_TML}}img/slice.jpg" alt=""></div>
+                </div>
+                <!-- 如果需要分页器 -->
+                <div class="swiper-pagination"></div>
 
-        </div>
-        <div class="gonggao">
-            <p>公示公告</p>
-            <div>
-                <img src="img/slice.jpg" alt="">
-                <span>8月2日，消息称，乐视网近期有两只总额为19.3亿元的公司债临近偿付。乐视网新董事长孙宏斌将先行对这两只公司债进行偿付。</span>
             </div>
-            <div>
-                <img src="img/slice.jpg" alt="">
-                <span>8月2日，消息称，乐视网近期有两只总额为19.3亿元的公司债临近偿付。乐视网新董事长孙宏斌将先行对这两只公司债进行偿付。</span>
+            <div class="gonggao">
+                <p>公示公告</p>
+
+                <div class="content">
+                    <p>
+                        <span>论道互联网+时代下的创新创业 陕西互联网创业大讲堂成功举办</span>
+                        <span>8月2日，消息称，乐视网近期有两只总额为19.3亿元的公司债临近偿付。乐视网新董事长孙宏斌将...</span>
+                    </p>
+                    <img src="{{PATH_TML}}img/banner.png" alt="">
+                </div>
+
             </div>
-            <div>
-                <p>8月2日，消息称，乐视网近期有两只总额为19.3亿元的公司债临近偿付。乐视网新董事长孙宏斌将先行对这两只公司债进行偿付。</p>
-            </div>
-        </div>
-        <div class="new-center">
-            <p>新闻中心</p>
-            <div>
-                <img src="img/slice.jpg" alt="">
-                <span>8月2日，消息称，乐视网近期有两只总额为19.3亿元的公司债临近偿付。乐视网新董事长孙宏斌将先行对这两只公司债进行偿付。</span>
-            </div>
-            <div>
-                <img src="img/slice.jpg" alt="">
-                <span>8月2日，消息称，乐视网近期有两只总额为19.3亿元的公司债临近偿付。乐视网新董事长孙宏斌将先行对这两只公司债进行偿付。</span>
+            <div class="new-center">
+                <p>新闻中心</p>
+                <div>
+                    <div class="detail">
+                        <span style="padding-left: 10px; border-left: 2px solid orange; color: orange;">最新消息</span>
+                        <span>2017.12.12</span>
+                    </div>
+                    <div class="content">
+                        <p>
+                            <span>论道互联网+时代下的创新创业 陕西互联网创业大讲堂成功举办</span>
+                            <span>8月2日，消息称，乐视网近期有两只总额为19.3亿元的公司债临近偿付。乐视网新董事长孙宏斌将...</span>
+                        </p>
+                        <img src="{{PATH_TML}}img/banner.png" alt="">
+                    </div>
+                </div>
+                <div>
+                    <div class="detail">
+                        <span style="padding-left: 10px; border-left: 2px solid #19cf8a; color: #19cf8a;">国内新闻</span>
+                        <span>2017.12.12</span>
+                    </div>
+                    <div class="content">
+                        <p>
+                            <span>论道互联网+时代下的创新创业 陕西互联网创业大讲堂成功举办</span>
+                            <span>8月2日，消息称，乐视网近期有两只总额为19.3亿元的公司债临近偿付。乐视网新董事长孙宏斌将...</span>
+                        </p>
+                        <img src="{{PATH_TML}}img/banner.png" alt="">
+                    </div>
+                </div>
             </div>
         </div>
         <footer>
             <ul>
-                <li class="active">首页</li>
-                <li>发现</li>
-                <li>消息</li>
-                <li>我的</li>
+                <li class="active"><img src="{{PATH_TML}}img/new-home.png" alt=""></li>
+                <li><img src="{{PATH_TML}}img/new-discover.png" alt=""></li>
+                <li><img src="{{PATH_TML}}img/new-message.png" alt=""></li>
+                <li><img src="{{PATH_TML}}img/new-my.png" alt=""></li>
             </ul>
         </footer>
     </div>
