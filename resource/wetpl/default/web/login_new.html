@@ -94,14 +94,39 @@
     <!-- <script src="/js/news_base.js"></script> -->
     <script>
         $("#favicon").attr("href", ApiMaterPlatQiniuDomain + window.localStorage.getItem("fav"));
-        var obj = new WxLogin({
-            id: "qrcode-block",
-            appid: "wx4b835b375578d1c0",
-            scope: "snsapi_login",
-            redirect_uri: apiUrl + "/wx/scan_callback",
-            href: 'https://wezchina.com/common/css/wechat.css',
-            state: ""
-        });
+
+        function setCookie(token, expiredays) {
+            var Days = expiredays;
+            var exp = new Date();
+            exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000);
+            document.cookie = "token=" + escape(token) + ";expires=" + exp.toGMTString() + ";path=/";
+        }
+
+        var code = GetQueryString('code');
+        var state = GetQueryString('state');
+        if (code !== null && code !== undefined && code !== '') {
+            $.ajax({
+                url: apiUrl + "wx/scan_callback",
+                data: {
+                    'code': code,
+                    'state': state
+                },
+                success: function(data) {
+                    localStorage.setItem('token', data.token);
+                    localStorage.setItem('weid', data.data.weid);
+                    localStorage.setItem('phone', data.data.phone);
+                    setCookie(data.token, 7);
+                    if (data.data.phone === null || data.data.phone === undefined || data.data.phone === '') {
+                        location.href = siteUrl + "/bind";
+                    } else {
+                        location.href = siteUrl + "/user";
+                    }
+
+                }
+            });
+        }
+
+
     </script>
 </body>
 

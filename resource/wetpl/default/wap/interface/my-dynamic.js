@@ -22,6 +22,6 @@ const reqDynamicList = (url) => {
 
 let type = 1;
 let domain = window.location.pathname.split('/')[1];
-reqDynamicList('http://new.wezchina.com/api/circel/dynamic?type=' + type + '&domain=' + domain);
+reqDynamicList(apiUrl + 'circel/dynamic?type=' + type + '&domain=' + domain);
 
 const my_dynamic = resp;

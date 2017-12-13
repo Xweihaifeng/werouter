@@ -12,7 +12,9 @@
         <link rel="stylesheet" href="{{PATH_TML}}user/css/wechat-update.css">
 
         <script src="/common/js/jquery-3.2.1.min.js"></script>
-        <!--<script src="/common/js/bootstrap.min.js"></script>-->
+        <script src="/common/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="{{PATH_TML}}user/css/application.css">
+
         <script src="/common/js/layer/layer.js"></script>
         <script src="{{PATH_CONFIG}}"></script>
     </head>
@@ -29,6 +31,8 @@
                             <li class="homepage"><a> 微信配置 </a></li>
                         </ol>
                     </div>
+
+                    <!--
                     <form id="uploadForm" class="form-horizontal" onsubmit="return addWechatPost()" method= "post" enctype ="multipart/form-data">
                     <div class="con-hd">
                         <div class="jumbotron">
@@ -78,15 +82,15 @@
                                 </div>
                                 <div class="form-group row">
                                     <label for="apiclient_key" class="col-sm-2 control-label" style="width:130px;"> 授权域名文件：</label>
-                                    <div class="col-xs-12 col-sm-4 col-md-4">
+                                    <div class="col-xs-12 col-sm-10 col-md-10">
                                         <div class="file-container" style="display:inline-block;position:relative;overflow: hidden;vertical-align:middle">
                                             <button class="btn btn-success fileinput-button" type="button" style="width: 150px;">上传</button>
                                             <input type="file" id="verify_file" name="verify_file"  style="position:absolute;top:0;left:0;font-size:34px; opacity:0">
                                         </div>
                                         <span id="filename" style="vertical-align: middle">未上传文件</span>
                                         <input type="hidden" name="verify_file_name"  value="">
+                                        <span style="color:#f00;">*</span>
                                     </div>
-                                    <span style="color:#f00;">*</span>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-sm-offset-2 col-sm-4">
@@ -112,6 +116,128 @@
                         </div>
                     </div>
                     </form>
+                    -->
+
+                    <div id="center">
+
+                        <div class="bottom">
+                            <div class="brand">
+                                <div class="left">
+                                    <div class="left_one">
+                                        <span>1</span>
+                                        <p>配置须知请仔细阅读</p>
+                                    </div>
+                                    <div class="left_two">
+                                        <!--<span>!</span>-->
+                                        <!--<p>没有开通二级域名,或独立域名无权操作</p>-->
+                                    </div>
+                                </div>
+                                <div class="right">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="list">
+                            <div class="sign">
+                                <div class="sign_set">
+                                    <p>公众平台配置</p>
+                                </div>
+                                <div class="open" id="open">展开</div>
+                            </div>
+                            <div class="open_content open_content0" style="display: none;padding-top: 8px;">
+                                <form id="uploadForm" class="form-horizontal" method="post"
+                                      enctype="multipart/form-data">
+                                    <input type="hidden" name="weid"  value="">
+                                    <div class="input-group signset">
+                                        <span style="width: 100px;">公众号appID: </span>
+                                        <input type="text" class="form-control" id="app_id" name="app_id"
+                                               style="width: 500px;" placeholder="公众号ID">
+                                        <p></p>
+                                    </div>
+                                    <div class="input-group surplus ">
+                                        <span style="width: 100px;">公众号密钥:</span>
+                                        <input type="text" class="form-control" id="app_cert" name="app_cert"
+                                               style="width: 500px;" placeholder="公众号密钥">
+                                    </div>
+                                    <div class="input-group surplus ">
+                                        <button type="button" class="btn btn-primary" id="wechat_open_save"> 确认保存</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="sign">
+                                <div class="sign_set">
+                                    <p>商户平台配置</p>
+                                </div>
+                                <div class="open" id="open1">展开</div>
+                            </div>
+                            <div class="open_content open_content1" style="display: none;padding-top: 8px;">
+                                <form id="uploadForm1" class="form-horizontal" method="post"
+                                      enctype="multipart/form-data">
+                                    <input type="hidden" name="weid"  value="">
+                                    <div class="input-group signset">
+                                        <span style="width: 100px;">商户号ID: </span>
+                                        <input type="text" class="form-control" id="merchant_id" name="merchant_id" style="width: 500px;" placeholder="商户号ID">
+                                        <p></p>
+                                    </div>
+                                    <div class="input-group surplus ">
+                                        <span style="width: 100px;">商户号密钥:</span>
+                                        <input type="text" class="form-control" id="merchant_key" name="merchant_key" style="width: 500px;" placeholder="商户号密钥">
+                                    </div>
+                                    <div class="input-group surplus " style="height:auto;">
+                                        <span style="width: 100px;">api证书:</span>
+                                        <textarea type="text" class="form-control" id="apiclient_cert" name="apiclient_cert" style="width: 500px;height: 300px;" placeholder="api证书"></textarea>
+                                    </div>
+                                    <div class="input-group surplus " style="height:auto;">
+                                        <span style="width: 100px;">api证书密钥:</span>
+                                        <textarea type="text" class="form-control" id="apiclient_key" name="apiclient_key" style="width: 500px;height: 300px;" placeholder="api证书密钥"></textarea>
+                                    </div>
+                                    <div class="input-group surplus ">
+                                        <button type="button" class="btn btn-primary" id="wechat_merchant_save"> 确认保存</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="sign">
+                                <div class="sign_set">
+                                    <p>授权域名文件配置</p>
+                                </div>
+                                <div class="open" id="open2">展开</div>
+                            </div>
+                            <div class="open_content open_content2" style="display: none;padding-top: 8px;">
+                                <form id="uploadForm2" class="form-horizontal" method="post"
+                                      enctype="multipart/form-data">
+                                    <input type="hidden" name="weid"  value="">
+                                    <div class="input-group signset">
+                                        <span style="width: 100px;">授权域名文件: </span>
+                                        <div class="file-container" style="display:inline-block;position:relative;overflow: hidden;vertical-align:middle">
+                                            <button class="btn btn-success fileinput-button" type="button" style="width: 150px;">上传</button>
+                                            <input type="file" id="verify_file" name="verify_file"  style="position:absolute;top:0;left:0;font-size:34px; opacity:0">
+                                        </div>
+                                        <span id="filename" style="vertical-align: middle">未上传文件</span>
+                                        <input type="hidden" name="verify_file_name"  value="">
+                                        <p></p>
+                                    </div>
+                                    <div class="input-group surplus ">
+                                        <button type="button" class="btn btn-primary" id="wechat_verify_save"> 确认保存</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="sign">
+                                <div class="sign_set">
+                                    <p>测试支付功能</p>
+                                </div>
+                                <div class="open" id="open3">展开</div>
+                            </div>
+                            <div class="open_content open_content3" style="display: none; padding-top: 8px;">
+                                <form id="uploadForm3" class="form-horizontal" method="post"
+                                      enctype="multipart/form-data">
+                                    <input type="hidden" name="weid"  value="">
+                                    <div class="input-group surplus ">
+                                        <button type="button" class="btn btn-primary" id="wechat_test_save"> 测试</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -121,3 +247,19 @@
         <script src="{{PATH_TML}}user/js/wechat-update.js"></script>
     </body>
 </html>
+
+<div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close close_modal" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel"> 微信配置信息提示 </h4>
+            </div>
+            <div class="modal-body modal_info">
+
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>

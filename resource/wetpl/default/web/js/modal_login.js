@@ -259,21 +259,8 @@ $(function() {
     }
 
     $("#home, #login, #article, #active, #project, #shopping, #zone, #zan").click(function(){
-        let path = window.location.pathname.split('/');
-        //  首页              官方微主页             官方各模块
-        if (path[1] == '' || path[1] == 'index' || path.indexOf('index') != -1) {
-            domain = '/index'
-        } else {
-            if (('/' + path[1]) != domain && path[1].length > 4 && path[1] != 'magazine' && path[1] != 'apply') { //排除频道，雜誌
-                domain = '/' + path[1];
-            } else {
-                if (!aru) {
-                    domain = '/index'
-                }
-            }
-        }
         var id = $(this).attr("id");
-        router(id, domain);
+        router(id, '/' + pages_index);
     })
 
     //关闭登录模态框
@@ -282,13 +269,14 @@ $(function() {
         $("#modal_login").fadeOut(300);
         $("body").css("overflow", "auto");
     })
-
+    
     function setCookie(token, expiredays)
     {
         var Days = expiredays;
         var exp = new Date();
+        var domain = '.'+root_domian;
         exp.setTime(exp.getTime() + Days*24*60*60*1000);
-        document.cookie = "token="+ escape (token) + ";expires=" + exp.toGMTString() +";path=/";
+        document.cookie = "token="+ escape (token) + ";expires=" + exp.toGMTString() +";path=/;domain="+domain+";";
     }
 
     var saveUserInfo = function(token, weid, imgUrl) {
@@ -434,7 +422,7 @@ $(function() {
                 'domain': domain
             /* , 'imagecode': imageCode, 'imagecode_id': imageCodeID*/ },
             success: function(data){
-                console.log(data);
+
                 if (data.code != -200) {
                     saveUserInfo(data.token, data.data.weid, data.data.avatar);
                     showLogin = false;

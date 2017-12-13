@@ -59,7 +59,6 @@
         <script>
             // 全局请求添加token
             Vue.http.headers.common['token'] = window.localStorage.getItem("token");
-
             // 创建vue根实例
             var app = new Vue({
                 el: "#pay_section",
@@ -99,21 +98,12 @@
                             if(data.data.code=='200'){
                                 self.config = data.data.data.config;
                             }else{
-                                layer.msg(ata.data.message);
+                                layer.msg(data.data.message);
                             }
                         });
                     }
                     //回调
-                     var jsApiCall = function (){
-                        WeixinJSBridge.invoke(
-                            'getBrandWCPayRequest',
-                            this.config,
-                            function(res){
-                                WeixinJSBridge.log(res.err_msg);
-                                alert(res.err_code+res.err_desc+res.err_msg);
-                            }
-                        );
-                    }
+
                 },
                 ready: function() {
 
@@ -129,12 +119,30 @@
                             if( document.addEventListener ){
                                 document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
                             }else if (document.attachEvent){
-                                document.attachEvent('WeixinJSBridgeReady', jsApiCall); 
+                                document.attachEvent('WeixinJSBridgeReady', jsApiCall);
                                 document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
                             }
                         }else{
-                            jsApiCall();
+                            this.jsApiCall();
                         }
+                    },
+                    jsApiCall:function (){
+                        WeixinJSBridge.invoke(
+                            'getBrandWCPayRequest',
+                            this.config,
+                            function(res){
+                                WeixinJSBridge.log(res.err_msg);
+                                if (res.err_msg == "get_brand_wcpay_request:ok") {
+                                    layer.msg("微信支付完成", { time: 1500 });
+
+                                } else if (res.err_msg == "get_brand_wcpay_request:cancel") {
+                                    //取消支付!
+                                    layer.msg("已取消支付", { time: 1500 });
+                                } else {
+                                    layer.msg("微信支付失败！", { time: 1500 });
+                                }
+                            }
+                        );
                     }
                 }
             })

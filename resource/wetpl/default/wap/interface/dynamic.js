@@ -25,6 +25,6 @@ const reqDynamicList = (url) => {
 
 //alert(localStorage.getItem('token'))
 let type = 2;
-reqDynamicList('http://new.wezchina.com/api/circel/dynamic?type=' + type);
+reqDynamicList(apiUrl + 'circel/dynamic?type=' + type);
 
 const dynamic = resp;

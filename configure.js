@@ -4,29 +4,16 @@
 
 //接口配置
 const httpType = window.location.protocol;
+
 const apiUrl = httpType + '//{{url}}/api/';
+
 const siteUrl = httpType + '//{{url}}';
 
 const domainHost = window.location.host;
 
 const controlUrl = 'https://mp.wezchina.com/api/menu_config?mark=';
 
-//七牛配置
-var qiniu;
-$.ajax({
-    url: apiUrl + 'settings',
-    type: 'get',
-    async: false,
-    success: function(data) {
-        console.log('setting:', data)
-        qiniu = httpType + '//' + data.data.qiniu.domain_custom + '/';
-    },
-    error: function(xhr) {
-        console.log(xhr);
-    }
-})
-
-const ApiMaterPlatQiniuDomain = qiniu;
+const ApiMaterPlatQiniuDomain =  httpType + '//' + plats_qiniu.domain_custom + '/';
 
 //七牛图片配置
 var imgSet = function(path, width, height, mode) {

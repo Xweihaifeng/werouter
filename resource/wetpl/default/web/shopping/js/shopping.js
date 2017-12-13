@@ -327,24 +327,6 @@ $(document).ready(function () {
         })
     }
     catesfun(pages_info.plats_domian.plat_user_id);
-    if (localStorage.getItem('title') == "" || localStorage.getItem('title') == null || localStorage.getItem('title') == undefined || localStorage.getItem('title') == "null") {
-        $.ajax({
-            url: apiUrl + "cms/advs",
-            type: 'get',
-            success: function (data) {
-                if (data.code == 200) {
-                    $('title').text('商城-' + data.data.setting.title + '官方微主页');
-                    localStorage.setItem('title', data.data.setting.title);
-                }
-            },
-            error: function (xhr) {
-                console.log(xhr);
-            }
-        })
-    } else {
-        $('title').text('商城-' + localStorage.getItem('title') + '官方微主页');
-
-    }
 
     //数据分页
     var reqUrl = apiUrl + 'circel/flist';
@@ -371,7 +353,7 @@ $(document).ready(function () {
             }
         })
     }
-
+    
     $("#more").click(function () {
         let state = $(".fans").attr("class").indexOf('active');
         let domain = window.location.pathname.split('/').slice(1, 2)[0];

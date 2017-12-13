@@ -116,6 +116,8 @@
                                             <select name="type" class="form-control">
                                             <option value="0" selected>文章集合</option>
                                             <option value="1">图文单页</option>
+                                            <option value="2">专题</option>
+                                            <option value="3">视频</option>
                                         </select>
                                         </div>
                                     </div>
@@ -188,7 +190,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group editor1" style="display:none">
                                         <label class="control-label col-sm-2">页面内容</label>
                                         <div class="col-sm-5">
                                             <textarea id="editor1" rows="3" name="content" class="form-control" placeholder="请输入页面展示内容"></textarea>
@@ -472,7 +474,7 @@
         var qiniu_upload_domain = '//upload.qiniu.com';
         var qiniu_bucket_domain = ApiMaterPlatQiniuDomain;
         CKEDITOR.replace('editor1', {
-            "extraPlugins": "filebrowser,image,imagepaste,filetools"
+            "extraPlugins": "filebrowser,image,imagepaste,filetools,flash"
         });
 
         $(function($) {
@@ -592,6 +594,14 @@
             });
             $('#bootstrapModal').on('hidden.bs.modal', function(e) {
                 $('.template-lists-table tbody').html('');
+            });
+
+            $(document).on('change', 'select[name=type]', function() {
+                if ($(this).val() == 1) {
+                    $(".editor1").show();
+                } else {
+                    $(".editor1").hide();
+                }
             });
             $(document).on('click', '.chs-btn', function() {
                 var type = $(this).data('type');

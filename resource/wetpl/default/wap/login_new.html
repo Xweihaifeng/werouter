@@ -41,11 +41,13 @@
     </div>
 
     <script>
-        const setCookie = (token, expiredays) => {
+        function setCookie(token, expiredays)
+        {
             var Days = expiredays;
             var exp = new Date();
+            var domain = '.'+root_domian;
             exp.setTime(exp.getTime() + Days*24*60*60*1000);
-            document.cookie = "token="+ escape (token) + ";expires=" + exp.toGMTString() +";path=/";
+            document.cookie = "token="+ escape (token) + ";expires=" + exp.toGMTString() +";path=/;domain="+domain;
         }
 
         const getChecknum = (phone) => {
@@ -117,8 +119,8 @@
             },
             created: function() {
                 let self = this;
-                localStorage.removeItem('token');
-                localStorage.removeItem('weid');
+//                localStorage.removeItem('token');
+//                localStorage.removeItem('weid');
             },
             methods: {
                 getCheck: function() {

@@ -9,7 +9,7 @@
     <script src="/common/js/jquery.imagecompress.js"></script>
     <link rel="stylesheet" href="{{PATH_TML}}user/common/css/main.css">
     <link rel="stylesheet" href="{{PATH_TML}}user/css/Marketplace.css">
-    <title>应用市场</title>
+    <title>主页应用</title>
     <link rel="stylesheet" href="/common/css/bootstrap.min.css">
     <link rel="stylesheet" href="/common/css/buttons.css">
     <link rel="stylesheet" href="/common/css/swiper.min.css">
@@ -80,7 +80,7 @@
             <div class="alert-num"> 5 </div></div>
     </div>
     <div id="middle">
-        <div class="we-title we-set">
+        <!--<div class="we-title we-set">
             <img src="/common/img/set.png" width="18" alt=""/>
             <span>系统设置</span>
             <span><img src="/common/img/more1.png" width="18"/></span>
@@ -161,7 +161,7 @@
         </div>
         <div class="we-cont we-log" style="display: none;">
             <a href="/user/admin/logs/operation"><div id="my-logo">系统日志</div></a>
-        </div>
+        </div>-->
     </div>
     <div id="right">
          <div class="we-art-nav">
@@ -202,20 +202,6 @@
                         </div>
                         <span>管理</span>
                     </li>
-                     <li class="list-group-item">
-                        <div>
-                            <p>商城管理</p>
-                            <div class="toggle-button-wrapper">
-                                <input type="checkbox" id="toggle-button-4" class="" name="switch">
-                                <label for="toggle-button-4" class="button-label">
-                                    <span class="circle"></span>
-                                    <span class="text on">ON</span>
-                                    <span class="text off">OFF</span>
-                                </label>
-                            </div>
-                        </div>
-                        <span>管理</span>
-                    </li>
                     <li class="list-group-item">
                         <div>
                             <p>项目板块</p>
@@ -242,8 +228,8 @@
                                 </label>
                             </div>
                         </div>
-                        <span>管理</span></li>
-
+                        <span>管理</span>
+                    </li>
                     <li class="list-group-item"  >
                         <div>
                             <p>圈子板块</p>
@@ -256,9 +242,23 @@
                                 </label>
                             </div>
                         </div>
-                        <span>管理</span></li>
-
-                    <li class="list-group-item" style="display: none">
+                        <span>管理</span>
+                    </li>
+                    <li class="list-group-item">
+                        <div>
+                            <p>商城管理</p>
+                            <div class="toggle-button-wrapper">
+                                <input type="checkbox" id="toggle-button-4" class="" name="switch">
+                                <label for="toggle-button-4" class="button-label">
+                                    <span class="circle"></span>
+                                    <span class="text on">ON</span>
+                                    <span class="text off">OFF</span>
+                                </label>
+                            </div>
+                        </div>
+                        <span>管理</span>
+                    </li>
+                    <!--<li class="list-group-item" style="display: none">
                         <div>
                             <p>CRM管理</p>
                             <div class="toggle-button-wrapper">
@@ -271,7 +271,7 @@
                             </div>
                         </div>
                         <span>管理</span>
-                    </li>
+                    </li>-->
                 </ul>
             </div>
         </div>
@@ -280,6 +280,7 @@
     <script src="{{PATH_CONFIG}}"></script>
 <script src="/common/js/control.js"></script>
 <script src="{{PATH_TML}}user/js/common.js"></script>
+<script src="{{PATH_TML}}user/common/js/generate_manage.js"></script>
 <script src="{{PATH_TML}}user/js/market.js"></script>
 <script>
     var modeleName = [];

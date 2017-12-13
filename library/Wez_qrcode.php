@@ -11,9 +11,9 @@ class Wez_qrcode extends controller
     public function __construct() 
     {
         parent::__construct();
-
+        
     }
-	public static function init($logo ,  $url , $logo_is)
+	public static function init($logo ,  $url , $logo_is , $qrcode_img_url)
 	{
 		$protocol = empty($_SERVER['HTTP_X_CLIENT_PROTO']) ? 'http://' : $_SERVER['HTTP_X_CLIENT_PROTO'] . '://';
 		
@@ -21,7 +21,7 @@ class Wez_qrcode extends controller
 		// 用于签名的公钥和私钥
 		$accessKey = config::$plats['qiniu']['access_key'];
 		$secretKey = config::$plats['qiniu']['secret_key'];
-
+		
 		$linshi_time = time();
 		$storage_img = './storage/'.time().'_qrcode.png';
 
@@ -38,11 +38,11 @@ class Wez_qrcode extends controller
 			// $scale = $bowidth/$logo_qr_width;
 			// $logo_qr_height = $boheight/$scale;
 			// $from_width = ($qrcode_imgwidth - $logo_qr_width) / 2;
-
+			
 			imagecopyresampled($qrcode_img, $border, 155, 155, 0, 0, 102,102, 102, 102);
 			imagedestroy($border);
-
-
+			
+			
 			$newImage = imagecreatetruecolor(430,430);
 			$c = imagecolorallocatealpha($newImage , 255 , 255 , 255 , 0);//拾取一个完全透明的颜色
 			imagealphablending($newImage , false);//关闭混合模式，以便透明颜色能覆盖原画布
@@ -56,7 +56,7 @@ class Wez_qrcode extends controller
 			imagedestroy($qrcode_img);
 			// imagedestroy($newImage);
 
-			$logo_gd = imagecreatefrompng($logo.'?roundPic/radius/!16p|imageView2/1/w/88/h/88|imageMogr2/format/png');
+			$logo_gd = imagecreatefrompng($logo.'?imageView2/1/w/88/h/88|imageMogr2/format/png|roundPic/radius/!16p');
 			
 			imagecopyresampled($newImage, $logo_gd, 173, 171, 0, 0, 88 , 88, 88, 88);
 
@@ -70,8 +70,8 @@ class Wez_qrcode extends controller
 			$qrcode_img = imagecreatefrompng("http://qr.liantu.com/api.php?&w=430&text=$url");
 			ImagePng($qrcode_img  , $storage_img );
 		}
-
-
+		
+		
 		// 七牛上传
 		$auth = new Auth($accessKey, $secretKey);
 		$bucket = config::$plats['qiniu']['bucket'];
@@ -82,10 +82,14 @@ class Wez_qrcode extends controller
 
 		// 上传到七牛后保存的文件名
 		$key = "qrcode/$linshi_time/$logo_is";
-
 		$upload = $uploadMgr->putFile($token, $key, $storage_img);
 
+		// 删除以前的图片
+		$config = new \Qiniu\Config();
+		$bucketManager = new \Qiniu\Storage\BucketManager($auth, $config);
+		$bucketManager->delete($bucket, $qrcode_img_url);
 		unlink($storage_img);
+		
 		return $key;
 
 	}

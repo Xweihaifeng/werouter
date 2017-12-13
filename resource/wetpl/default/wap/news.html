@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <title>秦商总会</title>
+    <link rel="stylesheet" href="{{PATH_TML}}css/news.css">
+    <link rel="stylesheet" href="{{PATH_TML}}css/swiper.min.css"/>
+    <script src="{{PATH_TML}}js/vue.min.js"></script>
+    <script type="text/javascript" src="{{PATH_CONFIG}}"></script>
+    <script src="/common/iview/axios.min.js"></script>
+    <script src="/common/iview/libs/util.js"></script>
+    <script src="{{PATH_TML}}js/swiper-3.3.1.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <header>
+            <a></a>
+            <span>秦商总会</span>
+            <i></i>
+        </header>
+        <div class="news-container">
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide" v-for="item in advList">
+                        <img :src="handleImg(item.image)" alt="">
+                        <span>{{item.title}}</span>
+                    </div>
+                </div>
+                <!-- 如果需要分页器 -->
+                <div class="swiper-pagination"></div>
+
+            </div>
+            <div class="gonggao">
+                <p>公示公告</p>
+                <div class="content" v-for="item in newList.nitoce">
+                    <p>
+                        <span>{{item.title}}</span>
+                        <span>{{item.summary | summaryLength}}</span>
+                    </p>
+                    <img :src="handleImg(item.thumb_image)" alt="">
+                </div>
+
+            </div>
+            <div class="new-center">
+                <p>新闻中心</p>
+                <div v-for="item in newList.news">
+                    <div class="detail">
+                        <span :class="getClass(item.cate_title)">{{item.cate_title}}</span>
+                        <span>{{parseInt(item.created_at + '000') | date}}</span>
+                    </div>
+                    <div class="content">
+                        <p>
+                            <span>{{item.title}}</span>
+                            <span>{{item.summary | summaryLength}}</span>
+                        </p>
+                        <img :src="handleImg(item.thumb_image)" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer>
+            <ul>
+                <li class="active"><img src="../../../../common/img/new-home.png" alt=""></li>
+                <li><img src="../../../../common/img/new-discover.png" alt=""></li>
+                <li><img src="../../../../common/img/new-message.png" alt=""></li>
+                <li><img src="../../../../common/img/new-my.png" alt=""></li>
+            </ul>
+        </footer>
+    </div>
+    <script>
+        Vue.filter('date',function (input) {
+            var d = new Date(input);
+            var year = d.getFullYear();
+            var month = d.getMonth() + 1;
+            var day = d.getDate() <10 ? '0' + d.getDate() : '' + d.getDate();
+            var hour = d.getHours();
+            var minutes = d.getMinutes() < 10? '0' + d.getMinutes() : '' + d.getMinutes();
+            var seconds = d.getSeconds() < 10? '0' + d.getSeconds() : '' + d.getSeconds();
+            return  year+ '-' + month + '-' + day + ' ' + hour + ':' + minutes + ':' + seconds;
+        });
+        Vue.filter('summaryLength',function (str) {
+            if(str.length > 40){
+                str = str.substring(0,40) + '...';
+            }
+            return str;
+        });
+        var app = new Vue({
+            el : '#app',
+            data : {
+                newList : [],
+                advList : []
+            },
+            mounted : function () {
+                var self = this;
+                ajax.get('cms/advs').then(function (res) {
+                    console.log(res)
+                    if(res.data && res.code == 200){
+                        self.advList = res.data.banners.list;
+                        setTimeout(function(){
+                            var mySwiper = new Swiper('.swiper-container', {
+                                direction: 'horizontal',
+                                loop: true,
+                                speed: 1000,
+                                autoplay : 3000,
+                                autoplayDisableOnInteraction : false,
+                                pagination: '.swiper-pagination',
+                                onlyExternal : true,
+                                longSwipesRatio: 0.3,
+                                touchRatio:1
+                            });
+                        }, 1000)
+                    }
+                }).catch(function (err) {
+                    console.log(err);
+                });
+
+                ajax.get('cms/index/grid').then(function (res) {
+                    console.log(res);
+                    if(res.data && res.code == 200){
+                        self.newList = res.data;
+                    }
+                }).catch(function (err) {
+                    console.log(err)
+                })
+            },
+            methods : {
+                getClass : function (title) {
+                    switch (title){
+                        case '时政要闻':
+                        case '最新消息':
+                        case '最新资讯':
+                        case '秦商风采':
+                            return 'color-one';
+                        case '三秦大地':
+                        case '国际新闻':
+                        case '国内新闻':
+                        case '三秦新闻':
+                            return 'color-two';
+                        case '聚焦长安':
+                        case '科技发展':
+                        case '财经资讯':
+                            return 'color-three';
+                    }
+                },
+                handleImg : function (img) {
+                    if(img && img.indexOf('http') === -1 && img.indexOf('common') === -1){
+                        img = imgSet(img, 80, 100);
+                    }
+                    return img;
+                }
+            }
+        })
+
+    </script>
+</body>
+</html>

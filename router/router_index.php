@@ -30,7 +30,7 @@ class router_index
     
     public function __construct()
     {	
-    	
+
         $this->_domain = $_SERVER['HTTP_HOST'];
         //$this->_domain = 'new.wezchina.com';
         
@@ -102,9 +102,10 @@ class router_index
 
         if(!file_exists($domain_router_file))
         {
+
             // 获取路由信息和路由正则信息
             $data_stirng = curl_action(config::$config_api_url.$this->_domain_config);
-			
+
             $data = json_decode($data_stirng , TRUE);
 
             if($data['code'] !== 200)
@@ -191,9 +192,10 @@ class main extends controller
 
             error(404);
         }
-        
+
         $router_map = $router_verify->router['router_map'];
         $controller_router_config = (!empty($router_verify->router['config'])) ? $router_verify->router['config']  : '' ;
+        
 
         if(!empty($controller_router_config['template']))
         {
@@ -216,19 +218,28 @@ class main extends controller
                 $key = 'plats_qiniu';
                 $value = ['domain_custom' => $value['domain_custom']];
             }
-            $add_public_config['const '.$key] = json_encode($value);
+
+            if (strpos($key , " ")) 
+            {
+                $add_public_config[$key] = $value;
+            }
+            else
+            {
+                $add_public_config['const '.$key] = json_encode($value);
+            }
         }
         
         if(!empty($additional_config))
         {
-        	$additional_config = array_merge($additional_config , $add_public_config);
+        	$additional_config = array_merge($add_public_config , $additional_config);
         }
         else
         {
             $additional_config = $add_public_config;
         }
 
-        $config_file = $this->_generate_config($additional_config , $domain , $mark_domain);
+        $config_file = $this->_generate_config($domain , $mark_domain);
+        $additional_config = $this->_additional_config($additional_config);
 
         if(!file_exists('.'.$this->file.$directory.$router_map))
         {
@@ -237,24 +248,14 @@ class main extends controller
 
         $content = file_get_contents('.'.$this->file.$directory.$router_map);
 
-        echo $this->_get_str_replace_content($content , $config_file , $directory);
+        echo $this->_get_str_replace_content($content , $config_file , $directory , $additional_config);
 
     }
 
-
-    // 生成配置文件
-    private function _generate_config($additional_config , $domain , $mark_domain)
+    //网站配置JS
+    private function _additional_config($additional_config)
     {
-        if($mark_domain == 'm')
-        {
-            $domain = 'm.'.$domain;
-        }
-        $config = file_get_contents('configure.js');
-
-        $config = str_replace('{{url}}', $domain , $config);
-
-        $config .= "\n".'const WWW_PATH= "'.$this->file.'";';
-
+        $config = '';
         foreach ($additional_config as $key => $value) {
             if($value)
             {
@@ -275,6 +276,23 @@ class main extends controller
             }
         }
 
+        return $config;
+    }
+
+
+    // 生成配置文件
+    private function _generate_config($domain , $mark_domain)
+    {
+        if($mark_domain == 'm')
+        {
+            $domain = 'm.'.$domain;
+        }
+        $config = file_get_contents('configure.js');
+
+        $config = str_replace('{{url}}', $domain , $config);
+
+        $config .= "\n".'const WWW_PATH= "'.$this->file.'";';
+
         $cache_config_file = '/config/web/'.md5($domain).'.js';
 
         $config_file = fopen( './'.$cache_config_file , "w");
@@ -289,7 +307,9 @@ class main extends controller
     // 获取网站基本信息
     private function _domain_data($weid)
     {
-
+        $plats['var root_domian'] = $this->_get_domain($_SERVER['HTTP_HOST']);
+        $plats['var is_domain'] = 'no';
+        $plats['var plats_token'] = false;
     	//七牛相关信息
     	$sql = 'SELECT name , config FROM we_plats_setting
 				WHERE plat_id=? AND name = "qiNiuConfig"';
@@ -306,19 +326,55 @@ class main extends controller
             $plats['qiniu']['buckut'] = $this->qiniu_cofing['buckut'];
 		}
 
+        //平台信息相关
+        $plats_sql = 'SELECT plat_name FROM we_plats
+                WHERE weid=? ';
+        $plats_row = $this->db->queryOne($plats_sql , array($weid));
+        if(empty($plats_row)) error(404);
+
 		$plats_cms_sql = 'SELECT title , description , key_word
 						 , icp , favicon , logo , background , weibo_show 
 						 , background_up , bar1 , bar2 , bar3 , background_right
 						 ,bar4 , block FROM we_plat_cms WHERE plat_id=?';
 		$plats['plats_info'] = $this->db->queryOne($plats_cms_sql , array($weid));
+        $plats['plats_info']['plat_name'] = $plats_row['plat_name'];
 
+        if(empty($_COOKIE['token']))
+        {
+            $plats['var pages_index'] = 'index';
+        }
+        else
+        {
+            $user_info = $this->user_token();
+            $plats['plats_user_info'] = FALSE;
+            if(!empty($user_info['weid']))
+            {
+                $plats['var plats_token'] = $_COOKIE['token'];
+                $plats['plats_user_info'] = $user_info;
+                $sql = 'SELECT domain FROM we_pages WHERE plat_id=? AND plat_user_id=? ';
+                $row = $this->db->queryOne($sql , array($weid , $user_info['weid']));
+
+                $plats['var pages_index'] = 'index';
+                $plats['var is_login'] = 'yes';
+                if(!empty($row))
+                {
+                    $plats['plats_user_info']['domian'] = $row['domain'];
+                    $plats['var pages_index'] = $row['domain'];
+                }       
+            }
+            else
+            {
+                $plats['var is_login'] = 'no';
+                $plats['var pages_index'] = 'index';
+            }
+        }
 		return $plats;
     }
 
     // 网站元素要替换规则
-    private function _get_str_replace_content($content , $config_file , $directory)
+    private function _get_str_replace_content($content , $config_file , $directory ,$additional_config)
     {
-        return Wez_template::init($this->file ,  $content , $config_file , $directory);
+        return Wez_template::init($this->file ,  $content , $config_file , $directory ,$additional_config);
     }
 
     // 判断是否加载控制器
@@ -346,6 +402,28 @@ class main extends controller
         
         include $controller_file;  $c = new $file(); $c->public_data = $data; $c->{$action}(); exit();
      
+    }
+
+    /**
+     * 取得根域名
+     * @param type $domain 域名
+     * @return string 返回根域名
+     */
+    private function _get_domain($domain) {
+        $re_domain = '';
+        $domain_postfix_cn_array = array("com", "net", "org", "gov", "edu", "com.cn", "cn");
+        $array_domain = explode(".", $domain);
+        $array_num = count($array_domain) - 1;
+        if ($array_domain[$array_num] == 'cn') {
+            if (in_array($array_domain[$array_num - 1], $domain_postfix_cn_array)) {
+                $re_domain = $array_domain[$array_num - 2] . "." . $array_domain[$array_num - 1] . "." . $array_domain[$array_num];
+            } else {
+                $re_domain = $array_domain[$array_num - 1] . "." . $array_domain[$array_num];
+            }
+        } else {
+            $re_domain = $array_domain[$array_num - 1] . "." . $array_domain[$array_num];
+        }
+        return $re_domain;
     }
 
 }

@@ -282,9 +282,10 @@ var qiniu_bucket_domain =ApiMaterPlatQiniuDomain;
                          if(logistics_flag){
                             //addrdivhtml+='<p><span class="t">物流单号:</span><span class="txt">'+data.send.logistics_no+'</span></p><p><span class="t">物流公司:</span><span class="txt">'+data.send.logistics_company+'</span></p>';
                          }
-                         if(refund_flag){
+                         if(data.refund){
                             addrdivhtml+='<p><span class="t">退款单号:</span><span class="txt">'+data.refund[0].order_refund_num+'</span></p>';
                             addrdivhtml+='<p><span class="t">退款金额:</span><span class="txt">'+data.refund[0].order_refund_money+'</span></p>';
+                            addrdivhtml+='<p><span class="t">退款原因:</span><span class="txt">'+data.refund[0].order_refund_reason+'</span></p>';
                             addrdivhtml+='<p><span class="t">退款日期:</span><span class="txt">'+data.refund[0].created_at+'</span></p>';
                          }   
                         addrdivhtml+='</div>'+
@@ -297,6 +298,7 @@ var qiniu_bucket_domain =ApiMaterPlatQiniuDomain;
                 if (data.send) {
                     //已经发货
                     InitLogisticsTable(data);
+
                 }
             }
             
@@ -323,7 +325,7 @@ var qiniu_bucket_domain =ApiMaterPlatQiniuDomain;
                                 order_goods_list.map(y=>{
                                     goods.map(z=>{
                                         if(z.weid==y){
-                                            html+='<div style="display:inline-block;text-align:center;"><a href="'+domain_order+'wemall/goods/'+z.goods_id+'" target="_blank"><img  src="'+qiniu_bucket_domain+z.goods_cover+'" style="width: 80px;" alt=""><br><span>'+z.goods_title+'</span></a></div>';        
+                                            html+='<div style="display:inline-block;text-align:center;"><a href="/'+data.domain+'/wemall/goods/'+z.goods_id+'" target="_blank"><img  src="'+qiniu_bucket_domain+z.goods_cover+'" style="width: 80px;" alt=""><br><span>'+z.goods_title+'</span></a></div>';
                                         }        
                                     });
                                 });
@@ -358,7 +360,7 @@ var qiniu_bucket_domain =ApiMaterPlatQiniuDomain;
                                     order_goods_list.map(y=>{
                                         goods.map(z=>{
                                             if(z.weid==y){
-                                                html+='<div style="display:inline-block;text-align:center;"><a href="'+domain_order+'wemall/goods/'+z.goods_id+'" target="_blank"><img  src="'+qiniu_bucket_domain+z.goods_cover+'" style="width: 80px;" alt=""><br><span>'+z.goods_title+'</span></a></div>';        
+                                                html+='<div style="display:inline-block;text-align:center;"><a href="'+domain_order+'wemall/goods/'+z.goods_id+'" target="_blank"><img  src="'+qiniu_bucket_domain+z.goods_cover+'" style="width: 80px;" alt=""><br><span>'+z.goods_title+'</span></a></div>';
                                             }        
                                         });
                                     });

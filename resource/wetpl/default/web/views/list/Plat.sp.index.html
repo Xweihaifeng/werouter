@@ -1,0 +1,59 @@
+<!--
+ * Created by weifeng on 2017/11/12.
+-->
+
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>专题新闻</title>
+        <link rel="icon" href="" id="public_icon" />
+
+        <script src="/common/js/jquery-3.2.1.min.js"></script>
+        <script src="/common/layer-v3.0.3/layer-v3.0.3/layer/layer.js"></script>
+        <script src="{{PATH_CONFIG}}"></script>
+        <script src="{{PATH_TML}}js/modal_login.js"></script>
+        <script src="{{PATH_TML}}js/paging.js"></script>
+
+        <link rel="stylesheet" type="text/css" href="{{PATH_TML}}font/iconfont.css" />
+        <link rel="stylesheet" type="text/css" href="{{PATH_TML}}css/news_base.css" />
+        <link rel="stylesheet" type="text/css" href="{{PATH_TML}}assets/list/special/css/special.css" />
+        <link rel="stylesheet" type="text/css" href="{{PATH_TML}}css/paging.css" />
+        <link rel="stylesheet" type="text/css" href="{{PATH_TML}}css/modal_login.css" />
+    </head>
+
+    <body>
+        <!-- 登录部分 -->
+        <div class="modal_login" id="modal_login"></div>
+        <!-- 专题新闻开始 -->
+        <div class="special-header">
+            <div class="special-top">
+                <div class="header-logo"></div>
+                <ul class="special-title-list"></ul>
+            </div>
+        </div>
+        <div class="special-content">
+            <div class="special-main-page clearfix">
+                <div class="special-right">
+                    <div class="special-content-info"></div>
+                </div>
+                <div class="special-left">
+                    <div class="special-nav-info"></div>
+                </div>
+            </div>
+            <div class="special-focus">
+                <h2>专题聚焦</h2>
+                <div class="special-box">
+                    <div class="special-box-left"></div>
+                    <div class="special-box-right">
+                        <div class="special-headline"></div>
+                        <div class="special-scrollable"><ul></ul></div>
+                        <div class="box" id="box"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="special-footer"></div>
+        <script src="{{PATH_TML}}assets/list/special/js/special.js"></script>
+    </body>
+</html>

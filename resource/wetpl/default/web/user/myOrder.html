@@ -7,16 +7,44 @@
 		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
 		<link rel="shortcut icon" id="favicon" href="" />
-		<link rel="stylesheet" href="/common/css/main.css">
-		<link rel="stylesheet" href="/common/css/bootstrap.min.css">
-		<link rel="stylesheet" href="{{PATH_TML}}user/css/laydate.css">
-		<link rel="stylesheet" href="{{PATH_TML}}user/css/comment_bomb_box.css" />
 
+
+		<link rel="stylesheet" href="/common/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="{{PATH_TML}}user/common/css/bootstrap-datetimepicker.min.css">
+		<link rel="stylesheet" href="/common/css/main.css">
+
+		<link rel="stylesheet" href="/common/css/buttons.css">
 		<script src="/common/js/jquery-3.2.1.min.js"></script>
+		<script type="text/javascript" src="/common/js/bootstrap.min.js"></script>
+		<script src="/common/js/browser.min.js"></script>
+		<link rel="shortcut icon" id="favicon" href="" />
+		<link rel="stylesheet" href="{{PATH_TML}}user/css/manage.css">
+		<link rel="stylesheet" type="text/css" href="{{PATH_TML}}user/css/laydate.css">
+		<link rel="stylesheet" type="text/css" href="{{PATH_TML}}user/css/mall_manage.css">
+		<link rel="stylesheet" type="text/css" href="{{PATH_TML}}user/css/order.css">
+
+		<script src="/common/js/plupload/plupload.full.min.js"></script>
 		<script src="{{PATH_CONFIG}}"></script>
+		<script src="/common/js/control.js"></script>
+		<script src="{{PATH_TML}}user/js/common.js"></script>
+
+		<script src="/common/js/swiper-3.3.1.min.js"></script>
+		<script src="/common/js/buttons.js"></script>
+		<script src="/common/js/ckeditor/ckeditor.js"></script>
+
+		<!-- <script type="text/javascript" src="/user/js/ship_addressmode.js"></script> -->
 		<script src="/common/js/layer/layer.js"></script>
-		<script src="{{PATH_TML}}user/js/laydate.js"></script>
-		<script src="/common/js/jquery.raty.js"></script>
+		<script src="/common/js/qiniu.js"></script>
+		<script type="text/javascript" src="{{PATH_TML}}user/js/laydate.js"></script>
+
+
+
+		<script type="text/javascript" src="{{PATH_TML}}user/js/user_my_order.js"></script>
+
+
+
+
+
 	</head>
 
 	<body style="width: 100%; background: #F7F6F2;">
@@ -27,41 +55,130 @@
 
 			<!-- 右侧内容 -->
 			<div id="right">
-				<div class="my_order_header">
-					<div>我的账户 > 我的订单</div>
+				<div class="">
+
+					<div class="order-table">
+
+						<div class="use-right">
+							<div class="list_title clearfix">
+								<div class="cur">
+									<span>我的账户 >我的订单</span>
+								</div>
+							</div>
+
+							<div class="use-right-box">
+								<!-- new html start -->
+								<div class="product_manage_box">
+									<div class="manage_tit">
+										<ul class="clearfloat filter-status-ul">
+											<li class="current"><a href="javascript:;" title="" data-id="0" class="filter-btn status-btn btn-select btn-all">全部<!-- (<span></span>) --></a></li>
+
+											<li><a href="javascript:;" title="" data-id="1" class="filter-btn status-btn btn-select btn-1">待支付<!-- (<span></span>) --></a></li>
+
+											<li><a href="javascript:;" title="" data-id="2" class="filter-btn status-btn btn-select btn-2">待发货<!-- (<span></span>) --></a></li>
+
+
+											<li><a href="javascript:;" title="" data-id="3" class="filter-btn status-btn btn-select btn-3">已发货<!-- (<span></span>) --></a></li>
+
+											<li><a href="javascript:;" title="" data-id="7" class="filter-btn status-btn btn-select btn-4">已完成<!-- (<span></span>) --></a></li>
+
+											<li><a href="javascript:;" title="" data-id="8" class="filter-btn status-btn btn-select btn-8">已申请退款<!-- (<span></span>) --></a></li>
+
+											<li><a href="javascript:;" title="" data-id="9" class="filter-btn status-btn btn-select btn-9">已退款<!-- (<span></span>) --></a></li>
+										</ul>
+									</div>
+
+									<div class="list_time">
+										<div class="orders_time">成交时间:</div>
+										<div class="orders_time_list">
+											<div class="control-text">
+												<input placeholder="开始时间" value="" name="start_time" class="laydate-icon" id="start_time">
+												<input placeholder="结束时间" value="" name="end_time" class="laydate-icon" id="end_time"></div>
+											<div class="clear"></div>
+										</div>
+										<input placeholder="订单号搜索" value="" name="no" id="filter_no" class="orders_no" type="text">
+										<div class="orders_screen btn-num">筛选</div>
+									</div>
+
+									<ul class="list-header">
+										<li style="width: 550px;">宝贝</li>
+										<li>单价</li>
+										<li>数量</li>
+										<li style="width: 100px;">实付款</li>
+										<li>订单操作</li>
+									</ul>
+									<div class="ordertable">
+									</div>
+								</div>
+
+
+								<div class="modal fade bs-example-modal-md" id="myModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+									<div class="modal-dialog modal-md" role="document">
+										<div class="modal-content sendModal">
+											<div class="modal-header">
+												<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+												<h4 class="modal-title">填写发货信息</h4>
+											</div>
+											<div class="modal-body">
+												<form>
+													<input type="hidden" value="" id="myModal_input">
+													<div class="dynamic-dom">
+														<div class="imgContainer"></div>
+														<div class="form-group">
+															<label for="exampleInputEmail1">物流公司</label>
+															<select name="wuliu_company" class="form-control" id="exampleInputEmail1"></select>
+														</div>
+														<div class="form-group">
+															<label for="exampleInputPassword1">物流编号</label>
+															<input type="text" name="wuliu_card" class="form-control" id="exampleInputPassword1">
+														</div>
+														<span id="addDom"> 添加+ </span>
+													</div>
+													<div class="modal-footer">
+														<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+														<button type="button" class="btn btn-primary save">确定</button>
+													</div>
+												</form>
+											</div>
+										</div>
+									</div>
+								</div>
+								<ul class="pagination">
+									<!-- <li  id="prev"><a href="javascript:void(0);">&laquo;</a></li>
+									<li class="active"><span>1</span></li> -->
+
+								</ul>
+
+							</div>
+						</div>
+
+					</div>
 				</div>
-				
-				<!-- 订单管理 -->
-				<div class="my_order_title">
-					<ul class="my_order_title_ul">
-	                    <li class="selected"><a href="javascript:void(0);" title="" class="my_order_all">全部</a></li>
-	                    <li><a href="javascript:void(0);" title="" class="my_order_stay_pay">待支付</a></li>
-	                    <li><a href="javascript:void(0);" title="" class="my_order_stay_goods">待发货</a></li>
-	                    <li><a href="javascript:void(0);" title="" class="my_order_shipped">已发货</a></li>
-	                    <li><a href="javascript:void(0);" title="" class="my_order_completed">已完成</a></li>
-	            	</ul>
-	            	<ul class="my_order_time">
-	            		<li>成交时间：</li>
-	            		<li><input value="" placeholder="开始时间" name="start_time" class="laydate-icon" id="start_time"></li>
-	            		<li><input value="" placeholder="结束时间" name="end_time" class="laydate-icon" id="end_time"></li>
-	            		<li><input type="text" value="" placeholder="订单号搜索"></li>
-	            		<li><button>筛选</button></li>
-	            	</ul>
-	            	<ul class="my_order_state">
-	            		<li>宝贝</li>
-	            		<li>单价</li>
-	            		<li>数量</li>
-	            		<li>实付款</li>
-	            		<li>商品操作</li>
-	            	</ul>
-				</div>
-				<div class="my_order_content"></div>
+
 			</div>
 		</div>
 
+		<div class="comment_mongolia_layer"></div>
+		<!-- 查看物流 -->
+		<div class="comment_bomb_box">
+			<div class="comment_bomb_box_header">
+				<div class="comment_bomb_box_title"> 物流信息 </div>
+				<div class="comment_bomb_box_close"> x </div>
+			</div>
+			<div class="comment_bomb_box_content">
+
+			</div>
+			<div class="comment_bomb_box_footer">
+			</div>
+		</div >
+
+
+
+
 		<!-- 评论弹框 -->
 		<div class="comment_mongolia_layer">
-			<div class="comment_bomb_box">
+
+			<!--<div class="comment_bomb_box">
 				<div class="comment_bomb_box_header">
 					<div class="comment_bomb_box_title"> 我要评论 </div>
 					<div class="comment_bomb_box_close"> x </div>
@@ -82,7 +199,7 @@
 					<div class="comment_bomb_box_group">
 						<div class="comment_bomb_box_name"> 好评率： </div>
 						<div class="bomb_box_star">
-							<!-- <span class="bomb_box_praise"></span> -->
+							&lt;!&ndash; <span class="bomb_box_praise"></span> &ndash;&gt;
 							<div id="star2"></div>
 							<div id="result2"></div>
 						</div>
@@ -91,13 +208,12 @@
 				<div class="comment_bomb_box_footer">
 					<button class="comment_save"> 保存评论 </button>
 				</div>
-			</div>
+			</div>-->
 		</div>
 
-		<script src="{{PATH_TML}}user/common/js/generate.js"></script>
-		<script src="/common/js/control.js"></script>
-		<script src="{{PATH_TML}}user/js/user_my_order.js"></script>
+
 		<script type="text/javascript">
+			/*
 			rat('star2','result2',1);
 			function rat(star,result,m){
 				star= '#' + star;
@@ -118,7 +234,7 @@
 					}
 				});
 			}
-
+			*/
 			var start = {
 		        elem: '#start_time',
 		        format: 'YYYY-MM-DD',
@@ -150,6 +266,7 @@
 			// 	// $('.dropdown-menu').hide();
 			// })
 		</script>
+		<script src="{{PATH_TML}}user/common/js/generate.js"></script>
 	</body>
 
 </html>
