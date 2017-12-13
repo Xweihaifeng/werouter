@@ -323,6 +323,7 @@
     <!-- page script -->
     <script>
         $(function() {
+            var types = ['文章集合', '图文单页', '专题', '视频'];
             var channel = getQueryParam('channel') ? getQueryParam('channel') : '';
             var cate = getQueryParam('parent_id') ? getQueryParam('parent_id') : '';
             var __init = function() {
@@ -388,7 +389,7 @@
 
                             json.data[i].id = i + 1;
                             json.data[i].thumb_image = json.data[i].thumb_image ? '<img src="' + ApiMaterPlatQiniuDomain + json.data[i].thumb_image + '" data-action="zoom" width="50" height="50">' : '';
-                            json.data[i].type = json.data[i].type ? '图文单页' : '文章集合';
+                            json.data[i].type = types[json.data[i].type];
                             json.data[i].init = json.data[i].init ? '<span class="label label-primary">是</span>' : '<span class="label label-default">否</span>';
                             json.data[i].operation = '<a href="contentCategory_edit.html?id=' + json.data[i].weid + '" class="btn btn-info">编辑</a>' + '&nbsp;&nbsp;' + (json.data[i].level == 1 ? '<a href="contentCategory.html?channel=' + json.data[i].channel_id + '&parent_id=' + json.data[i].weid + '" class="btn btn-success">查看子栏目</a>' : "") + '&nbsp;&nbsp;' + (_init == 1 ? '' : '<button class="btn btn-danger btn-delete"  data-id="' + json.data[i].weid + '" data-toggle="popover" data-placement="left" data-trigger="focus" data-html="true" title="确定要删除？" data-content="<button class=' + "'btn btn-danger btn-delete-confirm'" + '  data-id=' + "'" + json.data[i].weid + "'" + '>确认</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class=' + "'btn btn-default'" + '>取消</button>" >删除</button>');
                         }
