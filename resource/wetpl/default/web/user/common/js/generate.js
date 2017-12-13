@@ -50,7 +50,7 @@ let mainLeft_p = `
                     <a href="/apply" style="width:100%;" target= "_blank">会员申请</a>
                 </div>
                 <div id="avatar-logout">
-                    <a href="/login" style="width:100%;display: block;">安全退出</a>
+                    <a onclick="logout();"  href="/login" style="width:100%;display: block;">安全退出</a>
                 </div>
             </div>
         </div>
@@ -459,12 +459,12 @@ function clearCookie() {
     }
 }
 
-$("#avatar-logout").click(function () {
-    window.localStorage.removeItem('token');
-    window.localStorage.removeItem('weid');
-    setCookie('', -1);
-    clearCookie();
-})
+// $("#avatar-logout").click(function () {
+//     window.localStorage.removeItem('token');
+//     window.localStorage.removeItem('weid');
+//     setCookie('', -1);
+//     clearCookie();
+// })
 
 //主页初始化
 var init = function (token) {
@@ -605,3 +605,24 @@ $("#avatar, #dropdown").hover(function () {
 }, function () {
     $(".avatar").hide();
 })
+
+//退出登陆
+function logout()
+{
+    $.ajax({
+        url: apiUrl+'logout',
+        type: 'GET',
+        headers: {
+            'Token': plats_token
+        },
+        success: function (data) {
+            if (data.code == 200) {
+                localStorage.clear();
+                setCookie('', -1);
+                clearCookie();
+                window.location.href = "/login";
+            } 
+        }
+    });
+    
+}

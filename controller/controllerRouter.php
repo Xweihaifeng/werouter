@@ -144,10 +144,24 @@ class controllerRouter extends controller
         return FALSE;
     }
 
+    //验证LOGIN
+    public function login($param)
+    {
+        if($param != 'login')
+        {
+            return FALSE;
+        }
+        $user_info = $this->user_token();
+        if(!empty($user_info))
+        {
+            redirect('/user');
+        }
+        return TRUE;
+    }
+
     //验证TOKEN
     public function user($param)
     {
-
         $user_info = $this->user_token();
         $this->_user_id = $user_info['weid'];
         if(empty($this->_user_id))
