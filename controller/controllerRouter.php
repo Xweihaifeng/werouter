@@ -151,6 +151,10 @@ class controllerRouter extends controller
         {
             return FALSE;
         }
+        if(empty($_COOKIE['token']))
+        {
+            return TRUE;
+        }
         $user_info = $this->user_token();
         if(!empty($user_info))
         {
@@ -158,7 +162,7 @@ class controllerRouter extends controller
         }
         return TRUE;
     }
-    
+
     //验证TOKEN
     public function user($param)
     {
