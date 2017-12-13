@@ -445,17 +445,15 @@
         <script src="bower_components/qiniu/dist/qiniu.min.js"></script>
         <script>
             jQuery.noConflict();
-
             var qiniu_uptoken = '';
             var saveto = 'qiniu';
             var qiniu_upload_domain = '//upload.qiniu.com';
             var qiniu_bucket_domain = ApiMaterPlatQiniuDomain;
             CKEDITOR.replace('editor1', {
-                "extraPlugins": "filebrowser,image,imagepaste,filetools",
+                "extraPlugins": "filebrowser,image,imagepaste,filetools,flash",
                 height: '240px',
                 width: '100%'
             });
-
             var __init = function() {
                 $.ajax({
                     url: ApiUrl + 'file/qiniu_token?t=' + Math.random(),
