@@ -126,7 +126,7 @@ $(function () {
                         if(x.goods.length){
                             for(var i=0; i<x.goods.length; i++){
                                 var goodItem =
-                                    '<tr id="'+x.weid+'">'+
+                                    '<tr id="'+x.weid+'" domain="'+x.domain+'">'+
                                     '<td style="width: 106px;padding-top: 8px;"><img src="'+qiniu_bucket_domain+x.goods[i].goods_cover+'" alt=""></td>'+
                                     '<td style="width: 460px;"><a href="/'+x.domain +'/wemall/goods/'+x.goods[i].goods_id+'" target="_blank">'+x.goods[i].goods_summary+'</a></td>'+
                                     '<td>￥'+x.goods[i].goods_price+'</td>'+
@@ -151,12 +151,22 @@ $(function () {
                         })
                     }
                     switch (x.order_status){
+                        case 1:
+                            operList.push({
+                                name : '付款',
+                                oper : 'pay_order_operation',
+                            });
+                            operList.push({
+                                name : '取消订单',
+                                oper : 'cancel_order_operation',
+                            });
+                            break;
                         case 2:
                             break;
                         case 3:
                             operList.push({
                                 name : '确认收货',
-                                oper : 'take_delivery',
+                                oper : 'take_delivery_operation',
                             });
                             break;
                         case 4:
@@ -168,11 +178,11 @@ $(function () {
                             */
                             operList.push({
                                 name : '确定交易',
-                                oper : 'transaction_completion',
+                                oper : 'transaction_completion_operation',
                             });
                             operList.push({
                                 name : '申请退款',
-                                oper : 'apply_refund',
+                                oper : 'apply_refund_operation',
                             });
                             break;
                         case 5:
@@ -180,7 +190,7 @@ $(function () {
                         case 7:
                             operList.push({
                                 name : '删除订单',
-                                oper : 'delete_order',
+                                oper : 'delete_order_operation',
                             });
                             break;
                         case 8:
@@ -188,7 +198,7 @@ $(function () {
                         case 9:
                             operList.push({
                                 name : '删除订单',
-                                oper : 'delete_order',
+                                oper : 'delete_order_operation',
                             });
                             break;
                     }
@@ -197,7 +207,7 @@ $(function () {
                             var operDom =
                                 '<a class="'+ operList[i].oper +'">'+operList[i].name+'</a>';
                             $('#'+x.weid+' .status-oper').append(operDom);
-                            InitOperation();
+
                         }
                     }
 
@@ -250,6 +260,7 @@ $(function () {
                         })
 
                     }
+                    InitOperation();
                 }
 
             }
@@ -343,9 +354,11 @@ $(function () {
         if ($(".distribute")){
             $(".distribute").bind('click',function () {
                 $('.comment_mongolia_layer, .comment_bomb_box').fadeIn("slow");
+                $('.comment_bomb_box_title').text("物流信息");
                 $('.comment_bomb_box_content').text('正在加载...')
                 $('.comment_bomb_box_content .goodImg').children().remove();
                 $('.comment_bomb_box_content .detail').children().remove();
+                $('.comment_bomb_box_footer').empty();
                 var orderId = $(this).closest('tr').attr("id");
                 $.ajax({
                     url : apiUrl + 'order/detail/'+orderId,
@@ -401,62 +414,117 @@ $(function () {
             });
         }
 
-
-        //确收货
-        if ($(".take_delivery")){
-            $(".take_delivery").bind('click',function () {
+        //去支付
+        if ($(".pay_order_operation")) {
+            $(".pay_order_operation").unbind();
+            $(".pay_order_operation").bind('click', function () {
                 var orderId = $(this).closest('tr').attr("id");
+                var order_domain = $(this).closest('tr').attr("domain");
                 $.ajax({
-                    url : apiUrl + 'order/take',
-                    type : 'post',
-                    data:{order_id:orderId},
-                    headers : {
-                        "Token": localStorage.getItem('token')
+                    url: apiUrl + 'pages/wechatPay/mallOrderPcPay',
+                    type: 'post',
+                    data: {"order_id": orderId},
+                    headers: {
+                        'Token': localStorage.getItem('token')
                     },
-                    dataType : 'json',
-                    success : function (data) {
-                        if(data.code === 200){
-                            layer.msg("确收货成功", {
-                                time: 1500
-                            });
-                            //重新获取状
-                            reloadOperation(orderId);
-                        }else{
+                    success: function (data) {
+                        console.log(data);
+                        if (data.code == 200) {
+                            //去支付
+                            window.location.href = "/" + order_domain + "/wemall/pay/" + orderId + "";
+                        } else {
                             layer.msg(data.message, {
                                 time: 1500
                             });
                         }
+                    },
+                    error: function (xhr) {
+                        console.log(xhr);
                     }
+                })
+            })
+        }
+
+        //确收货
+        if ($(".take_delivery_operation")){
+            $(".take_delivery_operation").bind('click',function () {
+                var orderId = $(this).closest('tr').attr("id");
+                $('.comment_mongolia_layer, .comment_bomb_box').fadeIn("slow");
+                $('.comment_bomb_box_title').text("确收货");
+                $('.comment_bomb_box_content').text('请务必保证所有商品都收到货后确认收货否则订单数据将不全！')
+                $('.comment_bomb_box_content .goodImg').children().remove();
+                $('.comment_bomb_box_content .detail').children().remove();
+                $('.comment_bomb_box_footer').empty();
+                $('.comment_bomb_box_footer').append('<button class="comment_save" id="take_'+orderId+'"> 确认 </button>');
+                $("#take_"+orderId).unbind();
+                $("#take_"+orderId).bind('click',function () {
+                    $.ajax({
+                        url : apiUrl + 'order/take',
+                        type : 'post',
+                        data:{order_id:orderId},
+                        headers : {
+                            "Token": localStorage.getItem('token')
+                        },
+                        dataType : 'json',
+                        success : function (data) {
+                            if(data.code === 200){
+                                $('.comment_mongolia_layer, .comment_bomb_box').fadeOut("slow");
+                                layer.msg("确收货成功", {
+                                    time: 1500
+                                });
+                                //重新获取状
+                                reloadOperation(orderId);
+                            }else{
+                                layer.msg(data.message, {
+                                    time: 1500
+                                });
+                            }
+                        }
+                    });
                 });
+                closeModel();
+
             });
         }
 
         //申请退款
-        if ($(".apply_refund")){
-            $(".apply_refund").bind('click',function () {
+        if ($(".apply_refund_operation")){
+            $(".apply_refund_operation").bind('click',function () {
                 var orderId = $(this).closest('tr').attr("id");
-                $.ajax({
-                    url : apiUrl + 'order/refund',
-                    type : 'post',
-                    data:{order_id:orderId},
-                    headers : {
-                        "Token": localStorage.getItem('token')
-                    },
-                    dataType : 'json',
-                    success : function (data) {
-                        if(data.code === 200){
-                            layer.msg("申请退款成功", {
-                                time: 1500
-                            });
-                            //重新获取状
-                            reloadOperation(orderId);
-                        }else{
-                            layer.msg(data.message, {
-                                time: 1500
-                            });
+                $('.comment_mongolia_layer, .comment_bomb_box').fadeIn("slow");
+                $('.comment_bomb_box_title').text("申请退款");
+                $('.comment_bomb_box_content').empty();
+                $('.comment_bomb_box_content').append('<div class="comment_bomb_box_group"><div class="comment_bomb_box_name"> 退款原因： </div><div class="comment_bomb_box_input"><textarea class="bomb_box_textarea" cols="52" maxlength="52" rows="3" name="textarea"></textarea></div></div>');
+                $('.comment_bomb_box_footer').empty();
+                $('.comment_bomb_box_footer').append('<button class="comment_save" id="refund_'+orderId+'"> 确认 </button>');
+                $("#refund_"+orderId).unbind();
+                var reason=$("input[name=textarea]").val();
+                $("#refund_"+orderId).bind('click',function () {
+                    $.ajax({
+                        url : apiUrl + 'order/refund',
+                        type : 'post',
+                        data:{order_id:orderId,reason:reason},
+                        headers : {
+                            "Token": localStorage.getItem('token')
+                        },
+                        dataType : 'json',
+                        success : function (data) {
+                            if(data.code === 200){
+                                $('.comment_mongolia_layer, .comment_bomb_box').fadeOut("slow");
+                                layer.msg("申请退款成功", {
+                                    time: 1500
+                                });
+                                //重新获取状
+                                reloadOperation(orderId);
+                            }else{
+                                layer.msg(data.message, {
+                                    time: 1500
+                                });
+                            }
                         }
-                    }
+                    });
                 });
+                closeModel();
             });
         }
 
@@ -468,8 +536,8 @@ $(function () {
         }
 
         //交易完成
-        if ($(".transaction_completion")){
-            $(".transaction_completion").bind('click',function () {
+        if ($(".transaction_completion_operation")){
+            $(".transaction_completion_operation").bind('click',function () {
                 var orderId = $(this).closest('tr').attr("id");
                 $.ajax({
                     url : apiUrl + 'order/ok',
@@ -495,10 +563,9 @@ $(function () {
                 });
             });
         }
-
         //删除订单
-        if ($(".delete_order")){
-            $(".delete_order").bind('click',function () {
+        if ($(".delete_order_operation")){
+            $(".delete_order_operation").bind('click',function () {
                 var orderId = $(this).closest('tr').attr("id");
                 $.ajax({
                     url : apiUrl + 'order/delete',
@@ -524,8 +591,8 @@ $(function () {
         }
 
         //取消订单
-        if ($(".cancel_order")){
-            $(".cancel_order").bind('click',function () {
+        if ($(".cancel_order_operation")){
+            $(".cancel_order_operation").bind('click',function () {
                 var orderId = $(this).closest('tr').attr("id");
                 $.ajax({
                     url : apiUrl + 'order/cancel',
@@ -562,79 +629,80 @@ $(function () {
             },
             dataType : 'json',
             success : function (data) {
-                var operList = [];
-                switch (data.data.order_status){
-                    case 2:
-                        break;
-                    case 3:
+                if(data.code===200){
+                    var operList = [];
+                    if(data.data.send!=''){
                         operList.push({
                             name : '查看物流',
                             oper : 'distribute'
-                        });
-                        operList.push({
-                            name : '确认收货',
-                            oper : 'take_delivery',
-                        });
-                        break;
-                    case 4:
-                        operList.push({
-                            name : '查看物流',
-                            oper : 'distribute',
-                        });
-                        operList.push({
-                            name : '评论',
-                            oper : 'goods_comment',
-                        });
-                        operList.push({
-                            name : '确定交易',
-                            oper : 'transaction_completion',
-                        });
-                        operList.push({
-                            name : '申请退款',
-                            oper : 'apply_refund',
-                        });
-                        break;
-                    case 5:
-                        operList.push({
-                            name : '查看物流',
-                            oper : 'distribute',
-                        });
-                        break;
-                    case 7:
-                        operList.push({
-                            name : '查看物流',
-                            oper : 'distribute'
-                        },{
-                            name : '删除订单',
-                            oper : 'delete_order',
-                        });
-                        break;
-                    case 8:
-                        operList.push({
-                            name : '确认退款',
-                            oper : 'confirmRefund'
-                        },{
-                            name : '查看物流',
-                            oper : 'distribute'
-                        });
-                        break;
-                    case 9:
-                        operList.push({
-                            name : '查看物流',
-                            oper : 'distribute'
-                        });
-                        break;
-                }
-                if(operList.length){
-                    var operDom='';
-                    for(var i=0;i<operList.length;i++){
-                            operDom +=
-                            '<a class="'+ operList[i].oper +'">'+operList[i].name+'</a>';
+                        })
                     }
-                    var obj=$("#"+orderid).find(".status-oper");
-                    obj.empty();
-                    obj.append(operDom);
-
+                    switch (data.data.order_status){
+                        case 1:
+                            operList.push({
+                                name : '付款',
+                                oper : 'pay_order_operation',
+                            });
+                            operList.push({
+                                name : '取消订单',
+                                oper : 'cancel_order_operation',
+                            });
+                            break;
+                        case 2:
+                            operList.push({
+                                name : '取消订单',
+                                oper : 'cancel_order_operation',
+                            });
+                            break;
+                        case 3:
+                            operList.push({
+                                name : '确认收货',
+                                oper : 'take_delivery_operation',
+                            });
+                            break;
+                        case 4:
+                            /*
+                            operList.push({
+                                name : '评论',
+                                oper : 'goods_comment',
+                            });
+                            */
+                            operList.push({
+                                name : '确定交易',
+                                oper : 'transaction_completion_operation',
+                            });
+                            operList.push({
+                                name : '申请退款',
+                                oper : 'apply_refund_operation',
+                            });
+                            break;
+                        case 5:
+                            break;
+                        case 7:
+                            operList.push({
+                                name : '删除订单',
+                                oper : 'delete_order_operation',
+                            });
+                            break;
+                        case 8:
+                            break;
+                        case 9:
+                            operList.push({
+                                name : '删除订单',
+                                oper : 'delete_order_operation',
+                            });
+                            break;
+                    }
+                    if(operList.length){
+                        var operDom='';
+                        for(var i=0;i<operList.length;i++){
+                            operDom +=
+                                '<a class="'+ operList[i].oper +'">'+operList[i].name+'</a>';
+                        }
+                        var obj=$("#"+orderid).find(".status-oper");
+                        obj.empty();
+                        obj.append(operDom);
+                    }
                 }
             }
         })
