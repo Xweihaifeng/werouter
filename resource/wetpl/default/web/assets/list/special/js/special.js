@@ -154,7 +154,7 @@ $(function() {
         <li>
             <i>`+ (index + 1) +`</i>
             <h3 class="t">
-                <a href="/`+ pathname[0] +"/"+ result.weid +`">`+ result.title +`</a>
+                <a href="/`+ pathname[0] +"/"+ result.weid +`" target="_blank">`+ result.title +`</a>
             </h3>
             <div class="desc">`+ result.summary +`</div>
         </li>`
