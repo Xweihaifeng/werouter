@@ -452,7 +452,7 @@ checkdomain(domain,id);
 
     // 确认订单信息模板
      
-    var orderstorehtml=function(data,num,postMoney){
+    var orderstorehtml=function(data,num,postMoney,goodPrice){
         var orderhtml='<div class="goods_list" weid="'+data.weid+'" postage="'+data.postage+'" postage_max_money="'+data.postage_max_money+'" postage_status="'+data.postage_status+'"><li class="col-sm-2">'+
                 '<p class=""></p>'+
                 '<img src="'+qiniu_bucket_domain +data.cover+'" alt=""> </li>'+
@@ -462,7 +462,7 @@ checkdomain(domain,id);
                 '<p><img src="/common/img/qitian.png" alt="">该商品不支持7天无理由退货</p>'+
             '</li>'+
             '<li class="col-sm-3">' +
-                '<p id="one_price"> 单价：<span>'+parseFloat(data.price).toFixed(2)+'</span></p>' +
+                '<p id="one_price"> 单价：<span>'+parseFloat(goodPrice).toFixed(2)+'</span></p>' +
                 '<p id="postage_price">邮费：￥<span>'+postMoney+'</span></p>' +
             '</li>'+
             '<li class="col-sm-3">'+
@@ -496,11 +496,16 @@ checkdomain(domain,id);
                     if (data.code == 200) {
                         var goods = data.data;
                         console.log("商品详情：",goods)
+                        //判断是否会员价
+                        var goodPrice = goods.price;
+                        if(goods.discount_picture){
+                            goodPrice = goods.discount_picture
+                        }
                         //判断商品邮费
                         var postMoney = "0.00";
                         if(goods.postage_status == 2){
                             if(goods.postage_max_money && parseInt(goods.postage_max_money) > 0){
-                                if(parseFloat(goods.price * goodsdata.goods_num) < parseFloat(goods.postage_max_money)){
+                                if(parseFloat(goodPrice * goodsdata.goods_num) < parseFloat(goods.postage_max_money)){
                                     postMoney = parseFloat(goods.postage * goodsdata.goods_num).toFixed(2)
                                 }
                             }else{
@@ -509,11 +514,8 @@ checkdomain(domain,id);
 
                         }
                         //useraddr(goods.range_id);
-
-                    $(".product-buy-list").append(orderstorehtml(goods,goodsdata.goods_num,postMoney));
-                        if(index==id.goods_list.length-1){
-                            associatorNotDiscount();    
-                        }
+                        $(".product-buy-list").append(orderstorehtml(goods,goodsdata.goods_num,postMoney,goodPrice));
+                        associatorNotDiscount();
                     }
                 }               
             })        

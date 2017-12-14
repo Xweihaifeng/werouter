@@ -155,6 +155,12 @@ $(document).ready(function() {
 	var headId = 0;
 	var headIconId = '';
 	var artTemplete = function(data) {
+		var goodPrice = data.price;
+
+		if(data.discount_picture){
+            goodPrice = data.discount_picture;
+		}
+
 		headIconId = "head-" + headId;
 
 		var templete =
@@ -192,7 +198,7 @@ $(document).ready(function() {
 			'<p class="brief" title="' + data.summary + '">' + data.summary.substr(0, 120) + '</p>' +
 			'<div class="price">' +
 			'<b>价格</b>' +
-			'<span><em>￥</em>' + data.price + '</span>' +
+			'<span><em>￥</em>' + goodPrice + '</span>' +
 			'<b>市场价 ￥<i>' + data.marketprice + '</i></b>' +
 			'</div>' +
 			'<div class="state">' +

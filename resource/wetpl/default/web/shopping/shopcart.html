@@ -66,16 +66,15 @@
                                 </div>
                                 <div class="cart_shop_basic">
                                     <span>{{values.title}}</span>
-                                    <span>Axent Wear</span>
                                     <span>库存：{{values.stock}}</span>
                                 </div>
-                                <div class="cart_shop_price">￥<span class="cart_shop_unit_price"></span>{{parseFloat(values.price).toFixed(2)}}</div>
+                                <div class="cart_shop_price">￥<span class="cart_shop_unit_price"></span>{{values.discount_picture ? parseFloat(values.discount_picture).toFixed(2) : parseFloat(values.price).toFixed(2)}}</div>
                                 <div class="cart_shop_piece">
                                     <input id="count_min" name="" type="button" value="-" @click="count_add_min(values,item,'count_min')" />
                                     <input id="quantity"  name="" type="text" v-model="values.goods_num" />  
                                     <input id="count_add" name="" type="button" value="+" @click="count_add_min(values,item,'count_add')" />&nbsp;件
                                 </div>
-                                <div class="cart_shop_price">￥<span class="cart_shop_total_price"></span>{{parseFloat(values.price * values.goods_num).toFixed(2)}}</div>
+                                <div class="cart_shop_price">￥<span class="cart_shop_total_price"></span>{{parseFloat((values.discount_picture ? values.discount_picture : values.price) * values.goods_num).toFixed(2)}}</div>
                                 <div class="cart_shop_operation">
                                     <span class="cart_shop_delete" @click="delectGood(values)"> 删除商品 </span>
                                 </div>
@@ -154,7 +153,7 @@
 		                		item.checked = storeObj.mall.pCheck;
 		                	}
 		                	if(item.checked) {
-                                storeObj.storeAllMoney += item.price * item.goods_num;
+                                storeObj.storeAllMoney += (item.discount_picture ? item.discount_picture : item.price) * item.goods_num;
                                 storeObj.numbers++;
 		                	}
 		                });

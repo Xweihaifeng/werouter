@@ -116,6 +116,10 @@ $(document).ready(function(){
             case 'article' : return 'we-art'; break;
             case 'activity' : return 'we-active'; break;
             case 'apps': return 'we-app'; break;
+            case 'project' : return 'we-project'; break;
+            case 'quan' : return 'we-crm'; break;
+            case 'system' : return 'we-log'; break;
+            case 'wemall' : return 'we-mall'; break;
             default: break;
         }
     }
