@@ -633,8 +633,11 @@
                 return;
             }
             $.ajax({
-                url: ApiUrl + 'cms/contents/show_channel_by_content_id?content_id=' + content_id,
-                type: 'get',
+                url: ApiUrl + 'cms/contents/show_channel_by_content_id',
+                type: 'post',
+                data: {
+                    content_id: content_id
+                },
                 dataType: 'json',
                 success: function(data) {
                     $(that).attr('href', '/' + data.data.domain + '/' + content_id, '_blank');
