@@ -1368,8 +1368,8 @@ req().then((data) => {
                     i < 4 ? tpl += `<a href="${'/' + report.domain + '/' + e.domain}" target="_blank"><li><img src="${imgSet(e.thumb_image, 240, 60)}" height="60" /></li></a>` : tpl, '');
 
                 var vdtpl = vdinfo.list.reduce((tpl, e, i) =>
-                    i > 1 && i < 3 ?
-                    tpl += `<div class="hbs"><p><a href="${vdinfo.domain + '/' + e.weid}">> ${e.title.substr(0, 8) + '...'}</p>
+                    i >= 1 && i < 3 ?
+                    tpl += `<div class="hbs"><p><a href="${vdinfo.domain + '/' + e.weid}">> ${e.title.substr(0, 16) + '...'}</p>
                     <p>${new Date(e.publish_time * 1000).getFullYear()}-${(new Date(e.publish_time * 1000).getMonth() + 1).toString().length == 1 ? '0' + (new Date(e.publish_time * 1000).getMonth() + 1) : new Date(e.publish_time * 1000).getMonth() + 1}-${new Date(e.publish_time * 1000).getDate().toString().length == 1 ? '0' + new Date(e.publish_time * 1000).getDate() : new Date(e.publish_time * 1000).getDate()}</p></div>`
                     : tpl, '')
 
@@ -1377,7 +1377,7 @@ req().then((data) => {
                 $("#hbr ul").append(rptpl);
                 $("#hbl").append(vdtpl);
                 $(".hb1").html(`<a href="${vdinfo.domain + '/' + vdinfo.list[0].weid}">${vdinfo.list[0].title}</a>`);
-                $(".hb2").html(`<a href="${vdinfo.domain + '/' + vdinfo.list[0].weid}">${vdinfo.list[0].summary}</a>`);
+                $(".hb2").html(vdinfo.list[0].summary);
 
                 $("#hbl div:eq(1)").click(() => {
                     layer.open({
@@ -1389,7 +1389,9 @@ req().then((data) => {
                       shadeClose: true,
                       content: '//player.youku.com/embed/XMzIyODc3OTk0MA=='
                     });
-                    layer.msg('点击任意处关闭');
+                    layer.msg('点击任意处关闭', {
+                        time: 1500
+                    });
                 })
 
                 var newsCnt = 0;
