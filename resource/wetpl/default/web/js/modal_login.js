@@ -9,6 +9,12 @@ $(function() {
 
     // localStorage.removeItem('token');
     // localStorage.removeItem('weid');
+    function GetQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]);
+        return null;
+    }
     
     var token = window.localStorage.getItem('token'), get_weid;
     if(token) {
@@ -598,12 +604,12 @@ $(function() {
         window.location.href = "/user/admin"
     })
 
-    $("#qrcode").click(function(){
+    $("#qrcode").click(function() {
         $(".login-body").hide();
         $(".wexin").show();
     })
 
-    $(".to-login").click(function(){
+    $(".to-login").click(function() {
         $(".login-body").show();
         $(".wexin").hide();
     })
