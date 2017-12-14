@@ -283,4 +283,9 @@ $(function() {
     options18.fail(function (error) {
         console.info(error);
     })
+
+    if(pathname[0] == "v") {
+        $(".center_center").text("视频中心");
+        $(".hotspot").text("热点视频");
+    }
 })
