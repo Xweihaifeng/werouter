@@ -6,7 +6,7 @@ class controller
 
 	// 写入公共数据
 	public $public_data;
-	
+
 	// 构造方法
     public function __construct() 
     {

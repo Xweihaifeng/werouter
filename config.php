@@ -11,6 +11,6 @@ class config{
     );
 
     public static $config_api_url = 'http://api.mptest.wezchina.com/plats/domain?site=';
-
+    
     public static $plats;
 }

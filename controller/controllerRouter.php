@@ -174,7 +174,6 @@ class controllerRouter extends controller
         }
     }
 
-
     // user/admin 验证是否已经认证
     public function user_admin($param)
     {
