@@ -21,14 +21,15 @@ if (code !== null && code !== undefined && code !== '') {
         url: apiUrl + "wx/scan_revbind_callback",
         data: {
             'code': code,
-            'state': state
+            'state': state,
+            'token': plats_token
         },
         success: function(data) {
-            layer.load('绑定成功');
+            layer.msg('绑定成功');
             location.href = siteUrl + "/user";
         },
         error: function() {
-            layer.load('网络错误');
+            layer.msg('网络错误');
         }
     });
 }
@@ -533,25 +534,27 @@ $(document).ready(function() {
     });
 
     var qrWindow = function() {
-        layer.open({
-            type: 1,
-            title: '微信绑定',
-            offset: type,
-            area: ['300px', '350px'],
-            id: 'layerDemo' + type,
-            content: '<div id="qrcode-block" style="height: 300px;overflow: hidden;"></div>',
-            shade: 0,
-            scrollbar: false,
-            yes: function() {
-                layer.closeAll();
-            }
-        });
+        layer.load();
         $.ajax({
             url: apiUrl + 'setting/alias/weChatOpenConfig',
             type: 'get',
             dataType: 'json',
             success: function(result) {
+                layer.closeAll('loading');
                 if (result.code === 200) {
+                    layer.open({
+                        type: 1,
+                        title: '微信绑定',
+                        offset: type,
+                        area: ['300px', '350px'],
+                        id: 'layerDemo' + type,
+                        content: '<div id="qrcode-block" style="height: 300px;overflow: hidden;"></div>',
+                        shade: 0,
+                        scrollbar: false,
+                        yes: function() {
+                            layer.closeAll();
+                        }
+                    });
                     var obj = new WxLogin({
                         id: "qrcode-block",
                         appid: result.data.appid,
@@ -567,6 +570,7 @@ $(document).ready(function() {
                 }
             },
             error: function(xhr) {
+                layer.closeAll('loading');
                 console.log(xhr);
             }
         });
