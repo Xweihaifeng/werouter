@@ -512,10 +512,10 @@ $(document).ready(function() {
             title: '微信绑定',
             offset: type //具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
                 ,
-            area: ['400px', '500px'],
+            area: ['220px', '350px'],
             id: 'layerDemo' + type //防止重复弹出
                 ,
-            content: '<div id="qrcode-block"  style="padding: 20px 100px;"></div>'
+            content: '<div id="qrcode-block"></div>'
                 //,btn: '关闭全部'
                 ,
             btnAlign: 'c' //按钮居中
