@@ -255,7 +255,9 @@ req().then((data) => {
                 'overflow': 'auto'
             })
         }
-        $(".header, .big").remove();
+        if (channel != 'xw') {
+            $(".header, .big").remove();
+        }
     } else {
         let lid = new Array(seq.length).fill(0); //生成显示栏目对应序列的数组
         fill(seq); //填充seq;
