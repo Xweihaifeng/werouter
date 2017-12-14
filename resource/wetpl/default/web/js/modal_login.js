@@ -286,9 +286,8 @@ $(function() {
     {
         var Days = expiredays;
         var exp = new Date();
-        var domain = '.'+root_domain;
         exp.setTime(exp.getTime() + Days*24*60*60*1000);
-        document.cookie = "token="+ escape (token) + ";expires=" + exp.toGMTString() +";path=/;domain="+domain+";";
+        document.cookie = "token="+ escape (token) + ";expires=" + exp.toGMTString() +";path=/;"
     }
 
     var saveUserInfo = function(token, weid, imgUrl, identity) {
