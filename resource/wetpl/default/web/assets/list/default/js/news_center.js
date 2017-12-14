@@ -69,7 +69,7 @@ $(function() {
         }
 
         var template = `<span class="chan_li" id="` + result.domain + `"><a name="`+ result.weid +`" href="/`+ pathname[0] +"/"+ result.domain + `">
-            `+ result.title +`</a>`+ template2(result.children) +`</span>`
+            `+ result.title.substr(0, 4) +`</a>`+ template2(result.children) +`</span>`
 
         return template;
     }

@@ -4,6 +4,7 @@
 
 $(function() {
 
+    var tpl = "";
     function getQueryString(name) {  
         var re = new RegExp (name + "=([^\&]*)" , "i" );
         var a = re . exec (document . location . search );
@@ -23,6 +24,19 @@ $(function() {
     $(".header-logo").css("background", "#33a0e1 url("+ logo +") no-repeat center");
     $(".header-logo").html(`<a href="/`+ channel +`"></a>`);
 
+    // 平台商标
+    $.ajax({
+        url: apiUrl + "cms/setting/show",
+        dataType: 'json',
+        async: false,
+        success: function(data){
+            if(data.code === 200) {
+                tpl = data.data.title;
+            } else {
+                console.error(data.message);
+            }
+        }
+    });
 
 
     $.ajax({
@@ -239,4 +253,6 @@ $(function() {
         var input_val = $(".soso-input").val();
         window.location.href = `/search` +`?title=`+ input_val +`&channel=`+ channel;
     });
+
+    document.title = "最新新闻—" + tpl;
 })
