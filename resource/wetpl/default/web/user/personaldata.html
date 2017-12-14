@@ -5,8 +5,7 @@
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <script src="/common/js/jquery-3.2.1.min.js"></script>
-    <script src="/common/jquery-extend/tipso/tipso.min.js"></script>
-    <!-- <script type="text/javascript" src="/common/layer-v3.0.3/layer-v3.0.3/layer/layer.js"></script> -->
+    <script src="/common/js/layer-v3.1.1/layer/layer.js"></script>
     <script src="/common/js/browser.min.js"></script>
     <script src="/common/js/jquery.imagecompress.js"></script>
     <link rel="shortcut icon" id="favicon" href="" />
@@ -24,7 +23,7 @@
     <script src="/common/js/buttons.js"></script>
     <script src="/common/js/plupload/plupload.full.min.js"></script>
     <script src="/common/js/qiniu.js"></script>
-    <script src="/common/js/layer/layer.js"></script>
+
     <title>个人资料</title>
     <style type="text/css">
         .district {
@@ -37,7 +36,13 @@
         }
         .tipso_style {
             cursor: help;
-             border-bottom: 0px dotted; 
+            border-bottom: 0px dotted; 
+        }
+        .layui-layer-content {
+            color : #000 !important;
+        }
+        .layui-layer-tips{
+            border: 1px solid #f7f719 !important;
         }
     </style>
 </head>
@@ -90,7 +95,7 @@
 
                 <!--名称-->
                 <div class="name nickname">
-                    个人昵称：<input type="text">  <span class="tips" id="tip_nickname" data-tipso="个人昵称-在微主页标题栏展示"><img  src="/common/img/wenhao.png" width="20" height="20" /></span>
+                    个人昵称：<input type="text">  <span onclick="cl_tips('tip_nickname');" class="tipso_style" id="tip_nickname" ><img  src="/common/img/wenhao.png" width="20" height="20" /></span>
                 </div>
                 <div class="name username">
                     真实姓名：<input type="text">
@@ -113,9 +118,13 @@
                         cursor: pointer;
                     }
                 </style>
-                <!-- <div class="contact">
-						微信绑定：<i class="iconfont icon-weixin"></i><span></span>
-					</div> -->
+
+<!--                 <div class="contact">
+					微信绑定：<i class="iconfont icon-weixin"></i><span></span>
+				</div> -->              
+                <div class="contact">
+                    微信绑定：<i class="iconfont icon-weixin"></i><span></span>
+                </div>
                 <!--所在地区-->
                 <div class="area">
                     <span class='fl'>所在地区：</span>
@@ -124,13 +133,16 @@
                         <select class="form-control" id="we_province2"></select>
                         <select class="form-control" id="we_city3"></select>
                         <!-- <select class="form-control" id="we_area5"></select> -->&nbsp;
-                        <span class="tips" id="tip_nickname" data-tipso="所在地-微主页右侧展示."><img  src="/common/img/wenhao.png" width="20" height="20" /></span>
+                        <span onclick="cl_tips('tip_area');" class="tipso_style" id="tip_area" ><img  src="/common/img/wenhao.png" width="20" height="20" /></span>
                 </div>
                     </div>
                 </div>
                 <!--简介信息-->
                 <div class="information">
-                    <span>个性签名：</span><textarea name="" id="" cols="30" rows="10"></textarea>&nbsp; <span class="tips" id="tip_information" data-tipso="个性签名-微主页右侧展示."><img  src="/common/img/wenhao.png" width="20" height="20" /></span>
+                    <span>个性签名：</span><textarea name="" id="" cols="30" rows="10"></textarea>
+
+                    <span onclick="cl_tips('tip_information');" class="tipso_style" id="tip_information" >&nbsp; <img  src="/common/img/wenhao.png" width="20" height="20" /></span>
+
                 </div>
                 <!--保存更新-->
                 <div class="update">
@@ -190,6 +202,22 @@
     <!-- <script src="/common/js/ifconfig.js"></script> -->
     <!-- <script src="js/cert-config.js"></script> -->
     <script src="{{PATH_TML}}user/js/personaldata.js"></script>
+
+    <script type="text/javascript">
+        function cl_tips(name) {
+            var tips_array = {
+                'tip_nickname' : '个人昵称-在微主页标题栏展示',
+                'tip_area' : '所在地址-在微主页右侧展示',
+                'tip_information' : '个性签名-在微主页右侧展示',
+            };
+            layer.tips(tips_array[name], '#'+name, {
+              tips: [2, '#fff4bd'],
+              time: 40000
+            });
+        }
+
+
+    </script>
     <!-- <script type="text/javascript">
 			//原生城市-无联动
 			var select = $('.city-picker-select').cityPicker({
@@ -210,15 +238,6 @@
 				'name': '雁塔区'
 			}]);
 		</script> -->
-
-    <script type="text/javascript">
-
-        $('.tips').tipso({
-            background: 'tomato',
-            useTitle: false,
-            position: 'top'
-        });
-    </script>    
 
 </body>
 
