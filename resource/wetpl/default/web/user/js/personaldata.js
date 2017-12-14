@@ -510,18 +510,12 @@ $(document).ready(function() {
         layer.open({
             type: 1,
             title: '微信绑定',
-            offset: type //具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
-                ,
-            area: ['300px', '400px'],
-            id: 'layerDemo' + type //防止重复弹出
-                ,
-            content: '<div id="qrcode-block"></div>'
-                //,btn: '关闭全部'
-                ,
-            btnAlign: 'c' //按钮居中
-                ,
-            shade: 0 //不显示遮罩
-                ,
+            offset: type,
+            area: ['300px', '350px'],
+            id: 'layerDemo' + type,
+            content: '<div id="qrcode-block"></div>',
+            shade: 0,
+            scrollbar: false,
             yes: function() {
                 layer.closeAll();
             }
