@@ -7,6 +7,25 @@ if (sessionStorage.lastname == "we_title_1") {
     $("#we_title_1").find(".title-img").css("transform", "rotate(90deg)");
 }
 
+var code = GetQueryString('code');
+var state = GetQueryString('state');
+if (code !== null && code !== undefined && code !== '') {
+    $.ajax({
+        url: apiUrl + "wx/scan_revbind_callback",
+        data: {
+            'code': code,
+            'state': state
+        },
+        success: function(data) {
+            layer.load('绑定成功');
+            location.href = siteUrl + "/user";
+        }，
+        error: function() {
+            layer.load('网络错误');
+        }
+    });
+}
+
 // var Days = 7;//此 cookie 将被保存 30 天
 //    var exp = new Date();//new Date("December 31, 9998");
 //    exp.setTime(exp.getTime() + Days*24*60*60*1000);
@@ -530,7 +549,7 @@ $(document).ready(function() {
                         id: "qrcode-block",
                         appid: result.data.appid,
                         scope: "snsapi_login",
-                        redirect_uri: siteUrl + "/login",
+                        redirect_uri: siteUrl + "/user",
                         href: 'https://wezchina.com/common/css/wechat.css',
                         state: ""
                     });
@@ -545,6 +564,13 @@ $(document).ready(function() {
             }
         });
 
+    }
+
+    function setCookie(token, expiredays) {
+        var Days = expiredays;
+        var exp = new Date();
+        exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000);
+        document.cookie = "token=" + escape(token) + ";expires=" + exp.toGMTString() + ";path=/";
     }
 
 })
