@@ -378,7 +378,7 @@ req().then((data) => {
 
         var templete =
         '<div class="main-news-title"><img src="/common/img/topline.png" /><a href=' + href + ' target="_blank">' + data.title.substring(0,20) + '</div>' +
-        '<div class="main-news-content"><a href=' + href + ' target="_blank">' + summary + '[查看全文]</div>';
+        '<div class="main-news-content"><a href=' + href + ' target="_blank">' + summary + ' <span>[查看全文]</span></div>';
 
         return templete;
     }
@@ -894,7 +894,7 @@ req().then((data) => {
                     })
                     link_cont = '';
                     link[key].list.map(x => {
-                        link_cont += `<a href="${x.url}"><li>${x.title}</li></a>`
+                        link_cont += `<a href="${x.url}" target="_blank"><li>${x.title.length > 8 ? x.title.substr(0, 8) : x.title}</li></a>`
                     });
                     $("#link-page ul").html('');
                     $("#link-page ul").append(link_cont);
