@@ -193,11 +193,23 @@ $(document).ready(function(){
                         $('#'+x.weid).children().remove();
                         if(x.goods.length){
                             for(var i=0; i<x.goods.length; i++){
+                                var freight=0;
+                                if(x.goods[i].postage_status==1){
+                                    freight=0;
+                                }else{
+                                    if(x.goods[i].postage_max_money && parseInt(x.goods[i].postage_max_money) > 0 ){
+                                        if(parseFloat(x.goods[i].goods_price * x.goods[i].goods_num) < parseFloat(x.goods[i].postage_max_money)){
+                                            freight = parseFloat(x.goods[i].postage * x.goods[i].goods_num);
+                                        }
+                                    }else{
+                                        freight = parseFloat(x.goods[i].postage * x.goods[i].goods_num);
+                                    }
+                                }
                                 var goodItem =
                                     '<tr id="'+x.weid+'">'+
                                         '<td style="width: 106px;padding-top: 8px;"><img src="'+qiniu_bucket_domain+x.goods[i].goods_cover+'" alt=""></td>'+
                                         '<td style="width: 460px;"><a href="/'+x.domain +'/wemall/goods/'+x.goods[i].goods_id+'" target="_blank">'+x.goods[i].goods_summary+'</a></td>'+
-                                        '<td>￥'+x.goods[i].goods_price+'</td>'+
+                                        '<td>￥'+x.goods[i].goods_price+'<br>(运费￥'+freight+')</td>'+
                                         '<td>'+x.goods[i].goods_num+'</td>'+
                                         '<td rowspan="'+x.goods.length+'" class="price">￥'+x.order_price+'</td>'+
                                         '<td rowspan="'+x.goods.length+'" class="oper" style="width: 92px;" id="'+x.status+'">'+

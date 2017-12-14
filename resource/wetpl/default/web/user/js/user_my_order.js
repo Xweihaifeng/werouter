@@ -134,7 +134,7 @@ $(function () {
                                             freight = parseFloat(x.goods[i].postage * x.goods[i].goods_num);
                                         }
                                     }else{
-                                        freight = parseFloat(x.goods[i].postage * $(element).find("#numm").val());
+                                        freight = parseFloat(x.goods[i].postage * x.goods[i].goods_num);
                                     }
                                 }
                                 var goodItem =
