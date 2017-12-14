@@ -221,30 +221,31 @@
         .content-6 {
             font-family: '宋体';
             text-align: left;
-            margin: 10px 80px 0;
+            margin: 10px 80px 30px;
             font-size: 30px;
             text-indent: 2em;
         }
         
         .content-7 {
-            text-align: right;
-            margin: 10px 80px 0;
+            text-align: left;
+            text-indent: 485px;
+            margin-top: 8px;
             font-size: 17px;
         }
         
         .content-8 {
-            text-align: right;
-            margin: 10px 80px 0;
+            text-align: left;
             margin-top: 8px;
+            text-indent: 485px;
             font-size: 17px;
         }
         
         .content-9 {
             position: absolute;
             bottom: 70px;
-            right: 100px;
-            width: 115px;
-            height: 115px;
+            right: 77px;
+            width: 170px;
+            height: 150px;
         }
         
         .content-10 {
@@ -682,8 +683,8 @@
                             <div class="content-2">
                                 <img class="content-3 plat_logo">
                                 <div class="content-4 member_level"></div>
-                                <div class="content-5 plat_name"></div>
                                 <div class="content-6 cert_words"></div>
+                                <div class="content-8" style="">证书编号：<span class="end_number"></span></div>
                                 <div class="content-7">发证日期：<span class="begin_time"></span></div>
                                 <div class="content-8" style="">截止日期：<span class="end_time"></span></div>
                                 <img class="content-9 cert_seal">
@@ -1017,10 +1018,9 @@
                             $('.cert_template').attr('src', ApiMaterPlatQiniuDomain + data.data.cert_template);
                             $('.cert_seal').attr('src', ApiMaterPlatQiniuDomain + data.data.cert_seal);
                             $('.plat_logo').attr('src', ApiMaterPlatQiniuDomain + data.data.plat_logo);
-                            $('.plat_name').text(data.data.plat_name);
                             $('.member_level').text(data.data.member_level);
-                            $('.member_name').text(data.data.member_name);
                             $('.cert_words').text(data.data.cert_words);
+                            $('.end_number').text(data.data.cert_number);
                             $('.begin_time').text(data.data.begin_time);
                             $('.end_time').text(data.data.end_time);
                             //生成图片证书
