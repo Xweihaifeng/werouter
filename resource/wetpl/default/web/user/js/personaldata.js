@@ -26,7 +26,7 @@ if (code !== null && code !== undefined && code !== '') {
         success: function(data) {
             layer.load('绑定成功');
             location.href = siteUrl + "/user";
-        }，
+        },
         error: function() {
             layer.load('网络错误');
         }
