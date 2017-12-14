@@ -469,7 +469,7 @@ req().then((data) => {
                             '<img src=' + imgUrl + ' width="80"/>' +
                         '</div><div class="img-title1">' +
             '<div id=' + memberId + ' style="width: 100%; height: 35px; text-align: center; line-height: 35px; margin-top: 5px; font-size: 15px; font-weight: 600;" class="imgs-name1">' + data.real_name + '</div>' +
-            '<div style="width: 100%; height: 63px; text-align: center; line-height: 2em;" class="imgs-occupation">' + data.real_name + '</div>' +
+            '<div style="width: 100%; height: 63px; text-align: center; line-height: 2em;" class="imgs-occupation">' + data.position + '</div>' +
                     '</div></div>' +
                 '</a>' + 
             '</div>'
@@ -482,7 +482,7 @@ req().then((data) => {
                             '<img src=' + imgUrl + ' width="80"/>' +
                         '</div>' +
                         '<div id=' + memberId + ' style="width: 100%; height: 33px; text-align: center; line-height: 33px;">' + data.real_name + '</div>' +
-                        '<div style="width: 100%; height: 63px; text-align: center; line-height: 2em;" class="imgs-occupation">' + data.real_name + '</div>' +
+                        '<div style="width: 100%; height: 63px; text-align: center; line-height: 2em;" class="imgs-occupation">' + data.position + '</div>' +
                     '</div>' +
                 '</a>' + 
             '</div>'
@@ -1378,7 +1378,7 @@ req().then((data) => {
 
                 var vdtpl = vdinfo.list.reduce((tpl, e, i) =>
                     i >= 1 && i < 3 ?
-                    tpl += `<div class="hbs"><p><a href="${vdinfo.domain + '/' + e.weid}">> ${e.title.substr(0, 16)}</p>
+                    tpl += `<div class="hbs"><p><a href="${vdinfo.domain + '/' + e.weid}">> ${e.title.substr(0, 14)}</p>
                     <p style="margin-right: 10px;">${new Date(e.publish_time * 1000).getFullYear()}-${(new Date(e.publish_time * 1000).getMonth() + 1).toString().length == 1 ? '0' + (new Date(e.publish_time * 1000).getMonth() + 1) : new Date(e.publish_time * 1000).getMonth() + 1}-${new Date(e.publish_time * 1000).getDate().toString().length == 1 ? '0' + new Date(e.publish_time * 1000).getDate() : new Date(e.publish_time * 1000).getDate()}</p></div>`
                     : tpl, '')
 
