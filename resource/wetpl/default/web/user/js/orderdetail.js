@@ -319,7 +319,7 @@ var qiniu_bucket_domain =ApiMaterPlatQiniuDomain;
                                 '<td class="list_left" colspan="4">'+
                                     '<span class="list_left_date">物流信息  物流单号:'+x.logistics_no+'</span>'+
                                 '</td>'+
-                                '</tr><tr class="orders_list_content" id="914087f0-d0e1-11e7-ae66-c11b9b4ee3b1" data-id="undefined"> <td width="40%" colspan="4"><div class="od_about_order_left  od_bgwrite"><div style="padding: 20px 80px;">';
+                                '</tr><tr class="orders_list_content" id="914087f0-d0e1-11e7-ae66-c11b9b4ee3b1" data-id="undefined"> <td width="40%" ><div class="od_about_order_left  od_bgwrite"><div style="padding: 20px 80px;">';
                                 //分割字符串        
                                 var order_goods_list=x.order_goods_id.split(",");
                                 order_goods_list.map(y=>{
@@ -329,7 +329,7 @@ var qiniu_bucket_domain =ApiMaterPlatQiniuDomain;
                                         }        
                                     });
                                 });
-                                html+='</div><div class="logistics_father_div">';
+                                html+='</div><div class="logistics_father_div" style="width: 100%;">';
                                 logistics_info.data.map(x=>{
                                     html+='<p><i></i><span class="time">'+x.ftime+'</span><br><span>'+x.context+'</span></p>';
                                 });
@@ -364,7 +364,7 @@ var qiniu_bucket_domain =ApiMaterPlatQiniuDomain;
                                             }        
                                         });
                                     });
-                                    html+='</div><div class="logistics_father_div">';
+                                    html+='</div><div class="logistics_father_div" style="width: 100%;">';
                                     data.data.data.map(x=>{
                                         html+='<p><i></i><span class="time">'+x.ftime+'</span><br><span>'+x.context+'</span></p>';
                                     });
