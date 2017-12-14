@@ -34,14 +34,17 @@
             max-width: 200px;
             max-height: 120px;
         }
+        
         .tipso_style {
             cursor: help;
-            border-bottom: 0px dotted; 
+            border-bottom: 0px dotted;
         }
+        
         .layui-layer-content {
-            color : #000 !important;
+            color: #000 !important;
         }
-        .layui-layer-tips{
+        
+        .layui-layer-tips {
             border: 1px solid #f7f719 !important;
         }
     </style>
@@ -95,7 +98,7 @@
 
                 <!--名称-->
                 <div class="name nickname">
-                    个人昵称：<input type="text">  <span onclick="cl_tips('tip_nickname');" class="tipso_style" id="tip_nickname" ><img  src="/common/img/wenhao.png" width="20" height="20" /></span>
+                    个人昵称：<input type="text"> <span onclick="cl_tips('tip_nickname');" class="tipso_style" id="tip_nickname"><img  src="/common/img/wenhao.png" width="20" height="20" /></span>
                 </div>
                 <div class="name username">
                     真实姓名：<input type="text">
@@ -118,10 +121,6 @@
                         cursor: pointer;
                     }
                 </style>
-
-<!--                 <div class="contact">
-					微信绑定：<i class="iconfont icon-weixin"></i><span></span>
-				</div> -->              
                 <div class="contact">
                     微信绑定：<i class="iconfont icon-weixin"></i><span></span>
                 </div>
@@ -133,58 +132,58 @@
                         <select class="form-control" id="we_province2"></select>
                         <select class="form-control" id="we_city3"></select>
                         <!-- <select class="form-control" id="we_area5"></select> -->&nbsp;
-                        <span onclick="cl_tips('tip_area');" class="tipso_style" id="tip_area" ><img  src="/common/img/wenhao.png" width="20" height="20" /></span>
-                </div>
+                        <span onclick="cl_tips('tip_area');" class="tipso_style" id="tip_area"><img  src="/common/img/wenhao.png" width="20" height="20" /></span>
                     </div>
                 </div>
-                <!--简介信息-->
-                <div class="information">
-                    <span>个性签名：</span><textarea name="" id="" cols="30" rows="10"></textarea>
-
-                    <span onclick="cl_tips('tip_information');" class="tipso_style" id="tip_information" >&nbsp; <img  src="/common/img/wenhao.png" width="20" height="20" /></span>
-
-                </div>
-                <!--保存更新-->
-                <div class="update">
-                    保存最新设置
-                </div>
-
-                <!--中间-->
-                <form class="form-horizontal" id='imgForm' enctype="multipart/form-data" role="form" method="POST" action="#" style="display:none;">
-                    <input type="hidden" name="_token" value="YeEAT6EH29ZIKgKsd72sSrKQa2McrMdXAB9KxVsY">
-                    <div class="image-cut" id="image-cut">
-                        <div class="top">
-                            <div class="z">
-                                <div class="title">上传封面</div>
-                            </div>
-                            <div class="y">
-                                <div id="validation-errors"></div>
-                                <!--<i class="fa fa-times" aria-hidden="true"></i>-->
-                                <a href="JavaScript:;" style="color:#007cd3" id="cut-close"><i class="iconfont icon-guanbi"></i>&nbsp;</a>
-                            </div>
-                        </div>
-                        <div class="center">
-                            <div class="z">
-                                <img id="image-cut-box" src="" />
-                            </div>
-                            <div class="y">
-                                <div class="img-show img-preview"></div>
-                                <div class="img-show1 img-preview"></div>
-                                <div class="img-show2 img-preview"></div>
-                            </div>
-                        </div>
-                        <div class="bottom">
-                            <div class="z">
-                                <input type="file" name="image" id="image-up-input" required="required" accept="image/jpg,image/jpeg,image/png,image/gif" multiple="" />
-                            </div>
-                            <div class="y">
-                                <button class="btn" id="cut-button" type="button">确定上传</button>
-                            </div>
-                        </div>
-                    </div>
-                </form>
             </div>
+            <!--简介信息-->
+            <div class="information">
+                <span>个性签名：</span><textarea name="" id="" cols="30" rows="10"></textarea>
+
+                <span onclick="cl_tips('tip_information');" class="tipso_style" id="tip_information">&nbsp; <img  src="/common/img/wenhao.png" width="20" height="20" /></span>
+
+            </div>
+            <!--保存更新-->
+            <div class="update">
+                保存最新设置
+            </div>
+
+            <!--中间-->
+            <form class="form-horizontal" id='imgForm' enctype="multipart/form-data" role="form" method="POST" action="#" style="display:none;">
+                <input type="hidden" name="_token" value="YeEAT6EH29ZIKgKsd72sSrKQa2McrMdXAB9KxVsY">
+                <div class="image-cut" id="image-cut">
+                    <div class="top">
+                        <div class="z">
+                            <div class="title">上传封面</div>
+                        </div>
+                        <div class="y">
+                            <div id="validation-errors"></div>
+                            <!--<i class="fa fa-times" aria-hidden="true"></i>-->
+                            <a href="JavaScript:;" style="color:#007cd3" id="cut-close"><i class="iconfont icon-guanbi"></i>&nbsp;</a>
+                        </div>
+                    </div>
+                    <div class="center">
+                        <div class="z">
+                            <img id="image-cut-box" src="" />
+                        </div>
+                        <div class="y">
+                            <div class="img-show img-preview"></div>
+                            <div class="img-show1 img-preview"></div>
+                            <div class="img-show2 img-preview"></div>
+                        </div>
+                    </div>
+                    <div class="bottom">
+                        <div class="z">
+                            <input type="file" name="image" id="image-up-input" required="required" accept="image/jpg,image/jpeg,image/png,image/gif" multiple="" />
+                        </div>
+                        <div class="y">
+                            <button class="btn" id="cut-button" type="button">确定上传</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
         </div>
+    </div>
 
     </div>
 
@@ -202,22 +201,21 @@
     <!-- <script src="/common/js/ifconfig.js"></script> -->
     <!-- <script src="js/cert-config.js"></script> -->
     <script src="{{PATH_TML}}user/js/personaldata.js"></script>
-
     <script type="text/javascript">
         function cl_tips(name) {
             var tips_array = {
-                'tip_nickname' : '个人昵称-在微主页标题栏展示',
-                'tip_area' : '所在地址-在微主页右侧展示',
-                'tip_information' : '个性签名-在微主页右侧展示',
+                'tip_nickname': '个人昵称-在微主页标题栏展示',
+                'tip_area': '所在地址-在微主页右侧展示',
+                'tip_information': '个性签名-在微主页右侧展示',
             };
-            layer.tips(tips_array[name], '#'+name, {
-              tips: [2, '#fff4bd'],
-              time: 40000
+            layer.tips(tips_array[name], '#' + name, {
+                tips: [2, '#fff4bd'],
+                time: 40000
             });
         }
-
-
     </script>
+
+    <script src="https://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js"></script>
     <!-- <script type="text/javascript">
 			//原生城市-无联动
 			var select = $('.city-picker-select').cityPicker({

@@ -172,6 +172,12 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                    <label class="control-label col-sm-4 col-md-4 col-lg-2">证书编号前缀</label>
+                                    <div class="col-sm-8 col-md-8 col-lg-10">
+                                        <input name="cert_prefix_num" type="text" class="form-control" placeholder="如：61代表陕西">
+                                    </div>
+                                </div>
+                                <div class="form-group">
                                     <label class="control-label col-sm-4 col-md-4 col-lg-2">申请等待时间(天)</label>
                                     <div class="col-sm-8 col-md-8 col-lg-10">
                                         <input name="apply_wait_days" type="number" class="form-control" placeholder="用户提交申请后展示的处理时间，单位：天">
@@ -244,6 +250,7 @@
                         if (data.data.cert_seal) {
                             $("#img2").attr("src", ApiMaterPlatQiniuDomain + data.data.cert_seal);
                         }
+                        $('input[name=cert_prefix_num]').val(data.data.cert_prefix_num);
                         $('input[name=apply_wait_days]').val(data.data.apply_wait_days);
                         $('select[name=member_open_type]').val(data.data.member_open_type);
                     } else {
@@ -265,6 +272,7 @@
                 'cert_words': $('input[name=cert_words]').val(),
                 'cert_template': $('input[name=cert_template]').val(),
                 'cert_seal': $('input[name=cert_seal]').val(),
+                'cert_prefix_num': $('input[name=cert_prefix_num]').val(),
                 'apply_wait_days': $('input[name=apply_wait_days]').val(),
                 'member_open_type': $('select[name=member_open_type]').val(),
             };

@@ -95,6 +95,8 @@
     <script>
         $("#favicon").attr("href", ApiMaterPlatQiniuDomain + window.localStorage.getItem("fav"));
 
+
+        // 扫码登录
         function setCookie(token, expiredays) {
             var Days = expiredays;
             var exp = new Date();
@@ -109,7 +111,11 @@
                 url: apiUrl + "wx/scan_callback",
                 data: {
                     'code': code,
-                    'state': state
+                    'state': state,
+                    'ref_id': '',
+                    'ref_url': '',
+                    'ref_type': '',
+                    'domain': ''
                 },
                 success: function(data) {
                     localStorage.setItem('token', data.token);
@@ -126,7 +132,30 @@
             });
         }
 
+        $.ajax({
+            url: apiUrl + 'setting/alias/weChatOpenConfig',
+            type: 'get',
+            dataType: 'json',
+            success: function(result) {
+                if (result.code === 200) {
+                    var obj = new WxLogin({
+                        id: "qrcode-block",
+                        appid: result.data.appid,
+                        scope: "snsapi_login",
+                        redirect_uri: siteUrl + "/login",
+                        href: 'https://wezchina.com/common/css/wechat.css',
+                        state: ""
+                    });
+                } else {
+                    parent.layer.msg(result.message);
 
+                    return false;
+                }
+            },
+            error: function(xhr) {
+                console.log(xhr);
+            }
+        });
     </script>
 </body>
 
