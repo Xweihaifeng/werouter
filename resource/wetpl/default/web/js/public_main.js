@@ -455,7 +455,7 @@ req().then((data) => {
         var memberId = 'member_' + memberCnt;    
         var imgUrl = data.avatar;
         if (imgUrl != null && imgUrl.indexOf('http') === -1 && imgUrl.indexOf('common') === -1){
-            imgUrl = imgSet(imgUrl, 80, 100);
+            imgUrl = imgSet(imgUrl, 158, 154);
         } else if (imgUrl == null) {
             imgUrl = '/common/img/avatar.png';
         }
