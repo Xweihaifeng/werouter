@@ -311,6 +311,7 @@ class main extends controller
         $plats['var api_domain'] = $protocol.$_SERVER['HTTP_HOST'].'/api/';
         $plats['var root_domain'] = $this->_get_domain($_SERVER['HTTP_HOST']);
         $plats['var is_domain'] = 'no';
+        $plats['var is_login'] = 'no';
         $plats['var plats_token'] = false;
     	//七牛相关信息
     	$sql = 'SELECT name , config FROM we_plats_setting
