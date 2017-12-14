@@ -27,7 +27,9 @@ if (code !== null && code !== undefined && code !== '') {
         success: function(data) {
             if (data.code == 200) {
                 layer.msg('绑定成功');
-                location.href = siteUrl + "/user";
+                setTimeout(function() {
+                    location.href = siteUrl + "/user";
+                }, 500);
             } else {
                 layer.msg(data.message);
             }
