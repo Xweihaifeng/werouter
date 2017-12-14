@@ -502,7 +502,7 @@ $(document).ready(function() {
         update();
     })
 
-    $(".contact span .bind-wechat").click(function() {
+    $(document).on("click", ".contact span .bind-wechat", function() {
         qrWindow();
     });
 
