@@ -466,7 +466,7 @@ req().then((data) => {
                 '<a href="/u/' + data.weid + '">' + 
                     '<div class="imgs-style">' +
                         '<div class="imgs-member">' +
-                            '<img src=' + imgUrl + ' width="80"/>' +
+                            '<img src=' + imgUrl + ' width="158" height="154" />' +
                         '</div><div class="img-title1">' +
             '<div id=' + memberId + ' style="width: 100%; height: 35px; text-align: center; line-height: 35px; margin-top: 5px; font-size: 15px; font-weight: 600;" class="imgs-name1">' + data.real_name + '</div>' +
             '<div style="width: 100%; height: 63px; text-align: center; line-height: 2em;" class="imgs-occupation">' + data.position.split(/',|;'/g)[0] + '</div>' +
