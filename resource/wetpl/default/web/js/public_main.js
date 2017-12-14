@@ -1397,10 +1397,7 @@ req().then((data) => {
                       shade: 0.8,
                       closeBtn: 0,
                       shadeClose: true,
-                      content: '//player.youku.com/embed/XMzIyODc3OTk0MA=='
-                    });
-                    layer.msg('点击任意处关闭', {
-                        time: 1500
+                      content: `http://image.qqxqs.com/qqxqs_video.mp4`
                     });
                 })
 
