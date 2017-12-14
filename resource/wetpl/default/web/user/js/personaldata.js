@@ -291,9 +291,9 @@ $(document).ready(function() {
         }
         unionid = userInfo.unionid;
         if (unionid != undefined && unionid != "") {
-            $(".contact span").text("已绑定");
+            $(".contact span").html('<em>已绑定</em>');
         } else {
-            $(".contact span").text("立即绑定");
+            $(".contact span").html('<em class="bind-wechat">立即绑定</em>');
         }
 
         //用户头像
@@ -502,17 +502,17 @@ $(document).ready(function() {
         update();
     })
 
-    $(".contact i").click(function() {
+    $(".contact span .bind-wechat").click(function() {
         qrWindow();
     });
 
-    var qrWindow = function(rand, qrUrl) {
+    var qrWindow = function() {
         layer.open({
             type: 1,
             title: '微信绑定',
             offset: type //具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
                 ,
-            area: ['400px', '600px'],
+            area: ['400px', '500px'],
             id: 'layerDemo' + type //防止重复弹出
                 ,
             content: '<div id="qrcode-block"  style="padding: 20px 100px;"></div>'
