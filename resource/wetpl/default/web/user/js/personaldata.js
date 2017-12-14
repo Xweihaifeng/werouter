@@ -25,8 +25,12 @@ if (code !== null && code !== undefined && code !== '') {
             'token': plats_token
         },
         success: function(data) {
-            layer.msg('绑定成功');
-            location.href = siteUrl + "/user";
+            if (data.code == 200) {
+                layer.msg('绑定成功');
+                location.href = siteUrl + "/user";
+            } else {
+                layer.msg(data.message);
+            }
         },
         error: function() {
             layer.msg('网络错误');
