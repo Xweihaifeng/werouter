@@ -483,7 +483,7 @@ checkdomain(domain,id);
         //生成默认收货地址
         defaultaddr();
         console.log(id.goods_list);
-
+        $(".product-buy-list").children().remove();
         $(id.goods_list).each(function(index,goodsdata){
             $.ajax({
                 url: GOODS_DETAIL+'/' + goodsdata.goods_id,
@@ -509,7 +509,7 @@ checkdomain(domain,id);
 
                         }
                         //useraddr(goods.range_id);
-                        $(".product-buy-list").children().remove()
+
                     $(".product-buy-list").append(orderstorehtml(goods,goodsdata.goods_num,postMoney));
                         if(index==id.goods_list.length-1){
                             associatorNotDiscount();    
