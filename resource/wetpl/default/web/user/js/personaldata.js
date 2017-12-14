@@ -513,7 +513,7 @@ $(document).ready(function() {
             offset: type,
             area: ['300px', '350px'],
             id: 'layerDemo' + type,
-            content: '<div id="qrcode-block"></div>',
+            content: '<div id="qrcode-block" style="height: 300px;overflow: hidden;"></div>',
             shade: 0,
             scrollbar: false,
             yes: function() {
