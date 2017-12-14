@@ -43,33 +43,78 @@ const home = `
                     </div>
                     <div id="adv"></div>
                     <div class="adv-left">
-                        <div class="adv-left-0" style="background: dodgerblue"></div>
-                        <div class="adv-left-1" style="background: green"></div>
-                        <div class="adv-left-2" style="background: orange"></div>
-                        <div class="adv-left-3" style="background: lightskyblue"></div>
+                        <div class="adv-left-0" style="background: rgb(8, 128, 218)"></div>
+                        <div class="adv-left-1" style="background: rgb(8, 128, 218)"></div>
+                        <div class="adv-left-2" style="background: rgb(8, 128, 218)"></div>
+                        <div class="adv-left-3" style="background: rgb(8, 128, 218)"></div>
                     </div>
                     <div class="adv-right">
                         <div class="swiper-container" id="my-swiper2"><div class="swiper-wrapper adv-right-0"></div></div>
                         <div class="swiper-container" id="my-swiper3"><div class="swiper-wrapper adv-right-1"></div></div>
-                        <div class="swiper-container" id="my-swiper4"><div class="swiper-wrapper adv-right-2"></div></div>
+                        <!--<div class="swiper-container" id="my-swiper4"><div class="swiper-wrapper adv-right-2"></div></div>-->
                     </div>
                 </div>
                 <div id="home-body">
-                    <div id="bar"></div>
-                    <div id="bg"></div>
-                </div>
-                <div id="imgs" class="clearfix">
-                    <div class="imgs-title"></div>
-                    <div class="imgs-style">
-                        <div class="imgs-chairman"></div>
-                        <div class="imgs-name"></div>
+                    <div class="qsfc">
+                        <p class="imgs-title">秦商风采</p>
+                        <p class="imgs-more">更多&gt;&gt;</p>
                     </div>
-                    <div class="imgs-active">
-                        <div id="my-swiper1">
-                            <div class="swiper_rolling clearfix"></div>
+                    <div id="imgs">
+                        <div class="imgs-style">
+                            <div class="imgs-chairman"></div>
+                            <div class="img-title">
+                                <div class="imgs-name"></div>
+                                <div class="imgs-occupation"></div>
+                            </div>
+                        </div>
+                        <div class="imgs-active">
+                            <div id="my-swiper1">
+                                <div class="swiper_rolling clearfix"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="bg"></div>
+                    <div class="hbbg">
+                        <div id="bar"></div>
+                    </div>
+                    <div class="hbc">
+                        <div id="hb-center">
+                            <div id="hbl">
+                                <div>
+                                    <p></p>
+                                    <p>更多>></p>
+                                </div>
+                                <div>
+                                    
+                                </div>
+                                <p class="hb1"></p>
+                                <p class="hb2"></p>                                
+                            </div>
+                            <div id="hbm">
+                                <div>
+                                    <p></p>
+                                    <p>更多>></p>
+                                </div>
+                                <ul></ul>
+                            </div>
+                            <div id="hbr">
+                                <div>
+                                    <p>专题报告</p>
+                                    <p>更多>></p>
+                                </div>
+                                <ul></ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="link">
+                        <ul id="link-title"></ul>
+
+                        <div id="link-page">
+                            <ul></ul>
                         </div>
                     </div>
                 </div>
+
             `
 const organization = `
 
@@ -324,7 +369,7 @@ req().then((data) => {
         var summary = data.summary.substring(0, 86);
 
         var templete =
-        '<div class="main-news-title"><a href=' + href + ' target="_blank">' + data.title.substring(0,20) + '</div>' +
+        '<div class="main-news-title"><img src="/common/img/topline.png" /><a href=' + href + ' target="_blank">' + data.title.substring(0,20) + '</div>' +
         '<div class="main-news-content"><a href=' + href + ' target="_blank">' + summary + '... [查看全文]</div>';
 
         return templete;
@@ -415,9 +460,10 @@ req().then((data) => {
                     '<div class="imgs-style">' +
                         '<div class="imgs-member">' +
                             '<img src=' + imgUrl + ' width="80"/>' +
-                        '</div>' +
-                        '<div id=' + memberId + ' style="width: 100%; height: 33px; text-align: center; line-height: 33px;">' + data.real_name + '</div>' +
-                    '</div>' +
+                        '</div><div class="img-title1">' +
+            '<div id=' + memberId + ' style="width: 100%; height: 35px; text-align: center; line-height: 35px;" class="imgs-name1">' + data.real_name + '</div>' +
+            '<div id=' + memberId + ' style="width: 100%; height: 63px; text-align: center; line-height: 2em;" class="imgs-occupation">' + data.real_name + '</div>' +
+                    '</div></div>' +
                 '</a>' + 
             '</div>'
         } else {
@@ -791,11 +837,80 @@ req().then((data) => {
                     "token": null
                 }
 
+                //显示header
+                var addBg = (url, id, w, h) => {
+                    $(id).css({
+                        'background': 'url(' + imgSet(url, w, h) + ') no-repeat center',
+                        'background-size': '100%'
+                    })
+                }
+
+                addBg(data.data.header1.image, '#hl', 196, 45);
+                addBg(data.data.header2.image, '#big', 960, 235);
+
+                var time = setTimeout(() => {
+                        $(".header").fadeOut(500);
+                    }, 60000);
+
+                $(".main").mouseenter(() => {
+                    clearTimeout(time);
+                    $(".header").fadeIn(500);
+                })
+
+                $(".main").mouseleave(() => {
+                    time = setTimeout(() => {
+                        $(".header").fadeOut(500);
+                    }, 1000)
+                })
+
                 //生成轮播图，通过weid查找图片对应的url
                 var swiper = data.data.banners.list;
                 var block = data.data.block.list;
                 var blocks = data.data.blocks.list;
                 var users = data.data.users;
+                var link = data.data.link;
+                var link_list = [];
+                var link_tpl = '';
+                var link_cont = '';
+                var init_key = '';
+                for (var key in link) {
+                    link_tpl += `<li id="${key}">${link[key].title}</li>`;
+                    link_list.push(key);
+                }
+                //默认显示
+                var init_list = (key) => {
+                    $("#" + key).css({
+                        "color": "#fff",
+                        "background": "#4fb7ff"
+                    })
+                    link_cont = '';
+                    link[key].list.map(x => {
+                        link_cont += `<a href="${x.url}"><li>${x.title}</li></a>`
+                    });
+                    $("#link-page ul").html('');
+                    $("#link-page ul").append(link_cont);
+                }
+
+                init_key = link_list[0];
+                setTimeout(function(){
+                    init_list(init_key);
+                }, 500);
+
+                $("#link-title").append(link_tpl);
+                $("#link-title").click(function(e) {
+                    var key = $(e.target).attr('id');
+                    if (link_list.indexOf(key) != -1) {
+                        link_list.filter(x => x != key).map(x => {
+                            $("#" + x).css({
+                                "color": "#000",
+                                "background": "#fff"
+                            });
+                        })
+                        init_list(key)
+                    }
+                })
+
+
                 var swiperUrl = [];
                 if (swiper != '') {
                     swiper.map(x => {
@@ -873,10 +988,10 @@ req().then((data) => {
                         if (data.data.leader.image.indexOf('http') == -1) {
                             data.data.leader.image = ApiMaterPlatQiniuDomain + data.data.leader.image;
                         }
-                        $(".imgs-chairman").html('<a href=' + data.data.leader.url + '><img src=' + data.data.leader.image + ' width="80"/></a>');
+                        $(".imgs-chairman").html('<a href=' + data.data.leader.url + '><img src=' + data.data.leader.image + ' width="158" height="154" /></a>');
                         $(".imgs-name").html(data.data.leader.title);
                     } else {
-                        $(".imgs-chairman").html('<a href=' + mainData.data.leader.url + '><img src=' + mainData.data.leader.image + ' width="80"/></a>');
+                        $(".imgs-chairman").html('<a href=' + mainData.data.leader.url + '><img src=' + mainData.data.leader.image + ' width="158" height="154" /></a>');
                         $(".imgs-name").html(mainData.data.leader.title);
                     }
                 }, 0);
@@ -1149,8 +1264,6 @@ req().then((data) => {
                         init();
                         // org();
                         mySwiper.startAutoplay();
-                        //mySwiper9.startAutoplay();
-                        //mySwiper10.startAutoplay();
                     })
 
                     // 首页组织模块
@@ -1162,8 +1275,6 @@ req().then((data) => {
                         init();
                         org();
                         mySwiper.startAutoplay();
-                        //mySwiper9.startAutoplay();
-                        //mySwiper10.startAutoplay();
                         //mySwiper.stopAutoplay();
                     })
 
@@ -1178,8 +1289,6 @@ req().then((data) => {
                         init();
                         // org();
                         mySwiper.startAutoplay();
-                        //mySwiper9.startAutoplay();
-                        //mySwiper10.startAutoplay();
                         //mySwiper.stopAutoplay();
                     })
 
@@ -1194,8 +1303,6 @@ req().then((data) => {
                         init();
                         // org();
                         mySwiper.startAutoplay();
-                        //mySwiper9.startAutoplay();
-                        //mySwiper10.startAutoplay();
                         //mySwiper.stopAutoplay();
                     })
                 }
@@ -1243,6 +1350,48 @@ req().then((data) => {
             dataType: 'json',
             success: function(data){
                 console.log(data.data);
+                var vdinfo = data.data.spzx;
+                var magazine = data.data.mag;
+                var report = data.data.ztbd;
+                $("#hbl div:eq(0) p:eq(0)").text(vdinfo.title);
+                $("#hbl div:eq(0) p:eq(1)").html(`<a href="${'/' + vdinfo.domain}">更多>></a>`);
+                $("#hbm div:eq(0) p:eq(0)").text(magazine.title);
+                $("#hbm div:eq(0) p:eq(1)").html(`<a href="${'/magazine/' + magazine.domain}">更多>></a>`);
+                $("#hbr div:eq(0) p:eq(0)").text(report.title);
+                $("#hbr div:eq(0) p:eq(1)").html(`<a href="${'/' + report.domain}">更多>></a>`);
+                var mgztpl = magazine.list.reduce((tpl, e, i) =>
+                    i < 6 ? 
+                    tpl += `<a href="${'/magazine/' + magazine.domain + '/' + e.weid}" target="_blank"><li><img src="${imgSet(e.cover, 94, 128)}" /></li></a>`
+                    : tpl, '');
+
+                var rptpl = report.list.reduce((tpl, e, i) => 
+                    i < 4 ? tpl += `<a href="${'/' + report.domain + '/' + e.domain}" target="_blank"><li><img src="${imgSet(e.thumb_image, 240, 60)}" height="60" /></li></a>` : tpl, '');
+
+                var vdtpl = vdinfo.list.reduce((tpl, e, i) =>
+                    i > 1 && i < 3 ?
+                    tpl += `<div class="hbs"><p><a href="${vdinfo.domain + '/' + e.weid}">> ${e.title.substr(0, 8) + '...'}</p>
+                    <p>${new Date(e.publish_time * 1000).getFullYear()}-${(new Date(e.publish_time * 1000).getMonth() + 1).toString().length == 1 ? '0' + (new Date(e.publish_time * 1000).getMonth() + 1) : new Date(e.publish_time * 1000).getMonth() + 1}-${new Date(e.publish_time * 1000).getDate().toString().length == 1 ? '0' + new Date(e.publish_time * 1000).getDate() : new Date(e.publish_time * 1000).getDate()}</p></div>`
+                    : tpl, '')
+
+                $("#hbm ul").append(mgztpl);
+                $("#hbr ul").append(rptpl);
+                $("#hbl").append(vdtpl);
+                $(".hb1").text(vdinfo.list[0].title);
+                $(".hb2").text(vdinfo.list[0].summary);
+
+                $("#hbl div:eq(1)").click(() => {
+                    layer.open({
+                      type: 2,
+                      title: false,
+                      area: ['800px', '480px'],
+                      shade: 0.8,
+                      closeBtn: 0,
+                      shadeClose: true,
+                      content: '//player.youku.com/embed/XMzIyODc3OTk0MA=='
+                    });
+                    layer.msg('点击任意处关闭');
+                })
+
                 var newsCnt = 0;
                 var noticeCnt = 0;
                 var esNewsCnt = 0;
