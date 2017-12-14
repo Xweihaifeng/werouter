@@ -1377,7 +1377,7 @@ req().then((data) => {
                 $("#hbr ul").append(rptpl);
                 $("#hbl").append(vdtpl);
                 $(".hb1").html(`<a href="${vdinfo.domain + '/' + vdinfo.list[0].weid}">${vdinfo.list[0].title}</a>`);
-                $(".hb2").html(`<a href="${vdinfo.domain + '/' + vdinfo.list[0].weid}">${vdinfo.list[0].summary}</a>`);
+                $(".hb2").html(vdinfo.list[0].summary);
 
                 $("#hbl div:eq(1)").click(() => {
                     layer.open({
