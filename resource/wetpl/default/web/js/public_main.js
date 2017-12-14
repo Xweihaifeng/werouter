@@ -893,7 +893,7 @@ req().then((data) => {
                     })
                     link_cont = '';
                     link[key].list.map(x => {
-                        link_cont += `<a href="${x.url}" target="_blank"><li>${x.title.length > 8 ? x.title.substr(0, 8) : x.title}</li></a>`
+                        link_cont += `<a href="${x.url}" target="_blank"><li title="${x.title}">${x.title.length > 8 ? x.title.substr(0, 8) : x.title}</li></a>`
                     });
                     $("#link-page ul").html('');
                     $("#link-page ul").append(link_cont);
