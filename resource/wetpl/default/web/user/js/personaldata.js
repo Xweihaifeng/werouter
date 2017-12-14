@@ -1,6 +1,13 @@
 /**
  * Created by yangzi on 2017/8/9.
  */
+
+function GetQueryString(name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+    var r = window.location.search.substr(1).match(reg);
+    if (r != null) return unescape(r[2]);
+    return null;
+}
 // 判断 sessionStorage
 if (sessionStorage.lastname == "we_title_1") {
     $("#we_title_1").find(".we-cont").show().parents().siblings().find(".we-cont").hide();
