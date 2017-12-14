@@ -5,6 +5,7 @@
 $(function() {
     var pathname = window.location.pathname.split('/').slice(1,4);
     var logo = window.localStorage.getItem("logo");
+    var tpl = "";
     if(!logo) {
 	    logo = "/common/img/main_logo.png";
 	} else if (logo.indexOf('http') != 0 && logo != "") {
@@ -12,6 +13,20 @@ $(function() {
 	}
 	$(".header-logo").css("background", "#33a0e1 url("+ logo +") no-repeat center");
 	$(".header-logo").html(`<a href="/`+ pathname[0] +`"></a>`);
+
+    // 平台商标
+    $.ajax({
+        url: apiUrl + "cms/setting/show",
+        dataType: 'json',
+        async: false,
+        success: function(data){
+            if(data.code === 200) {
+                tpl = data.data.title;
+            } else {
+                console.error(data.message);
+            }
+        }
+    });
 
     $.ajax({
         url: CMS_CHANNELS_DOMAIN_QUERY + pathname[0],
@@ -43,14 +58,17 @@ $(function() {
         }
     });
 
-    if(pathname[1] != undefined || pathname[0] != null || pathname[1] != '') {
+    if(!pathname[1] || pathname[1] == '') {
+        $(".special-title-list").remove();
+    } else if(pathname[1] != undefined || pathname[0] != null || pathname[1] != '') {
         var options1 = $.get(apiUrl + "cms/channel_categories?channel=" + pathname[0]);
         options1.done(function(data) {
             if(data.code == 200 && data.data) {
                 var result = data.data;
                 result.forEach(function(value, index) {
                     if(value.domain == pathname[1]) {
-        			    $(".special-title-list").append(`<li><a href="/`+ pathname[0] +"/"+ value.domain +`">`+ value.title +`</a></li>`);                    
+        			    $(".special-title-list").append(`<li><a href="/`+ pathname[0] +"/"+ value.domain +`">`+ value.title +`</a></li>`);
+                        document.title = value.title +"—"+ tpl;
                     }
                 });
             }
@@ -106,6 +124,10 @@ $(function() {
             <a href="/`+ pathname[0] +"/"+ jumpUrl +`" target="_blank" >
                 <img src="`+ thumb_image +`" alt="">
             </a>
+            <div class="hot-info">
+                <div class="hot-title">`+ result.title +`</div>
+                <div class="hot-summary">`+ result.summary +`</div>
+            </div>
         </div>`
         return template;
     }
@@ -247,8 +269,6 @@ $(function() {
     // 默认加载专题新闻
     if(!pathname[1] || pathname[1] == '') {
         // 推荐专题新闻
-        window.location.href = "/404";
-        return false;
         opt4(pathname[0]);
     } else if(pathname[1] != undefined || pathname[0] != null || pathname[1] != '') {
     	// 排序新闻

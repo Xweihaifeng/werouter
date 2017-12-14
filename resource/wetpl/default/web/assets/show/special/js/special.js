@@ -5,6 +5,7 @@
 $(function() {
     var pathname = window.location.pathname.split('/').slice(1,4);
     var logo = window.localStorage.getItem("logo");
+    var tpl = "";
     if(!logo) {
 	    logo = "/common/img/main_logo.png";
 	} else if (logo.indexOf('http') != 0 && logo != "") {
@@ -12,6 +13,20 @@ $(function() {
 	}
 	$(".header-logo").css("background", "#33a0e1 url("+ logo +") no-repeat center");
 	$(".header-logo").html(`<a href="/`+ pathname[0] +`"></a>`);
+
+    // 平台商标
+    $.ajax({
+        url: apiUrl + "cms/setting/show",
+        dataType: 'json',
+        async: false,
+        success: function(data){
+            if(data.code === 200) {
+                tpl = data.data.title;
+            } else {
+                console.error(data.message);
+            }
+        }
+    });
 
     // 专题背景图
     $.ajax({
@@ -52,6 +67,10 @@ $(function() {
             <a href="/`+ pathname[0] +"/"+ jumpUrl +`" target="_blank" >
                 <img src="`+ thumb_image +`" alt="">
             </a>
+            <div class="hot-info">
+                <div class="hot-title">`+ result.title +`</div>
+                <div class="hot-summary">`+ result.summary +`</div>
+            </div>
         </div>`
         return template;
     }
@@ -78,6 +97,7 @@ $(function() {
                 console.log(data.data);
                 var result = data.data;
                 $(".special-title-list").append(`<li><a href="/`+ pathname[0] +"/"+ result.category.domain +`">`+ result.category.title +`</a></li>`);
+                document.title = result.category.title +"—"+ tpl;
                 $(".special-box-right").html(recommend(result));
             } else {
                 console.warn(data.message);

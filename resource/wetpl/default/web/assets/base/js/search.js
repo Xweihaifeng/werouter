@@ -60,7 +60,9 @@ $(function() {
         if(data.code == 200 && data.data) {
             var result = data.data;
             result.forEach(function(value, index) {
-                $(".special-title-list").append(`<li><a href="/`+ channel +"/"+ value.domain +`">`+ value.title +`</a></li>`);
+                if(index < 4) {
+                    $(".special-title-list").append(`<li><a href="/`+ channel +"/"+ value.domain +`">`+ value.title +`</a></li>`);
+                }
             });
         }
     });
@@ -120,6 +122,10 @@ $(function() {
             <a href="/`+ channel +"/"+ jumpUrl +`" target="_blank" >
                 <img src="`+ thumb_image +`" alt="">
             </a>
+            <div class="hot-info">
+                <div class="hot-title">`+ result.title +`</div>
+                <div class="hot-summary">`+ result.summary +`</div>
+            </div>
         </div>`
         return template;
     }
