@@ -3,18 +3,30 @@
  */
 
 $(function() {
-    var pathname = window.location.pathname.split('/').slice(1,4);
+
+    function getQueryString(name) {  
+        var re = new RegExp (name + "=([^\&]*)" , "i" );
+        var a = re . exec (document . location . search );
+        if (a == null )
+            return null ;
+        return a [ 1 ];  
+    }
+    var channel = getQueryString("channel");
+    var title = getQueryString("title");
+
     var logo = window.localStorage.getItem("logo");
     if(!logo) {
-	    logo = "/common/img/main_logo.png";
-	} else if (logo.indexOf('http') != 0 && logo != "") {
-	    logo = imgSet(logo, 60, 60, 3);
-	}
-	$(".header-logo").css("background", "#33a0e1 url("+ logo +") no-repeat center");
-	$(".header-logo").html(`<a href="/`+ pathname[0] +`"></a>`);
+        logo = "/common/img/main_logo.png";
+    } else if (logo.indexOf('http') != 0 && logo != "") {
+        logo = imgSet(logo, 60, 60, 3);
+    }
+    $(".header-logo").css("background", "#33a0e1 url("+ logo +") no-repeat center");
+    $(".header-logo").html(`<a href="/`+ channel +`"></a>`);
+
+
 
     $.ajax({
-        url: CMS_CHANNELS_DOMAIN_QUERY + pathname[0],
+        url: CMS_CHANNELS_DOMAIN_QUERY + channel,
         dataType: 'json',
         async: false,
         success: function(data){
@@ -43,37 +55,39 @@ $(function() {
         }
     });
 
-    if(pathname[1] != undefined || pathname[0] != null || pathname[1] != '') {
-        var options1 = $.get(apiUrl + "cms/channel_categories?channel=" + pathname[0]);
-        options1.done(function(data) {
-            if(data.code == 200 && data.data) {
-                var result = data.data;
-                result.forEach(function(value, index) {
-                    if(value.domain == pathname[1]) {
-        			    $(".special-title-list").append(`<li><a href="/`+ pathname[0] +"/"+ value.domain +`">`+ value.title +`</a></li>`);                    
-                    }
-                });
-            }
-        });
-        options1.fail(function(error) {
-            console.error(error);
-        });
-    }
-
-    // 热门
-    var options2 = $.get(CMS_CONTENTS_HOT + pathname[0] + "&hot=1&limit=1");
-    options2.done(function (data) {
-        if (data.code === 200 ) {
-            $.map(data.data.list, function(item, index) {
-                $(".special-headline").html(recommend(item, index));
+    var options1 = $.get(apiUrl + "cms/channel_categories?channel=" + channel);
+    options1.done(function(data) {
+        if(data.code == 200 && data.data) {
+            var result = data.data;
+            result.forEach(function(value, index) {
+                $(".special-title-list").append(`<li><a href="/`+ channel +"/"+ value.domain +`">`+ value.title +`</a></li>`);
             });
-        } else {
-            console.warn(data.message);
         }
     });
-    options2.fail(function (error) {
-        console.info(error);
+    options1.fail(function(error) {
+        console.error(error);
     });
+
+    function page_tab(page) {
+        var options2 = $.get(CMS_CONTENTS_HOT + channel +"&title="+ title +"&page="+ page);
+        options2.done(function (data) {
+            if(!data.data.list.length) {
+                return false;
+            }
+
+            $(".special-scrollable > ul").html("");
+            if (data.code === 200 ) {
+                $.map(data.data.list, function(item, index) {
+                    $(".special-scrollable > ul").append(new_recom(item, index));
+                });
+            } else {
+                console.warn(data.message);
+            }
+        });
+        options2.fail(function (error) {
+            console.info(error);
+        });
+    }
 
     // 分页显示
     var paging = function(total, limit) {
@@ -103,7 +117,7 @@ $(function() {
 
         var template = `
         <div>
-            <a href="/`+ pathname[0] +"/"+ jumpUrl +`" target="_blank" >
+            <a href="/`+ channel +"/"+ jumpUrl +`" target="_blank" >
                 <img src="`+ thumb_image +`" alt="">
             </a>
         </div>`
@@ -112,7 +126,7 @@ $(function() {
 
     // 热点专题标题
     var news_hots_info = function(result) {
-        var template = `<div><a href="/`+ pathname[0] +"/"+ result.weid +`">`+ result.title +`</a></div>`
+        var template = `<div><a href="/`+ channel +"/"+ result.weid +`">`+ result.title +`</a></div>`
         return template;
     }
 
@@ -121,7 +135,7 @@ $(function() {
         var template = `
         <h1>`+ result.title +`</h1>
         <div class="desc">`+ result.title.substr(1, 100) +`
-            <a href="/`+ pathname[0] +"/"+ result.weid +`" target="_blank">[查看详情]</a>
+            <a href="/`+ channel +"/"+ result.weid +`" target="_blank">[查看详情]</a>
         </div>`
         return template;
     }
@@ -132,74 +146,16 @@ $(function() {
         <li>
             <i>`+ (index + 1) +`</i>
             <h3 class="t">
-                <a href="/`+ pathname[0] +"/"+ result.weid +`">`+ result.title +`</a>
+                <a href="/`+ channel +"/"+ result.weid +`">`+ result.title +`</a>
             </h3>
             <div class="desc">`+ result.summary +`</div>
         </li>`
         return template;
     }
 
-    var page_tab = function(pageNum) {
-        if((pathname.length == 2 && pathname[1] == "") || pathname.length == 1) {
-            $(".special-scrollable > ul").html("");
-            $.ajax({
-                url: CMS_CONTENTS + pathname[0] + "&page=" + pageNum,
-                dataType: 'JSON',
-                type: 'get',
-                success: function(data) {
-                    if (data.code === 200 ) {
-                        $.map(data.data.list, function(item, index) {
-                            $(".special-scrollable > ul").append(new_recom(item, index));
-                        });
-                    } else {
-                        console.warn(data.message);
-                    }
-                },
-                error: function(error) {
-                    console.error(error);
-                }
-            })
-        } else {
-            var option4 = $.get(CMS_DETAIL_CONTENTS_CATE_ID + pathname[1] + "&page=" + pageNum);
-            option4.done(function(body4) {
-                if(!body4.data.list.length) {
-                    return false;
-                }
-
-	            $(".special-scrollable > ul").html("");
-                // 更多页的执行函数！
-                if (body4.code === 200 ) {
-                    $.map(body4.data.list, function(item, index) {
-                        $(".special-scrollable > ul").append(new_recom(item, index));
-                    });
-                } else {
-                    console.warn(body4.message);
-                }
-            });
-            option4.fail(function(error) {
-                console.error(error)
-            });
-        }
-    }
-
-    // 频道显示所有专题新闻
-    function opt4(channel_class) {
-        var options4 = $.get(CMS_CONTENTS_HOT + channel_class);
-        options4.done(function (data) {
-            if (data.code === 200 ) {
-                paging(data.data.total, 10);
-            } else {
-                console.warn(data.message);
-            }
-        });
-        options4.fail(function (error) {
-            console.info(error);
-        });        
-    }
-
     // 分类显示专题新闻
-    function opt5(channel_class) {
-        var options5 = $.get(CMS_DETAIL_CONTENTS_CATE_ID + channel_class);
+    function opt5(channel, title) {
+        var options5 = $.get(CMS_CONTENTS_HOT + channel + "&title=" + title);
         options5.done(function (data) {
             if (data.code === 200 ) {
                 paging(data.data.total, 10);
@@ -213,7 +169,7 @@ $(function() {
     }
 
     // 热门推荐
-    var options3 = $.get(CMS_CONTENTS_HOT + pathname[0] + "&index_show=1&limit=3");
+    var options3 = $.get(CMS_CONTENTS_HOT + channel + "&index_show=1&limit=3");
     options3.done(function (data) {
         if (data.code === 200 ) {
             $.map(data.data.list, function(item) {
@@ -244,19 +200,37 @@ $(function() {
         console.info(error);
     });
 
+    // 热门
+    var options4 = $.get(CMS_CONTENTS_HOT + channel + "&hot=1&limit=1");
+    options4.done(function (data) {
+        if (data.code === 200 ) {
+            $.map(data.data.list, function(item, index) {
+                $(".special-headline").html(recommend(item, index));
+            });
+        } else {
+            console.warn(data.message);
+        }
+    });
+    options4.fail(function (error) {
+        console.info(error);
+    });
+
     // 默认加载专题新闻
-    if(!pathname[1] || pathname[1] == '') {
+    if(!channel || channel == '') {
         // 推荐专题新闻
         window.location.href = "/404";
         return false;
-        opt4(pathname[0]);
-    } else if(pathname[1] != undefined || pathname[0] != null || pathname[1] != '') {
-    	// 排序新闻
-        opt5(pathname[1]);
+    } else if((channel != undefined 
+            || channel != null
+            || channel != '')
+            && window.location.search.indexOf("?title=") == 0) {
+    	// 搜索新闻
+        opt5(channel, title);
     }
 
+    // 搜索新闻
     $(".soso-submit").click(function() {
         var input_val = $(".soso-input").val();
-        window.location.href = `/search` +`?title=`+ input_val +`&channel=`+ pathname[0];
+        window.location.href = `/search` +`?title=`+ input_val +`&channel=`+ channel;
     });
 })

@@ -4,9 +4,9 @@
 
 @charset "utf-8"
 
-* { margin: 0; padding: 0; list-style: none; color: #555; }
 html { position: relative!important; }
-html, body { position: relative; }
+html, body { position: relative; margin: 0; padding: 0; font-family: arial, helvetica, "微软雅黑", "microsoft yahei", sans-serif; }
+* { margin: 0; padding: 0; list-style: none; color: #555; }
 a { text-decoration: none; display: inline-block; }
 
 .special-content { width: 100%; height: 100%; overflow-y: auto; overflow-x: hidden; background-attachment: local; background-repeat: no-repeat; }
@@ -14,7 +14,10 @@ a { text-decoration: none; display: inline-block; }
 .clearfix { *zoom: 1; }
 
 .special-header { width: 100%; height: 60px; line-height: 60px; background: #1c1c1c; display: flex; justify-content: center; }
-.special-top { width: 1080px; height: 60px; line-height: 60px; margin: 0 auto; display: inline-flex; }
+.special-top { width: 1080px; height: 60px; line-height: 60px; margin: 0 auto; display: inline-flex; position: relative; }
+.special-top .soso { position: absolute; right: 0; }
+.special-top .soso .soso-input { width: 150px; height: 27px; border: none; border-bottom-left-radius: 3px; border-top-left-radius: 3px; text-indent: 6px; background-color: #666; color: #ccc; outline: none; }
+.special-top .soso .soso-submit { width: 35px; height: 27px; border: 1px solid #33a0e1; border-bottom-right-radius: 3px; border-top-right-radius: 3px; position: relative; left: -5px; background-image: url("/common/img/default_soso.png"); background-size: 20px 20px; background-position: center center; background-repeat: no-repeat; vertical-align: middle; outline: none; background-color: #33a0e1; cursor: pointer; }
 .header-logo, .header-logo > a { width: 70px; height: 60px; }
 .special-title-list { display: flex; justify-content: center; }
 .special-title-list > li, .special-title-list > li > a { min-width: 80px; color: #aaa; }
@@ -24,9 +27,10 @@ a { text-decoration: none; display: inline-block; }
 .special-main-page { position: relative; margin: 30px auto 0; width: 1080px; height: 400px; border: 1px solid rgba(0, 0, 0, 0.3); }
 .special-main-page .special-left, .special-main-page .special-right{ float: left; }
 .special-main-page .special-nav-info { position: relative; text-align: center; font-size: 14px; font-family: "微软雅黑"; color: #fff; width: 310px; height: 400px; padding: 0 10px; background-color: rgba(0, 0, 0, .75); filter: alpha(opacity=30); display: flex; justify-content: center; align-items: center; flex-direction: column; }
-.special-main-page .special-nav-info div { width: 100%; height: 32px; line-height: 28px; padding: 0 10px; flex: 1; display: inline-flex; justify-content: center; align-items: center; border-top: 1px solid #eee; font-size: 16px; }
-.special-main-page .special-nav-info div:first-child { border-top: none; }
-.special-main-page .special-nav-info div.on { background-color: #c22; }
+.special-main-page .special-nav-info > div { width: 100%; height: 32px; line-height: 28px; padding: 0 10px; flex: 1; display: inline-flex; justify-content: center; align-items: center; border-top: 1px solid #eee; font-size: 16px; }
+.special-main-page .special-nav-info > div:first-child { border-top: none; }
+.special-main-page .special-nav-info > div.on { background-color: #c22; }
+.special-main-page .special-nav-info > div > a { width: 100%; height: 100%; color: #fff; display: inline-flex; justify-content: center; align-items: center; }
 .special-main-page .special-right { width: 750px; height: 400px; }
 .special-main-page .special-content-info { position: relative; width: 750px; height: 400px; overflow: hidden; background-color: rgba(255, 255, 255, .3); }
 .special-main-page .special-content-info div { width: 750px; height: 400px; background: #fff; }
@@ -34,17 +38,27 @@ a { text-decoration: none; display: inline-block; }
 .special-main-page .special-content-info a, .special-main-page .special-content-info img { width: 100%; height: 100%; }
 
 .special-focus { width: 1080px; height: auto; margin: 0 auto 50px; }
-.special-focus > h2 { margin: 1.25em 0; padding-left: .5em; border-left: 5px solid #c22; font-size: 1.5em; color: #555; font-family: arial, helvetica, "微软雅黑", "microsoft yahei", sans-serif; }
-.special-box { display: flex; }
-.special-box .special-box-left { width: 330px; height: 550px; margin-right: 20px; }
-.special-box .special-box-right { width: 750px; min-height: 550px; font-size: 14px; border-bottom: 1px solid #ccc; }
+.special-box { display: flex; margin-top: 1.25em; }
+.special-box .special-box-right { width: 1080px; min-height: 250px; font-size: 14px; padding-bottom: 20px; border-bottom: 1px dotted #ccc; }
+.special-box .special-box-right > .info span:nth-child(2) { margin-left: 10px; }
 .special-box .special-box-right > * { color: #555; }
 .special-box .special-box-right > h1 { color: #c22; font-size: 2em; margin: 0 0 .67em; }
 .special-box .special-box-right > div.info { padding: .5em 0; color: #999; }
 .special-box .special-box-right > div.sp_content * { width: 100%; }
-.special-box .special-box-right > div.sp_content { color: #555; line-height: 1.75em; display: inline-grid; margin-top: 1em; text-indent: 2em; }
+.special-box .special-box-right > div.sp_content { width: 100%; color: #555; line-height: 1.75em; display: inline-grid; margin-top: 1em; text-indent: 2em; }
 .special-box .special-box-right > div.sp_content img { width: 90%; margin: 0 auto; }
 .special-box .special-box-right > div.sp_content a { color: #555; }
 .special-box .special-box-right > div.sp_content > p { margin-bottom: 1em; text-indent: 2em; display: inline-grid; }
 .special-box .special-box-right > div.sp_content > img { margin-bottom: 1em; }
 
+.special-footer { width: 100%; height: 236px; padding: 21px 0; background-color: #000; position: absolute; }
+.special-footer a { color: #777; }
+.special-footer a:hover { text-decoration: underline; }
+.special-footer * { font-size: 14px; }
+.special-footer footer { width: 1080px; height: 194px; margin: 0 auto; padding: 21px 0; text-align: center; }
+.special-footer footer .footer-nav { margin-bottom: 7px; display: inline-flex; }
+.special-footer footer .footer-nav a { padding: 0 1em; color: #777; border-left: 1px solid #333; }
+.special-footer footer .footer-nav a:first-child { border: none; }
+.special-footer footer .copyright p { margin: .5em 0; }
+.special-footer footer ._ideConac { height: 80px; }
+.special-footer footer ._ideConac img { width: 80px; height: 80px; }

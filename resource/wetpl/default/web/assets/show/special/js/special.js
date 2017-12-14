@@ -21,41 +21,19 @@ $(function() {
         success: function(data){
             if(data.code === 200) {
                 domain_weid = data.data.weid;
-                var thumb_image = data.data.thumb_image;
                 var big_image = data.data.big_image;
-
-                if(!thumb_image) {
-                    thumb_image = "/common/img/news_top_img.png";
-                } else if (thumb_image.indexOf('http') != 0 && thumb_image != "") {
-                    thumb_image = imgSet(thumb_image, 330, 550, 3);
-                }
 
                 if(!big_image) {
                     big_image = "/common/img/news_top_img.png";
                 } else if (big_image.indexOf('http') != 0 && big_image != "") {
                     big_image = ApiMaterPlatQiniuDomain + big_image;
                 }
-                
-                $(".special-box-left").css("background", "url("+ thumb_image +") no-repeat scroll 0px 0px/100% 100% content-box padding-box");
+
                 $(".special-content").css("background", "#f7f0e0 url("+ big_image +")  no-repeat 50% 0");
             } else {
                 console.error(data.message);
             }
         }
-    });
-
-    // 专题分类
-    var options1 = $.get(apiUrl + "cms/channel_categories?channel=" + pathname[0]);
-    options1.done(function(data) {
-    	if(data.code == 200 && data.data) {
-    		var result = data.data;
-    		result.forEach(function(value, index) {
-    			$(".special-title-list").append(`<li><a href="/`+ pathname[0] +"/"+ value.domain +`">`+ value.title +`</a></li>`);
-    		});
-    	}
-    });
-    options1.fail(function(error) {
-    	console.error(error);
     });
 
     // 热点新闻图片显示
@@ -80,14 +58,14 @@ $(function() {
 
     // 热点专题标题
     var news_hots_info = function(result) {
-        var template = `<div>`+ result.title +`</div>`
+        var template = `<div><a href="/`+ pathname[0] +"/"+ result.weid +`">`+ result.title +`</a></div>`
         return template;
     }
 
     var recommend = function(result) {
         var template = `
         <h1 class="title">`+ result.title +`</h1>
-        <div class="info"><span>创建时间：</span>`+ result.created_at +`</div>
+        <div class="info"><span>发布单位：</span>`+ result.source +`<span>创建时间：</span>`+ result.created_at +`</div>
         <div class="sp_content">`+ result.content +`</div>`
         return template;
     }
@@ -98,7 +76,9 @@ $(function() {
         options5.done(function (data) {
             if (data.code === 200 && data.data) {
                 console.log(data.data);
-                $(".special-box-right").html(recommend(data.data));
+                var result = data.data;
+                $(".special-title-list").append(`<li><a href="/`+ pathname[0] +"/"+ result.category.domain +`">`+ result.category.title +`</a></li>`);
+                $(".special-box-right").html(recommend(result));
             } else {
                 console.warn(data.message);
             }
@@ -109,7 +89,7 @@ $(function() {
     }
 
     // 热门推荐
-    var options3 = $.get(CMS_CONTENTS_HOT + pathname[0] + "&hot=1&limit=3");
+    var options3 = $.get(CMS_CONTENTS_HOT + pathname[0] + "&index_show=1&limit=3");
     options3.done(function (data) {
         if (data.code === 200 ) {
             $.map(data.data.list, function(item) {
@@ -148,4 +128,10 @@ $(function() {
     	// 排序新闻
         opt5(pathname[1]);
     }
+
+    // 搜索新闻
+    $(".soso-submit").click(function() {
+        var input_val = $(".soso-input").val();
+        window.location.href = `/search` +`?title=`+ input_val +`&channel=`+ pathname[0];
+    });
 })
