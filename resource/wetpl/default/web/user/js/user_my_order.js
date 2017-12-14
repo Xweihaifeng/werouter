@@ -199,6 +199,12 @@ $(function () {
                             break;
                         case 5:
                             break;
+                        case 6:
+                            operList.push({
+                                name : '删除订单',
+                                oper : 'delete_order_operation',
+                            });
+                            break;
                         case 7:
                             operList.push({
                                 name : '删除订单',
@@ -708,6 +714,12 @@ $(function () {
                             });
                             break;
                         case 5:
+                            break;
+                        case 6:
+                            operList.push({
+                                name : '删除订单',
+                                oper : 'delete_order_operation',
+                            });
                             break;
                         case 7:
                             operList.push({
