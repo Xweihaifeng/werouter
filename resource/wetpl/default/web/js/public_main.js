@@ -255,6 +255,7 @@ req().then((data) => {
                 'overflow': 'auto'
             })
         }
+        $(".header, .big").remove();
     } else {
         let lid = new Array(seq.length).fill(0); //生成显示栏目对应序列的数组
         fill(seq); //填充seq;
@@ -1315,6 +1316,13 @@ req().then((data) => {
                         //mySwiper.stopAutoplay();
                     })
                 }
+
+                setInterval(function(){
+                    mySwiper.startAutoplay();                    
+                    mySwiper2.startAutoplay();
+                    mySwiper3.startAutoplay();
+                    mySwiper4.startAutoplay();
+                }, 1000)
 
                 genEvt();
                 org();
