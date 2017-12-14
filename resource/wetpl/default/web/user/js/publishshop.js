@@ -639,6 +639,19 @@ malldetail();
                     picture[index]=$(this).find("input[name='thumb_image_"+(index+1)+"']").val();
                 }
             });
+            var formatMoney = true;
+            $("input[name='member-price']").each(function(ind,el){
+                if($(el).val()){
+                    var reg = /(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/;
+                    if(!reg.test($(el).val())){
+                        formatMoney = false;
+                    }
+                }
+            })
+            if(!formatMoney){
+                mess_tusi('输入金额格式有误');
+                return;
+            }
             if (title == '') {
                 mess_tusi('请输入标题');
                 return;
