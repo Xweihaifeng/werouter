@@ -84,9 +84,8 @@ const home = `
                                     <p></p>
                                     <p>更多>></p>
                                 </div>
-                                <div>
-                                    
-                                </div>
+                                <div></div>
+                                <div id="vd"></div>
                                 <p class="hb1"></p>
                                 <p class="hb2"></p>                                
                             </div>
@@ -1389,7 +1388,7 @@ req().then((data) => {
                 $(".hb1").html(`<a href="${vdinfo.domain + '/' + vdinfo.list[0].weid}">${vdinfo.list[0].title}</a>`);
                 $(".hb2").html(vdinfo.list[0].summary);
 
-                $("#hbl div:eq(1)").click(() => {
+                $("#vd").click(() => {
                     layer.open({
                       type: 2,
                       title: false,
