@@ -64,7 +64,7 @@ const home = `
                             <div class="imgs-chairman"></div>
                             <div class="img-title">
                                 <div class="imgs-name"></div>
-                                <div class="imgs-occupation"></div>
+                                <div class="imgs-occupation-leader"></div>
                             </div>
                         </div>
                         <div class="imgs-active">
@@ -326,6 +326,11 @@ req().then((data) => {
         }
     })
 
+    //搜索
+    /*$("#hs span:eq(1) img").click(function(){
+        window.location.href = 'http://new.wezchina.com/' + 'search?title=' + $("#search").val() + '&channel=news';
+    })*/
+
     //首页新闻中心
     $("#center").click(function(e){
         var newsId = $(e.target).attr("class");
@@ -366,11 +371,14 @@ req().then((data) => {
     //头条新闻模板
     var mainNews = function(data){
         var href = data.channel_domain + "/" + data.weid;
-        var summary = data.summary.substring(0, 86);
+        var summary = data.summary;
+        if (summary.length > 140) {
+            summary = summary.substring(0, 140) + '... ';
+        }    
 
         var templete =
         '<div class="main-news-title"><img src="/common/img/topline.png" /><a href=' + href + ' target="_blank">' + data.title.substring(0,20) + '</div>' +
-        '<div class="main-news-content"><a href=' + href + ' target="_blank">' + summary + '... [查看全文]</div>';
+        '<div class="main-news-content"><a href=' + href + ' target="_blank">' + summary + '[查看全文]</div>';
 
         return templete;
     }
@@ -461,8 +469,8 @@ req().then((data) => {
                         '<div class="imgs-member">' +
                             '<img src=' + imgUrl + ' width="80"/>' +
                         '</div><div class="img-title1">' +
-            '<div id=' + memberId + ' style="width: 100%; height: 35px; text-align: center; line-height: 35px;" class="imgs-name1">' + data.real_name + '</div>' +
-            '<div id=' + memberId + ' style="width: 100%; height: 63px; text-align: center; line-height: 2em;" class="imgs-occupation">' + data.real_name + '</div>' +
+            '<div id=' + memberId + ' style="width: 100%; height: 35px; text-align: center; line-height: 35px; margin-top: 5px; font-size: 15px; font-weight: 600;" class="imgs-name1">' + data.real_name + '</div>' +
+            '<div style="width: 100%; height: 63px; text-align: center; line-height: 2em;" class="imgs-occupation">' + data.real_name + '</div>' +
                     '</div></div>' +
                 '</a>' + 
             '</div>'
@@ -475,6 +483,7 @@ req().then((data) => {
                             '<img src=' + imgUrl + ' width="80"/>' +
                         '</div>' +
                         '<div id=' + memberId + ' style="width: 100%; height: 33px; text-align: center; line-height: 33px;">' + data.real_name + '</div>' +
+                        '<div style="width: 100%; height: 63px; text-align: center; line-height: 2em;" class="imgs-occupation">' + data.real_name + '</div>' +
                     '</div>' +
                 '</a>' + 
             '</div>'
@@ -990,6 +999,7 @@ req().then((data) => {
                         }
                         $(".imgs-chairman").html('<a href=' + data.data.leader.url + '><img src=' + data.data.leader.image + ' width="158" height="154" /></a>');
                         $(".imgs-name").html(data.data.leader.title);
+                        $(".imgs-occupation-leader").text(data.data.leader.title)
                     } else {
                         $(".imgs-chairman").html('<a href=' + mainData.data.leader.url + '><img src=' + mainData.data.leader.image + ' width="158" height="154" /></a>');
                         $(".imgs-name").html(mainData.data.leader.title);
@@ -1369,7 +1379,7 @@ req().then((data) => {
 
                 var vdtpl = vdinfo.list.reduce((tpl, e, i) =>
                     i >= 1 && i < 3 ?
-                    tpl += `<div class="hbs"><p><a href="${vdinfo.domain + '/' + e.weid}">> ${e.title.substr(0, 16) + '...'}</p>
+                    tpl += `<div class="hbs"><p><a href="${vdinfo.domain + '/' + e.weid}">> ${e.title.substr(0, 16)}</p>
                     <p>${new Date(e.publish_time * 1000).getFullYear()}-${(new Date(e.publish_time * 1000).getMonth() + 1).toString().length == 1 ? '0' + (new Date(e.publish_time * 1000).getMonth() + 1) : new Date(e.publish_time * 1000).getMonth() + 1}-${new Date(e.publish_time * 1000).getDate().toString().length == 1 ? '0' + new Date(e.publish_time * 1000).getDate() : new Date(e.publish_time * 1000).getDate()}</p></div>`
                     : tpl, '')
 

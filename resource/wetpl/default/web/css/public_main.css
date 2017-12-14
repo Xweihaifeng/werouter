@@ -60,7 +60,8 @@ li {
 	margin-left: 90px;
 	background: transparent;
 	float: left;
-	overflow: auto;
+	overflow-y: auto;
+	overflow-x: hidden;
 }
 
 #right-nav {
@@ -637,7 +638,7 @@ li .active {
 	position: absolute;
 	width: 490px;
 	height: 60px;
-	top: 351px;
+	top: 356px;
 	padding-top: 10px;
 }
 
@@ -669,7 +670,7 @@ li .active {
 	position: absolute;
 	width: 460px;
 	height: 60px;
-	top: 351px;
+	top: 356px;
 	left: 490px;
 	padding-top: 10px;
 }
@@ -1961,10 +1962,23 @@ li .active {
 	height: 100px;
 }
 
+.img-title1 > div {
+	text-align: left!important;
+	text-indent: 1em;
+}
+
 .imgs-occupation {
 	height: 65px;
 	line-height: 2em;
 	font-size: 12.5px;
+	padding: 3px 2px;
+}
+
+.imgs-occupation-leader {
+	height: 65px;
+	line-height: 2em;
+	font-size: 12.5px;
+	padding: 5px 10px;
 }
 
 .qsfc {
@@ -1972,7 +1986,7 @@ li .active {
 	width: 100%;
 	justify-content: space-between;
 	align-items: center;
-	padding: 10px 0;
+	/*padding: 10px 0;*/
 	background: white;
 }
 
@@ -1984,4 +1998,3 @@ li .active {
 	padding-right: 15px;
 	float: right;
 }
-
