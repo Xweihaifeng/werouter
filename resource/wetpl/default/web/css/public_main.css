@@ -6,13 +6,21 @@
 
 html,
 body {
-	position: relative;
+	position: absolute;
 	width: 100%;
 	height: 100%;
 	background-attachment: fixed!important;
 	background: #dfc6a1!important;
 	/*background:#E8C598!important;*/
 	/*overflow-x: hidden;*/
+}
+
+#public_main_index {
+	position: fixed!important;
+	width: 100%;
+	height: 100%;
+	background-attachment: fixed!important;
+	background: #dfc6a1!important;
 }
 
 body {
@@ -53,11 +61,11 @@ li {
 }
 
 .main {
-	position: relative;
-	width: auto;
-	/*height: 1360px;*/
-	height: 100%;
-	margin-left: 90px;
+	position: fixed;
+	width: 1365px;
+	top: 0;
+	bottom: 0;
+	left: 90px;
 	background: transparent;
 	float: left;
 	overflow-y: auto;
@@ -460,13 +468,14 @@ li .active {
 
 .organization {
     position: absolute;
+    top: 0;
+    bottom: 0;
     width: 960px;
-    /*height: 100%;*/
     left: 105px;
     background: white;
     display: none;
     overflow-x: hidden;
-    /*overflow-y: auto;*/
+    overflow-y: hidden;
 }
 
 .center:hover,
