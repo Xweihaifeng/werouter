@@ -863,17 +863,16 @@ req().then((data) => {
 
                 var time = setTimeout(() => {
                         $(".header").fadeOut(500);
-                    }, 60000);
+                        $(".main").mouseleave(() => {
+                            time = setTimeout(() => {
+                                $(".header").fadeOut(500);
+                            }, 1000)
+                        })
+                    }, 10000);
 
                 $(".main").mouseenter(() => {
                     clearTimeout(time);
                     $(".header").fadeIn(500);
-                })
-
-                $(".main").mouseleave(() => {
-                    time = setTimeout(() => {
-                        $(".header").fadeOut(500);
-                    }, 1000)
                 })
 
                 //生成轮播图，通过weid查找图片对应的url
@@ -1404,7 +1403,7 @@ req().then((data) => {
                     layer.open({
                       type: 2,
                       title: false,
-                      area: ['800px', '480px'],
+                      area: ['855px', '480px'],
                       shade: 0.8,
                       closeBtn: 1,
                       shadeClose: true,
