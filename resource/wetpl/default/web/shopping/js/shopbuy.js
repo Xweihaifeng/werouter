@@ -186,7 +186,8 @@ var qiniu_bucket_domain =ApiMaterPlatQiniuDomain;
                         } else {
                             var url = domain
                         }
-                        window.location.href ="/"+ url+"/wemall";
+
+                        window.location.href ="/user/myaccount/order";
 
                         //shopstock(data.data.goods_id,order.goods_num);
                         //shopstock(data.data.goods);    

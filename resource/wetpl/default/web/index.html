@@ -22,7 +22,7 @@
         <link rel="stylesheet" href="{{PATH_TML}}css/home_rolling.css">
 
         <script src="/common/js/jquery-3.2.1.min.js"></script>        
-        <script src="/common/layer-v3.0.3/layer-v3.0.3/layer/layer.js"></script>
+        <script src="/common/js/layer-v3.1.1/layer/layer.js"></script>
         <script src="/common/js/swiper-3.3.1.min.js"></script>
         <script src="/common/layui/layui.js"></script>
         <script src="/common/js/buttons.js"></script>
@@ -37,6 +37,9 @@
     </head>
     <body>
         
+        <!-- <object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0" height="400" width="600"><param name="allowFullScreen" value="true" /><param name="quality" value="high" /><param name="movie" value="http://static.video.qq.com/TPout.swf?vid=k0308vliav5&amp;auto=0" /><embed allowfullscreen="true" height="400" pluginspage="http://www.macromedia.com/go/getflashplayer" quality="high" src="http://static.video.qq.com/TPout.swf?vid=k0308vliav5&amp;auto=0" type="application/x-shockwave-flash" width="600"></embed></object><br />↵<img alt="" src="/image.qqxqs.com/1513220486_1.jpg" style="height:913px; width:640px" />
+        <br />↵秦商之歌<br />↵&nbsp; &nbsp; &nbsp; &nbsp;这是一首融豪情万丈，壮志凌云的歌。↵<p>&nbsp; &nbsp; &nbsp; &nbsp;由刘阿津、李德团作词，张豪夫老师作曲的秦商联合会主题会歌《秦商之歌》今天终于和大家见面了。歌词大气磅礴、朗朗上口，旋律优美动听、宛转悠扬。歌曲从秦商源远流长的文化中提取精华，随着旋律放大到秦商&ldquo;以商事国&rdquo;的豪迈壮志，以及对未来发展的希冀和追求。词曲结合，油然而生一种大气磅礴、气势恢宏之感。展现了每一位秦商内心深处执着不变的对祖国的热爱以及建设祖国、实现中国梦的决心！</p> -->
+        
         <!-- 登录部分 -->
         <div class="modal_login" id="modal_login"></div>
 
@@ -48,153 +51,56 @@
             <div id="nav-news" style="display: none;">
                 <div class="nav-news-title">新闻</div>
                 <div class="nav-news-content">
-                    <ul>
-                        <!--<li>视频新闻</li>
-                        <li>图片新闻</li>
-                        <li>专题</li>
-                        <li>微新闻</li>-->
-                    </ul>
+                    <ul></ul>
                 </div>
             </div>
             <div id="nav-org" style="display: none;">
                 <div class="nav-org-title">组织</div>
                 <div class="nav-org-content">
-                    <ul>
-                        <!--<li>银商服务</li>
-                        <li>科商服务</li>
-                        <li>校商服务</li>
-                        <li>法商服务</li>-->
-                    </ul>
+                    <ul></ul>
                 </div>
             </div>
             <div id="nav-help" style="display: none;">
                 <div class="nav-help-title">互助</div>
                 <div class="nav-help-content">
-                    <ul>
-                        <!--<li>工商联</li>
-                        <li>商会</li>
-                        <li>其他组织</li>-->
-                    </ul>
+                    <ul></ul>
                 </div>
             </div>
             <div id="nav-share" style="display: none;">
                 <div class="nav-share-title">共享</div>
                 <div class="nav-share-content">
-                    <ul>
-                        <!--<li>优秀民企</li>
-                        <li>企业家</li>-->
-                    </ul>
+                    <ul></ul>
                 </div>
             </div>
         </div>
 
         <!-- 右侧手风琴内容 -->
         <div class="main">
-            <div class="home" style="">
+            <div class="header">
+                <div id="hl"></div>
+                <div id="hr">
+                    <div id="ht">
+                        <span>手机版</span>
+                        <span>微信</span>
+                        <span>微博</span>
+                        <span>知网资源</span>
+                    </div>
+                    <div id="hs">
+                        <span><input type="text" id="search" class="form-control"></span>
+                        <span><img src="/common/img/find.png" style="padding: 7px" /></span>
+                        <span>高级搜索</span>
+                    </div>
+                </div>
             </div>
+            <div class="big"><div id="big"></div></div>
+            <div class="home" style=""></div>
+            <div class="organization" style="display: none;"></div>
+            <div class="huzhu" style="display: none; left:210px; z-index: 10;"></div>
+            <div class="goodsBox" style="display:none;z-index: 10;"></div>
+        </div>
 
-            <div class="organization" style="display: none;">
-            </div>
-
-            <!-- 项目活动 start -->
-            <div class="huzhu" style="display: none; left:210px; z-index: 10;">
-            </div>
-            <!-- 项目活动 end    -->
-
-            <!-- 会员特供 start -->
-            <div class="goodsBox" style="display:none;z-index: 10;">
-            </div>
-            <!-- 会员特供 end -->
-        </div>        
         <div id="beijing" style="position: absolute; left:1365px; top: 0; right: 0; bottom: 0; width:100%; height:1080px;"></div>
 
         <!-- <script src="//captcha.luosimao.com/static/js/api.js"></script> -->
     </body>
 </html>
-<script>
-/*    $(function () {
-        // 项目活动切换
-        $("#xiangmu-btn").on("click",function(){
-            $("#xiangmu").show();
-            $("#huodong").hide();
-            $("#xiamgmu-title").show();
-            $("#huodong-title").hide();
-            $(this).css({"background":"#007cd3","color":"#fff"});
-            $("#huodong-btn").css({"background":"#d5d5d5","color":"#555"})
-        });
-        $("#huodong-btn").on("click",function(){
-            $("#huodong").show();
-            $("#xiangmu").hide();
-            $("#xiamgmu-title").hide();
-            $("#huodong-title").show();
-            $(this).css({"background":"#007cd3","color":"#fff"});
-            $("#xiangmu-btn").css({"background":"#d5d5d5","color":"#555"})
-        });
-        /!*导航*!/
-        $('.index-nav-esse').find('a').hover(function () {
-            $(this).css('background', 'rgb(217,217,217)');
-            $(this).find('span').css('top', '40%');
-            $(this).find('strong').css('display', 'block');
-        }, function () {
-            $(this).css('background', '');
-            $(this).find('span').css('top', '50%');
-            $(this).find('strong').css('display', 'none');
-        });
-
-        /!*推荐新闻切换*!/
-        {
-            $('#zsyw').find('li').mouseover(function () {
-                $(this).addClass('at').siblings('li').removeClass('at');
-                $('.zsyw_nr').find('.pose_content').eq($(this).index()).show().siblings('.pose_content').hide();
-            })
-        }
-
-        /!*列表tab切换*!/
-        $('#xwzx').find('li').mouseover(function () {
-            /!*热点新闻*!/
-            //$('.syzx_rg').find('.syzx_rtj').eq($(this).index()).show().siblings('.syzx_rtj').hide();
-
-            /!*显示菜单*!/
-            $(this).removeClass('not').addClass('at').siblings().removeClass('at').addClass('not');
-
-            /!*显示列表*!/
-            $('.rnew_nr').find('.xwzx_c_0').eq($(this).index()).show().siblings('.xwzx_c_0').hide();
-        });
-
-        /!*中部fadein图片自适应*!/
-        $('.slideBox').find('img').css({'width': '960px', 'height': $('.slideBox').height()});
-
-        /!*中部fadein*!/
-        // $(".slideBox").slide({mainCell: ".bd ul", effect: "fade", autoPlay: true});
-
-        /!*底部滚动*!/
-        // $(".picScroll-left").slide({mainCell:".bd ul",autoPlay:true,effect:"leftMarquee",vis:8,interTime:50,trigger:"click"});
-
-        /!*整屏标签切换*!/
-        $(document).ready(function() { 
-            gongshanglian();
-           $(window).bind("resize", function () {
-                gongshanglian();
-            });
-            play_number(0);
-        });
-
-        function play_number(index) {
-            if (index >= $("#stat span").length) return;
-            var n = parseInt($("#stat span").eq(index).text(), 10);
-            n++;
-            if (n > $("#stat span").eq(index).attr("data-number")) {
-                play_number(index + 1);
-                return;
-            }
-            $("#stat span").eq(index).text(n);
-            setTimeout(function () {
-                play_number(index);
-            }, 50);
-        }
-
-        function gongshanglian() {
-            $(".huzhu").css("height", $("#main").height());
-        }
-    })*/
-</script>
