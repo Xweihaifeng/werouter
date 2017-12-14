@@ -307,7 +307,9 @@ class main extends controller
     // 获取网站基本信息
     private function _domain_data($weid)
     {
-        $plats['var root_domian'] = $this->_get_domain($_SERVER['HTTP_HOST']);
+        $protocol = empty($_SERVER['HTTPS']) ? 'http://' : 'https://';
+        $plats['var api_domain'] = $protocol.$_SERVER['HTTP_HOST'].'/api/';
+        $plats['var root_domain'] = $this->_get_domain($_SERVER['HTTP_HOST']);
         $plats['var is_domain'] = 'no';
         $plats['var plats_token'] = false;
     	//七牛相关信息
