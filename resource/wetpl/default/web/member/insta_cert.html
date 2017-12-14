@@ -24,7 +24,7 @@
             .member_level { height: 55px; font-size: 48px; font-family: '黑体'; font-weight: 600; text-align: center; padding: 10px 80px; }
             .plat_name { height: 34px; padding: 5px 80px; font-size: 30px; font-family: '宋体'; }
             .cert_words { height: 68px; font-size: 30px; font-family: '宋体'; padding: 5px 80px; text-indent: 2em; text-align: unset; word-wrap:break-word; word-break:break-all; white-space: unset; }
-            .begin_time, .end_time { height: 21px; padding: 5px 80px; text-align: right; }
+            .begin_time, .end_time, .end_number { height: 21px; padding: 5px 80px; text-align: left; text-indent: 445px; }
             .cert_seal { position: absolute; width: 115px; height: 115px; right: 80px; bottom: 95px; background-size: 100% 100%; }
             #cert_img { width: 800px; height: 600px; position: absolute; transform: translate(-50%, -50%); left: 50%; top: 50%; }
         </style>
@@ -45,6 +45,7 @@
                 <div class="member_level">`+ result2.member_level +`</div>
                 <div class="plat_name">`+ result2.plat_name +`</div>
                 <div class="cert_words">`+ result2.cert_words +`</div>
+                <div class="end_number">证书编号：`+ result2.cert_number +`</div>
                 <div class="begin_time">发证日期：`+ result2.begin_time +`</div>
                 <div class="end_time">截止日期：`+ result2.end_time +`</div>
                 <div class="cert_seal"></div>`
