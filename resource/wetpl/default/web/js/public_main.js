@@ -55,9 +55,11 @@ const home = `
                     </div>
                 </div>
                 <div id="home-body">
-                    <div class="qsfc">
-                        <p class="imgs-title">秦商风采</p>
-                        <p class="imgs-more">更多&gt;&gt;</p>
+                    <div class="fc">
+                        <div class="qsfc">
+                            <p class="imgs-title">秦商风采</p>
+                            <p class="imgs-more">更多&gt;&gt;</p>
+                        </div>
                     </div>
                     <div id="imgs">
                         <div class="imgs-style">
@@ -1404,7 +1406,7 @@ req().then((data) => {
                       title: false,
                       area: ['800px', '480px'],
                       shade: 0.8,
-                      closeBtn: 0,
+                      closeBtn: 1,
                       shadeClose: true,
                       content: `http://image.qqxqs.com/qqxqs_video.mp4`
                     });
