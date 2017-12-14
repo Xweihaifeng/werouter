@@ -61,7 +61,13 @@ $(function() {
                 </div>
                 <div id="log-in">
                     <a class="button button-lowercase button-primary login-bt"> 登录 </a>
+                    <div id="qrcode"></div>
                 </div>
+            </div>
+            <div class="wexin" style="display: none;">
+                <!-- <div class="wx">微信登录</div> -->
+                <div id="qrcode-block" style="margin-left:25px;"><iframe src="https://open.weixin.qq.com/connect/qrconnect?appid=wx4b835b375578d1c0&amp;scope=snsapi_login&amp;redirect_uri=http://qqxqs.com/login&amp;state=&amp;login_type=jssdk&amp;self_redirect=default&amp;href=https://wezchina.com/common/css/wechat.css" frameborder="0" scrolling="no" width="300px" height="400px"></iframe></div>
+                <div class="to-login"></div>
             </div>
         </div>
     </div>`
@@ -411,6 +417,67 @@ $(function() {
             }
         }
     })
+    
+    // 扫码登录
+    /*function setCookie(token, expiredays) {
+        var Days = expiredays;
+        var exp = new Date();
+        exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000);
+        document.cookie = "token=" + escape(token) + ";expires=" + exp.toGMTString() + ";path=/";
+    }*/
+
+    var code = GetQueryString('code');
+    var state = GetQueryString('state');
+    if (code !== null && code !== undefined && code !== '') {
+        $.ajax({
+            url: apiUrl + "wx/scan_callback",
+            data: {
+                'code': code,
+                'state': state,
+                'ref_id': '',
+                'ref_url': '',
+                'ref_type': '',
+                'domain': ''
+            },
+            success: function(data) {
+                localStorage.setItem('token', data.token);
+                localStorage.setItem('weid', data.data.weid);
+                localStorage.setItem('phone', data.data.phone);
+                setCookie(data.token, 7);
+                if (data.data.phone === null || data.data.phone === undefined || data.data.phone === '') {
+                    location.href = siteUrl + "/bind";
+                } else {
+                    location.href = siteUrl + "/user";
+                }
+
+            }
+        });
+    }
+
+    $.ajax({
+        url: apiUrl + 'setting/alias/weChatOpenConfig',
+        type: 'get',
+        dataType: 'json',
+        success: function(result) {
+            if (result.code === 200) {
+                var obj = new WxLogin({
+                    id: "qrcode-block",
+                    appid: result.data.appid,
+                    scope: "snsapi_login",
+                    redirect_uri: siteUrl + "/login",
+                    href: 'https://wezchina.com/common/css/wechat.css',
+                    state: ""
+                });
+            } else {
+                parent.layer.msg(result.message);
+
+                return false;
+            }
+        },
+        error: function(xhr) {
+            console.log(xhr);
+        }
+    });
 
     //用户登录
     var login = function(phoneNum, checkNum, ref_id, ref_url, domain/*, imageCode, imageCodeID*/){
