@@ -1,6 +1,6 @@
 var ajax = {};
 ajax = axios.create({
-    baseURL: apiUrl,
+    baseURL: api_domain,
     timeout: 30000,
 });
 
