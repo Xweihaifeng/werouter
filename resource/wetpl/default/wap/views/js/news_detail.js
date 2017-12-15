@@ -91,7 +91,7 @@ $(function() {
         var template = `
             <p class="rich_media_title" id="activity-name">` + result.title + `</p>
             <div class="clearfix bts">
-                <a href="/wecard/`+ pid +`">`+ nickname +`</a>
+                <a href="/index/wecard">`+ nickname +`</a>
                 <span class="publisher">` + result.publisher.substr(0, 5) + `</span>
                 <span class="author">` + result.auth.substr(0, 5) + `</span>
                 <span class="source_url">`+ result.source_url +`</span>
