@@ -218,9 +218,12 @@ class main extends controller
     	$rule = $this->data['match'];
 
         config::$plats = $this->_domain_data($weid);
+
         //$this->data($this->_domain_data($weid));
 
     	$uri =current(explode('?', $_SERVER['REQUEST_URI']));
+
+        $controller_varify = $this->_controller($uri , $this->data);
 
         $uri_array = array_filter(explode('/', $uri));
 
@@ -230,8 +233,6 @@ class main extends controller
         {
             $uri = substr($uri , strlen('/'.$current_uri) , strlen($uri));
         }
-
-        $controller_varify = $this->_controller($uri , $this->data);
 
         $router_verify = new router_verify($router , $uri , $rule , $weid);
 
@@ -455,10 +456,10 @@ class main extends controller
         } 
 
         $action = 'index';
-        if(count($controller_uri) >= 2 )
-        {
-            $action = next($controller_uri);
-        }
+        // if(count($controller_uri) >= 2 )
+        // {
+        //     $action = next($controller_uri);
+        // }
         
         include $controller_file;  $c = new $file(); $c->public_data = $data; $c->{$action}(); exit();
      
