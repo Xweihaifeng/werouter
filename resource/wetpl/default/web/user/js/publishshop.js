@@ -540,7 +540,9 @@ malldetail();
                         }
                     }
 
-                    CKEDITOR.instances.editor1.setData(goods.content);
+
+                    CKEDITOR.on('instanceReady', function (e) { CKEDITOR.instances.editor1.setData(goods.content); })
+                        
                     $("select[name='cate_id']").find("#"+goods.cate_id).attr("selected","selected");
                     if(goods.picture!=null){
                         var picturearr=goods.picture.split(',');
