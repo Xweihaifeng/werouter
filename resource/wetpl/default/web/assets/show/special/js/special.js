@@ -86,7 +86,7 @@ $(function() {
         <h1 class="title">`+ result.title +`</h1>
         <div class="info"><span>发布单位：</span>`+ result.source +`<span>创建时间：</span>`+ result.created_at +`</div>
         <div class="sp_content">`+ result.content +`</div>`
-        document.title = result.title +"—"+ tpl;
+        document.title = "专题："+ result.title +"—"+ tpl;
         return template;
     }
 
@@ -118,19 +118,13 @@ $(function() {
                 $(".special-nav-info > div").eq(0).addClass("on");
             });
 
-            $(".special-nav-info > div").mouseover(function () {
-                var $this = $(this);
-                var index = $this.index();
-            }).mouseout(function () {
-                var $this = $(this);
-                var index = $this.index();
-            }).hover(function () {
+            $(".special-nav-info > div").hover(function () {
                 var $this = $(this);
                 var index = $this.index();
                 var l = -(index * 400);
                 $(".special-nav-info > div").removeClass("on");
                 $(".special-nav-info > div").eq(index).addClass("on");
-                $(".special-content-info > div:eq(0)").stop().animate({ "margin-top": l }, 500);
+                $(".special-content-info").stop().animate({ "margin-top": l }, 500);
             });
         } else {
             console.warn(data.message);
@@ -150,8 +144,8 @@ $(function() {
     }
 
     // 搜索新闻
-    $(".soso-submit").click(function() {
-        var input_val = $(".soso-input").val();
-        window.location.href = `/search` +`?title=`+ input_val +`&channel=`+ pathname[0];
-    });
+    // $(".soso-submit").click(function() {
+    //     var input_val = $(".soso-input").val();
+    //     window.location.href = `/search` +`?title=`+ input_val +`&channel=`+ pathname[0];
+    // });
 })

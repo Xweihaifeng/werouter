@@ -46,13 +46,13 @@ $(function() {
         success: function(data){
             if(data.code === 200) {
                 domain_weid = data.data.weid;
-                var thumb_image = data.data.thumb_image;
+                var back_image = data.data.back_image;
                 var big_image = data.data.big_image;
 
-                if(!thumb_image) {
-                    thumb_image = "/common/img/news_top_img.png";
-                } else if (thumb_image.indexOf('http') != 0 && thumb_image != "") {
-                    thumb_image = ApiMaterPlatQiniuDomain + thumb_image;
+                if(!back_image) {
+                    back_image = "/common/img/news_top_img.png";
+                } else if (back_image.indexOf('http') != 0 && back_image != "") {
+                    back_image = ApiMaterPlatQiniuDomain + back_image;
                 }
 
                 if(!big_image) {
@@ -61,7 +61,7 @@ $(function() {
                     big_image = ApiMaterPlatQiniuDomain + big_image;
                 }
                 
-                $(".special-box-left").css("background", "url("+ thumb_image +") no-repeat");
+                $(".special-box-left").css("background", "url("+ back_image +") no-repeat");
                 $(".special-content").css("background", "#f7f0e0 url("+ big_image +")  no-repeat 50% 0");
             } else {
                 console.error(data.message);
@@ -198,19 +198,13 @@ $(function() {
                 $(".special-nav-info > div").eq(0).addClass("on");
             });
 
-            $(".special-nav-info > div").mouseover(function () {
-                var $this = $(this);
-                var index = $this.index();
-            }).mouseout(function () {
-                var $this = $(this);
-                var index = $this.index();
-            }).hover(function () {
+            $(".special-nav-info > div").hover(function () {
                 var $this = $(this);
                 var index = $this.index();
                 var l = -(index * 400);
                 $(".special-nav-info > div").removeClass("on");
                 $(".special-nav-info > div").eq(index).addClass("on");
-                $(".special-content-info > div:eq(0)").stop().animate({ "margin-top": l }, 500);
+                $(".special-content-info").stop().animate({ "margin-top": l }, 500);
             });
         } else {
             console.warn(data.message);
@@ -249,10 +243,10 @@ $(function() {
     }
 
     // 搜索新闻
-    $(".soso-submit").click(function() {
-        var input_val = $(".soso-input").val();
-        window.location.href = `/search` +`?title=`+ input_val +`&channel=`+ channel;
-    });
+    // $(".soso-submit").click(function() {
+    //     var input_val = $(".soso-input").val();
+    //     window.location.href = `/search` +`?title=`+ input_val +`&channel=`+ channel;
+    // });
 
     document.title = "最新新闻—" + tpl;
 })
