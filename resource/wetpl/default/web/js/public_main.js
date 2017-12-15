@@ -1392,7 +1392,8 @@ req().then((data) => {
                 $("#hbm div:eq(0) p:eq(0)").text(magazine.title);
                 $("#hbm div:eq(0) p:eq(1)").html(`<a href="${'/magazine/' + magazine.domain}">更多>></a>`);
                 $("#hbr div:eq(0) p:eq(0)").text(report.title);
-                $("#hbr div:eq(0) p:eq(1)").html(`<a href="${'/' + report.domain}">更多>></a>`);
+                //$("#hbr div:eq(0) p:eq(1)").html(`<a href="${'/' + report.domain}">更多>></a>`);
+                $("#hbr div:eq(0) p:eq(1)").html('更多>>');
                 var mgztpl = magazine.list.reduce((tpl, e, i) =>
                     i < 6 ? 
                     tpl += `<a href="${'/magazine/' + magazine.domain + '/' + e.weid}" target="_blank"><li><img src="${imgSet(e.cover, 94, 128)}" /></li></a>`
