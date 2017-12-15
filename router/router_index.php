@@ -26,6 +26,14 @@ class router_index
     ];    
     // 重定向的链接
     private $_rest_url = '';
+    // wap get 参数
+    private $_wap_get;
+    // 手机目录
+    private $_wap_array = [
+       'wap','m'
+    ]; 
+
+    private $_wap_state = FALSE;
     
     public function __construct()
     {	
@@ -36,8 +44,11 @@ class router_index
         $this->_request_uri = $_SERVER['REQUEST_URI'];
         
         $this->_method = $_SERVER['REQUEST_METHOD'];
+
+        $this->_wap_get = (!empty($_GET['wap'])) ? $_GET['wap'] : FALSE ;
         
         $this->_domain_config = $this->_domain_init();
+
     }
 
 
@@ -71,7 +82,7 @@ class router_index
         	}
 
         }
-        
+
         $domain_config = $this->_domain;
         if($mark_domain == 'm') 
         {
@@ -79,9 +90,16 @@ class router_index
         }        
         $this->_mark_domain = (in_array($mark_domain, $mark_array)) ? $mark_domain : 'pc' ;
 
-        if($_GET['wap'] == 'yes')
+        if($this->_wap_get == 'yes')
         {
             $this->_mark_domain = 'm';
+        }
+
+        $uri = current(array_filter(explode('/', $this->_request_uri)));
+        if(in_array($uri, $this->_wap_array))
+        {
+            $this->_mark_domain = 'm';
+            $this->_wap_state = TRUE;
         }
         // $this->_is_wap($domain_config);
         return $domain_config;
@@ -96,11 +114,10 @@ class router_index
             header("Location: ".$protocol.$this->_rest_url.$this->_request_uri); 
             exit;
         }
-
         if($this->_mark_domain == 'pc' && is_mobile() == TRUE){
             header("Location: {$protocol}m.".$domain_config.$this->_request_uri);
             exit;
-        }elseif ($this->_mark_domain == 'm' && is_mobile() == FALSE && $_GET['wap'] != 'yes') {
+        }elseif ($this->_mark_domain == 'm' && is_mobile() == FALSE && $this->_wap_state != TRUE) {
             header("Location: {$protocol}".$domain_config.$this->_request_uri);
             exit;
         } 
@@ -181,6 +198,11 @@ class main extends controller
         'domain_custom' => 'images.wezchina.com',
         'buckut' => 'wezc',
     ];
+
+    // 手机目录
+    private $_wap_array = [
+       'wap','m'
+    ]; 
     // 构造方法
     public function __construct($data) 
     {
@@ -199,6 +221,15 @@ class main extends controller
         //$this->data($this->_domain_data($weid));
 
     	$uri =current(explode('?', $_SERVER['REQUEST_URI']));
+
+        $uri_array = array_filter(explode('/', $uri));
+
+        $current_uri = current($uri_array);
+
+        if(in_array($current_uri, $this->_wap_array))
+        {
+            $uri = substr($uri , strlen('/'.$current_uri) , strlen($uri));
+        }
 
         $controller_varify = $this->_controller($uri , $this->data);
 
