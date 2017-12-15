@@ -124,7 +124,7 @@ const home = `
                                     <p>办公电话：029-87298395 87298138 | 传真：029-87298138 | 电子邮件: sxsqslhh@163.com</p>
                                     <p>版权所有 陕西省秦商联合会 | 网站备案信息：<a id="icp" href="javascript:void(0)"></a></p>
                                 </div>
-                                <div class="_ideConac"><img src="/common/img/default_red_copy.png" alt=""></div>
+                                <div class="_ideConac"><img src="/common/img/gabeian.png" width="80" height="80" /></div>
                             </footer>
                         </div>
                     </div>
