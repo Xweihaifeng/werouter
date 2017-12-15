@@ -523,7 +523,7 @@ $(document).ready(function(){
                         var goods = res.data.goods;
                         for(var i=0; i<goods.length; i++){
                             var imgDom =
-                                '<img weid="'+goods[i].weid+'" src="'+qiniu_bucket_domain + goods[i].goods_cover+'">';
+                                '<img weid="'+goods[i].weid+'" src="'+qiniu_bucket_domain + goods[i].goods_cover+'"><br><span>'+goods[i].goods_title+'<span>';
                             $(".imgContainer").append(imgDom)
                         }
 
