@@ -23,8 +23,7 @@ class router_index
     private $_directory = [
         'm' => 'wap',
         'pc' => 'web'
-    ];
-    
+    ];    
     // 重定向的链接
     private $_rest_url = '';
     
@@ -56,7 +55,7 @@ class router_index
     private function _domain_init()
     {
         $this->_qqxqs();
-        
+
         $mark_array = ['m'];
         $domain_array = explode('.' , $this->_domain);
         
@@ -80,30 +79,34 @@ class router_index
         }        
         $this->_mark_domain = (in_array($mark_domain, $mark_array)) ? $mark_domain : 'pc' ;
 
+        if($_GET['wap'] == 'yes')
+        {
+            $this->_mark_domain = 'm';
+        }
         // $this->_is_wap($domain_config);
         return $domain_config;
     }
 
     private function _is_wap($domain_config)
-    {
+    {   
 
-        $protocol = empty($_SERVER['HTTPS']) ? 'http' : 'https';
+        $protocol = empty($_SERVER['HTTPS']) ? 'http://' : 'https://';
         if(!empty($this->_rest_url))
-    	{
-    		header("Location: ".$protocol."://".$this->_rest_url.$this->_request_uri); 
-            exit;
-    	}
-
-        if($this->_mark_domain == 'pc' && is_mobile() == TRUE){
-            header("Location: {$protocol}://m.".$domain_config.$this->_request_uri);
-            exit;
-        }elseif ($this->_mark_domain == 'm' && is_mobile() == FALSE) {
-            header("Location: {$protocol}://".$domain_config.$this->_request_uri);
+        {
+            header("Location: ".$protocol.$this->_rest_url.$this->_request_uri); 
             exit;
         }
+
+        if($this->_mark_domain == 'pc' && is_mobile() == TRUE){
+            header("Location: {$protocol}m.".$domain_config.$this->_request_uri);
+            exit;
+        }elseif ($this->_mark_domain == 'm' && is_mobile() == FALSE && $_GET['wap'] != 'yes') {
+            header("Location: {$protocol}".$domain_config.$this->_request_uri);
+            exit;
+        } 
         if($this->http != $protocol)
         {
-        	header("Location: {$this->http}://".$domain_config.$this->_request_uri);
+            header("Location: {$this->http}".$domain_config.$this->_request_uri);
             exit;
         }
     }
@@ -151,7 +154,7 @@ class router_index
 
         $this->data = $this->data['data'];
 
-        $this->http = ($this->data['http_type'] == 1) ? 'http' : 'https';
+        $this->http = ($this->data['http_type'] == 1) ? 'http://' : 'https://';
 
         if(empty($this->data['router'])) error (404);
 
@@ -320,15 +323,18 @@ class main extends controller
     // 获取网站基本信息
     private function _domain_data($weid)
     {
+        $protocol = ($this->data['http_type'] == 1) ? 'http://' : 'https://' ;
         //JS 环境变量初始化
-        $protocol = empty($_SERVER['HTTPS']) ? 'http://' : 'https://';
-        $plats['var api_domain'] = $protocol.$_SERVER['HTTP_HOST'].'/api/';
+        $plats['var http_type'] = $protocol;
+        $plats['var site_domian'] = $this->data['domain'];
+        $plats['var api_domain'] = $protocol.$this->data['domain'].'/api/';
         $plats['var root_domain'] = $this->_get_domain($_SERVER['HTTP_HOST']);
         $plats['var is_domain'] = 'no';
         $plats['var pages_index'] = 'index';
         $plats['var is_login'] = 'no';
         $plats['var plats_token'] = FALSE;
         $plats['plats_user_info'] = FALSE;
+        //$plats['pages_info'] = FALSE;
         $plats['plats_info'] = FALSE;
         $plats['qiniu'] = FALSE;
         //JS 环境变量初始化END
