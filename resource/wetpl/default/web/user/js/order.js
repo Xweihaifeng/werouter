@@ -208,7 +208,7 @@ $(document).ready(function(){
                                 var goodItem =
                                     '<tr id="'+x.weid+'">'+
                                         '<td style="width: 106px;padding-top: 8px;"><img src="'+qiniu_bucket_domain+x.goods[i].goods_cover+'" alt=""></td>'+
-                                        '<td style="width: 460px;"><a href="/'+x.domain +'/wemall/goods/'+x.goods[i].goods_id+'" target="_blank">'+x.goods[i].goods_summary+'</a></td>'+
+                                        '<td style="width: 460px;"><a href="/'+x.domain +'/wemall/goods/'+x.goods[i].goods_id+'" target="_blank">'+x.goods[i].goods_title+'</a></td>'+
                                         '<td>￥'+x.goods[i].goods_price+'<br>(运费￥'+freight+')</td>'+
                                         '<td>'+x.goods[i].goods_num+'</td>'+
                                         '<td rowspan="'+x.goods.length+'" class="price">￥'+x.order_price+'</td>'+
@@ -526,7 +526,6 @@ $(document).ready(function(){
                                 '<div style="display: inline-block;"><img weid="'+goods[i].weid+'" src="'+qiniu_bucket_domain + goods[i].goods_cover+'"><span style="display:block;margin-right: 10px;text-align: center;">'+goods[i].goods_title+'</span></div>';
                             $(".imgContainer").append(imgDom)
                         }
-
                         $(".dynamic-dom").attr("id",domNum);
                         operFormDom();
 
@@ -578,7 +577,7 @@ $(document).ready(function(){
                     console.log(data);
                     if(data.code===200){
                         layer.msg(data.data);
-                        window.location.reload();
+                        setTimeout(function() {window.location.reload();},1500);
                     }else{
                         layer.msg('退款失败  ' + data.message);
                     }

@@ -140,7 +140,7 @@ $(function () {
                                 var goodItem =
                                     '<tr id="'+x.weid+'" domain="'+x.domain+'">'+
                                     '<td style="width: 106px;padding-top: 8px;"><img src="'+qiniu_bucket_domain+x.goods[i].goods_cover+'" alt=""></td>'+
-                                    '<td style="width: 460px;"><a href="/'+x.domain +'/wemall/goods/'+x.goods[i].goods_id+'" target="_blank">'+x.goods[i].goods_summary+'</a></td>'+
+                                    '<td style="width: 460px;"><a href="/'+x.domain +'/wemall/goods/'+x.goods[i].goods_id+'" target="_blank">'+x.goods[i].goods_title+'</a></td>'+
                                     '<td>￥'+x.goods[i].goods_price+'<br>(运费￥'+freight+')</td>'+
                                     '<td>'+x.goods[i].goods_num+'</td>'+
                                     '<td rowspan="'+x.goods.length+'" class="price">￥'+x.order_price+'</td>'+
