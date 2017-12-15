@@ -474,7 +474,7 @@
                 }, {
                     "mData": 'title',
                     "render": function(data, type, full) {
-                        return `<a title="` + full.title + `" href="` + window.location.protocol + `//` + window.location.host + `/`+full.channel_domain+`/` + full.weid + `" target="_blank">` + shorten_str(full.title, 15) + `</a>`;
+                        return `<a class="title-link" title="` + full.title + `" href="javascript:void(0);" target="_blank" data-id="` + full.weid + `">` + shorten_str(full.title, 15) + `</a>`;
                     }
                 }, {
                     "mData": 'thumb_image',
@@ -626,6 +626,29 @@
             __init();
             initList();
         });
+        $(document).on('mouseenter', '.title-link', function() {
+            var content_id = $(this).data('id');
+            var that = this;
+            if ($(that).attr("href").indexOf('javascript:void(0)') === -1) {
+                return;
+            }
+            $.ajax({
+                url: ApiUrl + 'cms/contents/show_channel_by_content_id',
+                type: 'post',
+                data: {
+                    content_id: content_id
+                },
+                dataType: 'json',
+                success: function(data) {
+                    $(that).attr('href', '/' + data.data.domain + '/' + content_id, '_blank');
+                    $(that).click();
+                },
+                error: function(xhr) {
+                    console.log(xhr);
+                }
+            });
+        });
+
         $(document).on('change', 'select[name=channel]', function() {
             var channel_id = $(this).val();
             __cate_init(channel_id);

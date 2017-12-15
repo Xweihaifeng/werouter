@@ -286,8 +286,10 @@ $(function() {
     {
         var Days = expiredays;
         var exp = new Date();
+        var domain = '.'+root_domain;
         exp.setTime(exp.getTime() + Days*24*60*60*1000);
-        document.cookie = "token="+ escape (token) + ";expires=" + exp.toGMTString() +";path=/;"
+        //document.cookie = "token="+ escape (token) + ";expires=" + exp.toGMTString() +";path=/;"
+        document.cookie = "token="+ escape (token) + ";expires=" + exp.toGMTString() +";path=/;domain="+domain+";";
     }
 
     var saveUserInfo = function(token, weid, imgUrl, identity) {
@@ -420,12 +422,12 @@ $(function() {
     })
     
     // 扫码登录
-    /*function setCookie(token, expiredays) {
+    function setCookie(token, expiredays) {
         var Days = expiredays;
         var exp = new Date();
         exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000);
         document.cookie = "token=" + escape(token) + ";expires=" + exp.toGMTString() + ";path=/";
-    }*/
+    }
 
     var code = GetQueryString('code');
     var state = GetQueryString('state');
