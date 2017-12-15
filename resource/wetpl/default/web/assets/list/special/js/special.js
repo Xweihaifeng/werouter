@@ -160,8 +160,8 @@ $(function() {
                 <img src="`+ thumb_image +`" alt="">
             </a>
             <div class="hot-info">
-                <div class="hot-title">`+ result.title +`</div>
-                <div class="hot-summary">`+ result.summary +`</div>
+                <div class="hot-title">`+ result.title.substr(0, 25) +`</div>
+                <div class="hot-summary">`+ result.summary.substr(0, 42) +`</div>
             </div>
         </div>`
         return template;
@@ -176,8 +176,8 @@ $(function() {
     // 推荐专题新闻
     var recommend = function(result, idnex) {
         var template = `
-        <h1>`+ result.title +`</h1>
-        <div class="desc">`+ result.title.substr(1, 100) +`
+        <h1><a href="/`+ pathname[0] +"/"+ result.weid +`" target="_blank">`+ result.title.substr(0, 50) +`</a></h1>
+        <div class="desc">`+ result.title.substr(0, 99) +`
             <a href="/`+ pathname[0] +"/"+ result.weid +`" target="_blank">[查看详情]</a>
         </div>`
         return template;
