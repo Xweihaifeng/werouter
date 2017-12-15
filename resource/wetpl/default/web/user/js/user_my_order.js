@@ -745,6 +745,13 @@ $(function () {
                         var obj=$("#"+orderid).find(".status-oper");
                         obj.empty();
                         obj.append(operDom);
+                        //重新加载页面
+                        var time_start=$("input[name='start_time']").val();
+                        var time_end=$("input[name='end_time']").val();
+                        var order_num=$("input[name='no']").val();
+                        var statusid=$(".current .btn-select").data("id");
+                        var page=$("pagination").find("active").find("span").text();
+                        orderlist(userId,page,statusid,{time_start:time_start,time_end:time_end,order_num:order_num});
                     }
                 }
             }
