@@ -1016,10 +1016,11 @@ req().then((data) => {
                         }
                         $(".imgs-chairman").html('<a href=' + data.data.leader.url + '><img src=' + data.data.leader.image + ' width="158" height="154" /></a>');
                         $(".imgs-name").html(data.data.leader.title);
-                        $(".imgs-occupation-leader").text(data.data.leader.title)
+                        $(".imgs-occupation-leader").text(data.data.leader.description)
                     } else {
                         $(".imgs-chairman").html('<a href=' + mainData.data.leader.url + '><img src=' + mainData.data.leader.image + ' width="158" height="154" /></a>');
                         $(".imgs-name").html(mainData.data.leader.title);
+                        $(".imgs-occupation-leader").text(mainData.data.leader.title)
                     }
                 }, 0);
 
