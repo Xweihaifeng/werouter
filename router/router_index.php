@@ -41,7 +41,7 @@ class router_index
         $this->_domain_config = $this->_domain_init();
     }
 
-        
+
     // 秦商总会需要的东西
     private function _qqxqs()
     {
@@ -55,6 +55,8 @@ class router_index
     // 分解域名标识 手机版 PC版 API
     private function _domain_init()
     {
+        $this->_qqxqs();
+        
         $mark_array = ['m'];
         $domain_array = explode('.' , $this->_domain);
         
