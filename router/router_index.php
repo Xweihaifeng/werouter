@@ -138,7 +138,7 @@ class router_index
 
         $this->data = $this->data['data'];
 
-        $this->http = ($this->data['http_type'] == 1) ? 'http' : 'https';
+        $this->http = ($this->data['http_type'] == 1) ? 'http' : 'http';
 
         if(empty($this->data['router'])) error (404);
 
@@ -307,13 +307,19 @@ class main extends controller
     // 获取网站基本信息
     private function _domain_data($weid)
     {
+        //JS 环境变量初始化
         $protocol = empty($_SERVER['HTTPS']) ? 'http://' : 'https://';
         $plats['var api_domain'] = $protocol.$_SERVER['HTTP_HOST'].'/api/';
         $plats['var root_domain'] = $this->_get_domain($_SERVER['HTTP_HOST']);
         $plats['var is_domain'] = 'no';
+        $plats['var pages_index'] = 'index';
         $plats['var is_login'] = 'no';
-        $plats['var plats_token'] = false;
+        $plats['var plats_token'] = FALSE;
         $plats['plats_user_info'] = FALSE;
+        $plats['plats_info'] = FALSE;
+        $plats['qiniu'] = FALSE;
+        //JS 环境变量初始化END
+
     	//七牛相关信息
     	$sql = 'SELECT name , config FROM we_plats_setting
 				WHERE plat_id=? AND name = "qiNiuConfig"';
