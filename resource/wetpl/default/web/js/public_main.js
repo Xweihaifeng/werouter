@@ -1338,7 +1338,6 @@ req().then((data) => {
                     mySwiper.startAutoplay();                    
                     mySwiper2.startAutoplay();
                     mySwiper3.startAutoplay();
-                    mySwiper4.startAutoplay();
                 }, 1000)
 
                 genEvt();
