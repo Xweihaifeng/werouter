@@ -156,7 +156,7 @@ $(function () {
                         }
                         $('#'+x.weid+' .status-oper').children().remove();
                     var operList = [];
-                    if(x.send!=''){
+                    if(!isNull(x.send)){
                         operList.push({
                             name : '查看物流',
                             oper : 'distribute'
@@ -650,7 +650,7 @@ $(function () {
             success : function (data) {
                 if(data.code===200){
                     var operList = [];
-                    if(data.data.send!=''){
+                    if((!isNull(x.senddata.data.send)){
                         operList.push({
                             name : '查看物流',
                             oper : 'distribute'
@@ -796,7 +796,7 @@ $(function () {
     var __init = function(weid) {
         userId=weid;
         orderlist(userId,1);
-        
+
     }
     __init(weid);
 
