@@ -28,28 +28,31 @@ $(function() {
         }
     });
 
-    // 专题背景图
-    $.ajax({
-        url: CMS_CHANNELS_DOMAIN_QUERY + pathname[0],
-        dataType: 'json',
-        async: false,
-        success: function(data){
-            if(data.code === 200) {
-                domain_weid = data.data.weid;
-                var big_image = data.data.big_image;
-
-                if(!big_image) {
-                    big_image = "/common/img/news_top_img.png";
-                } else if (big_image.indexOf('http') != 0 && big_image != "") {
-                    big_image = ApiMaterPlatQiniuDomain + big_image;
-                }
-
-                $(".special-content").css("background", "#f7f0e0 url("+ big_image +")  no-repeat 50% 0");
-            } else {
-                console.error(data.message);
-            }
+    function big_img(result) {
+        if(!result) {
+            result = "/common/img/news_top_img.png";
+        } else if (result.indexOf('http') != 0 && result != "") {
+            result = ApiMaterPlatQiniuDomain + result;
         }
-    });
+        $(".special-content").css("background-image", "url("+ result +")");
+    }
+
+    function big_background_img() {
+        $.ajax({
+            url: CMS_CHANNELS_DOMAIN_QUERY + pathname[0],
+            dataType: 'json',
+            async: false,
+            success: function(data){
+                if(data.code === 200) {
+                    domain_weid = data.data.weid;
+                    var big_image = data.data.big_image;
+                    big_img(big_image);
+                } else {
+                    console.error(data.message);
+                }
+            }
+        });
+    }
 
     // 热点新闻图片显示
     var news_hots_imgs = function(result) {
@@ -95,8 +98,13 @@ $(function() {
         var options5 = $.get(CMS_DETAIL + pathname[1]);
         options5.done(function (data) {
             if (data.code === 200 && data.data) {
-                console.log(data.data);
                 var result = data.data;
+                var big_image = result.category.big_image;
+                if(!big_image) {
+                    big_background_img();
+                } else {
+                    big_img(big_image);
+                }
                 $(".special-title-list").append(`<li><a href="/`+ pathname[0] +"/"+ result.category.domain +`">`+ result.category.title +`</a></li>`);
                 $(".special-box-right").html(recommend(result));
             } else {

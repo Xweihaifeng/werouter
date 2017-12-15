@@ -38,7 +38,6 @@ $(function() {
         }
     });
 
-
     $.ajax({
         url: CMS_CHANNELS_DOMAIN_QUERY + channel,
         dataType: 'json',
