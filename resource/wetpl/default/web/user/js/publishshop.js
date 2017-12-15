@@ -531,7 +531,9 @@ malldetail();
                         $(".postage").show();
                         $(".postage_max_money").show();
                     }
-                    $("input[name='discount_status']").attr("checked",goods.discount_status);
+                    if(goods.discount_status == 1){
+                        $("input[value='1']").removeAttr('checked').attr("checked","checked");
+                    }
                     $('.insert-member').children().remove();
                     if(goods.discount_status == 1 && goods.discount.length){
                         for(var i=0; i<goods.discount.length; i++){
