@@ -868,7 +868,7 @@ req().then((data) => {
                         isFirst = false;
                         $(".header").fadeOut(500);
                     }
-                }, 60000);
+                }, 30000);
 
                 $(".main").mouseenter(() => {
                     clearTimeout(time);
@@ -881,7 +881,7 @@ req().then((data) => {
                         isFirst = false;
                         time = setTimeout(() => {
                             $(".header").fadeOut(500);
-                        }, 60000)
+                        }, 30000)
                     } else {
                         time = setTimeout(() => {
                             $(".header").fadeOut(500);
