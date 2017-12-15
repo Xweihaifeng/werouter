@@ -443,7 +443,7 @@ $(document).ready(function(){
         $('#myModal').find(".modal-title").text('服务号测试');
         $('#myModal').find(".modal-body").css("text-align","center");
         $('#myModal').find(".modal-body").children().remove();
-        $('#myModal').find(".modal-body").append("<img src='"+QRCODE+"?url="+mApiUrl+"pages/wechat/wechatConfigureTest?userid="+weid+"'/>");
+        $('#myModal').find(".modal-body").append("<img src='"+QRCODE+"?url=http://m.new.wezchina.com/api/pages/wechat/wechatConfigureTest?userid="+weid+"'/>");
         $('#myModal').modal('show');
 
     }
