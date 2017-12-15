@@ -1,6 +1,5 @@
 const httpType = window.location.protocol;
-// var hosts = httpType + '//' + window.location.host + '/api/';
-var hosts = 'http://ysl.co/';
+var hosts = httpType + '//' + window.location.host + '/api/';
 var ApiUrl = hosts + 'backend/';
 //七牛配置
 var ApiMaterPlatQiniuDomain;
