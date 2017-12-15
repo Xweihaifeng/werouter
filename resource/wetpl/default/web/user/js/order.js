@@ -632,7 +632,7 @@ $(document).ready(function(){
                                 }
                             }
 
-                            //$('#group'+i+' .detail').text('正在加载，请稍候...');
+                            $('#group'+i+' .detail').text('正在加载，请稍候...');
                             if(sendList[i].logistics_info){
                                 //字符串转json
                                 var logistics_info=$.parseJSON(sendList[i].logistics_info);
