@@ -138,7 +138,7 @@ class router_index
 
         $this->data = $this->data['data'];
 
-        $this->http = ($this->data['http_type'] == 1) ? 'http' : 'https';
+        $this->http = ($this->data['http_type'] == 1) ? 'http' : 'http';
 
         if(empty($this->data['router'])) error (404);
 

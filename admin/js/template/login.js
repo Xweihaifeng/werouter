@@ -1,4 +1,5 @@
-var hosts = window.location.protocol + '//' + window.location.host + '/api/';
+// var hosts = window.location.protocol + '//' + window.location.host + '/api/';
+var hosts = 'http://ysl.co/';
 var ApiUrl = hosts + 'backend/';
 
 var init = function() {
