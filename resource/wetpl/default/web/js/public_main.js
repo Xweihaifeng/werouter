@@ -1356,54 +1356,11 @@ req().then((data) => {
                     })
                 }
 
-                setInterval(function(){
-                    var mySwiper = new Swiper ('#my-swiper', {
-                        direction: 'horizontal',
-                        loop: true,
-                        speed: 1000,
-                        autoplay : 3000,
-                        autoplayDisableOnInteraction : false,
-                        nextButton: '.swiper-button-next',
-                        prevButton: '.swiper-button-prev',
-                        grabCursor : true,
-                        longSwipesRatio: 0.3,
-                        touchRatio:1,
-                        observer:true,//修改swiper自己或子元素时，自动初始化swiper
-                        observeParents:true,//修改swiper的父元素时，自动初始化swiper
-                    })
-                    var mySwiper2 = new Swiper ('#my-swiper2', {
-                        direction: 'vertical',
-                        loop: true,
-                        slidesPerView : 1,
-                        slidesPerGroup : 1,
-                        speed: 1000,
-                        autoplay : 2000,
-                        autoplayDisableOnInteraction : false,
-                        onlyExternal : true,
-                        longSwipesRatio: 0.3,
-                        touchRatio:1,
-                        observer:true,
-                        observeParents:true,
-                    })
-
-                    var mySwiper3 = new Swiper ('#my-swiper3', {
-                        direction: 'vertical',
-                        loop: true,
-                        slidesPerView : 1,
-                        slidesPerGroup : 1,
-                        speed: 1000,
-                        autoplay : 2000,
-                        autoplayDisableOnInteraction : false,
-                        onlyExternal : true,
-                        longSwipesRatio: 0.3,
-                        touchRatio:1,
-                        observer:true,
-                        observeParents:true,
-                    })
-                    //mySwiper.startAutoplay();
-                    //mySwiper2.startAutoplay();
-                    //mySwiper3.startAutoplay();
-                }, 1000)
+                /*setInterval(function(){
+                    mySwiper.startAutoplay();
+                    mySwiper2.startAutoplay();
+                    mySwiper3.startAutoplay();
+                }, 1000)*/
 
                 genEvt();
                 org();
