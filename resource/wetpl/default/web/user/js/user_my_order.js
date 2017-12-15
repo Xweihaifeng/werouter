@@ -519,6 +519,7 @@ $(function () {
         //申请退款
         if ($(".apply_refund_operation")){
             $(".apply_refund_operation").bind('click',function () {
+
                 var orderId = $(this).closest('tr').attr("id");
                 $('.comment_mongolia_layer, .comment_bomb_box').fadeIn("slow");
                 $('.comment_bomb_box_title').text("申请退款");
@@ -529,6 +530,7 @@ $(function () {
                 $("#refund_"+orderId).unbind();
                 var reason=$("input[name=textarea]").val();
                 $("#refund_"+orderId).bind('click',function () {
+                    $("#refund_"+orderId).attr("disabled","true");
                     $.ajax({
                         url : apiUrl + 'order/refund',
                         type : 'post',
@@ -539,6 +541,7 @@ $(function () {
                         dataType : 'json',
                         success : function (data) {
                             if(data.code === 200){
+                                $("#refund_"+orderId).attr("disabled","false");
                                 $('.comment_mongolia_layer, .comment_bomb_box').fadeOut("slow");
                                 layer.msg("申请退款成功", {
                                     time: 1500
@@ -546,6 +549,7 @@ $(function () {
                                 //重新获取状
                                 reloadOperation(orderId);
                             }else{
+                                $("#refund_"+orderId).attr("disabled","false");
                                 layer.msg(data.message, {
                                     time: 1500
                                 });
@@ -746,12 +750,37 @@ $(function () {
                         obj.empty();
                         obj.append(operDom);
                         //重新加载页面
-                        var time_start=$("input[name='start_time']").val();
-                        var time_end=$("input[name='end_time']").val();
-                        var order_num=$("input[name='no']").val();
-                        var statusid=$(".current .btn-select").data("id");
-                        var page=$("pagination").find("active").find("span").text();
-                        orderlist(userId,page,statusid,{time_start:time_start,time_end:time_end,order_num:order_num});
+                        var status_pay="";
+                        switch (ata.data.order_status){
+                            case 1:
+                                status_pay = '已下单';
+                                break;
+                            case 2:
+                                status_pay = '已付款';
+                                break;
+                            case 3:
+                                status_pay = '已发货';
+                                break;
+                            case 4:
+                                status_pay = '已收货';
+                                break;
+                            case 5:
+                                status_pay = '已评价';
+                                break;
+                            case 6:
+                                status_pay = '已取消';
+                                break;
+                            case 7:
+                                status_pay = '已完成';
+                                break;
+                            case 8:
+                                status_pay = '已申请退款';
+                                break;
+                            case 9:
+                                status_pay = '已确认退款';
+                                break;
+                        }
+                        $("#h"+orderid).find(".order").find("a").text(status_pay);
                     }
                 }
             }
