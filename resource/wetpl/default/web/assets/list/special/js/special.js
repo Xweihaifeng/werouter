@@ -34,7 +34,7 @@ $(function() {
         } else if (result.indexOf('http') != 0 && result != "") {
             result = ApiMaterPlatQiniuDomain + result;
         }
-        $(".special-box-left").css("background", "url("+ result +") no-repeat");
+        $(".special-box-left").css("background-image", "url("+ result +")");
     }
 
     function big_img(result) {
@@ -43,7 +43,7 @@ $(function() {
         } else if (result.indexOf('http') != 0 && result != "") {
             result = ApiMaterPlatQiniuDomain + result;
         }
-        $(".special-content").css("background", "#f7f0e0 url("+ result +")  no-repeat 50% 0");
+        $(".special-content").css("background-image", "url("+ result +")");
     }
 
     function back_background_img() {
