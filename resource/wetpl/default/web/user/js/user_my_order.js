@@ -498,13 +498,9 @@ $(function () {
                         dataType : 'json',
                         success : function (data) {
                             if(data.code === 200){
+                                reloadOperation(orderId,"确收货成功");
                                 $("#take_"+orderId).attr("disabled","false");
                                 $('.comment_mongolia_layer, .comment_bomb_box').fadeOut("slow");
-                                layer.msg("确收货成功", {
-                                    time: 1500
-                                });
-                                //重新获取状
-                                setTimeout(function(orderId) {reloadOperation(orderId);},1500);
                             }else{
                                 $("#take_"+orderId).attr("disabled","false");
                                 layer.msg(data.message, {
@@ -544,13 +540,9 @@ $(function () {
                         dataType : 'json',
                         success : function (data) {
                             if(data.code === 200){
+                                reloadOperation(orderId,"申请退款成功");
                                 $("#refund_"+orderId).attr("disabled","false");
                                 $('.comment_mongolia_layer, .comment_bomb_box').fadeOut("slow");
-                                layer.msg("申请退款成功", {
-                                    time: 1500
-                                });
-                                //重新获取状
-                                setTimeout(function(orderId) {reloadOperation(orderId);},1500);
                             }else{
                                 $("#refund_"+orderId).attr("disabled","false");
                                 layer.msg(data.message, {
@@ -585,11 +577,7 @@ $(function () {
                     dataType : 'json',
                     success : function (data) {
                         if(data.code === 200){
-                            layer.msg("交易完成", {
-                                time: 1500
-                            });
-                            //重新获取状
-                            setTimeout(function(orderId) {reloadOperation(orderId);},1500);
+                            reloadOperation(orderId,"交易完成");
                         }else{
                             layer.msg(data.message, {
                                 time: 1500
@@ -613,10 +601,7 @@ $(function () {
                     dataType : 'json',
                     success : function (data) {
                         if(data.code === 200){
-                            layer.msg("删除订单成功", {
-                                time: 1500
-                            });
-                            setTimeout(function(orderId) {reloadOperation(orderId);},1500);
+                            reloadOperation(orderId,"删除订单成功");
                         }else{
                             layer.msg(data.message, {
                                 time: 1500
@@ -642,10 +627,7 @@ $(function () {
                     dataType : 'json',
                     success : function (data) {
                         if(data.code === 200){
-                            layer.msg("取消订单成功", {
-                                time: 1500
-                            });
-                            setTimeout(function(orderId) {reloadOperation(orderId);},1500);
+                            reloadOperation(orderId,"取消订单成功");
                         }else{
                             layer.msg(data.message, {
                                 time: 1500
@@ -657,7 +639,7 @@ $(function () {
         }
     }
     //重新加载操作按钮
-    var reloadOperation=function (orderid) {
+    var reloadOperation=function (orderid,message) {
         $.ajax({
             url : apiUrl + 'order/detail/'+orderid,
             type : 'get',
@@ -745,6 +727,9 @@ $(function () {
                         var obj=$("#"+orderid).find(".status-oper");
                         obj.empty();
                         obj.append(operDom);
+                        layer.msg(message, {
+                            time: 1500
+                        });
                         //重新加载页面
                         var time_start=$("input[name='start_time']").val();
                         var time_end=$("input[name='end_time']").val();
