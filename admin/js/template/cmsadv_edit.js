@@ -8,6 +8,7 @@ $(document).ready(function(){
             if (result.code === 200){
                        //console.log(result);
                         $('input[name=title]').val(result.data.title);
+                        $('input[name=description]').val(result.data.description);
                         $('input[name=url]').val(result.data.url);
                         $('input[name=image]').val(result.data.image);
                         type_id=result.data.type_id;
@@ -79,6 +80,7 @@ $(document).ready(function(){
           var data = {
                 weid:weid,
                 title:$('input[name=title]').val(),
+                description:$('input[name=description]').val(),
                 url:url,
                 type_id:$("#type-select").val(),
                 image:image,
