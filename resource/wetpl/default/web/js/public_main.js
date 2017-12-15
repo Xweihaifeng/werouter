@@ -194,7 +194,8 @@ const content = [
     {pos: 1, name: '新闻', ename: 'xw', cont: ['视频新闻', '图片新闻', '专题', '本会新闻'], val: 'home'},
     {pos: 2, name: '组织', ename: 'zz', cont: ['商会介绍', '联席会议', '组委会', '总会党委'], val: 'organization'},
     {pos: 3, name: '互助', ename: 'hz', cont: ['互助项目', '线下活动', '其他'], val: 'huzhu'},
-    {pos: 4, name: '共享', ename: 'gx', cont: ['秦商特供', '秦商项目', '秦商课堂', '秦商直播'], val: 'goodsBox'}
+    //{pos: 4, name: '共享', ename: 'gx', cont: ['秦商特供', '秦商项目', '秦商课堂', '秦商直播'], val: 'goodsBox'}
+    {pos: 4, name: '共享', ename: 'gx', cont: ['秦商特供'], val: 'goodsBox'}
 ];
 const _init = [1,2,3,4];
 
