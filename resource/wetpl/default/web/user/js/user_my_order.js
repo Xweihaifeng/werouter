@@ -487,6 +487,7 @@ $(function () {
                 $('.comment_bomb_box_footer').append('<button class="comment_save" id="take_'+orderId+'"> 确认 </button>');
                 $("#take_"+orderId).unbind();
                 $("#take_"+orderId).bind('click',function () {
+                    $("#take_"+orderId).attr("disabled","true");
                     $.ajax({
                         url : apiUrl + 'order/take',
                         type : 'post',
@@ -497,6 +498,7 @@ $(function () {
                         dataType : 'json',
                         success : function (data) {
                             if(data.code === 200){
+                                $("#take_"+orderId).attr("disabled","false");
                                 $('.comment_mongolia_layer, .comment_bomb_box').fadeOut("slow");
                                 layer.msg("确收货成功", {
                                     time: 1500
@@ -504,6 +506,7 @@ $(function () {
                                 //重新获取状
                                 reloadOperation(orderId);
                             }else{
+                                $("#take_"+orderId).attr("disabled","false");
                                 layer.msg(data.message, {
                                     time: 1500
                                 });
