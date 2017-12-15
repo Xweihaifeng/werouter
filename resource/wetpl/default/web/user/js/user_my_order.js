@@ -650,7 +650,7 @@ $(function () {
             success : function (data) {
                 if(data.code===200){
                     var operList = [];
-                    if((!isNull(x.senddata.data.send)){
+                    if(!isNull(x.senddata.data.send)){
                         operList.push({
                             name : '查看物流',
                             oper : 'distribute'
