@@ -91,7 +91,7 @@ $(function() {
                 var result = data.data;
                 result.forEach(function(value, index) {
                     if(value.domain == pathname[1]) {
-        			    $(".special-title-list").append(`<li><a href="/`+ pathname[0] +"/"+ value.domain +`">`+ value.title +`</a></li>`);
+        			    $(".special-title-list").append(`<li><a href="/`+ pathname[0] +"/"+ value.domain +`" target="_blank">`+ value.title +`</a></li>`);
                         document.title = "专题："+ value.title +" — "+ tpl;
 
                         var back_image = value.back_image;
@@ -171,7 +171,7 @@ $(function() {
 
     // 热点专题标题
     var news_hots_info = function(result) {
-        var template = `<div><a href="/`+ pathname[0] +"/"+ result.weid +`">`+ result.title +`</a></div>`
+        var template = `<div><a href="/`+ pathname[0] +"/"+ result.weid +`" target="_blank">`+ result.title +`</a></div>`
         return template;
     }
 
