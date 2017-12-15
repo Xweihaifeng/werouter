@@ -504,7 +504,7 @@ $(function () {
                                     time: 1500
                                 });
                                 //重新获取状
-                                reloadOperation(orderId);
+                                setTimeout(function(orderId) {reloadOperation(orderId);},1500);
                             }else{
                                 $("#take_"+orderId).attr("disabled","false");
                                 layer.msg(data.message, {
@@ -550,7 +550,7 @@ $(function () {
                                     time: 1500
                                 });
                                 //重新获取状
-                                reloadOperation(orderId);
+                                setTimeout(function(orderId) {reloadOperation(orderId);},1500);
                             }else{
                                 $("#refund_"+orderId).attr("disabled","false");
                                 layer.msg(data.message, {
@@ -589,7 +589,7 @@ $(function () {
                                 time: 1500
                             });
                             //重新获取状
-                            reloadOperation(orderId);
+                            setTimeout(function(orderId) {reloadOperation(orderId);},1500);
                         }else{
                             layer.msg(data.message, {
                                 time: 1500
@@ -616,14 +616,7 @@ $(function () {
                             layer.msg("删除订单成功", {
                                 time: 1500
                             });
-                            //重新获取状
-                            reloadOperation(orderId);
-                            var time_start=$("input[name='start_time']").val();
-                            var time_end=$("input[name='end_time']").val();
-                            var order_num=$("input[name='no']").val();
-                            var statusid=$(".current .btn-select").data("id");
-                            var page=$("pagination").find("active").find("span").text();
-                            orderlist(userId,page,statusid,{time_start:time_start,time_end:time_end,order_num:order_num});
+                            setTimeout(function(orderId) {reloadOperation(orderId);},1500);
                         }else{
                             layer.msg(data.message, {
                                 time: 1500
@@ -652,7 +645,7 @@ $(function () {
                             layer.msg("取消订单成功", {
                                 time: 1500
                             });
-                            reloadOperation(orderId);
+                            setTimeout(function(orderId) {reloadOperation(orderId);},1500);
                         }else{
                             layer.msg(data.message, {
                                 time: 1500
@@ -753,37 +746,12 @@ $(function () {
                         obj.empty();
                         obj.append(operDom);
                         //重新加载页面
-                        var status_pay="";
-                        switch (ata.data.order_status){
-                            case 1:
-                                status_pay = '已下单';
-                                break;
-                            case 2:
-                                status_pay = '已付款';
-                                break;
-                            case 3:
-                                status_pay = '已发货';
-                                break;
-                            case 4:
-                                status_pay = '已收货';
-                                break;
-                            case 5:
-                                status_pay = '已评价';
-                                break;
-                            case 6:
-                                status_pay = '已取消';
-                                break;
-                            case 7:
-                                status_pay = '已完成';
-                                break;
-                            case 8:
-                                status_pay = '已申请退款';
-                                break;
-                            case 9:
-                                status_pay = '已确认退款';
-                                break;
-                        }
-                        $("#h"+orderid).find(".order").find("a").text(status_pay);
+                        var time_start=$("input[name='start_time']").val();
+                        var time_end=$("input[name='end_time']").val();
+                        var order_num=$("input[name='no']").val();
+                        var statusid=$(".current .btn-select").data("id");
+                        var page=$("pagination").find("active").find("span").text();
+                        orderlist(userId,page,statusid,{time_start:time_start,time_end:time_end,order_num:order_num});
                     }
                 }
             }
