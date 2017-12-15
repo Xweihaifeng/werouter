@@ -72,7 +72,7 @@ class controllerRouter extends controller
 
         $protocol = empty($_SERVER['HTTP_X_CLIENT_PROTO']) ? 'http://' : $_SERVER['HTTP_X_CLIENT_PROTO'] . '://';
 
-        $url = urldecode($protocol.$_SERVER['HTTP_HOST'].'/wecard/'.$row['plat_user_id']);
+        $url = urldecode($protocol.$_SERVER['HTTP_HOST'].'/'.$row['domain'].'/wecard');
 
         $logo = (!empty($wezchina_plats['plats_brand']['logo']) && $row['is_brand'] == 1) ? $wezchina_plats['plats_brand']['logo'] : $wezchina_plats['plats_user']['avatar'];
         //二维码已存在图片  
