@@ -4,6 +4,7 @@
 	<meta charset="UTF-8">
 	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <title></title>
+	<link rel="stylesheet" href="{{PATH_TML}}css/home.css"/>
 	<link rel="stylesheet" href="{{PATH_TML}}css/common.css"/>
     <link rel="stylesheet" href="{{PATH_TML}}lib/weui.css" />
     <link rel="stylesheet" href="{{PATH_TML}}css/info.css"/>
@@ -610,7 +611,7 @@
 									,moveType: 1 //拖拽模式，0或者1
 									,content:
 											`
-											<div id="app">
+											<div id="appx">
 											<!--<p style="font-size: 16px; margin-top: 25px; text-align: center;">请激活您的账号</p>-->
 											<div id="login-info">
 												<ul>
@@ -629,7 +630,7 @@
 									,success: function(layero){
 										$("#layui-layer1").css('overflow', 'hidden');
 										new Vue({
-											el: '#app',
+											el: '#appx',
 											data: {
 												phone: '',
 												check: '',
