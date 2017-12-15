@@ -526,7 +526,6 @@ malldetail();
                     $("[name='note']").val(goods.note);
                     $("input[name='postage']").val(goods.postage);
                     $("input[name='postage_max_money']").val(goods.postage_max_money);
-                    $("input[name='postage_status']").attr("checked",goods.postage_status);
                     if(goods.postage_status==2){
                         $(".postage").show();
                         $(".postage_max_money").show();
@@ -541,7 +540,7 @@ malldetail();
                         }
                     }
 
-                        CKEDITOR.instances.editor1.setData(goods.content);
+                    CKEDITOR.instances.editor1.setData(goods.content);
                     $("select[name='cate_id']").find("#"+goods.cate_id).attr("selected","selected");
                     if(goods.picture!=null){
                         var picturearr=goods.picture.split(',');
@@ -553,7 +552,11 @@ malldetail();
                     }else{
                         var picturearr="";
                     }
-
+                    if(goods.postage_status==1){
+                        $(":radio[name='postage_status'][value='1']").attr("checked","checked");
+                    }else{
+                        $(":radio[name='postage_status'][value='2']").attr("checked","checked");
+                    }
                     var i=1;
                     //var picbtn=$(".addimgmore").html();
                     //$(".addimgmore").children().remove();
@@ -1036,6 +1039,7 @@ $(function(){
     //邮费事件不包邮是弹出需要填写的邮费信息
     $('input[name="postage_status"]').click(function(){
         if($('input[name="postage_status"]:checked').val()==2){
+
             $(".postage").show();
             $(".postage_max_money").show();       
         }else{
