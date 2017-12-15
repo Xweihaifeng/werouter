@@ -55,9 +55,11 @@ const home = `
                     </div>
                 </div>
                 <div id="home-body">
-                    <div class="qsfc">
-                        <p class="imgs-title">秦商风采</p>
-                        <p class="imgs-more">更多&gt;&gt;</p>
+                    <div class="fc">
+                        <div class="qsfc">
+                            <p class="imgs-title">秦商风采</p>
+                            <p class="imgs-more">更多&gt;&gt;</p>
+                        </div>
                     </div>
                     <div id="imgs">
                         <div class="imgs-style">
@@ -255,6 +257,9 @@ req().then((data) => {
                 'overflow': 'auto'
             })
         }
+        if (channel != 'xw') {
+            $(".header, .big").remove();
+        }
     } else {
         let lid = new Array(seq.length).fill(0); //生成显示栏目对应序列的数组
         fill(seq); //填充seq;
@@ -371,8 +376,8 @@ req().then((data) => {
     var mainNews = function(data){
         var href = data.channel_domain + "/" + data.weid;
         var summary = data.summary;
-        if (summary.length > 140) {
-            summary = summary.substring(0, 140) + '... ';
+        if (summary.length > 90) {
+            summary = summary.substring(0, 90) + '... ';
         }    
 
         var templete =
@@ -421,7 +426,7 @@ req().then((data) => {
     //特别推荐模板
     var specialRecommend = function(data, url){
         var href = data.channel_domain + "/" + data.weid;
-        var title = data.title.substring(0, 14);
+        var title = data.title.substring(0, 16);
         var dt = new Date(data.created_at * 1000);
         var month = (dt.getMonth() + 1).toString().length == 1 ? '0' + (dt.getMonth() + 1) : dt.getMonth() + 1;
         var day = dt.getDate().toString().length == 1 ? '0' + dt.getDate() : dt.getDate(); 
@@ -438,7 +443,7 @@ req().then((data) => {
     //会员推荐模板
     var memberRecommend = function(data, url){
         var href = "/" + data.domain + "/article/" + data.weid; //需要动态验证domain
-        var title = data.title.substring(0, 14);
+        var title = data.title.substring(0, 16);
 
         var templete =
             '<div class="rcd-news-line" id=' + data.weid + '>' +
@@ -455,7 +460,7 @@ req().then((data) => {
         var memberId = 'member_' + memberCnt;    
         var imgUrl = data.avatar;
         if (imgUrl != null && imgUrl.indexOf('http') === -1 && imgUrl.indexOf('common') === -1){
-            imgUrl = imgSet(imgUrl, 158, 154);
+            imgUrl = imgSet(imgUrl, 158, 154) + '&t=' + new Date().getTime();
         } else if (imgUrl == null) {
             imgUrl = '/common/img/avatar.png';
         }
@@ -467,8 +472,8 @@ req().then((data) => {
                     '<div class="imgs-style">' +
                         '<div class="imgs-member">' +
                             '<img src=' + imgUrl + ' width="158" />' +
-                        '</div><div class="img-title1">' +
-            '<div id=' + memberId + ' style="width: 100%; height: 35px; text-align: center; line-height: 35px; margin-top: 5px; font-size: 15px; font-weight: 600;" class="imgs-name1">' + data.real_name + '</div>' +
+                        '</div><div class="img-title1" style="padding: 0 5px;">' +
+            '<div id=' + memberId + ' style="width: 100%; height: 35px; text-align: center; line-height: 35px; margin-top: 5px; font-size: 15px; font-weight: 600; padding-left: 2px;" class="imgs-name1">' + data.real_name + '</div>' +
             '<div style="width: 100%; height: 63px; text-align: center; line-height: 2em;" class="imgs-occupation">' + data.position.split(/',|;|；|，|'/g)[0] + '</div>' +
                     '</div></div>' +
                 '</a>' + 
@@ -478,10 +483,10 @@ req().then((data) => {
             '<div class="rolling_img">' +
                 '<a href="/u/' + data.weid + '">' + 
                     '<div class="imgs-style">' +
-                        '<div class="imgs-member">' +
+                        '<div class="imgs-member" style="padding: 0 5px;">' +
                             '<img src=' + imgUrl + ' width="158" />' +
                         '</div>' +
-                        '<div id=' + memberId + ' style="width: 100%; height: 33px; text-align: center; line-height: 33px;">' + data.real_name + '</div>' +
+                        '<div id=' + memberId + ' style="width: 100%; height: 33px; text-align: center; line-height: 33px; padding-left: 2px;">' + data.real_name + '</div>' +
                         '<div style="width: 100%; height: 63px; text-align: center; line-height: 2em;" class="imgs-occupation">' + data.position.split(/',|;|；|，|'/g)[0] + '</div>' +
                     '</div>' +
                 '</a>' + 
@@ -856,9 +861,14 @@ req().then((data) => {
                 addBg(data.data.header1.image, '#hl', 196, 45);
                 addBg(data.data.header2.image, '#big', 960, 235);
 
+                var isEnter = true; // 鼠标在main中
+                var isFirst = true; // 鼠标第一次离开main
                 var time = setTimeout(() => {
+                    if (!isEnter) {
+                        isFirst = false;
                         $(".header").fadeOut(500);
-                    }, 60000);
+                    }
+                }, 30000);
 
                 $(".main").mouseenter(() => {
                     clearTimeout(time);
@@ -866,9 +876,17 @@ req().then((data) => {
                 })
 
                 $(".main").mouseleave(() => {
-                    time = setTimeout(() => {
-                        $(".header").fadeOut(500);
-                    }, 1000)
+                    isEnter = false;
+                    if (isFirst) {
+                        isFirst = false;
+                        time = setTimeout(() => {
+                            $(".header").fadeOut(500);
+                        }, 30000)
+                    } else {
+                        time = setTimeout(() => {
+                            $(".header").fadeOut(500);
+                        }, 1000)
+                    }
                 })
 
                 //生成轮播图，通过weid查找图片对应的url
@@ -1316,6 +1334,12 @@ req().then((data) => {
                     })
                 }
 
+                setInterval(function(){
+                    mySwiper.startAutoplay();                    
+                    mySwiper2.startAutoplay();
+                    mySwiper3.startAutoplay();
+                }, 1000)
+
                 genEvt();
                 org();
                 help();
@@ -1392,9 +1416,9 @@ req().then((data) => {
                     layer.open({
                       type: 2,
                       title: false,
-                      area: ['800px', '480px'],
+                      area: ['855px', '480px'],
                       shade: 0.8,
-                      closeBtn: 0,
+                      closeBtn: 1,
                       shadeClose: true,
                       content: `http://image.qqxqs.com/qqxqs_video.mp4`
                     });

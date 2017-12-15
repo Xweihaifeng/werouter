@@ -311,7 +311,9 @@ class main extends controller
         $plats['var api_domain'] = $protocol.$_SERVER['HTTP_HOST'].'/api/';
         $plats['var root_domain'] = $this->_get_domain($_SERVER['HTTP_HOST']);
         $plats['var is_domain'] = 'no';
+        $plats['var is_login'] = 'no';
         $plats['var plats_token'] = false;
+        $plats['plats_user_info'] = FALSE;
     	//七牛相关信息
     	$sql = 'SELECT name , config FROM we_plats_setting
 				WHERE plat_id=? AND name = "qiNiuConfig"';
@@ -348,7 +350,7 @@ class main extends controller
         else
         {
             $user_info = $this->user_token();
-            $plats['plats_user_info'] = FALSE;
+            
             if(!empty($user_info['weid']))
             {
                 $plats['var plats_token'] = $_COOKIE['token'];

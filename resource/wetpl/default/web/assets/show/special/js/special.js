@@ -12,7 +12,7 @@ $(function() {
 	    logo = imgSet(logo, 60, 60, 3);
 	}
 	$(".header-logo").css("background", "#33a0e1 url("+ logo +") no-repeat center");
-	$(".header-logo").html(`<a href="/`+ pathname[0] +`"></a>`);
+	$(".header-logo").html(`<a href="/"></a>`);
 
     // 平台商标
     $.ajax({
@@ -86,6 +86,7 @@ $(function() {
         <h1 class="title">`+ result.title +`</h1>
         <div class="info"><span>发布单位：</span>`+ result.source +`<span>创建时间：</span>`+ result.created_at +`</div>
         <div class="sp_content">`+ result.content +`</div>`
+        document.title = result.title +"—"+ tpl;
         return template;
     }
 
@@ -97,7 +98,6 @@ $(function() {
                 console.log(data.data);
                 var result = data.data;
                 $(".special-title-list").append(`<li><a href="/`+ pathname[0] +"/"+ result.category.domain +`">`+ result.category.title +`</a></li>`);
-                document.title = result.category.title +"—"+ tpl;
                 $(".special-box-right").html(recommend(result));
             } else {
                 console.warn(data.message);

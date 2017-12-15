@@ -22,7 +22,7 @@ $(function() {
         logo = imgSet(logo, 60, 60, 3);
     }
     $(".header-logo").css("background", "#33a0e1 url("+ logo +") no-repeat center");
-    $(".header-logo").html(`<a href="/`+ channel +`"></a>`);
+    $(".header-logo").html(`<a href="/"></a>`);
 
     // 平台商标
     $.ajax({
