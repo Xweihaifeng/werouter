@@ -321,36 +321,20 @@
             </div>
         </div>
         <!--brand end -->
+        <!--weChat start -->
         <div id="center1">
-            <!--weChat start -->
-            <div class="bottom">
-                <div class="brand">
-                    <div class="left">
-                        <div class="left_one">
-                            <span>1</span>
-                            <p>启用微信配置</p>
-                        </div>
-                        <div class="left_two">
-                            <!--<span>!</span>
-                            <p>没有开通二级域名,或独立域名无权操作</p>-->
-                        </div>
-                    </div>
-                    <div class="right">
-                        <div class="toggle-button-wrapper switch">
-                            <input type="checkbox" id="we_toggle-button-app" name="switch" checked>
-                            <label for="we_toggle-button-app" class="button-label">
-                                <span class="circle"></span>
-                                <span class="text on">ON</span>
-                                <span class="text off">OFF</span>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <div class="list">
                 <div class="sign">
                     <div class="sign_set">
-                        <p>公众平台配置</p>
+                        <p>微信公众服务号接口配置</p>
+                    </div>
+                    <div class="toggle-button-wrapper switch">
+                        <input type="checkbox" id="toggle-button-2" name="switch">
+                        <label for="toggle-button-1" class="button-label">
+                            <span class="circle"></span>
+                            <span class="text on">ON</span>
+                            <span class="text off">OFF</span>
+                        </label>
                     </div>
                     <div class="open" id="we_open">展开</div>
                 </div>
@@ -370,17 +354,40 @@
                                    style="width: 500px;" placeholder="公众号密钥">
                         </div>
                         <div class="input-group surplus ">
-                            <button type="button" class="btn btn-primary" id="wechat_open_save"> 确认保存</button>
+                            <button type="button" class="btn btn-primary" id="wechat_open_save"> 确认保存</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <button type="button" class="btn btn-primary" id="wechat_test_save"> 服务号测试</button>
                         </div>
                     </form>
                 </div>
                 <div class="sign">
                     <div class="sign_set">
-                        <p>商户平台配置</p>
+                        <p>微信支付接口配置</p>
+                    </div>
+                    <div class="toggle-button-wrapper switch">
+                        <input type="checkbox" id="toggle-button-3" name="switch">
+                        <label for="toggle-button-1" class="button-label">
+                            <span class="circle"></span>
+                            <span class="text on">ON</span>
+                            <span class="text off">OFF</span>
+                        </label>
                     </div>
                     <div class="open" id="open1">展开</div>
                 </div>
                 <div class="open_content open_content1" style="display: none;padding-top: 8px;">
+                    <form id="uploadForm2" class="form-horizontal" method="post"
+                          enctype="multipart/form-data">
+                        <input type="hidden" name="weid"  value="">
+                        <div class="input-group signset">
+                            <span style="width: 100px;">授权域名文件: </span>
+                            <div class="file-container" style="display:inline-block;position:relative;overflow: hidden;vertical-align:middle">
+                                <button class="btn btn-success fileinput-button" type="button" style="width: 150px;">上传</button>
+                                <input type="file" id="verify_file" name="verify_file"  style="position:absolute;top:0;left:0;font-size:34px; opacity:0">
+                            </div>
+                            <span id="filename" style="vertical-align: middle">未上传文件</span>
+                            <input type="hidden" name="verify_file_name"  value="">&nbsp;&nbsp;&nbsp;&nbsp;
+                            <button type="button" class="btn btn-primary" id="wechat_verify_save"> 确认保存</button>
+                        </div>
+                    </form>
                     <form id="uploadForm1" class="form-horizontal" method="post"
                           enctype="multipart/form-data">
                         <input type="hidden" name="weid"  value="">
@@ -402,53 +409,14 @@
                             <textarea type="text" class="form-control" id="apiclient_key" name="apiclient_key" style="width: 500px;height: 120px;" placeholder="api证书密钥"></textarea>
                         </div>
                         <div class="input-group surplus ">
-                            <button type="button" class="btn btn-primary" id="wechat_merchant_save"> 确认保存</button>
-                        </div>
-                    </form>
-                </div>
-                <div class="sign">
-                    <div class="sign_set">
-                        <p>授权域名文件配置</p>
-                    </div>
-                    <div class="open" id="open2">展开</div>
-                </div>
-                <div class="open_content open_content2" style="display: none;padding-top: 8px;">
-                    <form id="uploadForm2" class="form-horizontal" method="post"
-                          enctype="multipart/form-data">
-                        <input type="hidden" name="weid"  value="">
-                        <div class="input-group signset">
-                            <span style="width: 100px;">授权域名文件: </span>
-                            <div class="file-container" style="display:inline-block;position:relative;overflow: hidden;vertical-align:middle">
-                                <button class="btn btn-success fileinput-button" type="button" style="width: 150px;">上传</button>
-                                <input type="file" id="verify_file" name="verify_file"  style="position:absolute;top:0;left:0;font-size:34px; opacity:0">
-                            </div>
-                            <span id="filename" style="vertical-align: middle">未上传文件</span>
-                            <input type="hidden" name="verify_file_name"  value="">
-                            <p></p>
-                        </div>
-                        <div class="input-group surplus ">
-                            <button type="button" class="btn btn-primary" id="wechat_verify_save"> 确认保存</button>
-                        </div>
-                    </form>
-                </div>
-                <div class="sign">
-                    <div class="sign_set">
-                        <p>测试支付功能</p>
-                    </div>
-                    <div class="open" id="open3">展开</div>
-                </div>
-                <div class="open_content open_content3" style="display: none; padding-top: 8px;">
-                    <form id="uploadForm3" class="form-horizontal" method="post"
-                          enctype="multipart/form-data">
-                        <input type="hidden" name="weid"  value="">
-                        <div class="input-group surplus ">
-                            <button type="button" class="btn btn-primary" id="wechat_test_save"> 测试</button>
+                            <button type="button" class="btn btn-primary" id="wechat_merchant_save"> 确认保存</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <button type="button" class="btn btn-primary" id="wechat_test_save"> 支付测试</button>
                         </div>
                     </form>
                 </div>
             </div>
-            <!--weChat end -->
         </div>
+        <!--weChat end -->
     </div>
 </div>
 <div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

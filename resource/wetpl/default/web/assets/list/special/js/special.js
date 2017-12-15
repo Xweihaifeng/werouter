@@ -269,6 +269,9 @@ $(function() {
     // 默认加载专题新闻
     if(!pathname[1] || pathname[1] == '') {
         // 推荐专题新闻
+        window.location.href = "/";
+        return false;
+
         opt4(pathname[0]);
     } else if(pathname[1] != undefined || pathname[0] != null || pathname[1] != '') {
     	// 排序新闻
