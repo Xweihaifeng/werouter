@@ -109,13 +109,26 @@ const home = `
                     </div>
                     <div id="link">
                         <ul id="link-title"></ul>
-
                         <div id="link-page">
                             <ul></ul>
                         </div>
+                        <div id="bottom1">
+                            <footer>
+                                <div class="footer-nav">
+                                    <a href="javascript:void(0)">咨询与建议</a>
+                                    <a href="javascript:void(0)">站点地图</a>
+                                    <a href="javascript:void(0)">联系我们</a>
+                                </div>
+                                <div class="copyright">
+                                    <p>全球秦商大会组委会 陕西省秦商联合会 | 地址：西安市新城大院省政府院内综合楼B101 邮编：710006</p>
+                                    <p>办公电话：029-87298395 87298138 | 传真：029-87298138 电子邮件: sxsqslhh@163.com | 项目热线：+86-029-87298395（办公室） 项目邮箱：sxsqslhh@163.com</p>
+                                    <p>版权所有 陕西省秦商联合会 | 网站备案信息：<a id="icp" href="javascript:void(0)">陕ICP备00001号</a></p>
+                                </div>
+                                <div class="_ideConac"><img src="/common/img/default_red_copy.png" alt=""></div>
+                            </footer>
+                        </div>
                     </div>
                 </div>
-
             `
 const organization = `
 
@@ -461,7 +474,8 @@ req().then((data) => {
         var memberId = 'member_' + memberCnt;    
         var imgUrl = data.avatar;
         if (imgUrl != null && imgUrl.indexOf('http') === -1 && imgUrl.indexOf('common') === -1){
-            imgUrl = imgSet(imgUrl, 158, 154) + '&t=' + new Date().getTime();
+            //imgUrl = imgSet(imgUrl, 158, 154) + '&t=' + new Date().getTime();
+            imgUrl = imgSet(imgUrl, 158, 154);
         } else if (imgUrl == null) {
             imgUrl = '/common/img/avatar.png';
         }

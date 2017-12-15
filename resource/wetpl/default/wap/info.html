@@ -479,9 +479,9 @@
 		})
 	}
 
-	const tologin = (phoneNum, checkNum, weid, ref) => {
+	const tologin = (url, phoneNum, checkNum, weid, ref) => {
 		$.ajax({
-			url:  apiUrl + 'userAct',
+			url:  url,
 			type: 'post',
 			data: {
 				'phone': phoneNum,
