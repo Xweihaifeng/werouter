@@ -283,11 +283,11 @@ var qiniu_bucket_domain =ApiMaterPlatQiniuDomain;
                             //addrdivhtml+='<p><span class="t">物流单号:</span><span class="txt">'+data.send.logistics_no+'</span></p><p><span class="t">物流公司:</span><span class="txt">'+data.send.logistics_company+'</span></p>';
                          }
                          if(data.refund){
-                            if(data.refund.order_refund_num){
+                            if(data.refund[0].order_refund_num){
                                 addrdivhtml+='<p><span class="t">退款单号:</span><span class="txt">'+data.refund[0].order_refund_num+'</span></p>';
                             }
                             addrdivhtml+='<p><span class="t">退款金额:</span><span class="txt">'+data.refund[0].order_refund_money+'</span></p>';
-                             if(data.refund.order_refund_reason){
+                             if(data.refund[0].order_refund_reason){
                                  addrdivhtml+='<p><span class="t">退款原因:</span><span class="txt">'+data.refund[0].order_refund_reason+'</span></p>';
                              }
                              addrdivhtml+='<p><span class="t">退款日期:</span><span class="txt">'+data.refund[0].created_at+'</span></p>';
