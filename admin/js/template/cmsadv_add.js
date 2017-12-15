@@ -50,6 +50,7 @@ $(document).ready(function(){
           }
           var data = {
                 title:$('input[name=title]').val(),
+                description:$('input[name=description]').val(),title:$('input[name=description]').val(),
                 url:url,
                 type_id:$("#type-select").val(),
                 image:image,

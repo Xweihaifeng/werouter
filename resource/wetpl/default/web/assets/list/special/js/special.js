@@ -28,35 +28,57 @@ $(function() {
         }
     });
 
-    $.ajax({
-        url: CMS_CHANNELS_DOMAIN_QUERY + pathname[0],
-        dataType: 'json',
-        async: false,
-        success: function(data){
-            if(data.code === 200) {
-                domain_weid = data.data.weid;
-                var thumb_image = data.data.thumb_image;
-                var big_image = data.data.big_image;
-
-                if(!thumb_image) {
-                    thumb_image = "/common/img/news_top_img.png";
-                } else if (thumb_image.indexOf('http') != 0 && thumb_image != "") {
-                    thumb_image = ApiMaterPlatQiniuDomain + thumb_image;
-                }
-
-                if(!big_image) {
-                    big_image = "/common/img/news_top_img.png";
-                } else if (big_image.indexOf('http') != 0 && big_image != "") {
-                    big_image = ApiMaterPlatQiniuDomain + big_image;
-                }
-                
-                $(".special-box-left").css("background", "url("+ thumb_image +") no-repeat");
-                $(".special-content").css("background", "#f7f0e0 url("+ big_image +")  no-repeat 50% 0");
-            } else {
-                console.error(data.message);
-            }
+    function back_img(result) {
+        if(!result) {
+            result = "/common/img/news_top_img.png";
+        } else if (result.indexOf('http') != 0 && result != "") {
+            result = ApiMaterPlatQiniuDomain + result;
         }
-    });
+        $(".special-box-left").css("background-image", "url("+ result +")");
+    }
+
+    function big_img(result) {
+        if(!result) {
+            result = "/common/img/news_top_img.png";
+        } else if (result.indexOf('http') != 0 && result != "") {
+            result = ApiMaterPlatQiniuDomain + result;
+        }
+        $(".special-content").css("background-image", "url("+ result +")");
+    }
+
+    function back_background_img() {
+        $.ajax({
+            url: CMS_CHANNELS_DOMAIN_QUERY + pathname[0],
+            dataType: 'json',
+            async: false,
+            success: function(data){
+                if(data.code === 200) {
+                    domain_weid = data.data.weid;
+                    var back_image = data.data.back_image;
+                    back_img(back_image);
+                } else {
+                    console.error(data.message);
+                }
+            }
+        });
+    }
+
+    function big_background_img() {
+        $.ajax({
+            url: CMS_CHANNELS_DOMAIN_QUERY + pathname[0],
+            dataType: 'json',
+            async: false,
+            success: function(data){
+                if(data.code === 200) {
+                    domain_weid = data.data.weid;
+                    var big_image = data.data.big_image;
+                    big_img(big_image);
+                } else {
+                    console.error(data.message);
+                }
+            }
+        });
+    }
 
     if(!pathname[1] || pathname[1] == '') {
         $(".special-title-list").remove();
@@ -68,7 +90,20 @@ $(function() {
                 result.forEach(function(value, index) {
                     if(value.domain == pathname[1]) {
         			    $(".special-title-list").append(`<li><a href="/`+ pathname[0] +"/"+ value.domain +`">`+ value.title +`</a></li>`);
-                        document.title = value.title +"—"+ tpl;
+                        document.title = "专题："+ value.title +"—"+ tpl;
+
+                        var back_image = value.back_image;
+                        var big_image = value.big_image;
+                        if(!back_image) {
+                            back_background_img();
+                        } else {
+                            back_img(back_image);
+                        }
+                        if(!big_image) {
+                            big_background_img();
+                        } else {
+                            big_img(big_image);
+                        }
                     }
                 });
             }
@@ -244,19 +279,13 @@ $(function() {
                 $(".special-nav-info > div").eq(0).addClass("on");
             });
 
-            $(".special-nav-info > div").mouseover(function () {
-                var $this = $(this);
-                var index = $this.index();
-            }).mouseout(function () {
-                var $this = $(this);
-                var index = $this.index();
-            }).hover(function () {
+            $(".special-nav-info > div").hover(function () {
                 var $this = $(this);
                 var index = $this.index();
                 var l = -(index * 400);
                 $(".special-nav-info > div").removeClass("on");
                 $(".special-nav-info > div").eq(index).addClass("on");
-                $(".special-content-info > div:eq(0)").stop().animate({ "margin-top": l }, 500);
+                $(".special-content-info").stop().animate({ "margin-top": l }, 500);
             });
         } else {
             console.warn(data.message);
@@ -278,8 +307,8 @@ $(function() {
         opt5(pathname[1]);
     }
 
-    $(".soso-submit").click(function() {
-        var input_val = $(".soso-input").val();
-        window.location.href = `/search` +`?title=`+ input_val +`&channel=`+ pathname[0];
-    });
+    // $(".soso-submit").click(function() {
+    //     var input_val = $(".soso-input").val();
+    //     window.location.href = `/search` +`?title=`+ input_val +`&channel=`+ pathname[0];
+    // });
 })

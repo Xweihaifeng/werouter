@@ -432,57 +432,64 @@ $(function() {
     var ref_id = localStorage.getItem('ref_id');
     var ref_url = localStorage.getItem('ref_url');
     var domain = localStorage.getItem('domain');
-    if (code !== null && code !== undefined && code !== '') {
-        console.log(ref_id);
-        console.log(domain);
-        $.ajax({
-            url: apiUrl + "wx/scan_callback",
-            data: {
-                'code': code,
-                'state': state,
-                'ref_id': ref_id,
-                'ref_url': ref_url,
-                'domain': domain
-            },
-            success: function(data) {
-                localStorage.setItem('token', data.token);
-                localStorage.setItem('weid', data.data.weid);
-                localStorage.setItem('phone', data.data.phone);
-                setCookie(data.token, 7);
-                if (data.data.phone === null || data.data.phone === undefined || data.data.phone === '') {
-                    location.href = siteUrl + "/bind";
-                } else {
-                    location.href = siteUrl + "/user";
-                }
 
+    var qrlogin = function(){
+        if (code !== null && code !== undefined && code !== '') {
+            console.log(ref_id);
+            console.log(domain);
+            $.ajax({
+                url: apiUrl + "wx/scan_callback",
+                data: {
+                    'code': code,
+                    'state': state,
+                    'ref_id': ref_id,
+                    'ref_url': ref_url,
+                    'domain': domain
+                },
+                success: function(data) {
+                    localStorage.setItem('token', data.token);
+                    localStorage.setItem('weid', data.data.weid);
+                    localStorage.setItem('phone', data.data.phone);
+                    setCookie(data.token, 7);
+                    if (data.data.phone === null || data.data.phone === undefined || data.data.phone === '') {
+                        location.href = siteUrl + "/bind";
+                    } else {
+                        location.href = siteUrl + "/user";
+                    }
+
+                }
+            });
+        }
+
+        $.ajax({
+            url: apiUrl + 'setting/alias/weChatOpenConfig',
+            type: 'get',
+            dataType: 'json',
+            success: function(result) {
+                if (result.code === 200) {
+                    var obj = new WxLogin({
+                        id: "qrcode-block",
+                        appid: result.data.appid,
+                        scope: "snsapi_login",
+                        redirect_uri: window.location.href,
+                        href: 'https://wezchina.com/common/css/wechat.css',
+                        state: ""
+                    });
+                } else {
+                    parent.layer.msg(result.message);
+
+                    return false;
+                }
+            },
+            error: function(xhr) {
+                console.log(xhr);
             }
         });
     }
 
-    $.ajax({
-        url: apiUrl + 'setting/alias/weChatOpenConfig',
-        type: 'get',
-        dataType: 'json',
-        success: function(result) {
-            if (result.code === 200) {
-                var obj = new WxLogin({
-                    id: "qrcode-block",
-                    appid: result.data.appid,
-                    scope: "snsapi_login",
-                    redirect_uri: window.location.href,
-                    href: 'https://wezchina.com/common/css/wechat.css',
-                    state: ""
-                });
-            } else {
-                parent.layer.msg(result.message);
-
-                return false;
-            }
-        },
-        error: function(xhr) {
-            console.log(xhr);
-        }
-    });
+    $("#qrcode").click(function(){
+        qrlogin();
+    })
 
     //用户登录
     var login = function(phoneNum, checkNum, ref_id, ref_url, domain/*, imageCode, imageCodeID*/){
