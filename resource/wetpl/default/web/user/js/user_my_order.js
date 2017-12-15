@@ -795,7 +795,7 @@ $(function () {
     var userId;
     var __init = function(weid) {
         userId=weid;
-
+        orderlist(userId,1);
         
     }
     __init(weid);
