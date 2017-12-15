@@ -89,7 +89,7 @@ $(function() {
         <h1 class="title">`+ result.title +`</h1>
         <div class="info"><span>发布单位：</span>`+ result.source +`<span>创建时间：</span>`+ result.created_at +`</div>
         <div class="sp_content">`+ result.content +`</div>`
-        document.title = "专题："+ result.title +"—"+ tpl;
+        document.title = "专题："+ result.title +" — "+ tpl;
         return template;
     }
 

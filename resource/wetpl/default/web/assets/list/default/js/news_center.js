@@ -13,16 +13,16 @@ $(function() {
         success: function(data){
             if(data.code === 200) {
                 domain_weid = data.data.weid;
-                var thumb_image = data.data.thumb_image;
+                var big_image = data.data.big_image;
 
-                if(!thumb_image) {
-                    thumb_image = "/common/img/news_top_img.png";
+                if(!big_image) {
+                    big_image = "/common/img/news_top_img.png";
 
-                } else if (thumb_image.indexOf('http') != 0 && thumb_image != "") {
-                    thumb_image = imgSet(thumb_image, 1100, 235, 3);
+                } else if (big_image.indexOf('http') != 0 && big_image != "") {
+                    big_image = imgSet(big_image, 1100, 235, 3);
                 }
 
-                $(".new-top-images").css("backgroundImage", "url("+ thumb_image +")");
+                $(".new-top-images").css("backgroundImage", "url("+ big_image +")");
             } else {
                 console.error(data.message);
             }

@@ -223,7 +223,13 @@ $(document).ready(function(){
                             }
                         }
                         $('#'+x.weid+' .status-oper').children().remove();
-                        var operList = [];
+                            var operList = [];
+                            if(x.send!=''){
+                                operList.push({
+                                    name : '查看物流',
+                                    oper : 'distribute'
+                                });
+                            }
                             switch (x.order_status){
                                 case 2:
                                     operList.push({
@@ -232,43 +238,22 @@ $(document).ready(function(){
                                     });
                                     break;
                                 case 3:
-                                    operList.push({
-                                        name : '查看物流',
-                                        oper : 'distribute'
-                                    });
                                     break;
                                 case 4:
-                                    operList.push({
-                                        name : '查看物流',
-                                        oper : 'distribute'
-                                    });
                                     break;
                                 case 5:
-                                    operList.push({
-                                        name : '查看物流',
-                                        oper : 'distribute'
-                                    });
+
                                     break;
                                 case 7:
-                                    operList.push({
-                                        name : '查看物流',
-                                        oper : 'distribute'
-                                    });
+
                                     break;
                                 case 8:
                                     operList.push({
                                         name : '确认退款',
                                         oper : 'confirmRefund'
-                                    },{
-                                        name : '查看物流',
-                                        oper : 'distribute'
                                     });
                                     break;
                                 case 9:
-                                    operList.push({
-                                        name : '查看物流',
-                                        oper : 'distribute'
-                                    });
                                     break;
                             }
                             if(operList.length){
@@ -637,7 +622,7 @@ $(document).ready(function(){
                                     for(var good = 0; good<goodsSendGroup.length; good++){
                                         if(goodsList[a].weid == goodsSendGroup[good]){
                                             var imgDom =
-                                                '<div>' +
+                                                '<div style="text-align: center;">' +
                                                     '<img src="'+qiniu_bucket_domain+goodsList[a].goods_cover+'">'+
                                                     '<span>'+goodsList[a].goods_title+'</span>'+
                                                 '</div>';
@@ -648,12 +633,24 @@ $(document).ready(function(){
                                 }
                             }
 
-                            $('#group'+i+' .detail').text('正在加载，请稍候...')
-
+                            //$('#group'+i+' .detail').text('正在加载，请稍候...');
+                            if(sendList[i].logistics_info){
+                                //字符串转json
+                                var logistics_info=$.parseJSON(sendList[i].logistics_info);
+                                for(var j=0; j<logistics_info.data.length;j++){
+                                    var dom =
+                                        '<p>' +
+                                        '<i></i>'+
+                                        '<span class="time">'+logistics_info.data[j].time+'</span>' +
+                                        '<span class="content">'+logistics_info.data[j].context+'</span>'+
+                                        '</p>';
+                                    $('#group'+i+' .detail').append(dom);
+                                }
+                            }
                         }
-
-                        getDistributionInfo()
-
+                        if(sendList[0].logistics_info){
+                            getDistributionInfo();
+                        }
                     }
 
 

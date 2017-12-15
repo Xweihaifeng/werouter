@@ -800,50 +800,50 @@ req().then((data) => {
                             {
                                 "weid": "77e41d20-72ad-11e7-8825-933924ec5963",
                                 "avatar": "/common/img/init/1501747962172.jpg",
-                                "real_name": "孙国栋",
-                                "nickname": "黄易"
+                                "position": "孙国栋",
+                                "real_name": "黄易"
                             },
                             {
                                 "weid": "f6ee5110-75a0-11e7-a8b2-7179f2349d50",
                                 "avatar": "/common/img/init/1501747874443.jpg",
-                                "real_name": "张荣林",
-                                "nickname": "黄易"
+                                "position": "张荣林",
+                                "real_name": "黄易"
                             },
                             {
                                 "weid": "f4e7c590-7686-11e7-bdd1-bd45557ed232",
                                 "avatar": "/common/img/init/1501747932796.jpg",
-                                "real_name": "李国华",
-                                "nickname": "黄易"
+                                "position": "李国华",
+                                "real_name": "黄易"
                             },
                             {
                                 "weid": "983ad200-7698-11e7-87c1-41f823b6258c",
                                 "avatar": "/common/img/init/1501747945200.jpg",
-                                "real_name": "康宁",
-                                "nickname": "黄易"
+                                "position": "康宁",
+                                "real_name": "黄易"
                             },
                             {
                                 "weid": "1acc8080-769f-11e7-afe9-a1e618177dd9",
                                 "avatar": "/common/img/init/1501747979135.jpg",
-                                "real_name": "森朝",
-                                "nickname": "黄易"
+                                "position": "森朝",
+                                "real_name": "黄易"
                             },
                             {
                                 "weid": "6ffe16d0-7737-11e7-aa93-d54026432560",
                                 "avatar": "/common/img/init/1501747999786.jpg",
-                                "real_name": "李雄",
-                                "nickname": "黄易"
+                                "position": "李雄",
+                                "real_name": "黄易"
                             },
                             {
                                 "weid": "349e6fa0-7837-11e7-b217-671a38e00778",
                                 "avatar": "/common/img/init/1501747999786.jpg",
-                                "real_name": "康宁",
-                                "nickname": "黄易"
+                                "position": "康宁",
+                                "real_name": "黄易"
                             },
                             {
                                 "weid": "934c7b10-78dd-11e7-94c8-015cbd20044d",
                                 "avatar": "/common/img/init/1501837469772.jpg",
-                                "real_name": "吕家劲",
-                                "nickname": "黄易"
+                                "position": "吕家劲",
+                                "real_name": "黄易"
                             }
                         ]
                     },
@@ -861,7 +861,7 @@ req().then((data) => {
                 addBg(data.data.header1.image, '#hl', 196, 45);
                 addBg(data.data.header2.image, '#big', 960, 235);
 
-                var isEnter = true; // 鼠标在main中
+                /*var isEnter = true; // 鼠标在main中
                 var isFirst = true; // 鼠标第一次离开main
                 var time = setTimeout(() => {
                     if (!isEnter) {
@@ -887,7 +887,7 @@ req().then((data) => {
                             $(".header").fadeOut(500);
                         }, 1000)
                     }
-                })
+                })*/
 
                 //生成轮播图，通过weid查找图片对应的url
                 var swiper = data.data.banners.list;
