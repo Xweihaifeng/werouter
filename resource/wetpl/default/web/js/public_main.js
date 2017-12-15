@@ -861,7 +861,7 @@ req().then((data) => {
                 addBg(data.data.header1.image, '#hl', 196, 45);
                 addBg(data.data.header2.image, '#big', 960, 235);
 
-                var isEnter = true; // 鼠标在main中
+                /*var isEnter = true; // 鼠标在main中
                 var isFirst = true; // 鼠标第一次离开main
                 var time = setTimeout(() => {
                     if (!isEnter) {
@@ -887,7 +887,7 @@ req().then((data) => {
                             $(".header").fadeOut(500);
                         }, 1000)
                     }
-                })
+                })*/
 
                 //生成轮播图，通过weid查找图片对应的url
                 var swiper = data.data.banners.list;
