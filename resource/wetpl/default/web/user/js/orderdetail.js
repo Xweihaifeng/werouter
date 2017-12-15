@@ -99,7 +99,7 @@ var qiniu_bucket_domain =ApiMaterPlatQiniuDomain;
 
     var weid = localStorage.getItem('weid');
     hasDomain(weid);
-    
+    /*
     //route
     var isLogin; //判断用户登陆与否
     var router = function(route){
@@ -163,6 +163,7 @@ var qiniu_bucket_domain =ApiMaterPlatQiniuDomain;
         var id = $(this).attr("id");
         router(id);
     })
+    */
      //主页初始化
     var isLogin = false;
     var init = function(token){
