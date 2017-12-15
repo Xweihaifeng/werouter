@@ -247,5 +247,5 @@ $(function() {
     //     window.location.href = `/search` +`?title=`+ input_val +`&channel=`+ channel;
     // });
 
-    document.title = "最新新闻—" + tpl;
+    document.title = "最新新闻 — " + tpl;
 })

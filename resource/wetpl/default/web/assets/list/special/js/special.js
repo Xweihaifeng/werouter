@@ -90,7 +90,7 @@ $(function() {
                 result.forEach(function(value, index) {
                     if(value.domain == pathname[1]) {
         			    $(".special-title-list").append(`<li><a href="/`+ pathname[0] +"/"+ value.domain +`">`+ value.title +`</a></li>`);
-                        document.title = "专题："+ value.title +"—"+ tpl;
+                        document.title = "专题："+ value.title +" — "+ tpl;
 
                         var back_image = value.back_image;
                         var big_image = value.big_image;
