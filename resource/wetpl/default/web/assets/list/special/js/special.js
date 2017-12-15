@@ -5,7 +5,7 @@
 $(function() {
     var pathname = window.location.pathname.split('/').slice(1,4);
     var logo = window.localStorage.getItem("logo");
-    var tpl = "";
+    var tpl = "", icp = '';
     if(!logo) {
 	    logo = "/common/img/main_logo.png";
 	} else if (logo.indexOf('http') != 0 && logo != "") {
@@ -22,6 +22,8 @@ $(function() {
         success: function(data){
             if(data.code === 200) {
                 tpl = data.data.title;
+                icp = data.data.icp;
+                $("#copy_icp").text(icp);
             } else {
                 console.error(data.message);
             }
@@ -89,7 +91,7 @@ $(function() {
                 var result = data.data;
                 result.forEach(function(value, index) {
                     if(value.domain == pathname[1]) {
-        			    $(".special-title-list").append(`<li><a href="/`+ pathname[0] +"/"+ value.domain +`">`+ value.title +`</a></li>`);
+        			    $(".special-title-list").append(`<li><a href="/`+ pathname[0] +"/"+ value.domain +`" target="_blank">`+ value.title +`</a></li>`);
                         document.title = "专题："+ value.title +" — "+ tpl;
 
                         var back_image = value.back_image;
@@ -114,7 +116,7 @@ $(function() {
     }
 
     // 热门
-    var options2 = $.get(CMS_CONTENTS_HOT + pathname[0] + "&hot=1&limit=1");
+    var options2 = $.get(CMS_DETAIL_CONTENTS_CATE_ID + pathname[1] + "&hot=1&limit=1");
     options2.done(function (data) {
         if (data.code === 200 ) {
             $.map(data.data.list, function(item, index) {
@@ -169,7 +171,7 @@ $(function() {
 
     // 热点专题标题
     var news_hots_info = function(result) {
-        var template = `<div><a href="/`+ pathname[0] +"/"+ result.weid +`">`+ result.title +`</a></div>`
+        var template = `<div><a href="/`+ pathname[0] +"/"+ result.weid +`" target="_blank">`+ result.title +`</a></div>`
         return template;
     }
 
@@ -189,9 +191,9 @@ $(function() {
         <li>
             <i>`+ (index + 1) +`</i>
             <h3 class="t">
-                <a href="/`+ pathname[0] +"/"+ result.weid +`" target="_blank">`+ result.title +`</a>
+                <a href="/`+ pathname[0] +"/"+ result.weid +`" target="_blank">`+ result.title.substr(0, 35) +`</a>
             </h3>
-            <div class="desc">`+ result.summary +`</div>
+            <div class="desc">`+ result.summary.substr(0, 45) +`</div>
         </li>`
         return template;
     }
@@ -200,7 +202,7 @@ $(function() {
         if((pathname.length == 2 && pathname[1] == "") || pathname.length == 1) {
             $(".special-scrollable > ul").html("");
             $.ajax({
-                url: CMS_CONTENTS + pathname[0] + "&page=" + pageNum,
+                url: CMS_CONTENTS + pathname[0] + "&page=" + pageNum +"&limit=15",
                 dataType: 'JSON',
                 type: 'get',
                 success: function(data) {
@@ -217,7 +219,7 @@ $(function() {
                 }
             })
         } else {
-            var option4 = $.get(CMS_DETAIL_CONTENTS_CATE_ID + pathname[1] + "&page=" + pageNum);
+            var option4 = $.get(CMS_DETAIL_CONTENTS_CATE_ID + pathname[1] + "&page=" + pageNum +"&limit=15");
             option4.done(function(body4) {
                 if(!body4.data.list.length) {
                     return false;
@@ -244,7 +246,7 @@ $(function() {
         var options4 = $.get(CMS_CONTENTS_HOT + channel_class);
         options4.done(function (data) {
             if (data.code === 200 ) {
-                paging(data.data.total, 10);
+                paging(data.data.total, 15);
             } else {
                 console.warn(data.message);
             }
@@ -259,7 +261,7 @@ $(function() {
         var options5 = $.get(CMS_DETAIL_CONTENTS_CATE_ID + channel_class);
         options5.done(function (data) {
             if (data.code === 200 ) {
-                paging(data.data.total, 10);
+                paging(data.data.total, 15);
             } else {
                 console.warn(data.message);
             }
@@ -270,7 +272,7 @@ $(function() {
     }
 
     // 热门推荐
-    var options3 = $.get(CMS_CONTENTS_HOT + pathname[0] + "&index_show=1&limit=3");
+    var options3 = $.get(CMS_DETAIL_CONTENTS_CATE_ID + pathname[1] + "&index_show=1&limit=3");
     options3.done(function (data) {
         if (data.code === 200 ) {
             $.map(data.data.list, function(item) {

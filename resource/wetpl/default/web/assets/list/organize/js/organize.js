@@ -115,7 +115,7 @@ $(function() {
         var jumpUrl = result.weid;
         var template = `<li name="` + jumpUrl + `">
             <a href="/`+ pathname[0]+"/"+ jumpUrl +`" target="_blank">` + result.title + `</a>
-            <small>` + result.updated_at + `</small>
+            <small>` + result.publish_time + `</small>
         </li>`
 
         return template;
