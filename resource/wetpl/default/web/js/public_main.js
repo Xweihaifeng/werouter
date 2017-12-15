@@ -117,12 +117,12 @@ const home = `
                                 <div class="footer-nav">
                                     <a href="javascript:void(0)">咨询与建议</a>
                                     <a href="javascript:void(0)">站点地图</a>
-                                    <a href="javascript:void(0)">联系我们</a>
+                                    <a id="contact" href="javascript:void(0)">联系我们</a>
                                 </div>
                                 <div class="copyright">
                                     <p>全球秦商大会组委会 陕西省秦商联合会 | 地址：西安市新城大院省政府院内综合楼B101 邮编：710006</p>
                                     <p>办公电话：029-87298395 87298138 | 传真：029-87298138 | 电子邮件: sxsqslhh@163.com</p>
-                                    <p>版权所有 陕西省秦商联合会 | 网站备案信息：<a id="icp" href="javascript:void(0)">陕ICP备00001号</a></p>
+                                    <p>版权所有 陕西省秦商联合会 | 网站备案信息：<a id="icp" href="javascript:void(0)"></a></p>
                                 </div>
                                 <div class="_ideConac"><img src="/common/img/default_red_copy.png" alt=""></div>
                             </footer>
@@ -348,6 +348,8 @@ req().then((data) => {
         }
     })
 
+    $("#icp").text(plats_info.icp);
+    $("#contact").attr("href", "/org/contact");
     //搜索
     /*$("#hs span:eq(1) img").click(function(){
         window.location.href = 'http://new.wezchina.com/' + 'search?title=' + $("#search").val() + '&channel=news';
