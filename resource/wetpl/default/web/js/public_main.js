@@ -124,7 +124,7 @@ const home = `
                                     <p>办公电话：029-87298395 87298138 | 传真：029-87298138 | 电子邮件: sxsqslhh@163.com</p>
                                     <p>版权所有 陕西省秦商联合会 | 网站备案信息：<a id="icp" href="javascript:void(0)"></a></p>
                                 </div>
-                                <div class="_ideConac"><img src="/common/img/gabeian.png" width="80" height="80" /></div>
+                                <div class="_ideConac"><img src="/common/img/gabeian.png" width="60" height="60" /></div>
                             </footer>
                         </div>
                     </div>
@@ -1206,7 +1206,7 @@ req().then((data) => {
                     observeParents:true,
                 })
 
-                var mySwiper4 = new Swiper ('#my-swiper4', {
+                /*var mySwiper4 = new Swiper ('#my-swiper4', {
                     direction: 'vertical',
                     loop: true,
                     slidesPerView : 1,
@@ -1219,7 +1219,7 @@ req().then((data) => {
                     touchRatio:1,
                     observer:true,
                     observeParents:true,
-                })
+                })*/
 
                 $(".adv-right").click(function(e){
                     var id = $(e.target).parents(".swiper-slide").attr("id");
@@ -1357,9 +1357,52 @@ req().then((data) => {
                 }
 
                 setInterval(function(){
-                    mySwiper.startAutoplay();                    
-                    mySwiper2.startAutoplay();
-                    mySwiper3.startAutoplay();
+                    var mySwiper = new Swiper ('#my-swiper', {
+                        direction: 'horizontal',
+                        loop: true,
+                        speed: 1000,
+                        autoplay : 3000,
+                        autoplayDisableOnInteraction : false,
+                        nextButton: '.swiper-button-next',
+                        prevButton: '.swiper-button-prev',
+                        grabCursor : true,
+                        longSwipesRatio: 0.3,
+                        touchRatio:1,
+                        observer:true,//修改swiper自己或子元素时，自动初始化swiper
+                        observeParents:true,//修改swiper的父元素时，自动初始化swiper
+                    })
+                    var mySwiper2 = new Swiper ('#my-swiper2', {
+                        direction: 'vertical',
+                        loop: true,
+                        slidesPerView : 1,
+                        slidesPerGroup : 1,
+                        speed: 1000,
+                        autoplay : 2000,
+                        autoplayDisableOnInteraction : false,
+                        onlyExternal : true,
+                        longSwipesRatio: 0.3,
+                        touchRatio:1,
+                        observer:true,
+                        observeParents:true,
+                    })
+
+                    var mySwiper3 = new Swiper ('#my-swiper3', {
+                        direction: 'vertical',
+                        loop: true,
+                        slidesPerView : 1,
+                        slidesPerGroup : 1,
+                        speed: 1000,
+                        autoplay : 2000,
+                        autoplayDisableOnInteraction : false,
+                        onlyExternal : true,
+                        longSwipesRatio: 0.3,
+                        touchRatio:1,
+                        observer:true,
+                        observeParents:true,
+                    })
+                    //mySwiper.startAutoplay();
+                    //mySwiper2.startAutoplay();
+                    //mySwiper3.startAutoplay();
                 }, 1000)
 
                 genEvt();
