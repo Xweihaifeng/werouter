@@ -31,34 +31,24 @@
       </div>
       <!--右侧-->
       <div class="vote-right">
-        <!-- <img class="vote-code" src="http://qqxqs.com/storage/vote_qrcode/vote-1497156008-10178624.png"> -->
         <img class="vote-code" src="">
         <p style="margin-top:15px" id="start">开始时间： 2017/06/13 00:00:00</p>
         <p id="end">结束时间： 2017/06/20 00:00:00</p>
         <p>仅限微信客户端浏览，微信扫描上图的二维码，进入微信投票。</p>
         <a id="support" href="javascript:;" target="_blank"><span></span>提供技术支持</a>&nbsp;&nbsp;</div></div>
-        <!-- <span><a id="support" href="javascript:;" target="_blank" style="display: inline-block;"></a><a style='text-decoration: none; display: inline-block;'>&nbsp;&nbsp;提供技术支持&nbsp;&nbsp;</a></span></div></div> -->
     <meta charset="UTF-8">
     <title></title>
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
     <meta name="format-detection" content="telephone=no">
     <meta content="email=no" name="format-detection">
-    <!-- <link href="https://cdn.bootcss.com/Swiper/3.4.2/css/swiper.min.css" rel="stylesheet"> -->
-    <!--<link rel="stylesheet" href="{{PATH_TML}}vote/css/swiper.min.css">-->
     <link rel="stylesheet" href="{{PATH_TML}}vote/static/icon/iconfont_1.css">
     <link rel="stylesheet" type="text/css" href="{{PATH_TML}}vote/css/modal.css">
-    <style>.alert{text-align: center;z-index: 20000;color: #fff;background: rgba(0, 0, 0, 0.5);height: 46px;line-height: 46px;border: none;position: fixed;top: 0;width: 35%;border-radius: 5px;} /*.alert-success{text-align: center; z-index: 20000;color:#fff;background: #4cd964;height: 46px;border-radius: inherit;line-height: 46px;border: none;position: fixed;top: 0;width: 100%;}*/ /*.alert-danger{text-align: center;z-index: 999999;color:#fff;background: #f6383a;height: 46px;border-radius: inherit;border:none;line-height: 46px;width: 100%;position: fixed;top: 0;}*/ .modal-title{font-size: 14px;display: block;margin-top: -2px;}</style>
-    <!-- <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"> -->
+    <style>.alert{text-align: center;z-index: 20000;color: #fff;background: rgba(0, 0, 0, 0.5);height: 46px;line-height: 46px;border: none;position: fixed;top: 0;width: 35%;border-radius: 5px;} .modal-title{font-size: 14px;display: block;margin-top: -2px;}</style>
     <link rel="stylesheet" href="{{PATH_TML}}votem/css/bootstrap.css">
     <style></style>
     <div class="wxalert alert-danger" role="alert" id="message-top" style="display: none;"></div>
-<!--     <script src="https://cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
-    <script src="https://cdn.bootcss.com/Swiper/3.4.2/js/swiper.jquery.js"></script>
-    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
     <script src='{{PATH_TML}}vote/js/jquery1.4.3.min.js'></script>
     <script src="{{PATH_CONFIG}}"></script>
-  <!-- <script src='{{PATH_TML}}vote/js/swiper-3.3.1.min.js'></script> -->
-  <!-- <script src='{{PATH_TML}}vote/js/bootstrap.min.js'></script> -->
     <script>
 
 
@@ -71,7 +61,8 @@
     }
 
     var imgHost = ApiMaterPlatQiniuDomain;
-    var interface = 'http://' + window.location.host + '/api'
+    // var interface = 'http://' + window.location.host + '/api'
+    var interface = apiUrl;
 
     $(function() {
         //var weid = getUrlParam('id');
@@ -81,7 +72,6 @@
         $('.vote-code').attr('src', interface + '/file/qrcode?margin=3&url=http://m.' + window.location.host + '/vote/' + weid[1]);
 
         var globalHost = interface;
-        //var globalHost = "http://api.wezchina.loc";
         $.ajax({
           url: globalHost+'/vote/detail/'+ weid[1] + '?type=1',
           type:'GET',
@@ -93,8 +83,6 @@
                 $("title").text(data.data.title);
                 $("#support span").text(data.data.support_text);
                 $("#support").attr("href", data.data.support_link);
-                // $("#support").text(data.data.support_text + " ");
-                // $("#support").attr("href", data.data.support_link);
                   var fav = data.data.favicon;
                   if (fav.indexOf('http') === -1) {
                       fav = imgHost + fav;
@@ -108,23 +96,6 @@
             console.log(xhr);
           }
         })
-
-        /*$.ajax({
-          url: globalHost + '/cms/setting/show',
-          type: 'GET',
-          success: function(data){
-            var imgHost = 'http://images.new.wezchina.com/';
-            var fav = data.data.favicon;
-            if (fav.indexOf('http') === -1) {
-              fav = imgHost + fav;
-            }
-            $("#fav").attr("href", fav);
-            console.log(fav)
-          },
-          error: function(xhr){
-            console.log(xhr)
-          }
-        })*/
 
         // 计算操作显示框的位置
         var window_height = $(window).height();
