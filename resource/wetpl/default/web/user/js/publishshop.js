@@ -539,10 +539,7 @@ malldetail();
                              $('.insert-member').append(memberDom(goods.discount[i]))
                         }
                     }
-
-
-                    CKEDITOR.on('instanceReady', function (e) { CKEDITOR.instances.editor1.setData(goods.content); })
-                        
+                    setTimeout(function () { CKEDITOR.instances.editor1.setData(goods.content); }, 2000);
                     $("select[name='cate_id']").find("#"+goods.cate_id).attr("selected","selected");
                     if(goods.picture!=null){
                         var picturearr=goods.picture.split(',');
