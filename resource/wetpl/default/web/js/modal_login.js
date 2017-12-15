@@ -281,15 +281,14 @@ $(function() {
         $("#modal_login").fadeOut(300);
         $("body").css("overflow", "auto");
     })
-    
+
     function setCookie(token, expiredays)
     {
         var Days = expiredays;
         var exp = new Date();
         var domain = '.'+root_domain;
         exp.setTime(exp.getTime() + Days*24*60*60*1000);
-        //document.cookie = "token="+ escape (token) + ";expires=" + exp.toGMTString() +";path=/;"
-        document.cookie = "token="+ escape (token) + ";expires=" + exp.toGMTString() +";path=/;domain="+domain+";";
+        document.cookie = "token="+ escape (token) + ";expires=" + exp.toGMTString() +";path=/;domain="+domain;
     }
 
     var saveUserInfo = function(token, weid, imgUrl, identity) {
@@ -422,12 +421,12 @@ $(function() {
     })
     
     // 扫码登录
-    function setCookie(token, expiredays) {
+    /*function setCookie(token, expiredays) {
         var Days = expiredays;
         var exp = new Date();
         exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000);
         document.cookie = "token=" + escape(token) + ";expires=" + exp.toGMTString() + ";path=/";
-    }
+    }*/
 
     var code = GetQueryString('code');
     var state = GetQueryString('state');
@@ -435,7 +434,7 @@ $(function() {
     var ref_url = localStorage.getItem('ref_url');
     var domain = localStorage.getItem('domain');
 
-    var qrlogin = function(){
+    //var qrlogin = function(){
         if (code !== null && code !== undefined && code !== '') {
             console.log(ref_id);
             console.log(domain);
@@ -487,11 +486,11 @@ $(function() {
                 console.log(xhr);
             }
         });
-    }
+    //}
 
-    $("#qrcode").click(function(){
+    /*$("#qrcode").click(function(){
         qrlogin();
-    })
+    })*/
 
     //用户登录
     var login = function(phoneNum, checkNum, ref_id, ref_url, domain/*, imageCode, imageCodeID*/){
