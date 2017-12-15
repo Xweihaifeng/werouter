@@ -434,7 +434,7 @@ $(function() {
     var ref_url = localStorage.getItem('ref_url');
     var domain = localStorage.getItem('domain');
 
-    //var qrlogin = function(){
+    var qrlogin = function(){
         if (code !== null && code !== undefined && code !== '') {
             console.log(ref_id);
             console.log(domain);
@@ -486,11 +486,11 @@ $(function() {
                 console.log(xhr);
             }
         });
-    //}
+    }
 
-    /*$("#qrcode").click(function(){
+    $("#qrcode").click(function(){
         qrlogin();
-    })*/
+    })
 
     //用户登录
     var login = function(phoneNum, checkNum, ref_id, ref_url, domain/*, imageCode, imageCodeID*/){
