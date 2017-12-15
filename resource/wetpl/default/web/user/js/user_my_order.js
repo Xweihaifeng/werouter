@@ -531,9 +531,9 @@ $(function () {
                 $('.comment_bomb_box_footer').empty();
                 $('.comment_bomb_box_footer').append('<button class="comment_save" id="refund_'+orderId+'"> 确认 </button>');
                 $("#refund_"+orderId).unbind();
-                var reason=$("textarea[name=textarea]").val();
                 $("#refund_"+orderId).bind('click',function () {
                     $("#refund_"+orderId).attr("disabled","true");
+                    var reason=$("textarea[name=textarea]").val();
                     $.ajax({
                         url : apiUrl + 'order/refund',
                         type : 'post',
