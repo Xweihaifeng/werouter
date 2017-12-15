@@ -4,9 +4,84 @@
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <title>新闻搜索</title>
-    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="{{PATH_TML}}css/news_search.css">
+    <script src="{{PATH_CONFIG}}"></script>
+    <script src="/common/js/vue.min.js"></script>
+    <script src="/common/iview/axios.min.js"></script>
+    <script src="/common/iview/libs/util.js"></script>
 </head>
 <body>
-
+    <div>
+        <div class="head">
+            <div>
+                <img class="logo" src="/common/img/logo-so.png" alt="">
+                <input type="text" placeholder="请输入要搜索的内容">
+                <a>搜索</a>
+            </div>
+            <div>
+                <span>首页</span>
+                <span>设置</span>
+                <span>登录</span>
+            </div>
+        </div>
+        <div class="classify">
+            <ul>
+                <li>全部</li>
+                <li>时政要闻</li>
+                <li>最新消息</li>
+                <li>最新资讯</li>
+                <li>秦商风采</li>
+                <li>三秦大地</li>
+                <li>国际新闻</li>
+                <li>国内新闻</li>
+                <li>三秦新闻</li>
+                <li>聚焦长安</li>
+                <li>科技发展</li>
+                <li>财经资讯</li>
+            </ul>
+        </div>
+        <div class="tips">
+            <span>为您找到相关结果约1,000,000个</span>
+        </div>
+        <div class="content">
+            <div class="left">
+                <div>
+                    <a href=""><b style="color: red;">民营银行</b>互联网贷款迎来强监管</a>
+                    <p>作为民营银行核心业务之一的互联网贷款迎来强监管。日前，银监会下发了关于《民营银行互联网贷款管理暂行办法(征求意见稿)》，并针对民营银行经营互联网贷款业务，所涉及的受理、审批、签订、发放、贷管、监管、风险以及法律责任等方面做出了具体规定。</p>
+                </div>
+                <div>
+                    <a href=""><b style="color: red;">民营银行</b>互联网贷款迎来强监管</a>
+                    <p>
+                        <img src="/common/img/img5.jpg" alt="">
+                        <span>作为民营银行核心业务之一的互联网贷款迎来强监管。日前，银监会下发了关于《民营银行互联网贷款管理暂行办法(征求意见稿)》，并针对民营银行经营互联网贷款业务，所涉及的受理、审批、签订、发放、贷管、监管、风险以及法律责任等方面做出了具体规定。</span>
+                    </p>
+                </div>
+            </div>
+           <div class="right">
+               <div>
+                   <p>所有结果</p>
+                   <ul>
+                       <li>标题</li>
+                       <li>正文</li>
+                   </ul>
+               </div>
+               <div>
+                   <p>时间不限</p>
+                   <ul>
+                       <li>1天内</li>
+                       <li>1周内</li>
+                       <li>1个月内</li>
+                   </ul>
+               </div>
+               <div>
+                   <p>结果排序</p>
+                   <ul>
+                       <li>按ID排序</li>
+                       <li>按发布时间排序</li>
+                   </ul>
+               </div>
+           </div>
+        </div>
+    </div>
 </body>
 </html>
