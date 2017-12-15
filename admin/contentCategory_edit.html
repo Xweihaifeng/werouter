@@ -158,6 +158,17 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">背景图</label>
+                                        <div class="col-sm-5">
+                                            <p style="padding-top:7px" class="info"> 上传格式： .png、.jpg、 .gif</p>
+                                            <input name="back_image" type="hidden" value="" class="form-control" />
+                                            <input id="pickfiles3" name="cover" type="file" class="form-control hide" />
+                                            <div id="look">
+                                                <img onclick="$('#pickfiles3').click()" id="img3" width="100px;" src="//oty3r3tmi.bkt.clouddn.com/upload.png" alt="暂无预览图片" class="thumbnail">
+                                            </div>
+                                        </div>
+                                    </div>
 
                                     <div class="form-group template-group">
                                         <label class="control-label col-sm-2">模板选择*</label>
@@ -545,6 +556,10 @@
                             $('#img2').attr("src", ApiMaterPlatQiniuDomain + data.data.big_image);
                             $('input[name=big_image]').val(data.data.big_image);
                         }
+                        if (data.data.back_image) {
+                            $('#img3').attr("src", ApiMaterPlatQiniuDomain + data.data.back_image);
+                            $('input[name=back_image]').val(data.data.back_image);
+                        }
                         $("[name=index_show]:checkbox").attr("checked", data.data.index_show ? true : false);
                         $("[name=index_pose]:checkbox").attr("checked", data.data.index_pose ? true : false);
                         $('input[name=list_field]').val(data.data.list_id);
@@ -675,6 +690,46 @@
                     }
                 }
             });
+            var uploader3 = Qiniu.uploader({
+                runtimes: 'html5,flash,html4',
+                browse_button: 'pickfiles3',
+                uptoken_url: ApiUrl + 'file/qiniu_token',
+                get_new_uptoken: false,
+                domain: ApiMaterPlatQiniuDomain,
+                container: 'look',
+                max_file_size: '100mb',
+                flash_swf_url: '//cdn.staticfile.org/plupload/2.1.8/Moxie.swf',
+                max_retries: 3,
+                dragdrop: true,
+                drop_element: 'look',
+                chunk_size: '4mb',
+                auto_start: true,
+                filters: {
+                    max_file_size: '5mb',
+                    prevent_duplicates: true,
+                    // Specify what files to browse for
+                    mime_types: [{
+                        title: "Image files",
+                        extensions: "jpg,gif,png"
+                    }, ]
+                },
+                init: {
+                    'FileUploaded': function(up, file, info) {
+                        var domain = up.getOption('domain');
+                        res = JSON.parse(info.response);
+                        $("input[name=back_image]").val(res.key);
+                        var sourceLink = domain + res.key;
+                        $("#img3").attr('src', sourceLink);
+                    },
+                    'Error': function(up, err, errTip) {},
+                    'UploadComplete': function() {},
+                    'Key': function(up, file) {
+                        var key = "plats/resource/";
+                        key += new Date().valueOf() + '.' + file.name.substring(file.name.indexOf('.') + 1);
+                        return key;
+                    }
+                }
+            });
             $('button.pop-modal').click(function() {
                 $('#bootstrapModal').modal('show');
                 var type = $(this).data('type');
@@ -736,6 +791,7 @@
                     'index_pose': $('input[name="index_pose"]').is(':checked') ? 1 : 0,
                     'thumb_image': $('input[name=thumb_image]').val(),
                     'big_image': $('input[name=big_image]').val(),
+                    'back_image': $('input[name=back_image]').val(),
                     'content': CKEDITOR.instances.editor1.getData(),
                     'channel_id': $('select[name=channel_id]').val(),
                     'parent_id': $('select[name=parent_id]').val(),
@@ -785,8 +841,8 @@
                                 message: '别名长度为1到10位'
                             },
                             regexp: {
-                                regexp: /^[a-z]+$/,
-                                message: '别名只能由小写字母组成'
+                                regexp: /^[a-z0-9]+$/,
+                                message: '别名只能由小写字母或数字组成'
                             }
                         }
                     },

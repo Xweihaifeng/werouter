@@ -12,7 +12,7 @@ $(function() {
 	    logo = imgSet(logo, 60, 60, 3);
 	}
 	$(".header-logo").css("background", "#33a0e1 url("+ logo +") no-repeat center");
-	$(".header-logo").html(`<a href="/`+ pathname[0] +`"></a>`);
+	$(".header-logo").html(`<a href="/"></a>`);
 
     // 平台商标
     $.ajax({
@@ -154,7 +154,7 @@ $(function() {
         <li>
             <i>`+ (index + 1) +`</i>
             <h3 class="t">
-                <a href="/`+ pathname[0] +"/"+ result.weid +`">`+ result.title +`</a>
+                <a href="/`+ pathname[0] +"/"+ result.weid +`" target="_blank">`+ result.title +`</a>
             </h3>
             <div class="desc">`+ result.summary +`</div>
         </li>`
@@ -269,6 +269,9 @@ $(function() {
     // 默认加载专题新闻
     if(!pathname[1] || pathname[1] == '') {
         // 推荐专题新闻
+        window.location.href = "/";
+        return false;
+
         opt4(pathname[0]);
     } else if(pathname[1] != undefined || pathname[0] != null || pathname[1] != '') {
     	// 排序新闻

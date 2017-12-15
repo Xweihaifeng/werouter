@@ -296,20 +296,16 @@ $(function() {
         localStorage.setItem('identity', identity);
         setCookie(token, 7);
         if(!imgUrl) {
-
             imgUrl = "/common/img/my.png";
             $("#login a").css({"background": "url("+ imgUrl +") center center / 100% no-repeat"});
 
         } else if (imgUrl.indexOf('http') != 0 && imgUrl != "") {
-
             imgUrl = ApiMaterPlatQiniuDomain + imgUrl;
             $("#login a").css({"background": "url(" + window.localStorage.getItem('avatar') + ") center center / 100% no-repeat"});
             $("#login a").addClass("i-header").html("");
             showLogin = false;
             isLogin = true;
-
         } else if(imgUrl.indexOf('http') == 0 && imgUrl != "") {
-
             $("#login a").css({"background": "url(" + imgUrl + ") center center / 100% no-repeat"});
         }
         window.localStorage.setItem("avatar", imgUrl);
@@ -433,16 +429,20 @@ $(function() {
 
     var code = GetQueryString('code');
     var state = GetQueryString('state');
+    var ref_id = localStorage.getItem('ref_id');
+    var ref_url = localStorage.getItem('ref_url');
+    var domain = localStorage.getItem('domain');
     if (code !== null && code !== undefined && code !== '') {
+        console.log(ref_id);
+        console.log(domain);
         $.ajax({
             url: apiUrl + "wx/scan_callback",
             data: {
                 'code': code,
                 'state': state,
-                'ref_id': '',
-                'ref_url': '',
-                'ref_type': '',
-                'domain': ''
+                'ref_id': ref_id,
+                'ref_url': ref_url,
+                'domain': domain
             },
             success: function(data) {
                 localStorage.setItem('token', data.token);

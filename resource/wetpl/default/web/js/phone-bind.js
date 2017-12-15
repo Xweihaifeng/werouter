@@ -153,7 +153,9 @@ var btgn_s = function() {
                             localStorage.setItem('avatar', data.data.user.avatar);
                             localStorage.setItem('user', data.data.user);
                             setCookie(data.token, 7);
-                            location.href = "/user";
+                            setTimeout(function() {
+                                location.href = "/user";
+                            }, 500);
                             $(".fom-axx").hide();
                             $(".fom-axx1").show();
                             //中途
@@ -211,7 +213,9 @@ var btgn_s = function() {
                                 localStorage.setItem('avatar', data.data.user.avatar);
                                 localStorage.setItem('user', data.data.user);
                                 setCookie(data.token, 7);
-                                location.href = "/user";
+                                setTimeout(function() {
+                                    location.href = "/user";
+                                }, 500);
                                 $(".btn-xinxi2").css({
                                     background: "#12ADFF",
                                     color: "#FFF"

@@ -111,12 +111,12 @@
 	</div>-->
 	<div class="foot">
 		<div>
-			<a :href="goto" style="color: white">
+			<!--<a :href="goto" style="color: white">-->
 			<p class="enter" @click="enjoy">
 				<button data-method="notice" class="layui-btn" style="position: absolute; background: transparent;width: 100%; left: 0; display: none;"></button>
 				{{status}}
 			</p>
-			</a>
+			<!--</a>-->
 			<p>投诉</p>
 		</div>		
 	</div>
@@ -734,6 +734,7 @@
 							})
 						} else {
 //							cancelFollow('circel/quxiao', _self.domain, _self);
+							window.location.href = '/' + _self.domain + '/';
 						}
 					}
 				/*} else {
