@@ -252,12 +252,16 @@ const req = () => {
 }
 
 req().then((data) => {
-    // console.log(data)
+    console.log(data)
     for (key in data) {
         if (data[key].show == 1) {
             seq[data[key].sort -1] = content.filter(c => key == c.ename)[0].pos;
         }
     }
+    if (seq.length == 1 && [2,3,4].indexOf(seq[0])) { //单页面且非新闻页
+        $(".header, .big").remove();
+    }
+
     if (channel != '') {
         // seq = [...[content.filter(c => channel == c.ename)[0].pos], ...seq].reduce((r, e) => r.indexOf(e) != -1 ? r : [...r, e], []);
         seq = [content.filter(c => channel == c.ename)[0].pos]
