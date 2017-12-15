@@ -59,7 +59,9 @@ $(document).ready(function(){
     var domain;
     var isBrand;
     var btState;
-    var chatState = true;
+    var chatState;
+    var chatState1;
+    var chatState2;
     var pageId;
     var hasDomain = function(weid){
         $.ajax({
@@ -86,10 +88,10 @@ $(document).ready(function(){
                         pageId = data.data.weid;
                         if (isBrand == 1) { //开启
                             btState = true;
-                            $("#toggle-button-app").prop("checked", true);
+                            $("#toggle-button-app").attr("checked",'checked');
                         } else {
                             btState = false;
-                            $("#toggle-button-app").prop("checked", false);
+                            $("#toggle-button-app").removeAttr("checked");
                         }
                     }
 
@@ -182,13 +184,13 @@ $(document).ready(function(){
     var weid = localStorage.getItem('weid');
     $("#toggle-button-app").click(function(){
         if (!btState){
-            $("#toggle-button-app").prop("checked", true);
+            $("#toggle-button-app").attr("checked",'checked');
             //$(".list").show();
             isBrand = 1;
             btState = true;
             openBrand(pageId, isBrand);
         } else {
-            $("#toggle-button-app").prop("checked", false);
+            $("#toggle-button-app").removeAttr("checked");
             //$(".list").hide();
             isBrand = 2;
             btState = false;
@@ -197,12 +199,38 @@ $(document).ready(function(){
     })
 
     $("#we_toggle-button-app").click(function () {
-        if(chatState){
-            $("#we_toggle-button-app").prop("checked", false);
-            chatState = false;
-        }else{
-            $("#we_toggle-button-app").prop("checked", true);
+        if(!chatState){
+            $("#we_toggle-button-app").attr("checked",'checked');
             chatState = true;
+        }else{
+            $("#we_toggle-button-app").removeAttr("checked");
+            chatState = false;
+        }
+
+    })
+    $("#we_toggle-button-app2").click(function () {
+        if(!chatState2){
+            $("#we_toggle-button-app2").attr("checked",'checked');
+            chatState2 = true;
+        }else{
+            $("#we_toggle-button-app2").removeAttr("checked");
+            chatState2 = false;
+        }
+
+    })
+
+    $("#we_toggle-button-app1").click(function () {
+        var a = checkInput();
+        if(a){
+            layer.msg("请先完善微信公众服务号接口配置");
+            return;
+        }
+        if(!chatState1){
+            $("#we_toggle-button-app1").attr("checked",'checked');
+            chatState1 = true;
+        }else{
+            $("#we_toggle-button-app1").removeAttr("checked");
+            chatState1 = false;
         }
 
     })
@@ -221,7 +249,7 @@ $(document).ready(function(){
                 $("#merchant_key")	 .val(result105.merchant_key);
                 $("#apiclient_cert") .val(result105.apiclient_cert);
                 $("#apiclient_key")	 .val(result105.apiclient_key);
-                $("#filename").html(result105.verify_file_name);
+                $("#filename").val(result105.verify_file_name);
                 $("input[name=verify_file_name]").val(result105.verify_file_name);
 
             }
@@ -294,7 +322,7 @@ $(document).ready(function(){
             return false;
         }
         $("input[name=verify_file_name]").val(file.name);
-        $("#filename").html(file.name);
+        $("#filename").val(file.name);
     });
     $("#wechat_open_save").click(function () {
         var body107 = new Object();
@@ -325,6 +353,11 @@ $(document).ready(function(){
         }
     });
     $('#open1').click(function(){
+        var a = checkInput();
+        if(a){
+            layer.msg("请先完善微信公众服务号接口配置");
+            return
+        }
         var text = $(this).text();
         if(text === "展开"){
             $('.open_content1').stop().slideDown(400);
@@ -342,17 +375,6 @@ $(document).ready(function(){
             $(this).text("收起");
         }else {
             $('.open_content2').stop().slideUp(400);
-            $(this).text("展开");
-
-        }
-    });
-    $('#open3').click(function(){
-        var text = $(this).text();
-        if(text === "展开"){
-            $('.open_content3').stop().slideDown(400);
-            $(this).text("收起");
-        }else {
-            $('.open_content3').stop().slideUp(400);
             $(this).text("展开");
 
         }
@@ -403,6 +425,28 @@ $(document).ready(function(){
         }
         addWechatTestPost();
     });
+    $("#service_test").click(function () {
+        serviceTest()
+    });
+    //校验上一步信息
+    function checkInput() {
+        var isEmpty = false;
+        $('.open_content0 input[type="text"]').each(function (ind, el) {
+            if(!$(el).val()){
+                isEmpty = true;
+            }
+        })
+        return isEmpty;
+    }
+    //服务号测试
+    function serviceTest() {
+        $('#myModal').find(".modal-title").text('服务号测试');
+        $('#myModal').find(".modal-body").css("text-align","center");
+        $('#myModal').find(".modal-body").children().remove();
+        $('#myModal').find(".modal-body").append("<img src='"+QRCODE+"?url="+mApiUrl+"pages/wechat/wechatConfigureTest?userid="+weid+"'/>");
+        $('#myModal').modal('show');
+
+    }
     //测试支付请求
     function addWechatTestPost() {
         $.ajax({

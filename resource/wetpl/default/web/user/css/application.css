@@ -18,7 +18,7 @@
   font-weight: none;
 }
 
-#toggle-button-app, #we_toggle-button-app, #toggle-button-1, #toggle-button-2, #toggle-button-3, #toggle-button-4 { display: none; }
+#toggle-button-app, #we_toggle-button-app,#we_toggle-button-app1,#we_toggle-button-app2, #toggle-button-1, #toggle-button-2, #toggle-button-3, #toggle-button-4 { display: none; }
 .button-label{
     position: relative;
     display: inline-block;
@@ -51,36 +51,44 @@
     margin-left: -8px;
 }
 
-#toggle-button-app:checked + label.button-label .circle,
-#we_toggle-button-app:checked + label.button-label .circle,
-#toggle-button-1:checked + label.button-label .circle,
-#toggle-button-2:checked + label.button-label .circle,
-#toggle-button-3:checked + label.button-label .circle,
-#toggle-button-4:checked + label.button-label .circle
+#toggle-button-app[checked] + label.button-label .circle,
+#we_toggle-button-app[checked] + label.button-label .circle,
+#we_toggle-button-app1[checked] + label.button-label .circle,
+#we_toggle-button-app2[checked] + label.button-label .circle,
+#toggle-button-1[checked] + label.button-label .circle,
+#toggle-button-2[checked] + label.button-label .circle,
+#toggle-button-3[checked] + label.button-label .circle,
+#toggle-button-4[checked] + label.button-label .circle
 {left: 50px;}
 
-#toggle-button-app:checked + label.button-label .on,
-#we_toggle-button-app:checked + label.button-label .on,
-#toggle-button-1:checked + label.button-label .on,
-#toggle-button-2:checked + label.button-label .on,
-#toggle-button-3:checked + label.button-label .on,
-#toggle-button-4:checked + label.button-label .on
+#toggle-button-app[checked] + label.button-label .on,
+#we_toggle-button-app[checked] + label.button-label .on,
+#we_toggle-button-app1[checked] + label.button-label .on,
+#we_toggle-button-app2[checked] + label.button-label .on,
+#toggle-button-1[checked] + label.button-label .on,
+#toggle-button-2[checked] + label.button-label .on,
+#toggle-button-3[checked] + label.button-label .on,
+#toggle-button-4[checked] + label.button-label .on
 { display: inline-block; }
 
-#toggle-button-app:checked + label.button-label .off,
-#we_toggle-button-app:checked + label.button-label .off,
-#toggle-button-1:checked + label.button-label .off,
-#toggle-button-2:checked + label.button-label .off,
-#toggle-button-3:checked + label.button-label .off,
-#toggle-button-4:checked + label.button-label .off
+#toggle-button-app[checked] + label.button-label .off,
+#we_toggle-button-app[checked] + label.button-label .off,
+#we_toggle-button-app1[checked] + label.button-label .off,
+#we_toggle-button-app2[checked] + label.button-label .off,
+#toggle-button-1[checked] + label.button-label .off,
+#toggle-button-2[checked] + label.button-label .off,
+#toggle-button-3[checked] + label.button-label .off,
+#toggle-button-4[checked] + label.button-label .off
 { display: none; }
 
-#toggle-button-app:checked + label.button-label,
-#we_toggle-button-app:checked + label.button-label,
-#toggle-button-1:checked + label.button-label,
-#toggle-button-2:checked + label.button-label,
-#toggle-button-3:checked + label.button-label,
-#toggle-button-4:checked + label.button-label
+#toggle-button-app[checked] + label.button-label,
+#we_toggle-button-app[checked] + label.button-label,
+#we_toggle-button-app1[checked] + label.button-label,
+#we_toggle-button-app2[checked] + label.button-label,
+#toggle-button-1[checked] + label.button-label,
+#toggle-button-2[checked] + label.button-label,
+#toggle-button-3[checked] + label.button-label,
+#toggle-button-4[checked] + label.button-label
 { background-color: #fea2a2;}
 
 
@@ -447,4 +455,8 @@
 	width: 200px;
 	height: 40px;
 	font-size: 18px;
+}
+
+#center1 .button{
+	padding:0 20px;
 }
