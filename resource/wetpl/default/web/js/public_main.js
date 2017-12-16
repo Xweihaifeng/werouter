@@ -252,7 +252,7 @@ const req = () => {
 }
 
 req().then((data) => {
-    console.log(data)
+    //console.log(data)
     for (key in data) {
         if (data[key].show == 1) {
             seq[data[key].sort -1] = content.filter(c => key == c.ename)[0].pos;
@@ -569,7 +569,7 @@ req().then((data) => {
             url: CMS_ADVS,
             dataType: 'json',
             success: function(data){
-                console.log(data.data);
+                //console.log(data.data);
                 //var url = data.data.http_url
                 //固定初始化数据
                 var mainData = {
@@ -1050,7 +1050,7 @@ req().then((data) => {
                         url: FOUNDER,
                         type: 'get',
                         success: function(data){
-                            console.log(data);
+                            //console.log(data);
                             if (data.code == 200){
                                 var info = data.data;
                                 var weid = info.weid;
@@ -1068,7 +1068,7 @@ req().then((data) => {
                             }
                         },
                         error: function(xhr){
-                            console.log(xhr);
+                            //console.log(xhr);
                         }
                     })
                 }
@@ -1364,8 +1364,8 @@ req().then((data) => {
 
                 genEvt();
                 org();
-                help();
-                share();
+                //help();
+                //share();
 
                 var title = setting.title;
                 var favicon = setting.favicon;
@@ -1404,7 +1404,7 @@ req().then((data) => {
             url: CMS_INDEX_GRID,
             dataType: 'json',
             success: function(data){
-                console.log(data.data);
+                //console.log(data.data);
                 var vdinfo = data.data.spzx;
                 var magazine = data.data.mag;
                 var report = data.data.ztbd;
@@ -1482,7 +1482,7 @@ req().then((data) => {
             url: ARTICLES,
             dataType: 'json',
             success: function(data){
-                console.log(data.data);
+                //console.log(data.data);
                 var esNewsCnt = 0;
                 data.data.list.map(x => {
                     if (esNewsCnt < 4) {
@@ -1660,7 +1660,7 @@ req().then((data) => {
             status:2,
             is_private:1
         }
-        console.log(sendData);
+        //console.log(sendData);
         $.ajax({
             url:ACTIVITY_LIST,
             type:'post',
@@ -1669,7 +1669,7 @@ req().then((data) => {
                     'Token': localStorage.getItem('token')
                 },
             success:function(data){
-                console.log(data);
+                //console.log(data);
                 if(data.code == 200){
                     if(data.data.total>0){
                         if(page<=1){
@@ -1781,7 +1781,7 @@ req().then((data) => {
 
     // 1.获取项目列表
     var projectlist=function(weid,nickname,avatar,cateid,page){
-        console.log(weid);
+        //console.log(weid);
         var limit=8;
         var sendData={
             user_id:weid,
@@ -1790,7 +1790,7 @@ req().then((data) => {
             page:page,
             is_private:1            
         }
-        console.log(sendData);
+        //console.log(sendData);
         $.ajax({
             url:PROJECT_LIST,
             type:'post',
@@ -1928,7 +1928,7 @@ req().then((data) => {
             page: page,
             keywords: keywords
         }
-        console.log(sendData);
+        //console.log(sendData);
         $.ajax({
             url:GOODS_LISTS_USER,
             type:'post',
@@ -1937,8 +1937,8 @@ req().then((data) => {
                 'Token': localStorage.getItem('token')
             },
             success: function(data){
-                console.log(data);
-                if (data.code == 200) {
+                //console.log(data);
+                //if (data.code == 200) {
                     var shop = data.data.list;
                     /* if(shop.length==0){
                         ulnone($("."+tid));
