@@ -462,9 +462,15 @@ $(function () {
                             //去支付
                             window.open("/" + order_domain + "/wemall/pay/" + orderId + "");
                         } else {
-                            layer.msg(data.message, {
-                                time: 1500
-                            });
+                            if(data.message=='201 商户订单号重复'){
+                                layer.msg("此订订单通过手机端下单请去手机端支付", {
+                                    time: 1500
+                                });
+                            }else{
+                                layer.msg(data.message, {
+                                    time: 1500
+                                });
+                            }
                         }
                     },
                     error: function (xhr) {
