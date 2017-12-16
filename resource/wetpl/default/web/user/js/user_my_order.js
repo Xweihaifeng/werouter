@@ -156,7 +156,7 @@ $(function () {
                         }
                         $('#'+x.weid+' .status-oper').children().remove();
                     var operList = [];
-                    if(x.send!=''){
+                    if(!isNull(x.send)){
                         operList.push({
                             name : '查看物流',
                             oper : 'distribute'
@@ -650,7 +650,7 @@ $(function () {
             success : function (data) {
                 if(data.code===200){
                     var operList = [];
-                    if(data.data.send!=''){
+                    if(!isNull(x.senddata.data.send)){
                         operList.push({
                             name : '查看物流',
                             oper : 'distribute'
@@ -794,48 +794,9 @@ $(function () {
 
     var userId;
     var __init = function(weid) {
-        $.ajax({
-            url: PAGES_PAGE_GETDETAILBYUSER + weid,
-            type: 'GET',
-            headers: {
-                'Token': localStorage.getItem('token')
-            },
-            success: function(data){
-                if (data.code == 200){
-                    if (data.data != null) {
-                        userId = data.data.plat_user_id;
-                        orderlist(userId,1);
-                        /*
-                        $(".orders_list_pic a").each(function(){
-                            $(this).attr("href","/"+data.data.domain+"/"+$(this).attr("href"));
-                        })
-                        */
-                        /*
-                        $(".orders_list_details a").each(function(){
-                            // $(this).attr("href","/"+data.data.domain+"/"+$(this).attr("href"));
+        userId=weid;
+        orderlist(userId,1);
 
-                        })
-                        */
-                        // getUserInfo(USERDETAIL, "/" + userId);
-                    } else {
-                        /*
-                        $(".orders_list_pic a").each(function(){
-                            $(this).attr("href","/index/"+$(this).attr("href"));
-                        })
-                        */
-                        /*$(".orders_list_details a").each(function(){
-                            $(this).attr("href","/index/"+$(this).attr("href"));
-
-                        })*/
-                    }
-                } else {
-                    window.location.href = "/*";
-                }
-            },
-            error: function(xhr){
-                console.log(xhr);
-            }
-        })
     }
     __init(weid);
 

@@ -317,7 +317,7 @@ var qiniu_bucket_domain =ApiMaterPlatQiniuDomain;
         var goods=data.goods;
         var obj=data.send;
             obj.map(x=>{
-                if(x.logistics_info!=''){
+                if(!isNull(x.logistics_info)){
                     var logistics_info=jQuery.parseJSON(x.logistics_info);     
                     var html='<table class="orders_list_title"><tbody>'+
                                 '<tr class="orders_list_msg">'+
