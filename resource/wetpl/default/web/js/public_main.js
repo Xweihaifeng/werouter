@@ -1348,7 +1348,7 @@ req().then((data) => {
                 }, 1000)*/
 
                 genEvt();
-                org();
+                //org();
                 //help();
                 //share();
 
