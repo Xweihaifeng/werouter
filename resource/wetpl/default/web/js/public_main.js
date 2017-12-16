@@ -480,8 +480,8 @@ req().then((data) => {
         var memberId = 'member_' + memberCnt;    
         var imgUrl = data.avatar;
         if (imgUrl != null && imgUrl.indexOf('http') === -1 && imgUrl.indexOf('common') === -1){
-            imgUrl = imgSet(imgUrl, 158, 154) + '&t=' + new Date().getTime();
-            //imgUrl = imgSet(imgUrl, 158, 154);
+            //imgUrl = imgSet(imgUrl, 158, 154) + '&t=' + new Date().getTime();
+            imgUrl = imgSet(imgUrl, 158, 154);
         } else if (imgUrl == null) {
             imgUrl = '/common/img/avatar.png';
         }
@@ -1206,21 +1206,6 @@ req().then((data) => {
                     observeParents:true,
                 })
 
-                /*var mySwiper4 = new Swiper ('#my-swiper4', {
-                    direction: 'vertical',
-                    loop: true,
-                    slidesPerView : 1,
-                    slidesPerGroup : 1,
-                    speed: 1000,
-                    autoplay : 2000,
-                    autoplayDisableOnInteraction : false,
-                    onlyExternal : true,
-                    longSwipesRatio: 0.3,
-                    touchRatio:1,
-                    observer:true,
-                    observeParents:true,
-                })*/
-
                 $(".adv-right").click(function(e){
                     var id = $(e.target).parents(".swiper-slide").attr("id");
                     var res = swiperUrl.filter(x => id === x.id);
@@ -1919,7 +1904,7 @@ req().then((data) => {
     
         return templete;
     }
-    var shoppinglist=function(weid,page){
+    /*var shoppinglist=function(weid,page){
         var limit=8;
         var keywords='';
          var sendData = {
@@ -1938,11 +1923,11 @@ req().then((data) => {
             },
             success: function(data){
                 //console.log(data);
-                //if (data.code == 200) {
+                if (data.code == 200) {
                     var shop = data.data.list;
-                    /* if(shop.length==0){
+                    /!* if(shop.length==0){
                         ulnone($("."+tid));
-                    }*/
+                    }*!/
                     if(data.data.total>0){
                       // $("#goodsBox .person-goods-lists .row").children().remove();
                        if(page<=1){
@@ -1984,7 +1969,7 @@ req().then((data) => {
                 console.log(xhr);
             }
         })
-    }
+    }*/
 
     $("#xiangmu-btn").on("click",function(){
         $("#xiangmu").show();
