@@ -37,6 +37,16 @@ class controllerRouter extends controller
     // 个性域名公共数据调用
     private function _domain_init($row)
     {
+        $plats_show = [
+            'head_title' => '',
+            'head_logo' => '',
+            'head_describe' => '',
+
+            'main_title' => '',
+            'main_logo' => '',
+            'main_describe' => '',
+            'main_auth' => '',
+        ];
 
         $wezchina_plats['plats_domian'] = $row;
         //$this->config['config']['const wezchina_domain_weid'] = $row['weid'];
@@ -70,6 +80,29 @@ class controllerRouter extends controller
         
         $wezchina_plats['plats_user_cert'] = $this->db->queryOne($plats_user_cert_sql , array($this->weid , $row['plat_user_id']));
 
+        // 标题、主体显示判断
+        if(!empty($wezchina_plats['plats_brand']))
+        {
+            $plats_show['head_title'] = $wezchina_plats['plats_brand']['title'];
+            $plats_show['head_describe'] = $wezchina_plats['plats_brand']['slogan'];
+            if(!empty($wezchina_plats['plats_brand']['title']))
+            {
+                $plats_show['head_logo'] = $wezchina_plats['plats_brand']['logo'];
+            }
+        }
+        else
+        {
+            $plats_show['head_title'] = $wezchina_plats['plats_user']['nickname'] .'的微主页  — ' . config::$plats['plats_info']['plat_name'];
+            $plats_show['head_describe'] = $wezchina_plats['plats_user']['motto'];
+            $plats_show['head_logo'] = $wezchina_plats['plats_user']['avatar'];
+            if($row['domain'] == 'index')
+            {
+                $plats_show['head_title'] = config::$plats['plats_info']['plat_name'];
+                $plats_show['head_describe'] = config::$plats['plats_info']['description'];
+                $plats_show['head_logo'] = config::$plats['plats_info']['logo'];
+            }
+        }
+        
         $protocol = empty($_SERVER['HTTP_X_CLIENT_PROTO']) ? 'http://' : $_SERVER['HTTP_X_CLIENT_PROTO'] . '://';
 
         $url = urldecode($protocol.$_SERVER['HTTP_HOST'].'/'.$row['domain'].'/wecard');
@@ -109,6 +142,8 @@ class controllerRouter extends controller
         }
 
         $wezchina_plats['plats_user_qrcode'] = $qrcode_img;
+
+        $wezchina_plats['plats_show'] = $plats_show;
 
         return $wezchina_plats;
     }
