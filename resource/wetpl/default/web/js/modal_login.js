@@ -436,34 +436,34 @@ $(function() {
     var ref_url = localStorage.getItem('ref_url');
     var domain = localStorage.getItem('domain');
 
-    var qrlogin = function(){
-        if (code !== null && code !== undefined && code !== '') {
-            console.log(ref_id);
-            console.log(domain);
-            $.ajax({
-                url: apiUrl + "wx/scan_callback",
-                data: {
-                    'code': code,
-                    'state': state,
-                    'ref_id': ref_id,
-                    'ref_url': ref_url,
-                    'domain': domain
-                },
-                success: function(data) {
-                    localStorage.setItem('token', data.token);
-                    localStorage.setItem('weid', data.data.weid);
-                    localStorage.setItem('phone', data.data.phone);
-                    setCookie(data.token, 7);
-                    if (data.data.phone === null || data.data.phone === undefined || data.data.phone === '') {
-                        location.href = siteUrl + "/bind";
-                    } else {
-                        location.href = siteUrl + "/user";
-                    }
-
+    if (code !== null && code !== undefined && code !== '') {
+        console.log(ref_id);
+        console.log(domain);
+        $.ajax({
+            url: apiUrl + "wx/scan_callback",
+            data: {
+                'code': code,
+                'state': state,
+                'ref_id': ref_id,
+                'ref_url': ref_url,
+                'domain': domain
+            },
+            success: function(data) {
+                localStorage.setItem('token', data.token);
+                localStorage.setItem('weid', data.data.weid);
+                localStorage.setItem('phone', data.data.phone);
+                setCookie(data.token, 7);
+                if (data.data.phone === null || data.data.phone === undefined || data.data.phone === '') {
+                    location.href = siteUrl + "/bind";
+                } else {
+                    location.href = siteUrl + "/user";
                 }
-            });
-        }
 
+            }
+        });
+    }
+
+    var qrlogin = function(){
         $.ajax({
             url: apiUrl + 'setting/alias/weChatOpenConfig',
             type: 'get',
