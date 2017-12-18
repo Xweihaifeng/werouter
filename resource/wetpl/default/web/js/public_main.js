@@ -1347,7 +1347,7 @@ req().then((data) => {
                 }, 1000)*/
 
                 genEvt();
-                //org();
+                org();
                 //help();
                 //share();
 
@@ -1463,7 +1463,7 @@ req().then((data) => {
     //读取会员推荐新闻
     var loadMemberNews = function(){
         $.ajax({
-            url: ARTICLES,
+            url: ARTICLES + '?field=domain,weid,title,cate_id,created_at',
             dataType: 'json',
             success: function(data){
                 //console.log(data.data);
