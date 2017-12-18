@@ -1463,7 +1463,7 @@ req().then((data) => {
     //读取会员推荐新闻
     var loadMemberNews = function(){
         $.ajax({
-            url: ARTICLES + '?field=domain,weid,title,cate_id,created_at',
+            url: ARTICLES,
             dataType: 'json',
             success: function(data){
                 //console.log(data.data);
