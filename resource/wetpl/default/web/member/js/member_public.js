@@ -247,6 +247,7 @@ function submit_modify_btn() {
                 }
                 $(".member_official").show().siblings().hide();
 
+                submit_btn(4);
                 var options1 = $.get(CERT_REALNAME_DETAIL);
                 options1.done(function(data) {
                     if(data.code == 200) {
