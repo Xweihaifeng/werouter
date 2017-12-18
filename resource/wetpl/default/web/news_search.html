@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <title>新闻搜索</title>
+    <title></title>
     <link rel="stylesheet" href="{{PATH_TML}}css/news_search.css">
     <script src="{{PATH_CONFIG}}"></script>
+    <script src="/common/public/js/app.js"></script>
     <script src="/common/js/vue.min.js"></script>
     <script src="/common/iview/axios.min.js"></script>
     <script src="/common/iview/libs/util.js"></script>
@@ -19,16 +20,11 @@
                 <input type="text" placeholder="请输入要搜索的内容" v-model="searchText" @keyup.enter="goSearch()">
                 <a @click="goSearch()">搜索</a>
             </div>
-            <div>
-                <span>首页</span>
-                <span>设置</span>
-                <span>登录</span>
-            </div>
         </div>
         <div class="classify">
             <ul>
                 <li @click="getSort()" :class="{'li-active': '' == currentActive}">全部</li>
-                <li v-for="item in columnList" @click="getSort(item.weid)" :id="item.weid" :class="{'li-active':item.weid == currentActive}">{{item.title}}</li>
+                <li v-for="item in columnList" @click="getSort(item)" :id="item.weid" :class="{'li-active':item.domain == currentActive}">{{item.title}}</li>
             </ul>
         </div>
         <div class="tips">
@@ -36,57 +32,78 @@
         </div>
         <div class="content">
             <div class="left">
-                <div v-if="!newList.length">没有搜索到相关信息</div>
-                <div v-if="newList.length>0" class="column" v-for="item in newList" :key="item.weid">
-                    <a :href="item.source_url ? item.source_url : 'javascript:void(0)'" target="_blank" v-html="toRed(item.title)"></a>
+                <div class="spinner" v-if="spinner">
+                    <div class="bounce1"></div>
+                    <div class="bounce2"></div>
+                    <div class="bounce3"></div>
+                </div>
+                <div v-if="!spinner && !newList.length">没有搜索到相关信息</div>
+                <div v-if="!spinner && newList.length>0" class="column" v-for="item in newList" :key="item.weid">
+                    <a :href="apiUrl+'news/'+item.weid" target="_blank" v-html="toRed(item.title)"></a>
                     <div :class="{'has-img' : item.thumb_image}">
                         <img v-if="item.thumb_image" :src="handleImg(item.thumb_image)" alt="">
-                        <p v-html="getSummary(item.summary)"></p>
+                        <p>
+                            <span v-html="getSummary(item.summary)"></span>
+                            <label>
+                                <a :href="apiUrl+'news/'+item.weid" v-html="apiUrl+'news/'+item.weid" target="_blank"></a>
+                                <span> - {{item.cate_name}}</span>
+                            </label>
+                        </p>
                     </div>
-                    <div>
-                        <span>{{item.publish_time}}</span>
-                        <span>{{item.cate_name}}</span>
-                    </div>
+                    <!--<div>-->
+                        <!--<span>{{item.publish_time}}</span>-->
+                        <!--<span>{{item.cate_name}}</span>-->
+                    <!--</div>-->
                 </div>
-                <ul v-if="newList.length>0">
-                    <li :class="{'non-btn':page==1}"><a href="#" @click="previous()">&laquo;</a></li>
+                <ul v-if="!spinner && newList.length>0">
+                    <li v-if="page > 1" :class="{'non-btn':page==1}"><a href="#" @click="previous()">上一页</a></li>
                     <li v-for="n in Math.ceil((total/limit).toFixed(2))" @click="goPage(n)" :class="{'selected-page' : n==page}"><a href="#">{{n}}</a></li>
-                    <li :class="{'non-btn':page==Math.ceil((total/limit).toFixed(2))}"><a href="#" @click="next()">&raquo;</a></li>
+                    <li :class="{'non-btn':page==Math.ceil((total/limit).toFixed(2))}"><a href="#" @click="next()">下一页</a></li>
                 </ul>
             </div>
            <div class="right">
                <div>
                    <p>所有结果</p>
                    <ul>
-                       <li>标题</li>
+                       <li :class="{'active':byTitle == 'title'}" @click="getTitle('title')">标题</li>
                        <li>正文</li>
                    </ul>
                </div>
                <div>
                    <p>时间不限</p>
                    <ul>
-                       <li>1天内</li>
-                       <li>1周内</li>
-                       <li>1个月内</li>
+                       <li :class="{'active':sortTime == 1}" @click="getSearchByTime('day')">1天内</li>
+                       <li :class="{'active':sortTime == 7}" @click="getSearchByTime('week')">1周内</li>
+                       <li :class="{'active':sortTime == 30}" @click="getSearchByTime('mon')">1个月内</li>
+                       <li :class="{'active':sortTime == ''}" @click="getSearchByTime('')">时间不限</li>
                    </ul>
                </div>
                <div>
                    <p>结果排序</p>
                    <ul>
-                       <li>按ID排序</li>
-                       <li>按发布时间排序</li>
+                       <li :class="{'active':order == 'publish_time'}" @click="getOrder('publish')">按发布时间排序</li>
+                       <li :class="{'active':order == 'updated_at'}" @click="getOrder('update')">按更新时间排序</li>
                    </ul>
                </div>
 
 
            </div>
         </div>
+        <div class="foot">
+            <span>帮助</span>
+            <span>举报</span>
+            <span>用户反馈</span>
+        </div>
     </div>
     <script>
         var app = new Vue({
             el : '#app',
             data : {
+                spinner : false,
                 currentActive:'',
+                sortTime:null,
+                byTitle : null,
+                order: '',
                 total:0,
                 newList : [],
                 searchText : '',
@@ -95,13 +112,44 @@
                 page : 1
             },
             mounted : function () {
-                this.getCloumn()
+                this.currentActive = $app.get_query_string('c') ? $app.get_query_string('c')  : '';
+                this.searchText = $app.get_query_string('q') ? $app.get_query_string('q') : '';
+                var channel='';
+                if(this.currentActive){
+                    switch (this.currentActive){
+                        case 'zt':
+                            channel = '专题报道';
+                            break;
+                        case 'v':
+                            channel = '视频中心';
+                            break;
+                        case 'sp':
+                            channel = '专题';
+                            break;
+                        case 'news':
+                            channel = '新闻';
+                            break;
+                        case 'org':
+                            channel = '组织';
+                            break;
+                        case 'js':
+                            channel = '建设';
+                            break;
+                        case 'dw':
+                            channel = '党委';
+                            break;
+                    }
+                    document.title = channel + '-搜索-'+plats_info.title;
+                }else{
+                    document.title = '搜索-'+plats_info.title;
+                }
+                this.getCloumn();
             },
             methods : {
                 getCloumn: function () {
-                    ajax.get(apiUrl + 'cms/channel_categories?channel=news').then((res)=>{
-                        if(res.code == 200 && res.data.length){
-                            this.columnList = res.data;
+                    ajax.get(apiUrl + 'cms/channels').then((res)=>{
+                        if(res.code == 200 && res.data.list.length){
+                            this.columnList = res.data.list;
                         }
                     });
                 },
@@ -109,17 +157,22 @@
                     if(!this.searchText){
                         return
                     }
+                    this.spinner = true;
                     ajax.get('cms/contents' , {params: {
                         title : this.searchText,
-                        cate_id : this.currentActive,
+                        channel_id : this.currentActive,
+                        time_scope : this.sortTime,
+                        order : this.order,
                         page : this.page,
                         limit : this.limit
                     }}).then((res) => {
+                        this.spinner = false;
                         if(res.code == 200){
                             this.newList = res.data.list;
                             this.total = res.data.total;
                         }
                     });
+//                    window.location.href = '/so/?q='+this.searchText+'&c='+this.currentActive;
 
                 },
                 handleImg : function (img) {
@@ -137,18 +190,20 @@
                     });
                     return result
                 },
-                getSort : function (wid) {
-                    if(!wid){
+                getSort : function (item) {
+                    if(!item){
                         this.currentActive = '';
+                        document.title = '搜索-'+plats_info.title
                     }else{
-                        this.currentActive = wid;
+                        this.currentActive = item.domain;
+                        document.title = item.title+'-搜索-'+plats_info.title
                     }
                     this.page = 1;
                     this.goSearch();
                 },
                 getSummary : function (text) {
                     if(text.length > 100){
-                        text = text.substring(0,100) + '...';
+                        text = text.substring(0,80) + '...';
                     }
                     var res = this.toRed(text);
                     return res;
@@ -171,6 +226,30 @@
                         this.page = Math.ceil((this.total/this.limit).toFixed(2))
                         return
                     }
+                    this.goSearch();
+                },
+                getSearchByTime : function (time) {
+                    if(time == 'day'){
+                        this.sortTime = 1
+                    }else if(time == 'week'){
+                        this.sortTime = 7
+                    }else if(time == 'mon'){
+                        this.sortTime = 30
+                    }else{
+                        this.sortTime = ''
+                    }
+                    this.goSearch();
+                },
+                getOrder : function (order) {
+                    if(order == 'publish'){
+                        this.order = 'publish_time'
+                    }else if(order == 'update'){
+                        this.order = 'updated_at'
+                    }
+                    this.goSearch();
+                },
+                getTitle : function (title) {
+                    this.byTitle = title;
                     this.goSearch();
                 }
             }

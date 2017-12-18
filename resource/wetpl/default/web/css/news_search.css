@@ -16,7 +16,6 @@ b{
     font-weight:normal;
 }
 .head{
-    overflow: hidden;
     height:55px;
     line-height: 55px;
     padding:0 10px;
@@ -25,6 +24,7 @@ b{
 .head .logo{
     display: inline-block;
     vertical-align: middle;
+    width:106px;
 }
 .head input{
     width:424px;
@@ -34,12 +34,6 @@ b{
     outline: none;
     padding-left:10px;
     vertical-align: middle;
-}
-.head div{
-    float: left;
-}
-.head div:last-child{
-    float: right;
 }
 .head div:first-child a{
     display: inline-block;
@@ -64,7 +58,7 @@ b{
     background-color: #f8f8f8;
     height:38px;
     line-height:38px;
-    padding-left:214px;
+    padding-left:121px;
     min-width:1160px;
 }
 .classify ul li{
@@ -84,10 +78,10 @@ b{
     height:42px;
     line-height:42px;
     width:538px;
-    margin-left:220px;
+    margin-left:121px;
 }
 .content{
-    padding-left:222px;
+    padding-left:121px;
     width:1212px;
     overflow: hidden;
 }
@@ -98,7 +92,7 @@ b{
     float: right;
     border-left:1px solid #e1e1e1;
     width:384px;
-    padding-left:60px;
+    padding-left:40px;
     font-size:14px;
 }
 .content .left .column{
@@ -111,8 +105,6 @@ b{
 .content .left .column>a{
     display: block;
     font-size:medium;
-    /*text-decoration: underline;*/
-    /*color: dodgerblue;*/
     margin-bottom:5px;
 }
 .content .left .column div img{
@@ -136,6 +128,22 @@ b{
     display: inline-block;
     vertical-align: top;
 }
+.content .left .column div p label a{
+    width: 80%;
+    display: inline-block;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    font-size:13px;
+    color: green;
+}.content .left .column div p label span{
+     font-size:13px;
+     color: #666;
+}
+.content .left .column div p>span{
+    height: 60px;
+    display: inline-block;
+}
 .content .left .column .has-img p{
     width: 74%;
 }
@@ -146,10 +154,17 @@ b{
     color: #ff7900;
     font-size:16px;
     margin-bottom:10px;
+    padding-left:26px;
 }
 .content .right div ul li{
     height:30px;
     line-height: 30px;
+    width:120px;
+    padding-left:26px;
+}
+.content .right div ul li:hover,.content .right div ul li.active{
+    background: #79c8ff;
+    color: #fff;
 }
 .content .left>ul{
     margin-top:20px;
@@ -163,6 +178,9 @@ b{
     margin-right:9px;
     text-align: center;
     display: inline-block;
+}
+.content .left>ul li:first-child,.content .left>ul li:last-child{
+    width:68px;
 }
 .content .left>ul li a{
     font-size:14px;
@@ -186,4 +204,68 @@ b{
 .content .left>ul .selected-page a{
     color: #333;
     font-weight: bold;
+}
+.foot{
+    background: #f5f6f5;
+    border-top: 1px solid #ebebeb;
+    text-align: left;
+    height: 42px;
+    line-height: 42px;
+    margin-top: 40px;
+    width:100%;
+    position: fixed;
+    left:0;
+    bottom:0;
+    font-size:12px;
+    box-sizing: border-box;
+    padding-left:100px;
+}
+.foot span{
+    margin-right:20px;
+}
+
+/*loading加载样式*/
+.spinner {
+    margin: 100px auto 0;
+    width: 150px;
+    text-align: center;
+}
+
+.spinner > div {
+    width: 30px;
+    height: 30px;
+    background-color: #79c8ff;
+
+    border-radius: 100%;
+    display: inline-block;
+    -webkit-animation: bouncedelay 1.4s infinite ease-in-out;
+    animation: bouncedelay 1.4s infinite ease-in-out;
+    /* Prevent first frame from flickering when animation starts */
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+
+.spinner .bounce1 {
+    -webkit-animation-delay: -0.32s;
+    animation-delay: -0.32s;
+}
+
+.spinner .bounce2 {
+    -webkit-animation-delay: -0.16s;
+    animation-delay: -0.16s;
+}
+
+@-webkit-keyframes bouncedelay {
+    0%, 80%, 100% { -webkit-transform: scale(0.0) }
+    40% { -webkit-transform: scale(1.0) }
+}
+
+@keyframes bouncedelay {
+    0%, 80%, 100% {
+        transform: scale(0.0);
+        -webkit-transform: scale(0.0);
+    } 40% {
+          transform: scale(1.0);
+          -webkit-transform: scale(1.0);
+      }
 }
