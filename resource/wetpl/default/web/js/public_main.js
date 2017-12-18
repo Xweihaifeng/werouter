@@ -1072,7 +1072,7 @@ req().then((data) => {
                     })
                 }
 
-                getUserInfo();
+                //getUserInfo();
 
                 var kayFrame = function(result) {
                     var loopObj_list = "";
