@@ -214,7 +214,7 @@ const genSideBar = (ns) => {
     return ns.map((x, i) => {
         $("." + seqlist[i] + '-title').text(x.name);
         $("." + seqlist[i] + '-content ul').append(
-            x.cont.map(x => `<li>${x}</li>`).join('')
+            x.cont.map(x => `<li id='${x.ename}'>${x}</li>`).join('')
         )
         $("." + district[i]).append(eval(x.val));
         if (x.ename == 'hz' || x.ename == 'gx') {
@@ -1463,7 +1463,7 @@ req().then((data) => {
     //读取会员推荐新闻
     var loadMemberNews = function(){
         $.ajax({
-            url: ARTICLES,
+            url: ARTICLES + "?field=domain,weid,title,cate_id,created_at",
             dataType: 'json',
             success: function(data){
                 //console.log(data.data);
