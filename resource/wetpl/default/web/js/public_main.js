@@ -131,7 +131,6 @@ const home = `
                 </div>
             `
 const organization = `
-
                 <dd  class="organize" id="organize">
                     <div class="zuzhi-top">
                         <div class="shanghuijieshao"></div>
@@ -153,7 +152,6 @@ const organization = `
                         <img alt="" id="org_bottom_big_img" style="">
                     </div>
                 </dd>
-
             `
 const huzhu = `
                 <div class="huzhu-top-img">
@@ -881,6 +879,7 @@ req().then((data) => {
 
                 addBg(data.data.header1.image, '#hl', 196, 45);
                 addBg(data.data.header2.image, '#big', 960, 235);
+                $(".big a").attr('href', data.data.header2.url);
 
                 /*var isEnter = true; // 鼠标在main中
                 var isFirst = true; // 鼠标第一次离开main
@@ -1296,7 +1295,7 @@ req().then((data) => {
                         $("#nav-help,#nav-share").css("margin-left", "0");
                         $("#nav-org,#nav-help,#nav-share").css({ "position":"static", "left":"0" });
                         init();
-                        // org();
+                        //org();
                         mySwiper.startAutoplay();
                     })
 
@@ -1321,7 +1320,7 @@ req().then((data) => {
                         $("#nav-help").css({ "margin-left": "0", "position":"static" });
                         $("#nav-share").css({ "position":"static", "left":"0", "margin-left":"210px" });
                         init();
-                        // org();
+                        //org();
                         mySwiper.startAutoplay();
                         //mySwiper.stopAutoplay();
                     })
@@ -1335,7 +1334,7 @@ req().then((data) => {
                         $("#nav-org").css({ "position":"absolute", "left":"-855px" });
                         $("#nav-help").css({ "position":"absolute", "left":"-750px" });
                         init();
-                        // org();
+                        //org();
                         mySwiper.startAutoplay();
                         //mySwiper.stopAutoplay();
                     })
@@ -1348,7 +1347,7 @@ req().then((data) => {
                 }, 1000)*/
 
                 genEvt();
-                org();
+                //org();
                 //help();
                 //share();
 
