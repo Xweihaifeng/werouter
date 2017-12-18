@@ -98,38 +98,40 @@ $(function() {
 
     $("#public_main_news_menu").append(template);
 
-    var options1 = $.get(USERDETAIL + "/" + get_weid);
-    options1.done(function(data) {
-        if(data.code == 200) {
-            if(!data.data) {
-                return false;
+    if (get_weid != undefined) {
+        var options1 = $.get(USERDETAIL + "/" + get_weid);
+        options1.done(function(data) {
+            if(data.code == 200) {
+                if(!data.data) {
+                    return false;
+                }
+
+                var imgUrl = data.data.avatar;
+                if(!imgUrl) {                
+                    imgUrl = "/common/img/my.png";
+                    console.log(imgUrl);
+                    $("#login a").css({"background": "url("+ imgUrl +") center center / cover no-repeat"});
+                    $("#login a").addClass("i-header").html("");
+
+                } else if (imgUrl.indexOf('http') != 0 && imgUrl != "") {                
+                    imgUrl = ApiMaterPlatQiniuDomain + imgUrl;
+                    console.log(imgUrl);
+                    $("#login a").css({"background": "url(" + imgUrl + ") center center / cover no-repeat"});
+                    $("#login a").addClass("i-header").html("");
+                    showLogin = false;
+                    isLogin = true;
+
+                }
+                
+                window.localStorage.setItem("avatar", imgUrl);
             }
+        });
+        options1.fail(function(error) {
+            console.error(error);
+        });
+    }    
 
-            var imgUrl = data.data.avatar;
-            if(!imgUrl) {                
-                imgUrl = "/common/img/my.png";
-                console.log(imgUrl);
-                $("#login a").css({"background": "url("+ imgUrl +") center center / cover no-repeat"});
-                $("#login a").addClass("i-header").html("");
-
-            } else if (imgUrl.indexOf('http') != 0 && imgUrl != "") {                
-                imgUrl = ApiMaterPlatQiniuDomain + imgUrl;
-                console.log(imgUrl);
-                $("#login a").css({"background": "url(" + imgUrl + ") center center / cover no-repeat"});
-                $("#login a").addClass("i-header").html("");
-                showLogin = false;
-                isLogin = true;
-
-            }
-            
-            window.localStorage.setItem("avatar", imgUrl);
-        }
-    });
-    options1.fail(function(error) {
-        console.error(error);
-    });
-
-    var options0 = $.get(apiUrl + "cms/setting/show");
+    /*var options0 = $.get(apiUrl + "cms/setting/show");
     options0.done(function(data) {
         if(data.code == 200) {
             if(!data.data) {
@@ -155,7 +157,7 @@ $(function() {
     });
     options0.fail(function(error) {
         console.error(error);
-    });
+    });*/
 
     var showLogin = false; //调整窗口大小时登陆框是否存在
     $(window).resize(function(){
@@ -434,7 +436,7 @@ $(function() {
     var ref_url = localStorage.getItem('ref_url');
     var domain = localStorage.getItem('domain');
 
-    //var qrlogin = function(){
+    var qrlogin = function(){
         if (code !== null && code !== undefined && code !== '') {
             console.log(ref_id);
             console.log(domain);
@@ -486,11 +488,11 @@ $(function() {
                 console.log(xhr);
             }
         });
-    //}
+    }
 
-    /*$("#qrcode").click(function(){
+    $("#qrcode").click(function(){
         qrlogin();
-    })*/
+    })
 
     //用户登录
     var login = function(phoneNum, checkNum, ref_id, ref_url, domain/*, imageCode, imageCodeID*/){
