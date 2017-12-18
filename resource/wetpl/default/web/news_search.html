@@ -9,14 +9,15 @@
     <script src="/common/js/vue.min.js"></script>
     <script src="/common/iview/axios.min.js"></script>
     <script src="/common/iview/libs/util.js"></script>
+    <script src="/common/js/jquery.min.js"></script>
 </head>
 <body>
-    <div>
+    <div id="app">
         <div class="head">
             <div>
                 <img class="logo" src="/common/img/logo-so.png" alt="">
-                <input type="text" placeholder="请输入要搜索的内容">
-                <a>搜索</a>
+                <input type="text" placeholder="请输入要搜索的内容" v-model="searchText" @keyup.enter="goSearch()">
+                <a @click="goSearch()">搜索</a>
             </div>
             <div>
                 <span>首页</span>
@@ -26,36 +27,32 @@
         </div>
         <div class="classify">
             <ul>
-                <li>全部</li>
-                <li>时政要闻</li>
-                <li>最新消息</li>
-                <li>最新资讯</li>
-                <li>秦商风采</li>
-                <li>三秦大地</li>
-                <li>国际新闻</li>
-                <li>国内新闻</li>
-                <li>三秦新闻</li>
-                <li>聚焦长安</li>
-                <li>科技发展</li>
-                <li>财经资讯</li>
+                <li @click="getSort()" :class="{'li-active': '' == currentActive}">全部</li>
+                <li v-for="item in columnList" @click="getSort(item.weid)" :id="item.weid" :class="{'li-active':item.weid == currentActive}">{{item.title}}</li>
             </ul>
         </div>
         <div class="tips">
-            <span>为您找到相关结果约1,000,000个</span>
+            <span>为您找到相关结果约{{total}}个</span>
         </div>
         <div class="content">
             <div class="left">
-                <div>
-                    <a href=""><b style="color: red;">民营银行</b>互联网贷款迎来强监管</a>
-                    <p>作为民营银行核心业务之一的互联网贷款迎来强监管。日前，银监会下发了关于《民营银行互联网贷款管理暂行办法(征求意见稿)》，并针对民营银行经营互联网贷款业务，所涉及的受理、审批、签订、发放、贷管、监管、风险以及法律责任等方面做出了具体规定。</p>
+                <div v-if="!newList.length">没有搜索到相关信息</div>
+                <div v-if="newList.length>0" class="column" v-for="item in newList" :key="item.weid">
+                    <a :href="item.source_url ? item.source_url : 'javascript:void(0)'" target="_blank" v-html="toRed(item.title)"></a>
+                    <div :class="{'has-img' : item.thumb_image}">
+                        <img v-if="item.thumb_image" :src="handleImg(item.thumb_image)" alt="">
+                        <p v-html="getSummary(item.summary)"></p>
+                    </div>
+                    <div>
+                        <span>{{item.publish_time}}</span>
+                        <span>{{item.cate_name}}</span>
+                    </div>
                 </div>
-                <div>
-                    <a href=""><b style="color: red;">民营银行</b>互联网贷款迎来强监管</a>
-                    <p>
-                        <img src="/common/img/img5.jpg" alt="">
-                        <span>作为民营银行核心业务之一的互联网贷款迎来强监管。日前，银监会下发了关于《民营银行互联网贷款管理暂行办法(征求意见稿)》，并针对民营银行经营互联网贷款业务，所涉及的受理、审批、签订、发放、贷管、监管、风险以及法律责任等方面做出了具体规定。</span>
-                    </p>
-                </div>
+                <ul v-if="newList.length>0">
+                    <li :class="{'non-btn':page==1}"><a href="#" @click="previous()">&laquo;</a></li>
+                    <li v-for="n in Math.ceil((total/limit).toFixed(2))" @click="goPage(n)" :class="{'selected-page' : n==page}"><a href="#">{{n}}</a></li>
+                    <li :class="{'non-btn':page==Math.ceil((total/limit).toFixed(2))}"><a href="#" @click="next()">&raquo;</a></li>
+                </ul>
             </div>
            <div class="right">
                <div>
@@ -80,8 +77,104 @@
                        <li>按发布时间排序</li>
                    </ul>
                </div>
+
+
            </div>
         </div>
     </div>
+    <script>
+        var app = new Vue({
+            el : '#app',
+            data : {
+                currentActive:'',
+                total:0,
+                newList : [],
+                searchText : '',
+                columnList : [],
+                limit : 10,
+                page : 1
+            },
+            mounted : function () {
+                this.getCloumn()
+            },
+            methods : {
+                getCloumn: function () {
+                    ajax.get(apiUrl + 'cms/channel_categories?channel=news').then((res)=>{
+                        if(res.code == 200 && res.data.length){
+                            this.columnList = res.data;
+                        }
+                    });
+                },
+                goSearch : function () {
+                    if(!this.searchText){
+                        return
+                    }
+                    ajax.get('cms/contents' , {params: {
+                        title : this.searchText,
+                        cate_id : this.currentActive,
+                        page : this.page,
+                        limit : this.limit
+                    }}).then((res) => {
+                        if(res.code == 200){
+                            this.newList = res.data.list;
+                            this.total = res.data.total;
+                        }
+                    });
+
+                },
+                handleImg : function (img) {
+                    if(img && img.indexOf('http') === -1 && img.indexOf('common') === -1){
+                        img = imgSet(img, 80, 100);
+                    }
+                    return img;
+                },
+                toRed : function (text) {
+                    var reg = new RegExp(app.searchText,"gi");
+                    var result = text.replace(reg, function (key) {
+                        var template ='<span style="color: red;">'+key+'</span>';
+
+                        return template;
+                    });
+                    return result
+                },
+                getSort : function (wid) {
+                    if(!wid){
+                        this.currentActive = '';
+                    }else{
+                        this.currentActive = wid;
+                    }
+                    this.page = 1;
+                    this.goSearch();
+                },
+                getSummary : function (text) {
+                    if(text.length > 100){
+                        text = text.substring(0,100) + '...';
+                    }
+                    var res = this.toRed(text);
+                    return res;
+                },
+                goPage : function (n) {
+                    this.page = n;
+                    this.goSearch();
+                },
+                previous : function () {
+                    this.page-=1;
+                    if(this.page < 1){
+                        this.page=1;
+                        return
+                    }
+                    this.goSearch();
+                },
+                next : function () {
+                    this.page+=1;
+                    if(this.page > Math.ceil((this.total/this.limit).toFixed(2))){
+                        this.page = Math.ceil((this.total/this.limit).toFixed(2))
+                        return
+                    }
+                    this.goSearch();
+                }
+            }
+        })
+    </script>
 </body>
 </html>

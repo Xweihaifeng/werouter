@@ -9,9 +9,9 @@ body{
 ul,li{
     list-style: none;
 }
-a{
-    text-decoration: none;
-}
+/*a{*/
+    /*text-decoration: none;*/
+/*}*/
 b{
     font-weight:normal;
 }
@@ -48,9 +48,10 @@ b{
     line-height:36px;
     text-align: center;
     color: #fff;
-    background-color: dodgerblue;
+    background-color: #3385ff;
     margin-left:-4px;
     vertical-align: middle;
+    cursor: pointer;
 }
 .head div:last-child span{
     display: inline-block;
@@ -71,6 +72,7 @@ b{
     padding:0 10px;
     color: #666;
     font-size:14px;
+    cursor: pointer;
 }
 .classify ul li.active{
     color: #323232;
@@ -99,30 +101,43 @@ b{
     padding-left:60px;
     font-size:14px;
 }
-.content .left div{
+.content .left .column{
     width:538px;
     margin-bottom:10px;
     font-size:13px;
     -ms-word-wrap: break-word;
     word-wrap: break-word;
 }
-.content .left div>a{
+.content .left .column>a{
     display: block;
     font-size:medium;
-    text-decoration: underline;
-    color: dodgerblue;
+    /*text-decoration: underline;*/
+    /*color: dodgerblue;*/
     margin-bottom:5px;
 }
-.content .left div p img{
+.content .left .column div img{
     display: inline-block;
     width:121px;
     height:75px;
     margin-right:10px;
 }
-.content .left div p span{
+.content .left .column div:last-child{
+    overflow: hidden;
+}
+.content .left .column div:last-child>span{
+    float: left;
+    font-size:12px;
+    color: #999;
+}
+.content .left .column div:last-child>span:last-child{
+    float: right;
+}
+.content .left .column div p{
     display: inline-block;
-    width: 74%;
     vertical-align: top;
+}
+.content .left .column .has-img p{
+    width: 74%;
 }
 .content .right div{
     margin-bottom:10px;
@@ -135,4 +150,40 @@ b{
 .content .right div ul li{
     height:30px;
     line-height: 30px;
+}
+.content .left>ul{
+    margin-top:20px;
+}
+.content .left>ul li{
+    width: 34px;
+    height: 34px;
+    line-height: 34px;
+    border: 1px solid #e1e2e3;
+    cursor: pointer;
+    margin-right:9px;
+    text-align: center;
+    display: inline-block;
+}
+.content .left>ul li a{
+    font-size:14px;
+    text-decoration: none;
+    color: rgb(0,0,238);
+}
+.content .left>ul li:hover{
+    background: #f2f8ff;
+    border: 1px solid #38f;
+}
+.li-active{
+    border-bottom: 2px solid dodgerblue;
+}
+.non-btn{
+    background-color: #eee;
+}
+.content .left>ul .selected-page,.content .left>ul .selected-page:hover{
+    border:none;
+    background: none;
+}
+.content .left>ul .selected-page a{
+    color: #333;
+    font-weight: bold;
 }
