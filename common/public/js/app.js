@@ -25,9 +25,7 @@
 	}
 	
 	app.set_title = function(title){
-		
-		$('title').html(title);
-		
+		document.title = title;
 	}
 	
 	window.$app = app;

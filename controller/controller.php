@@ -54,6 +54,10 @@ class controller
         	{
         		$row['motto'] = '咱俩不太熟，暂时保密';
         	}
+            if(empty($row['avatar']))
+            {
+                $row['avatar'] = '/common/img/avatar.png';
+            }
             return $row;
         }
         return FALSE;

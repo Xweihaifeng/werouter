@@ -320,10 +320,17 @@ class main extends controller
     private function _domain_data($weid)
     {
         $protocol = ($this->data['http_type'] == 1) ? 'http://' : 'https://' ;
+        if(is_mobile() == TRUE)
+        {
+            $this->data['domain'] = 'm.'.$this->data['domain'];
+        }
         //JS 环境变量初始化
         $plats['var http_type'] = $protocol;
         $plats['var site_domian'] = $this->data['domain'];
         $plats['var api_domain'] = $protocol.$this->data['domain'].'/api/';
+        //$plats['var all_domian'] = $protocol.$this->data['domain'].'/'; 正式环境使用
+        $plats['var all_domian'] = $protocol.$_SERVER['HTTP_HOST'].'/';  //测试环境使用
+        
         $plats['var root_domain'] = $this->_get_domain($_SERVER['HTTP_HOST']);
         $plats['var is_domain'] = 'no';
         $plats['var pages_index'] = 'index';
@@ -359,7 +366,7 @@ class main extends controller
 
 		$plats_cms_sql = 'SELECT title , description , key_word
 						 , icp , favicon , logo , background , weibo_show 
-						 , background_up , bar1 , bar2 , bar3 , background_right
+						 , background_up , block , bar1 , bar2 , bar3 , background_right
 						 ,bar4 , block FROM we_plat_cms WHERE plat_id=?';
 		$plats['plats_info'] = $this->db->queryOne($plats_cms_sql , array($weid));
         $plats['plats_info']['plat_name'] = $plats_row['plat_name'];

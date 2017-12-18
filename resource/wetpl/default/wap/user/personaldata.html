@@ -1,170 +1,147 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <title>我的</title>
-    <link rel="shortcut icon" id="favicon" href="" />
-    <link rel="stylesheet" href="{{PATH_TML}}css/home.css"/>
-    <link rel="stylesheet" href="{{PATH_TML}}css/myInfo.css"/>
-    <link rel="stylesheet" href="{{PATH_TML}}css/iconfont.css"/>
-    <script type="text/javascript" src="{{PATH_CONFIG}}"></script>
-    <script src="{{PATH_TML}}js/vue.min.js"></script>
-    <script src="/common/iview/axios.min.js"></script>
-    <script src="/common/iview/libs/util.js"></script>
-    <script src="/common/model/web_business.js"></script>
-    <script src="{{PATH_TML}}lib/jquery.min.js"></script>
-    <script src="{{PATH_TML}}js/layui/layui.js"></script>
-    <script src="/common/jquery-lazyload/jquery.lazyload.js"></script>
-    <link rel="stylesheet" href="/common/jquery.animsition/css/animsition.min.css">
-    <script src="/common/jquery.animsition/js/jquery.animsition.min.js"></script>
-    <script src="{{PATH_TML}}js/home.js"></script>
-</head>
-<body class="animsition">
-<div id="app">
-    <div id="container">
-        <div class="about-me">
-            <div class="personal">
-                <div class="my-left">
-                    <img :src="avatar" alt="">
-                    <p>
-                        <strong>{{ name }}</strong>
-                        <label>
-                            <span>{{ motto }}</span>
-                            <i class="iconfont icon-mingpian1" v-if="card_show==true"></i>
-                            <i class="iconfont icon-mingpian1" v-if="auth_show==true"></i>
-                        </label>
-                    </p>
-                </div>
-                <div class="my-right">
-                    <a :href="pages_index">个人微主页 <i class="iconfont icon-xiangyou"></i></a>
-                </div>
+<#extend#>public/domain/domain_extend.html</#extend#>
+<script type="text/javascript">
+    show.header = 'no';
+</script>
+<link rel="stylesheet" href="{{PATH_TML}}css/myInfo.css"/>
+<div id="container">
+    <div class="about-me">
+        <div class="personal">
+            <div class="my-left">
+                <img :src="avatar" alt="">
+                <p>
+                    <strong>{{ name }}</strong>
+                    <label>
+                        <span>{{ motto }}</span>
+                        <i class="iconfont icon-mingpian1" v-if="card_show==true"></i>
+                        <i class="iconfont icon-mingpian1" v-if="auth_show==true"></i>
+                    </label>
+                </p>
             </div>
-            <div class="friends">
-                <div>
-                    <label>
-                        <a href="">{{nums.wnums}}</a>
-                        <span>微友</span>
-                    </label>
-                </div>
-                <div>
-                    <label>
-                        <a href="">{{nums.gnums}}</a>
-                        <span>关注</span>
-                    </label>
-                </div>
-                <div>
-                    <label>
-                        <a href="">{{nums.fnums}}</a>
-                        <span>粉丝</span>
-                    </label>
-                </div>
+            <div class="my-right">
+                <a :href="pages_index">个人微主页 <i class="iconfont icon-xiangyou"></i></a>
             </div>
         </div>
-        <div class="other-me">
-            <ul>
-                <li>
-                    <span>
-                        <i style="background: url('/common/img/我的钱包@2x.png') no-repeat center center;background-size: 50%; background-color: #F26D5F;"></i>
-                        <a>我的钱包</a>
-                    </span>
-                    <img src="/common/img/you.png" alt="">
-                </li>
-                <li onclick="window.location.href='/shopping/allOrder'">
-                    <span>
-                        <i style="background: url('/common/img/我的订单@2x.png') no-repeat center center;background-size: 50%; background-color: #F26D5F;"></i>
-                        <a>我的订单</a>
-                    </span>
-                    <img src="/common/img/you.png" alt="">
-                </li>
-            </ul>
-            <ul>
-                <li>
-                    <span>
-                        <i style="background: url('/common/img/我的圈子@2x.png') no-repeat center center;background-size: 50%; background-color: #35B87F;"></i>
-                        <a>我的圈子</a>
-                    </span>
-                    <img src="/common/img/you.png" alt="">
-                </li>
-                <li>
-                    <span>
-                        <i style="background: url('/common/img/我的文章@2x.png') no-repeat center center;background-size: 50%; background-color: #5B99EE;"></i>
-                        <a>我的文章</a>
-                    </span>
-                    <img src="/common/img/you.png" alt="">
-                </li>
-                <li>
-                    <span>
-                        <i style="background: url('/common/img/我的项目@2x.png') no-repeat center center;background-size: 50%; background-color: #5B99EE;"></i>
-                        <a>我的项目</a>
-                    </span>
-                    <img src="/common/img/you.png" alt="">
-                </li>
-                <li>
-                    <span>
-                        <i style="background: url('/common/img/我的活动@2x.png') no-repeat center center;background-size: 50%; background-color: #35B87F;"></i>
-                        <a>我的活动</a>
-                    </span>
-                    <img src="/common/img/you.png" alt="">
-                </li>
-            </ul>
-            <ul>
-                <li>
-                    <span>
-                        <i style="background: url('/common/img/意见反馈@2x.png') no-repeat center center;background-size: 50%; background-color: #FFA200;"></i>
-                        <a>意见反馈</a>
-                    </span>
-                    <img src="/common/img/you.png" alt="">
-                </li>
-                <li>
-                    <span>
-                        <i style="background: url('/common/img/关于我们@2x.png') no-repeat center center;background-size: 50%; background-color: #FFA200;"></i>
-                        <a>关于我们</a>
-                    </span>
-                    <img src="/common/img/you.png" alt="">
-                </li>
-            </ul>
+        <div class="friends">
+            <div>
+                <label>
+                    <a href="">{{nums.wnums}}</a>
+                    <span>微友</span>
+                </label>
+            </div>
+            <div>
+                <label>
+                    <a href="">{{nums.gnums}}</a>
+                    <span>关注</span>
+                </label>
+            </div>
+            <div>
+                <label>
+                    <a href="">{{nums.fnums}}</a>
+                    <span>粉丝</span>
+                </label>
+            </div>
         </div>
     </div>
-    <footer></footer>
+    <div class="other-me">
+        <ul>
+            <li>
+                <span>
+                    <i style="background: url('/common/img/我的钱包@2x.png') no-repeat center center;background-size: 50%; background-color: #F26D5F;"></i>
+                    <a>我的钱包</a>
+                </span>
+                <img src="/common/img/you.png" alt="">
+            </li>
+            <li onclick="window.location.href='/shopping/allOrder'">
+                <span>
+                    <i style="background: url('/common/img/我的订单@2x.png') no-repeat center center;background-size: 50%; background-color: #F26D5F;"></i>
+                    <a>我的订单</a>
+                </span>
+                <img src="/common/img/you.png" alt="">
+            </li>
+        </ul>
+        <ul>
+            <li>
+                <span>
+                    <i style="background: url('/common/img/我的圈子@2x.png') no-repeat center center;background-size: 50%; background-color: #35B87F;"></i>
+                    <a>我的圈子</a>
+                </span>
+                <img src="/common/img/you.png" alt="">
+            </li>
+            <li>
+                <span>
+                    <i style="background: url('/common/img/我的文章@2x.png') no-repeat center center;background-size: 50%; background-color: #5B99EE;"></i>
+                    <a>我的文章</a>
+                </span>
+                <img src="/common/img/you.png" alt="">
+            </li>
+            <li>
+                <span>
+                    <i style="background: url('/common/img/我的项目@2x.png') no-repeat center center;background-size: 50%; background-color: #5B99EE;"></i>
+                    <a>我的项目</a>
+                </span>
+                <img src="/common/img/you.png" alt="">
+            </li>
+            <li>
+                <span>
+                    <i style="background: url('/common/img/我的活动@2x.png') no-repeat center center;background-size: 50%; background-color: #35B87F;"></i>
+                    <a>我的活动</a>
+                </span>
+                <img src="/common/img/you.png" alt="">
+            </li>
+        </ul>
+        <ul>
+            <li>
+                <span>
+                    <i style="background: url('/common/img/意见反馈@2x.png') no-repeat center center;background-size: 50%; background-color: #FFA200;"></i>
+                    <a>意见反馈</a>
+                </span>
+                <img src="/common/img/you.png" alt="">
+            </li>
+            <li>
+                <span>
+                    <i style="background: url('/common/img/关于我们@2x.png') no-repeat center center;background-size: 50%; background-color: #FFA200;"></i>
+                    <a>关于我们</a>
+                </span>
+                <img src="/common/img/you.png" alt="">
+            </li>
+        </ul>
+    </div>
 </div>
-
-    <script>
-        new Vue({
-            el: '#app',
-
-            data: {
-                name: '阿尔卑斯山',
-                motto: 'Alps',
-                pages_index : '',
-                card_show : false,
-                auth_show : false,
-                avatar : '/common/img/avatar.png',
-                nums : {
-                    wnums : 0,
-                    gnums : 0,
-                    fnums : 0,
-                }
-                
-            },
-            mounted: function(){
-                this.$nextTick(()=>{
-                    this.name = plats_user_info.real_name;
-                    this.motto = plats_user_info.motto;
-                    this.pages_index = plats_user_info.domian;
-                    if(plats_user_info.avatar)
-                    {
-                        this.avatar = ApiMaterPlatQiniuDomain + plats_user_info.avatar;
-                    }
-                    
-                    // 获取统计数据
-                    ajax.get('/circel/index' , {params : {'domain' : plats_user_info.domian}})
-                    .then((data)=>{
-                        this.nums = data.data;
-                    });
-                })
+<script>
+new Vue({
+    el: '#app',
+    data: {
+        name: '阿尔卑斯山',
+        motto: 'Alps',
+        pages_index : '',
+        card_show : false,
+        auth_show : false,
+        avatar : '/common/img/avatar.png',
+        nums : {
+            wnums : 0,
+            gnums : 0,
+            fnums : 0,
+        }
+    },
+    mounted: function(){
+        this.$nextTick(()=>{
+            $app.set_title('我的');
+            this.name = plats_user_info.real_name;
+            this.motto = plats_user_info.motto;
+            this.pages_index = plats_user_info.domian;
+            if(plats_user_info.avatar)
+            {
+                this.avatar = ApiMaterPlatQiniuDomain + plats_user_info.avatar;
             }
-        });
-    </script>
+            
+            // 获取统计数据
+            ajax.get('/circel/index' , {params : {'domain' : plats_user_info.domian}})
+            .then((data)=>{
+                this.nums = data.data;
+            });
+        })
+    }
+});
+</script>
 </body>
 </html>
