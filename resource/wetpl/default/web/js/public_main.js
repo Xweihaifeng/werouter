@@ -213,8 +213,9 @@ const _init = [1,2,3,4];
 const genSideBar = (ns) => {
     return ns.map((x, i) => {
         $("." + seqlist[i] + '-title').text(x.name);
+        $("." + seqlist[i] + '-content ul').addClass(x.ename)
         $("." + seqlist[i] + '-content ul').append(
-            x.cont.map(x => `<li id='${x.ename}'>${x}</li>`).join('')
+            x.cont.map(x => `<li>${x}</li>`).join('')
         )
         $("." + district[i]).append(eval(x.val));
         if (x.ename == 'hz' || x.ename == 'gx') {
@@ -1286,55 +1287,83 @@ req().then((data) => {
                 var share = () => {
                     shoppinglist(localStorage.getItem("indexweid"),1);
                 }
+
+                var list = [
+                    {
+                        id: 'xw',
+                        val: init
+                    },
+                    {
+                        id: 'zz',
+                        val: org
+                    },
+                    {
+                        id: 'hz',
+                        val: help
+                    },
+                    {
+                        id: 'gx',
+                        val: share
+                    }
+                ];
                 //right side control
                 var genEvt = () => {
+                    if (channel != '') {
+                        list.filter(x => x.id == channel)[0].val();
+                    }
                     // 首页新闻模块
-                    $("#nav-news").click(function(){
+                    $("#nav-news").click(function(e){
+                        var id = $(e.target).find('ul').attr('class');
                         $("#nav-news, .huzhu, .organization, .goodsBox").hide();
                         $(".home, #nav-help, #nav-share, #nav-org").show();
                         $("#nav-help,#nav-share").css("margin-left", "0");
                         $("#nav-org,#nav-help,#nav-share").css({ "position":"static", "left":"0" });
-                        init();
-                        //org();
+                        list.filter(x => x.id == id)[0].val();
+                        // init();
+                        // org();
                         mySwiper.startAutoplay();
                     })
 
                     // 首页组织模块
-                    $("#nav-org").click(function(){
+                    $("#nav-org").click(function(e){
+                        var id = $(e.target).find('ul').attr('class');
                         $(".home, #nav-org, .huzhu, .goodsBox").hide();
                         $("#nav-news, #nav-help, #nav-share, .organization").show();
                         $("#nav-org,#nav-share").css({ "margin-left": "0", "position":"static" });
                         $("#nav-help").css({ "position":"static", "left":"0", "margin-left":"105px" });
-                        init();
-                        org();
+                        list.filter(x => x.id == id)[0].val();
+                        // init();
+                        // org();
                         mySwiper.startAutoplay();
                         //mySwiper.stopAutoplay();
                     })
 
                     // 首页互助模块
-                    $("#nav-help").click(function(){
-                        homeState = "help";
+                    $("#nav-help").click(function(e){
+                        var id = $(e.target).find('ul').attr('class');
                         $(".home, #nav-help, .organization, .goodsBox").hide();
                         $("#nav-news, #nav-org, #nav-share, .huzhu").show();
                         $("#nav-org").css({ "position":"absolute", "left":"-855px" });
                         $("#nav-help").css({ "margin-left": "0", "position":"static" });
                         $("#nav-share").css({ "position":"static", "left":"0", "margin-left":"210px" });
-                        init();
-                        //org();
+                        list.filter(x => x.id == id)[0].val();
+                        // init();
+                        // org();
                         mySwiper.startAutoplay();
                         //mySwiper.stopAutoplay();
                     })
 
                     // 首页共享模块
-                    $("#nav-share").click(function(){
-                        homeState = "share";
+                    $("#nav-share").click(function(e){
+                        var id = $(e.target).find('ul').attr('class');
                         $(".home, .huzhu, #nav-share, .organization").hide();
                         $("#nav-news, #nav-org, #nav-help, .goodsBox").show();
                         $("#nav-share,#nav-help").css("margin-left", "0");
                         $("#nav-org").css({ "position":"absolute", "left":"-855px" });
                         $("#nav-help").css({ "position":"absolute", "left":"-750px" });
-                        init();
-                        //org();
+                        list.filter(x => x.id == id)[0].val();
+                        // init();
+                        // org();
                         mySwiper.startAutoplay();
                         //mySwiper.stopAutoplay();
                     })
@@ -1347,7 +1376,7 @@ req().then((data) => {
                 }, 1000)*/
 
                 genEvt();
-                org();
+                //org();
                 //help();
                 //share();
 
@@ -1903,7 +1932,7 @@ req().then((data) => {
     
         return templete;
     }
-    /*var shoppinglist=function(weid,page){
+    var shoppinglist=function(weid,page){
         var limit=8;
         var keywords='';
          var sendData = {
@@ -1924,9 +1953,9 @@ req().then((data) => {
                 //console.log(data);
                 if (data.code == 200) {
                     var shop = data.data.list;
-                    /!* if(shop.length==0){
+                    /* if(shop.length==0){
                         ulnone($("."+tid));
-                    }*!/
+                    }*/
                     if(data.data.total>0){
                       // $("#goodsBox .person-goods-lists .row").children().remove();
                        if(page<=1){
@@ -1968,7 +1997,7 @@ req().then((data) => {
                 console.log(xhr);
             }
         })
-    }*/
+    }
 
     $("#xiangmu-btn").on("click",function(){
         $("#xiangmu").show();
