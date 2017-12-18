@@ -156,7 +156,7 @@ $(function () {
                         }
                         $('#'+x.weid+' .status-oper').children().remove();
                     var operList = [];
-                    if(!isNull(x.send)){
+                    if(!isNull(x.send.logistics_info)){
                         operList.push({
                             name : '查看物流',
                             oper : 'distribute'
@@ -182,12 +182,10 @@ $(function () {
                             });
                             break;
                         case 4:
-                            /*
                             operList.push({
                                 name : '评论',
                                 oper : 'goods_comment',
                             });
-                            */
                             operList.push({
                                 name : '确定交易',
                                 oper : 'transaction_completion_operation',
@@ -563,9 +561,73 @@ $(function () {
         }
 
         //评论商品
-        if ($(".goods_comment")){
-            $(".goods_comment").bind('click',function () {
+        if ($(".goods_comment")) {
+            $(".goods_comment").bind('click', function () {
+                var orderId = $(this).closest('tr').attr("id");
+                $('.comment_mongolia_layer, .comment_bomb_box').fadeIn("slow");
+                $('.comment_bomb_box_title').text("商品评论");
+                $('.comment_bomb_box_content').empty();
+                //循环商品评论列表
+                createCommentHtml(orderId);
+                $('.comment_bomb_box_footer').empty();
+                $('.comment_bomb_box_footer').append('<button class="comment_save" id="comment_' + orderId + '"> 确认 </button>');
+                $("#comment_" + orderId).unbind();
+                $("#comment_" + orderId).bind('click', function () {
+                    //$("#comment_" + orderId).attr("disabled", "true");
+                    //组织数组
+                    var data = new Array();
+                    $(".goods_comment_list").each(function (ind, ele) {
+                        var goods_id = $(ele).find(".goodImg").find("img").attr("goodsweid");
+                        var pictures = new Array();
+                        $(ele).find(".progressContainer").each(function (PicInd, PicEle) {
+                            var value = $(PicEle).find(".filesname").attr("value");
+                            pictures.push(value);
+                        });
+                        var content = $(ele).find(".comment_bomb_box_group").find(".bomb_box_textarea").val();
+                        data.push({
+                            'goods_id': goods_id,
+                            'pictures': pictures,
+                            'order_id': orderId,
+                            'content': content
+                        })
+                    })
+                    if(!isNull(data)){
+                        for (var a = 0; a < data.length; a++){
+                            if(isNull(data[a].content)){
+                                layer.msg("评论内容不能为空", {
+                                    time: 1500
+                                });
+                                return false;
+                            }
+                        }
+                    }
+                    $.ajax({
+                        url: apiUrl + 'goods/comment/store',
+                        type: 'post',
+                        data: {
+                            order_id: orderId,
+                            data: JSON.parse(JSON.stringify(data))
+                        },
+                        headers: {
+                            "Token": localStorage.getItem('token')
+                        },
+                        dataType: 'json',
+                        success: function (data) {
+                            if (data.code === 200) {
+                                reloadOperation(orderId, "评论商品成功");
+                                $("#comment_" + orderId).attr("disabled", "false");
+                                $('.comment_mongolia_layer, .comment_bomb_box').fadeOut("slow");
+                            } else {
+                                $("#comment_" + orderId).attr("disabled", "false");
+                                layer.msg(data.message, {
+                                    time: 1500
+                                });
+                            }
+                        }
+                    });
 
+                });
+                closeModel();
             });
         }
 
@@ -644,6 +706,129 @@ $(function () {
             });
         }
     }
+    //商品评论列表模版
+    var createCommentHtml = function (orderid) {
+        $.ajax({
+            url: apiUrl + 'order/detail/' + orderid,
+            type: 'get',
+            headers: {
+                "Token": localStorage.getItem('token')
+            },
+            dataType: 'json',
+            success: function (data) {
+                var html = "";
+                if (data.code === 200) {
+                    if (!isNull(data.data.goods)) {
+                        var goodsList = data.data.goods;
+                        var i = 0;
+                        goodsList.map(x => {
+                            html += '<div class="goods_comment_list"><div class="goodImg"><div style="text-align: center;"><img src="' + qiniu_bucket_domain + x.goods_cover + '" goodsweid="' + x.goods_id + '"><span>' + x.goods_title + '</span></div></div>' +
+                            '<div class="col-sm-10 form-group addimgmore">' +
+                            '<div class="imglabel">' +
+                            '<div id="container">' +
+                            '<a class="btn btn-default btn-lg btn-file" id="pickfiles-more' + i + '" href="#" >' +
+                            '<span>上传图片</span>' +
+                            '</a>' +
+                            '</div>' +
+                            '</div>' +
+                            '<div style="display:none" id="success" class="col-md-12">' +
+                            '<div class="alert-success">' +
+                            '队列全部文件处理完毕' +
+                            '</div>' +
+                            '</div>' +
+                            '<div class="imgmore">' +
+                            '<div class="imgsdiv">' +
+                            '<div id="fsUploadProgress"></div>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>' +
+                            '<div class="comment_bomb_box_group" style="display: inline-flex;"><div class="comment_bomb_box_name"> 评论： </div><div class="comment_bomb_box_input"><textarea class="bomb_box_textarea" cols="52" maxlength="52" rows="3" name="textarea"></textarea></div></div></div>';
+                        i++;
+                    })
+                        ;
+                        $(".comment_bomb_box_content").append(html);
+
+                        //绑定七牛多图上传
+                        for (var a = 0; a < goodsList.length; a++) {
+                            var uploader = Qiniu.uploader({
+                                disable_statistics_report: false,
+                                runtimes: 'html5,flash,html4',
+                                browse_button: 'pickfiles-more' + a,
+                                container: 'container',
+                                drop_element: 'container',
+                                max_file_size: '100mb',
+                                flash_swf_url: '../../common/js/plupload/Moxie.swf',
+                                dragdrop: true,
+                                chunk_size: '4mb',
+                                multi_selection: !(moxie.core.utils.Env.OS.toLowerCase() === "ios"),
+                                uptoken_url: QINIU_UPTOKEN_URL,
+                                domain: qiniu_bucket_domain,
+                                get_new_uptoken: false,
+                                auto_start: true,
+                                log_level: 5,
+                                init: {
+                                    'BeforeChunkUpload': function (up, file) {
+                                    },
+                                    'FilesAdded': function (up, files) {
+                                        $('table').show();
+                                        $('#success').hide();
+                                        plupload.each(files, function (file) {
+                                            var progress = new FileProgress(file,
+                                                'fsUploadProgress');
+                                            progress.setStatus("等待...");
+                                            progress.bindUploadCancel(up);
+                                        });
+                                    },
+                                    'BeforeUpload': function (up, file) {
+                                        var progress = new FileProgress(file, 'fsUploadProgress');
+                                        var chunk_size = plupload.parseSize(this.getOption(
+                                            'chunk_size'));
+                                        if (up.runtime === 'html5' && chunk_size) {
+                                            progress.setChunkProgess(chunk_size);
+                                        }
+                                    },
+                                    'UploadProgress': function (up, file) {
+                                        var progress = new FileProgress(file, 'fsUploadProgress');
+                                        var chunk_size = plupload.parseSize(this.getOption(
+                                            'chunk_size'));
+                                        progress.setProgress(file.percent + "%", file.speed,
+                                            chunk_size);
+                                    },
+                                    'UploadComplete': function () {
+
+                                    },
+                                    'FileUploaded': function (up, file, info) {
+                                        var domain = up.getOption('domain');
+                                        var progress = new FileProgress(file, 'fsUploadProgress');
+                                        progress.setComplete(up, info.response);
+                                        $(".progressCancel").bind("click", function () {
+                                            $(this).closest(".progressContainer").remove();
+                                        })
+                                    },
+                                    'Error': function (up, err, errTip) {
+                                        $('table').show();
+                                        var progress = new FileProgress(err.file, 'fsUploadProgress');
+                                        progress.setError();
+                                        progress.setStatus(errTip);
+                                    },
+                                    'Key': function (up, file) {
+                                        var key = "pages/goods/";
+                                        key += new Date().valueOf() + '.' + file.name.substring(file.name.indexOf('.') + 1);
+                                        return key;
+                                    }
+
+                                }
+                            });
+                        }
+                    }
+                } else {
+                    $(".comment_bomb_box_content").append("加载失败");
+                }
+            }
+
+        });
+
+    }
     //重新加载操作按钮
     var reloadOperation=function (orderid,message) {
         $.ajax({
@@ -656,7 +841,7 @@ $(function () {
             success : function (data) {
                 if(data.code===200){
                     var operList = [];
-                    if(!isNull(x.senddata.data.send)){
+                    if(!isNull(data.data.send.logistics_info)){
                         operList.push({
                             name : '查看物流',
                             oper : 'distribute'
@@ -686,12 +871,10 @@ $(function () {
                             });
                             break;
                         case 4:
-                            /*
                             operList.push({
                                 name : '评论',
                                 oper : 'goods_comment',
                             });
-                            */
                             operList.push({
                                 name : '确定交易',
                                 oper : 'transaction_completion_operation',
