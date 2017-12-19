@@ -11,20 +11,25 @@
     <script src="/common/iview/axios.min.js"></script>
     <script src="/common/iview/libs/util.js"></script>
     <script src="/common/js/jquery.min.js"></script>
+    <style type="text/css">
+        [v-cloak] {
+            display: none;
+        }
+    </style>
 </head>
 <body>
-    <div id="app">
+    <div id="app" v-cloak>
         <div class="head">
             <div>
                 <img class="logo" src="/common/img/logo-so.png" alt="">
-                <input type="text" placeholder="请输入要搜索的内容" v-model="searchText" @keyup.enter="goSearch()">
-                <a @click="goSearch()">搜索</a>
+                <input type="text" placeholder="请输入要搜索的内容" v-model="searchText" @keyup.enter="goSearchOpen()">
+                <a @click="goSearchOpen()">搜索</a>
             </div>
         </div>
         <div class="classify">
             <ul>
-                <li @click="getSort()" :class="{'li-active': '' == currentActive}">全部</li>
-                <li v-for="item in columnList" @click="getSort(item)" :id="item.weid" :class="{'li-active':item.domain == currentActive}">{{item.title}}</li>
+                <li  @click="currentActive='';goSearchOpen();" :class="{'li-active': '' == currentActive}">全部</li>
+                <li v-for="item in columnList" @click="currentActive=item.domain;goSearchOpen()" :id="item.weid" :class="{'li-active':item.domain == currentActive}">{{item.title}}</li>
             </ul>
         </div>
         <div class="tips">
@@ -45,7 +50,7 @@
                         <p>
                             <span v-html="getSummary(item.summary)"></span>
                             <label>
-                                <a :href="apiUrl+'news/'+item.weid" v-html="apiUrl+'news/'+item.weid" target="_blank"></a>
+                                <a :href="apiUrl+'news/'+item.weid" v-html="all_domian+'news/'+item.weid" target="_blank"></a>
                                 <span> - {{item.cate_name}}</span>
                             </label>
                         </p>
@@ -99,6 +104,7 @@
         var app = new Vue({
             el : '#app',
             data : {
+                channel: '',
                 spinner : false,
                 currentActive:'',
                 sortTime:null,
@@ -114,42 +120,29 @@
             mounted : function () {
                 this.currentActive = $app.get_query_string('c') ? $app.get_query_string('c')  : '';
                 this.searchText = $app.get_query_string('q') ? $app.get_query_string('q') : '';
-                var channel='';
-                if(this.currentActive){
-                    switch (this.currentActive){
-                        case 'zt':
-                            channel = '专题报道';
-                            break;
-                        case 'v':
-                            channel = '视频中心';
-                            break;
-                        case 'sp':
-                            channel = '专题';
-                            break;
-                        case 'news':
-                            channel = '新闻';
-                            break;
-                        case 'org':
-                            channel = '组织';
-                            break;
-                        case 'js':
-                            channel = '建设';
-                            break;
-                        case 'dw':
-                            channel = '党委';
-                            break;
-                    }
-                    document.title = channel + '-搜索-'+plats_info.title;
-                }else{
-                    document.title = '搜索-'+plats_info.title;
-                }
                 this.getCloumn();
+                if(this.currentActive == ''){
+                    document.title = this.searchText + ' - 搜索- '+plats_info.title;
+                }
+                this.goSearch();
             },
             methods : {
+                goSearchOpen: function()
+                {
+                    window.location.href="/so?c="+this.currentActive + "&q="+this.searchText; 
+                },
                 getCloumn: function () {
                     ajax.get(apiUrl + 'cms/channels').then((res)=>{
+
                         if(res.code == 200 && res.data.list.length){
                             this.columnList = res.data.list;
+                            for(var item of this.columnList)
+                            {
+                                if(item.domain == this.currentActive)
+                                {
+                                    document.title = item.title + ' - 搜索- '+ this.searchText + ' - ' +plats_info.title;
+                                }
+                            }
                         }
                     });
                 },
