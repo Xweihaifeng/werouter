@@ -126,7 +126,7 @@
                 this.searchText = $app.get_query_string('q') ? $app.get_query_string('q') : '';
                 this.getCloumn();
                 if(this.currentActive == ''){
-                    document.title = this.searchText + ' - 搜索- '+plats_info.title;
+                    document.title = '搜索 - '+plats_info.title;
                 }
                 this.goSearch();
             },
@@ -144,7 +144,7 @@
                             {
                                 if(item.domain == this.currentActive)
                                 {
-                                    document.title = item.title + ' - 搜索- '+ this.searchText + ' - ' +plats_info.title;
+                                    document.title = item.title + '_搜索 - '+ this.searchText + ' - ' +plats_info.title;
                                 }
                             }
                         }
