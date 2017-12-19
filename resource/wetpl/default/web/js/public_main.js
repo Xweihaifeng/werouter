@@ -263,16 +263,16 @@ const fill = (seq) => _init.map(x => {
 
 const req = () => {
     return new Promise((resolve, reject) => {
-        $.ajax({
+        /*$.ajax({
             url: apiUrl + "cms/setting/show",
             dataType: 'json',
             success: function(data){
                 resolve(JSON.parse(data.data.blocks));
             }
-        })
-        /*setTimeout(() => {
+        })*/
+        setTimeout(() => {
             resolve(plats_info.blocks);
-        }, 50);*/
+        }, 50);
     })
 }
 
