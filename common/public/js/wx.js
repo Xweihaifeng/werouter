@@ -2,11 +2,12 @@
 (function(window) {
 	var wx = {};
 	wx.get_openid = function(name){
-		alert(is_wx);
 		if(is_wx == 'no') return false;
-		var openid = $app.get_query_string('openid');
-		var get_storage_openid = $app.get_storage('openid');
 
+		var openid = $app.get_query_string('openid');
+		alert(openid);
+		var get_storage_openid = $app.get_storage('openid');
+		
 		if($app.empty(openid) == true && $app.empty(get_storage_openid) == false)
 		{
 			$app.set_cookie('openid' , openid , 7);
@@ -20,7 +21,7 @@
 			window.location.href = encodeURI(api_domain + 'openid?url=' + window.location.href)
 		}
 	}
-
+	
 	//微信登陆依赖VUE AXIOS
 	wx.wx_login = function(openid){
 		if(is_wx == 'no') return false;
