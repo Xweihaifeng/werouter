@@ -46,7 +46,7 @@
                 <div v-if="!spinner && newList.length>0" class="column" v-for="item in newList" :key="item.weid">
                     <a :href="all_domian+item.channel_domain+'/'+item.weid" target="_blank" v-html="toRed(item.title)"></a>
                     <div :class="{'has-img' : item.thumb_image}">
-                        <img v-if="item.thumb_image" v-show="isShow" :src="handleImg(item.thumb_image)" alt="">
+                        <img v-if="item.thumb_image" :src="handleImg(item.thumb_image)" alt="">
                         <p>
                             <span v-html="getSummary(item.summary)"></span>
                             <label>
@@ -61,7 +61,7 @@
                         <!--<span>{{item.cate_name}}</span>-->
                     <!--</div>-->
                 </div>
-                <ul v-if="!spinner && newList.length>0 && Math.ceil(total/limit)">
+                <ul v-if="!spinner && newList.length>0" v-show="isShow">
                     <li v-if="page > 1" :class="{'non-btn':page==1}" id="prev_page"><a href="#" @click="previous()">&lt;上一页</a></li>
                     <li v-for="n in Math.ceil((total/limit).toFixed(2))" @click="goPage(n)" :class="{'selected-page' : n==page}"><a href="#">{{n}}</a></li>
                     <li :class="{'non-btn':page==Math.ceil((total/limit).toFixed(2))}" id="next_page"><a href="#" @click="next()">下一页&gt;</a></li>
@@ -165,6 +165,9 @@
                         if(res.code == 200){
                             this.newList = res.data.list;
                             this.total = res.data.total;
+                            if(Math.ceil(this.total/this.limit) <= 1){
+                            	this.isShow = false;
+                            }
                         }
                     });
 //                    window.location.href = '/so/?q='+this.searchText+'&c='+this.currentActive;
