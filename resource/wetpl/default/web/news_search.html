@@ -125,8 +125,10 @@
                 this.currentActive = $app.get_query_string('c') ? $app.get_query_string('c')  : '';
                 this.searchText = $app.get_query_string('q') ? $app.get_query_string('q') : '';
                 this.getCloumn();
-                if(this.currentActive == ''){
-                    document.title = '搜索 - '+plats_info.title;
+                if(this.currentActive == '' && this.searchText){
+                    document.title = this.searchText + '_搜索 - '+plats_info.title;
+                } else {
+                	document.title = '搜索 - '+plats_info.title;
                 }
                 this.goSearch();
             },
