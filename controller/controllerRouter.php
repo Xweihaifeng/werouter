@@ -149,8 +149,24 @@ class controllerRouter extends controller
     }
 
     // 验证个性域名
-    public function domain($param)
+    public function domain($param , $uri)
     {
+        $domain_type_array = array(
+            'article' => 2,
+            'project' => 4,
+            'wemall' => 3,
+            'activity' => 5
+        );
+
+        if($uri['total'] >= 2)
+        {
+            $type = next($uri['uri']);
+            $this->config['config']['var pages_type'] = (!empty($domain_type_array[$type])) ? $domain_type_array[$type] : 6 ;
+        }
+        else
+        {
+            $this->config['config']['var pages_type'] = 6;
+        }
         // 测试 CONFIG 配置了 config 参数会直接追加到 config 最下面
         // $this->config['config']['var title'] = 'yes';
         //$this->config['template'] = '/login.html';
