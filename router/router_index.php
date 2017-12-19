@@ -26,14 +26,6 @@ class router_index
     ];    
     // 重定向的链接
     private $_rest_url = '';
-    // wap get 参数
-    private $_wap_get;
-    // 手机目录
-    private $_wap_array = [
-       'wap','m'
-    ]; 
-
-    private $_wap_state = FALSE;
     
     public function __construct()
     {	
@@ -44,11 +36,8 @@ class router_index
         $this->_request_uri = $_SERVER['REQUEST_URI'];
         
         $this->_method = $_SERVER['REQUEST_METHOD'];
-
-        $this->_wap_get = (!empty($_GET['wap'])) ? $_GET['wap'] : FALSE ;
         
         $this->_domain_config = $this->_domain_init();
-
     }
 
 
@@ -82,7 +71,7 @@ class router_index
         	}
 
         }
-
+        
         $domain_config = $this->_domain;
         if($mark_domain == 'm') 
         {
@@ -90,17 +79,6 @@ class router_index
         }        
         $this->_mark_domain = (in_array($mark_domain, $mark_array)) ? $mark_domain : 'pc' ;
 
-        if($this->_wap_get == 'yes')
-        {
-            $this->_mark_domain = 'm';
-        }
-
-        $uri = current(array_filter(explode('/', $this->_request_uri)));
-        if(in_array($uri, $this->_wap_array))
-        {
-            $this->_mark_domain = 'm';
-            $this->_wap_state = TRUE;
-        }
         // $this->_is_wap($domain_config);
         return $domain_config;
     }
@@ -114,10 +92,11 @@ class router_index
             header("Location: ".$protocol.$this->_rest_url.$this->_request_uri); 
             exit;
         }
+
         if($this->_mark_domain == 'pc' && is_mobile() == TRUE){
             header("Location: {$protocol}m.".$domain_config.$this->_request_uri);
             exit;
-        }elseif ($this->_mark_domain == 'm' && is_mobile() == FALSE && $this->_wap_state != TRUE) {
+        }elseif ($this->_mark_domain == 'm' && is_mobile() == FALSE) {
             header("Location: {$protocol}".$domain_config.$this->_request_uri);
             exit;
         } 
@@ -198,11 +177,6 @@ class main extends controller
         'domain_custom' => 'images.wezchina.com',
         'buckut' => 'wezc',
     ];
-
-    // 手机目录
-    private $_wap_array = [
-       'wap','m'
-    ]; 
     // 构造方法
     public function __construct($data) 
     {
@@ -218,21 +192,11 @@ class main extends controller
     	$rule = $this->data['match'];
 
         config::$plats = $this->_domain_data($weid);
-
         //$this->data($this->_domain_data($weid));
 
     	$uri =current(explode('?', $_SERVER['REQUEST_URI']));
 
         $controller_varify = $this->_controller($uri , $this->data);
-
-        $uri_array = array_filter(explode('/', $uri));
-
-        $current_uri = current($uri_array);
-
-        if(in_array($current_uri, $this->_wap_array))
-        {
-            $uri = substr($uri , strlen('/'.$current_uri) , strlen($uri));
-        }
 
         $router_verify = new router_verify($router , $uri , $rule , $weid);
 
@@ -356,10 +320,17 @@ class main extends controller
     private function _domain_data($weid)
     {
         $protocol = ($this->data['http_type'] == 1) ? 'http://' : 'https://' ;
+        if(is_mobile() == TRUE)
+        {
+            $this->data['domain'] = 'm.'.$this->data['domain'];
+        }
         //JS 环境变量初始化
         $plats['var http_type'] = $protocol;
         $plats['var site_domian'] = $this->data['domain'];
         $plats['var api_domain'] = $protocol.$this->data['domain'].'/api/';
+        //$plats['var all_domian'] = $protocol.$this->data['domain'].'/'; 正式环境使用
+        $plats['var all_domian'] = $protocol.$_SERVER['HTTP_HOST'].'/';  //测试环境使用
+        
         $plats['var root_domain'] = $this->_get_domain($_SERVER['HTTP_HOST']);
         $plats['var is_domain'] = 'no';
         $plats['var pages_index'] = 'index';
@@ -395,9 +366,12 @@ class main extends controller
 
 		$plats_cms_sql = 'SELECT title , description , key_word
 						 , icp , favicon , logo , background , weibo_show 
-						 , background_up , bar1 , bar2 , bar3 , background_right
+						 , background_up , block , bar1 , bar2 , bar3 , background_right
 						 ,bar4 , block FROM we_plat_cms WHERE plat_id=?';
 		$plats['plats_info'] = $this->db->queryOne($plats_cms_sql , array($weid));
+
+        $block = array_sort(json_decode($plats['plats_info']['block'] , TRUE) , 'sort' , 'asc');
+        $plats['plats_info']['blocks'] = $block;
         $plats['plats_info']['plat_name'] = $plats_row['plat_name'];
 
         if(empty($_COOKIE['token']))
@@ -456,10 +430,10 @@ class main extends controller
         } 
 
         $action = 'index';
-        // if(count($controller_uri) >= 2 )
-        // {
-        //     $action = next($controller_uri);
-        // }
+        if(count($controller_uri) >= 2 )
+        {
+            $action = next($controller_uri);
+        }
         
         include $controller_file;  $c = new $file(); $c->public_data = $data; $c->{$action}(); exit();
      

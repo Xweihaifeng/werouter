@@ -22,6 +22,21 @@ function curl_action($url, $timeout = '2',$device = false)
     return $info;
 }
 
+// 二位数组排序
+function array_sort($arr, $keys, $type = 'asc') 
+{
+    $keysvalue = $new_array = array();
+    foreach ($arr as $k => $v){
+        $keysvalue[$k] = $v[$keys];
+    }
+    $type == 'asc' ? asort($keysvalue) : arsort($keysvalue);
+    reset($keysvalue);
+    foreach ($keysvalue as $k => $v) {
+       $new_array[$k] = $arr[$k];
+    }
+    return $new_array;
+}
+
 // 错误提示
 function error($code)
 {
@@ -53,6 +68,13 @@ function loader($file)
     }
 }
 
+function is_weixin()
+{ 
+    if ( strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger') !== false ) {
+        return true;
+    }  
+    return false;
+}
 // 判断是否是手机
 function is_mobile()
 { 
