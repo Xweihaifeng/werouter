@@ -196,6 +196,14 @@ $(function () {
                             });
                             break;
                         case 5:
+                            operList.push({
+                                name : '确定交易',
+                                oper : 'transaction_completion_operation',
+                            });
+                            operList.push({
+                                name : '申请退款',
+                                oper : 'apply_refund_operation',
+                            });
                             break;
                         case 6:
                             operList.push({
@@ -909,6 +917,14 @@ $(function () {
                             });
                             break;
                         case 5:
+                            operList.push({
+                                name : '确定交易',
+                                oper : 'transaction_completion_operation',
+                            });
+                            operList.push({
+                                name : '申请退款',
+                                oper : 'apply_refund_operation',
+                            });
                             break;
                         case 6:
                             operList.push({
