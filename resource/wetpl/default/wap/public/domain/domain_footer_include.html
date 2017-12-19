@@ -1,6 +1,6 @@
 <footer id="footer">
 	<ul>
-		<li :id="key" v-for="(item , key) in footer_nav" @click="page=key">
+		<li :id="key" v-for="(item , key) in footer_nav" @click="open(key);">
 			<div class="up" v-if="item.nav == false"></div>
 			<div class="down" v-if="item.nav == false"></div>
 
@@ -150,23 +150,6 @@
 	            },
 	            page : '',
 	        },
-	        watch: {
-	            page(val)
-	            {
-	                if(this.cuupage != val)
-	                {
-	                	var select = this.footer_nav[val];
-	                	if(select.login == true)
-	                	{
-	                		if(is_login != 'yes')
-	                		{
-	                			return ;
-	                		}
-	                	}
-	                    window.location.href= select.href;
-	                }
-	            }
-	        },
 	        mounted() {
 	            this.$nextTick( function () {
 	            	if(is_domain == 'yes')
@@ -176,6 +159,22 @@
 	            });
 	        },
 	        methods:{
+	        	open(val)
+	        	{
+	        		if(this.cuupage != val)
+	                {
+	                	var select = this.footer_nav[val];
+	                	if(select.login == true)
+	                	{
+	                		if(is_login != 'yes')
+	                		{
+	                			mb_login();
+	                			return ;
+	                		}
+	                	}
+	                    window.location.href= select.href;
+	                }
+	        	}
 	        }
 	    });
 	}

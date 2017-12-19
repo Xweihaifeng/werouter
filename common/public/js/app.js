@@ -1,13 +1,14 @@
 // 微众公共方法调用.
 (function(window) {
 	var app = {};
-	
+	//获取GET参数
 	app.get_query_string = function(name){
 		var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
 		var r = window.location.search.substr(1).match(reg);
 		if(r!=null)return  decodeURIComponent(r[2]); return null;
 	}
-	
+
+	//验证是否是空
 	app.empty = function(params){
 		if(params !== null && params !== undefined && params !== '')
 		{
@@ -15,7 +16,7 @@
 		}
 		return false;
 	}
-	
+	// 写入COOKIE
 	app.set_cookie = function(key  , val ,expiredays){
 		var Days = expiredays;
 		var exp = new Date();
@@ -23,10 +24,49 @@
 		exp.setTime(exp.getTime() + Days*24*60*60*1000);
 		document.cookie = key+"="+ escape (val) + ";expires=" + exp.toGMTString() +";path=/;domain="+domain;
 	}
-	
+	// 获取COOKIE
+	app.get_cookie = function(name){
+		var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+	    if(arr=document.cookie.match(reg)){
+	        return unescape(arr[2]); 
+	    }
+	    else {
+	        return null; 
+	    }
+	}
+	// 写入本地容器
+	app.set_storage = function(val , params){
+		var dataJson = JSON.stringify(params);
+        localStorage.setItem(val , dataJson);
+	}
+	// 获取本地容器
+	app.get_storage = function(val){
+		var dataString = localStorage.getItem(val);
+        if (dataString == null || dataString == 'undefined')
+        {
+            return false;
+        }
+        var dataJson = JSON.parse(dataString);
+        return dataJson;
+	}
+	// 登陆成功后需要添加的数据
+	app.set_login_data = function(data)
+	{
+		alert(data.data.weid);
+		alert(data.data.activation_status);
+		localStorage.setItem('weid', data.data.weid);
+		localStorage.setItem('token', data.token);
+		if(app.empty(data.data.activation_status) == true)
+		{
+			localStorage.setItem('activation', data.data.activation_status);
+		}
+		localStorage.setItem('phone', data.data.phone);
+		app.set_cookie('token' , data.token );
+	} 
+	// 修改页面标题
 	app.set_title = function(title){
 		document.title = title;
 	}
-	
+
 	window.$app = app;
 })(window);

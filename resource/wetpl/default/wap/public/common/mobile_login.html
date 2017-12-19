@@ -1,0 +1,111 @@
+<script src="/common/public/js/layer_mobile/layer.js"></script>
+<script type="text/javascript">
+// 需要依赖layer moble
+function mb_login(call){
+    layer.open({
+        content: '仅需一步,即可激活您的账号'
+        ,btn: ['激活', '暂不']
+        ,style: 'width: 60% ;'
+        ,yes: function(index){
+            layer.open({
+                content: `
+                <div id="login_vue">
+                    <div id="app_ss"  >
+                        <div id="login-info">
+                            <ul>
+                                <li id="phonenum">
+                                    <input type="text" v-model="login.phone" value="" name="login_phone" placeholder="请输入手机号码" maxlength="11" id="login_phone">
+                                </li> 
+                                <li id="checknum">
+                                    <input type="text" v-model="login.check" value="" name="login_check"  placeholder="请输入手机验证码" maxlength="6" id="login_check"> <span v-if="check_num>0">剩余{{check_num}}秒</span> <span v-else @click="code();">{{code_string}}</span>
+                                </li>
+                            </ul>
+                        </div>
+                         <div ><a class="layui-layer-btn0">激活</a></div>
+                    </div>
+                </div>
+                `
+                ,style:' height : 35%;padding:0px;0px;box-shadow: 1px 1px 50px rgba(0,0,0,.3);'
+
+            });
+
+            new Vue({
+                el: '#login_vue',
+                data: {
+                   code_string : '获取验证码',
+                   login: {
+                        phone : '',
+                        check : ''     
+                   },
+                   check_num : 0,
+                   verification : {
+                        'phone' : /^((1[1-9]{1})+\d{9})$/,
+                        'check' : /^\d{6}\b/,
+                   }
+                },
+                mounted() {
+                },
+                methods:{
+                    timer(){
+                        setTimeout(()=>{
+                            if(!this.check_num == 0)
+                            {
+                                this.check_num--;
+                                this.timer();
+                            }
+                        } , 1000);
+                    },
+                    code (){
+                        if(!this.verification.test(this.login.phone)) 
+                        { 
+                            mb_message('手机号不对');
+                        }
+
+                        ajax.post('codes' , {'phone' : this.login.phone}).then((data)=>{
+                            if(data.code == 200)
+                            {
+                                this.check_num = 60;
+                                this.timer();
+                            }
+                        });
+                    },
+                    login(){
+                        if(!this.verification.test(this.login.phone)) 
+                        { 
+                            mb_message('手机号不对');
+                            return;
+                        }
+                        
+                        if(!this.check.test(this.login.check)) 
+                        { 
+                            mb_message('手机号不对');
+                            return;
+                        }
+                        
+                        ajax.post('userAct' , {'phone' : this.login.phone , 'code' : this.login.check 
+                        , 'weid' : weid , 'type': 1 , 'from_type': 2}).then((data)=>{
+                            if(data.code == 200)
+                            {
+                                
+                            }
+                        });
+
+                    }
+                }
+            }); 
+            //call();
+        }
+    });
+}
+
+// 弹出窗口
+function mb_message(message)
+{
+    layer.open({
+        content: message
+        ,skin: 'msg'
+        ,time: 2 //2秒后自动关闭
+    });
+}
+</script>
+
