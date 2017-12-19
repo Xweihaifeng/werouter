@@ -608,6 +608,7 @@ $(function () {
                     if(!isNull(data)){
                         for (var a = 0; a < data.length; a++){
                             if(isNull(data[a].content)){
+                                $("#comment_" + orderId).attr("disabled", "false");
                                 layer.msg("评论内容不能为空", {
                                     time: 1500
                                 });
@@ -736,104 +737,38 @@ $(function () {
                         var goodsList = data.data.goods;
                         var i = 0;
                         goodsList.map(x => {
-                            html += '<div class="goods_comment_list"><div class="goodImg"><div style="text-align: center;"><img src="' + qiniu_bucket_domain + x.goods_cover + '" goodsweid="' + x.goods_id + '"><span>' + x.goods_title + '</span></div></div>' +
-                            '<div class="col-sm-10 form-group addimgmore">' +
-                            '<div class="imglabel">' +
-                            '<div id="container">' +
-                            '<a class="btn btn-default btn-lg btn-file" id="pickfiles-more' + i + '" href="#" >' +
-                            '<span>上传图片</span>' +
-                            '</a>' +
-                            '</div>' +
-                            '</div>' +
-                            '<div style="display:none" id="success" class="col-md-12">' +
-                            '<div class="alert-success">' +
-                            '队列全部文件处理完毕' +
-                            '</div>' +
-                            '</div>' +
-                            '<div class="imgmore">' +
-                            '<div class="imgsdiv">' +
-                            '<div id="fsUploadProgress"></div>' +
-                            '</div>' +
-                            '</div>' +
-                            '</div>' +
-                            '<div class="comment_bomb_box_group" style="display: inline-flex;"><div class="comment_bomb_box_name"> 评论： </div><div class="comment_bomb_box_input"><textarea class="bomb_box_textarea" cols="52" maxlength="52" rows="3" name="textarea"></textarea></div></div></div>';
-                        i++;
-                    })
-                        ;
-                        $(".comment_bomb_box_content").append(html);
+                                html = `<div class="goods_comment_list"><div class="goodImg"><div style="text-align: center;padding-left: 30px;"><img src="${qiniu_bucket_domain + x.goods_cover}" goodsweid="${x.goods_id}"><span>${x.goods_title}</span></div></div>
+                                <div class="col-sm-10 form-group addimgmore">
+                                <div class="imglabel">
+                                <div id="container_${i}">
+                                <a class="btn btn-default btn-lg btn-file" id="pickfiles_more_${i}" href="#" >
+                                <span>上传图片</span>
+                                </a>
+                                </div>
+                                </div>
+                                <div style="display:none" id="success" class="col-md-12">
+                                <div class="alert-success">
+                                队列全部文件处理完毕
+                                </div>
+                                </div>
+                                <div class="imgmore" style="padding-left: 15px;">
+                                <div class="imgsdiv">
+                                <div id="fsUploadProgress_${i}"></div>
+                                </div>
+                                </div>
+                                </div>
+                                <div class="comment_bomb_box_group" style="display: inline-flex;"><div class="comment_bomb_box_name"> 评论： </div><div class="comment_bomb_box_input"><textarea class="bomb_box_textarea" cols="52" maxlength="52" rows="3" name="textarea"></textarea></div></div></div>`;
+                                console.log(html);
+                                i++;
+                                $(".comment_bomb_box_content").append(html);
 
-                        //绑定七牛多图上传
-                        for (var a = 0; a < goodsList.length; a++) {
-                            var uploader = Qiniu.uploader({
-                                disable_statistics_report: false,
-                                runtimes: 'html5,flash,html4',
-                                browse_button: 'pickfiles-more' + a,
-                                container: 'container',
-                                drop_element: 'container',
-                                max_file_size: '100mb',
-                                flash_swf_url: '../../common/js/plupload/Moxie.swf',
-                                dragdrop: true,
-                                chunk_size: '4mb',
-                                multi_selection: !(moxie.core.utils.Env.OS.toLowerCase() === "ios"),
-                                uptoken_url: QINIU_UPTOKEN_URL,
-                                domain: qiniu_bucket_domain,
-                                get_new_uptoken: false,
-                                auto_start: true,
-                                log_level: 5,
-                                init: {
-                                    'BeforeChunkUpload': function (up, file) {
-                                    },
-                                    'FilesAdded': function (up, files) {
-                                        $('table').show();
-                                        $('#success').hide();
-                                        plupload.each(files, function (file) {
-                                            var progress = new FileProgress(file,
-                                                'fsUploadProgress');
-                                            progress.setStatus("等待...");
-                                            progress.bindUploadCancel(up);
-                                        });
-                                    },
-                                    'BeforeUpload': function (up, file) {
-                                        var progress = new FileProgress(file, 'fsUploadProgress');
-                                        var chunk_size = plupload.parseSize(this.getOption(
-                                            'chunk_size'));
-                                        if (up.runtime === 'html5' && chunk_size) {
-                                            progress.setChunkProgess(chunk_size);
-                                        }
-                                    },
-                                    'UploadProgress': function (up, file) {
-                                        var progress = new FileProgress(file, 'fsUploadProgress');
-                                        var chunk_size = plupload.parseSize(this.getOption(
-                                            'chunk_size'));
-                                        progress.setProgress(file.percent + "%", file.speed,
-                                            chunk_size);
-                                    },
-                                    'UploadComplete': function () {
-
-                                    },
-                                    'FileUploaded': function (up, file, info) {
-                                        var domain = up.getOption('domain');
-                                        var progress = new FileProgress(file, 'fsUploadProgress');
-                                        progress.setComplete(up, info.response);
-                                        $(".progressCancel").bind("click", function () {
-                                            $(this).closest(".progressContainer").remove();
-                                        })
-                                    },
-                                    'Error': function (up, err, errTip) {
-                                        $('table').show();
-                                        var progress = new FileProgress(err.file, 'fsUploadProgress');
-                                        progress.setError();
-                                        progress.setStatus(errTip);
-                                    },
-                                    'Key': function (up, file) {
-                                        var key = "pages/goods/";
-                                        key += new Date().valueOf() + '.' + file.name.substring(file.name.indexOf('.') + 1);
-                                        return key;
-                                    }
-
-                                }
-                            });
-                        }
+                        });
+                        var j = 0;
+                       for(var item of goodsList)
+                       {
+                           uploader(j);
+                           j++;
+                       }
                     }
                 } else {
                     $(".comment_bomb_box_content").append("加载失败");
@@ -842,7 +777,82 @@ $(function () {
 
         });
 
-    }
+    };
+
+
+    var uploader = function (mark) {
+
+          var up = Qiniu.uploader({
+            disable_statistics_report: false,
+            runtimes: 'html5,flash,html4',
+            browse_button: 'pickfiles_more_' + mark,
+            container: 'container_' + mark,
+            drop_element: 'container_'+ mark,
+            max_file_size: '100mb',
+            flash_swf_url: '../../common/js/plupload/Moxie.swf',
+            dragdrop: true,
+            chunk_size: '4mb',
+            multi_selection: !(moxie.core.utils.Env.OS.toLowerCase() === "ios"),
+            uptoken_url: QINIU_UPTOKEN_URL,
+            domain: qiniu_bucket_domain,
+            get_new_uptoken: false,
+            auto_start: true,
+            log_level: 5,
+            init: {
+                'BeforeChunkUpload': function (up, file) {
+                },
+                'FilesAdded': function (up, files) {
+                    $('table').show();
+                    $('#success').hide();
+                    plupload.each(files, function (file) {
+                        var progress = new FileProgress(file,
+                            'fsUploadProgress_'+ mark);
+                        progress.setStatus("等待...");
+                        progress.bindUploadCancel(up);
+                    });
+                },
+                'BeforeUpload': function (up, file) {
+                    var progress = new FileProgress(file, 'fsUploadProgress_'+ mark);
+                    var chunk_size = plupload.parseSize(this.getOption(
+                        'chunk_size'));
+                    if (up.runtime === 'html5' && chunk_size) {
+                        progress.setChunkProgess(chunk_size);
+                    }
+                },
+                'UploadProgress': function (up, file) {
+                    var progress = new FileProgress(file, 'fsUploadProgress_'+ mark);
+                    var chunk_size = plupload.parseSize(this.getOption(
+                        'chunk_size'));
+                    progress.setProgress(file.percent + "%", file.speed,
+                        chunk_size);
+                },
+                'UploadComplete': function () {
+
+                },
+                'FileUploaded': function (up, file, info) {
+                    var domain = up.getOption('domain');
+                    var progress = new FileProgress(file, 'fsUploadProgress_'+ mark);
+                    progress.setComplete(up, info.response);
+                    $(".progressCancel").bind("click", function () {
+                        $(this).closest(".progressContainer").remove();
+                    })
+                },
+                'Error': function (up, err, errTip) {
+                    $('table').show();
+                    var progress = new FileProgress(err.file, 'fsUploadProgress_'+ mark);
+                    progress.setError();
+                    progress.setStatus(errTip);
+                },
+                'Key': function (up, file) {
+                    var key = "pages/goods/";
+                    key += new Date().valueOf() + '.' + file.name.substring(file.name.indexOf('.') + 1);
+                    return key;
+                }
+
+            }
+        });
+          return up;
+    };
     //重新加载操作按钮
     var reloadOperation=function (orderid,message) {
         $.ajax({

@@ -523,7 +523,7 @@ $(document).ready(function(){
                         var goods = res.data.goods;
                         for(var i=0; i<goods.length; i++){
                             var imgDom =
-                                '<div style="display: inline-block;"><img weid="'+goods[i].weid+'" src="'+qiniu_bucket_domain + goods[i].goods_cover+'"><span style="display:block;margin-right: 10px;text-align: center;">'+goods[i].goods_title+'</span></div>';
+                                '<img weid="'+goods[i].weid+'" src="'+qiniu_bucket_domain + goods[i].goods_cover+'">';
                             $(".imgContainer").append(imgDom)
                         }
                         $(".dynamic-dom").attr("id",domNum);
@@ -647,9 +647,8 @@ $(document).ready(function(){
                                 }
                             }
                         }
-                        if(sendList[0].logistics_info){
-                            getDistributionInfo();
-                        }
+                        getDistributionInfo();
+
                     }
 
 
@@ -691,7 +690,7 @@ $(document).ready(function(){
                                 $('#group'+ind+' .detail').append(dom)
                             }
                         }else{
-                            $('#group'+ind+' .detail').text('加载失败')
+                            $('#group'+ind+' .detail').text(res.message.message);
                         }
 
                     }
