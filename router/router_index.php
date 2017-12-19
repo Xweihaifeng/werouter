@@ -371,7 +371,6 @@ class main extends controller
 		$plats['plats_info'] = $this->db->queryOne($plats_cms_sql , array($weid));
 
         $block = array_sort(json_decode($plats['plats_info']['block'] , TRUE) , 'sort' , 'asc');
-        
         $plats['plats_info']['blocks'] = $block;
         $plats['plats_info']['plat_name'] = $plats_row['plat_name'];
 
