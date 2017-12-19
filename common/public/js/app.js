@@ -5,7 +5,7 @@
 	app.get_query_string = function(name){
 		var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
 		var r = window.location.search.substr(1).match(reg);
-		if(r!=null)return  decodeURIComponent(r[2]); return null;
+		if(r!=null)return  decodeURIComponent(r[2]); return false;
 	}
 
 	//验证是否是空

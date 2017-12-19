@@ -2,11 +2,11 @@
 (function(window) {
 	var wx = {};
 	wx.get_openid = function(name){
+		alert(is_wx);
 		if(is_wx == 'no') return false;
 		var openid = $app.get_query_string('openid');
 		var get_storage_openid = $app.get_storage('openid');
-		alert($app.empty(openid));
-		return;
+
 		if($app.empty(openid) == true && $app.empty(get_storage_openid) == false)
 		{
 			$app.set_cookie('openid' , openid , 7);
