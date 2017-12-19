@@ -28,11 +28,16 @@ b{
     line-height: 55px;
     padding:0 10px;
     min-width:918px;
+    border-bottom: 1px solid #ebebeb;
 }
 .head .logo{
     display: inline-block;
     vertical-align: middle;
     width:106px;
+    height: 34px;
+    background: url(/common/img/sou_logo.png) 0 0 no-repeat, url(/common/img/sou_title.png) 30px 0 no-repeat;
+    background-size: 34px 34px, auto 34px;
+    background-position: 10px 0px, 38px 0px;
 }
 .head input{
     width:424px;
@@ -65,13 +70,17 @@ b{
     /*width:100%;*/
     background-color: #f8f8f8;
     height:38px;
-    line-height:38px;
     padding-left:121px;
     min-width:1160px;
+}
+.classify ul {
+	height: 38px;
 }
 .classify ul li{
     display: inline-block;
     padding:0 10px;
+    height: 36px;
+    line-height: 36px;
     color: #666;
     font-size:14px;
     cursor: pointer;
@@ -92,6 +101,7 @@ b{
     padding-left:121px;
     width:1212px;
     overflow: hidden;
+    margin-bottom: 60px;
 }
 .content>div{
     float: left;
@@ -149,7 +159,8 @@ b{
      color: #666;
 }
 .content .left .column div p>span{
-    height: 60px;
+    width: 100%;
+    min-height: 60px;
     display: inline-block;
 }
 .content .left .column .has-img p{

@@ -82,7 +82,7 @@
 						<div class="carousel-items">
 							<span v-for="(item,index) in slideList.length" :class="{'active':index===currentIndex}" @mouseover="change(index)"></span>
 						</div>-->
-						<div id="ceshiceshi" class="swiper-container">
+						<div id="swiperOption" class="swiper-container" :options="swiperOption">
 							<div class="swiper-wrapper">
 								<div class="swiper-slide">Slide 1</div>
 								<div class="swiper-slide">Slide 2</div>
@@ -95,9 +95,7 @@
 								<div class="swiper-slide">Slide 9</div>
 								<div class="swiper-slide">Slide 10</div>
 							</div>
-							<!-- Add Arrows -->
-							<div class="swiper-button-next"></div>
-							<div class="swiper-button-prev"></div>
+							<div class="swiper-pagination" slot="pagination"></div>
 						</div>
 					</div>
 					<ul class="sytjlb">
@@ -167,14 +165,6 @@
 
 			<!-- 底部 -->
 			<div class="footer">
-				<!--<div class="fooder_pc">
-					<img src="{{PATH_TML}}img/icon1.png"/>
-					<img src="{{PATH_TML}}img/icon1.png"/>
-				</div>
-				<div class="fooder_tel">
-					<a href="javascript:void(0)">手机版</a>|
-					<a href="javascript:void(0)">PC版</a>
-				</div>-->
 				<div class="fooder_wz">
 					<p>版权所有 陕西省秦商联合会 </p>
 					<p>全球秦商大会组委会 陕西省秦商联合会 | 地址：西安市新城大院省政府院内综合楼B101 邮编：710006</p>
@@ -189,17 +179,17 @@
 				data: {
 
 				},
-				computed: {
-					swiper() {
-						// return this.$refs.mySwiper.swiper;
-					}
+				methods: {
+					swiper() {}
 				},
 				mounted: function() {
-					var swiper = new Swiper('#ceshiceshi', {
-						autoplay: 5000,
+					var swiper = new Swiper('#swiperOption', {
+						autoplay: 3500,
 						slidesPerView: 1,
 						spaceBetween: 30,
+						slidesPerGroup: 1,
 						loop: true,
+						loopFillGroupWithBlank: true,
 						pagination: {
 							el: '.swiper-pagination',
 							clickable: true

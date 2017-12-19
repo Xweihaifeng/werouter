@@ -21,7 +21,10 @@
     <div id="app" v-cloak>
         <div class="head">
             <div>
-                <img class="logo" src="/common/img/logo-so.png" alt="">
+                <!--<img class="logo" src="/common/img/logo-so.png" alt="">-->
+                <div id="logo" class="logo">
+                	
+                </div>
                 <input type="text" placeholder="请输入要搜索的内容" v-model="searchText" @keyup.enter="goSearchOpen()">
                 <a @click="goSearchOpen()">搜索</a>
             </div>
@@ -44,13 +47,13 @@
                 </div>
                 <div v-if="!spinner && !newList.length">没有搜索到相关信息</div>
                 <div v-if="!spinner && newList.length>0" class="column" v-for="item in newList" :key="item.weid">
-                    <a :href="apiUrl+'news/'+item.weid" target="_blank" v-html="toRed(item.title)"></a>
+                    <a :href="all_domian+item.channel_domain+'/'+item.weid" target="_blank" v-html="toRed(item.title)"></a>
                     <div :class="{'has-img' : item.thumb_image}">
                         <img v-if="item.thumb_image" v-show="isShow" :src="handleImg(item.thumb_image)" alt="">
                         <p>
                             <span v-html="getSummary(item.summary)"></span>
                             <label>
-                                <a :href="apiUrl+'news/'+item.weid" v-html="all_domian+'news/'" target="_blank"></a>
+                                <a :href="all_domian+item.channel_domain+'/'+item.weid" v-html="all_domian+item.channel_domain+'/…'" target="_blank"></a>
                                 <span> - {{item.cate_name}}</span>
                             </label>
                         </p>
