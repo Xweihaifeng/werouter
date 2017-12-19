@@ -46,11 +46,11 @@
                 <div v-if="!spinner && newList.length>0" class="column" v-for="item in newList" :key="item.weid">
                     <a :href="apiUrl+'news/'+item.weid" target="_blank" v-html="toRed(item.title)"></a>
                     <div :class="{'has-img' : item.thumb_image}">
-                        <img v-if="item.thumb_image" :src="handleImg(item.thumb_image)" alt="">
+                        <img v-if="item.thumb_image" v-show="isShow" :src="handleImg(item.thumb_image)" alt="">
                         <p>
                             <span v-html="getSummary(item.summary)"></span>
                             <label>
-                                <a :href="apiUrl+'news/'+item.weid" v-html="all_domian+'news/'+item.weid" target="_blank"></a>
+                                <a :href="apiUrl+'news/'+item.weid" v-html="all_domian+'news/'" target="_blank"></a>
                                 <span> - {{item.cate_name}}</span>
                             </label>
                         </p>
@@ -109,6 +109,7 @@
                 currentActive:'',
                 sortTime:null,
                 byTitle : null,
+                isShow: true,
                 order: '',
                 total:0,
                 newList : [],

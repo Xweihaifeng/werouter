@@ -12,14 +12,35 @@
 		<title> 秦商 </title>
 		<link rel="shortcut icon" id="favicon" href="" />
 		<link rel="stylesheet" href="{{PATH_TML}}css/qin_dynasty.css">
+		<link rel="stylesheet" href="/common/css/swiper.min.css" />
 
 		<script src="/common/iview/vue.min.js"></script>
 		<script src="/common/iview/axios.min.js"></script>
 		<script src="/common/iview/libs/util.js"></script>
+
+		<script src="/common/js/swiper-3.3.1.min.js"></script>
+		<script src="/common/js/vue-awesome-swiper.js"></script>
 	</head>
 
 	<body>
 
+		<!--<script	>				
+		var mySwiper = new Swiper ('#swiperOption',{
+			autoplay: 5000,
+			slidesPerView: 1,
+			spaceBetween: 30,
+			loop: true,
+			pagination: {
+				el: '.swiper-pagination',
+				clickable: true
+			},
+			navigation: {
+				nextEl: '.swiper-button-next',
+				prevEl: '.swiper-button-prev'
+			}
+		});
+
+		</script>-->
 		<div id="app" class="app">
 
 			<!-- 头部 -->
@@ -50,7 +71,7 @@
 				<div class="banner">
 					<h2>要闻推荐</h2>
 					<div class="carousel">
-						<ul>
+						<!--<ul>
 							<li v-for="(list,index) in slideList" :key="index" v-show="index===currentIndex" @mouseenter="stop" @mouseleave="go">
 								<a :href="list.clickUrl">
 									<img :src="list.image" :alt="list.desc">
@@ -60,6 +81,23 @@
 						</ul>
 						<div class="carousel-items">
 							<span v-for="(item,index) in slideList.length" :class="{'active':index===currentIndex}" @mouseover="change(index)"></span>
+						</div>-->
+						<div id="ceshiceshi" class="swiper-container">
+							<div class="swiper-wrapper">
+								<div class="swiper-slide">Slide 1</div>
+								<div class="swiper-slide">Slide 2</div>
+								<div class="swiper-slide">Slide 3</div>
+								<div class="swiper-slide">Slide 4</div>
+								<div class="swiper-slide">Slide 5</div>
+								<div class="swiper-slide">Slide 6</div>
+								<div class="swiper-slide">Slide 7</div>
+								<div class="swiper-slide">Slide 8</div>
+								<div class="swiper-slide">Slide 9</div>
+								<div class="swiper-slide">Slide 10</div>
+							</div>
+							<!-- Add Arrows -->
+							<div class="swiper-button-next"></div>
+							<div class="swiper-button-prev"></div>
 						</div>
 					</div>
 					<ul class="sytjlb">
@@ -144,61 +182,35 @@
 				</div>
 			</div>
 		</div>
-
 		<script>
 			var app = new Vue({
 				el: '#app',
+
 				data: {
-					slideList: [{
-							"clickUrl": "#",
-							"title": "江山美如画",
-							"desc": "nhwc",
-							"image": "{{PATH_TML}}img/bg1.jpg"
-						},
-						{
-							"clickUrl": "#",
-							"title": "风景绿如蓝",
-							"desc": "hxrj",
-							"image": "{{PATH_TML}}img/bg2.jpg"
-						},
-						{
-							"clickUrl": "#",
-							"title": "日出江花红胜火",
-							"desc": "rsdh",
-							"image": "{{PATH_TML}}img/bg3.jpg"
-						}
-					],
-					currentIndex: 0,
-					timer: ''
+
 				},
-				methods: {
-					go() {
-						this.timer = setInterval(() => {
-							this.autoPlay()
-						}, 5000)
-					},
-					stop() {
-						clearInterval(this.timer)
-						this.timer = null
-					},
-					change(index) {
-						this.currentIndex = index
-					},
-					autoPlay() {
-						this.currentIndex++
-							if(this.currentIndex > this.slideList.length - 1) {
-								this.currentIndex = 0
-							}
+				computed: {
+					swiper() {
+						// return this.$refs.mySwiper.swiper;
 					}
 				},
-				created() {
-					this.$nextTick(() => {
-						this.timer = setInterval(() => {
-							this.autoPlay()
-						}, 5000)
-					})
+				mounted: function() {
+					var swiper = new Swiper('#ceshiceshi', {
+						autoplay: 5000,
+						slidesPerView: 1,
+						spaceBetween: 30,
+						loop: true,
+						pagination: {
+							el: '.swiper-pagination',
+							clickable: true
+						},
+						navigation: {
+							nextEl: '.swiper-button-next',
+							prevEl: '.swiper-button-prev'
+						}
+					});
 				}
-			})
+			});
 		</script>
 	</body>
 
