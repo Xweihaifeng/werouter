@@ -44,20 +44,20 @@ $(document).ready(function () {
             },
             success: function (data) {
                 if (data.code === 200) {
-                    showTips('添加成功!', 2, 'alert-info');
+                    showTips('添加成功!', 2, 'alert-info', 1);
                 } else {
-                    showTips('添加失败! '+data.message, 2, 'alert-danger');
+                    showTips(data.message, 2, 'alert-danger', 2);
                     console.log('error: -200');
                 }
             },
             error: function (xhr) {
-                showTips('添加失败! ', 2, 'alert-danger')
+                showTips('添加失败! ', 2, 'alert-danger', 2);
                 console.log(xhr);
             }
         })
     });
 
-    function showTips(tips, time, el) {
+    function showTips(tips, time, el, res) {
         var windowWidth = document.documentElement.clientWidth;
         var tipsDiv = '<div class="alert ' + el + '" role="alert">' + tips + '</div>';
 
@@ -79,6 +79,9 @@ $(document).ready(function () {
         setTimeout(function () {
             $('div.alert').fadeOut();
             $('.alert').remove();
+            if (res === 1) {
+                location.href = 'roles.html';
+            }
         }, (time * 1000)
         );
     }
