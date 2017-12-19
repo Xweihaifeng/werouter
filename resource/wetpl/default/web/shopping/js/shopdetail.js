@@ -290,7 +290,7 @@ $(document).ready(function() {
             pictureArr=data.pictures.split(",");
 			for(var i=0;i<pictureArr.length;i++){
                 img+='<a class="fancybox" href="'+ApiMaterPlatQiniuDomain+pictureArr[i]+'" data-fancybox-group="gallery'+data.weid+'">' +
-                '<img src="'+ApiMaterPlatQiniuDomain+pictureArr[i]+'" alt=" " style="width: 100px;height: 100px;">' +
+                '<img src="'+ApiMaterPlatQiniuDomain+pictureArr[i]+'" alt=" " style="width: 100px;height: 100px;margin: 10px 5px;">' +
                 '</a>';
 			}
 		}
@@ -336,10 +336,9 @@ $(document).ready(function() {
                         'zoomSpeedOut': 300,
                         'padding':'0px',
                         'hideOnOverlayClick':false,
-                        'showCloseButton':false,
-                        'autoScale'   : true,
-						'showCloseButton':false
-                    });
+                        'closeBtn':false,
+                        'autoScale'   : true
+					});
 				} else {
 					layer.msg("MESSAGE IS ERROR", { time: 2500 });
 				}
