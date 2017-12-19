@@ -108,7 +108,7 @@ const home = `
                         </div>
                     </div>
                     <div id="link">
-                        <ul id="link-title"></ul>
+                        <ul id="link-title"><div class="blueline"></div></ul>
                         <div id="link-page">
                             <ul></ul>
                         </div>
@@ -945,7 +945,8 @@ req().then((data) => {
                 var init_list = (key) => {
                     $("#" + key).css({
                         "color": "#fff",
-                        "background": "#4fb7ff"
+                        "background": "rgb(1, 167, 255)",
+                        "font-weight": "600"
                     })
                     link_cont = '';
                     link[key].list.map(x => {
@@ -967,7 +968,8 @@ req().then((data) => {
                         link_list.filter(x => x != key).map(x => {
                             $("#" + x).css({
                                 "color": "#000",
-                                "background": "#fff"
+                                "background": "#fff",
+                                "font-weight": "500"
                             });
                         })
                         init_list(key)
@@ -1458,7 +1460,7 @@ req().then((data) => {
                             $("#huodong .person-article-lists ").append("<div class='more text-center col-sm-12' style='margin-top:20px;'>查看更多</div>");
 
                         }else{
-                        $("#huodong .person-article-lists ").append("<div class='more text-center col-sm-12' style='margin-top:20px;'>这是我的底线啦~~~</div>");
+                        // $("#huodong .person-article-lists ").append("<div class='more text-center col-sm-12' style='margin-top:20px;'>这是我的底线啦~~~</div>");
 
                         }
                         page++;
@@ -1468,7 +1470,7 @@ req().then((data) => {
                         })
                     }else{
                          $("#huodong .person-article-lists ").children().remove();
-                        $("#huodong .person-article-lists ").append("<div class='more text-center col-sm-12' style='margin-top:20px;'>这是我的底线啦~~~</div>");
+                        // $("#huodong .person-article-lists ").append("<div class='more text-center col-sm-12' style='margin-top:20px;'>这是我的底线啦~~~</div>");
 
                     }
                 }
