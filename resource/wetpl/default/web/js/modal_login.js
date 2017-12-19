@@ -99,7 +99,19 @@ $(function() {
     $("#public_main_news_menu").append(template);
 
     if (get_weid != undefined) {
-        var options1 = $.get(USERDETAIL + "/" + get_weid);
+        var imgUrl = plats_user_info.avatar;
+        if(!imgUrl) {
+            imgUrl = "/common/img/my.png";
+            $("#login a").css({"background": "url("+ imgUrl +") center center / cover no-repeat"});
+            $("#login a").addClass("i-header").html("");
+        } else if (imgUrl.indexOf('http') != 0 && imgUrl != "") {
+            imgUrl = ApiMaterPlatQiniuDomain + imgUrl;
+            $("#login a").css({"background": "url(" + imgUrl + ") center center / cover no-repeat"});
+            $("#login a").addClass("i-header").html("");
+            showLogin = false;
+            isLogin = true;
+        }
+        /*var options1 = $.get(USERDETAIL + "/" + get_weid);
         options1.done(function(data) {
             if(data.code == 200) {
                 if(!data.data) {
@@ -127,7 +139,7 @@ $(function() {
         });
         options1.fail(function(error) {
             console.error(error);
-        });
+        });*/
     }    
 
     /*var options0 = $.get(apiUrl + "cms/setting/show");

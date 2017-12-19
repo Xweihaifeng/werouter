@@ -277,7 +277,7 @@ const req = () => {
 }
 
 req().then((data) => {
-    console.log(data)
+    // console.log(data)
     let init_page;
     let once = true;
     for (key in data) {
