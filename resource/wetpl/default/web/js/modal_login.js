@@ -159,6 +159,22 @@ $(function() {
         console.error(error);
     });*/
 
+    var setting = plats_info;
+    window.localStorage.setItem("logo", setting.logo);
+    window.localStorage.setItem("fav", setting.favicon);
+
+    $("#corporation").text(setting.title);
+
+    if(!setting.favicon == false) {
+        var favicon = ApiMaterPlatQiniuDomain + setting.favicon;
+        $("#public_icon").attr("href", favicon);
+    }
+
+    if(!setting.logo == false) {
+        var logo = ApiMaterPlatQiniuDomain + setting.logo;
+        $("#home .logoImg").css({"background-image": "url(" + logo + ")"});
+    }
+
     var showLogin = false; //调整窗口大小时登陆框是否存在
     $(window).resize(function(){
         if (showLogin){
@@ -291,6 +307,14 @@ $(function() {
         var domain = '.'+root_domain;
         exp.setTime(exp.getTime() + Days*24*60*60*1000);
         document.cookie = "token="+ escape (token) + ";expires=" + exp.toGMTString() +";path=/;domain="+domain;
+    }
+
+    function clearCookie() {
+        var keys = document.cookie.match(/[^ =;]+(?=\=)/g);
+        if (keys) {
+            for (var i = keys.length; i--;)
+                document.cookie = keys[i] + '=0;expires=' + new Date(0).toUTCString()
+        }
     }
 
     var saveUserInfo = function(token, weid, imgUrl, identity) {
@@ -607,6 +631,8 @@ $(function() {
     $("#avatar-logout span").click(function () {
         localStorage.removeItem('token');
         localStorage.removeItem('weid');
+        setCookie('', -1);
+        clearCookie();
     })
 
     $("#avatar-admin").click(function(){
