@@ -21,8 +21,8 @@
     <div id="app" v-cloak>
         <div class="head">
             <div>
-                <div id="logo" class="logo"></div>
-                <input type="text" placeholder="请输入要搜索的内容" v-model="searchText" @keyup.enter="goSearchOpen()">
+                <a href="/" id="logo" class="logo"></a>
+                <input type="text" placeholder="请输入关键字" v-model="searchText" @keyup.enter="goSearchOpen()">
                 <a @click="goSearchOpen()">搜一下</a>
             </div>
         </div>
@@ -46,7 +46,9 @@
                 <div v-if="!spinner && newList.length>0" class="column" v-for="item in newList" :key="item.weid">
                     <a :href="all_domian+item.channel_domain+'/'+item.weid" target="_blank" v-html="toRed(item.title)"></a>
                     <div :class="{'has-img' : item.thumb_image}">
-                        <img v-if="item.thumb_image" :src="handleImg(item.thumb_image)" alt="">
+                        <a :href="all_domian+item.channel_domain+'/'+item.weid" target="_blank">
+                        	<img v-if="item.thumb_image" :src="handleImg(item.thumb_image)" alt="">
+                        </a>
                         <p>
                             <span v-html="getSummary(item.summary)"></span>
                             <label>
@@ -130,7 +132,7 @@
             },
             methods : {
                 goSearchOpen: function()
-                {
+                {                	
                     window.location.href="/so?c="+this.currentActive + "&q="+this.searchText; 
                 },
                 getCloumn: function () {

@@ -68,7 +68,12 @@ b {
 	vertical-align: middle;
 }
 
-.head div:first-child a {
+.head input:focus {
+	/*border: 1px solid #0073B7;*/
+	border-color: #4791ff transparent #4791ff #4791ff;
+}
+
+.head div:first-child a:last-child {
 	display: inline-block;
 	width: 100px;
 	height: 33px;
@@ -81,6 +86,12 @@ b {
 	font-size: 14px;
 	vertical-align: middle;
 	cursor: pointer;
+}
+
+.head div:first-child a:last-child:hover {
+	background: #317ef3;
+	border-bottom: 1px solid #2868c8;
+	box-shadow: 1px 1px 1px #ccc;
 }
 
 .head div:last-child span {
@@ -295,9 +306,11 @@ b {
 	display: inline-block;
 }
 
-#prev_page, #next_page {
+#prev_page,
+#next_page {
 	width: 68px;
 }
+
 .content .left>ul li a {
 	font-size: 14px;
 	text-decoration: none;
@@ -343,6 +356,11 @@ b {
 
 .foot span {
 	padding: 0 15px;
+}
+
+
+.foot span:last-child {
+	padding-right: 115px;
 }
 
 
