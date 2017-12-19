@@ -115,7 +115,6 @@ $(function() {
 
                 } else if (imgUrl.indexOf('http') != 0 && imgUrl != "") {                
                     imgUrl = ApiMaterPlatQiniuDomain + imgUrl;
-                    console.log(imgUrl);
                     $("#login a").css({"background": "url(" + imgUrl + ") center center / cover no-repeat"});
                     $("#login a").addClass("i-header").html("");
                     showLogin = false;
@@ -183,8 +182,8 @@ $(function() {
     })
 
     //route
-    var domain;
-    var aru = false;
+    var domain = '/' + pages_index;
+    /*var aru = false;
     var hasDomain = function(weid){
         $.ajax({
             url: PAGES_PAGE_GETDETAILBYUSER + weid,
@@ -195,7 +194,7 @@ $(function() {
             },
             success: function(data){
                 if (data.code == 200){
-                    console.log(data);
+                    //console.log(data);
                     if (data.data != null) {
                         if (data.data.domain == null) {
                             //没有个性域名
@@ -212,9 +211,9 @@ $(function() {
                     }
 
                 } else {
-                    /*layer.msg(data.message, {
+                    /!*layer.msg(data.message, {
                         time: 1500
-                    });*/
+                    });*!/
                     // window.localStorage.removeItem('token')
                     // window.location.href = '/login'
                 }
@@ -227,8 +226,8 @@ $(function() {
 
     var weid = localStorage.getItem('weid');
     if (weid != null) {
-        hasDomain(weid);    
-    }
+        hasDomain(weid);
+    }*/
     
 
     //route
