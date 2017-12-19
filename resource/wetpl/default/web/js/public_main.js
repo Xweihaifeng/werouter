@@ -1599,7 +1599,7 @@ req().then((data) => {
                             $("#xiangmu .huzhubox ").append("<div class='more text-center col-sm-12' style='margin-top:20px;'>查看更多</div>");
 
                         }else{
-                          $("#xiangmu .huzhubox").append('<div align="center" id="crowd_uloadingsImg" style="display: block; height: 40px; margin-top: 40px; color: rgb(146, 146, 146);" class="col-sm-12 more"><div style="color: #858585;">——————————&nbsp;这是我的底线啦&nbsp;—————————</div></div>')
+                          // $("#xiangmu .huzhubox").append('<div align="center" id="crowd_uloadingsImg" style="display: block; height: 40px; margin-top: 40px; color: rgb(146, 146, 146);" class="col-sm-12 more"><div style="color: #858585;">——————————&nbsp;这是我的底线啦&nbsp;—————————</div></div>')
 
                         }
                         page++;
@@ -1609,7 +1609,7 @@ req().then((data) => {
                         })
                     }else{
                         $("#xiangmu .huzhubox").children().remove();
-                        $("#xiangmu .huzhubox").append('<div align="center" id="crowd_uloadingsImg" style="display: block; height: 40px; margin-top: 40px; color: rgb(146, 146, 146);" class="col-sm-12 more"><div style="color: #858585;">——————————&nbsp;这是我的底线啦&nbsp;—————————</div></div>')
+                        // $("#xiangmu .huzhubox").append('<div align="center" id="crowd_uloadingsImg" style="display: block; height: 40px; margin-top: 40px; color: rgb(146, 146, 146);" class="col-sm-12 more"><div style="color: #858585;">——————————&nbsp;这是我的底线啦&nbsp;—————————</div></div>')
                     }
                 }
             },

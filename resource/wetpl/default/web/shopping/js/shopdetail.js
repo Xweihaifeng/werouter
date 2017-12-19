@@ -284,15 +284,27 @@ $(document).ready(function() {
 		} else {
 			var nickname = data.nickname;
 		}
+        var img='';
+		if(!isNull(data.pictures)){
+			var pictureArr= new Array();
+            pictureArr=data.pictures.split(",");
+			for(var i=0;i<pictureArr.length;i++){
+                img+='<a class="fancybox" href="'+ApiMaterPlatQiniuDomain+pictureArr[i]+'" data-fancybox-group="gallery'+data.weid+'">' +
+                '<img src="'+ApiMaterPlatQiniuDomain+pictureArr[i]+'" alt=" " style="width: 100px;height: 100px;">' +
+                '</a>';
+			}
+		}
+
 		var messhtml = '<li class="supporter">' +
 			'<div class="supporter_img ">' +
-			'<img class="img-circle" src="' + imgsrc + '">' +
+			'<img class="img-circle" src="' +qiniu_bucket_domain + imgsrc + '">' +
 			'</div>' +
 			'<div class="supporter_user">' +
 			'<span class="supporter_user_log"></span>' +
 			'<p class="supporter_user_mid m0">' + nickname + ' </p>' +
 			'<span class="supporter_user_sm"></span>' +
 			'<div class="supporter_user_color">' + data.created_at + '</div>' +
+            '<div style="display: inline-block;">'+img+'</div>' +
 			' <div class="supporter_user_liuyan" style="width: 632px"> ' + data.content + '</div>' +
 			'</div>' +
 			'</li>';
@@ -317,6 +329,17 @@ $(document).ready(function() {
 						$(".pingjianeirong").append(messtemplete(x));
 
 					})
+                    $(".fancybox").fancybox({
+                        'width': 'auto',
+                        'height': 'auto',
+						'zoomSpeedIn': 300,
+                        'zoomSpeedOut': 300,
+                        'padding':'0px',
+                        'hideOnOverlayClick':false,
+                        'showCloseButton':false,
+                        'autoScale'   : true,
+						'showCloseButton':false
+                    });
 				} else {
 					layer.msg("MESSAGE IS ERROR", { time: 2500 });
 				}
