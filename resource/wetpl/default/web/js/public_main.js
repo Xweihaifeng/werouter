@@ -272,6 +272,7 @@ const req = () => {
         })*/
         setTimeout(() => {
             resolve(plats_info.blocks);
+            $("#beijing").css({ "background-image": "url(" + imgSet(plats_info.background_right, 960, 960, 3) + ")"})
         }, 50);
     })
 }
@@ -1281,7 +1282,7 @@ req().then((data) => {
 
                 $("#home-body").css({ "background": "url(" + bgImg + ") no-repeat center", "background-size": "100% 100%", "opacity": "1"})
                 //$("#beijing")  .css({ "background-image": "url(" + bgRight + ")",  "background-size": "50%"})
-                $("#beijing")  .css({ "background-image": "url(" + bgRight + ")"})
+                // $("#beijing")  .css({ "background-image": "url(" + bgRight + ")"})
                 $("#nav-news") .css({ "background-image": "url(" + bar1 + ")","background-size": "100% 100%","background-repeat": "no-repeat","background-position": "center" })
                 $("#nav-org")  .css({ "background-image": "url(" + bar2 + ")","background-size": "100% 100%","background-repeat": "no-repeat","background-position": "center" })
                 $("#nav-help") .css({ "background-image": "url(" + bar3 + ")","background-size": "100% 100%","background-repeat": "no-repeat","background-position": "center" })
