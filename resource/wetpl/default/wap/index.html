@@ -11,14 +11,16 @@
 
 		<title> 秦商 </title>
 		<link rel="shortcut icon" id="favicon" href="" />
-
 		<link rel="stylesheet" href="{{PATH_TML}}css/qin_dynasty.css">
-		<script type="text/javascript" src="{{PATH_TML}}js/vue.min.js"></script>
+
+		<script src="/common/iview/vue.min.js"></script>
+		<script src="/common/iview/axios.min.js"></script>
+		<script src="/common/iview/libs/util.js"></script>
 	</head>
 
 	<body>
 
-		<div id="viewport" class="viewport">
+		<div id="app" class="app">
 
 			<!-- 头部 -->
 			<div class="header">
@@ -47,7 +49,19 @@
 				</div>
 				<div class="banner">
 					<h2>要闻推荐</h2>
-					<div class="carousel"></div>
+					<div class="carousel">
+						<ul>
+							<li v-for="(list,index) in slideList" :key="index" v-show="index===currentIndex" @mouseenter="stop" @mouseleave="go">
+								<a :href="list.clickUrl">
+									<img :src="list.image" :alt="list.desc">
+									<span>{{list.title}}</span>
+								</a>
+							</li>
+						</ul>
+						<div class="carousel-items">
+							<span v-for="(item,index) in slideList.length" :class="{'active':index===currentIndex}" @mouseover="change(index)"></span>
+						</div>
+					</div>
 					<ul class="sytjlb">
 						<li>
 							<a href="javascript:void(0)" class="clearfix">
@@ -133,15 +147,56 @@
 
 		<script>
 			var app = new Vue({
-				el: "#viewport",
+				el: '#app',
 				data: {
-
-				},
-				mounted: function() {
-
+					slideList: [{
+							"clickUrl": "#",
+							"title": "江山美如画",
+							"desc": "nhwc",
+							"image": "{{PATH_TML}}img/bg1.jpg"
+						},
+						{
+							"clickUrl": "#",
+							"title": "风景绿如蓝",
+							"desc": "hxrj",
+							"image": "{{PATH_TML}}img/bg2.jpg"
+						},
+						{
+							"clickUrl": "#",
+							"title": "日出江花红胜火",
+							"desc": "rsdh",
+							"image": "{{PATH_TML}}img/bg3.jpg"
+						}
+					],
+					currentIndex: 0,
+					timer: ''
 				},
 				methods: {
-
+					go() {
+						this.timer = setInterval(() => {
+							this.autoPlay()
+						}, 5000)
+					},
+					stop() {
+						clearInterval(this.timer)
+						this.timer = null
+					},
+					change(index) {
+						this.currentIndex = index
+					},
+					autoPlay() {
+						this.currentIndex++
+							if(this.currentIndex > this.slideList.length - 1) {
+								this.currentIndex = 0
+							}
+					}
+				},
+				created() {
+					this.$nextTick(() => {
+						this.timer = setInterval(() => {
+							this.autoPlay()
+						}, 5000)
+					})
 				}
 			})
 		</script>
