@@ -615,7 +615,7 @@ $(document).ready(function(){
 
 
                             $('.comment_bomb_box_content').append(domGroup);
-                            if(sendList[i].order_goods_id){
+                            if(!isNull(sendList[i].order_goods_id)){
                                 var goodsSendGroup = sendList[i].order_goods_id.split(',');
                                 for(var a=0; a<goodsList.length; a++){
                                     for(var good = 0; good<goodsSendGroup.length; good++){
@@ -633,7 +633,7 @@ $(document).ready(function(){
                             }
 
                             //$('#group'+i+' .detail').text('正在加载，请稍候...');
-                            if(sendList[i].logistics_info){
+                            if(!isNull(sendList[i].logistics_info)){
                                 //字符串转json
                                 var logistics_info=$.parseJSON(sendList[i].logistics_info);
                                 for(var j=0; j<logistics_info.data.length;j++){
@@ -664,39 +664,39 @@ $(document).ready(function(){
         $('.send-group').each(function (ind, ele) {
             var no = $(ele).attr('no');
             var code = $(ele).attr('code');
-
-            $.ajax({
-                url : apiUrl + 'pages/logistics/getLogisticsInfo',
-                type : 'post',
-                data : {
-                    logistics_NO : no,
-                    company_code : code
-                },
-                headers : {
-                    "Token": localStorage.getItem('token')
-                },
-                dataType : 'json',
-                success : function (res) {
-                    console.log("根据订单详情查看物流信息",res);
-                    $('#group'+ind+' .detail').text('')
-                    if(res.code === 200){
-                        var logistList = res.data.data;
-                        for(var i=0; i<logistList.length;i++){
-                            var dom =
-                                '<p>' +
-                                '<i></i>'+
-                                '<span class="time">'+logistList[i].time+'</span>' +
-                                '<span class="content">'+logistList[i].context+'</span>'+
-                                '</p>';
-                            $('#group'+ind+' .detail').append(dom)
+            if(isNull($('#group'+ind+' .detail').text())){
+                $.ajax({
+                    url : apiUrl + 'pages/logistics/getLogisticsInfo',
+                    type : 'post',
+                    data : {
+                        logistics_NO : no,
+                        company_code : code
+                    },
+                    headers : {
+                        "Token": localStorage.getItem('token')
+                    },
+                    dataType : 'json',
+                    success : function (res) {
+                        console.log("根据订单详情查看物流信息",res);
+                        $('#group'+ind+' .detail').text('')
+                        if(res.code === 200){
+                            var logistList = res.data.data;
+                            for(var i=0; i<logistList.length;i++){
+                                var dom =
+                                    '<p>' +
+                                    '<i></i>'+
+                                    '<span class="time">'+logistList[i].time+'</span>' +
+                                    '<span class="content">'+logistList[i].context+'</span>'+
+                                    '</p>';
+                                $('#group'+ind+' .detail').append(dom)
+                            }
+                        }else{
+                            $('#group'+ind+' .detail').text('加载失败')
                         }
-                    }else{
-                        $('#group'+ind+' .detail').text('加载失败')
+
                     }
-
-                }
-            })
-
+                })
+            }
         })
 
     }

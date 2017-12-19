@@ -515,6 +515,7 @@ checkdomain(domain,id);
                         }
                         //useraddr(goods.range_id);
                         $(".product-buy-list").append(orderstorehtml(goods,goodsdata.goods_num,postMoney,goodPrice));
+
                         associatorNotDiscount();
                     }
                 }               
@@ -530,27 +531,28 @@ checkdomain(domain,id);
         numjia();
         numchange();
         buynumfunNotDiscount();
-        $("#submit").bind("click",function(){
-            var goods_list=[];
-            var obj=$(".product-buy-list").find(".goods_list");
-            obj.each(function(index,element){
-                var obj={"goods_id":$(element).attr("weid"),"goods_num":$(element).find("input[name='nums']").val()};
-                goods_list.push(obj);
-            });
-            var sendData = {
-                "goods_list":goods_list,
-                "address_id": $(".dizhi-active").parent().attr('data'),
-                "username": $(".dizhi-active").parent().find(".dizhi .buyname").text(),
-                "phone": $(".dizhi-active").parent().find(".dizhi .telname").text(),
-                "note": $("textarea[name='remark']").val()
-           }
-           submitorder(sendData);
-        })    
-        
-
     }
 
-    
+    $("#submit").bind("click",function(){
+        var goods_list=[];
+        var obj=$(".product-buy-list").find(".goods_list");
+        obj.each(function(index,element){
+            var obj={"goods_id":$(element).attr("weid"),"goods_num":$(element).find("input[name='nums']").val()};
+            goods_list.push(obj);
+        });
+        var sendData = {
+            "goods_list":goods_list,
+            "address_id": $(".dizhi-active").parent().attr('data'),
+            "username": $(".dizhi-active").parent().find(".dizhi .buyname").text(),
+            "phone": $(".dizhi-active").parent().find(".dizhi .telname").text(),
+            "note": $("textarea[name='remark']").val()
+        }
+        submitorder(sendData);
+    });
+
+
+
+
     // 提交订单
     var submitorder=function(sendData){
         if (domain == '') {

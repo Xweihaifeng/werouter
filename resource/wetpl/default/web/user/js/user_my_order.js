@@ -156,7 +156,7 @@ $(function () {
                         }
                         $('#'+x.weid+' .status-oper').children().remove();
                     var operList = [];
-                    if(!isNull(x.send.logistics_info)){
+                    if(!isNull(x.send)){
                         operList.push({
                             name : '查看物流',
                             oper : 'distribute'
@@ -427,7 +427,21 @@ $(function () {
                                     }
                                 }
 
-                                $('#group'+i+' .detail').text('正在加载，请稍候...')
+                                //$('#group'+i+' .detail').text('正在加载，请稍候...');
+                                if(!isNull(sendList[i].logistics_info)){
+                                    $('#group'+i+' .detail').text('');
+                                    //字符串转json
+                                    var logistics_info=$.parseJSON(sendList[i].logistics_info);
+                                    for(var j=0; j<logistics_info.data.length;j++){
+                                        var dom =
+                                            '<p>' +
+                                            '<i></i>'+
+                                            '<span class="time">'+logistics_info.data[j].time+'</span>' +
+                                            '<span class="content">'+logistics_info.data[j].context+'</span>'+
+                                            '</p>';
+                                        $('#group'+i+' .detail').append(dom);
+                                    }
+                                }
 
                             }
                             getDistributionInfo();
@@ -841,7 +855,7 @@ $(function () {
             success : function (data) {
                 if(data.code===200){
                     var operList = [];
-                    if(!isNull(data.data.send.logistics_info)){
+                    if(!isNull(data.data.send)){
                         operList.push({
                             name : '查看物流',
                             oper : 'distribute'
@@ -935,39 +949,39 @@ $(function () {
         $('.send-group').each(function (ind, ele) {
             var no = $(ele).attr('no');
             var code = $(ele).attr('code');
-
-            $.ajax({
-                url : apiUrl + 'pages/logistics/getLogisticsInfo',
-                type : 'post',
-                data : {
-                    logistics_NO : no,
-                    company_code : code
-                },
-                headers : {
-                    "Token": localStorage.getItem('token')
-                },
-                dataType : 'json',
-                success : function (res) {
-                    console.log("根据订单详情查看物流信息",res);
-                    $('#group'+ind+' .detail').text('')
-                    if(res.code === 200){
-                        var logistList = res.data.data;
-                        for(var i=0; i<logistList.length;i++){
-                            var dom =
-                                '<p>' +
-                                '<i></i>'+
-                                '<span class="time">'+logistList[i].time+'</span>' +
-                                '<span class="content">'+logistList[i].context+'</span>'+
-                                '</p>';
-                            $('#group'+ind+' .detail').append(dom)
+            if(isNull($('#group'+ind+' .detail').text())){
+                $.ajax({
+                    url : apiUrl + 'pages/logistics/getLogisticsInfo',
+                    type : 'post',
+                    data : {
+                        logistics_NO : no,
+                        company_code : code
+                    },
+                    headers : {
+                        "Token": localStorage.getItem('token')
+                    },
+                    dataType : 'json',
+                    success : function (res) {
+                        console.log("根据订单详情查看物流信息",res);
+                        $('#group'+ind+' .detail').text('')
+                        if(res.code === 200){
+                            var logistList = res.data.data;
+                            for(var i=0; i<logistList.length;i++){
+                                var dom =
+                                    '<p>' +
+                                    '<i></i>'+
+                                    '<span class="time">'+logistList[i].time+'</span>' +
+                                    '<span class="content">'+logistList[i].context+'</span>'+
+                                    '</p>';
+                                $('#group'+ind+' .detail').append(dom)
+                            }
+                        }else{
+                            $('#group'+ind+' .detail').text(res.message.message);
                         }
-                    }else{
-                        $('#group'+ind+' .detail').text('加载失败')
+
                     }
-
-                }
-            })
-
+                })
+            }
         })
     }
     var closeModel = function () {
