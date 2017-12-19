@@ -50,7 +50,7 @@ let mainLeft_p = `
                     <a href="/apply" style="width:100%;" target= "_blank">会员申请</a>
                 </div>
                 <div id="avatar-logout">
-                    <a onclick="logout();"  href="/" style="width:100%;display: block;">安全退出</a>
+                    <a onclick="logout();" style="width:100%;display: block;">安全退出</a>
                 </div>
             </div>
         </div>
@@ -617,7 +617,7 @@ function logout()
                 localStorage.removeItem('weid');
                 setCookie('', -1);
                 clearCookie();
-                // window.location.href = "/login";
+                window.location.href = "/";
             } 
         }
     });
