@@ -4,6 +4,9 @@
 
 // 主左
 
+
+
+
 let mainLeft = `
         <div id="home">
             <img src="/common/img/home.png" width='90' alt="HOME" />
@@ -622,4 +625,17 @@ function logout()
         }
     });
     
+}
+
+
+//监听加载状态改变
+document.onreadystatechange = completeLoading;
+function completeLoading() {
+    if (document.readyState == "complete") {
+        if ($("#loadingDiv").length > 0) {
+            $("#loadingDiv").animate({
+                opacity: "hide"
+            }, 300);
+        }
+    }
 }
