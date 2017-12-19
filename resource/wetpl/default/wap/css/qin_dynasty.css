@@ -207,51 +207,38 @@ ul {
 	background-size: 100%;
 }
 
-#swiperOption {
-	width: 100%;
-	height: 100%;
-	color: #fff;
+.swiper-pagination {
+	width: auto!important;
+	right: 0.1rem;
+	left: auto!important;
 }
 
-.swiper-container {
-	width: 100%;
-	height: 100%;
+.swiper-pagination>span {
+	background-color: #fff;
+	opacity: 0.8;
 }
 
-.swiper-slide {
-	text-align: center;
-	font-size: 18px;
-	/*background: #fff;*/
-	/* Center slide text vertically */
-	display: -webkit-box;
-	display: -ms-flexbox;
-	display: -webkit-flex;
-	display: flex;
-	-webkit-box-pack: center;
-	-ms-flex-pack: center;
-	-webkit-justify-content: center;
-	justify-content: center;
-	-webkit-box-align: center;
-	-ms-flex-align: center;
-	-webkit-align-items: center;
-	align-items: center;
+.swiper-pagination-bullet-active {
+	background-color: #79c8ff!important;
 }
 
 .carousel>ul,
 .carousel>ul>li,
-.carousel>ul>li>a,
-.carousel>ul>li>a>img {
+.carousel>ul>li>div,
+.carousel>ul>li>div>a,
+.carousel>ul>li>div>a>img {
 	width: 100%;
 	height: 100%;
 }
 
-.carousel>ul>li>a>span {
+.carousel>ul>li>div>a>span {
 	position: absolute;
 	display: inline-block;
 	width: 100%;
 	height: 0.36rem;
+	left: 0;
 	bottom: 0;
-	background-color: rgba(0, 0, 0, .5);
+	background-color: rgba(0, 0, 0, .4);
 	color: #fff;
 	line-height: 0.36rem;
 	text-indent: 0.08rem;

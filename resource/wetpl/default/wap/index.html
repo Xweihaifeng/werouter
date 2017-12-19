@@ -71,32 +71,16 @@
 				<div class="banner">
 					<h2>要闻推荐</h2>
 					<div class="carousel">
-						<!--<ul>
-							<li v-for="(list,index) in slideList" :key="index" v-show="index===currentIndex" @mouseenter="stop" @mouseleave="go">
-								<a :href="list.clickUrl">
-									<img :src="list.image" :alt="list.desc">
-									<span>{{list.title}}</span>
-								</a>
+						<ul id="swiperOption" class="swiper-container">
+							<li class="swiper-wrapper">
+								<div class="swiper-slide"><a href=""><img src="{{PATH_TML}}img/bg1.jpg" /><span>春来江水绿如蓝</span></a></div>
+								<div class="swiper-slide"><a href=""><img src="{{PATH_TML}}img/bg2.jpg" /><span>江山如此多娇</span></a></div>
+								<div class="swiper-slide"><a href=""><img src="{{PATH_TML}}img/bg3.jpg" /><span>日出江花红胜火</span></a></div>
 							</li>
-						</ul>
-						<div class="carousel-items">
-							<span v-for="(item,index) in slideList.length" :class="{'active':index===currentIndex}" @mouseover="change(index)"></span>
-						</div>-->
-						<div id="swiperOption" class="swiper-container" :options="swiperOption">
-							<div class="swiper-wrapper">
-								<div class="swiper-slide">Slide 1</div>
-								<div class="swiper-slide">Slide 2</div>
-								<div class="swiper-slide">Slide 3</div>
-								<div class="swiper-slide">Slide 4</div>
-								<div class="swiper-slide">Slide 5</div>
-								<div class="swiper-slide">Slide 6</div>
-								<div class="swiper-slide">Slide 7</div>
-								<div class="swiper-slide">Slide 8</div>
-								<div class="swiper-slide">Slide 9</div>
-								<div class="swiper-slide">Slide 10</div>
-							</div>
 							<div class="swiper-pagination" slot="pagination"></div>
-						</div>
+							<!--<div class="swiper-button-prev" slot="button-prev"></div>
+							<div class="swiper-button-next" slot="button-next"></div>-->
+						</ul>
 					</div>
 					<ul class="sytjlb">
 						<li>
@@ -172,32 +156,32 @@
 				</div>
 			</div>
 		</div>
+
 		<script>
 			var app = new Vue({
 				el: '#app',
-
-				data: {
-
-				},
+				data: {},
 				methods: {
 					swiper() {}
 				},
 				mounted: function() {
 					var swiper = new Swiper('#swiperOption', {
-						autoplay: 3500,
-						slidesPerView: 1,
 						spaceBetween: 30,
 						slidesPerGroup: 1,
-						loop: true,
 						loopFillGroupWithBlank: true,
-						pagination: {
-							el: '.swiper-pagination',
-							clickable: true
-						},
-						navigation: {
-							nextEl: '.swiper-button-next',
-							prevEl: '.swiper-button-prev'
-						}
+						loop: true,
+						speed: 300,
+						autoplay: 3000000,
+						autoplayDisableOnInteraction: false,
+						paginationClickable: true,
+						pagination: '.swiper-pagination',
+//						nextButton: '.swiper-button-next',
+//						prevButton: '.swiper-button-prev',
+						grabCursor: true,
+						longSwipesRatio: 0.3,
+						touchRatio: 1,
+						observer: true, //修改swiper自己或子元素时，自动初始化swiper
+						observeParents: true, //修改swiper的父元素时，自动初始化swiper
 					});
 				}
 			});
