@@ -509,7 +509,7 @@ $(function() {
                         id: "qrcode-block",
                         appid: result.data.appid,
                         scope: "snsapi_login",
-                        redirect_uri: window.location.href,
+                        redirect_uri: aa = (console.log(window.location.href) , window.location.href),
                         href: 'https://wezchina.com/common/css/wechat.css',
                         state: ""
                     });
