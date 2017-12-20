@@ -209,7 +209,7 @@ const header = `
                 <a href="http://2017.qqxqs.com" target="_blank"><span style="border-right: none;">访问旧版</span></a>
             </div>
             <div id="hs">
-                <span><input type="text" id="search" class="form-control"></span>
+                <span><input type="text" id="search" class="form-control" placeholder="请输入关键字"></span>
                 <span><img src="/common/img/find.png" style="padding: 7px" /></span>
                 <span>高级搜索</span>
             </div>
