@@ -72,7 +72,8 @@ $(function() {
             </div>
             <div class="wexin" style="display: none;">
                 <!-- <div class="wx">微信登录</div> -->
-                <div id="qrcode-block" style="margin-left:25px;"><iframe src="https://open.weixin.qq.com/connect/qrconnect?appid=wx4b835b375578d1c0&amp;scope=snsapi_login&amp;redirect_uri=http://qqxqs.com/login&amp;state=&amp;login_type=jssdk&amp;self_redirect=default&amp;href=https://wezchina.com/common/css/wechat.css" frameborder="0" scrolling="no" width="300px" height="400px"></iframe></div>
+                <!-- <div id="qrcode-block" style="margin-left:25px;"><iframe src="https://open.weixin.qq.com/connect/qrconnect?appid=wx4b835b375578d1c0&amp;scope=snsapi_login&amp;redirect_uri=http://qqxqs.com/login&amp;state=&amp;login_type=jssdk&amp;self_redirect=default&amp;href=https://wezchina.com/common/css/wechat.css" frameborder="0" scrolling="no" width="300px" height="400px"></iframe></div> -->
+                <div id="qrcode-block" style="margin-left:25px;"></div>
                 <div class="to-login"></div>
             </div>
         </div>
@@ -499,7 +500,7 @@ $(function() {
     }
 
     var qrlogin = function(){
-        /*$.getScript("https://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js", function(){
+        $.getScript("https://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js", function(){
             $.ajax({
                 url: apiUrl + 'setting/alias/weChatOpenConfig',
                 type: 'get',
@@ -524,7 +525,7 @@ $(function() {
                     console.log(xhr);
                 }
             });
-        })*/
+        })
     }
 
     $("#qrcode").click(function(){

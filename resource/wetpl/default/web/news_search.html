@@ -110,7 +110,7 @@
 			<div class="foot">
 				<span>意见反馈</span>
 				<span>使用帮助</span>
-				<span>推广合作</span> Copyright © qqxqs.com 全球秦商网 版权所有
+				<span>推广合作</span> Copyright © {{post}} {{title}} 版权所有
 			</div>
 		</div>
 		<script>
@@ -131,6 +131,8 @@
 					columnList: [],
 					limit: 10,
 					page: 1,
+					title: '',
+					post: window.location.host,
 					logo_bg: {
 						backgroundImage: this.logo
 					}
@@ -140,6 +142,7 @@
 						console.log(res);
 						if(res.data && res.code === 200) {
 							var logo = res.data.logo;
+							this.title = res.data.title;
 							if(!logo) {
 								logo = "/common/img/sou_logo.png";
 							} else if(logo.indexOf('http') != 0 && logo != "") {
