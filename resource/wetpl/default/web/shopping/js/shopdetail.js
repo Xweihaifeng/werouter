@@ -24,6 +24,7 @@ $(document).ready(function() {
 	}
 
 	//主页初始化
+	/*
 	var init = function(token) {
 		if(token != 'null' && token != undefined) {
 			showLogin = false;
@@ -38,7 +39,7 @@ $(document).ready(function() {
 	}
 
 	init(token);
-
+	*/
 	var router = function(route) {
 		if(!isLogin) {
 			showLogin = true;
