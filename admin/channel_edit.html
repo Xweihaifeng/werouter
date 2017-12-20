@@ -104,6 +104,22 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
+                                        <label class="control-label col-sm-2">在搜索展示</label>
+                                        <div class="col-sm-5">
+                                            <div class="checkbox">
+                                                <label><input type="checkbox" name="in_search" value="1"></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2">搜索展示名</label>
+                                        <div class="col-sm-5">
+                                            <div class="checkbox">
+                                                <input type="text" value="" class="form-control" name="search_name" placeholder="1到32个字符">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
                                         <label class="col-sm-2 control-label">缩略图</label>
                                         <div class="col-sm-5">
                                             <p style="padding-top:7px" class="info"> 上传格式： .png、.jpg、 .gif</p>
@@ -434,6 +450,8 @@
                         $('input[name=title]').val(data.data.title);
                         $('input[name=domain]').val(data.data.domain);
                         $('input[name=sort]').val(data.data.sort);
+                        $("[name=in_search]:checkbox").attr("checked", data.data.in_search ? true : false);
+                        $('input[name=search_name]').val(data.data.search_name);
                         if (data.data.thumb_image) {
                             $('#img').attr("src", ApiMaterPlatQiniuDomain + data.data.thumb_image);
                             $('input[name=thumb_image]').val(data.data.thumb_image);
@@ -621,6 +639,8 @@
                     'title': $('input[name=title]').val(),
                     'domain': $('input[name=domain]').val(),
                     'sort': $('input[name=sort]').val(),
+                    'in_search': $('input[name="in_search"]').is(':checked') ? 1 : 0,
+                    'search_name': $('input[name=search_name]').val(),
                     'thumb_image': $('input[name=thumb_image]').val(),
                     'back_image': $('input[name=back_image]').val(),
                     'big_image': $('input[name=big_image]').val(),
@@ -652,6 +672,16 @@
                                 min: 1,
                                 max: 32,
                                 message: '标题长度为1-32位'
+                            }
+                        }
+                    },
+                    search_name: {
+                        message: '索搜展示名无效',
+                        validators: {
+                            stringLength: {
+                                min: 1,
+                                max: 32,
+                                message: '索搜展示名长度为1-32位'
                             }
                         }
                     },
