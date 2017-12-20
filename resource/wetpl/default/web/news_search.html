@@ -5,13 +5,17 @@
 		<meta charset="UTF-8">
 		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 		<title></title>
+
 		<link rel="stylesheet" href="{{PATH_TML}}css/news_search.css">
+		<link rel="stylesheet" href="/common/magazine/css/iview.css">
+
 		<script src="{{PATH_CONFIG}}"></script>
 		<script src="/common/public/js/app.js"></script>
 		<script src="/common/js/vue.min.js"></script>
 		<script src="/common/iview/axios.min.js"></script>
 		<script src="/common/iview/libs/util.js"></script>
 		<script src="/common/js/jquery.min.js"></script>
+		<script src="/common/magazine/js/iview.min.js"></script>
 		<style type="text/css">
 			[v-cloak] {
 				display: none;
@@ -24,7 +28,7 @@
 			<div class="head">
 				<div>
 					<div class="logo">
-						<a href="/" id="logo1" v-bind:style="logo_bg"></a>
+						<a href="/" id="logo1" :style="'background-image:url('+logo_bg+')'"></a>
 						<a href="/so" id="logo2"></a>
 					</div>
 					<input type="text" placeholder="请输入关键字" v-model="searchText" @keyup.enter="goSearchOpen()">
@@ -68,17 +72,8 @@
 						<!--<span>{{item.cate_name}}</span>-->
 						<!--</div>-->
 					</div>
-					<ul v-if="!spinner && newList.length>0" v-show="isShow">
-						<li v-if="page > 1" :class="{'non-btn':page==1}" id="prev_page">
-							<a href="#" @click="previous()">&lt;上一页</a>
-						</li>
-						<li v-for="n in Math.ceil((total/limit).toFixed(2))" @click="goPage(n)" :class="{'selected-page' : n==page}">
-							<a href="#">{{n}}</a>
-						</li>
-						<li :class="{'non-btn':page==Math.ceil((total/limit).toFixed(2))}" id="next_page">
-							<a href="#" @click="next()">下一页&gt;</a>
-						</li>
-					</ul>
+					<Page :total="parseInt(total)" :current="page" :page-size="limit" v-show="isShow" @on-change="change" ></Page>
+					
 				</div>
 				<div class="right">
 					<div>
@@ -133,9 +128,7 @@
 					page: 1,
 					title: '',
 					post: window.location.host,
-					logo_bg: {
-						backgroundImage: this.logo
-					}
+					logo_bg: ''
 				},
 				mounted: function() {
 					ajax.get(apiUrl + 'cms/setting/show').then((res) => {
@@ -149,6 +142,8 @@
 								logo = imgSet(logo, 34, 34, 3);
 							}
 							this.logo = logo;
+							console.log(this.logo)
+	
 						} else {
 							console.warn(res.message);
 						}
@@ -162,6 +157,11 @@
 						document.title = '搜索 - ' + plats_info.title;
 					}
 					this.goSearch();
+				},
+				computed: {
+					logo_bg : function(){
+						return this.logo;
+					}
 				},
 				methods: {
 					goSearchOpen: function() {
@@ -208,9 +208,13 @@
 								}
 							}
 						});
-						//                    window.location.href = '/so/?q='+this.searchText+'&c='+this.currentActive;
-
 					},
+		            change: function(page) {
+		                console.log(page)
+		                var _self = this;
+		                _self.page = page;
+		                _self.goSearch();
+		            },
 					handleImg: function(img) {
 						if(img && img.indexOf('http') === -1 && img.indexOf('common') === -1) {
 							img = imgSet(img, 80, 100);
