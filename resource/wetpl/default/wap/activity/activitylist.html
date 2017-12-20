@@ -1,3 +1,4 @@
+<script src="../../../../../common/iview/libs/filter.js"></script>
 <#extend#>public/domain/domain_extend.html</#extend#>
 <link rel="stylesheet" href="{{PATH_TML}}css/act.css"/>
 <link rel="stylesheet" href="{{PATH_TML}}css/home.css"/>
@@ -6,7 +7,7 @@
     <div v-for="data in activityList">
         <a :href="'/' + domain + '/activity-detail/' + data.weid">
             <div class="act-content">
-                <div class="act-cover"><img :src="imgSet(data.cover, 110, 69, 1)" width="110" height="69" /></div>
+                <div class="act-cover"><img :src="data.cover | imgSet(110, 69, 1)" width="110" height="69" /></div>
                 <div class="act-cont">
                     <ul>
                         <li class="act-cont-title">
@@ -15,7 +16,7 @@
                         </li>
                         <li class="act-cont-summary"><p>{{data.Sponsor}}</p></li>
                         <li class="act-cont-time">
-                            <p>{{data.begain_time | formateTime}} 开讲</p>
+                            <p>{{data.begain_time | formateTime('MDHM')}} 开讲</p>
                             <p>{{data.area_name}}</p>
                         </li>
                         <li class="act-cont-info"></li>
@@ -35,37 +36,12 @@
         },
         mounted : function () {
             this.$nextTick(()=>{
-                ajax.get('pages/page/getDetailByDomain/'+this.domain).then((res)=>{
+                ajax.post('activity/listbyuser',{user_id: pages_info.plats_domian.plat_user_id}).then((res)=>{
                     if(res.code == 200){
-                        this.platUserId = res.data.plat_user_id;
-                        ajax.post('activity/listbyuser',{data:{user_id: this.platUserId}}).then((res)=>{
-                            if(res.code == 200){
-                                this.activityList = res.data.list
-                            }
-                        })
+                        this.activityList = res.data.list
                     }
-                })
+                });
             })
-        },
-        filters : {
-            formateTime : function (time) {
-                var date = new Date(time);
-                var year = date.getFullYear();
-                var month = (date.getMonth() + 1).toString().length == 1 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1;
-                var day = (date.getDay() + 1).toString().length == 1 ? '0' + (date.getDay() + 1) : date.getDay() + 1;
-                var hour = date.getHours().toString().length == 1 ? '0' + date.getHours() : date.getHours();
-                var min = date.getMinutes().toString().length == 1 ? '0' + date.getMinutes() : date.getMinutes();
-                return month +'-'+day+' '+hour+':'+min
-            }
-        },
-        methods : {
-            imgSet : function(path, width, height, mode) {
-                if (mode != undefined) {
-                    return ApiMaterPlatQiniuDomain + path + '?imageView2/' + mode + '/w/' + width + '/h/' + height;
-                } else {
-                    return ApiMaterPlatQiniuDomain + path + '?imageView2/3/w/' + width + '/h/' + height;
-                }
-            }
         }
     })
 </script>

@@ -1,64 +1,65 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <link rel="shortcut icon" id="favicon" href="" />
-    <link rel="stylesheet" href="{{PATH_TML}}css/home.css"/>
-    <link rel="stylesheet" href="{{PATH_TML}}css/common.css"/>
-    <link rel="stylesheet" href="{{PATH_TML}}css/act.css"/>
-    <link rel="stylesheet" href="{{PATH_TML}}css/wepage.css"/>
-    <link rel="stylesheet" href="/common/jquery.animsition/css/animsition.min.css">
-    <!--<link rel="stylesheet" href="css/liMarquee.css"/>-->
-    <!--<script src="js/jquery.liMarquee.js"></script>-->
-    <script src="{{PATH_TML}}js/jquery-3.2.1.min.js"></script>
-    <script src="{{PATH_TML}}js/vue.min.js"></script>
-    <script type="text/javascript" src="{{PATH_CONFIG}}"></script>
-    <link rel="stylesheet" href="{{PATH_TML}}js/layui/css/layui.css"/>
-    <script src="{{PATH_TML}}js/layui/layui.js"></script>
-    <script src="{{PATH_TML}}interface/activity.js"></script>
-    <!--<script src="{{PATH_TML}}interface/my-activity.js"></script>-->
-    <script src="{{PATH_TML}}js/home.js"></script>
-    <script src="/common/jquery.animsition/js/jquery.animsition.min.js"></script>
-    <script src="/common/jquery-lazyload/jquery.lazyload.js"></script>
-    <title>活动</title>
-</head>
-<body class="animsition">
-    <style>
-        .act-cont-title {
-            width: 1.7rem;
-        }
-
-        .act-cont-summary {
-            margin-top: 0.05rem;
-        }
-
-        .act-cont-time {
-            padding: 0;
-            border: none;
-            /*margin: 0.09rem 0 0 0.1rem;*/
-        }
-
-        .act-cont-time {
-            width: 1.7rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-    </style>
-    <nav></nav>
-    <!--<div class="act-sound">
-        <img src="img/sound.svg" alt="" />
+<#extend#>public/domain/domain_extend.html</#extend#>
+<link rel="stylesheet" href="{{PATH_TML}}css/home.css"/>
+<link rel="stylesheet" href="{{PATH_TML}}css/common.css"/>
+<link rel="stylesheet" href="{{PATH_TML}}css/act.css"/>
+<div id="act-container">
+    <div v-for="item in actList">
+        <div class="act">
+            <div class="act-avatar">
+                <a :href="'/' + item.domain + '/wecard'">
+                    <img class="lazy" :src="item.avatar | img_src(60,60)" width="60" height="60" />
+                </a>
+            </div>
+            <div class="all">
+                <div class="act-info">
+                    <ul>
+                        <li class="act-title">{{item.nickname}}</li>
+                        <li class="act-intro">{{item.motto}}</li>
+                    </ul>
+                    <div class="act-hot"><span>热门</span></div>
+                </div>
+                <a :href="'/' + item.domain + '/activity-detail/' + JSON.parse(item.other).weid">
+                    <div class="act-content">
+                        <div class="act-cover"><img class="lazy" :src="JSON.parse(item.other).cover | imgSet(110, 69, 1)" width="110" height="69" /></div>
+                        <div class="act-cont">
+                            <ul>
+                                <li class="act-cont-title">
+                                    <p>{{JSON.parse(item.other).title}}</p>
+                                    <p>免费</p>
+                                </li>
+                                <li class="act-cont-summary">{{JSON.parse(item.other).Sponsor}}</li>
+                                <li class="act-cont-time">
+                                    <p>{{JSON.parse(item.other).updated_at | formateTime('MDHM') }} 开讲</p>
+                                    <p>{{JSON.parse(item.other).area_name}}</p>
+                                </li>
+                                <li class="act-cont-info"></li>
+                            </ul>
+                        </div>
+                    </div>
+                </a>
+                <div class="act-other">
+                    <p>{{JSON.parse(item.other).updated_at | formateTime('HM') }}</p>
+                    <img src="/common/img/review.svg" alt=""/>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="str1 str_wrap">
-        <span>Javascript是一种基于（Object）和事件驱动并具有安全性能的脚本语言。</span>
-        <span>Javascript是一种通用的脚本编程语言</span>
-    </div>-->
-    <div id="container" style="margin-top: 0.44rem;"></div>
-    <footer></footer>
-
-    <!--<script>
-        $('.str1').liMarquee();
-    </script>-->
-</body>
-</html>
+</div>
+<script>
+    new Vue({
+        el : '#app',
+        data : {
+            actList : []
+        },
+        mounted : function () {
+            this.$nextTick(()=>{
+                ajax.get('circel/dynamic?type=' + 2 + '&dynamic_type=' + 3).then((res)=>{
+                    console.log(res)
+                    if(res.code == 200){
+                        this.actList = res.data.list;
+                    }
+                })
+            })
+        }
+    })
+</script>
