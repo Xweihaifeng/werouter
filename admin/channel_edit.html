@@ -96,6 +96,13 @@
                                             <input type="text" value="" class="form-control" name="domain" placeholder="1到4个小写英文字母">
                                         </div>
                                     </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2">排序*</label>
+                                        <div class="col-sm-5">
+                                            <input type="text" value="" class="form-control" name="sort" placeholder="请输入数字">
+                                        </div>
+                                    </div>
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">缩略图</label>
                                         <div class="col-sm-5">
@@ -426,6 +433,7 @@
                     success: function(data) {
                         $('input[name=title]').val(data.data.title);
                         $('input[name=domain]').val(data.data.domain);
+                        $('input[name=sort]').val(data.data.sort);
                         if (data.data.thumb_image) {
                             $('#img').attr("src", ApiMaterPlatQiniuDomain + data.data.thumb_image);
                             $('input[name=thumb_image]').val(data.data.thumb_image);
@@ -612,6 +620,7 @@
                     '_method': 'put',
                     'title': $('input[name=title]').val(),
                     'domain': $('input[name=domain]').val(),
+                    'sort': $('input[name=sort]').val(),
                     'thumb_image': $('input[name=thumb_image]').val(),
                     'back_image': $('input[name=back_image]').val(),
                     'big_image': $('input[name=big_image]').val(),
@@ -660,6 +669,18 @@
                             regexp: {
                                 regexp: /^[a-z]+$/,
                                 message: '别名只能由小写字母组成'
+                            }
+                        }
+                    },
+                    sort: {
+                        message: '排序无效',
+                        validators: {
+                            notEmpty: {
+                                message: '排序不能为空'
+                            },
+                            regexp: {
+                                regexp: /^[0-9]+$/,
+                                message: '排序只能为数字'
                             }
                         }
                     },
