@@ -1,189 +1,229 @@
-<!--
- * Created by weifeng on 2017/11/12.
--->
-
-<!DOCTYPE html>
-<html lang="en">
+<html>
 
 	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+		<title></title>
+		<meta name="viewport" content="width=device-width; initial-scale=1; user-scalable=no;">
+		<link rel="stylesheet" href="{{PATH_TML}}css/coc/mtcstyle.css">
+		<script src="{{PATH_TML}}js/jquery-3.2.1.min.js"></script>
 
-		<title> 秦商 </title>
-		<link rel="shortcut icon" id="favicon" href="" />
-		<link rel="stylesheet" href="{{PATH_TML}}css/qin_dynasty.css">
-		<link rel="stylesheet" href="/common/css/swiper.min.css" />
-
-		<script src="/common/iview/vue.min.js"></script>
-		<script src="/common/iview/axios.min.js"></script>
-		<script src="/common/iview/libs/util.js"></script>
-
-		<script src="/common/js/swiper-3.3.1.min.js"></script>
-		<script src="/common/js/vue-awesome-swiper.js"></script>
 	</head>
 
 	<body>
-
-		<!--<script	>				
-		var mySwiper = new Swiper ('#swiperOption',{
-			autoplay: 5000,
-			slidesPerView: 1,
-			spaceBetween: 30,
-			loop: true,
-			pagination: {
-				el: '.swiper-pagination',
-				clickable: true
-			},
-			navigation: {
-				nextEl: '.swiper-button-next',
-				prevEl: '.swiper-button-prev'
-			}
-		});
-
-		</script>-->
-		<div id="app" class="app">
-
-			<!-- 头部 -->
+		<div id="viewport" class="viewport">
 			<div class="header">
-				<div class="logo"></div>
+				<i class="m_logo"></i>
 			</div>
-
-			<!-- 内容部分 -->
-			<div class="content">
-				<div class="syflbg">
-					<!--栏目-->
-					<div class="syfl clearfix">
-						<a><img src="{{PATH_TML}}img/nav_icon1.png" alt="" /><span>资讯中心</span></a>
-						<a><img src="{{PATH_TML}}img/nav_icon2.png" alt="" /><span>信息公开</span></a>
-						<a><img src="{{PATH_TML}}img/nav_icon3.png" alt="" /><span>在线服务</span></a>
-						<a><img src="{{PATH_TML}}img/nav_icon4.png" alt="" /><span>互动交流</span></a>
-						<a><img src="{{PATH_TML}}img/nav_icon5.png" alt="" /><span>美丽秦川</span></a>
-						<a><img src="{{PATH_TML}}img/nav_icon6.png" alt="" /><span>网站导航</span></a>
+			<div class="clear"></div>
+			<div class="syflbg">
+				<!--栏目-->
+				<div class="syfl">
+					<div class="syfl_mar">
+						<ul>
+							<li>
+								<a href="http://m.tongchuan.gov.cn/html/zxzx/index.html"><span><img src="{{PATH_TML}}img/index/nav_icon1.png"></span>
+									<h2>资讯中心</h2></a>
+							</li>
+							<li>
+								<a href="http://m.tongchuan.gov.cn/html/xxgk/index.html"><span><img src="{{PATH_TML}}img/index/nav_icon2.png"></span>
+									<h2>信息公开</h2></a>
+							</li>
+							<li>
+								<a href="http://m.tongchuan.gov.cn/html/service/index.html"><span><img src="{{PATH_TML}}img/index/nav_icon3.png"></span>
+									<h2>在线服务</h2></a>
+							</li>
+							<li>
+								<a href="http://m.tongchuan.gov.cn/html/hd/index.html"><span><img src="{{PATH_TML}}img/index/nav_icon4.png"></span>
+									<h2>互动交流</h2></a>
+							</li>
+							<li>
+								<a href="http://m.tongchuan.gov.cn/html/mltc/index.html"><span><img src="{{PATH_TML}}img/index/nav_icon5.png"></span>
+									<h2>美丽铜川</h2></a>
+							</li>
+							<li>
+								<a href="http://m.tongchuan.gov.cn/news_list.rt?channlId=6"><span><img src="{{PATH_TML}}img/index/nav_icon6.png"></span>
+									<h2>网站导航</h2></a>
+							</li>
+						</ul>
 					</div>
-					<!--搜索-->
-					<div class="sous">
-						<div><input type="text" value="请输入关键词" /></div>
-						<div>
-							<div></div>
+				</div>
+				<div class="clear"></div>
+				<!--栏目 end-->
+				<!--搜索-->
+				<div class="sous">
+					<form action="http://m.tongchuan.gov.cn/search_list.rt" method="post" name="sosoFrom">
+						<div class="sous_l"><input name="keyWord" type="text" class="sous_inp" value="请输入关键词"></div>
+						<div class="sous_r"><input name="" type="submit" class="sous_but" value=""></div>
+						<div class="clear"></div>
+					</form>
+				</div>
+				<!--搜索-->
+			</div>
+			<div class="clear"></div>
+			<div class="syywtj_dh"><img src="{{PATH_TML}}img/index/hs_ic.jpg">
+				<h1 onclick="location.href=&#39;/html/zxzx/tcyw/index.html&#39;">要闻推荐</h1></div>
+			<div class="clear"></div>
+			<!--图片轮换开始-->
+			<div class="banner1">
+				<div id="mySwipe" class="swipe" style="visibility: visible;">
+					<div class="swipe-wrap" style="width: 1125px;">
+						<div data-index="0" style="width: 375px; left: 0px; transition-duration: 300ms; transform: translate(-375px, 0px) translateZ(0px);">
+							<a href="http://m.tongchuan.gov.cn/html/zxzx/tpxw/201712/189452.html"><img src="{{PATH_TML}}img/index/1513742482503.jpg" width="100%"></a>
+							<div class="mySwipeceng">
+								<div class="left"><b style="font-weight:normal; color:">李荣检查医疗卫生服务工作</b></div>
+								<div class="mySwip_rg"> <span class="mySwipetabdiancurr"></span><span class="mySwipetabdian"></span>
+									<span class="mySwipetabdian"></span>
+								</div>
+							</div>
+						</div>
+						<div data-index="1" style="width: 375px; left: -375px; transition-duration: 300ms; transform: translate(0px, 0px) translateZ(0px);">
+							<a href="http://m.tongchuan.gov.cn/html/zxzx/tpxw/201712/189388.html"><img src="{{PATH_TML}}img/index/1513655494752.jpg" width="100%"></a>
+							<div class="mySwipeceng">
+								<div class="left"><b style="font-weight:normal; color:#ff0000">美丽天使　播撒温暖</b></div>
+								<div class="mySwip_rg"> <span class="mySwipetabdiancurr"></span><span class="mySwipetabdian"></span>
+									<span class="mySwipetabdian"></span>
+								</div>
+							</div>
+						</div>
+						<div data-index="2" style="width: 375px; left: -750px; transition-duration: 0ms; transform: translate(375px, 0px) translateZ(0px);">
+							<a href="http://m.tongchuan.gov.cn/html/zxzx/tpxw/201712/189420.html"><img src="{{PATH_TML}}img/index/1513704196184.JPG" width="100%"></a>
+							<div class="mySwipeceng">
+								<div class="left"><b style="font-weight:normal; color:">郭大为：用责任担当度提升转型发展加速度</b></div>
+								<div class="mySwip_rg"> <span class="mySwipetabdiancurr"></span><span class="mySwipetabdian"></span>
+									<span class="mySwipetabdian"></span>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
-				<div class="banner">
-					<h2>要闻推荐</h2>
-					<div class="carousel">
-						<ul id="swiperOption" class="swiper-container">
-							<li class="swiper-wrapper">
-								<div class="swiper-slide"><a href=""><img src="{{PATH_TML}}img/bg1.jpg" /><span>春来江水绿如蓝</span></a></div>
-								<div class="swiper-slide"><a href=""><img src="{{PATH_TML}}img/bg2.jpg" /><span>江山如此多娇</span></a></div>
-								<div class="swiper-slide"><a href=""><img src="{{PATH_TML}}img/bg3.jpg" /><span>日出江花红胜火</span></a></div>
-							</li>
-							<div class="swiper-pagination" slot="pagination"></div>
-							<!--<div class="swiper-button-prev" slot="button-prev"></div>
-							<div class="swiper-button-next" slot="button-next"></div>-->
-						</ul>
-					</div>
-					<ul class="sytjlb">
+			</div>
+			<div class="clear"></div>
+			<!--图片轮换结束-->
+			<div class="sytjlb">
+				<ul>
+					<li>
+						<a href="http://m.tongchuan.gov.cn/html/zxzx/tcyw/201712/189422.html"><span class="sytjlb_fl">[铜川新闻]</span>
+							<h2><b style="font-weight:normal; color:">我市六项措施推进农村饮水安全</b></h2><span class="sytjlb_sj">2017-12-20</span></a>
+					</li>
+					<li>
+						<a href="http://m.tongchuan.gov.cn/html/zxzx/tpxw/201712/189452.html"><span class="sytjlb_fl">[图片新闻]</span>
+							<h2><b style="font-weight:normal; color:">李荣检查医疗卫生服务工作</b></h2><span class="sytjlb_sj">2017-12-20</span></a>
+					</li>
+					<li>
+						<a href="http://m.tongchuan.gov.cn/html/zxzx/qxkx/201712/189451.html"><span class="sytjlb_fl">[区县快讯]</span>
+							<h2><b style="font-weight:normal; color:">耀州区瑶曲镇就业扶贫传捷报</b></h2><span class="sytjlb_sj">2017-12-20</span></a>
+					</li>
+					<li>
+						<a href="http://m.tongchuan.gov.cn/html/zxzx/qxkx/201712/189450.html"><span class="sytjlb_fl">[区县快讯]</span>
+							<h2><b style="font-weight:normal; color:">耀州区选手在全省“讲陕西故事</b></h2><span class="sytjlb_sj">2017-12-20</span></a>
+					</li>
+					<li>
+						<a href="http://m.tongchuan.gov.cn/html/zxzx/qxkx/201712/189445.html"><span class="sytjlb_fl">[区县快讯]</span>
+							<h2><b style="font-weight:normal; color:">印台区用项目建设激发贫困户脱</b></h2><span class="sytjlb_sj">2017-12-20</span></a>
+					</li>
+					<li>
+						<a href="http://m.tongchuan.gov.cn/html/zxzx/qxkx/201712/189443.html"><span class="sytjlb_fl">[区县快讯]</span>
+							<h2><b style="font-weight:normal; color:">印台区：“生态活水”浇开“扶</b></h2><span class="sytjlb_sj">2017-12-20</span></a>
+					</li>
+				</ul>
+			</div>
+			<!--重点专题-->
+			<div class="syzdzt_dh"><img src="{{PATH_TML}}img/index/hs_ic.jpg">
+				<h1>重点专题</h1></div>
+			<div class="clear"></div>
+			<div class="syzdzt_pc">
+				<div class="syzdzt_pcmr">
+					<ul>
 						<li>
-							<a href="javascript:void(0)" class="clearfix">
-								<div><span>[秦川新闻]</span><span>秦川探索开展“保险+期货”试</span></div>
-								<div>2017-12-18</div>
-							</a>
+							<a href="http://m.tongchuan.gov.cn/html/zxzx/zwzt/xxxzw/index.html"><img src="{{PATH_TML}}img/index/1512983693129.jpg"></a>
 						</li>
 						<li>
-							<a href="javascript:void(0)" class="clearfix">
-								<div><span>[视频新闻]</span><span>秦川新闻联播（2017年12</span></div>
-								<div>2017-12-18</div>
-							</a>
+							<a href="http://m.tongchuan.gov.cn/html/zxzx/zwzt/sjd/index.html"><img src="{{PATH_TML}}img/index/1507859756469.jpg"></a>
 						</li>
 						<li>
-							<a href="javascript:void(0)" class="clearfix">
-								<div><span>[图片新闻]</span><span>杨长亚主持召开市政府党组会议</span></div>
-								<div>2017-12-18</div>
-							</a>
+							<a href="http://m.tongchuan.gov.cn/html/zxzx/zwzt/dlfjwn/index.html"><img src="{{PATH_TML}}img/index/1500626261042.jpg"></a>
+						</li>
+						<div class="clear"></div>
+						<li>
+							<a href="http://m.tongchuan.gov.cn/html/zxzx/zwzt/swhbdc/index.html"><img src="{{PATH_TML}}img/index/1508032038678.jpg"></a>
 						</li>
 						<li>
-							<a href="javascript:void(0)" class="clearfix">
-								<div><span>[图片新闻]</span><span>郭大为：深悟精髓要义　汲取实</span></div>
-								<div>2017-12-18</div>
-							</a>
+							<a href="http://m.tongchuan.gov.cn/html/zxzx/zwzt/fjfz/index.html"><img src="{{PATH_TML}}img/index/1503370511224.jpg"></a>
 						</li>
 						<li>
-							<a href="javascript:void(0)" class="clearfix">
-								<div><span>[公告通知]</span><span>2017年铜川市增补合同制消</span></div>
-								<div>2017-12-18</div>
-							</a>
+							<a href="http://m.tongchuan.gov.cn/html/zxzx/zwzt/tgxy/index.html"><img src="{{PATH_TML}}img/index/1483696104301.jpg"></a>
+						</li>
+						<div class="clear"></div>
+						<li>
+							<a href="http://m.tongchuan.gov.cn/html/zxzx/zwzt/byts/index.html"><img src="{{PATH_TML}}img/index/1491807354803.jpg"></a>
 						</li>
 						<li>
-							<a href="javascript:void(0)" class="clearfix">
-								<div><span>[图片新闻]</span><span>全省森林防火和松材线虫病防控</span></div>
-								<div>2017-12-18</div>
-							</a>
+							<a href="http://www.shaanxi.gov.cn:8089/vote/front/vote/list01.lhtml"><img src="{{PATH_TML}}img/index/1489034257090.jpg"></a>
+						</li>
+						<li>
+							<a href="http://m.tongchuan.gov.cn/html/zxzx/zwzt/tczm/index.html"><img src="{{PATH_TML}}img/index/20131118095045.jpg"></a>
 						</li>
 					</ul>
 				</div>
-				<div class="detail">
-					<h2>重点专题</h2>
-					<div class="recommend clearfix">
-						<a href=""><img src="{{PATH_TML}}img/bg2.jpg" /></a>
-						<a href=""><img src="{{PATH_TML}}img/bg2.jpg" /></a>
-						<a href=""><img src="{{PATH_TML}}img/bg2.jpg" /></a>
-						<a href=""><img src="{{PATH_TML}}img/bg2.jpg" /></a>
-						<a href=""><img src="{{PATH_TML}}img/bg2.jpg" /></a>
-						<a href=""><img src="{{PATH_TML}}img/bg2.jpg" /></a>
-						<a href=""><img src="{{PATH_TML}}img/bg2.jpg" /></a>
-						<a href=""><img src="{{PATH_TML}}img/bg2.jpg" /></a>
-						<a href=""><img src="{{PATH_TML}}img/bg2.jpg" /></a>
-					</div>
+				<div class="clear"></div>
+			</div>
+			<!--重点专题 end-->
+			<!--快捷服务-->
+			<div class="syzdzt_dh"><img src="{{PATH_TML}}img/index/hs_ic.jpg">
+				<h1>快捷服务</h1></div>
+			<div class="clear"></div>
+			<div class="sykjfw">
+				<div class="sykjfw_mar">
+					<ul>
+						<li>
+							<a href="http://m.tongchuan.gov.cn/html/service/syxxcx/index.html"><span><img src="{{PATH_TML}}img/index/kj01.png"></span>
+								<h2>便民查询</h2></a>
+						</li>
+						<li>
+							<a href="http://m.tongchuan.gov.cn/news_list.rt?channlId=182"><span><img src="{{PATH_TML}}img/index/kj02.png"></span>
+								<h2>建议/投诉</h2></a>
+						</li>
+						<li>
+							<a href="http://m.tongchuan.gov.cn/news_list.rt?channlId=1286"><span><img src="{{PATH_TML}}img/index/kj03.png"></span>
+								<h2>部门权责</h2></a>
+						</li>
+						<li>
+							<a href="http://m.tongchuan.gov.cn/html/xxgk/ysqgk/ysqgkzn/index.html"><span><img src="{{PATH_TML}}img/index/kj04.png"></span>
+								<h2>依申请公开</h2></a>
+						</li>
+						<li>
+							<a href="http://m.tongchuan.gov.cn/html/hd/index.html"><span><img src="{{PATH_TML}}img/index/kj05.png"></span>
+								<h2>办件查询</h2></a>
+						</li>
+					</ul>
 				</div>
-				<div class="service">
-					<h2>快捷服务</h2>
-					<div class="sykjfw_mar">
-						<a><img src="{{PATH_TML}}img/kj01.png" alt="" /><span>便民查询</span></a>
-						<a><img src="{{PATH_TML}}img/kj02.png" alt="" /><span>建议/投诉</span></a>
-						<a><img src="{{PATH_TML}}img/kj03.png" alt="" /><span>部门权责</span></a>
-						<a><img src="{{PATH_TML}}img/kj04.png" alt="" /><span>依申请公开</span></a>
-						<a><img src="{{PATH_TML}}img/kj05.png" alt="" /><span>办件查询</span></a>
-					</div>
+				<div class="clear"></div>
+			</div>
+			<!--快捷服务-->
+			<div class="fooder">
+				<div class="fooder_pc">
+					<img src="{{PATH_TML}}img/index/db01.png"><img src="{{PATH_TML}}img/index/db02.png"></div>
+				<div class="fooder_tel">
+					<a href="http://m.tongchuan.gov.cn/">手机版</a>|
+					<a href="http://www.tongchuan.gov.cn/#fromapp">PC版</a>
+				</div>
+				<div class="fooder_wz">
+					版权所有：铜川市人民政府　陕ICP备09018839号<br> 组织建设：铜川市人民政府办公室 您是第80404690位访客<br> 运行维护：铜川市电子政务办公室&nbsp;&nbsp;&nbsp;&nbsp; 运维电话：0919-3183128
 				</div>
 			</div>
 
-			<!-- 底部 -->
-			<div class="footer">
-				<div class="fooder_wz">
-					<p>版权所有 陕西省秦商联合会 </p>
-					<p>全球秦商大会组委会 陕西省秦商联合会 | 地址：西安市新城大院省政府院内综合楼B101 邮编：710006</p>
-					<p>办公电话：029-87298395 87298138 | 传真：029-87298138 | 电子邮件: sxsqslhh@163.com</p>
-				</div>
-			</div>
 		</div>
 
-		<script>
-			var app = new Vue({
-				el: '#app',
-				data: {},
-				methods: {
-					swiper() {}
-				},
-				mounted: function() {
-					var swiper = new Swiper('#swiperOption', {
-						spaceBetween: 30,
-						slidesPerGroup: 1,
-						loopFillGroupWithBlank: true,
-						loop: true,
-						speed: 300,
-						autoplay: 3000000,
-						autoplayDisableOnInteraction: false,
-						paginationClickable: true,
-						pagination: '.swiper-pagination',
-//						nextButton: '.swiper-button-next',
-//						prevButton: '.swiper-button-prev',
-						grabCursor: true,
-						longSwipesRatio: 0.3,
-						touchRatio: 1,
-						observer: true, //修改swiper自己或子元素时，自动初始化swiper
-						observeParents: true, //修改swiper的父元素时，自动初始化swiper
-					});
-				}
+		<script type="text/javascript" src="http://m.tongchuan.gov.cn/resources/web/js/swipe.min.js"></script>
+		<script type="text/javascript">
+			var elem = document.getElementById('mySwipe');
+			window.mySwipe = Swipe(elem, {
+				startSlide: 0,
+				auto: 3000,
+				continuous: true,
+				disableScroll: true,
+				stopPropagation: true,
+				callback: function(index, element) {},
+				transitionEnd: function(index, element) {}
 			});
 		</script>
 	</body>
