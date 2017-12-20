@@ -189,7 +189,7 @@
 							return
 						}
 						this.spinner = true;
-						ajax.get('cms/contents', {
+						ajax.get(apiUrl + 'cms/contents', {
 							params: {
 								title: this.searchText,
 								channel_id: this.currentActive,
