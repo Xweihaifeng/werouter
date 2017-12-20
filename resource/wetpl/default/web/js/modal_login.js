@@ -499,30 +499,32 @@ $(function() {
     }
 
     var qrlogin = function(){
-        $.ajax({
-            url: apiUrl + 'setting/alias/weChatOpenConfig',
-            type: 'get',
-            dataType: 'json',
-            success: function(result) {
-                if (result.code === 200) {
-                    var obj = new WxLogin({
-                        id: "qrcode-block",
-                        appid: result.data.appid,
-                        scope: "snsapi_login",
-                        redirect_uri: aa = (console.log(window.location.href) , window.location.href),
-                        href: 'https://wezchina.com/common/css/wechat.css',
-                        state: ""
-                    });
-                } else {
-                    parent.layer.msg(result.message);
+        $.getScript("https://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js", function(){
+            $.ajax({
+                url: apiUrl + 'setting/alias/weChatOpenConfig',
+                type: 'get',
+                dataType: 'json',
+                success: function(result) {
+                    if (result.code === 200) {
+                        var obj = new WxLogin({
+                            id: "qrcode-block",
+                            appid: result.data.appid,
+                            scope: "snsapi_login",
+                            redirect_uri: window.location.href,
+                            href: 'https://wezchina.com/common/css/wechat.css',
+                            state: ""
+                        });
+                    } else {
+                        parent.layer.msg(result.message);
 
-                    return false;
+                        return false;
+                    }
+                },
+                error: function(xhr) {
+                    console.log(xhr);
                 }
-            },
-            error: function(xhr) {
-                console.log(xhr);
-            }
-        });
+            });
+        })
     }
 
     $("#qrcode").click(function(){
