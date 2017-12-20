@@ -528,8 +528,12 @@ $(function() {
         })
     }
 
+    var only = true;
     $("#qrcode").click(function(){
-        qrlogin();
+        if (only) {
+            only = false;
+            qrlogin();    
+        }        
     })
 
     //用户登录
