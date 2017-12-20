@@ -1,4 +1,4 @@
-<footer id="footer">
+<footer id="footer" style="display: none;">
 	<ul>
 		<li :id="key" v-for="(item , key) in footer_nav" @click="open(key);">
 			<div class="up" v-if="item.nav == false"></div>
@@ -100,7 +100,7 @@
 	// footer 渲染
 	function init_footer(show) {
 		if(show == 'no') return false;
-
+		$('#footer').show();
 		new Vue({
 	        el: '#footer',
 	        data: {
