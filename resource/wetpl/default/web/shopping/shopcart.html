@@ -112,7 +112,6 @@
                 el: "#cart_shopping",
                 data: {
                     cart_list: [],
-                    page_list:'',
                     prevPageNum:'',
                     nextPageNum:'',
                     page_list_Num:[],
@@ -236,35 +235,69 @@
                         });
                     },
                     pageListFun:function (totalnum,currentnum) {
-                        var pagelength=2;
                         var self = this;
-                        //上一页
+                        //分页 start
+                        var prevNum=0;
+                        var prevNumLenth=0;
+                        var nextNum=0;
+                        var nextNumLenth=0;
+                        var pagenum=parseInt(totalnum);
 
-                        var prevNum='';
-                        //下一页
-                        var nextNum='';
-                        //清空页
+                        if(pagenum>5){
+                            nextNumLenth=parseInt(parseInt(currentnum)+2);
+                            prevNumLenth=parseInt(parseInt(currentnum)-2);
+                            prevNum=parseInt(parseInt(currentnum)-1);
+                            nextNum=parseInt(parseInt(currentnum)+1);
+                            if(parseInt(parseInt(currentnum)-2)<1){
+                                if(parseInt(parseInt(currentnum)-1)<=1){
+                                    prevNum=1;
+                                }else{
+                                    prevNum=parseInt(parseInt(currentnum)-1);
+                                }
+                                prevNumLenth=1;
+                                nextNum=parseInt(parseInt(currentnum)+1);
+                                nextNumLenth=parseInt(parseInt(currentnum)+2);
+                            }
+                            if(parseInt(parseInt(currentnum)+2)>pagenum){
+                                if(parseInt(currentnum)<pagenum){
+                                    nextNum=parseInt(parseInt(currentnum)+1);
+                                }else{
+                                    nextNum=parseInt(pagenum);
+                                }
+                                nextNumLenth=pagenum;
+                                prevNum=parseInt(parseInt(currentnum)-1);
+                                prevNumLenth=parseInt(parseInt(currentnum)-2);
+                            }
+                        }else{
+                            //全部输出
+                            if(pagenum==1){
+                                prevNumLenth=1;
+                                nextNumLenth=parseInt(pagenum);
+                                prevNum=1;
+                                nextNum=1;
+                            }else{
+                                prevNumLenth=1;
+                                nextNumLenth=parseInt(pagenum);
+                                if(parseInt(currentnum)==1){
+                                    prevNum=1;
+                                    nextNum=parseInt(parseInt(currentnum)+1);
+                                }else{
+                                    prevNum=parseInt(parseInt(currentnum)-1);
+                                }
+                                if(parseInt(currentnum)==parseInt(pagenum)){
+                                    prevNum=parseInt(parseInt(currentnum)-1);
+                                    nextNum=parseInt(currentnum);
+                                }else{
+                                    nextNum=parseInt(parseInt(currentnum)+1);
+                                }
+                            }
+                        }
+                        //分页 start
                         self.page_list='';
-                        var prevPageNum='';
-                        if((currentnum-pagelength)>0){
-                            prevNum=currentnum-pagelength;
-                            prevPageNum=currentnum-1;
-                        }else{
-                            prevNum=1;
-                            prevPageNum=prevNum;
-                        }
-                        self.prevPageNum=prevPageNum;
-                        var nextPageNum;
-                        if((currentnum+pagelength)<=totalnum){
-                            nextNum=currentnum+pagelength;
-                            nextPageNum=currentnum+1;
-                        }else{
-                            nextNum=totalnum;
-                            nextPageNum=nextNum;
-                        }
-                        self.nextPageNum=nextPageNum;
+                        self.prevPageNum=prevNum;
+                        self.nextPageNum=nextNum;
                         self.page_list_Num=[];
-                        for(var i=prevNum;i<=nextNum;i++){
+                        for(var i=prevNumLenth;i<=nextNumLenth;i++){
                             if(i==currentnum){
                                 self.page_list_Num.push({active:'active',num:i});
                             }else{
