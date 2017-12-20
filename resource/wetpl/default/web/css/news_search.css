@@ -158,6 +158,7 @@ b {
 .content {
 	width: 1212px;
 	overflow: hidden;
+	margin-bottom: 40px;
 }
 
 .content>div {
@@ -314,8 +315,9 @@ b {
 }
 
 .content .left>ul {
-	margin: 30px 0 40px;
-	max-width: 540px;
+	margin: 30px 0 0;
+	float: left;
+	display: inline-flex;
 }
 
 .content .left>ul li {
@@ -382,14 +384,11 @@ b {
 	padding: 0 15px;
 }
 
-
 .foot span:last-child {
 	padding-right: 75px;
 }
 
-
 /*loading加载样式*/
-
 .spinner {
 	margin: 100px auto 0;
 	width: 150px;
@@ -441,4 +440,91 @@ b {
 		transform: scale(1.0);
 		-webkit-transform: scale(1.0);
 	}
+}
+
+/*分页*/
+.page-bar ul, li {
+    margin: 0px;
+    padding: 0px;
+}
+
+.page-bar {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.page-button-disabled {
+    color:#ddd !important;
+}
+
+.page-bar li {
+    list-style: none;
+    display: inline-block;
+}
+
+.page-bar li:first-child > a {
+    margin-left: 0px;
+}
+
+.page-bar a {
+    border: 1px solid #ddd;
+    text-decoration: none;
+    position: relative;
+    float: left;
+    padding: 6px 12px;
+    margin-left: -1px;
+    line-height: 1.42857143;
+    color: #337ab7;
+    cursor: pointer;
+}
+
+.page-bar a:hover {
+    background-color: #eee;
+}
+
+.page-bar .active a {
+    color: #fff;
+    cursor: default;
+    background-color: #337ab7;
+    border-color: #337ab7;
+}
+
+.page-bar i {
+    font-style: normal;
+    color: #d44950;
+    margin: 0px 4px;
+    font-size: 12px;
+}
+
+.ivu-page li.ivu-page-prev, .ivu-page li.ivu-page-next {
+	width: 70px!important;
+}
+
+.ivu-page li {
+	border-radius: 1px;
+	border: 1px solid #e1e2e3;
+}
+.ivu-page li:hover {
+	background: #f2f8ff;
+    border: 1px solid #38f;
+}
+.ivu-page li.ivu-page-item.ivu-page-item-active {
+	background-color: transparent;
+	border: none;
+}
+.ivu-page li.ivu-page-item.ivu-page-item-active a {
+	color: #000;
+	font-weight: 700;
+}
+
+.ivu-page li.ivu-page-prev .ivu-icon-ios-arrow-left:before {
+	content: "<上一页"!important;
+}
+
+.ivu-page li.ivu-page-next .ivu-icon-ios-arrow-right:before {
+	content: "下一页>"!important;
 }
