@@ -383,9 +383,10 @@ req().then((data) => {
     $("#icp").text(plats_info.icp);
     $("#contact").attr("href", "/org/contact");
     //搜索
-    /*$("#hs span:eq(1) img").click(function(){
-        window.location.href = 'http://new.wezchina.com/' + 'search?title=' + $("#search").val() + '&channel=news';
-    })*/
+    $("#hs span:eq(1) img").click(function(){
+        // window.location.href = window.location.protocol + "//" + window.location.host + '/so?q=' + $("#search").val();
+        window.location.href = 'http://qqxqs.com/so?q=' + $("#search").val();
+    })
 
     //首页新闻中心
     $("#center").click(function(e){
