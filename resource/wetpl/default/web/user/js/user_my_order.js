@@ -525,10 +525,10 @@ $(function () {
                         success : function (data) {
                             if(data.code === 200){
                                 reloadOperation(orderId,"确收货成功");
-                                $("#take_"+orderId).attr("disabled","false");
+                                $("#take_"+orderId).removeAttr("disabled");
                                 $('.comment_mongolia_layer, .comment_bomb_box').fadeOut("slow");
                             }else{
-                                $("#take_"+orderId).attr("disabled","false");
+                                $("#take_"+orderId).removeAttr("disabled");
                                 layer.msg(data.message, {
                                     time: 1500
                                 });
@@ -567,10 +567,10 @@ $(function () {
                         success : function (data) {
                             if(data.code === 200){
                                 reloadOperation(orderId,"申请退款成功");
-                                $("#refund_"+orderId).attr("disabled","false");
+                                $("#refund_"+orderId).removeAttr("disabled");
                                 $('.comment_mongolia_layer, .comment_bomb_box').fadeOut("slow");
                             }else{
-                                $("#refund_"+orderId).attr("disabled","false");
+                                $("#refund_"+orderId).removeAttr("disabled");
                                 layer.msg(data.message, {
                                     time: 1500
                                 });
@@ -616,7 +616,7 @@ $(function () {
                     if(!isNull(data)){
                         for (var a = 0; a < data.length; a++){
                             if(isNull(data[a].content)){
-                                $("#comment_" + orderId).attr("disabled", "false");
+
                                 layer.msg("评论内容不能为空", {
                                     time: 1500
                                 });
@@ -624,6 +624,7 @@ $(function () {
                             }
                         }
                     }
+                    $("#comment_" + orderId).attr("disabled", "true");
                     $.ajax({
                         url: apiUrl + 'goods/comment/store',
                         type: 'post',
@@ -638,10 +639,10 @@ $(function () {
                         success: function (data) {
                             if (data.code === 200) {
                                 reloadOperation(orderId, "评论商品成功");
-                                $("#comment_" + orderId).attr("disabled", "false");
+                                $("#comment_" + orderId).removeAttr("disabled");
                                 $('.comment_mongolia_layer, .comment_bomb_box').fadeOut("slow");
                             } else {
-                                $("#comment_" + orderId).attr("disabled", "false");
+                                $("#comment_" + orderId).removeAttr("disabled");
                                 layer.msg(data.message, {
                                     time: 1500
                                 });
