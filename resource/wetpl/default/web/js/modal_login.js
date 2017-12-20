@@ -499,7 +499,7 @@ $(function() {
     }
 
     var qrlogin = function(){
-        $.getScript("https://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js", function(){
+        /*$.getScript("https://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js", function(){
             $.ajax({
                 url: apiUrl + 'setting/alias/weChatOpenConfig',
                 type: 'get',
@@ -524,7 +524,7 @@ $(function() {
                     console.log(xhr);
                 }
             });
-        })
+        })*/
     }
 
     $("#qrcode").click(function(){
