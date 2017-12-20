@@ -481,7 +481,7 @@ $(function () {
                         if (data.code == 200) {
                             //去支付
                             //解决浏览器拦截问题
-                            $('body').append($('<a href="/'+ order_domain +'/wemall/pay/'+orderId+'" target="_blank" id="openWin"></a>'));
+                            $('body').append($('<a href="/'+ order_domain +'/wemall/pay/'+orderId+'" id="openWin"></a>'));
                             document.getElementById("openWin").click();//点击事件
                             $('#openWin').remove();
                         } else {
