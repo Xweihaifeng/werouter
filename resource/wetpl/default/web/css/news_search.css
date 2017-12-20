@@ -52,9 +52,27 @@ b {
 	vertical-align: middle;
 	width: 106px;
 	height: 34px;
-	background: url(/common/img/sou_logo.png) 0 0 no-repeat, url(/common/img/sou_title.png) 30px 0 no-repeat;
-	background-size: 34px 34px, auto 34px;
-	background-position: 10px 0px, 38px 0px;
+	/*background: url(/common/img/sou_logo.png) 0 0 no-repeat, url(/common/img/sou_title.png) 30px 0 no-repeat;*/
+	/*background-size: 34px 34px, auto 34px;*/
+	/*background-position: 10px 0px, 38px 0px;*/
+}
+
+.logo #logo1 {
+    display: inline-block;
+    width: 34px;
+    height: 34px;
+    margin: 0 4px 0 10px;
+    background: url(/common/img/sou_logo.png) 0 0 no-repeat;
+    background-size: 34px 34px;
+}
+
+.logo #logo2 {
+    display: inline-block;
+    width: 50px;
+    height: 34px;
+    background: url(/common/img/sou_title.png) 30px 0 no-repeat;
+    background-size: auto 34px;
+    background-position: center 0;
 }
 
 .head input {
@@ -73,7 +91,7 @@ b {
 	border-color: #4791ff transparent #4791ff #4791ff;
 }
 
-.head div:first-child a:last-child {
+.head>div:first-child>a:last-child {
 	display: inline-block;
 	width: 100px;
 	height: 33px;
@@ -88,7 +106,7 @@ b {
 	cursor: pointer;
 }
 
-.head div:first-child a:last-child:hover {
+.head>div:first-child>a:last-child:hover {
 	background: #317ef3;
 	border-bottom: 1px solid #2868c8;
 	box-shadow: 1px 1px 1px #ccc;
@@ -277,12 +295,15 @@ b {
 	color: #ff7900;
 	font-size: 16px;
 	margin-bottom: 10px;
+	padding-left: 10px;
 }
 
 .content .right div ul li {
 	height: 30px;
 	line-height: 30px;
 	width: 120px;
+	padding-left: 10px;
+	cursor: pointer;
 }
 
 .content .right div ul li:hover,
