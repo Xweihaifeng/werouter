@@ -1,14 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-
 	<head>
 		<meta charset="UTF-8">
 		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 		<title></title>
-
 		<link rel="stylesheet" href="{{PATH_TML}}css/news_search.css">
 		<link rel="stylesheet" href="/common/magazine/css/iview.css">
-
 		<script src="{{PATH_CONFIG}}"></script>
 		<script src="/common/public/js/app.js"></script>
 		<script src="/common/js/vue.min.js"></script>
@@ -22,7 +19,6 @@
 			}
 		</style>
 	</head>
-
 	<body>
 		<div id="app" v-cloak>
 			<div class="head">
@@ -173,7 +169,6 @@
 					},
 					getCloumn: function() {
 						ajax.get(apiUrl + 'cms/channels').then((res) => {
-
 							if(res.code == 200 && res.data.list.length) {
 								this.columnList = res.data.list;
 								for(var item of this.columnList) {
@@ -296,5 +291,4 @@
 			})
 		</script>
 	</body>
-
 </html>
