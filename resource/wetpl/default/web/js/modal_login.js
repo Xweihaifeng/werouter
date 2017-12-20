@@ -532,7 +532,7 @@ $(function() {
     $("#qrcode").click(function(){
         if (only) {
             only = false;
-            qrlogin();    
+            qrlogin();
         }        
     })
 
