@@ -89,6 +89,13 @@
                             </slide>
                         </ul>
                     </div>
+                    <div style="text-align: center">
+
+                        <ul class="pagination"><li id="prev"><a v-on:click="goInit(prevPageNum)">«</a></li>   <li  v-for="pageitem in page_list_Num" :class="pageitem.active"><a v-on:click="goInit(pageitem.num)">{{pageitem.num}}</a></li>  <li id="next"><a class="next" v-on:click="app.goInit(nextPageNum)" rel="next">»</a></li></ul>
+
+
+
+                    </div>
                 </div>
             </div>
         </div>
@@ -104,16 +111,22 @@
             var app = new Vue({
                 el: "#cart_shopping",
                 data: {
-                    cart_list: []
+                    cart_list: [],
+                    page_list:'',
+                    prevPageNum:'',
+                    nextPageNum:'',
+                    page_list_Num:[],
                 },
                 mounted: function () {
                     // 获取默认列表
-                    this.init()
+                    this.init(1)
                 },
                 methods: {
-                    init : function () {
+                    init : function (pageNum) {
                         var body = {
-                            user_id : window.localStorage.getItem("weid")
+                            user_id : window.localStorage.getItem("weid"),
+                            limit : 10,
+                            page : pageNum
                         };
                         this.$http.post(apiUrl + 'cart/lists', body).then(function (res) {
                             if(res.data && res.data.code===200){
@@ -126,6 +139,9 @@
                                 }
                                 this.cart_list = list;
                                 console.log(this.cart_list)
+                                var totalnum=Math.ceil(res.data.data.total/body.limit);
+                                this.pageListFun(totalnum,pageNum);
+
                             }
                         })
                     },
@@ -218,9 +234,51 @@
                                 layer.close(index);
                             })
                         });
+                    },
+                    pageListFun:function (totalnum,currentnum) {
+                        var pagelength=2;
+                        var self = this;
+                        //上一页
+
+                        var prevNum='';
+                        //下一页
+                        var nextNum='';
+                        //清空页
+                        self.page_list='';
+                        var prevPageNum='';
+                        if((currentnum-pagelength)>0){
+                            prevNum=currentnum-pagelength;
+                            prevPageNum=currentnum-1;
+                        }else{
+                            prevNum=1;
+                            prevPageNum=prevNum;
+                        }
+                        self.prevPageNum=prevPageNum;
+                        var nextPageNum;
+                        if((currentnum+pagelength)<=totalnum){
+                            nextNum=currentnum+pagelength;
+                            nextPageNum=currentnum+1;
+                        }else{
+                            nextNum=totalnum;
+                            nextPageNum=nextNum;
+                        }
+                        self.nextPageNum=nextPageNum;
+                        self.page_list_Num=[];
+                        for(var i=prevNum;i<=nextNum;i++){
+                            if(i==currentnum){
+                                self.page_list_Num.push({active:'active',num:i});
+                            }else{
+                                self.page_list_Num.push({active:'',num:i});
+                            }
+                        }
+                    },
+                    goInit : function (i) {
+                        this.init(i)
                     }
                 }
             })
+
+
         </script>
     </body>
 </html>

@@ -264,24 +264,92 @@ $(document).ready(function(){
                                 }
                             }
                     })
+                    //分页 start
+                    var prevNum=0;
+                    var prevNumLenth=0;
+                    var nextNum=0;
+                    var nextNumLenth=0;
                     var pagenum=Math.ceil(data.data.total/limit);
+                    pagenum=parseInt(pagenum);
+                    if(pagenum>5){
+                        nextNumLenth=parseInt(parseInt(page)+2);
+                        prevNumLenth=parseInt(parseInt(page)-2);
+                        prevNum=parseInt(parseInt(page)-1);
+                        nextNum=parseInt(parseInt(page)+1);
+                        if(parseInt(parseInt(page)-2)<1){
+                            if(parseInt(parseInt(page)-1)<=1){
+                                prevNum=1;
+                            }else{
+                                prevNum=parseInt(parseInt(page)-1);
+                            }
+                            prevNumLenth=1;
+                            nextNum=parseInt(parseInt(page)+1);
+                            nextNumLenth=parseInt(parseInt(page)+2);
+                        }
+                        if(parseInt(parseInt(page)+2)>pagenum){
+                            if(parseInt(page)<pagenum){
+                                nextNum=parseInt(parseInt(page)+1);
+                            }else{
+                                nextNum=parseInt(pagenum);
+                            }
+                            nextNumLenth=pagenum;
+                            prevNum=parseInt(parseInt(page)-1);
+                            prevNumLenth=parseInt(parseInt(page)-2);
+                        }
+                    }else{
+                        //全部输出
+                        if(pagenum==1){
+                            prevNumLenth=1;
+                            nextNumLenth=parseInt(pagenum);
+                            prevNum=1;
+                            nextNum=1;
+                        }else{
+                            prevNumLenth=1;
+                            nextNumLenth=parseInt(pagenum);
+                            if(parseInt(page)==1){
+                                prevNum=1;
+                                nextNum=parseInt(parseInt(page)+1);
+                            }else{
+                                prevNum=parseInt(parseInt(page)-1);
+                            }
+                            if(parseInt(page)==parseInt(pagenum)){
+                                prevNum=parseInt(parseInt(page)-1);
+                                nextNum=parseInt(page);
+                            }else{
+                                nextNum=parseInt(parseInt(page)+1);
+                            }
+                        }
+                    }
+                    //分页 start
+
                     // console.log(page+":page");
                     var pagestr="";
-                    if(flag){
+
                         $('.pagination').children().remove();
-                        $('.pagination').append('<li id="prev"><a href="javascript:void(0);">«</a></li><li class="active"><span>1</span></li>');
+                        $('.pagination').append('<li id="prev" page="'+prevNum+'"><a href="javascript:void(0);">«</a></li>');
 
-                        for(i=1;i<pagenum;i++){
+                        for(i=prevNumLenth;i<=nextNumLenth;i++){
                             // $('.pagination').append(pagelisthtml(i));
-                            pagestr+='<li><a href="javascript:void(0)" id="'+(i+1)+'">'+(i+1)+'</a></li>';
-
+                            if(i==page){
+                                pagestr+='<li page="'+i+'" class="active"><span>'+i+'</span></li>';
+                            }else{
+                                pagestr+='<li page="'+i+'" ><a href="javascript:void(0)" >'+i+'</a></li>';
+                            }
                         }
                         $('.pagination').append(pagestr);
-                        $(".pagination").append('<li id="next"><a href="javascript:void(0)" class="next" rel="next">&raquo;</a></li>');
+                        $(".pagination").append('<li id="next" page="'+nextNum+'"><a href="javascript:void(0)" class="next" rel="next">&raquo;</a></li>');
                         // 点击页码事件
                         $(".pagination li").bind("click",function(){
+
+                            orderlist(mall_id,$(this).attr("page"),type);
+                            /*
                             flag=false;
                             // console.log($(this).attr("id"));
+                            for(i=prevPageNum;i<nextPageNum;i++){
+                                // $('.pagination').append(pagelisthtml(i));
+                                pagestr+='<li><a href="javascript:void(0)" id="'+(i+1)+'">'+(i+1)+'</a></li>';
+
+                            }
                             if($(this).attr('class')!="active"){
                                 var prevactive=parseInt($(this).parent().find('.active span').text());
                                 var curr=$(this).find('a').text();
@@ -309,10 +377,11 @@ $(document).ready(function(){
                                 }
 
                             }
+                            */
 
 
                         })
-                    }
+
                      // 1acc8080-769f-11e7-afe9-a1e618177dd9
                     __init(localStorage.getItem("weid"));
                     // __init("1acc8080-769f-11e7-afe9-a1e618177dd9");

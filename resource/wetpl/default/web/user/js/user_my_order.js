@@ -236,65 +236,89 @@ $(function () {
                     }
 
                     });
+                    //分页 start
+                    var prevNum=0;
+                    var prevNumLenth=0;
+                    var nextNum=0;
+                    var nextNumLenth=0;
                     var pagenum=Math.ceil(data.data.total/limit);
-                    var pagestr="";
-                    if(flag){
-                        $('.pagination').children().remove();
-                        $('.pagination').append('<li id="prev"><a href="javascript:void(0);">«</a></li><li class="active"><span>1</span></li>');
-
-                        for(i=1;i<pagenum;i++){
-                            // $('.pagination').append(pagelisthtml(i));
-                            pagestr+='<li><a href="javascript:void(0)" id="'+(i+1)+'">'+(i+1)+'</a></li>';
-
+                    pagenum=parseInt(pagenum);
+                    if(pagenum>5){
+                        nextNumLenth=parseInt(parseInt(page)+2);
+                        prevNumLenth=parseInt(parseInt(page)-2);
+                        prevNum=parseInt(parseInt(page)-1);
+                        nextNum=parseInt(parseInt(page)+1);
+                        if(parseInt(parseInt(page)-2)<1){
+                            if(parseInt(parseInt(page)-1)<=1){
+                                prevNum=1;
+                            }else{
+                                prevNum=parseInt(parseInt(page)-1);
+                            }
+                            prevNumLenth=1;
+                            nextNum=parseInt(parseInt(page)+1);
+                            nextNumLenth=parseInt(parseInt(page)+2);
                         }
-                        $('.pagination').append(pagestr);
-                        $(".pagination").append('<li id="next"><a href="javascript:void(0)" class="next" rel="next">&raquo;</a></li>');
+                        if(parseInt(parseInt(page)+2)>pagenum){
+                            if(parseInt(page)<pagenum){
+                                nextNum=parseInt(parseInt(page)+1);
+                            }else{
+                                nextNum=parseInt(pagenum);
+                            }
+                            nextNumLenth=pagenum;
+                            prevNum=parseInt(parseInt(page)-1);
+                            prevNumLenth=parseInt(parseInt(page)-2);
+                        }
+                    }else{
+                        //全部输出
+                        if(pagenum==1){
+                            prevNumLenth=1;
+                            nextNumLenth=parseInt(pagenum);
+                            prevNum=1;
+                            nextNum=1;
+                        }else{
+                            prevNumLenth=1;
+                            nextNumLenth=parseInt(pagenum);
+                            if(parseInt(page)==1){
+                                prevNum=1;
+                                nextNum=parseInt(parseInt(page)+1);
+                            }else{
+                                prevNum=parseInt(parseInt(page)-1);
+                            }
+                            if(parseInt(page)==parseInt(pagenum)){
+                                prevNum=parseInt(parseInt(page)-1);
+                                nextNum=parseInt(page);
+                            }else{
+                                nextNum=parseInt(parseInt(page)+1);
+                            }
+                        }
+                    }
+                    //分页 start
+
+                    var pagestr="";
+
+                    $('.pagination').children().remove();
+                    $('.pagination').append('<li id="prev" page="'+prevNum+'"><a href="javascript:void(0);">«</a></li>');
+
+                    for(i=prevNumLenth;i<=nextNumLenth;i++){
+                        // $('.pagination').append(pagelisthtml(i));
+                        if(i==page){
+                            pagestr+='<li page="'+i+'" class="active"><span>'+i+'</span></li>';
+                        }else{
+                            pagestr+='<li page="'+i+'" ><a href="javascript:void(0)" >'+i+'</a></li>';
+                        }
+                    }
+                    $('.pagination').append(pagestr);
+                    $(".pagination").append('<li id="next" page="'+nextNum+'"><a href="javascript:void(0)" class="next" rel="next">&raquo;</a></li>');
 
                         // 点击页码事件
                         $(".pagination li").bind("click",function(){
-                            flag=false;
-                            if($(this).attr('class')!="active"){
-                                var prevactive=parseInt($(this).parent().find('.active span').text());
-                                var curr=$(this).find('a').text();
-                                if($(this).attr("id")=="prev"){
-                                    if(prevactive>1){
-                                        $(this).parent().find('.active').append('<a href="javascript:void(0)" id="'+prevactive+'">'+prevactive+'</a>').find("span").remove();
-                                        $(this).parent().find('.active').prev().append('<span>'+(prevactive-1)+'</span>').find('a').remove();
-                                        $(this).parent().find('.active').prev().addClass("active").siblings().removeClass('active');
-                                        var time_start=$("input[name='start_time']").val();
-                                        var time_end=$("input[name='end_time']").val();
-                                        var order_num=$("input[name='no']").val();
-                                        orderlist(userId,prevactive-1,type,{time_start:time_start,time_end:time_end,order_num:order_num});
-                                    }
-                                }else if($(this).attr("id")=="next"){
-                                    if(prevactive<pagenum){
-                                        $(this).parent().find('.active').append('<a href="javascript:void(0)" id="'+prevactive+'">'+prevactive+'</a>').find("span").remove();
-                                        $(this).parent().find('.active').next().append('<span>'+(prevactive+1)+'</span>').find('a').remove();
-                                        $(this).parent().find('.active').next().addClass("active").siblings().removeClass('active');
-
-                                        var time_start=$("input[name='start_time']").val();
-                                        var time_end=$("input[name='end_time']").val();
-                                        var order_num=$("input[name='no']").val();
-                                        orderlist(userId,prevactive+1,type,{time_start:time_start,time_end:time_end,order_num:order_num});
-
-                                    }
-
-                                }else{
-                                    var time_start=$("input[name='start_time']").val();
-                                    var time_end=$("input[name='end_time']").val();
-                                    var order_num=$("input[name='no']").val();
-                                    orderlist(userId,$(this).find("a").text(),type,{time_start:time_start,time_end:time_end,order_num:order_num});
-                                    $(this).parent().find('.active').append('<a href="javascript:void(0)" id="'+prevactive+'">'+prevactive+'</a>').find("span").remove();
-                                    $(this).addClass("active").siblings().removeClass('active');
-                                    $(this).append('<span>'+curr+'</span>').find('a').remove();
-                                }
-
-                            }
-
-
+                            var time_start=$("input[name='start_time']").val();
+                            var time_end=$("input[name='end_time']").val();
+                            var order_num=$("input[name='no']").val();
+                            orderlist(userId,$(this).attr("page"),type,{time_start:time_start,time_end:time_end,order_num:order_num});
                         })
 
-                    }
+
                     InitOperation();
                 }
 
