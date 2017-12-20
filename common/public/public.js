@@ -1,4 +1,8 @@
-// 临时放到这里
+// 文件已经没有用了
+// 
+// 
+// 
+// 
 function GetQueryString(name) {
     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
     var r = window.location.search.substr(1).match(reg);
