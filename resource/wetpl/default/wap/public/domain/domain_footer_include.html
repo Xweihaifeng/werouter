@@ -15,9 +15,13 @@
 	// header 渲染
 	function init_header(show) {
 	    if(show == 'no') return false;
-
+	    var dom_id = '#header';
+	    if(show != 'yes')
+	    {
+	    	dom_id = '#'+show;
+	    }
 	    new Vue({
-	        el: '#header',
+	        el: dom_id,
 	        data: {
 	            router : window.location.pathname.split('/').slice(1,2),
 	            cuupage : window.location.pathname.split('/').pop(),
@@ -100,6 +104,11 @@
 	// footer 渲染
 	function init_footer(show) {
 		if(show == 'no') return false;
+	    var dom_id = '#footer';
+	    if(show != 'yes')
+	    {
+	    	dom_id = '#'+show;
+	    }
 		$('#footer').show();
 		new Vue({
 	        el: '#footer',
