@@ -480,7 +480,10 @@ $(function () {
                         console.log(data);
                         if (data.code == 200) {
                             //去支付
-                            window.open("/" + order_domain + "/wemall/pay/" + orderId + "");
+                            //解决浏览器拦截问题
+                            $('body').append($('<a href="/'+ order_domain +'/wemall/pay/'+orderId+'" target="_blank" id="openWin"></a>'));
+                            document.getElementById("openWin").click();//点击事件
+                            $('#openWin').remove();
                         } else {
                             if(data.message=='201 商户订单号重复'){
                                 layer.msg("此订订单通过手机端下单请去手机端支付", {

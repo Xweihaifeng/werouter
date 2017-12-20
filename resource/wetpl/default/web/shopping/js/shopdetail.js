@@ -24,22 +24,24 @@ $(document).ready(function() {
 	}
 
 	//主页初始化
-	/*
+
 	var init = function(token) {
 		if(token != 'null' && token != undefined) {
 			showLogin = false;
 			isLogin = true;
 			//加载用户头像
-			$("#login a").css({
-				'background': 'url(/common/img/p2240276035.jpg) no-repeat center',
-				'background-size': '100%'
-			});
-			$("#login a").addClass("i-header").html("");
-		}
-	}
+            /*
+            $("#login a").css({
+                'background': 'url(/common/img/p2240276035.jpg) no-repeat center',
+                'background-size': '100%'
+            });
+            $("#login a").addClass("i-header").html("");
+            */
+        }
+    }
 
-	init(token);
-	*/
+    init(token);
+
 	var router = function(route) {
 		if(!isLogin) {
 			showLogin = true;
