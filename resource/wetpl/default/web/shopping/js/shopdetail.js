@@ -24,20 +24,23 @@ $(document).ready(function() {
 	}
 
 	//主页初始化
+
 	var init = function(token) {
 		if(token != 'null' && token != undefined) {
 			showLogin = false;
 			isLogin = true;
 			//加载用户头像
-			$("#login a").css({
-				'background': 'url(/common/img/p2240276035.jpg) no-repeat center',
-				'background-size': '100%'
-			});
-			$("#login a").addClass("i-header").html("");
-		}
-	}
+            /*
+            $("#login a").css({
+                'background': 'url(/common/img/p2240276035.jpg) no-repeat center',
+                'background-size': '100%'
+            });
+            $("#login a").addClass("i-header").html("");
+            */
+        }
+    }
 
-	init(token);
+    init(token);
 
 	var router = function(route) {
 		if(!isLogin) {
@@ -284,15 +287,27 @@ $(document).ready(function() {
 		} else {
 			var nickname = data.nickname;
 		}
+        var img='';
+		if(!isNull(data.pictures)){
+			var pictureArr= new Array();
+            pictureArr=data.pictures.split(",");
+			for(var i=0;i<pictureArr.length;i++){
+                img+='<a class="fancybox" href="'+ApiMaterPlatQiniuDomain+pictureArr[i]+'" data-fancybox-group="gallery'+data.weid+'">' +
+                '<img src="'+ApiMaterPlatQiniuDomain+pictureArr[i]+'" alt=" " style="width: 100px;height: 100px;margin: 10px 5px;">' +
+                '</a>';
+			}
+		}
+
 		var messhtml = '<li class="supporter">' +
 			'<div class="supporter_img ">' +
-			'<img class="img-circle" src="' + imgsrc + '">' +
+			'<img class="img-circle" src="' +qiniu_bucket_domain + imgsrc + '">' +
 			'</div>' +
 			'<div class="supporter_user">' +
 			'<span class="supporter_user_log"></span>' +
 			'<p class="supporter_user_mid m0">' + nickname + ' </p>' +
 			'<span class="supporter_user_sm"></span>' +
 			'<div class="supporter_user_color">' + data.created_at + '</div>' +
+            '<div style="display: inline-block;">'+img+'</div>' +
 			' <div class="supporter_user_liuyan" style="width: 632px"> ' + data.content + '</div>' +
 			'</div>' +
 			'</li>';
@@ -317,6 +332,25 @@ $(document).ready(function() {
 						$(".pingjianeirong").append(messtemplete(x));
 
 					})
+                    $(".fancybox").fancybox({
+                        'width': 'auto',
+                        'height': 'auto',
+						'zoomSpeedIn': 300,
+                        'zoomSpeedOut': 300,
+                        'padding':'0px',
+                        'hideOnOverlayClick':false,
+                        'closeBtn':false,
+                        'autoScale'   : true,
+                        'tpl':{
+                            'wrap'     : '<div class="fancybox-wrap" tabIndex="-1"><div class="fancybox-skin"><div class="fancybox-outer"><div class="fancybox-inner"></div></div></div></div>',
+                            'image'    : '<img class="fancybox-image" src="{href}" alt="" />',
+                        	'iframe'   : '<iframe id="fancybox-frame{rnd}" name="fancybox-frame{rnd}" class="fancybox-iframe" frameborder="0" vspace="0" hspace="0"' + ($.browser.msie ? ' allowtransparency="true"' : '') + '></iframe>',
+                        	'error'    : '<p class="fancybox-error">The requested content cannot be loaded.<br/>Please try again later.</p>',
+                    		'closeBtn' : '<a title="Close" class="fancybox-item fancybox-close" href="javascript:;"></a>',
+                    		'next'     : '<a title="下一个" class="fancybox-nav fancybox-next" href="javascript:;"><span></span></a>',
+                    		'prev'     : '<a title="上一个" class="fancybox-nav fancybox-prev" href="javascript:;"><span></span></a>'
+                        	}
+					});
 				} else {
 					layer.msg("MESSAGE IS ERROR", { time: 2500 });
 				}

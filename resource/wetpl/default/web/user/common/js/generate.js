@@ -4,6 +4,9 @@
 
 // 主左
 
+
+
+
 let mainLeft = `
         <div id="home">
             <img src="/common/img/home.png" width='90' alt="HOME" />
@@ -50,7 +53,7 @@ let mainLeft_p = `
                     <a href="/apply" style="width:100%;" target= "_blank">会员申请</a>
                 </div>
                 <div id="avatar-logout">
-                    <a onclick="logout();"  href="/login" style="width:100%;display: block;">安全退出</a>
+                    <a onclick="logout();" style="width:100%;display: block;">安全退出</a>
                 </div>
             </div>
         </div>
@@ -444,11 +447,13 @@ options.fail(function (error) {
     console.error(error);
 });
 
-function setCookie(token, expiredays) {
+function setCookie(token, expiredays)
+{
     var Days = expiredays;
     var exp = new Date();
-    exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000);
-    document.cookie = "token=" + escape(token) + ";expires=" + exp.toGMTString();
+    var domain = '.'+root_domain;
+    exp.setTime(exp.getTime() + Days*24*60*60*1000);
+    document.cookie = "token="+ escape (token) + ";expires=" + exp.toGMTString() +";path=/;domain="+domain;
 }
 
 function clearCookie() {
@@ -458,13 +463,6 @@ function clearCookie() {
             document.cookie = keys[i] + '=0;expires=' + new Date(0).toUTCString()
     }
 }
-
-// $("#avatar-logout").click(function () {
-//     window.localStorage.removeItem('token');
-//     window.localStorage.removeItem('weid');
-//     setCookie('', -1);
-//     clearCookie();
-// })
 
 //主页初始化
 var init = function (token) {
@@ -617,12 +615,27 @@ function logout()
         },
         success: function (data) {
             if (data.code == 200) {
-                localStorage.clear();
+                // localStorage.clear();
+                localStorage.removeItem('token');
+                localStorage.removeItem('weid');
                 setCookie('', -1);
                 clearCookie();
-                window.location.href = "/login";
+                window.location.href = "/";
             } 
         }
     });
     
+}
+
+
+//监听加载状态改变
+document.onreadystatechange = completeLoading;
+function completeLoading() {
+    if (document.readyState == "complete") {
+        if ($("#loadingDiv").length > 0) {
+            $("#loadingDiv").animate({
+                opacity: "hide"
+            }, 300);
+        }
+    }
 }

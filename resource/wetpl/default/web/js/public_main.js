@@ -108,7 +108,7 @@ const home = `
                         </div>
                     </div>
                     <div id="link">
-                        <ul id="link-title"></ul>
+                        <ul id="link-title"><div class="blueline"></div></ul>
                         <div id="link-page">
                             <ul></ul>
                         </div>
@@ -209,7 +209,7 @@ const header = `
                 <a href="http://2017.qqxqs.com" target="_blank"><span style="border-right: none;">访问旧版</span></a>
             </div>
             <div id="hs">
-                <span><input type="text" id="search" class="form-control"></span>
+                <span><input type="text" id="search" class="form-control" placeholder="请输入关键字"></span>
                 <span><img src="/common/img/find.png" style="padding: 7px" /></span>
                 <span>高级搜索</span>
             </div>
@@ -272,6 +272,7 @@ const req = () => {
         })*/
         setTimeout(() => {
             resolve(plats_info.blocks);
+            $("#beijing").css({ "background-image": "url(" + imgSet(plats_info.background_right, 960, 960, 3) + ")"})
         }, 50);
     })
 }
@@ -382,9 +383,18 @@ req().then((data) => {
     $("#icp").text(plats_info.icp);
     $("#contact").attr("href", "/org/contact");
     //搜索
-    /*$("#hs span:eq(1) img").click(function(){
-        window.location.href = 'http://new.wezchina.com/' + 'search?title=' + $("#search").val() + '&channel=news';
-    })*/
+    $("#hs span:eq(1) img").click(function(){
+        window.location.href = window.location.protocol + "//" + window.location.host + '/so?q=' + $("#search").val();
+        // window.location.href = 'http://qqxqs.com/so?q=' + $("#search").val();
+    })
+
+    $("#search").keydown(function(evt){
+        switch (evt.keyCode){
+            case 13: window.location.href = window.location.href = window.location.protocol + "//" + window.location.host + '/so?q=' + $("#search").val();
+        }
+    });
+
+
 
     //首页新闻中心
     $("#center").click(function(e){
@@ -945,7 +955,8 @@ req().then((data) => {
                 var init_list = (key) => {
                     $("#" + key).css({
                         "color": "#fff",
-                        "background": "#4fb7ff"
+                        "background": "rgb(1, 167, 255)",
+                        "font-weight": "600"
                     })
                     link_cont = '';
                     link[key].list.map(x => {
@@ -967,7 +978,8 @@ req().then((data) => {
                         link_list.filter(x => x != key).map(x => {
                             $("#" + x).css({
                                 "color": "#000",
-                                "background": "#fff"
+                                "background": "#fff",
+                                "font-weight": "500"
                             });
                         })
                         init_list(key)
@@ -1279,7 +1291,7 @@ req().then((data) => {
 
                 $("#home-body").css({ "background": "url(" + bgImg + ") no-repeat center", "background-size": "100% 100%", "opacity": "1"})
                 //$("#beijing")  .css({ "background-image": "url(" + bgRight + ")",  "background-size": "50%"})
-                $("#beijing")  .css({ "background-image": "url(" + bgRight + ")"})
+                // $("#beijing")  .css({ "background-image": "url(" + bgRight + ")"})
                 $("#nav-news") .css({ "background-image": "url(" + bar1 + ")","background-size": "100% 100%","background-repeat": "no-repeat","background-position": "center" })
                 $("#nav-org")  .css({ "background-image": "url(" + bar2 + ")","background-size": "100% 100%","background-repeat": "no-repeat","background-position": "center" })
                 $("#nav-help") .css({ "background-image": "url(" + bar3 + ")","background-size": "100% 100%","background-repeat": "no-repeat","background-position": "center" })
@@ -1458,7 +1470,7 @@ req().then((data) => {
                             $("#huodong .person-article-lists ").append("<div class='more text-center col-sm-12' style='margin-top:20px;'>查看更多</div>");
 
                         }else{
-                        $("#huodong .person-article-lists ").append("<div class='more text-center col-sm-12' style='margin-top:20px;'>这是我的底线啦~~~</div>");
+                        // $("#huodong .person-article-lists ").append("<div class='more text-center col-sm-12' style='margin-top:20px;'>这是我的底线啦~~~</div>");
 
                         }
                         page++;
@@ -1468,7 +1480,7 @@ req().then((data) => {
                         })
                     }else{
                          $("#huodong .person-article-lists ").children().remove();
-                        $("#huodong .person-article-lists ").append("<div class='more text-center col-sm-12' style='margin-top:20px;'>这是我的底线啦~~~</div>");
+                        // $("#huodong .person-article-lists ").append("<div class='more text-center col-sm-12' style='margin-top:20px;'>这是我的底线啦~~~</div>");
 
                     }
                 }
@@ -1596,7 +1608,7 @@ req().then((data) => {
                             $("#xiangmu .huzhubox ").append("<div class='more text-center col-sm-12' style='margin-top:20px;'>查看更多</div>");
 
                         }else{
-                          $("#xiangmu .huzhubox").append('<div align="center" id="crowd_uloadingsImg" style="display: block; height: 40px; margin-top: 40px; color: rgb(146, 146, 146);" class="col-sm-12 more"><div style="color: #858585;">——————————&nbsp;这是我的底线啦&nbsp;—————————</div></div>')
+                          // $("#xiangmu .huzhubox").append('<div align="center" id="crowd_uloadingsImg" style="display: block; height: 40px; margin-top: 40px; color: rgb(146, 146, 146);" class="col-sm-12 more"><div style="color: #858585;">——————————&nbsp;这是我的底线啦&nbsp;—————————</div></div>')
 
                         }
                         page++;
@@ -1606,7 +1618,7 @@ req().then((data) => {
                         })
                     }else{
                         $("#xiangmu .huzhubox").children().remove();
-                        $("#xiangmu .huzhubox").append('<div align="center" id="crowd_uloadingsImg" style="display: block; height: 40px; margin-top: 40px; color: rgb(146, 146, 146);" class="col-sm-12 more"><div style="color: #858585;">——————————&nbsp;这是我的底线啦&nbsp;—————————</div></div>')
+                        // $("#xiangmu .huzhubox").append('<div align="center" id="crowd_uloadingsImg" style="display: block; height: 40px; margin-top: 40px; color: rgb(146, 146, 146);" class="col-sm-12 more"><div style="color: #858585;">——————————&nbsp;这是我的底线啦&nbsp;—————————</div></div>')
                     }
                 }
             },
@@ -1737,7 +1749,7 @@ req().then((data) => {
                             $("#goodsBox .person-goods-lists .row").append("<div class='more text-center col-sm-12' style='margin-top:20px;'>查看更多</div>");
 
                         }else{
-                          $("#goodsBox .person-goods-lists .row").append('<div align="center" id="crowd_uloadingsImg" style="display: block; height: 40px; margin-top: 40px; color: rgb(146, 146, 146);" class="col-sm-12 more"><div style="color: #858585;">——————————&nbsp;这是我的底线啦&nbsp;—————————</div></div>')
+                          // $("#goodsBox .person-goods-lists .row").append('<div align="center" id="crowd_uloadingsImg" style="display: block; height: 40px; margin-top: 40px; color: rgb(146, 146, 146);" class="col-sm-12 more"><div style="color: #858585;">——————————&nbsp;这是我的底线啦&nbsp;—————————</div></div>')
 
                         }
                         page++;
@@ -1747,7 +1759,7 @@ req().then((data) => {
                         })
                     }else{
                          $("#goodsBox .person-goods-lists .row").children().remove();
-                        $("#goodsBox .person-goods-lists .row").append('<div align="center" id="crowd_uloadingsImg" style="display: block; height: 40px; margin-top: 40px; color: rgb(146, 146, 146);" class="col-sm-12 more"><div style="color: #858585;">——————————&nbsp;这是我的底线啦&nbsp;—————————</div></div>')
+                        // $("#goodsBox .person-goods-lists .row").append('<div align="center" id="crowd_uloadingsImg" style="display: block; height: 40px; margin-top: 40px; color: rgb(146, 146, 146);" class="col-sm-12 more"><div style="color: #858585;">——————————&nbsp;这是我的底线啦&nbsp;—————————</div></div>')
                     }
                 }
             },

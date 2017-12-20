@@ -1,17 +1,20 @@
 var ajax = {};
 ajax = axios.create({
-    baseURL: api_domain,
+    //baseURL: api_domain,
+    baseURL: 'http://m.cnew.wezchina.com/api/',
     timeout: 30000,
 });
 
 // http request 拦截器
 ajax.interceptors.request.use(
     config => {
-        config.headers.Token = localStorage.getItem('token');
+        if(is_login == 'yes'){
+            config.headers.Token = plats_token;
+        }
         return config;
     }
 );
-
+// 如果是 401 没有权限需要重新编写LOGIN程序
 ajax.interceptors.response.use(
     response => {
         switch (response.data.code){
@@ -26,9 +29,10 @@ ajax.interceptors.response.use(
                 break;
             case -200:
                 return response.data;
-                break;
+                break; 
             case 401:
-                window.location.href = '/login?url='+window.location.pathname;
+                mb_login(window.location.pathname);
+                return false;
                 break;
         }
     }

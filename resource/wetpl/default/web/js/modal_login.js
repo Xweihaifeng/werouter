@@ -72,7 +72,8 @@ $(function() {
             </div>
             <div class="wexin" style="display: none;">
                 <!-- <div class="wx">微信登录</div> -->
-                <div id="qrcode-block" style="margin-left:25px;"><iframe src="https://open.weixin.qq.com/connect/qrconnect?appid=wx4b835b375578d1c0&amp;scope=snsapi_login&amp;redirect_uri=http://qqxqs.com/login&amp;state=&amp;login_type=jssdk&amp;self_redirect=default&amp;href=https://wezchina.com/common/css/wechat.css" frameborder="0" scrolling="no" width="300px" height="400px"></iframe></div>
+                <!-- <div id="qrcode-block" style="margin-left:25px;"><iframe src="https://open.weixin.qq.com/connect/qrconnect?appid=wx4b835b375578d1c0&amp;scope=snsapi_login&amp;redirect_uri=http://qqxqs.com/login&amp;state=&amp;login_type=jssdk&amp;self_redirect=default&amp;href=https://wezchina.com/common/css/wechat.css" frameborder="0" scrolling="no" width="300px" height="400px"></iframe></div> -->
+                <div id="qrcode-block" style="margin-left:25px;"></div>
                 <div class="to-login"></div>
             </div>
         </div>
@@ -499,34 +500,40 @@ $(function() {
     }
 
     var qrlogin = function(){
-        $.ajax({
-            url: apiUrl + 'setting/alias/weChatOpenConfig',
-            type: 'get',
-            dataType: 'json',
-            success: function(result) {
-                if (result.code === 200) {
-                    var obj = new WxLogin({
-                        id: "qrcode-block",
-                        appid: result.data.appid,
-                        scope: "snsapi_login",
-                        redirect_uri: window.location.href,
-                        href: 'https://wezchina.com/common/css/wechat.css',
-                        state: ""
-                    });
-                } else {
-                    parent.layer.msg(result.message);
+        $.getScript("https://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js", function(){
+            $.ajax({
+                url: apiUrl + 'setting/alias/weChatOpenConfig',
+                type: 'get',
+                dataType: 'json',
+                success: function(result) {
+                    if (result.code === 200) {
+                        var obj = new WxLogin({
+                            id: "qrcode-block",
+                            appid: result.data.appid,
+                            scope: "snsapi_login",
+                            redirect_uri: window.location.href,
+                            href: 'https://wezchina.com/common/css/wechat.css',
+                            state: ""
+                        });
+                    } else {
+                        parent.layer.msg(result.message);
 
-                    return false;
+                        return false;
+                    }
+                },
+                error: function(xhr) {
+                    console.log(xhr);
                 }
-            },
-            error: function(xhr) {
-                console.log(xhr);
-            }
-        });
+            });
+        })
     }
 
+    var only = true;
     $("#qrcode").click(function(){
-        qrlogin();
+        if (only) {
+            only = false;
+            qrlogin();
+        }        
     })
 
     //用户登录

@@ -3,24 +3,6 @@ $(document).ready(function() {
 	var rolesWeId = getParam('weid');
 	var init = function() {
 		$.ajax({
-			url: ApiUrl + "roles",
-			type: 'get',
-			dataType: 'JSON',
-			success: function(result) {
-				if(result.code === 200) {
-					$.each(result.data, function(key, val) {
-						var param_list = '<option name="options" value="0" selected=\"selected\">待激活 </option>' +
-							'<option name="options" value="1" selected=\"selected\">激活 </option>';
-						$("#activation").html(param_list);
-					})
-				} else {
-					parent.layer.msg(result.message);
-
-					return false;
-				}
-			}
-		});
-		$.ajax({
 			url: ApiUrl + "roles/" + rolesWeId,
 			type: 'get',
 			dataType: 'JSON',
@@ -28,7 +10,7 @@ $(document).ready(function() {
 				if(result.code === 200) {
 					$('#name').val(result.data.name);
 					$('#display_name').val(result.data.display_name);
-					$('#activation').find('option[name="options"]').eq(result.data.status).attr('disabled',true);
+                    $("input[name=status][value=" + result.data.status +  "]").attr('checked', true);
 					$('#describe').val(result.data.description);
 				} else {
 					parent.layer.msg(result.message);
@@ -52,7 +34,7 @@ $(document).ready(function() {
 		var formList = {
 			'name': $('#name').val(),
 			'display_name': $('#display_name').val(),
-			'activation': $("#activation").find("option:selected").val(),
+			'status': $("input[name='status']:checked").val(),
 			'description': $("#describe").val()
 		}
 		$.ajax({
@@ -62,16 +44,16 @@ $(document).ready(function() {
 			data: {
 				name: formList.name,
 				display_name: formList.display_name,
-				activation: formList.activation,
+                status: formList.status,
 				description: formList.description
 			},
 			success: function(data) {
 				console.log(data);
 				if(data.code === 200) {
-					showTips('修改成功!',2,'alert-info');
+					showTips('修改成功!',2,'alert-info', 1);
 					console.log('ok');
 				} else {
-					showTips('修改失败!  '+data.message,2,'alert-danger');
+					showTips(data.message,2,'alert-danger', 2);
 					console.log('error: -200');
 				}
 			},
@@ -81,7 +63,7 @@ $(document).ready(function() {
 		})
 	});
 
-	function showTips(tips, time, el) {
+	function showTips(tips, time, el, res) {
         var windowWidth = document.documentElement.clientWidth;
         var tipsDiv = '<div class="alert ' + el + '" role="alert">' + tips + '</div>';
 
@@ -103,6 +85,9 @@ $(document).ready(function() {
         setTimeout(function () {
             $('div.alert').fadeOut();
             $('.alert').remove();
+            if (res === 1) {
+                location.href = 'roles.html';
+            }
         }, (time * 1000)
         );
     }

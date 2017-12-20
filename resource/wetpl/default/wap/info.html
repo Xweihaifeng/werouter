@@ -1,750 +1,136 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="UTF-8">
-	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <title></title>
-	<link rel="stylesheet" href="{{PATH_TML}}css/home.css"/>
-	<link rel="stylesheet" href="{{PATH_TML}}css/common.css"/>
-    <link rel="stylesheet" href="{{PATH_TML}}lib/weui.css" />
-    <link rel="stylesheet" href="{{PATH_TML}}css/info.css"/>
-	<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
-    <script src="{{PATH_TML}}lib/jquery.min.js"></script>
-	<script src="{{PATH_TML}}js/vue.min.js"></script>
-	<script src="{{PATH_CONFIG}}"></script>
-	<link rel="stylesheet" href="{{PATH_TML}}js/layui/css/layui.css"/>
-	<script src="{{PATH_TML}}js/layui/layui.js"></script>
-</head>
-<body>
-<div id="app" class="box">
-	<div class="myInfo">
-		<span class="img"><img :src="avatar" alt=""/></span>
-		<span>
-			<p class="name">{{nickname}}</p>
-			<p class="wid">weid:{{domain}}</p>
+<#extend#>public/domain/domain_extend.html</#extend#>
+<script type="text/javascript">
+	show.header = 'no';
+	show.footer = 'no';
+</script>
+<link rel="stylesheet" href="{{PATH_TML}}lib/weui.css" />
+<link rel="stylesheet" href="{{PATH_TML}}css/info.css"/>
+<div class="myInfo">
+	<span class="img"><img v-if="info.avatar != ''" :src="info.avatar | img_src(100,100)" alt=""/></span>
+	<span>
+		<p class="name">{{info.nickname}}</p>
+		<p class="wid">weid:{{info.domain}}</p>
+	</span>
+</div>
+<div class="des">
+	<div>
+		<label>功能介绍</label>
+		<span style="display:inline-block;width: 73%; font-size: 0.115rem;vertical-align: middle">{{info.motto}}</span>
+	</div>
+	<div class="img-div">
+		<label>账号主体</label>
+		<span style="font-size: 0.115rem;">
+			<img  src="/common/img/shiming.png" width="25" alt=""/>
+			{{info.account}}
 		</span>
 	</div>
-	<div class="des">
-		<div>
-			<label>功能介绍</label>
-			<span style="display:inline-block;width: 73%; font-size: 0.115rem;vertical-align: middle">{{motto}}</span>
-		</div>
-		<div class="img-div">
-			<label>账号主体</label>
-			<span style="font-size: 0.115rem;">
-				<img v-if="card_show==true" src="/common/img/shiming.png" width="25" alt=""/>
-				{{account}}
-			</span>
-		</div>
-		<div class="cert" v-if="auth_show==true">
-			<label>认证信息</label>
-			<span style="font-size: 0.115rem;">
-				<img v-if="card_show==true" src="/common/img/duihao.png" width="15" alt=""/>
-				{{cert}}
-			</span>
-		</div>
-		<!--<div>
-			<label>所在地</label>
-			<span style="padding-left: 0.13rem;">陕西&nbsp;&nbsp;西安</span>
-		</div>-->
+	<div class="cert">
+		<label>认证信息</label>
+		<span style="font-size: 0.115rem;">
+			<img v-if="pages_info.plats_user_cert.is_authenticated == 2"  src="/common/img/duihao.png" width="15" alt=""/>
+			{{info.cert}}
+		</span>
 	</div>
+</div>
 
-	<!--<div class="des">
-		<div class="work">
-			<label>经营范围</label>
-			<span>{{work}}</span>
-		</div>
-	</div>-->
-	
-	<!--<div class="user_select">
-		<div>
-			<label>接收文章推送</label>
-            <input class="weui-switch" type="checkbox" checked="checked"/>
-		</div>
-		<div>
-			<label>置顶公众号</label>
-			<input class="weui-switch" type="checkbox"/>
-		</div>
-	</div>-->
-	<div class="des">
-		<a :href="wepage" >
-			<div>
-				<label>
-					我的微主页
-				</label>
-			</div>
-		</a>
-		<a :href="wecard">
-			<div>
-				<label>
-					我的微名片
-				</label>
-			</div>
-		</a>
-		<a>
-			<div>
-				<label>
-					查看历史消息
-				</label>
-			</div>
-		</a>
-	</div>
-
-	<!--<div class="des">
+<div class="des">
+	<a :href="wepage" >
 		<div>
 			<label>
-				<a>申请查看手机号</a>
+				我的微主页
 			</label>
 		</div>
-	</div>-->
-
-
-	<!--<div class="history" style="display: flex;">
-		<label>
-			功能模块
-		</label>
-		<label style="display: flex">
-			<img src="{{PATH_TML}}img/tb2.png" alt=""/>
-			<img src="{{PATH_TML}}img/tb3.png" alt=""/>
-			<img src="{{PATH_TML}}img/tb4.png" alt=""/>
-			<img src="{{PATH_TML}}img/tb5.png" alt=""/>
-		</label>
-	</div>-->
-	<div class="foot">
+	</a>
+	<a :href="wecard">
 		<div>
-			<!--<a :href="goto" style="color: white">-->
-			<p class="enter" @click="enjoy">
-				<button data-method="notice" class="layui-btn" style="position: absolute; background: transparent;width: 100%; left: 0; display: none;"></button>
-				{{status}}
-			</p>
-			<!--</a>-->
-			<p>投诉</p>
-		</div>		
-	</div>
-</div>	
+			<label>
+				我的微名片
+			</label>
+		</div>
+	</a>
+	<a>
+		<div>
+			<label>
+				查看历史消息
+			</label>
+		</div>
+	</a>
+</div>
+<div class="foot">
+	<div>
+		<!--<a :href="goto" style="color: white">-->
+		<p class="enter" @click="click_but();">
+			<button   class="layui-btn" style="position: absolute; background: transparent;width: 100%; left: 0; display: none;"></button>
+			{{but_text}}
+		</p>
+		<!--</a>-->
+		<p>投诉</p>
+	</div>		
+</div>
 <script>
-	var user_info = pages_info.plats_user;
-	const userId = (domain) => {
-		return new Promise((resolve, reject) => {
-			$.ajax({
-				url: PAGES_DETAIL_DOMAIN + "/" + domain,
-				type: 'GET',
-				success: function (data) {
-					if (data.code == 200) {
-						console.log(data);
-						if (data.data != null) {
-							let uid = data.data.plat_user_id;
-							console.log('userId:', uid);
-							resolve(uid);
-						}
-					} else {
-						//window.location.href = "/*";
-						console.log("error", data.code)
-					}
-				},
-				error: function (xhr) {
-					console.log(xhr);
-				}
-			})
-		})
-	}
+new Vue({
+    el: '#app',
+    data: {
+    	info : {
+    		'nickname' : pages_info.plats_user.nickname,
+    		'domain' : pages_info.plats_domian.domain,
+    		'motto' : pages_info.plats_user.motto,
+    		'account' : pages_info.plats_user_cert.type,
+    		'cert' : pages_info.plats_user_cert.cert_info,
+    		'avatar' : pages_info.plats_user.avatar,
+    		'pages_info' : pages_info
+    	},
+    	wepage : all_domian +pages_index,
+    	wecard : all_domian +pages_index+'/wecard',
+    	but_text : '关注',
+    	if_follow : 0,
+    	but_url : all_domian + pages_index,
+    },
+    mounted: function(){
+        this.$nextTick(()=>{
+        	this.info.account = (pages_info.plats_user_cert.type == 1) ? '个人' : '企业' ;
+        	if(is_login == 'yes')
+        	{
+        		if(pages_index == plats_user_info.domian)
+        		{
+        			this.if_follow = 1;
+        			this.but_text = '进入我的微主页';
+        		}
+        		else
+        		{
+        			$mob_ajax.if_follow(pages_index , (res)=>{
+	        			if(res.data == 1)
+	        			{
+	        				this.if_follow = 1;
+	        				this.but_text = '进入微主页';
+	        			}
+	        		});
+        		}
 
-	const getUserInfo = function(url, id){
-		let tid = window.location.pathname.split('/').pop();
-		let list = [{id: '', val: '首页'}, {id: 'article', val: '文章'}, {id: 'activity', val: '活动'}, {id: 'wemall', val: '商城'}];
+        		this.wepage = all_domian + plats_user_info.domian;
+        		this.wecard = all_domian + plats_user_info.domian + '/wecard';
+        	}
 
-		var info = pages_info.plats_user;
-		if (info.nickname != null) {
-			$('title').text(find(tid, list) + '-' + info.nickname + '的官方微主页');
-		} else {
-			if (info.real_name != null) {
-				$('title').text(find(tid, list) + '-' + info.real_name + '的官方微主页');
-			} else {
-				$('title').text(find(tid, list) + '-' + localStorage.getItem('title') + '官方微主页');
-			}
-		}
-		$("#favicon").attr('href', localStorage.getItem('fav'));
-
-	}
-
-	const hasDomain = function(weid, ref) {
-		$.ajax({
-			url: PAGES_PAGE_GETDETAILBYUSER + weid,
-			type: 'GET',
-			headers: {
-				'Token': plats_token
-			},
-			success: function (data) {
-				console.log(data);
-
-			}
-		})
-	}
-
-	const setCookie = function(token, expiredays){
-		var Days = expiredays;
-		var exp = new Date();
-		var domain = '.'+root_domain;
-		exp.setTime(exp.getTime() + Days*24*60*60*1000);
-		document.cookie = "token="+ escape (token) + ";expires=" + exp.toGMTString() +";path=/;domain="+domain;
-	}
-
-	const wxlogin = (openid, ref) => {
-		//微信登录
-		$.ajax({
-			url: apiUrl + 'wxlogin',
-			type: 'POST',
-			async: false,
-			data: {
-				openid: openid,
-				ref_url: window.location.pathname,
-				ref_type: 2,
-				ref_id: window.location.pathname.split('/')[2],
-				domain: ref.domain
-			},
-			success: function (data) {
-//				alert(JSON.stringify(data));
-				localStorage.setItem('weid', data.data.weid);
-				localStorage.setItem('token', data.token);
-				localStorage.setItem('activation', data.data.activation_status);
-				localStorage.setItem('phone', data.data.phone);
-
-				hasDomain(data.data.weid, ref);
-
-				setCookie(data.token, 7);
-				ref.activation = data.data.activation_status;
-				if (ref.activation != 4 && ref.activation != null && ref.activation != '') {
-					$(".layui-btn").hide();
-				}
-				if (data.code == 200) {
-					if (isNull(data.token) == false) { //非空
-						localStorage.setItem('token-date', new Date().getTime())
-						localStorage.setItem('user-token', data.token);
-					}
-				}
-			}
-		})
-	}
-
-	const init = function(url, ref) {
-		if (user_info.avatar != null) {
-			ref.avatar = ApiMaterPlatQiniuDomain + user_info.avatar;
-		}
-		$('title').text(user_info.nickname + '的微名片')
-		ref.nickname = user_info.nickname;
-		ref.domain = pages_info.plats_domian.domain;
-		ref.motto = user_info.motto;
-		var domain_index = '';
-		if(plats_user_info == false)
-		{
-			domain_index = pages_index;
-		}
-		else
-		{
-			domain_index = plats_user_info.domian;
-		}
-		ref.wepage = '/' + domain_index + '/';
-		ref.wecard = '/' + domain_index + '/wecard';
-
-		let title = ref.nickname;
-		let summary = ref.motto;
-		let cover = ref.avatar;
-
-		isFollow('circel/if_follow', ref.domain, ref);
-		//确保登录成功后能返回当前页
-		sessionStorage.setItem('nextPage', window.location.href);
-		sessionStorage.setItem('currentPage', window.location.href);
-		if (is_weixn()) {
-			var oldTime = localStorage.getItem('setopenid-date');
-			if (!isExpire(oldTime)) { //没过期
-				//var usertoken = localStorage.getItem('user-token');
-				var usertoken = localStorage.getItem('setopenid');
-				if (usertoken == 'true') {
-					openid = getUrlParam("openid");
-//							alert('openid:' + openid)
-					if (openid != null) {
-						localStorage.setItem('openid', openid);
-						wxlogin(openid, ref);
-					} else {
-						let openid = localStorage.getItem('openid');
-						wxlogin(openid, ref);
-					}
-				}
-			} else {
-				localStorage.setItem('setopenid', true);
-				localStorage.setItem('setopenid-date', new Date().getTime())
-				window.location.href = encodeURI(apiUrl + '/openid?url=' + window.location.href);
-			}
-		} else {
-//			$(".layui-btn").hide();
-		}
-		$.ajax({
-			url: apiUrl + 'wxjssdk',
-			type: 'POST',
-			data: {
-				currenturl: window.location.href
-			},
-			success: function(data) {
-				if (data.code == 200) {
-//							console.log(data)
-					wx.config({
-						debug: false,
-						appId: data.data.appId,
-						timestamp: data.data.timestamp,
-						nonceStr: data.data.nonceStr,
-						signature: data.data.signature,
-						jsApiList: ["onMenuShareTimeline", "onMenuShareAppMessage"]
-					});
-
-					wx.ready(function() {
-						var link = window.location.href;
-						wx.onMenuShareTimeline({
-							title: title,
-							// 分享标题
-							link: link,
-							// 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-							desc: ref.motto,
-							//分享描述
-							imgUrl: cover,
-							// 分享图标
-							success: function() {
-								// 用户确认分享后执行的回调函数
-							},
-							cancel: function() {
-								// 用户取消分享后执行的回调函数
-							}
-						});
-						wx.onMenuShareAppMessage({
-							title: title,
-							// 分享标题
-							desc: ref.motto,
-							// 分享描述
-							link: link,
-							// 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-							imgUrl: cover,
-							// 分享图标
-							type: '',
-							// 分享类型,music、video或link，不填默认为link
-							dataUrl: '',
-							// 如果type是music或video，则要提供数据链接，默认为空
-							success: function() {
-								// 用户确认分享后执行的回调函数
-							},
-							cancel: function() {
-								// 用户取消分享后执行的回调函数
-							}
-						});
-					})
-				}
-			}
-		})
-
-	}
-
-	//获取参数
-	function getUrlParam(name) {
-		var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
-		var r = window.location.search.substr(1).match(reg); //匹配目标参数
-		if (r != null) return unescape(r[2]);
-		return null; //返回参数值
-	}
-
-	//判断为空
-	function isNull(data) {
-		return (data == "" || data == undefined || data == null || data == 'null') ? true: false;
-	}
-
-	//判断是否在微信中打开
-	function is_weixn() {
-		var ua = navigator.userAgent.toLowerCase();
-		if (ua.match(/MicroMessenger/i) == "micromessenger") {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	//检查openid是否过期(有效期1天)
-	const isExpire = function(oldTime) {
-		var day = 86400000;
-		var now = new Date().getTime();
-		if (oldTime != null) {
-			if (now - oldTime < 86400000) {
-				return false;
-			} else {
-				localStorage.removeItem('setopenid-date')
-				localStorage.removeItem('user-token')
-				return true;
-			}
-		} else {
-			return true;
-		}
-	}
-
-	//关注
-	const follow = function(url, domain, ref) {
-		$.ajax({
-			url: apiUrl + url,
-			type: 'POST',
-			data: {
-				'domain': domain,
-				'type': 2
-			},
-			headers: {
-				'Token': plats_token
-			},
-			success: function(data) {
-				console.log(data)
-				if (data.code == 200) {
-					ref.status = '进入微主页';
-					ref.state = true;
-				} else {
-					layer.msg(data.message, {
-						time: 1500
-					})
-				}
-			},
-			error: function(xhr) {
-				console.log(xhr)
-			}
-		})
-	}
-
-	//取消关注
-	const cancelFollow = function(url, domain, ref) {
-		$.ajax({
-			url: apiUrl + url,
-			type: 'POST',
-			data: {
-				'domain': domain,
-				'type': 2
-			},
-			headers: {
-				'Token': plats_token
-			},
-			success: function(data) {
-				console.log(data)
-				if (data.code == 200) {
-					ref.status = '关注';
-					ref.state = false;
-				} else {
-					console.log(data.message)
-				}
-			},
-			error: function(xhr) {
-				console.log(xhr)
-			}
-		})
-	}
-
-	const isFollow = function(url, domain, ref) {
-		$.ajax({
-			url: apiUrl + url,
-			type: "POST",
-			data: {
-				'domain': domain
-			},
-			headers: {
-				'Token': plats_token
-			},
-			success: function(data) {
-				console.log(data);
-				if (data.code == 200) {
-//					alert('isFollow:' + data.data)
-					if (data.data == 1) {
-						ref.state = true;
-						ref.status = '进入微主页';
-						ref.goto = '/' + ref.domain + '/';
-					} else {
-						ref.state = false;
-						ref.status = '关注';
-					}
-				}
-			}
-		})
-	}
-
-	const getChecknum = (phone) => {
-		$.ajax({
-			url: CODES,
-			dataType: 'json',
-			type: 'post',
-			data: {'phone': phone},
-			success: function(data){
-				console.log(data);
-			},
-			error: function(err){
-				console.log(err);
-			}
-		})
-	}
-
-	const tologin = (url, phoneNum, checkNum, weid, ref) => {
-		$.ajax({
-			url:  url,
-			type: 'post',
-			data: {
-				'phone': phoneNum,
-				'code': checkNum,
-				'weid': weid,
-				'type': 1,
-				'from_type': 2
-			},
-			success: function(data){
-				console.log(data);
-//                    alert(2)
-				if (data.code == 200) {
-					layer.msg('激活成功', {
-						time: 1500
-					})
-					$(".layui-btn").hide();
-//                        alert('token:' + data.token);
-					setCookie(data.token, 7);
-					localStorage.setItem('token', data.token);
-					localStorage.setItem('activation', 3);
-					ref.activation = 3;
-				} else {
-					layer.msg(data.message, {
-						time: 1500
-					})
-				}
-			},
-			error: function(err){
-				console.log(err);
-			}
-		})
-	}
-
-	new Vue({
-		el: '#app',
-		data: {
-			activation: '',
-			avatar: '',
-			nickname: '',
-			domain: '',
-			account: '个人',
-			cert: '官方认证',
-			motto: '暂无内容',
-			work: '互联网',
-			wepage: '',
-			wecard: '',
-			state: false, //未关注
-			status: '',
-			goto: '', //进入我的微主页
-			pages_show : false,  // 我的微主页 我的微名片是否显示
-			card_show : false,   // 身份认证图标是否显示
-			auth_show: false,    //认证信息是否显示
-
-		},
-		created: function(){
-			var _self = this;
-			var platuserid = pages_info.plats_domian.plat_user_id;
-			if (is_login == 'no') {
-				_self.status = '关注';
-				$(".layui-btn").show();
-			}
-			init(apiUrl + 'circel/wcard/' + platuserid, _self);
-		},
-		mounted: function(){
-			this.$nextTick(function () {
-				var _self = this;
-				if(plats_user_info != false)
-				{
-					this.pages_show = true;
-				}
-
-				if(pages_info.plats_user_auth != false)
-				{
-					this.card_show = true;
-				}
-				if(pages_info.plats_user_cert != false && pages_info.plats_user_cert.type == 2)
-				{
-					this.account = pages_info.plats_user_cert.name;
-					this.card_show = false;
-					this.auth_show = true;
-				}
-				else
-				{
-					this.auth_show = true;
-				}
-				
-				if(pages_info.plats_user_auth != false)
-				{
-					this.cert = pages_info.plats_user_auth.name;
-				}
-				if(pages_info.plats_user_cert != false)
-				{
-					this.cert = pages_info.plats_user_cert.cert_info;
-				}
-
-				layui.use('layer', function(){ //独立版的layer无需执行这一句
-					var $ = layui.jquery, layer = layui.layer; //独立版的layer无需执行这一句
-					//触发事件
-					var active = {
-						setTop: function(){
-							var that = this;
-						}
-						,notice: function(){
-							layer.confirm('仅需一步，即可激活您的账号', {
-								skin:'confirm-class',
-								title: false,
-								closeBtn: false,
-								btn: ['暂不','激活'],
-								shade: 0.5,
-								shadeClose: true,
-								area: ['2.25rem', 'auto']
-							}, function(index){
-								layer.close(index)
-							}, function (index) {
-								layer.close(index)
-								layer.open({
-									skin:'active-class'
-									,type: 1
-									,title: false //不显示标题栏
-									,closeBtn: false
-									,shadeClose: true
-									,area: ['320px', '250px']
-									,shade: 0.5
-									,id: 'LAY_layuipro' //设定一个id，防止重复弹出
-									,btn: ['激活']
-									,btnAlign: 'c'
-									,moveType: 1 //拖拽模式，0或者1
-									,content:
-											`
-											<div id="appx">
-											<!--<p style="font-size: 16px; margin-top: 25px; text-align: center;">请激活您的账号</p>-->
-											<div id="login-info">
-												<ul>
-													<li id="phonenum">
-														<!--<span>+86 <img src="/common/img/downarrow.png" alt=""/></span>-->
-														<input type="text" placeholder="请输入手机号码" maxlength="11" id="phone" v-model="phone" />
-													</li>
-													<li id="checknum">
-														<input type="text" placeholder="请输入手机验证码" maxlength="6" id="check" v-model="check" />
-														<span @click="getCheck">{{ info }}</span>
-													</li>
-												</ul>
-											</div>
-											</div>
-											`
-									,success: function(layero){
-										$("#layui-layer1").css('overflow', 'hidden');
-										new Vue({
-											el: '#appx',
-											data: {
-												phone: '',
-												check: '',
-												info: '获取验证码',
-												lock: false,
-												backurl: '',
-												isCheck: false,
-												weid: '',
-												token: ''
-											},
-											created: function() {
-												let self = this;
-												self.backurl = sessionStorage.getItem('currentPage');
-												self.weid = localStorage.getItem('weid');
-												self.token = localStorage.getItem('token');
-												$('.layui-layer-btn0').click(function(){
-													let phonenum = $('#phone').val();
-													let checknum = $('#check').val();
-													if (/^1[3|4|5|7|8][0-9]{9}$/.test(phonenum)) {
-														if (/^[0-9]{6}$/.test(checknum)) { //发送手机和验证码验证成功
-															function is_weixn() {
-																var ua = navigator.userAgent.toLowerCase();
-																if (ua.match(/MicroMessenger/i) == "micromessenger") {
-																	return true;
-																} else {
-																	return false;
-																}
-															}
-															if (is_weixn()) {
-															    tologin(apiUrl + 'userAct', phonenum, checknum, self.weid);
-															} else {
-																tologin(LOGIN, phonenum, checknum, self.weid);
-															}
-														} else {
-															layer.msg("手机验证码输入错误", {
-																time: 1500
-															})
-														}
-													} else {
-														layer.msg("请输入正确的手机号码", {
-															time: 1500
-														})
-													}
-												})
-											},
-											methods: {
-												getCheck: function() {
-													let self = this;
-													let count = 59;
-													let phonenum = self.phone;
-													if (/^1[3|4|5|7|8][0-9]{9}$/.test(phonenum)) {
-														getChecknum(phonenum);
-														if (!self.lock) {
-															let evt = setInterval(function () {
-																self.lock = true;
-																if (count > 0) {
-																	self.info = count-- + '秒';
-																} else {
-																	self.info = '重新发送验证码';
-																	self.lock = false;
-																	clearInterval(evt);
-																}
-															}, 1000)
-														}
-													} else {
-														layer.msg("请输入正确的手机号码", {
-															time: 1500
-														})
-													}
-												},
-												login: function() {
-													let self = this;
-													let phonenum = self.phone;
-													let checknum = self.check;
-												}
-											}
-										})
-									}
-								});
-
-							});
-
-						}
-					};
-					$('.layui-btn').on('click', function(){
-						var othis = $(this), method = othis.data('method');
-						active[method] ? active[method].call(this, othis) : '';
-					});
-				});
-			})
-		},
-		methods: {
-			enjoy: function(){
-				let _self = this;
-//				if (plats_token != null && plats_token != undefined) {
-					if (is_login == 'no') { //未登录
-						$(".layui-btn").show();
-					} else {
-						if (!_self.state) {
-							follow('circel/relationship', pages_info.plats_domian.domain, _self);
-							layer.msg("关注成功", {
-								time: 1500
-							})
-						} else {
-//							cancelFollow('circel/quxiao', _self.domain, _self);
-							window.location.href = '/' + _self.domain + '/';
-						}
-					}
-				/*} else {
-					window.location.href = '/login';
-				}*/
-			}
-		}
-	})
+        	$app.set_title(pages_info.plats_user.nickname + '的微名片');
+        });
+    },
+    methods:{
+    	click_but(){
+    		if(this.if_follow == 0){
+        		$mob_ajax.relationship(2 , pages_index , (res)=>{
+        			if(res.data == 1)
+        			{
+        				this.if_follow = 1;
+        				this.but_text = '进入微主页';
+        			}
+        		});
+    		}
+    		else
+    		{
+    			$app.open_page(this.but_url);
+    		}
+    	}
+    }
+    
+});
 </script>
-</body>
-</html>

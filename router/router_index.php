@@ -330,9 +330,10 @@ class main extends controller
         $plats['var api_domain'] = $protocol.$this->data['domain'].'/api/';
         //$plats['var all_domian'] = $protocol.$this->data['domain'].'/'; 正式环境使用
         $plats['var all_domian'] = $protocol.$_SERVER['HTTP_HOST'].'/';  //测试环境使用
-        
+		
         $plats['var root_domain'] = $this->_get_domain($_SERVER['HTTP_HOST']);
         $plats['var is_domain'] = 'no';
+        $plats['var is_wx'] = is_weixin();
         $plats['var pages_index'] = 'index';
         $plats['var is_login'] = 'no';
         $plats['var plats_token'] = FALSE;

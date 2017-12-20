@@ -839,3 +839,15 @@ $("#avatar, #dropdown").hover(function () {
     $(".avatar").hide();
 })
 })
+
+ //监听加载状态改变
+ document.onreadystatechange = completeLoading;
+ function completeLoading() {
+     if (document.readyState == "complete") {
+         if ($("#loadingDiv").length > 0) {
+             $("#loadingDiv").animate({
+                 opacity: "hide"
+             }, 300);
+         }
+     }
+ }

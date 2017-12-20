@@ -89,12 +89,38 @@
     <script src="{{PATH_TML}}js/public_main_right_bg.js"></script>
 
     <!-- <script src="//captcha.luosimao.com/static/js/api.js"></script> -->
-    <script src="https://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js"></script>
+    <!-- <script src="https://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js"></script> -->
     <script src="{{PATH_TML}}js/image_code_id.js"></script>
     <!-- <script src="/js/news_base.js"></script> -->
     <script>
-        $("#favicon").attr("href", ApiMaterPlatQiniuDomain + window.localStorage.getItem("fav"));
 
+        $("#favicon").attr("href", ApiMaterPlatQiniuDomain + window.localStorage.getItem("fav"));
+        $.getScript("https://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js", function(){
+            $.ajax({
+                url: apiUrl + 'setting/alias/weChatOpenConfig',
+                type: 'get',
+                dataType: 'json',
+                success: function(result) {
+                    if (result.code === 200) {
+                        var obj = new WxLogin({
+                            id: "qrcode-block",
+                            appid: result.data.appid,
+                            scope: "snsapi_login",
+                            redirect_uri: window.location.href,
+                            href: 'https://wezchina.com/common/css/wechat.css',
+                            state: ""
+                        });
+                    } else {
+                        parent.layer.msg(result.message);
+
+                        return false;
+                    }
+                },
+                error: function(xhr) {
+                    console.log(xhr);
+                }
+            });
+        })
 
         // 扫码登录
         function setCookie(token, expiredays)
@@ -136,30 +162,7 @@
             });
         }
 
-        $.ajax({
-            url: apiUrl + 'setting/alias/weChatOpenConfig',
-            type: 'get',
-            dataType: 'json',
-            success: function(result) {
-                if (result.code === 200) {
-                    var obj = new WxLogin({
-                        id: "qrcode-block",
-                        appid: result.data.appid,
-                        scope: "snsapi_login",
-                        redirect_uri: window.location.href,
-                        href: 'https://wezchina.com/common/css/wechat.css',
-                        state: ""
-                    });
-                } else {
-                    parent.layer.msg(result.message);
 
-                    return false;
-                }
-            },
-            error: function(xhr) {
-                console.log(xhr);
-            }
-        });
     </script>
 </body>
 

@@ -52,11 +52,13 @@ var qiniu_bucket_domain =ApiMaterPlatQiniuDomain;
             showLogin = false;
             isLogin = true;
             //加载用户头像
+            /*
             $("#login a").css({
                 'background': 'url(../common/img/p2240276035.jpg) no-repeat center',
                 'background-size': '100%'
             });
             $("#login a").addClass("i-header").html("");
+            */
         }
     }
 

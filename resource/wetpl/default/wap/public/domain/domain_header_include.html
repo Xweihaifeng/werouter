@@ -2,24 +2,32 @@
 <html xmlns="https://www.w3.org/1999/xhtml" ng-app="myApp">
 <head>
     <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui"/>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="renderer" content="webkit" />
 	<link rel="shortcut icon" id="favicon" href="http://images.wezchina.com/plats/resource/1505225663330.ico">
+    <link rel="stylesheet" href="/common/iview/iview.css"></link>
 	<link rel="stylesheet" href="/resource/wetpl/default/wap/css/home.css">
     <link rel="stylesheet" href="/resource/wetpl/default/wap/css/common.css">
     <link rel="stylesheet" href="/resource/wetpl/default/wap/css/swiper.min.css">
     <link rel="stylesheet" href="/common/jquery.animsition/css/animsition.min.css">
     <script type="text/javascript" src="{{PATH_CONFIG}}"></script>
-	<script src="/common/public/js/app.js"></script>
+    <script src="/common/public/zepto.min.js"></script>
+    <script src="/common/public/js/app.js"></script>
+
     <script src="/common/iview/vue.min.js"></script>
     <script src="/common/iview/axios.min.js"></script>
     <script src="/common/iview/libs/util.js"></script>
+    <script src="/common/iview/libs/filter.js"></script>
+    
+    <script src="/common/public/js/mobile_common_ajax.js"></script>
+    <script src="/common/public/js/wx.js"></script>
     <script type="text/javascript">
         var show = {
             'header' : 'yes' ,
-            'footer' : 'yes'
+            'footer' : 'yes' 
         };
+        $wx.get_openid();
     </script>
     
 	<style type="text/css">
@@ -37,9 +45,15 @@
         .footer_selecte {
             color: rgb(153, 153, 153); 
         }
+        .layui-m-layercont {
+            padding: 10px 10px;
+            line-height: 22px;
+            text-align: center;
+        }
     </style>
 </head>   
-<body class="animsition" style="animation-duration: 0.3s; opacity: 1;">     
+<body class="animsition" style="animation-duration: 0.3s; opacity: 1;">    
+
 <div id="header" v-cloak>
     <nav>
         <ul>
