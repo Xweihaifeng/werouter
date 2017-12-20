@@ -5,30 +5,32 @@
 		if(is_wx == 'no') return false;
 
 		var openid = $app.get_query_string('openid');
-		alert(openid);
 		var get_storage_openid = $app.get_storage('openid');
-		
-		if($app.empty(openid) == true && $app.empty(get_storage_openid) == false)
+		// console.log(get_storage_openid);
+		if(get_storage_openid != false){
+			return true;
+		}
+		// console.log(get_storage_openid);
+		if(openid != false)
 		{
 			$app.set_cookie('openid' , openid , 7);
 			$app.set_storage('openid' , openid);
-			alert(openid);
-			//顺便微信登陆下
+			//顺便微信登陆下 
 			wx.wx_login(openid);
 		}
 		else
 		{
-			window.location.href = encodeURI(api_domain + 'openid?url=' + window.location.href)
+			$app.open_page(encodeURI(api_domain + 'openid?url=' + window.location.href));
 		}
 	}
-	
+	// ref_type 1.微信登陆 2.手机号码传  3PC扫码 
 	//微信登陆依赖VUE AXIOS
 	wx.wx_login = function(openid){
 		if(is_wx == 'no') return false;
 		var data_post = {
 			'openid': openid,
 			'ref_url' : window.location.pathname,
-			'ref_type' : 2,
+			'ref_type' : pages_type,
 			'ref_id' : '',
 			'domain' : pages_index
 		};
@@ -36,6 +38,7 @@
 		ajax.post('wxlogin' , data_post).then((res)=>{
 			if(res.code == 200){
 				$app.set_login_data(res);
+				location.reload();
 			}
 		});
 	}

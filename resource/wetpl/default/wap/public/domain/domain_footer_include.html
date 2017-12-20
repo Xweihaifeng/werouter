@@ -3,10 +3,10 @@
 		<li :id="key" v-for="(item , key) in footer_nav" @click="open(key);">
 			<div class="up" v-if="item.nav == false"></div>
 			<div class="down" v-if="item.nav == false"></div>
-
+			
 			<img :src="item.select_img"  v-if="key == router" />
 			<img :src="item.img"  v-else />
-
+			
 			<span v-if="item.nav != false" :class="{'footer_selecte' : key == router}">{{item.name}}</span>
 		</li>
 	</ul>

@@ -1,7 +1,8 @@
 <script src="/common/public/js/layer_mobile/layer.js"></script>
 <script type="text/javascript">
 // 需要依赖layer moble
-function mb_login(call){
+function mb_login(href){
+    var weid = $app.get_storage('weid');
     layer.open({
         content: '仅需一步,即可激活您的账号'
         ,btn: ['激活', '暂不']
@@ -17,11 +18,11 @@ function mb_login(call){
                                     <input type="text" v-model="login.phone" value="" name="login_phone" placeholder="请输入手机号码" maxlength="11" id="login_phone">
                                 </li> 
                                 <li id="checknum">
-                                    <input type="text" v-model="login.check" value="" name="login_check"  placeholder="请输入手机验证码" maxlength="6" id="login_check"> <span v-if="check_num>0">剩余{{check_num}}秒</span> <span v-else @click="code();">{{code_string}}</span>
+                                    <input type="text" v-model="login.code" value="" name="login_check"  placeholder="请输入手机验证码" maxlength="6" id="login_check"> <span v-if="check_num>0">剩余{{check_num}}秒</span> <span v-else @click="code();">{{code_string}}</span>
                                 </li>
                             </ul>
                         </div>
-                         <div ><a class="layui-layer-btn0">激活</a></div>
+                         <div ><a class="layui-layer-btn0" @click="login_post();">激活</a></div>
                     </div>
                 </div>
                 `
@@ -35,12 +36,18 @@ function mb_login(call){
                    code_string : '获取验证码',
                    login: {
                         phone : '',
-                        check : ''     
+                        code : '',
+                        weid : '',  
+                        ref_type : pages_type,
+                        from_type : '',
+                        ref_url : window.location.pathname,
+                        type : '',
+                        domain : pages_index
                    },
                    check_num : 0,
                    verification : {
                         'phone' : /^((1[1-9]{1})+\d{9})$/,
-                        'check' : /^\d{6}\b/,
+                        'check' : /^\d{6}$/,
                    }
                 },
                 mounted() {
@@ -56,7 +63,7 @@ function mb_login(call){
                         } , 1000);
                     },
                     code (){
-                        if(!this.verification.test(this.login.phone)) 
+                        if(!this.verification.phone.test(this.login.phone)) 
                         { 
                             mb_message('手机号不对');
                         }
@@ -69,31 +76,45 @@ function mb_login(call){
                             }
                         });
                     },
-                    login(){
-                        if(!this.verification.test(this.login.phone)) 
+                    login_post(){
+                        if(!this.verification.phone.test(this.login.phone)) 
                         { 
                             mb_message('手机号不对');
                             return;
                         }
-                        
-                        if(!this.check.test(this.login.check)) 
-                        { 
-                            mb_message('手机号不对');
-                            return;
-                        }
-                        
-                        ajax.post('userAct' , {'phone' : this.login.phone , 'code' : this.login.check 
-                        , 'weid' : weid , 'type': 1 , 'from_type': 2}).then((data)=>{
-                            if(data.code == 200)
-                            {
-                                
-                            }
-                        });
 
+                        if(!this.verification.check.test(this.login.code)) 
+                        { 
+                            mb_message('验证码有误!');
+                            return;
+                        }
+                        if(is_wx == 'yes')
+                        {
+                            var weid = $app.get_storage('weid');
+                            this.login.weid = weid;
+                            this.login.type = 1;
+                            this.login.from_type = 2;
+                            ajax.post('userAct' , this.login).then((data)=>{
+                                if(data.code == 200)
+                                {
+                                    $app.set_login_data(data);
+                                    $app.open_page(href);
+                                }
+                            });
+                        }
+                        else
+                        {
+                            ajax.post('login' , this.login).then((data)=>{
+                                if(data.code == 200)
+                                {
+                                    $app.set_login_data(data);
+                                    $app.open_page(href);
+                                }
+                            });
+                        }
                     }
                 }
             }); 
-            //call();
         }
     });
 }

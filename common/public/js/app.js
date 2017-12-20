@@ -7,7 +7,7 @@
 		var r = window.location.search.substr(1).match(reg);
 		if(r!=null)return  decodeURIComponent(r[2]); return false;
 	}
-
+	
 	//验证是否是空
 	app.empty = function(params){
 		if(params !== null && params !== undefined && params !== '')
@@ -27,7 +27,7 @@
 	// 获取COOKIE
 	app.get_cookie = function(name){
 		var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
-	    if(arr=document.cookie.match(reg)){
+	    if(arr = document.cookie.match(reg)){
 	        return unescape(arr[2]); 
 	    }
 	    else {
@@ -36,7 +36,12 @@
 	}
 	// 写入本地容器
 	app.set_storage = function(val , params){
-		var dataJson = JSON.stringify(params);
+		var dataJson = params;
+		if(typeof params == 'object')
+		{
+			var dataJson = JSON.stringify(params);
+		}
+		
         localStorage.setItem(val , dataJson);
 	}
 	// 获取本地容器
@@ -46,14 +51,12 @@
         {
             return false;
         }
-        var dataJson = JSON.parse(dataString);
-        return dataJson;
+        // var dataJson = JSON.parse(dataString);
+        return dataString;
 	}
 	// 登陆成功后需要添加的数据
 	app.set_login_data = function(data)
 	{
-		alert(data.data.weid);
-		alert(data.data.activation_status);
 		localStorage.setItem('weid', data.data.weid);
 		localStorage.setItem('token', data.token);
 		if(app.empty(data.data.activation_status) == true)
@@ -62,7 +65,11 @@
 		}
 		localStorage.setItem('phone', data.data.phone);
 		app.set_cookie('token' , data.token );
-	} 
+	}
+	// 页面跳转
+	app.open_page = function(href){
+		window.location.href = href;
+	}
 	// 修改页面标题
 	app.set_title = function(title){
 		document.title = title;
