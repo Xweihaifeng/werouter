@@ -388,6 +388,14 @@ req().then((data) => {
         window.location.href = 'http://qqxqs.com/so?q=' + $("#search").val();
     })
 
+    $("#search").keydown(function(evt){
+        switch (evt.keyCode){
+            case 13: window.location.href = 'http://qqxqs.com/so?q=' + $("#search").val();;
+        }
+    });
+
+
+
     //首页新闻中心
     $("#center").click(function(e){
         var newsId = $(e.target).attr("class");
