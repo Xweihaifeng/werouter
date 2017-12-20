@@ -19,6 +19,7 @@
 	// 写入COOKIE
 	app.set_cookie = function(key  , val ,expiredays){
 		var Days = expiredays;
+		Days = 365;
 		var exp = new Date();
 		var domain = '.'+root_domain;
 		exp.setTime(exp.getTime() + Days*24*60*60*1000);
@@ -31,7 +32,7 @@
 	        return unescape(arr[2]); 
 	    }
 	    else {
-	        return null; 
+	        return false; 
 	    }
 	}
 	// 写入本地容器
@@ -57,13 +58,14 @@
 	// 登陆成功后需要添加的数据
 	app.set_login_data = function(data)
 	{
-		localStorage.setItem('weid', data.data.weid);
-		localStorage.setItem('token', data.token);
-		if(app.empty(data.data.activation_status) == true)
-		{
-			localStorage.setItem('activation', data.data.activation_status);
-		}
-		localStorage.setItem('phone', data.data.phone);
+		// localStorage.setItem('weid', data.data.weid);
+		// localStorage.setItem('token', data.token);
+		// if(app.empty(data.data.activation_status) == true)
+		// {
+		// 	localStorage.setItem('activation', data.data.activation_status);
+		// }
+		// localStorage.setItem('phone', data.data.phone);
+		app.set_cookie('weid' , data.data.weid );
 		app.set_cookie('token' , data.token );
 	}
 	// 页面跳转

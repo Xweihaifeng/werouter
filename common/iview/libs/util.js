@@ -31,7 +31,8 @@ ajax.interceptors.response.use(
                 return response.data;
                 break; 
             case 401:
-                window.location.href = '/login?url='+window.location.pathname;
+                mb_login(window.location.pathname);
+                return false;
                 break;
         }
     }

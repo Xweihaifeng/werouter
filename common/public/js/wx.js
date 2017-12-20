@@ -5,7 +5,7 @@
 		if(is_wx == 'no') return false;
 
 		var openid = $app.get_query_string('openid');
-		var get_storage_openid = $app.get_storage('openid');
+		var get_storage_openid = $app.get_cookie('openid');
 		// console.log(get_storage_openid);
 		if(get_storage_openid != false){
 			return true;
@@ -13,8 +13,7 @@
 		// console.log(get_storage_openid);
 		if(openid != false)
 		{
-			$app.set_cookie('openid' , openid , 7);
-			$app.set_storage('openid' , openid);
+			$app.set_cookie('openid' , openid );
 			//顺便微信登陆下 
 			wx.wx_login(openid);
 		}

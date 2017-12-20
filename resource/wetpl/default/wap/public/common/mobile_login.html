@@ -67,11 +67,11 @@ function mb_login(href){
                         { 
                             mb_message('手机号不对');
                         }
-
+                        this.check_num = 60;
                         ajax.post('codes' , {'phone' : this.login.phone}).then((data)=>{
                             if(data.code == 200)
                             {
-                                this.check_num = 60;
+                                //this.check_num = 60;
                                 this.timer();
                             }
                         });
@@ -90,7 +90,7 @@ function mb_login(href){
                         }
                         if(is_wx == 'yes')
                         {
-                            var weid = $app.get_storage('weid');
+                            var weid = $app.get_cookie('weid');
                             this.login.weid = weid;
                             this.login.type = 1;
                             this.login.from_type = 2;
