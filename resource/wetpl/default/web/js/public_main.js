@@ -384,13 +384,13 @@ req().then((data) => {
     $("#contact").attr("href", "/org/contact");
     //搜索
     $("#hs span:eq(1) img").click(function(){
-        // window.location.href = window.location.protocol + "//" + window.location.host + '/so?q=' + $("#search").val();
-        window.location.href = 'http://qqxqs.com/so?q=' + $("#search").val();
+        window.location.href = window.location.protocol + "//" + window.location.host + '/so?q=' + $("#search").val();
+        // window.location.href = 'http://qqxqs.com/so?q=' + $("#search").val();
     })
 
     $("#search").keydown(function(evt){
         switch (evt.keyCode){
-            case 13: window.location.href = 'http://qqxqs.com/so?q=' + $("#search").val();;
+            case 13: window.location.href = window.location.href = window.location.protocol + "//" + window.location.host + '/so?q=' + $("#search").val();
         }
     });
 
