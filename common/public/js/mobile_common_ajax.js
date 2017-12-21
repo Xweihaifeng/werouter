@@ -25,13 +25,15 @@
 
 	//获取动态数据  type = 1 是我的动态  2是我关注人的动态
 	// dynamic_type 0全部  1文章2项目3活动4商城
-	mob_ajax.dynamic  = function(type , dynamic_type , call){
+	mob_ajax.dynamic  = function(type , dynamic_type , page , limit , call){
 		if(type == 2 && is_login == 'no')
 		{
 			return false;
 		}
 		var params = {};
 		params.type = type;
+		params.page = page;
+		params.limit = limit;
 		if(dynamic_type > 0)
 		{
 			params.dynamic_type = dynamic_type;

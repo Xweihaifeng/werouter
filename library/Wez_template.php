@@ -5,20 +5,23 @@
 class Wez_template
 {
 	private static $variable;
-
+	
 	public static function init($file ,  $content , $config_file , $directory ,$additional_config)
 	{
 		$content = self::_replace($content , $file , $directory);
 		$content = str_replace('{{PATH_CONFIG}}', $config_file.'?t='.time() , $content);
 		$content = str_replace('{{PATH_TML}}', $file.$directory.'/' , $content);
-		$content = str_replace('</body>', '<script src="//captcha.luosimao.com/static/js/api.js"></script></body>' , $content);
+		if(is_mobile() !== TRUE)
+		{
+			$content = str_replace('</body>', '<script src="//captcha.luosimao.com/static/js/api.js"></script></body>' , $content);
+		}
 		preg_match("@<html[^>]*>@si",$content, $regs);
 		$html_tag = current($regs);
 		$content = str_replace($html_tag, $html_tag.'<script>'.$additional_config.'</script>' , $content);
 		return $content;
 		//return self::_compress_html($content);
 	}
-
+	
 	public static function _compress_html($string) {
     	return ltrim(rtrim(preg_replace(array("/> *([^ ]*) *</","//","'/\*[^*]*\*/'","/\r\n/","/\n/","/\t/",'/>[ ]+</'),array(">\\1<",'','','','','','><'),$string)));
 	}
