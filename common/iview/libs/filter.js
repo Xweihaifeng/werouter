@@ -44,5 +44,12 @@ Vue.filter('formateTime',function (value,type) {
         return hour+':'+min;
     }
 
+});
+
+Vue.filter('limitLen',function (value,min,max) {
+    if(value.length>max){
+        value = value.substring(min,max) + '...'
+    }
+    return value;
 })
 
