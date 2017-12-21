@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="{{PATH_TML}}css/article.css"/>
 <link rel="stylesheet" href="{{PATH_TML}}css/act.css"/>
 <div id="act-container">
-	<div class="art-temp1"  v-for="item in artList">
+	<div class="art-temp1"  v-for="item in list_data">
 		<div class="art-left">
 			<span>
 				<a :href="'/' + item.domain + '/wecard'">
@@ -35,14 +35,29 @@
     new Vue({
         el : '#app',
         data : {
-            artList : []
+            list_data:[],
+            params : {
+                page : 1,
+                limit : 10,
+                page_count : 0,
+                type : 2,
+                dynamic_type : 1,
+            },
+            dom : '#app'
         },
-        mounted : function () {
+        mounted() {
             this.$nextTick(()=>{
-                $mob_ajax.dynamic(2 , 1 , (res)=>{
-					this.artList = res.data.list;
-                });
-            })
+                this.data_list();
+            });
+        },
+        methods:{
+            // 使用common_page 方法必须定义data方法 以及对象 params
+            data(params , call){
+                return $mob_ajax.dynamic(params , call);
+            },
+            data_list() {
+                $mob_ajax.common_page(this , this.params);
+            }
         }
     })
 </script>

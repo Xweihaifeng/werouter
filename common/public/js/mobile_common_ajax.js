@@ -30,7 +30,6 @@
 			return false;
 		}
 		ajax.get('/circel/dynamic' , {params :params} ).then((res)=>{
-
 			if(res.code == 200 && res.data.list.length > 0)
 			{
 				if($app.empty(call) == false){
@@ -38,10 +37,12 @@
                     return false;
 				}
 				call(res);
+                return false;
 			}
 			else
 			{
                 call(false);
+                return false;
 			}
 			
 		});
@@ -53,36 +54,28 @@
 			scrollArea : window,
 			loadDownFn : (dropload)=>{
 				_this.data(params , (res)=>{
-                    if(res == false)
-                    {
+
+                    setTimeout(()=>{
+                        _this.list_data = _this.list_data.concat(res.data.list);
+                        //if($app.empty(dropload) == false) return false;
+                        // 插入数据到页面，放到最后面
                         dropload.resetload();
-                        // 锁定
+                        _this.params.page++;
+
+                    },500);
+
+                    if(res == false || res.data.params.pageCount == res.data.params.currPage)
+                    {
+                        // dropload.resetload();
                         dropload.lock();
-                        // 无数据
+
                         dropload.noData();
+
+                        dropload.resetload();
                         return false;
                     }
 
-					setTimeout(()=>{
-        			 	_this.list_data = _this.list_data.concat(res.data.list);
-        			 	//if($app.empty(dropload) == false) return false;
-                        // 插入数据到页面，放到最后面
-                        dropload.resetload();
-                        
-                    },500);
 
-
-        			
-					if(res.data.params.pageCount == res.data.params.currPage)
-        			{
-                        dropload.resetload();
-
-        				dropload.lock();
-
-        				dropload.noData();
-        				return false;
-        			}
-        			_this.params.page++;
 				});
 			}
 		});

@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="{{PATH_TML}}css/common.css"/>
 <link rel="stylesheet" href="{{PATH_TML}}css/shopping.css"/>
 <div class="section">
-<slide v-for="item in list">
+<slide v-for="item in list_data">
 	<slide class="li_img_wap">
 		<a href="'/' + item.domain + '/wecard'">
 			<img class="lazy" :src="item.avatar | imgSet(36, 36)" width="60" height="60">
@@ -37,93 +37,31 @@
 </div>
 <script type="text/javascript">
     new Vue({
-        el: '#app',
+        el : '#app',
         data : {
-            list:[],
-            page : 1,
-            limit : 10,
-            page_count : 0,
-            type : 2,
-            dynamic_type : 4,
+            list_data:[],
+            params : {
+                page : 1,
+                limit : 10,
+                page_count : 0,
+                type : 2,
+                dynamic_type : 4,
+            },
+            dom : '#app'
         },
         mounted() {
             this.$nextTick(()=>{
-                $('#app').dropload({
-                    scrollArea : $('#app'),
-                    loadDownFn : (dropload)=>{
-                        this.data_list(dropload);
-                    }
-                });
+                this.data_list();
             });
         },
         methods:{
-            data_list(dropload) {
-                $mob_ajax.dynamic(this.type , this.dynamic_type , this.page , this.limit ,  (res)=>{
-					console.log(res);
-                    setTimeout(()=>{
-                        this.list = this.list.concat(res.data.list);
-                        // 插入数据到页面，放到最后面
-                        dropload.resetload();
-                        this.page++;
-                    },500);
-
-                    if(res == false)
-                    {
-                        // dropload.resetload();
-                        // 锁定
-                        dropload.lock();
-                        // 无数据
-                        dropload.noData();
-                        return false;
-                    }
-                    if(res.data.params.pageCount == res.data.params.currPage)
-                    {
-                        dropload.lock();
-
-                        dropload.noData();
-                        return false;
-                    }
-
-                });
+            // 使用common_page 方法必须定义data方法 以及对象 params
+            data(params , call){
+                return $mob_ajax.dynamic(params , call);
+            },
+            data_list() {
+                $mob_ajax.common_page(this , this.params);
             }
         }
-    });
+    })
 </script>
-
-
-
-<!--<!DOCTYPE html>-->
-<!--<html>-->
-
-	<!--<head>-->
-		<!--<meta charset="utf-8">-->
-		<!--<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />-->
-		<!--<link rel="shortcut icon" id="favicon" href="" />-->
-		<!--<title> 商品 </title>-->
-
-		<!--<link rel="stylesheet" href="{{PATH_TML}}css/home.css" />-->
-		<!--<link rel="stylesheet" href="{{PATH_TML}}css/common.css"/>-->
-		<!--<link rel="stylesheet" href="/common/jquery.animsition/css/animsition.min.css">-->
-		<!--<link rel="stylesheet" href="{{PATH_TML}}js/layui/css/layui.css"/>-->
-		<!--<link rel="stylesheet" href="{{PATH_TML}}css/shopping.css" />-->
-
-		<!--<script type="text/javascript" src="{{PATH_TML}}js/jquery-3.2.1.min.js"></script>-->
-		<!--<script src="{{PATH_TML}}js/vue.min.js"></script>-->
-		<!--<script type="text/javascript" src="{{PATH_CONFIG}}"></script>-->
-		<!--<script src="{{PATH_TML}}js/layui/layui.js"></script>-->
-		<!--<script src="/common/jquery.animsition/js/jquery.animsition.min.js"></script>-->
-		<!--<script src="/common/jquery-lazyload/jquery.lazyload.js"></script>-->
-		<!--&lt;!&ndash;<script type="text/javascript" src="/common/layer-v3.0.3/layer-v3.0.3/layer/layer.js"></script>&ndash;&gt;-->
-		<!--&lt;!&ndash; <script type="text/javascript" src="{{PATH_TML}}interface/shopping.js" ></script> &ndash;&gt;-->
-	<!--</head>-->
-
-	<!--<body class="animsition">-->
-		<!--<nav></nav>-->
-		<!--<div id="container" class="section" style="margin-top: 0.4rem;"></div>-->
-		<!--<footer></footer>-->
-		<!--<script type="text/javascript" src="{{PATH_TML}}interface/shopping.js"></script>-->
-		<!--&lt;!&ndash;<script type="text/javascript" src="{{PATH_TML}}js/shopping.js" ></script>&ndash;&gt;-->
-		<!--<script type="text/javascript" src="{{PATH_TML}}js/home.js" ></script>-->
-	<!--</body>-->
-
-<!--</html>-->
