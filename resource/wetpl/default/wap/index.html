@@ -1,14 +1,11 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<title></title>
-		<meta name="viewport" content="width=device-width; initial-scale=1; user-scalable=no;">
-		<link rel="stylesheet" href="{{PATH_TML}}css/coc/mtcstyle.css">
-		<script src="{{PATH_TML}}js/jquery-3.2.1.min.js"></script>
-	</head>
+<#include#>public/common/public.html</#include#>
+<#include#>public/common/mobile_login.html</#include#>
+
+	<link rel="stylesheet" href="{{PATH_TML}}css/coc/mtcstyle.css">
+	<script src="{{PATH_TML}}js/coc/swipe.min.js"></script>
 
 	<body>
-		<div id="viewport" class="viewport">
+		<div id="app" class="viewport">
 			<div class="header">
 				<i class="m_logo"></i>
 			</div>
@@ -65,16 +62,16 @@
 			<div class="banner1">
 				<div id="mySwipe" class="swipe" style="visibility: visible;">
 					<div class="swipe-wrap" style="width: 1125px;">
-						<div data-index="0" style="width: 375px; left: 0px; transition-duration: 300ms; transform: translate(-375px, 0px) translateZ(0px);">
-							<a href="/index5"><img src="{{PATH_TML}}img/index/1513742482503.jpg" width="100%"></a>
+						<div v-for="(item,index) in especial_news" :data-index="index" style="width: 375px;" >
+							<a href="/index5"><img src="http://cms-bucket.nosdn.127.net/7f2c404616844c2183a80e8b300460d720170803082841.jpeg"  width="300" height="300"></a>
 							<div class="mySwipeceng">
-								<div class="left"><b style="font-weight:normal; color:">李荣检查医疗卫生服务工作</b></div>
+								<div class="left"><b style="font-weight:normal; color:">{{item.title}}</b></div>
 								<div class="mySwip_rg"> <span class="mySwipetabdiancurr"></span><span class="mySwipetabdian"></span>
 									<span class="mySwipetabdian"></span>
 								</div>
 							</div>
 						</div>
-						<div data-index="1" style="width: 375px; left: -375px; transition-duration: 300ms; transform: translate(0px, 0px) translateZ(0px);">
+<!-- 						<div data-index="1" style="width: 375px; left: -375px; transition-duration: 300ms; transform: translate(0px, 0px) translateZ(0px);">
 							<a href="/index5"><img src="{{PATH_TML}}img/index/1513655494752.jpg" width="100%"></a>
 							<div class="mySwipeceng">
 								<div class="left"><b style="font-weight:normal; color:#ff0000">美丽天使　播撒温暖</b></div>
@@ -91,7 +88,7 @@
 									<span class="mySwipetabdian"></span>
 								</div>
 							</div>
-						</div>
+						</div> -->
 					</div>
 				</div>
 			</div>
@@ -99,29 +96,10 @@
 			<!--图片轮换结束-->
 			<div class="sytjlb">
 				<ul>
-					<li>
-						<a href="/index6"><span class="sytjlb_fl">[秦川新闻]</span>
-							<h2><b style="font-weight:normal; color:">我市六项措施推进农村饮水安全</b></h2><span class="sytjlb_sj">2017-12-20</span></a>
-					</li>
-					<li>
-						<a href="/index6"><span class="sytjlb_fl">[图片新闻]</span>
-							<h2><b style="font-weight:normal; color:">李荣检查医疗卫生服务工作</b></h2><span class="sytjlb_sj">2017-12-20</span></a>
-					</li>
-					<li>
-						<a href="/index6"><span class="sytjlb_fl">[区县快讯]</span>
-							<h2><b style="font-weight:normal; color:">耀州区瑶曲镇就业扶贫传捷报</b></h2><span class="sytjlb_sj">2017-12-20</span></a>
-					</li>
-					<li>
-						<a href="/index6"><span class="sytjlb_fl">[区县快讯]</span>
-							<h2><b style="font-weight:normal; color:">耀州区选手在全省“讲陕西故事</b></h2><span class="sytjlb_sj">2017-12-20</span></a>
-					</li>
-					<li>
-						<a href="/index6"><span class="sytjlb_fl">[区县快讯]</span>
-							<h2><b style="font-weight:normal; color:">印台区用项目建设激发贫困户脱</b></h2><span class="sytjlb_sj">2017-12-20</span></a>
-					</li>
-					<li>
-						<a href="/index6"><span class="sytjlb_fl">[区县快讯]</span>
-							<h2><b style="font-weight:normal; color:">印台区：“生态活水”浇开“扶</b></h2><span class="sytjlb_sj">2017-12-20</span></a>
+					<li v-for="item in news">
+						<a href="/index6"><span class="sytjlb_fl">[{{item.cate_title}}]</span>
+							<h2><b style="font-weight:normal; color:">{{item.title}}</b></h2><span class="sytjlb_sj">{{item.created_at}}</span>
+						</a>
 					</li>
 				</ul>
 			</div>
@@ -212,17 +190,39 @@
 
 		</div>
 
-		<script type="text/javascript" src="http://m.tongchuan.gov.cn/resources/web/js/swipe.min.js"></script>
-		<script type="text/javascript">
-			var elem = document.getElementById('mySwipe');
-			window.mySwipe = Swipe(elem, {
-				startSlide: 0,
-				auto: 3000,
-				continuous: true,
-				disableScroll: true,
-				stopPropagation: true,
-				callback: function(index, element) {},
-				transitionEnd: function(index, element) {}
+		<script>
+			var app = new Vue({
+				el: '#app',
+				data: {
+					news: '',
+					especial_news: '',
+				},
+		        mounted: function() {
+
+					// $mob_ajax.cms_lists({} , (res)=>{
+					// 	this.especial_news = res.data;
+					// });
+
+					ajax.get('cms/index/grid').then((res) => {
+	                    if (res.code === 200) {
+	                        this.news = res.data.news;
+	                        this.especial_news = res.data.especial_news;
+	                        this.swiper();
+	                       	
+	                    } 
+	                });
+				},
+				methods: {
+					swiper() {
+						Swipe(document.getElementById('mySwipe'), {
+							startSlide: 0,
+							auto: 3000,
+							continuous: true,
+							disableScroll: true,
+							stopPropagation: true,
+						});
+					}
+				},
 			});
 		</script>
 	</body>

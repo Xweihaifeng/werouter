@@ -48,7 +48,7 @@
 		});
 	}
 
-		//通用单个页面 分页方法
+	//通用单个页面 分页方法
 	mob_ajax.common_page = function(_this , params ){
 		$(_this.dom).dropload({
 			scrollArea : window,
@@ -78,6 +78,20 @@
 
 				});
 			}
+		});
+	}
+
+	//CMS 新闻调用
+	mob_ajax.cms_lists  = function(params , call){
+		ajax.get('/cms/contents' , params:params).then((res)=>{
+			call(res);
+		});
+	}
+
+	//CMS 分类调用
+	mob_ajax.cms_channel  = function(params , call){
+		ajax.get('/cms/cate_tree_by_channel' , params:params).then((res)=>{
+			call(res);
 		});
 	}
 
