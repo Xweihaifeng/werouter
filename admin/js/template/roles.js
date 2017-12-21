@@ -30,7 +30,10 @@ $(document).ready(function() {
                         if (val.name == 'superManager') {
                             html += 
                             '<td class="text-center">' +
-                            '<a title = "编辑" class="btn btn-info" style="margin-right:10px;"  href="roles_edit.html?weid=' + val.weid + '">编辑</a>' +                            
+                            '<a title = "菜单权限" class="btn btn-info" style="margin-right:10px;background: grey;border: none;" href="#" disabled="disabled">菜单权限</a>' +
+                            '<a title = "频道权限" class="btn btn-info" style="margin-right:10px;background: grey;border: none;" href="#" disabled="disabled">频道权限</a>' +
+                            '<a title = "编辑" class="btn btn-info" style="margin-right:10px;"  href="roles_edit.html?weid=' + val.weid + '">编辑</a>' +
+                            '<a title = "删除" class="btn btn-danger" href="#" style="background: grey; border: none!important;" disabled="disabled">删除</a>' +
                             '</td></tr>';
                         } else {
                             html += 
