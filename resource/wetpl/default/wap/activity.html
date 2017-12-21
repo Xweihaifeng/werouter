@@ -3,7 +3,7 @@
 <link rel="stylesheet" href="{{PATH_TML}}css/common.css"/>
 <link rel="stylesheet" href="{{PATH_TML}}css/act.css"/>
 <div id="act-container">
-    <div v-for="item in actList">
+    <div v-for="item in list_data">
         <div class="act">
             <div class="act-avatar">
                 <a :href="'/' + item.domain + '/wecard'">
@@ -49,17 +49,29 @@
     new Vue({
         el : '#app',
         data : {
-            actList : []
+            list_data:[],
+            params : {
+                page : 1,
+                limit : 10,
+                page_count : 0,
+                type : 2,
+                dynamic_type : 3,
+            },
+            dom : '#app'
         },
-        mounted : function () {
+        mounted() {
             this.$nextTick(()=>{
-                ajax.get('circel/dynamic?type=' + 2 + '&dynamic_type=' + 3).then((res)=>{
-                    console.log(res)
-                    if(res.code == 200){
-                        this.actList = res.data.list;
-                    }
-                })
-            })
+                this.data_list();
+            });
+        },
+        methods:{
+            // 使用common_page 方法必须定义data方法 以及对象 params
+            data(params , call){
+                $mob_ajax.dynamic(params , call);
+            },
+            data_list() {
+                $mob_ajax.common_page(this , this.params);
+            }
         }
     })
 </script>
