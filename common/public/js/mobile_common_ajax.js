@@ -52,36 +52,33 @@
 			scrollArea : window,
 			loadDownFn : (dropload)=>{
 				_this.data(params , (res)=>{
+
+                    _this.params.page++;
+
                     if(res == false)
                     {
-                        dropload.resetload();
                         // 锁定
                         dropload.lock();
                         // 无数据
                         dropload.noData();
+
+                        dropload.resetload();
                         return false;
                     }
 
-					setTimeout(()=>{
-        			 	_this.list_data = _this.list_data.concat(res.data.list);
-        			 	//if($app.empty(dropload) == false) return false;
-                        // 插入数据到页面，放到最后面
+                    if(res.data.params.pageCount == res.data.params.currPage)
+                    {
+                        dropload.lock();
+
+                        dropload.noData();
+
+                    }
+                    setTimeout(()=>{
+                        _this.list_data = _this.list_data.concat(res.data.list);
                         dropload.resetload();
-                        
                     },500);
 
 
-        			
-					if(res.data.params.pageCount == res.data.params.currPage)
-        			{
-                        dropload.resetload();
-
-        				dropload.lock();
-
-        				dropload.noData();
-        				return false;
-        			}
-        			_this.params.page++;
 				});
 			}
 		});

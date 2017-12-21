@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="{{PATH_TML}}css/home.css"/>
 <link rel="stylesheet" href="{{PATH_TML}}css/common.css"/>
 <div id="act-container">
-    <div v-for="data in activityList">
+    <div v-for="data in list_data">
         <a :href="'/' + domain + '/activity-detail/' + data.weid">
             <div class="act-content">
                 <div class="act-cover"><img :src="data.cover | imgSet(110, 69, 1)" width="110" height="69" /></div>
@@ -28,20 +28,38 @@
 </div>
 <script>
     new Vue({
-        el : '#app',
+        el: '#app',
         data : {
-            platUserId : '',
-            activityList : [],
-            domain : window.location.pathname.split('/')[1]
+            list_data:[],
+            params : {
+                page : 1,
+                limit : 10,
+                pageCount:0,
+                currPage : 0,
+                user_id : pages_info.plats_domian.plat_user_id
+            },
+            domain : all_domian,
+            dom : '#app'
         },
-        mounted : function () {
+        mounted() {
             this.$nextTick(()=>{
-                ajax.post('activity/listbyuser',{user_id: pages_info.plats_domian.plat_user_id}).then((res)=>{
+                this.data_list();
+            });
+        },
+        methods:{
+            // 使用common_page 方法必须定义data方法 以及对象 params
+            data(params , call){
+                ajax.post('activity/listbyuser',params).then((res)=>{
+                    console.log(this.params);
                     if(res.code == 200){
-                        this.activityList = res.data.list
+                        call(res);
                     }
                 });
-            })
+            },
+            data_list() {
+                $mob_ajax.common_page(this , this.params);
+            }
         }
-    })
+    });
+
 </script>

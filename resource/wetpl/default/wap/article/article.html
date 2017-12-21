@@ -3,3 +3,19 @@
 <link rel="stylesheet" href="/resource/wetpl/default/wap/css/act.css">
 <link rel="stylesheet" href="/resource/wetpl/default/wap/css/article.css">
 <link rel="stylesheet" href="/resource/wetpl/default/wap/css/shopping.css">
+<div>
+
+</div>
+<script>
+    new Vue({
+        el : '#app',
+        data : {
+
+        },
+        mounted : function () {
+            ajax.get('articles/list',{params:{'userId':pages_info.plats_domian.plat_user_id}}).then((res)=>{
+                console.log(res)
+            })
+        }
+    })
+</script>
