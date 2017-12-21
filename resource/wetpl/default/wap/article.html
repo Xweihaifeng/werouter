@@ -1,43 +1,50 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="UTF-8">
-	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <title>文章</title>
-	<link rel="shortcut icon" id="favicon" href="" />
-    <link rel="stylesheet" href="{{PATH_TML}}css/home.css"/>
-	<link rel="stylesheet" href="{{PATH_TML}}css/common.css"/>
-    <link rel="stylesheet" href="{{PATH_TML}}css/article.css"/>
-    <link rel="stylesheet" href="{{PATH_TML}}css/act.css"/>
-	<link rel="stylesheet" href="/common/jquery.animsition/css/animsition.min.css">
-    <!--<script src="{{PATH_TML}}js/zepto.min.js"></script>-->
-	<script src="{{PATH_TML}}lib/jquery.min.js"></script>
-	<script src="{{PATH_TML}}js/vue.min.js"></script>
-	<script type="text/javascript" src="{{PATH_CONFIG}}"></script>
-	<link rel="stylesheet" href="{{PATH_TML}}js/layui/css/layui.css"/>
-	<script src="{{PATH_TML}}js/layui/layui.js"></script>
-	<script src="{{PATH_TML}}interface/article.js"></script>
-    <script src="{{PATH_TML}}js/home.js"></script>
-	<script src="/common/jquery.animsition/js/jquery.animsition.min.js"></script>
-	<script src="/common/jquery-lazyload/jquery.lazyload.js"></script>
-</head>
-<body class="animsition">
-	<nav></nav>
-	<div id="container" style="margin-top: 0.44rem;"></div>
-	<footer></footer>
-	<script>
-		$(document).ready(function(){
-			$(".art-temp1 .art-des-text strong").each(function(){
-				var maxLength = 10;
-				if($(this).text().length > maxLength){
-					$(this).text($(this).text().substring(0,maxLength)+"...")
-				}
-			})
-
-			$(".art-content").on('click',function () {
-				window.location.href = "http://m.new.wezchina.com/kezunping/article/e00abf70-b659-11e7-90ed-ddc55cdfd250"
+<#extend#>public/domain/domain_extend.html</#extend#>
+<link rel="stylesheet" href="{{PATH_TML}}css/home.css"/>
+<link rel="stylesheet" href="{{PATH_TML}}css/common.css"/>
+<link rel="stylesheet" href="{{PATH_TML}}css/article.css"/>
+<link rel="stylesheet" href="{{PATH_TML}}css/act.css"/>
+<div id="act-container">
+	<div class="art-temp1"  v-for="item in artList">
+		<div class="art-left">
+			<span>
+				<a :href="'/' + item.domain + '/wecard'">
+					<img class="lazy" :src="item.avatar | imgSet(36, 36)" style="width: 0.36rem; height: 0.36rem; border-radius: 0.36rem;" />
+				</a>
+			</span>
+		</div>
+		<div class="art-right">
+			<span class="art-title">{{item.nickname}}</span>
+			<p>{{item.motto}}</p>
+			<a href="'/' + item.domain + '/article/' + JSON.parse(item.other).weid">
+				<div class="art-content">
+					<span><img class="lazy" :src="JSON.parse(item.other).cover" width="88" /></span>
+					<span class="art-des-text">
+						<strong>{{JSON.parse(item.other).title | limitLen(0,10)}}</strong>
+						<pre>{{JSON.parse(item.other).summary | limitLen(0,40)}}</pre>
+					</span>
+				</div>
+			</a>
+			<div class="art-other">
+				<span>{{JSON.parse(item.other).updated_at | formateTime('HM')}}</span>
+				<span></span>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+    new Vue({
+        el : '#app',
+        data : {
+            artList : []
+        },
+        mounted : function () {
+            this.$nextTick(()=>{
+                $mob_ajax.dynamic(2 , 1 , (res)=>{
+                    if(res.code == 200){
+                        this.artList = res.data.list;
+                    }
+                });
             })
-	    })
-	</script>
-</body>
-</html>
+        }
+    })
+</script>
