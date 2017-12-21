@@ -1,201 +1,64 @@
-<!DOCTYPE html>
+<#extend#>public/domain/domain_extend.html</#extend#>
+<script type="text/javascript">
+    show.header = 'no';
+    show.footer = 'no';
+</script>
+<link rel="stylesheet" href="{{PATH_TML}}css/order.css">
 
-<html>
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-    <title>下单页面</title>
-
-    <link rel="stylesheet" href="{{PATH_TML}}css/order.css">
-
-    <script type="text/javascript" src="{{PATH_TML}}js/jquery-3.2.1.min.js"></script>
-    <script type="text/javascript" src="{{PATH_CONFIG}}"></script>
-    <script src="/common/js/layer/layer.js"></script>
-    <script src="{{PATH_TML}}js/vue.min.js"></script>
-    <script src="{{PATH_TML}}js/vue-resource.min.js"></script>
-
-</head>
-<body>
-<div id="myOrder" v-cloak>
-    <header>
-        <span>确认订单</span>
-        <a class="back" href="javascript:void(0)" onclick="javascript:history.back(-1)"></a>
-    </header>
-    <div class="main">
-        <div @click="goAddrList()" class="address">
-            <p v-if="!isDefault">请选择默认收货地址</p>
-            <div v-if="isDefault">
-                <p>{{selectAddr.name + ' ' + selectAddr.telophone}}</p>
-                <p>{{selectAddr.province_name + selectAddr.area_name + selectAddr.county_name + selectAddr.detail}}</p>
-            </div>
-
-        </div>
-
-        <div class="store">
-            <div class="name">
-                <p>
-                    <i></i>
-                    <span>{{list.name}}</span>
-                </p>
-            </div>
-            <ul>
-                <li v-for="(item,index) in list.goodsList">
-                    <img :src="ApiMaterPlatQiniuDomain + item.cover" alt="">
-                    <div class="product">
-                        <p class="des">{{item.title}}</p>
-                        <p class="price">
-                            <span>￥{{parseFloat(item.price * item.goods_num).toFixed(2)}}</span>
-                            <label>
-                                <span>已选：{{item.goods_num}}件</span>
-                            </label>
-                        </p>
-                        <p class="operation">
-                            <!--<span>删除</span>-->
-                            <!--<span>移入关注</span>-->
-                            <span>运费￥{{getSinglePostage(item)}}</span>
-                        </p>
-                    </div>
-                </li>
-            </ul>
-            <div class="store-count">
-                <p>
-                    <span>
-                        总计：
-                        <strong>￥{{parseFloat(storeAll + postage).toFixed(2)}}</strong>
-                    </span>
-                    <span>总额￥{{parseFloat(storeAll + postage).toFixed(2)}} 立减￥0.00</span>
-                </p>
-            </div>
-        </div>
-        <div class="order_invoice">
-            <div> 发票</div>
-            <div><span>不开发票</span><em class="detail_btn2"></em></div>
-        </div>
-        <div class="order_total">
-            <div> 商品总计</div>
-            <div> ￥{{parseFloat(storeAll).toFixed(2)}}</div>
-        </div>
-        <div class="order_freight">
-            <div> 运费</div>
-            <div> ￥{{parseFloat(postage).toFixed(2)}}</div>
+<header>
+    <span>确认订单</span>
+    <a class="back" href="javascript:void(0)" ></a>
+</header>
+<div class="main">
+    <div  class="address" @click="get_address_list">
+        <div>
+            <p>收货人 ：关钊  15249211010</p>
+            <p>收货人 ：北京市 密云县 闸北西路88号小区</p>
         </div>
     </div>
-    <footer class="order_footer">
-        <a href="javascript:void(0)" class="order_footer_follow">
-            <div><span> 应付金额：</span><span class="order_count">￥{{parseFloat(storeAll + postage).toFixed(2)}}</span></div>
-            <div><span>总额￥{{parseFloat(storeAll + postage).toFixed(2)}} 立减￥0.00</span></div>
-        </a>
-        <a href="javascript:void(0)" class="order_footer_pay" @click="order_footer_pay()">提交订单</a>
-    </footer>
 </div>
 
 <script>
 
-    Vue.http.headers.common['token'] = window.localStorage.getItem("token");
-
-    var app = new Vue({
-        el: "#myOrder",
-        data: {
-            list: JSON.parse(window.localStorage.getItem('orderObj')),
-            store_num: '',
-            isDefault: false,
-            selectAddr: {}
+new Vue({
+    el: "#app",
+    data : {
+        'order_detail' : {},
+        'order_sell_list' : [],
+        'order_address_list' : [],
+        'order_address_default' : {},
+    },
+    mounted: function(){
+        this.$nextTick(()=>{
+            this.get_address();
+        });
+    },
+    methods:{
+        // 获取全部收货地址
+        get_address_list()
+        {
+            ajax.post('/users/address/list').then((res)=>{
+                this.order_address_list = res.data;
+            });
         },
-        mounted: function () {
-            // 获取默认地址
-            this.$http.post(apiUrl + 'users/address/getDefault').then(function (res) {
-                console.log(res);
-                if(res.data && res.data.code===200){
-                    this.isDefault = true;
-                    this.selectAddr = res.data.data;
-                }else{
-                    this.isDefault = false;
-                }
-            })
-        },
-        computed: {
-            storeAll: function () {
-                console.log('数据打包：',this.list);
-                var money = 0;
-                for (var a = 0; a < this.list.goodsList.length; a++) {
-                    money += this.list.goodsList[a].price * this.list.goodsList[a].goods_num
-                }
-                return money;
-            },
-            postage : function () {
-                var money = 0.00;
-                var goods = this.list.goodsList;
-                for (var a = 0; a < goods.length; a++) {
-                    if(goods[a].postage_status === 2){
-                        if(goods[a].postage_max_money && parseInt(goods[a].postage_max_money) > 0){
-                            if(parseFloat(goods[a].price * goods[a].goods_num) < parseFloat(goods[a].postage_max_money)){
-                                money += parseFloat(goods[a].postage * goods[a].goods_num)
-                            }
-                        }else{
-                            money += parseFloat(goods[a].postage * goods[a].goods_num)
-                        }
-                    }
-                }
-                return money;
-            }
-        },
-        methods: {
-            goAddrList: function () {
-                var domain = window.location.pathname.split("/")[1];
-                
-                window.location.href = "/shopping/pay/address";
-            },
-            order_footer_pay: function () {
-                if(!this.isDefault){
-                    layer.msg("请添加收货地址", { time: 2500 });
-                    return false;
-                }
-                var self = this;
-                var goods_list = new Array();
-                this.list.goodsList.forEach(function (value, index, array) {
-                    var data = new Object();
-                    data.goods_id = value.weid;
-                    data.goods_num = value.goods_num;
-                    goods_list.push(data);
-                });
-                var body = {};
-                body.goods_list = goods_list;
-                body.address_id = self.selectAddr.weid;
-                body.username = self.selectAddr.name;
-                body.phone = self.selectAddr.telophone;
-                body.address_detail = self.selectAddr.detail;
-                body.note = "";
+        // 添加收货地址方法
+        add_address()
+        {
 
-                this.$http.post(apiUrl + 'order/store', body).then(function (data) {
-                    if (data.body.code == 200) {
-                        this.store_num = data.body.data;
-                        window.sessionStorage.setItem('store_num', data.body.data);
+        },
+        // 修改收货地址
+        up_address()
+        {
 
-                        window.location.href = '/pay/shopping?store_num='+ data.body.data;
-                    } else {
-                        layer.msg(data.body.message, { time: 2500 });
-                    }
-                })
-            },
-            getSinglePostage : function (item) {
-                if(item.postage_status === 1){
-                    return '0.00'
-                }
-                if(item.postage_status === 2){
-                    if(item.postage_max_money && parseInt(item.postage_max_money) > 0){
-                        if(parseFloat(item.price * item.goods_num) >= parseFloat(item.postage_max_money)){
-                            return '0.00'
-                        }else{
-                            return parseFloat(item.postage * item.goods_num).toFixed(2)
-                        }
-                    }else{
-                        return parseFloat(item.postage * item.goods_num).toFixed(2)
-                    }
-                }
-            }
+        },
+        // 删除收货地址
+        del_address()
+        {
+            
         }
-    })
+    }
+});
+
 </script>
 </body>
 </html>
