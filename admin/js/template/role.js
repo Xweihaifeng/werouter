@@ -17,7 +17,8 @@ $(document).ready(function(){
 	};
 
 	var authority = (select, weid) => {
-		var reqUrl = ApiUrl + 'backend/admins/get_' + select + '?role_id=' + weid;
+		// var reqUrl = ApiUrl + 'backend/admins/get_' + select + '?role_id=' + weid;
+		var reqUrl = 'http://new.wezchina.com/api/' + 'backend/admins/get_' + select + '?role_id=' + weid;
 		d = new dTree('d');
 		d.add(0, -1, '后台管理');
 

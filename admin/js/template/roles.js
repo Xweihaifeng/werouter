@@ -26,13 +26,21 @@ $(document).ready(function() {
                             '<td>' + val.display_name + '</td>' +
                             '<td>' + val.description + '</td>' +
                             '<td>' + status + '</td>' +
-                            '<td>' + val.created_at + '</td>' +
+                            '<td>' + val.created_at + '</td>'
+                        if (val.name == 'superManager') {
+                            html += 
+                            '<td class="text-center">' +
+                            '<a title = "编辑" class="btn btn-info" style="margin-right:10px;"  href="roles_edit.html?weid=' + val.weid + '">编辑</a>' +                            
+                            '</td></tr>';
+                        } else {
+                            html += 
                             '<td class="text-center">' +
                             '<a title = "菜单权限" class="btn btn-info" style="margin-right:10px;"  href="roles_config.html?weid=' + val.weid + '&type=config">菜单权限</a>' +
                             '<a title = "频道权限" class="btn btn-info" style="margin-right:10px;"  href="roles_channel.html?weid=' + val.weid + '&type=channel">频道权限</a>' +
                             '<a title = "编辑" class="btn btn-info" style="margin-right:10px;"  href="roles_edit.html?weid=' + val.weid + '">编辑</a>' +
                             '<a title = "删除" class="btn btn-danger" data-toggle="modal" data-target="#myModal" data-id="' + val.weid + '" data-name="' + val.name + '"  href="#">删除</a>' +
                             '</td></tr>';
+                        }                        
                     });
                     $("#rolesTable").html(html);
                     $("#rolesTable").children().children().each(function() {
