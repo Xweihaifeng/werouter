@@ -127,23 +127,15 @@
 					logo_bg: ''
 				},
 				mounted: function() {
-					ajax.get(apiUrl + 'cms/setting/show').then((res) => {
-						console.log(res);
-						if(res.data && res.code === 200) {
-							var logo = res.data.logo;
-							this.title = res.data.title;
-							if(!logo) {
-								logo = "/common/img/sou_logo.png";
-							} else if(logo.indexOf('http') != 0 && logo != "") {
-								logo = imgSet(logo, 34, 34, 3);
-							}
-							this.logo = logo;
-							console.log(this.logo)
-	
-						} else {
-							console.warn(res.message);
-						}
-					})
+					var logo = plats_info.logo;
+					if(!logo) {
+						logo = "/common/img/sou_logo.png";
+					} else if(logo.indexOf('http') != 0 && logo != "") {
+						logo = imgSet(logo, 34, 34, 3);
+					}
+					this.logo = logo;
+					this.title = plats_info.title;
+
 					this.currentActive = $app.get_query_string('c') ? $app.get_query_string('c') : '';
 					this.searchText = $app.get_query_string('q') ? $app.get_query_string('q') : '';
 					this.getCloumn();
