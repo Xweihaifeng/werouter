@@ -1,70 +1,73 @@
-<!--
- * Created by weifeng on 2017/11/12.
--->
-
-<!DOCTYPE html>
-<html>
-
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-        <title></title>
-
-        <link rel="stylesheet" href="{{PATH_TML}}js/layui/css/layui.css"/>
-        <link rel="stylesheet" href="{{PATH_TML}}css/swiper.min.css"/>
-        <link rel="stylesheet" href="{{PATH_TML}}css/home.css" />
-        <link rel="stylesheet" href="{{PATH_TML}}css/common.css"/>
-        <link rel="stylesheet" href="{{PATH_TML}}css/my-shopping.css" />
-        <link rel="stylesheet" href="/common/jquery.animsition/css/animsition.min.css">
-        <!--<script type="text/javascript" src="{{PATH_TML}}js/zepto.min.js" ></script>-->
-        <script type="text/javascript" src="{{PATH_TML}}js/jquery-3.2.1.min.js"></script>
-        <script type="text/javascript" src="{{PATH_CONFIG}}"></script>
-        <script src="{{PATH_TML}}js/vue.min.js"></script>
-        <script type="text/javascript" src="{{PATH_TML}}js/swiper-3.3.1.min.js"></script>
-        <script src="{{PATH_TML}}js/layui/layui.js"></script>
-        <script src="/common/jquery.animsition/js/jquery.animsition.min.js"></script>
-        <script src="/common/jquery-lazyload/jquery.lazyload.js"></script>
-        <!--<script type="text/javascript" src="{{PATH_TML}}interface/my-shopping.js"></script>-->
-    </head>
-
-    <body>
-        <div id="carousel">
-<!--             <div class="swiper-container" id="my-swiper">
-                <div class="swiper-wrapper carousel">
-                    <div class="swiper-slide">
-                        <img src="/common/img/shopping_0.jpg" alt=""/>
-                    </div>
-                    <div class="swiper-slide">
-                        <img src="/common/img/shopping_1.jpg" alt=""/>
-                    </div>
-                    <div class="swiper-slide">
-                        <img src="/common/img/shopping_2.jpg" alt=""/>
-                    </div>
-                    <div class="swiper-slide">
-                        <img src="/common/img/shopping_3.jpg" alt=""/>
-                    </div>
-                </div>
-                <div class="swiper-pagination"></div>
-            </div> -->
-        </div>
-        <nav></nav>
-        <div id="art-type">
-            <ul>
-                <li><img src="/common/img/default.png" alt=""/><p>活动</p></li>
-                <li><img src="/common/img/bg.png" alt=""/><p>活动</p></li>
-                <li><img src="/common/img/bg1.png" alt=""/><p>活动</p></li>
-                <li><img src="/common/img/bg3.jpg" alt=""/><p>活动</p></li>
+<#extend#>public/domain/domain_extend.html</#extend#>
+<link rel="stylesheet" href="{{PATH_TML}}css/home.css"/>
+<link rel="stylesheet" href="{{PATH_TML}}css/common.css"/>
+<link rel="stylesheet" href="{{PATH_TML}}css/my-shopping.css"/>
+<div>
+    <div class="container mall">
+        <menu class="menu" id="menu_title">
+            <ul id="shop_type">
+                <li v-for="item in sortList" :class="{'active' : currentSort == item.weid}" @click="getSortList(item.weid)" :id="item.weid">{{item.name}}</li>
             </ul>
-        </div>
-        <div class="container mall">
-            <menu class="menu" id="menu_title"><ul id="shop_type"></ul></menu>
-            <article class="shop">
-                <ul></ul>
-            </article>
-        </div>
-        <footer></footer>
-
-        <script type="text/javascript" src="{{PATH_TML}}js/home.js" ></script>
-        <script type="text/javascript" src="{{PATH_TML}}js/my-shopping.js"></script>
-    </body>
-</html>
+        </menu>
+        <article class="shop">
+            <ul>
+                <a v-for="good in goodList" :id="good.weid" @click="window.localStorage.setItem('shopping_weid', good.weid)" :href="'/'+ domain +'/wemall/goods/'+ good.weid">
+                    <div>
+                        <slide class="li_img_wap">
+                            <img :src="good.cover | imgSet(100, 100, 3)">
+                        </slide>
+                        <slide class="li_info">
+                            <h3>{{good.title}}</h3>
+                            <div class="lii_price">￥{{good.price}}</div>
+                            <p class="lii_sold">
+                                <span>已售：{{good.sales_num}}</span><span>收藏：{{good.collections}}</span></p>
+                        </slide>
+                    </div>
+                </a>
+            </ul>
+        </article>
+    </div>
+</div>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            sortList: [],
+            goodList: [],
+            domain : '',
+            currentSort : ''
+        },
+        mounted() {
+            this.$nextTick(() => {
+                this.domain = window.location.pathname.split("/")[1];
+                ajax.get('goods/cates/listsbyuser/' + pages_info.plats_domian.plat_user_id).then((res) => {
+                    console.log(res);
+                    if (res.code == 200 && res.data.length) {
+                        this.sortList = res.data;
+                        this.currentSort = res.data[0].weid;
+                        this.getList()
+                    }
+                })
+            });
+        },
+        methods: {
+            getList : function () {
+                var sendData = {
+                    userId : pages_info.plats_domian.plat_user_id,
+                    cate_id : this.currentSort
+                }
+                ajax.post('goods/lists/user',sendData).then((res)=>{
+                    console.log(res);
+                    if(res.code == 200 && res.data.list.length){
+                        this.goodList = res.data.list;
+                    }
+                })
+            },
+            getSortList : function (wid) {
+                this.currentSort = wid;
+                this.goodList=[];
+                this.getList();
+            }
+        }
+    })
+</script>
