@@ -59,6 +59,12 @@
 	                    {
 	                        mod = '/'+ val;
 	                    }
+
+	                    if(is_domain == 'no' && mod == '')
+	                    {
+	                    	mod = '/dynamic';
+	                    }
+
 	                    window.location.href= all_domian + this.router + mod;
 	                }
 	            }
