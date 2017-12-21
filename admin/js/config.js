@@ -144,6 +144,23 @@ var start = function() {
         console.log('id is null');
     }
 
+    $.ajax({
+        url: ApiUrl + 'admins/check_auth',
+        type: 'POST',
+        data: {
+            role_id: sessionStorage.getItem('role_id'),
+            url: $("input[name='config-url']").val()
+        },
+        success: function(data){
+            if (data.code != 200) {
+                alert('权限不足');
+                window.location.href = 'index.html';
+            } else {
+                // console.log(data);
+            }
+        }
+    })
+
 }
 
 var itemId = [];
