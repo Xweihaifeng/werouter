@@ -96,14 +96,15 @@ $(document).ready(function(){
 		}
 		res = res.map(x => find(set.all, x.substr(2))).map(x => x[0]);
 		for (let i = 0; i < res.length; i++) {
+			res[i]['checked'] = true;
 			delete res[i]['children'];
 		}
-
+		console.log(res);
 		var sendData = transData(res, 'id', 'parent_id', 'children');
 		var data = {};
 		data['role_id'] = weid;
 		data[select] = sendData;
-		console.log(data);
+		
 		$.ajax({
 			url: sendUrl,
 			type: 'POST',
