@@ -25,7 +25,7 @@ $(document).ready(function () {
     $('#updateSet').click(function(){
     	var formList = {
     		'id'         :$("#role_id").find("option:selected").val(),
-    		'username'   :$('#username').val(),
+    		'username'   :$('#username1').val(),
     		'password'   :$('#password').val(),
     		'rePassword' :$('#rePassword').val(),
     		'phone'      :$('#phone').val(),
