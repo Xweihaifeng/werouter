@@ -98,9 +98,9 @@ $(document).ready(function(){
 		for (let i = 0; i < res.length; i++) {
 			res[i]['checked'] = true;
 			delete res[i]['children'];
-		}
-		console.log(res);
+		}		
 		var sendData = transData(res, 'id', 'parent_id', 'children');
+		console.log(sendData);
 		var data = {};
 		data['role_id'] = weid;
 		data[select] = sendData;
