@@ -33,9 +33,6 @@ $(document).ready(function () {
     		'inlineRadioOptions':$('input:radio[name="list"]:checked').val(),
     		'memo'       :$('#memo').val()
     	}
-
-    	alert(formList.username);
-
     	 $.ajax({
             url: ApiUrl + 'admins',
             type: 'post',

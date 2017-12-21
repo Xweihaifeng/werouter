@@ -1,44 +1,6 @@
 $(document).ready(function() {
     start();
     var init = function() {
-        // $.ajax({
-        //     url: ApiUrl + "admins",
-        //     type: 'get',
-        //     dataType: 'JSON',
-        //     success: function(result) {
-        //         if (result.code === 200) {
-        //             var html = '',
-        //                 num = '',
-        //                 status = '';
-        //             $.each(result.data.list, function(key, val) {
-        //                 num++;
-        //                 switch (val.status) {
-        //                     case 1:
-        //                         status = '正常';
-        //                         break;
-        //                     case 2:
-        //                         status = '锁定';
-        //                     case 3:
-        //                         status = '禁用';
-        //                 };
-        //                 html += '<tr>' +
-        //                     '<td>' + num + '</td>' +
-        //                     '<td><a title="" data-toggle="modal" data-target="#myModal" data-id="' + val.weid + '" data-name="' + val.username + '" href="#">' + val.username + '</a></td>' +
-        //                     '<td>' + val.real_name + '</td>' +
-        //                     '<td>' + val.phone + '</td>' +
-        //                     '<td>' + val.created_at + '</td>' +
-        //                     '<td>' + status + '</td>' +
-        //                     '<td>' + val.memo + '</td>' +
-        //                     '<td class="text-center"><a title = "编辑" class="btn btn-info" href="admin_edit.html?weid=' + val.weid + '">编辑</a></td></tr>';
-        //             });
-        //             $("#adminsTable").html(html);
-        //         } else {
-        //             parent.layer.msg(result.message);
-
-        //             return false;
-        //         }
-        //     }
-        // });
         $('#adminsTable').DataTable({
             "ajax": {
                 url: ApiUrl + "admins",
@@ -60,7 +22,7 @@ $(document).ready(function() {
                         }
                         json.data.list[i].id = i + 1;
                         json.data.list[i].status = status;
-                        json.data.list[i].operation = '<a href="admin_edit.html?weid=' + json.data.list[i].weid + '" class="btn btn-info">编辑</a>'
+                        json.data.list[i].operation = '<a href="admin_edit.html?weid=' + json.data.list[i].weid + '" class="btn btn-info">编辑</a><a title = "删除" class="btn btn-danger" data-toggle="modal" data-target="#myModal" data-id="' + json.data.list[i].weid + '" data-name="' + json.data.list[i].name + '"  href="#">删除</a>'
                     }
                     return json.data.list;
 
@@ -98,4 +60,24 @@ $(document).ready(function() {
     };
 
     init();
+
+    $('#confirm').click(function() {
+        var dataId = $(this).attr('data-id');
+        $.ajax({
+            url: ApiUrl + "admins/" + dataId,
+            type: 'DELETE',
+            dataType: 'JSON',
+            success: function(result) {
+                if (result.code === 200) {
+                    showTips('删除成功！', 2, 'alert-info');
+                    location.reload();
+                    console.log('ok');
+                } else {
+                    parent.layer.msg(result.message);
+
+                    return false;
+                }
+            }
+        });
+    });
 });
