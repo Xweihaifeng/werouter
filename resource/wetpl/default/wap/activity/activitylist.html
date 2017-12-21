@@ -50,16 +50,18 @@
                 ajax.post('activity/listbyuser',params).then((res)=>{
                     console.log(this.params);
                     if(res.code == 200){
+                        var pageCount = Math.ceil(res.data.total / this.params.limit);
                         var post = {
                             data : {
                                 code : 200,
                                 list: res.data.list,
                                 params : {
-                                    pageCount : 1,
-                                    currPage : 1,
+                                    pageCount : pageCount,
+                                    currPage : this.params.page,
                                 }
                             },
-                        }
+                        };
+                        console.log(post);
                         call(post);
                     }
                 });
