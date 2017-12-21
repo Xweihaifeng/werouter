@@ -34,7 +34,7 @@
 			<div class="classify">
 				<ul>
 					<li @click="currentActive='';goSearchOpen();" :class="{'li-active': '' == currentActive}">全部</li>
-					<li v-for="item in columnList" @click="currentActive=item.domain;goSearchOpen()" :id="item.weid" :class="{'li-active':item.domain == currentActive}">{{item.title}}</li>
+					<li v-for="item in columnList" @click="currentActive=item.domain;goSearchOpen()" :id="item.weid" :class="{'li-active':item.domain == currentActive}">{{item.search_name}}</li>
 				</ul>
 			</div>
 			<div class="tips">
