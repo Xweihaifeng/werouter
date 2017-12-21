@@ -34,13 +34,14 @@
 			if(res.code == 200 && res.data.list.length > 0)
 			{
 				if($app.empty(call) == false){
-					return res;
+                    call(false);
+                    return false;
 				}
 				call(res);
 			}
 			else
 			{
-				return false;
+                call(false);
 			}
 			
 		});
@@ -52,6 +53,16 @@
 			scrollArea : window,
 			loadDownFn : (dropload)=>{
 				_this.data(params , (res)=>{
+                    if(res == false)
+                    {
+                        dropload.resetload();
+                        // 锁定
+                        dropload.lock();
+                        // 无数据
+                        dropload.noData();
+                        return false;
+                    }
+
 					setTimeout(()=>{
         			 	_this.list_data = _this.list_data.concat(res.data.list);
         			 	//if($app.empty(dropload) == false) return false;
@@ -60,18 +71,12 @@
                         
                     },500);
 
-        			if(res == false)
-        			{
-        				// dropload.resetload();
-        				// 锁定
-                        dropload.lock();
-                        // 无数据
-                        dropload.noData();
-                        return false;
-        			}
+
         			
 					if(res.data.params.pageCount == res.data.params.currPage)
         			{
+                        dropload.resetload();
+
         				dropload.lock();
 
         				dropload.noData();

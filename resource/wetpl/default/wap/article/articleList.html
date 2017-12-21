@@ -33,7 +33,7 @@
         methods:{
         	// 使用common_page 方法必须定义data方法 以及对象 params
         	data(params , call){
-        		$mob_ajax.dynamic(params , call);
+        		return $mob_ajax.dynamic(params , call);
         	},
         	data_list() {
         		$mob_ajax.common_page(this , this.params);

@@ -17,8 +17,7 @@ $(document).ready(function(){
 	};
 
 	var authority = (select, weid) => {
-		// var reqUrl = ApiUrl + 'backend/admins/get_' + select + '?role_id=' + weid;
-		var reqUrl = 'http://new.wezchina.com/api/' + 'backend/admins/get_' + select + '?role_id=' + weid;
+		var reqUrl = ApiUrl + 'admins/get_' + select + '?role_id=' + weid;
 		d = new dTree('d');
 		d.add(0, -1, '后台管理');
 
@@ -84,7 +83,7 @@ $(document).ready(function(){
 	}
 
 	function test(select, weid) {
-		var sendUrl = ApiUrl + 'backend/admins/set_' + select;
+		var sendUrl = ApiUrl + 'admins/set_' + select;
 		var count = 0;
 		var obj = document.all.m;	
 		var res = [];

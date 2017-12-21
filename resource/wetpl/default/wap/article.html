@@ -40,9 +40,7 @@
         mounted : function () {
             this.$nextTick(()=>{
                 $mob_ajax.dynamic(2 , 1 , (res)=>{
-                    if(res.code == 200){
-                        this.artList = res.data.list;
-                    }
+					this.artList = res.data.list;
                 });
             })
         }
