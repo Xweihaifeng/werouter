@@ -59,7 +59,7 @@
 								<label>
                                 <a :href="all_domian+item.channel_domain+'/'+item.weid" v-html="all_domian+item.channel_domain+'/...'" target="_blank"></a>
                                 <span class="triangle"></span>
-                                <a :href="all_domian+item.channel_domain+'/'+item.weid" class="more" v-html="item.cate_name" target="_blank"></a>
+                                <a :href="all_domian+item.channel_domain+'/'+item.cate_domain" class="more" v-html="item.cate_name" target="_blank"></a>
                             </label>
 							</p>
 						</div>
@@ -185,7 +185,7 @@
 							return
 						}
 						this.spinner = true;
-						ajax.get(apiUrl + 'cms/contents', {
+						ajax.get(apiUrl + 'cms/content_search', {
 							params: {
 								title: this.searchText,
 								channel_id: this.currentActive,
