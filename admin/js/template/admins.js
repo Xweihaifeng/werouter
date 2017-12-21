@@ -22,7 +22,7 @@ $(document).ready(function() {
                         }
                         json.data.list[i].id = i + 1;
                         json.data.list[i].status = status;
-                        json.data.list[i].operation = '<a href="admin_edit.html?weid=' + json.data.list[i].weid + '" class="btn btn-info">编辑</a><a title = "删除" class="btn btn-danger" data-toggle="modal" data-target="#myModal" data-id="' + json.data.list[i].weid + '" data-name="' + json.data.list[i].name + '"  href="#">删除</a>'
+                        json.data.list[i].operation = '<a href="admin_edit.html?weid=' + json.data.list[i].weid + '" class="btn btn-info" style="margin-right:10px;">编辑</a><a title = "删除" class="btn btn-danger" data-toggle="modal" data-target="#myModal" data-id="' + json.data.list[i].weid + '" data-name="' + json.data.list[i].name + '"  href="#">删除</a>'
                     }
                     return json.data.list;
 
