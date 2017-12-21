@@ -23,24 +23,56 @@
 		});
 	}
 
+	mob_ajax.common_page = function(_this , params ){
+		$(_this.dom).dropload({
+			scrollArea : window,
+			loadDownFn : (dropload)=>{
+				_this.data(params , (res)=>{
+					setTimeout(()=>{
+        			 	_this.list_data = _this.list_data.concat(res.data.list);
+        			 	//if($app.empty(dropload) == false) return false;
+                        // 插入数据到页面，放到最后面
+                        dropload.resetload();
+                        
+                    },500);
+
+        			if(res == false)
+        			{
+        				// dropload.resetload();
+        				// 锁定
+                        dropload.lock();
+                        // 无数据
+                        dropload.noData();
+                        return false;
+        			}
+        			
+					if(res.data.params.pageCount == res.data.params.currPage)
+        			{
+        				dropload.lock();
+
+        				dropload.noData();
+        				return false;
+        			}
+        			_this.params.page++;
+				});
+			}
+		});
+	}
+
 	//获取动态数据  type = 1 是我的动态  2是我关注人的动态
 	// dynamic_type 0全部  1文章2项目3活动4商城
-	mob_ajax.dynamic  = function(type , dynamic_type , page , limit , call){
-		if(type == 2 && is_login == 'no')
+	mob_ajax.dynamic  = function(params, call){
+		if(params.type == 2 && is_login == 'no')
 		{
 			return false;
 		}
-		var params = {};
-		params.type = type;
-		params.page = page;
-		params.limit = limit;
-		if(dynamic_type > 0)
-		{
-			params.dynamic_type = dynamic_type;
-		}
 		ajax.get('/circel/dynamic' , {params :params} ).then((res)=>{
+
 			if(res.code == 200 && res.data.list.length > 0)
 			{
+				if($app.empty(call) == false){
+					return res;
+				}
 				call(res);
 			}
 			else

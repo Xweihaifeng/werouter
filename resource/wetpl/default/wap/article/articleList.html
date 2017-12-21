@@ -4,7 +4,7 @@
 <div class="latest">最新推荐</div>
 <div id="container" class="my_container">
 	<div>
-		<li v-for="item in list">{{item.title}}
+		<li v-for="item in list_data">{{item.title}}
 			<br/><br/><br/><br/><br/><br/><br/><br/>
 		</li>
 	</div>
@@ -15,53 +15,28 @@
 	new Vue({
     	el: '#app',
     	data : {
-    		list:[],
-    		page : 1,
-    		limit : 10,
-    		page_count : 0,
-    		type : 1,
-    		dynamic_type : 0,
+    		list_data:[],
+    		params : {
+    			page : 1,
+	    		limit : 10,
+	    		page_count : 0,
+	    		type : 1,
+	    		dynamic_type : 0,
+	    		dom : '#container' ,
+    		}
     	},
         mounted() {
         	this.$nextTick(()=>{
-        		$('#container').dropload({
-        			scrollArea : window,
-        			loadDownFn : (dropload)=>{
-        				this.data_list(dropload);
-        				this.page++;
-        			}
-        		});
+        		this.data_list();
         	});
         },
         methods:{
-        	data_list(dropload) {
-        		$mob_ajax.dynamic(this.type , this.dynamic_type , this.page , this.limit ,  (res)=>{
-
-        			 setTimeout(()=>{
-        			 	this.list = this.list.concat(res.data.list);
-                        // 插入数据到页面，放到最后面
-                        dropload.resetload();
-                    },1000);
-
-        			if(res == false)
-        			{
-        				// dropload.resetload();
-        				// 锁定
-                        dropload.lock();
-                        // 无数据
-                        dropload.noData();
-                        return false;
-        			}
-        			
-					if(res.data.params.pageCount == res.data.params.currPage)
-        			{
-        				dropload.lock();
-
-        				dropload.noData();
-        				return false;
-        			}
-        			
-        		});
+        	// 使用common_page 方法必须定义data方法 以及对象 params
+        	data(params , call){
+        		$mob_ajax.dynamic(params , call);
+        	},
+        	data_list() {
+        		$mob_ajax.common_page(this , this.params);
         	}
         }
     });
