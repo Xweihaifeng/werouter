@@ -24,10 +24,28 @@
 	}
 
 	//获取动态数据  type = 1 是我的动态  2是我关注人的动态
-	// dynamic_type 1文章2项目3活动4商城
+	// dynamic_type 0全部  1文章2项目3活动4商城
 	mob_ajax.dynamic  = function(type , dynamic_type , call){
-		ajax.get('/circel/dynamic' , {params :{type: type ,  dynamic_type : dynamic_type}}).then((res)=>{
-			call(res);
+		if(type == 2 && is_login == 'no')
+		{
+			return false;
+		}
+		var params = {};
+		params.type = type;
+		if(dynamic_type > 0)
+		{
+			params.dynamic_type = dynamic_type;
+		}
+		ajax.get('/circel/dynamic' , {params :params} ).then((res)=>{
+			if(res.code == 200 && res.data.list.length > 0)
+			{
+				call(res);
+			}
+			else
+			{
+				return false;
+			}
+			
 		});
 	}
 

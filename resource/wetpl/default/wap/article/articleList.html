@@ -14,12 +14,14 @@
     	},
         mounted() {
         	this.$nextTick(()=>{
-
+        		this.data_list();
         	});
         },
         methods:{
-        	data_list() : {
-        		ajax.get('');
+        	data_list() {
+        		$mob_ajax.dynamic(1 , 0 , (res)=>{
+        			this.list = res.data.list;
+        		});
         	}
         }
     });
