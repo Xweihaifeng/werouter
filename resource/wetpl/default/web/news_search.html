@@ -168,7 +168,7 @@
 						}
 					},
 					getCloumn: function() {
-						ajax.get(apiUrl + 'cms/channels').then((res) => {
+						ajax.get(apiUrl + 'cms/channel_search').then((res) => {
 							if(res.code == 200 && res.data.list.length) {
 								this.columnList = res.data.list;
 								for(var item of this.columnList) {
@@ -181,6 +181,7 @@
 					},
 					goSearch: function() {
 						if(!this.searchText) {
+							this.isShow = false;
 							return
 						}
 						this.spinner = true;
