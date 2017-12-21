@@ -1,294 +1,298 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8">
-		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-		<title></title>
-		<link rel="stylesheet" href="{{PATH_TML}}css/news_search.css">
-		<link rel="stylesheet" href="/common/magazine/css/iview.css">
-		<script src="{{PATH_CONFIG}}"></script>
-		<script src="/common/public/js/app.js"></script>
-		<script src="/common/js/vue.min.js"></script>
-		<script src="/common/iview/axios.min.js"></script>
-		<script src="/common/iview/libs/util.js"></script>
-		<script src="/common/js/jquery.min.js"></script>
-		<script src="/common/magazine/js/iview.min.js"></script>
-		<style type="text/css">
-			[v-cloak] {
-				display: none;
-			}
-		</style>
-	</head>
-	<body>
-		<div id="app" v-cloak>
-			<div class="head">
-				<div>
-					<div class="logo">
-						<a href="/" id="logo1" :style="'background-image:url('+logo_bg+')'"></a>
-						<a href="/so" id="logo2"></a>
-					</div>
-					<input type="text" placeholder="请输入关键字" v-model="searchText" @keyup.enter="goSearchOpen()">
-					<a @click="goSearchOpen()">搜一下</a>
-				</div>
-			</div>
-			<div class="classify">
-				<ul>
-					<li @click="currentActive='';goSearchOpen();" :class="{'li-active': '' == currentActive}">全部</li>
-					<li v-for="item in columnList" @click="currentActive=item.domain;goSearchOpen()" :id="item.weid" :class="{'li-active':item.domain == currentActive}">{{item.title}}</li>
-				</ul>
-			</div>
-			<div class="tips">
-				<span>为您找到相关结果约{{total}}个</span>
-			</div>
-			<div class="content">
-				<div class="left">
-					<div class="spinner" v-if="spinner">
-						<div class="bounce1"></div>
-						<div class="bounce2"></div>
-						<div class="bounce3"></div>
-					</div>
-					<div v-if="!spinner && !newList.length">没有搜索到相关信息</div>
-					<div v-if="!spinner && newList.length>0" class="column" v-for="item in newList" :key="item.weid">
-						<a :href="all_domian+item.channel_domain+'/'+item.weid" target="_blank" v-html="toRed(item.title)"></a>
-						<div :class="{'has-img' : item.thumb_image}">
-							<a :href="all_domian+item.channel_domain+'/'+item.weid" target="_blank">
-								<img v-if="item.thumb_image" :src="handleImg(item.thumb_image)" alt="">
-							</a>
-							<p>
-								<span v-html="getSummary(item.summary)"></span>
-								<label>
+
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <title></title>
+    <link rel="stylesheet" href="{{PATH_TML}}css/news_search.css">
+    <link rel="stylesheet" href="/common/magazine/css/iview.css">
+    <script src="{{PATH_CONFIG}}"></script>
+    <script src="/common/public/js/app.js"></script>
+    <script src="/common/js/vue.min.js"></script>
+    <script src="/common/iview/axios.min.js"></script>
+    <script src="/common/iview/libs/util.js"></script>
+    <script src="/common/js/jquery.min.js"></script>
+    <script src="/common/magazine/js/iview.min.js"></script>
+    <style type="text/css">
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app" v-cloak>
+        <div class="head">
+            <div>
+                <div class="logo">
+                    <a href="/" id="logo1" :style="'background-image:url('+logo_bg+')'"></a>
+                    <a href="/so" id="logo2"></a>
+                </div>
+                <input type="text" placeholder="请输入关键字" v-model="searchText" @keyup.enter="goSearchOpen()">
+                <a @click="goSearchOpen()">搜一下</a>
+            </div>
+        </div>
+        <div class="classify">
+            <ul>
+                <li @click="currentActive='';goSearchOpen();" :class="{'li-active': '' == currentActive}">全部</li>
+                <li v-for="item in columnList" @click="currentActive=item.domain;goSearchOpen()" :id="item.weid" :class="{'li-active':item.domain == currentActive}">{{item.search_name}}</li>
+            </ul>
+        </div>
+        <div class="tips">
+            <span>为您找到相关结果约{{total}}个</span>
+        </div>
+        <div class="content">
+            <div class="left">
+                <div class="spinner" v-if="spinner">
+                    <div class="bounce1"></div>
+                    <div class="bounce2"></div>
+                    <div class="bounce3"></div>
+                </div>
+                <div v-if="!spinner && !newList.length">没有搜索到相关信息</div>
+                <div v-if="!spinner && newList.length>0" class="column" v-for="item in newList" :key="item.weid">
+                    <a :href="all_domian+item.channel_domain+'/'+item.weid" target="_blank" v-html="toRed(item.title)"></a>
+                    <div :class="{'has-img' : item.thumb_image}">
+                        <a :href="all_domian+item.channel_domain+'/'+item.weid" target="_blank">
+                            <img v-if="item.thumb_image" :src="handleImg(item.thumb_image)" alt="">
+                        </a>
+                        <p>
+                            <span v-html="getSummary(item.summary)"></span>
+                            <label>
                                 <a :href="all_domian+item.channel_domain+'/'+item.weid" v-html="all_domian+item.channel_domain+'/...'" target="_blank"></a>
                                 <span class="triangle"></span>
-                                <a :href="all_domian+item.channel_domain+'/'+item.weid" class="more" v-html="item.cate_name" target="_blank"></a>
+                                <a :href="all_domian+item.channel_domain+'/'+item.cate_domain" class="more" v-html="item.cate_name" target="_blank"></a>
                             </label>
-							</p>
-						</div>
-						<!--<div>-->
-						<!--<span>{{item.publish_time}}</span>-->
-						<!--<span>{{item.cate_name}}</span>-->
-						<!--</div>-->
-					</div>
-					<Page :total="parseInt(total)" :current="page" :page-size="limit" v-show="isShow" @on-change="change" ></Page>
-					
-				</div>
-				<div class="right">
-					<div>
-						<p>所有结果</p>
-						<ul>
-							<li :class="{'active':byTitle == 'title'}" @click="getTitle('title')">标题</li>
-							<li>正文</li>
-						</ul>
-					</div>
-					<div>
-						<p>时间不限</p>
-						<ul>
-							<li :class="{'active':sortTime == 1}" @click="getSearchByTime('day')">1天内</li>
-							<li :class="{'active':sortTime == 7}" @click="getSearchByTime('week')">1周内</li>
-							<li :class="{'active':sortTime == 30}" @click="getSearchByTime('mon')">1个月内</li>
-							<li :class="{'active':sortTime == ''}" @click="getSearchByTime('')">时间不限</li>
-						</ul>
-					</div>
-					<div>
-						<p>结果排序</p>
-						<ul>
-							<li :class="{'active':order == 'publish_time'}" @click="getOrder('publish')">按发布时间排序</li>
-							<li :class="{'active':order == 'updated_at'}" @click="getOrder('update')">按更新时间排序</li>
-						</ul>
-					</div>
+                        </p>
+                    </div>
+                    <!--<div>-->
+                    <!--<span>{{item.publish_time}}</span>-->
+                    <!--<span>{{item.cate_name}}</span>-->
+                    <!--</div>-->
+                </div>
+                <Page :total="parseInt(total)" :current="page" :page-size="limit" v-show="isShow" @on-change="change"></Page>
 
-				</div>
-			</div>
-			<div class="foot">
-				<span>意见反馈</span>
-				<span>使用帮助</span>
-				<span>推广合作</span> Copyright © {{post}} {{title}} 版权所有
-			</div>
-		</div>
-		<script>
-			var app = new Vue({
-				el: '#app',
-				data: {
-					channel: '',
-					spinner: false,
-					currentActive: '',
-					sortTime: null,
-					byTitle: null,
-					isShow: true,
-					order: '',
-					logo: '',
-					total: 0,
-					newList: [],
-					searchText: '',
-					columnList: [],
-					limit: 10,
-					page: 1,
-					title: '',
-					post: window.location.host,
-					logo_bg: ''
-				},
-				mounted: function() {
-					ajax.get(apiUrl + 'cms/setting/show').then((res) => {
-						console.log(res);
-						if(res.data && res.code === 200) {
-							var logo = res.data.logo;
-							this.title = res.data.title;
-							if(!logo) {
-								logo = "/common/img/sou_logo.png";
-							} else if(logo.indexOf('http') != 0 && logo != "") {
-								logo = imgSet(logo, 34, 34, 3);
-							}
-							this.logo = logo;
-							console.log(this.logo)
-	
-						} else {
-							console.warn(res.message);
-						}
-					})
-					this.currentActive = $app.get_query_string('c') ? $app.get_query_string('c') : '';
-					this.searchText = $app.get_query_string('q') ? $app.get_query_string('q') : '';
-					this.getCloumn();
-					if(this.currentActive == '' && this.searchText) {
-						document.title = this.searchText + '_搜索 - ' + plats_info.title;
-					} else {
-						document.title = '搜索 - ' + plats_info.title;
-					}
-					this.goSearch();
-				},
-				computed: {
-					logo_bg : function(){
-						return this.logo;
-					}
-				},
-				methods: {
-					goSearchOpen: function() {
-						if(!this.currentActive) {
-							window.location.href = "/so?q=" + this.searchText;
-						} else {
-							window.location.href = "/so?c=" + this.currentActive + "&q=" + this.searchText;
-						}
-					},
-					getCloumn: function() {
-						ajax.get(apiUrl + 'cms/channels').then((res) => {
-							if(res.code == 200 && res.data.list.length) {
-								this.columnList = res.data.list;
-								for(var item of this.columnList) {
-									if(item.domain == this.currentActive) {
-										document.title = item.title + '_搜索 - ' + this.searchText + ' - ' + plats_info.title;
-									}
-								}
-							}
-						});
-					},
-					goSearch: function() {
-						if(!this.searchText) {
-							return
-						}
-						this.spinner = true;
-						ajax.get(apiUrl + 'cms/contents', {
-							params: {
-								title: this.searchText,
-								channel_id: this.currentActive,
-								time_scope: this.sortTime,
-								order: this.order,
-								page: this.page,
-								limit: this.limit
-							}
-						}).then((res) => {
-							this.spinner = false;
-							if(res.code == 200) {
-								this.newList = res.data.list;
-								this.total = res.data.total;
-								if(Math.ceil(this.total / this.limit) <= 1) {
-									this.isShow = false;
-								}
-							}
-						});
-					},
-		            change: function(page) {
-		                console.log(page)
-		                var _self = this;
-		                _self.page = page;
-		                _self.goSearch();
-		            },
-					handleImg: function(img) {
-						if(img && img.indexOf('http') === -1 && img.indexOf('common') === -1) {
-							img = imgSet(img, 80, 100);
-						}
-						return img;
-					},
-					toRed: function(text) {
-						var reg = new RegExp(app.searchText, "gi");
-						var result = text.replace(reg, function(key) {
-							var template = '<span style="color:#c00;">' + key + '</span>';
+            </div>
+            <div class="right">
+                <div>
+                    <p>所有结果</p>
+                    <ul>
+                        <li :class="{'active':byTitle == 'title'}" @click="getTitle('title')">标题</li>
+                        <li>正文</li>
+                    </ul>
+                </div>
+                <div>
+                    <p>时间不限</p>
+                    <ul>
+                        <li :class="{'active':sortTime == 1}" @click="getSearchByTime('day')">1天内</li>
+                        <li :class="{'active':sortTime == 7}" @click="getSearchByTime('week')">1周内</li>
+                        <li :class="{'active':sortTime == 30}" @click="getSearchByTime('mon')">1个月内</li>
+                        <li :class="{'active':sortTime == ''}" @click="getSearchByTime('')">时间不限</li>
+                    </ul>
+                </div>
+                <div>
+                    <p>结果排序</p>
+                    <ul>
+                        <li :class="{'active':order == 'publish_time'}" @click="getOrder('publish')">按发布时间排序</li>
+                        <li :class="{'active':order == 'updated_at'}" @click="getOrder('update')">按更新时间排序</li>
+                    </ul>
+                </div>
 
-							return template;
-						});
-						return result
-					},
-					getSort: function(item) {
-						if(!item) {
-							this.currentActive = '';
-							document.title = '搜索-' + plats_info.title
-						} else {
-							this.currentActive = item.domain;
-							document.title = item.title + '-搜索-' + plats_info.title
-						}
-						this.page = 1;
-						this.goSearch();
-					},
-					getSummary: function(text) {
-						if(text.length > 100) {
-							text = text.substring(0, 80) + '...';
-						}
-						var res = this.toRed(text);
-						return res;
-					},
-					goPage: function(n) {
-						this.page = n;
-						this.goSearch();
-					},
-					previous: function() {
-						this.page -= 1;
-						if(this.page < 1) {
-							this.page = 1;
-							return
-						}
-						this.goSearch();
-					},
-					next: function() {
-						this.page += 1;
-						if(this.page > Math.ceil((this.total / this.limit).toFixed(2))) {
-							this.page = Math.ceil((this.total / this.limit).toFixed(2))
-							return
-						}
-						this.goSearch();
-					},
-					getSearchByTime: function(time) {
-						if(time == 'day') {
-							this.sortTime = 1
-						} else if(time == 'week') {
-							this.sortTime = 7
-						} else if(time == 'mon') {
-							this.sortTime = 30
-						} else {
-							this.sortTime = ''
-						}
-						this.goSearch();
-					},
-					getOrder: function(order) {
-						if(order == 'publish') {
-							this.order = 'publish_time'
-						} else if(order == 'update') {
-							this.order = 'updated_at'
-						}
-						this.goSearch();
-					},
-					getTitle: function(title) {
-						this.byTitle = title;
-						this.goSearch();
-					}
-				}
-			})
-		</script>
-	</body>
+            </div>
+        </div>
+        <div class="foot">
+            <span>意见反馈</span>
+            <span>使用帮助</span>
+            <span>推广合作</span> Copyright © {{post}} {{title}} 版权所有
+        </div>
+    </div>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                channel: '',
+                spinner: false,
+                currentActive: '',
+                sortTime: null,
+                byTitle: null,
+                isShow: true,
+                order: '',
+                logo: '',
+                total: 0,
+                newList: [],
+                searchText: '',
+                columnList: [],
+                limit: 10,
+                page: 1,
+                title: '',
+                post: window.location.host,
+                logo_bg: ''
+            },
+            mounted: function() {
+                ajax.get(apiUrl + 'cms/setting/show').then((res) => {
+                    console.log(res);
+                    if (res.data && res.code === 200) {
+                        var logo = res.data.logo;
+                        this.title = res.data.title;
+                        if (!logo) {
+                            logo = "/common/img/sou_logo.png";
+                        } else if (logo.indexOf('http') != 0 && logo != "") {
+                            logo = imgSet(logo, 34, 34, 3);
+                        }
+                        this.logo = logo;
+                        console.log(this.logo)
+
+                    } else {
+                        console.warn(res.message);
+                    }
+                })
+                this.currentActive = $app.get_query_string('c') ? $app.get_query_string('c') : '';
+                this.searchText = $app.get_query_string('q') ? $app.get_query_string('q') : '';
+                this.getCloumn();
+                if (this.currentActive == '' && this.searchText) {
+                    document.title = this.searchText + '_搜索 - ' + plats_info.title;
+                } else {
+                    document.title = '搜索 - ' + plats_info.title;
+                }
+                this.goSearch();
+            },
+            computed: {
+                logo_bg: function() {
+                    return this.logo;
+                }
+            },
+            methods: {
+                goSearchOpen: function() {
+                    if (!this.currentActive) {
+                        window.location.href = "/so?q=" + this.searchText;
+                    } else {
+                        window.location.href = "/so?c=" + this.currentActive + "&q=" + this.searchText;
+                    }
+                },
+                getCloumn: function() {
+                    ajax.get(apiUrl + 'cms/channel_search').then((res) => {
+                        if (res.code == 200 && res.data.list.length) {
+                            this.columnList = res.data.list;
+                            for (var item of this.columnList) {
+                                if (item.domain == this.currentActive) {
+                                    document.title = item.title + '_搜索 - ' + this.searchText + ' - ' + plats_info.title;
+                                }
+                            }
+                        }
+                    });
+                },
+                goSearch: function() {
+                    if (!this.searchText) {
+                        this.isShow = false;
+                        return
+                    }
+                    this.spinner = true;
+                    ajax.get(apiUrl + 'cms/content_search', {
+                        params: {
+                            title: this.searchText,
+                            channel_id: this.currentActive,
+                            time_scope: this.sortTime,
+                            order: this.order,
+                            page: this.page,
+                            limit: this.limit
+                        }
+                    }).then((res) => {
+                        this.spinner = false;
+                        if (res.code == 200) {
+                            this.newList = res.data.list;
+                            this.total = res.data.total;
+                            if (Math.ceil(this.total / this.limit) <= 1) {
+                                this.isShow = false;
+                            }
+                        }
+                    });
+                },
+                change: function(page) {
+                    console.log(page)
+                    var _self = this;
+                    _self.page = page;
+                    _self.goSearch();
+                },
+                handleImg: function(img) {
+                    if (img && img.indexOf('http') === -1 && img.indexOf('common') === -1) {
+                        img = imgSet(img, 80, 100);
+                    }
+                    return img;
+                },
+                toRed: function(text) {
+                    var reg = new RegExp(app.searchText, "gi");
+                    var result = text.replace(reg, function(key) {
+                        var template = '<span style="color:#c00;">' + key + '</span>';
+
+                        return template;
+                    });
+                    return result
+                },
+                getSort: function(item) {
+                    if (!item) {
+                        this.currentActive = '';
+                        document.title = '搜索-' + plats_info.title
+                    } else {
+                        this.currentActive = item.domain;
+                        document.title = item.title + '-搜索-' + plats_info.title
+                    }
+                    this.page = 1;
+                    this.goSearch();
+                },
+                getSummary: function(text) {
+                    if (text.length > 100) {
+                        text = text.substring(0, 80) + '...';
+                    }
+                    var res = this.toRed(text);
+                    return res;
+                },
+                goPage: function(n) {
+                    this.page = n;
+                    this.goSearch();
+                },
+                previous: function() {
+                    this.page -= 1;
+                    if (this.page < 1) {
+                        this.page = 1;
+                        return
+                    }
+                    this.goSearch();
+                },
+                next: function() {
+                    this.page += 1;
+                    if (this.page > Math.ceil((this.total / this.limit).toFixed(2))) {
+                        this.page = Math.ceil((this.total / this.limit).toFixed(2))
+                        return
+                    }
+                    this.goSearch();
+                },
+                getSearchByTime: function(time) {
+                    if (time == 'day') {
+                        this.sortTime = 1
+                    } else if (time == 'week') {
+                        this.sortTime = 7
+                    } else if (time == 'mon') {
+                        this.sortTime = 30
+                    } else {
+                        this.sortTime = ''
+                    }
+                    this.goSearch();
+                },
+                getOrder: function(order) {
+                    if (order == 'publish') {
+                        this.order = 'publish_time'
+                    } else if (order == 'update') {
+                        this.order = 'updated_at'
+                    }
+                    this.goSearch();
+                },
+                getTitle: function(title) {
+                    this.byTitle = title;
+                    this.goSearch();
+                }
+            }
+        })
+    </script>
+</body>
+
 </html>
