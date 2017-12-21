@@ -24,7 +24,7 @@ $(document).ready(function () {
 
     $('#updateSet').click(function(){
     	var formList = {
-    		'id'         : $("#role_id").find("option:selected").val(),
+    		'id'         :$("#role_id").find("option:selected").val(),
     		'username'   :$('#username').val(),
     		'password'   :$('#password').val(),
     		'rePassword' :$('#rePassword').val(),
@@ -33,6 +33,9 @@ $(document).ready(function () {
     		'inlineRadioOptions':$('input:radio[name="list"]:checked').val(),
     		'memo'       :$('#memo').val()
     	}
+
+    	alert(formList.username);
+
     	 $.ajax({
             url: ApiUrl + 'admins',
             type: 'post',
