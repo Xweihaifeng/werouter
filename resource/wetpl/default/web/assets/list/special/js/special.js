@@ -309,8 +309,17 @@ $(function() {
         opt5(pathname[1]);
     }
 
-    // $(".soso-submit").click(function() {
-    //     var input_val = $(".soso-input").val();
-    //     window.location.href = `/search` +`?title=`+ input_val +`&channel=`+ pathname[0];
-    // });
+    // 搜索新闻
+    $(".soso-submit").bind("click", soso_submit);
+    function soso_submit() {
+        var input_val = $(".soso-input").val();
+        window.open(`/so` +`?c=`+ pathname[0] +`&q=`+ input_val);
+    }
+
+    $(".soso-input").keyup(function (event) {
+        var e = event || window.event;
+        if(e && e.keyCode==13){ // enter 键
+            soso_submit();
+        }
+    })
 })
