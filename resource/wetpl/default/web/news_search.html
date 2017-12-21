@@ -148,7 +148,7 @@
 					this.searchText = $app.get_query_string('q') ? $app.get_query_string('q') : '';
 					this.getCloumn();
 					if(this.currentActive == '' && this.searchText) {
-						document.title = this.searchText + '_搜索 - ' + plats_info.title;
+						document.title = '搜索_'+ this.searchText +' - '+ plats_info.title;
 					} else {
 						document.title = '搜索 - ' + plats_info.title;
 					}
@@ -173,7 +173,7 @@
 								this.columnList = res.data.list;
 								for(var item of this.columnList) {
 									if(item.domain == this.currentActive) {
-										document.title = item.title + '_搜索 - ' + this.searchText + ' - ' + plats_info.title;
+										document.title = item.search_name + '_搜索 - ' + this.searchText + ' - ' + plats_info.title;
 									}
 								}
 							}
