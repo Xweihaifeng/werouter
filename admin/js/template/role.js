@@ -55,7 +55,7 @@ $(document).ready(function(){
 				})
 			}
 
-			var genTree = data => data.map(e => d.add(e.id, e.pid, 'm', e.pid, e.name, e.checked, false, e.url))
+			var genTree = data => data.map(e => d.add(e.id, e.pid, 'm', e.pid, e.name, e.checked, false))
 
 			process(resp, depth);
 			genTree(rem);
@@ -113,7 +113,11 @@ $(document).ready(function(){
 			},
 			data: data,
 			success: function(data) {
-				console.log(data);
+				if (data.code === 200) {
+                    swal('提示', '保存成功', 'success');
+                } else {
+                    swal('提示', data.message, 'error');
+                }
 			},
 			error: function(xhr) {
 				console.log(xhr)
