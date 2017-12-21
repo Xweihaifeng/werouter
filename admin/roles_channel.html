@@ -22,6 +22,7 @@
     <!-- Select2 -->
     <link rel="stylesheet" href="bower_components/select2/dist/css/select2.min.css">
     <link rel="stylesheet" href="css/pbms.css">
+    <link rel="stylesheet" href="css/dtree.css">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -32,7 +33,8 @@
     <script src="js/jquery-3.2.1.min.js"></script>
     <script src="js/browser.min.js"></script>
     <script src="js/config.js"></script>
-    <script src="js/template/menus.js"></script>
+    <script src="js/dtree.js"></script>
+    <script src="js/template/role.js"></script>
     <!-- Google Font -->
     <style>::-webkit-scrollbar { width: 0; }</style>
 </head>
@@ -70,64 +72,21 @@
         <!-- Main content -->
         <section class="content">
             <div class="row">
-                <div class="box">
+                <div class="box" style="padding-left: 30px; padding-bottom: 10px;">
                     <div class="box-header">
                         <h3 class="box-title"></h3>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body no-padding">
-                        <table class="table table-condensed" id="menu_role">
-                            <tbody>
-                            <tr>
-                                <th style="width: 10px">&nbsp;</th>
-                                <th>名称</th>
-                                <th>Mark</th>
-                                <th>URl</th>
-                            </tr>
-                            <tr>
-                                <td>&nbsp;</td>
-                                <td><strong>平台管理</strong></td>
-                                <td>mark</td>
-                                <td>&nbsp;</td>
-                            </tr>
-                            <tr>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;&nbsp;&nbsp;├─ <input name="config" type="checkbox" value="" /> 网站管理</td>
-                                <td>mark</td>
-                                <td>&nbsp;</td>
-                            </tr>
-                            <tr>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;&nbsp;&nbsp;│ &nbsp;&nbsp;&nbsp;├─ <input name="config" type="checkbox" value="" /> 内容管理</td>
-                                <td>mark</td>
-                                <td>&nbsp;</td>
-                            </tr>
-                            <tr>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;&nbsp;&nbsp;│ &nbsp;&nbsp;&nbsp;├─ <input name="config" type="checkbox" value="" /> 栏目管理</td>
-                                <td>mark</td>
-                                <td>&nbsp;</td>
-                            </tr>
-                            <tr>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;&nbsp;&nbsp;│ &nbsp;&nbsp;&nbsp;├─ <input name="config" type="checkbox" value="" /> 频道管理</td>
-                                <td>mark</td>
-                                <td>&nbsp;</td>
-                            </tr>
-                            <tr>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;&nbsp;&nbsp;│ &nbsp;&nbsp;&nbsp;├─ <input name="config" type="checkbox" value="" /> 区块管理</td>
-                                <td>mark</td>
-                                <td>&nbsp;</td>
-                            </tr>
-                            <tr>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;&nbsp;&nbsp;│ &nbsp;&nbsp;&nbsp;├─ <input name="config" type="checkbox" value="" /> 基本设置</td>
-                                <td>mark</td>
-                                <td>&nbsp;</td>
-                            </tr>
-                            </tbody>
-                        </table>
+                        <div class="dtree">
+                            <p><a href="javascript:  d.closeAll();">open all</a> | <a href="javascript: d.openAll();">close all</a></p>
+                            <div id="res"></div>
+                        </div>
+                        <div>
+                        <!-- <input type='button' name='bChannel' value='频道' id='channel'> -->
+                        <!-- <input type='button' name='bConfig' value='配置' id='config'> -->
+                        <input type='button' name='bTest' value='确定' id='test' style="margin-top: 25px;">
+                        </div>
                     </div>
                     <!-- /.box-body -->
                 </div>
