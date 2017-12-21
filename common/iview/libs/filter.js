@@ -9,7 +9,7 @@ Vue.filter('img_src', function (value , width , height) {
     }
     else
     {
-        return settings + value + '?imageView2/3/w/' + width + '/h/' + height;
+        return settings + value + '?imageView2/1/w/' + width + '/h/' + height;
     }
 });
 

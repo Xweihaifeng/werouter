@@ -1,230 +1,187 @@
 <#include#>public/common/public.html</#include#>
 <#include#>public/common/mobile_login.html</#include#>
 
-	<link rel="stylesheet" href="{{PATH_TML}}css/coc/mtcstyle.css">
-	<script src="{{PATH_TML}}js/coc/swipe.min.js"></script>
-
-	<body>
-		<div id="app" class="viewport">
-			<div class="header">
-				<i class="m_logo"></i>
-			</div>
-			<div class="clear"></div>
-			<div class="syflbg">
-				<!--栏目-->
-				<div class="syfl">
-					<div class="syfl_mar">
-						<ul>
-							<li>
-								<a href="/index4"><span><img src="{{PATH_TML}}img/index/nav_icon1.png"></span>
-									<h2>资讯中心</h2></a>
-							</li>
-							<li>
-								<a href="javascript:void(0)"><span><img src="{{PATH_TML}}img/index/nav_icon2.png"></span>
-									<h2>信息公开</h2></a>
-							</li>
-							<li>
-								<a href="javascript:void(0)"><span><img src="{{PATH_TML}}img/index/nav_icon3.png"></span>
-									<h2>在线服务</h2></a>
-							</li>
-							<li>
-								<a href="javascript:void(0)"><span><img src="{{PATH_TML}}img/index/nav_icon4.png"></span>
-									<h2>互动交流</h2></a>
-							</li>
-							<li>
-								<a href="/index5"><span><img src="{{PATH_TML}}img/index/nav_icon5.png"></span>
-									<h2>美丽秦川</h2></a>
-							</li>
-							<li>
-								<a href="javascript:void(0)"><span><img src="{{PATH_TML}}img/index/nav_icon6.png"></span>
-									<h2>网站导航</h2></a>
-							</li>
-						</ul>
-					</div>
-				</div>
-				<div class="clear"></div>
-				<!--栏目 end-->
-				<!--搜索-->
-				<div class="sous">
-					<form action="http://m.tongchuan.gov.cn/search_list.rt" method="post" name="sosoFrom">
-						<div class="sous_l"><input name="keyWord" type="text" class="sous_inp" value="请输入关键词"></div>
-						<div class="sous_r"><input name="" type="submit" class="sous_but" value=""></div>
-						<div class="clear"></div>
-					</form>
-				</div>
-				<!--搜索-->
-			</div>
-			<div class="clear"></div>
-			<div class="syywtj_dh"><img src="{{PATH_TML}}img/index/hs_ic.jpg">
-				<h1 onclick="location.href='/index6'">要闻推荐</h1></div>
-			<div class="clear"></div>
-			<!--图片轮换开始-->
-			<div class="banner1">
-				<div id="mySwipe" class="swipe" style="visibility: visible;">
-					<div class="swipe-wrap" style="width: 1125px;">
-						<div v-for="(item,index) in especial_news" :data-index="index" style="width: 375px;" >
-							<a href="/index5"><img src="http://cms-bucket.nosdn.127.net/7f2c404616844c2183a80e8b300460d720170803082841.jpeg"  width="300" height="300"></a>
-							<div class="mySwipeceng">
-								<div class="left"><b style="font-weight:normal; color:">{{item.title}}</b></div>
-								<div class="mySwip_rg"> <span class="mySwipetabdiancurr"></span><span class="mySwipetabdian"></span>
-									<span class="mySwipetabdian"></span>
-								</div>
-							</div>
-						</div>
-<!-- 						<div data-index="1" style="width: 375px; left: -375px; transition-duration: 300ms; transform: translate(0px, 0px) translateZ(0px);">
-							<a href="/index5"><img src="{{PATH_TML}}img/index/1513655494752.jpg" width="100%"></a>
-							<div class="mySwipeceng">
-								<div class="left"><b style="font-weight:normal; color:#ff0000">美丽天使　播撒温暖</b></div>
-								<div class="mySwip_rg"> <span class="mySwipetabdiancurr"></span><span class="mySwipetabdian"></span>
-									<span class="mySwipetabdian"></span>
-								</div>
-							</div>
-						</div>
-						<div data-index="2" style="width: 375px; left: -750px; transition-duration: 0ms; transform: translate(375px, 0px) translateZ(0px);">
-							<a href="/index5"><img src="{{PATH_TML}}img/index/1513704196184.JPG" width="100%"></a>
-							<div class="mySwipeceng">
-								<div class="left"><b style="font-weight:normal; color:">郭大为：用责任担当度提升转型发展加速度</b></div>
-								<div class="mySwip_rg"> <span class="mySwipetabdiancurr"></span><span class="mySwipetabdian"></span>
-									<span class="mySwipetabdian"></span>
-								</div>
-							</div>
-						</div> -->
-					</div>
-				</div>
-			</div>
-			<div class="clear"></div>
-			<!--图片轮换结束-->
-			<div class="sytjlb">
+<link rel="stylesheet" href="{{PATH_TML}}css/coc/mtcstyle.css">
+<script src="{{PATH_TML}}js/coc/swipe.min.js"></script>
+<div id="viewport" class="viewport">
+	<div class="header">
+		<i class="m_logo"><img :src="plats.logo | img_src(60,60)"></i>
+	</div>
+	<div class="clear"></div>
+	<div class="syflbg">
+		<!--栏目-->
+		<div class="syfl">
+			<div class="syfl_mar">
 				<ul>
-					<li v-for="item in news">
-						<a href="/index6"><span class="sytjlb_fl">[{{item.cate_title}}]</span>
-							<h2><b style="font-weight:normal; color:">{{item.title}}</b></h2><span class="sytjlb_sj">{{item.created_at}}</span>
-						</a>
+					<li>
+						<a href="/index4"><span><img src="{{PATH_TML}}img/index/nav_icon1.png"></span>
+							<h2>资讯中心</h2></a>
+					</li>
+					<li>
+						<a href="javascript:void(0)"><span><img src="{{PATH_TML}}img/index/nav_icon2.png"></span>
+							<h2>信息公开</h2></a>
+					</li>
+					<li>
+						<a href="javascript:void(0)"><span><img src="{{PATH_TML}}img/index/nav_icon3.png"></span>
+							<h2>在线服务</h2></a>
+					</li>
+					<li>
+						<a href="javascript:void(0)"><span><img src="{{PATH_TML}}img/index/nav_icon4.png"></span>
+							<h2>互动交流</h2></a>
+					</li>
+					<li>
+						<a href="/index5"><span><img src="{{PATH_TML}}img/index/nav_icon5.png"></span>
+							<h2>美丽秦川</h2></a>
+					</li>
+					<li>
+						<a href="javascript:void(0)"><span><img src="{{PATH_TML}}img/index/nav_icon6.png"></span>
+							<h2>网站导航</h2></a>
 					</li>
 				</ul>
 			</div>
-			<!--重点专题-->
-			<div class="syzdzt_dh"><img src="{{PATH_TML}}img/index/hs_ic.jpg">
-				<h1>重点专题</h1></div>
-			<div class="clear"></div>
-			<div class="syzdzt_pc">
-				<div class="syzdzt_pcmr">
-					<ul>
-						<li>
-							<a href="/index5"><img src="{{PATH_TML}}img/index/1512983693129.jpg"></a>
-						</li>
-						<li>
-							<a href="/index5"><img src="{{PATH_TML}}img/index/1507859756469.jpg"></a>
-						</li>
-						<li>
-							<a href="/index5"><img src="{{PATH_TML}}img/index/1500626261042.jpg"></a>
-						</li>
-						<div class="clear"></div>
-						<li>
-							<a href="/index5"><img src="{{PATH_TML}}img/index/1508032038678.jpg"></a>
-						</li>
-						<li>
-							<a href="/index5"><img src="{{PATH_TML}}img/index/1503370511224.jpg"></a>
-						</li>
-						<li>
-							<a href="/index5"><img src="{{PATH_TML}}img/index/1483696104301.jpg"></a>
-						</li>
-						<div class="clear"></div>
-						<li>
-							<a href="/index5"><img src="{{PATH_TML}}img/index/1491807354803.jpg"></a>
-						</li>
-						<li>
-							<a href="/index5"><img src="{{PATH_TML}}img/index/1489034257090.jpg"></a>
-						</li>
-						<li>
-							<a href="/index5"><img src="{{PATH_TML}}img/index/20131118095045.jpg"></a>
-						</li>
-					</ul>
-				</div>
-				<div class="clear"></div>
-			</div>
-			<!--重点专题 end-->
-			<!--快捷服务-->
-			<div class="syzdzt_dh"><img src="{{PATH_TML}}img/index/hs_ic.jpg">
-				<h1>快捷服务</h1></div>
-			<div class="clear"></div>
-			<div class="sykjfw">
-				<div class="sykjfw_mar">
-					<ul>
-						<li>
-							<a href="/index4"><span><img src="{{PATH_TML}}img/index/kj01.png"></span>
-								<h2>便民查询</h2></a>
-						</li>
-						<li>
-							<a href="/index4"><span><img src="{{PATH_TML}}img/index/kj02.png"></span>
-								<h2>建议/投诉</h2></a>
-						</li>
-						<li>
-							<a href="/index4"><span><img src="{{PATH_TML}}img/index/kj03.png"></span>
-								<h2>部门权责</h2></a>
-						</li>
-						<li>
-							<a href="/index4"><span><img src="{{PATH_TML}}img/index/kj04.png"></span>
-								<h2>依申请公开</h2></a>
-						</li>
-						<li>
-							<a href="/index4"><span><img src="{{PATH_TML}}img/index/kj05.png"></span>
-								<h2>办件查询</h2></a>
-						</li>
-					</ul>
-				</div>
-				<div class="clear"></div>
-			</div>
-			<!--快捷服务-->
-			<div class="fooder">
-				<div class="fooder_pc">
-					<img src="{{PATH_TML}}img/index/db01.png"><img src="{{PATH_TML}}img/index/db02.png"></div>
-				<div class="fooder_tel">
-					<a href="http://m.new.wezchina.com/">手机版</a>|
-					<a href="http://new.wezchina.com/">PC版</a>
-				</div>
-				<div class="fooder_wz">
-					版权所有：秦川市人民政府　陕ICP备09018839号<br> 组织建设：秦川市人民政府办公室 您是第80404690位访客<br> 运行维护：秦川市电子政务办公室&nbsp;&nbsp;&nbsp;&nbsp; 运维电话：0919-3183128
-				</div>
-			</div>
-
 		</div>
+		<div class="clear"></div>
+		<!--栏目 end-->
+		<!--搜索-->
+		<div class="sous">
+			<form action="http://m.tongchuan.gov.cn/search_list.rt" method="post" name="sosoFrom">
+				<div class="sous_l"><input name="keyWord" type="text" class="sous_inp" value="请输入关键词"></div>
+				<div class="sous_r"><input name="" type="submit" class="sous_but" value=""></div>
+				<div class="clear"></div>
+			</form>
+		</div>
+		<!--搜索-->
+	</div>
+	<div class="clear"></div>
+	<div class="syywtj_dh"><img src="{{PATH_TML}}img/index/hs_ic.jpg">
+		<h1 onclick="location.href='/index6'">要闻推荐</h1></div>
 
-		<script>
-			var app = new Vue({
-				el: '#app',
-				data: {
-					news: '',
-					especial_news: '',
-				},
-		        mounted: function() {
+	<div class="clear"></div>
+	<!--图片轮换开始-->
+    <div class="banner1">
+		<div id='mySwipe' class='swipe'>
+			<div class='swipe-wrap' style="width: 1242px;">
+				<div v-for="(item,index) in especial_news"> 
+					<a><img :src="item.thumb_image | img_src(300 , 200)" width="100%" /></a> 
+					<div
+					class="mySwipeceng">
+						<div class="left"><b style='font-weight:normal; color:'>崔歆在党建联系点调研党建工作</b></div>
+						<div class="mySwip_rg"> <span class="mySwipetabdiancurr"></span><span class="mySwipetabdian"></span>
+							<span class="mySwipetabdian"></span>
+						</div>
+					</div>
+				</div>
+			</div>
+        </div>
+    </div>
+	 <div class="clear"></div>
+	<!--图片轮换结束-->
 
-					// $mob_ajax.cms_lists({} , (res)=>{
-					// 	this.especial_news = res.data;
-					// });
+	<div class="sytjlb">
+		<ul>
+			<li v-for="item in news">
+				<a href="/index6"><span class="sytjlb_fl">[{{item.cate_title}}]</span>
+					<h2><b style="font-weight:normal; color:">{{item.title}}</b></h2><span class="sytjlb_sj">{{item.created_at | formateTime('MDHM')}}</span>
+				</a>
+			</li>
+		</ul>
+	</div>
+	<!--重点专题-->
+	<div class="syzdzt_dh"><img src="{{PATH_TML}}img/index/hs_ic.jpg">
+		<h1>重点专题</h1></div>
+	<div class="clear"></div>
+	<div class="syzdzt_pc">
+		<div class="syzdzt_pcmr">
+			<ul>
+				<li v-for="item in ztbd">
+					<a href="/index5"><img :src="item.thumb_image | img_src"></a>
+				</li>
 
-					ajax.get('cms/index/grid').then((res) => {
-	                    if (res.code === 200) {
-	                        this.news = res.data.news;
-	                        this.especial_news = res.data.especial_news;
-	                        this.swiper();
-	                       	
-	                    } 
-	                });
-				},
-				methods: {
-					swiper() {
-						Swipe(document.getElementById('mySwipe'), {
-							startSlide: 0,
-							auto: 3000,
-							continuous: true,
-							disableScroll: true,
-							stopPropagation: true,
-						});
-					}
-				},
-			});
-		</script>
-	</body>
+			</ul>
+		</div>
+		<div class="clear"></div>
+	</div>
+	<!--重点专题 end-->
+	<!--快捷服务-->
+	<div class="syzdzt_dh"><img src="{{PATH_TML}}img/index/hs_ic.jpg">
+		<h1>快捷服务</h1></div>
+	<div class="clear"></div>
+	<div class="sykjfw">
+		<div class="sykjfw_mar">
+			<ul>
+				<li>
+					<a href="/index4"><span><img src="{{PATH_TML}}img/index/kj01.png"></span>
+						<h2>便民查询</h2></a>
+				</li>
+				<li>
+					<a href="/index4"><span><img src="{{PATH_TML}}img/index/kj02.png"></span>
+						<h2>建议/投诉</h2></a>
+				</li>
+				<li>
+					<a href="/index4"><span><img src="{{PATH_TML}}img/index/kj03.png"></span>
+						<h2>部门权责</h2></a>
+				</li>
+				<li>
+					<a href="/index4"><span><img src="{{PATH_TML}}img/index/kj04.png"></span>
+						<h2>依申请公开</h2></a>
+				</li>
+				<li>
+					<a href="/index4"><span><img src="{{PATH_TML}}img/index/kj05.png"></span>
+						<h2>办件查询</h2></a>
+				</li>
+			</ul>
+		</div>
+		<div class="clear"></div>
+	</div>
+	<!--快捷服务-->
+	<div class="fooder">
+		<div class="fooder_pc">
+			<img src="{{PATH_TML}}img/index/db01.png"><img src="{{PATH_TML}}img/index/db02.png"></div>
+		<div class="fooder_tel">
+			<a href="http://m.new.wezchina.com/">手机版</a>|
+			<a href="http://new.wezchina.com/">PC版</a>
+		</div>
+		<div class="fooder_wz">
+			版权所有：秦川市人民政府　陕ICP备09018839号<br> 组织建设：秦川市人民政府办公室 您是第80404690位访客<br> 运行维护：秦川市电子政务办公室&nbsp;&nbsp;&nbsp;&nbsp; 运维电话：0919-3183128
+		</div>
+	</div>
 
-</html>
+</div>
+
+<script>
+	var app = new Vue({
+		el: '#viewport',
+		data: {
+			news: [],
+			especial_news: [],
+			ztbd : [],
+			plats : plats_info
+		},
+        mounted: function() {
+        	$app.set_title(plats_info.title);
+        	ajax.get('cms/index/grid').then((res) => {
+                if (res.code === 200) {
+                    this.news = res.data.news;
+                    this.especial_news = res.data.especial_news;
+                    this.ztbd = res.data.ztbd.list;
+                    this.$nextTick(()=>{
+		            	this.swiper();
+		        	});
+                } 
+            });
+		},
+		methods: {
+			swiper() {
+				var elem = document.getElementById('mySwipe');
+				Swipe(elem, {
+					startSlide: 0,
+					auto: 3000,
+					continuous: true,
+					disableScroll: true,
+					stopPropagation: true
+				});
+			}
+		},
+	});
+</script>
+
