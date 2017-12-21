@@ -1,3 +1,26 @@
 <#extend#>public/domain/domain_extend.html</#extend#>
 <link rel="stylesheet" href="/resource/wetpl/default/wap/css/article.css">
+<div class="latest">最新推荐</div>
+<div id="container" class="my_container">
+	
 
+</div>
+
+<script type="text/javascript">
+	new Vue({
+    	el: '#app',
+    	data : {
+    		list:[]
+    	},
+        mounted() {
+        	this.$nextTick(()=>{
+
+        	});
+        },
+        methods:{
+        	data_list() : {
+        		ajax.get('');
+        	}
+        }
+    });
+</script>
