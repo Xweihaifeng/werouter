@@ -62,7 +62,10 @@ $(document).ready(function() {
     init();
 
     $('#confirm').click(function() {
-        var dataId = $(this).attr('data-id');
+
+        showTips('无权操作！', 2, 'alert-info');
+
+        /*var dataId = $(this).attr('data-id');
         $.ajax({
             url: ApiUrl + "admins/" + dataId,
             type: 'DELETE',
@@ -78,6 +81,31 @@ $(document).ready(function() {
                     return false;
                 }
             }
-        });
+        });*/
     });
+
+    function showTips(tips, time, el) {
+        var windowWidth = document.documentElement.clientWidth;
+        var tipsDiv = '<div class="alert ' + el + '" role="alert">' + tips + '</div>';
+
+        $('body').append(tipsDiv);
+        $('div.alert').css({
+            'top': '220px',
+            'left': (windowWidth / 2) - (tips.length * 10 / 2) + 'px',
+            'position': 'absolute',
+            'padding': '3px 5px',
+            'background': '#ffffff',
+            'width': '200px',
+            'font-size': 14 + 'px',
+            'margin': '0 auto',
+            'text-align': 'center',
+            'z-index': '5000',
+            'line-height': '230%',
+            'opacity': '0.8'
+        }).show();
+        setTimeout(function() {
+            $('div.alert').fadeOut();
+            $('.alert').remove();
+        }, (time * 1000));
+    }
 });
