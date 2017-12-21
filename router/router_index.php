@@ -326,6 +326,7 @@ class main extends controller
         }
         //JS 环境变量初始化
         $plats['var http_type'] = $protocol;
+        $plats['var pages_type'] = 6;
         $plats['var site_domian'] = $this->data['domain'];
         $plats['var api_domain'] = $protocol.$this->data['domain'].'/api/';
         //$plats['var all_domian'] = $protocol.$this->data['domain'].'/'; 正式环境使用
