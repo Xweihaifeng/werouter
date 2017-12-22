@@ -66,11 +66,12 @@
                             {
                                 if(item.domain == this.params.cate_id)
                                 {
-                                    this.title += '-' + item.title
+                                    plats_info.show_title = item.title;  
+                                    this.title += '-' + item.title;
                                 }
                             }	
                             $app.set_title(this.title);	
-                            plats_info.show_title = this.title;      	
+                                	
 				        	this.data_list();
 				        }
 				    });

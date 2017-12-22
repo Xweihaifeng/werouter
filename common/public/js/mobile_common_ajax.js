@@ -88,6 +88,11 @@
 	mob_ajax.cms_lists  = function(params , call){
 		ajax.get('/cms/contents' , {params : params}).then((res)=>{
 			if(res.code == 200){
+				if(res.data.total == 0)
+				{
+					call(false);
+                	return true;
+				}
                 var pageCount = Math.ceil(res.data.total / params.limit);
                 var post = {
                     data : {
