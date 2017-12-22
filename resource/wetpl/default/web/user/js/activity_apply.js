@@ -56,23 +56,26 @@
     }*/
 
 var chart = {
-    init: function() {
+    init: function(weid) {
         var _self = this;
-        this.getData(function(data) {
+        this.getData(weid, function(data) {
             _self.createChartCity(data.city);
             _self.createChartPosition(data.position);
             _self.createChartTimeLine(data.timeline);
         });
     },
-    getData: function(callback) {
+    getData: function(weid, callback) {
         var _self = this;
-        var url = $('#J_GetChartDataUrl').val();
+        var url = ACTIVITY_ENROLL_STATISTICS;
         $.ajax({
             url: url,
             type: 'get',
             dataType: 'json',
+            data: {
+                activity_id: weid
+            },
             success: function(res) {
-                if (res.status) {
+                if (res.code == 200) {
                     var data = _self.formatData(res.data);
                     callback && callback(data);
                 } else {
@@ -80,7 +83,7 @@ var chart = {
                 }
             },
             error: function(xhr, code, error) {
-                // notice.alert(error);
+                notice.alert(error);
             },
             complete: function() {}
         });
@@ -508,7 +511,7 @@ $(document).ready(function() {
     });
 
     // 加载统计
-    chart.init();
+    chart.init(id);
 
     // 页码
     var pagefun = function(pagenum, weid, type = 0, keywords) {
