@@ -132,7 +132,7 @@ $(document).ready(function(){
                     '<input name="thumb_image_slide'+i+'" type="hidden" value="" class="form-control">' +
                     '<input id="slidefiles_'+i+'" name="front" type="file" class="form-control hide">' +
                     '<div id="look">' +
-                    '<img style=" margin-top:0px;" onclick="$(\'#slidefiles_'+i+'\').click()" id="img'+i+'" src="/common/img/weizhuyebanner.png" alt="" class="thumbnail">' +
+                    '<img style=" margin-top:0px;" onclick="$(\'#slidefiles_'+i+'\').click()" id="img'+i+'" src="http://image.qqxqs.com/common/1502085164249.jpg" alt="" class="thumbnail">' +
                     '</div>' +
                     '</div>' +
                     '<span style="margin-left: 120px;">*支持JPG、JPEG、PNG、BMP的图片，图片尺寸 建议为：1920*489， 图片小于4M</span>';
@@ -152,7 +152,7 @@ $(document).ready(function(){
             }
             for(var i=1;i<=slideListLenth;i++){
                 var hiddenUrl='';
-                var thumbnailUrl='/common/img/weizhuyebanner.png';
+                var thumbnailUrl='http://image.qqxqs.com/common/1502085164249.jpg';
                 if(!isNull(newImgArr[i])){
                     hiddenUrl=newImgArr[i];
                     thumbnailUrl=ApiMaterPlatQiniuDomain+newImgArr[i]
@@ -229,7 +229,7 @@ $(document).ready(function(){
                     '<input name="thumb_image_banner'+i+'" type="hidden" value="" class="form-control">'+
                     '<input id="bannerfiles_'+i+'" name="back" type="file" class="form-control hide">'+
                     '<div id="look-1">'+
-                    '<img style=" margin-top:0px;" onclick="$(\'#bannerfiles_'+i+'\').click()" id="img-'+i+'" src="/common/img/nq.png" alt="" class="thumbnail">'+
+                    '<img style=" margin-top:0px;" onclick="$(\'#bannerfiles_'+i+'\').click()" id="img-'+i+'" src="http://image.qqxqs.com/common/1502085164249.jpg" alt="" class="thumbnail">'+
                     '</div>'+
                     '</div>'+
                     '<span style="margin-left: 120px;">* 图片尺寸建议为：380*133，图片小于2M</span>';
@@ -247,7 +247,7 @@ $(document).ready(function(){
             }
             for(var i=1;i<=bannerListLenth;i++){
                 var hiddenUrl='';
-                var thumbnailUrl='/common/img/nq.png';
+                var thumbnailUrl='http://image.qqxqs.com/common/1502085164249.jpg';
                 if(!isNull(newImgArr[i])){
                     hiddenUrl=newImgArr[i];
                     thumbnailUrl=ApiMaterPlatQiniuDomain+newImgArr[i]
