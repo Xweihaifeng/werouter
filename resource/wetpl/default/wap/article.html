@@ -7,15 +7,15 @@
 	<div class="art-temp1"  v-for="item in list_data">
 		<div class="art-left">
 			<span>
-				<a :href="'/' + item.domain + '/wecard'">
-					<img class="lazy" :src="item.avatar | imgSet(36, 36)" style="width: 0.36rem; height: 0.36rem; border-radius: 0.36rem;" />
+				<a :href="'/' + item.domain + '/wecard' | href">
+					<img class="lazy" :src="item.avatar | img_src(36, 36)" style="width: 0.36rem; height: 0.36rem; border-radius: 0.36rem;" />
 				</a>
 			</span>
 		</div>
 		<div class="art-right">
 			<span class="art-title">{{item.nickname}}</span>
 			<p>{{item.motto}}</p>
-			<a href="'/' + item.domain + '/article/' + JSON.parse(item.other).weid">
+			<a :href="'/' + item.domain + '/article/' + JSON.parse(item.other).weid | href">
 				<div class="art-content">
 					<span><img class="lazy" :src="JSON.parse(item.other).cover" width="88" /></span>
 					<span class="art-des-text">

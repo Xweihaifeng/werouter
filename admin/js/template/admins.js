@@ -62,10 +62,7 @@ $(document).ready(function() {
     init();
 
     $('#confirm').click(function() {
-
-        showTips('无权操作！', 2, 'alert-info');
-
-        /*var dataId = $(this).attr('data-id');
+        var dataId = $(this).attr('data-id');
         $.ajax({
             url: ApiUrl + "admins/" + dataId,
             type: 'DELETE',
@@ -74,14 +71,13 @@ $(document).ready(function() {
                 if (result.code === 200) {
                     showTips('删除成功！', 2, 'alert-info');
                     location.reload();
-                    console.log('ok');
                 } else {
                     parent.layer.msg(result.message);
 
                     return false;
                 }
             }
-        });*/
+        });
     });
 
     function showTips(tips, time, el) {
