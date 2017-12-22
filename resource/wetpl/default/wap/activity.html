@@ -6,7 +6,7 @@
     <div v-for="item in list_data">
         <div class="act">
             <div class="act-avatar">
-                <a :href="'/' + item.domain + '/wecard'">
+                <a :href="'/' + item.domain + '/wecard' | href">
                     <img class="lazy" :src="item.avatar | img_src(60,60)" width="60" height="60" />
                 </a>
             </div>
@@ -18,9 +18,9 @@
                     </ul>
                     <div class="act-hot"><span>热门</span></div>
                 </div>
-                <a :href="'/' + item.domain + '/activity-detail/' + JSON.parse(item.other).weid">
+                <a :href="'/' + item.domain + '/activity-detail/' + JSON.parse(item.other).weid | href">
                     <div class="act-content">
-                        <div class="act-cover"><img class="lazy" :src="JSON.parse(item.other).cover | imgSet(110, 69, 1)" width="110" height="69" /></div>
+                        <div class="act-cover"><img class="lazy" :src="JSON.parse(item.other).cover | img_src(110, 69, 1)" width="110" height="69" /></div>
                         <div class="act-cont">
                             <ul>
                                 <li class="act-cont-title">

@@ -7,19 +7,19 @@
 <slide v-for="item in list_data">
 	<slide class="li_img_wap">
 		<a href="'/' + item.domain + '/wecard'">
-			<img class="lazy" :src="item.avatar | imgSet(36, 36)" width="60" height="60">
+			<img class="lazy" :src="item.avatar | img_src(36, 36)" width="60" height="60">
 		</a>
 	</slide>
 	<slide class="li_info">
 		<h2>{{item.nickname}}</h2>
 		<h3>{{item.motto}}</h3>
 		<div class="lii_img">
-			<img class="lazy" v-for="x in JSON.parse(item.other).picture.split(',')" :src="x | imgSet(102, 97, 1)" width="102" height="97" />
+			<img class="lazy" v-for="x in JSON.parse(item.other).picture.split(',')" :src="x | img_src(102, 97, 1)" width="102" height="97" />
 		</div>
 		<div class="lii_sold">
 			<a href="'/' + item.domain + '/wemall/goods/' + JSON.parse(item.other).weid">
 				<slide class="li_img_wap">
-					<img class="lazy" :src="JSON.parse(item.other).cover | imgSet(55, 55, 1)" />
+					<img class="lazy" :src="JSON.parse(item.other).cover | img_src(55, 55, 1)" />
 				</slide>
 				<slide class="li_info">
 					<h3>{{JSON.parse(item.other).title}}</h3>

@@ -12,8 +12,8 @@
         <div v-if="item.dynamic_type == 1" class="art-temp1">
             <div class="art-left">
 			<span>
-				<a :href="'/' + item.domain + '/wecard'">
-					<img class="lazy" :src="item.avatar | imgSet(36, 36)" style="width: 0.36rem; height: 0.36rem; border-radius: 0.36rem;" />
+				<a :href="'/' + item.domain + '/wecard' | href">
+					<img class="lazy" :src="item.avatar | img_src(36, 36)" style="width: 0.36rem; height: 0.36rem; border-radius: 0.36rem;" />
 				</a>
 			</span>
             </div>
@@ -39,7 +39,7 @@
         <div v-if="item.dynamic_type == 3">
             <div class="act">
                 <div class="act-avatar">
-                    <a :href="'/' + item.domain + '/wecard'">
+                    <a :href="'/' + item.domain + '/wecard' | href">
                         <img class="lazy" :src="item.avatar | img_src(60,60)" width="60" height="60" />
                     </a>
                 </div>
@@ -51,9 +51,9 @@
                         </ul>
                         <div class="act-hot"><span>热门</span></div>
                     </div>
-                    <a :href="'/' + item.domain + '/activity-detail/' + JSON.parse(item.other).weid">
+                    <a :href="'/' + item.domain + '/activity-detail/' + JSON.parse(item.other).weid | href">
                         <div class="act-content">
-                            <div class="act-cover"><img class="lazy" :src="JSON.parse(item.other).cover | imgSet(110, 69, 1)" width="110" height="69" /></div>
+                            <div class="act-cover"><img class="lazy" :src="JSON.parse(item.other).cover | img_src(110, 69, 1)" width="110" height="69" /></div>
                             <div class="act-cont">
                                 <ul>
                                     <li class="act-cont-title">
@@ -81,20 +81,20 @@
         <div v-if="item.dynamic_type == 4" id="container" class="section">
             <slide>
                 <slide class="li_img_wap">
-                    <a href="'/' + item.domain + '/wecard'">
-                        <img class="lazy" :src="item.avatar | imgSet(36, 36)" width="60" height="60">
+                    <a :href="'/' + item.domain + '/wecard' | href">
+                        <img class="lazy" :src="item.avatar | img_src(36, 36)" width="60" height="60">
                     </a>
                 </slide>
                 <slide class="li_info">
                     <h2>{{item.nickname}}</h2>
                     <h3>{{item.motto}}</h3>
                     <div class="lii_img">
-                        <img class="lazy" v-for="x in JSON.parse(item.other).picture.split(',')" :src="x | imgSet(102, 97, 1)" width="102" height="97" />
+                        <img class="lazy" v-for="x in JSON.parse(item.other).picture.split(',')" :src="x | img_src(102, 97, 1)" width="102" height="97" />
                     </div>
                     <div class="lii_sold">
-                        <a href="'/' + item.domain + '/wemall/goods/' + JSON.parse(item.other).weid">
+                        <a :href="'/' + item.domain + '/wemall/goods/' + JSON.parse(item.other).weid | href">
                             <slide class="li_img_wap">
-                                <img class="lazy" :src="JSON.parse(item.other).cover | imgSet(55, 55, 1)" />
+                                <img class="lazy" :src="JSON.parse(item.other).cover | img_src(55, 55, 1)" />
                             </slide>
                             <slide class="li_info">
                                 <h3>{{JSON.parse(item.other).title}}</h3>
