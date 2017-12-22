@@ -22,8 +22,9 @@ $(document).ready(function() {
                         }
                         json.data.list[i].id = i + 1;
                         json.data.list[i].status = status;
-                        json.data.list[i].operation = '<a href="admin_edit.html?weid=' + json.data.list[i].weid + '" class="btn btn-info" style="margin-right:10px;">编辑</a><a title = "删除" class="btn btn-danger" data-toggle="modal" data-target="#myModal" data-id="' + json.data.list[i].weid + '" data-name="' + json.data.list[i].name + '"  href="#">删除</a>'
+                        json.data.list[i].operation = '<a href="admin_edit.html?weid=' + json.data.list[i].weid + '" class="btn btn-info" style="margin-right:10px;">编辑</a><a title = "删除" class="btn btn-danger del" data-toggle="modal" data-target="#myModal" data-id="' + json.data.list[i].weid + '" data-name="' + json.data.list[i].name + '"  href="#">删除</a>'
                     }
+
                     return json.data.list;
 
                 }
@@ -55,54 +56,58 @@ $(document).ready(function() {
             },
             initComplete: function() {
                 $('[data-toggle="popover"]').popover();
+                var dataId;
+                $(".del").click(function(e){
+                    dataId = $(e.target).attr('data-id');
+                })
+
+                $('#confirm').click(function() {                        
+                    $.ajax({
+                        url: ApiUrl + "admins/" + dataId,
+                        type: 'DELETE',
+                        dataType: 'JSON',
+                        success: function(result) {
+                            if (result.code === 200) {
+                                showTips('删除成功！', 2, 'alert-info');
+                                location.reload();
+                            } else {
+                                parent.layer.msg(result.message);
+
+                                return false;
+                            }
+                        }
+                    });
+                });
+
+                function showTips(tips, time, el) {
+                    var windowWidth = document.documentElement.clientWidth;
+                    var tipsDiv = '<div class="alert ' + el + '" role="alert">' + tips + '</div>';
+
+                    $('body').append(tipsDiv);
+                    $('div.alert').css({
+                        'top': '220px',
+                        'left': (windowWidth / 2) - (tips.length * 10 / 2) + 'px',
+                        'position': 'absolute',
+                        'padding': '3px 5px',
+                        'background': '#ffffff',
+                        'width': '200px',
+                        'font-size': 14 + 'px',
+                        'margin': '0 auto',
+                        'text-align': 'center',
+                        'z-index': '5000',
+                        'line-height': '230%',
+                        'opacity': '0.8'
+                    }).show();
+                    setTimeout(function() {
+                        $('div.alert').fadeOut();
+                        $('.alert').remove();
+                    }, (time * 1000));
+                }                
             }
         });
     };
 
     init();
 
-    $('#confirm').click(function() {
-        //var dataId = $(this).attr('data-id');
-        var dataId = '21f770b0-e6c7-11e7-8c89-4b981a8be892';
-        $.ajax({
-            url: ApiUrl + "admins/" + dataId,
-            type: 'DELETE',
-            dataType: 'JSON',
-            success: function(result) {
-                if (result.code === 200) {
-                    showTips('删除成功！', 2, 'alert-info');
-                    location.reload();
-                } else {
-                    parent.layer.msg(result.message);
-
-                    return false;
-                }
-            }
-        });
-    });
-
-    function showTips(tips, time, el) {
-        var windowWidth = document.documentElement.clientWidth;
-        var tipsDiv = '<div class="alert ' + el + '" role="alert">' + tips + '</div>';
-
-        $('body').append(tipsDiv);
-        $('div.alert').css({
-            'top': '220px',
-            'left': (windowWidth / 2) - (tips.length * 10 / 2) + 'px',
-            'position': 'absolute',
-            'padding': '3px 5px',
-            'background': '#ffffff',
-            'width': '200px',
-            'font-size': 14 + 'px',
-            'margin': '0 auto',
-            'text-align': 'center',
-            'z-index': '5000',
-            'line-height': '230%',
-            'opacity': '0.8'
-        }).show();
-        setTimeout(function() {
-            $('div.alert').fadeOut();
-            $('.alert').remove();
-        }, (time * 1000));
-    }
+    
 });
