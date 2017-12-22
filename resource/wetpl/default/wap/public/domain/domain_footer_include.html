@@ -79,7 +79,7 @@
 	                {
 	                    this.header_nav.index.name = '动态';
 	                    this.router = 'discovery';
-	                    title = '动态';
+	                    title = '发现动态';
 	                    // $app.set_title('动态');
 	                }
 	                else
@@ -96,6 +96,10 @@
 	                else
 	                {
 	                	title = this.header_nav[this.cuupage].name + '-' +  title;
+	                	if(is_domain == 'no')
+	                	{
+	                		title = '发现' + this.header_nav[this.cuupage].name;
+	                	}
 	                }
 
 	                this.title(title);
