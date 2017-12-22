@@ -11,7 +11,7 @@
                 <p>
                     <strong>{{ name }}</strong>
                     <label>
-                        <span>{{ motto }}</span>
+                        <span>{{ motto | limitLen(0,50)}}</span>
                         <i class="iconfont icon-mingpian1" v-if="card_show==true"></i>
                         <i class="iconfont icon-mingpian1" v-if="auth_show==true"></i>
                     </label>
