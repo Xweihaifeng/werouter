@@ -58,7 +58,8 @@
             {
                 ajax.get('cms/channels/domain_query/'+this.params.channel_id).then((res) => {
                     //$app.set_title(res.data.title);
-                    this.title += res.data.title
+                    this.title += res.data.title;
+                    plats_info.show_title = res.data.title;
                     ajax.get('cms/cate_tree_by_channel' , {params:{channel:res.data.weid}}).then((res) => {
                         if (res.code === 200) {
                             this.two_name = res.data;   
@@ -70,7 +71,8 @@
                                     this.title += '-' + item.title;
                                 }
                             }   
-                            $app.set_title(this.title); 
+
+                            $app.set_title(this.title + ' - ' + plats_info.title); 
                                     
                             this.data_list();
                         }
