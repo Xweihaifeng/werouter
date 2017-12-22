@@ -21,8 +21,6 @@ $(document).ready(function() {
 							if(result.code === 200) {
 								$("#role_id").find("option[value=" + result.data.role_id + "]").attr("selected", true);
 								$('#userName').val(result.data.username);
-								$('#password').val(result.data.password);
-								$('#rePassword').val(result.data.rePassword);
 								$('#phone').val(result.data.phone);
 								$('#real_name').val(result.data.real_name);
 								$('input:radio[name="list"]').get(result.data.sex-1).checked = true;
@@ -98,10 +96,7 @@ $(document).ready(function() {
          fields: {
             password :{  
                     message:'密码无效',  
-                    validators:{  
-                        notEmpty:{  
-                            message:'密码不能为空'  
-                        },  
+                    validators:{
                         stringLength:{  
                             min:6,  
                             max:32,  
@@ -118,20 +113,12 @@ $(document).ready(function() {
 		                        regexp: {
 		                         regexp: /^1[34578]\d{9}$/,
 		                         message: '手机号码错误'
-		                     },
-		                        // stringLength:{  
-		                        //     min:11,  
-		                        //     max:11,  
-		                        //     message:'手机号码错误'  
-		                        // }
+		                     }
 		                    }  
 		            }, 
 		rePassword :{  
 		                    message:'重复密码无效',  
-		                    validators:{  
-		                        notEmpty:{  
-		                            message:'重复密码不能为空'  
-		                        },  
+		                    validators:{
 		                        stringLength:{  
 		                            min:6,  
 		                            max:32,  
