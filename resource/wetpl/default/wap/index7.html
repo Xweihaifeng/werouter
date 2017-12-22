@@ -1,145 +1,87 @@
-<#include#>public/common/public.html</#include#>
-<#include#>public/common/mobile_login.html</#include#>
+<#extend#>public/coc/coc_extend.html</#extend#>
+<script type="text/javascript">
+    show.header = 'no';
+</script>
+<style>
+    [v-cloak] {
+        display: none;
+    }
+</style>
 
-	<link rel="stylesheet" href="{{PATH_TML}}css/coc/mtcstyle.css">
-	<script src="{{PATH_TML}}js/coc/swipe.min.js"></script>
+<div id="app" class="viewport" v-cloak style="width:100%">
+    <div class="tcshow_dh">
+        <div class="tcshow_dhlf">
+            <a href="javascript:history.back()"><img src="{{PATH_TML}}img/index/back02.png"></a>
+        </div>
+        <h2>{{category.title}}</h2>
+    </div>
+    <div class="clear"></div>
+    <div class="xxsh_wk">
+        <div class="xxsh_tit">
+            <div stlyle="color:"><h1 v-html="news_detail.title"></h1></div>
+            <span>{{news_detail.created_at}}   {{news_detail.source}}</span>
 
-	<body>
-		<div id="app" class="viewport">
-			<div class="tcshow_dh">
-				<div class="tcshow_dhlf">
-					<a href="javascript:history.back()"><img src="{{PATH_TML}}img/index/back02.png"></a>
-				</div>
-				<h2>{{category.title}}</h2>
-			</div>
-			<div class="clear"></div>
+        </div>
+        <div class="clear"></div>
+        <div class="xxsh_js" style="padding:0 0;">
+            <p v-html="news_detail.content"></p>
+        </div>
+        <div>
+            <div class="xxsh_fen">
+                <span>分享给好友阅读：</span>
+                <div class="left">
+                    <a href="javascript:void(0)" class="bds_more" data-cmd="more">
+                        <img src="/common/img/like.png" style="width:20px;margin-top:3px" @click="zan()">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div class="fooder" style="margin-top:15px">
+        <div class="fooder_pc"><img src="{{PATH_TML}}img/index/db01.png">
+            <img src="{{PATH_TML}}img/index/db02.png">
+        </div>
+        <div class="fooder_wz">
+            版权所有：{{plats_info.title}}　{{plats_info.icp}}<br> 组织建设：{{plats_info.description}}<br> 运行维护：{{plats_info.key_word}}
+        </div>
+    </div>
 
-			<div class="xxsh_wk">
-				<div class="xxsh_tit">
-					<div stlyle="color:">
-						<h2></h2>
-					</div>
-					<div stlyle="color:">
-						<h1 v-html="news_detail.title"></h1>
-					</div>
-					<div stlyle="color:">
-						<h2></h2>
-					</div>
-					<span style="text-align: center">{{news_detail.created_at}}   {{news_detail.source}}
-						<div style="margin-left:5px; float:right; text-align: right; background-color:#fff;">
-							<!-- <iframe frameborder="0" hspace="0" width="100px" height="15px" marginheight="0" marginwidth="0" scrolling="no" src="{{PATH_TML}}img/index/checknum.html" allowtransparency="true" style="background-color=transparent;"></iframe> -->
-						</div>
-					</span>
+</div>
 
-				</div>
-				<div class="clear"></div>
-				<div class="xxsh_js" style="padding:0 0;">
-					<p v-html="news_detail.content"></p>
-				</div>
-				<!--分享 begin-->
-				<div>
-					<div class="xxsh_fen">
-						<span>分享给好友阅读：</span>
-						<!--代码开始-->
-						<div class="bdsharebuttonbox left bdshare-button-style0-16" data-bd-bind="1513760233884">
-							<a href="http://m.tongchuan.gov.cn/html/zxzx/tcyw/201712/189422.html#" class="bds_more" data-cmd="more"></a>
-							<a href="http://m.tongchuan.gov.cn/html/zxzx/tcyw/201712/189422.html#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
-							<a href="http://m.tongchuan.gov.cn/html/zxzx/tcyw/201712/189422.html#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
-							<a href="http://m.tongchuan.gov.cn/html/zxzx/tcyw/201712/189422.html#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a>
-							<a href="http://m.tongchuan.gov.cn/html/zxzx/tcyw/201712/189422.html#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a>
-							<a href="http://m.tongchuan.gov.cn/html/zxzx/tcyw/201712/189422.html#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
-						</div>
-						<script>
-							window._bd_share_config = {
-								"common": {
-									"bdSnsKey": {},
-									"bdText": "",
-									"bdMini": "2",
-									"bdMiniList": false,
-									"bdPic": "",
-									"bdStyle": "0",
-									"bdSize": "16"
-								},
-								"share": {},
-								"selectShare": {
-									"bdContainerClass": null,
-									"bdSelectMiniList": ["qzone", "tsina", "tqq", "renren", "weixin"]
-								}
-							};
-							with(document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];
-						</script>
-						<!--代码结束-->
-					</div>
-				</div>
-				<!--分享 end-->
-				<div class="clear"></div>
-			</div>
-
-			<div class="clear"></div>
-
-			<div class="dbback">
-				<ul>
-					<li>
-						<a href="/"><span><img src="{{PATH_TML}}img/index/home2.png"></span>
-							<p>回首页</p>
-						</a>
-					</li>
-					<li>
-						<a href="javascript:scroll(0,0)" id="top"><span><img src="{{PATH_TML}}img/index/back.png"></span>
-							<p>回顶部</p>
-						</a>
-					</li>
-				</ul>
-				<div class="clear"></div>
-			</div>
-
-			<div class="clear"></div>
-			<div class="fooder">
-				<div class="fooder_pc"><img src="{{PATH_TML}}img/index/db01.png"><img src="{{PATH_TML}}img/index/db02.png"></div>
-				<div class="fooder_wz">
-					版权所有：{{plats_info.title}}　{{plats_info.icp}}<br> 组织建设：{{plats_info.description}}<br> 运行维护：{{plats_info.key_word}}
-				</div>
-			</div>
-
-		</div>
-
-		<!-- <iframe frameborder="0" id="bdSharePopup_selectshare1513760233892bg" class="bdselect_share_bg" style="display:none;" src="{{PATH_TML}}img/index/saved_resource.html"></iframe> -->
-		<div id="bdSharePopup_selectshare1513760233892box" style="display:none;" share-type="selectshare" class="bdselect_share_box" data-bd-bind="1513760233892">
-			<div class="selectshare-mod-triangle">
-				<div class="triangle-border"></div>
-				<div class="triangle-inset"></div>
-			</div>
-			<div class="bdselect_share_head"><span>分享到</span>
-				<a href="http://www.baidu.com/s?wd=&amp;tn=SE_hldp08010_vurs2xrp" class="bdselect_share_dialog_search" target="_blank"><i class="bdselect_share_dialog_search_i"></i><span class="bdselect_share_dialog_search_span">百度一下</span></a>
-				<a class="bdselect_share_dialog_close"></a>
-			</div>
-			<div class="bdselect_share_content">
-				<ul class="bdselect_share_list bdshare-button-style0-16">
-					<div class="bdselect_share_partners"></div>
-					<a href="http://m.tongchuan.gov.cn/html/zxzx/tcyw/201712/189422.html#" class="bds_more" data-cmd="more"></a>
-				</ul>
-			</div>
-		</div>
-
-		<script>
-			var app = new Vue({
-				el: '#app',
-				data: {
-					news_detail: '',
-					category: '',
-					plats_info: plats_info
-				},
-		        mounted: function() {
-					ajax.get(apiUrl+'cms/detail/9eea0240-b7b9-11e7-8e10-f1da2e8ed6b6').then((res) => {
-	                    if (res.data && res.code === 200) {
-	                        this.news_detail = res.data;
-	                        this.category = res.data.category;
-	                       	console.log(this.news_detail);
-	                    } 
-	                });
-	            }
-			})
-		</script>
-	</body>
-
-</html>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            news_detail: '',
+            category : '',
+            zan_true : '',
+            plats_info: plats_info
+        },
+        mounted: function() {
+            ajax.get(apiUrl+'cms/detail/9eea0240-b7b9-11e7-8e10-f1da2e8ed6b6').then((res) => {
+                if (res.data && res.code === 200) {
+                    this.news_detail = res.data;
+                    this.category = res.data.category;
+                       console.log(this.news_detail);
+                }
+            });
+        },
+        methods: {
+            zan(){
+                var data = new Object();
+                data.content_id = this.news_detail.weid;
+                ajax.post(CMS_CONTENTS_PRAISE, data).then((res) => {
+                    if (res.data && res.code === 200) {
+                        this.zan_true = res.data.praise;
+                        if(!this.zan_true) {
+                            console.log("取消赞");
+                            return false;
+                        }
+                        console.log("成功点赞");
+                    }
+                });
+            }
+        }
+    })
+</script>
