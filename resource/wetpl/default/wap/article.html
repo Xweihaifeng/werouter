@@ -15,7 +15,7 @@
 		<div class="art-right">
 			<span class="art-title">{{item.nickname}}</span>
 			<p>{{item.motto}}</p>
-			<a href="'/' + item.domain + '/article/' + JSON.parse(item.other).weid">
+			<a :href="'/' + item.domain + '/article/' + JSON.parse(item.other).weid | href">
 				<div class="art-content">
 					<span><img class="lazy" :src="JSON.parse(item.other).cover" width="88" /></span>
 					<span class="art-des-text">
