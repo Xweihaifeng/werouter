@@ -328,6 +328,7 @@ init();
               }
           }
      });
+         
          var uploader = Qiniu.uploader({
           runtimes: 'html5,flash,html4', 
           browse_button: 'wap_logofile', 
