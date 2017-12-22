@@ -86,25 +86,25 @@ class router_index
     private function _is_wap($domain_config)
     {   
 
-        $protocol = empty($_SERVER['HTTPS']) ? 'http://' : 'https://';
-        if(!empty($this->_rest_url))
-        {
-            header("Location: ".$protocol.$this->_rest_url.$this->_request_uri); 
-            exit;
-        }
+        // $protocol = empty($_SERVER['HTTPS']) ? 'http://' : 'https://';
+        // if(!empty($this->_rest_url))
+        // {
+        //     header("Location: ".$protocol.$this->_rest_url.$this->_request_uri); 
+        //     exit;
+        // }
 
-        if($this->_mark_domain == 'pc' && is_mobile() == TRUE){
-            header("Location: {$protocol}m.".$domain_config.$this->_request_uri);
-            exit;
-        }elseif ($this->_mark_domain == 'm' && is_mobile() == FALSE) {
-            header("Location: {$protocol}".$domain_config.$this->_request_uri);
-            exit;
-        } 
-        if($this->http != $protocol)
-        {
-            header("Location: {$this->http}".$domain_config.$this->_request_uri);
-            exit;
-        }
+        // if($this->_mark_domain == 'pc' && is_mobile() == TRUE){
+        //     header("Location: {$protocol}m.".$domain_config.$this->_request_uri);
+        //     exit;
+        // }elseif ($this->_mark_domain == 'm' && is_mobile() == FALSE) {
+        //     header("Location: {$protocol}".$domain_config.$this->_request_uri);
+        //     exit;
+        // } 
+        // if($this->http != $protocol)
+        // {
+        //     header("Location: {$this->http}".$domain_config.$this->_request_uri);
+        //     exit;
+        // }
     }
 
     // 获取网站信息路由信息
