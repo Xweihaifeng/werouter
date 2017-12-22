@@ -1,22 +1,8 @@
 <#extend#>public/coc/coc_extend.html</#extend#>
-<script type="text/javascript">
-	show.footer = 'no';
-</script>
-
 <link rel="stylesheet" href="{{PATH_TML}}css/coc/component.css">
-<link rel="stylesheet" href="{{PATH_TML}}css/coc/page.css">
-<script type="text/javascript" src="{{PATH_TML}}js/coc/jquery2.js"></script>
-<script type="text/javascript" src="{{PATH_TML}}js/coc/modernizr.custom.js"></script>
-<script type="text/javascript" src="{{PATH_TML}}js/coc/jquery.dlmenu.js"></script>
-
 <div id="viewport" class="viewport" style="width:100%">
-	<script type="text/javascript">
-		$(function() {
-			$('#dl-menu').dlmenu();
-		});
-	</script>
 
-	<div class="xinxi_mar">
+	<div class="xinxi_mar" id="viewport_list">
 		<div class="xinxi">
 			<ul>
 				<li v-for="(item, index) in two_name">
@@ -27,40 +13,13 @@
 		<div class="clear"></div>
 		<div class="xinxlt_lb">
 			<ul id="con_list">
-				<li v-for="(item, index) in cate_list">
+				<li v-for="(item, index) in list_data">
 					<a href="/index7">
 						<h2><b style="font-weight:normal" v-html="item.title"></b></h2><span class="dwgklb_sj">{{item.publish_time.substr(0, 10)}}</span></a>
 				</li>
 			</ul>
 		</div>
 	</div>
-
-	<div class="clear"></div>
-
-	<div class="dbback">
-		<ul>
-			<li>
-				<a href="/"><span><img src="{{PATH_TML}}img/index/home2.png"></span>
-					<p>回首页</p>
-				</a>
-			</li>
-			<li>
-				<a href="javascript:scroll(0,0)" id="top"><span><img src="{{PATH_TML}}img/index/back.png"></span>
-					<p>回顶部</p>
-				</a>
-			</li>
-		</ul>
-		<div class="clear"></div>
-	</div>
-
-	<div class="clear"></div>
-	<div class="fooder">
-		<div class="fooder_pc"><img src="{{PATH_TML}}img/index/db01.png"><img src="{{PATH_TML}}img/index/db02.png"></div>
-		<div class="fooder_wz">
-			版权所有：{{plats.title}}　{{plats.icp}}<br> 组织建设：{{plats.description}}<br> 运行维护：{{plats.key_word}}
-		</div>
-	</div>
-
 </div>
 
 </html><script type="text/javascript">
@@ -75,29 +34,19 @@
     			page : 1,
 	    		limit : 10,
 	    		page_count : 0,
-	    		type : 1,
-	    		dynamic_type : 0,
+	    		cate_id : 'sznews',
     		},
-    		dom : '#con_list'
+    		dom : '#viewport_list'
     	},
         mounted() {
+		    ajax.get('cms/cate_categories?cate=d69a1ec0-7d7f-11e7-bd13-51172995c3b5').then((res) => {
+		        if (res.code === 200) {
+		        	this.two_name = res.data;
+		        }
+		    });
         	this.$nextTick(()=>{
         		this.data_list();
         	});
-
-        	ajax.get('cms/cate_categories?cate=d69a1ec0-7d7f-11e7-bd13-51172995c3b5').then((res) => {
-		        if (res.code === 200) {
-		        	console.log(res.data);
-		        	this.two_name = res.data;
-		        }
-		    })
-
-        	ajax.get('cms/contents?cate_id=sznews&limit=15').then((res) => {
-		        if (res.code === 200) {
-		        	console.log(res.data);
-		        	this.cate_list = res.data.list;
-		        }
-		    })
         },
         methods:{
         	// 使用common_page 方法必须定义data方法 以及对象 params

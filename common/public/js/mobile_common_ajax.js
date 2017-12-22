@@ -86,8 +86,23 @@
 
 	//CMS 新闻调用
 	mob_ajax.cms_lists  = function(params , call){
-		ajax.get('/cms/contents' , params).then((res)=>{
-			call(res);
+		ajax.get('/cms/contents' , {params : params}).then((res)=>{
+			if(res.code == 200){
+                var pageCount = Math.ceil(res.data.total / params.limit);
+                var post = {
+                    data : {
+                        code : 200,
+                        list: res.data.list,
+                        params : {
+                            pageCount : pageCount,
+                            currPage : params.page,
+                        }
+                    },
+                };
+                call(post);
+                return true;
+            }
+			return false;
 		});
 	}
 	
