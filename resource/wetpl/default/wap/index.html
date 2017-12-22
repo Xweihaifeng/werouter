@@ -60,9 +60,9 @@
 	<!--图片轮换开始-->
     <div class="banner1">
 		<div id='mySwipe' class='swipe'>
-			<div class='swipe-wrap' style="width: 1242px;">
+			<div class='swipe-wrap'>
 				<div v-for="(item,index) in especial_news"> 
-					<a><img :src="item.thumb_image | img_src(300 , 200)" width="100%" /></a> 
+					<a><img :src="item.thumb_image | img_src(300 , 200 , 1)" width="100%" /></a> 
 					<div
 					class="mySwipeceng">
 						<div class="left"><b style='font-weight:normal; color:'>崔歆在党建联系点调研党建工作</b></div>
@@ -80,8 +80,8 @@
 	<div class="sytjlb">
 		<ul>
 			<li v-for="item in news">
-				<a href="/index6"><span class="sytjlb_fl">[{{item.cate_title}}]</span>
-					<h2><b style="font-weight:normal; color:">{{item.title}}</b></h2><span class="sytjlb_sj">{{item.created_at | formateTime('MDHM')}}</span>
+				<a :href="'news/' + item.weid | href"><span class="sytjlb_fl">[{{item.cate_title}}]</span>
+					<h2><b style="font-weight:normal; color:">{{item.title}}</b></h2><span class="sytjlb_sj">{{item.created_at | formateTime('YMDHM')}}</span>
 				</a>
 			</li>
 		</ul>
@@ -93,14 +93,15 @@
 	<div class="syzdzt_pc">
 		<div class="syzdzt_pcmr">
 			<ul>
-				<li v-for="item in ztbd">
-					<a href="/index5"><img :src="item.thumb_image | img_src"></a>
+				<li v-for="item in ztbd.list">
+					<a :href="ztbd.domain + '/'+ item.domain | href"><img :src="item.thumb_image | img_src"></a>
 				</li>
 
 			</ul>
 		</div>
 		<div class="clear"></div>
 	</div>
+
 	<!--重点专题 end-->
 	<!--快捷服务-->
 	<div class="syzdzt_dh"><img src="{{PATH_TML}}img/index/hs_ic.jpg">
@@ -163,7 +164,7 @@
                 if (res.code === 200) {
                     this.news = res.data.news;
                     this.especial_news = res.data.especial_news;
-                    this.ztbd = res.data.ztbd.list;
+                    this.ztbd = res.data.ztbd;
                     this.$nextTick(()=>{
 		            	this.swiper();
 		        	});
