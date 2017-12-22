@@ -106,7 +106,7 @@ $(document).ready(function(){
                         $("input[name=bannerweid]").val(data.data.weid);
                     }else{
                         //添加
-                        $("input[name=bannerweid]").val();
+                        $("input[name=bannerweid]").val('');
                     }
                     initSlideHtml(data.data);
                     //初始化横幅列表
@@ -135,7 +135,7 @@ $(document).ready(function(){
                     '<img style=" margin-top:0px;" onclick="$(\'#slidefiles_'+i+'\').click()" id="img'+i+'" src="http://image.qqxqs.com/common/1502085164249.jpg" alt="" class="thumbnail">' +
                     '</div>' +
                     '</div>' +
-                    '<span style="margin-left: 120px;">*支持JPG、JPEG、PNG、BMP的图片，图片尺寸 建议为：1920*489， 图片小于4M</span>';
+                    '<span style="margin-left: 120px;position: relative;display: block;top: -20px;">*支持JPG、JPEG、PNG、BMP的图片，图片尺寸 建议为：1920*489， 图片小于4M</span>';
                 $("#slideList").append(html);
             }
         }else{
@@ -164,7 +164,7 @@ $(document).ready(function(){
                     '<img style=" margin-top:0px;" onclick="$(\'#slidefiles_'+i+'\').click()" id="img'+i+'" src="'+thumbnailUrl+'" alt="" class="thumbnail">' +
                     '</div>' +
                     '</div>' +
-                    '<span style="margin-left: 120px;">*支持JPG、JPEG、PNG、BMP的图片，图片尺寸 建议为：1920*489， 图片小于4M</span>';
+                    '<span style="margin-left: 120px;position: relative;display: block;top: -20px;">*支持JPG、JPEG、PNG、BMP的图片，图片尺寸 建议为：1920*489， 图片小于4M</span>';
                 $("#slideList").append(html);
             }
         }
@@ -232,7 +232,7 @@ $(document).ready(function(){
                     '<img style=" margin-top:0px;" onclick="$(\'#bannerfiles_'+i+'\').click()" id="img-'+i+'" src="http://image.qqxqs.com/common/1502085164249.jpg" alt="" class="thumbnail">'+
                     '</div>'+
                     '</div>'+
-                    '<span style="margin-left: 120px;">* 图片尺寸建议为：380*133，图片小于2M</span>';
+                    '<span style="margin-left: 120px;position: relative;top: -20px;">* 图片尺寸建议为：380*133，图片小于2M</span>';
                 $("#bannerList").append(html);
             }
         }else{
@@ -259,7 +259,7 @@ $(document).ready(function(){
                     '<img style=" margin-top:0px;" onclick="$(\'#bannerfiles_'+i+'\').click()" id="img-'+i+'" src="'+thumbnailUrl+'" alt="" class="thumbnail">'+
                     '</div>'+
                     '</div>'+
-                    '<span style="margin-left: 120px;">* 图片尺寸建议为：380*133，图片小于2M</span>';
+                    '<span style="margin-left: 120px;position: relative;top: -20px;">* 图片尺寸建议为：380*133，图片小于2M</span>';
                 $("#bannerList").append(html);
             }
 
