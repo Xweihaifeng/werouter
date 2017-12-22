@@ -103,8 +103,8 @@ $(document).ready(function(){
      //分类select初始化
      var initSelect = function(){
         var advTypes='';
-         $.getJSON(ApiUrl+"cms/advTypes",function(result){
-            $.each(result.data, function(i,item){
+         $.getJSON(ApiUrl+"cms/advTypes?limit=30",function(result){
+            $.each(result.data.list, function(i,item){
                advTypes=advTypes+'<option value="'+item.weid+'" description="'+item.description+'">'+item.title+'</option>';
             });
              $("#type-select").append(advTypes);
