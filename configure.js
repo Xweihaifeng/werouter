@@ -225,6 +225,9 @@ const ACTIVITY_ENROLL_LISTS = apiUrl + 'activity/enroll/lists'; // 活动 -报�
 const ACTIVITY_ENROLL_DESTROY = apiUrl + 'activity/enroll/destroy'; // 活动 - 报名 - 删除
 const ACTIVITY_ENROLL_COUNT = apiUrl + 'activity/enroll/count'; // 活动 - 报名 - 人数
 const ACTIVITY_ENROLL_TICKETS = apiUrl + 'activity/enroll/tickets'; // 活动 - 报名 - 售票状况
+const ACTIVITY_ENROLL_STATISTICS = apiUrl + 'activity/enroll/statistics'; // 活动 - 报名 - 图标统计
+
+const ACTIVITY_ENROLL_ATTENDCOUNT = apiUrl + 'activity/enroll/attend_count'; // 活动 - 签到 - 人数
 
 
 const ACTIVITY_COLLECTION_LISTBYUSER = apiUrl + 'activity/collection/listbyuser'; // 活动 - 收藏 - 列表（根据用户id）

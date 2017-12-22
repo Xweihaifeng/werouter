@@ -56,6 +56,28 @@
     }*/
 
 
+// 活动签到数
+var loadAttendCount = function(weid, callback) {
+    $.ajax({
+        url: ACTIVITY_ENROLL_ATTENDCOUNT,
+        type: 'GET',
+        data: {
+            activity_id: weid
+        },
+        headers: {
+            'Token': localStorage.getItem('token')
+        },
+        success: function(data) {
+            if (data.code == 200)
+                callback(data.data);
+            else
+                notice.alert(data.message);
+        },
+        error: function(xhr) {
+            console.log(xhr);
+        }
+    });
+}
 
 $(document).ready(function() {
     // const ApiMaterPlatQiniuDomain       = 'http://images.new.wezchina.com/';
@@ -297,6 +319,11 @@ $(document).ready(function() {
     if (id != null && id != '' && id.length == 36) { applylistdetail(id); }
     // applylistdetail(weid);
 
+
+    // 加载签到数
+    loadAttendCount(id, function(data) {
+        $(".entry-num>span").text(data.attendCount);
+    });
 
 
     // 页码

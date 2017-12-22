@@ -10,35 +10,35 @@ $(document).ready(function() {
 				if(result.code === 200) {
 					var opt = '';
 					$.each(result.data.list, function(key, val) {
-						opt += '<option name="options" value=' + val.weid + ' selected=\"selected\">' + val.display_name + '</option>';
+						opt += '<option name="options" value=' + val.weid + '>' + val.display_name + '</option>';
 					});
 					$("#role_id").html(opt);
+					$.ajax({
+						url: ApiUrl + "admins/detail/" + adminWeId,
+						type: 'get',
+						dataType: 'JSON',
+						success: function(result) {
+							if(result.code === 200) {
+								$("#role_id").find("option[value=" + result.data.role_id + "]").attr("selected", true);
+								$('#userName').val(result.data.username);
+								$('#password').val(result.data.password);
+								$('#rePassword').val(result.data.rePassword);
+								$('#phone').val(result.data.phone);
+								$('#real_name').val(result.data.real_name);
+								$('input:radio[name="list"]').get(result.data.sex-1).checked = true;
+								$('#memox').val(result.data.memo);
+							} else {
+								parent.layer.msg(result.message);
+								return false;
+							}
+						}
+					});
 				} else {
 					parent.layer.msg(result.message);
 					return false;
 				}
 			}
-		});
-		$.ajax({
-			url: ApiUrl + "admins/detail/" + adminWeId,
-			type: 'get',
-			dataType: 'JSON',
-			success: function(result) {
-				if(result.code === 200) {
-					$("#role_id").find("option[value=" + result.data.weid + "]").attr("selected", true);
-					$('#userName').val(result.data.username);
-					$('#password').val(result.data.password);
-					$('#rePassword').val(result.data.rePassword);
-					$('#phone').val(result.data.phone);
-					$('#real_name').val(result.data.real_name);
-					$('input:radio[name="list"]').get(result.data.sex-1).checked = true;
-					$('#memox').val(result.data.memo);
-				} else {
-					parent.layer.msg(result.message);
-					return false;
-				}
-			}
-		});
+		});		
 	};
 
 	function getParam(paramName) {
