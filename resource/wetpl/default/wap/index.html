@@ -3,18 +3,26 @@
 	show.header = 'no';
 </script>
 <style type="text/css">
-	#vd {
-	    
-	}
+    .main-wrap{
+        margin: 0 auto;
+        min-width: 320px;
+        max-width: 640px;
+    }
+
+    .main-wrap video{
+        width: 100%;
+    }
 </style>
 <link rel="stylesheet" href="{{PATH_TML}}css/coc/mtcstyle.css">
 <script src="{{PATH_TML}}js/coc/swipe.min.js"></script>
+<link rel="stylesheet" href="/common/public/hivideo-master/">
+<script src="/common/public/hivideo-master/assets/hivideo.css"></script>
 <div id="viewport" class="viewport">
 	<div class="header">
 		<i class="m_logo"><!-- <img :src="plats.logo | img_src(60,60)"> --></i>
 	</div>
 	<!--视频中心-->
-	<div class="syywtj_dh"><img src="/resources/web/images/hs_ic.jpg"><h1>要闻推荐</h1></div>
+	<div class="syywtj_dh"><h1>要闻推荐</h1></div>
 	<div class="clear"></div>
 	<!--图片轮换开始-->
     <div class="banner1">
@@ -62,6 +70,11 @@
 				<img src="/common/img/02.png" width="95%" height="95%" />
 			</ul>
 		</div>
+	    <div class="main-wrap">
+	        <video ishivideo="true" autoplay="false" isrotate="true" autoHide="false">
+	            <source src="http://image.qqxqs.com/qqxqs_video.mp4" type="video/mp4">
+	        </video>
+	    </div>
 		<div class="clear"></div>
 	</div>
 	<!--视频中心-->
