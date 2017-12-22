@@ -153,7 +153,9 @@ var start = function() {
         },
         success: function(data){
             if (data.code != 200) {
-                swal('提示', '权限不足', 'success');
+                setTimeout(function(){
+                    swal('提示', '权限不足', 'success');
+                }, 1500);
                 window.location.href = 'index.html';
             } else {
                 // console.log(data);
