@@ -25,8 +25,16 @@ Vue.filter('img_src', function (value , width , height, mode) {
 
 Vue.filter('href', function (value) {
     if (!value) return '';
-
-    return all_domian + value;
+    var string = value.substr(0 , 1);
+    if(string == '/')
+    {
+        return all_domian.substring(0 , all_domian.length-1) + value;
+    }
+    else
+    {
+        return all_domian + value;
+    }
+    
 });
 
 Vue.filter('formateTime',function (value,type) {
