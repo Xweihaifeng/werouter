@@ -153,10 +153,11 @@ var start = function() {
         },
         success: function(data){
             if (data.code != 200) {
-                alert('权限不足');
-                window.location.href = 'index.html';
+                swal('提示', '权限不足', 'success');
+                //window.location.href = 'index.html';
             } else {
                 // console.log(data);
+
             }
         }
     })
