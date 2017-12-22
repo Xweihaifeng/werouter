@@ -154,7 +154,7 @@ var start = function() {
         success: function(data){
             if (data.code != 200) {
                 swal('提示', '权限不足', 'success');
-                //window.location.href = 'index.html';
+                window.location.href = 'index.html';
             } else {
                 // console.log(data);
 
