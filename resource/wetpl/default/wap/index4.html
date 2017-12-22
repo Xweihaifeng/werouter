@@ -1,16 +1,12 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width; initial-scale=1; user-scalable=no;">
+<#include#>public/common/public.html</#include#>
+<#include#>public/common/mobile_login.html</#include#>
 
-		<title>秦川市人民政府</title>
-		<link rel="stylesheet" href="{{PATH_TML}}css/coc/mtcstyle.css">
-		<link rel="stylesheet" href="{{PATH_TML}}css/coc/component.css">
-		<script type="text/javascript" src="{{PATH_TML}}js/coc/jquery2.js"></script>
-		<script type="text/javascript" src="{{PATH_TML}}js/coc/modernizr.custom.js"></script>
-		<script type="text/javascript" src="{{PATH_TML}}js/coc/jquery.dlmenu.js"></script>
-
+<link rel="stylesheet" href="{{PATH_TML}}css/coc/mtcstyle.css">
+<link rel="stylesheet" href="{{PATH_TML}}css/coc/component.css">
+<script src="{{PATH_TML}}js/coc/jquery2.js"></script>
+<script src="{{PATH_TML}}js/coc/modernizr.custom.js"></script>
+<script src="{{PATH_TML}}js/coc/jquery.dlmenu.js"></script>
+<script src="{{PATH_TML}}js/coc/swipe.min.js"></script>
 		<script>
 			function setTab(name, cursel, n) {
 				for(i = 1; i <= n; i++) {
@@ -22,10 +18,6 @@
 				}
 			}
 		</script>
-	</head>
-
-	<body>
-
 		<div id="viewport" class="viewport">
 
 			<div class="hea">
@@ -66,7 +58,7 @@
 
 			</div>
 			<div class="clear"></div>
-			<script type="text/javascript">
+			<script>
 				$(function() {
 					$('#dl-menu').dlmenu();
 				});
@@ -74,56 +66,27 @@
 
 			<!--图片轮换开始-->
 			<div class="banner1">
-				<div id="mySwipe" class="swipe" style="visibility: visible;">
-					<div class="swipe-wrap" style="width: 1500px;">
-						<div data-index="0" style="width: 375px; left: 0px; transition-duration: 300ms; transform: translate(0px, 0px) translateZ(0px);">
-							<a href="/html/zxzx/tpxw/201712/189452.html"><img src="{{PATH_TML}}img/index/1513742482503.jpg" width="100%"></a>
-							<div class="mySwipeceng">
-								<div class="left"><b style="font-weight:normal; color:">李荣检查医疗卫生服务工作</b></div>
-								<div class="mySwip_rg"> <span class="mySwipetabdiancurr"></span><span class="mySwipetabdian"></span>
-									<span class="mySwipetabdian"></span>
-								</div>
-							</div>
-						</div>
-						<div data-index="1" style="width: 375px; left: -375px; transition-duration: 0ms; transform: translate(375px, 0px) translateZ(0px);">
-							<a href="/html/zxzx/tpxw/201712/189388.html"><img src="{{PATH_TML}}img/index/1513655494752.jpg" width="100%"></a>
-							<div class="mySwipeceng">
-								<div class="left"><b style="font-weight:normal; color:#ff0000">美丽天使　播撒温暖</b></div>
-								<div class="mySwip_rg"> <span class="mySwipetabdiancurr"></span><span class="mySwipetabdian"></span>
-									<span class="mySwipetabdian"></span>
-								</div>
-							</div>
-						</div>
-						<div data-index="2" style="width: 375px; left: -750px; transition-duration: 300ms; transform: translate(-375px, 0px) translateZ(0px);">
-							<a href="/html/zxzx/tpxw/201712/189420.html"><img src="{{PATH_TML}}img/index/1513704196184.JPG" width="100%"></a>
-							<div class="mySwipeceng">
-								<div class="left"><b style="font-weight:normal; color:">郭大为：用责任担当度提升转型发展</b></div>
-								<div class="mySwip_rg"> <span class="mySwipetabdiancurr"></span><span class="mySwipetabdian"></span>
-									<span class="mySwipetabdian"></span>
-								</div>
-							</div>
-						</div>
-						<div data-index="3" style="width: 375px; left: -1125px; transition-duration: 300ms; transform: translate(-375px, 0px) translateZ(0px);">
-							<a href="/html/zxzx/tpxw/201712/189390.html"><img src="{{PATH_TML}}img/index/1513677092034.jpg" width="100%"></a>
-							<div class="mySwipeceng">
-								<div class="left"><b style="font-weight:normal; color:">杨长亚调研医药卫生体制改革工作</b></div>
+				<div id='mySwipe' class='swipe'>
+					<div class='swipe-wrap'>
+						<div v-for="(item,index) in especial_news"> 
+							<a><img :src="item.thumb_image | img_src(300 , 200 , 1)" width="100%" /></a> 
+							<div
+							class="mySwipeceng">
+								<div class="left"><b style='font-weight:normal; color:'>崔歆在党建联系点调研党建工作</b></div>
 								<div class="mySwip_rg"> <span class="mySwipetabdiancurr"></span><span class="mySwipetabdian"></span>
 									<span class="mySwipetabdian"></span>
 								</div>
 							</div>
 						</div>
 					</div>
-				</div>
+		        </div>
 			</div>
 			<!--图片轮换结束-->
 
 			<!--头条-->
-			<div class="lthot">
-				<h1><b style="font-weight:normal; color:">我市六项措施推进农村饮水安全助力脱贫攻坚</b></h1>
-				<p>
-					<a href="/html/zxzx/tcyw/201712/189422.html">今年以来，我市坚持将农村饮水安全巩固提升作为头号民生水利工作，立足精准脱贫，坚持分类施策，截至11月底，累计完成投资1.16亿元，建成供水工程84处，解...<span>[查看全文]</span></a>
-				</p>
-
+			<div class="lthot" v-for="(item, index) in hot">
+				<h1><b style="font-weight:normal;text-align:left" v-html="item.title"></b></h1>
+				<p><a href="jsvascript:void(0)">{{item.summary}}...<span>[查看全文]</span></a></p>
 				<div class="clear"></div>
 			</div>
 			<!--头条 end-->
@@ -132,8 +95,8 @@
 			<div id="Tab1">
 				<div class="Menubox">
 					<dl>
-						<dd id="one1" onclick="setTab('one',1,4)" class="hover">秦川要闻</dd>
-						<dd id="one2" onclick="setTab('one',2,4)" class="">新闻发布</dd>
+						<dd id="one1" onclick="setTab('one',1,4)" class="hover">新闻中心</dd>
+						<dd id="one2" onclick="setTab('one',2,4)" class="">公示公告</dd>
 					</dl>
 				</div>
 				<div class="Contentbox">
@@ -142,46 +105,11 @@
 							<a href="/index6">更多</a>
 						</div>
 						<ul class="Content_wz">
-							<li>
+							<li v-for="(item, index) in news">
 								<a href="/index7">
-									<h2><b style="font-weight:normal; color:">我市六项措施推进农村饮水安全助力脱贫攻</b></h2><span class="sytjlb_sj">2017-12-20</span></a>
+									<h2><b style="font-weight:normal;" v-html="item.title"></b></h2><span class="sytjlb_sj">{{item.created_at | formateTime('YMDHM').substr(0, 10)}}</span>
+								</a>
 							</li>
-
-							<li>
-								<a href="/index7">
-									<h2><b style="font-weight:normal; color:">深学细悟新思想　真学实干作表率</b></h2><span class="sytjlb_sj">2017-12-20</span></a>
-							</li>
-
-							<li>
-								<a href="/index7">
-									<h2><b style="font-weight:normal; color:">我市首条健康步道加紧建设</b></h2><span class="sytjlb_sj">2017-12-20</span></a>
-							</li>
-
-							<li>
-								<a href="/index7">
-									<h2><b style="font-weight:normal; color:">我市创建国家中医药健康旅游示范市 暨照</b></h2><span class="sytjlb_sj">2017-12-20</span></a>
-							</li>
-
-							<li>
-								<a href="/index7">
-									<h2><b style="font-weight:normal; color:">省文化厅抽查我市基层文化场所效能工作</b></h2><span class="sytjlb_sj">2017-12-20</span></a>
-							</li>
-
-							<li>
-								<a href="/index7">
-									<h2><b style="font-weight:normal; color:">我市积极推进保险扶贫工作</b></h2><span class="sytjlb_sj">2017-12-20</span></a>
-							</li>
-
-							<li>
-								<a href="/index7">
-									<h2><b style="font-weight:normal; color:">我市顺利加入秦晋豫黄河金三角体育协作区</b></h2><span class="sytjlb_sj">2017-12-20</span></a>
-							</li>
-
-							<li>
-								<a href="/index7">
-									<h2><b style="font-weight:normal; color:">我省固体废物污染环境防治工作成效显著</b></h2><span class="sytjlb_sj">2017-12-19</span></a>
-							</li>
-
 						</ul>
 					</div>
 					<div id="con_one_2" style="display: none;">
@@ -189,142 +117,16 @@
 							<a href="/index6">更多</a>
 						</div>
 						<ul class="Content_wz">
-							<li>
+							<li v-for="(item, index) in nitoce">
 								<a href="/index7">
-									<h2><b style="font-weight:normal; color:">第四届中国孙思邈中医药文化节新闻发布</b></h2><span class="sytjlb_sj">2017-09-05</span></a>
+									<h2><b style="font-weight:normal;" v-html="item.title"></b></h2><span class="sytjlb_sj">{{item.created_at | formateTime('YMDHM').substr(0, 10)}}</span>
+								</a>
 							</li>
-
-							<li>
-								<a href="/index7">
-									<h2><b style="font-weight:normal; color:">文化助力转型发展 秦川市打造公共文化</b></h2><span class="sytjlb_sj">2017-07-14</span></a>
-							</li>
-
-							<li>
-								<a href="/index7">
-									<h2><b style="font-weight:normal; color:">秦川电网2017年迎峰度夏新闻通气会</b></h2><span class="sytjlb_sj">2017-07-04</span></a>
-							</li>
-
-							<li>
-								<a href="/index7">
-									<h2><b style="font-weight:normal; color:">秦川市2017年铁腕治霾“1+7”行</b></h2><span class="sytjlb_sj">2017-03-21</span></a>
-							</li>
-
-							<li>
-								<a href="/index7">
-									<h2><b style="font-weight:normal; color:">北京中医药大学第七临床医学院 暨孙思</b></h2><span class="sytjlb_sj">2017-03-16</span></a>
-							</li>
-
-							<li>
-								<a href="/index7">
-									<h2><b style="font-weight:normal; color:">秦川市脱贫攻坚专题新闻发布会发布辞</b></h2><span class="sytjlb_sj">2016-10-14</span></a>
-							</li>
-
-							<li>
-								<a href="/index7">
-									<h2><b style="font-weight:normal; color:">秦川市文化改革发展新闻发布会发布辞</b></h2><span class="sytjlb_sj">2016-08-30</span></a>
-							</li>
-
-							<li>
-								<a href="/index7">
-									<h2><b style="font-weight:normal; color:">秦川市人民检察院开展“举报宣传周”活</b></h2><span class="sytjlb_sj">2016-06-20</span></a>
-							</li>
-
 						</ul>
 					</div>
 				</div>
 			</div>
 			<!--内容一 end-->
-
-			<!--内容二-->
-			<div id="Tab1">
-				<div class="Menubox">
-					<dl>
-						<dd id="two1" onclick="setTab('two',1,4)" class="">部门动态</dd>
-						<dd id="two2" onclick="setTab('two',2,4)" class="hover">区县快讯</dd>
-					</dl>
-				</div>
-				<div class="Contentbox">
-					<div id="con_two_1" class="hover" style="display: none;">
-						<div class="Menumore">
-							<a href="/index6">更多</a>
-						</div>
-						<ul class="Content_wz">
-							<li>
-								<a href="index7">
-									<h2><b style="font-weight:normal; color:">市统计局召开全市商贸统计报表制度布置</b></h2><span class="sytjlb_sj">2017-12-20</span></a>
-							</li>
-							<li>
-								<a href="index7">
-									<h2><b style="font-weight:normal; color:">市政府召开照金创建国家5A级旅游景区</b></h2><span class="sytjlb_sj">2017-12-20</span></a>
-							</li>
-							<li>
-								<a href="index7">
-									<h2><b style="font-weight:normal; color:">省信访局督查组来铜督导检查扶贫领域信</b></h2><span class="sytjlb_sj">2017-12-19</span></a>
-							</li>
-							<li>
-								<a href="index7">
-									<h2><b style="font-weight:normal; color:">全市德育品牌建设实现时间任务双过半</b></h2><span class="sytjlb_sj">2017-12-19</span></a>
-							</li>
-							<li>
-								<a href="index7">
-									<h2><b style="font-weight:normal; color:">我市教师在全国初中青年教师优秀课大赛</b></h2><span class="sytjlb_sj">2017-12-19</span></a>
-							</li>
-							<li>
-								<a href="index7">
-									<h2><b style="font-weight:normal; color:">市教育局开展2017年民办学校年度检</b></h2><span class="sytjlb_sj">2017-12-19</span></a>
-							</li>
-							<li>
-								<a href="index7">
-									<h2><b style="font-weight:normal; color:">“与名师同行　促教师成长 ”系列活动</b></h2><span class="sytjlb_sj">2017-12-19</span></a>
-							</li>
-							<li>
-								<a href="index7">
-									<h2><b style="font-weight:normal; color:">我市举办学校党务干部示范培训班</b></h2><span class="sytjlb_sj">2017-12-19</span></a>
-							</li>
-						</ul>
-					</div>
-					<div id="con_two_2" style="display: block;">
-						<div class="Menumore">
-							<a href="/index6">更多</a>
-						</div>
-						<ul class="Content_wz">
-							<li>
-								<a href="/index7">
-									<h2><b style="font-weight:normal; color:">耀州区瑶曲镇就业扶贫传捷报</b></h2><span class="sytjlb_sj">2017-12-20</span></a>
-							</li>
-							<li>
-								<a href="/index7">
-									<h2><b style="font-weight:normal; color:">耀州区选手在全省“讲陕西故事”调讲决</b></h2><span class="sytjlb_sj">2017-12-20</span></a>
-							</li>
-							<li>
-								<a href="/index7">
-									<h2><b style="font-weight:normal; color:">印台区用项目建设激发贫困户脱贫新潜能</b></h2><span class="sytjlb_sj">2017-12-20</span></a>
-							</li>
-							<li>
-								<a href="/index7">
-									<h2><b style="font-weight:normal; color:">印台区：“生态活水”浇开“扶贫之花”</b></h2><span class="sytjlb_sj">2017-12-20</span></a>
-							</li>
-							<li>
-								<a href="/index7">
-									<h2><b style="font-weight:normal; color:">王益区召开森林防火工作推进会</b></h2><span class="sytjlb_sj">2017-12-19</span></a>
-							</li>
-							<li>
-								<a href="/index7">
-									<h2><b style="font-weight:normal; color:">王益区：姜文宏主持召开安委会第六次全</b></h2><span class="sytjlb_sj">2017-12-19</span></a>
-							</li>
-							<li>
-								<a href="/index7">
-									<h2><b style="font-weight:normal; color:">秦川市王益区残疾人联合会召开第七次代</b></h2><span class="sytjlb_sj">2017-12-19</span></a>
-							</li>
-							<li>
-								<a href="/index7">
-									<h2><b style="font-weight:normal; color:">王益区：陕西东风车桥公司资产转让签约</b></h2><span class="sytjlb_sj">2017-12-19</span></a>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</div>
-			<!--内容二 end-->
 
 			<!--内容三-->
 			<div id="Tab1">
@@ -706,26 +508,57 @@
 			<div class="fooder">
 				<div class="fooder_pc"><img src="{{PATH_TML}}img/index/db01.png"><img src="{{PATH_TML}}img/index/db02.png"></div>
 				<div class="fooder_wz">
-					版权所有：秦川市人民政府　陕ICP备09018839号<br> 组织建设：秦川市人民政府办公室 您是第23434364564位访客<br> 运行维护：秦川市电子政务办公室&nbsp;&nbsp;&nbsp;&nbsp; 运维电话：0919-3183128
+					版权所有：{{plats.title}}　{{plats.icp}}<br> 组织建设：{{plats.description}}<br> 运行维护：{{plats.key_word}}
 				</div>
 			</div>
 
 		</div>
-		<script src="//captcha.luosimao.com/static/js/api.js"></script>
 
-		<script type="text/javascript" src="http://m.tongchuan.gov.cn/resources/web/js/swipe.min.js"></script>
-		<script type="text/javascript">
-			var elem = document.getElementById('mySwipe');
-			window.mySwipe = Swipe(elem, {
-				startSlide: 0,
-				auto: 3000,
-				continuous: true,
-				disableScroll: true,
-				stopPropagation: true,
-				callback: function(index, element) {},
-				transitionEnd: function(index, element) {}
+		<script>
+			var app = new Vue({
+				el: '#viewport',
+				data: {
+					news : [],
+					ztbd : [],
+					spzx : [],
+					mag  : [],
+					hot  : [],
+					nitoce : [],
+					especial_news: [],
+					plats : plats_info
+				},
+		        mounted: function() {
+		        	$app.set_title(plats_info.title);
+		        	ajax.get('cms/index/grid').then((res) => {
+		                if (res.code === 200) {
+		                	console.log(res.data);
+		                    this.news = res.data.news;
+		                    this.mag  = res.data.mag;
+		                    this.hot  = res.data.hot;
+		                    this.ztbd = res.data.ztbd;
+		                    this.spzx = res.data.spzx;
+		                    this.nitoce = res.data.nitoce;
+		                    this.especial_news = res.data.especial_news;
+		                    this.$nextTick(()=>{
+				            	this.swiper();
+				        	});
+		                } 
+		            });
+				},
+				methods: {
+					swiper() {
+						var elem = document.getElementById('mySwipe');
+						Swipe(elem, {
+							startSlide: 0,
+							auto: 3000,
+							continuous: true,
+							disableScroll: true,
+							stopPropagation: true
+						});
+					},
+					data(params , call){
+		        		return $mob_ajax.cms_lists(params , call);
+		        	}
+				},
 			});
 		</script>
-	</body>
-
-</html>
