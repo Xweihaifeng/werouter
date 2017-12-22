@@ -22,7 +22,8 @@ $(document).ready(function() {
                         }
                         json.data.list[i].id = i + 1;
                         json.data.list[i].status = status;
-                        json.data.list[i].operation = '<a href="admin_edit.html?weid=' + json.data.list[i].weid + '" class="btn btn-info" style="margin-right:10px;">编辑</a><a title = "删除" class="btn btn-danger del" data-toggle="modal" data-target="#myModal" data-id="' + json.data.list[i].weid + '" data-name="' + json.data.list[i].name + '"  href="#">删除</a>'
+                        json.data.list[i].operation = '<a href="admin_edit.html?weid=' + json.data.list[i].weid + '" class="btn btn-info" style="margin-right:10px;">编辑</a><a title = "删除" class="btn btn-danger" data-toggle="modal" data-target="#myModal" data-id="' + json.data.list[i].weid + '" data-name="' + json.data.list[i].name + '"  href="#">删除</a>'
+                        // json.data.list[i].operation="<a href=cmsadv_edit.html?weid="+json.data.list[i].weid+" class=\"btn btn-info\">编辑</a>&nbsp;&nbsp;<button class=\"btn btn-danger btn-delete\"  data-id="+json.data.list[i].weid+" data-toggle=\"popover\" data-placement=\"left\" data-trigger=\"focus\" data-html=\"true\" title=\"确定要删除？\" data-content=\"<button class='btn btn-danger btn-delete-confirm'  data-id="+json.data.list[i].weid+">确认</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class='btn btn-default'>取消</button>\" >删除</button>";
                     }
 
                     return json.data.list;
@@ -57,11 +58,11 @@ $(document).ready(function() {
             initComplete: function() {
                 $('[data-toggle="popover"]').popover();
                 var dataId;
-                $(".del").click(function(e){
-                    dataId = $(e.target).attr('data-id');
-                })
+                $("body").delegate('#adminsTable tr a', 'click', function (e) {
+                    dataId = $(e.target).attr('data-id');                    
+                });  
 
-                $('#confirm').click(function() {                        
+                $('#confirm').click(function() {
                     $.ajax({
                         url: ApiUrl + "admins/" + dataId,
                         type: 'DELETE',
@@ -77,7 +78,7 @@ $(document).ready(function() {
                             }
                         }
                     });
-                });
+                }); 
 
                 function showTips(tips, time, el) {
                     var windowWidth = document.documentElement.clientWidth;
