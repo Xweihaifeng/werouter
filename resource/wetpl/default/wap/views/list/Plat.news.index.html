@@ -5,8 +5,8 @@
 	<div class="xinxi_mar" id="viewport_list">
 		<div class="xinxi">
 			<ul>
-				<li v-for="(item, index) in two_name" style="cursor:pointer;">
-					<a style="cursor:pointer;"  @click="channel(item.domain);" >{{item.title}}</a>
+				<li v-for="(item, index) in two_name" >
+					<a  @click="channel(item.domain);" >{{item.title}}</a>
 				</li>
 			</ul>
 		</div>
@@ -24,9 +24,10 @@
 
 </html><script type="text/javascript">
 	new Vue({
-    	el: '#viewport',
+    	el: '#app',
     	data : {
     		plats : plats_info,
+            title : '',
     		two_name : [],
     		cate_list: [],
     		list_data: [],
@@ -34,15 +35,16 @@
     			page : 1,
 	    		limit : 20,
 	    		cate_id : '',
-	    		channel_id : window.location.pathname.split('/').slice(1,2)[0],
+	    		channel_id : window.location.pathname.split('/').slice(1,2).shift(),
     		},
     		cate_name : window.location.pathname.split('/').slice(1,2)[0],
     		dom : '#viewport_list'
     	},
         mounted() {
-        	if(this.channel_id !== window.location.pathname.split('/').pop())
+            console.log(window.location.pathname.split('/'));
+        	if(this.params.channel_id != window.location.pathname.split('/').pop())
         	{
-        		this.cate_id = window.location.pathname.split('/').pop();
+        		this.params.cate_id = window.location.pathname.split('/').pop();
         	}
         	this.init();
         },
@@ -55,11 +57,20 @@
         	init()
         	{
 			    ajax.get('cms/channels/domain_query/'+this.params.channel_id).then((res) => {
-			    	$app.set_title(res.data.title);
+			    	//$app.set_title(res.data.title);
+                    this.title += res.data.title
 			      	ajax.get('cms/cate_tree_by_channel' , {params:{channel:res.data.weid}}).then((res) => {
 				        if (res.code === 200) {
-				        	this.two_name = res.data;
-
+                            this.two_name = res.data;	
+                            for(var item of this.two_name)
+                            {
+                                if(item.domain == this.params.cate_id)
+                                {
+                                    this.title += '-' + item.title
+                                }
+                            }	
+                            $app.set_title(this.title);	
+                            plats_info.show_title = this.title;      	
 				        	this.data_list();
 				        }
 				    });

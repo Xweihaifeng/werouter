@@ -26,7 +26,7 @@
 	    new Vue({
 	        el: dom_id,
 	        data: {
-	           plats : plats_info
+	           plats : plats_info,
 	        },
 	        watch: {
 	          
@@ -49,7 +49,7 @@
 	    	dom_id = '#'+show;
 	    }
 		$('#footer').show();
-		new Vue({
+		return new Vue({
 	        el: '#footer',
 	        data: {
 	            router : window.location.pathname.split('/').slice(1,2),

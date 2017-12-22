@@ -375,6 +375,7 @@ class main extends controller
         $block = array_sort(json_decode($plats['plats_info']['block'] , TRUE) , 'sort' , 'asc');
         $plats['plats_info']['blocks'] = $block;
         $plats['plats_info']['plat_name'] = $plats_row['plat_name'];
+        $plats['plats_info']['show_title'] = '';
 
         if(empty($_COOKIE['token']))
         {
