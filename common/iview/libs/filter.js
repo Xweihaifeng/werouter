@@ -53,6 +53,10 @@ Vue.filter('formateTime',function (value,type) {
             date = new Date(value * 1000);
             year = date.getFullYear();
             return year + '-' +month +'-'+day+' '+hour+':'+min;
+        case 'YMD':
+            date = new Date(value * 1000);
+            year = date.getFullYear();
+            return year + '-' +month +'-'+day;
         case 'HM':
             return hour+':'+min;
         case 'MD-C':

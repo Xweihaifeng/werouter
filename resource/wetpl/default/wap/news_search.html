@@ -1,273 +1,260 @@
-<!DOCTYPE html>
-<html>
+<#extend#>public/coc/coc_extend.html</#extend#>
+<script type="text/javascript">
+	show.header = 'no';
+</script>
 
-	<head>
-		<title>搜一下</title>
-		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-		<link rel="stylesheet" type="text/css" href="{{PATH_TML}}css/search.css" />
-	</head>
-
-	<body>
-		<header id="header" class="g-header g-header-v2">
-			<div class="g-header-search-wrap">
-				<div class="g-header-nav-wrap">
-					<h1 class="g-header-logo"> <a href="/?src=result_logo"> 360搜索 </a> </h1>
-					<div class="g-header-nav">
-						<div class="g-header-nav-inner"> <span>网页</span>
-							<nav>
-								<a href="javascript:void(0)" data-home="http://m.news.so.com/?src=m_www" data-cat="news" data-search="http://m.news.so.com/ns?src=m_www&amp;q=">新闻</a>
-							</nav>
-							<nav>
-								<a href="javascript:void(0)" data-home="http://m.image.so.com/?src=m_www" data-cat="image" data-search="http://m.image.so.com/i?src=m_www&amp;q=">图片</a>
-							</nav>
-							<nav>
-								<a href="javascript:void(0)" data-home="http://m.360video.so.com/?src=m_www" data-cat="video" data-search="http://m.360video.so.com/s?src=m_www&amp;q=">视频</a>
-							</nav>
-						</div>
-					</div>
-				</div>
-				<div class="g-header-search-box" id="search-box">
-					<div class="g-header-search-form-container" style="position: relative;">
-						<form class="g-header-search-form" action="/s" autocomplete="off">
-							<div class="g-header-input-container"> <input id="q" name="q" class="g-header-q" maxlength="100" autocomplete="off" autocorrect="off" x-webkit-speech="" value="全球秦商"><input type="hidden" name="src" value="result_input"><input type="hidden" name="rg" value="0"> <input type="hidden" name="_ms" value="0"><input type="hidden" name="log_id" value="4862699"><input type="hidden" name="dm_ms-ui" value="0"><input type="hidden" name="ms_ui" value="1"><input type="hidden" name="guid" value="34870781.2933199296555015700.1513772442613.5662"><input type="hidden" name="offset" value="0"><input type="hidden" name="limit" value="10"> </div> <button type="submit" class="g-header-search-button">搜索</button> </form>
-						<div class="suggest-container" style="display: none;">
-							<div class="suggest-box" role="listbox">
-								<div class="suggest-content"></div>
-								<div class="suggest-toolbar m-1px-t">
-									<div class="suggest-clearhistory" mo-p="suggest-clearhistory">清空历史记录</div>
-									<div class="suggest-blank"></div>
-									<div class="suggest-close" mo-p="suggest-close">关闭</div>
-								</div>
-							</div>
-						</div>
-						<div class="suggest-reset" style="display: none;"><i></i></div>
-					</div>
+<link rel="stylesheet" type="text/css" href="{{PATH_TML}}css/search.css" />
+<header  class="g-header g-header-v2">
+	<div class="g-header-search-wrap">
+		<div class="g-header-nav-wrap">
+			<h1  class="g-header-logo"><img :src="logo_bg | img_src(30 ,30)" /> <img src="/common/img/sou_title.png" /></h1>
+			<div class="g-header-nav">
+				<div class="g-header-nav-inner">
+					<nav v-if=" index < 4" v-for="(item , index) in columnList" @click="currentActive=item.domain;goSearchOpen()">
+						<a  :style="{color:'#38f'}" v-if="item.domain == currentActive"  href="javascript:void(0)">{{item.search_name}}</a>
+						<a  v-else  href="javascript:void(0)">{{item.search_name}}</a>
+					</nav>	
 				</div>
 			</div>
-		</header>
-		<section class="page-content">
-			<div id="main">
-				<div class="r-results">
-					<div class=" g-card res-list og " data-pcurl="http://www.qqxqs.com/" data-jss="{&quot;urlType&quot;:&quot;web&quot;}" data-index="0" data-page="1" data-img-loaded="1">
-						<a class="alink" href="javascript:void(0)" data-md="{&quot;b&quot;:&quot;title&quot;}">
-							<h3 class="res-title"> <em>全球</em>新秦商网 欢迎访问<em>秦商</em>联合会网站 </h3>
-							<p class="g-main summary"> 关于开展2016年度<b>全球秦商</b>评选表彰活动的通知 秦商联合会会同辽宁省陕西商会捐资助学仪式在大荔县观音渡小学隆重举行 秦商联合会2017年新会员交流座谈会成功召开 ... </p>
-						</a>
-						<div class="res-supplement"> <cite><span class="res-site-url">qqxqs.com</span></cite> </div>
-					</div>
+		</div>
+		<div class="g-header-search-box" id="search-box">
+			<div class="g-header-search-form-container" style="position: relative;">
+				<form :class="form_class"  >
+					<div class="g-header-input-container"> <input placeholder="请输入关键字" keyup.enter="goSearchOpen()" id="q" name="q" class="g-header-q" maxlength="100" autocomplete="off" autocorrect="off" x-webkit-speech="" v-model="searchText" value=""> </div> <button type="submit" class="g-header-search-button" @click="goSearchOpen();">搜索</button> </form>
+				<div class="suggest-reset" style="display: none;"><i></i></div>
+			</div>
+		</div>
+	</div>
+</header>
+<section class="page-content">
+	<div id="main">
+		<div class="r-results">
+			<div v-for="item in list_data">
+				<div class=" g-card res-list og " v-if="item.thumb_image==''">
+					<a :href="item.channel_domain+'/'+item.weid | href" class="alink">
+						<h3 class="res-title" v-html="getSummary(item.title)"></h3>
+						<p class="g-main summary" v-html="getSummary(item.summary)"> </p>
+					</a>
+					<div class="res-supplement"> <cite><span class="res-site-url" v-html="all_domian+item.channel_domain+'/...'"></span></cite><!-- <time>09-20</time> --></div>
+				</div>
 
-					<div class="res-list g-mohe" id="mohe-m-news" data-mohe-type="news" data-index="1" data-page="1" data-img-loaded="1">
-						<ul>
-							<li class="g-card g-tap-highlight">
-								<a href="javascript:void(0)">
-									<h4 class="g-f-title g-f-ellipsis">宋玉庆荣任2017年度<em>全球秦商</em>最具影响力人物评选活动评委</h4>
-									<div class="g-f-list-pic g-flex">
-										<div class="g-flex-item g-f-img-zoom g-f-img-def"><span class="g-f-img-zoom-pic" style="background-image:url(http://p.ssl.qhimg.com/dmsmty/106_80_90/t019fa5958572c3a44f.webp)"></span></div>
-										<div class="g-flex-item g-f-img-zoom g-f-img-def"><span class="g-f-img-zoom-pic" style="background-image:url(http://p.ssl.qhimg.com/dmsmty/106_80_90/t016c61246898412fee.webp)"></span></div>
-										<div class="g-flex-item g-f-img-zoom g-f-img-def"><span class="g-f-img-zoom-pic" style="background-image:url(http://p.ssl.qhimg.com/dmsmty/106_80_90/t017bcf51586e2fe0d4.webp)"></span></div>
-									</div>
-									<div class="g-f-info-sub g-clearfix"><span class="g-f-info-from">东方头条</span><time class="g-f-info-time">11-23</time></div>
-								</a>
-							</li>
-							<li class="g-card g-tap-highlight">
-								<a href="javascript:void(0)">
-									<h4 class="g-f-title g-f-ellipsis">2017年度<em>全球秦商</em>最具影响力人物评选活动正式开启</h4>
-									<div class="g-f-list-pic g-flex">
-										<div class="g-flex-item g-f-img-zoom g-f-img-def"><span class="g-f-img-zoom-pic" style="background-image:url(http://p.ssl.qhimg.com/dmsmty/106_80_90/t01a47823f68a7d021e.webp)"></span></div>
-										<div class="g-flex-item g-f-img-zoom g-f-img-def"><span class="g-f-img-zoom-pic" style="background-image:url(http://p.ssl.qhimg.com/dmsmty/106_80_90/t013f2a488cfebe1aa2.webp)"></span></div>
-										<div class="g-flex-item g-f-img-zoom g-f-img-def"><span class="g-f-img-zoom-pic" style="background-image:url(http://p.ssl.qhimg.com/dmsmty/106_80_90/t016ed417e374460d5c.webp)"></span></div>
-									</div>
-									<div class="g-f-info-sub g-clearfix"><span class="g-f-info-from">今日爆点</span><time class="g-f-info-time">11-22</time></div>
-								</a>
-							</li>
-							<li class="g-card g-tap-highlight">
-								<a href="javascript:void(0)">
-									<div class="g-f-figure g-clearfix">
-										<div class="g-f-img-zoom g-f-img-def"><span class="g-f-img-zoom-pic" style="background-image:url(http://p.ssl.qhimg.com/dmsmty/106_80_90/t01e9c897e670c77ca6.webp)"></span></div>
-										<div class="g-f-title">
-											<div>
-												<h4 class="g-f-ellipsis">2017年度<em>全球秦商</em>最具影响力人物评选活动启动</h4></div>
-										</div>
-										<div class="g-f-info-sub g-clearfix"><span class="g-f-info-from">今日爆点</span><time class="g-f-info-time">11-22</time></div>
-									</div>
-								</a>
-							</li>
-						</ul>
-					</div>
 
-					<div data-pcurl="http://house.ifeng.com/detail/2017_07_07/51133122_0.shtml" class="g-card g-tap-highlight res-list mso-flow mso" data-cat="mso-news" data-jss="{&quot;urlType&quot;:&quot;transnew&quot;}" data-index="5" data-page="1" data-img-loaded="1">
-						<a href="javascript:void(0)">
-							<div class="g-f-figure g-clearfix">
-								<div class="g-f-img-zoom g-f-img-def"> <span class="g-f-img-zoom-pic" style="background-image:url(http://p.ssl.qhimg.com/dmfd/212_160_/ss/40_130/t019a03e3faeaeb5de1.webp)"></span></div>
-								<div class="g-f-title">
-									<div>
-										<h4 class="g-f-ellipsis"> 第八届<em>全球秦商</em>大会在古都西安隆重召开——凤凰房产北京 </h4></div>
-								</div>
-								<div class="g-f-info-sub g-clearfix"> <span class="g-f-info-from"><span class="res-site-name">凤凰房产</span></span> <time class="g-f-info-time">07-07</time> </div>
+				<div class="g-card res-list sumext-tpl-image mso" v-if="item.thumb_image!=''">
+					<a class="alink" :href="item.channel_domain+'/'+item.weid | href">
+					<h3 class="res-title" v-html="getSummary(item.title)"></h3>
+					</a><a :href="item.channel_domain+'/'+item.weid | href" class="alink" >
+					<div class="res-con">
+						<div class="img">
+							<div class="imgholder">
+								<img :src="item.thumb_image | img_src(120,120)">
 							</div>
-						</a>
-					</div>
-
-					<div class="g-card res-list g-block2 mb mso-recommend-card" data-cat="mso-recommend-normal-rel-1" data-index="3" data-page="1" data-img-loaded="1">
-						<div class="mso-recommend-related  mso-rec-rel-more">
-							<div class="mid rel-rec-wrap mohe-cool-panel mohe-cool-panel-so" data-moheid="mso-nlp-midpanel">
-								<div class="mh-panel mh-custom-panel">
-									<div class="rel-rec-title mh-panel-hd">
-										<a href="#return" class="mh-return" data-md="{&quot;p&quot;:&quot;back&quot;}" closepanel=""></a>
-										<h3 class="mh-panel-tit">全球秦商的相关推荐</h3>
-										<a href="#close" class="mh-close" data-md="{&quot;p&quot;:&quot;close&quot;}" closepanel=""></a>
-									</div>
-									<div class="mh-panel-bd">
-										<section class="rel-ill-sec mid-rel-root" data-cat="nlp">
-											<header class="rel-ill-header">相关商帮</header>
-											<ul class="rel-ill-list rel-ill-l-wrap g-clearfix">
-												<li class="rel-ill-item">
-													<a class="rel-ill-link" href="javascript:void(0)">
-														<section class="rel-img-wrap"> <img class="rel-ill-img" src="http://p.ssl.qhimg.com/dmsmty/180_180_80/ss/40_130/t0189bfcd74350a2d68.webp"> </section> <span class="rel-ill-name">中国十大商帮</span> </a>
-												</li>
-												<li class="rel-ill-item">
-													<a class="rel-ill-link" href="javascript:void(0)">
-														<section class="rel-img-wrap"> <img class="rel-ill-img" src="http://p.ssl.qhimg.com/dmsmty/180_180_80/ss/40_130/t01fdab0ba293641105.webp"> </section> <span class="rel-ill-name">浙商</span> </a>
-												</li>
-												<li class="rel-ill-item">
-													<a class="rel-ill-link" href="javascript:void(0)">
-														<section class="rel-img-wrap"> <img class="rel-ill-img" src="http://p.ssl.qhimg.com/dmsmty/180_180_80/ss/40_130/t0144effb9b7470b62b.webp"> </section> <span class="rel-ill-name">鲁商</span> </a>
-												</li>
-												<li class="rel-ill-item">
-													<a class="rel-ill-link" href="javascript:void(0)">
-														<section class="rel-img-wrap"> <img class="rel-ill-img" src="http://p.ssl.qhimg.com/dmsmty/180_180_80/ss/40_130/t018790d1e3469d8e06.webp"> </section> <span class="rel-ill-name">潮汕商人</span> </a>
-												</li>
-												<li class="rel-ill-item">
-													<a class="rel-ill-link" href="javascript:void(0)">
-														<section class="rel-img-wrap"> <img class="rel-ill-img" src="http://p.ssl.qhimg.com/dmsmty/180_180_80/ss/40_130/t01de80ecfd09c7e762.webp"> </section> <span class="rel-ill-name">苏商</span> </a>
-												</li>
-												<li class="rel-ill-item">
-													<a class="rel-ill-link" href="javascript:void(0)">
-														<section class="rel-img-wrap"> <img class="rel-ill-img" src="http://p.ssl.qhimg.com/dmsmty/180_180_80/ss/40_130/t01add66f16e2c3e78c.webp"> </section> <span class="rel-ill-name">商帮</span> </a>
-												</li>
-												<li class="rel-ill-item">
-													<a class="rel-ill-link" href="javascript:void(0)">
-														<section class="rel-img-wrap"> <img class="rel-ill-img" src="http://p.ssl.qhimg.com/dmsmty/180_180_80/ss/40_130/t018980dffe51dd9321.webp"> </section> <span class="rel-ill-name">赣商</span> </a>
-												</li>
-												<li class="rel-ill-item">
-													<a class="rel-ill-link" href="javascript:void(0)">
-														<section class="rel-img-wrap"> <img class="rel-ill-img" src="http://p.ssl.qhimg.com/dmsmty/180_180_80/ss/40_130/t017c675efd35d0feac.webp"> </section> <span class="rel-ill-name">闽商</span> </a>
-												</li>
-												<li class="rel-ill-item">
-													<a class="rel-ill-link" href="javascript:void(0)">
-														<section class="rel-img-wrap"> <img class="rel-ill-img" src="http://p.ssl.qhimg.com/dmsmty/180_180_80/ss/40_130/t0100a6d7ec098dd38c.webp"> </section> <span class="rel-ill-name">山东商帮</span> </a>
-												</li>
-												<li class="rel-ill-item">
-													<a class="rel-ill-link" href="javascript:void(0)">
-														<section class="rel-img-wrap"> <img class="rel-ill-img" src="http://p.ssl.qhimg.com/dmsmty/180_180_80/ss/40_130/t01d3c213b54d9b4541.webp"> </section> <span class="rel-ill-name">粤商</span> </a>
-												</li>
-												<li class="rel-ill-item">
-													<a class="rel-ill-link" href="javascript:void(0)">
-														<section class="rel-img-wrap"> <img class="rel-ill-img" src="http://p.ssl.qhimg.com/dmsmty/180_180_80/ss/40_130/t013c506b6ef939f2d5.webp"> </section> <span class="rel-ill-name">龙游商帮</span> </a>
-												</li>
-												<li class="rel-ill-item">
-													<a class="rel-ill-link" href="javascript:void(0)">
-														<section class="rel-img-wrap"> <img class="rel-ill-img" src="http://p.ssl.qhimg.com/dmsmty/180_180_80/ss/40_130/t01dcb469c73dfeb1bd.webp"> </section> <span class="rel-ill-name">世界晋商网</span> </a>
-												</li>
-											</ul>
-											<footer class="rel-ill-footer common-expansion common-expansion-c" data-md="{&quot;p&quot;:&quot;unfold&quot;}">展开</footer>
-										</section>
-										<section class="rel-res-sec mid-rel-root" data-cat="os">
-											<ul class="rel-res-list"> </ul>
-										</section>
-									</div>
-								</div>
-							</div>
-							<div class="mso-recommend-box">
-								<h3 class="res-title"> <span class="recommand-title" showfullpanel=""><b>全球秦商</b>_相关推荐</span> <span class="res-more" showfullpanel="" data-md="{&quot;b&quot;:&quot;more&quot;}" _click=""> 更多  </span></h3>
-								<section class="mso-slider-images mso-slider-1-3" style="touch-action: pan-y pinch-zoom;">
-									<ul class="slider-inner" style="width: 402.477%; transition-timing-function: cubic-bezier(0.1, 0.57, 0.1, 1); transition-duration: 0ms; transform: translate(0px, 0px) translateZ(0px);">
-										<li>
-											<a href="javascript:void(0)" class="pic">
-												<div class="imgholder g-img-def"> <img data-md="{&quot;b&quot;:&quot;pic&quot;}" _click="" data-index="0" src="http://p.ssl.qhimg.com/dmsmflm/212_212_/ss/40_130/t0189bfcd74350a2d68.webp"> </div>
-												<p data-md="{&quot;b&quot;:&quot;word&quot;}">中国十大商帮</p>
-											</a>
-										</li>
-										<li>
-											<a href="javascript:void(0)" class="pic">
-												<div class="imgholder g-img-def"> <img data-md="{&quot;b&quot;:&quot;pic&quot;}" _click="" data-index="1" src="http://p.ssl.qhimg.com/dmsmflm/212_212_/ss/40_130/t01fdab0ba293641105.webp"> </div>
-												<p data-md="{&quot;b&quot;:&quot;word&quot;}">浙商</p>
-											</a>
-										</li>
-										<li>
-											<a href="javascript:void(0)" class="pic">
-												<div class="imgholder g-img-def"> <img data-md="{&quot;b&quot;:&quot;pic&quot;}" _click="" data-index="2" src="http://p.ssl.qhimg.com/dmsmflm/212_212_/ss/40_130/t0144effb9b7470b62b.webp"> </div>
-												<p data-md="{&quot;b&quot;:&quot;word&quot;}">鲁商</p>
-											</a>
-										</li>
-										<li>
-											<a href="javascript:void(0)" class="pic">
-												<div class="imgholder g-img-def"> <img data-md="{&quot;b&quot;:&quot;pic&quot;}" _click="" data-index="3" src="http://p.ssl.qhimg.com/dmsmflm/212_212_/ss/40_130/t018790d1e3469d8e06.webp"> </div>
-												<p data-md="{&quot;b&quot;:&quot;word&quot;}">潮汕商人</p>
-											</a>
-										</li>
-										<li>
-											<a href="javascript:void(0)" class="pic">
-												<div class="imgholder g-img-def"> <img data-md="{&quot;b&quot;:&quot;pic&quot;}" _click="" data-index="4" src="http://p.ssl.qhimg.com/dmsmflm/212_212_/ss/40_130/t01de80ecfd09c7e762.webp"> </div>
-												<p data-md="{&quot;b&quot;:&quot;word&quot;}">苏商</p>
-											</a>
-										</li>
-										<li>
-											<a href="javascript:void(0)" class="pic">
-												<div class="imgholder g-img-def"> <img data-md="{&quot;b&quot;:&quot;pic&quot;}" _click="" data-index="5" src="http://p.ssl.qhimg.com/dmsmflm/212_212_/ss/40_130/t01add66f16e2c3e78c.webp"> </div>
-												<p data-md="{&quot;b&quot;:&quot;word&quot;}">商帮</p>
-											</a>
-										</li>
-										<li>
-											<a href="javascript:void(0)" class="pic">
-												<div class="imgholder g-img-def"> <img data-md="{&quot;b&quot;:&quot;pic&quot;}" _click="" data-index="6" src="http://p.ssl.qhimg.com/dmsmflm/212_212_/ss/40_130/t018980dffe51dd9321.webp"> </div>
-												<p data-md="{&quot;b&quot;:&quot;word&quot;}">赣商</p>
-											</a>
-										</li>
-										<li>
-											<a href="javascript:void(0)" class="pic">
-												<div class="imgholder g-img-def"> <img data-md="{&quot;b&quot;:&quot;pic&quot;}" _click="" data-index="7" src="http://p.ssl.qhimg.com/dmsmflm/212_212_/ss/40_130/t017c675efd35d0feac.webp"> </div>
-												<p data-md="{&quot;b&quot;:&quot;word&quot;}">闽商</p>
-											</a>
-										</li>
-										<li>
-											<a href="javascript:void(0)" class="pic">
-												<div class="imgholder g-img-def"> <img data-md="{&quot;b&quot;:&quot;pic&quot;}" _click="" data-index="8" src="http://p.ssl.qhimg.com/dmsmflm/212_212_/ss/40_130/t0100a6d7ec098dd38c.webp"> </div>
-												<p data-md="{&quot;b&quot;:&quot;word&quot;}">山东商帮</p>
-											</a>
-										</li>
-										<li>
-											<a href="javascript:void(0)" class="pic">
-												<div class="imgholder g-img-def"> <img data-md="{&quot;b&quot;:&quot;pic&quot;}" _click="" data-index="9" src="http://p.ssl.qhimg.com/dmsmflm/212_212_/ss/40_130/t01d3c213b54d9b4541.webp"> </div>
-												<p data-md="{&quot;b&quot;:&quot;word&quot;}">粤商</p>
-											</a>
-										</li>
-										<li>
-											<a href="javascript:void(0)" class="pic">
-												<div class="imgholder g-img-def"> <img data-md="{&quot;b&quot;:&quot;pic&quot;}" _click="" data-index="10" src="http://p.ssl.qhimg.com/dmsmflm/212_212_/ss/40_130/t013c506b6ef939f2d5.webp"> </div>
-												<p data-md="{&quot;b&quot;:&quot;word&quot;}">龙游商帮</p>
-											</a>
-										</li>
-										<li>
-											<a href="javascript:void(0)" class="pic">
-												<div class="imgholder g-img-def"> <img data-md="{&quot;b&quot;:&quot;pic&quot;}" _click="" data-index="11" src="http://p.ssl.qhimg.com/dmsmflm/212_212_/ss/40_130/t01dcb469c73dfeb1bd.webp"> </div>
-												<p data-md="{&quot;b&quot;:&quot;word&quot;}">世界晋商网</p>
-											</a>
-										</li>
-										<li class="mso-rec-list-more" showfullpanel="" _click="" data-md="{&quot;b&quot;:&quot;more-pic&quot;}">
-											<a href="javascript:void(0)" class="pic">
-												<div class="imgholder moreholder"> <span class="icon"></span> </div>
-											</a>
-										</li>
-									</ul>
-								</section>
+						</div>
+						<div class="con hasImg">
+							<div class="summary" v-html="getSummary(item.summary)">
 							</div>
 						</div>
 					</div>
+					</a>
+					<div class="res-supplement">
+						<cite><span class="res-site-url" v-html="all_domian+item.channel_domain+'/...'"></span></cite><!-- <time>09-20</time> -->
+					</div>
 				</div>
+
 			</div>
-		</section>
+		</div>
+	</div>
+</section>
+<script>
+var app = new Vue({
+	el: '#app',
+	data: {
+		form_class:'g-header-search-form',
+		channel: '',
+		spinner: false,
+		currentActive: '',
+		sortTime: null,
+		byTitle: null,
+		isShow: true,
+		order: '',
+		logo: '',
+		total: 0,
+		list_data: [],
+		searchText: '',
+		columnList: [],
+		limit: 10,
+		page: 1,
+		title: '',
+		post: window.location.host,
+		logo_bg: plats_info.logo,
+		params: {
+			title: this.searchText,
+			channel_id: this.currentActive,
+			time_scope: this.sortTime,
+			order: this.order,
+			page: 1,
+			limit: 10
+		},
+		dom:'#main'
+	},
+	mounted: function() {
+		this.title = plats_info.title;
 
-	</body>
+		this.getCloumn();
 
-</html>
+		this.currentActive = $app.get_query_string('c') ? $app.get_query_string('c') : '';
+
+		this.params.channel_id = $app.get_query_string('c') ? $app.get_query_string('c') : '';
+
+		this.params.title = $app.get_query_string('q') ? $app.get_query_string('q') : '';
+
+		this.searchText = $app.get_query_string('q') ? $app.get_query_string('q') : '';
+		
+		if(this.currentActive == '' && this.searchText) {
+			document.title = this.searchText +'_搜索 - '+ plats_info.title;
+		} else {
+			document.title = '搜索 - ' + plats_info.title;
+		}
+		//this.$nextTick(()=>{
+			this.data_list();
+		//});
+		
+	},
+	methods: {
+		// 使用common_page 方法必须定义data方法 以及对象 params
+    	data(params , call){
+    		console.log(this.params);
+    		ajax.get('cms/content_search', {params:this.params}).then((res) => {
+				this.spinner = false;
+				if(res.code == 200) {
+
+					this.total = res.data.total;
+					if(this.total == 0)
+					{
+						call(false);
+						return false;
+					}
+					if(Math.ceil(this.total / this.limit) <= 1) {
+						this.isShow = false;
+					}
+
+					var pageCount = Math.ceil(res.data.total / params.limit);
+	                var post = {
+	                    data : {
+	                        code : 200,
+	                        list: res.data.list,
+	                        params : {
+	                            pageCount : pageCount,
+	                            currPage : params.page,
+	                        }
+	                    },
+	                };
+	                call(post);
+				}
+			});
+    		//return $mob_ajax.cms_lists(params , call);
+    	},
+    	data_list() {
+    		$mob_ajax.common_page(this , this.params);
+    	},
+		goSearchOpen: function() {
+			var url = '';
+			if($app.empty(this.currentActive) == false) {
+				url = all_domian + "so?q=" + this.searchText;
+			} else {
+
+				url = all_domian + "so?c=" + this.currentActive + "&q=" + this.searchText;
+			}
+			$app.open_page(url);
+		},
+		getCloumn: function() {
+			ajax.get('cms/channel_search').then((res) => {
+				if(res.code == 200 && res.data.list.length) {
+					this.columnList = res.data.list;
+					for(var item of this.columnList) {
+						if(item.domain == this.currentActive) {
+							// document.title = item.search_name + '_搜索 - ' + this.searchText + ' - ' + plats_info.title;
+                            if(!this.searchText) {
+                                document.title = '搜索 - ' + plats_info.title;
+                            } else {
+                                document.title = this.searchText +'_搜索 - '+ plats_info.title;
+                            }
+						}
+					}
+				}
+			});
+		},
+
+		toRed: function(text) {
+			var reg = new RegExp(app.searchText, "gi");
+			var result = text.replace(reg, function(key) {
+				var template = '<span style="color:#c00;">' + key + '</span>';
+
+				return template;
+			});
+			return result
+		},
+		getSort: function(item) {
+			if(!item) {
+				this.currentActive = '';
+				document.title = '搜索 - ' + plats_info.title
+			} else {
+				this.currentActive = item.domain;
+				document.title = item.title + '_搜索 - ' + plats_info.title
+			}
+			this.page = 1;
+			this.goSearch();
+		},
+		getSummary: function(text) {
+			if(text.length > 100) {
+				text = text.substring(0, 80) + '...';
+			}
+			var res = this.toRed(text);
+			return res;
+		},
+		goPage: function(n) {
+			this.page = n;
+			this.goSearch();
+		},
+		previous: function() {
+			this.page -= 1;
+			if(this.page < 1) {
+				this.page = 1;
+				return
+			}
+			this.goSearch();
+		},
+		next: function() {
+			this.page += 1;
+			if(this.page > Math.ceil((this.total / this.limit).toFixed(2))) {
+				this.page = Math.ceil((this.total / this.limit).toFixed(2))
+				return
+			}
+			this.goSearch();
+		},
+		getSearchByTime: function(time) {
+			if(time == 'day') {
+				this.sortTime = 1
+			} else if(time == 'week') {
+				this.sortTime = 7
+			} else if(time == 'mon') {
+				this.sortTime = 30
+			} else {
+				this.sortTime = ''
+			}
+			this.goSearch();
+		},
+		getOrder: function(order) {
+			if(order == 'publish') {
+				this.order = 'publish_time'
+			} else if(order == 'update') {
+				this.order = 'updated_at'
+			}
+			this.goSearch();
+		},
+		getTitle: function(title) {
+			this.byTitle = title;
+			this.goSearch();
+		}
+	}
+})
+</script>

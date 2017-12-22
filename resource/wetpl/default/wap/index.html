@@ -45,7 +45,7 @@
 		<ul>
 			<li v-for="item in news">
 				<a :href="'news/' + item.weid | href"><span class="sytjlb_fl">[{{item.cate_title}}]</span>
-					<h2><b style="font-weight:normal; color:">{{item.title}}</b></h2><span class="sytjlb_sj">{{item.created_at | formateTime('YMDHM')}}</span>
+					<h2><b style="font-weight:normal; color:">{{item.title}}</b></h2><span class="sytjlb_sj">{{item.created_at | formateTime('YMD')}}</span>
 				</a>
 			</li>
 		</ul>
@@ -104,11 +104,11 @@
 						<h2>新闻中心</h2></a>
 				</li>
 				<li>
-					<a ><span><img src="/common/img/index/news.png"></span>
+					<a :href="'magazine/qinshang/820d1280-bef4-11e7-86e7-2f6b48d4c639' | href"><span><img src="/common/img/index/news.png"></span>
 						<h2>秦商杂志</h2></a>
 				</li>
 				<li>
-					<a ><span><img src="/common/img/index/gw.png"></span>
+					<a href="https://weibo.com/wezchina/profile?s=6cm7D0"><span><img src="/common/img/index/gw.png"></span>
 						<h2>秦商官微</h2></a>
 				</li>
 				<li>
