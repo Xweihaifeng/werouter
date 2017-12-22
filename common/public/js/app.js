@@ -10,7 +10,8 @@
 	
 	//验证是否是空
 	app.empty = function(params){
-		if(params !== null && params !== undefined && params !== '')
+
+		if(params !== null && params !== undefined && params !== '' && typeof(params)== "undefined")
 		{
 			return true;
 		}

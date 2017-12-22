@@ -29,22 +29,44 @@ new Vue({
         'order_address_default' : {},
     },
     mounted: function(){
-        this.$nextTick(()=>{
-            this.get_address();
-        });
+        this.get_address_list();
+
     },
     methods:{
         // 获取全部收货地址
         get_address_list()
         {
-            ajax.post('/users/address/list').then((res)=>{
-                this.order_address_list = res.data;
+            ajax.get('users/address/list').then((res)=>{
+                this.order_address_list = res.data.list;
+
+                if(this.order_address_list.length > 0)
+                {
+                    // 遍历元素获取默认的收货地址.
+                    for(var item of this.order_address_list)
+                    {
+                        if(item.status == 1)
+                        {
+                            this.order_address_default = item;
+                            break;
+                        }
+                    }
+                    // 如果没有默认收货地址,获取第一条收货地址
+                    if($app.empty(this.order_address_default) == false)
+                    {
+                        this.order_address_default = this.order_address_default[0];
+                    }
+                }
+
+                //用户没有收货地址,发起添加收货地址
+                if($app.empty(this.order_address_default) == false){
+                    this.add_address();
+                }
             });
         },
         // 添加收货地址方法
         add_address()
-        {
-
+        {   
+            alert('添加收货地址');
         },
         // 修改收货地址
         up_address()
