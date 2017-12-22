@@ -125,7 +125,7 @@ $(document).ready(function(){
     //幻灯列表初始化
     var initSlideHtml=function (data) {
         $("#slideList").empty();
-        $("#slideList").append('<span>幻灯管理：</span>');
+        $("#slideList").append('<span style="position: absolute;">幻灯管理：</span>');
         if(isNull(data)){
             for(var i=1;i<=slideListLenth;i++){
                 var html='<div class="form-group">' +
@@ -222,7 +222,7 @@ $(document).ready(function(){
     }
     var initBannerHtml=function (data) {
         $("#bannerList").empty();
-        $("#bannerList").append('<span style="padding-left: 20px;">小横幅管理：</span>');
+        $("#bannerList").append('<span style="position: absolute;">小横幅管理：</span>');
         if(isNull(data)){
             for(var i=1;i<=bannerListLenth;i++){
                 var html='<div class="form-group">'+
