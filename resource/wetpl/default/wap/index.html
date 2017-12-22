@@ -2,24 +2,26 @@
 <script type="text/javascript">
 	show.header = 'no';
 </script>
+<style type="text/css">
+	#vd {
+	    
+	}
+</style>
 <link rel="stylesheet" href="{{PATH_TML}}css/coc/mtcstyle.css">
 <script src="{{PATH_TML}}js/coc/swipe.min.js"></script>
 <div id="viewport" class="viewport">
 	<div class="header">
 		<i class="m_logo"><!-- <img :src="plats.logo | img_src(60,60)"> --></i>
 	</div>
-
+	<!--视频中心-->
+	<div class="syywtj_dh"><img src="/resources/web/images/hs_ic.jpg"><h1>要闻推荐</h1></div>
 	<div class="clear"></div>
-<!-- 	<div class="syywtj_dh"><img src="{{PATH_TML}}img/index/hs_ic.jpg">
-		<h1>要闻推荐</h1></div> -->
-
-<!-- 	<div class="clear"></div> -->
 	<!--图片轮换开始-->
     <div class="banner1">
 		<div id='mySwipe' class='swipe'>
 			<div class='swipe-wrap'>
 				<div v-for="(item,index) in especial_news"> 
-					<a><img :src="item.thumb_image | img_src(300 , 200 , 1)" width="100%" /></a> 
+					<a><img :src="item.thumb_image | img_src(418 , 230 , 1)"  /></a> 
 					<div
 					class="mySwipeceng">
 						<div class="left"><b style='font-weight:normal; color:'>崔歆在党建联系点调研党建工作</b></div>
@@ -44,51 +46,29 @@
 		</ul>
 	</div>
 	<div class="clear"></div>
-	<div class="syflbg">
-		<!--栏目-->
-		<div class="syfl">
-			<div class="syfl_mar">
-				<ul>
-					<li>
-						<a href="/index4"><span><img src="{{PATH_TML}}img/index/nav_icon1.png"></span>
-							<h2>资讯中心</h2></a>
-					</li>
-					<li>
-						<a href="javascript:void(0)"><span><img src="{{PATH_TML}}img/index/nav_icon2.png"></span>
-							<h2>信息公开</h2></a>
-					</li>
-					<li>
-						<a href="javascript:void(0)"><span><img src="{{PATH_TML}}img/index/nav_icon3.png"></span>
-							<h2>在线服务</h2></a>
-					</li>
-					<li>
-						<a href="javascript:void(0)"><span><img src="{{PATH_TML}}img/index/nav_icon4.png"></span>
-							<h2>互动交流</h2></a>
-					</li>
-					<li>
-						<a href="/index5"><span><img src="{{PATH_TML}}img/index/nav_icon5.png"></span>
-							<h2>美丽秦川</h2></a>
-					</li>
-					<li>
-						<a href="javascript:void(0)"><span><img src="{{PATH_TML}}img/index/nav_icon6.png"></span>
-							<h2>网站导航</h2></a>
-					</li>
-				</ul>
-			</div>
+
+	<!--视频中心-->
+	<div class="syzdzt_dh"><img src="{{PATH_TML}}img/index/hs_ic.jpg">
+		<h1>视频中心</h1></div>
+	<div class="clear"></div>
+	<div class="syzdzt_pc">
+		<div class="syzdzt_pcmr">
+			<ul>	
+				<div id="vd" style="position: absolute;
+	    width: 382px;
+	    height: 191px;
+	    /* margin-left: 10px; */
+	    /* margin-top: 0px; */
+	    background: url(/common/img/play.png) no-repeat center;
+	    background-size: 100%;" class="vd"></div>
+				<img src="/common/img/02.png" width="95%" height="95%" />
+			</ul>
 		</div>
 		<div class="clear"></div>
-		<!--栏目 end-->
-		<!--搜索-->
-		<div class="sous">
-			<form action="http://m.tongchuan.gov.cn/search_list.rt" method="post" name="sosoFrom">
-				<div class="sous_l"><input name="keyWord" type="text" class="sous_inp" value="请输入关键词"></div>
-				<div class="sous_r"><input name="" type="submit" class="sous_but" value=""></div>
-				<div class="clear"></div>
-			</form>
-		</div>
-		<!--搜索-->
 	</div>
-	<!--重点专题-->
+	<!--视频中心-->
+
+
 	<div class="syzdzt_dh"><img src="{{PATH_TML}}img/index/hs_ic.jpg">
 		<h1>重点专题</h1></div>
 	<div class="clear"></div>
@@ -138,12 +118,7 @@
 	</div>
 	<!--快捷服务-->
 </div>
-<div class="fooder">
 
-	<div class="fooder_wz">
-		版权所有：秦川市人民政府　陕ICP备09018839号<br> 组织建设：秦川市人民政府办公室 您是第80404690位访客<br> 运行维护：秦川市电子政务办公室&nbsp;&nbsp;&nbsp;&nbsp; 运维电话：0919-3183128
-	</div>
-</div>
 <script>
 	var app = new Vue({
 		el: '#app',
@@ -155,16 +130,19 @@
 		},
         mounted: function() {
         	$app.set_title(plats_info.title);
-        	ajax.get('cms/index/grid').then((res) => {
-                if (res.code === 200) {
-                    this.news = res.data.news;
-                    this.especial_news = res.data.especial_news;
-                    this.ztbd = res.data.ztbd;
-                    this.$nextTick(()=>{
-		            	this.swiper();
-		        	});
-                } 
-            });
+        	this.$nextTick(()=>{
+        		ajax.get('cms/index/grid').then((res) => {
+	                if (res.code === 200) {
+	                    this.news = res.data.news;
+	                    this.especial_news = res.data.especial_news;
+	                    this.ztbd = res.data.ztbd;
+	                    this.$nextTick(()=>{
+			            	this.swiper();
+			        	});
+	                } 
+	            });
+        	});
+
 		},
 		methods: {
 			swiper() {
