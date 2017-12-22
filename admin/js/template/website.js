@@ -24,11 +24,13 @@ $(document).ready(function(){
                     $('input[name=icp]').val(info.icp);
                     $('input[name=favicon]').val(info.favicon);
                     $('input[name=logo]').val(info.logo);
+                    $('input[name=wap_logo]').val(info.logo);
                     $('input[name=background_up]').val(info.background_up);
                     $('input[name=background]').val(info.background);
                   
                     if(info.favicon!=''){$('#img_favicon').attr('src',ApiMaterPlatQiniuDomain+info.favicon);}
                     if(info.logo!=''){$('#img_logo').attr('src',ApiMaterPlatQiniuDomain+info.logo);}
+                    if(info.wap_logo!=''){$('#img_wap_logo').attr('src',ApiMaterPlatQiniuDomain+info.wap_logo);}
                     if(info.background!=''){$('#img_background').attr('src',ApiMaterPlatQiniuDomain+info.background);}
                     if(info.background_up!=''){$('#img_background_up').attr('src',ApiMaterPlatQiniuDomain+info.background_up);}
 
@@ -154,6 +156,7 @@ init();
 	            weibo_show:$('textarea[name=weibo_show]').val(),
 	            favicon:$('input[name=favicon]').val(),
 	            logo:$('input[name=logo]').val(),
+              wap_logo:$('input[name=wap_logo]').val(),
               background_up:$('input[name=background_up]').val(),
 	            background:$('input[name=background]').val(),
             };  
@@ -313,6 +316,48 @@ init();
                      $("input[name=logo]").val(res.key);
                      var sourceLink = domain + res.key;
                      $("#img_logo").attr('src', sourceLink);
+              },
+              'Error': function(up, err, errTip) {
+              },
+              'UploadComplete': function() {
+              },
+              'Key': function(up, file) {
+                  var key = "plats/resource/";
+                  key += new Date().valueOf() + '.' + file.name.substring(file.name.indexOf('.') + 1); 
+                  return key;
+              }
+          }
+     });
+         var uploader = Qiniu.uploader({
+          runtimes: 'html5,flash,html4', 
+          browse_button: 'wap_logofile', 
+          uptoken_url: ApiUrl + 'file/qiniu_token',
+          get_new_uptoken: false, 
+          domain: ApiMaterPlatQiniuDomain,     
+          container: 'look',        
+          max_file_size: '100mb',           
+          flash_swf_url: 'http://cdn.staticfile.org/plupload/2.1.8/Moxie.swf',  
+          max_retries: 3,  
+          dragdrop: true,  
+          drop_element: 'look',
+          chunk_size: '4mb', 
+          auto_start: true,
+          init: {
+              'FilesAdded': function(up, files) {
+                  plupload.each(files, function(file) {
+                  });
+              },
+              'BeforeUpload': function(up, file) {
+              },
+              'UploadProgress': function(up, file) {
+              },
+              'FileUploaded': function(up, file, info) {
+                     var domain = up.getOption('domain');
+                     res = JSON.parse(info.response);
+                     console.log(res);
+                     $("input[name=wap_logo]").val(res.key);
+                     var sourceLink = domain + res.key;
+                     $("#img_wap_logo").attr('src', sourceLink);
               },
               'Error': function(up, err, errTip) {
               },
