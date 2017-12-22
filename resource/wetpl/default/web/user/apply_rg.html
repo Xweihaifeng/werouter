@@ -162,163 +162,190 @@
                 <input type="hidden" id="J_SendMessageUrl" value="http://my.welian.com/event/notice/NDIxNjM=">
                 <input type="hidden" id='J_TicketType' value='0'>
                 <!--图表接口-->
-                <input type="hidden" id="J_GetChartDataUrl" value="http://my.welian.com/event/joinerAnalysis/NDIxNjM=">
+                <!-- <input type="hidden" id="J_GetChartDataUrl" value="http://my.welian.com/event/joinerAnalysis/NDIxNjM="> -->
+                <input type="hidden" id="J_GetChartDataUrl" value="/common/data/city.json">
                 <div class="wrap">
                     <div class="container">
                         <div class="manage">
-                            <!--<div class="data ">
-                                  <div class="chart doughnut">
-                                      <canvas id="J_ChartCity" width="120" height="120"></canvas>
-                                      <div class="intro">
-                                          <ul id="J_ListCity"></ul>
-                               </div>
-                                  </div>
-                                  <div class="chart doughnut">
-                                      <canvas id="J_ChartPosition" width="120" height="120"></canvas>
-                                      <div class="intro">
-                                          <ul id="J_ListPosition"></ul>
-                                      </div>
-                                  </div>
-                                  <div class="chart line">
-                                      <canvas id="J_ChartTimeLine" width="400" height="120"></canvas>
-                                  </div> -->
-                            <!-- <img src="/user/img/chart.png" alt=""> -->
-                        </div>
-                        <div class="operation">
-                            <div class="pull-left">
-                                <!--有人报名-->
-                                <!--活动未结束-->
-                                <button class="del J_BtnDelAllRecord" style="background: transparent;">删除</button>
-                                <!--   <button onclick="exportCsv('NDIxNjM=')" class="export" style="background: transparent;">导出名单</button> -->
+                            <div class="title" id="J_ActivityTitle">Loading...</div>
+                            <div class="result">
+                                <div class="pull-left entry-num"><span class="word-blue">0</span>人已报名</div>
+                                <div class="pull-right btn-group">
+                                    <a data-toggle="dialog" data-target="#J_DialogSign" class="btn btn-active">签到管理</a>
+                                </div>
                             </div>
-                            <div class="pull-right">
-                                <div class="search">
-                                    <div class="type" id="J_SearchType">
-                                        <div class="selected J_SearchSelectedType" data-type="name" name="search_type" value='username'><span>姓名</span><i class="fa fa-chevron-down"></i></div>
-                                        <div class="other J_SearchOtherType" data-type="mobile" name="search_type" value='mobile'>手机</div>
+                            <div class="account">
+                                <table class="table" cellpadding="0" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>票种</th>
+                                            <th>总票数</th>
+                                            <th>已售</th>
+                                            <th>单价</th>
+                                            <th>总额</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td colspan="5" style="text-align:center;">loading...</td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                                <!-- <div class="tips">活动结束后，一周内结清款项，如有疑问，请联系微链运营经理 闹闹：18658883913</div> -->
+                            </div>
+                            <div class="data ">
+                                <div class="chart doughnut">
+                                    <canvas id="J_ChartCity" width="120" height="120"></canvas>
+                                    <div class="intro">
+                                        <ul id="J_ListCity"></ul>
                                     </div>
-                                    <input type="text" id="J_InputSearchCondition" placeholder="请输入用户姓名">
-                                    <div class="button" id="J_BtnSearchEntry">搜索</div>
                                 </div>
+                                <div class="chart doughnut">
+                                    <canvas id="J_ChartPosition" width="120" height="120"></canvas>
+                                    <div class="intro">
+                                        <ul id="J_ListPosition"></ul>
+                                    </div>
+                                </div>
+                                <div class="chart line">
+                                    <canvas id="J_ChartTimeLine" width="400" height="120"></canvas>
+                                </div>
+                                <img src="/user/img/chart.png" alt="">
                             </div>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="entry-list">
-                            <table cellpadding="0" cellspacing="0" id="J_EntryList">
-                                <thead>
-                                    <tr>
-                                        <th class="th-chk"><input type="checkbox" class="boxsty J_CkbAll"></th>
-                                        <th class="th-queue">序号</th>
-                                        <th class="th-user">报名人员</th>
-                                        <th class="th-mobile">手机号码</th>
-                                        <th class="th-tictet">票务信息</th>
-                                        <th class="th-operate">报名状态</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="J_EntryList">
-                                    <tr data-id="1462363">
-                                        <td class="chk" colspan="6">暂无报名</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <!-- <div class="loadlist J_LoadList"><img src="http://fed.welian.com/loading.gif"></div> -->
-                            <div class="pagination" data-total="2" data-size="15">
-                                <ul></ul>
+                            <div class="operation">
+                                <div class="pull-left">
+                                    <!--有人报名-->
+                                    <!--活动未结束-->
+                                    <button class="del J_BtnDelAllRecord" style="background: transparent;">删除</button>
+                                    <!--   <button onclick="exportCsv('NDIxNjM=')" class="export" style="background: transparent;">导出名单</button> -->
+                                </div>
+                                <div class="pull-right">
+                                    <div class="search">
+                                        <div class="type" id="J_SearchType">
+                                            <div class="selected J_SearchSelectedType" data-type="name" name="search_type" value='username'><span>姓名</span><i class="fa fa-chevron-down"></i></div>
+                                            <div class="other J_SearchOtherType" data-type="mobile" name="search_type" value='mobile'>手机</div>
+                                        </div>
+                                        <input type="text" id="J_InputSearchCondition" placeholder="请输入用户姓名">
+                                        <div class="button" id="J_BtnSearchEntry">搜索</div>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="entry-list">
+                                <table cellpadding="0" cellspacing="0" id="J_EntryList">
+                                    <thead>
+                                        <tr>
+                                            <th class="th-chk"><input type="checkbox" class="boxsty J_CkbAll"></th>
+                                            <th class="th-queue">序号</th>
+                                            <th class="th-user">报名人员</th>
+                                            <th class="th-mobile">手机号码</th>
+                                            <th class="th-tictet">票务信息</th>
+                                            <th class="th-operate">报名状态</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="J_EntryList">
+                                        <tr data-id="1462363">
+                                            <td class="chk" colspan="6">暂无报名</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <!-- <div class="loadlist J_LoadList"><img src="http://fed.welian.com/loading.gif"></div> -->
+                                <div class="pagination" data-total="2" data-size="15">
+                                    <ul></ul>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <!--签到管理start-->
-            <div class="dialog" id="J_DialogSign">
-                <div class="dialog-head">
-                    <h3>签到管理</h3>
-                    <span class="fa fa-times dialog-close"></span>
+                <!--签到管理start-->
+                <div class="dialog" id="J_DialogSign">
+                    <div class="dialog-head">
+                        <h3>签到管理</h3>
+                        <span class="fa fa-times dialog-close"></span>
+                    </div>
+                    <div class="dialog-body sign-style">
+                        <div class="style s1">
+                            <h4>1.报名人使用微信扫描签到二维码进行签到</h4>
+                            <div class="intro">
+                                <div class="block">
+                                    <div class="pic">
+                                        <img src="{{PATH_TML}}user/img/icon_qrcode.png">
+                                    </div>
+                                    <div class="word">
+                                        <p>下载签到二维码</p>
+                                        <p><a href="#">点击下载</a></p>
+                                    </div>
+                                </div>
+                                <div class="block">
+                                    <div class="pic">
+                                        <img src="{{PATH_TML}}user/img/icon_scan.png">
+                                    </div>
+                                    <div class="word">
+                                        <p>使用微信扫描签到</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="style s2">
+                            <h4>2.主办方使用微信扫描活动电子票进行签到<span>（活动成员到场后主动出示报名电子票）</span>
+                            </h4>
+                            <div class="intro">
+                                <div class="block">
+                                    <div class="pic">
+                                        <img src="{{PATH_TML}}user/img/icon_phone.png">
+                                    </div>
+                                    <div class="word">
+                                        <p>登录移动版活动下载</p>
+                                        <p><a href="#" target="_blank">点击下载</a></p>
+                                    </div>
+                                </div>
+                                <div class="block">
+                                    <div class="pic">
+                                        <img src="{{PATH_TML}}user/img/icon_scan.png">
+                                    </div>
+                                    <div class="word">
+                                        <p>主办方微信扫描电子票</p>
+                                    </div>
+                                </div>
+                                <div class="block">
+                                    <div class="pic">
+                                        <img src="{{PATH_TML}}user/img/icon_confirm.png">
+                                    </div>
+                                    <div class="word">
+                                        <p>确认签到</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--div class="end">注：通过渠道报名的用户将会收到该活动的电子票，电子票上有签到二维码，扫描即可</div-->
+                    </div>
                 </div>
-                <div class="dialog-body sign-style">
-                    <div class="style s1">
-                        <h4>1.报名用户扫描二维码自主签到</h4>
-                        <div class="intro">
-                            <div class="block">
-                                <div class="pic">
-                                    <img src="http://fed.welian.com/0_icon/icon_qrcode.png">
-                                </div>
-                                <div class="word">
-                                    <p>下载签到二维码</p>
-                                    <p><a href="http://my.welian.com/download/qrcode/aHR0cDovL2g1LndlbGlhbi5jb20vc2lnbi9pL05ESXhOak09">点击下载</a></p>
-                                </div>
-                            </div>
-                            <div class="block">
-                                <div class="pic">
-                                    <img src="http://fed.welian.com/0_icon/icon_scan.png">
-                                </div>
-                                <div class="word">
-                                    <p>微链APP扫一扫</p>
-                                </div>
+                <!--签到管理end-->
+                <div class="dialog dialog-refuse" id="J_DialogRefuse">
+                    <div class="dialog-head">
+                        <h3>拒绝信息</h3>
+                        <span class="fa fa-times dialog-close"></span>
+                    </div>
+                    <div class="dialog-body">
+                        <div class="msg-tips">输入拒绝的理由！<span>确定之后<span id="J_RefuseUser"></span>将会收到通知</span>
+                        </div>
+                        <div class="msg-content">
+                            <div class="message" id="J_RefuseMessage">
+                                <textarea id="J_InputRefuseMessage" maxLength="1357" placeholder="请输入理由" onkeyup="review()"></textarea>
+                                <p id="J_RefuseReason"></p>
                             </div>
                         </div>
                     </div>
-                    <div class="style s2">
-                        <h4>2.主办方微链扫描电子票签到<span>（本活动的签到授权密码为<span class="blue-word">94875</span>）</span>
-                        </h4>
-                        <div class="intro">
-                            <div class="block">
-                                <div class="pic">
-                                    <img src="http://fed.welian.com/0_icon/icon_phone.png">
-                                </div>
-                                <div class="word">
-                                    <p>安装并登录微链APP</p>
-                                    <p><a href="http://www.welian.com" target="_blank">点击下载</a></p>
-                                </div>
-                            </div>
-                            <div class="block">
-                                <div class="pic">
-                                    <img src="http://fed.welian.com/0_icon/icon_scan.png">
-                                </div>
-                                <div class="word">
-                                    <p>微链APP扫一扫</p>
-                                </div>
-                            </div>
-                            <div class="block">
-                                <div class="pic">
-                                    <img src="http://fed.welian.com/0_icon/icon_confirm.png">
-                                </div>
-                                <div class="word">
-                                    <p>确认签到</p>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="dialog-footer" style="text-align:right">
+                        <button type="button" class="btn btn-cancel dialog-close">取消</button>
+                        <button type="button" class="btn btn-active" id="J_BtnRefuseSure">确认</button>
                     </div>
-                    <div class="end">注：通过微链渠道报名的用户将会收到该活动的电子票，电子票上有签到二维码，扫描即可</div>
                 </div>
             </div>
 
-            <!--签到管理end-->
-            <div class="dialog dialog-refuse" id="J_DialogRefuse">
-                <div class="dialog-head">
-                    <h3>拒绝信息</h3>
-                    <span class="fa fa-times dialog-close"></span>
-                </div>
-                <div class="dialog-body">
-                    <div class="msg-tips">输入拒绝的理由！<span>确定之后<span id="J_RefuseUser"></span>将会收到通知</span>
-                    </div>
-                    <div class="msg-content">
-                        <div class="message" id="J_RefuseMessage">
-                            <textarea id="J_InputRefuseMessage" maxLength="1357" placeholder="请输入理由" onkeyup="review()"></textarea>
-                            <p id="J_RefuseReason"></p>
-                        </div>
-                    </div>
-                </div>
-                <div class="dialog-footer" style="text-align:right">
-                    <button type="button" class="btn btn-cancel dialog-close">取消</button>
-                    <button type="button" class="btn btn-active" id="J_BtnRefuseSure">确认</button>
-                </div>
-            </div>
+
+
         </div>
-
-
-
-    </div>
     </div>
 
 

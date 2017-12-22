@@ -55,10 +55,188 @@
         })
     }*/
 
+var chart = {
+    init: function() {
+        var _self = this;
+        this.getData(function(data) {
+            _self.createChartCity(data.city);
+            _self.createChartPosition(data.position);
+            _self.createChartTimeLine(data.timeline);
+        });
+    },
+    getData: function(callback) {
+        var _self = this;
+        var url = $('#J_GetChartDataUrl').val();
+        $.ajax({
+            url: url,
+            type: 'get',
+            dataType: 'json',
+            success: function(res) {
+                if (res.status) {
+                    var data = _self.formatData(res.data);
+                    callback && callback(data);
+                } else {
+                    $('.data').hide();
+                }
+            },
+            error: function(xhr, code, error) {
+                // notice.alert(error);
+            },
+            complete: function() {}
+        });
+    },
+    formatData: function(data) {
+        var colors = ['#24aa98', '#65abd0', '#d9c26c', '#db7560', '#af6dd5', '#898e93', '#32b9e6', '#8cbe52', '#ffab27', '#c88b76'];
+        var tmp = {
+            city: [],
+            position: [],
+            timeline: {
+                labels: [],
+                datasets: [{
+                    label: "报名数据",
+                    fillColor: "rgba(151,187,205,0.2)",
+                    strokeColor: "rgba(151,187,205,1)",
+                    pointColor: "rgba(151,187,205,1)",
+                    pointStrokeColor: "#fff",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "rgba(151,187,205,1)",
+                    data: []
+                }]
+            }
+        };
+        for (var i = 0; i < data['city'].length; i++) {
+            var city = data['city'][i];
+            tmp.city.push({
+                value: city.value,
+                color: colors[i],
+                highlight: colors[i],
+                label: city.name
+            });
+        };
+        for (var i = 0; i < data['position'].length; i++) {
+            var position = data['position'][i];
+            tmp.position.push({
+                value: position.value,
+                color: colors[i],
+                highlight: colors[i],
+                label: position.name
+            });
+        };
+        for (var i = 0; i < data['timeline'].length; i++) {
+            var time = data['timeline'][i];
+            tmp.timeline.labels.push(time.name);
+            tmp.timeline.datasets[0].data.push(time.value);
+        }
+        return tmp;
+    },
+    createChartCity: function(data) {
+        this.createDoughnut('J_ChartCity', data);
+        this.createList('J_ListCity', data);
+    },
+    createChartPosition: function(data) {
+        this.createDoughnut('J_ChartPosition', data);
+        this.createList('J_ListPosition', data);
+    },
+    createChartTimeLine: function(data) {
+        var chart = this.getChart('J_ChartTimeLine');
+        chart.Line(data);
+    },
+    createDoughnut: function(id, data, options) {
+        if (!options) options = {};
+        var chart = this.getChart(id);
+        chart.Pie(data, options);
+    },
+    getChart: function(id) {
+        var ctx = document.getElementById(id).getContext('2d');
+        var chart = new Chart(ctx);
+        return chart;
+    },
+    createList: function(id, list) {
+        var html = '';
+        var total = 0;
+        for (var i = 0; i < list.length; i++) {
+            total += parseInt(list[i].value);
+        }
+        for (var i = 0; i < list.length; i++) {
+            var item = list[i];
+            var percent = item.value / total * 100;
+            html += '<li><span class="mark" style="background-color:' + item.color + '"></span>' + item.label + ' <label>' + percent.toFixed(1) + '%</label></li>';
+        };
+        $('#' + id).append(html);
+    }
+}
+
+// 活动详情
+var loadActivity = function(weid, callback) {
+    $.ajax({
+        url: ACTIVITY_DETAIL + '/' + weid,
+        type: 'GET',
+        headers: {
+            'Token': localStorage.getItem('token')
+        },
+        success: function(data) {
+            if (data.code == 200)
+                callback(data.data);
+            else
+                notice.alert(data.message);
+        },
+        error: function(xhr) {
+            console.log(xhr);
+        }
+    });
+}
+
+// 活动报名数
+var loadCount = function(weid, callback) {
+    $.ajax({
+        url: ACTIVITY_ENROLL_COUNT,
+        type: 'GET',
+        data: {
+            activity_id: weid
+        },
+        headers: {
+            'Token': localStorage.getItem('token')
+        },
+        success: function(data) {
+            if (data.code == 200)
+                callback(data.data);
+            else
+                notice.alert(data.message);
+        },
+        error: function(xhr) {
+            console.log(xhr);
+        }
+    });
+}
+
+// 活动售票情况
+var loadTickets = function(weid, callback) {
+    $.ajax({
+        url: ACTIVITY_ENROLL_TICKETS,
+        type: 'GET',
+        data: {
+            activity_id: weid
+        },
+        headers: {
+            'Token': localStorage.getItem('token')
+        },
+        success: function(data) {
+            if (data.code == 200)
+                callback(data.data);
+            else
+                notice.alert(data.message);
+        },
+        error: function(xhr) {
+            console.log(xhr);
+        }
+    });
+}
+
 
 
 $(document).ready(function() {
     // const ApiMaterPlatQiniuDomain       = 'http://images.new.wezchina.com/';
+
 
     var favicon = ApiMaterPlatQiniuDomain + localStorage.getItem('fav');
     console.log('logo:', favicon);
@@ -234,6 +412,7 @@ $(document).ready(function() {
     }
     var weid = localStorage.getItem('weid');
 
+
     // 1.获取活动报名列表
     var applylistdetail = function(weid, type = 0, page = 1, keywords = "") {
 
@@ -300,11 +479,36 @@ $(document).ready(function() {
         })
     }
     var id = window.location.href.split('/').pop();
-    console.log(id);
     if (id != null && id != '' && id.length == 36) { applylistdetail(id); }
     // applylistdetail(weid);
 
+    // 加载活动详情
+    loadActivity(id, function(data) {
+        $("#J_ActivityTitle").text(data.title);
+    })
 
+    // 加载报名数
+    loadCount(id, function(data) {
+        $(".entry-num>span").text(data.enrollCount);
+    });
+
+    // 加载售票情况
+    loadTickets(id, function(data) {
+        var html = '';
+        $.each(data.tickets, function(k, v) {
+            html += `<tr>
+            <td>` + v.name + `</td>
+            <td>` + v.total_num + `</td>
+            <td>` + v.sold_num + `</td>
+            <td>` + v.price + `</td>
+            <td>` + v.sold_fee + `</td>
+        </tr>`;
+        });
+        $(".account table tbody").html(html);
+    });
+
+    // 加载统计
+    chart.init();
 
     // 页码
     var pagefun = function(pagenum, weid, type = 0, keywords) {
