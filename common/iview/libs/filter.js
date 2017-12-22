@@ -1,5 +1,11 @@
-Vue.filter('img_src', function (value , width , height) {
+Vue.filter('img_src', function (value , width , height, mode) {
+
     if (!value) return '';
+
+    if(value.indexOf('http') !== -1){
+
+        return value;
+    }
 
     var settings = http_type + plats_qiniu.domain_custom + '/';
 
@@ -9,29 +15,30 @@ Vue.filter('img_src', function (value , width , height) {
     }
     else
     {
-        return settings + value + '?imageView2/1/w/' + width + '/h/' + height;
-    }
-});
-
-Vue.filter('imgSet', function (value, width, height, mode) {
-    if(value.indexOf('http') !== -1){
-        return value
-    }else{
         if (mode != undefined) {
-            return ApiMaterPlatQiniuDomain + value + '?imageView2/' + mode + '/w/' + width + '/h/' + height;
+            return settings + value + '?imageView2/' + mode + '/w/' + width + '/h/' + height;
         } else {
-            return ApiMaterPlatQiniuDomain + value + '?imageView2/3/w/' + width + '/h/' + height;
+            return settings + value + '?imageView2/3/w/' + width + '/h/' + height;
         }
     }
-})
+});
 
 Vue.filter('href', function (value) {
     if (!value) return '';
-
-    return all_domian + value;
+    var string = value.substr(0 , 1);
+    if(string == '/')
+    {
+        return all_domian.substring(0 , all_domian.length-1) + value;
+    }
+    else
+    {
+        return all_domian + value;
+    }
+    
 });
 
 Vue.filter('formateTime',function (value,type) {
+
     var date = new Date(value);
     var year = date.getFullYear();
     var month = (date.getMonth() + 1).toString().length == 1 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1;
@@ -40,6 +47,11 @@ Vue.filter('formateTime',function (value,type) {
     var min = date.getMinutes().toString().length == 1 ? '0' + date.getMinutes() : date.getMinutes();
     if(type == 'MDHM'){
         return month +'-'+day+' '+hour+':'+min
+    }
+    else if(type == 'YMDHM'){
+        date = new Date(value * 1000);
+        year = date.getFullYear();
+        return year + '-' +month +'-'+day+' '+hour+':'+min
     }else if(type == 'HM'){
         return hour+':'+min;
     }

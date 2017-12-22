@@ -14,7 +14,7 @@
                 <a v-for="good in goodList" :id="good.weid" @click="window.localStorage.setItem('shopping_weid', good.weid)" :href="'/'+ domain +'/wemall/goods/'+ good.weid">
                     <div>
                         <slide class="li_img_wap">
-                            <img :src="good.cover | imgSet(100, 100, 3)">
+                            <img :src="good.cover | img_src(100, 100, 3)">
                         </slide>
                         <slide class="li_info">
                             <h3>{{good.title}}</h3>

@@ -5,9 +5,9 @@
 <link rel="stylesheet" href="{{PATH_TML}}css/common.css"/>
 <div id="act-container">
     <div v-for="data in list_data">
-        <a :href="'/' + domain + '/activity-detail/' + data.weid">
+        <a :href="'/activity-detail/' + data.weid | href">
             <div class="act-content">
-                <div class="act-cover"><img :src="data.cover | imgSet(110, 69, 1)" width="110" height="69" /></div>
+                <div class="act-cover"><img :src="data.cover | img_src(110 , 69 , 1)" width="110" height="69" /></div>
                 <div class="act-cont">
                     <ul>
                         <li class="act-cont-title">
@@ -48,7 +48,6 @@
             // 使用common_page 方法必须定义data方法 以及对象 params
             data(params , call){
                 ajax.post('activity/listbyuser',params).then((res)=>{
-                    console.log(this.params);
                     if(res.code == 200){
                         var pageCount = Math.ceil(res.data.total / this.params.limit);
                         var post = {
@@ -61,7 +60,6 @@
                                 }
                             },
                         };
-                        console.log(post);
                         call(post);
                     }
                 });
