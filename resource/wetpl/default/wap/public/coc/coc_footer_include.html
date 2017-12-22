@@ -1,3 +1,4 @@
+<br/><br/><br/><br/>
 <footer id="footer" style="display: none;">
 	<ul>
 		<li :id="key" v-for="(item , key) in footer_nav" @click="open(key);">
@@ -15,6 +16,8 @@
 	// header 渲染
 	function init_header(show) {
 	    if(show == 'no') return false;
+
+	    $('#header').show();
 	    var dom_id = '#header';
 	    if(show != 'yes')
 	    {
@@ -23,80 +26,16 @@
 	    new Vue({
 	        el: dom_id,
 	        data: {
-	            router : window.location.pathname.split('/').slice(1,2),
-	            cuupage : window.location.pathname.split('/').pop(),
-	            header_nav : {
-	                index :{
-	                    'name' : '推荐',
-	                    'nav' : true,
-	                },
-	                article : {
-	                    'name' : '文章',
-	                    'nav' : true,
-	                },
-	                project : {
-	                    'name' : '项目',
-	                    'nav' : false,
-	                },
-	                activity : {
-	                    'name' : '活动',
-	                    'nav' : true,
-	                },
-	                wemall : {
-	                    'name' : '商城',
-	                    'nav' : true,
-	                }
-	            },
-	            page : '',
+	           plats : plats_info
 	        },
 	        watch: {
-	            page(val)
-	            {
-	                if(this.cuupage != val)
-	                {
-	                    var mod = '';
-	                    if(val != 'index')
-	                    {
-	                        mod = '/'+ val;
-	                    }
-	                    window.location.href= all_domian + this.router + mod;
-	                }
-	            }
+	          
 	        },
 	        mounted() {
 	            this.$nextTick( function () {
-	            	var title = '';
-	                // 当根路由变成 discovery 改变导航字样
-	                if(is_domain == 'no')
-	                {
-	                    this.header_nav.index.name = '动态';
-	                    this.router = 'discovery';
-	                    title = '动态';
-	                    // $app.set_title('动态');
-	                }
-	                else
-	                {
-	                    this.router = pages_index;
-	                    // if(pages_info.)
-	                    title = pages_info.plats_show.head_title;
-	                }
-	                // 当俩个接点相同肯定是微主页首页
-	                if(this.cuupage == this.router || this.cuupage == 'dynamic')
-	                {
-	                    this.cuupage = 'index';
-	                }
-	                else
-	                {
-	                	title = this.header_nav[this.cuupage].name + '-' +  title;
-	                }
-
-	                this.title(title);
 	            });
 	        },
 	        methods:{
-	        	title (title){
-	        		$app.set_title(title);
-	        	}
 	        }
 	    });
 	}
