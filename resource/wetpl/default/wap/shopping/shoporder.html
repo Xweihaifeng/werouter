@@ -12,8 +12,8 @@
 <div class="main">
     <div  class="address" @click="get_address_list">
         <div>
-            <p>收货人 ：关钊  15249211010</p>
-            <p>收货人 ：北京市 密云县 闸北西路88号小区</p>
+            <p>收货人 ：{{order_address_default.name}}  {{order_address_default.name}}</p>
+            <p>收货人 ：{{order_address_default.province_name}} {{order_address_default.area_name}} {{order_address_default.detail}}</p>
         </div>
     </div>
 </div>
@@ -29,8 +29,9 @@ new Vue({
         'order_address_default' : {},
     },
     mounted: function(){
-        this.get_address_list();
-
+        this.$nextTick(()=>{
+            this.get_address_list();
+        });
     },
     methods:{
         // 获取全部收货地址
@@ -41,6 +42,7 @@ new Vue({
 
                 if(this.order_address_list.length > 0)
                 {
+
                     // 遍历元素获取默认的收货地址.
                     for(var item of this.order_address_list)
                     {
@@ -50,6 +52,7 @@ new Vue({
                             break;
                         }
                     }
+
                     // 如果没有默认收货地址,获取第一条收货地址
                     if($app.empty(this.order_address_default) == false)
                     {
@@ -66,7 +69,7 @@ new Vue({
         // 添加收货地址方法
         add_address()
         {   
-            alert('添加收货地址');
+            
         },
         // 修改收货地址
         up_address()

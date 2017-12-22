@@ -10,12 +10,12 @@
 	<script type="text/javascript" src="{{PATH_CONFIG}}"></script>
 	<script src="/common/public/zepto.min.js"></script>
 	<script src="/common/public/js/app.js"></script>
-
+	
 	<script src="/common/iview/vue.min.js"></script>
 	<script src="/common/iview/axios.min.js"></script>
 	<script src="/common/iview/libs/util.js"></script>
 	<script src="/common/iview/libs/filter.js"></script>
-
+	
 	<script src="/common/public/js/mobile_common_ajax.js"></script>
 	<script src="/common/public/js/wx.js"></script>
 	
@@ -23,7 +23,23 @@
 	<link rel="stylesheet" href="/common/public/zepto-dropload/dropload.css">
 	<script src="/common/public/zepto-dropload/dropload.min.js"></script>
 	
+	<!-- 弹出层组件 -->
+	<link rel="stylesheet" href="/common/public/zepto-dialog/css/dialog.css">
+	<script src="/common/public/zepto-dialog/dialog.js"></script>
+	
 	<script type="text/javascript">
+	
+		// 移动端临时-弹出窗口
+		function mb_message(message)
+		{
+			if(message == '') return true;
+			$.dialog({
+				type : 'info',
+				showTitle : false,
+				contentHtml : '<p class="info-text">'+message+'</p>',
+				autoClose : 2500
+			});
+		}
 		var show = {
 			'header' : 'yes' ,
 			'footer' : 'yes' 

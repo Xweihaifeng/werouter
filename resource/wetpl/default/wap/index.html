@@ -1,6 +1,7 @@
-<#include#>public/common/public.html</#include#>
-<#include#>public/common/mobile_login.html</#include#>
-
+<#extend#>public/coc/coc_extend.html</#extend#>
+<script type="text/javascript">
+	show.header = 'no';
+</script>
 <link rel="stylesheet" href="{{PATH_TML}}css/coc/mtcstyle.css">
 <script src="{{PATH_TML}}js/coc/swipe.min.js"></script>
 <div id="viewport" class="viewport">
@@ -151,7 +152,7 @@
 
 <script>
 	var app = new Vue({
-		el: '#viewport',
+		el: '#app',
 		data: {
 			news: [],
 			especial_news: [],
@@ -185,4 +186,3 @@
 		},
 	});
 </script>
-
