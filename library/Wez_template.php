@@ -97,6 +97,7 @@ class Wez_template
 			{
 				$replace_content = self::{'_'.$value}($replace_value[$key] , $file , $directory);
 				$content = str_replace($replace_key[$key], $replace_content , $content);
+				
 			}
 			else
 			{
@@ -109,6 +110,7 @@ class Wez_template
 		{
 			$content = self::{'_'.$last['key']}($last['value'] , $file , $directory , $content , $last['lable']);
 		}
+		$content = str_replace('{{PATH_TML}}', $file.$directory.'/' , $content);
 		return $content;
 	}
 

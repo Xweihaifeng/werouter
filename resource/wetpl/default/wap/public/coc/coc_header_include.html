@@ -1,58 +1,8 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="https://www.w3.org/1999/xhtml" ng-app="myApp">
-<head>
-    <title></title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui"/>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-	<link rel="shortcut icon" id="favicon" href="http://images.wezchina.com/plats/resource/1505225663330.ico">
-    <script type="text/javascript" src="{{PATH_CONFIG}}"></script>
-    <script src="/common/public/zepto.min.js"></script>
-    <script src="/common/iview/vue.min.js"></script>
-    <script src="/common/iview/axios.min.js"></script>
-    <script src="/common/iview/libs/util.js"></script>
-    <script src="/common/public/js/app.js"></script>
-    <script src="/common/public/js/wx.js"></script>
-    <script type="text/javascript">
-        var show = {
-            'header' : 'yes' ,
-            'footer' : 'yes' 
-        };
-        $wx.get_openid();
-    </script>
-    
-	<style type="text/css">
-        [v-cloak] {
-            display: none;
-        }
-        .header_selecte {
-            color: rgb(153, 153, 153); border-bottom: 2px solid rgb(37, 195, 254) !important; 
-        }
+<link rel="stylesheet" href="/resource/wetpl/default/wap/css/home.css">
+<link rel="stylesheet" href="/resource/wetpl/default/wap/css/common.css">
+<link rel="stylesheet" href="/resource/wetpl/default/wap/css/swiper.min.css">
+<link rel="stylesheet" href="/common/jquery.animsition/css/animsition.min.css">
 
-        .header_no_select {
-            color: rgb(51, 51, 51); border-bottom: none !important;
-        }
-
-        .footer_selecte {
-            color: rgb(153, 153, 153); 
-        }
-        .layui-m-layercont {
-            padding: 10px 10px;
-            line-height: 22px;
-            text-align: center;
-        }
-    </style>
-</head>   
-<body class="animsition" style="animation-duration: 0.3s; opacity: 1;">    
-
-<div id="header" v-cloak>
-    <nav>
-        <ul>
-            <li v-for="(item , key) in header_nav" @click="page=key"  :class="{'header_selecte' : key == cuupage}">{{item.name}}</li>
-            <li  id="my-center"><img src="/common/img/adds.png" alt="add"></li>
-        </ul>
-    </nav>
-</div>
 
 
 

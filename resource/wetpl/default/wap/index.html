@@ -1,11 +1,47 @@
-<#include#>public/common/public.html</#include#>
-<#include#>public/common/mobile_login.html</#include#>
-
+<#extend#>public/coc/coc_extend.html</#extend#>
+<script type="text/javascript">
+	show.header = 'no';
+</script>
 <link rel="stylesheet" href="{{PATH_TML}}css/coc/mtcstyle.css">
 <script src="{{PATH_TML}}js/coc/swipe.min.js"></script>
 <div id="viewport" class="viewport">
 	<div class="header">
-		<i class="m_logo"><img :src="plats.logo | img_src(60,60)"></i>
+		<i class="m_logo"><!-- <img :src="plats.logo | img_src(60,60)"> --></i>
+	</div>
+
+	<div class="clear"></div>
+<!-- 	<div class="syywtj_dh"><img src="{{PATH_TML}}img/index/hs_ic.jpg">
+		<h1>要闻推荐</h1></div> -->
+
+<!-- 	<div class="clear"></div> -->
+	<!--图片轮换开始-->
+    <div class="banner1">
+		<div id='mySwipe' class='swipe'>
+			<div class='swipe-wrap'>
+				<div v-for="(item,index) in especial_news"> 
+					<a><img :src="item.thumb_image | img_src(300 , 200 , 1)" width="100%" /></a> 
+					<div
+					class="mySwipeceng">
+						<div class="left"><b style='font-weight:normal; color:'>崔歆在党建联系点调研党建工作</b></div>
+						<div class="mySwip_rg"> <span class="mySwipetabdiancurr"></span><span class="mySwipetabdian"></span>
+							<span class="mySwipetabdian"></span>
+						</div>
+					</div>
+				</div>
+			</div>
+        </div>
+    </div>
+	 <div class="clear"></div>
+	<!--图片轮换结束-->
+
+	<div class="sytjlb">
+		<ul>
+			<li v-for="item in news">
+				<a :href="'news/' + item.weid | href"><span class="sytjlb_fl">[{{item.cate_title}}]</span>
+					<h2><b style="font-weight:normal; color:">{{item.title}}</b></h2><span class="sytjlb_sj">{{item.created_at | formateTime('YMDHM')}}</span>
+				</a>
+			</li>
+		</ul>
 	</div>
 	<div class="clear"></div>
 	<div class="syflbg">
@@ -51,40 +87,6 @@
 			</form>
 		</div>
 		<!--搜索-->
-	</div>
-	<div class="clear"></div>
-	<div class="syywtj_dh"><img src="{{PATH_TML}}img/index/hs_ic.jpg">
-		<h1 onclick="location.href='/index6'">要闻推荐</h1></div>
-
-	<div class="clear"></div>
-	<!--图片轮换开始-->
-    <div class="banner1">
-		<div id='mySwipe' class='swipe'>
-			<div class='swipe-wrap'>
-				<div v-for="(item,index) in especial_news"> 
-					<a><img :src="item.thumb_image | img_src(300 , 200 , 1)" width="100%" /></a> 
-					<div
-					class="mySwipeceng">
-						<div class="left"><b style='font-weight:normal; color:'>崔歆在党建联系点调研党建工作</b></div>
-						<div class="mySwip_rg"> <span class="mySwipetabdiancurr"></span><span class="mySwipetabdian"></span>
-							<span class="mySwipetabdian"></span>
-						</div>
-					</div>
-				</div>
-			</div>
-        </div>
-    </div>
-	 <div class="clear"></div>
-	<!--图片轮换结束-->
-
-	<div class="sytjlb">
-		<ul>
-			<li v-for="item in news">
-				<a :href="'news/' + item.weid | href"><span class="sytjlb_fl">[{{item.cate_title}}]</span>
-					<h2><b style="font-weight:normal; color:">{{item.title}}</b></h2><span class="sytjlb_sj">{{item.created_at | formateTime('YMDHM')}}</span>
-				</a>
-			</li>
-		</ul>
 	</div>
 	<!--重点专题-->
 	<div class="syzdzt_dh"><img src="{{PATH_TML}}img/index/hs_ic.jpg">
@@ -135,23 +137,16 @@
 		<div class="clear"></div>
 	</div>
 	<!--快捷服务-->
-	<div class="fooder">
-		<div class="fooder_pc">
-			<img src="{{PATH_TML}}img/index/db01.png"><img src="{{PATH_TML}}img/index/db02.png"></div>
-		<div class="fooder_tel">
-			<a href="http://m.new.wezchina.com/">手机版</a>|
-			<a href="http://new.wezchina.com/">PC版</a>
-		</div>
-		<div class="fooder_wz">
-			版权所有：秦川市人民政府　陕ICP备09018839号<br> 组织建设：秦川市人民政府办公室 您是第80404690位访客<br> 运行维护：秦川市电子政务办公室&nbsp;&nbsp;&nbsp;&nbsp; 运维电话：0919-3183128
-		</div>
-	</div>
-
 </div>
+<div class="fooder">
 
+	<div class="fooder_wz">
+		版权所有：秦川市人民政府　陕ICP备09018839号<br> 组织建设：秦川市人民政府办公室 您是第80404690位访客<br> 运行维护：秦川市电子政务办公室&nbsp;&nbsp;&nbsp;&nbsp; 运维电话：0919-3183128
+	</div>
+</div>
 <script>
 	var app = new Vue({
-		el: '#viewport',
+		el: '#app',
 		data: {
 			news: [],
 			especial_news: [],
@@ -185,4 +180,3 @@
 		},
 	});
 </script>
-

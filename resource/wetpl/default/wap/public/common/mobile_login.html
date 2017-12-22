@@ -63,6 +63,7 @@ function mb_login(href){
                         } , 1000);
                     },
                     code (){
+     
                         if(!this.verification.phone.test(this.login.phone)) 
                         { 
                             mb_message('手机号不对');
@@ -119,14 +120,5 @@ function mb_login(href){
     });
 }
 
-// 弹出窗口
-function mb_message(message)
-{
-    layer.open({
-        content: message
-        ,skin: 'msg'
-        ,time: 2 //2秒后自动关闭
-    });
-}
 </script>
 

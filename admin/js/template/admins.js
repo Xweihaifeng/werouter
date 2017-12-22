@@ -62,7 +62,8 @@ $(document).ready(function() {
     init();
 
     $('#confirm').click(function() {
-        var dataId = $(this).attr('data-id');
+        //var dataId = $(this).attr('data-id');
+        var dataId = '21f770b0-e6c7-11e7-8c89-4b981a8be892';
         $.ajax({
             url: ApiUrl + "admins/" + dataId,
             type: 'DELETE',

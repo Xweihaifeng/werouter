@@ -15,7 +15,7 @@ const domainHost = window.location.host;
 
 const controlUrl = 'https://mp.wezchina.com/api/menu_config?mark=';
 
-const ApiMaterPlatQiniuDomain =  httpType + '//' + plats_qiniu.domain_custom + '/';
+const ApiMaterPlatQiniuDomain = httpType + '//' + plats_qiniu.domain_custom + '/';
 
 //七牛图片配置
 var imgSet = function(path, width, height, mode) {
@@ -218,10 +218,15 @@ const ACTIVITY_TICKET_LISTS = apiUrl + 'activity/ticket/lists'; // 门票 - 列�
 const ACTIVITY_ADDVIEW = apiUrl + 'activity/addview'; // 活动 - 增加用户浏览量
 const ACTIVITY_COLLECTION_STORE = apiUrl + 'activity/collection/store'; // 活动 - 收藏 - 保存
 const ACTIVITY_COLLECTION_ISCOLLECTION = apiUrl + 'activity/collection/iscollection'; // 活动 - 收藏 - 用户是否收藏
+
 const ACTIVITY_ENROLL_STORE = apiUrl + 'activity/enroll/store'; // 活动 -报名 - 保存
 const ACTIVITY_ENROLL_DETAIL = apiUrl + 'activity/enroll/detail'; // 活动 -报名 - 详情
 const ACTIVITY_ENROLL_LISTS = apiUrl + 'activity/enroll/lists'; // 活动 -报名 - 列表
 const ACTIVITY_ENROLL_DESTROY = apiUrl + 'activity/enroll/destroy'; // 活动 - 报名 - 删除
+const ACTIVITY_ENROLL_COUNT = apiUrl + 'activity/enroll/count'; // 活动 - 报名 - 人数
+const ACTIVITY_ENROLL_TICKETS = apiUrl + 'activity/enroll/tickets'; // 活动 - 报名 - 售票状况
+
+
 const ACTIVITY_COLLECTION_LISTBYUSER = apiUrl + 'activity/collection/listbyuser'; // 活动 - 收藏 - 列表（根据用户id）
 const ACTIVITY_COLLECTION_LISTS = apiUrl + 'activity/collection/lists'; // 活动 - 收藏 - 列表
 const ACTIVITY_ENROLL_ISENROLL = apiUrl + 'activity/enroll/isEnroll'; // 活动 - 收藏 - 列表
