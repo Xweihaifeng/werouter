@@ -1,162 +1,157 @@
 <#extend#>public/coc/coc_extend.html</#extend#>
 <script type="text/javascript">
-	show.header = 'no';
+    show.header = 'no';
 </script>
-<style type="text/css">
-	.syzdzt_pcmr ul li {
-	    width: 50% !important;
-	    float: left;
-	    margin: 5px 0px;
-	}
-</style>
-<link rel="stylesheet" href="{{PATH_TML}}css/coc/mtcstyle.css">
+
+<link rel="stylesheet" href="{{PATH_TML}}css/coc/pub_index.css">
 <script src="{{PATH_TML}}js/coc/swipe.min.js"></script>
 <!-- <link rel="stylesheet" href="/common/public/hivideo-master/">
 <script src="/common/public/hivideo-master/assets/hivideo.css"></script> -->
 <div id="viewport" class="viewport">
-	<div class="header">
-		<img :src="plats.wap_logo | img_src(60,60)">
-	</div>
+    <div class="header">
+        <img :src="plats.wap_logo | img_src(60,60)">
+    </div>
 
-		
-	<div class="syywtj_dh"><img src="{{PATH_TML}}img/index/hs_ic.jpg"><h1>要闻推荐</h1></div>
-	<div class="clear"></div>
-	<!--图片轮换开始-->
+    <div class="clear"></div>
+    <!--图片轮换开始-->
     <div class="banner1">
-		<div id='mySwipe' class='swipe'>
-			<div class='swipe-wrap'>
-				<div v-for="(item,index) in especial_news" v-if="index<3"> 
-					<a><img :src="item.thumb_image | img_src(413 , 230 , 1)"    /></a> 
-					<div
-					class="mySwipeceng">
-						<div class="left"><b style='font-weight:normal; color:'>崔歆在党建联系点调研党建工作</b></div>
-						<div class="mySwip_rg"> <span class="mySwipetabdiancurr"></span><span class="mySwipetabdian"></span>
-							<span class="mySwipetabdian"></span>
-						</div>
-					</div>
-				</div>
-			</div>
+        <div id='mySwipe' class='swipe'>
+            <div class='swipe-wrap'>
+                <div v-for="(item,index) in especial_news" v-if="index<3"> 
+                    <a><img :src="item.thumb_image | img_src(413 , 230 , 1)"    /></a> 
+                    <div
+                    class="mySwipeceng">
+                        <div class="left"><b style='font-weight:normal; color:'>崔歆在党建联系点调研党建工作</b></div>
+                        <div class="mySwip_rg"> <span class="mySwipetabdiancurr"></span><span class="mySwipetabdian"></span>
+                            <span class="mySwipetabdian"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-	 <div class="clear"></div>
-	<!--图片轮换结束-->
-	<div class="sytjlb">
-		<ul>
-			<li v-for="item in news">
-				<a :href="'news/' + item.weid | href"><span class="sytjlb_fl">[{{item.cate_title}}]</span>
-					<h2><b style="font-weight:normal; color:">{{item.title}}</b></h2><span class="sytjlb_sj">{{item.created_at | formateTime('YMD')}}</span>
-				</a>
-			</li>
-		</ul>
-	</div>
-	<div class="clear"></div>
+     <div class="clear"></div>
+    <!--图片轮换结束-->
+        
+    <div class="syywtj_dh"><span class="sup"></span><h1>要闻推荐</h1></div>
+    <div class="clear"></div>
+    <div class="sytjlb">
+        <ul>
+            <li v-for="item in news">
+                <a :href="'news/' + item.weid | href"><span class="sytjlb_fl">[{{item.cate_title}}]</span>
+                    <h2><b style="font-weight:normal; color:">{{item.title}}</b></h2><span class="sytjlb_sj">{{item.created_at | formateTime('YMD')}}</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="clear"></div>
 
-	
-	<!--视频中心-->
-	<div class="syzdzt_dh"><img src="{{PATH_TML}}img/index/hs_ic.jpg">
-		<h1>视频中心</h1></div>
-	<div class="clear"></div>
-	<div class="syzdzt_pc">
-		<div class="syzdzt_pcmr">
-			<ul @click="video();">	
-				<img src="/common/img/index/video.png" width="98%" height="98%" />
-			</ul>
-		</div>
-<!-- 	    <div class="main-wrap">
-	        <video ishivideo="true" autoplay="false" isrotate="true" autoHide="false">
-	            <source src="http://image.qqxqs.com/qqxqs_video.mp4" type="video/mp4">
-	        </video>
-	    </div> -->
-		<div class="clear"></div>
-	</div>
-	<!--视频中心-->
+    
+    <!--视频中心-->
+    <div class="syzdzt_dh"><span class="sup"></span><h1>视频中心</h1></div>
+    <div class="clear"></div>
+    <div class="syzdzt_pc">
+        <div class="syzdzt_pcmr">
+            <ul @click="video();">
+                <img src="/common/img/index/video.png" width="100%" height="100%" />
+            </ul>
+        </div>
+<!--         <div class="main-wrap">
+            <video ishivideo="true" autoplay="false" isrotate="true" autoHide="false">
+                <source src="http://image.qqxqs.com/qqxqs_video.mp4" type="video/mp4">
+            </video>
+        </div> -->
+        <div class="clear"></div>
+    </div>
+    <!--视频中心-->
 
-	<div class="syzdzt_dh"><img src="{{PATH_TML}}img/index/hs_ic.jpg">
-		<h1>重点专题</h1></div>
-	<div class="clear"></div>
-	<div class="syzdzt_pc">
-		<div class="syzdzt_pcmr">
-			<ul>
-				<li v-for="item in ztbd.list">
-					<a :href="ztbd.domain + '/'+ item.domain | href"><img :src="item.thumb_image | img_src"></a>
-				</li>
+    <div class="syzdzt_dh"><span class="sup"></span><h1>重点专题</h1></div>
+    <div class="clear"></div>
+    <div class="syzdzt_pc">
+        <div class="syzdzt_pcmr">
+            <ul>
+                <li v-for="item in ztbd.list">
+                    <a :href="ztbd.domain + '/'+ item.domain | href"><img :src="item.thumb_image | img_src"></a>
+                </li>
+            </ul>
+        </div>
+        <div class="clear"></div>
+    </div>
 
-			</ul>
-		</div>
-		<div class="clear"></div>
-	</div>
-
-	<!--重点专题 end-->
-	<!--快捷服务-->
-	<div class="syzdzt_dh"><img src="{{PATH_TML}}img/index/hs_ic.jpg">
-		<h1>快捷直通</h1></div>
-	<div class="clear"></div>
-	<div class="sykjfw">
-		<div class="sykjfw_mar">
-			<ul>
-				<li>
-					<a :href="'org' | href"><span><img width="74" height="74" src="/common/img/index/org.png"></span>
-						<h2>走近秦商</h2></a>
-				</li>
-				<li>
-					<a :href="'news' | href"><span><img src="/common/img/index/news.png"></span>
-						<h2>新闻中心</h2></a>
-				</li>
-				<li>
-					<a :href="'magazine/qinshang' | href"><span><img src="/common/img/index/magazine.png"></span>
-						<h2>秦商杂志</h2></a>
-				</li>
-				<li>
-					<a :href="'index' | href"><span><img src="/common/img/index/index.png"></span>
-						<h2>秦商官微</h2></a>
-				</li>
-				<li>
-					<a :href="'so' | href"><span><img src="/common/img/index/so.png"></span>
-						<h2>搜索中心</h2></a>
-				</li>
-			</ul>
-		</div>
-		<div class="clear"></div>
-	</div>
-	<!--快捷服务-->
+    <!--重点专题 end-->
+    <!--快捷服务-->
+    <div class="syzdzt_dh"><span class="sup"></span><h1>快捷直通</h1></div>
+    <div class="clear"></div>
+    <div class="sykjfw">
+        <div class="sykjfw_mar">
+            <ul>
+                <li>
+                    <a :href="'org' | href"><span><img width="74" height="74" src="/common/img/index/org.png"></span>
+                        <h2>走近秦商</h2>
+                    </a>
+                </li>
+                <li>
+                    <a :href="'news' | href"><span><img src="/common/img/index/news.png"></span>
+                        <h2>新闻中心</h2>
+                    </a>
+                </li>
+                <li>
+                    <a :href="'magazine/qinshang' | href"><span><img src="/common/img/index/magazine.png"></span>
+                        <h2>秦商杂志</h2>
+                    </a>
+                </li>
+                <li>
+                    <a :href="'index' | href"><span><img src="/common/img/index/index.png"></span>
+                        <h2>秦商官微</h2>
+                    </a>
+                </li>
+                <li>
+                    <a :href="'so' | href"><span><img src="/common/img/index/so.png"></span>
+                        <h2>搜索中心</h2>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <!--快捷服务-->
 </div>
 
 <script>
-	var app = new Vue({
-		el: '#app',
-		data: {
-			news: [],
-			especial_news: [],
-			ztbd : [],
-			plats : plats_info
-		},
+    var app = new Vue({
+        el: '#app',
+        data: {
+            news: [],
+            especial_news: [],
+            ztbd : [],
+            plats : plats_info
+        },
         mounted: function() {
-        	$app.set_title(plats_info.title);
-        	this.$nextTick(()=>{
-        		ajax.get('cms/index/grid').then((res) => {
-	                if (res.code === 200) {
-	                    this.news = res.data.news;
-	                    this.especial_news = res.data.especial_news;
-	                    this.ztbd = res.data.ztbd;
-	                    this.$nextTick(()=>{
-			            	this.swiper();
-			        	});
-	                } 
-	            });
-        	});
-
-		},
-		methods: {
-			swiper() {
-				var elem = document.getElementById('mySwipe');
-				Swipe(elem, {
-					startSlide: 0,
-					auto: 3000,
-					continuous: true,
-					disableScroll: true,
-					stopPropagation: true
-				});
-			}
-		},
-	});
+            $app.set_title(plats_info.title);
+            this.$nextTick(()=>{
+                ajax.get('cms/index/grid').then((res) => {
+                    if (res.code === 200) {
+                        this.news = res.data.news;
+                        this.especial_news = res.data.especial_news;
+                        this.ztbd = res.data.ztbd;
+                        this.$nextTick(()=>{
+                            this.swiper();
+                        });
+                    } 
+                });
+            });
+        },
+        methods: {
+            swiper() {
+                var elem = document.getElementById('mySwipe');
+                Swipe(elem, {
+                    startSlide: 0,
+                    auto: 3000,
+                    continuous: true,
+                    disableScroll: true,
+                    stopPropagation: true
+                });
+            }
+        },
+    });
 </script>
