@@ -154,4 +154,24 @@ $(document).ready(function() {
         );
     }
 	init();
+    $(".wenhao").hover(function(){
+        $(".wenhao-tishi").show();
+    },function(){
+        $(".wenhao-tishi").hide();
+    });
+    $(".wenhao1").hover(function(){
+        $(".wenhao-tishi1").show();
+    },function(){
+        $(".wenhao-tishi1").hide();
+    });
+    $(".wenhao2").hover(function(){
+        $(".wenhao-tishi2").show();
+    },function(){
+        $(".wenhao-tishi2").hide();
+    });
+    $(".wenhao3").hover(function(){
+        $(".wenhao-tishi3").show();
+    },function(){
+        $(".wenhao-tishi3").hide();
+    });
 });
