@@ -8,9 +8,9 @@ $(document).ready(function() {
                 data: {},
                 "dataSrc": function(json) {
                     var leng = json.data.list.length;
-                    for (var i = leng - 1, j = 0; i >= 0; i--, j++) {
+                    for (var i = 0; i < leng; i++) {
                         var _init = json.data.list[i].init;
-                        switch (json.data.list[j].status) {
+                        switch (json.data.list[i].status) {
                             case 1:
                                 status = '正常';
                                 break;
@@ -21,9 +21,9 @@ $(document).ready(function() {
                                 status = '禁用';
                                 break;
                         }
-                        json.data.list[j].id = i + 1;
-                        json.data.list[j].status = status;
-                        json.data.list[j].operation = '<a href="admin_edit.html?weid=' + json.data.list[i].weid + '" class="btn btn-success" style="margin-right:10px;">详情</a>' +
+                        json.data.list[i].id = i + 1;
+                        json.data.list[i].status = status;
+                        json.data.list[i].operation = '<a href="admin_edit.html?weid=' + json.data.list[i].weid + '" class="btn btn-success" style="margin-right:10px;">详情</a>' +
                             '<a href="admin_edit.html?weid=' + json.data.list[i].weid + '" class="btn btn-info" style="margin-right:10px;">编辑</a>' +
                             '<a title = "删除" class="btn btn-danger" data-toggle="modal" data-target="#myModal" data-id="' + json.data.list[i].weid + '" data-name="' + json.data.list[i].name + '"  href="#">删除</a>'
                     }
