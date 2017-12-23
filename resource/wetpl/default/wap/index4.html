@@ -47,11 +47,11 @@
     <!--头条 end-->
 
     <!--内容一-->
-    <div id="Tab1" v-for="(item, index) in channel_news">
+    <div :id="'Tab1'+index" class="Tabs" v-for="(item, index) in channel_news">
 
         <div class="Menubox">
             <dl>
-                <dd v-for="(value, key) in item" id="one1" @click="setTab(value.title, key)" :class="key % 2 === 0? 'hover' : ''">
+                <dd v-for="(value, key) in item" :id="'one'+key" @click="setTab(value.title, key)" :class="key % 2 === 0? 'hover' : ''">
 					{{value.title}}
 					<li v-html="value.detail"></li>
                 </dd>
