@@ -2,37 +2,40 @@ maqfn
 
 <link rel="stylesheet" href="/resource/wetpl/default/wap/css/act.css"/>
 <link rel="stylesheet" href="/resource/wetpl/default/wap/css/article.css"/>
-<link rel="stylesheet" href="/resource/wetpl/default/wap/css/shopping.css"/>
-
+<!--<link rel="stylesheet" href="/resource/wetpl/default/wap/css/shopping.css"/>-->
+<!--<link rel="stylesheet" href="{{PATH_TML}}css/my-shopping.css"/>-->
 <div class="latest">最新推荐</div>
 <div id="container" class="my_container">
     <div v-for="item in list_data">
         <a :href="item.domain + '/article/' + item.relation_id  | href"  v-if="item.dynamic_type == 1">
             <div class="art-content" >
                 <span><img class="lazy" :src="JSON.parse(item.other).cover | img_src(110, 69, 1)" width="110" height="69" /></span>
-                <span style="padding: 0.1rem 0.1rem 0.15rem 0.25rem !important;" class="art-des-text">
-                    <strong>{{JSON.parse(item.other).title}}</strong>
-                    <pre>{{ item.motto}}</pre>              
+                <span style="padding-left:0.1rem;" class="art-des-text">
+                    <strong>{{JSON.parse(item.other).title | limitLen(0,15) }}</strong>
+                    <pre>{{item.motto | limitLen(0,55) }}</pre>
                 </span>
             </div>
         </a>
-<!--         <div class="lii_sold" v-if="item.dynamic_type == 4">
+        <div v-if="item.dynamic_type == 4">
             <a :href="item.domain + '/wemall/goods/' + item.relation_id  | href">
-                <slide class="li_img_wap">
-                    <img class="lazy" :src="JSON.parse(item.other).cover | img_src(110, 69, 1)" width="110" height="69" />
-                </slide>
-                <slide class="li_info">
-                    <h3>{{JSON.parse(item.other).title}}</h3>
-                    <p class="lii_sold1"><span> 已售：{{JSON.parse(item.other).sales_num}} </span><span> 收藏：{{JSON.parse(item.other).comment_num}} </span></p>
-                    <div class="lii_price">￥：<span>{{JSON.parse(item.other).price}}</span></div>
-                </slide>
+                <div class="art-content" style="background: #fff;">
+                    <div class="act-cover">
+                        <img class="lazy" :src="JSON.parse(item.other).cover | img_src(110, 69, 1)" width="110" height="69" />
+                    </div>
+                    <span style="padding-left:0.1rem;" class="art-des-text">
+                        <strong>{{JSON.parse(item.other).title}}</strong>
+                        <p class="for-good">
+                            <span> 已售：{{JSON.parse(item.other).sales_num ? JSON.parse(item.other).sales_num : 0}} 收藏：{{JSON.parse(item.other).comment_num ? JSON.parse(item.other).comment_num : 0}} </span>
+                            <span>￥{{JSON.parse(item.other).price}}</span>
+                        </p>
+                    </span>
+                </div>
             </a>
-        </div> -->
+        </div>
         <a v-if="item.dynamic_type == 3" :href="item.domain + '/activity/' + item.relation_id  | href">
-        <div class="act-content" style="background: #fff;width: 100%; height:90px;">
+        <div class="art-content" style="background: #fff;">
             <div class="act-cover">
                 <img class="lazy" :src="JSON.parse(item.other).cover | img_src(110, 69, 1)" width="110" height="69" />
-
             </div>
             <div class="act-cont">
                 <ul>

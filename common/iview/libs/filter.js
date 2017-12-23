@@ -67,9 +67,11 @@ Vue.filter('formateTime',function (value,type) {
 });
 
 Vue.filter('limitLen',function (value,min,max) {
-    if($app.empty(value) == false) return false;
-    if(value.length > max){
-        value = value.substring(min,max) + '...'
+    // if($app.empty(value) == false) return false;
+    if(value){
+        if(value.length > max){
+            value = value.substring(min,max) + '...'
+        }
     }
     return value;
 })
