@@ -14,24 +14,22 @@
             <div class="time t_for_lists">
                 <span>{{getTimeTip(value)}}</span>
             </div>
-            <div v-for="(item,index) in value">
-                <div class="lists">
-                    <a :href="'/' + domain + '/article/' + item.weid | href">
-                        <div v-if="index==0" :style="'background-image:url('+item.cover+')'">
+            <div class="lists">
+                <a :href="'/' + domain + '/article/' + item.weid | href" v-for="(item,index) in value">
+                    <div v-if="index==0" :style="'background-image:url('+item.cover+')'">
+                        <label>
+                            <span>{{item.title}}</span>
+                        </label>
+                    </div>
+                    <p v-if="index>0">
+                        <label>
+                            <span>{{item.title}}</span>
                             <label>
-                                <span>{{item.title}}</span>
+                                <img :src="item.cover" alt="">
                             </label>
-                        </div>
-                        <p v-if="index>0">
-                            <label>
-                                <span>{{item.title}}</span>
-                                <label>
-                                    <img :src="item.cover" alt="">
-                                </label>
-                            </label>
-                        </p>
-                    </a>
-                </div>
+                        </label>
+                    </p>
+                </a>
             </div>
         </div>
 
