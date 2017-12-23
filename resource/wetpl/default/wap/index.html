@@ -18,10 +18,10 @@
         <div id='mySwipe' class='swipe'>
             <div class='swipe-wrap'>
                 <div v-for="(item,index) in especial_news" v-if="index<3"> 
-                    <a><img :src="item.thumb_image | img_src(413 , 230 , 1)"    /></a> 
+                    <a :href="'news/' + item.weid | href"><img :src="item.thumb_image | img_src(413 , 230 , 1)"    /></a> 
                     <div
                     class="mySwipeceng">
-                        <div class="left"><b style='font-weight:normal; color:'>崔歆在党建联系点调研党建工作</b></div>
+                        <div class="left"><b style='font-weight:normal; color:'>{{item.title}}</b></div>
                         <div class="mySwip_rg"> <span class="mySwipetabdiancurr"></span><span class="mySwipetabdian"></span>
                             <span class="mySwipetabdian"></span>
                         </div>

@@ -14,7 +14,7 @@
         <div class="xinxlt_lb">
             <ul id="con_list">
                 <li v-for="(item, index) in list_data">
-                    <a href="/index7">
+                    <a :href="cate_name+ '/' + item.weid | href">
                         <h2><b style="font-weight:normal" v-html="item.title"></b></h2><span class="dwgklb_sj">{{item.publish_time.substr(0, 10)}}</span></a>
                 </li>
             </ul>

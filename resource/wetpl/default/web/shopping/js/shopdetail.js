@@ -313,13 +313,115 @@ $(document).ready(function() {
 			'</li>';
 		return messhtml;
 	}
+
+	//商品评论分页
+	var commentPagesListTemplete=function (total,page) {
+		//添加元素
+		if($(".pingjianeirong").find(".commentpage").length>0){
+            $(".pingjianeirong").find(".commentpage").empty();
+		}else{
+            $(".pingjianeirong").append('<div class="commentpage" style="text-align: center;"></div>');
+		}
+		if(total!=0){
+            var pageObj=pageListFun(total,page);
+
+
+            var pagestr="";
+            $(".commentpage").append('<ul class="pagination"></ul>');
+            $(".commentpage").find('.pagination').children().remove();
+
+            $(".commentpage").find('.pagination').append('<li id="prev" page="'+pageObj.prevNum+'"><a href="javascript:void(0);">«</a></li>');
+
+            for(i=pageObj.prevNumLenth;i<=pageObj.nextNumLenth;i++){
+				if(i==page){
+                    pagestr+='<li page="'+i+'" class="active"><span>'+i+'</span></li>';
+                }else{
+                    pagestr+='<li page="'+i+'" ><a href="javascript:void(0)" >'+i+'</a></li>';
+                }
+            }
+            $(".commentpage").find('.pagination').append(pagestr);
+            $(".commentpage").find(".pagination").append('<li id="next" page="'+pageObj.nextNum+'"><a href="javascript:void(0)" class="next" rel="next">&raquo;</a></li>');
+            $(".pagination li").bind("click",function(){
+                goodsmess(id,$(this).attr("page"));
+			});
+		}
+	}
+	
+	var pageListFun=function (totalnum,currentnum) {
+        var prevNum=0;
+        var prevNumLenth=0;
+        var nextNum=0;
+        var nextNumLenth=0;
+        var pagenum=parseInt(totalnum);
+
+        if(pagenum>5){
+            nextNumLenth=parseInt(parseInt(currentnum)+2);
+            prevNumLenth=parseInt(parseInt(currentnum)-2);
+            prevNum=parseInt(parseInt(currentnum)-1);
+            nextNum=parseInt(parseInt(currentnum)+1);
+            if(parseInt(parseInt(currentnum)-2)<1){
+                if(parseInt(parseInt(currentnum)-1)<=1){
+                    prevNum=1;
+                }else{
+                    prevNum=parseInt(parseInt(currentnum)-1);
+                }
+                prevNumLenth=1;
+                nextNum=parseInt(parseInt(currentnum)+1);
+                nextNumLenth=parseInt(parseInt(currentnum)+2);
+            }
+            if(parseInt(parseInt(currentnum)+2)>pagenum){
+                if(parseInt(currentnum)<pagenum){
+                    nextNum=parseInt(parseInt(currentnum)+1);
+                }else{
+                    nextNum=parseInt(pagenum);
+                }
+                nextNumLenth=pagenum;
+                prevNum=parseInt(parseInt(currentnum)-1);
+                prevNumLenth=parseInt(parseInt(currentnum)-2);
+            }
+        }else{
+            //全部输出
+            if(pagenum==1){
+                prevNumLenth=1;
+                nextNumLenth=parseInt(pagenum);
+                prevNum=1;
+                nextNum=1;
+            }else{
+                prevNumLenth=1;
+                nextNumLenth=parseInt(pagenum);
+                if(parseInt(currentnum)==1){
+                    prevNum=1;
+                    nextNum=parseInt(parseInt(currentnum)+1);
+                }else{
+                    prevNum=parseInt(parseInt(currentnum)-1);
+                }
+                if(parseInt(currentnum)==parseInt(pagenum)){
+                    prevNum=parseInt(parseInt(currentnum)-1);
+                    nextNum=parseInt(currentnum);
+                }else{
+                    nextNum=parseInt(parseInt(currentnum)+1);
+                }
+            }
+        }
+        //分页 start
+
+        var page = new Object;
+        page.prevNum=prevNum;
+        page.nextNum=nextNum;
+        page.prevNumLenth=prevNumLenth;
+        page.nextNumLenth=nextNumLenth;
+        return page;
+    }
+
 	//商品评论列表
-	var goodsmess = function(id) {
+	var goodsmess = function(id,page) {
 		$.ajax({
 			url: GOODS_COMMENT_LIST,
 			type: 'post',
 			data: {
-				goods_id: id
+				goods_id: id,
+                limit:2,
+                page:page
 			},
 			dataType: 'json',
 			headers: {
@@ -328,10 +430,13 @@ $(document).ready(function() {
 			success: function(data) {
 				// console.log(data);
 				if(data.code == 200) {
+                    $(".pingjianeirong").empty();
 					data.data.list.map(x => {
 						$(".pingjianeirong").append(messtemplete(x));
-
 					})
+					//加入分页
+                    var pagenum=Math.ceil(data.data.total/2);
+					commentPagesListTemplete(pagenum,page);
                     $(".fancybox").fancybox({
                         'width': 'auto',
                         'height': 'auto',
@@ -547,7 +652,7 @@ $(document).ready(function() {
 
 					getprovince(goods.range_id);
 
-					goodsmess(id);
+                    goodsmess(id,1);
 					// console.log(url+"/wemall/order/" + id);
 					// 立即购买
 					$(".buy_btn").bind("click", function() {

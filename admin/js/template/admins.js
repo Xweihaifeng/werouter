@@ -7,7 +7,8 @@ $(document).ready(function() {
                 type: "get",
                 data: {},
                 "dataSrc": function(json) {
-                    for (var i = 0, ien = json.data.list.length; i < ien; i++) {
+                    var leng = json.data.list.length;
+                    for (var i = 0; i < leng; i++) {
                         var _init = json.data.list[i].init;
                         switch (json.data.list[i].status) {
                             case 1:
@@ -22,38 +23,43 @@ $(document).ready(function() {
                         }
                         json.data.list[i].id = i + 1;
                         json.data.list[i].status = status;
-                        json.data.list[i].operation = '<a href="admin_edit.html?weid=' + json.data.list[i].weid + '" class="btn btn-info" style="margin-right:10px;">编辑</a><a title = "删除" class="btn btn-danger" data-toggle="modal" data-target="#myModal" data-id="' + json.data.list[i].weid + '" data-name="' + json.data.list[i].name + '"  href="#">删除</a>'
-                        // json.data.list[i].operation="<a href=cmsadv_edit.html?weid="+json.data.list[i].weid+" class=\"btn btn-info\">编辑</a>&nbsp;&nbsp;<button class=\"btn btn-danger btn-delete\"  data-id="+json.data.list[i].weid+" data-toggle=\"popover\" data-placement=\"left\" data-trigger=\"focus\" data-html=\"true\" title=\"确定要删除？\" data-content=\"<button class='btn btn-danger btn-delete-confirm'  data-id="+json.data.list[i].weid+">确认</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class='btn btn-default'>取消</button>\" >删除</button>";
+                        json.data.list[i].operation = '<a href="admin_edit.html?weid=' + json.data.list[i].weid + '" class="btn btn-success" style="margin-right:10px;">详情</a>' +
+                            '<a href="admin_edit.html?weid=' + json.data.list[i].weid + '" class="btn btn-info" style="margin-right:10px;">编辑</a>' +
+                            '<a title = "删除" class="btn btn-danger" data-toggle="modal" data-target="#myModal" data-id="' + json.data.list[i].weid + '" data-name="' + json.data.list[i].name + '"  href="#">删除</a>'
                     }
 
                     return json.data.list;
-
                 }
             },
             "columns": [
                 { "data": "id" },
                 { "data": "username" },
+                { "data": "role_name" },
                 { "data": "real_name" },
                 { "data": "phone" },
-                { "data": "created_at" },
                 { "data": "status" },
-                { "data": "memo" },
-                { "data": "operation" },
+                { "data": "created_at" },
+                { "data": "operation" }
             ],
             "aoColumnDefs": [
                 { "bSortable": false, "aTargets": [1, 2, 3, 5, 6, 7] }, //can't be sorted
                 { "bSearchable": false, "aTargets": [2, 6, 7] }, //can't be searched
             ],
             "aaSorting": [
-                [0, "ASC"]
+                [5, "DESC"]
             ],
             "oLanguage": {
                 "sLengthMenu": "显示 _MENU_ 记录",
-                                "sZeroRecords": "对不起，查询不到任何相关数据",
+                "sZeroRecords": "对不起，查询不到任何相关数据",
                 "sLoadingRecords": "正在加载数据-请等待...",
-                                "sInfo": "当前显示 _START_ 到 _END_ 条，共 _TOTAL_ 条记录。",
+                "sInfo": "当前显示 _START_ 到 _END_ 条，共 _TOTAL_ 条记录。",
                 "sSearch": "搜索:",
-                "oPaginate": {                        "sFirst": "首页",                         "sPrevious": " 上一页 ",                         "sNext": " 下一页 ",                         "sLast": " 尾页 "                    }
+                "oPaginate": {
+                    "sFirst": "首页",
+                    "sPrevious": " 上一页 ",
+                    "sNext": " 下一页 ",
+                    "sLast": " 尾页 "
+                }
             },
             initComplete: function() {
                 $('[data-toggle="popover"]').popover();
