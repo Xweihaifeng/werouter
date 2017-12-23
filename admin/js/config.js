@@ -156,7 +156,7 @@ var start = function() {
                 setTimeout(function(){
                     swal('提示', '权限不足', 'success');
                 }, 1500);
-                window.location.href = 'index.html';
+                window.location.href = '/admin';
             } else {
                 // console.log(data);
 
