@@ -47,398 +47,18 @@
     <!--头条 end-->
 
     <!--内容一-->
-    <div id="Tab1">
+    <div id="Tab1" v-for="(item, index) in channel_news">
+
         <div class="Menubox">
             <dl>
-                <dd id="one1" onclick="setTab('one',1,2)" class="hover">新闻中心</dd>
-                <dd id="one2" onclick="setTab('one',2,2)" class="">公示公告</dd>
+                <dd v-for="(value, key) in item" id="one1" @click="setTab(value.title, key)" :class="key % 2 === 0? 'hover' : ''">
+					{{value.title}}
+					<li v-html="value.detail"></li>
+                </dd>
+                
             </dl>
         </div>
-        <div class="Contentbox">
-            <div id="con_one_1" class="hover" style="display: block;">
-                <div class="Menumore">
-                    <a href="/index6">更多</a>
-                </div>
-                <ul class="Content_wz">
-                    <li v-for="(item, index) in news">
-                        <a href="/index7">
-                            <h2><b style="font-weight:normal;" v-html="item.title"></b></h2><span class="sytjlb_sj">{{item.created_at | formateTime('YMDHM').substr(0, 10)}}</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            <div id="con_one_2" style="display: none;">
-                <div class="Menumore">
-                    <a href="/index6">更多</a>
-                </div>
-                <ul class="Content_wz">
-                    <li v-for="(item, index) in nitoce">
-                        <a href="/index7">
-                            <h2><b style="font-weight:normal;" v-html="item.title"></b></h2><span class="sytjlb_sj">{{item.created_at | formateTime('YMDHM').substr(0, 10)}}</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <!--内容一 end-->
 
-    <!--内容三-->
-    <div id="Tab1">
-        <div class="Menubox">
-            <dl>
-                <dd id="three1" onclick="setTab('three',1,2)" class="hover">图片新闻</dd>
-                <dd id="three2" onclick="setTab('three',2,2)" class="">视频新闻</dd>
-            </dl>
-        </div>
-        <div class="Contentbox">
-            <div id="con_three_1" class="hover">
-                <div class="Menumore">
-                    <a href="/index6">更多</a>
-                </div>
-                <div class="Contpc">
-                    <div class="Contpc_lb">
-                        <a href="/index6">
-                            <p><img src="{{PATH_TML}}img/index/1513742482503.jpg"></p>
-                            <h2><span><b style="font-weight:normal">李荣检查医疗卫生服务</b></span></h2>
-                        </a>
-                    </div>
-                    <!--Contpc_lb-->
-
-                    <div class="Contpc_lb">
-                        <a href="/index6">
-                            <p><img src="{{PATH_TML}}img/index/1513655494752.jpg"></p>
-                            <h2><span><b style="font-weight:normal">美丽天使　播撒温暖</b></span></h2>
-                        </a>
-                    </div>
-                    <!--Contpc_lb-->
-
-                    <div class="Contpc_lb">
-                        <a href="/index6">
-                            <p><img src="{{PATH_TML}}img/index/1513704196184.JPG"></p>
-                            <h2><span><b style="font-weight:normal">郭大为：用责任担当度</b></span></h2>
-                        </a>
-                    </div>
-                    <!--Contpc_lb-->
-
-                    <div class="Contpc_lb">
-                        <a href="/index6">
-                            <p><img src="{{PATH_TML}}img/index/1513677092034.jpg"></p>
-                            <h2><span><b style="font-weight:normal">杨长亚调研医药卫生体</b></span></h2>
-                        </a>
-                    </div>
-                    <!--Contpc_lb-->
-
-                </div>
-            </div>
-            <div id="con_three_2" style="display:none">
-                <div class="Menumore">
-                    <a href="/index6">更多</a>
-                </div>
-                <div class="Contpc">
-                    <div class="Contsp">
-                        <a href="/index7">
-                            <span><img src="{{PATH_TML}}img/index/1513684525879.png"></span>
-                            <h2><b style="font-weight:normal">秦川新闻联播（2017年12月19日）</b></h2>
-                        </a>
-                    </div>
-                    <!--Contsp-->
-
-                    <div class="Contsp">
-                        <a href="/index7">
-                            <span><img src="{{PATH_TML}}img/index/1513598968972.png"></span>
-                            <h2><b style="font-weight:normal">秦川新闻联播（2017年12月18日）</b></h2>
-                        </a>
-                    </div>
-                    <!--Contsp-->
-
-                    <div class="Contsp">
-                        <a href="/index7">
-                            <span><img src="{{PATH_TML}}img/index/1513425556228.png"></span>
-                            <h2><b style="font-weight:normal">秦川新闻联播（2017年12月16日）</b></h2>
-                        </a>
-                    </div>
-                    <!--Contsp-->
-
-                    <div class="Contsp">
-                        <a href="/index7">
-                            <span><img src="{{PATH_TML}}img/index/1513339627062.jpg"></span>
-                            <h2><b style="font-weight:normal">秦川新闻联播（2017年12月15日）</b></h2>
-                        </a>
-                    </div>
-                    <!--Contsp-->
-
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--内容三 end-->
-
-    <!--内容四-->
-    <div id="Tab1">
-        <div class="Menubox">
-            <dl>
-                <dd id="four1" onclick="setTab('four',1,2)" class="hover">公告公示</dd>
-                <dd id="four2" onclick="setTab('four',2,2)" class="">中省要闻</dd>
-            </dl>
-        </div>
-        <div class="Contentbox">
-            <div id="con_four_1" class="hover">
-                <div class="Menumore">
-                    <a href="/index6">更多</a>
-                </div>
-                <ul class="Content_wz">
-                    <li>
-                        <a href="/index7">
-                            <h2><b style="font-weight:normal">2017年秦川市增补合同制消防员（文</b></h2><span class="sytjlb_sj">2017-12-18</span></a>
-                    </li>
-
-                    <li>
-                        <a href="/index7">
-                            <h2><b style="font-weight:normal">秦川市人民政府办公室 关于进一步加强</b></h2><span class="sytjlb_sj">2017-12-18</span></a>
-                    </li>
-
-                    <li>
-                        <a href="/index7">
-                            <h2><b style="font-weight:normal">全民盯防污染　呵护碧水蓝天 倡议书</b></h2><span class="sytjlb_sj">2017-12-16</span></a>
-                    </li>
-
-                    <li>
-                        <a href="/index7">
-                            <h2><b style="font-weight:normal">2017年秦川市市级党政机关公开遴选</b></h2><span class="sytjlb_sj">2017-12-15</span></a>
-                    </li>
-
-                    <li>
-                        <a href="/index7">
-                            <h2><b style="font-weight:normal">秦川市人民政府关于公布秦川市古树名木</b></h2><span class="sytjlb_sj">2017-12-13</span></a>
-                    </li>
-
-                    <li>
-                        <a href="/index7">
-                            <h2><b style="font-weight:normal">关于开展第一百零四期邀请公民代表走进</b></h2><span class="sytjlb_sj">2017-12-12</span></a>
-                    </li>
-
-                    <li>
-                        <a href="/index7">
-                            <h2><b style="font-weight:normal">2017年北京中医药大学孙思邈医院（</b></h2><span class="sytjlb_sj">2017-12-12</span></a>
-                    </li>
-
-                    <li>
-                        <a href="/index7">
-                            <h2><b style="font-weight:normal">13～17日降雪降温，中南部设施樱桃</b></h2><span class="sytjlb_sj">2017-12-12</span></a>
-                    </li>
-
-                </ul>
-            </div>
-            <div id="con_four_2" style="display:none">
-                <div class="Menumore">
-                    <a href="/index6">更多</a>
-                </div>
-                <ul class="Content_wz">
-                    <li>
-                        <a href="/index7">
-                            <h2><b style="font-weight:normal">陕西航天技术助阿尔及利亚一号通信卫星</b></h2><span class="sytjlb_sj">2017-12-19</span></a>
-                    </li>
-
-                    <li>
-                        <a href="/index7">
-                            <h2><b style="font-weight:normal">陕西渭河获首届全国“最美家乡河”称号</b></h2><span class="sytjlb_sj">2017-12-19</span></a>
-                    </li>
-
-                    <li>
-                        <a href="/index7">
-                            <h2><b style="font-weight:normal">我省建立社会组织管理综合执法联席会议</b></h2><span class="sytjlb_sj">2017-12-19</span></a>
-                    </li>
-
-                    <li>
-                        <a href="/index7">
-                            <h2><b style="font-weight:normal">全国法院基本解决执行难理论与实务经验</b></h2><span class="sytjlb_sj">2017-12-19</span></a>
-                    </li>
-
-                    <li>
-                        <a href="/index7">
-                            <h2><b style="font-weight:normal">我省举办“坚定文化自信 讲好陕西故事</b></h2><span class="sytjlb_sj">2017-12-19</span></a>
-                    </li>
-
-                    <li>
-                        <a href="/index7">
-                            <h2><b style="font-weight:normal">西安绕城高速杏园互通式立交今日通车</b></h2><span class="sytjlb_sj">2017-12-19</span></a>
-                    </li>
-
-                    <li>
-                        <a href="/index7">
-                            <h2><b style="font-weight:normal">电力装备成为陕西制造业第二大产业</b></h2><span class="sytjlb_sj">2017-12-19</span></a>
-                    </li>
-
-                    <li>
-                        <a href="/index7">
-                            <h2><b style="font-weight:normal">前11月陕西省新设外资企业数量同比增</b></h2><span class="sytjlb_sj">2017-12-18</span></a>
-                    </li>
-
-                </ul>
-            </div>
-        </div>
-    </div>
-    <!--内容四 end-->
-
-    <!--内容五-->
-    <div id="Tab1">
-        <div class="Menubox">
-            <dl>
-                <dd id="five1" onclick="setTab('five',1,2)" class="hover">秦川企联</dd>
-                <dd id="five2" onclick="setTab('five',2,2)" class="">秦川经济社会调研</dd>
-            </dl>
-        </div>
-        <div class="Contentbox">
-            <div id="con_five_1" class="hover">
-                <div class="Menumore">
-                    <a href="/index6">更多</a>
-                </div>
-                <ul class="Content_wz">
-                    <li>
-                        <a href="/index7">
-                            <h2><b style="font-weight:normal">2017第五期秦川企联</b></h2><span class="sytjlb_sj">2017-11-03</span></a>
-                    </li>
-
-                    <li>
-                        <a href="/index7">
-                            <h2><b style="font-weight:normal">2017第四期秦川企联</b></h2><span class="sytjlb_sj">2017-08-30</span></a>
-                    </li>
-
-                    <li>
-                        <a href="/index7">
-                            <h2><b style="font-weight:normal">2017第三期秦川企联</b></h2><span class="sytjlb_sj">2017-07-07</span></a>
-                    </li>
-
-                    <li>
-                        <a href="/index7">
-                            <h2><b style="font-weight:normal">2017第二期秦川企联</b></h2><span class="sytjlb_sj">2017-05-09</span></a>
-                    </li>
-
-                    <li>
-                        <a href="/index7">
-                            <h2><b style="font-weight:normal">2017第一期秦川企联</b></h2><span class="sytjlb_sj">2017-03-14</span></a>
-                    </li>
-
-                    <li>
-                        <a href="/index7">
-                            <h2><b style="font-weight:normal">2016第六期秦川企联</b></h2><span class="sytjlb_sj">2017-01-10</span></a>
-                    </li>
-
-                    <li>
-                        <a href="/index7">
-                            <h2><b style="font-weight:normal">2016秦川企联（增刊）</b></h2><span class="sytjlb_sj">2016-11-24</span></a>
-                    </li>
-
-                    <li>
-                        <a href="/index7">
-                            <h2><b style="font-weight:normal">2016第五期秦川企联</b></h2><span class="sytjlb_sj">2016-11-21</span></a>
-                    </li>
-
-                </ul>
-            </div>
-            <div id="con_five_2" style="display:none">
-                <div class="Menumore">
-                    <a href="/index6">更多</a>
-                </div>
-                <ul class="Content_wz">
-                    <li>
-                        <a href="/index7">
-                            <h2><b style="font-weight:normal">2017第五期秦川经济社会研究</b></h2><span class="sytjlb_sj">2017-12-04</span></a>
-                    </li>
-                    <li>
-                        <a href="/index7">
-                            <h2><b style="font-weight:normal">2017第四期秦川经济社会研究</b></h2><span class="sytjlb_sj">2017-11-06</span></a>
-                    </li>
-                    <li>
-                        <a href="/index7">
-                            <h2><b style="font-weight:normal">2017县域经济专刊</b></h2><span class="sytjlb_sj">2017-11-06</span></a>
-                    </li>
-                    <li>
-                        <a href="/index7">
-                            <h2><b style="font-weight:normal">2017第三期秦川经济社会研究</b></h2><span class="sytjlb_sj">2017-07-17</span></a>
-                    </li>
-                    <li>
-                        <a href="/index7">
-                            <h2><b style="font-weight:normal">2017第二期秦川经济社会研究</b></h2><span class="sytjlb_sj">2017-06-19</span></a>
-                    </li>
-                    <li>
-                        <a href="/index7">
-                            <h2><b style="font-weight:normal">2017第一期秦川经济社会研究</b></h2><span class="sytjlb_sj">2017-04-12</span></a>
-                    </li>
-                    <li>
-                        <a href="/index7">
-                            <h2><b style="font-weight:normal">2016第六期秦川经济社会研究</b></h2><span class="sytjlb_sj">2017-03-15</span></a>
-                    </li>
-                    <li>
-                        <a href="/index7">
-                            <h2><b style="font-weight:normal">2016第五期秦川经济社会研究</b></h2><span class="sytjlb_sj">2016-11-29</span></a>
-                    </li>
-
-                </ul>
-            </div>
-        </div>
-    </div>
-    <!--内容五 end-->
-
-    <!--政务专题-->
-    <div class="zhengfzt">
-        <h1>政务专题</h1><span><a href="/index6">更多</a></span></div>
-    <div class="syzdzt_pc">
-        <div class="syzdzt_pcmr">
-            <ul>
-                <li>
-                    <a href="/index7"><img src="{{PATH_TML}}img/index/1512983693129.jpg"></a>
-                </li>
-                <li>
-                    <a href="/index7"><img src="{{PATH_TML}}img/index/1507859756469.jpg"></a>
-                </li>
-                <li>
-                    <a href="/index7"><img src="{{PATH_TML}}img/index/1500626261042.jpg"></a>
-                </li>
-                <div class="clear"></div>
-                <li>
-                    <a href="/index7"><img src="{{PATH_TML}}img/index/1508032038678.jpg"></a>
-                </li>
-                <li>
-                    <a href="/index7"><img src="{{PATH_TML}}img/index/1503370511224.jpg"></a>
-                </li>
-                <li>
-                    <a href="/index7"><img src="{{PATH_TML}}img/index/1483696104301.jpg"></a>
-                </li>
-                <div class="clear"></div>
-                <li>
-                    <a href="/index7"><img src="{{PATH_TML}}img/index/1491807354803.jpg"></a>
-                </li>
-                <li>
-                    <a href="/index7"><img src="{{PATH_TML}}img/index/1489034257090.jpg"></a>
-                </li>
-                <li>
-                    <a href="/index7"><img src="{{PATH_TML}}img/index/20131118095045.jpg"></a>
-                </li>
-            </ul>
-        </div>
-        <div class="clear"></div>
-    </div>
-    <div class="zhengfzt_nr">
-        <ul>
-            <li>
-                <a href="/index7">
-                    <h2><b style="font-weight:normal">善待自己</b></h2><span class="sytjlb_sj">2017-12-19</span></a>
-            </li>
-            <li>
-                <a href="/index7">
-                    <h2><b style="font-weight:normal">我国农历各月的别称</b></h2><span class="sytjlb_sj">2017-12-19</span></a>
-            </li>
-            <li>
-                <a href="/index7">
-                    <h2><b style="font-weight:normal">选对桌椅　肩颈健康</b></h2><span class="sytjlb_sj">2017-12-19</span></a>
-            </li>
-            <li>
-                <a href="/index7">
-                    <h2><b style="font-weight:normal">卢金梅：信访群众的贴心人</b></h2><span class="sytjlb_sj">2017-12-19</span></a>
-            </li>
-        </ul>
     </div>
 </div>
 
@@ -454,13 +74,14 @@
             nitoce : [],
             especial_news: [],
             channel_news : [],
+            list_domain  : [],
             plats : plats_info
         },
         mounted: function() {
             $app.set_title(plats_info.title);
             ajax.get('cms/index/grid').then((res) => {
                 if (res.code === 200) {
-                    console.log(res.data);
+
                     this.news = res.data.news;
                     this.mag  = res.data.mag;
                     this.hot  = res.data.hot;
@@ -473,13 +94,10 @@
                     });
                 }
             });
-
-            ajax.get("cms/channel_categories?channel=news").then((res) => {
-            	if (res.data && res.code === 200) {
-            		console.log(res.data);
-            		this.channel_news = res.data;
-            	}
-            });
+            this.data_list();
+	        this.$nextTick(()=>{
+	        	
+            })
         },
         methods: {
             swiper() {
@@ -494,6 +112,27 @@
             },
             data(params , call){
                 return $mob_ajax.cms_lists(params , call);
+            },
+            data_list() {
+            	ajax.get("cms/channel_categories?channel=news").then((res) => {
+	                if (res.data && res.code === 200) {
+	                    res.data.forEach((item, index)=>{
+	                        if(index % 2 === 0) {
+	                            this.channel_news[Math.floor(index/2)] = new Array();
+	                            this.list_domain = item.domain;
+	                        }
+
+	                        ajax.get("cms/contents?cate_id=zxxx").then((body) => {
+	                            if (body.data && body.code === 200) {
+                                	item.detail = body.data;
+	                            }
+	                        })
+	                        this.channel_news[Math.floor(index/2)][index%2] = item;
+	                    });
+	                    console.log(this.channel_news);
+	                }
+	            });
+	            
             }
         },
     });

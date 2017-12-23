@@ -45,21 +45,30 @@ Vue.filter('formateTime',function (value,type) {
     var day = (date.getDay() + 1).toString().length == 1 ? '0' + (date.getDay() + 1) : date.getDay() + 1;
     var hour = date.getHours().toString().length == 1 ? '0' + date.getHours() : date.getHours();
     var min = date.getMinutes().toString().length == 1 ? '0' + date.getMinutes() : date.getMinutes();
-    if(type == 'MDHM'){
-        return month +'-'+day+' '+hour+':'+min
+
+    switch (type){
+        case 'MDHM':
+            return month +'-'+day+' '+hour+':'+min;
+        case 'YMDHM':
+            date = new Date(value * 1000);
+            year = date.getFullYear();
+            return year + '-' +month +'-'+day+' '+hour+':'+min;
+        case 'YMD':
+            date = new Date(value * 1000);
+            year = date.getFullYear();
+            return year + '-' +month +'-'+day;
+        case 'HM':
+            return hour+':'+min;
+        case 'MD-C':
+            return month + '月' + day + '号';
     }
-    else if(type == 'YMDHM'){
-        date = new Date(value * 1000);
-        year = date.getFullYear();
-        return year + '-' +month +'-'+day+' '+hour+':'+min
-    }else if(type == 'HM'){
-        return hour+':'+min;
-    }
+
 
 });
 
 Vue.filter('limitLen',function (value,min,max) {
-    if(value.length>max){
+    if($app.empty(value) == false) return false;
+    if(value.length > max){
         value = value.substring(min,max) + '...'
     }
     return value;

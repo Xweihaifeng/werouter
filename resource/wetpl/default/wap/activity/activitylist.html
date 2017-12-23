@@ -49,6 +49,12 @@
             data(params , call){
                 ajax.post('activity/listbyuser',params).then((res)=>{
                     if(res.code == 200){
+
+                        if(res.data.total == 0)
+                        {
+                            call(false);
+                            return false;
+                        }
                         var pageCount = Math.ceil(res.data.total / this.params.limit);
                         var post = {
                             data : {

@@ -1,5 +1,14 @@
-<br/><br/><br/><br/>
-<footer id="footer" style="display: none;">
+<div id="footer" style="display: none;">
+<div class="dbback" v-if="cuupage!=''">
+	<ul>
+	<li><a :href="'/' | href"><span><img src="/resource/wetpl/default/wap/img/index/home2.png"></span><p>回首页</p></a></li>
+	<li><a href="javascript:scroll(0,0)" id="top"><span><img src="/resource/wetpl/default/wap/img/index/back.png"></span><p>回顶部</p></a></li>
+	</ul>
+	<div class="clear"></div>
+</div>
+<footer >
+	<br/><br/><br/>
+	
 	<ul>
 		<li :id="key" v-for="(item , key) in footer_nav" @click="open(key);">
 			<div class="up" v-if="item.nav == false"></div>
@@ -12,6 +21,7 @@
 		</li>
 	</ul>
 </footer>
+</div>
 <script type="text/javascript">
 	// header 渲染
 	function init_header(show) {
@@ -26,7 +36,7 @@
 	    new Vue({
 	        el: dom_id,
 	        data: {
-	           plats : plats_info
+	           plats : plats_info,
 	        },
 	        watch: {
 	          
@@ -49,7 +59,7 @@
 	    	dom_id = '#'+show;
 	    }
 		$('#footer').show();
-		new Vue({
+		return new Vue({
 	        el: '#footer',
 	        data: {
 	            router : window.location.pathname.split('/').slice(1,2),
@@ -59,7 +69,7 @@
 	                    'name' : '首页',
 	                    'nav' : true,
 	                    'login' : false,
-	                    'img' : '/common/img/home.png',
+	                    'img' : '/common/img/homeblue.png',
 	                    'select_img' : '/common/img/homeblue.png',
 	                    'href' : all_domian
 	                },

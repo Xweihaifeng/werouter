@@ -1,21 +1,172 @@
 <!--首页-文章-->
 <#extend#>public/domain/domain_extend.html</#extend#>
-<link rel="stylesheet" href="/resource/wetpl/default/wap/css/act.css">
-<link rel="stylesheet" href="/resource/wetpl/default/wap/css/article.css">
-<link rel="stylesheet" href="/resource/wetpl/default/wap/css/shopping.css">
-<div>
+<link rel="stylesheet" href="{{PATH_TML}}css/home.css"/>
+<link rel="stylesheet" href="{{PATH_TML}}css/common.css"/>
+<link rel="stylesheet" href="{{PATH_TML}}css/list.css"/>
+<div id="box" class="section my_container" @touchstart="touchStart($event)" @touchmove="touchMove($event)"
+     @touchend="touchEnd($event)" style="transform:translate(0,-30px)">
+    <div class="fresh-tip">
+        <span>下拉加载更多...</span>
+    </div>
+    <div v-for="(value,key) in artListObj">
+        <!--多个模板-->
+        <div v-if="value.length>1">
+            <div class="time t_for_lists">
+                <span>{{getTimeTip(value)}}</span>
+            </div>
+            <div class="lists">
+                <a :href="'/' + domain + '/article/' + item.weid | href" v-for="(item,index) in value">
+                    <div v-if="index==0" :style="'background-image:url('+item.cover+')'">
+                        <label>
+                            <span>{{item.title}}</span>
+                        </label>
+                    </div>
+                    <p v-if="index>0">
+                        <label>
+                            <span>{{item.title}}</span>
+                            <label>
+                                <img :src="item.cover" alt="">
+                            </label>
+                        </label>
+                    </p>
+                </a>
+            </div>
+        </div>
 
+
+        <!--单个模板-->
+        <div v-if="value.length == 1">
+            <div class="time t_for_single">
+                <span>{{getTimeTip(value)}}</span>
+            </div>
+            <a :href="'/' + domain + '/article/' + value[0].weid | href">
+                <div class="single">
+                    <p class="title">{{value[0].title}}</p>
+                    <span class="pt">{{value[0].created_at | formateTime('MD-C')}}</span>
+                    <img :src="value[0].cover" alt="">
+                    <span class="detail">{{value[0].summary}}</span>
+                    <p>查看全文</p>
+                </div>
+            </a>
+        </div>
+    </div>
 </div>
 <script>
     new Vue({
-        el : '#app',
-        data : {
-
+        el: '#app',
+        data: {
+            start: '',
+            end: '',
+            offset: 30,
+            endTime: '',
+            artListObj: {},
+            domain: plats_user_info.domian
         },
-        mounted : function () {
-            ajax.get('articles/list',{params:{'userId':pages_info.plats_domian.plat_user_id}}).then((res)=>{
-                console.log(res)
-            })
+        mounted: function () {
+            this.getArtData()
+        },
+        methods: {
+            getArtData: function () {
+                var sendData = {
+                    userId: plats_user_info.weid,
+                    endtime: this.endTime
+                };
+                ajax.post('articles/getListByDay', sendData).then((res) => {
+                    console.log(res);
+                    if (res.code == 200 && res.data.list && JSON.stringify(res.data.list) != '{}') {
+                        this.artListObj = $.extend(res.data.list,this.artListObj);
+                        console.log(this.artListObj)
+                    }
+                    if (res.data.lastdate) {
+                        this.endTime = res.data.lastdate
+                    }
+                })
+                document.getElementById('box').style.transform = 'translate(0,' + (-this.offset) + 'px)';
+            },
+            getMin: function (arr) {
+                var min = arr[0];
+                if (arr.length) {
+                    for (var i = 0; i < arr.length; i++) {
+                        if (arr[i] < min) {
+                            min = arr[i]
+                        }
+                    }
+                }
+                return min;
+            },
+            getTimeTip: function (list) {
+                var timeList = [];
+                list.forEach(function (val, ind) {
+                    if (val["created_at"]) {
+                        timeList.push(val["created_at"])
+                    }
+                })
+                var weeks = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
+                if (timeList.length) {
+                    var minTime = this.getMin(timeList);
+                    minTime = new Date(minTime);
+                    var minYear = minTime.getFullYear();
+                    var minMonth = minTime.getMonth() + 1;
+                    var minDate = minTime.getDate();
+                    var minHour = minTime.getHours();
+                    var minSecond = minTime.getSeconds();
+                    var minDay = minTime.getDay();
+                    var minMin = minTime.getMinutes() < 10 ? "0" + minTime.getMinutes() : minTime.getMinutes();
+
+                    //  gap为0代表当天 为1代表昨天
+                    var gap = parseInt((new Date() - new Date(minYear + "-" + minMonth + "-" + minDate)) / 1000 / 60 / 60 / 24)
+                    // 只计算周内的日期 七天内但是不包括上周
+                    var beforeSunday = new Date() - (new Date().getDay() * 24 * 60 * 60 * 1000)
+                    if (gap == 1) {
+                        if (0 <= minHour && minHour <= 12) {
+                            return "昨天 早上" + minHour + ":" + minMin;
+                        } else {
+                            return "昨天 下午" + minHour + ":" + minMin;
+                        }
+
+                    } else if (1 < gap && gap <= 7 && (minTime > beforeSunday)) {
+                        if (0 <= minHour && minHour <= 12) {
+                            return weeks[minDay] + " 早上" + minHour + ":" + minMin;
+                        } else {
+                            return weeks[minDay] + " 下午" + minHour + ":" + minMin;
+                        }
+                    } else if (gap == 0) {
+                        if (0 <= minHour && minHour <= 12) {
+                            return "早上" + minHour + ":" + minMin;
+                        } else {
+                            return "下午" + minHour + ":" + minMin;
+                        }
+                    } else {
+                        if (0 <= minHour && minHour <= 12) {
+                            return minMonth + "月" + minDate + "日 早上" + minHour + ":" + minMin;
+                        } else {
+                            return minMonth + "月" + minDate + "日 下午" + minHour + ":" + minMin;
+                        }
+
+                    }
+
+
+                }
+            },
+            touchStart: function (ev) {
+                this.start = ev.touches[0].pageY;
+            },
+            touchMove: function (ev) {
+                this.end = ev.touches[0].pageY;
+                if (document.body.scrollTop == 0) {
+                    if (this.start < this.end) {
+                        document.getElementById('box').style.transform = 'translate(0,' + parseInt(this.end - this.start) + 'px)'
+                    }
+                }
+            },
+            touchEnd: function (ev) {
+                if (document.body.scrollTop == 0) {
+                    if (this.end - this.start >= this.offset) {
+                        document.getElementById('box').style.transform = 'translate(0,0)';
+                        this.getArtData();
+                    }
+                }
+            }
         }
     })
 </script>

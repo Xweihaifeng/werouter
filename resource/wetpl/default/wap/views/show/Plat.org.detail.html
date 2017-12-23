@@ -1,63 +1,77 @@
-<!-- <!DOCTYPE html>
-<html>
+<#extend#>public/coc/coc_extend.html</#extend#>
+<script type="text/javascript">
+    show.header = 'no';
+</script>
+<style>
+    [v-cloak] {
+        display: none;
+    }
+</style>
 
-    <head>
-        <title></title>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
-        <link rel="stylesheet" type="text/css" href="{{PATH_TML}}views/css/organize.css" />
-
-        <script src="/common/js/jquery-3.2.1.min.js"></script> 
-        <script src="/common/layer-v3.0.3/layer-v3.0.3/layer/layer.js"></script>
-        <script src="{{PATH_CONFIG}}"></script>
-        <script src="{{PATH_TML}}views/js/organize.js"></script>
-    </head>
-
-    <body>
-        组织部分开始
-        <ul class="list-article-ul"></ul>
-        组织部分结束
-    </body>
-
-</html> -->
-
-
-
-<!DOCTYPE html>
-<html>
-
-    <head>
-        <title></title>
-        <meta charset="UTF-8">
-        <link rel="icon" href="" id="public_icon" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
-        <script charset="utf-8" type="text/javascript" src="/common/js/jquery-3.2.1.min.js"></script>
-        <script charset="utf-8" type="text/javascript" src="/common/layer-v3.0.3/layer-v3.0.3/layer/layer.js"></script>
-        <script charset="utf-8" type="text/javascript" src="{{PATH_CONFIG}}"></script>
-        <script charset="utf-8" type="text/javascript" src="{{PATH_TML}}views/js/news_detail.js" ></script>
-        <script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
-        <!-- <script charset="utf-8" type="text/javascript" src="{{PATH_TML}}viewsm/js/back_top.js"></script> -->
-
-        <link rel="stylesheet" type="text/css" href="{{PATH_TML}}views/css/news_detail.css" />
-
-        <!--[if lt IE 9]>
-          <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-          <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-        <![endif]-->
-
-    </head>
-
-    <body>
-        <!-- 新闻详情开始手机端 -->
-        <div class="page-content flex">
-            <div id="default404"><img src="/common/img/default404.png" width="100%" alt=""></div>
-            <div class="page-left">
-                <!-- <div id="plat-two-back-top"><img src="/common/img/gotop.png"></div> -->
+<div id="viewport" class="viewport" v-cloak style="width:100%;margin-bottom:15px">
+    <div class="tcshow_dh">
+        <div class="tcshow_dhlf">
+            <a href="javascript:history.back()"><img src="{{PATH_TML}}img/index/back02.png"></a>
+        </div>
+        <h2>{{category.title}}</h2>
+    </div>
+    <div class="clear"></div>
+    <div class="xxsh_wk">
+        <div class="xxsh_tit">
+            <div stlyle="color:"><h1 v-html="news_detail.title"></h1></div>
+            <span>{{news_detail.created_at}}&ensp;{{news_detail.source}}&ensp;浏览次数：{{news_detail.views}}次</span>
+        </div>
+        <div class="clear"></div>
+        <div class="xxsh_js" style="padding:0 0;">
+            <p v-html="news_detail.content"></p>
+        </div>
+        <div>
+            <div class="xxsh_fen">
+                <!-- <span>分享给好友阅读：</span> -->
+                <div class="left">
+                    <a href="javascript:void(0)" class="bds_more" >
+                        <img src="/common/img/like.png" style="width:20px;margin-top:3px" @click="zan()">{{news_detail.praise_num}}
+                    </a>
+                </div>
             </div>
         </div>
-        <!-- 新闻详情结束 -->
-    </body>
+    </div>
+</div>
 
-</html>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            news_detail: '',
+            category : '',
+            zan_true : '',
+            plats_info: plats_info,
+			id : window.location.pathname.split('/').pop()
+        },
+        mounted: function() {
+            ajax.get('cms/detail/'+this.id).then((res) => {
+                if (res.data && res.code === 200) {
+                    this.news_detail = res.data;
+                    this.category = res.data.category;
+					$app.set_title(this.news_detail.title);
+                }
+            });
+        },
+        methods: {
+            zan(){
+                var data = new Object();
+                data.content_id = this.news_detail.weid;
+                ajax.post('cms/contents/praise', data).then((res) => {
+                    if (res.data && res.code === 200) {
+                        this.zan_true = res.data.praise;
+                        if(!this.zan_true) {
+                            
+                            return false;
+                        }
+                        console.log("成功点赞");
+                    }
+                });
+            }
+        }
+    })
+</script>

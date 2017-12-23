@@ -369,12 +369,13 @@ class main extends controller
 		$plats_cms_sql = 'SELECT title , description , key_word
 						 , icp , favicon , logo , background , weibo_show 
 						 , background_up , block , bar1 , bar2 , bar3 , background_right
-						 ,bar4 , block FROM we_plat_cms WHERE plat_id=?';
+						 ,bar4 , block ,wap_logo FROM we_plat_cms WHERE plat_id=?';
 		$plats['plats_info'] = $this->db->queryOne($plats_cms_sql , array($weid));
 
         $block = array_sort(json_decode($plats['plats_info']['block'] , TRUE) , 'sort' , 'asc');
         $plats['plats_info']['blocks'] = $block;
         $plats['plats_info']['plat_name'] = $plats_row['plat_name'];
+        $plats['plats_info']['show_title'] = '';
 
         if(empty($_COOKIE['token']))
         {
