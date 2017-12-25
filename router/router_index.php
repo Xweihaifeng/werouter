@@ -125,7 +125,7 @@ class router_index extends controller
 
         $protocol = empty($_SERVER['HTTPS']) ? 'http://' : 'https://';
         $wap_domain_url = '';
-        $this->data['wap_domain'] = 2;
+        //$this->data['wap_domain'] = 2;
 
         if($this->data['wap_domain'] == 1)
         {
