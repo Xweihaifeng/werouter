@@ -65,7 +65,7 @@
     <!--图片轮换结束-->
     <div class="sytjlb">
         <ul>
-            <li v-for="item in news">
+            <li v-for="(item, index) in news" v-if="index < 6">
                 <a :href="'news/' + item.weid | href"><span class="sytjlb_fl">[{{item.cate_title}}]</span>
                     <h2><b style="font-weight:normal; color:">{{item.title}}</b></h2><span class="sytjlb_sj">{{item.created_at | formateTime('YMD')}}</span>
                 </a>
