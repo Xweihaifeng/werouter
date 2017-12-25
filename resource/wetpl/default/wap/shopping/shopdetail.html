@@ -192,7 +192,7 @@
                     var checkedSpecifications = $('.check-specifications').text()||"", checkedNum = parseInt($('.buy-num').val())||1;
                     //var topNum = parseInt($('.goods_stock').attr('topnum'));
                     var topNum = goods.stock;
-                    if( parseInt(checkedNum) > parseInt(topNum)){
+                    if(parseInt(checkedNum) > parseInt(topNum)){
                         //选择数量时是否超过库存；
                         checkedNum = topNum;
                         $('.tips').show().html('输入值达库存上限了！');
@@ -216,7 +216,8 @@
                 })
                 $('.fix-up').on('tap','.minus',function(e){
                     var checkedSpecifications = $('.check-specifications').text()||"";
-                    var topNum = parseInt($('.goods_stock').attr('topnum'));
+                    //var topNum = parseInt($('.goods_stock').attr('topnum'));
+                    var topNum = goods.stock;
                     var buyNum = parseInt($('.buy-num').val())||1;
                     $('.tips').hide();
                     if(parseInt(buyNum) <=1){
@@ -233,7 +234,7 @@
                 })
                 $('.fix-up').on('tap','.add',function(e){
                     var checkedSpecifications = $('.check-specifications').text()||"";
-                    var topNum = parseInt($('.goods_stock').attr('topnum'));
+                    var topNum = goods.stock;
                     var buyNum = parseInt($('.buy-num').val())||1;
                     if(parseInt(buyNum) >= parseInt(topNum)){
                         $('.tips').show().html('已达库存上限了！');
