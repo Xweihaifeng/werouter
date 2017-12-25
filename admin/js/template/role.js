@@ -18,9 +18,6 @@ $(document).ready(function(){
 
 	var authority = (select, weid) => {
 		var reqUrl = ApiUrl + 'admins/get_' + select + '?role_id=' + weid;
-		d = new dTree('d');
-		d.add(0, -1, '后台管理');
-
 		var req = (reqUrl) => {
 			return new Promise((resolve, reject) => {
 				$.ajax({
@@ -46,7 +43,7 @@ $(document).ready(function(){
 			var depth = 'i';
 			var process = function(data, depth){
 				data.map((e, i) => {
-					rem.push({id: e.id, value: depth + i, pid: e.parent_id, name: e.name, checked: e.checked, url: e.url, mark: e.mark});
+					rem.push({id: e.id, value: depth + i, pid: e.parent_id, name: e.name , checked: e.checked, url: e.url, mark: e.mark});
 					set.all.push(e);
 					if (e.children != undefined && e.children != '' && e.children != 'undefined') {
 						process(e.children, depth + 'i');
@@ -61,7 +58,7 @@ $(document).ready(function(){
 
 			var id = document.getElementById("res");
 			id.innerHTML = d;
-			d.openAll();
+        	d.openAll();
 		})
 	}
 
