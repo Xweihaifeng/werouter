@@ -137,7 +137,7 @@ var btgn_s = function() {
                     headers: {
                         'Token': docCookies.getItem("token")
                     },
-                    url: apiUrl + "/userAct",
+                    url: apiUrl + "userAct",
                     data: {
                         phone: shouji,
                         code: Code_o,
