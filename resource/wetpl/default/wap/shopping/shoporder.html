@@ -254,7 +254,7 @@
                             <span class="goods-price" style="top:1.3rem">￥{{order_goods_detail.price}}</span>
                         </div>
                         <div class="goods-num" style="top: 1.939393rem;">
-                            x1
+                            x {{order.num}}
                         </div>
                     </li>
                 </ul>
@@ -315,7 +315,7 @@ new Vue({
         'order_goods_id' : window.location.pathname.split('/').pop(),
         'order' : {
             'price' : 0,
-            'num' : 1
+            'num' : ($app.get_query_string('num')) ? $app.get_query_string('num') : 1  , 
         },
         'postage' : 0,
         'total_price' : 0
@@ -323,6 +323,7 @@ new Vue({
     mounted: function(){
         $app.set_title('确认订单');
         this.$nextTick(()=>{
+
             // 获取收货地址列表
             this.get_address_list();
 
@@ -348,7 +349,7 @@ new Vue({
         price()
         {
             this.order.price = this.order_goods_detail.price * this.order.num;
-            
+
             if(this.order_goods_detail.postage_status == 2)
             {
                 if(this.order_goods_detail.postage_max_money > this.order.price)
@@ -362,7 +363,7 @@ new Vue({
             }
             
             this.total_price = ( this.order.price * this.order.num ).toFixed(2);
-            
+
             this.postage = this.postage.toFixed(2);
         },
         // 获取全部收货地址
@@ -370,10 +371,10 @@ new Vue({
         {
             ajax.get('users/address/list').then((res)=>{
                 this.order_address_list = res.data.list;
-                
+
                 if(this.order_address_list.length > 0)
                 {
-                    
+
                     // 遍历元素获取默认的收货地址.
                     for(var item of this.order_address_list)
                     {
@@ -383,14 +384,14 @@ new Vue({
                             break;
                         }
                     }
-                    
+
                     // 如果没有默认收货地址,获取第一条收货地址
                     if($app.empty(this.order_address_default) == false)
                     {
                         this.order_address_default = this.order_address_default[0];
                     }
                 }
-                
+
                 //用户没有收货地址,发起添加收货地址
                 if($app.empty(this.order_address_default) == false){
                     this.add_address();

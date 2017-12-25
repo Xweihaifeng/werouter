@@ -74,7 +74,7 @@
             hot  : [],
             especial_news: [],
             channel_list : [],
-            pathname : window.location.pathname.split('/').slice(1,6)[1],
+            pathname : $app.get_router(),
             isShow: []
         },
         mounted: function() {
@@ -88,13 +88,14 @@
                 }
             });
 
-            ajax.get("cms/channels/domain_query/news").then((res) => {
+            ajax.get("cms/channels/domain_query/"+this.pathname).then((res) => {
                 if (res.data && res.code === 200) {
+                    $app.set_title(res.data.search_name + ' - ' + plats_info.title);
                     plats_info.show_title = res.data.search_name;
                 }
             })
 
-            ajax.get("cms/index/list_news_by_channel?channel=news").then((res) => {
+            ajax.get("cms/index/list_news_by_channel?channel="+this.pathname).then((res) => {
                 if (res.data && res.code === 200) {
                     var channel_list = [];
                     res.data.forEach((item, index)=>{
