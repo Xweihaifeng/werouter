@@ -341,7 +341,13 @@ $(document).ready(function(){
                         // 点击页码事件
                         $(".pagination li").bind("click",function(){
 
-                            orderlist(mall_id,$(this).attr("page"),type);
+                            //查询条件
+                            var time_start=$("input[name='start_time']").val();
+                            var time_end=$("input[name='end_time']").val();
+                            var order_num=$("input[name='no']").val();
+
+                            orderlist(mall_id,$(this).attr("page"),type,{time_start:time_start,time_end:time_end,order_num:order_num});
+
                             /*
                             flag=false;
                             // console.log($(this).attr("id"));
