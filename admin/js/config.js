@@ -41,14 +41,14 @@ var hearderTpl = `<header class="main-header">
             <!-- User Account: style can be found in dropdown.less -->
             <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                    <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User-Image">
+                    <img src="dist/img/avatar.jpg" class="user-image" alt="User-Image">
                     <span class="hidden-xs" id="adminUser">admin</span>
                 </a>
                 <ul class="dropdown-menu">
                     <!-- User image -->
                     <li class="user-header">
 
-                        <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User-Image">
+                        <img src="dist/img/avatar.jpg" class="img-circle" alt="User-Image">
                         <p>
                             <span id="username">sky hao - Full Stack Developer</span>
                             <small id="memo">Let's Creat!</small>
@@ -106,7 +106,7 @@ var start = function() {
     $("title").text(setting.title + '后台管理');
     var admin_name = sessionStorage.getItem('real_name');
     $("#adminUser").text(admin_name);
-    if (avatar) $(".user-image,.img-circle").attr('src', ApiMaterPlatQiniuDomain + avatar);
+    //if (avatar) $(".user-image,.img-circle").attr('src', ApiMaterPlatQiniuDomain + avatar);
     if (avatar == 'avatar.jpg') $(".user-image,.img-circle").attr('src', 'image/' + avatar);
     $("#username").text(username);
     $("#memo").text(memo ? memo : "");
@@ -144,25 +144,25 @@ var start = function() {
         console.log('id is null');
     }
 
-    $.ajax({
-        url: ApiUrl + 'admins/check_auth',
-        type: 'POST',
-        data: {
-            role_id: sessionStorage.getItem('role_id'),
-            url: $("input[name='config-url']").val()
-        },
-        success: function(data){
-            if (data.code != 200) {
-                setTimeout(function(){
-                    swal('提示', '权限不足', 'success');
-                }, 1500);
-                window.location.href = 'index.html';
-            } else {
-                // console.log(data);
+    // $.ajax({
+    //     url: ApiUrl + 'admins/check_auth',
+    //     type: 'POST',
+    //     data: {
+    //         role_id: sessionStorage.getItem('role_id'),
+    //         url: $("input[name='config-url']").val()
+    //     },
+    //     success: function(data){
+    //         if (data.code != 200) {
+    //             setTimeout(function(){
+    //                 swal('提示', '权限不足', 'success');
+    //             }, 1500);
+    //             window.location.href = '/admin';
+    //         } else {
+    //             // console.log(data);
 
-            }
-        }
-    })
+    //         }
+    //     }
+    // })
 
 }
 

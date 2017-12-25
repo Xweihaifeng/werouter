@@ -36,7 +36,7 @@ $(document).ready(function(){
            url: PAGES_PAGE_GETDETAILBYUSER + weid,
            type: 'GET',
            headers: {
-             'Token': localStorage.getItem('token')
+             'Token': docCookies.getItem("token")
            },
            success: function(data){
               /*if (data.code == 401) {            
@@ -65,7 +65,7 @@ $(document).ready(function(){
          })
      }
 
-    var weid = localStorage.getItem('weid');
+    var weid = docCookies.getItem("weid");
     hasDomain(weid);
 
     /*var isLogin = false; //判断用户登陆与否
@@ -167,7 +167,7 @@ $(document).ready(function(){
             url: PAGES_MODULERUN_LIST,
             type: 'GET',
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data){
                 if (data.code == 200){
@@ -287,7 +287,7 @@ $(document).ready(function(){
             url: TRADEMARK_DETAILBYUSER + weid,
             type: 'GET',
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data){
                 if (data.code == 200){
@@ -325,7 +325,7 @@ $(document).ready(function(){
         })
     }
 
-    var weid = localStorage.getItem('weid');
+    var weid = docCookies.getItem("weid");
     //console.log(weid)
     init(weid);
 
@@ -335,7 +335,7 @@ $(document).ready(function(){
             type: 'POST',
             data: sendData,
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data){
                 if (data.code == 200){
@@ -362,7 +362,7 @@ $(document).ready(function(){
             type: 'POST',
             data: sendData,
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data){
                 if (data.code == 200){
@@ -439,6 +439,6 @@ $(document).ready(function(){
       }
     }
 
-    init__(localStorage.getItem('token'));*/
+    init__(docCookies.getItem("token"));*/
 
 })

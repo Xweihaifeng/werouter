@@ -170,7 +170,7 @@ $(".we-cont").click(function (event) {
 })
 
 //  登录token参数
-var token = window.localStorage.getItem('token');
+var token = docCookies.getItem("token");
 if (token) {
     $.ajaxSetup({
         global: true,
@@ -351,14 +351,14 @@ function avatar_admin() {
         , success: function (layero) {
             var host = 'http://' + window.location.host;
             $("#host").text(host + "/");
-            var weid = localStorage.getItem('weid');
+            var weid = docCookies.getItem("weid");
             var store = function (sendData) {
                 $.ajax({
                     url: PAGESTORE,
                     type: 'POST',
                     data: sendData,
                     headers: {
-                        'Token': localStorage.getItem('token')
+                        'Token': docCookies.getItem("token")
                     },
                     success: function (data) {
                         if (data.code == 200) {
@@ -483,7 +483,7 @@ var init = function (token) {
     }
 }
 
-init(localStorage.getItem('token'));
+init(docCookies.getItem("token"));
 
 var domain;
 var hasDomain = function (weid) {
@@ -491,7 +491,7 @@ var hasDomain = function (weid) {
         url: PAGES_PAGE_GETDETAILBYUSER + weid,
         type: 'GET',
         headers: {
-            'Token': localStorage.getItem('token')
+            'Token': docCookies.getItem("token")
         },
         success: function (data) {
             // if (data.code == 401) {
@@ -525,13 +525,13 @@ var hasDomain = function (weid) {
     })
 }
 
-var weid = localStorage.getItem('weid');
+var weid = docCookies.getItem("weid");
 hasDomain(weid);
 
 //route
 var isLogin; //判断用户登陆与否
 var router = function (route) {
-    if (!window.localStorage.getItem("token")) {
+    if (!docCookies.getItem("token")) {
         isLogin = false;
     } else {
         isLogin = true;

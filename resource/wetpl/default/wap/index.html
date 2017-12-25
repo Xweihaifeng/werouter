@@ -9,9 +9,40 @@
 <script src="/common/public/hivideo-master/assets/hivideo.css"></script> -->
 <div id="viewport" class="viewport">
     <div class="header">
-        <img :src="plats.wap_logo | img_src(60,60)">
+        <img :src="ApiMaterPlatQiniuDomain+plats.wap_logo">
     </div>
+    <div class="clear"></div>
 
+    <div class="syflbg">
+        <!--栏目-->
+        <div class="syfl">
+            <div class="syfl_mar">
+                <ul>
+                    <li><a href="/news"><span><img src="{{PATH_TML}}/img/index/top_1.png"></span><h2>新闻中心</h2></a></li>
+                    <li><a href="/org"><span><img src="{{PATH_TML}}/img/index/top_2.png"></span><h2>走进商会</h2></a></li>
+                    <li><a href="javascript:void(0)"><span><img src="{{PATH_TML}}/img/index/top_3.png"></span><h2>互助专区</h2></a></li>
+                    <li><a href="javascript:void(0)"><span><img src="{{PATH_TML}}/img/index/top_4.png"></span><h2>共享中心</h2></a></li>
+                    <li><a href="javascript:void(0)"><span><img src="{{PATH_TML}}/img/index/top_5.png"></span><h2>天下秦商</h2></a></li>
+                    <li><a href="javascript:void(0)"><span><img src="{{PATH_TML}}/img/index/top_6.png"></span><h2>网站导航</h2></a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="clear"></div>
+        <!--栏目 end-->
+        <!--搜索-->
+        <div class="sous">
+            <form action="/so" method="post" name="sosoFrom">
+                <div class="sous_l"><input name="keyWord" type="text" class="sous_inp" placeholder="请输入关键词"></div>
+                <div class="sous_r"><input name="" type="submit" class="sous_but" value=""></div>
+                <div class="clear"></div>
+            </form>
+        </div>
+      <!--搜索-->
+    </div>
+    <div class="clear"></div>
+
+        
+    <div class="syywtj_dh"><img src="{{PATH_TML}}/img/index/hs_ic.jpg"><h1>要闻推荐</h1></div>
     <div class="clear"></div>
     <!--图片轮换开始-->
     <div class="banner1">
@@ -21,7 +52,7 @@
                     <a :href="'news/' + item.weid | href"><img :src="item.thumb_image | img_src(413 , 230 , 1)"    /></a> 
                     <div
                     class="mySwipeceng">
-                        <div class="left"><b style='font-weight:normal; color:'>{{item.title}}</b></div>
+                        <div class="left"><b style='font-weight:normal; color:'>{{item.title.substr(0,22)}}</b></div>
                         <div class="mySwip_rg"> <span class="mySwipetabdiancurr"></span><span class="mySwipetabdian"></span>
                             <span class="mySwipetabdian"></span>
                         </div>
@@ -32,12 +63,9 @@
     </div>
      <div class="clear"></div>
     <!--图片轮换结束-->
-        
-    <div class="syywtj_dh"><span class="sup"></span><h1>要闻推荐</h1></div>
-    <div class="clear"></div>
     <div class="sytjlb">
         <ul>
-            <li v-for="item in news">
+            <li v-for="(item, index) in news" v-if="index < 6">
                 <a :href="'news/' + item.weid | href"><span class="sytjlb_fl">[{{item.cate_title}}]</span>
                     <h2><b style="font-weight:normal; color:">{{item.title}}</b></h2><span class="sytjlb_sj">{{item.created_at | formateTime('YMD')}}</span>
                 </a>
@@ -48,12 +76,16 @@
 
     
     <!--视频中心-->
-    <div class="syzdzt_dh"><span class="sup"></span><h1>视频中心</h1></div>
+    <div class="syzdzt_dh"><img src="{{PATH_TML}}/img/index/hs_ic.jpg"><h1>视频中心</h1></div>
     <div class="clear"></div>
     <div class="syzdzt_pc">
         <div class="syzdzt_pcmr">
-            <ul @click="video();">
-                <img src="/common/img/index/video.png" width="100%" height="100%" />
+            <ul>
+                <img src="/common/img/index/video.png" width="100%" height="100%" @click="views_show=true" v-if="views_show == false" />
+                <!-- <video src="http://image.qqxqs.com/qqxqs_video.mp4" controls="controls" width="100%" height="100%" ></video> -->
+                <video ishivideo="true" autoplay="true" isrotate="true" width="100%" controls autoHide="false" v-if="views_show == true">
+                    <source src="http://image.qqxqs.com/qqxqs_video.mp4" type="video/mp4">
+                </video>
             </ul>
         </div>
 <!--         <div class="main-wrap">
@@ -65,7 +97,7 @@
     </div>
     <!--视频中心-->
 
-    <div class="syzdzt_dh"><span class="sup"></span><h1>重点专题</h1></div>
+    <div class="syzdzt_dh"><img src="{{PATH_TML}}/img/index/hs_ic.jpg"><h1>重点专题</h1></div>
     <div class="clear"></div>
     <div class="syzdzt_pc">
         <div class="syzdzt_pcmr">
@@ -80,7 +112,7 @@
 
     <!--重点专题 end-->
     <!--快捷服务-->
-    <div class="syzdzt_dh"><span class="sup"></span><h1>快捷直通</h1></div>
+    <div class="syzdzt_dh"><img src="{{PATH_TML}}/img/index/hs_ic.jpg"><h1>快捷直通</h1></div>
     <div class="clear"></div>
     <div class="sykjfw">
         <div class="sykjfw_mar">
@@ -122,6 +154,7 @@
         el: '#app',
         data: {
             news: [],
+            views_show : false,
             especial_news: [],
             ztbd : [],
             plats : plats_info
@@ -151,7 +184,10 @@
                     disableScroll: true,
                     stopPropagation: true
                 });
+            },
+            video() {
+
             }
-        },
+        }
     });
 </script>

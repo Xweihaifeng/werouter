@@ -3,7 +3,7 @@
  */
 
 //route
-var isLogin = false; //ÅÐ¶ÏÓÃ»§µÇÂ½Óë·ñ
+var isLogin = false; //ï¿½Ð¶ï¿½ï¿½Ã»ï¿½ï¿½ï¿½Â½ï¿½ï¿½ï¿½
 var router = function(route){
     var routerList = ['home', 'login', 'article'];
 
@@ -70,12 +70,12 @@ $("#login, #article, #project, #active, #shopping, #zone").hover(function(e){
     $("#" + id + " .word").css("margin-top", "-55px");
 })
 
-//Ö÷Ò³³õÊ¼»¯
+//ï¿½ï¿½Ò³ï¿½ï¿½Ê¼ï¿½ï¿½
 var init = function(token){
     if (token != 'null' && token != undefined) {
         showLogin = false;
         isLogin = true;
-        //¼ÓÔØÓÃ»§Í·Ïñ
+        //ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½Í·ï¿½ï¿½
         $("#login div img").hide();
         $(".log-head").css({
             'background': 'url(../common/img/p2240276035.jpg) no-repeat center',
@@ -90,4 +90,4 @@ var init = function(token){
     }
 }
 
-init(localStorage.getItem('token'));
+init(docCookies.getItem("token"));

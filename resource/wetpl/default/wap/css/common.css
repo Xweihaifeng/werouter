@@ -243,7 +243,7 @@
 
 .swiper-slide img {
     width: 3.75rem;
-    height: 1.9rem;
+    height: 2rem;
     display: block;
 }
 
@@ -344,3 +344,200 @@
 .section > slide > slide.li_info > .lii_sold > a > slide.li_info > .lii_sold1 { font-size: 0.12rem; color: #999999; }
 .section > slide > slide.li_info > .lii_sold span { padding-right: 0.1rem; }
 .section > slide > slide.li_info > .lii_eval { display: flex; justify-content: space-between; align-items: center; padding: 0.10rem 0.15rem 0.05rem 0; color: #9b9b9b; }*/
+
+.swiper-container{
+    height:2rem;
+}
+.modal-bg{
+    position: fixed;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    background-color:rgba(0,0,0,.7);
+}
+.modal-content{
+    position: fixed;
+    width:100%;
+    height:1.82rem;
+    background-color:#fff;
+    left:0;
+    bottom:0;
+    font-size:0.16rem;
+    z-index:999;
+}
+.fade-enter-active, .fade-leave-active {
+    transition: opacity .2s ease-out;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active in below version 2.1.8 */ {
+    opacity: 0
+}
+.modal-content .top{
+    border-bottom: 0.02rem solid #e5e5e5;
+    padding: 0.1rem 0;
+    margin: 0 0.1rem;
+    overflow: hidden;
+}
+.modal-content .top img{
+    display: inline-block;
+    width: 0.5rem;
+    height: 0.5rem;
+    border: 1px solid #eee;
+    border-radius: 0.02rem;
+    float: left;
+}
+.modal-content .top div{
+    display: inline-block;
+    float: left;
+    margin-left:0.1rem;
+}
+.modal-content .top div p:first-child{
+    margin-bottom: 0.05rem;
+    font-size: 0.14rem;
+    line-height: 0.22rem;
+    -ms-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.modal-content .top div p:last-child{
+    line-height:0.2rem;
+    overflow: hidden;
+}
+.modal-content .top div p:last-child>span{
+    display: inline-block;
+    color: #f60;
+}
+.modal-content .top div p:last-child>span:first-child{
+    padding-top:0.01rem;
+    font-size:0.14rem;
+    float: left;
+}
+.modal-content .top div p:last-child>span:last-child{
+    font-size:0.16rem;
+}
+.modal-content .top i{
+    float: right;
+    width:0.22rem;
+    height:0.22rem;
+    background: url('/common/img/icon_close.png') no-repeat center center;
+    -webkit-background-size: contain;
+    background-size: contain;
+}
+.modal-content .medium{
+    padding:0.1rem 0.1rem 0.2rem 0.1rem;
+    font-size:0.14rem;
+    overflow: hidden;
+    line-height:0.29rem;
+}
+.modal-content .medium p{
+    float: left;
+}
+.modal-content .medium p:last-child{
+    float: right;
+}
+.modal-content .medium p button{
+    width:0.37rem;
+    height:0.29rem;
+    background-color: #fff;
+    border: 1px solid #999;
+    border-radius: 0.02rem 0 0 0.02rem;
+    font-size: 0.16rem;
+    font-weight: 700;
+    color: #666;
+    text-align: center;
+    position: relative;
+    float: left;
+    outline:none;
+}
+.modal-content .medium p input{
+    width: 0.33rem;
+    height: 0.25rem;
+    padding: 0.01rem;
+    border: 1px solid #999;
+    border-left-width:0;
+    border-right-width:0;
+    text-align: center;
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+    color: #666;
+    font-size:0.14rem;
+    outline: none;
+    float: left;
+}
+.modal-content .medium p button::before{
+    height: 0.01rem;
+    width: 0.09rem;
+    background-color: #666;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    bottom: 0;
+    content: '';
+    position: absolute;
+}
+.modal-content .medium p button:last-child::after{
+    width: 0.01rem;
+    height: 0.09rem;
+    background-color: #666;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    content: '';
+}
+.modal-content .medium p button.disabled{
+    background-color: #f8f8f8;
+    border-color: #e8e8e8 #999 #e8e8e8 #e8e8e8;
+}
+.modal-content .medium p button:last-child.disabled{
+    border-color: #e8e8e8 #e8e8e8 #e8e8e8 #999;
+}
+.modal-content .medium p button.disabled:before{
+    background-color: #bbb;
+}
+.modal-content .medium p button.disabled:last-child::after{
+    background-color: #bbb;
+}
+.modal-content .bottom{
+    overflow: hidden;
+}
+.modal-content .bottom a{
+    display: inline-block;
+    width:50%;
+    height:0.5rem;
+    line-height:0.5rem;
+    text-align: center;
+    font-size:0.16rem;
+    color: #fff;
+    background-color:#f85;
+    float: left;
+}
+.modal-content .bottom a:last-child{
+    background-color:#f44;
+}
+.add-store-tip{
+    position: fixed;
+    top: 35%;
+    left: 50%;
+    width: 2.20rem;
+    padding: 0;
+    margin: 0 0 0 -1.1rem;
+    z-index: 9999;
+    background: rgba(0,0,0,0.8);
+    color: #fff;
+    font-size: 0.14rem;
+    line-height: 1.5em;
+    border-radius: 0.06rem;
+    -webkit-box-shadow: 0 0.01rem 0.02rem rgba(0,0,0,0.2);
+    box-shadow: 0 0.01rem 0.02rem rgba(0,0,0,0.2);
+}
+.add-store-tip .tip-inner{
+    padding: 0.1rem;
+    text-align: center;
+    word-wrap: break-word;
+}

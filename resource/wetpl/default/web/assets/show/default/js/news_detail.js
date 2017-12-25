@@ -20,7 +20,7 @@ $(function() {
     var get_param = window.location.pathname.split('/').pop();
     var praise_if, original;
     // token 加载值请求头（Headers）
-    var token = window.localStorage.getItem('token'), isLogin = false;
+    var token = docCookies.getItem("token"), isLogin = false;
 
     if(token) {
         $.ajaxSetup({
@@ -72,8 +72,8 @@ $(function() {
     // 新问内容部分显示
     var news_detail = function(result) {
         document.title = result.title;
-        var thumb_image = window.localStorage.getItem("logo"),
-            publisher   = window.localStorage.getItem("title");
+        var thumb_image = localStorage.getItem("logo"),
+            publisher   = localStorage.getItem("title");
 
         if(!thumb_image) {
             thumb_image = "/common/img/news_default.jpg";

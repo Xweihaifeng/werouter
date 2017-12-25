@@ -101,7 +101,7 @@ $("#btn_1").on("click", function() {
         $.ajax({
             type: "GET",
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             url: apiUrl + "/common/code",
             data: {
@@ -135,13 +135,13 @@ var btgn_s = function() {
                 $.ajax({
                     type: "POST",
                     headers: {
-                        'Token': localStorage.getItem('token')
+                        'Token': docCookies.getItem("token")
                     },
                     url: apiUrl + "/userAct",
                     data: {
                         phone: shouji,
                         code: Code_o,
-                        weid: localStorage.getItem('weid'),
+                        weid: docCookies.getItem("weid"),
                         from_type: 3,
                     },
                     dataType: "json",
@@ -197,7 +197,7 @@ var btgn_s = function() {
                     $.ajax({
                         type: "POST",
                         headers: {
-                            'Token': localStorage.getItem('token')
+                            'Token': docCookies.getItem("token")
                         },
                         url: apiUrl + "userAct",
                         data: {
@@ -270,7 +270,7 @@ $("#btn_fs").on("click", function() {
     $.ajax({
         type: "GET",
         headers: {
-            'Token': localStorage.getItem('token')
+            'Token': docCookies.getItem("token")
         },
         url: apiUrl + "/common/code",
         data: {

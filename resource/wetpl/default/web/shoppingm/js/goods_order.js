@@ -97,7 +97,7 @@ var qiniu_bucket_domain = ApiMaterPlatQiniuDomain;
                 data:{domain:domain,goodsid:id},
                 dataType:'json',
                 headers: {
-                    'Token': localStorage.getItem('token')
+                    'Token': docCookies.getItem("token")
                 },
                 success: function(data){
                     console.log(data);
@@ -205,7 +205,7 @@ checkdomain(domain,id);*/
         }
     }
 
-    init(localStorage.getItem('token'));*/
+    init(docCookies.getItem("token"));*/
 
     var id = window.location.href.split('/').pop();    
  
@@ -262,7 +262,7 @@ checkdomain(domain,id);*/
             url:ADDRESS_LIST,
             type: 'get',
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data){
                 console.log(data);
@@ -327,7 +327,7 @@ checkdomain(domain,id);*/
             type: 'post',
             data:{range_weid:range_weid,address_weid:address_weid},
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data){
                 console.log(data);
@@ -371,7 +371,7 @@ checkdomain(domain,id);*/
                         dataType:'json',
                         type:'post',
                         headers: {
-                            'Token': localStorage.getItem('token')
+                            'Token': docCookies.getItem("token")
                         },
                         data:{name:consignee,province_id:province,area_id:city,detail:address,zipcode:zip,telophone:mobile,status:defaultaddr},
                         success:function(data){
@@ -483,7 +483,7 @@ checkdomain(domain,id);*/
             url: GOODS_DETAIL+'/' + id,
             type:'get',
             headers: {
-                    'Token': localStorage.getItem('token')
+                    'Token': docCookies.getItem("token")
                 },
             dataType: 'json',
             success: function(data){
@@ -507,7 +507,7 @@ checkdomain(domain,id);*/
                            mall_id:goods.mall_id
                     }  
                     //获取会员折扣
-                    associator(localStorage.getItem("weid"),goods.mall_id,goods.price,goodsdata);
+                    associator(docCookies.getItem("weid"),goods.mall_id,goods.price,goodsdata);
 
 
 
@@ -604,7 +604,7 @@ checkdomain(domain,id);*/
             type:'post',
             data:sendData,
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data){
                 console.log(data);
@@ -704,7 +704,7 @@ checkdomain(domain,id);*/
             type:'post',
             data:sendData,
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data){
                 console.log(data);
@@ -737,7 +737,7 @@ checkdomain(domain,id);*/
             url:GOODS_RANGE_PROVICELISTS+'/'+weid,
             type:'get',
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data){
                 if (data.code == 200) {
@@ -768,7 +768,7 @@ checkdomain(domain,id);*/
             type:'post',
             data:{weid:weid,province_id:pid},
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data){
                 if (data.code == 200) {

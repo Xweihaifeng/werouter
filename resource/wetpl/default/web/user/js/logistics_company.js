@@ -4,7 +4,7 @@
 
 $(document).ready(function(){
     //  登录token参数
-    var token = window.localStorage.getItem('token');
+    var token = docCookies.getItem("token");
     if(token) {
         $.ajaxSetup({
             global: true,
@@ -77,7 +77,7 @@ $(document).ready(function(){
         })
     }
 
-    var weid = localStorage.getItem('weid');
+    var weid = docCookies.getItem("weid");
     hasDomain(weid);
 
     //主页初始化
@@ -133,7 +133,7 @@ $(document).ready(function(){
     }
 
     function pages_logistics_list() {
-        var weid = window.localStorage.getItem("weid"),
+        var weid = docCookies.getItem("weid"),
             body100 = {
                 user_id: weid,
                 limit  : 200,
@@ -185,7 +185,7 @@ var moduleState = function() {
         url: apiUrl + 'pages/modulerun/list',
         type: 'GET',
         headers: {
-            'Token': localStorage.getItem('token')
+            'Token': docCookies.getItem("token")
         },
         success: function(data){
             //列表折叠

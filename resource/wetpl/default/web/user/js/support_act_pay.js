@@ -1,4 +1,4 @@
-var token = window.localStorage.getItem('token');
+var token = docCookies.getItem("token");
 if (token) {
     $.ajaxSetup({
         global: true,
@@ -70,7 +70,7 @@ var activity_ebroll_detail = function(id) {
         url: ACTIVITY_ENROLL_DETAIL + "/" + id, //活动报名详情
         type: 'get',
         headers: {
-            'Token': localStorage.getItem('token')
+            'Token': docCookies.getItem("token")
         },
         success: function(data) {
             if (data.code == 200) {
@@ -94,7 +94,7 @@ var wechat_scan_pay = function(number) {
             number: number
         },
         headers: {
-            'Token': localStorage.getItem('token')
+            'Token': docCookies.getItem("token")
         },
         success: function(data) {
             if (data.code == 200) {
@@ -497,7 +497,7 @@ var Support = function(id) {
 
 
 
-            if (isNull(localStorage.getItem('weid')) || isNull(localStorage.getItem('token'))) {
+            if (isNull(docCookies.getItem("weid")) || isNull(docCookies.getItem("token"))) {
                 layer.msg("请验证您的手机号", {
                     time: 1000
                 });
@@ -528,7 +528,7 @@ var Support = function(id) {
                 type: 'post',
                 data: sendData,
                 headers: {
-                    'Token': localStorage.getItem('token')
+                    'Token': docCookies.getItem("token")
                 },
                 success: function(data) {
                     layer.closeAll('loading');
@@ -569,7 +569,7 @@ var GetActivity = function(id, callback) {
         url: ACTIVITY_DETAIL + "/" + id,
         type: 'get',
         headers: {
-            'Token': localStorage.getItem('token')
+            'Token': docCookies.getItem("token")
         },
         success: function(data) {
             callback(data);

@@ -30,7 +30,7 @@
 			call(false);
 		}
 		ajax.get('/circel/dynamic' , {params :params} ).then((res)=>{
-
+			
 			if(res.code == 200 && res.data.list.length > 0)
 			{
 				if($app.empty(call) == false){
@@ -45,7 +45,7 @@
 			
 		});
 	}
-
+	
 	//通用单个页面 分页方法
 	mob_ajax.common_page = function(_this , params ){
 		$(_this.dom).dropload({
@@ -83,7 +83,7 @@
 			}
 		});
 	}
-
+	
 	//CMS 新闻调用
 	mob_ajax.cms_lists  = function(params , call){
 		ajax.get('/cms/contents' , {params : params}).then((res)=>{
@@ -115,6 +115,21 @@
 	mob_ajax.cms_channel  = function(params , call){
 		ajax.get('/cms/cate_tree_by_channel' , params).then((res)=>{
 			call(res);
+		});
+	}
+	
+	// 秦商杂志
+	mob_ajax.magazined  = function(params, call){
+		ajax.get('/magazine/index' , {params :params} ).then((res)=>{
+			if(res.code == 200 && res.data.list.length > 0) {
+				if($app.empty(call) == false){
+                    call(false);
+                    return false;
+				}
+				call(res);
+			} else {
+                call(false);
+			}
 		});
 	}
 

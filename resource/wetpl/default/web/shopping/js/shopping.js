@@ -12,7 +12,7 @@ $(document).ready(function () {
     if (window.location.pathname == "/wemall") {
         window.location = "/index/wemall";
     }
-    var weid = localStorage.getItem('weid');
+    var weid = docCookies.getItem("weid");
 
     var url = window.location.pathname.split('/');
     var active = url.pop();
@@ -62,7 +62,7 @@ $(document).ready(function () {
         }
     }
 
-    init(localStorage.getItem('token'));
+    init(docCookies.getItem("token"));
 
     var options0 = $.get(CMS_ADVS);
     options0.done(function (data) {
@@ -108,7 +108,7 @@ $(document).ready(function () {
             url: GOODS_CATES_LIST_USERID + "/" + weid,
             type: 'get',
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function (data) {
                 console.log(data);
@@ -144,7 +144,7 @@ $(document).ready(function () {
             url: MALL_USERDETAIL,
             type: 'get',
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function (data) {
                 // console.log(data);
@@ -228,7 +228,7 @@ $(document).ready(function () {
             type: 'post',
             data: sendData,
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function (data) {
                 console.log(data);
@@ -335,7 +335,7 @@ $(document).ready(function () {
             url: url + '?domain=' + domain + '&page=' + page + '&type=' + type + '&limit=' + limit,
             type: 'GET',
             headers: {
-                'Token': window.localStorage.getItem("token")
+                'Token': docCookies.getItem("token")
             },
             success: function (data) {
                 let totalPage = data.data.params.pageCount;

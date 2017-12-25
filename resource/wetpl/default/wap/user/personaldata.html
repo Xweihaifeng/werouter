@@ -129,7 +129,7 @@ new Vue({
             $app.set_title('我的');
             this.name = (plats_user_info.real_name != '神秘人') ? plats_user_info.real_name  : plats_user_info.nickname ;
             this.phone =  plats_user_info.phone;
-            this.pages_index = plats_user_info.domian;
+            this.pages_index = plats_user_info.domian + '?from=' + pages_index;
             if(plats_user_info.avatar)
             {
                 this.avatar = ApiMaterPlatQiniuDomain + plats_user_info.avatar;

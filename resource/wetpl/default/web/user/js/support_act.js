@@ -57,7 +57,7 @@ $(document).ready(function() {
             url: ACTIVITY_ENROLL_DETAIL + "/" + id, //活动报名详情
             type: 'get',
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data) {
                 console.log(data)
@@ -262,6 +262,6 @@ $(document).ready(function() {
         })
     }
 
-    artList(localStorage.getItem("weid"));
+    artList(docCookies.getItem("weid"));
 
 })

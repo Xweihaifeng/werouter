@@ -105,8 +105,10 @@
         <script src="/common/js/control.js"></script>
         <script src="{{PATH_TML}}user/js/common.js"></script>
         <script>
-
-            Vue.http.headers.common['token'] = window.localStorage.getItem("token");
+            $(function(){
+                $("#favicon").attr("href", ApiMaterPlatQiniuDomain + localStorage.getItem("fav"));
+            })
+            Vue.http.headers.common['token'] = docCookies.getItem("token");
 
             var app = new Vue({
                 el: "#cart_shopping",
@@ -123,7 +125,7 @@
                 methods: {
                     init : function (pageNum) {
                         var body = {
-                            user_id : window.localStorage.getItem("weid"),
+                            user_id : docCookies.getItem("weid"),
                             limit : 10,
                             page : pageNum
                         };
@@ -211,6 +213,8 @@
                                             }
                                     })
 
+                                }else{
+                                    layer.msg('还未勾选商品');
                                 }
                             }
                         });

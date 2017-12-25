@@ -36,7 +36,7 @@ $(document).ready(function(){
 var qiniu_bucket_domain =ApiMaterPlatQiniuDomain;
 
   // token 加载值请求头（Headers）
-    var token = window.localStorage.getItem('token'), isLogin = false;
+    var token = docCookies.getItem("token"), isLogin = false;
     if(token) {
         $.ajaxSetup({
             global: true,
@@ -166,7 +166,7 @@ var qiniu_bucket_domain =ApiMaterPlatQiniuDomain;
             url: ORDER_DETAIL+'/' + id,
             type:'get',
             headers: {
-                    'Token': localStorage.getItem('token')
+                    'Token': docCookies.getItem("token")
                 },
             dataType: 'json',
             success: function(data){
@@ -208,7 +208,7 @@ var qiniu_bucket_domain =ApiMaterPlatQiniuDomain;
             url: GOODS_DETAIL+'/'+weid,
             type:'get',
             headers: {
-                    'Token': localStorage.getItem('token')
+                    'Token': docCookies.getItem("token")
                 },
             dataType: 'json',
             success: function(data){
@@ -244,7 +244,7 @@ var qiniu_bucket_domain =ApiMaterPlatQiniuDomain;
             type:'post',
             data:sendData,
             headers: {
-                    'Token': localStorage.getItem('token')
+                    'Token': docCookies.getItem("token")
                 },
             dataType: 'json',
             success: function(data){
@@ -270,7 +270,7 @@ var qiniu_bucket_domain =ApiMaterPlatQiniuDomain;
             type:'post',
             data:{"order_id":id},
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data){
                 console.log(data);

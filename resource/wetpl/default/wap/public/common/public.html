@@ -29,7 +29,37 @@
 	<script src="/common/public/zepto-dialog/dialog.js"></script>
 	
 	<script type="text/javascript">
-	
+		function mb_setdomain()
+		{
+			var router_array = ['' , 'article' , 'activity' , 'wemall'];
+			var frist_router = $app.get_router();
+			var two_router = $app.get_router(2);
+
+			var params = location.href; //取得整个地址栏
+			params = params.indexOf("?");
+			if(params != '-1')
+			{
+				return false;
+			} 
+			
+			if(is_domain == 'no' && frist_router == '')
+			{
+				$app.set_cookie('domain' , '/');
+			}
+
+			if(is_domain == 'yes')
+			{
+				for(var item of router_array)
+				{
+					if(item == two_router)
+					{
+						$app.set_cookie('domain' , frist_router);
+						break;
+					}
+				}
+				
+			}
+		}
 		// 移动端临时-弹出窗口
 		function mb_message(message)
 		{
@@ -45,6 +75,7 @@
 			'header' : 'yes' ,
 			'footer' : 'yes' 
 		};
+		mb_setdomain();
 		$wx.get_openid();
 	</script>
 

@@ -89,7 +89,7 @@ var recharge = function(amount){
 	$.ajax({
 		url: apiUrl + 'wechatpay/rechargepay/' + amount,
 		headers: {
-			'Token': localStorage.getItem('token')
+			'Token': docCookies.getItem("token")
 		},
 		type: "GET",
 		success: function(data) {
@@ -143,7 +143,7 @@ var showList = function(limit, page, type) {
 		url: apiUrl + "users/account/detail/list",
 		type: "POST",
 		headers: {
-			'Token': localStorage.getItem('token')
+			'Token': docCookies.getItem("token")
 		},
 		data: {
 			limit: limit,

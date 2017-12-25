@@ -6,17 +6,13 @@ function getResponse(resp)
 }
 
 $(function() {
-
-    // localStorage.removeItem('token');
-    // localStorage.removeItem('weid');
     function GetQueryString(name) {
         var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
         var r = window.location.search.substr(1).match(reg);
         if (r != null) return unescape(r[2]);
         return null;
     }
-    
-    var token = window.localStorage.getItem('token'), get_weid;
+    var token = docCookies.getItem('token'), get_weid;
     if(token) {
         $.ajaxSetup({
             global: true,
@@ -24,8 +20,7 @@ $(function() {
                 'Token': token,
             }
         });
-
-        get_weid = window.localStorage.getItem("weid");
+        get_weid = docCookies.getItem("weid");
         var pathname = window.location.pathname.split('/').slice(1,3);
         if(pathname[0] == 'login') {
             // window.location.href = "/";
@@ -71,20 +66,11 @@ $(function() {
                 </div>
             </div>
             <div class="wexin" style="display: none;">
-                <!-- <div class="wx">微信登录</div> -->
-                <!-- <div id="qrcode-block" style="margin-left:25px;"><iframe src="https://open.weixin.qq.com/connect/qrconnect?appid=wx4b835b375578d1c0&amp;scope=snsapi_login&amp;redirect_uri=http://qqxqs.com/login&amp;state=&amp;login_type=jssdk&amp;self_redirect=default&amp;href=https://wezchina.com/common/css/wechat.css" frameborder="0" scrolling="no" width="300px" height="400px"></iframe></div> -->
                 <div id="qrcode-block" style="margin-left:25px;"></div>
                 <div class="to-login"></div>
             </div>
         </div>
     </div>`
-
-/*                <div class="input-group flex">
-                    <input type="text" class="form-control image_code" maxlength="5" placeholder="请输入图片验证码">
-                    <span class="input-group-btn">
-                        <img src="" class="btn btn-default" id="image_code_id_url" alt="图片验证码" style="height:40px" title="图片验证码">
-                    </span>
-                </div>*/
 
     $("#modal_login").append(template_login);
 
@@ -112,64 +98,6 @@ $(function() {
             showLogin = false;
             isLogin = true;
         }
-        /*var options1 = $.get(USERDETAIL + "/" + get_weid);
-        options1.done(function(data) {
-            if(data.code == 200) {
-                if(!data.data) {
-                    return false;
-                }
-
-                var imgUrl = data.data.avatar;
-                if(!imgUrl) {                
-                    imgUrl = "/common/img/my.png";
-                    console.log(imgUrl);
-                    $("#login a").css({"background": "url("+ imgUrl +") center center / cover no-repeat"});
-                    $("#login a").addClass("i-header").html("");
-
-                } else if (imgUrl.indexOf('http') != 0 && imgUrl != "") {                
-                    imgUrl = ApiMaterPlatQiniuDomain + imgUrl;
-                    $("#login a").css({"background": "url(" + imgUrl + ") center center / cover no-repeat"});
-                    $("#login a").addClass("i-header").html("");
-                    showLogin = false;
-                    isLogin = true;
-
-                }
-                
-                window.localStorage.setItem("avatar", imgUrl);
-            }
-        });
-        options1.fail(function(error) {
-            console.error(error);
-        });*/
-    }    
-
-    /*var options0 = $.get(apiUrl + "cms/setting/show");
-    options0.done(function(data) {
-        if(data.code == 200) {
-            if(!data.data) {
-                return false;
-            }
-
-            var setting = data.data;
-            window.localStorage.setItem("logo", setting.logo);
-            window.localStorage.setItem("fav", setting.favicon);
-
-            $("#corporation").text(setting.title);
-
-            if(!setting.favicon == false) {
-                var favicon = ApiMaterPlatQiniuDomain + setting.favicon;
-                $("#public_icon").attr("href", favicon);
-            }
-
-            if(!setting.logo == false) {
-                var logo = ApiMaterPlatQiniuDomain + setting.logo;
-                $("#home .logoImg").css({"background-image": "url(" + logo + ")"});
-            }
-        }
-    });
-    options0.fail(function(error) {
-        console.error(error);
-    });*/
 
     var setting = plats_info;
     window.localStorage.setItem("logo", setting.logo);
@@ -196,57 +124,11 @@ $(function() {
 
     //route
     var domain = '/' + pages_index;
-    /*var aru = false;
-    var hasDomain = function(weid){
-        $.ajax({
-            url: PAGES_PAGE_GETDETAILBYUSER + weid,
-            type: 'GET',
-            async: false,
-            headers: {
-                'Token': localStorage.getItem('token')
-            },
-            success: function(data){
-                if (data.code == 200){
-                    //console.log(data);
-                    if (data.data != null) {
-                        if (data.data.domain == null) {
-                            //没有个性域名
-                            domain = '/index';
-                            aru = false;
-                        } else {
-                            //存在个性域名
-                            domain = "/" + data.data.domain;
-                            aru = true;
-                        }
-                    } else {
-                        domain = '/index';
-                        aru = false;
-                    }
-
-                } else {
-                    /!*layer.msg(data.message, {
-                        time: 1500
-                    });*!/
-                    // window.localStorage.removeItem('token')
-                    // window.location.href = '/login'
-                }
-            },
-            error: function(xhr){
-                console.log(xhr);
-            }
-        })
-    }
-
-    var weid = localStorage.getItem('weid');
-    if (weid != null) {
-        hasDomain(weid);
-    }*/
-    
 
     //route
     var isLogin; //判断用户登陆与否
     var router = function(route, domain){
-        if(!window.localStorage.getItem("token")) {
+        if(!docCookies.getItem("token")) {
             isLogin = false;
         } else {
             isLogin = true;
@@ -312,13 +194,13 @@ $(function() {
         $("body").css("overflow", "auto");
     })
 
-    function setCookie(token, expiredays)
+    function setCookie(token, weid, expiredays)
     {
         var Days = expiredays;
         var exp = new Date();
         var domain = '.'+root_domain;
         exp.setTime(exp.getTime() + Days*24*60*60*1000);
-        document.cookie = "token="+ escape (token) + ";expires=" + exp.toGMTString() +";path=/;domain="+domain;
+        document.cookie = "token="+ escape (token) + ";weid=" + escape (weid) + ";expires=" + exp.toGMTString() +";path=/;domain="+domain;
     }
 
     function clearCookie() {
@@ -330,17 +212,19 @@ $(function() {
     }
 
     var saveUserInfo = function(token, weid, imgUrl, identity) {
-        localStorage.setItem('token', token);
-        localStorage.setItem('weid', weid);
+        //localStorage.setItem('token', token);
+        //localStorage.setItem('weid', weid);
         localStorage.setItem('identity', identity);
-        setCookie(token, 7);
+        //setCookie(token, weid, 7);
+        docCookies.setItem("token", token, new Date().getTime() + 7 * 24*60*60*1000, "/", '.' + root_domain);
+        docCookies.setItem("weid", weid, new Date().getTime() + 7 * 24*60*60*1000, "/", '.' + root_domain);
         if(!imgUrl) {
             imgUrl = "/common/img/my.png";
             $("#login a").css({"background": "url("+ imgUrl +") center center / 100% no-repeat"});
 
         } else if (imgUrl.indexOf('http') != 0 && imgUrl != "") {
             imgUrl = ApiMaterPlatQiniuDomain + imgUrl;
-            $("#login a").css({"background": "url(" + window.localStorage.getItem('avatar') + ") center center / 100% no-repeat"});
+            $("#login a").css({"background": "url(" + localStorage.getItem('avatar') + ") center center / 100% no-repeat"});
             $("#login a").addClass("i-header").html("");
             showLogin = false;
             isLogin = true;
@@ -485,10 +369,12 @@ $(function() {
                 'domain': domain
             },
             success: function(data) {
-                localStorage.setItem('token', data.token);
-                localStorage.setItem('weid', data.data.weid);
+                //localStorage.setItem('token', data.token);
+                //localStorage.setItem('weid', data.data.weid);
                 localStorage.setItem('phone', data.data.phone);
-                setCookie(data.token, 7);
+                //setCookie(data.token, data.weid, 7);
+                docCookies.setItem("token", data.token, new Date().getTime() + 7 * 24*60*60*1000, "/", '.' + root_domain);
+                docCookies.setItem("weid", data.weid, new Date().getTime() + 7 * 24*60*60*1000, "/", '.' + root_domain);
                 if (data.data.phone === null || data.data.phone === undefined || data.data.phone === '') {
                     location.href = siteUrl + "/bind";
                 } else {
@@ -649,7 +535,9 @@ $(function() {
     $("#avatar-logout span").click(function () {
         localStorage.removeItem('token');
         localStorage.removeItem('weid');
-        setCookie('', -1);
+        //setCookie('', '', 0);
+        docCookies.removeItem('token');
+        docCookies.removeItem('weid');
         clearCookie();
     })
 
@@ -666,4 +554,5 @@ $(function() {
         $(".login-body").show();
         $(".wexin").hide();
     })
+}
 })

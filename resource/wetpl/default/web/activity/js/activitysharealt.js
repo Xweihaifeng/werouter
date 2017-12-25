@@ -12,7 +12,7 @@
     var qiniu_bucket_domain = ApiMaterPlatQiniuDomain;
 
     // token 加载值请求头（Headers）
-    var token = window.localStorage.getItem('token'), isLogin = false;
+    var token = docCookies.getItem("token"), isLogin = false;
     if(token) {
         $.ajaxSetup({
             global: true,
@@ -123,7 +123,7 @@
         }
     });*/
 
-    var weid = localStorage.getItem('weid');
+    var weid = docCookies.getItem("weid");
 
     var activityid = window.location.href.split('/').pop();   
     var url = window.location.href.split('/');
@@ -147,7 +147,7 @@ var activitydetail=function(id,nickname,imgUrl,applyid=0){
             url: ACTIVITY_DETAIL+"/"+id,
             type: 'get',
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data){
                 console.log(data);
@@ -218,7 +218,7 @@ var startactivitydetail=function(id,nickname,imgUrl){
             url: url + id,
             type: 'get',
             /*headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },*/
             success: function(data){
                 console.log(data);
@@ -274,7 +274,7 @@ var startactivitydetail=function(id,nickname,imgUrl){
             url: PAGES_PAGE_GETDETAILBYUSER + weid,
             type: 'GET',
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data){
                 if (data.code == 200){
@@ -319,7 +319,7 @@ var startactivitydetail=function(id,nickname,imgUrl){
             url:BRAND_DETAIL_USER+'/' + weid,
             type: 'GET',
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data){
                 if (data.code == 200){

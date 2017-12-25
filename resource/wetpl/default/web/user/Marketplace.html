@@ -141,7 +141,7 @@
             url: apiUrl+'pages/modulerun/list',
             type: 'GET',
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data){
                 if (data.code == 200){
@@ -286,7 +286,7 @@
             type: 'POST',
             data: {moduleId: mid},
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function (data) {
                 if (data.code == 200) {

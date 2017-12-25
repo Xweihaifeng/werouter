@@ -33,7 +33,94 @@
     <script src="js/config.js"></script>
     <script src="js/template/admins_edit.js"></script>
     <!-- Google Font -->
-    <style>::-webkit-scrollbar { width: 0; }</style>
+    <style>
+        ::-webkit-scrollbar { width: 0; }
+        .danwei{position: absolute;
+            right: 35px;
+            top: 3px;
+            color: #888;}
+        .iconfont {
+            font-family: "iconfont" !important;
+            font-size: 20px;
+            font-style: normal;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        .wenhao{
+            position: absolute;
+            right: -18px;
+            top: 3px;
+        }
+        .wenhao1{
+            position: absolute;
+            right: -18px;
+            top: 3px;
+        }
+        .wenhao2{
+            position: absolute;
+            right: -18px;
+            top: 3px;
+        }
+        .wenhao3{
+            position: absolute;
+            right: -18px;
+            top: 3px;
+        }
+        .wenhao-tishi {
+            border: 1px solid #dcd344;
+            position: absolute;
+            right: -320px;
+            width: 320px;
+            padding: 5px;
+            background: #fffaac;
+            display: none;
+            z-index: 100;
+        }
+        .wenhao-tishi1 {
+            border: 1px solid #dcd344;
+            position: absolute;
+            right: -320px;
+            width: 320px;
+            padding: 5px;
+            background: #fffaac;
+            display: none;
+            z-index: 100;
+        }
+        .wenhao-tishi2 {
+            border: 1px solid #dcd344;
+            position: absolute;
+            right: -320px;
+            width: 320px;
+            padding: 5px;
+            background: #fffaac;
+            display: none;
+            z-index: 100;
+        }
+        .wenhao-tishi3 {
+            border: 1px solid #dcd344;
+            position: absolute;
+            right: -320px;
+            width: 320px;
+            padding: 5px;
+            background: #fffaac;
+            display: none;
+            z-index: 100;
+        }
+        .icon-shizhong {
+            position: absolute;
+            top: 7px;
+            right: 33px;
+            color: #999;
+            font-size: 15px;
+        }
+        .datepicker {
+            cursor: pointer!important;
+            background-color: #fff!important;
+        }
+        .form-group .info {
+            color: #999;
+        }
+    </style>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
@@ -60,13 +147,13 @@
         <input type="hidden" name="config-url" value="admins.html">
         <section class="content-header">
             <h1>
-                管理员管理
-                <small>管理员编辑</small>
+                账号管理
+                <small>管理编辑</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> 首页</a></li>
                 <li><a href="#">系统设置</a></li>
-                <li class="active">管理员编辑</li>
+                <li class="active">编辑管理</li>
             </ol>
         </section>
         <!-- Main content -->
@@ -81,38 +168,54 @@
                         <div class="box-body">
                             <form id="form" class="box-body form-horizontal" style="padding: 30px;">
                                 <div class="form-group">
-                                    <label class="control-label col-sm-3 col-md-2 col-lg-1">账号*</label>
-                                    <div class="col-sm-9 col-md-10 col-lg-11">
-                                        <input type="text" class="form-control" id="userName" name="userName" placeholder="用户名">
+                                    <label class="control-label col-sm-3 col-md-2 col-lg-1">账 号</label>
+                                    <div class="col-sm-5">
+                                        <input type="text" class="form-control" id="userName" name="userName" placeholder="账号" readonly>
+                                        <span class="wenhao"><i class="iconfont ion-ios-help"></i></span>
+                                        <div class="wenhao-tishi">
+                                            账号不能为空</br>用于管理后台登录账号
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label col-sm-3 col-md-2 col-lg-1">密  码*</label>
-                                    <div class="col-sm-9 col-md-10 col-lg-11">
+                                    <label class="control-label col-sm-3 col-md-2 col-lg-1">密  码</label>
+                                    <div class="col-sm-5">
                                         <input type="password" class="form-control" id="password" name="password" placeholder="******">
+                                        <span class="wenhao1"><i class="iconfont ion-ios-help"></i></span>
+                                        <div class="wenhao-tishi1">
+                                            密码不能为空</br>用于管理后台登录密码
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label col-sm-3 col-md-2 col-lg-1">重复密码*</label>
-                                    <div class="col-sm-9 col-md-10 col-lg-11">
+                                    <label class="control-label col-sm-3 col-md-2 col-lg-1">重复密码</label>
+                                    <div class="col-sm-5">
                                         <input type="password" class="form-control" id="rePassword" name="rePassword" placeholder="******">
+                                        <span class="wenhao2"><i class="iconfont ion-ios-help"></i></span>
+                                        <div class="wenhao-tishi2">
+                                            重复密码不能为空
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
-				                    <label class="control-label col-sm-3 col-md-2 col-lg-1">管理权限*</label>
-				                    <div class="col-sm-9 col-md-10 col-lg-11">
-				                    <select class="form-control" id="role_id"></select>
+				                    <label class="control-label col-sm-3 col-md-2 col-lg-1">管理权限</label>
+				                    <div class="col-sm-5">
+				                        <select class="form-control" id="role_id"></select>
+                                        <span class="wenhao3"><i class="iconfont ion-ios-help"></i></span>
+                                        <div class="wenhao-tishi3">
+                                            权限组不能为空</br>每个权限组拥有不同权限
+                                        </div>
 				                    </div>
 				                </div>
                                 <div class="form-group">
-                                    <label class="control-label col-sm-3 col-md-2 col-lg-1">真实姓名*</label>
-                                    <div class="col-sm-9 col-md-10 col-lg-11">
+                                    <label class="control-label col-sm-3 col-md-2 col-lg-1">真实姓名</label>
+                                    <div class="col-sm-5">
                                         <input type="text" class="form-control" id="real_name" name="real_name" placeholder="真实姓名">
                                     </div>
                                 </div>
 				                <div class="form-group">
-				                	<label class="control-label col-sm-3 col-md-2 col-lg-1">性别*</label>
-				                	<div class="col-sm-9 col-md-10 col-lg-11">
+				                	<label class="control-label col-sm-3 col-md-2 col-lg-1">性别</label>
+				                	<div class="col-sm-5">
 				                    <label class="radio-inline">
 				                        <input type="radio" name="list" id="inlineRadio1" value="1"> 男
 				                    </label>
@@ -122,14 +225,14 @@
 				                    </div>
 				                </div>
                                 <div class="form-group">
-                                    <label class="control-label col-sm-3 col-md-2 col-lg-1">电话号码*</label>
-                                    <div class="col-sm-9 col-md-10 col-lg-11">
+                                    <label class="control-label col-sm-3 col-md-2 col-lg-1">电话号码</label>
+                                    <div class="col-sm-5">
                                         <input type="text" class="form-control" id="phone" name="phone" placeholder="电话号码">
                                     </div>
                                 </div>
 				                <div class="form-group">
 				                    <label class="control-label col-sm-3 col-md-2 col-lg-1">备  注</label>
-				                    <div class="col-sm-9 col-md-10 col-lg-11">
+				                    <div class="col-sm-5">
 				                    <input type="text" class="form-control" id="memox" name="memox" placeholder="备注">
 				                    </div>
 				                </div>

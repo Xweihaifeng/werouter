@@ -8,7 +8,9 @@ if(sessionStorage.lastname=="we_title_2"){
     $("#we_title_2").find(".title-img").css("transform","rotate(90deg)");
 }
 $(document).ready(function(){
-var qiniu_bucket_domain =ApiMaterPlatQiniuDomain;
+    $("#favicon").attr("href", ApiMaterPlatQiniuDomain + localStorage.getItem("fav"));
+
+    var qiniu_bucket_domain =ApiMaterPlatQiniuDomain;
 
     var showLogin = false; //调整窗口大小时登陆框是否存在
     var currWidth = $(window).width();
@@ -72,7 +74,7 @@ var qiniu_bucket_domain =ApiMaterPlatQiniuDomain;
             url: apiUrl+'pages/page/getDetailByUser/' + weid,
             type: 'GET',
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data){
                 if (data.code == 200){
@@ -97,13 +99,13 @@ var qiniu_bucket_domain =ApiMaterPlatQiniuDomain;
         })
     }
 
-    var weid = localStorage.getItem('weid');
+    var weid = docCookies.getItem("weid");
     hasDomain(weid);
     /*
     //route
     var isLogin; //判断用户登陆与否
     var router = function(route){
-        if(!window.localStorage.getItem("token")) {
+        if(!docCookies.getItem("token")) {
             isLogin = false;
         } else {
             isLogin = true;
@@ -185,7 +187,7 @@ var qiniu_bucket_domain =ApiMaterPlatQiniuDomain;
 
     }
 
-    init(localStorage.getItem('token'));
+    init(docCookies.getItem("token"));
     
     var id = window.location.href.split('/').pop();
 
@@ -349,7 +351,7 @@ var qiniu_bucket_domain =ApiMaterPlatQiniuDomain;
                         type:'post',
                         data:{logistics_NO:x.logistics_no,company_code:x.logistics_company_code},
                         headers: {
-                                'Token': localStorage.getItem('token')
+                                'Token': docCookies.getItem("token")
                             },
                         dataType: 'json',
                         success: function(data){
@@ -451,7 +453,7 @@ var qiniu_bucket_domain =ApiMaterPlatQiniuDomain;
                 '<tr class="orders_list_content" id="'+data.weid+'" data-id="'+data.goods_id+'">'+
                    ' <td width="40%" colspan="4">'+
                         '<div class="od_about_order_left  od_bgwrite">'+
-                        '<p><span class="t">商家昵称:</span><span class="txt">'+nickname+'</span></p>'+
+                        '<p><span class="t">买家昵称:</span><span class="txt">'+nickname+'</span></p>'+
                         '<p><span class="t">所在地址:</span><span class="txt">'+addr+'</span></p>'+
                         '<p><span class="t">联系电话:</span><span class="txt">'+phone+'</span></p>'+
                         '<p><span class="t">收货地址:</span><span class="txt">'+data.address+'</span></p>'+
@@ -533,7 +535,7 @@ var qiniu_bucket_domain =ApiMaterPlatQiniuDomain;
             url: ORDER_DETAIL+'/' + id,
             type:'get',
             headers: {
-                    'Token': localStorage.getItem('token')
+                    'Token': docCookies.getItem("token")
                 },
             dataType: 'json',
             success: function(data){
@@ -556,7 +558,7 @@ var qiniu_bucket_domain =ApiMaterPlatQiniuDomain;
             url: MALL_DETAIL+'/' + mall_id,
             type:'get',
             headers: {
-                    'Token': localStorage.getItem('token')
+                    'Token': docCookies.getItem("token")
                 },
             dataType: 'json',
             success: function(data){
@@ -579,7 +581,7 @@ var qiniu_bucket_domain =ApiMaterPlatQiniuDomain;
             url: USERDETAIL+'/' + userid,
             type:'get',
             headers: {
-                    'Token': localStorage.getItem('token')
+                    'Token': docCookies.getItem("token")
                 },
             dataType: 'json',
             success: function(data){
@@ -623,7 +625,7 @@ var qiniu_bucket_domain =ApiMaterPlatQiniuDomain;
             url: USERDETAIL+'/' + userid,
             type:'get',
             headers: {
-                    'Token': localStorage.getItem('token')
+                    'Token': docCookies.getItem("token")
                 },
             dataType: 'json',
             success: function(data){
@@ -668,7 +670,7 @@ var qiniu_bucket_domain =ApiMaterPlatQiniuDomain;
             url: GOODS_DETAIL+'/' + goods_id,
             type:'get',
             headers: {
-                    'Token': localStorage.getItem('token')
+                    'Token': docCookies.getItem("token")
                 },
             dataType: 'json',
             success: function(data){
@@ -692,7 +694,7 @@ var qiniu_bucket_domain =ApiMaterPlatQiniuDomain;
             url: PAGES_PAGE_GETDETAILBYUSER + weid,
             type: 'GET',
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data){
                 if (data.code == 200){

@@ -94,7 +94,7 @@ new Vue({
         		if(pages_index == plats_user_info.domian)
         		{
         			this.if_follow = 1;
-        			this.but_text = '进入我的微主页';
+        			this.but_text = '进入微主页';
         		}
         		else
         		{
@@ -111,7 +111,7 @@ new Vue({
         		this.wepage = all_domian + plats_user_info.domian;
         		this.wecard = all_domian + plats_user_info.domian + '/wecard';
         	}
-
+        	this.wepage += '?from=' + pages_index
         	$app.set_title(pages_info.plats_user.nickname + '的微名片');
         });
     },
@@ -128,7 +128,7 @@ new Vue({
     		}
     		else
     		{
-    			$app.open_page(this.but_url);
+    			$app.open_page(this.but_url + '?from=' + pages_index);
     		}
     	}
     }

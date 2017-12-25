@@ -49,7 +49,7 @@ var create = function(amount, status) {
 	$.ajax({
 		url: apiUrl + "users/account/store",
 		headers: {
-			'Token': localStorage.getItem('token')
+			'Token': docCookies.getItem("token")
 		},
 		data: {
 			amount: amount,
@@ -73,7 +73,7 @@ var init = function(id) {
 		url: apiUrl + "users/account/getDetailByUser/" + id,
 		type: "GET",
 		headers: {
-			'Token': localStorage.getItem('token')
+			'Token': docCookies.getItem("token")
 		},
 		dataType: "json",
 		success: function(data) {

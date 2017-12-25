@@ -30,15 +30,15 @@ $(document).ready(function() {
                         if (val.name == 'superManager') {
                             html += 
                             '<td class="text-center">' +
-                            '<a title = "菜单权限" class="btn btn-info" style="margin-right:10px;background: grey;border: none;" href="#" disabled="disabled">菜单权限</a>' +
+                            '<a title = "权限设置" class="btn btn-info" style="margin-right:10px;background: grey;border: none;" href="#" disabled="disabled">权限设置</a>' +
                             '<a title = "频道权限" class="btn btn-info" style="margin-right:10px;background: grey;border: none;" href="#" disabled="disabled">频道权限</a>' +
-                            '<a title = "编辑" class="btn btn-info" style="margin-right:10px;"  href="roles_edit.html?weid=' + val.weid + '">编辑</a>' +
+                            '<a title = "编辑" class="btn btn-info" style="margin-right:10px;background: grey;border: none;"  href="#" disabled="disabled">编辑</a>' +
                             '<a title = "删除" class="btn btn-danger" href="#" style="background: grey; border: none!important;" disabled="disabled">删除</a>' +
                             '</td></tr>';
                         } else {
                             html += 
                             '<td class="text-center">' +
-                            '<a title = "菜单权限" class="btn btn-info" style="margin-right:10px;"  href="roles_config.html?weid=' + val.weid + '&type=config">菜单权限</a>' +
+                            '<a title = "权限设置" class="btn btn-info" style="margin-right:10px;"  href="roles_config.html?weid=' + val.weid + '&type=config">权限设置</a>' +
                             '<a title = "频道权限" class="btn btn-info" style="margin-right:10px;"  href="roles_channel.html?weid=' + val.weid + '&type=channel">频道权限</a>' +
                             '<a title = "编辑" class="btn btn-info" style="margin-right:10px;"  href="roles_edit.html?weid=' + val.weid + '">编辑</a>' +
                             '<a title = "删除" class="btn btn-danger" data-toggle="modal" data-target="#myModal" data-id="' + val.weid + '" data-name="' + val.name + '"  href="#">删除</a>' +

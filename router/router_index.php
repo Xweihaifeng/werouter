@@ -1,5 +1,5 @@
 <?php
-class router_index 
+class router_index extends controller
 {
     //路由配置信息
     public $params;
@@ -26,18 +26,36 @@ class router_index
     ];    
     // 重定向的链接
     private $_rest_url = '';
-    
+
+    public $wap = [];
+
+    // 获取项目文件FILE
+    public $file;
+    // 七牛
+    public $qiniu_cofing = [
+        'access_key' => '3C18srWCsPzjl8sf_L-el16dBJ2EjH5U82wTH1d3',
+        'secret_key' => 'C51Q1mBQBeOYwnVrmvCLg3FW5y2EV_8o-CYa_Cux',
+        'domain_custom' => 'images.wezchina.com',
+        'buckut' => 'wezc',
+    ];
+
+    // 协议类型
+    public $http;
+
     public function __construct()
     {	
-
+        parent::__construct();
+        // 获取域名用于验证网站
         $this->_domain = $_SERVER['HTTP_HOST'];
         //$this->_domain = 'new.wezchina.com';
-        
+        // 传递的URI 以及 参数
         $this->_request_uri = $_SERVER['REQUEST_URI'];
-        
+            
         $this->_method = $_SERVER['REQUEST_METHOD'];
-        
-        $this->_domain_config = $this->_domain_init();
+        // 分解手机版
+        $this->_analysis();
+
+        //$this->_domain_config = $this->_domain_init();
     }
 
 
@@ -50,43 +68,103 @@ class router_index
             exit();
         }
     }
-    
-    // 分解域名标识 手机版 PC版 API
-    private function _domain_init()
+
+    // 获取网站手机版域名
+    private function _wap_analysis($domian)
     {
-        $this->_qqxqs();
-
-        $mark_array = ['m'];
-        $domain_array = explode('.' , $this->_domain);
-        
-        $count_domain_array = count($domain_array);
-        $mark_domain = current($domain_array);
-        
-        if($count_domain_array == 4 || $count_domain_array == 3 )
-        {
-        	if($mark_domain == 'www')
-        	{
-        		$this->_domain = substr( $this->_domain , 4);
-        		$this->_rest_url = $this->_domain;
-        	}
-
-        }
-        
-        $domain_config = $this->_domain;
-        if($mark_domain == 'm') 
-        {
-            $domain_config = str_replace("m.","", $this->_domain );
-        }        
-        $this->_mark_domain = (in_array($mark_domain, $mark_array)) ? $mark_domain : 'pc' ;
-
-        // $this->_is_wap($domain_config);
-        return $domain_config;
+        $this->wap['front']['url'] = 'm.'.$this->_domain_config;
+        $this->wap['after']['url'] = $this->_domain_config.'/m';
     }
+
+    // 分解网站域名
+    private function _analysis()
+    {
+        $front_array = ['m'];
+        $after_array = ['m'];
+
+        $front = current(explode('.', $this->_domain));
+        $domain = $this->_domain;
+        $this->wap['front']['state'] = FALSE;
+        $this->wap['after']['state'] = FALSE;
+        $wap_state = FALSE;
+        if(in_array($front, $front_array))
+        {
+            $domain = substr($domain, strlen($front) + 1 ,strlen($domain));
+            $this->wap['front']['state'] = true;
+            $wap_state = TRUE;
+        }
+
+        $uri = current(explode('?', $this->_request_uri));
+        $after_array_obj = explode('/', $uri);
+        $after = next($after_array_obj);
+
+        if(in_array($after, $after_array))
+        {
+            $this->wap['after']['state'] = true;
+            $wap_state = TRUE;
+        }    
+
+        $this->_mark_domain = ($wap_state == TRUE) ? 'm' : 'pc' ;
+
+        if($this->_mark_domain == 'pc')
+        {
+            if(substr($domain, 0  , 3) == 'www')
+            {
+                $domain = substr($domain, 4 ,strlen($domain));
+            }
+        }
+
+        $this->_domain_config = $domain;  
+
+        $this->_wap_analysis($this->_domain_config);
+    }
+
 
     private function _is_wap($domain_config)
     {   
 
         $protocol = empty($_SERVER['HTTPS']) ? 'http://' : 'https://';
+        $wap_domain_url = '';
+        //$this->data['wap_domain'] = 2;
+
+        if($this->data['wap_domain'] == 1)
+        {
+            $wap_domain_url = $this->wap['front']['url'];
+        }
+        else
+        {
+            $wap_domain_url = $this->wap['after']['url'];
+        }
+
+        $this->wap_domain_url = $wap_domain_url;
+
+        if(substr($this->_request_uri, 0  , 2) == '/m'){
+            $this->_request_uri = substr($this->_request_uri, 2  , strlen($this->_request_uri));
+        }
+
+        if($this->data['wap_domain'] == 1 && $this->wap['after']['state'] == TRUE)
+        {
+            $domain = $this->wap['front']['url'];
+
+            header("Location: {$protocol}".$domain.$this->_request_uri);
+            exit;
+        }
+
+        if($this->data['wap_domain'] == 2 && $this->wap['front']['state'] == TRUE)
+        {
+            $domain = $this->wap['after']['url'];
+
+            header("Location: {$protocol}".$domain.$this->_request_uri);
+            exit;
+        }
+
+        if($this->wap['front']['state'] == TRUE && $this->wap['after']['state'] == TRUE)
+        {
+
+            header("Location: {$protocol}".$wap_domain_url.$this->_request_uri);
+            exit;
+        }
+
         if(!empty($this->_rest_url))
         {
             header("Location: ".$protocol.$this->_rest_url.$this->_request_uri); 
@@ -94,7 +172,8 @@ class router_index
         }
 
         if($this->_mark_domain == 'pc' && is_mobile() == TRUE){
-            header("Location: {$protocol}m.".$domain_config.$this->_request_uri);
+            
+            header("Location: {$protocol}".$wap_domain_url.$this->_request_uri);
             exit;
         }elseif ($this->_mark_domain == 'm' && is_mobile() == FALSE) {
             header("Location: {$protocol}".$domain_config.$this->_request_uri);
@@ -110,6 +189,7 @@ class router_index
     // 获取网站信息路由信息
     private function _get_domain()
     {
+
         $domain_router_file = './config/domain/'.md5($this->_domain_config);
 
         if(!file_exists($domain_router_file))
@@ -131,7 +211,6 @@ class router_index
             $data = file_get_contents($domain_router_file);
             $data = json_decode($data , TRUE);
         }
-
         return $data;
     }
     
@@ -154,49 +233,31 @@ class router_index
 
         if(empty($this->data['router'])) error (404);
 
-         // 手机版 && 电脑版相互跳转
+        // 手机版 && 电脑版相互跳转
         $this->_is_wap($this->_domain_config);
 
-        (new main($this->data))->index($this->_directory[$this->_mark_domain] , $this->data['weid'] , $this->_domain_config, $this->_mark_domain);
-        
+        $this->tml_index($this->_directory[$this->_mark_domain] , $this->data['weid'] , $this->_domain_config, $this->_mark_domain);        
     }
-}
 
-class main extends controller
-{ 
-    //路由配置信息
-    public $params;
-    //获取data 数据
-    public $data;
-    // 获取项目文件FILE
-    public $file;
-    // 七牛
-    public $qiniu_cofing = [
-        'access_key' => '3C18srWCsPzjl8sf_L-el16dBJ2EjH5U82wTH1d3',
-        'secret_key' => 'C51Q1mBQBeOYwnVrmvCLg3FW5y2EV_8o-CYa_Cux',
-        'domain_custom' => 'images.wezchina.com',
-        'buckut' => 'wezc',
-    ];
-    // 构造方法
-    public function __construct($data) 
-    {
-    	parent::__construct();
-        $this->data = $data;
-    }
-    
-    public function  index( $directory , $weid , $domain , $mark_domain)
+
+    public function  tml_index( $directory , $weid , $domain , $mark_domain)
     {
 
-		$router = $this->data['router'];
+        $router = $this->data['router'];
 
-    	$rule = $this->data['match'];
+        $rule = $this->data['match'];
 
         config::$plats = $this->_domain_data($weid);
         //$this->data($this->_domain_data($weid));
 
-    	$uri =current(explode('?', $_SERVER['REQUEST_URI']));
+        $uri = current(explode('?', $_SERVER['REQUEST_URI']));
 
         $controller_varify = $this->_controller($uri , $this->data);
+
+        if($this->data['wap_domain'] == 2 && $this->_mark_domain == 'm')
+        {
+            $uri = substr($uri, 2  , strlen($uri));
+        }
 
         $router_verify = new router_verify($router , $uri , $rule , $weid);
 
@@ -208,7 +269,6 @@ class main extends controller
         $router_map = $router_verify->router['router_map'];
         $controller_router_config = (!empty($router_verify->router['config'])) ? $router_verify->router['config']  : '' ;
         
-
         if(!empty($controller_router_config['template']))
         {
             $router_map = $controller_router_config['template'];
@@ -220,7 +280,7 @@ class main extends controller
             $additional_config = $controller_router_config['config'];
         }
 
-        $this->file = '/resource/wetpl/default/';
+        $this->file = '/resource/wetpl/'.$this->data['template'].'/';
 
         $add_public_config = [];
 
@@ -243,7 +303,7 @@ class main extends controller
         
         if(!empty($additional_config))
         {
-        	$additional_config = array_merge($add_public_config , $additional_config);
+            $additional_config = array_merge($add_public_config , $additional_config);
         }
         else
         {
@@ -320,7 +380,7 @@ class main extends controller
     private function _domain_data($weid)
     {
         $protocol = ($this->data['http_type'] == 1) ? 'http://' : 'https://' ;
-        if(is_mobile() == TRUE)
+        if(is_mobile() == TRUE && $this->data['wap_domain'] == 1)
         {
             $this->data['domain'] = 'm.'.$this->data['domain'];
         }
@@ -331,8 +391,12 @@ class main extends controller
         $plats['var api_domain'] = $protocol.$this->data['domain'].'/api/';
         //$plats['var all_domian'] = $protocol.$this->data['domain'].'/'; 正式环境使用
         $plats['var all_domian'] = $protocol.$_SERVER['HTTP_HOST'].'/';  //测试环境使用
-		
-        $plats['var root_domain'] = $this->_get_domain($_SERVER['HTTP_HOST']);
+        if(is_mobile() == TRUE && $this->data['wap_domain'] == 2)
+        {
+            $plats['var all_domian'] = $protocol.$_SERVER['HTTP_HOST'].'/m/';  //测试环境使用
+        }
+
+        $plats['var root_domain'] = $this->_get_root_domain($_SERVER['HTTP_HOST']);
         $plats['var is_domain'] = 'no';
         $plats['var is_wx'] = is_weixin();
         $plats['var pages_index'] = 'index';
@@ -344,21 +408,21 @@ class main extends controller
         $plats['qiniu'] = FALSE;
         //JS 环境变量初始化END
 
-    	//七牛相关信息
-    	$sql = 'SELECT name , config FROM we_plats_setting
-				WHERE plat_id=? AND name = "qiNiuConfig"';
-		$row = $this->db->queryOne($sql , array($weid));
+        //七牛相关信息
+        $sql = 'SELECT name , config FROM we_plats_setting
+                WHERE plat_id=? AND name = "qiNiuConfig"';
+        $row = $this->db->queryOne($sql , array($weid));
 
-		$config = json_decode($row['config'] , TRUE);
-		
-		$plats['qiniu'] = $config;
-		if(empty($config['domain_custom']))
-		{
-			$plats['qiniu']['domain_custom'] = $this->qiniu_cofing['domain_custom'];
+        $config = json_decode($row['config'] , TRUE);
+        
+        $plats['qiniu'] = $config;
+        if(empty($config['domain_custom']))
+        {
+            $plats['qiniu']['domain_custom'] = $this->qiniu_cofing['domain_custom'];
             $plats['qiniu']['access_key'] = $this->qiniu_cofing['access_key'];
             $plats['qiniu']['secret_key'] = $this->qiniu_cofing['secret_key'];
             $plats['qiniu']['buckut'] = $this->qiniu_cofing['buckut'];
-		}
+        }
 
         //平台信息相关
         $plats_sql = 'SELECT plat_name FROM we_plats
@@ -366,11 +430,11 @@ class main extends controller
         $plats_row = $this->db->queryOne($plats_sql , array($weid));
         if(empty($plats_row)) error(404);
 
-		$plats_cms_sql = 'SELECT title , description , key_word
-						 , icp , favicon , logo , background , weibo_show 
-						 , background_up , block , bar1 , bar2 , bar3 , background_right
-						 ,bar4 , block ,wap_logo FROM we_plat_cms WHERE plat_id=?';
-		$plats['plats_info'] = $this->db->queryOne($plats_cms_sql , array($weid));
+        $plats_cms_sql = 'SELECT title , description , key_word
+                         , icp , favicon , logo , background , weibo_show 
+                         , background_up , block , bar1 , bar2 , bar3 , background_right
+                         ,bar4 , block ,wap_logo FROM we_plat_cms WHERE plat_id=?';
+        $plats['plats_info'] = $this->db->queryOne($plats_cms_sql , array($weid));
 
         $block = array_sort(json_decode($plats['plats_info']['block'] , TRUE) , 'sort' , 'asc');
         $plats['plats_info']['blocks'] = $block;
@@ -406,7 +470,7 @@ class main extends controller
                 $plats['var pages_index'] = 'index';
             }
         }
-		return $plats;
+        return $plats;
     }
 
     // 网站元素要替换规则
@@ -437,7 +501,7 @@ class main extends controller
         {
             $action = next($controller_uri);
         }
-        
+
         include $controller_file;  $c = new $file(); $c->public_data = $data; $c->{$action}(); exit();
      
     }
@@ -447,7 +511,7 @@ class main extends controller
      * @param type $domain 域名
      * @return string 返回根域名
      */
-    private function _get_domain($domain) {
+    private function _get_root_domain($domain) {
         $re_domain = '';
         $domain_postfix_cn_array = array("com", "net", "org", "gov", "edu", "com.cn", "cn");
         $array_domain = explode(".", $domain);
@@ -463,6 +527,6 @@ class main extends controller
         }
         return $re_domain;
     }
-
 }
+
 

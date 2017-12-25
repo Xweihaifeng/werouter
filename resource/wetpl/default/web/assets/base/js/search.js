@@ -15,7 +15,7 @@ $(function() {
     var channel = getQueryString("channel");
     var title = getQueryString("title");
 
-    var logo = window.localStorage.getItem("logo");
+    var logo = localStorage.getItem("logo");
     if(!logo) {
         logo = "/common/img/main_logo.png";
     } else if (logo.indexOf('http') != 0 && logo != "") {

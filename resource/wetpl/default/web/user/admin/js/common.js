@@ -8,7 +8,7 @@ var hasDomain = function(weid){
         url: PAGES_PAGE_GETDETAILBYUSER + weid,
         type: 'GET',
         headers: {
-            'Token': localStorage.getItem('token')
+            'Token': docCookies.getItem("token")
         },
         success: function(data){
             if (data.code == 200){
@@ -33,7 +33,7 @@ var hasDomain = function(weid){
     })
 }
 
-var weid = localStorage.getItem('weid');
+var weid = docCookies.getItem("weid");
 hasDomain(weid);
 
 var isLogin = false; //判断用户登陆与否
@@ -111,4 +111,4 @@ var init = function(token){
     }
 }
 
-init(localStorage.getItem('token'));
+init(docCookies.getItem("token"));

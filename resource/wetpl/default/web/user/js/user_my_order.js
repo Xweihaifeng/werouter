@@ -4,8 +4,8 @@
 
 
 var domain,
-    weid = window.localStorage.getItem('weid'),
-    token = window.localStorage.getItem("token");
+    weid = docCookies.getItem("weid"),
+    token = docCookies.getItem("token");
 
 //  登录token参数
 if(token) {
@@ -35,7 +35,7 @@ $(function () {
             url: PAGES_PAGE_GETDETAILBYUSER + weid,
             type: 'GET',
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data){
                 if (data.code == 401) {
@@ -64,7 +64,7 @@ $(function () {
         })
     }
 
-    var weid = localStorage.getItem('weid');
+    var weid = docCookies.getItem("weid");
     hasDomain(weid);
 
     var flag=true;
@@ -100,7 +100,7 @@ $(function () {
             type:'post',
             data:sendData,
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             dataType: 'json',
             success: function(data){
@@ -423,7 +423,7 @@ $(function () {
                     url : apiUrl + 'order/detail/'+orderId,
                     type : 'get',
                     headers : {
-                        "Token": localStorage.getItem('token')
+                        "Token": docCookies.getItem("token")
                     },
                     dataType : 'json',
                     success : function (data) {
@@ -498,7 +498,7 @@ $(function () {
                     type: 'post',
                     data: {"order_id": orderId},
                     headers: {
-                        'Token': localStorage.getItem('token')
+                        'Token': docCookies.getItem("token")
                     },
                     success: function (data) {
                         console.log(data);
@@ -546,7 +546,7 @@ $(function () {
                         type : 'post',
                         data:{order_id:orderId},
                         headers : {
-                            "Token": localStorage.getItem('token')
+                            "Token": docCookies.getItem("token")
                         },
                         dataType : 'json',
                         success : function (data) {
@@ -588,7 +588,7 @@ $(function () {
                         type : 'post',
                         data:{order_id:orderId,reason:reason},
                         headers : {
-                            "Token": localStorage.getItem('token')
+                            "Token": docCookies.getItem("token")
                         },
                         dataType : 'json',
                         success : function (data) {
@@ -660,7 +660,7 @@ $(function () {
                             data: JSON.parse(JSON.stringify(data))
                         },
                         headers: {
-                            "Token": localStorage.getItem('token')
+                            "Token": docCookies.getItem("token")
                         },
                         dataType: 'json',
                         success: function (data) {
@@ -691,7 +691,7 @@ $(function () {
                     type : 'post',
                     data:{order_id:orderId},
                     headers : {
-                        "Token": localStorage.getItem('token')
+                        "Token": docCookies.getItem("token")
                     },
                     dataType : 'json',
                     success : function (data) {
@@ -715,7 +715,7 @@ $(function () {
                     type : 'post',
                     data:{order_id:orderId},
                     headers : {
-                        "Token": localStorage.getItem('token')
+                        "Token": docCookies.getItem("token")
                     },
                     dataType : 'json',
                     success : function (data) {
@@ -741,7 +741,7 @@ $(function () {
                     type : 'post',
                     data:{order_id:orderId},
                     headers : {
-                        "Token": localStorage.getItem('token')
+                        "Token": docCookies.getItem("token")
                     },
                     dataType : 'json',
                     success : function (data) {
@@ -763,7 +763,7 @@ $(function () {
             url: apiUrl + 'order/detail/' + orderid,
             type: 'get',
             headers: {
-                "Token": localStorage.getItem('token')
+                "Token": docCookies.getItem("token")
             },
             dataType: 'json',
             success: function (data) {
@@ -895,7 +895,7 @@ $(function () {
             url : apiUrl + 'order/detail/'+orderid,
             type : 'get',
             headers : {
-                "Token": localStorage.getItem('token')
+                "Token": docCookies.getItem("token")
             },
             dataType : 'json',
             success : function (data) {
@@ -992,7 +992,18 @@ $(function () {
                         var time_end=$("input[name='end_time']").val();
                         var order_num=$("input[name='no']").val();
                         var statusid=$(".current .btn-select").data("id");
-                        var page=$("pagination").find("active").find("span").text();
+                        var page=$(".pagination").find(".active").find("span").text();
+                        orderlist(userId,page,statusid,{time_start:time_start,time_end:time_end,order_num:order_num});
+                    }else{
+                        layer.msg(message, {
+                            time: 1500
+                        });
+                        //重新加载页面
+                        var time_start=$("input[name='start_time']").val();
+                        var time_end=$("input[name='end_time']").val();
+                        var order_num=$("input[name='no']").val();
+                        var statusid=$(".current .btn-select").data("id");
+                        var page=$(".pagination").find(".active").find("span").text();
                         orderlist(userId,page,statusid,{time_start:time_start,time_end:time_end,order_num:order_num});
                     }
                 }
@@ -1012,7 +1023,7 @@ $(function () {
                         company_code : code
                     },
                     headers : {
-                        "Token": localStorage.getItem('token')
+                        "Token": docCookies.getItem("token")
                     },
                     dataType : 'json',
                     success : function (res) {

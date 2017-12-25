@@ -10,7 +10,7 @@ $(document).ready(function(){
         localStorage.setItem('token', token);
     }
 
-    var weid = localStorage.getItem('weid');
+    var weid = docCookies.getItem("weid");
 
     //路由处理逻辑
     var url = window.location.pathname.split('/');

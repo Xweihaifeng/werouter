@@ -84,6 +84,7 @@ class controllerRouter extends controller
         if(!empty($wezchina_plats['plats_brand']))
         {
             $plats_show['head_title'] = $wezchina_plats['plats_brand']['title'];
+            $plats_show['main_title'] = $wezchina_plats['plats_brand']['title'];
             $plats_show['head_describe'] = $wezchina_plats['plats_brand']['slogan'];
             if(!empty($wezchina_plats['plats_brand']['title']))
             {
@@ -93,11 +94,13 @@ class controllerRouter extends controller
         else
         {
             $plats_show['head_title'] = $wezchina_plats['plats_user']['nickname'] .'的微主页  — ' . config::$plats['plats_info']['plat_name'];
+            $plats_show['main_title'] = $wezchina_plats['plats_user']['nickname'] .'的微主页';
             $plats_show['head_describe'] = $wezchina_plats['plats_user']['motto'];
             $plats_show['head_logo'] = $wezchina_plats['plats_user']['avatar'];
             if($row['domain'] == 'index')
             {
                 $plats_show['head_title'] = config::$plats['plats_info']['plat_name'];
+                $plats_show['main_title'] =  config::$plats['plats_info']['plat_name'];
                 $plats_show['head_describe'] = config::$plats['plats_info']['description'];
                 $plats_show['head_logo'] = config::$plats['plats_info']['logo'];
             }

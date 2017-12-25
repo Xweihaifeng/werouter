@@ -7,11 +7,10 @@ $(document).ready(function () {
             dataType: 'json',
             success: function (data) {
                 if (data.code === 200) {
-                    $('#platId').val(data.data.weid);
                     $('#domain').val(data.data.domain);
                     $('#plat_name').val(data.data.plat_name);
-                    $("input[name=http_type][value=" + data.data.http_type +  "]").attr('checked', true);
-                    $("input[name=wap_domain][value=" + data.data.wap_domain +  "]").attr('checked', true);
+                    $("input[name=http_type][value=" + data.data.http_type + "]").attr('checked', true);
+                    $("input[name=wap_domain][value=" + data.data.wap_domain + "]").attr('checked', true);
                 } else {
                     console.log('error: -200');
                 }

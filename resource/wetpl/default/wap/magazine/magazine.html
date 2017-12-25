@@ -1,0 +1,124 @@
+<#extend#>public/coc/coc_extend.html</#extend#>
+<script type="text/javascript">
+    // show.header = 'no';
+</script>
+<style>
+    [v-cloak] {
+        display: block;
+    }
+    .meili_nlb span img {
+        height: auto;
+    }
+    .meili > p {
+        padding-bottom: 25px;
+        margin: 0;
+        display: flex;
+        position: relative;
+    }
+    a.red-class {
+        display: inline-block;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+    .meili > p > a >span {
+        position: absolute;
+        transform: translateX(-50%);
+        left: 50%;
+        bottom: 5px;
+    }
+    .red-class {
+        height: 120px!important;
+        overflow: hidden;
+    }
+    .blue-class {
+        height: auto;
+    }
+    .meili_nr {
+        margin: 0em 1em 2em; 
+        flex-wrap: wrap;
+        display: flex;
+    }
+    .meili_nr > li {
+        width: 50%;
+    }
+    .dropload-down {
+        height: 50px;
+        width: 100%;
+    }
+    li {
+        list-style: none;
+    }
+</style>
+
+<div id="viewport" class="viewport" style="width:100%">
+
+    <!--魅力秦川-->
+    <div class="meili">
+        <h1 v-html="magazine.name"></h1>
+        <p>
+            <a href="javascript:void(0)" :class="clicked? 'blue-class':'red-class'" @click="clicked = !clicked" v-html="magazine.intro+'<span>[查看全部]</span>'"></a>
+        </p>
+        <div class="clear"></div>
+    </div>
+
+    <div class="meili_nr" id="magazine_table">
+        <li bgcolor="#FFFFFF" align="center" v-for="(value, key) in list_data">
+            <div class="meili_nlb">
+                <a :href="'/magazine/'+magazine.ename+'/'+value.weid" target="_blank">
+                    <span><img :src="ApiMaterPlatQiniuDomain + value.cover"></span>
+                    <h2 v-html="value.title"></h2>
+                </a>
+            </div>
+        </li>
+        <div class="clear"></div>
+    </div>
+</div>
+<script> 
+    new Vue({
+        el: '#viewport',
+        data : {
+            clicked : false,
+            list_data:[],
+            magazine:{
+                name:'',
+                intro: ''
+            },
+            params : {
+                page : 1,
+                limit : 8,
+                page_count : 0,
+
+            },
+            dom : '#magazine_table'
+        },
+        mounted() {
+            this.$nextTick(()=>{
+                this.data_list();
+            });
+        },
+        methods:{
+            // 使用common_page 方法必须定义data方法 以及对象 params
+            data(params , call){
+                ajax.get('/magazine/index' , {params :params} ).then((res)=>{
+                    if(res.code == 200 && res.data.list.length > 0) {
+                        if($app.empty(call) == false){
+                            call(false);
+                            return false;
+                        }
+                        this.magazine = res.data.magazine;
+                        call(res);
+                    } else {
+                        call(false);
+                    }
+                });
+            },
+            data_list() {
+                $mob_ajax.common_page(this , this.params);
+            },
+            more() {
+
+            }
+        }
+    });
+</script>

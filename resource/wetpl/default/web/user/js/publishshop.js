@@ -106,7 +106,7 @@ $(function(){
                 url : apiUrl + 'plat/member_level',
                 type : 'get',
                 headers: {
-                    'Token': localStorage.getItem('token')
+                    'Token': docCookies.getItem("token")
                 },
                 success : function (res) {
                     console.log('dfsdfs',res);
@@ -122,6 +122,54 @@ $(function(){
             })
         }
     })
+
+    //添加服务
+    $(".add_service").click(function () {
+
+
+        var html=initServiceHtml('');
+
+        $(".insert-service").append(html);
+        delServiceDelete();
+
+    });
+     var initServiceHtml=function (data) {
+         if (isNull(data)) {
+             var html='<div class="service_list"><div class="operate" style="font-size: 20px;position: absolute;right: 50px;"><i class="fa fa-close J_Service_Delete" style="top: 2px;color: #adadad;cursor: pointer;font-size: 24px;"></i></div>'+
+                 '<div class="form-group"><label class="col-sm-2 control-label">服务标题:</label><div class="col-sm-3"><input type="text" class="form-control" name="service_title" value=""></div></div>'+
+                 '<div class="form-group">'+
+                 '<label for="" class="col-sm-2 control-label">服务内容:</label>'+
+                 '<div class="col-sm-6">'+
+                 '<textarea class="form-control" name="service_content" rows="5"></textarea>'+
+                 '</div>'+
+                 '</div>'+
+                 '</div>';
+             return html;
+         } else {
+             //编辑使用（循环data）
+             var html='';
+             for (var i=0;i<data.length;i++){
+                 html+='<div class="service_list"><div class="operate" style="font-size: 20px;position: absolute;right: 50px;"><i class="fa fa-close J_Service_Delete" style="top: 2px;color: #adadad;cursor: pointer;font-size: 24px;"></i></div>'+
+                     '<div class="form-group"><label class="col-sm-2 control-label">服务标题:</label><div class="col-sm-3"><input type="text" class="form-control" name="service_title" value="'+data[i].service_title+'"></div></div>'+
+                     '<div class="form-group">'+
+                     '<label for="" class="col-sm-2 control-label">服务内容:</label>'+
+                     '<div class="col-sm-6">'+
+                    '<textarea class="form-control" name="service_content" rows="5">'+data[i].service_content+'</textarea>'+
+                    '</div>'+
+                    '</div>'+
+                    '</div>';
+             }
+             return html;
+         }
+     }
+     //删除服务
+    var delServiceDelete=function () {
+        $(".J_Service_Delete").click(function () {
+            $(this).closest(".service_list").remove();
+        });
+    }
+
+     
    /* //route
     var isLogin = false; //判断用户登陆与否
     var router = function(route){
@@ -179,7 +227,7 @@ $(function(){
             url: PAGES_PAGE_GETDETAILBYUSER + weid,
             type: 'GET',
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data){
                 if (data.code == 401) {
@@ -207,7 +255,7 @@ $(function(){
         })
     }
 
-    var weid = localStorage.getItem('weid');
+    var weid = docCookies.getItem("weid");
     hasDomain(weid);
 
     var isLogin = false; //判断用户登陆与否
@@ -358,14 +406,14 @@ $(function(){
      // 获取商品分类
     var weid = getUrlParam('id');
     var cateType = [];
-    var userid=localStorage.getItem('weid');
+    var userid=docCookies.getItem("weid");
     var catesfun = function(userid){
         $.ajax({
             // url: "http://apitest.wezchina.com/goods/cates/list",
-            url: GOODS_CATES_LIST_USERID+"/"+userid,
+            url: apiUrl + 'goods/cates/listsAllByUser/'+userid,
             type: 'get',
             headers: {
-                    'Token': localStorage.getItem('token')
+                    'Token': docCookies.getItem("token")
                 },
             success: function(data){
                 // console.log(data);
@@ -403,7 +451,7 @@ $(function(){
             url:MALL_USERDETAIL,
             type:'get',
             headers: {
-                    'Token': localStorage.getItem('token')
+                    'Token': docCookies.getItem("token")
                 },
             success:function(data){
                 // console.log(data);
@@ -438,7 +486,7 @@ malldetail();
                     url:apiUrl+'goods/range/lists',
                     type:'post',
                     headers: {
-                        'Token': localStorage.getItem('token')
+                        'Token': docCookies.getItem("token")
                     },
                     success: function(data){
                         console.log(data);
@@ -470,7 +518,7 @@ malldetail();
             url: GOODS_RANGE_DETAIL+'/' + weid,
             type:'get',
             headers: {
-                    'Token': localStorage.getItem('token')
+                    'Token': docCookies.getItem("token")
                 },
             dataType: 'json',
             success: function(data){
@@ -507,7 +555,7 @@ malldetail();
             url: GOODS_DETAIL+'/' + id,
             type:'get',
             headers: {
-                    'Token': localStorage.getItem('token')
+                    'Token': docCookies.getItem("token")
                 },
             dataType: 'json',
             success: function(data){
@@ -539,6 +587,13 @@ malldetail();
                              $('.insert-member').append(memberDom(goods.discount[i]))
                         }
                     }
+                    //加入服务列表
+                    if(!isNull(goods.service)){
+                        var html=initServiceHtml(JSON.parse(goods.service));
+                        $(".insert-service").append(html);
+                        delServiceDelete();
+                    }
+
                     //解决部分情况加载不出来的情况 add by lisheng 2017-12-15 22:03
                     setTimeout(function () { CKEDITOR.instances.editor1.setData(goods.content); }, 200);
                     $("select[name='cate_id']").find("#"+goods.cate_id).attr("selected","selected");
@@ -699,6 +754,14 @@ malldetail();
                     }
                 })
             }
+            var service=[];
+            $('.service_list').each(function (ind,item) {
+                var obj = {};
+                obj.service_title = $(item).find("input[name='service_title']").val();
+                obj.service_content = $(item).find("[name='service_content']").val();
+                service.push(obj);
+
+            });
             var sendData = {
                 title: title,
                 price: price,
@@ -718,7 +781,8 @@ malldetail();
                 postage:postage,
                 postage_max_money:postage_max_money,
                 discount_status:discount_status,
-                discount:discount
+                discount:discount,
+                service:service
             }
             // console.log(sendData);
 
@@ -731,7 +795,7 @@ malldetail();
                     type: 'post',
                     data: sendData,
                     headers: {
-                        'Token': localStorage.getItem('token')
+                        'Token': docCookies.getItem("token")
                     },
                     success: function(data){
                         // console.log(data);
@@ -755,7 +819,7 @@ malldetail();
                     type: 'post',
                     data: sendData,
                     headers: {
-                        'Token': localStorage.getItem('token')
+                        'Token': docCookies.getItem("token")
                     },
                     success: function(data){
                         // console.log(data);
@@ -781,7 +845,7 @@ malldetail();
             url:PROVINCE_LIST,
             type:'get',
             headers: {
-                        'Token': localStorage.getItem('token')
+                        'Token': docCookies.getItem("token")
                     },
             success: function(data){
                 // console.log(data);
@@ -865,7 +929,7 @@ getprovincedetail();
             url: PAGES_MODULERUN_LIST,
             type: 'GET',
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data){
                 if (data.code == 200){
@@ -995,7 +1059,7 @@ getprovincedetail();
       }
     }
 
-    init__(localStorage.getItem('token'));*/
+    init__(docCookies.getItem("token"));*/
 })
 
 // 配送列表
@@ -1004,7 +1068,7 @@ getprovincedetail();
                     url:GOODS_RANGE_LISTS,
                     type:'post',
                     headers: {
-                        'Token': localStorage.getItem('token')
+                        'Token': docCookies.getItem("token")
                     },
                     success: function(data){
                         // console.log(data);
@@ -1349,7 +1413,7 @@ $(function(){
                     type:'post',
                     data:params,
                     headers: {
-                        'Token': localStorage.getItem('token')
+                        'Token': docCookies.getItem("token")
                     },
                     success: function(data){
                         // console.log(data);

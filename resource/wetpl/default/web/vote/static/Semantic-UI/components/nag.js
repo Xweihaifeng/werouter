@@ -212,7 +212,7 @@ $.fn.nag = function(parameters) {
               storedValue
             ;
             if(settings.storageMethod == 'localstorage' && window.localStorage !== undefined) {
-              storedValue = window.localStorage.getItem(key);
+              storedValue = localStorage.getItem(key);
             }
             else if(settings.storageMethod == 'sessionstorage' && window.sessionStorage !== undefined) {
               storedValue = window.sessionStorage.getItem(key);

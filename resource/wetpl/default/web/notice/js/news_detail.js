@@ -19,7 +19,7 @@ $(function() {
     $(".prompt-info").hide();
     var praise_if;
 
-    var token = window.localStorage.getItem('token');
+    var token = docCookies.getItem("token");
 
     if(token) {
         $.ajaxSetup({

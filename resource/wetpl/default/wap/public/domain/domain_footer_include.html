@@ -23,7 +23,8 @@
 	    new Vue({
 	        el: dom_id,
 	        data: {
-	            router : window.location.pathname.split('/').slice(1,2),
+	            router : $app.get_router(),
+	            is_domain : is_domain,
 	            cuupage : window.location.pathname.split('/').pop(),
 	            header_nav : {
 	                index :{
@@ -34,10 +35,10 @@
 	                    'name' : '文章',
 	                    'nav' : true,
 	                },
-	                project : {
-	                    'name' : '项目',
-	                    'nav' : false,
-	                },
+	                // project : {
+	                //     'name' : '项目',
+	                //     'nav' : false,
+	                // },
 	                activity : {
 	                    'name' : '活动',
 	                    'nav' : true,
@@ -47,65 +48,99 @@
 	                    'nav' : true,
 	                }
 	            },
+	           	discovery_header_nav : {
+	                dynamic :{
+	                    'name' : '动态',
+	                    'nav' : true,
+	                },
+	                article : {
+	                    'name' : '文章',
+	                    'nav' : true,
+	                },
+	                // project : {
+	                //     'name' : '项目',
+	                //     'nav' : false,
+	                // },
+	                activity : {
+	                    'name' : '活动',
+	                    'nav' : true,
+	                },
+	                goods : {
+	                    'name' : '商品',
+	                    'nav' : true,
+	                }
+	            },
 	            page : '',
 	        },
-	        watch: {
-	            page(val)
-	            {
-	                if(this.cuupage != val)
-	                {
-	                	if(this.header_nav[val].nav == false) return false;
-
-	                    var mod = '';
-	                    if(val != 'index')
-	                    {
-	                        mod = '/'+ val;
-	                    }
-
-	                    if(is_domain == 'no' && mod == '')
-	                    {
-	                    	mod = '/dynamic';
-	                    }
-
-	                    window.location.href= all_domian + this.router + mod;
-	                }
-	            }
-	        },
+	        // watch: {
+	        //     page(val)
+	        //     {
+	               
+	        //     }
+	        // },
 	        mounted() {
+	        	
 	            this.$nextTick( function () {
+
 	            	var title = '';
 	                // 当根路由变成 discovery 改变导航字样
 	                if(is_domain == 'no')
 	                {
 	                    this.header_nav.index.name = '动态';
 	                    this.router = 'discovery';
-	                    title = '发现动态';
+	                    title = '发现' + this.discovery_header_nav[this.cuupage].name;
 	                    // $app.set_title('动态');
 	                }
 	                else
 	                {
 	                    this.router = pages_index;
 	                    // if(pages_info.)
-	                    title = pages_info.plats_show.head_title;
+	                    title = pages_info.plats_show.main_title;
+
+	                    var two_router =  $app.get_router(2);
+
+	                    if($app.empty(two_router) == false)
+	                    {
+	                    	this.cuupage = 'index';
+	                    }
 	                }
-	                // 当俩个接点相同肯定是微主页首页
-	                if(this.cuupage == this.router || this.cuupage == 'dynamic')
-	                {
-	                    this.cuupage = 'index';
-	                }
-	                else
-	                {
-	                	title = this.header_nav[this.cuupage].name + '-' +  title;
-	                	if(is_domain == 'no')
-	                	{
-	                		title = '发现' + this.header_nav[this.cuupage].name;
-	                	}
-	                }
+	                
 
 	                this.title(title);
 	            });
 	        },
 	        methods:{
+	        	pages: function(val)
+	        	{
+	        		if(this.cuupage != val)
+	                {
+	                	if(is_domain == 'yes')
+	                	{
+	                		if(this.header_nav[val].nav == false) return false;
+	                	}
+	                	else
+	                	{
+	                		if(this.discovery_header_nav[val].nav == false) return false;
+	                	}
+
+	                	if(val == 'index')
+	                	{
+	                		val = '';
+	                	}
+	                	
+	                    var mod = '/'+ val;
+	                    var get_params = $app.get_query_string('from');
+	                    if(get_params != false)
+	                    {
+	                    	window.location.href= all_domian + this.router + mod + '?from='+get_params;
+	                    }
+	                    else
+	                    {
+	                    	window.location.href= all_domian + this.router + mod;
+	                    }
+	                    
+	                }
+	        	},
 	        	title (title){
 	        		$app.set_title(title);
 	        	}
@@ -125,7 +160,7 @@
 		new Vue({
 	        el: '#footer',
 	        data: {
-	            router : window.location.pathname.split('/').slice(1,2),
+	            router : $app.get_router(),
 	            cuupage : window.location.pathname.split('/').pop(),
 	            footer_nav : {
 	                home :{
@@ -191,6 +226,23 @@
 	                		{
 	                			mb_login(select.href);
 	                			return ;
+	                		}
+	                	}
+	                	var cookie_domain = $app.get_cookie('domain');
+	                	if(val == 'home')
+	                	{
+	                		if(cookie_domain != false)
+	                		{
+	                			if(cookie_domain == '/')
+	                			{
+	                				window.location.href= all_domian;
+	                			}
+	                			else
+	                			{
+	                				window.location.href= all_domian + cookie_domain;
+	                			}
+	                			
+	                			return false;
 	                		}
 	                	}
 	                    window.location.href= select.href;
