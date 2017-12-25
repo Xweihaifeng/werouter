@@ -184,7 +184,7 @@
                     <span class="text">服务：</span>
                     <div class="serviceTitle">
                         <div v-for="srv in service">
-                            <i class="promotiontxt">* </i><i class="normal">{{srv.service_title}}</i>
+                            <span v-for="s in srv"><i class="promotiontxt">* </i><i class="normal">{{s.service_title}}</i></span>
                             <!--<i class="promotiontxt">* </i><i class="normal">原产地直供</i>
                             <i class="promotiontxt">* </i><i class="normal">48小时极速退款</i>-->
                         </div>
@@ -342,9 +342,13 @@
                 ajax.get('goods/detail/' + this.weid).then(data =>
                 {
                     console.log(data)
+                    const splitArray = (arr, res, len) => {
+                        let rem = arr.splice(len);
+                        return arr == "" ? res : splitArray(rem, [...res, arr], len);
+                    }
                     let goods = data.data;
-                    let img = goods.picture != null ? goods.picture : '';
-                    let pics = goods.cover + ',' + img;
+                    let img = goods.picture != null ? ',' + goods.picture : '';
+                    let pics = goods.cover + img;
                     this.wemall = '/' + pages_index + '/wemall';
                     this.order = '/' + pages_index + '/wemall/order/' + goods.weid;
                     this.cart = '/user/wemall/cart';
@@ -357,9 +361,10 @@
                     this.goods.pictures = pics.split(',').map(x => ApiMaterPlatQiniuDomain + x);
                     this.goods.content = goods.content;
                     this.service = JSON.parse(goods.service);
+                    if (this.service != null) {
+                        this.service = splitArray(this.service, [], 2);
+                    }
                     console.log(this.service)
-                    const splitArray = (arr, res, len) => rem = arr.splice(len) == null ? res : splitArray(arr.splice(len), [...res, arr], len)
-
                     $app.set_title(this.goods.title);
 
                     setTimeout(() =>
@@ -446,8 +451,7 @@
                             $('.add').addClass('gray');
                         }
                     })
-                }
-                )
+                })
             },
             methods: {
                 addCar: function () {
@@ -462,7 +466,8 @@
                         goods_id: this.weid,
                         goods_num: num
                     };
-                    ajax.post("cart/store", sendData).then(data => {
+                    ajax.post("cart/store", sendData).then(data =>
+                    {
                         //console.log(data);
                     });
                 },
@@ -472,40 +477,14 @@
                         mb_login(url);
                         return false;
                     }
-                })
-            })
-        },
-        methods: {
-            addCar: function() {
-                var url = '';
-                if(is_login == 'no')
-                {
-                    mb_login(url);
-                    return false;
+
+                    //增加权限判断
+                    ajax.get('mall/detail/' + this.mall_id).then(data =>
+                    {
+                        //console.log(data);
+                        window.location.href = this.order;
+                    });
                 }
-                //增加权限判断
-                let num = $("#buynum").val();
-                let sendData = {
-                    goods_id: this.weid,
-                    goods_num: num
-                };
-                ajax.post("cart/store", sendData).then(data => {
-                    //console.log(data);
-                });
-            },
-            buyNow: function() {
-                var url = '';
-                if(is_login == 'no')
-                {
-                    mb_login(url);
-                    return false;
-                }
-                
-                //增加权限判断
-                ajax.get('mall/detail/' + this.mall_id).then(data => {
-                    //console.log(data);
-                    window.location.href = this.order;
-                });
             }
         })
 
