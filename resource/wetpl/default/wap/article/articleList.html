@@ -1,8 +1,18 @@
 <#extend#>public/domain/domain_extend.html</#extend#>
 <link rel="stylesheet" href="/resource/wetpl/default/wap/css/act.css"/>
 <link rel="stylesheet" href="/resource/wetpl/default/wap/css/article.css"/>
+<script src="{{PATH_TML}}js/swiper-3.3.1.min.js"></script>
 <div class="latest">最新推荐</div>
 <div id="container" class="my_container">
+    <div class="swiper-container" v-if="advList.length">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide" v-for="item in advList" v-if="item.src">
+                <a :href="item.href"><img :src="item.src | img_src" alt=""></a>
+            </div>
+        </div>
+        <div class="swiper-pagination"></div>
+    </div>
+
     <div v-for="item in list_data">
         <a :href="item.domain + '/article/' + item.relation_id  | href"  v-if="item.dynamic_type == 1">
             <div class="art-content" >
@@ -60,6 +70,7 @@
     	el: '#app',
     	data : {
     		list_data:[],
+            advList:[],
     		params : {
     			page : 1,
 	    		limit : 10,
@@ -72,13 +83,37 @@
         mounted() {
         	this.$nextTick(()=>{
         		this.data_list();
+        		var sendData = {
+                    user_id : plats_user_info.weid,
+                    style : 1
+                };
+        		ajax.post('pages/banner/detail',sendData).then((res)=>{
+                    console.log(res);
+                    if(res.code == 200 && res.data){
+                        this.advList = JSON.parse(res.data.slide);
+                        console.log(this.advList)
+                    }
+                });
+                setTimeout(function(){
+                    var mySwiper = new Swiper('.swiper-container', {
+                        direction: 'horizontal',
+                        loop: true,
+                        speed: 1000,
+                        autoplay : 3000,
+                        autoplayDisableOnInteraction : false,
+                        pagination: '.swiper-pagination',
+                        onlyExternal : true,
+                        longSwipesRatio: 0.3,
+                        touchRatio:1
+                    });
+                }, 1000)
         	});
         },
         methods:{
         	// 使用common_page 方法必须定义data方法 以及对象 params
         	data(params , call){
         		return $mob_ajax.dynamic(params , call);
-        	},
+            },
         	data_list() {
         		$mob_ajax.common_page(this , this.params);
         	}
