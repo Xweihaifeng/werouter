@@ -8,6 +8,7 @@
     [v-cloak] {
         display: none !important;
     }
+
     #login_vue {
         width: 100%;
         height: 200px;
@@ -15,9 +16,11 @@
         background-color: #ecf0f3;
         padding-top: 0.01rem;
     }
+
     #app_ss {
         margin-top: 30px;
     }
+
     #phonenum input {
         width: 80%;
         height: 40px;
@@ -31,6 +34,7 @@
         margin-top: 0;
         font-size: 15px;
     }
+
     #checknum input {
         width: 44%;
         height: 40px;
@@ -44,6 +48,7 @@
         font-size: 15px;
         margin-top: 15px;
     }
+
     #checknum span {
         display: inline-block;
         height: 40px;
@@ -59,6 +64,7 @@
         margin-top: 15px;
         right: 20px;
     }
+
     .layui-layer-btn0 {
         width: 82% !important;
         height: 40px !important;
@@ -73,288 +79,409 @@
         padding: 0 !important;
         box-sizing: border-box !important;
         display: block;
-        margin-left: 26px!important;
-        margin-top: 13px!important;
+        margin-left: 26px !important;
+        margin-top: 13px !important;
     }
 </style>
 <div id="app" v-cloak>
-<div class="box" id="box">
-    <div class="loading hide">
-        <p style="padding: 0 1rem;">客官莫急，当前抢购用户太多啦，咱们货源充足，先喝杯茶休息下吧~</p>
-    </div>
-    <!-- main -->
-    <div class="main">
-        <div class="bar hide"> <a class="btn-index" href="/shop_wap/html/didao/index.html"> <svg width="0.64rem" height="0.64rem" viewBox="0 0 64 64" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"> <!-- Generator: Sketch 45.2 (43514) - http://www.bohemiancoding.com/sketch --> <desc></desc> <defs></defs> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="商品详情" transform="translate(-562.000000, -20.000000)"> <g id="Group-31" transform="translate(562.000000, 20.000000)"> <g id="Group-26"> <circle id="Oval-4" fill="#000000" opacity="0.4" cx="32" cy="32" r="32"></circle> <g id="Page-1" transform="translate(7.000000, 10.000000)" fill="#FFFFFF"> <path d="M47.1611701,26.8282129 L26.4737166,3.5606591 C26.0088485,3.03816273 25.400733,2.75166787 24.7624312,2.75166787 C24.1235806,2.75166787 23.5132697,3.04035809 23.050597,3.5634033 L2.40485541,26.8309571 C1.90101962,27.4006537 1.02946055,27.4473052 0.46250808,26.9467624 C-0.106639753,26.4407313 -0.156584259,25.5741118 0.346702687,25.0044151 L20.9902489,1.73576368 C21.9836506,0.616128599 23.3233709,-0.000219536291 24.759687,-0.000219536291 C26.1992963,-0.000219536291 27.5384676,0.616128599 28.5291251,1.73356832 L49.2193229,25.0016709 C49.725354,25.5680745 49.6732141,26.4374383 49.1035175,26.9440182 C48.8417204,27.1750802 48.5151602,27.2908856 48.1902465,27.2908856 C47.8109975,27.2908856 47.4366882,27.1339171 47.1611701,26.8282129 Z" id="Fill-1"></path> <path d="M41.2675538,38.4256016 C41.2675538,39.9442439 40.0354063,41.1769402 38.516764,41.1769402 L33.0135381,41.1769402 L33.0135381,30.1710371 C33.0135381,27.1337525 30.5459502,24.6683599 27.5114098,24.6683599 L22.0081838,24.6683599 C18.9741923,24.6683599 16.5055067,27.1337525 16.5055067,30.1710371 L16.5055067,41.1769402 L11.0028296,41.1769402 C9.48693149,41.1769402 8.25149102,39.9442439 8.25149102,38.4250527 L8.25149102,24.6689088 L5.50015246,24.6689088 L5.50015246,38.4256016 C5.50015246,41.4606908 7.9682892,43.9282787 11.0028296,43.9282787 L16.5055067,43.9282787 L19.2568453,43.9282787 L19.2568453,41.1769402 L19.2568453,30.1710371 C19.2568453,28.6556878 20.4922857,27.4202473 22.0081838,27.4202473 L27.5114098,27.4202473 C29.0300521,27.4202473 30.2621995,28.6556878 30.2621995,30.1710371 L30.2621995,41.1769402 L30.2621995,43.9282787 L33.0135381,43.9282787 L38.516764,43.9282787 C41.5513044,43.9282787 44.0194412,41.4606908 44.0194412,38.4256016 L44.0194412,24.6689088 L41.2675538,24.6689088 L41.2675538,38.4256016 Z" id="Fill-3"></path> </g> </g> </g> </g> </g> </svg> </a> <a class="btn-shopCar" href="/shop_wap/tmpl/cart_list.html?icon=1"> <span class="car-num hide">8</span> <svg width="0.64rem" height="0.64rem" viewBox="0 0 64 64" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="商品详情" transform="translate(-656.000000, -20.000000)"> <g id="Group-31" transform="translate(562.000000, 20.000000)"> <g id="Group-25" transform="translate(94.000000, 0.000000)"> <circle id="Oval-4" fill="#000000" opacity="0.4" cx="32" cy="32" r="32"></circle> <path d="M50.9134442,17.5595034 C50.1852937,16.7375745 49.1815246,16.2852704 48.0930744,16.2852704 L23.4049951,16.2852704 C22.6229075,16.2852704 21.9794381,16.9375177 21.9794381,17.7281042 C21.9794381,18.519231 22.6153563,19.1568879 23.4049951,19.1568879 L48.1081768,19.1568879 C48.3762441,19.1568879 48.6065554,19.2638846 48.7904808,19.4713933 C49.0736505,19.7940044 49.2041782,20.3235838 49.1502411,20.8002053 L46.9048406,33.6700666 C46.8282499,34.3077235 46.2300877,34.8605396 45.5175789,34.868105 L26.1719672,36.2968887 C25.3828678,36.3498467 24.7922568,37.0415423 24.853745,37.8245633 C24.9071427,38.5773227 25.5279585,39.1452696 26.2712114,39.1452696 C26.3024949,39.1452696 26.3402509,39.1382446 26.3790856,39.1382446 L45.6173625,37.7175666 C47.6712865,37.7175666 49.4722455,36.08938 49.7176592,34.085084 L51.9635991,21.2071169 C52.1243316,19.8248065 51.7489295,18.5041002 50.9134442,17.5595034 M47.6480935,42.0017563 L24.4853548,42.0017563 C23.887732,42.0017563 23.2820186,41.4413747 23.2054279,40.7810216 L20.7761019,23.6491266 L19.4039427,15.7086773 C19.1509778,13.6281866 17.3192746,12 15.2421578,12 L13.425557,12 C12.6364575,12 12,12.6376569 12,13.4277029 C12,14.2188298 12.6364575,14.8564867 13.425557,14.8564867 L15.2497089,14.8564867 C15.8629735,14.8564867 16.4988917,15.424974 16.5835729,16.1236946 L17.9557321,24.0944056 L20.3775069,41.1495657 C20.6229206,43.2305967 22.4314309,44.8587833 24.4853548,44.8587833 L47.6480935,44.8587833 C48.4377323,44.8587833 49.0736505,44.2211264 49.0736505,43.43054 C49.0736505,42.6394131 48.4377323,42.0017563 47.6480935,42.0017563 M44.8201725,46.2870267 C43.2408949,46.2870267 41.9690586,47.5618 41.9690586,49.1435133 C41.9690586,50.7252266 43.2408949,52 44.8201725,52 C46.3989108,52 47.6712865,50.7252266 47.6712865,49.1435133 C47.6712865,47.5618 46.3913596,46.2870267 44.8201725,46.2870267 M24.853745,46.2870267 C23.2744674,46.2870267 22.0020917,47.5618 22.0020917,49.1435133 C22.0020917,50.7252266 23.2744674,52 24.853745,52 C26.4324833,52 27.704859,50.7252266 27.704859,49.1435133 C27.704859,47.5618 26.4324833,46.2870267 24.853745,46.2870267" id="Fill-1" fill="#FFFFFF"></path> </g> </g> </g> </g> </svg> </a> </div>
-        <!-- 商品图片模块 -->
-        <div class="goods-img swiper-container-horizontal">
-            <div class="abs"><img
-                    src="http://static.didao-zx.com/upload/media/plantform/29ada1218e263b16cfe213624914fab0/image/20171128/1511874446894830.png"
-                    alt="用券立减"></div>
-            <ul class="swiper-wrapper" style="transform: translate3d(-1875px, 0px, 0px); transition-duration: 0ms;">
-                <li class="swiper-slide" v-for="i in goods.pictures" :style="{'background': 'url(' + i + ') center center / 100%', 'width': '375px'}"></li>
-            </ul>
-            <!--<div class="goods-img-pagination swiper-pagination-fraction"><span
-                    class="swiper-pagination-current">5</span> / <span class="swiper-pagination-total">5</span></div>-->
+    <div class="box" id="box">
+        <div class="loading hide">
+            <p style="padding: 0 1rem;">客官莫急，当前抢购用户太多啦，咱们货源充足，先喝杯茶休息下吧~</p>
         </div>
-        <!-- 商城承诺特色 -->
-        <div class="goods-promise hide"> <!-- 未上线 -->
-            <ul>
-                <li><i class="iconfot"></i>全国包邮</li>
-                <li><i class="iconfot"></i>浙江包邮</li>
-                <li><i class="iconfot"></i>丽水包邮</li>
-            </ul>
-        </div>
-        <!-- 商品标题／价格／简介／已售 -->
-        <div class="goods-content">
-            <div class="goods-title">{{goods.title}}</div>
-            <div class="goods-Introduction">{{goods.summary}}</div>
-            <!-- ||it.goods_info.goods_sub_title -->
-            <div class="goods-some">
-                <div class="goods-price"> ￥{{goods.price}}</div>
-                <div class="goods-yprice hide">
-                    <del></del>
+        <!-- main -->
+        <div class="main">
+            <div class="bar hide"><a class="btn-index" href="/shop_wap/html/didao/index.html">
+                <svg width="0.64rem" height="0.64rem" viewBox="0 0 64 64" version="1.1"
+                     xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <!-- Generator: Sketch 45.2 (43514) - http://www.bohemiancoding.com/sketch -->
+                    <desc></desc>
+                    <defs></defs>
+                    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                        <g id="商品详情" transform="translate(-562.000000, -20.000000)">
+                            <g id="Group-31" transform="translate(562.000000, 20.000000)">
+                                <g id="Group-26">
+                                    <circle id="Oval-4" fill="#000000" opacity="0.4" cx="32" cy="32" r="32"></circle>
+                                    <g id="Page-1" transform="translate(7.000000, 10.000000)" fill="#FFFFFF">
+                                        <path d="M47.1611701,26.8282129 L26.4737166,3.5606591 C26.0088485,3.03816273 25.400733,2.75166787 24.7624312,2.75166787 C24.1235806,2.75166787 23.5132697,3.04035809 23.050597,3.5634033 L2.40485541,26.8309571 C1.90101962,27.4006537 1.02946055,27.4473052 0.46250808,26.9467624 C-0.106639753,26.4407313 -0.156584259,25.5741118 0.346702687,25.0044151 L20.9902489,1.73576368 C21.9836506,0.616128599 23.3233709,-0.000219536291 24.759687,-0.000219536291 C26.1992963,-0.000219536291 27.5384676,0.616128599 28.5291251,1.73356832 L49.2193229,25.0016709 C49.725354,25.5680745 49.6732141,26.4374383 49.1035175,26.9440182 C48.8417204,27.1750802 48.5151602,27.2908856 48.1902465,27.2908856 C47.8109975,27.2908856 47.4366882,27.1339171 47.1611701,26.8282129 Z"
+                                              id="Fill-1"></path>
+                                        <path d="M41.2675538,38.4256016 C41.2675538,39.9442439 40.0354063,41.1769402 38.516764,41.1769402 L33.0135381,41.1769402 L33.0135381,30.1710371 C33.0135381,27.1337525 30.5459502,24.6683599 27.5114098,24.6683599 L22.0081838,24.6683599 C18.9741923,24.6683599 16.5055067,27.1337525 16.5055067,30.1710371 L16.5055067,41.1769402 L11.0028296,41.1769402 C9.48693149,41.1769402 8.25149102,39.9442439 8.25149102,38.4250527 L8.25149102,24.6689088 L5.50015246,24.6689088 L5.50015246,38.4256016 C5.50015246,41.4606908 7.9682892,43.9282787 11.0028296,43.9282787 L16.5055067,43.9282787 L19.2568453,43.9282787 L19.2568453,41.1769402 L19.2568453,30.1710371 C19.2568453,28.6556878 20.4922857,27.4202473 22.0081838,27.4202473 L27.5114098,27.4202473 C29.0300521,27.4202473 30.2621995,28.6556878 30.2621995,30.1710371 L30.2621995,41.1769402 L30.2621995,43.9282787 L33.0135381,43.9282787 L38.516764,43.9282787 C41.5513044,43.9282787 44.0194412,41.4606908 44.0194412,38.4256016 L44.0194412,24.6689088 L41.2675538,24.6689088 L41.2675538,38.4256016 Z"
+                                              id="Fill-3"></path>
+                                    </g>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </svg>
+            </a> <a class="btn-shopCar" href="/shop_wap/tmpl/cart_list.html?icon=1"> <span class="car-num hide">8</span>
+                <svg width="0.64rem" height="0.64rem" viewBox="0 0 64 64" version="1.1"
+                     xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                        <g id="商品详情" transform="translate(-656.000000, -20.000000)">
+                            <g id="Group-31" transform="translate(562.000000, 20.000000)">
+                                <g id="Group-25" transform="translate(94.000000, 0.000000)">
+                                    <circle id="Oval-4" fill="#000000" opacity="0.4" cx="32" cy="32" r="32"></circle>
+                                    <path d="M50.9134442,17.5595034 C50.1852937,16.7375745 49.1815246,16.2852704 48.0930744,16.2852704 L23.4049951,16.2852704 C22.6229075,16.2852704 21.9794381,16.9375177 21.9794381,17.7281042 C21.9794381,18.519231 22.6153563,19.1568879 23.4049951,19.1568879 L48.1081768,19.1568879 C48.3762441,19.1568879 48.6065554,19.2638846 48.7904808,19.4713933 C49.0736505,19.7940044 49.2041782,20.3235838 49.1502411,20.8002053 L46.9048406,33.6700666 C46.8282499,34.3077235 46.2300877,34.8605396 45.5175789,34.868105 L26.1719672,36.2968887 C25.3828678,36.3498467 24.7922568,37.0415423 24.853745,37.8245633 C24.9071427,38.5773227 25.5279585,39.1452696 26.2712114,39.1452696 C26.3024949,39.1452696 26.3402509,39.1382446 26.3790856,39.1382446 L45.6173625,37.7175666 C47.6712865,37.7175666 49.4722455,36.08938 49.7176592,34.085084 L51.9635991,21.2071169 C52.1243316,19.8248065 51.7489295,18.5041002 50.9134442,17.5595034 M47.6480935,42.0017563 L24.4853548,42.0017563 C23.887732,42.0017563 23.2820186,41.4413747 23.2054279,40.7810216 L20.7761019,23.6491266 L19.4039427,15.7086773 C19.1509778,13.6281866 17.3192746,12 15.2421578,12 L13.425557,12 C12.6364575,12 12,12.6376569 12,13.4277029 C12,14.2188298 12.6364575,14.8564867 13.425557,14.8564867 L15.2497089,14.8564867 C15.8629735,14.8564867 16.4988917,15.424974 16.5835729,16.1236946 L17.9557321,24.0944056 L20.3775069,41.1495657 C20.6229206,43.2305967 22.4314309,44.8587833 24.4853548,44.8587833 L47.6480935,44.8587833 C48.4377323,44.8587833 49.0736505,44.2211264 49.0736505,43.43054 C49.0736505,42.6394131 48.4377323,42.0017563 47.6480935,42.0017563 M44.8201725,46.2870267 C43.2408949,46.2870267 41.9690586,47.5618 41.9690586,49.1435133 C41.9690586,50.7252266 43.2408949,52 44.8201725,52 C46.3989108,52 47.6712865,50.7252266 47.6712865,49.1435133 C47.6712865,47.5618 46.3913596,46.2870267 44.8201725,46.2870267 M24.853745,46.2870267 C23.2744674,46.2870267 22.0020917,47.5618 22.0020917,49.1435133 C22.0020917,50.7252266 23.2744674,52 24.853745,52 C26.4324833,52 27.704859,50.7252266 27.704859,49.1435133 C27.704859,47.5618 26.4324833,46.2870267 24.853745,46.2870267"
+                                          id="Fill-1" fill="#FFFFFF"></path>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </svg>
+            </a></div>
+            <!-- 商品图片模块 -->
+            <div class="goods-img swiper-container-horizontal">
+                <div class="abs"><img
+                        src="http://static.didao-zx.com/upload/media/plantform/29ada1218e263b16cfe213624914fab0/image/20171128/1511874446894830.png"
+                        alt="用券立减"></div>
+                <ul class="swiper-wrapper" style="transform: translate3d(-1875px, 0px, 0px); transition-duration: 0ms;">
+                    <li class="swiper-slide" v-for="i in goods.pictures"
+                        :style="{'background': 'url(' + i + ') center center / 100%', 'width': '375px'}"></li>
+                </ul>
+                <!--<div class="goods-img-pagination swiper-pagination-fraction"><span
+                        class="swiper-pagination-current">5</span> / <span class="swiper-pagination-total">5</span></div>-->
+            </div>
+            <!-- 商城承诺特色 -->
+            <div class="goods-promise hide"> <!-- 未上线 -->
+                <ul>
+                    <li><i class="iconfot"></i>全国包邮</li>
+                    <li><i class="iconfot"></i>浙江包邮</li>
+                    <li><i class="iconfot"></i>丽水包邮</li>
+                </ul>
+            </div>
+            <!-- 商品标题／价格／简介／已售 -->
+            <div class="goods-content">
+                <div class="goods-title">{{goods.title}}</div>
+                <div class="goods-Introduction">{{goods.summary}}</div>
+                <!-- ||it.goods_info.goods_sub_title -->
+                <div class="goods-some">
+                    <div class="goods-price"> ￥{{goods.price}}</div>
+                    <div class="goods-yprice hide">
+                        <del></del>
+                    </div>
+                    <div class="goods-sold hide">已售884</div>
                 </div>
-                <div class="goods-sold hide">已售884</div>
+            </div>
+            <!-- 规格 -->
+            <div class="goodsCheck goods-specifications">
+                <div class="tabarText"> 已选：{{goods.selected}}</div>
+                <div class="tabarIcon iconfont icon-gengduo"></div>
+            </div>
+            <!-- 红包 -->
+            <div class="goodsCheck goods-red-packet hide">
+                <div class="tabarText"><span class="text">红包：</span> <i class="tags">满59.00可用</i> <i
+                        class="tags">满100.00可用</i> <i class="more">...</i></div>
+                <div class="tabarIcon iconfont icon-gengduo"></div>
+            </div>
+            <!-- 促销 -->
+            <div class="goodsCheck goods-promotion hide">
+                <div class="tabarText"><span class="text">2个促销：</span> <i class="tags">超值组合</i> <i class="promotiontxt">甜瓜＋蜜瓜，直降20...</i>
+                </div>
+                <div class="tabarIcon iconfont icon-gengduo"></div>
+            </div>
+            <!-- 服务 -->
+            <div class="goodsCheck goods-service">
+                <div class="tabarText">
+                    <span class="text">服务：</span>
+                    <div class="serviceTitle">
+                        <div v-for="srv in service">
+                            <i class="promotiontxt">* </i><i class="normal">{{srv.service_title}}</i>
+                            <!--<i class="promotiontxt">* </i><i class="normal">原产地直供</i>
+                            <i class="promotiontxt">* </i><i class="normal">48小时极速退款</i>-->
+                        </div>
+                        <!--<div>
+                            <i class="promotiontxt">* </i><i class="normal">生鲜坏果包赔</i>
+                            <i class="promotiontxt">* </i><i class="normal">部分地区不配送</i>
+                        </div>-->
+                    </div>
+                    <!-- <i class="promotiontxt">·</i><i class="normal">10天无忧退换</i> <i class="promotiontxt">·</i><i class="normal">48小时快速退款</i> -->
+                </div>
+                <div class="tabarIcon iconfont icon-gengduo"></div>
+            </div>
+            <!-- 商品详情 -->
+            <div class="goods-details">
+                <h4>
+                    <div class="left"></div>
+                    <div class="center">商品详情</div>
+                    <div class="right"></div>
+                </h4>
+                <div class="goods-details-imgs" v-html="goods.content">
+
+                </div>
             </div>
         </div>
-        <!-- 规格 -->
-        <div class="goodsCheck goods-specifications">
-            <div class="tabarText"> 已选：{{goods.selected}}</div>
-            <div class="tabarIcon iconfont icon-gengduo"></div>
+        <!-- 底部导航 -->
+        <div class="bottomNav">
+            <a :href="wemall" class="toindex iconfont icon-shangcheng"><p>微商城</p></a>
+            <a :href="order" class="tocenter iconfont icon-dingdan"><p>订单</p></a>
+            <a :href="cart" class="tocart iconfont icon-gouwuche1"><p>购物车</p></a>
+
+            <div class="hide like iconfont icon-xihuan"></div>
+            <div class="add-car-btn add-car">加入购物车</div>
+            <div class="buy-now-btn buy-now" @click="buyNow">立即购买</div>
         </div>
-        <!-- 红包 -->
-        <div class="goodsCheck goods-red-packet hide">
-            <div class="tabarText"><span class="text">红包：</span> <i class="tags">满59.00可用</i> <i
-                    class="tags">满100.00可用</i> <i class="more">...</i></div>
-            <div class="tabarIcon iconfont icon-gengduo"></div>
-        </div>
-        <!-- 促销 -->
-        <div class="goodsCheck goods-promotion hide">
-            <div class="tabarText"><span class="text">2个促销：</span> <i class="tags">超值组合</i> <i class="promotiontxt">甜瓜＋蜜瓜，直降20...</i>
+        <!-- 返回顶部 -->
+        <div class="fix-up animate-hide">
+            <!-- fixed -->
+            <div class="fixed-bg fade-out"></div>
+
+            <div class="goods-fixed goods-specifications-fixed move-down">
+                <div class="title">
+                    <div class="goods_image"><img :src="goods.cover" alt=""></div>
+                    <div class="goods_price"> ￥{{goods.price}}</div>
+                    <div class="goods_stock" topnum="3139">库存：{{goods.quantity}}件</div>
+                    <div class="close iconfont icon-close"></div>
+                </div>
+                <div class="specifications">
+                    <div class="common-spec-name"></div>
+                    <ul>
+                        <li specs_value_id="1649" id="2280" class="check-specifications">{{goods.summary}}</li>
+                    </ul>
+                </div>
+                <div class="buynum">
+                    <div class="num-title">购买数量</div>
+                    <div class="num-input"><span class="minus gray">-</span> <input type="text" pattern="[0-9]*"
+                                                                                    class="buy-num" id="buynum"
+                                                                                    value="1"> <span
+                            class="add">+</span></div>
+                    <div class="tips"></div>
+                </div>
+                <div class="btns">
+                    <div class="choosebtn hide">
+                        <div class="addcar" @click="addCar">加入购物车</div>
+                        <div class="buynow" @click="buyNow">立即购买</div>
+                    </div>
+                    <div class="addcarbtn enter" @click="addCar">确定</div>
+                </div>
             </div>
-            <div class="tabarIcon iconfont icon-gengduo"></div>
-        </div>
-        <!-- 服务 -->
-        <div class="goodsCheck goods-service">
-            <div class="tabarText"><span class="text">服务：</span>
 
-                <div class="serviceTitle"><i class="promotiontxt">* </i><i class="normal">原产地直供</i> <i
-                        class="promotiontxt">* </i><i class="normal">48小时极速退款</i><br> <i class="promotiontxt">* </i><i
-                        class="normal">生鲜坏果包赔</i> <i class="promotiontxt">* </i><i class="normal">部分地区不配送</i></div>
-                <!-- <i class="promotiontxt">·</i><i class="normal">10天无忧退换</i> <i class="promotiontxt">·</i><i class="normal">48小时快速退款</i> -->
+            <div class="goods-fixed goods-red-packet-fixed move-down"><h4>可领取红包</h4>
+                <ul>
+                    <li>
+                        <div class="left">
+                            <div class="bag-title red">新用户专享</div>
+                            <div class="bag-limit">满1亿元可用</div>
+                            <div class="out-date">有效日期至2016/03/03</div>
+                        </div>
+                        <div class="right">
+                            <div class="bag-amount red">50<span>元</span></div>
+                            <div class="bag-get red">立即领取</div>
+                        </div>
+                    </li>
+                </ul>
             </div>
-            <div class="tabarIcon iconfont icon-gengduo"></div>
-        </div>
-        <!-- 商品详情 -->
-        <div class="goods-details">
-            <h4>
-                <div class="left"></div>
-                <div class="center">商品详情</div>
-                <div class="right"></div>
-            </h4>
-            <div class="goods-details-imgs" v-html="goods.content">
 
+            <div class="goods-fixed goods-promotion-fixed move-down"><h4>两个促销</h4>
+                <ul>
+                    <li><a href="#"><span>超值组合</span><i>甜瓜+蜜瓜，直降30</i>
+
+                        <div class="tabarIcon iconfont icon-gengduo"></div>
+                    </a></li>
+                    <li><a href="#"><span>超值组合</span><i>甜瓜+蜜瓜，直降30</i>
+
+                        <div class="tabarIcon iconfont icon-gengduo"></div>
+                    </a></li>
+                </ul>
+            </div>
+
+            <div class="goods-fixed goods-service-fixed move-down">
+                <div class="close iconfont icon-close"
+                     style="position: absolute; top: 0.3rem; right: 0.2rem; color: #d5d5d5;"></div>
+                <h4>服务</h4>
+                <ul>
+                    <li><span class="red">• </span> 原产地直供<br> <span class="text">产品均来自原产地，若有问题请咨询在线客服</span></li>
+                    <li><span class="red">• </span> 48小时极速退款<br> <span class="text">收到退货包裹确认无误后，将在48h内办理退款，款项原路返回，各银行处理时间不同，将在1～7个工作日内到账</span>
+                    </li>
+                    <li><span class="red">• </span> 生鲜坏果包赔<br> <span class="text">生鲜类商品支持收货后24h内坏果包赔，若因无正当理由拒绝签收导致生鲜类商品出现损伤、腐烂情形的，相关运费及商品费用由买家承担</span>
+                    </li>
+                    <li><span class="red">• </span> 不配送区域<br> <span class="text">省份:北京,海南,西藏,甘肃,青海,宁夏,新疆,台湾,香港,澳门,内蒙古,辽宁,吉林,黑龙江,上海</span><br>
+                    </li>
+                    <!-- 下面的是促销提示字段，为了兼容老版的详情页添加，按道理不应该在服务里面显示促销提示的字段的 -->  </ul>
+                <div class="close serviceclose">完成</div>
             </div>
         </div>
+        <div class="toTop narrow amplification iconfont icon-xiangshangjiantou">
+        </div>
     </div>
-    <!-- 底部导航 -->
-    <div class="bottomNav">
-        <a :href="wemall" class="toindex iconfont icon-shangcheng"><p>微商城</p></a>
-        <a :href="order" class="tocenter iconfont icon-dingdan"><p>订单</p></a>
-        <a :href="cart" class="tocart iconfont icon-gouwuche1"><p>购物车</p></a>
-        <div class="hide like iconfont icon-xihuan"></div>
-        <div class="add-car-btn add-car">加入购物车</div>
-        <div class="buy-now-btn buy-now" @click="buyNow">立即购买</div>
-    </div>
-    <!-- 返回顶部 -->
-    <div class="fix-up animate-hide">
-        <!-- fixed -->
-        <div class="fixed-bg fade-out"></div>
+    <script type="text/javascript" charset="utf-8" src="{{PATH_TML}}shopping/js/touch_v1.2.0.js"></script>
+    <script type="text/javascript" charset="utf-8" src="{{PATH_TML}}shopping/js/requestAnimationFrame.js"></script>
+    <script type="text/javascript" charset="utf-8" src="{{PATH_TML}}shopping/js/zepto.fly.min.js"></script>
+    <script type="text/javascript" src="{{PATH_TML}}shopping/js/swiper.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="{{PATH_TML}}shopping/js/common.js"></script>
+    <script type="text/javascript" src="{{PATH_TML}}shopping/js/goods.js"></script>
 
-        <div class="goods-fixed goods-specifications-fixed move-down"> <div class="title"> <div class="goods_image"><img :src="goods.cover" alt=""></div> <div class="goods_price">  ￥{{goods.price}}  </div> <div class="goods_stock" topnum="3139">库存：{{goods.quantity}}件</div> <div class="close iconfont icon-close"></div> </div> <div class="specifications">  <div class="common-spec-name"></div> <ul>  <li specs_value_id="1649" id="2280" class="check-specifications">{{goods.summary}}</li>  </ul>  </div> <div class="buynum"> <div class="num-title">购买数量</div> <div class="num-input"> <span class="minus gray">-</span> <input type="text" pattern="[0-9]*" class="buy-num" id="buynum" value="1"> <span class="add">+</span> </div> <div class="tips"></div> </div> <div class="btns"> <div class="choosebtn hide"> <div class="addcar" @click="addCar">加入购物车</div> <div class="buynow" @click="buyNow">立即购买</div> </div> <div class="addcarbtn enter" @click="addCar">确定</div> </div>  </div>
-
-        <div class="goods-fixed goods-red-packet-fixed move-down"> <h4>可领取红包</h4> <ul> <li> <div class="left"> <div class="bag-title red">新用户专享</div> <div class="bag-limit">满1亿元可用</div> <div class="out-date">有效日期至2016/03/03</div> </div> <div class="right"> <div class="bag-amount red">50<span>元</span></div> <div class="bag-get red">立即领取</div> </div> </li> </ul> </div>
-
-        <div class="goods-fixed goods-promotion-fixed move-down"> <h4>两个促销</h4> <ul> <li> <a href="#"><span>超值组合</span><i>甜瓜+蜜瓜，直降30</i><div class="tabarIcon iconfont icon-gengduo"></div></a> </li> <li> <a href="#"><span>超值组合</span><i>甜瓜+蜜瓜，直降30</i><div class="tabarIcon iconfont icon-gengduo"></div></a> </li> </ul> </div>
-
-        <div class="goods-fixed goods-service-fixed move-down"><div class="close iconfont icon-close" style="position: absolute; top: 0.3rem; right: 0.2rem; color: #d5d5d5;"></div> <h4>服务</h4> <ul> <li> <span class="red">• </span> 原产地直供<br> <span class="text">产品均来自原产地，若有问题请咨询在线客服</span> </li> <li> <span class="red">• </span> 48小时极速退款<br> <span class="text">收到退货包裹确认无误后，将在48h内办理退款，款项原路返回，各银行处理时间不同，将在1～7个工作日内到账</span> </li>  <li> <span class="red">• </span> 生鲜坏果包赔<br> <span class="text">生鲜类商品支持收货后24h内坏果包赔，若因无正当理由拒绝签收导致生鲜类商品出现损伤、腐烂情形的，相关运费及商品费用由买家承担</span> </li>   <li> <span class="red">• </span> 不配送区域<br>  <span class="text">省份:北京,海南,西藏,甘肃,青海,宁夏,新疆,台湾,香港,澳门,内蒙古,辽宁,吉林,黑龙江,上海</span><br>    </li>   <!-- 下面的是促销提示字段，为了兼容老版的详情页添加，按道理不应该在服务里面显示促销提示的字段的 -->  </ul> <div class="close serviceclose">完成</div>  </div>
-    </div>
-    <div class="toTop narrow amplification iconfont icon-xiangshangjiantou">
-    </div>
-</div>
-<script type="text/javascript" charset="utf-8" src="{{PATH_TML}}shopping/js/touch_v1.2.0.js"></script>
-<script type="text/javascript" charset="utf-8" src="{{PATH_TML}}shopping/js/requestAnimationFrame.js"></script>
-<script type="text/javascript" charset="utf-8" src="{{PATH_TML}}shopping/js/zepto.fly.min.js"></script>
-<script type="text/javascript" src="{{PATH_TML}}shopping/js/swiper.min.js"></script>
-<script type="text/javascript" charset="utf-8" src="{{PATH_TML}}shopping/js/common.js"></script>
-<script type="text/javascript" src="{{PATH_TML}}shopping/js/goods.js"></script>
-
-<script>
-    function c(){
-        var all_width=$(window).width();
-        var all_height=$(window).height();
-        fz = (all_width/750)*100;
-        $('html').css({"fontSize":fz});
-    }
-    new Vue({
-        el: '#app',
-        data: {
-            weid: window.location.pathname.split('/').pop(),
-            wemall: '',
-            order: '',
-            cart: '',
-            mall_id: '',
-            goods: {
-                title: '',
-                cover: '',
-                summary: '',
-                price: '',
-                selected: '“1件”',
-                quantity: 100,
-                pictures: [],
-                content: '',
+    <script>
+        function c() {
+            var all_width = $(window).width();
+            var all_height = $(window).height();
+            fz = (all_width / 750) * 100;
+            $('html').css({"fontSize": fz});
+        }
+        new Vue({
+            el: '#app',
+            data: {
+                weid: window.location.pathname.split('/').pop(),
+                wemall: '',
+                order: '',
+                cart: '',
+                mall_id: '',
+                goods: {
+                    title: '',
+                    cover: '',
+                    summary: '',
+                    price: '',
+                    selected: '“1件”',
+                    quantity: 100,
+                    pictures: [],
+                    content: ''
+                },
+                service: []
             },
-        },
-        created: function() {
-            c();
-            //商品详情
-            ajax.get('goods/detail/'+ this.weid).then(data => {
-                console.log(data)
-                let goods = data.data;
-                let pics = goods.cover + ',' + goods.picture != null ? goods.picture : '';
-                this.wemall = '/' + pages_index + '/wemall';
-                this.order = '/' + pages_index + '/wemall/order/' + goods.weid;
-                this.cart = '/user/wemall/cart';
-                this.mall_id = goods.mall_id;
-                this.goods.title = goods.title;
-                this.goods.cover = ApiMaterPlatQiniuDomain + goods.cover;
-                this.goods.summary = goods.summary;
-                this.goods.price = goods.price;
-                this.goods.quantity = goods.stock;
-                this.goods.pictures = pics.split(',').map(x => ApiMaterPlatQiniuDomain + x);
-                this.goods.content = goods.content;
-                $app.set_title(this.goods.title);
-                
-                setTimeout(() => {
-                    var mySwiper = new Swiper ('.swiper-container-horizontal', {
-                        direction: 'horizontal',
-                        loop: true,
-                        speed: 1000,
-                        autoplay : 3000,
-                        autoplayDisableOnInteraction : false,
+            created: function () {
+                c();
+                //商品详情
+                ajax.get('goods/detail/' + this.weid).then(data =>
+                {
+                    console.log(data)
+                    let goods = data.data;
+                    let img = goods.picture != null ? goods.picture : '';
+                    let pics = goods.cover + ',' + img;
+                    this.wemall = '/' + pages_index + '/wemall';
+                    this.order = '/' + pages_index + '/wemall/order/' + goods.weid;
+                    this.cart = '/user/wemall/cart';
+                    this.mall_id = goods.mall_id;
+                    this.goods.title = goods.title;
+                    this.goods.cover = ApiMaterPlatQiniuDomain + goods.cover;
+                    this.goods.summary = goods.summary;
+                    this.goods.price = goods.price;
+                    this.goods.quantity = goods.stock;
+                    this.goods.pictures = pics.split(',').map(x => ApiMaterPlatQiniuDomain + x);
+                    this.goods.content = goods.content;
+                    this.service = JSON.parse(goods.service);
+                    console.log(this.service)
+                    const splitArray = (arr, res, len) => rem = arr.splice(len) == null ? res : splitArray(arr.splice(len), [...res, arr], len)
+
+                    $app.set_title(this.goods.title);
+
+                    setTimeout(() =>
+                    {
+                        var mySwiper = new Swiper('.swiper-container-horizontal', {
+                            direction: 'horizontal',
+                            loop: true,
+                            speed: 1000,
+                            autoplay: 3000,
+                            autoplayDisableOnInteraction: false,
+                        })
+                    }, 50);
+
+                    var checkedSpecifications, checkedNum;
+                    //规格数量选择
+                    $('.fix-up').on('tap', '.goods-specifications-fixed li', function () {
+                        $(this).addClass('check-specifications').siblings().removeClass('check-specifications');
+                        var checkedSpecifications = $('.check-specifications').text() || "",
+                                checkedNum = parseInt($('.buy-num').val()) || 1;
+                        //$('.goods-specifications .tabarText').text("已选：“"+checkedSpecifications+","+checkedNum+"件”");
+                        $('.goods-specifications .tabarText').text("已选：“" + checkedNum + "件”");
+                        _userClick = 1;
+                        get_detail($(this).attr("id"));
+                        goods_id = $(this).attr("id");//切换商品后的商品id替换
                     })
-                }, 50);
-
-                var checkedSpecifications,checkedNum;
-                //规格数量选择
-                $('.fix-up').on('tap','.goods-specifications-fixed li',function(){
-                    $(this).addClass('check-specifications').siblings().removeClass('check-specifications');
-                    var checkedSpecifications = $('.check-specifications').text()||"",
-                            checkedNum = parseInt($('.buy-num').val())||1;
-                    //$('.goods-specifications .tabarText').text("已选：“"+checkedSpecifications+","+checkedNum+"件”");
-                    $('.goods-specifications .tabarText').text("已选：“"+checkedNum+"件”");
-                    _userClick = 1;
-                    get_detail($(this).attr("id"));
-                    goods_id = $(this).attr("id");//切换商品后的商品id替换
-                })
-                $('.fix-up').on('input','#buynum',function(e){
-                    var checkedSpecifications = $('.check-specifications').text()||"", checkedNum = parseInt($('.buy-num').val())||1;
-                    //var topNum = parseInt($('.goods_stock').attr('topnum'));
-                    var topNum = goods.stock;
-                    if(parseInt(checkedNum) > parseInt(topNum)){
-                        //选择数量时是否超过库存；
-                        checkedNum = topNum;
-                        $('.tips').show().html('输入值达库存上限了！');
-                        $('.add').addClass('gray');
-                        $('.buy-num').val(topNum);
-                    }else{
-                        if(checkedNum<=1){
-                            $('.buy-num').val(1);
+                    $('.fix-up').on('input', '#buynum', function (e) {
+                        var checkedSpecifications = $('.check-specifications').text() || "", checkedNum = parseInt($('.buy-num').val()) || 1;
+                        //var topNum = parseInt($('.goods_stock').attr('topnum'));
+                        var topNum = goods.stock;
+                        if (parseInt(checkedNum) > parseInt(topNum)) {
+                            //选择数量时是否超过库存；
+                            checkedNum = topNum;
+                            $('.tips').show().html('输入值达库存上限了！');
+                            $('.add').addClass('gray');
+                            $('.buy-num').val(topNum);
+                        } else {
+                            if (checkedNum <= 1) {
+                                $('.buy-num').val(1);
+                            }
+                            $('.add').removeClass('gray');
+                            $('.tips').hide();
                         }
-                        $('.add').removeClass('gray');
-                        $('.tips').hide();
-                    }
-                    if(checkedNum>1){
-                        $('.minus').removeClass('gray');
-                    }else{
-                        $('.minus').addClass('gray');
-                    }
-                    //$('.goods-specifications .tabarText').text("已选：“"+checkedSpecifications+","+checkedNum+"件”");
-                    $('.goods-specifications .tabarText').text("已选：“"+checkedNum+"件”");
+                        if (checkedNum > 1) {
+                            $('.minus').removeClass('gray');
+                        } else {
+                            $('.minus').addClass('gray');
+                        }
+                        //$('.goods-specifications .tabarText').text("已选：“"+checkedSpecifications+","+checkedNum+"件”");
+                        $('.goods-specifications .tabarText').text("已选：“" + checkedNum + "件”");
 
-                })
-                $('.fix-up').on('tap','.minus',function(e){
-                    var checkedSpecifications = $('.check-specifications').text()||"";
-                    //var topNum = parseInt($('.goods_stock').attr('topnum'));
-                    var topNum = goods.stock;
-                    var buyNum = parseInt($('.buy-num').val())||1;
-                    $('.tips').hide();
-                    if(parseInt(buyNum) <=1){
-                        $('.minus').addClass('gray');
+                    })
+                    $('.fix-up').on('tap', '.minus', function (e) {
+                        var checkedSpecifications = $('.check-specifications').text() || "";
+                        //var topNum = parseInt($('.goods_stock').attr('topnum'));
+                        var topNum = goods.stock;
+                        var buyNum = parseInt($('.buy-num').val()) || 1;
+                        $('.tips').hide();
+                        if (parseInt(buyNum) <= 1) {
+                            $('.minus').addClass('gray');
+                            return false;
+                        }
+                        $('.buy-num').val(parseInt(buyNum) - 1);
+                        $('.add').removeClass('gray');
+                        //$('.goods-specifications .tabarText').text("已选：“"+checkedSpecifications+","+$('.buy-num').val()+"件”");
+                        $('.goods-specifications .tabarText').text("已选：“" + $('.buy-num').val() + "件”");
+                        if (parseInt(buyNum) - 1 == 1) {
+                            $('.minus').addClass('gray');
+                        }
+                    })
+                    $('.fix-up').on('tap', '.add', function (e) {
+                        var checkedSpecifications = $('.check-specifications').text() || "";
+                        var topNum = goods.stock;
+                        var buyNum = parseInt($('.buy-num').val()) || 1;
+                        if (parseInt(buyNum) >= parseInt(topNum)) {
+                            $('.tips').show().html('已达库存上限了！');
+                            $('.add').addClass('gray');
+                            return false
+                        }
+                        $('.buy-num').val(parseInt(buyNum) + 1)
+                        $('.minus').removeClass('gray');
+                        //$('.goods-specifications .tabarText').text("已选：“"+checkedSpecifications+","+$('.buy-num').val()+"件”");
+                        $('.goods-specifications .tabarText').text("已选：“" + $('.buy-num').val() + "件”");
+                        if (parseInt(buyNum) + 1 == parseInt(topNum)) {
+                            $('.add').addClass('gray');
+                        }
+                    })
+                }
+                )
+            },
+            methods: {
+                addCar: function () {
+                    var url = '';
+                    if (is_login == 'no') {
+                        mb_login(url);
                         return false;
                     }
-                    $('.buy-num').val(parseInt(buyNum)-1);
-                    $('.add').removeClass('gray');
-                    //$('.goods-specifications .tabarText').text("已选：“"+checkedSpecifications+","+$('.buy-num').val()+"件”");
-                    $('.goods-specifications .tabarText').text("已选：“"+$('.buy-num').val()+"件”");
-                    if( parseInt(buyNum)-1 == 1){
-                        $('.minus').addClass('gray');
+                    //增加权限判断
+                    let num = $("#buynum").val();
+                    let sendData = {
+                        goods_id: this.weid,
+                        goods_num: num
+                    };
+                    ajax.post("cart/store", sendData).then(data => {
+                        //console.log(data);
+                    });
+                },
+                buyNow: function () {
+                    var url = '';
+                    if (is_login == 'no') {
+                        mb_login(url);
+                        return false;
                     }
-                })
-                $('.fix-up').on('tap','.add',function(e){
-                    var checkedSpecifications = $('.check-specifications').text()||"";
-                    var topNum = goods.stock;
-                    var buyNum = parseInt($('.buy-num').val())||1;
-                    if(parseInt(buyNum) >= parseInt(topNum)){
-                        $('.tips').show().html('已达库存上限了！');
-                        $('.add').addClass('gray');
-                        return false
-                    }
-                    $('.buy-num').val(parseInt(buyNum)+1)
-                    $('.minus').removeClass('gray');
-                    //$('.goods-specifications .tabarText').text("已选：“"+checkedSpecifications+","+$('.buy-num').val()+"件”");
-                    $('.goods-specifications .tabarText').text("已选：“"+$('.buy-num').val()+"件”");
-                    if( parseInt(buyNum)+1 == parseInt(topNum)){
-                        $('.add').addClass('gray');
-                    }
-                })
-            })
-        },
-        methods: {
-            addCar: function() {
-                var url = '';
-                if(is_login == 'no')
-                {
-                    mb_login(url);
-                    return false;
-                }
-                //增加权限判断
-                let num = $("#buynum").val();
-                let sendData = {
-                    goods_id: this.weid,
-                    goods_num: num
-                };
-                ajax.post("cart/store", sendData).then(data => {
-                    //console.log(data);
-                });
-            },
-            buyNow: function() {
-                var url = '';
-                if(is_login == 'no')
-                {
-                    mb_login(url);
-                    return false;
-                }
 
-                //增加权限判断
-                ajax.get('mall/detail/' + this.mall_id).then(data => {
-                    //console.log(data);
-                    window.location.href = this.order;
-                });
+                    //增加权限判断
+                    ajax.get('mall/detail/' + this.mall_id).then(data => {
+                        //console.log(data);
+                        window.location.href = this.order;
+                    });
+                }
             }
-        }
-    })
+        })
 
-</script>
+    </script>
 </div>
 
