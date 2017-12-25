@@ -1,18 +1,8 @@
 <#extend#>public/coc/coc_extend.html</#extend#>
 <script type="text/javascript">
     // show.header = 'no';
+    // show.footer = 'no';
 </script>
-<script>
-    function setTab(name, cursel, n) {
-        for(i = 1; i <= n; i++) {
-            var menu = document.getElementById(name + i);
-            var con = document.getElementById("con_" + name + "_" + i);
-            menu.className = (i == cursel ? "hover" : "");
-            con.style.display = (i == cursel ? "block" : "none");
-        }
-    }
-</script>
-<script src="{{PATH_TML}}js/coc/modernizr.custom.js"></script>
 <script src="{{PATH_TML}}js/coc/swipe.min.js"></script>
 <style>
     [v-cloak] {
@@ -25,7 +15,7 @@
     <div class="banner1">
         <div id='mySwipe' class='swipe'>
             <div class='swipe-wrap'>
-                <div v-for="(item,index) in especial_news"> 
+                <div v-for="(item,index) in especial_news" v-if="index < 3"> 
                     <a><img :src="item.thumb_image | img_src(300 , 200 , 1)" width="100%" height="220px" /></a> 
                     <div class="mySwipeceng">
                         <div class="left"><b style='font-weight:normal'>崔歆在党建联系点调研党建工作</b></div>
@@ -44,21 +34,32 @@
         <p><a href="jsvascript:void(0)">{{item.summary}}...<span>[查看全文]</span></a></p>
         <div class="clear"></div>
     </div>
+    <div class="clear"></div>
     <!--头条 end-->
 
     <!--内容一-->
-    <div :id="'Tab1'+index" class="Tabs" v-for="(item, index) in channel_news">
-
+    <div :id="'Tab1'+index" class="Tabs" v-for="(item, index) in channel_list">
         <div class="Menubox">
             <dl>
-                <dd v-for="(value, key) in item" :id="'one'+key" @click="setTab(value.title, key)" :class="key % 2 === 0? 'hover' : ''">
-					{{value.title}}
-					<li v-html="value.detail"></li>
+                <dd v-for="(value, key) in item" :id="'list_'+index+'_'+key" @click="setTab(key)" :class="{hover:selected == key}">
+                    {{value.title}}
                 </dd>
-                
             </dl>
         </div>
-
+        <div class="Contentbox">
+            <div v-for="(value, key) in item" :class="'list_'+index+'_'+key" v-if="selected == key">
+                <div class="Menumore">
+                    <a :href="'/news/'+value.domain">更多</a>
+                </div>
+                <ul class="Content_wz">
+                    <li v-for="(val, inde) in value.detail">
+                        <a href="/index7">
+                            <h2><b style="font-weight:normal;" v-html="val.title"></b></h2><span class="sytjlb_sj">{{val.publish_time.substr(0, 10)}}</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -66,38 +67,41 @@
     var app = new Vue({
         el: '#app',
         data: {
-            news : [],
-            ztbd : [],
-            spzx : [],
-            mag  : [],
+            selected : 0,
             hot  : [],
-            nitoce : [],
             especial_news: [],
-            channel_news : [],
-            list_domain  : [],
-            plats : plats_info
+            channel_list : [],
+            pathname : window.location.pathname.split('/').slice(1,6)[1],
         },
         mounted: function() {
-            $app.set_title(plats_info.title);
             ajax.get('cms/index/grid').then((res) => {
                 if (res.code === 200) {
-
-                    this.news = res.data.news;
-                    this.mag  = res.data.mag;
                     this.hot  = res.data.hot;
-                    this.ztbd = res.data.ztbd;
-                    this.spzx = res.data.spzx;
-                    this.nitoce = res.data.nitoce;
                     this.especial_news = res.data.especial_news;
                     this.$nextTick(()=>{
                         this.swiper();
                     });
                 }
             });
-            this.data_list();
-	        this.$nextTick(()=>{
-	        	
+
+            ajax.get("cms/channels/domain_query/news").then((res) => {
+                if (res.data && res.code === 200) {
+                    plats_info.show_title = res.data.search_name;
+                }
             })
+
+            ajax.get("cms/index/list_news_by_channel?channel=news").then((res) => {
+                if (res.data && res.code === 200) {
+                    var channel_list = [];
+                    res.data.forEach((item, index)=>{
+                        if(index % 2 === 0) {
+                            channel_list[Math.floor(index/2)] = new Array();
+                        }
+                        channel_list[Math.floor(index/2)][index%2] = item;
+                    });
+                    this.channel_list = channel_list;
+                }
+            });
         },
         methods: {
             swiper() {
@@ -113,26 +117,8 @@
             data(params , call){
                 return $mob_ajax.cms_lists(params , call);
             },
-            data_list() {
-            	ajax.get("cms/channel_categories?channel=news").then((res) => {
-	                if (res.data && res.code === 200) {
-	                    res.data.forEach((item, index)=>{
-	                        if(index % 2 === 0) {
-	                            this.channel_news[Math.floor(index/2)] = new Array();
-	                            this.list_domain = item.domain;
-	                        }
-
-	                        ajax.get("cms/contents?cate_id=zxxx").then((body) => {
-	                            if (body.data && body.code === 200) {
-                                	item.detail = body.data;
-	                            }
-	                        })
-	                        this.channel_news[Math.floor(index/2)][index%2] = item;
-	                    });
-	                    console.log(this.channel_news);
-	                }
-	            });
-	            
+            setTab(this_id) {
+                this.selected = this_id;
             }
         },
     });

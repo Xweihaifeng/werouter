@@ -3,51 +3,62 @@
 <link rel="stylesheet" href="{{PATH_TML}}css/home.css"/>
 <link rel="stylesheet" href="{{PATH_TML}}css/common.css"/>
 <link rel="stylesheet" href="{{PATH_TML}}css/list.css"/>
-<div id="box" class="section my_container" @touchstart="touchStart($event)" @touchmove="touchMove($event)"
-     @touchend="touchEnd($event)" style="transform:translate(0,-30px)">
-    <div class="fresh-tip">
-        <span>下拉加载更多...</span>
-    </div>
-    <div v-for="(value,key) in artListObj">
-        <!--多个模板-->
-        <div v-if="value.length>1">
-            <div class="time t_for_lists">
-                <span>{{getTimeTip(value)}}</span>
-            </div>
-            <div class="lists">
-                <a :href="'/' + domain + '/article/' + item.weid | href" v-for="(item,index) in value">
-                    <div v-if="index==0" :style="'background-image:url('+item.cover+')'">
-                        <label>
-                            <span>{{item.title}}</span>
-                        </label>
-                    </div>
-                    <p v-if="index>0">
-                        <label>
-                            <span>{{item.title}}</span>
+<script src="{{PATH_TML}}js/swiper-3.3.1.min.js"></script>
+<div style="padding-top: 0.44rem;">
+    <!--<div class="swiper-container" v-if="advList.length">-->
+        <!--<div class="swiper-wrapper">-->
+            <!--<div class="swiper-slide" v-for="item in advList" v-if="item.src">-->
+                <!--<a :href="item.href"><img :src="item.src | img_src" alt=""></a>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="swiper-pagination"></div>-->
+    <!--</div>-->
+    <div id="box" class="section my_container" @touchstart="touchStart($event)" @touchmove="touchMove($event)"
+         @touchend="touchEnd($event)" style="transform:translate(0,-30px)">
+        <div class="fresh-tip">
+            <span>下拉加载更多...</span>
+        </div>
+        <div v-for="(value,key) in artListObj">
+            <!--多个模板-->
+            <div v-if="value.length>1">
+                <div class="time t_for_lists">
+                    <span>{{getTimeTip(value)}}</span>
+                </div>
+                <div class="lists">
+                    <a :href="'/' + domain + '/article/' + item.weid | href" v-for="(item,index) in value">
+                        <div v-if="index==0" :style="'background-image:url('+item.cover+')'">
                             <label>
-                                <img :src="item.cover" alt="">
+                                <span>{{item.title}}</span>
                             </label>
-                        </label>
-                    </p>
+                        </div>
+                        <p v-if="index>0">
+                            <label>
+                                <span>{{item.title}}</span>
+                                <label>
+                                    <img :src="item.cover" alt="">
+                                </label>
+                            </label>
+                        </p>
+                    </a>
+                </div>
+            </div>
+
+
+            <!--单个模板-->
+            <div v-if="value.length == 1">
+                <div class="time t_for_single">
+                    <span>{{getTimeTip(value)}}</span>
+                </div>
+                <a :href="'/' + domain + '/article/' + value[0].weid | href">
+                    <div class="single">
+                        <p class="title">{{value[0].title}}</p>
+                        <span class="pt">{{value[0].created_at | formateTime('MD-C')}}</span>
+                        <img :src="value[0].cover" alt="">
+                        <span class="detail">{{value[0].summary}}</span>
+                        <p>查看全文</p>
+                    </div>
                 </a>
             </div>
-        </div>
-
-
-        <!--单个模板-->
-        <div v-if="value.length == 1">
-            <div class="time t_for_single">
-                <span>{{getTimeTip(value)}}</span>
-            </div>
-            <a :href="'/' + domain + '/article/' + value[0].weid | href">
-                <div class="single">
-                    <p class="title">{{value[0].title}}</p>
-                    <span class="pt">{{value[0].created_at | formateTime('MD-C')}}</span>
-                    <img :src="value[0].cover" alt="">
-                    <span class="detail">{{value[0].summary}}</span>
-                    <p>查看全文</p>
-                </div>
-            </a>
         </div>
     </div>
 </div>
@@ -55,6 +66,7 @@
     new Vue({
         el: '#app',
         data: {
+            advList: [],
             start: '',
             end: '',
             offset: 30,
@@ -63,7 +75,33 @@
             domain: plats_user_info.domian
         },
         mounted: function () {
-            this.getArtData()
+            this.getArtData();
+
+            var sendData = {
+                user_id : plats_user_info.weid,
+                style: 2
+            };
+            ajax.post('pages/banner/detail', sendData).then((res) => {
+                console.log(res);
+                if (res.code == 200 && res.data) {
+                    this.advList = JSON.parse(res.data.slide);
+                    console.log(this.advList)
+                }
+            });
+            setTimeout(function () {
+                var mySwiper = new Swiper('.swiper-container', {
+                    direction: 'horizontal',
+                    loop: true,
+                    speed: 1000,
+                    autoplay: 3000,
+                    autoplayDisableOnInteraction: false,
+                    pagination: '.swiper-pagination',
+                    onlyExternal: true,
+                    longSwipesRatio: 0.3,
+                    touchRatio: 1
+                });
+            }, 1000)
+
         },
         methods: {
             getArtData: function () {
@@ -74,7 +112,7 @@
                 ajax.post('articles/getListByDay', sendData).then((res) => {
                     console.log(res);
                     if (res.code == 200 && res.data.list && JSON.stringify(res.data.list) != '{}') {
-                        this.artListObj = $.extend(res.data.list,this.artListObj);
+                        this.artListObj = $.extend(res.data.list, this.artListObj);
                         console.log(this.artListObj)
                     }
                     if (res.data.lastdate) {

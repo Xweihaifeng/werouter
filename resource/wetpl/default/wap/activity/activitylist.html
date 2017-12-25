@@ -3,9 +3,18 @@
 <link rel="stylesheet" href="{{PATH_TML}}css/act.css"/>
 <link rel="stylesheet" href="{{PATH_TML}}css/home.css"/>
 <link rel="stylesheet" href="{{PATH_TML}}css/common.css"/>
+<script src="{{PATH_TML}}js/swiper-3.3.1.min.js"></script>
 <div id="act-container">
+    <div class="swiper-container" v-if="advList.length">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide" v-for="item in advList" v-if="item.src">
+                <a :href="item.href"><img :src="item.src | img_src" alt=""></a>
+            </div>
+        </div>
+        <div class="swiper-pagination"></div>
+    </div>
     <div v-for="data in list_data">
-        <a :href="'/activity-detail/' + data.weid | href">
+        <a :href="data.domain + '/activity-detail/' + data.weid | href">
             <div class="act-content">
                 <div class="act-cover"><img :src="data.cover | img_src(110 , 69 , 1)" width="110" height="69" /></div>
                 <div class="act-cont">
@@ -30,6 +39,7 @@
     new Vue({
         el: '#app',
         data : {
+            advList : [],
             list_data:[],
             params : {
                 page : 1,
@@ -42,6 +52,30 @@
         mounted() {
             this.$nextTick(()=>{
                 this.data_list();
+                var sendData = {
+                    user_id : plats_user_info.weid,
+                    style : 4
+                };
+                ajax.post('pages/banner/detail',sendData).then((res)=>{
+                    console.log(res);
+                    if(res.code == 200 && res.data){
+                        this.advList = JSON.parse(res.data.slide);
+                        console.log(this.advList)
+                    }
+                });
+                setTimeout(function(){
+                    var mySwiper = new Swiper('.swiper-container', {
+                        direction: 'horizontal',
+                        loop: true,
+                        speed: 1000,
+                        autoplay : 3000,
+                        autoplayDisableOnInteraction : false,
+                        pagination: '.swiper-pagination',
+                        onlyExternal : true,
+                        longSwipesRatio: 0.3,
+                        touchRatio:1
+                    });
+                }, 1000)
             });
         },
         methods:{

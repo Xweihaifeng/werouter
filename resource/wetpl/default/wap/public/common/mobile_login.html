@@ -1,4 +1,54 @@
 <script src="/common/public/js/layer_mobile/layer.js"></script>
+<style>
+    .layui-m-layerchild {
+        border-radius: 2px;
+        background: none;
+    }
+    .layui-m-layerbtn {
+        display: box;
+        display: -moz-box;
+        display: -webkit-box;
+        width: 100%;
+        height: 31px!important;
+        line-height: 31px;
+        font-size: 0;
+        border-top: 1px solid #DDD;
+        background-color: #FFF;
+    }
+    .layui-m-layerbtn span[yes] {
+        color: #1aad19;
+    }
+    .layui-m-layerbtn, .layui-m-layerbtn span {
+        position: relative;
+        text-align: center;
+        border-radius: 2px;
+    }
+    #login_vue {
+        width: 3.2rem;
+        max-width: 640px;
+        height: 2.06rem;
+        border-radius: 0.06rem;
+        background-color: #ecf0f3;
+        padding-top: 0.01rem;
+    }
+
+    .layui-layer-btn0 {
+        width: 83% !important;
+        height: 0.4rem !important;
+        line-height: 0.4rem !important;
+        background: #24c3fb !important;
+        color: #fff !important;
+        -webkit-border-radius: 0.04rem !important;
+        -moz-border-radius: 0.04rem !important;
+        border-radius: 0.04rem !important;
+        font-size: 0.14rem !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        box-sizing: border-box !important;
+        display: block;
+        margin-left: 0.27rem!important;
+    }
+</style>
 <script type="text/javascript">
 // 需要依赖layer moble
 function mb_login(href){
@@ -6,17 +56,17 @@ function mb_login(href){
     layer.open({
         content: '仅需一步,即可激活您的账号'
         ,btn: ['激活', '暂不']
-        ,style: 'width: 60% ;'
+        ,style: 'width: 260px; color: #818180;'
         ,yes: function(index){
             layer.open({
                 content: `
                 <div id="login_vue">
-                    <div id="app_ss"  >
+                    <div id="app_ss">
                         <div id="login-info">
                             <ul>
                                 <li id="phonenum">
                                     <input type="text" v-model="login.phone" value="" name="login_phone" placeholder="请输入手机号码" maxlength="11" id="login_phone">
-                                </li> 
+                                </li>
                                 <li id="checknum">
                                     <input type="text" v-model="login.code" value="" name="login_check"  placeholder="请输入手机验证码" maxlength="6" id="login_check"> <span v-if="check_num>0">剩余{{check_num}}秒</span> <span v-else @click="code();">{{code_string}}</span>
                                 </li>
@@ -26,10 +76,8 @@ function mb_login(href){
                     </div>
                 </div>
                 `
-                ,style:' height : 35%;padding:0px;0px;box-shadow: 1px 1px 50px rgba(0,0,0,.3);'
-
             });
-            
+
             new Vue({
                 el: '#login_vue',
                 data: {
@@ -37,7 +85,7 @@ function mb_login(href){
                    login: {
                         phone : '',
                         code : '',
-                        weid : '',  
+                        weid : '',
                         ref_type : pages_type,
                         from_type : '',
                         ref_url : window.location.pathname,
@@ -63,9 +111,9 @@ function mb_login(href){
                         } , 1000);
                     },
                     code (){
-     
-                        if(!this.verification.phone.test(this.login.phone)) 
-                        { 
+
+                        if(!this.verification.phone.test(this.login.phone))
+                        {
                             mb_message('手机号不对');
                         }
                         this.check_num = 60;
@@ -78,14 +126,14 @@ function mb_login(href){
                         });
                     },
                     login_post(){
-                        if(!this.verification.phone.test(this.login.phone)) 
-                        { 
+                        if(!this.verification.phone.test(this.login.phone))
+                        {
                             mb_message('手机号不对');
                             return;
                         }
 
-                        if(!this.verification.check.test(this.login.code)) 
-                        { 
+                        if(!this.verification.check.test(this.login.code))
+                        {
                             mb_message('验证码有误!');
                             return;
                         }
@@ -115,7 +163,7 @@ function mb_login(href){
                         }
                     }
                 }
-            }); 
+            });
         }
     });
 }

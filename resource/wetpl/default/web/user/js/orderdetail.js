@@ -8,7 +8,9 @@ if(sessionStorage.lastname=="we_title_2"){
     $("#we_title_2").find(".title-img").css("transform","rotate(90deg)");
 }
 $(document).ready(function(){
-var qiniu_bucket_domain =ApiMaterPlatQiniuDomain;
+    $("#favicon").attr("href", ApiMaterPlatQiniuDomain + window.localStorage.getItem("fav"));
+
+    var qiniu_bucket_domain =ApiMaterPlatQiniuDomain;
 
     var showLogin = false; //调整窗口大小时登陆框是否存在
     var currWidth = $(window).width();
@@ -451,7 +453,7 @@ var qiniu_bucket_domain =ApiMaterPlatQiniuDomain;
                 '<tr class="orders_list_content" id="'+data.weid+'" data-id="'+data.goods_id+'">'+
                    ' <td width="40%" colspan="4">'+
                         '<div class="od_about_order_left  od_bgwrite">'+
-                        '<p><span class="t">商家昵称:</span><span class="txt">'+nickname+'</span></p>'+
+                        '<p><span class="t">买家昵称:</span><span class="txt">'+nickname+'</span></p>'+
                         '<p><span class="t">所在地址:</span><span class="txt">'+addr+'</span></p>'+
                         '<p><span class="t">联系电话:</span><span class="txt">'+phone+'</span></p>'+
                         '<p><span class="t">收货地址:</span><span class="txt">'+data.address+'</span></p>'+

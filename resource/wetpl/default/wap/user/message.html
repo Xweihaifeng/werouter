@@ -1,57 +1,47 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <title>我的消息</title>
-    <link rel="shortcut icon" id="favicon" href="" />
-    <link rel="stylesheet" href="{{PATH_TML}}css/home.css"/>
-    <link rel="stylesheet" href="{{PATH_TML}}css/common.css"/>
-    <link rel="stylesheet" href="{{PATH_TML}}css/message.css"/>
-    <link rel="stylesheet" href="/common/jquery.animsition/css/animsition.min.css">
-    <script src="{{PATH_TML}}js/jquery-3.2.1.min.js"></script>
-    <script src="{{PATH_TML}}js/vue.min.js"></script>
-    <script type="text/javascript" src="{{PATH_CONFIG}}"></script>
-    <!--<script src="{{PATH_TML}}js/zepto.min.js"></script>-->
-    <script src="/common/jquery.animsition/js/jquery.animsition.min.js"></script>
-    <link rel="stylesheet" href="{{PATH_TML}}js/layui/css/layui.css"/>
-    <script src="{{PATH_TML}}js/layui/layui.js"></script>
-    <script src="{{PATH_TML}}js/home.js"></script>
-</head>
-<body>
-    <div class="mes" style="display: none;">
-        <ul>
-            <li>
-                <span>
-                    <i style="background-image: url('/common/img/我的私信@2x.png');background-color: #FFAA00;"></i>
-                    <a>我的私信</a>
-                </span>
-                <!--<img class="me-right" src="img/you.png" alt="">-->
-            </li>
-            <li>
-            <li>
-                <span>
-                    <i style="background-image: url('/common/img/站内通知@2x.png');background-color: #35B87F;"></i>
-                    <a>站内通知</a>
-                </span>
-                <!--<img class="me-right" src="img/you.png" alt="">-->
-            </li>
-            <li>
-                <span>
-                    <i style="background-image: url('/common/img/支付信息@2x.png');background-color: #5B99EE;"></i>
-                    <a>支付信息</a>
-                </span>
-                <!--<img class="me-right" src="img/you.png" alt="">-->
-            </li>
-            <li>
-                <span>
-                    <i style="background-image: url('/common/img/系统消息@2x.png');background-color: #F26D5F;"></i>
-                    <a>系统消息</a>
-                </span>
-                <!--<img class="me-right" src="img/you.png" alt="">-->
-            </li>
-        </ul>
-    </div>
-    <footer></footer>
-</body>
-</html>
+<#extend#>public/domain/domain_extend.html</#extend#>
+<script type="text/javascript">
+    show.header = 'no';
+</script>
+<link rel="stylesheet" href="{{PATH_TML}}css/message.css"/>
+<div class="mes" >
+    <ul>
+        <li>
+            <span>
+                <i style="background-image: url('/common/img/我的私信@2x.png');background-color: #FFAA00;"></i>
+                <a>我的私信</a>
+            </span>
+            <!--<img class="me-right" src="img/you.png" alt="">-->
+        </li>
+        <li>
+        <li>
+            <span>
+                <i style="background-image: url('/common/img/站内通知@2x.png');background-color: #35B87F;"></i>
+                <a>站内通知</a>
+            </span>
+            <!--<img class="me-right" src="img/you.png" alt="">-->
+        </li>
+        <li>
+            <span>
+                <i style="background-image: url('/common/img/支付信息@2x.png');background-color: #5B99EE;"></i>
+                <a>支付信息</a>
+            </span>
+            <!--<img class="me-right" src="img/you.png" alt="">-->
+        </li>
+        <li>
+            <span>
+                <i style="background-image: url('/common/img/系统消息@2x.png');background-color: #F26D5F;"></i>
+                <a>系统消息</a>
+            </span>
+            <!--<img class="me-right" src="img/you.png" alt="">-->
+        </li>
+    </ul>
+</div>
+<script>
+new Vue({
+    el: '#app',
+    data: {
+    },
+    mounted: function(){
+    }
+});
+</script>

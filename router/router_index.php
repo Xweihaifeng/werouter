@@ -125,7 +125,7 @@ class router_index extends controller
 
         $protocol = empty($_SERVER['HTTPS']) ? 'http://' : 'https://';
         $wap_domain_url = '';
-        $this->data['wap_domain'] = 2;
+        //$this->data['wap_domain'] = 2;
 
         if($this->data['wap_domain'] == 1)
         {
@@ -138,12 +138,14 @@ class router_index extends controller
 
         $this->wap_domain_url = $wap_domain_url;
 
+        if(substr($this->_request_uri, 0  , 2) == '/m'){
+            $this->_request_uri = substr($this->_request_uri, 2  , strlen($this->_request_uri));
+        }
+
         if($this->data['wap_domain'] == 1 && $this->wap['after']['state'] == TRUE)
         {
             $domain = $this->wap['front']['url'];
-            if(substr($this->_request_uri, 0  , 2) == '/m'){
-                $this->_request_uri = substr($this->_request_uri, 2  , strlen($this->_request_uri));
-            }
+
             header("Location: {$protocol}".$domain.$this->_request_uri);
             exit;
         }
@@ -151,18 +153,14 @@ class router_index extends controller
         if($this->data['wap_domain'] == 2 && $this->wap['front']['state'] == TRUE)
         {
             $domain = $this->wap['after']['url'];
-            if(substr($this->_request_uri, 0  , 2) == '/m'){
-                $this->_request_uri = substr($this->_request_uri, 2  , strlen($this->_request_uri));
-            }
+
             header("Location: {$protocol}".$domain.$this->_request_uri);
             exit;
         }
 
         if($this->wap['front']['state'] == TRUE && $this->wap['after']['state'] == TRUE)
         {
-            if(substr($this->_request_uri, 0  , 2) == '/m'){
-                $this->_request_uri = substr($this->_request_uri, 2  , strlen($this->_request_uri));
-            }
+
             header("Location: {$protocol}".$wap_domain_url.$this->_request_uri);
             exit;
         }
@@ -256,7 +254,7 @@ class router_index extends controller
 
         $controller_varify = $this->_controller($uri , $this->data);
 
-        if($this->data['wap_domain'] == 2)
+        if($this->data['wap_domain'] == 2 && $this->_mark_domain == 'm')
         {
             $uri = substr($uri, 2  , strlen($uri));
         }
@@ -271,7 +269,6 @@ class router_index extends controller
         $router_map = $router_verify->router['router_map'];
         $controller_router_config = (!empty($router_verify->router['config'])) ? $router_verify->router['config']  : '' ;
         
-
         if(!empty($controller_router_config['template']))
         {
             $router_map = $controller_router_config['template'];
@@ -504,7 +501,7 @@ class router_index extends controller
         {
             $action = next($controller_uri);
         }
-        
+
         include $controller_file;  $c = new $file(); $c->public_data = $data; $c->{$action}(); exit();
      
     }

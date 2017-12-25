@@ -105,7 +105,9 @@
         <script src="/common/js/control.js"></script>
         <script src="{{PATH_TML}}user/js/common.js"></script>
         <script>
-
+            $(function(){
+                $("#favicon").attr("href", ApiMaterPlatQiniuDomain + window.localStorage.getItem("fav"));
+            })
             Vue.http.headers.common['token'] = window.localStorage.getItem("token");
 
             var app = new Vue({
