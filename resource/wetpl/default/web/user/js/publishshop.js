@@ -410,7 +410,7 @@ $(function(){
     var catesfun = function(userid){
         $.ajax({
             // url: "http://apitest.wezchina.com/goods/cates/list",
-            url: GOODS_CATES_LIST_USERID+"/"+userid,
+            url: apiUrl + 'goods/cates/listsAllByUser/'+userid,
             type: 'get',
             headers: {
                     'Token': docCookies.getItem("token")

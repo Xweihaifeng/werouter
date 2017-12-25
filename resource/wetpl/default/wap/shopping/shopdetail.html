@@ -472,13 +472,40 @@
                         mb_login(url);
                         return false;
                     }
-
-                    //增加权限判断
-                    ajax.get('mall/detail/' + this.mall_id).then(data => {
-                        //console.log(data);
-                        window.location.href = this.order;
-                    });
+                })
+            })
+        },
+        methods: {
+            addCar: function() {
+                var url = '';
+                if(is_login == 'no')
+                {
+                    mb_login(url);
+                    return false;
                 }
+                //增加权限判断
+                let num = $("#buynum").val();
+                let sendData = {
+                    goods_id: this.weid,
+                    goods_num: num
+                };
+                ajax.post("cart/store", sendData).then(data => {
+                    //console.log(data);
+                });
+            },
+            buyNow: function() {
+                var url = '';
+                if(is_login == 'no')
+                {
+                    mb_login(url);
+                    return false;
+                }
+                
+                //增加权限判断
+                ajax.get('mall/detail/' + this.mall_id).then(data => {
+                    //console.log(data);
+                    window.location.href = this.order;
+                });
             }
         })
 

@@ -78,7 +78,7 @@
             this.getArtData();
 
             var sendData = {
-                user_id : plats_user_info.weid,
+                user_id : pages_info.plats_user.weid,
                 style: 2
             };
             ajax.post('pages/banner/detail', sendData).then((res) => {
@@ -106,7 +106,7 @@
         methods: {
             getArtData: function () {
                 var sendData = {
-                    userId: plats_user_info.weid,
+                    userId: pages_info.plats_user.weid,
                     endtime: this.endTime
                 };
                 ajax.post('articles/getListByDay', sendData).then((res) => {
@@ -116,7 +116,7 @@
                         console.log(this.artListObj)
                     }
                     if (res.data.lastdate) {
-                        this.endTime = res.data.lastdate
+                        this.endTime = res.data.lastdate;
                     }
                 })
                 document.getElementById('box').style.transform = 'translate(0,' + (-this.offset) + 'px)';

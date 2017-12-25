@@ -44,28 +44,58 @@
  // 吐丝层end////////////////////////////////////
 
 
+ var deletedGuests = [];
+ var deletedTickets = [];
+
  // 删除嘉宾
  var guestdel = function(obj) {
-         console.log($(obj).closest(".J_ActivityGuest"));
+         deletedGuests.push($(obj).closest(".J_ActivityGuest").data('id'));
          $(obj).closest(".J_ActivityGuest").remove();
+
+     }
+     // 删除门票
+ var ticketdel = function(obj) {
+         deletedTickets.push($(obj).closest(".J_ActivityTicket").data('id'));
+         if (parseInt($(obj).closest(".J_ActivityTicket").data('joined')) > 0) {
+             mess_tusi('该票已经有人购买，不能删除!');
+             return;
+         }
+         $(obj).closest(".J_ActivityTicket").remove();
      }
      //编辑嘉宾
  var guestedit = function(obj) {
-         $(".add_guest").click();
-         var name = $(obj).closest(".J_ActivityGuest").find(".name").text();
-         var company = $(obj).closest(".J_ActivityGuest").find(".company").text();
-         var position = $(obj).closest(".J_ActivityGuest").find(".position").text();
-         var cover = $(obj).closest(".J_ActivityGuest").find(".avatar1 img").attr('src');
-         var thumb_avatar1 = $(obj).closest(".J_ActivityGuest").find(".thumb_avatar1").val();
-         $("#J_GuestName").val(name);
-         $("#J_GuestCompany").val(company);
-         $("#J_GuestPosition").val(position);
-         $("#img1").attr('src', cover);
+     $(".add_guest").click();
+     var name = $(obj).closest(".J_ActivityGuest").find(".name").text();
+     var company = $(obj).closest(".J_ActivityGuest").find(".company").text();
+     var position = $(obj).closest(".J_ActivityGuest").find(".position").text();
+     var cover = $(obj).closest(".J_ActivityGuest").find(".avatar1 img").attr('src');
+     var thumb_avatar1 = $(obj).closest(".J_ActivityGuest").find(".thumb_avatar1").val();
+     $("#J_GuestName").val(name);
+     $("#J_GuestCompany").val(company);
+     $("#J_GuestPosition").val(position);
+     $("#img1").attr('src', cover);
 
-         var gusestid = $(obj).closest(".J_ActivityGuest").data("result");
-         $("#J_GuestId").val(gusestid);
-         $("#J_GuestAvatar").val(thumb_avatar1)
-         $("#J_BtnSaveGuest").data("id", 2);
+     var gusestid = $(obj).closest(".J_ActivityGuest").data("result");
+     $("#J_GuestId").val(gusestid);
+     $("#J_GuestAvatar").val(thumb_avatar1)
+     $("#J_BtnSaveGuest").data("id", 2);
+ }
+
+ //编辑门票
+ var ticketedit = function(obj) {
+         $(".add_ticket").click();
+         var name = $(obj).closest(".J_ActivityTicket").find(".name").text();
+         var info = $(obj).closest(".J_ActivityTicket").find(".info").text();
+         var price = $(obj).closest(".J_ActivityTicket").find(".price").text();
+         var num = $(obj).closest(".J_ActivityTicket").find(".num").text();
+         $("#J_TicketName").val(name);
+         $("#J_TicketIntro").val(info);
+         $("#J_TicketPrice").val(price);
+         $("#J_TicketNum").val(num);
+
+         var ticketid = $(obj).closest(".J_ActivityTicket").data("result");
+         $("#J_TicketId").val(ticketid);
+         $("#J_BtnSaveTicket").data("id", 2);
      }
      //删除主办方-编辑活动时
  var sponordel = function(obj) {
@@ -440,6 +470,8 @@
                  content: content,
                  type: type,
                  price: price,
+                 deletedGuests: deletedGuests,
+                 deletedTickets: deletedTickets,
                  status: status,
                  is_private: is_private
              }
@@ -460,15 +492,14 @@
                      if (data.code == 200) {
                          if ($(".J_ActivityGuest").length > 0) {
                              // 修改嘉宾
-                             //saveGuest(id, btnstatus);
+                             saveGuest(id, btnstatus);
                              // 修改门票
-                             //alert(888);
                              saveTicket(id, btnstatus);
-                             //alert(999);
+                             deletedGuests.splice(0, deletedGuests.length);
+                             deletedTickets.splice(0, deletedTickets.length);
 
                          } else {
                              mess_tusi("活动编辑成功");
-                             window.location = "/user/admin/activity/list";
                          }
 
 
@@ -499,20 +530,13 @@
                          if ($(".J_ActivityGuest").length > 0) {
                              saveGuest(data.data, btnstatus);
                              saveTicket(data.data, btnstatus);
+                             deletedGuests.splice(0, deletedGuests.length);
+                             deletedTickets.splice(0, deletedTickets.length);
 
                          } else {
                              mess_tusi("活动发布成功");
-                             // location.reload();
-                             window.location = "/user/admin/activity/list";
 
                          }
-
-                         // }else{
-                         // mess_tusi("活动发布成功");
-                         //
-                         // }
-                         // window.location.href = "/user/admin/wemall/goods/add";
-                         // location.reload();
                      } else {
                          mess_tusi(data.message);
                      }
@@ -625,8 +649,8 @@
          $(".J_ActivityTicket").each(function(index) {
              var name = $(this).find(".name").text();
              var info = $(this).find(".info").text();
-             var price = $(this).find(".price span").text();
-             var num = $(this).find(".num span").text();
+             var price = $(this).find(".price").text();
+             var num = $(this).find(".num").text();
 
              var guid = $(this).data("id");
 
@@ -757,12 +781,80 @@
 
          } else if ($(this).data("id") == 2) {
              // 编辑嘉宾
-             console.log($("div[data-result='" + guestid + "']"));
-             $("div[data-result='" + guestid + "']").find(".avatar1 img").attr("src", qiniu_bucket_domain + avatar);
-             $("div[data-result='" + guestid + "']").find(".avatar1 .thumb_avatar1").val(avatar);
-             $("div[data-result='" + guestid + "']").find(".name").text(name);
-             $("div[data-result='" + guestid + "']").find(".company").text(company);
-             $("div[data-result='" + guestid + "']").find(".position").text(position);
+             $(".J_GuestList div[data-result='" + guestid + "']").find(".avatar1 img").attr("src", qiniu_bucket_domain + avatar);
+             $(".J_GuestList div[data-result='" + guestid + "']").find(".avatar1 .thumb_avatar1").val(avatar);
+             $(".J_GuestList div[data-result='" + guestid + "']").find(".name").text(name);
+             $(".J_GuestList div[data-result='" + guestid + "']").find(".company").text(company);
+             $(".J_GuestList div[data-result='" + guestid + "']").find(".position").text(position);
+         }
+     })
+
+
+     // 修改门票
+     var dataarr2 = [];
+     var j = 0;
+     $("#J_BtnSaveTicket").bind("click", function() {
+         if ($(this).data("id") == 1) {
+             j++;
+         }
+         var name = $("#J_TicketName").val();
+         var info = $("#J_TicketIntro").val();
+         var price = $("#J_TicketPrice").val();
+         var num = $("#J_TicketNum").val();
+         var ticketid = $("#J_TicketId").val();
+         if (name == '') {
+             mess_tusi('请输入票名');
+             return;
+         }
+         if (price == '') {
+             mess_tusi('请输入票价');
+             return;
+         }
+         if (isNaN(price)) {
+             mess_tusi('票价必须为数字');
+             return;
+         }
+         if (price <= 0) {
+             mess_tusi('票价必须大于0');
+             return;
+         }
+         if (num == '') {
+             mess_tusi('请输入总票数');
+             return;
+         }
+         if (isNaN(num)) {
+             mess_tusi('票数必须为数字');
+             return;
+         }
+         if (num <= 0) {
+             mess_tusi('票数大于0');
+             return;
+         }
+         num = parseInt(num);
+         var sendData2 = {
+             name: name,
+             description: info,
+             price: price,
+             total_num: num,
+             i: j
+         }
+         if ($(this).data("id") == 1) {
+             dataarr2.push(sendData2);
+         } else {
+             dataarr2[ticketid - 1] = sendData2;
+         }
+         console.log(ticketid);
+         console.log(sendData2);
+         console.log(dataarr2);
+         console.log($(this).data("id"));
+         dialog.close($('#J_DialogTicket'));
+         if ($(this).data("id") == 1) {
+             $(".J_TicketList").append(ticketlist(sendData2));
+         } else if ($(this).data("id") == 2) {
+             $(".J_TicketList div[data-result='" + ticketid + "']").find(".name").text(name);
+             $(".J_TicketList div[data-result='" + ticketid + "']").find(".info").text(info);
+             $(".J_TicketList div[data-result='" + ticketid + "']").find(".price").text(price);
+             $(".J_TicketList div[data-result='" + ticketid + "']").find(".num").text(num);
          }
      })
 
@@ -798,15 +890,15 @@
              i = type;
              dataweid = data.weid;
          }
-         var guesthtml = '<div class="row J_ActivityTicket" data-result="' + data.i + '" data-id="' + dataweid + '">' +
+         var guesthtml = '<div class="row J_ActivityTicket" data-result="' + data.i + '" data-id="' + dataweid + '" data-joined="' + data.sold_num + '">' +
              '<div class="cell drag"><span></span></div>' +
              '<div class="cell name">' + data.name + '</div>' +
              '<div class="cell info">' + data.description + '</div>' +
              '<div class="cell price">' + data.price + '</div>' +
              '<div class="cell num">' + data.total_num + '</div>' +
              '<div class="cell operate">' +
-             '<i class="fa fa-pencil-square-o J_TicketEdit"></i>' +
-             '<i class="fa fa-close J_TicketDelete"></i>' +
+             '<i class="fa fa-pencil-square-o J_TicketEdit" onclick="ticketedit(this)"></i>' +
+             '<i class="fa fa-close J_TicketDelete" onclick="ticketdel(this)"></i>' +
              '</div>' +
              '</div>';
          return guesthtml;
@@ -814,8 +906,10 @@
 
      $(".add_guest").bind("click", function() {
          $("#J_BtnSaveGuest").data("id", '1');
-     })
-
+     });
+     $(".add_ticket").bind("click", function() {
+         $("#J_BtnSaveTicket").data("id", '1');
+     });
      // 4.活动详情
      var activitydetail = function(id) {
              $.ajax({
@@ -961,31 +1055,6 @@
                              data.data.list.map(x => {
                                  index++;
                                  $(".J_TicketList").append(ticketlist(x, index));
-                                 $edit = $('.J_TicketEdit');
-                                 $del = $('.J_TicketDelete');
-                                 $edit.click(function() {
-                                     alert(123);
-                                     var $p = $(this).parent().parent();
-                                     var data = $p.data('result');
-                                     if (typeof data == 'string') {
-                                         data = JsonObj.decode(data);
-                                     }
-                                     _self._isNew = false;
-                                     _self._editNode = $p;
-                                     _self.edit(data);
-                                 });
-                                 $del.click(function() {
-                                     var $p = $(this).parent().parent();
-                                     var joined = parseInt($p.data('joined'), 10);
-                                     if (joined > 0) {
-                                         notice.alert('此票种已经有人报名，不可删除');
-                                         return;
-                                     }
-                                     $p.slideUp(ANIM_TIME, function() {
-                                         //删除表单数据中的门票
-                                         $p.remove();
-                                     });
-                                 });
 
                              })
                          }

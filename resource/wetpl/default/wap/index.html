@@ -9,7 +9,7 @@
 <script src="/common/public/hivideo-master/assets/hivideo.css"></script> -->
 <div id="viewport" class="viewport">
     <div class="header">
-        <img :src="plats.wap_logo | img_src(272,64)">
+        <img :src="ApiMaterPlatQiniuDomain+plats.wap_logo">
     </div>
     <div class="clear"></div>
 
@@ -18,8 +18,8 @@
         <div class="syfl">
             <div class="syfl_mar">
                 <ul>
-                    <li><a href="javascript:void(0)"><span><img src="{{PATH_TML}}/img/index/top_1.png"></span><h2>新闻中心</h2></a></li>
-                    <li><a href="javascript:void(0)"><span><img src="{{PATH_TML}}/img/index/top_2.png"></span><h2>走进商户</h2></a></li>
+                    <li><a href="/news"><span><img src="{{PATH_TML}}/img/index/top_1.png"></span><h2>新闻中心</h2></a></li>
+                    <li><a href="/org"><span><img src="{{PATH_TML}}/img/index/top_2.png"></span><h2>走进商会</h2></a></li>
                     <li><a href="javascript:void(0)"><span><img src="{{PATH_TML}}/img/index/top_3.png"></span><h2>互助专区</h2></a></li>
                     <li><a href="javascript:void(0)"><span><img src="{{PATH_TML}}/img/index/top_4.png"></span><h2>共享中心</h2></a></li>
                     <li><a href="javascript:void(0)"><span><img src="{{PATH_TML}}/img/index/top_5.png"></span><h2>天下秦商</h2></a></li>
@@ -32,7 +32,7 @@
         <!--搜索-->
         <div class="sous">
             <form action="/so" method="post" name="sosoFrom">
-                <div class="sous_l"><input name="keyWord" type="text" class="sous_inp" value="请输入关键词"></div>
+                <div class="sous_l"><input name="keyWord" type="text" class="sous_inp" placeholder="请输入关键词"></div>
                 <div class="sous_r"><input name="" type="submit" class="sous_but" value=""></div>
                 <div class="clear"></div>
             </form>
@@ -80,8 +80,12 @@
     <div class="clear"></div>
     <div class="syzdzt_pc">
         <div class="syzdzt_pcmr">
-            <ul @click="video();">
-                <img src="/common/img/index/video.png" width="100%" height="100%" />
+            <ul>
+                <img src="/common/img/index/video.png" width="100%" height="100%" @click="views_show=true" v-if="views_show == false" />
+                <!-- <video src="http://image.qqxqs.com/qqxqs_video.mp4" controls="controls" width="100%" height="100%" ></video> -->
+                <video ishivideo="true" autoplay="true" isrotate="true" width="100%" controls autoHide="false" v-if="views_show == true">
+                    <source src="http://image.qqxqs.com/qqxqs_video.mp4" type="video/mp4">
+                </video>
             </ul>
         </div>
 <!--         <div class="main-wrap">
@@ -124,8 +128,7 @@
                     </a>
                 </li>
                 <li>
-                    <!-- <a :href="'magazine/qinshang' | href"><span><img src="/common/img/index/magazine.png"></span> -->
-                    <a href="/index8"><span><img src="/common/img/index/magazine.png"></span>
+                    <a :href="'magazine/qinshang' | href"><span><img src="/common/img/index/magazine.png"></span>
                         <h2>秦商杂志</h2>
                     </a>
                 </li>
@@ -151,6 +154,7 @@
         el: '#app',
         data: {
             news: [],
+            views_show : false,
             especial_news: [],
             ztbd : [],
             plats : plats_info
@@ -180,7 +184,10 @@
                     disableScroll: true,
                     stopPropagation: true
                 });
+            },
+            video() {
+
             }
-        },
+        }
     });
 </script>
