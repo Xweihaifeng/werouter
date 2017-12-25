@@ -23,7 +23,7 @@
 	    new Vue({
 	        el: dom_id,
 	        data: {
-	            router : $app.first_router(),
+	            router : $app.get_router(),
 	            cuupage : window.location.pathname.split('/').pop(),
 	            header_nav : {
 	                index :{
@@ -96,7 +96,7 @@
 	                }
 	                else
 	                {
-	                	title = this.header_nav[this.cuupage].name + '-' +  title;
+	                	//title = this.header_nav[this.cuupage].name + '-' +  title;
 	                	if(is_domain == 'no')
 	                	{
 	                		title = '发现' + this.header_nav[this.cuupage].name;
@@ -126,7 +126,7 @@
 		new Vue({
 	        el: '#footer',
 	        data: {
-	            router : $app.first_router(),
+	            router : $app.get_router(),
 	            cuupage : window.location.pathname.split('/').pop(),
 	            footer_nav : {
 	                home :{
@@ -192,6 +192,15 @@
 	                		{
 	                			mb_login(select.href);
 	                			return ;
+	                		}
+	                	}
+	                	var cookie_domain = $app.get_cookie('domain');
+	                	if(val == 'home')
+	                	{
+	                		if(cookie_domain != false)
+	                		{
+	                			window.location.href= all_domian + cookie_domain;
+	                			return false;
 	                		}
 	                	}
 	                    window.location.href= select.href;

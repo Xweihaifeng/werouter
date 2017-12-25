@@ -85,17 +85,28 @@
 	}
 
 	//获取第一段路由
-	app.first_router = function(){
+	app.get_router = function(params){
+		if($app.empty(params) == false)
+		{
+			params = 1;
+		}
 		// .;
 		var pathname = window.location.pathname;
 		//var pathname_obj = pathname.substr(1).split('/');
 		var pathname_string = pathname.substr(1).split('/').shift();
 		if(pathname_string == 'm')
 		{
-			return pathname.substr(1).split('/')[1];
+			if($app.empty(pathname.substr(1).split('/')[params]))
+			{
+				return pathname.substr(1).split('/')[params];
+			}
+			return '';
 		}
-		return pathname.substr(1).split('/')[0]; 
-		
+		if($app.empty(pathname.substr(1).split('/')[params-1]))
+		{
+			return pathname.substr(1).split('/')[params-1]; 
+		}
+		return '';
 	}
 
 	window.$app = app;
