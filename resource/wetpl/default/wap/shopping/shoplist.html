@@ -2,28 +2,36 @@
 <link rel="stylesheet" href="{{PATH_TML}}css/home.css"/>
 <link rel="stylesheet" href="{{PATH_TML}}css/common.css"/>
 <link rel="stylesheet" href="{{PATH_TML}}css/my-shopping.css"/>
+<script src="/common/js/jquery.min.js"></script>
 <div>
     <div class="container mall">
         <menu class="menu" id="menu_title">
             <ul id="shop_type">
-                <li v-for="item in sortList" :class="{'active' : currentSort == item.weid}" @click="getSortList(item.weid)" :id="item.weid">{{item.name}}</li>
+                <li v-for="item in sortList" :class="{'active' : currentShow == item.weid}" @click="getSortList(item)" :id="item.weid">
+                    <a>{{item.name}}</a>
+                </li>
             </ul>
         </menu>
         <article class="shop">
             <ul>
-                <a v-for="good in goodList" :id="good.weid" @click="window.localStorage.setItem('shopping_weid', good.weid)" :href="'/'+ domain +'/wemall/goods/'+ good.weid">
-                    <div>
-                        <slide class="li_img_wap">
-                            <img :src="good.cover | img_src(100, 100, 3)">
-                        </slide>
-                        <slide class="li_info">
-                            <h3>{{good.title}}</h3>
-                            <div class="lii_price">￥{{good.price}}</div>
-                            <p class="lii_sold">
-                                <span>已售：{{good.sales_num}}</span><span>收藏：{{good.collections}}</span></p>
-                        </slide>
-                    </div>
-                </a>
+                <li v-for="list in sortList" :id="list.name" >
+                    <p>{{list.name}}</p>
+                    <a v-for="good in goodList" :id="good.weid" v-if="good.catename == list.name" @click="window.localStorage.setItem('shopping_weid', good.weid)" :href="'/'+ domain +'/wemall/goods/'+ good.weid">
+                        <div>
+                            <slide class="li_img_wap">
+                                <img :src="good.cover | img_src(100, 100, 3)">
+                            </slide>
+                            <slide class="li_info">
+                                <h3>{{good.title | limitLen(0,15)}}</h3>
+                                <div class="lii_price"><span>￥</span>{{good.price}}</div>
+                                <p class="lii_sold">
+                                    <!--<span>已售：{{good.sales_num}}</span><span>收藏：{{good.collections}}</span>-->
+                                    <i></i>
+                                </p>
+                            </slide>
+                        </div>
+                    </a>
+                </li>
             </ul>
         </article>
     </div>
@@ -34,39 +42,56 @@
         data: {
             sortList: [],
             goodList: [],
-            domain : '',
-            currentSort : ''
+            domain : pages_index,
+            currentSort : '',
+            currentShow : '',
         },
         mounted() {
             this.$nextTick(() => {
-                this.domain = window.location.pathname.split("/")[1];
+                var self = this;
                 ajax.get('goods/cates/listsbyuser/' + pages_info.plats_domian.plat_user_id).then((res) => {
-                    console.log(res);
                     if (res.code == 200 && res.data.length) {
                         this.sortList = res.data;
-                        this.currentSort = res.data[0].weid;
-                        this.getList()
+                        this.currentShow = this.sortList[0].weid;
+                        this.sortList.map(function (ele, ind) {
+                            self.currentSort = ele.weid;
+                            self.getList()
+                        });
                     }
                 })
+
             });
+            window.addEventListener('scroll', this.menu)
         },
         methods: {
             getList : function () {
                 var sendData = {
                     userId : pages_info.plats_domian.plat_user_id,
                     cate_id : this.currentSort
-                }
+                };
                 ajax.post('goods/lists/user',sendData).then((res)=>{
-                    console.log(res);
                     if(res.code == 200 && res.data.list.length){
-                        this.goodList = res.data.list;
+                        this.goodList.push.apply(this.goodList,res.data.list);
                     }
                 })
             },
-            getSortList : function (wid) {
-                this.currentSort = wid;
-                this.goodList=[];
-                this.getList();
+            getSortList : function (item) {
+                this.currentShow = item.weid;
+                $("html,body").animate({
+                    scrollTop: $("#"+item.name).offset().top-44}, {duration: 500, easing: "swing"});
+                return false;
+            },
+            menu() {
+                var self = this;
+                var scroll = document.documentElement.scrollTop || document.body.scrollTop;
+                if(this.sortList && this.sortList.length){
+                    this.sortList.forEach(function (ele, ind) {
+                        var top = $("#"+ele.name).offset().top;
+                        if(top - scroll >0 && top - scroll < document.body.offsetHeight/2){
+                            self.currentShow = self.sortList[ind].weid;
+                        }
+                    });
+                }
             }
         }
     })

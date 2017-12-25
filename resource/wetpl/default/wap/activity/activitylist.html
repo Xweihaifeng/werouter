@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="{{PATH_TML}}css/common.css"/>
 <div id="act-container">
     <div v-for="data in list_data">
-        <a :href="'/activity-detail/' + data.weid | href">
+        <a :href="data.domain + '/activity-detail/' + data.weid | href">
             <div class="act-content">
                 <div class="act-cover"><img :src="data.cover | img_src(110 , 69 , 1)" width="110" height="69" /></div>
                 <div class="act-cont">
