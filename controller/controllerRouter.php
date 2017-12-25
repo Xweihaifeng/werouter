@@ -235,7 +235,7 @@ class controllerRouter extends controller
         {
             redirect('/login');
         }
-
+        
         $sql = 'SELECT weid FROM we_pages  WHERE plat_id=? AND plat_user_id =?';
         $row = $this->db->queryOne($sql , array($this->weid , $this->_user_id));
         if(!empty($row['weid']))
