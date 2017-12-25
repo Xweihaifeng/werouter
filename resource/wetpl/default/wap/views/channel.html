@@ -19,7 +19,7 @@
                 <div v-for="(item,index) in especial_news" v-if="index < 3"> 
                     <a><img :src="item.thumb_image | img_src(300 , 200 , 1)" width="100%" height="220px" /></a> 
                     <div class="mySwipeceng">
-                        <div class="left"><b style='font-weight:normal'>崔歆在党建联系点调研党建工作</b></div>
+                        <div class="left"><b style='font-weight:normal'>{{item.title}}</b></div>
                         <div class="mySwip_rg"> <span class="mySwipetabdiancurr"></span><span class="mySwipetabdian"></span>
                             <span class="mySwipetabdian"></span>
                         </div>
@@ -51,7 +51,7 @@
             <!-- <div v-for="(value, key) in item" :class="'list_'+index+'_'+key" v-if="{active:selected == key}"> -->
             <div v-for="(value, key) in item" :class="'list_'+index+'_'+key" v-if="isShow.filter(x => value.weid == x.id)[0].type">
                 <div class="Menumore">
-                    <a :href="'/news/'+value.domain">更多</a>
+                    <a :href="pathname + '/' + value.domain">更多</a>
                 </div>
                 <ul class="Content_wz">
                     <li v-for="(val, inde) in value.detail">
