@@ -84,5 +84,14 @@
 		document.title = title;
 	}
 
+	//获取第一段路由
+	app.first_router = function(){
+		// .;
+		var pathname = window.location.pathname
+		pathname = pathname.substr(1).split('/')[1,2];
+		console.log(pathname);
+		
+	}
+
 	window.$app = app;
 })(window);

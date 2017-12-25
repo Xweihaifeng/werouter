@@ -103,7 +103,7 @@
         <!-- fixed -->
         <div class="fixed-bg fade-out"></div>
 
-        <div class="goods-fixed goods-specifications-fixed move-down"> <div class="title"> <div class="goods_image"><img :src="goods.cover" alt="【地道甄选】赣南脐橙5斤装"></div> <div class="goods_price">  ￥{{goods.price}}  </div> <div class="goods_stock" topnum="3139">库存：{{goods.quantity}}件</div> <div class="close iconfont icon-close"></div> </div> <div class="specifications">  <div class="common-spec-name"></div> <ul>  <li specs_value_id="1649" id="2280" class="check-specifications">{{goods.summary}}</li>  </ul>  </div> <div class="buynum"> <div class="num-title">购买数量</div> <div class="num-input"> <span class="minus gray">-</span> <input type="text" pattern="[0-9]*" class="buy-num" id="buynum" value="1"> <span class="add">+</span> </div> <div class="tips"></div> </div> <div class="btns"> <div class="choosebtn hide"> <div class="addcar" @click="addCar">加入购物车</div> <div class="buynow" @click="buyNow">立即购买</div> </div> <div class="addcarbtn enter" @click="addCar">确定</div> </div>  </div>
+        <div class="goods-fixed goods-specifications-fixed move-down"> <div class="title"> <div class="goods_image"><img :src="goods.cover" alt=""></div> <div class="goods_price">  ￥{{goods.price}}  </div> <div class="goods_stock" topnum="3139">库存：{{goods.quantity}}件</div> <div class="close iconfont icon-close"></div> </div> <div class="specifications">  <div class="common-spec-name"></div> <ul>  <li specs_value_id="1649" id="2280" class="check-specifications">{{goods.summary}}</li>  </ul>  </div> <div class="buynum"> <div class="num-title">购买数量</div> <div class="num-input"> <span class="minus gray">-</span> <input type="text" pattern="[0-9]*" class="buy-num" id="buynum" value="1"> <span class="add">+</span> </div> <div class="tips"></div> </div> <div class="btns"> <div class="choosebtn hide"> <div class="addcar" @click="addCar">加入购物车</div> <div class="buynow" @click="buyNow">立即购买</div> </div> <div class="addcarbtn enter" @click="addCar">确定</div> </div>  </div>
 
         <div class="goods-fixed goods-red-packet-fixed move-down"> <h4>可领取红包</h4> <ul> <li> <div class="left"> <div class="bag-title red">新用户专享</div> <div class="bag-limit">满1亿元可用</div> <div class="out-date">有效日期至2016/03/03</div> </div> <div class="right"> <div class="bag-amount red">50<span>元</span></div> <div class="bag-get red">立即领取</div> </div> </li> </ul> </div>
 
@@ -165,7 +165,8 @@
                 this.goods.quantity = goods.stock;
                 this.goods.pictures = pics.split(',').map(x => ApiMaterPlatQiniuDomain + x);
                 this.goods.content = goods.content;
-
+                $app.set_title(this.goods.title);
+                
                 setTimeout(() => {
                     var mySwiper = new Swiper ('.swiper-container-horizontal', {
                         direction: 'horizontal',
@@ -253,6 +254,12 @@
         },
         methods: {
             addCar: function() {
+                var url = '';
+                if(is_login == 'no')
+                {
+                    mb_login(url);
+                    return false;
+                }
                 //增加权限判断
                 let num = $("#buynum").val();
                 let sendData = {
@@ -264,6 +271,13 @@
                 });
             },
             buyNow: function() {
+                var url = '';
+                if(is_login == 'no')
+                {
+                    mb_login(url);
+                    return false;
+                }
+
                 //增加权限判断
                 ajax.get('mall/detail/' + this.mall_id).then(data => {
                     //console.log(data);

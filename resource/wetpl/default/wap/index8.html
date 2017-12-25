@@ -46,9 +46,9 @@
 		</p>
 		<div class="clear"></div>
 	</div>
-
-	<div class="meili_nr">
-		<table width="100%" border="0" cellspacing="1" cellpadding="0" bgcolor="#e9e9e9" id="magazine_table">
+        
+	<div class="meili_nr" id="magazine_table">
+		<table width="100%" border="0" cellspacing="1" cellpadding="0" bgcolor="#e9e9e9" >
 			<tbody>
 				<tr v-for="(item, index) in list_data">
 					<td bgcolor="#FFFFFF" align="center" v-for="(value, key) in item">
@@ -73,11 +73,11 @@
     		list_data:[],
     		magazine:[],
     		params : {
-    			page : 0,
+    			page : 1,
 	    		limit : 4,
 	    		page_count : 0,
     		},
-    		dom : '#app'
+    		dom : '#magazine_table'
     	},
         mounted() {
         	this.$nextTick(()=>{
@@ -90,7 +90,7 @@
         		return $mob_ajax.magazined(params , call);
         	},
         	data_list() {
-        		$mob_ajax.magazine_page(this , this.params);
+        		$mob_ajax.common_page(this , this.params);
         	},
         	more() {
 
