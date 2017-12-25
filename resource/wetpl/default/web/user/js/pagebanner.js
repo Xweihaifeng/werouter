@@ -135,27 +135,32 @@ $(document).ready(function(){
                     '<img style=" margin-top:0px;" onclick="$(\'#slidefiles_'+i+'\').click()" id="img'+i+'" src="http://image.qqxqs.com/common/1502085164249.jpg" alt="" class="thumbnail">' +
                     '</div>' +
                     '</div>' +
-                    '<span style="margin-left: 120px;position: relative;display: block;top: -20px;">*支持JPG、JPEG、PNG、BMP的图片，图片尺寸 建议为：1920*489， 图片小于4M</span>';
+                    '<span style="margin-left: 120px;position: relative;display: block;top: -20px;">*支持JPG、JPEG、PNG、BMP的图片，图片尺寸 建议为：1920*489， 图片小于4M</span>'+
+                    '<input type="text" class="form-control" name="slide_href'+i+'" value="" placeholder="跳转链接地址" style="' +
+                    '    width: 400px;margin-bottom: 15px;margin-left: 120px;' +
+                    '">';
                 $("#slideList").append(html);
             }
         }else{
             //获取图片链接
             var imgArr=[];
             if(!isNull(data.slide)){
-                imgArr=data.slide.split(",");
-
+                imgArr=JSON.parse(data.slide)
             }
             var newImgArr=[];
             for(var i=1;i<=imgArr.length;i++){
                 newImgArr[i]=imgArr[i-1];
-
             }
             for(var i=1;i<=slideListLenth;i++){
                 var hiddenUrl='';
                 var thumbnailUrl='http://image.qqxqs.com/common/1502085164249.jpg';
+                var href='';
                 if(!isNull(newImgArr[i])){
-                    hiddenUrl=newImgArr[i];
-                    thumbnailUrl=ApiMaterPlatQiniuDomain+newImgArr[i]
+                    hiddenUrl=newImgArr[i].src;
+                    if(!isNull(newImgArr[i].src)){
+                        thumbnailUrl=ApiMaterPlatQiniuDomain+newImgArr[i].src;
+                    }
+                    href=newImgArr[i].href;
                 }
                 var html='<div class="form-group">' +
                     '<input name="thumb_image_slide'+i+'" type="hidden" value="'+hiddenUrl+'" class="form-control">' +
@@ -164,7 +169,10 @@ $(document).ready(function(){
                     '<img style=" margin-top:0px;" onclick="$(\'#slidefiles_'+i+'\').click()" id="img'+i+'" src="'+thumbnailUrl+'" alt="" class="thumbnail">' +
                     '</div>' +
                     '</div>' +
-                    '<span style="margin-left: 120px;position: relative;display: block;top: -20px;">*支持JPG、JPEG、PNG、BMP的图片，图片尺寸 建议为：1920*489， 图片小于4M</span>';
+                    '<span style="margin-left: 120px;position: relative;display: block;top: -20px;">*支持JPG、JPEG、PNG、BMP的图片，图片尺寸 建议为：1920*489， 图片小于4M</span>'+
+                    '<input type="text" class="form-control" name="slide_href'+i+'" value="'+href+'" placeholder="跳转链接地址" style="' +
+                    '    width: 400px;margin-bottom: 15px;margin-left: 120px;' +
+                    '">';
                 $("#slideList").append(html);
             }
         }
@@ -232,14 +240,16 @@ $(document).ready(function(){
                     '<img style=" margin-top:0px;" onclick="$(\'#bannerfiles_'+i+'\').click()" id="img-'+i+'" src="http://image.qqxqs.com/common/1502085164249.jpg" alt="" class="thumbnail">'+
                     '</div>'+
                     '</div>'+
-                    '<span style="margin-left: 120px;position: relative;top: -20px;">* 图片尺寸建议为：380*133，图片小于2M</span>';
+                    '<span style="margin-left: 120px;position: relative;top: -20px;">* 图片尺寸建议为：380*133，图片小于2M</span>'+
+                    '<input type="text" class="form-control" name="banner_href'+i+'" value="" placeholder="跳转链接地址" style="' +
+                    '    width: 400px;margin-bottom: 15px;margin-left: 120px;' +
+                    '">';
                 $("#bannerList").append(html);
             }
         }else{
             var imgArr=[];
             if(!isNull(data.banner)){
-                imgArr=data.banner.split(",");
-
+                imgArr=JSON.parse(data.banner)
             }
             var newImgArr=[];
             for(var i=1;i<=imgArr.length;i++){
@@ -248,9 +258,13 @@ $(document).ready(function(){
             for(var i=1;i<=bannerListLenth;i++){
                 var hiddenUrl='';
                 var thumbnailUrl='http://image.qqxqs.com/common/1502085164249.jpg';
+                var href='';
                 if(!isNull(newImgArr[i])){
-                    hiddenUrl=newImgArr[i];
-                    thumbnailUrl=ApiMaterPlatQiniuDomain+newImgArr[i]
+                    hiddenUrl=newImgArr[i].src;
+                    if(!isNull(newImgArr[i].src)){
+                        thumbnailUrl=ApiMaterPlatQiniuDomain+newImgArr[i].src;
+                    }
+                    href=newImgArr[i].href;
                 }
                 var html='<div class="form-group">'+
                     '<input name="thumb_image_banner'+i+'" type="hidden" value="'+hiddenUrl+'" class="form-control">'+
@@ -259,7 +273,10 @@ $(document).ready(function(){
                     '<img style=" margin-top:0px;" onclick="$(\'#bannerfiles_'+i+'\').click()" id="img-'+i+'" src="'+thumbnailUrl+'" alt="" class="thumbnail">'+
                     '</div>'+
                     '</div>'+
-                    '<span style="margin-left: 120px;position: relative;top: -20px;">* 图片尺寸建议为：380*133，图片小于2M</span>';
+                    '<span style="margin-left: 120px;position: relative;top: -20px;">* 图片尺寸建议为：380*133，图片小于2M</span>'+
+                    '<input type="text" class="form-control" name="banner_href'+i+'" value="'+href+'" placeholder="跳转链接地址" style="' +
+                    '    width: 400px;margin-bottom: 15px;margin-left: 120px;' +
+                    '">';
                 $("#bannerList").append(html);
             }
 
@@ -359,12 +376,12 @@ $(document).ready(function(){
         var slide=[];
         var slideObj=$("#slideList").find(".form-group");
         slideObj.each(function (index,element) {
-            slide.push($(element).find("input[name=thumb_image_slide"+(index+1)+"]").val());
+            slide.push({'src':$(element).find("input[name=thumb_image_slide"+(index+1)+"]").val(),'href':$("input[name=slide_href"+(index+1)+"]").val()});
         });
         var banner=[];
         var bannerObj=$("#bannerList").find(".form-group");
         bannerObj.each(function (index,element) {
-            banner.push($(element).find("input[name=thumb_image_banner"+(index+1)+"]").val());
+            banner.push({'src':$(element).find("input[name=thumb_image_banner"+(index+1)+"]").val(),'href':$("input[name=banner_href"+(index+1)+"]").val()});
         });
         if(!isNull($flag)){
             //修改
@@ -414,6 +431,7 @@ $(document).ready(function(){
                 dataType: 'json',
                 success: function (data) {
                     if (data.code == 200) {
+                        $("input[name=bannerweid]").val(data.data);
                         layer.msg("保存成功", {
                             time: 1500
                         });
