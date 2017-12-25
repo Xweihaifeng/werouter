@@ -34,6 +34,14 @@
 			var router_array = ['' , 'article' , 'activity' , 'wemall'];
 			var frist_router = $app.get_router();
 			var two_router = $app.get_router(2);
+
+			var params = location.href; //取得整个地址栏
+			params = params.indexOf("?");
+			if(params != '-1')
+			{
+				return false;
+			} 
+			
 			if(is_domain == 'no' && frist_router == '')
 			{
 				$app.set_cookie('domain' , '/');
