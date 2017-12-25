@@ -652,7 +652,14 @@ $(document).ready(function(){
                     console.log(data);
                     if(data.code===200){
                         layer.msg(data.data);
-                        setTimeout(function() {window.location.reload();},1500);
+                        setTimeout(function() {
+                            var time_start=$("input[name='start_time']").val();
+                            var time_end=$("input[name='end_time']").val();
+                            var order_num=$("input[name='no']").val();
+                            var statusid=$(".current .btn-select").data("id");
+                            var page=$(".pagination").find(".active").find("span").text();
+                            orderlist(mall_id,page,statusid,{time_start:time_start,time_end:time_end,order_num:order_num});
+                        },1500);
                     }else{
                         layer.msg('退款失败  ' + data.message);
                     }
@@ -948,7 +955,12 @@ $(document).ready(function(){
                     if (data.code == 200) {
                         layer.msg("发货成功");
                         $('#myModal').modal('hide');
-                        window.location.reload();
+                        var time_start=$("input[name='start_time']").val();
+                        var time_end=$("input[name='end_time']").val();
+                        var order_num=$("input[name='no']").val();
+                        var statusid=$(".current .btn-select").data("id");
+                        var page=$(".pagination").find(".active").find("span").text();
+                        orderlist(mall_id,page,statusid,{time_start:time_start,time_end:time_end,order_num:order_num});
                     }else {
                         layer.msg(data.message);
                     }

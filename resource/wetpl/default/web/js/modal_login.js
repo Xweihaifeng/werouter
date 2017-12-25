@@ -12,6 +12,7 @@ $(function() {
         if (r != null) return unescape(r[2]);
         return null;
     }
+
     var token = docCookies.getItem('token'), get_weid;
     if(token) {
         $.ajaxSetup({
@@ -87,9 +88,9 @@ $(function() {
 
     if (get_weid != undefined) {
         var imgUrl = plats_user_info.avatar;
-        if(!imgUrl) {
+        if (!imgUrl) {
             imgUrl = "/common/img/my.png";
-            $("#login a").css({"background": "url("+ imgUrl +") center center / cover no-repeat"});
+            $("#login a").css({"background": "url(" + imgUrl + ") center center / cover no-repeat"});
             $("#login a").addClass("i-header").html("");
         } else if (imgUrl.indexOf('http') != 0 && imgUrl != "") {
             imgUrl = ApiMaterPlatQiniuDomain + imgUrl;
@@ -98,6 +99,7 @@ $(function() {
             showLogin = false;
             isLogin = true;
         }
+    }
 
     var setting = plats_info;
     window.localStorage.setItem("logo", setting.logo);
@@ -554,5 +556,4 @@ $(function() {
         $(".login-body").show();
         $(".wexin").hide();
     })
-}
 })

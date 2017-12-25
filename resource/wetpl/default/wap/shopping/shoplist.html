@@ -114,7 +114,7 @@
                 });
 
                 var sendData = {
-                    user_id : plats_user_info.weid,
+                    user_id : pages_info.plats_user.weid,
                     style: 3
                 };
                 ajax.post('pages/banner/detail', sendData).then((res) => {
@@ -157,8 +157,7 @@
                 this.currentShow = item.weid;
                 $("html,body").animate({
                     scrollTop: $("#" + item.name).offset().top - 44
-                }, {duration: 500, easing: "swing"});
-                return false;
+                }, {duration: 0});
             },
             menu() {
                 var self = this;

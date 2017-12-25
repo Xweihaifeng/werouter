@@ -248,6 +248,7 @@ class controllerRouter extends controller
     // 频道额外规则
     public function channel( $param, $match = array())
     {
+
         $sql = 'SELECT we_plat_cms_template.template AS tml FROM we_plat_cms_channel  
                 LEFT JOIN we_plat_cms_template ON we_plat_cms_channel.list_id = we_plat_cms_template.weid
                 WHERE we_plat_cms_channel.plat_id =? AND  we_plat_cms_channel.domain = ?';

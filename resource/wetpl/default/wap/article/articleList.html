@@ -84,7 +84,7 @@
         	this.$nextTick(()=>{
         		this.data_list();
         		var sendData = {
-                    user_id : plats_user_info.weid,
+                    user_id : pages_info.plats_user.weid,
                     style : 1
                 };
         		ajax.post('pages/banner/detail',sendData).then((res)=>{

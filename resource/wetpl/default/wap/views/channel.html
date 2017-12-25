@@ -42,7 +42,7 @@
     <div :id="'Tab1'+index" class="Tabs" v-for="(item, index) in channel_list">
         <div class="Menubox">
             <dl>
-                <dd v-for="(value, key) in item" :id="'list_'+index+'_'+key" @click="setTab(value.weid)" :class="{hover:selected == key}">
+                <dd v-for="(value, key) in item" :id="'list_'+index+'_'+key" @click="setTab(value.weid,'list_'+index+'_'+key)" :class="{hover:selected == key}">
                     {{value.title}}
                 </dd>
             </dl>
@@ -125,7 +125,19 @@
             data(params , call){
                 return $mob_ajax.cms_lists(params , call);
             },
-            setTab(this_id) {
+            setTab(this_id, li_id) {
+
+                var elem=document.getElementById(li_id).parentNode;
+                var elem_child = elem.childNodes;
+                for(var i = 0; i < elem_child.length; i++){
+                    if(elem_child[i].id == li_id) {
+                        event.currentTarget.className = "hover";
+                    } else {
+                        var s = elem_child[i].id;
+                        document.getElementById(s).className = '';
+                    }
+                }
+
                 this.isShow = this.isShow.map(x => {
                     if (x.id == this_id) {
                         x.type = true;
