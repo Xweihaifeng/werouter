@@ -133,7 +133,7 @@
         <!--正在使用的默认地址Begin-->
         <div class="nctouch-cart-add-default"><a href="javascript:void(0);" id="list-address-valve"><i
                 class="icon-add"></i>
-            <dl>
+            <dl @click="add_address">
                 <input type="hidden" class="inp" name="address_id" id="address_id" value="249068">
                 <dt>收货人：<span id="true_name">{{order_address_default.name}}</span><span id="mob_phone">{{order_address_default.telophone}}</span></dt>
                 <dd>收货地址：<span id="address">{{order_address_default.province_name}} {{order_address_default.area_name}} {{order_address_default.detail}}</span></dd>
@@ -158,13 +158,12 @@
                  id="list-address-scroll">
                 <ul class="nctouch-cart-add-list" id="list-address-add-list-ul"
                     style="transition-timing-function: cubic-bezier(0.1, 0.57, 0.1, 1); transition-duration: 0ms; transform: translate(0px, 0px) translateZ(0px);">
-                    <li class="selected"
-                        data-param="{user_address_id:'249068',user_address_contact:'abc',user_address_phone:'15311111111',user_address_area:'重庆 重庆市 彭水苗族土家族自治县 ',user_address_area:'重庆 重庆市 彭水苗族土家族自治县 ',user_address_area_id:'380',user_address_city_id:'62',user_address_address:'111'}">
+                    <li class="selected" v-for="item in order_address_list"> 
                         <i></i>
                         <dl>
-                            <dt>收货人：<span id="">abc</span><span id="">15311111111</span><sub>默认</sub>
+                            <dt>收货人：<span id="">{{item.name}}</span><span>{{item.telophone}}</span><sub v-if="item.status == 1">默认</sub>
                             </dt>
-                            <dd><span id="">重庆 重庆市 彭水苗族土家族自治县 &nbsp;111</span>
+                            <dd><span id="">{{order_address_default.province_name}} {{order_address_default.area_name}} {{order_address_default.detail}}</span>
                             </dd>
                         </dl>
                     </li>
@@ -527,7 +526,12 @@ new Vue({
         // 添加收货地址方法
         add_address()
         {   
-            add_address_page();
+            layer.open({
+              type: 1
+              ,content: $('list-address-wrapper').html()
+              ,anim: 'up'
+              ,style: 'position:fixed; left:0; top:0; width:100%; height:100%; border: none; -webkit-animation-duration: .5s; animation-duration: .5s;'
+            });
         },
         // 修改收货地址
         up_address()
@@ -546,9 +550,7 @@ function add_address_page()
 {
     layer.open({
       type: 1
-      ,content: `
-        
-      `
+      ,content: $('list-address-wrapper').html()
       ,anim: 'up'
       ,style: 'position:fixed; left:0; top:0; width:100%; height:100%; border: none; -webkit-animation-duration: .5s; animation-duration: .5s;'
     });

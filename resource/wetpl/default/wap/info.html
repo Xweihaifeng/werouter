@@ -111,7 +111,7 @@ new Vue({
         		this.wepage = all_domian + plats_user_info.domian;
         		this.wecard = all_domian + plats_user_info.domian + '/wecard';
         	}
-
+        	this.wepage += '?from=' + pages_index
         	$app.set_title(pages_info.plats_user.nickname + '的微名片');
         });
     },
