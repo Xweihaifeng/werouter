@@ -41,7 +41,7 @@ class router_index extends controller
 
     // 协议类型
     public $http;
-
+    
     public function __construct()
     {	
         parent::__construct();
@@ -52,7 +52,7 @@ class router_index extends controller
         $this->_request_uri = $_SERVER['REQUEST_URI'];
         
         $this->_qqxqs();
-
+        
         $this->_method = $_SERVER['REQUEST_METHOD'];
         // 分解手机版
         $this->_analysis();
@@ -60,7 +60,7 @@ class router_index extends controller
         //$this->_domain_config = $this->_domain_init();
     }
 
-
+    
     // 秦商总会需要的东西
     private function _qqxqs()
     {
@@ -363,7 +363,7 @@ class router_index extends controller
         }
         $config = file_get_contents('configure.js');
 
-        $config = str_replace('{{url}}', $_SERVER['HTTP_HOST'] , $config);
+        $config = str_replace('{{url}}', $domain , $config);
 
         $config .= "\n".'const WWW_PATH= "'.$this->file.'";';
 
