@@ -12,7 +12,7 @@ var qiniu_bucket_domain = ApiMaterPlatQiniuDomain;
     if(window.location.pathname=="/wemall"){
         window.location="/index/wemall";
     }
-    var weid = localStorage.getItem('weid');
+    var weid = docCookies.getItem("weid");
 
     var url = window.location.pathname.split('/');
     var active = url.pop();
@@ -39,7 +39,7 @@ var qiniu_bucket_domain = ApiMaterPlatQiniuDomain;
         }
     }
 
-    init(localStorage.getItem('token'));
+    init(docCookies.getItem("token"));
 
    var options0 = $.get(CMS_ADVS);
     options0.done(function(data) {
@@ -161,7 +161,7 @@ var qiniu_bucket_domain = ApiMaterPlatQiniuDomain;
             type:'post',
             data:sendData,
             headers: {
-                    'Token': localStorage.getItem('token')
+                    'Token': docCookies.getItem("token")
                 },
             success:function(data){
                 console.log(data);

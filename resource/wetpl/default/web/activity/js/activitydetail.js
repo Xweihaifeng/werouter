@@ -24,7 +24,7 @@ $(document).ready(function() {
     //获取主机地址，如： http://localhost:8083
     var localhostPath = curWwwPath.substring(0, pos);
     // token 加载值请求头（Headers）
-    var token = window.localStorage.getItem('token'),
+    var token = docCookies.getItem("token"),
         isLogin = false;
     if (token) {
         $.ajaxSetup({
@@ -143,7 +143,7 @@ $(document).ready(function() {
         }
     });
 
-    var weid = localStorage.getItem('weid');
+    var weid = docCookies.getItem("weid");
     console.log(weid)
     var activityid = window.location.href.split('/').pop();
     var activityid_all = activityid.split('#');
@@ -168,7 +168,7 @@ $(document).ready(function() {
                 data: { domain: domain, activityid: id },
                 dataType: 'json',
                 headers: {
-                    'Token': localStorage.getItem('token')
+                    'Token': docCookies.getItem("token")
                 },
                 success: function(data) {
                     console.log(data);
@@ -229,7 +229,7 @@ $(document).ready(function() {
             url: ACTIVITY_ENROLL_DETAIL + "/" + id, //活动报名详情
             type: 'get',
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data) {
                 if (data.code == 200) {
@@ -254,7 +254,7 @@ $(document).ready(function() {
                 number: number
             },
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data) {
                 if (data.code == 200) {
@@ -272,7 +272,7 @@ $(document).ready(function() {
 
     //判断是否报名
     var isEnroll = function() {
-        var sendData = { 'user_id': localStorage.getItem('weid'), 'activity_id': activityid_all[0] };
+        var sendData = { 'user_id': docCookies.getItem("weid"), 'activity_id': activityid_all[0] };
         $.ajax({
             url: ACTIVITY_ENROLL_ISENROLL,
             dataType: 'json',
@@ -411,7 +411,7 @@ $(document).ready(function() {
         var datauser = '';
         var realname = '';
         var disa = '';
-        if (localStorage.getItem('weid') != null && localStorage.getItem('token') != null) {
+        if (docCookies.getItem("weid") != null && docCookies.getItem("token") != null) {
             datauser = localStorage.getItem('dataPhone');
             realname = localStorage.getItem('realName');
             disa = 'disabled="disabled"';
@@ -696,7 +696,7 @@ $(document).ready(function() {
 
 
 
-                if (isNull(localStorage.getItem('weid')) || isNull(localStorage.getItem('token'))) {
+                if (isNull(docCookies.getItem("weid")) || isNull(docCookies.getItem("token"))) {
                     layer.msg("请验证您的手机号", {
                         time: 1000
                     });
@@ -727,7 +727,7 @@ $(document).ready(function() {
                     type: 'post',
                     data: sendData,
                     headers: {
-                        'Token': localStorage.getItem('token')
+                        'Token': docCookies.getItem("token")
                     },
                     success: function(data) {
                         layer.closeAll('loading');
@@ -769,7 +769,7 @@ $(document).ready(function() {
             url: ACTIVITY_ADDVIEW + "/" + id,
             type: 'get',
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data) {
 
@@ -787,7 +787,7 @@ $(document).ready(function() {
             type: 'post',
             data: { user_id: userid, activity_id: act_id },
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data) {
                 console.log(data);
@@ -811,14 +811,14 @@ $(document).ready(function() {
             }
         })
     }
-    iscollection(localStorage.getItem("weid"), activityid);
+    iscollection(docCookies.getItem("weid"), activityid);
     // 1获取活动详情
     var activitydetail = function(id, nickname, imgUrl, applyid = 0) {
             $.ajax({
                 url: ACTIVITY_DETAIL + "/" + id,
                 type: 'get',
                 headers: {
-                    'Token': localStorage.getItem('token')
+                    'Token': docCookies.getItem("token")
                 },
                 success: function(data) {
                     if (data.code == 200) {
@@ -913,7 +913,7 @@ $(document).ready(function() {
             url: ACTIVITY_DETAIL + "/" + id,
             type: 'get',
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data) {
                 callback(data);
@@ -1006,7 +1006,7 @@ $(document).ready(function() {
             type: 'post',
             data: sendData,
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data) {
                 console.log(data);
@@ -1079,7 +1079,7 @@ $(document).ready(function() {
             type: 'post',
             data: sendData,
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data) {
                 console.log(data);
@@ -1114,7 +1114,7 @@ $(document).ready(function() {
             data: { activity_id: weid },
             dataType: 'json',
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data) {
                 console.log(data);
@@ -1170,7 +1170,7 @@ $(document).ready(function() {
              url: GOODS_COLLECTION_ISCOLLECTION+'/' + id,
              type:'get',
              headers: {
-                     'Token': localStorage.getItem('token')
+                     'Token': docCookies.getItem("token")
                  },
              success:function(data){
                  console.log(data);
@@ -1193,7 +1193,7 @@ $(document).ready(function() {
             url: ACTIVITY_ACTIVITYINFO + '/' + weid,
             type: 'get',
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data) {
                 console.log(data);
@@ -1229,7 +1229,7 @@ $(document).ready(function() {
 
     //获取通用用户信息
     var host = ApiMaterPlatQiniuDomain;
-    console.log(localStorage.getItem('weid'))
+    console.log(docCookies.getItem("weid"))
     var getUserDomain = function(id) {
         $.ajax({
             url: USERDETAIL + '/' + id,
@@ -1255,13 +1255,13 @@ $(document).ready(function() {
             }
         })
     }
-    getUserDomain(localStorage.getItem('weid'));
+    getUserDomain(docCookies.getItem("weid"));
     var getUserInfo = function(url, id) {
         $.ajax({
             url: url + id,
             type: 'get',
             /*headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },*/
             success: function(data) {
 
@@ -1321,7 +1321,7 @@ $(document).ready(function() {
             url: PAGES_PAGE_GETDETAILBYUSER + weid,
             type: 'GET',
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data) {
                 if (data.code == 200) {
@@ -1366,7 +1366,7 @@ $(document).ready(function() {
             url: BRAND_DETAIL_USER + '/' + weid,
             type: 'GET',
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data) {
                 console.log(data);

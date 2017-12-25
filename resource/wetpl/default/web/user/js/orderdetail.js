@@ -8,7 +8,7 @@ if(sessionStorage.lastname=="we_title_2"){
     $("#we_title_2").find(".title-img").css("transform","rotate(90deg)");
 }
 $(document).ready(function(){
-    $("#favicon").attr("href", ApiMaterPlatQiniuDomain + window.localStorage.getItem("fav"));
+    $("#favicon").attr("href", ApiMaterPlatQiniuDomain + localStorage.getItem("fav"));
 
     var qiniu_bucket_domain =ApiMaterPlatQiniuDomain;
 
@@ -74,7 +74,7 @@ $(document).ready(function(){
             url: apiUrl+'pages/page/getDetailByUser/' + weid,
             type: 'GET',
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data){
                 if (data.code == 200){
@@ -99,13 +99,13 @@ $(document).ready(function(){
         })
     }
 
-    var weid = localStorage.getItem('weid');
+    var weid = docCookies.getItem("weid");
     hasDomain(weid);
     /*
     //route
     var isLogin; //判断用户登陆与否
     var router = function(route){
-        if(!window.localStorage.getItem("token")) {
+        if(!docCookies.getItem("token")) {
             isLogin = false;
         } else {
             isLogin = true;
@@ -187,7 +187,7 @@ $(document).ready(function(){
 
     }
 
-    init(localStorage.getItem('token'));
+    init(docCookies.getItem("token"));
     
     var id = window.location.href.split('/').pop();
 
@@ -351,7 +351,7 @@ $(document).ready(function(){
                         type:'post',
                         data:{logistics_NO:x.logistics_no,company_code:x.logistics_company_code},
                         headers: {
-                                'Token': localStorage.getItem('token')
+                                'Token': docCookies.getItem("token")
                             },
                         dataType: 'json',
                         success: function(data){
@@ -535,7 +535,7 @@ $(document).ready(function(){
             url: ORDER_DETAIL+'/' + id,
             type:'get',
             headers: {
-                    'Token': localStorage.getItem('token')
+                    'Token': docCookies.getItem("token")
                 },
             dataType: 'json',
             success: function(data){
@@ -558,7 +558,7 @@ $(document).ready(function(){
             url: MALL_DETAIL+'/' + mall_id,
             type:'get',
             headers: {
-                    'Token': localStorage.getItem('token')
+                    'Token': docCookies.getItem("token")
                 },
             dataType: 'json',
             success: function(data){
@@ -581,7 +581,7 @@ $(document).ready(function(){
             url: USERDETAIL+'/' + userid,
             type:'get',
             headers: {
-                    'Token': localStorage.getItem('token')
+                    'Token': docCookies.getItem("token")
                 },
             dataType: 'json',
             success: function(data){
@@ -625,7 +625,7 @@ $(document).ready(function(){
             url: USERDETAIL+'/' + userid,
             type:'get',
             headers: {
-                    'Token': localStorage.getItem('token')
+                    'Token': docCookies.getItem("token")
                 },
             dataType: 'json',
             success: function(data){
@@ -670,7 +670,7 @@ $(document).ready(function(){
             url: GOODS_DETAIL+'/' + goods_id,
             type:'get',
             headers: {
-                    'Token': localStorage.getItem('token')
+                    'Token': docCookies.getItem("token")
                 },
             dataType: 'json',
             success: function(data){
@@ -694,7 +694,7 @@ $(document).ready(function(){
             url: PAGES_PAGE_GETDETAILBYUSER + weid,
             type: 'GET',
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data){
                 if (data.code == 200){

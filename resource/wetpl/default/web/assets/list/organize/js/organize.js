@@ -5,7 +5,7 @@
 $(function() {
 
     window.localStorage.setItem("pageNum", 1);
-    var token = window.localStorage.getItem('token');
+    var token = docCookies.getItem("token");
     var pathname = window.location.pathname.split('/').slice(1,4);
     var li_name, total, limit, pageNum = 1;
     var get_param = pathname[0];
@@ -236,7 +236,7 @@ $(function() {
                         });
 
                         column(show_two, pageNum);
-                        document.title = $('#' + pathname[1]).text() + " — " + window.localStorage.getItem("title");
+                        document.title = $('#' + pathname[1]).text() + " — " + localStorage.getItem("title");
 
                     } else {
 
@@ -270,7 +270,7 @@ $(function() {
 
                         show_two = $("#menuTwo").children().first().attr("id");
                         $('#' + show_two).addClass("single_active").siblings().removeClass("single_active");
-                        document.title = $('#' + show_two).text() + " — " + window.localStorage.getItem("title");
+                        document.title = $('#' + show_two).text() + " — " + localStorage.getItem("title");
                         
                         $.ajax({
                             url: apiUrl + "cms/categories/domain_query/" + show_two,
@@ -350,10 +350,10 @@ $(function() {
                                             async:  false,
                                             success: function(data){
                                                 if(data.code === 200) {
-                                                    document.title = $('#' + pathname[1]).text() + " — " + window.localStorage.getItem("title");
+                                                    document.title = $('#' + pathname[1]).text() + " — " + localStorage.getItem("title");
                                                     $('#' + data.data.domain).addClass("cate-active-on").siblings().removeClass("cate-active-on");
                                                     $("#menuY").text(data.data.title);
-                                                    document.title = $('#' + pathname[1]).text() + " — " + window.localStorage.getItem("title");
+                                                    document.title = $('#' + pathname[1]).text() + " — " + localStorage.getItem("title");
                                                 }
                                             }
                                         });
@@ -387,7 +387,7 @@ $(function() {
 
                                         $('#' + pathname[1]).addClass("cate-active-on").siblings().removeClass("cate-active-on");
                                         $("#menuY").text($('#' + pathname[1]).text());
-                                        document.title = $('#' + pathname[1]).text() + " — " + window.localStorage.getItem("title");
+                                        document.title = $('#' + pathname[1]).text() + " — " + localStorage.getItem("title");
                                     }
                                 }
                             }
@@ -403,7 +403,7 @@ $(function() {
 
     $("#oooo").attr("href", "/zz");
     if(pathname[1] == null || pathname[1] == undefined) {
-        document.title = "最新发布 — " + window.localStorage.getItem("title");
+        document.title = "最新发布 — " + localStorage.getItem("title");
         $("#oooo").addClass("single_active");
     }
 });

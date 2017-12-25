@@ -122,7 +122,7 @@ $(function(){
             url: PAGES_PAGE_GETDETAILBYUSER + weid,
             type: 'GET',
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data){
                 /*if (data.code == 401) {
@@ -152,7 +152,7 @@ $(function(){
         })
     }
 
-    var weid = localStorage.getItem('weid');
+    var weid = docCookies.getItem("weid");
     hasDomain(weid);
 
     var isLogin = false; //判断用户登陆与否
@@ -214,7 +214,7 @@ $(function(){
             url: apiUrl+'goods/range/detail/' + weid,
             type:'get',
             headers: {
-                    'Token': localStorage.getItem('token')
+                    'Token': docCookies.getItem("token")
                 },
             dataType: 'json',
             success: function(data){
@@ -245,7 +245,7 @@ $(function(){
             url:PROVINCE_LIST,
             type:'get',
             headers: {
-                        'Token': localStorage.getItem('token')
+                        'Token': docCookies.getItem("token")
                     },
             success: function(data){
                 console.log(data);
@@ -329,7 +329,7 @@ getprovincedetail();
             url: PAGES_MODULERUN_LIST,
             type: 'GET',
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data){
                 if (data.code == 200){
@@ -459,7 +459,7 @@ getprovincedetail();
       }
     }
 
-    init__(localStorage.getItem('token'));*/
+    init__(docCookies.getItem("token"));*/
 })
 
 // 配送列表模板
@@ -482,7 +482,7 @@ var rangetemplate=function(data){
                     url:GOODS_RANGE_LISTS,
                     type:'post',
                     headers: {
-                        'Token': localStorage.getItem('token')
+                        'Token': docCookies.getItem("token")
                     },
                     success: function(data){
                         console.log(data);
@@ -585,7 +585,7 @@ $(function(){
                     url: GOODS_RANGE_DESTORY+'/' + id,
                     type:'get',
                     headers: {
-                            'Token': localStorage.getItem('token')
+                            'Token': docCookies.getItem("token")
                         },
                     dataType: 'json',
                     success: function(data){
@@ -626,7 +626,7 @@ $(function(){
                     url: GOODS_RANGE_DETAIL+'/'+id,
                     type:'get',
                     headers: {
-                            'Token': localStorage.getItem('token')
+                            'Token': docCookies.getItem("token")
                         },
                     dataType: 'json',
                     success: function(data){
@@ -975,7 +975,7 @@ $(function(){
                     type:'post',
                     data:params,
                     headers: {
-                        'Token': localStorage.getItem('token')
+                        'Token': docCookies.getItem("token")
                     },
                     success: function(data){
                         console.log(data);
@@ -1016,7 +1016,7 @@ $(function(){
                     type:'post',
                     data:params,
                     headers: {
-                        'Token': localStorage.getItem('token')
+                        'Token': docCookies.getItem("token")
                     },
                     success: function(data){
                         console.log(data);

@@ -4,7 +4,7 @@
 
 $(function() {
 
-    var pages = window.localStorage.getItem("pageNum");
+    var pages = localStorage.getItem("pageNum");
     if(!pages) {
         window.localStorage.setItem("pageNum", 1);
     }

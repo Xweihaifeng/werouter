@@ -12,7 +12,7 @@ var qiniu_bucket_domain = ApiMaterPlatQiniuDomain;
     if(window.location.pathname=="/project"){
         window.location="/index/project";
     }
-    var weid = localStorage.getItem('weid');
+    var weid = docCookies.getItem("weid");
 
     var url = window.location.pathname.split('/');
     var active = url.pop();
@@ -24,7 +24,7 @@ var qiniu_bucket_domain = ApiMaterPlatQiniuDomain;
     //route
     var isLogin; //判断用户登陆与否
     /*var router = function(route){
-        if(!window.localStorage.getItem("token")) {
+        if(!docCookies.getItem("token")) {
             isLogin = false;
         } else {
             isLogin = true;
@@ -124,7 +124,7 @@ var qiniu_bucket_domain = ApiMaterPlatQiniuDomain;
         }
     }
 
-    init(localStorage.getItem('token'));*/
+    init(docCookies.getItem("token"));*/
 
    var options0 = $.get(CMS_ADVS);
     options0.done(function(data) {
@@ -255,7 +255,7 @@ var qiniu_bucket_domain = ApiMaterPlatQiniuDomain;
             type:'post',
             data:sendData,
             headers: {
-                    'Token': localStorage.getItem('token')
+                    'Token': docCookies.getItem("token")
                 },
             //console.log(token)
             success:function(data){
@@ -320,7 +320,7 @@ var qiniu_bucket_domain = ApiMaterPlatQiniuDomain;
             type:'post',
             data:{user_id:userid},
             headers: {
-                    'Token': localStorage.getItem('token')
+                    'Token': docCookies.getItem("token")
                 },
             success:function(data){
                 console.log(data);
@@ -360,7 +360,7 @@ var qiniu_bucket_domain = ApiMaterPlatQiniuDomain;
             url: url + id,
             type: 'get',
             /!*headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },*!/
             success: function(data){
                 // console.log(data);
@@ -438,7 +438,7 @@ var qiniu_bucket_domain = ApiMaterPlatQiniuDomain;
             url: PAGES_PAGE_GETDETAILBYUSER+ weid,
             type: 'GET',
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data){
                 if (data.code == 200){
@@ -483,7 +483,7 @@ var qiniu_bucket_domain = ApiMaterPlatQiniuDomain;
             url: BRAND_DETAIL_USER+'/' + weid,
             type: 'GET',
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data){
                 if (data.code == 200){

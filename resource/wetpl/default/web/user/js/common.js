@@ -8,7 +8,7 @@ var hasDomain = function(weid){
         url: PAGES_PAGE_GETDETAILBYUSER + weid,
         type: 'GET',
         headers: {
-            'Token': localStorage.getItem('token')
+            'Token': docCookies.getItem("token")
         },
         success: function(data){
             if (data.code == 200){
@@ -39,13 +39,13 @@ function isNull(data) {
     return (data == "" || data == undefined || data == null|| data == 'null') ? true: false;
 }
 
-/*var weid = localStorage.getItem('weid');
+/*var weid = docCookies.getItem("weid");
 hasDomain(weid);*/
 
     //route
     var isLogin; //判断用户登陆与否
     /*var router = function(route){
-        if(!window.localStorage.getItem("token")) {
+        if(!docCookies.getItem("token")) {
             isLogin = false;
         } else {
             isLogin = true;
@@ -116,7 +116,7 @@ hasDomain(weid);*/
        url: PAGES_PAGE_GETDETAILBYUSER + weid,
        type: 'GET',
        headers: {
-         'Token': localStorage.getItem('token')
+         'Token': docCookies.getItem("token")
        },
        success: function(data){
           if (data.code == 401) {
@@ -144,7 +144,7 @@ hasDomain(weid);*/
      })
  }
 
-var weid = localStorage.getItem('weid');
+var weid = docCookies.getItem("weid");
 hasDomain(weid);*/
 
 
@@ -189,4 +189,4 @@ var init = function(token){
         }
     }*/
 
-//init(localStorage.getItem('token'));
+//init(docCookies.getItem("token"));

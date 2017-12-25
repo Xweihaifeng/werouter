@@ -51,7 +51,7 @@ $(document).ready(function(){
             url: PAGES_PAGE_GETDETAILBYUSER + weid,
             type: 'GET',
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data){
                 if (data.code == 401) {
@@ -77,7 +77,7 @@ $(document).ready(function(){
         })
     }
 
-    var weid = localStorage.getItem('weid');
+    var weid = docCookies.getItem("weid");
     hasDomain(weid);
 
     //下拉列表初始化
@@ -96,7 +96,7 @@ $(document).ready(function(){
                 style: style
             },
             headers: {
-                "Token": localStorage.getItem('token')
+                "Token": docCookies.getItem("token")
             },
             dataType: 'json',
             success: function (data) {
@@ -344,7 +344,7 @@ $(document).ready(function(){
             url: PAGES_PAGE_GETDETAILBYUSER + weid,
             type: 'GET',
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data){
                 if (data.code == 200){
@@ -365,7 +365,7 @@ $(document).ready(function(){
 
 
 
-    var weid = localStorage.getItem('weid');
+    var weid = docCookies.getItem("weid");
 
     init(weid);
 
@@ -431,7 +431,7 @@ $(document).ready(function(){
                 type: 'post',
                 data: sendData,
                 headers: {
-                    "Token": localStorage.getItem('token')
+                    "Token": docCookies.getItem("token")
                 },
                 dataType: 'json',
                 success: function (data) {
@@ -461,7 +461,7 @@ $(document).ready(function(){
                 type: 'post',
                 data: sendData,
                 headers: {
-                    "Token": localStorage.getItem('token')
+                    "Token": docCookies.getItem("token")
                 },
                 dataType: 'json',
                 success: function (data) {

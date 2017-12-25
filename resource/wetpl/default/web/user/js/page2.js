@@ -7,14 +7,14 @@ if(sessionStorage.lastname == "we_title_2") {
 var favicon = ApiMaterPlatQiniuDomain + localStorage.getItem('fav');
 $('#favicon').attr('href', favicon);
 
-var weid = localStorage.getItem('weid');
+var weid = docCookies.getItem("weid");
 var amount = 0;
 var init = function(id) {
 	$.ajax({
 		url: apiUrl + "users/account/getDetailByUser/" + id,
 		type: "GET",
 		headers: {
-			'Token': localStorage.getItem('token')
+			'Token': docCookies.getItem("token")
 		},
 		dataType: "json",
 		success: function(data) {
@@ -35,7 +35,7 @@ var useable = function() {
 		url: apiUrl + "users/Withdraws/couldWithdraws",
 		type: "GET",
 		headers: {
-			'Token': localStorage.getItem('token')
+			'Token': docCookies.getItem("token")
 		},
 		dataType: "json",
 		success: function(data) {
@@ -70,7 +70,7 @@ var userInfo = function(weid){
 		url: apiUrl + "users/account/userAccountInfo/" + weid,
 		type: "GET",
 		headers: {
-			'Token': localStorage.getItem('token')
+			'Token': docCookies.getItem("token")
 		},
 		dataType: "json",
 		success: function(data) {
@@ -89,7 +89,7 @@ var detail = function(id) {
 		url: apiUrl + "users/Withdraws/detail/" + id,
 		type: "GET",
 		headers: {
-			'Token': localStorage.getItem('token')
+			'Token': docCookies.getItem("token")
 		},
 		dataType: "json",
 		success: function(data) {
@@ -120,7 +120,7 @@ var withdraw = function(money, secret) {
 		url: apiUrl + "users/Withdraws/store",
 		type: "POST",
 		headers: {
-			'Token': localStorage.getItem('token')
+			'Token': docCookies.getItem("token")
 		},
 		data: {
 			amount: money,
@@ -193,7 +193,7 @@ var showList = function(status, limit, page) {
 		url: apiUrl + "users/Withdraws/list",
 		type: "POST",
 		headers: {
-			'Token': localStorage.getItem('token')
+			'Token': docCookies.getItem("token")
 		},
 		data: {
 			status: status,

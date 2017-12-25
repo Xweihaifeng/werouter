@@ -116,8 +116,8 @@ $(document).ready(function() {
         }
     });
 
-    var weid = localStorage.getItem("weid");
-    var token = localStorage.getItem("token");
+    var weid = docCookies.getItem("weid");
+    var token = docCookies.getItem("token");
     if(token) {
         $.ajaxSetup({
             global: true,
@@ -141,7 +141,7 @@ $(document).ready(function() {
     }
 
     $.ajax({
-        url: USERDETAIL + '/' + localStorage.getItem('weid'),
+        url: USERDETAIL + '/' + docCookies.getItem("weid"),
         //url: USERDETAIL,
         success: function (data) {
             console.log(data);
@@ -188,7 +188,7 @@ $(document).ready(function() {
         //console.log(send);
 
         $.ajax({
-            url: USERINFO + '/' + localStorage.getItem('weid'),
+            url: USERINFO + '/' + docCookies.getItem("weid"),
             type: 'POST',
             data: send,
             success:function (data) {

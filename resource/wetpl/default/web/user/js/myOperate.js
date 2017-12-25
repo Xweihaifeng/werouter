@@ -48,8 +48,8 @@ if(sessionStorage.lastname=="we_title_2"){
 
 // 加载完获取手机号码
  $(document).ready(function() {
-   var weid = localStorage.getItem("weid");
-    var token = localStorage.getItem("token");
+   var weid = docCookies.getItem("weid");
+    var token = docCookies.getItem("token");
     if(token) {
         $.ajaxSetup({
             global: true,
@@ -82,7 +82,7 @@ if(sessionStorage.lastname=="we_title_2"){
         $(".information textarea").val(userInfo.motto);
     }
     $.ajax({
-        url: USERDETAIL + '/' + localStorage.getItem('weid'),
+        url: USERDETAIL + '/' + docCookies.getItem("weid"),
         //url: USERDETAIL,
         success: function(data) {
             if(data.code === 200) {
@@ -200,7 +200,7 @@ $(".small_send_sms_verify").click(function(){
                 data: {'phone': phoneNum,'secret':newSecret,'reSecret':reSecret,'code': checkNum},
                 dataType: "json",
                 headers: {
-                        'Token': localStorage.getItem('token')
+                        'Token': docCookies.getItem("token")
                     },
                 success: function(data){
                     console.log(data);

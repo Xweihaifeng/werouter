@@ -222,7 +222,7 @@
              url: PAGES_PAGE_GETDETAILBYUSER + weid,
              type: 'GET',
              headers: {
-                 'Token': localStorage.getItem('token')
+                 'Token': docCookies.getItem("token")
              },
              success: function(data) {
                  if (data.code == 401) {
@@ -252,7 +252,7 @@
          })
      }
 
-     var weid = localStorage.getItem('weid');
+     var weid = docCookies.getItem("weid");
      hasDomain(weid);
 
 
@@ -453,7 +453,7 @@
                  type: 'post',
                  data: sendData,
                  headers: {
-                     'Token': localStorage.getItem('token')
+                     'Token': docCookies.getItem("token")
                  },
                  success: function(data) {
                      console.log(data);
@@ -487,7 +487,7 @@
                  type: 'post',
                  data: sendData,
                  headers: {
-                     'Token': localStorage.getItem('token')
+                     'Token': docCookies.getItem("token")
                  },
                  success: function(data) {
                      console.log(data);
@@ -546,7 +546,7 @@
                      type: 'post',
                      data: { weid: guid, name: name, avatar: avatar, position: position, company: company },
                      headers: {
-                         'Token': localStorage.getItem('token')
+                         'Token': docCookies.getItem("token")
                      },
                      success: function(data) {
                          console.log(data);
@@ -583,7 +583,7 @@
                      type: 'post',
                      data: { activity_id: activityid, name: name, avatar: avatar, position: position, company: company },
                      headers: {
-                         'Token': localStorage.getItem('token')
+                         'Token': docCookies.getItem("token")
                      },
                      success: function(data) {
                          console.log(data);
@@ -637,7 +637,7 @@
                      type: 'post',
                      data: { weid: guid, name: name, description: info, price: price, total_num: num },
                      headers: {
-                         'Token': localStorage.getItem('token')
+                         'Token': docCookies.getItem("token")
                      },
                      success: function(data) {
                          if (data.code == 200) {
@@ -670,7 +670,7 @@
                      type: 'post',
                      data: { activity_id: activityid, name: name, description: info, price: price, total_num: num },
                      headers: {
-                         'Token': localStorage.getItem('token')
+                         'Token': docCookies.getItem("token")
                      },
                      success: function(data) {
                          if (data.code == 200) {
@@ -822,7 +822,7 @@
                  url: ACTIVITY_DETAIL + "/" + id,
                  type: 'get',
                  headers: {
-                     'Token': localStorage.getItem('token')
+                     'Token': docCookies.getItem("token")
                  },
                  success: function(data) {
                      console.log(data);
@@ -914,7 +914,7 @@
                  type: 'post',
                  data: sendData,
                  headers: {
-                     'Token': localStorage.getItem('token')
+                     'Token': docCookies.getItem("token")
                  },
                  success: function(data) {
                      console.log(data);
@@ -951,7 +951,7 @@
                  type: 'post',
                  data: sendData,
                  headers: {
-                     'Token': localStorage.getItem('token')
+                     'Token': docCookies.getItem("token")
                  },
                  success: function(data) {
                      console.log(data);
@@ -1030,7 +1030,7 @@
             url: PAGES_MODULERUN_LIST,
             type: 'GET',
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data){
                 if (data.code == 200){
@@ -1152,5 +1152,5 @@
          }
        }
 
-       init__(localStorage.getItem('token'));*/
+       init__(docCookies.getItem("token"));*/
  })

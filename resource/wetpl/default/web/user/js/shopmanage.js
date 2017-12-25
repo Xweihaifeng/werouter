@@ -97,7 +97,7 @@ $(document).ready(function(){
             url: PAGES_PAGE_GETDETAILBYUSER + weid,
             type: 'GET',
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data){
                 if (data.code == 401) {
@@ -127,7 +127,7 @@ $(document).ready(function(){
         })
     }
 
-    var weid = localStorage.getItem('weid');
+    var weid = docCookies.getItem("weid");
     hasDomain(weid);
 
    /* var isLogin = false; //判断用户登陆与否
@@ -195,7 +195,7 @@ $(document).ready(function(){
         }
     }
 
-    init(localStorage.getItem('token'));*/
+    init(docCookies.getItem("token"));*/
 
 
     //商品分类模板
@@ -213,7 +213,7 @@ $(document).ready(function(){
             url: "http://apitest.wezchina.com/goods/cates/list",
             type: 'get',
             headers: {
-                    'Token': localStorage.getItem('token')
+                    'Token': docCookies.getItem("token")
                 },
             success: function(data){
                 if (data.code == 200) {
@@ -249,7 +249,7 @@ $(document).ready(function(){
             url:MALL_USERDETAIL,
             type:'get',
             headers: {
-                    'Token': localStorage.getItem('token')
+                    'Token': docCookies.getItem("token")
                 },
             success:function(data){
                 // console.log(data);
@@ -325,7 +325,7 @@ malldetail();
             type:'post',
             data: sendData,
             headers: {
-                    'Token': localStorage.getItem('token')
+                    'Token': docCookies.getItem("token")
                 },
             success: function(data){
                 console.log(data);
@@ -556,7 +556,7 @@ var pagefun=function(pagenum,weid,type){
             url: GOODS_CATES_LIST_USERID+"/"+weid,
             type: 'get',
             headers: {
-                    'Token': localStorage.getItem('token')
+                    'Token': docCookies.getItem("token")
                 },
             success: function(data){
                 console.log(data);
@@ -614,7 +614,7 @@ var pagefun=function(pagenum,weid,type){
             type:'post',
             data:sendData,
             headers: {
-                    'Token': localStorage.getItem('token')
+                    'Token': docCookies.getItem("token")
                 },
             success:function(data){
                 console.log(data);
@@ -650,7 +650,7 @@ var pagefun=function(pagenum,weid,type){
             url:GOODS_DESTROY+'/'+id,
             type:'get',
             headers: {
-                    'Token': localStorage.getItem('token')
+                    'Token': docCookies.getItem("token")
                 },
             success:function(data){
                 console.log(data);
@@ -1002,7 +1002,7 @@ var pagefun=function(pagenum,weid,type){
             url: PAGES_MODULERUN_LIST,
             type: 'GET',
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data){
                 if (data.code == 200){
@@ -1131,6 +1131,6 @@ var pagefun=function(pagenum,weid,type){
       }
     }
 
-    init__(localStorage.getItem('token'));*/
+    init__(docCookies.getItem("token"));*/
 
 })

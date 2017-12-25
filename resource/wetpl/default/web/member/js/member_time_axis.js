@@ -95,7 +95,7 @@ function time_axis_sub(result1) {
 
 // 初审
 function time_axis_app(result1) {
-    var apply_wait_days = window.localStorage.getItem("apply_wait_days");
+    var apply_wait_days = localStorage.getItem("apply_wait_days");
     if(!apply_wait_days) {
         apply_wait_days = 1;
     }

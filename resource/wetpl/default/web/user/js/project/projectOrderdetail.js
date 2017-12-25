@@ -2,7 +2,7 @@
 sessionStorage.listname='we-project';
 var url = window.location.pathname.split('/');
 var suportid = url.pop();
-var weid = localStorage.getItem('weid');
+var weid = docCookies.getItem("weid");
     hasDomain(weid);
 
    /* var isLogin = false; //判断用户登陆与否
@@ -76,7 +76,7 @@ $(function(){
             url: PROJECT_SUPORT_DETAIL+'/'+suportid,
             type: 'GET',
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data){
                 console.log(data);
@@ -228,7 +228,7 @@ $(function(){
             url: PAGES_MODULERUN_LIST,
             type: 'GET',
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data){
                 if (data.code == 200){
@@ -357,7 +357,7 @@ $(function(){
 			$(".log-head").show();
 		}
     }
-	init__(localStorage.getItem('token'));*/		
+	init__(docCookies.getItem("token"));*/
 	//李生 end
 
 })

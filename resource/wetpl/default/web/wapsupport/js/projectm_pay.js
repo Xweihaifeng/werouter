@@ -10,7 +10,7 @@
 var url = window.location.pathname.split('/');
 var projectid = url.pop();
 var domain = url.slice(1, 2)[0];
-var weid = localStorage.getItem('weid');
+var weid = docCookies.getItem("weid");
 var repay_su=function(data){
 
         var html=

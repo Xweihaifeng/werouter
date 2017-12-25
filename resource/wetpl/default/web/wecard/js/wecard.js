@@ -5,7 +5,7 @@ $(document).ready(function(){
         localStorage.setItem('token', token);
     }
 
-    var weid = localStorage.getItem('weid');
+    var weid = docCookies.getItem("weid");
 
     //路由处理逻辑
     var url = window.location.pathname.split('/');
@@ -22,7 +22,7 @@ $(document).ready(function(){
             url: url + id,
             type: 'get',
             /*headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },*/
             success: function(data){
                 console.log(data);

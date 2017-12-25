@@ -100,7 +100,7 @@ $("#btn_1").on("click", function() {
 		$.ajax({
 			type: "GET",
 			headers: {
-				'Token': localStorage.getItem('token')
+				'Token': docCookies.getItem("token")
 			},
 			url: apiUrl+"/common/code",
 			data: {
@@ -134,7 +134,7 @@ var btgn_s = function() {
 			$.ajax({
 				type: "GET",
 				headers: {
-					'Token': localStorage.getItem('token')
+					'Token': docCookies.getItem("token")
 				},
 				url: apiUrl+"/common/verfycode",
 				data: {
@@ -187,7 +187,7 @@ var btgn_s = function() {
 				$.ajax({
 					type: "GET",
 					headers: {
-						'Token': localStorage.getItem('token')
+						'Token': docCookies.getItem("token")
 					},
 					url: apiUrl+"/common/verfycode",
 					data: {
@@ -254,7 +254,7 @@ $("#btn_fs").on("click", function() {
 	$.ajax({
 		type: "GET",
 		headers: {
-			'Token': localStorage.getItem('token')
+			'Token': docCookies.getItem("token")
 		},
 		url: apiUrl+"/common/code",
 		data: {
@@ -285,7 +285,7 @@ $(document).keydown(function(event) {
             url: url + id,
             type: 'get',
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data){
                 console.log(data);
@@ -305,4 +305,4 @@ $(document).keydown(function(event) {
             }
         })
     }
-    getUserInfo(USERDETAIL, "/" + localStorage.getItem("weid"));
+    getUserInfo(USERDETAIL, "/" + docCookies.getItem("weid"));

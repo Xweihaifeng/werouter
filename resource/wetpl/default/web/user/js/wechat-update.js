@@ -4,7 +4,7 @@
 
 $(document).ready(function(){
     //  登录token参数
-    var token = window.localStorage.getItem('token'), get_weid = '', mall_user_id = '';
+    var token = docCookies.getItem("token"), get_weid = '', mall_user_id = '';
     if(token) {
         $.ajaxSetup({
             global: true,

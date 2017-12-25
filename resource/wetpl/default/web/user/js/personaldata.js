@@ -43,7 +43,7 @@ if (code !== null && code !== undefined && code !== '') {
 // var Days = 7;//此 cookie 将被保存 30 天
 //    var exp = new Date();//new Date("December 31, 9998");
 //    exp.setTime(exp.getTime() + Days*24*60*60*1000);
-//    document.cookie = "token="+ localStorage.getItem('token') + ";expires=" + exp.toGMTString();
+//    document.cookie = "token="+ docCookies.getItem("token") + ";expires=" + exp.toGMTString();
 
 /*var domain;
 	 var hasDomain = function(weid){
@@ -51,7 +51,7 @@ if (code !== null && code !== undefined && code !== '') {
 			 url: PAGES_PAGE_GETDETAILBYUSER + weid,
 			 type: 'GET',
 			 headers: {
-				 'Token': localStorage.getItem('token')
+				 'Token': docCookies.getItem("token")
 			 },
 			 success: function(data){
 			 	 // if (data.code == 401) {			 	 	
@@ -81,13 +81,13 @@ if (code !== null && code !== undefined && code !== '') {
 		 })
 	 }
 
-	 var weid = localStorage.getItem('weid');
+	 var weid = docCookies.getItem("weid");
 	 hasDomain(weid);*/
 
 //route
 var isLogin; //判断用户登陆与否
 /*var router = function(route){
-    if(!window.localStorage.getItem("token")) {
+    if(!docCookies.getItem("token")) {
         isLogin = false;
     } else {
         isLogin = true;
@@ -173,7 +173,7 @@ $("#login, #article, #project, #active, #shopping, #zone").hover(function(e) {
     $("#" + id + " .word").css("margin-top", "-55px");
 })
 
-init(localStorage.getItem('token'));
+init(docCookies.getItem("token"));
 var qiniu_uptoken = '';
 var saveto = 'qiniu';
 var __init = function() {
@@ -300,8 +300,8 @@ $(document).ready(function() {
         }
     });
 
-    var weid = localStorage.getItem("weid");
-    var token = localStorage.getItem("token");
+    var weid = docCookies.getItem("weid");
+    var token = docCookies.getItem("token");
     if (token) {
         $.ajaxSetup({
             global: true,
@@ -344,7 +344,7 @@ $(document).ready(function() {
 
         localStorage.setItem('avatar', avatar);
 
-        init(localStorage.getItem('token'));
+        init(docCookies.getItem("token"));
 
         $(".username input").val(userInfo.real_name);
         $(".nickname input").val(userInfo.nickname);
@@ -370,7 +370,7 @@ $(document).ready(function() {
                 dataType: "json",
                 type: "GET",
                 headers: {
-                    'Token': localStorage.getItem('token')
+                    'Token': docCookies.getItem("token")
                 },
                 success: function(data) {
                     console.log(data);
@@ -398,7 +398,7 @@ $(document).ready(function() {
         $.ajax({
             type: "GET",
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             url: apiUrl + "province/list",
             dataType: "json",
@@ -433,7 +433,7 @@ $(document).ready(function() {
             $.ajax({
                 type: "GET",
                 headers: {
-                    'Token': localStorage.getItem('token')
+                    'Token': docCookies.getItem("token")
                 },
                 url: apiUrl + "area/list/" + $('#we_province2 option:selected').attr('id'),
                 dataType: "json",
@@ -456,7 +456,7 @@ $(document).ready(function() {
     }
 
     $.ajax({
-        url: USERDETAIL + '/' + localStorage.getItem('weid'),
+        url: USERDETAIL + '/' + docCookies.getItem("weid"),
         //url: USERDETAIL,
         success: function(data) {
             if (data.code === 200) {
@@ -511,7 +511,7 @@ $(document).ready(function() {
         }
 
         $.ajax({
-            url: USERINFO + '/' + localStorage.getItem('weid'),
+            url: USERINFO + '/' + docCookies.getItem("weid"),
             type: 'POST',
             data: send,
             success: function(data) {

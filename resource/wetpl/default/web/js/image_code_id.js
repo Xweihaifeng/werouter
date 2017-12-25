@@ -36,7 +36,7 @@ $(function() {
     setCookie('', -1);
     clearCookie();
 
-    var token = window.localStorage.getItem('token'),
+    var token = docCookies.getItem("token"),
         get_weid
     const template = `
         <li id="home" style="height: 90px"><a class="logoImg"></a></li>
@@ -66,7 +66,7 @@ $(function() {
             }
         });
 
-        get_weid = window.localStorage.getItem("weid");
+        get_weid = docCookies.getItem("weid");
         var pathname = window.location.pathname.split('/').slice(1, 3);
         if (pathname[0] == 'login') {
             // window.location.href = "/";
@@ -89,7 +89,7 @@ $(function() {
                 } else if (imgUrl.indexOf('http') != 0 && imgUrl != "") {
 
                     imgUrl = ApiMaterPlatQiniuDomain + imgUrl;
-                    $("#login a").css({ "background": "url(" + window.localStorage.getItem('avatar') + ") center center / 100% no-repeat" });
+                    $("#login a").css({ "background": "url(" + localStorage.getItem('avatar') + ") center center / 100% no-repeat" });
                     $("#login a").addClass("i-header").html("");
                     showLogin = false;
                     isLogin = true;
@@ -222,7 +222,7 @@ $(function() {
         } else if (imgUrl.indexOf('http') != 0 && imgUrl != "") {
 
             imgUrl = ApiMaterPlatQiniuDomain + imgUrl;
-            $("#login a").css({ "background": "url(" + window.localStorage.getItem('avatar') + ") center center / 100% no-repeat" });
+            $("#login a").css({ "background": "url(" + localStorage.getItem('avatar') + ") center center / 100% no-repeat" });
             showLogin = false;
             isLogin = true;
 

@@ -14,7 +14,7 @@
                  url: ACTIVITY_DESTROY + '/' + $(obj).closest('li').data('id'),
                  type: 'get',
                  headers: {
-                     'Token': localStorage.getItem('token')
+                     'Token': docCookies.getItem("token")
                  },
                  success: function(data) {
                      console.log(data);
@@ -47,7 +47,7 @@
              type: 'post',
              data: { weid: actiid, status: 1 },
              headers: {
-                 'Token': localStorage.getItem('token')
+                 'Token': docCookies.getItem("token")
              },
              success: function(data) {
                  console.log(data);
@@ -72,7 +72,7 @@
          type: 'post',
          data: { weid: actiid, status: 2 },
          headers: {
-             'Token': localStorage.getItem('token')
+             'Token': docCookies.getItem("token")
          },
          success: function(data) {
              console.log(data);
@@ -190,7 +190,7 @@
              url: PAGES_PAGE_GETDETAILBYUSER + weid,
              type: 'GET',
              headers: {
-                 'Token': localStorage.getItem('token')
+                 'Token': docCookies.getItem("token")
              },
              success: function(data) {
                  if (data.code == 401) {
@@ -220,7 +220,7 @@
          })
      }
 
-     var weid = localStorage.getItem('weid');
+     var weid = docCookies.getItem("weid");
      hasDomain(weid);
 
      /*   var isLogin = false; //判断用户登陆与否
@@ -373,11 +373,11 @@
              '</li>';
          return listhtml;
      }
-     var weid = localStorage.getItem('weid');
+     var weid = docCookies.getItem("weid");
      // 1.获取活动列表
      var flagpage = true;
      var activitylist = function(weid, type = 0, page = 1) {
-         console.log(localStorage.getItem('weid'));
+         console.log(docCookies.getItem("weid"));
          var limit = 5;
          var status = is_on = "";
          console.log("type:", type);
@@ -405,7 +405,7 @@
              type: 'post',
              data: sendData,
              headers: {
-                 'Token': localStorage.getItem('token')
+                 'Token': docCookies.getItem("token")
              },
              success: function(data) {
                  console.log(data);
@@ -491,7 +491,7 @@
              url: ACTIVITY_USERINFO + '/' + weid,
              type: 'get',
              headers: {
-                 'Token': localStorage.getItem('token')
+                 'Token': docCookies.getItem("token")
              },
              success: function(data) {
                  console.log(data);
@@ -626,7 +626,7 @@
              url: PAGES_MODULERUN_LIST,
              type: 'GET',
              headers: {
-                 'Token': localStorage.getItem('token')
+                 'Token': docCookies.getItem("token")
              },
              success: function(data) {
                  if (data.code == 200) {
@@ -755,6 +755,6 @@
          }
      }
 
-     init__(localStorage.getItem('token'));
+     init__(docCookies.getItem("token"));
 
  })

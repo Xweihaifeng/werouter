@@ -404,7 +404,7 @@ var modulelist=function(){
         url: apiUrl+"pages/module/platlist",
         type: 'GET',
         headers: {
-            'Token': localStorage.getItem('token')
+            'Token': docCookies.getItem("token")
         },
         success: function(data){
             console.log(data);
@@ -449,7 +449,7 @@ if(sessionStorage.statedata!=null && sessionStorage.statedata!="" && sessionStor
             url: PAGES_MODULERUN_LIST,
             type: 'GET',
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data){
                 if (data.code == 200){
@@ -536,7 +536,7 @@ $(".we-title").on("click", function() {
 })*/
 
 //  登录token参数
-var token = window.localStorage.getItem('token');
+var token = docCookies.getItem("token");
 if(token) {
     $.ajaxSetup({
         global: true,
@@ -695,7 +695,7 @@ var init = function(token){
     }
 }
 
-init(localStorage.getItem('token'));
+init(docCookies.getItem("token"));
 
     var domain;
     var hasDomain = function(weid){
@@ -703,7 +703,7 @@ init(localStorage.getItem('token'));
             url: PAGES_PAGE_GETDETAILBYUSER + weid,
             type: 'GET',
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data){
                 // if (data.code == 401) {
@@ -740,13 +740,13 @@ init(localStorage.getItem('token'));
         })
     }
 
-    var weid = localStorage.getItem('weid');
+    var weid = docCookies.getItem("weid");
     hasDomain(weid);
 
     //route
     var isLogin; //判断用户登陆与否
     var router = function(route){
-        if(!window.localStorage.getItem("token")) {
+        if(!docCookies.getItem("token")) {
             isLogin = false;
         } else {
             isLogin = true;

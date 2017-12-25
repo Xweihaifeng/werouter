@@ -4,7 +4,7 @@
 
 $(function() {
     var pathname = window.location.pathname.split('/').slice(1,4);
-    var logo = window.localStorage.getItem("logo");
+    var logo = localStorage.getItem("logo");
     var tpl = "";
     if(!logo) {
 	    logo = "/common/img/main_logo.png";

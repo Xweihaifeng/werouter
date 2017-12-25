@@ -49,7 +49,7 @@ $(document).ready(function(){
 				$.ajax({
 					type: "GET",
 					headers: {
-						'Token': localStorage.getItem('token')
+						'Token': docCookies.getItem("token")
 					},
 					url: "http://apitest.wezchina.com/users/address/list",
 					dataType: "json",
@@ -118,7 +118,7 @@ $(document).ready(function(){
 												$.ajax({
 													type: "GET",
 													headers: {
-														'Token': localStorage.getItem('token')
+														'Token': docCookies.getItem("token")
 													},
 													url: "http://apitest.wezchina.com/users/address/destroy/" + weid,
 													dataType: "json",
@@ -146,7 +146,7 @@ $(document).ready(function(){
 								$.ajax({
 									type: "GET",
 									headers: {
-										'Token': localStorage.getItem('token')
+										'Token': docCookies.getItem("token")
 									},
 									url: "http://apitest.wezchina.com/users/address/list",
 									dataType: "json",
@@ -230,7 +230,7 @@ $(document).ready(function(){
 											$.ajax({
 												type: "POST",
 												headers: {
-													'Token': localStorage.getItem('token')
+													'Token': docCookies.getItem("token")
 												},
 												url: "http://apitest.wezchina.com/users/address/store",
 												data: {
@@ -253,7 +253,7 @@ $(document).ready(function(){
 														$.ajax({
 															type: "GET",
 															headers: {
-																'Token': localStorage.getItem('token')
+																'Token': docCookies.getItem("token")
 															},
 															url: "http://apitest.wezchina.com/users/address/destroy/" + index1[0].getAttribute("id"),
 															dataType: "json",
@@ -289,7 +289,7 @@ $(document).ready(function(){
 								$.ajax({
 									type: "POST",
 									headers: {
-										'Token': localStorage.getItem('token')
+										'Token': docCookies.getItem("token")
 									},
 									url: "http://apitest.wezchina.com/users/address/update",
 									data: {
@@ -404,7 +404,7 @@ $(document).ready(function(){
 								$.ajax({
 									type: "POST",
 									headers: {
-										'Token': localStorage.getItem('token')
+										'Token': docCookies.getItem("token")
 									},
 									url: "http://apitest.wezchina.com/users/address/store",
 									data: {
