@@ -8,7 +8,9 @@ if(sessionStorage.lastname=="we_title_2"){
     $("#we_title_2").find(".title-img").css("transform","rotate(90deg)");
 }
 $(document).ready(function(){
-var qiniu_bucket_domain =ApiMaterPlatQiniuDomain;
+    $("#favicon").attr("href", ApiMaterPlatQiniuDomain + window.localStorage.getItem("fav"));
+
+    var qiniu_bucket_domain =ApiMaterPlatQiniuDomain;
 
     var showLogin = false; //调整窗口大小时登陆框是否存在
     var currWidth = $(window).width();
