@@ -371,18 +371,53 @@ $(document).ready(function(){
 
     //保存
     $("#save").click(function() {
+
         $flag=$("input[name=bannerweid]").val();
         //组织数据
         var slide=[];
         var slideObj=$("#slideList").find(".form-group");
-        slideObj.each(function (index,element) {
-            slide.push({'src':$(element).find("input[name=thumb_image_slide"+(index+1)+"]").val(),'href':$("input[name=slide_href"+(index+1)+"]").val()});
-        });
+        var regex =/^http(s)?:\/\/([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?$/i;
+        for(var i=0;i<slideObj.length;i++){
+            if(!regex.test($("input[name=slide_href"+(i+1)+"]").val())&&!isNull($("input[name=slide_href"+(i+1)+"]").val())){
+                layer.msg("链接地址不合法必须是http://或者https://开头", {
+                    time: 1500
+                });
+
+                return false;
+            }
+            //判断是否为空
+            /*
+            if(isNull($("input[name=thumb_image_slide"+(i+1)+"]").val())){
+                layer.msg("广告幻灯图片为空", {
+                    time: 1500
+                });
+                return false;
+            }
+            */
+            slide.push({'src':$("input[name=thumb_image_slide"+(i+1)+"]").val(),'href':$("input[name=slide_href"+(i+1)+"]").val()});
+        }
+
         var banner=[];
         var bannerObj=$("#bannerList").find(".form-group");
-        bannerObj.each(function (index,element) {
-            banner.push({'src':$(element).find("input[name=thumb_image_banner"+(index+1)+"]").val(),'href':$("input[name=banner_href"+(index+1)+"]").val()});
-        });
+        for(var i=0;i<bannerObj.length;i++){
+            //正则判断链接地址是否合法
+            if(!regex.test($("input[name=banner_href"+(i+1)+"]").val())&&!isNull($("input[name=banner_href"+(i+1)+"]").val())){
+                layer.msg("链接地址不合法必须是http://或者https://开头", {
+                    time: 1500
+                });
+                return false;
+            }
+            //判断是否为空
+            /*
+            if(isNull($("input[name=thumb_image_banner"+(i+1)+"]").val())){
+                layer.msg("广告横幅图片为空", {
+                    time: 1500
+                });
+                return false;
+            }
+            */
+            banner.push({'src':$("input[name=thumb_image_banner"+(i+1)+"]").val(),'href':$("input[name=banner_href"+(i+1)+"]").val()});
+        }
         if(!isNull($flag)){
             //修改
             var sendData={
