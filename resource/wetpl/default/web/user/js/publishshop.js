@@ -122,6 +122,54 @@ $(function(){
             })
         }
     })
+
+    //添加服务
+    $(".add_service").click(function () {
+
+
+        var html=initServiceHtml('');
+
+        $(".insert-service").append(html);
+        delServiceDelete();
+
+    });
+     var initServiceHtml=function (data) {
+         if (isNull(data)) {
+             var html='<div class="service_list"><div class="operate" style="font-size: 20px;position: absolute;right: 50px;"><i class="fa fa-close J_Service_Delete" style="top: 2px;color: #adadad;cursor: pointer;font-size: 24px;"></i></div>'+
+                 '<div class="form-group"><label class="col-sm-2 control-label">服务标题:</label><div class="col-sm-3"><input type="text" class="form-control" name="service_title" value=""></div></div>'+
+                 '<div class="form-group">'+
+                 '<label for="" class="col-sm-2 control-label">服务内容:</label>'+
+                 '<div class="col-sm-6">'+
+                 '<textarea class="form-control" name="service_content" rows="5"></textarea>'+
+                 '</div>'+
+                 '</div>'+
+                 '</div>';
+             return html;
+         } else {
+             //编辑使用（循环data）
+             var html='';
+             for (var i=0;i<data.length;i++){
+                 html+='<div class="service_list"><div class="operate" style="font-size: 20px;position: absolute;right: 50px;"><i class="fa fa-close J_Service_Delete" style="top: 2px;color: #adadad;cursor: pointer;font-size: 24px;"></i></div>'+
+                     '<div class="form-group"><label class="col-sm-2 control-label">服务标题:</label><div class="col-sm-3"><input type="text" class="form-control" name="service_title" value="'+data[i].service_title+'"></div></div>'+
+                     '<div class="form-group">'+
+                     '<label for="" class="col-sm-2 control-label">服务内容:</label>'+
+                     '<div class="col-sm-6">'+
+                    '<textarea class="form-control" name="service_content" rows="5">'+data[i].service_content+'</textarea>'+
+                    '</div>'+
+                    '</div>'+
+                    '</div>';
+             }
+             return html;
+         }
+     }
+     //删除服务
+    var delServiceDelete=function () {
+        $(".J_Service_Delete").click(function () {
+            $(this).closest(".service_list").remove();
+        });
+    }
+
+     
    /* //route
     var isLogin = false; //判断用户登陆与否
     var router = function(route){
@@ -539,6 +587,13 @@ malldetail();
                              $('.insert-member').append(memberDom(goods.discount[i]))
                         }
                     }
+                    //加入服务列表
+                    if(!isNull(goods.service)){
+                        var html=initServiceHtml(JSON.parse(goods.service));
+                        $(".insert-service").append(html);
+                        delServiceDelete();
+                    }
+
                     //解决部分情况加载不出来的情况 add by lisheng 2017-12-15 22:03
                     setTimeout(function () { CKEDITOR.instances.editor1.setData(goods.content); }, 200);
                     $("select[name='cate_id']").find("#"+goods.cate_id).attr("selected","selected");
@@ -699,6 +754,14 @@ malldetail();
                     }
                 })
             }
+            var service=[];
+            $('.service_list').each(function (ind,item) {
+                var obj = {};
+                obj.service_title = $(item).find("input[name='service_title']").val();
+                obj.service_content = $(item).find("[name='service_content']").val();
+                service.push(obj);
+
+            });
             var sendData = {
                 title: title,
                 price: price,
@@ -718,7 +781,8 @@ malldetail();
                 postage:postage,
                 postage_max_money:postage_max_money,
                 discount_status:discount_status,
-                discount:discount
+                discount:discount,
+                service:service
             }
             // console.log(sendData);
 
