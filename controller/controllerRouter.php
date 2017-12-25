@@ -143,14 +143,14 @@ class controllerRouter extends controller
             $where = array('plat_id' => $row['plat_id'] , 'domain' => $row['domain']);
             $this->db->update('we_pages' , $set , $where);
         }
-
+        
         $wezchina_plats['plats_user_qrcode'] = $qrcode_img;
-
+        
         $wezchina_plats['plats_show'] = $plats_show;
-
+        
         return $wezchina_plats;
     }
-
+    
     // 验证个性域名
     public function domain($param , $uri)
     {
