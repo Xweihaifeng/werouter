@@ -61,9 +61,9 @@ $(function() {
             //城市选择
             citySelect.init();
             //票务
-            ticket.init();
+            //ticket.init();
             //嘉宾
-            guest.init();
+            //guest.init();
 
             if (isFillAcccountInfo == 0) {
                 account.init();

@@ -451,6 +451,9 @@ $(document).ready(function() {
                 console.log(data);
                 if (data.code == 200) {
                     $(".J_EntryList").children().remove();
+                    if (data.data.list.length > 0) {
+                        $('.data').show();
+                    }
                     data.data.list.map(x => {
                         $(".J_EntryList").append(listtemplate(x));
 

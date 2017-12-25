@@ -144,25 +144,25 @@ var start = function() {
         console.log('id is null');
     }
 
-    $.ajax({
-        url: ApiUrl + 'admins/check_auth',
-        type: 'POST',
-        data: {
-            role_id: sessionStorage.getItem('role_id'),
-            url: $("input[name='config-url']").val()
-        },
-        success: function(data){
-            if (data.code != 200) {
-                setTimeout(function(){
-                    swal('提示', '权限不足', 'success');
-                }, 1500);
-                window.location.href = '/admin';
-            } else {
-                // console.log(data);
+    // $.ajax({
+    //     url: ApiUrl + 'admins/check_auth',
+    //     type: 'POST',
+    //     data: {
+    //         role_id: sessionStorage.getItem('role_id'),
+    //         url: $("input[name='config-url']").val()
+    //     },
+    //     success: function(data){
+    //         if (data.code != 200) {
+    //             setTimeout(function(){
+    //                 swal('提示', '权限不足', 'success');
+    //             }, 1500);
+    //             window.location.href = '/admin';
+    //         } else {
+    //             // console.log(data);
 
-            }
-        }
-    })
+    //         }
+    //     }
+    // })
 
 }
 
