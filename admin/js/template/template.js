@@ -58,9 +58,9 @@ $(document).ready(function () {
             data: {template_id: templateId},
             success: function (data) {
                 if (data.code === 200) {
-                    swal('提示', '保存成功', 'success');
+                    swal('', '保存成功', 'success');
                 } else {
-                    swal('提示', data.message, 'error');
+                    swal('', data.message, 'error');
                 }
             },
             error: function (xhr) {
