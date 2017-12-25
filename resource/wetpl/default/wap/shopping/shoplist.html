@@ -38,7 +38,7 @@
                                 <div class="lii_price"><span>￥</span>{{good.price}}</div>
                                 <p class="lii_sold">
                                     <!--<span>已售：{{good.sales_num}}</span><span>收藏：{{good.collections}}</span>-->
-                                    <i></i>
+                                    <i @click="add(good,$event)"></i>
                                 </p>
                             </slide>
                         </div>
@@ -47,6 +47,36 @@
             </ul>
         </article>
     </div>
+    <transition name="fade">
+        <div class="modal-bg" v-show="showModal" @click="showModal=false"></div>
+    </transition>
+    <transition name="fade">
+        <div class="modal-content" v-show="showModal">
+            <div>
+                <img :src="addGood.cover  | img_src" alt="">
+                <div>
+                    <p>{{addGood.title | limitLen(0,13)}}</p>
+                    <p>
+                        <span>￥</span>
+                        <span>{{addGood.price}}</span>
+                    </p>
+                </div>
+                <i></i>
+            </div>
+            <div>
+                <p>购买数量：</p>
+                <p>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </p>
+            </div>
+            <div>
+                <a>加入购物车</a>
+                <a>立即购买</a>
+            </div>
+        </div>
+    </transition>
 </div>
 <script>
     new Vue({
@@ -58,6 +88,8 @@
             domain: pages_index,
             currentSort: '',
             currentShow: '',
+            addGood: '',
+            showModal: false
         },
         mounted() {
             this.$nextTick(() => {
@@ -146,6 +178,12 @@
                         }
                     });
                 }
+            },
+            add : function (good,event) {
+                this.addGood = good;
+                console.log(good)
+                this.showModal = true;
+                event.preventDefault();
             }
         }
     })
