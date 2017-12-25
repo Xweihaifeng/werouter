@@ -172,7 +172,7 @@ $(document).ready(function(){
         })
     }
 
-    artList(localStorage.getItem("weid"));
+    artList(docCookies.getItem("weid"));
     var canclecollect=function(id){
         $.ajax({
             // url: ACTIVITY_LIST,

@@ -121,7 +121,7 @@
         data: header_data,
         mounted() {
             this.$nextTick( function () {
-                var token = localStorage.getItem("token");
+                var token = docCookies.getItem("token");
                 if (token !== null && token !== undefined && token !== '') { 
                     this.login_state = 1;     
                 }

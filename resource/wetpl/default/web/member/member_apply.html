@@ -390,11 +390,11 @@
         <script src="{{PATH_TML}}member/js/member_apply.js"></script>
 
         <script>
-            var title = window.localStorage.getItem("title");
+            var title = localStorage.getItem("title");
             if(!title) {
                 document.title = "入会申请";
             } else {
-                document.title = "入会申请 — " + window.localStorage.getItem("title");                
+                document.title = "入会申请 — " + localStorage.getItem("title");
             }
         </script>
     </body>

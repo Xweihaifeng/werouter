@@ -181,11 +181,11 @@ dTree.prototype.node = function(node, nodeId) {
     }
 
     if (node.url) {
-        var str1 = '</a><span style="padding: 20px;">操作权限 <input type="checkbox" name="permission">全选</span>' +
-			'<span style="padding: 20px;"><input type="checkbox" name="permission" value="list">列表</span>' +
-			'<span style="padding: 20px;"><input type="checkbox" name="permission" value="add">增加</span>' +
-			'<span style="padding: 20px;"><input type="checkbox" name="permission" value="edit">编辑</span>' +
-			'<span><input type="checkbox" name="permission" value="del">删除</span>';
+        var str1 = '</a><span style="padding: 20px;">操作权限 <input type="checkbox" name="permission" checked>全选</span>' +
+			'<span style="padding: 20px;"><input type="checkbox" name="permission" value="list" checked>列表</span>' +
+			'<span style="padding: 20px;"><input type="checkbox" name="permission" value="add" checked>增加</span>' +
+			'<span style="padding: 20px;"><input type="checkbox" name="permission" value="edit" checked>编辑</span>' +
+			'<span><input type="checkbox" name="permission" value="del" checked>删除</span>';
         if (node.cshow == '频道管理') {
             str1 = '</a><span style="padding: 20px;">频道权限设置</span>';
 		}

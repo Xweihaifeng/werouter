@@ -151,7 +151,7 @@ $(document).ready(function(){
     });
 
     //  登录token参数
-    var token = window.localStorage.getItem('token');
+    var token = docCookies.getItem("token");
     if(token) {
         $.ajaxSetup({
             global: true,

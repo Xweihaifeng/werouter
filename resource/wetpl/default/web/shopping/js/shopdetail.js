@@ -12,7 +12,7 @@ $(document).ready(function() {
 	var qiniu_bucket_domain = ApiMaterPlatQiniuDomain;
 
 	// token 加载值请求头（Headers）
-	var token = window.localStorage.getItem('token'),
+	var token = docCookies.getItem("token"),
 		isLogin = false;
 	if(token) {
 		$.ajaxSetup({
@@ -101,7 +101,7 @@ $(document).ready(function() {
 		}
 	});
 
-	var weid = localStorage.getItem('weid');
+	var weid = docCookies.getItem("weid");
 
 	var id = window.location.href.split('/').pop();
 	var url = window.location.href.split('/');
@@ -122,7 +122,7 @@ $(document).ready(function() {
 				},
 				dataType: 'json',
 				headers: {
-					'Token': localStorage.getItem('token')
+					'Token': docCookies.getItem("token")
 				},
 				success: function(data) {
 					if(data.code == 200) {
@@ -425,7 +425,7 @@ $(document).ready(function() {
 			},
 			dataType: 'json',
 			headers: {
-				'Token': localStorage.getItem('token')
+				'Token': docCookies.getItem("token")
 			},
 			success: function(data) {
 				// console.log(data);
@@ -539,7 +539,7 @@ $(document).ready(function() {
 				goods_num: add_number
 			},
 			headers: {
-				'Token': window.localStorage.getItem('token'),
+				'Token': docCookies.getItem("token"),
 			},
 			success: function(data) {
 				// console.log(data);
@@ -569,7 +569,7 @@ $(document).ready(function() {
 			type: 'get',
 			dataType: 'json',
 			headers: {
-				'Token': localStorage.getItem('token')
+				'Token': docCookies.getItem("token")
 			},
 			success: function(data) {
 				// console.log(data);
@@ -626,7 +626,7 @@ $(document).ready(function() {
 			url: GOODS_DETAIL + '/' + id,
 			type: 'get',
 			headers: {
-				'Token': localStorage.getItem('token')
+				'Token': docCookies.getItem("token")
 			},
 			dataType: 'json',
 			success: function(data) {
@@ -674,7 +674,7 @@ $(document).ready(function() {
 								url : apiUrl + 'users/imagecodeid',
 								type : 'get',
 								headers : {
-                                    'Token': localStorage.getItem('token')
+                                    'Token': docCookies.getItem("token")
 								},
 								dataType : 'json',
 								success : function (res) {
@@ -699,7 +699,7 @@ $(document).ready(function() {
 			url: GOODS_COLLECTION_ISCOLLECTION + '/' + id,
 			type: 'get',
 			headers: {
-				'Token': localStorage.getItem('token')
+				'Token': docCookies.getItem("token")
 			},
 			success: function(data) {
 				// console.log(data);
@@ -724,7 +724,7 @@ $(document).ready(function() {
 			url: GOODS_RANGE_PROVICELISTS + '/' + weid,
 			type: 'get',
 			headers: {
-				'Token': localStorage.getItem('token')
+				'Token': docCookies.getItem("token")
 			},
 			success: function(data) {
 				console.log(data);
@@ -759,7 +759,7 @@ $(document).ready(function() {
 				province_id: pid
 			},
 			headers: {
-				'Token': localStorage.getItem('token')
+				'Token': docCookies.getItem("token")
 			},
 			success: function(data) {
 				// console.log(data);

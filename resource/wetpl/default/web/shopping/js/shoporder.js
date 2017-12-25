@@ -99,7 +99,7 @@ var qiniu_bucket_domain = ApiMaterPlatQiniuDomain;
                 data:{domain:domain,goodsid:id},
                 dataType:'json',
                 headers: {
-                    'Token': localStorage.getItem('token')
+                    'Token': docCookies.getItem("token")
                 },
                 success: function(data){
                     console.log(data);
@@ -124,7 +124,7 @@ checkdomain(domain,id);
     //route
     var isLogin; //判断用户登陆与否
     var router = function(route){
-        if(!window.localStorage.getItem("token")) {
+        if(!docCookies.getItem("token")) {
             isLogin = false;
         } else {
             isLogin = true;
@@ -220,7 +220,7 @@ checkdomain(domain,id);
         }
     }
 
-    init(localStorage.getItem('token'));
+    init(docCookies.getItem("token"));
 
     //var id = window.location.href.split('/').pop();    
     
@@ -264,7 +264,7 @@ checkdomain(domain,id);
             url:ADDRESS_LIST,
             type: 'get',
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data) {
                 if (data.code == 200){
@@ -307,7 +307,7 @@ checkdomain(domain,id);
             url:ADDRESS_LIST,
             type: 'get',
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data){
                 console.log(data);
@@ -373,7 +373,7 @@ checkdomain(domain,id);
             type: 'post',
             data:{range_weid:range_weid,address_weid:address_weid},
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data){
                 console.log(data);
@@ -420,7 +420,7 @@ checkdomain(domain,id);
                         dataType:'json',
                         type:'post',
                         headers: {
-                            'Token': localStorage.getItem('token')
+                            'Token': docCookies.getItem("token")
                         },
                         data:{name:consignee,province_id:province,area_id:city,county_id:county,detail:address,zipcode:zip,telophone:mobile,status:defaultaddr},
                         success:function(data){
@@ -489,7 +489,7 @@ checkdomain(domain,id);
                 url: GOODS_DETAIL+'/' + goodsdata.goods_id,
                 type:'get',
                 headers: {
-                        'Token': localStorage.getItem('token')
+                        'Token': docCookies.getItem("token")
                     },
                 dataType: 'json', 
                 success: function(data){
@@ -566,7 +566,7 @@ checkdomain(domain,id);
             type:'post',
             data:sendData,
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data){
                 console.log(data);
@@ -591,7 +591,7 @@ checkdomain(domain,id);
             url: PROVINCE_LIST,
             type: 'get',
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data) {
                 if (data.code == 200) {
@@ -625,7 +625,7 @@ checkdomain(domain,id);
             url:AREA_LIST+'/'+pid,
             type:'get',
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data){
                 if (data.code == 200) {
@@ -657,7 +657,7 @@ checkdomain(domain,id);
             url:apiUrl+'county/list'+'/'+pid,
             type:'get',
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data){
                 if (data.code == 200) {

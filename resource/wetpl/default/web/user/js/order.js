@@ -28,7 +28,7 @@ $(document).ready(function(){
             url: 'http://apitest.wezchina.com/pages/page/getDetailByUser/' + weid,
             type: 'GET',
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data){
                 if (data.code == 200){
@@ -59,7 +59,7 @@ $(document).ready(function(){
         })
     }
 
-    var weid = localStorage.getItem('weid');
+    var weid = docCookies.getItem("weid");
     //console.log(weid)
     init(weid);*/
 
@@ -69,7 +69,7 @@ $(document).ready(function(){
             url: PAGES_PAGE_GETDETAILBYUSER + weid,
             type: 'GET',
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data){
                 if (data.code == 401) {
@@ -98,7 +98,7 @@ $(document).ready(function(){
         })
     }
 
-    var weid = localStorage.getItem('weid');
+    var weid = docCookies.getItem("weid");
     hasDomain(weid);
 
     // 获取个人商城信息
@@ -108,7 +108,7 @@ $(document).ready(function(){
             url:MALL_USERDETAIL,
             type:'get',
             headers: {
-                    'Token': localStorage.getItem('token')
+                    'Token': docCookies.getItem("token")
                 },
             dataType: 'json',
             success: function(data){
@@ -167,7 +167,7 @@ $(document).ready(function(){
             type:'post',
             data:sendData,
             headers: {
-                    'Token': localStorage.getItem('token')
+                    'Token': docCookies.getItem("token")
                 },
             dataType: 'json',
             success: function(data){
@@ -383,7 +383,7 @@ $(document).ready(function(){
                         })
 
                      // 1acc8080-769f-11e7-afe9-a1e618177dd9
-                    __init(localStorage.getItem("weid"));
+                    __init(docCookies.getItem("weid"));
                     // __init("1acc8080-769f-11e7-afe9-a1e618177dd9");
                     sendshop();
                 }
@@ -583,7 +583,7 @@ $(document).ready(function(){
                 url : apiUrl + 'order/detail/' + orderid,
                 type : 'get',
                 headers : {
-                    'Token' : localStorage.getItem('token')
+                    'Token' : docCookies.getItem("token")
                 },
                 dataType : 'json',
                 success : function (res) {
@@ -605,11 +605,11 @@ $(document).ready(function(){
                     url : apiUrl + 'pages/logistics/lists',
                     type : 'post',
                     data : {
-                        'user_id' : localStorage.getItem('weid'),
+                        'user_id' : docCookies.getItem("weid"),
                         'status' : 1
                     },
                     headers : {
-                        "Token" : localStorage.getItem('token')
+                        "Token" : docCookies.getItem("token")
                     },
                     dataType : 'json',
                     success : function (res) {
@@ -639,7 +639,7 @@ $(document).ready(function(){
                     order_id : orderId
                 },
                 headers: {
-                    'Token': localStorage.getItem('token')
+                    'Token': docCookies.getItem("token")
                 },
                 dataType: 'json',
                 success : function (data) {
@@ -664,7 +664,7 @@ $(document).ready(function(){
                 url : apiUrl + 'order/detail/'+orderId,
                 type : 'get',
                 headers : {
-                    "Token": localStorage.getItem('token')
+                    "Token": docCookies.getItem("token")
                 },
                 dataType : 'json',
                 success : function (data) {
@@ -741,7 +741,7 @@ $(document).ready(function(){
                         company_code : code
                     },
                     headers : {
-                        "Token": localStorage.getItem('token')
+                        "Token": docCookies.getItem("token")
                     },
                     dataType : 'json',
                     success : function (res) {
@@ -934,7 +934,7 @@ $(document).ready(function(){
                 type:'post',
                 data:sendData,
                 headers: {
-                        'Token': localStorage.getItem('token')
+                        'Token': docCookies.getItem("token")
                     },
                 dataType: 'json',
                 success: function(data){
@@ -984,7 +984,7 @@ $(document).ready(function(){
             url: url + id,
             type: 'get',
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data){
                 console.log(data);
@@ -1028,7 +1028,7 @@ $(document).ready(function(){
             url: PAGES_PAGE_GETDETAILBYUSER + weid,
             type: 'GET',
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data){
                 if (data.code == 200){

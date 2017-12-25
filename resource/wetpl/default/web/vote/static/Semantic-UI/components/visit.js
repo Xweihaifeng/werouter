@@ -281,7 +281,7 @@ $.visit = $.fn.visit = function(parameters) {
             storedValue
           ;
           if(settings.storageMethod == 'localstorage' && window.localStorage !== undefined) {
-            storedValue = window.localStorage.getItem(key);
+            storedValue = localStorage.getItem(key);
           }
           // get by cookie
           else if($.cookie !== undefined) {

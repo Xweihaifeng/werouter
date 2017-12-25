@@ -147,7 +147,7 @@ $(document).ready(function(){
         }
     }
 
-    init(localStorage.getItem('token'));
+    init(docCookies.getItem("token"));
 
     var id = window.location.href.split('/').pop();
     var headId = 0;
@@ -215,7 +215,7 @@ $(document).ready(function(){
             type: 'post',
             dataType: 'json',
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             data: {'articleId': weid},
             success: function(data){

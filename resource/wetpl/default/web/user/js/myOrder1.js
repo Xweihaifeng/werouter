@@ -24,7 +24,7 @@ var hasDomain = function(weid) {
 		url: PAGES_PAGE_GETDETAILBYUSER + weid,
 		type: 'GET',
 		headers: {
-			'Token': localStorage.getItem('token')
+			'Token': docCookies.getItem("token")
 		},
 		success: function(data) {
 			if(data.code == 200) {
@@ -49,13 +49,13 @@ var hasDomain = function(weid) {
 	})
 }
 
-var weid = localStorage.getItem('weid');
+var weid = docCookies.getItem("weid");
 hasDomain(weid);
 
 //route
 var isLogin; //判断用户登陆与否
 var router = function(route) {
-	if(!window.localStorage.getItem("token")) {
+	if(!docCookies.getItem("token")) {
 		isLogin = false;
 	} else {
 		isLogin = true;
@@ -145,11 +145,11 @@ $(document).ready(function() {
 		localStorage.removeItem('weid');
 	})
 
-	var weid = localStorage.getItem('weid');
+	var weid = docCookies.getItem("weid");
 
 })
 
-var weid = localStorage.getItem('weid');
+var weid = docCookies.getItem("weid");
 
 //获取订单列表
 var flag = true;
@@ -203,7 +203,7 @@ var orderlist = function(weid, page, type = 0, dataobj = "") {
 		type: 'post',
 		data: sendData,
 		headers: {
-			'Token': localStorage.getItem('token')
+			'Token': docCookies.getItem("token")
 		},
 		dataType: 'json',
 		success: function(data) {
@@ -325,7 +325,7 @@ var savemess = function(goods_id, obj) {
 			type: 'post',
 			data: sendData,
 			headers: {
-				'Token': localStorage.getItem('token')
+				'Token': docCookies.getItem("token")
 			},
 			dataType: 'json',
 			success: function(data) {
@@ -491,7 +491,7 @@ var malldetail = function(x, mall_id) {
 		url: MALL_DETAIL + '/' + mall_id,
 		type: 'get',
 		headers: {
-			'Token': localStorage.getItem('token')
+			'Token': docCookies.getItem("token")
 		},
 		dataType: 'json',
 		success: function(data) {
@@ -535,7 +535,7 @@ var init = function(id) {
 		url: ORDER_DETAIL + '/' + id,
 		type: 'get',
 		headers: {
-			'Token': localStorage.getItem('token')
+			'Token': docCookies.getItem("token")
 		},
 		dataType: 'json',
 		success: function(data) {
@@ -560,7 +560,7 @@ var shopstock = function(weid, num) {
 		url: GOODS_DETAIL + '/' + weid,
 		type: 'get',
 		headers: {
-			'Token': localStorage.getItem('token')
+			'Token': docCookies.getItem("token")
 		},
 		dataType: 'json',
 		success: function(data) {
@@ -590,7 +590,7 @@ var shopstockupdate = function(sendData) {
 		type: 'post',
 		data: sendData,
 		headers: {
-			'Token': localStorage.getItem('token')
+			'Token': docCookies.getItem("token")
 		},
 		dataType: 'json',
 		success: function(data) {
@@ -630,7 +630,7 @@ var shoppay = function(id) {
 		url: WECHATPAY_NATIVEPAY + '/' + id,
 		type: 'get',
 		headers: {
-			'Token': localStorage.getItem('token')
+			'Token': docCookies.getItem("token")
 		},
 		success: function(data) {
 			console.log(data);
@@ -660,7 +660,7 @@ var delorder = function(obj) {
 		url: ORDER_DESTROY + '/' + orderid,
 		type: 'get',
 		headers: {
-			'Token': localStorage.getItem('token')
+			'Token': docCookies.getItem("token")
 		},
 		success: function(data) {
 			console.log(data);
@@ -684,7 +684,7 @@ var getUserInfo = function(url, id) {
 		url: url + id,
 		type: 'get',
 		headers: {
-			'Token': localStorage.getItem('token')
+			'Token': docCookies.getItem("token")
 		},
 		success: function(data) {
 			console.log(data);
@@ -729,7 +729,7 @@ var __init = function(x, weid) {
 		url: PAGES_PAGE_GETDETAILBYUSER + weid,
 		type: 'GET',
 		headers: {
-			'Token': localStorage.getItem('token')
+			'Token': docCookies.getItem("token")
 		},
 		success: function(data) {
 			if(data.code == 200) {

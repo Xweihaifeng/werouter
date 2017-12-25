@@ -264,7 +264,7 @@ $.ajax({
         })
 
         //  登录token参数
-        var token = window.localStorage.getItem('token');
+        var token = docCookies.getItem("token");
         if(token) {
             $.ajaxSetup({
                 global: true,
@@ -423,7 +423,7 @@ $.ajax({
             }
         }
 
-        init(localStorage.getItem('token'));
+        init(docCookies.getItem("token"));
 
         var domain;
         var hasDomain = function(weid){
@@ -431,7 +431,7 @@ $.ajax({
                 url: PAGES_PAGE_GETDETAILBYUSER + weid,
                 type: 'GET',
                 headers: {
-                    'Token': localStorage.getItem('token')
+                    'Token': docCookies.getItem("token")
                 },
                 success: function(data){
                     if (data.code == 200){
@@ -458,7 +458,7 @@ $.ajax({
             })
         }
 
-        var weid = localStorage.getItem('weid');
+        var weid = docCookies.getItem("weid");
         hasDomain(weid);
 
         var isLogin = false; //判断用户登陆与否

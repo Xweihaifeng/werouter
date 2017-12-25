@@ -2,13 +2,13 @@
  * Created by Hongguang on 2017/9/5.
  */
 
-//Ä£¿é
+//Ä£ï¿½ï¿½
 var moduleDetail = function(mid) {
     $.ajax({
         url: 'http://apitest.wezchina.com/pages/module/detail/' + mid,
         type: 'GET',
         headers: {
-            'Token': localStorage.getItem('token')
+            'Token': docCookies.getItem("token")
         },
         success: function(data){
             if (data.code == 200){
@@ -31,7 +31,7 @@ var moduleState = function(weid) {
         url: 'http://apitest.wezchina.com/pages/modulerun/list',
         type: 'GET',
         headers: {
-            'Token': localStorage.getItem('token')
+            'Token': docCookies.getItem("token")
         },
         success: function(data){
             if (data.code == 200){
@@ -68,7 +68,7 @@ var moduleUser = function(weid) {
         url: 'http://apitest.wezchina.com/pages/modulerun/getDetailByUser/' + weid,
         type: 'GET',
         headers: {
-            'Token': localStorage.getItem('token')
+            'Token': docCookies.getItem("token")
         },
         success: function(data){
             if (data.code == 200){
@@ -85,5 +85,5 @@ var moduleUser = function(weid) {
     })
 }
 
-var weid = localStorage.getItem('weid');
+var weid = docCookies.getItem("weid");
 modelState(weid);

@@ -1449,7 +1449,7 @@ req().then((data) => {
             type:'post',
             data:sendData,
             headers: {
-                    'Token': localStorage.getItem('token')
+                    'Token': docCookies.getItem("token")
                 },
             success:function(data){
                 //console.log(data);
@@ -1579,7 +1579,7 @@ req().then((data) => {
             type:'post',
             data:sendData,
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             //console.log(token)
             success:function(data){
@@ -1639,7 +1639,7 @@ req().then((data) => {
             type:'post',
             data:{user_id:userid},
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success:function(data){
                 if(data.code == 200){
@@ -1717,7 +1717,7 @@ req().then((data) => {
             type:'post',
             data: sendData,
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data){
                 //console.log(data);

@@ -7,7 +7,7 @@
             url:ACTIVITY_DESTROY+'/'+$(obj).closest('li').data('id'),
             type:'get',
             headers: {
-                    'Token': localStorage.getItem('token')
+                    'Token': docCookies.getItem("token")
                 },
             success:function(data){
                 console.log(data);
@@ -37,7 +37,7 @@
             type:'post',
             data:{weid:actiid,status:1},
             headers: {
-                    'Token': localStorage.getItem('token')
+                    'Token': docCookies.getItem("token")
                 },
             success:function(data){
                 console.log(data);
@@ -65,7 +65,7 @@ var loadAttendCount = function(weid, callback) {
             activity_id: weid
         },
         headers: {
-            'Token': localStorage.getItem('token')
+            'Token': docCookies.getItem("token")
         },
         success: function(data) {
             if (data.code == 200)
@@ -187,7 +187,7 @@ $(document).ready(function() {
             url: PAGES_PAGE_GETDETAILBYUSER + weid,
             type: 'GET',
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data) {
                 if (data.code == 401) {
@@ -217,7 +217,7 @@ $(document).ready(function() {
         })
     }
 
-    var weid = localStorage.getItem('weid');
+    var weid = docCookies.getItem("weid");
     hasDomain(weid);
 
 
@@ -247,7 +247,7 @@ $(document).ready(function() {
             '</tr>';
         return listhtml;
     }
-    var weid = localStorage.getItem('weid');
+    var weid = docCookies.getItem("weid");
 
     // 1.获取活动报名列表
     var applylistdetail = function(weid, type = 0, page = 1, keywords = "") {
@@ -278,7 +278,7 @@ $(document).ready(function() {
             type: 'post',
             data: sendData,
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data) {
                 console.log(data);
@@ -471,7 +471,7 @@ $(document).ready(function() {
                         type: 'get',
                         url: ACTIVITY_ENROLL_DESTROY + "/" + x,
                         headers: {
-                            'Token': localStorage.getItem('token')
+                            'Token': docCookies.getItem("token")
                         },
                         success: function(data) {
                             console.log(data);
@@ -502,7 +502,7 @@ $(document).ready(function() {
             url: ACTIVITY_USERINFO + '/' + weid,
             type: 'get',
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data) {
                 console.log(data);
@@ -593,7 +593,7 @@ $(document).ready(function() {
                 url: GOODS_CATES_LIST_USERID + "/" + weid,
                 type: 'get',
                 headers: {
-                    'Token': localStorage.getItem('token')
+                    'Token': docCookies.getItem("token")
                 },
                 success: function(data) {
                     console.log(data);
@@ -651,7 +651,7 @@ $(document).ready(function() {
                 type: 'post',
                 data: sendData,
                 headers: {
-                    'Token': localStorage.getItem('token')
+                    'Token': docCookies.getItem("token")
                 },
                 success: function(data) {
                     console.log(data);
@@ -687,7 +687,7 @@ $(document).ready(function() {
             url: GOODS_DESTROY + '/' + id,
             type: 'get',
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data) {
                 console.log(data);
@@ -890,7 +890,7 @@ $(document).ready(function() {
                     url: PAGES_MODULERUN_LIST,
                     type: 'GET',
                     headers: {
-                        'Token': localStorage.getItem('token')
+                        'Token': docCookies.getItem("token")
                     },
                     success: function(data){
                         if (data.code == 200){
@@ -1019,6 +1019,6 @@ $(document).ready(function() {
       }
     }
 
-    init__(localStorage.getItem('token'));*/
+    init__(docCookies.getItem("token"));*/
 
 })

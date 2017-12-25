@@ -46,8 +46,8 @@ $(document).ready(function(){
     var saveUserInfo = function(token) {
         localStorage.setItem('token', token);
     }
-    var weid=localStorage.getItem('weid');
-   console.log(localStorage.getItem('weid'));
+    var weid=docCookies.getItem("weid");
+   console.log(docCookies.getItem("weid"));
 
    var domain;
     var hasDomain = function(weid){
@@ -55,7 +55,7 @@ $(document).ready(function(){
             url: PAGES_PAGE_GETDETAILBYUSER + weid,
             type: 'GET',
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data){
                 if (data.code == 401) {
@@ -85,7 +85,7 @@ $(document).ready(function(){
         })
     }
 
-    var weid = localStorage.getItem('weid');
+    var weid = docCookies.getItem("weid");
     hasDomain(weid);
 
     /*var isLogin = false; //判断用户登陆与否
@@ -171,7 +171,7 @@ $(document).ready(function(){
 
     }
 
-    init(localStorage.getItem('token'));*/
+    init(docCookies.getItem("token"));*/
 
    //商品分类列表模板
     var catelisthtml=function(data){
@@ -199,7 +199,7 @@ $(document).ready(function(){
             url: GOODS_CATES_LIST_USERID+"/"+weid,
             type: 'get',
             headers: {
-                    'Token': localStorage.getItem('token')
+                    'Token': docCookies.getItem("token")
                 },
             success: function(data){
                 console.log(data);
@@ -322,7 +322,7 @@ catesfun(weid);
                     url: GOODS_CATES_DESTORY+'/'+_lidom.data("id"),
                     type:'get',
                     headers: {
-                            'Token': localStorage.getItem('token')
+                            'Token': docCookies.getItem("token")
                         },
                     dataType: 'json',
                     success: function(data){
@@ -450,7 +450,7 @@ catesfun(weid);
                     type:'post',
                     data:sendData,
                     headers: {
-                            'Token': localStorage.getItem('token')
+                            'Token': docCookies.getItem("token")
                         },
                     dataType: 'json',
                     success: function(data){
@@ -483,7 +483,7 @@ catesfun(weid);
                     type:'post',
                     data:sendData,
                     headers: {
-                            'Token': localStorage.getItem('token')
+                            'Token': docCookies.getItem("token")
                         },
                     dataType: 'json',
                     success: function(data){
@@ -523,7 +523,7 @@ catesfun(weid);
                 url: 'http://apitest.wezchina.com/goods/cates/detail/'+weid,
                 type:'get',
                 headers: {
-                        'Token': localStorage.getItem('token')
+                        'Token': docCookies.getItem("token")
                     },
                 dataType: 'json',
                 success: function(data){
@@ -557,7 +557,7 @@ catesfun(weid);
                 url: 'http://apitest.wezchina.com/goods/cates/destroy/'+weid,
                 type:'get',
                 headers: {
-                        'Token': localStorage.getItem('token')
+                        'Token': docCookies.getItem("token")
                     },
                 dataType: 'json',
                 success: function(data){
@@ -608,7 +608,7 @@ catesfun(weid);
             url: PAGES_MODULERUN_LIST,
             type: 'GET',
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data){
                 if (data.code == 200){
@@ -729,6 +729,6 @@ catesfun(weid);
       }
     }
 
-    init__(localStorage.getItem('token'));*/
+    init__(docCookies.getItem("token"));*/
 
 })

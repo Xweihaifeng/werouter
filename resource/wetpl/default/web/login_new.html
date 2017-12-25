@@ -94,7 +94,7 @@
     <!-- <script src="/js/news_base.js"></script> -->
     <script>
 
-        $("#favicon").attr("href", ApiMaterPlatQiniuDomain + window.localStorage.getItem("fav"));
+        $("#favicon").attr("href", ApiMaterPlatQiniuDomain + localStorage.getItem("fav"));
         $.getScript("https://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js", function(){
             $.ajax({
                 url: apiUrl + 'setting/alias/weChatOpenConfig',

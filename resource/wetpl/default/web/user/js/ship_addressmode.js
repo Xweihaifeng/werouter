@@ -305,7 +305,7 @@ $(function(){
 		            type:'post',
 		            data:params,
 		            headers: {
-		                'Token': localStorage.getItem('token')
+		                'Token': docCookies.getItem("token")
 		            },
 		            success: function(data){
 		                console.log(data);

@@ -511,7 +511,7 @@ ul.description li::before{
             },
             getData()
             {
-                var token = localStorage.getItem("token");
+                var token = docCookies.getItem("token");
                 ajax.get(web_business.web_solution_detail, {params:{'type': this.type}}).then((res)=>{
                     if(res != false)
                     {
@@ -528,7 +528,7 @@ ul.description li::before{
             },
             open_solution(val)
             {
-                var weid = localStorage.getItem("weid");
+                var weid = docCookies.getItem("weid");
                 ajax.get('userinfo/'+weid).then((res)=>{
                     if(res.code == 200)
                     {

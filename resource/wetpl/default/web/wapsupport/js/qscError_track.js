@@ -155,7 +155,7 @@
         logger.push('_sid_', GetSID(logger.sessionName_));
     }
     function ls(logger){
-        var QscToken = window.localStorage.getItem("Qsc-Token");
+        var QscToken = localStorage.getItem("Qsc-Token");
         QscToken =$.parseJSON(QscToken);
         var DTASESSIONID = getCookie('DTASESSIONID');
         var DTAUSRID = getCookie('DTAUSRID');

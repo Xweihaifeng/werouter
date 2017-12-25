@@ -21,7 +21,7 @@ $(function() {
     $(".prompt-info").hide();
 
     // token 加载值请求头（Headers）
-    var token = window.localStorage.getItem('token'), isLogin = false;
+    var token = docCookies.getItem("token"), isLogin = false;
     if(token) {
         $.ajaxSetup({
             global: true,

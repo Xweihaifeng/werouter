@@ -81,7 +81,7 @@ $(function(){
             window.location.href = "/";
         }
     }
-    var weid = localStorage.getItem('weid');
+    var weid = docCookies.getItem("weid");
 
     var id = window.location.href.split('/').pop().split("?")[0];   
     var url = window.location.href.split('/');
@@ -487,7 +487,7 @@ $(function(){
             url: url + id,
             type: 'get',
             /*headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },*/
             success: function(data){
                 console.log(data);

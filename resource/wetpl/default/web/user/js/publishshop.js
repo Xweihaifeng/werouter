@@ -106,7 +106,7 @@ $(function(){
                 url : apiUrl + 'plat/member_level',
                 type : 'get',
                 headers: {
-                    'Token': localStorage.getItem('token')
+                    'Token': docCookies.getItem("token")
                 },
                 success : function (res) {
                     console.log('dfsdfs',res);
@@ -227,7 +227,7 @@ $(function(){
             url: PAGES_PAGE_GETDETAILBYUSER + weid,
             type: 'GET',
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data){
                 if (data.code == 401) {
@@ -255,7 +255,7 @@ $(function(){
         })
     }
 
-    var weid = localStorage.getItem('weid');
+    var weid = docCookies.getItem("weid");
     hasDomain(weid);
 
     var isLogin = false; //判断用户登陆与否
@@ -406,14 +406,14 @@ $(function(){
      // 获取商品分类
     var weid = getUrlParam('id');
     var cateType = [];
-    var userid=localStorage.getItem('weid');
+    var userid=docCookies.getItem("weid");
     var catesfun = function(userid){
         $.ajax({
             // url: "http://apitest.wezchina.com/goods/cates/list",
             url: GOODS_CATES_LIST_USERID+"/"+userid,
             type: 'get',
             headers: {
-                    'Token': localStorage.getItem('token')
+                    'Token': docCookies.getItem("token")
                 },
             success: function(data){
                 // console.log(data);
@@ -451,7 +451,7 @@ $(function(){
             url:MALL_USERDETAIL,
             type:'get',
             headers: {
-                    'Token': localStorage.getItem('token')
+                    'Token': docCookies.getItem("token")
                 },
             success:function(data){
                 // console.log(data);
@@ -486,7 +486,7 @@ malldetail();
                     url:apiUrl+'goods/range/lists',
                     type:'post',
                     headers: {
-                        'Token': localStorage.getItem('token')
+                        'Token': docCookies.getItem("token")
                     },
                     success: function(data){
                         console.log(data);
@@ -518,7 +518,7 @@ malldetail();
             url: GOODS_RANGE_DETAIL+'/' + weid,
             type:'get',
             headers: {
-                    'Token': localStorage.getItem('token')
+                    'Token': docCookies.getItem("token")
                 },
             dataType: 'json',
             success: function(data){
@@ -555,7 +555,7 @@ malldetail();
             url: GOODS_DETAIL+'/' + id,
             type:'get',
             headers: {
-                    'Token': localStorage.getItem('token')
+                    'Token': docCookies.getItem("token")
                 },
             dataType: 'json',
             success: function(data){
@@ -795,7 +795,7 @@ malldetail();
                     type: 'post',
                     data: sendData,
                     headers: {
-                        'Token': localStorage.getItem('token')
+                        'Token': docCookies.getItem("token")
                     },
                     success: function(data){
                         // console.log(data);
@@ -819,7 +819,7 @@ malldetail();
                     type: 'post',
                     data: sendData,
                     headers: {
-                        'Token': localStorage.getItem('token')
+                        'Token': docCookies.getItem("token")
                     },
                     success: function(data){
                         // console.log(data);
@@ -845,7 +845,7 @@ malldetail();
             url:PROVINCE_LIST,
             type:'get',
             headers: {
-                        'Token': localStorage.getItem('token')
+                        'Token': docCookies.getItem("token")
                     },
             success: function(data){
                 // console.log(data);
@@ -929,7 +929,7 @@ getprovincedetail();
             url: PAGES_MODULERUN_LIST,
             type: 'GET',
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data){
                 if (data.code == 200){
@@ -1059,7 +1059,7 @@ getprovincedetail();
       }
     }
 
-    init__(localStorage.getItem('token'));*/
+    init__(docCookies.getItem("token"));*/
 })
 
 // 配送列表
@@ -1068,7 +1068,7 @@ getprovincedetail();
                     url:GOODS_RANGE_LISTS,
                     type:'post',
                     headers: {
-                        'Token': localStorage.getItem('token')
+                        'Token': docCookies.getItem("token")
                     },
                     success: function(data){
                         // console.log(data);
@@ -1413,7 +1413,7 @@ $(function(){
                     type:'post',
                     data:params,
                     headers: {
-                        'Token': localStorage.getItem('token')
+                        'Token': docCookies.getItem("token")
                     },
                     success: function(data){
                         // console.log(data);

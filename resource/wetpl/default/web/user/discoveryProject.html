@@ -102,7 +102,7 @@
             url:PROJECT_INFO+'/'+weid,
             type:'get',
             headers: {
-                    'Token': localStorage.getItem('token')
+                    'Token': docCookies.getItem("token")
                 },
             success:function(data){
                 console.log(data);
