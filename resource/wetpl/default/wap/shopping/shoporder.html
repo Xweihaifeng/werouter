@@ -143,38 +143,26 @@
     </div>
 
     <!--选择收货地址Begin-->
-    <div id="list-address-wrapper" class="nctouch-full-mask hide">
-        <div class="nctouch-full-mask-bg"></div>
-        <div class="nctouch-full-mask-block">
-            <div class="header">
-                <div class="header-wrap">
-                    <div class="header-l"><a href="javascript:void(0);"> <i class="back"></i> </a></div>
-                    <div class="header-title">
-                        <h1>收货地址</h1>
-                    </div>
-                </div>
-            </div>
-            <div class="nctouch-main-layout"
-                 style="display: block; position: absolute; top: 2rem; right: 0; left: 0; bottom:4.6rem; overflow: scroll; z-index: 1;"
-                 id="list-address-scroll">
-                <ul class="nctouch-cart-add-list" id="list-address-add-list-ul"
-                    style="transition-timing-function: cubic-bezier(0.1, 0.57, 0.1, 1); transition-duration: 0ms; transform: translate(0px, 0px) translateZ(0px);">
-                    <li class="selected" v-for="item in order_address_list"> 
-                        <i></i>
-                        <dl>
-                            <dt>收货人：<span id="">{{item.name}}</span><span>{{item.telophone}}</span><sub v-if="item.status == 1">默认</sub>
-                            </dt>
-                            <dd><span id="">{{order_address_default.province_name}} {{order_address_default.area_name}} {{order_address_default.detail}}</span>
-                            </dd>
-                        </dl>
-                    </li>
-                </ul>
-            </div>
-            <div id="addresslist" class="mt10" style="position: absolute; right: 0; left: 0; bottom: 0; z-index: 1;"><a
-                    href="javascript:void(0);" class="btn-l" id="new-address-valve"
-                    style="font-size: .72727273rem;background: none;border: 1px solid #7A232E;">+ 添加地址</a></div>
-
+    <div id = "select_address" class="hide">
+        <div class="nctouch-main-layout"
+             style="display: block; position: absolute; top: 2rem; right: 0; left: 0; bottom:4.6rem; overflow: scroll; z-index: 1;"
+             id="list-address-scroll">
+            <ul class="nctouch-cart-add-list" id="list-address-add-list-ul"
+                style="transition-timing-function: cubic-bezier(0.1, 0.57, 0.1, 1); transition-duration: 0ms; transform: translate(0px, 0px) translateZ(0px);">
+                <li class="selected" v-for="item in order_address_list"> 
+                    <i></i>
+                    <dl>
+                        <dt>收货人：<span id="">{{item.name}}</span><span>{{item.telophone}}</span><sub v-if="item.status == 1">默认</sub>
+                        </dt>
+                        <dd><span id="">{{order_address_default.province_name}} {{order_address_default.area_name}} {{order_address_default.detail}}</span>
+                        </dd>
+                    </dl>
+                </li>
+            </ul>
         </div>
+        <div id="addresslist" class="mt10" style="position: absolute; right: 0; left: 0; bottom: 0; z-index: 1;"><a
+                href="javascript:void(0);" class="btn-l" id="new-address-valve"
+                style="font-size: .72727273rem;background: none;border: 1px solid #7A232E;">+ 添加地址</a></div>
     </div>
     <!--选择收货地址End-->
     <!--新增收货地址Begin-->
@@ -244,35 +232,30 @@
     <div id="goodslist_before" class="mt5">
         <div id="deposit">
             <div class="nctouch-cart-container">
-                
+
                 <ul class="nctouch-cart-item">
                     <div class="ding hide">
                     </div>
                     <li class="buy-item">
-                        <div class="goods-pic" style="top:1.3rem">
-                            <input type="hidden" name="cart_id" value="637488">
-                            <a href="http://m.didao-zx.com/shop_wap//tmpl/product_detail.html?goods_id=2338">
-                                <img src="http://static.didao-zx.com/upload/media/29ada1218e263b16cfe213624914fab0/851906/364/image/20171220/1513737630193974.jpg">
+                        <div class="goods-pic" >
+                            <a>
+                                <img :src="order_goods_detail.cover | img_src(100,100)">
                             </a>
                         </div>
                         <dl class="goods-info">
                             <dt class="goods-name">
-                                <a href="http://m.didao-zx.com/shop_wap//tmpl/product_detail.html?goods_id=2338">
-                                    【地道甄选】皖南菜籽油2.5L
-
+                                <a>
+                                    {{order_goods_detail.title}}
                                 </a>
                             </dt>
-                            <dd class="goods-type">规格:2.5L</dd>
+                           <!--  <dd class="goods-type">规格:2.5L</dd> -->
                         </dl>
                         <div class="goods-subtotal">
-                            <span class="goods-price" style="top:1.3rem">￥75.00</span>
+                            <span class="goods-price" style="top:1.3rem">￥{{order_goods_detail.price}}</span>
                         </div>
                         <div class="goods-num" style="top: 1.939393rem;">
                             x1
-
-
                         </div>
-                        <div class="notransport" style="display:none;"><p>该商品不支持配送</p></div>
                     </li>
                 </ul>
                 <div class="nctouch-cart-subtotal">
@@ -329,14 +312,42 @@ new Vue({
         'order_sell_list' : [],
         'order_address_list' : [],
         'order_address_default' : {},
+        'order_goods_detail' : {},
+        'order_goods_id' : window.location.pathname.split('/').pop(),
+        'order' : {
+            'postage' : 0,
+            'price' : 0,
+            'num' : 1
+        }
     },
     mounted: function(){
         $app.set_title('确认订单');
         this.$nextTick(()=>{
+            // 获取收货地址列表
             this.get_address_list();
+
+            // 获取产品信息
+            this.get_goods();
         });
     },
     methods:{
+        // 获取产品信息
+        get_goods()
+        {
+            ajax.get('goods/detail/'+ this.order_goods_id).then((res)=>{
+                this.order_goods_detail = res.data;
+
+                this.order.price = this.order_goods_detail.price * this.order.num;
+
+                if(this.order_goods_detail.postage_status == 2)
+                {
+                    if(this.order_goods_detail.postage_max_money > 0)
+                    {
+                        
+                    }
+                }
+            });
+        },
         // 获取全部收货地址
         get_address_list()
         {
@@ -372,14 +383,13 @@ new Vue({
         // 添加收货地址方法
         add_address()
         {   
-            console.log($('list-address-wrapper'));
             // return false;
-            // layer.open({
-            //   type: 1
-            //   ,content: $('list-address-wrapper').html()
-            //   ,anim: 'up'
-            //   ,style: 'position:fixed; left:0; top:0; width:100%; height:100%; border: none; -webkit-animation-duration: .5s; animation-duration: .5s;'
-            // });
+            layer.open({
+              type: 1
+              ,content: $('#select_address').html()
+              ,anim: 'up'
+              ,style: 'background:#fff;position:fixed; left:0; top:0; width:100%; height:100%; border: none; -webkit-animation-duration: .5s; animation-duration: .5s;'
+            });
         },
         // 修改收货地址
         up_address()
