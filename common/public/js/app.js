@@ -87,9 +87,14 @@
 	//获取第一段路由
 	app.first_router = function(){
 		// .;
-		var pathname = window.location.pathname
-		pathname = pathname.substr(1).split('/')[1,2];
-		console.log(pathname);
+		var pathname = window.location.pathname;
+		//var pathname_obj = pathname.substr(1).split('/');
+		var pathname_string = pathname.substr(1).split('/').shift();
+		if(pathname_string == 'm')
+		{
+			return pathname.substr(1).split('/')[1];
+		}
+		return pathname.substr(1).split('/')[0]; 
 		
 	}
 

@@ -501,7 +501,7 @@ class router_index extends controller
         {
             $action = next($controller_uri);
         }
-        
+
         include $controller_file;  $c = new $file(); $c->public_data = $data; $c->{$action}(); exit();
      
     }
