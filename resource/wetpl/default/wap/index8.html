@@ -77,11 +77,15 @@
         data : {
             clicked : false,
             list_data:[],
-            magazine:[],
+            magazine:{
+                name:'',
+                intro: ''
+            },
             params : {
                 page : 1,
-                limit : 4,
+                limit : 8,
                 page_count : 0,
+
             },
             dom : '#magazine_table'
         },
@@ -93,7 +97,18 @@
         methods:{
             // 使用common_page 方法必须定义data方法 以及对象 params
             data(params , call){
-                return $mob_ajax.magazined(params , call);
+                ajax.get('/magazine/index' , {params :params} ).then((res)=>{
+                    if(res.code == 200 && res.data.list.length > 0) {
+                        if($app.empty(call) == false){
+                            call(false);
+                            return false;
+                        }
+                        this.magazine = res.data.magazine;
+                        call(res);
+                    } else {
+                        call(false);
+                    }
+                });
             },
             data_list() {
                 $mob_ajax.common_page(this , this.params);
