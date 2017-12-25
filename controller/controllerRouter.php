@@ -143,14 +143,14 @@ class controllerRouter extends controller
             $where = array('plat_id' => $row['plat_id'] , 'domain' => $row['domain']);
             $this->db->update('we_pages' , $set , $where);
         }
-        
+
         $wezchina_plats['plats_user_qrcode'] = $qrcode_img;
-        
+
         $wezchina_plats['plats_show'] = $plats_show;
-        
+
         return $wezchina_plats;
     }
-    
+
     // 验证个性域名
     public function domain($param , $uri)
     {
@@ -248,6 +248,7 @@ class controllerRouter extends controller
     // 频道额外规则
     public function channel( $param, $match = array())
     {
+
         $sql = 'SELECT we_plat_cms_template.template AS tml FROM we_plat_cms_channel  
                 LEFT JOIN we_plat_cms_template ON we_plat_cms_channel.list_id = we_plat_cms_template.weid
                 WHERE we_plat_cms_channel.plat_id =? AND  we_plat_cms_channel.domain = ?';
