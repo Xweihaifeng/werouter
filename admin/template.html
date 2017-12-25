@@ -67,12 +67,12 @@
         <input type="hidden" name="config-url" value="settings.html">
         <section class="content-header">
             <h1>
-                系统设置
+                模板设置
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> 首页</a></li>
-                <li><a href="#">系统设置</a></li>
-                <li class="active">基本设置</li>
+                <li><a href="#">模板管理</a></li>
+                <li class="active">模板设置</li>
             </ol>
         </section>
         <!-- Main content -->
@@ -94,15 +94,14 @@
                             <div class="form-group">
                                 <label class="col-sm-1">启用模板：</label>
                                 <div class="col-sm-5">
-                                    <input type="radio" value="1" name="http_type" checked> 否
-                                    <input type="radio" value="2" name="http_type"> 是
+                                    <input type="radio" value="1" name="is_custom" checked> 否
+                                    <input type="radio" value="2" name="is_custom"> 是
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-5" id="custom"></div>
                             </div>
                             <div class="pull-right">
-                                <button style="margin-right: 50px;" type="button" class="btn btn-success" id="updateCache">更新缓存</button>
                                 <button type="button" class="btn btn-info pull-right" id="updateSet">保存</button>
                             </div>
                         </form>
