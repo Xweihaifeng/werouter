@@ -1,32 +1,49 @@
 <script src="/common/public/js/layer_mobile/layer.js"></script>
-<div id="footer_add" style="display: none;">
-    <img src="https://www.wezchina.com/wap/tpl/default/images/activity_06.jpg" style=" max-width: 100%;display: block;margin: 0 auto;" />
-
-    <img onclick="close_footer_add();" style="position:absolute;top:94%;left:48%;width: 20px;z-index: 50555555555555;" src="https://www.wezchina.com/wap/tpl/default/images/activity_1.png" alt="">
-
-   <div  style="position:absolute;top:800rem;left:13%;width: 20px;z-index: 50555555555555;">
-        <a href="/wap/index.php?ctl=publish&amp;act=article">
-            <img width="65" height="65" class="list_01" src="https://www.wezchina.com/wap/tpl/default/images/activity_03.png" alt="">
-            <p class="list_text_left">发文章</p>
-        </a>
+<!--中间弹出层-->
+<div class="box" style="display: none;">
+    <div class="release">
+        <img src="https://www.wezchina.com/wap/tpl/default/images/activity_06.jpg" alt="">
+        <div class="content_s" style="margin-bottom: -400px;">
+            <div class="list_t">
+                <a href="/wap/index.php?ctl=publish&amp;act=deal">
+                    <img class="list_02" src="https://www.wezchina.com/wap/tpl/default/images/activity_02.png" alt="">
+                    <p class="list_text">发项目</p>
+                </a>
+            </div>
+            <div class="list">
+                <div class="list_footer_text">
+                    <a href="/wap/index.php?ctl=publish&amp;act=article">
+                        <img class="list_01" src="https://www.wezchina.com/wap/tpl/default/images/activity_03.png" alt="">
+                        <p class="list_text_left">发文章</p>
+                    </a>
+                </div>
+                <div class="list_footer_active">
+                    <a href="/wap/index.php?ctl=publish&amp;act=roadshow">
+                        <img class="list_03" src="https://www.wezchina.com/wap/tpl/default/images/activity_04.png" alt="">
+                        <p class="list_text_right">发活动</p>
+                    </a>
+                </div>
+            </div>
+            <img class="list_last" src="https://www.wezchina.com/wap/tpl/default/images/activity_1.png" alt="">
+        </div>
     </div>
-
-    <div  style="position:absolute;top:80%;left:33%;width: 20px;z-index: 50555555555555;">
-        <a href="/wap/index.php?ctl=publish&amp;act=deal">
-            <img width="65" height="65" class="list_02" src="https://www.wezchina.com/wap/tpl/default/images/activity_02.png" alt="">
-            <p class="list_text">发项目</p>
-        </a>
-    </div>
-
-    <div  style="position:absolute;top:88%;left:60%;width: 20px;z-index: 50555555555555;">
-        <a href="/wap/index.php?ctl=publish&amp;act=roadshow">
-            <img width="65" height="65" class="list_03" src="https://www.wezchina.com/wap/tpl/default/images/activity_04.png" alt="">
-            <p class="list_text_right">发活动</p>
-        </a>
-    </div>
-
-
 </div>
+</div>
+<!-- page 结束 -->
+<div class="head_search_mask"></div>
+<script>
+    window.onload=function(){
+        $(".bottom_mid").click(function(){
+            $(".box").show();
+            $(".content_s").css({"margin-bottom":"0px"});
+        });
+        $(".list_last").click(function(){
+            $(".box").hide();
+            $(".content_s").css({"margin-bottom":"-400px"});
+        });
+
+    };
+</script>
 <style>
     .layui-m-layerchild {
         border-radius: 2px;
