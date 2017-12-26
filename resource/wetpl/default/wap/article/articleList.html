@@ -12,7 +12,9 @@
         </div>
         <div class="swiper-pagination"></div>
     </div>
-    
+    <div class="banner" v-if="bannerList.length">
+        <a v-for="item in bannerList" v-if="item.src" :href="item.href"><img :src="item.src | img_src" alt=""></a>
+    </div>
     <div v-for="item in list_data">
         <a :href="item.domain + '/article/' + item.relation_id  | href"  v-if="item.dynamic_type == 1">
             <div class="art-content" >
@@ -70,12 +72,9 @@
     	el: '#app',
     	data : {
     		list_data:[],
-            advList:[
-                {
-                    src: '/common/img/banner.png',
-                    href : '#'
-                }
-            ],
+            advList:[],
+            bannerList:[],
+            url:'',
     		params : {
     			page : 1,
 	    		limit : 10,
@@ -87,6 +86,20 @@
     	},
         mounted() {
         	this.$nextTick(()=>{
+        	    var pos = window.location.href.indexOf(pages_index);
+        	    this.url = window.location.href.substring(0,pos);
+        	    console.log(this.url);
+        	    var defaultAdv = [
+                    {href:'#',src:this.url+'common/img/banner.png'},
+                    {href:'#',src:this.url+'common/img/bg2.jpg'},
+                    {href:'#',src:this.url+'/common/img/bg3.jpg'}
+                ];
+                var defaultBanner = [
+                    {href:'#',src:this.url+'common/img/adv_left.png'},
+                    {href:'#',src:this.url+'common/img/adv_right.png'}
+                ];
+                this.advList = defaultAdv;
+        	    this.bannerList = defaultBanner;
         		this.data_list();
         		var sendData = {
                     user_id : pages_info.plats_user.weid,
@@ -96,7 +109,9 @@
                     console.log(res);
                     if(res.code == 200 && res.data){
                         this.advList = JSON.parse(res.data.slide);
-                        console.log(this.advList)
+                        this.bannerList = JSON.parse(res.data.banner);
+                        console.log(this.advList);
+                        console.log(this.bannerList);
                     }
                 });
                 setTimeout(function(){
