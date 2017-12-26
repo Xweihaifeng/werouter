@@ -47,6 +47,9 @@
             </ul>
         </article>
     </div>
+    <div class="store-icon" v-if="showStore">
+        <i @click="window.location.href='/user/wemall/cart'"></i>
+    </div>
     <transition name="fade">
         <div class="modal-bg" v-show="showModal" @click="showModal=false"></div>
     </transition>
@@ -94,6 +97,7 @@
             currentShow: '',
             addGood: '',
             tipMsg: '',
+            showStore: false,
             unablePlus:false,
             unableReduce: true,
             showModal: false,
@@ -188,7 +192,6 @@
             },
             add : function (good,event) {
                 this.addGood = good;
-                console.log(good);
                 this.showModal = true;
                 this.buyNum = 1;
                 this.unablePlus = false;
@@ -206,7 +209,7 @@
                 ajax.get('mall/detail/' + this.addGood.mall_id).then(data => {
                     console.log(data);
                     if(data.code == 200 && data.data){
-                        window.location.href = '/' + pages_index + '/wemall/order/' + this.addGood.weid;
+                        window.location.href = '/' + pages_index + '/wemall/order/' + this.addGood.weid + '?num='+this.buyNum;
                     }
                 });
             },
@@ -218,7 +221,6 @@
                     mb_login(url);
                     return false;
                 }
-                //增加权限判断
                 let sendData = {
                     goods_id: this.addGood.weid,
                     goods_num: this.buyNum
@@ -228,9 +230,13 @@
                     console.log(data);
                     this.addStoreTip = true;
                     if(data.code == 200){
-                        this.tipMsg = '已成功添加到购物车'
+                        this.tipMsg = '已成功添加到购物车';
+                        this.showStore = true;
+                    }else if(data.code == -200 && data.message == '该商品已经加入购物车！'){
+                        this.tipMsg = data.message;
+                        this.showStore = true;
                     }else{
-                        this.tipMsg = '该商品已经加入购物车'
+                        this.showStore = false
                     }
                     setTimeout(function () {
                         self.addStoreTip = false
