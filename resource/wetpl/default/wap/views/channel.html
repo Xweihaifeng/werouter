@@ -90,12 +90,12 @@
                 }
             })
 
-            ajax.get("cms/index/list_news_by_channel?channel="+this.pathname).then((res) => {
+            ajax.get("cms/index/list_news_by_channel", {params : {channel: this.pathname, limit: 8}}).then((res) => {
                 if (res.data && res.code === 200) {
                     var channel_list = [];
                     res.data.forEach((item, index)=>{
-                        if(index % 2 === 0) {                            
-                            channel_list[Math.floor(index/2)] = new Array();                            
+                        if(index % 2 === 0) {
+                            channel_list[Math.floor(index/2)] = new Array();
                             this.isShow.push({id: item.weid, type: true, flag: 0})
                         } else {
                             this.isShow.push({id: item.weid, type: false, flag: 0})

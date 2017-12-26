@@ -3,11 +3,6 @@
 	show.header = 'no';
 </script>
 <link rel="stylesheet" type="text/css" href="{{PATH_TML}}css/search.css" />
-<style>
-	#footer .dbback {
-	    display: none!important;
-	}
-</style>
 
 <header  class="g-header g-header-v2">
 	<div class="g-header-search-wrap">
@@ -24,8 +19,8 @@
 		</div>
 		<div class="g-header-search-box" id="search-box">
 			<div class="g-header-search-form-container" style="position: relative;">
-				<form :class="form_class"  >
-					<div class="g-header-input-container"> <input placeholder="请输入关键字" keyup.enter="goSearchOpen()" id="q" name="q" class="g-header-q" maxlength="100" autocomplete="off" autocorrect="off" x-webkit-speech="" v-model="searchText" value=""> </div> <button type="submit" class="g-header-search-button" @click="goSearchOpen();">搜索</button> </form>
+				<div :class="form_class"  >
+					<div class="g-header-input-container"> <input placeholder="请输入关键字" keyup.enter="goSearchOpen()" id="q" name="q" class="g-header-q" maxlength="100" autocomplete="off" autocorrect="off" x-webkit-speech="" v-model="searchText" value=""> </div> <button type="submit" class="g-header-search-button" @click="goSearchOpen();">搜索</button> </div>
 				<div class="suggest-reset" style="display: none;"><i></i></div>
 			</div>
 		</div>

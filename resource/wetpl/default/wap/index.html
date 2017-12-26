@@ -31,11 +31,11 @@
         <!--栏目 end-->
         <!--搜索-->
         <div class="sous">
-            <form action="/so" method="post" name="sosoFrom">
-                <div class="sous_l"><input name="keyWord" type="text" class="sous_inp" placeholder="请输入关键词"></div>
-                <div class="sous_r"><input name="" type="submit" class="sous_but" value=""></div>
+            
+                <div class="sous_l"><input name="keyWord" type="text" class="sous_inp" placeholder="请输入关键词" v-model="searchText" keyup.enter="goSearchOpen()"></div>
+                <div class="sous_r"><input name="" type="submit" class="sous_but" value="" @click="goSearchOpen();"></div>
                 <div class="clear"></div>
-            </form>
+            
         </div>
       <!--搜索-->
     </div>
@@ -153,6 +153,7 @@
     var app = new Vue({
         el: '#app',
         data: {
+            searchText: '',
             news: [],
             views_show : false,
             especial_news: [],
@@ -187,6 +188,12 @@
             },
             video() {
 
+            },
+            goSearchOpen() {
+                var url = '';
+                url = all_domian + "so?q=" + this.searchText;
+                $app.open_page(url);
+                // return false;
             }
         }
     });
