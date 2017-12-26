@@ -65,7 +65,7 @@
     <div class="meili_nr" id="magazine_table">
         <li bgcolor="#FFFFFF" align="center" v-for="(value, key) in list_data">
             <div class="meili_nlb">
-                <a :href="'/magazine/'+magazine.ename+'/'+value.weid" target="_blank">
+                <a :href="'/magazine/'+magazine.ename+'/'+value.weid">
                     <span><img :src="ApiMaterPlatQiniuDomain + value.cover"></span>
                     <h2 v-html="value.title"></h2>
                 </a>
@@ -107,6 +107,8 @@
                             return false;
                         }
                         this.magazine = res.data.magazine;
+                        $app.set_title(res.data.magazine.name + ' - ' + plats_info.title);
+                        plats_info.show_title = res.data.magazine.name;
                         call(res);
                     } else {
                         call(false);
