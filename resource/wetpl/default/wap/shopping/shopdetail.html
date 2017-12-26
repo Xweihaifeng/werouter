@@ -288,14 +288,15 @@
                      style="position: absolute; top: 0.3rem; right: 0.2rem; color: #d5d5d5;"></div>
                 <h4>服务</h4>
                 <ul>
-                    <li><span class="red">• </span> 原产地直供<br> <span class="text">产品均来自原产地，若有问题请咨询在线客服</span></li>
-                    <li><span class="red">• </span> 48小时极速退款<br> <span class="text">收到退货包裹确认无误后，将在48h内办理退款，款项原路返回，各银行处理时间不同，将在1～7个工作日内到账</span>
+                    <li v-for="i in intro"><span class="red">• </span> {{i.service_title}}<br> <span class="text">{{i.service_content}}</span></li>
+                    <!--<li><span class="red">• </span> 原产地直供<br> <span class="text">产品均来自原产地，若有问题请咨询在线客服</span></li>-->
+                    <!--<li><span class="red">• </span> 48小时极速退款<br> <span class="text">收到退货包裹确认无误后，将在48h内办理退款，款项原路返回，各银行处理时间不同，将在1～7个工作日内到账</span>
                     </li>
                     <li><span class="red">• </span> 生鲜坏果包赔<br> <span class="text">生鲜类商品支持收货后24h内坏果包赔，若因无正当理由拒绝签收导致生鲜类商品出现损伤、腐烂情形的，相关运费及商品费用由买家承担</span>
                     </li>
                     <li><span class="red">• </span> 不配送区域<br> <span class="text">省份:北京,海南,西藏,甘肃,青海,宁夏,新疆,台湾,香港,澳门,内蒙古,辽宁,吉林,黑龙江,上海</span><br>
-                    </li>
-                    <!-- 下面的是促销提示字段，为了兼容老版的详情页添加，按道理不应该在服务里面显示促销提示的字段的 -->  </ul>
+                    </li>-->
+                </ul>
                 <div class="close serviceclose">完成</div>
             </div>
         </div>
@@ -334,6 +335,7 @@
                     pictures: [],
                     content: ''
                 },
+                intro: [],
                 service: []
             },
             created: function () {
@@ -360,6 +362,7 @@
                     this.goods.quantity = goods.stock;
                     this.goods.pictures = pics.split(',').map(x => ApiMaterPlatQiniuDomain + x);
                     this.goods.content = goods.content;
+                    this.intro = JSON.parse(goods.service);
                     this.service = JSON.parse(goods.service);
                     if (this.service != null) {
                         this.service = splitArray(this.service, [], 2);
