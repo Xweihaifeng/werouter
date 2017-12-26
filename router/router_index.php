@@ -399,7 +399,7 @@ class router_index extends controller
         {
             $plats['var all_domian'] = $protocol.$_SERVER['HTTP_HOST'].'/m/';  //测试环境使用
         }
-
+        
         $plats['var root_domain'] = $this->_get_root_domain($_SERVER['HTTP_HOST']);
         $plats['var is_domain'] = 'no';
         $plats['var is_wx'] = is_weixin();

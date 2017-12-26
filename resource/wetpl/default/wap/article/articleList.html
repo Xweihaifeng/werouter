@@ -12,7 +12,7 @@
         </div>
         <div class="swiper-pagination"></div>
     </div>
-
+    
     <div v-for="item in list_data">
         <a :href="item.domain + '/article/' + item.relation_id  | href"  v-if="item.dynamic_type == 1">
             <div class="art-content" >
@@ -70,7 +70,12 @@
     	el: '#app',
     	data : {
     		list_data:[],
-            advList:[],
+            advList:[
+                {
+                    src: '/common/img/banner.png',
+                    href : '#'
+                }
+            ],
     		params : {
     			page : 1,
 	    		limit : 10,
