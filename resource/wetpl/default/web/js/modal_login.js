@@ -376,7 +376,7 @@ $(function() {
                 localStorage.setItem('phone', data.data.phone);
                 //setCookie(data.token, data.weid, 7);
                 docCookies.setItem("token", data.token, new Date().getTime() + 7 * 24*60*60*1000, "/", '.' + root_domain);
-                docCookies.setItem("weid", data.weid, new Date().getTime() + 7 * 24*60*60*1000, "/", '.' + root_domain);
+                docCookies.setItem("weid", data.data.weid, new Date().getTime() + 7 * 24*60*60*1000, "/", '.' + root_domain);
                 if (data.data.phone === null || data.data.phone === undefined || data.data.phone === '') {
                     location.href = siteUrl + "/bind";
                 } else {
