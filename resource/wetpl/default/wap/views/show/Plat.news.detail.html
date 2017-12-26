@@ -1,7 +1,8 @@
 <#extend#>public/coc/coc_extend.html</#extend#>
 <script type="text/javascript">
+    show.footer = 'no';
+    show.header = 'no';
     if($app.get_query_string('from') == 'weplats') {
-        show.footer = 'yes';
         show.footer = 'yes';
     }
 </script>
@@ -14,7 +15,7 @@
     </div>
     <div class="auth-info">
         <div class="auth-original" style="" v-if="news_detail.is_original == 1">原创</div>
-        <div class="auth-date">{{news_detail.publish_time.substring(0,10)}}</div>
+        <div class="auth-date">{{news_detail.publish_time | formateString(3)}}</div>
         <div class="auth-name" style="display: none;"></div>
         <div class="auth-publisher" style="margin-right: 0.08rem;" v-html="news_detail.publisher"></div>
         <div class="auth-main">

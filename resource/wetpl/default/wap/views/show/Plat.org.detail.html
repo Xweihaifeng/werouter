@@ -1,13 +1,12 @@
 <#extend#>public/coc/coc_extend.html</#extend#>
-
-<link rel="stylesheet" href="{{PATH_TML}}views/css/Plat.news.detail.css">
 <script type="text/javascript">
+    show.footer = 'no';
     show.header = 'no';
     if($app.get_query_string('from') == 'weplats') {
-          show.header = 'no';
-          // show.foorer = 'no';
+        show.footer = 'yes';
     }
 </script>
+<link rel="stylesheet" href="{{PATH_TML}}views/css/Plat.news.detail.css">
 
 <div class="clear"></div>
 <div id="read" style="background-color:#fff">
@@ -16,15 +15,15 @@
     </div>
     <div class="auth-info">
         <div class="auth-original" style="" v-if="news_detail.is_original == 1">原创</div>
-        <div class="auth-date">{{news_detail.publish_time}}</div>
+        <div class="auth-date">{{news_detail.publish_time | formateString(3)}}</div>
         <div class="auth-name" style="display: none;"></div>
         <div class="auth-publisher" style="margin-right: 0.08rem;" v-html="news_detail.publisher"></div>
         <div class="auth-main">
-            <a href="/kezunping/wecard/" style="color: #607fa6; text-decoration: none;" v-html="news_detail.auth"></a>
+            <a :href="'/'+channels+'/'+category.domain" style="color: #607fa6; text-decoration: none;" v-html="category.title"></a>
         </div>
     </div>
     <div id="read-art" v-html="news_detail.content"></div>
-    <div id="footer">
+    <div id="footer_bottom">
         <div class="read-org" style="">
             <a :href="news_detail.source_url">阅读原文</a>
         </div>
@@ -44,12 +43,13 @@
             category : '',
             zan_true : '',
             plats_info: plats_info,
-            id : window.location.pathname.split('/').pop()
+            channels : $app.get_router(1),
+            id : $app.get_router(2),
         },
         mounted: function() {
             ajax.get('cms/detail/'+this.id).then((res) => {
                 if (res.data && res.code === 200) {
-                    console.log(res.data);
+                    console.log(this.news_detail);
                     this.news_detail = res.data;
                     this.category = res.data.category;
                     plats.title = res.data.category.title;
