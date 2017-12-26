@@ -61,7 +61,7 @@
     <div class="sytjlb">
         <ul>
             <li v-for="(item, index) in news" v-if="index < 6">
-                <a :href="init_domian.news +'/'+ item.weid | href"><span class="sytjlb_fl">[{{item.cate_title}}]</span>
+                <a :href="init_domian.news +'/'+ item.weid | href('weplats')"><span class="sytjlb_fl">[{{item.cate_title}}]</span>
                     <h2><b style="font-weight:normal; color:">{{item.title}}</b></h2><span class="sytjlb_sj">{{item.created_at | formateTime('YMD')}}</span>
                 </a>
             </li>
@@ -82,20 +82,19 @@
         </div>
         <div class="clear"></div>
     </div>
-    <!--视频中心-->
+    <!--重点专题-->
     <div class="syzdzt_dh"><img src="{{PATH_TML}}/img/index/hs_ic.jpg"><h1>重点专题</h1></div>
     <div class="clear"></div>
     <div class="syzdzt_pc">
         <div class="syzdzt_pcmr">
             <ul>
                 <li v-for="item in ztbd.list">
-                    <a :href="ztbd.domain + '/'+ item.domain | href('weplats')"><img :src="item.thumb_image | img_src"></a>
+                    <a :href="ztbd.domain + '/'+ item.domain"><img :src="item.thumb_image | img_src"></a>
                 </li>
             </ul>
         </div>
         <div class="clear"></div>
     </div>
-    <!--重点专题 end-->
     <!--快捷服务-->
     <div class="syzdzt_dh"><img src="{{PATH_TML}}/img/index/hs_ic.jpg"><h1>快捷直通</h1></div>
     <div class="clear"></div>
