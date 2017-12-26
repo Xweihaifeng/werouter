@@ -368,7 +368,7 @@
                             json.data.list[i].id = i + 1;
                             json.data.list[i].thumb_image = json.data.list[i].thumb_image ? '<img src="' + ApiMaterPlatQiniuDomain + json.data.list[i].thumb_image + '"  data-action="zoom" width="50" height="50">' : '';
                             json.data.list[i].init = json.data.list[i].init ? '<span class="label label-primary">是</span>' : '<span class="label label-default">否</span>';
-                            json.data.list[i].operation = '<a href="contentCategory.html?channel=' + json.data.list[i].weid + '" class="btn btn-success">查看栏目</a>' + '&nbsp;&nbsp;' + '<a href="channel_edit.html?id=' + json.data.list[i].weid + '" class="btn btn-info">编辑</a>' + '&nbsp;&nbsp;' + (_init == 1 ? '' : '<button class="btn btn-danger btn-delete"  data-id="' + json.data.list[i].weid + '" data-toggle="popover" data-placement="left" data-trigger="focus" data-html="true" title="确定要删除？" data-content="<button class=' + "'btn btn-danger btn-delete-confirm'" + '  data-id=' + "'" + json.data.list[i].weid + "'" + '>确认</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class=' + "'btn btn-default'" + '>取消</button>" >删除</button>');
+                            json.data.list[i].operation = '<a href="contentCategory.html?channel=' + json.data.list[i].weid + '" class="btn btn-success">查看栏目</a>' + '&nbsp;&nbsp;' + '<a href="channel_edit.html?id=' + json.data.list[i].weid + '" class="btn btn-info">编辑</a>' + '&nbsp;&nbsp;' + (_init == 1 ? '<button class="btn btn-primary btn-delete"  data-id="' + json.data.list[i].weid + '" data-toggle="popover" data-placement="left" data-trigger="focus" data-html="true" title="确定要初始化？" data-content="<button class=' + "'btn btn-primary btn-csh-confirm'" + '  data-id=' + "'" + json.data.list[i].weid + "'" + ' data-init_type=' + "'" + json.data.list[i].init_type + "'" + '>确认</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class=' + "'btn btn-default'" + '>取消</button>" >初始化栏目</button>' : '')+(_init == 1 ? '' : '<button class="btn btn-danger btn-delete"  data-id="' + json.data.list[i].weid + '" data-toggle="popover" data-placement="left" data-trigger="focus" data-html="true" title="确定要删除？" data-content="<button class=' + "'btn btn-danger btn-delete-confirm'" + '  data-id=' + "'" + json.data.list[i].weid + "'" + '>确认</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class=' + "'btn btn-default'" + '>取消</button>" >删除</button>');
                         }
                         return json.data.list;
 
@@ -437,6 +437,29 @@
                     } else {
                         swal('提示', data.message, 'error');
                     }
+                },
+                error: function(xhr) {
+                    console.log(xhr);
+                }
+            });
+        });
+        $(document).on('click', '.btn-csh-confirm', function() {
+           //alert($(this).parent('button').attr("class"));
+            $.ajax({
+                url: ApiUrl + 'cms/initCate',
+                type: 'post',
+                data: {
+                    channel_id:$(this).data('id'),
+                    init_type:$(this).data('init_type')
+                },
+                dataType: 'json',
+                success: function(data) {
+                    if (data.code == 200) {
+                        swal({text: data.message,type: 'success', timer: 20000});
+                    } else {
+                         swal({text: data.message,type: 'error', timer: 20000});
+                    }
+                    //$(this).attr("disabled", "true");
                 },
                 error: function(xhr) {
                     console.log(xhr);
