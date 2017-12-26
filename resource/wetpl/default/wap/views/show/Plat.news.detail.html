@@ -3,9 +3,7 @@
     show.header = 'no';
 </script>
 <style>
-    [v-cloak] {
-        display: none;
-    }
+    [v-cloak] { display: none; }
 </style>
 
 <div id="viewport" class="viewport" v-cloak style="width:100%;margin-bottom:15px">
@@ -29,8 +27,8 @@
             <div class="xxsh_fen">
                 <!-- <span>分享给好友阅读：</span> -->
                 <div class="left">
-                    <a href="javascript:void(0)" class="bds_more" >
-                        <img src="/common/img/like.png" style="width:20px;margin-top:3px" @click="zan()">{{news_detail.praise_num}}
+                    <a href="javascript:void(0)" class="bds_more" style="display: flex; align-items: flex-end;">
+                        <img src="/common/img/like.png" @click="zan()" style="width: 20px; height: 20px; margin-top: 3px; padding-right: 0.3em;">{{news_detail.praise_num}}
                     </a>
                 </div>
             </div>
