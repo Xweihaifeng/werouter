@@ -29,7 +29,7 @@
         <!--搜索-->
         <div class="sous">
             <!-- <form name="sosoFrom"> -->
-                <div class="sous_l"><input name="keyWord" type="text" class="sous_inp" placeholder="请输入关键词" v-model="searchText" keyup.enter="goSearchOpen()"></div>
+                <div class="sous_l"><input name="keyWord" type="text" class="sous_inp" placeholder="请输入关键字" v-model="searchText" keyup.enter="goSearchOpen()"></div>
                 <div class="sous_r"><input name="" type="submit" class="sous_but" value="" @click="goSearchOpen();"></div>
                 <div class="clear"></div>
             <!-- </form> -->
@@ -89,7 +89,7 @@
         <div class="syzdzt_pcmr">
             <ul>
                 <li v-for="item in ztbd.list">
-                    <a :href="ztbd.domain + '/'+ item.domain | href"><img :src="item.thumb_image | img_src"></a>
+                    <a :href="ztbd.domain + '/'+ item.domain | href('weplats')"><img :src="item.thumb_image | img_src"></a>
                 </li>
             </ul>
         </div>

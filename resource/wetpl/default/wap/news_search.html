@@ -7,7 +7,10 @@
 <header  class="g-header g-header-v2">
     <div class="g-header-search-wrap">
         <div class="g-header-nav-wrap">
-            <h1  class="g-header-logo" style="vertical-align:middle"><img :src="logo_bg | img_src(28 ,28)" /><img src="/common/img/sou_title.png" height="28px" /></h1>
+            <h1  class="g-header-logo" style="vertical-align:middle">
+                <a href="/"><img :src="logo_bg | img_src(28 ,28)" /></a>
+                <img src="/common/img/sou_title.png" height="28px" />
+            </h1>
             <div class="g-header-nav">
                 <div class="g-header-nav-inner">
                     <nav v-if="index < 4" v-for="(item , index) in columnList" @click="currentActive=item.domain;goSearchOpen()">
