@@ -14,7 +14,7 @@
             </ul>
         </div>
         <div class="clear"></div>
-        <div class="xinxlt_lb" v-if="show_content = false">
+        <div class="xinxlt_lb" v-if="show_content == false">
             <ul id="con_list">
                 <li v-for="(item, index) in list_data">
                     <a :href="cate_name+ '/' + item.weid | href('weplats')">
@@ -22,7 +22,7 @@
                 </li>
             </ul>
         </div>
-        <div class="xinxlt_lb" v-if="show_content = true">
+        <div class="xinxlt_lb" v-if="show_content == true">
             <br/>
             <ul id="con_list" v-html = "content">
             </ul>
