@@ -27,8 +27,8 @@
 
     <!--头条-->
     <div class="lthot" v-for="(item, index) in hot">
-        <h1><a :href="pathname + '/' + item.weid | href('weplats')"><b style="font-weight:normal;text-align:left;color:#007cd3" v-html="item.title"></b></a></h1>
-        <p><a :href="pathname + '/' + item.weid | href('weplats')">{{item.summary | limitLen(0,80)}}<span>[查看全文]</span></a></p>
+        <h1><a :href="pathname + '/' + item.weid | href('weplats')"><b style="font-weight:normal;text-align:left;color:#007cd3;width: 388px;overflow: hidden;white-space: nowrap;display: inline-block;" >{{item.title | limitLen(0,24)}}</b></a></h1>
+        <p><a :href="pathname + '/' + item.weid | href('weplats')">{{item.summary | limitLen(0,83)}}<span>[查看全文]</span></a></p>
         <div class="clear"></div>
     </div>
     <div class="clear"></div>
@@ -88,7 +88,7 @@
                     $app.set_title(plats_info.title);
                     plats.show_title = '首页';
                     plats.title = res.data.title;
-                    plats.url = all_domain + this.pathname;
+                    plats.url = all_domian + this.pathname;
                 }
             })
 
