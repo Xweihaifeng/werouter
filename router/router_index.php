@@ -363,8 +363,10 @@ class router_index extends controller
         }
         $config = file_get_contents('configure.js');
 
-        $config = str_replace('{{url}}', $domain , $config);
+        //$config = str_replace('{{url}}', $domain , $config);
 
+        $config = str_replace('{{url}}', $_SERVER['HTTP_HOST'] , $config);
+        
         $config .= "\n".'const WWW_PATH= "'.$this->file.'";';
 
         $cache_config_file = '/config/web/'.md5($domain).'.js';
