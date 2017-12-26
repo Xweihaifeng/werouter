@@ -456,8 +456,13 @@ $(document).ready(function() {
                     '<div class="clon1"></div>' +
                     '<div class="sign_head_contain">' +
                     '<div class="act_title">' +
-                    (rep.data.type == 1 ? '<img src="\/common\/img\/ticket-jia.png" >' : '<p>￥<b>' +
-                        rep.data.price + `</b> / 每人</p>`) +
+                    '<div class="mp">' +
+                        '<ul>' +
+
+                        '</ul>' +
+                    '</div>' +
+                    /*(rep.data.type == 1 ? '<img src="\/common\/img\/ticket-jia.png" >' : '<p>￥<b>' +
+                        rep.data.price + `</b> / 每人</p>`) +*/
                     '</div></div>' +
                     '</div>' +
 
@@ -511,6 +516,37 @@ $(document).ready(function() {
                     '</div>',
                 success: function() {
                     CurrentActivity = rep.data;
+                    $.ajax({
+                        url: apiUrl + 'activity/tickets?activity_id=' + window.location.pathname.split('/').pop(),
+                        type: 'GET',
+                        success: function(data){
+                            console.log(data);
+                            var ids = [];
+                            $(".mp ul").append(
+                                data.data.reduce((res, e, i) =>
+                                    (ids.push(e.weid),
+                                    res += '<li id="' + e.weid + '">' +
+                                            '<img src="/common/img/rmb.png">' +
+                                            '<p class="price">' + e.price + '</p>' +
+                                            '<div>' +
+                                            '<p class="tkname">' + e.name + '</p>' +
+                                            '<p class="tkdscp">' + e.description + '</p>' +
+                                            '</div>' +
+                                            '</li>')
+                                , '')
+                            );
+                            $(".mp ul li").click(function(e) {
+                                var id = $(e.target).parents('li').attr('id');
+                                tid = id;
+                                ids.filter(x => x != id).map(x => $('#' + x).css('border', '1px solid #dddddd'));
+                                ids.filter(x => x != id).map(x => $('#' + x + ' .price').css('color', '#555'));
+                                ids.filter(x => x != id).map(x => $('#' + x + ' img').attr('src', '/common/img/rmb.png'));
+                                $('#' + id).css('border', '1px solid #ffb03f');
+                                $('#' + id + ' .price').css('color', '#ffb03f');
+                                $('#' + id + ' img').attr('src', '/common/img/rmbo.png');
+                            })
+                        }
+                    })
                 },
                 end: function() {
                     //location.reload();
@@ -675,12 +711,18 @@ $(document).ready(function() {
                     logBt();
             }
         });
+        var tid; //购票id
         setTimeout(function() {
             $(".apply_submit").bind("click", function() {
                 var name = $('#username').val();
                 var telphone = $('#phone').val();
                 var poistion = $("#zhiw").val();
                 var company = $("#gongsi").val();
+                if (tid == undefined) {
+                    layer.msg('请选择门票', {
+                        time: 1000
+                    })
+                }
                 if (name == "") {
                     layer.msg("请输入名字", {
                         time: 1000
@@ -720,7 +762,8 @@ $(document).ready(function() {
                     name: name,
                     telphone: telphone,
                     poistion: poistion,
-                    company: company
+                    company: company,
+                    ticket_id: tid
                 }
                 $.ajax({
                     url: ACTIVITY_ENROLL_STORE,
@@ -845,10 +888,11 @@ $(document).ready(function() {
                             $(".view_num").text(data.data.view_num);
                             $(".city").text(data.data.area_name);
                             $(".apply_num").text(data.data.enroll_num);
-                            if (data.data.type == 1 || parseFloat(data.data.price) === 0) {
+                            if (data.data.type == 1) {
                                 $(".pay-type span").text('免费');
                             } else {
-                                $(".pay-type span").html('￥<b>' + data.data.price + '</b>');
+                                //$(".pay-type span").html('￥<b>' + data.data.price + '</b>');
+                                $(".pay-type span").html('收费');
                             }
                             if (data.data.enroll_limit > 0) {
                                 $(".enroll_limit").text(data.data.enroll_limit);
