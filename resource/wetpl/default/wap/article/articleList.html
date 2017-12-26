@@ -12,9 +12,10 @@
         </div>
         <div class="swiper-pagination"></div>
     </div>
-    <div class="banner" v-if="bannerList.length">
-        <a v-for="item in bannerList" v-if="item.src" :href="item.href"><img :src="item.src | img_src" alt=""></a>
-    </div>
+    <br/>
+<!--     <div class="banner" v-if="bannerList.length">
+        <a v-for="item in bannerList" v-if="item.src" :href="item.href"><img :src="item.src | img_src" alt=""></a>&nbsp;
+    </div> -->
     <div v-for="item in list_data">
         <a :href="item.domain + '/article/' + item.relation_id  | href"  v-if="item.dynamic_type == 1">
             <div class="art-content" >
