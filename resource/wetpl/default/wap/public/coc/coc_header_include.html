@@ -18,22 +18,22 @@
 	</div>
 	<div class="hea_rg">
 		<h2>{{plats.show_title}}</h2>
-<!-- 		<div id="dl-menu" class="dl-menuwrapper">
+		<div id="dl-menu" class="dl-menuwrapper">
 			<button id="dl-menu-button" class="">
-			<div class="dl-menu-wz">
+			<div  class="dl-menu-wz" @click="menu_open=!menu_open">
 				<img src="/resource/wetpl/default/wap/img/index/fllm.png">导航
 			</div>
 			</button>
-			<ul class="dl-menu">
-				<li><a href="/">首&nbsp;页</a></li>
-				<li><a href="/index4">资讯中心</a></li>
-				<li><a href="javascript:void(0)">信息公开</a></li>
-				<li><a href="javascript:void(0)">在线服务</a></li>
-				<li><a href="javascript:void(0)">互动交流</a></li>
-				<li><a href="/index5">美丽秦川</a></li>
-				<li><a href="javascript:void(0)">部门导航</a></li>
+			<ul :class="{'dl-menu' :true , 'dl-menuopen' : menu_open}">
+				<li><a :href="'/' | href">首页</a></li>
+				<li><a :href="'news' | href">新闻中心</a></li>
+				<li><a :href="'org' | href">走近商会</a></li>
+				<li><a href="javascript:void(0)">互助专区</a></li>
+				<li><a href="javascript:void(0)">共享中心</a></li>
+				<li><a href="javascript:void(0)">天下秦商</a></li>
+				<li><a href="javascript:void(0)">网站导航</a></li>
 			</ul>
-		</div> -->
+		</div>
 	</div>
 </div>
 
