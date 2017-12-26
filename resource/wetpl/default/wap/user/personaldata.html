@@ -17,7 +17,7 @@
                     </label>
                 </p>
             </div>
-            <div class="my-right">
+            <div class="my-right" v-if="plats_user_info.domian!=''">
                 <a :href="pages_index">个人微主页 <i class="iconfont icon-xiangyou"></i></a>
             </div>
         </div>
@@ -134,12 +134,14 @@ new Vue({
             {
                 this.avatar = ApiMaterPlatQiniuDomain + plats_user_info.avatar;
             }
-            
-            // 获取统计数据
-            ajax.get('/circel/index' , {params : {'domain' : plats_user_info.domian}})
-            .then((data)=>{
-                this.nums = data.data;
-            });
+            if($app.empty(plats_user_info.domian) == true)
+            {
+                // 获取统计数据
+                ajax.get('/circel/index' , {params : {'domain' : plats_user_info.domian}})
+                .then((data)=>{
+                    this.nums = data.data;
+                });
+            }
         })
     }
 });

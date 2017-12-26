@@ -1,23 +1,10 @@
-<!DOCTYPE html>
-
-<html>
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-    <title>购物车页面</title>
-
-    <link rel="stylesheet" href="{{PATH_TML}}css/shopping-cart.css">
-
-    <script src="{{PATH_TML}}js/jquery-3.2.1.min.js"></script>
-    <script src="{{PATH_CONFIG}}"></script>
-    <script src="/common/js/layer/layer.js"></script>
-    <script src="{{PATH_TML}}js/vue.min.js"></script>
-    <script src="{{PATH_TML}}js/vue-resource.min.js"></script>
-
-</head>
-<body>
-<div id="shopCart" v-cloak>
+<#extend#>public/domain/domain_extend.html</#extend#>
+<script>
+    show.header = 'no';
+    show.footer = 'no';
+</script>
+<link rel="stylesheet" href="{{PATH_TML}}css/shopping-cart.css">
+<div id="shopCart">
     <header>
         <span>购物车</span>
         <a class="back" href="javascript:void(0)" onclick="javascript:history.back(-1)"></a>
@@ -75,26 +62,14 @@
 </div>
 
 <script>
-    Vue.http.headers.common['token'] = window.localStorage.getItem("token");
     var app = new Vue({
-        el: "#shopCart",
+        el: "#app",
         data: {
-            list   : [],
-            user_id: window.localStorage.getItem("weid")
+            list : [],
+            user_id: plats_user_info.weid
         },
         mounted: function () {
-
-/*            var domain = window.sessionStorage.getItem("goods_domain");
-            this.$http.get(apiUrl + 'pages/page/getDetailByDomain/' + domain).then(function (res) {
-                console.log(res);
-                if(res.data.code == 200) {
-                    this.user_id = res.data.data.plat_user_id;
-
-                }
-            })*/
-
             this.init()
-
         },
         methods: {
             init : function () {
@@ -102,18 +77,17 @@
                 var data = {
                     "user_id" : self.user_id,
                 };
-                console.log(data);
-                this.$http.post(apiUrl+'cart/lists', data).then(function (res) {
-                    var resList = res.data.data.list;
-                    if(resList && resList.length){
-                        for(var i=0;i<resList.length;i++){
+                ajax.post(apiUrl+'cart/lists', data).then(function (res) {
+                    if(res.code == 200 && res.data.list.length){
+                        var resList = res.data.list;
+                        for(var i=0; i<resList.length; i++){
                             resList[i].mall["pCheck"] = false;
                             for(var a = 0; a < resList[i].goods.length; a++){
                                 resList[i].goods[a]["checked"] = false
                             }
                         }
-                        this.list = res.data.data.list;
-                        console.log(this.list)
+                        self.list = res.data.list;
+                        console.log(self.list)
                     }
                 })
             },
@@ -156,14 +130,22 @@
                 if(oper === "add"){
                     item.goods_num++;
                     if (item.goods_num > item.stock) {
-                        layer.msg('商品数量已经超过库存')
+                        layer.open({
+                            content: '商品数量已经超过库存'
+                            ,skin: 'msg'
+                            ,time: 2 //2秒后自动关闭
+                        })
                         item.goods_num = item.stock
                     }
                 }
                 if(oper === "reduce"){
                     item.goods_num--;
                     if (item.goods_num <= 0) {
-                        layer.msg('商品数量不能小于1')
+                        layer.open({
+                            content: '商品数量不能小于1'
+                            ,skin: 'msg'
+                            ,time: 2 //2秒后自动关闭
+                        })
                         item.goods_num = 1;
                     }
                 }
@@ -202,23 +184,26 @@
             deletePro : function (pro) {
                 console.log(pro);
                 var self = this;
-                layer.confirm('确认删除该条商品吗？', {
-                    title: false,
-                    btn: ['确定','取消']
-                }, function(index){
-                    self.$http.post(apiUrl+'cart/destroy',{'weid' : pro.cartweid}).then(function (res) {
-                        console.log(res);
-                        if(res.data.code === 200){
-                            this.init()
-                        }else{
-                            layer.msg('删除失败')
-                        }
-                        layer.close(index);
-                    })
+                layer.open({
+                    content: '确认删除该条商品吗？'
+                    ,btn: ['确定','取消']
+                    ,yes: function(index){
+                        ajax.post(apiUrl+'cart/destroy',{'weid' : pro.cartweid}).then(function (res) {
+                            console.log(res);
+                            if(res.code === 200){
+                                self.init()
+                            }else{
+                                layer.open({
+                                    content: '删除失败'
+                                    ,skin: 'msg'
+                                    ,time: 2 //2秒后自动关闭
+                                })
+                            }
+                            layer.close(index);
+                        })
+                    }
                 });
             }
         }
     })
 </script>
-</body>
-</html>

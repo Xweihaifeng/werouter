@@ -267,7 +267,7 @@
                         <input type="text" name="remarks" placeholder="买家备注" rel="364" id="storeMessage364">
                     </div>
                     <div class="store-total">
-                        共{{order.num}}件商品&nbsp;小计：<span style="font-size:0.6rem;">￥<em id="storeTotal364">{{total_price - postage}}</em></span>
+                        共{{order.num}}件商品&nbsp;小计：<span style="font-size:0.6rem;">￥<em id="storeTotal364">{{total_price}}</em></span>
                     </div>
                 </div>
 
@@ -361,8 +361,8 @@ new Vue({
                     this.postage = this.order_goods_detail.postage * this.order.num;
                 }
             }
-            
-            this.total_price = ( this.order.price * this.order.num ).toFixed(2);
+
+            this.total_price = ( (this.order.price * this.order.num) + this.postage ).toFixed(2);
 
             this.postage = this.postage.toFixed(2);
         },

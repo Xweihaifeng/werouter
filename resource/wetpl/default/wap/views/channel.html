@@ -1,9 +1,5 @@
 <#extend#>public/coc/coc_extend.html</#extend#>
-<script type="text/javascript">
-    // show.header = 'no';
-    // show.footer = 'no';
-</script>
-<script src="{{PATH_TML}}js/jquery-3.2.1.min.js"></script>
+
 <script src="{{PATH_TML}}js/coc/swipe.min.js"></script>
 <style>
     [v-cloak] {
@@ -17,9 +13,9 @@
         <div id='mySwipe' class='swipe'>
             <div class='swipe-wrap'>
                 <div v-for="(item,index) in especial_news" v-if="index < 3"> 
-                    <a><img :src="item.thumb_image | img_src(300 , 200 , 1)" width="100%" height="220px" /></a> 
+                    <a :href="pathname + '/' + item.weid | href('weplats')"><img :src="item.thumb_image | img_src(300 , 200 , 1)" width="100%" height="220px" /></a> 
                     <div class="mySwipeceng">
-                        <div class="left"><b style='font-weight:normal'>崔歆在党建联系点调研党建工作</b></div>
+                        <div class="left"><b style='font-weight:normal'>{{item.title | limitLen(0,21)}}</b></div>
                         <div class="mySwip_rg"> <span class="mySwipetabdiancurr"></span><span class="mySwipetabdian"></span>
                             <span class="mySwipetabdian"></span>
                         </div>
@@ -31,8 +27,8 @@
 
     <!--头条-->
     <div class="lthot" v-for="(item, index) in hot">
-        <h1><b style="font-weight:normal;text-align:left" v-html="item.title"></b></h1>
-        <p><a href="jsvascript:void(0)">{{item.summary}}...<span>[查看全文]</span></a></p>
+        <h1><a :href="pathname + '/' + item.weid | href('weplats')"><b style="font-weight:normal;text-align:left" v-html="item.title"></b></a></h1>
+        <p><a :href="pathname + '/' + item.weid | href('weplats')">{{item.summary | limitLen(0,80)}}<span>[查看全文]</span></a></p>
         <div class="clear"></div>
     </div>
     <div class="clear"></div>
@@ -43,19 +39,18 @@
         <div class="Menubox">
             <dl>
                 <dd v-for="(value, key) in item" :id="'list_'+index+'_'+key" @click="setTab(value.weid,'list_'+index+'_'+key)" :class="{hover:selected == key}">
-                    {{value.title}}
+                    {{value.title | limitLen(0,6)}}
                 </dd>
             </dl>
         </div>
         <div class="Contentbox">
-            <!-- <div v-for="(value, key) in item" :class="'list_'+index+'_'+key" v-if="{active:selected == key}"> -->
             <div v-for="(value, key) in item" :class="'list_'+index+'_'+key" v-if="isShow.filter(x => value.weid == x.id)[0].type">
                 <div class="Menumore">
-                    <a :href="'/news/'+value.domain">更多</a>
+                    <a :href="pathname + '/' + value.domain">更多</a>
                 </div>
                 <ul class="Content_wz">
                     <li v-for="(val, inde) in value.detail">
-                        <a href="/index7">
+                        <a :href="pathname + '/' + val.weid | href('weplats')">
                             <h2><b style="font-weight:normal;" v-html="val.title"></b></h2><span class="sytjlb_sj">{{val.publish_time.substr(0, 10)}}</span>
                         </a>
                     </li>
@@ -90,17 +85,17 @@
 
             ajax.get("cms/channels/domain_query/"+this.pathname).then((res) => {
                 if (res.data && res.code === 200) {
-                    $app.set_title(res.data.search_name + ' - ' + plats_info.title);
-                    plats_info.show_title = res.data.search_name;
+                    $app.set_title(plats_info.title);
+                    plats.show_title = res.data.title;
                 }
             })
 
-            ajax.get("cms/index/list_news_by_channel?channel="+this.pathname).then((res) => {
+            ajax.get("cms/index/list_news_by_channel", {params : {channel: this.pathname, limit: 8}}).then((res) => {
                 if (res.data && res.code === 200) {
                     var channel_list = [];
                     res.data.forEach((item, index)=>{
-                        if(index % 2 === 0) {                            
-                            channel_list[Math.floor(index/2)] = new Array();                            
+                        if(index % 2 === 0) {
+                            channel_list[Math.floor(index/2)] = new Array();
                             this.isShow.push({id: item.weid, type: true, flag: 0})
                         } else {
                             this.isShow.push({id: item.weid, type: false, flag: 0})
@@ -160,7 +155,6 @@
                         }
                     }
                 }
-
             }
         },
     });

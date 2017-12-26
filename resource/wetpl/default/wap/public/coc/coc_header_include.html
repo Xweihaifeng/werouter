@@ -4,9 +4,15 @@
 <link rel="stylesheet" href="/common/jquery.animsition/css/animsition.min.css">
 <link rel="stylesheet" href="{{PATH_TML}}css/coc/mtcstyle.css">
 <link rel="stylesheet" href="{{PATH_TML}}css/coc/component.css">
-
+<script type="text/javascript">
+	var plats = {
+		'title' : '',
+		'show_title' : '',
+		'url' : ''
+	};
+</script>
 <div id="header" style="display: none;" class="hea">
-	<div onclick="location.href='/'" class="hea_lf">
+	<div @click=open(plats.url); class="hea_lf">
 		<img src="/resource/wetpl/default/wap/img/index/home.png">
 		<h1>{{plats.title}}</h1>
 	</div>
