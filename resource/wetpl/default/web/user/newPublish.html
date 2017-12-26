@@ -3,6 +3,7 @@
 <head lang="en">
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <script src="{{PATH_TML}}user/common/js/loading.js"></script>
     <script src="/common/js/jquery-3.2.1.min.js"></script>
     <script src="/common/js/browser.min.js"></script>
     <link rel="shortcut icon" id="favicon" href="" />
@@ -102,7 +103,7 @@
         </div>
 		<div class="art-link">
             <span style="display: flex; align-items: center;"><input type="checkbox" class="mgc mgc-primary mgc-lg" id="link-box" style="margin-top: -1px; margin-right: 15px;"/>原文链接</span>
-            <input name="art-link" type="text" id="art-link" size="30" class="form-control" maxlength="100"
+            <input name="art-link" type="text" id="art-link" size="30" class="form-control" maxlength="500"
                    placeholder="" wrap="hard" cols="100" style="margin-left: 15px; padding: 0 12px;display: none;" />
         </div>
         <div style="width: 100%; border-bottom: 1px solid #f0f0f0; margin-top: 20px;"></div>
@@ -120,12 +121,12 @@
 	                </div>
 	            </div>
 	        </div>
-	        <div style="margin: 15px 0 10px 0;">摘要<span style="margin-left: 15px; color: #999; padding: 0;">选填，如果不填写会默认抓取正文前54个字</span></div>
+	        <div style="margin: 15px 0 10px 0;">摘要<span style="margin-left: 15px; color: #999; padding: 0;">选填，如果不填写会默认抓取正文前140个字</span></div>
         </div>
         <div class="we-release-add">
             <div class="art-cover-intro">
                 <!-- <span>封面描述:</span> -->
-                <textarea name="summary" type="text" class="form-control" id="summary" size="30" maxlength="600"
+                <textarea name="summary" type="text" class="form-control" id="summary" size="30" maxlength="140"
                           placeholder="" wrap="hard" cols="30"></textarea>
             </div>
             <div class="art-type" style="display: flex; margin-top: 30px;">

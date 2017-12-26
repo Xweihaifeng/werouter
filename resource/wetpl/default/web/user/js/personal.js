@@ -11,6 +11,7 @@ if(sessionStorage.lastname=="we_title_1"){
 var favicon = ApiMaterPlatQiniuDomain + localStorage.getItem('fav');
 console.log('logo:',favicon);
 $('#favicon').attr('href', favicon);
+var id_card_number = ''
 
 var qiniu_uptoken = '';
 var saveto ='qiniu';
@@ -77,7 +78,7 @@ $(document).ready(function(){
     });
 
     //  登录token参数
-    var token = window.localStorage.getItem('token');
+    var token = docCookies.getItem("token");
     if(token) {
         $.ajaxSetup({
             global: true,
@@ -85,6 +86,16 @@ $(document).ready(function(){
                 'Token': token,
             }
         });
+    }
+
+    // 隐藏身份证号码
+    function plusXing (str,frontLen,endLen) { 
+        var len = str.length-frontLen-endLen;
+        var xing = '';
+        for (var i=0;i<len;i++) {
+            xing+='*';
+        }
+        return str.substring(0,frontLen)+xing+str.substring(str.length-endLen);
     }
 
     // 实名认证详情显示
@@ -101,7 +112,8 @@ $(document).ready(function(){
             if(result.is_authenticated == 1) {
                 $("#personal").show();
                 $("#id-name") .val(result.name);
-                $("#id-card") .val(result.card_id);
+                id_card_number = result.card_id;
+                $("#id-card") .val(plusXing(result.card_id, 3, 4));
             }
         }
     });
@@ -173,8 +185,8 @@ $(document).ready(function(){
     $("#submit").click(function(){
         var body = {};
         body.type           = 1;
-        body.name           = $("#id-name").val();
-        body.card_id        = $("#id-card").val();
+        body.card_id        = id_card_number;
+        body.name           = $("#id-name")  .val();
         body.cert_info      = $("#cert_info").val();
         body.per_cert_imgs  = $("#per_cert_imgs").val();
 
@@ -216,8 +228,8 @@ $(document).ready(function(){
         var body = {};
         var certUrl = CERT_OFCCERTS;
         body._method       = "put",
-        body.name          = $("#id-name").val();
-        body.card_id       = $("#id-card").val();
+        body.card_id       = id_card_number;
+        body.name          = $("#id-name")  .val();
         body.cert_info     = $("#cert_info").val();
         body.per_cert_imgs = $("#per_cert_imgs").val();
 

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title> 物流详情 </title>
+
+    <link href="{{PATH_TML}}css/distribution.css" rel="stylesheet">
+
+    <script src="{{PATH_TML}}js/jquery-3.2.1.min.js"></script>
+    <script src="{{PATH_CONFIG}}"></script>
+    <script src="{{PATH_TML}}js/vue.min.js"></script>
+    <script src="{{PATH_TML}}js/vue-resource.min.js"></script>
+    <script type="text/javascript" src="/common/layer-v3.0.3/layer-v3.0.3/layer/layer.js"></script>
+</head>
+<body>
+<div id="distribution-app" v-cloak>
+    <header>
+        <span> 物流详情 </span>
+        <a class="back" href="javascript:void(0)" onclick="javascript:history.back(-1)"></a>
+    </header>
+    <div class="distri-container">
+        <div v-if="!disList.length" class="tips">{{tips}}</div>
+        <div v-for="item in disList">
+            <span>{{item.time}}</span>
+            <span>{{item.context}}</span>
+        </div>
+    </div>
+</div>
+<script>
+//    Vue.http.headers.common['token'] = 'eyJpdiI6IlwvTFZlRU5lQ2FlMHE3MW16dkFmNUVnPT0iLCJ2YWx1ZSI6Ijc2ZWt3M1o5U2RcL2tWNTlYazBSVDVsMDIwaHpcL2dWZ2VwSVY1V2hib3o0RmxTMzBvU2o1SEMyZ2U2UjRVV0xielFBWlROb1ArbGhyRTY3VHBXTlwvenZwUXF6aHBpUmROeFJJNE5CRUh2YyswPSIsIm1hYyI6ImIzYjBiYzM2YjBlMjkxNDAzMjZlYzM5YWJmMWNhOGEzMDJkY2FjMzFiNGQwMGM0NGFlYTRkMTVlMzNhZGU1N2EifQ=='
+
+    Vue.http.headers.common['token'] = window.localStorage.getItem("token");
+    var commentApp = new Vue({
+        el : "#distribution-app",
+        data : {
+            disList : [],
+            tips : ''
+        },
+        mounted : function () {
+            var data = JSON.parse(window.localStorage.getItem('sendObj'));
+            this.tips = '正在加载...请稍候...';
+            this.$http.post(apiUrl + 'pages/logistics/getLogisticsInfo',data).then(function (res) {
+                console.log(res);
+                if(res.data && res.data.code === 200){
+                    this.disList = res.data.data.data;
+                }else{
+                    this.tips = '加载失败';
+                }
+            },function (err) {
+                this.tips = '加载失败';
+                console.log(err)
+            })
+        }
+    });
+
+</script>
+</body>
+</html>

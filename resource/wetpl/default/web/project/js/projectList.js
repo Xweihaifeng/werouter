@@ -12,25 +12,24 @@ var qiniu_bucket_domain = ApiMaterPlatQiniuDomain;
     if(window.location.pathname=="/project"){
         window.location="/index/project";
     }
-    var weid = localStorage.getItem('weid');
+    var weid = docCookies.getItem("weid");
 
     var url = window.location.pathname.split('/');
     var active = url.pop();
     var domain = url.slice(1, 2)[0];
-    console.log('domain', domain);
-    console.log(window.location.pathname);
+    //console.log('domain', domain);
+    //console.log(window.location.pathname);
 
 
     //route
     var isLogin; //判断用户登陆与否
-    var router = function(route){
-        if(!window.localStorage.getItem("token")) {
+    /*var router = function(route){
+        if(!docCookies.getItem("token")) {
             isLogin = false;
         } else {
             isLogin = true;
         }
-        // var routerList = ['home', 'login', 'article', 'active', 'project', 'shopping', 'zone', 'zan'];
-        var routerList = ['home', 'login', 'article', 'active', 'zan'];
+        var routerList = ['home', 'login', 'article', 'active', 'project', 'shopping', 'zone', 'zan'];
 
         var isMember = function(routerList, route){
             return routerList.filter(x => x === route);
@@ -51,27 +50,27 @@ var qiniu_bucket_domain = ApiMaterPlatQiniuDomain;
 
         var article = function(){
             showLogin = false;
-            window.location.href = "/index/article";
+            window.location.href = domain + "/article";
         }
 
         var active = function(){
             showLogin = false;
-            window.location.href = "/index/activity";
+            window.location.href = domain + "/activity";
         }
         var project = function(){
             showLogin = false;
-            window.location.href = "/index/project";
+            window.location.href = domain + "/project";
         }
 
 
         var shopping = function(){
             showLogin = false;
-            window.location.href = "/index/wemall";
+            window.location.href = domain + "/wemall";
         }
 
         var zone = function(){
             showLogin = false;
-            window.location.href = "/index/quan";
+            window.location.href = domain + "/quan";
         }
 
         if (isMember(routerList, route) != ""){
@@ -79,8 +78,8 @@ var qiniu_bucket_domain = ApiMaterPlatQiniuDomain;
         }
     }
 
-    // $("#home, #login, #article, #active, #project, #shopping, #zone, #zan").click(function(){
-    $("#home, #login, #article, #active, #zan").click(function(){
+    $("#home, #login, #article, #active, #project, #shopping, #zone, #zan").click(function(){
+    // $("#home, #login, #article, #active, #zan").click(function(){
         var id = $(this).attr("id");
         router(id);
     })
@@ -104,10 +103,10 @@ var qiniu_bucket_domain = ApiMaterPlatQiniuDomain;
         $(this).find(".word").hide();
         $(this).css("line-height", "65px");
         $("#" + id + " .word").css("margin-top", "-55px");
-    })
+    })*/
 
     //主页初始化
-    var init = function(token){
+    /*var init = function(token){
         if (token != 'null' && token != undefined) {
             showLogin = false;
             isLogin = true;
@@ -125,7 +124,7 @@ var qiniu_bucket_domain = ApiMaterPlatQiniuDomain;
         }
     }
 
-    init(localStorage.getItem('token'));
+    init(docCookies.getItem("token"));*/
 
    var options0 = $.get(CMS_ADVS);
     options0.done(function(data) {
@@ -203,7 +202,6 @@ var qiniu_bucket_domain = ApiMaterPlatQiniuDomain;
                     <div class="project-lists-one">
                         <div class="project-section">
                             <div class="shijian"> `+timetext+`</div>
-                            <!--<div class="yishou"><img src=" http://next.wezchina.com/images/defeat.png&#10 " alt=""></div>-->
                             <div class="yishou"><span class="span_left"></span><span class="span_status">`+data.onStatus+`</span><span class="span_right"></span></div>
                             <div class="zhonglei"><span> `+data.cate_name+` </span></div>
                             <a href="/`+data.domain+`/project/`+data.weid+`">
@@ -257,7 +255,7 @@ var qiniu_bucket_domain = ApiMaterPlatQiniuDomain;
             type:'post',
             data:sendData,
             headers: {
-                    'Token': localStorage.getItem('token')
+                    'Token': docCookies.getItem("token")
                 },
             //console.log(token)
             success:function(data){
@@ -322,7 +320,7 @@ var qiniu_bucket_domain = ApiMaterPlatQiniuDomain;
             type:'post',
             data:{user_id:userid},
             headers: {
-                    'Token': localStorage.getItem('token')
+                    'Token': docCookies.getItem("token")
                 },
             success:function(data){
                 console.log(data);
@@ -344,10 +342,8 @@ var qiniu_bucket_domain = ApiMaterPlatQiniuDomain;
         })
     }
 
-
-
-
-
+    projectcate(pages_info.plats_domian.plat_user_id,pages_info.plats_user.real_name,pages_info.plats_user.avatar);
+    projectlist(pages_info.plats_domian.plat_user_id,pages_info.plats_user.real_name,pages_info.plats_user.avatar);
 
 
  var url = window.location.pathname.split('/');
@@ -358,14 +354,14 @@ var qiniu_bucket_domain = ApiMaterPlatQiniuDomain;
     $(".linkto").attr('href', '/' + domain)
 
     //获取通用用户信息
-    var host = ApiMaterPlatQiniuDomain;
+    /*var host = ApiMaterPlatQiniuDomain;
     var getUserInfo = function(url, id){
         $.ajax({
             url: url + id,
             type: 'get',
-            /*headers: {
-                'Token': localStorage.getItem('token')
-            },*/
+            /!*headers: {
+                'Token': docCookies.getItem("token")
+            },*!/
             success: function(data){
                 // console.log(data);
                 if (data.code == 200){
@@ -397,13 +393,15 @@ var qiniu_bucket_domain = ApiMaterPlatQiniuDomain;
 
 					if (info.nickname != null) {
                         $(".line-0").html(
-                            info.nickname + '<img src="/common/img/vrenzheng.png" alt="">'
+                            info.nickname + '<img class="rz" src="/common/img/vrenzheng.png" alt="">' +
+                            '<div class="collection"><img class="ct" src="/common/img/collect.svg" alt=""/><span class="wd">关注</span></div>'
                         );    
                         user_name=info.nickname;                    
                     } else {
                         if (info.real_name != null) {
                             $(".line-0").html(
-                                info.real_name + '<img src="/common/img/vrenzheng.png" alt="">'
+                                info.nickname + '<img class="rz" src="/common/img/vrenzheng.png" alt="">' +
+                                '<div class="collection"><img class="ct" src="/common/img/collect.svg" alt=""/><span class="wd">关注</span></div>'
                             );
                         } else {
                             $(".line-0").html(
@@ -420,8 +418,9 @@ var qiniu_bucket_domain = ApiMaterPlatQiniuDomain;
                          $(".oline-2").find("span").eq(1).text("暂无介绍");
                     }
                     $(".user-cnt").text(info.real_name);
-                    artCount(weid);
-                    countinfo(weid);
+                    //genListTpl(apiUrl + 'circel/index?domain=' + domain.substr(1))
+                    //artCount(weid);
+                    //countinfo(weid);
                     //artTypeList(weid);
                     projectcate(weid,user_name,data.data.avatar);
                     projectlist(weid,user_name,data.data.avatar);
@@ -439,7 +438,7 @@ var qiniu_bucket_domain = ApiMaterPlatQiniuDomain;
             url: PAGES_PAGE_GETDETAILBYUSER+ weid,
             type: 'GET',
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data){
                 if (data.code == 200){
@@ -468,9 +467,9 @@ var qiniu_bucket_domain = ApiMaterPlatQiniuDomain;
                         }
                     }
                 } else {
-                    /*layer.msg(data.message, {
+                    /!*layer.msg(data.message, {
                         time: 1500
-                    });*/
+                    });*!/
                 }
             },
             error: function(xhr){
@@ -484,7 +483,7 @@ var qiniu_bucket_domain = ApiMaterPlatQiniuDomain;
             url: BRAND_DETAIL_USER+'/' + weid,
             type: 'GET',
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data){
                 if (data.code == 200){
@@ -493,7 +492,7 @@ var qiniu_bucket_domain = ApiMaterPlatQiniuDomain;
 
                     } else {
                         $(".line-0").html(
-                            data.data.title + '<img src="http://next.wezchina.com/images/vrenzheng.png" alt="">'
+                            data.data.title + '<img src="/common/img/vrenzheng.png" alt="">'
                         );
                         $(".line-1").text("品牌介绍");
                         var logo = data.data.logo;
@@ -539,14 +538,14 @@ var qiniu_bucket_domain = ApiMaterPlatQiniuDomain;
                         console.log('router error')
                     }
                 } else {
-                    // window.location.href = "/*";
+                    // window.location.href = "/!*";
                 }
             },
             error: function(xhr){
                 console.log(xhr);
             }
         })
-    }
+    }*/
    /*   var checkdomain=function(domain,id){
         if(domain!="index" && domain!="wemall"){
            console.log("a");
@@ -557,7 +556,7 @@ var qiniu_bucket_domain = ApiMaterPlatQiniuDomain;
 
     }
 checkdomain(domain);*/
-if (domain == 'wemall') {
+    /*if (domain == 'wemall') {
         domain = '';
     } else {
         domain = "/" + domain;
@@ -566,9 +565,9 @@ if (domain == 'wemall') {
 
     if (domain != '') {
         __init(domain);
-    }
+    }*/
 
-    var artCount = function(weid){
+    /*var artCount = function(weid){
         $.ajax({
             // url: apiUrl+"/articles/listCount?userId=" + weid,
             url: ARTICLES_LISTCOUNT+"?userId=" + weid,
@@ -600,7 +599,7 @@ if (domain == 'wemall') {
                 console.log(xhr);
             }
         })
-    }
+    }*/
 
 
 
@@ -613,25 +612,5 @@ if (domain == 'wemall') {
         })
     }
 
-    var favicon = ApiMaterPlatQiniuDomain + localStorage.getItem('fav');
-    $('#favicon').attr('href', favicon);
-    if(localStorage.getItem('title')=="" || localStorage.getItem('title')==null ||localStorage.getItem('title')==undefined || localStorage.getItem('title')=="null"){
-         $.ajax({
-            url: apiUrl+"cms/advs",
-            type: 'get',
-            success: function(data){
-                if (data.code == 200){
-                    $('title').text('项目-' + data.data.setting.title + '官方微主页');
-                   localStorage.setItem('title',data.data.setting.title);
-                   
-                }
-            },
-            error: function(xhr){
-                console.log(xhr);
-            }
-        })
-    }else{
-        $('title').text('项目-' + localStorage.getItem('title') + '官方微主页');
 
-    }
 })

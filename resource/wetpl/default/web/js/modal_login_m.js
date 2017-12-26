@@ -77,7 +77,7 @@
         wxorpc();
 $(function() {
 
-    var token = window.localStorage.getItem('token'), get_weid;
+    var token = docCookies.getItem("token"), get_weid;
     if(token) {
         $.ajaxSetup({
             global: true,
@@ -86,7 +86,7 @@ $(function() {
             }
         });
 
-        get_weid = window.localStorage.getItem("weid");
+        get_weid = docCookies.getItem("weid");
         var pathname = window.location.pathname.split('/').slice(1,3);
         if(pathname[0] == 'login') {
             window.location.href = "/";
@@ -216,7 +216,7 @@ $(function() {
     //route
     var isLogin; //判断用户登陆与否
     var router = function(route){
-        if(!window.localStorage.getItem("token")) {
+        if(!docCookies.getItem("token")) {
             isLogin = false;
         } else {
             isLogin = true;
@@ -296,7 +296,7 @@ $(function() {
         } else if (imgUrl.indexOf('http') != 0 && imgUrl != "") {
 
             imgUrl = ApiMaterPlatQiniuDomain + imgUrl;
-            $("#login a").css({"background": "url(" + window.localStorage.getItem('avatar') + ") center center / 100% no-repeat"});
+            $("#login a").css({"background": "url(" + localStorage.getItem('avatar') + ") center center / 100% no-repeat"});
             $("#login a").addClass("i-header").html("");
             showLogin = false;
             isLogin = true;

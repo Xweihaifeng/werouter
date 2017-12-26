@@ -1,0 +1,122 @@
+<#extend#>public/domain/domain_extend.html</#extend#>
+<link rel="stylesheet" href="/resource/wetpl/default/wap/css/act.css"/>
+<link rel="stylesheet" href="/resource/wetpl/default/wap/css/article.css"/>
+<script src="{{PATH_TML}}js/swiper-3.3.1.min.js"></script>
+<div class="latest">最新推荐</div>
+<div id="container" class="my_container">
+    <div class="swiper-container" v-if="advList.length">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide" v-for="item in advList" v-if="item.src">
+                <a :href="item.href"><img :src="item.src | img_src" alt=""></a>
+            </div>
+        </div>
+        <div class="swiper-pagination"></div>
+    </div>
+
+    <div v-for="item in list_data">
+        <a :href="item.domain + '/article/' + item.relation_id  | href"  v-if="item.dynamic_type == 1">
+            <div class="art-content" >
+                <span><img class="lazy" :src="JSON.parse(item.other).cover | img_src(110, 69, 1)" width="110" height="69" /></span>
+                <span style="padding-left:0.1rem;" class="art-des-text">
+                    <strong>{{JSON.parse(item.other).title | limitLen(0,15) }}</strong>
+                    <pre>{{item.motto | limitLen(0,55) }}</pre>
+                </span>
+            </div>
+        </a>
+        <div v-if="item.dynamic_type == 4">
+            <a :href="item.domain + '/wemall/goods/' + item.relation_id  | href">
+                <div class="art-content" style="background: #fff;">
+                    <div class="act-cover">
+                        <img class="lazy" :src="JSON.parse(item.other).cover | img_src(110, 69, 1)" width="110" height="69" />
+                    </div>
+                    <span style="padding-left:0.1rem;" class="art-des-text">
+                        <strong>{{JSON.parse(item.other).title}}</strong>
+                        <p class="for-good">
+                            <span> 已售：{{JSON.parse(item.other).sales_num ? JSON.parse(item.other).sales_num : 0}} 收藏：{{JSON.parse(item.other).comment_num ? JSON.parse(item.other).comment_num : 0}} </span>
+                            <span>￥{{JSON.parse(item.other).price}}</span>
+                        </p>
+                    </span>
+                </div>
+            </a>
+        </div>
+        <a v-if="item.dynamic_type == 3" :href="item.domain + '/activity/' + item.relation_id  | href">
+        <div class="art-content" style="background: #fff;">
+            <div class="act-cover">
+                <img class="lazy" :src="JSON.parse(item.other).cover | img_src(110, 69, 1)" width="110" height="69" />
+            </div>
+            <div class="act-cont">
+                <ul>
+                    <li class="act-cont-title">
+                        <p>{{JSON.parse(item.other).title}}</p>
+                        <p>免费</p>
+                    </li>
+                    <li class="act-cont-summary">
+                        <p>{{JSON.parse(item.other).Sponsor}}</p>
+                    </li>
+                    <li class="act-cont-time">
+                        <p>{{JSON.parse(item.other).updated_at | formateTime('MDHM') }} 开讲</p>
+                        <p>{{JSON.parse(item.other).area_name}}</p>
+                    </li>
+                    <li class="act-cont-info"></li>
+                </ul>
+            </div>
+        </div>
+        </a>
+    </div>
+</div>
+
+<script type="text/javascript">
+	new Vue({
+    	el: '#app',
+    	data : {
+    		list_data:[],
+            advList:[],
+    		params : {
+    			page : 1,
+	    		limit : 10,
+	    		type : 1,
+	    		dynamic_type : 0,
+                domain : pages_index
+    		},
+    		dom : '#app'
+    	},
+        mounted() {
+        	this.$nextTick(()=>{
+        		this.data_list();
+        		var sendData = {
+                    user_id : pages_info.plats_user.weid,
+                    style : 1
+                };
+        		ajax.post('pages/banner/detail',sendData).then((res)=>{
+                    console.log(res);
+                    if(res.code == 200 && res.data){
+                        this.advList = JSON.parse(res.data.slide);
+                        console.log(this.advList)
+                    }
+                });
+                setTimeout(function(){
+                    var mySwiper = new Swiper('.swiper-container', {
+                        direction: 'horizontal',
+                        loop: true,
+                        speed: 1000,
+                        autoplay : 3000,
+                        autoplayDisableOnInteraction : false,
+                        pagination: '.swiper-pagination',
+                        onlyExternal : true,
+                        longSwipesRatio: 0.3,
+                        touchRatio:1
+                    });
+                }, 1000)
+        	});
+        },
+        methods:{
+        	// 使用common_page 方法必须定义data方法 以及对象 params
+        	data(params , call){
+        		return $mob_ajax.dynamic(params , call);
+            },
+        	data_list() {
+        		$mob_ajax.common_page(this , this.params);
+        	}
+        }
+    });
+</script>

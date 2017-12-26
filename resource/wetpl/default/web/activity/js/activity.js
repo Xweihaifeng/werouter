@@ -12,107 +12,13 @@ var qiniu_bucket_domain = ApiMaterPlatQiniuDomain;
     if(window.location.pathname=="/wemall"){
         window.location="/index/wemall";
     }
-    var weid = localStorage.getItem('weid');
+    var weid = docCookies.getItem("weid");
 
     var url = window.location.pathname.split('/');
     var active = url.pop();
     var domain = url.slice(1, 2)[0];
-    console.log('domain', domain);
-    console.log(window.location.pathname);
-
-   /*   var checkdomain=function(domain,id){
-        if(domain!="index" && domain!="wemall"){
-           console.log("a");
-
-        }else if(domain=="wemall" || domain=="undefined" || domain==""){
-            window.location="/index/wemall";
-        }
-
-    }
-checkdomain(domain);*/
-/*if (domain == 'wemall') {
-        domain = '';
-    } else {
-        domain = "/" + domain;
-    }*/
-    //route
-    var isLogin = false; //判断用户登陆与否
-    var router = function(route){
-        // var routerList = ['home', 'login', 'article','active','project','zone', 'shopping'];
-        var routerList = ['home', 'login', 'article','active'];
-
-        var isMember = function(routerList, route){
-            return routerList.filter(x => x === route);
-        }
-
-        var home = function(){
-            window.location.href = '/index';
-        }
-
-        var top = $(window).scrollTop();
-
-        var login = function(){
-            if (!isLogin) {
-                showLogin = true;
-                $("#modal").show();
-
-                $(".show-login").fadeIn(300);
-                $("body").css("overflow", "hidden");
-            } else {
-                window.location.href = "/user/";
-            }
-        }
-
-        var article = function(){
-            showLogin = false;
-            window.location.href = domain + "/article";
-        }
-
-         var active = function(){
-            showLogin = false;
-            window.location.href = domain + "/activity";
-        }
-
-         var project = function(){
-            showLogin = false;
-            window.location.href = domain + "/project";
-        }
-
-        var shopping = function(){
-            showLogin = false;
-            window.location.href = domain + "/wemall";
-        }
-
-        if (isMember(routerList, route) != ""){
-            eval(route)();
-        }
-    }
-
-    $("#home, #login, #article,#active").click(function(){
-        var id = $(this).attr("id");
-        router(id);
-    })
-
-    //left-navbar show words
-    $("#login, #article, #project, #active, #shopping, #zone").hover(function(e){
-        var id = $(this).attr("id");
-        if (id != 'login') {
-            $(this).find(".word").show();
-            $(this).css("line-height", "50px");
-            $("#" + id + " .word").css("margin-top", "-20px");
-        } else {
-            if (!isLogin) {
-                $(this).find(".word").show();
-                $(this).css("line-height", "50px");
-                $("#" + id + " .word").css("margin-top", "-20px");
-            }
-        }
-    }, function(){
-        var id = $(this).attr("id");
-        $(this).find(".word").hide();
-        $(this).css("line-height", "65px");
-        $("#" + id + " .word").css("margin-top", "-55px");
-    })
+    //console.log('domain', domain);
+    //console.log(window.location.pathname);
 
     //主页初始化
     var init = function(token){
@@ -133,7 +39,7 @@ checkdomain(domain);*/
         }
     }
 
-    init(localStorage.getItem('token'));
+    init(docCookies.getItem("token"));
 
    var options0 = $.get(CMS_ADVS);
     options0.done(function(data) {
@@ -210,7 +116,7 @@ checkdomain(domain);*/
                         '<div class="project-section">'+
                             '<div class="biaoti">热门活动</div>'+
                             '<div class="shijian"> '+timetext+'</div>'+
-                            '<a href="'+domain+'/activity/'+data.weid+'" class="hover-img-box">'+
+                            '<a href="/'+domain+'/activity/'+data.weid+'" class="hover-img-box">'+
                                 '<img src="'+qiniu_bucket_domain+data.cover+'" class="person-left-img">'+
                             '</a>'+
                             '<img class="logo" src="'+qiniu_bucket_domain+avatar+'" alt="">'+
@@ -255,7 +161,7 @@ checkdomain(domain);*/
             type:'post',
             data:sendData,
             headers: {
-                    'Token': localStorage.getItem('token')
+                    'Token': docCookies.getItem("token")
                 },
             success:function(data){
                 console.log(data);
@@ -298,268 +204,14 @@ checkdomain(domain);*/
         })
     }
 
+    activitylist(pages_info.plats_domian.plat_user_id,pages_info.plats_user.real_name,pages_info.plats_user.avatar);
 
-
-
-
-
-
-
- var url = window.location.pathname.split('/');
+    var url = window.location.pathname.split('/');
     var active = url.pop();
     var domain = url.slice(1, 2)[0];
     console.log('domain', domain);
 
     $(".linkto").attr('href', '/' + domain)
-
-    //获取通用用户信息
-    var host = ApiMaterPlatQiniuDomain;
-    var getUserInfo = function(url, id){
-        $.ajax({
-            url: url + id,
-            type: 'get',
-            /*headers: {
-                'Token': localStorage.getItem('token')
-            },*/
-            success: function(data){
-                console.log(data);
-                if (data.code == 200){
-                    var info = data.data;
-                    var weid = info.weid;
-                    console.log(weid)
-                    var imgUrl = info.avatar;
-                    if ((imgUrl != null && imgUrl != "") && imgUrl.indexOf('http') === -1){
-                        imgUrl = host + imgUrl;
-                        $("#head-icon, .user-head").css({
-                            "background": "url(" + imgUrl + ") no-repeat center",
-                            "background-size": "100%"
-                        });
-                    } else {
-                        if (imgUrl != null && imgUrl != "") {
-                            $("#head-icon, .user-head").css({
-                                "background": "url(" + imgUrl + ") no-repeat center",
-                                "background-size": "110%"
-                            });
-                        } else {
-                            $("#head-icon, .user-head").css({
-                                "background": "url(/common/img/avatar.png) no-repeat center",
-                                "background-size": "110%"
-                            });
-                        }
-                    }
-                    var user_name="";
-                    if (info.nickname != null) {
-                        $(".line-0").html(
-                            info.nickname + '<img src="/common/img/vrenzheng.png" alt="">'
-                        );   
-                        user_name=info.nickname;                     
-                    } else {
-                        if (info.real_name != null) {
-                            $(".line-0").html(
-                                info.real_name + '<img src="/common/img/vrenzheng.png" alt="">'
-                            );
-                        } else {
-                            $(".line-0").html(
-                                localStorage.getItem('title') + '官方微主页' + '<img src="/common/img/vrenzheng.png" alt="">'
-                            );
-                        }
-                        user_name=info.real_name;                     
-
-                    }  
-                    if(info.motto!=null && info.motto!=""){
-                        $(".oline-2").find("span").eq(1).text(info.motto);
-
-                    }else{
-                         $(".oline-2").find("span").eq(1).text("暂无介绍");
-                    }
-                    $(".user-cnt").text(info.real_name);
-                    artCount(weid);
-                    countinfo(weid);
-                    //artTypeList(weid);
-                    activitylist(weid,user_name,data.data.avatar);
-
-                }
-            },
-            error: function(xhr){
-                console.log(xhr);
-            }
-        })
-    }
-
-    var hasDomain = function(weid){
-        $.ajax({
-            url: PAGES_PAGE_GETDETAILBYUSER+ weid,
-            type: 'GET',
-            headers: {
-                'Token': localStorage.getItem('token')
-            },
-            success: function(data){
-                if (data.code == 200){
-                    console.log(data);
-                    if (data.data == null) {
-
-                    } else {
-                        //微主页banner图
-                        var bgLogo = data.data.background;
-                        if (bgLogo != null) {
-                            $("#art-head").css({
-                                "background": "url(" + bgLogo + ") no-repeat center",
-                                "background-size": "100%"
-                            });
-                        }
-                        //微名片背景
-                        var bgUser = data.data.background_user;
-                        if (bgUser != null){
-                            $(".user-info").css({
-                                "background": "url(" + bgUser + ") no-repeat center",
-                                "background-size": "100%"
-                            });
-                        }
-                        if (data.data.is_brand == 1) {
-                            hasBrand(userId);
-                        }
-                    }
-                } else {
-                    /*layer.msg(data.message, {
-                        time: 1500
-                    });*/
-                }
-            },
-            error: function(xhr){
-                console.log(xhr);
-            }
-        })
-    }
-
-    var hasBrand = function(weid){
-        $.ajax({
-            url: BRAND_DETAIL_USER+'/' + weid,
-            type: 'GET',
-            headers: {
-                'Token': localStorage.getItem('token')
-            },
-            success: function(data){
-                if (data.code == 200){
-                    console.log(data);
-                    if (data.data == null) {
-
-                    } else {
-                        $(".line-0").html(
-                            data.data.title + '<img src="http://next.wezchina.com/images/vrenzheng.png" alt="">'
-                        );
-                        $(".line-1").text("品牌介绍");
-                        var logo = data.data.logo;
-                        if (logo != null){
-                            $("#head-icon").css({
-                                "background": "url(" + logo + ") no-repeat center",
-                                "background-size": "100%"
-                            });
-                        }
-                    }
-
-                } else {
-                    layer.msg(data.message, {
-                        time: 1500
-                    });
-                }
-            },
-            error: function(xhr){
-                console.log(xhr);
-            }
-        })
-    }
-
-    //个性域名用户weid
-    var userId;
-    var __init = function(domain) {
-        $.ajax({
-            url: PAGES_DETAIL_DOMAIN + domain,
-            type: 'GET',
-            success: function(data){
-                if (data.code == 200){
-                    //var domain = data.data.domain;
-                    console.log(data);
-                    if (data.data != null) {
-                        userId = data.data.plat_user_id;
-                        console.log('userId:', userId);
-                        console.log('userDetail')
-                        getUserInfo(USERDETAIL, "/" + userId);
-                        hasDomain(userId);
-                    } else {
-                        domain = '';
-                        getUserInfo(FOUNDER, '');
-                        console.log('router error')
-                    }
-                } else {
-                    // window.location.href = "/*";
-                }
-            },
-            error: function(xhr){
-                console.log(xhr);
-            }
-        })
-    }
-   /*   var checkdomain=function(domain,id){
-        if(domain!="index" && domain!="wemall"){
-           console.log("a");
-
-        }else if(domain=="wemall" || domain=="undefined" || domain==""){
-            window.location="/index/wemall";
-        }
-
-    }
-checkdomain(domain);*/
-if (domain == 'wemall') {
-        domain = '';
-    } else {
-        domain = "/" + domain;
-    }
-    //
-  /*  if (domain == 'article') {
-        domain = '';
-        getUserInfo(FOUNDER, '');
-    } else {
-        domain = "/" + domain;
-    }*/
-
-    if (domain != '') {
-        __init(domain);
-    }
-
-    var artCount = function(weid){
-        $.ajax({
-            // url: apiUrl+"/articles/listCount?userId=" + weid,
-            url: ARTICLES_LISTCOUNT+"?userId=" + weid,
-            type: 'get',
-            success: function(data){
-                console.log(data);
-                if (data.code == 200){
-                    $(".user-art").children('div:eq(0)').text(data.data);
-                }
-            },
-            error: function(xhr){
-                console.log(xhr);
-            }
-        })
-    }
-    var countinfo=function(weid){
-          $.ajax({
-            // url: apiUrl+"/articles/listCount?userId=" + weid,
-            url: PAGES_PAGE_COUNTAGEINFO+"/" + weid,
-            type: 'get',
-            success: function(data){
-                console.log(data);
-                if (data.code == 200){
-                    $(".user-proj").children('div:eq(0)').text(data.data.project_count);
-                    $(".user-type").children('div:eq(0)').text(data.data.activity_count);
-                }
-            },
-            error: function(xhr){
-                console.log(xhr);
-            }
-        })
-    }
-
 
 
     // 鼠标滑动到列表时加hover
@@ -571,25 +223,5 @@ if (domain == 'wemall') {
         })
     }
 
-    var favicon = ApiMaterPlatQiniuDomain + localStorage.getItem('fav');
-    $('#favicon').attr('href', favicon);
-    if(localStorage.getItem('title')=="" || localStorage.getItem('title')==null ||localStorage.getItem('title')==undefined || localStorage.getItem('title')=="null"){
-         $.ajax({
-            url: apiUrl+"cms/advs",
-            type: 'get',
-            success: function(data){
-                if (data.code == 200){
-                    $('title').text('活动-' + data.data.setting.title + '官方微主页');
-                   localStorage.setItem('title',data.data.setting.title);
-                   
-                }
-            },
-            error: function(xhr){
-                console.log(xhr);
-            }
-        })
-    }else{
-        $('title').text('活动-' + localStorage.getItem('title') + '官方微主页');
 
-    }
 })

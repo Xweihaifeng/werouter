@@ -88,6 +88,7 @@
         </aside>
         <!-- content-wrapper -->
         <div class="content-wrapper">
+            <input type="hidden" name="config-url" value="apps.html">
             <section class="content-header">
                 <h1> 应用中心 </h1>
                 <!--
@@ -104,7 +105,7 @@
                     <div class="col-xs-12">
                         <div class="box">
                             <div class="box-header with-border" style="line-height: 35px;">
-                                <h3 class="box-title">应用阀</h3>
+                                <h3 class="box-title">基础应用</h3>
                                 <!-- /.box-header -->
                                 <div class="box-body">
                                     <div class="per_bottom apply_bottom">
@@ -318,71 +319,25 @@
                                     <div class="panel-body tab-body" style="display:none">
                                         <form id="weChat" class="form-horizontal" style="padding: 30px;">
                                             <div class="form-group">
-                                                <label class="control-label col-sm-3 col-md-2 col-lg-1">Developing...</label>
+                                                <label class="control-label col-sm-3 col-md-2 col-lg-1">AppID</label>
                                                 <div class="col-sm-9 col-md-10 col-lg-11">
-                                                    <input type="text" class="form-control" id="" name="config[wechat_appid]" placeholder="">
+                                                    <input type="text" class="form-control" id="wechat_open_appid" name="config[open_appid]" placeholder="">
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label class="control-label col-sm-3 col-md-2 col-lg-1">Developing...</label>
+                                                <label class="control-label col-sm-3 col-md-2 col-lg-1">AppSecret</label>
                                                 <div class="col-sm-9 col-md-10 col-lg-11">
-                                                    <input type="text" class="form-control" id="" name="config[]" placeholder="">
+                                                    <input type="text" class="form-control" id="wechat_open_secret" name="config[open_secret]" placeholder="">
                                                 </div>
                                             </div>
                                             <div>
-                                                <button type="button" class="btn btn-info pull-right weChatSet" disabled>保存</button>
+                                                <button type="button" class="btn btn-info pull-right weChatOpenSet">保存</button>
                                             </div>
                                         </form>
                                     </div>
                                 </div>
                                 </li>
                                 <!-- 微信配置结束 -->
-                                <!-- 另一个应用开始 -->
-                                <li class="message_box another">
-                                    <div class="per_bottom_tit">
-                                        <span class="scad_setting">大数据分析(开发中)</span>
-                                        <span class="switch brand_set turn_on_off switch-close" data-key="is_sms_open">
-                                                    <div id="op1" class="open">
-                                                        <div id="op2" class="close"></div>
-                                                        <span class="brand_on_off">OFF</span>
-                                    </div>
-                                    </span>
-                                    <a class="edit_domain">展开</a>
-                            </div>
-                            <div class="edit_domain_area" style="display: none;">
-                                <div class="panel-body">
-                                    <div class="form-group">
-                                        <label class="col-xs-12 col-sm-4 col-md-2 control-label"> 智能用户画像：</label>
-                                        <div class="col-sm-4 col-xs-4 col-lg-4">
-                                            <div class="row row-fix tpl-category-container">
-                                                <input class="messarg_sign" type="text" name="rest_count" value="120" readonly> 次
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="panel-body">
-                                    <div class="form-group">
-                                        <label class="col-xs-12 col-sm-4 col-md-2 control-label"> 未来趋势评估：</label>
-                                        <div class="col-sm-4 col-xs-4 col-lg-4">
-                                            <div class="row row-fix tpl-category-container">
-                                                <input class="messarg_sign" type="text" name="rest_count" value="120" readonly> 次
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="message_buy_box" style="display: none;">
-                                    <div class="message_buy_tit">xxx</div>
-                                    <p class="message_info">
-                                        xxx
-                                    </p>
-                                    <div class="message_package">
-                                    </div>
-                                    <div class="apply_buy">
-                                        <button type="button" class="btn btn-danger btn-lg">购买套餐</button>
-                                    </div>
-                                </div>
-                                </li>
-                                <!-- 另一个应用结束 -->
 
                                 </ul>
                             </div>
@@ -566,9 +521,9 @@
     <!-- AdminLTE App -->
     <script src="dist/js/adminlte.min.js"></script>
 
-    <script src="http://cdn.staticfile.org/plupload/2.1.8/moxie.js"></script>
-    <script src="http://cdn.staticfile.org/plupload/2.1.8/plupload.dev.js"></script>
-    <script src="http://cdn.staticfile.org/plupload/2.1.8/i18n/zh_CN.js"></script>
+    <script src="//cdn.staticfile.org/plupload/2.1.8/moxie.js"></script>
+    <script src="//cdn.staticfile.org/plupload/2.1.8/plupload.dev.js"></script>
+    <script src="//cdn.staticfile.org/plupload/2.1.8/i18n/zh_CN.js"></script>
     <script src="bower_components/qiniu/dist/qiniu.min.js"></script>
 
     <!-- AdminLTE for demo purposes -->

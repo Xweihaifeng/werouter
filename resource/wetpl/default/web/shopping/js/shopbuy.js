@@ -36,7 +36,7 @@ $(document).ready(function(){
 var qiniu_bucket_domain =ApiMaterPlatQiniuDomain;
 
   // token 加载值请求头（Headers）
-    var token = window.localStorage.getItem('token'), isLogin = false;
+    var token = docCookies.getItem("token"), isLogin = false;
     if(token) {
         $.ajaxSetup({
             global: true,
@@ -52,11 +52,13 @@ var qiniu_bucket_domain =ApiMaterPlatQiniuDomain;
             showLogin = false;
             isLogin = true;
             //加载用户头像
+            /*
             $("#login a").css({
                 'background': 'url(../common/img/p2240276035.jpg) no-repeat center',
                 'background-size': '100%'
             });
             $("#login a").addClass("i-header").html("");
+            */
         }
     }
 
@@ -164,7 +166,7 @@ var qiniu_bucket_domain =ApiMaterPlatQiniuDomain;
             url: ORDER_DETAIL+'/' + id,
             type:'get',
             headers: {
-                    'Token': localStorage.getItem('token')
+                    'Token': docCookies.getItem("token")
                 },
             dataType: 'json',
             success: function(data){
@@ -174,12 +176,24 @@ var qiniu_bucket_domain =ApiMaterPlatQiniuDomain;
                     $(".order-title1 span").text(order.order_num);
                     $('.cope-with span').text(order.order_price);
 
-                    if(data.data.status==2){
+                    if(data.data.order_status==2){
                         clearInterval(t);
                         // console.log("status:"+data.data.status);
                         // 修改商品库存量
-                        shopstock(data.data.goods_id,order.goods_num);
+                            
+                        mess_tusi("支付成功");
+                        // window.location="/shopping";
+                        if (domain == '') {
+                            var url = '';
+                        } else {
+                            var url = domain
+                        }
 
+                        window.location.href ="/user/myaccount/order";
+
+                        //shopstock(data.data.goods_id,order.goods_num);
+                        //shopstock(data.data.goods);    
+                          
 
                     }
                 }
@@ -187,13 +201,14 @@ var qiniu_bucket_domain =ApiMaterPlatQiniuDomain;
         })
     }
     // 商品详情
+    /*
     var shopstock=function(weid,num){
 
         $.ajax({
             url: GOODS_DETAIL+'/'+weid,
             type:'get',
             headers: {
-                    'Token': localStorage.getItem('token')
+                    'Token': docCookies.getItem("token")
                 },
             dataType: 'json',
             success: function(data){
@@ -216,6 +231,7 @@ var qiniu_bucket_domain =ApiMaterPlatQiniuDomain;
             }
         })
     }
+    */
     // 修改商品库存量
     var shopstockupdate=function(sendData){
         if (domain == '') {
@@ -228,12 +244,13 @@ var qiniu_bucket_domain =ApiMaterPlatQiniuDomain;
             type:'post',
             data:sendData,
             headers: {
-                    'Token': localStorage.getItem('token')
+                    'Token': docCookies.getItem("token")
                 },
             dataType: 'json',
             success: function(data){
                 console.log(data);
                 if (data.code == 200) {
+
                          mess_tusi("支付成功");
                         // window.location="/shopping";
                     window.location.href ="/"+ url+"/wemall";
@@ -248,11 +265,12 @@ var qiniu_bucket_domain =ApiMaterPlatQiniuDomain;
     // 支付二维码链接
     var t="";
     var shoppay=function(id){
-         $.ajax({
-            url:WECHATPAY_NATIVEPAY+'/'+id,
-            type:'get',
+        $.ajax({
+            url:apiUrl+'pages/wechatPay/mallOrderPcPay',
+            type:'post',
+            data:{"order_id":id},
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data){
                 console.log(data);
@@ -270,7 +288,7 @@ var qiniu_bucket_domain =ApiMaterPlatQiniuDomain;
 
                 }else{
                     // console.log('PAY  ERROR');
-                    mess_tusi('商户平台信息有误,稍后处理，请耐心等候！')
+                    mess_tusi(data.message);
                 }
             },
             error: function(xhr){

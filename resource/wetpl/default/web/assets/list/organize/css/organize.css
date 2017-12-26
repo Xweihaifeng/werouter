@@ -10,8 +10,7 @@ html,body {
     position: fixed;
     width: 100%;
     height: 100%;
-    overflow-y: auto; 
-    background-image: url(/common/img/dibu.jpg); 
+    overflow-y: auto;
     background-attachment: fixed;
 }
 
@@ -54,18 +53,19 @@ li {
 
 .organize-content .weizhuye-gerenfencai .top-nav {
     /*position: relative;*/
+    height: 320px;
 }
 
 .organize-content .weizhuye-gerenfencai .top-nav ul {
     position: relative;
-    margin-top: -49px;
+    margin-top: -45px;
     min-height: 45px;
-    background: rgba(255,255,255,0.75);
+    background: rgba(255,255,255,0.65);
 }
 
 .organize-content .weizhuye-gerenfencai .top-nav ul a {
     display: inline-block;
-    color: #333;
+    color: #000;
     flex: 1;
     height: 45px;
     line-height: 45px;
@@ -76,11 +76,15 @@ li {
     cursor: pointer;
 }
 
+#menuX > a:last-child {
+    border-right: none;
+}
+
 .organize-content .weizhuye-gerenfencai .top-nav ul li a {
     color: #333;
 }
 
-.organize-content .weizhuye-gerenfencai .top-nav>img {
+.organize-content .weizhuye-gerenfencai .top-nav > #thumb_image {
     width: 100%;
     height: 320px;
     max-height: 320px;
@@ -100,13 +104,14 @@ li {
 }
 
 .organize-content .weizhuye-gerenfencai .fengcai-main {
-    padding: 30px 15px;
+    padding: 25px 15px 50px;
     display: block;
 }
 
 .organize-content .weizhuye-gerenfencai .main-top {
     width: 100%;
     height: 45px;
+    line-height: 45px;
     background: #f1f1f1;
 }
 
@@ -119,10 +124,11 @@ li {
     min-width: 70px;
     height: 45px;
     line-height: 45px;
+    text-align: center;
+    justify-content: center;
     padding: 0 10px;
     background: #007cd3;
     color: #fff;
-    text-align: center;
     cursor: pointer;
 }
 
@@ -132,7 +138,7 @@ li {
 }
 
 .organize-content .weizhuye-gerenfencai .list-article-ul {
-    margin: 30px 0 15px;
+    margin: 25px 0 15px;
     padding: 15px;
     border: 1px solid #ccc;
     min-height: 460px;
@@ -165,8 +171,7 @@ li {
 .organize-content .paging {
     display: flex;
     justify-content: center;
-    height: 30px;
-    display: none;
+    height: 35px;
 }
 
 .organize-content .paging .prev-page,
@@ -224,4 +229,90 @@ li {
     height: auto !important;
     margin: 1rem auto;
     display: block;
+}
+
+.clearfix:after {
+    content: " ";
+    display: block;
+    clear: both;
+    height: 0;
+}
+
+.clearfix {
+    zoom: 1;
+}
+
+.article_list {
+    position: relative;
+    width: auto;
+    height: 100%;
+    display: inline-flex;
+}
+
+.article_list input {
+    position: absolute;
+    display: inline-block;
+    height: 25px;
+    margin: 10px 0;
+    content: "";
+    cursor: pointer;
+    text-align: center;
+    background-color: transparent;
+    outline: none;
+    border-bottom: 13px solid rgba(0,0,0,0);
+    border-top: 13px solid rgba(0,0,0,0);
+}
+
+.article_list input#prev_btn {
+    float: left;
+    left: 0;
+    border-right: 15px solid #cacaca;
+    border-left: 5px solid rgba(0,0,0,0);
+}
+
+.article_list input#next_btn {
+    float: right;
+    right: 0;
+    border-left: 15px solid #cacaca;
+    border-right: 5px solid rgba(0,0,0,0);
+}
+
+#menuTwo {
+    min-width: 80px;
+    display: inline-flex;
+    text-align: center;
+    justify-content: center;
+}
+
+#menuTwo a {
+    background: #f1f1f1;
+    border-left: 1px solid #fff;
+    border-right: 1px solid #fff;
+    min-width: 70px;
+    height: 45px;
+    line-height: 45px;
+    padding: 0 5px;
+    color: #666;
+    text-align: center;
+    cursor: pointer;
+}
+
+.single_active {
+    background: #007cd3!important;
+    color: #fff!important;
+}
+
+#menuTwo .single_active {
+    position: relative;
+}
+
+#menuTwo .single_active::after {
+    content: "";
+    position: absolute;
+    border-top: 10px solid #007cd3;
+    border-bottom: 10px solid rgba(0,0,0,0);
+    border-left: 10px solid rgba(0,0,0,0);
+    border-right: 10px solid rgba(0,0,0,0);
+    top: 45px;
+    left: 28px;
 }

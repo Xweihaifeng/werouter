@@ -16,7 +16,7 @@
     <!-- DataTables -->
     <link rel="stylesheet" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
     <!-- Datepicker -->
-    <link href="http://www.bootcss.com/p/bootstrap-datetimepicker/bootstrap-datetimepicker/css/datetimepicker.css" rel="stylesheet">
+    <link href="/common/datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
     <!-- Theme style -->
     <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
     <!-- AdminLTE Skins. Choose a skin from the css/skins
@@ -61,6 +61,7 @@
         </aside>
         <!-- content-wrapper -->
         <div class="content-wrapper">
+            <input type="hidden" name="config-url" value="contents.html">
             <section class="content-header">
                 <h1> 新增内容 </h1>
                 <!--
@@ -97,6 +98,12 @@
 
                                         <div class="col-sm-2">
                                             <select name="cate" class="form-control">
+                                                   <option value="">选择栏目</option>
+                                             </select>
+                                        </div>
+
+                                        <div class="col-sm-2">
+                                            <select name="cate_child" class="form-control">
                                                    <option value="">选择栏目</option>
                                              </select>
                                         </div>
@@ -151,7 +158,7 @@
                                             <input name="thumb_image" type="hidden" value="" class="form-control" />
                                             <input id="pickfiles" name="cover" type="file" class="form-control hide" />
                                             <div id="look">
-                                                <img onclick="$('#pickfiles').click()" id="img" width="120px;" src="http://oty3r3tmi.bkt.clouddn.com/upload.png" alt="暂无预览图片" class="thumbnail">
+                                                <img onclick="$('#pickfiles').click()" id="img" width="120px;" src="//oty3r3tmi.bkt.clouddn.com/upload.png" alt="暂无预览图片" class="thumbnail">
                                             </div>
                                         </div>
                                     </div>
@@ -166,11 +173,12 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="col-sm-2">
-                                            <div class="input-append date" id="datetimepicker" data-date-format="yyyy-mm-dd hh:ii:ss">
+                                            <!-- <div class="input-append date" id="datetimepicker" data-date-format="yyyy-mm-dd hh:ii:ss">
                                                 <input class="form-control" type="text" name="publish_time" placeholder="发布时间">
                                                 <span class="add-on"><i class="icon-remove"></i></span>
                                                 <span class="add-on"><i class="icon-th"></i></span>
-                                            </div>
+                                            </div> -->
+                                            <input type="text" name="publish_time" class="form-control" value="" placeholder="发布时间" onfocus="WdatePicker({maxDate:'\'2099-11-20\''});">
                                         </div>
                                         <div class="col-sm-2">
                                             <select name="status" class="form-control">
@@ -403,11 +411,11 @@
         <script src="js/jquery-3.2.1.min.js"></script>
         <!-- Bootstrap 3.3.7 -->
         <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-        <script src="http://cdn.staticfile.org/jquery.bootstrapvalidator/0.5.3/js/bootstrapValidator.min.js"></script>
+        <script src="//cdn.staticfile.org/jquery.bootstrapvalidator/0.5.3/js/bootstrapValidator.min.js"></script>
         <!-- DataTables -->
         <script src="bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
         <script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-        <script src="http://www.bootcss.com/p/bootstrap-datetimepicker/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+        <script src="/common/datetimepicker/bootstrap-datetimepicker.min.js"></script>
         <!-- SlimScroll -->
         <script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
         <!-- FastClick -->
@@ -419,7 +427,7 @@
         <!-- ckeditor -->
         <script src="plugins/ckeditor/ckeditor.js"></script>
         <script src="/common/sweetalert2/dist/sweetalert2.min.js"></script>
-
+        <script type="text/javascript" src="js/My97DatePicker/WdatePicker.js"></script>
 
 
         <script src="js/react.js"></script>
@@ -430,25 +438,23 @@
         <script src="js/template/index.js"></script>
 
         <!-- page script -->
-        <script src="http://cdn.staticfile.org/jquery/1.9.1/jquery.min.js"></script>
-        <script src="http://cdn.staticfile.org/plupload/2.1.8/moxie.js"></script>
-        <script src="http://cdn.staticfile.org/plupload/2.1.8/plupload.dev.js"></script>
-        <script src="http://cdn.staticfile.org/plupload/2.1.8/i18n/zh_CN.js"></script>
-
-        <script src="bower_components/qiniu/dist/qiniu.min.js"></script>
+        <script src="//cdn.staticfile.org/jquery/1.9.1/jquery.min.js"></script>
+        <script src="//cdn.staticfile.org/plupload/2.1.8/moxie.js"></script>
+        <script src="//cdn.staticfile.org/plupload/2.1.8/plupload.dev.js"></script>
+        <script src="//cdn.staticfile.org/plupload/2.1.8/i18n/zh_CN.js"></script>
+        <!-- <script src="bower_components/qiniu/dist/qiniu.min.js"></script> -->
+        <script src="/common/js/qiniu.js"></script>
         <script>
             jQuery.noConflict();
-
             var qiniu_uptoken = '';
             var saveto = 'qiniu';
-            var qiniu_upload_domain = 'http://upload.qiniu.com';
+            var qiniu_upload_domain = '//upload.qiniu.com';
             var qiniu_bucket_domain = ApiMaterPlatQiniuDomain;
             CKEDITOR.replace('editor1', {
-                "extraPlugins": "filebrowser,image,imagepaste,filetools",
+                "extraPlugins": "filebrowser,image,imagepaste,filetools,flash",
                 height: '240px',
                 width: '100%'
             });
-
             var __init = function() {
                 $.ajax({
                     url: ApiUrl + 'file/qiniu_token?t=' + Math.random(),
@@ -503,12 +509,33 @@
                     }
                 });
             }
+            var __cate_child_init = function(parent_id) {
+                $.ajax({
+                    url: ApiUrl + 'cms/cate_categories?cate=' + parent_id,
+                    type: 'get',
+                    dataType: 'json',
+                    success: function(data) {
+                        var option = '<option value=""><顶级></option>';
+                        $.each(data.data, function(k, v) {
+                            option += `<option value="` + v.weid + `">` + v.title + `</option>`;
+                        });
+                        $('select[name=cate_child]').html(option);
+                    },
+                    error: function(xhr) {
+                        console.log(xhr);
+                    }
+                });
+            }
             $(function($) {
                 __init();
                 __init_channel();
                 $(document).on('change', 'select[name=channel]', function() {
                     var channel_id = $(this).val();
                     __cate_init(channel_id);
+                });
+                $(document).on('change', 'select[name=cate]', function() {
+                    var parent_id = $(this).val();
+                    __cate_child_init(parent_id);
                 });
                 var uploader = Qiniu.uploader({
                     runtimes: 'html5,flash,html4',
@@ -518,7 +545,7 @@
                     domain: ApiMaterPlatQiniuDomain,
                     container: 'look',
                     max_file_size: '100mb',
-                    flash_swf_url: 'http://cdn.staticfile.org/plupload/2.1.8/Moxie.swf',
+                    flash_swf_url: '//cdn.staticfile.org/plupload/2.1.8/Moxie.swf',
                     max_retries: 3,
                     dragdrop: true,
                     drop_element: 'look',
@@ -555,7 +582,7 @@
                         'title': $('input[name=title]').val(),
                         'summary': $('textarea[name=summary]').val(),
                         'thumb_image': $('input[name=thumb_image]').val(),
-                        'cate_id': $('select[name=cate]').val(),
+                        'cate_id': $('select[name=cate_child]').val() ? $('select[name=cate_child]').val() : $('select[name=cate]').val(),
                         'auth': $('input[name=auth]').val(),
                         'content': CKEDITOR.instances.editor1.getData(),
                         'is_original': $('input[name="is_original"]').is(':checked') ? 1 : 2,
@@ -599,8 +626,8 @@
                                 },
                                 stringLength: {
                                     min: 1,
-                                    max: 32,
-                                    message: '标题长度为1-32位'
+                                    max: 64,
+                                    message: '标题长度为1-64位'
                                 }
                             }
                         },

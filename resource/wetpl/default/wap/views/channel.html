@@ -1,0 +1,161 @@
+<#extend#>public/coc/coc_extend.html</#extend#>
+
+<script src="{{PATH_TML}}js/coc/swipe.min.js"></script>
+<style>
+    [v-cloak] {
+        display: none;
+    }
+</style>
+
+<div id="viewport" class="viewport" style="width:100%;margin-bottom:15px">
+    <!--图片轮换开始-->
+    <div class="banner1">
+        <div id='mySwipe' class='swipe'>
+            <div class='swipe-wrap'>
+                <div v-for="(item,index) in especial_news" v-if="index < 3"> 
+                    <a :href="pathname + '/' + item.weid"><img :src="item.thumb_image | img_src(300 , 200 , 1)" width="100%" height="220px" /></a> 
+                    <div class="mySwipeceng">
+                        <div class="left"><b style='font-weight:normal'>{{item.title | limitLen(0,21)}}</b></div>
+                        <div class="mySwip_rg"> <span class="mySwipetabdiancurr"></span><span class="mySwipetabdian"></span>
+                            <span class="mySwipetabdian"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--头条-->
+    <div class="lthot" v-for="(item, index) in hot">
+        <h1><a :href="pathname + '/' + item.weid"><b style="font-weight:normal;text-align:left" v-html="item.title"></b></a></h1>
+        <p><a :href="pathname + '/' + item.weid">{{item.summary | limitLen(0,80)}}<span>[查看全文]</span></a></p>
+        <div class="clear"></div>
+    </div>
+    <div class="clear"></div>
+    <!--头条 end-->
+
+    <!--内容一-->
+    <div :id="'Tab1'+index" class="Tabs" v-for="(item, index) in channel_list">
+        <div class="Menubox">
+            <dl>
+                <dd v-for="(value, key) in item" :id="'list_'+index+'_'+key" @click="setTab(value.weid,'list_'+index+'_'+key)" :class="{hover:selected == key}">
+                    {{value.title | limitLen(0,6)}}
+                </dd>
+            </dl>
+        </div>
+        <div class="Contentbox">
+            <div v-for="(value, key) in item" :class="'list_'+index+'_'+key" v-if="isShow.filter(x => value.weid == x.id)[0].type">
+                <div class="Menumore">
+                    <a :href="pathname + '/' + value.domain">更多</a>
+                </div>
+                <ul class="Content_wz">
+                    <li v-for="(val, inde) in value.detail">
+                        <a :href="pathname + '/' + val.weid">
+                            <h2><b style="font-weight:normal;" v-html="val.title"></b></h2><span class="sytjlb_sj">{{val.publish_time.substr(0, 10)}}</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            selected : 0,
+            isTrue : false,
+            hot  : [],
+            especial_news: [],
+            channel_list : [],
+            pathname : $app.get_router(),
+            isShow: []
+        },
+        mounted: function() {
+            ajax.get('cms/index/grid').then((res) => {
+                if (res.code === 200) {
+                    this.hot  = res.data.hot;
+                    this.especial_news = res.data.especial_news;
+                    this.$nextTick(()=>{
+                        this.swiper();
+                    });
+                }
+            });
+
+            ajax.get("cms/channels/domain_query/"+this.pathname).then((res) => {
+                if (res.data && res.code === 200) {
+                    $app.set_title(res.data.search_name + ' - ' + plats_info.title);
+                    plats_info.show_title = res.data.search_name;
+                }
+            })
+
+            ajax.get("cms/index/list_news_by_channel", {params : {channel: this.pathname, limit: 8}}).then((res) => {
+                if (res.data && res.code === 200) {
+                    var channel_list = [];
+                    res.data.forEach((item, index)=>{
+                        if(index % 2 === 0) {
+                            channel_list[Math.floor(index/2)] = new Array();
+                            this.isShow.push({id: item.weid, type: true, flag: 0})
+                        } else {
+                            this.isShow.push({id: item.weid, type: false, flag: 0})
+                        }
+                        channel_list[Math.floor(index/2)][index%2] = item;
+                    });
+                    this.channel_list = channel_list;
+                }
+            });
+
+        },
+        methods: {
+            swiper() {
+                var elem = document.getElementById('mySwipe');
+                Swipe(elem, {
+                    startSlide: 0,
+                    auto: 3000,
+                    continuous: true,
+                    disableScroll: true,
+                    stopPropagation: true
+                });
+            },
+            data(params , call){
+                return $mob_ajax.cms_lists(params , call);
+            },
+            setTab(this_id, li_id) {
+
+                var elem=document.getElementById(li_id).parentNode;
+                var elem_child = elem.childNodes;
+                for(var i = 0; i < elem_child.length; i++){
+                    if(elem_child[i].id == li_id) {
+                        event.currentTarget.className = "hover";
+                    } else {
+                        var s = elem_child[i].id;
+                        document.getElementById(s).className = '';
+                    }
+                }
+
+                this.isShow = this.isShow.map(x => {
+                    if (x.id == this_id) {
+                        x.type = true;
+                        x.flag = 1;
+                        return x;
+                    } else {
+                        return x;
+                    }
+                })
+
+                for (let i = 0; i < this.isShow.length; i++) {
+                    if (this.isShow[i].flag == 1 && this.isShow[i].id == this_id) {
+                        if (i % 2 == 0) {
+                            this.isShow[i + 1].type = false;
+                            this.isShow[i + 1].flag = 0;
+                        } else {
+                            this.isShow[i - 1].type = false;
+                            this.isShow[i - 1].flag = 0;
+                        }
+                    }
+                }
+            }
+        },
+    });
+</script>

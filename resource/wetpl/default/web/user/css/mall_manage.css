@@ -727,7 +727,7 @@
     text-align: center
 }
 .orders_list_pic .img img{width:100%;vertical-align:middle;}
-.contact_seller{position:relative;padding-left:23px;display:inline-block;}
+.contact_seller{position:relative;display:inline-block;}
 .contact_seller i{position:absolute;left:0;top:0px;background:url(../images/tel.png) no-repeat;display:block;width:20px;height:20px;}
 .contact_seller span{position:absolute;right:0;top:25px;padding:10px;background:#1296db;color:#fff;border:2px solid #1296db;font-weight:700;font-size:16px;font-family:"微软雅黑";display:none;/*height:20px;*/width:230px;text-align:center;line-height:20px;}
 .contact_seller span:after{content:"";width: 0;height: 0;border-left: 5px solid transparent; border-right: 5px solid transparent;border-bottom: 10px solid #1296db;position:absolute;top:-10px;right:10px;display:block;}
@@ -745,7 +745,6 @@
     min-height: 66px;
 }
 .orders_list_details a{
-	line-height: 26px;
 	color: #FF6060;
 	display: block;
 }
@@ -884,6 +883,7 @@
 	line-height: 38px;
 	border: 1px solid #EFEFEF;
 	background: #FAFAFA;
+	overflow: hidden;
 }
 .list_time div{
 	float: left;
@@ -893,6 +893,7 @@
 	height:26px;
 	border-color:#e0e0e0;
 	margin:5px;
+	width:270px;
 }
 .list_time .orders_no{
 	float:left;
@@ -1056,3 +1057,41 @@ input, button {
 }
 .od_about_order_left.od_w50.order_x{width:100%}
 .close{    background: none;}
+
+
+
+.logistics_father_div{
+	width: 80%;
+    border-left: 1px solid #b4b4b4;
+}
+
+ 
+.logistics_father_div p{
+	margin-bottom: 10px;
+    box-sizing: border-box;
+    padding-left: 40px;
+    display: inline-block;
+    position: relative;
+    overflow: inherit;
+}   
+
+.logistics_father_div p:first-child>i {
+    background-image: url(/common/img/circle-red.png);
+}
+
+.logistics_father_div p i{
+	display: inline-block;
+	width: 18px;
+	height: 18px;
+	position: absolute;
+	background: url(/common/img/circle-time.png) no-repeat 0 0;
+    -webkit-background-size: contain;
+    background-size: contain;
+    left: -10px;
+    top: -6px;
+} 
+    
+.logistics_father_div p span{
+ 	display: inline-block;
+    vertical-align: top;
+}

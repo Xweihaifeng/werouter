@@ -10,7 +10,7 @@ var projectid = url.pop();
     if(window.location.pathname=="/wemall"){
         window.location="/index/wemall";
     }
-    var weid = localStorage.getItem('weid');
+    var weid = docCookies.getItem("weid");
     localStorage.setItem("data_style","");
     localStorage.setItem("repayid","");
     var url = window.location.pathname.split('/');
@@ -30,7 +30,7 @@ $(document).ready(function(){
                 data:{domain:domain,project_id:id},
                 dataType:'json',
                 headers: {
-                    'Token': localStorage.getItem('token')
+                    'Token': docCookies.getItem("token")
                 },
                 success: function(data){
                     console.log(data);
@@ -56,7 +56,7 @@ $(document).ready(function(){
     //route
     var isLogin; //判断用户登陆与否
     var router = function(route){
-        if(!window.localStorage.getItem("token")) {
+        if(!docCookies.getItem("token")) {
             isLogin = false;
         } else {
             isLogin = true;
@@ -157,7 +157,7 @@ $(document).ready(function(){
         }
     }
 
-    init(localStorage.getItem('token'));
+    init(docCookies.getItem("token"));
 
    var options0 = $.get(CMS_ADVS);
     options0.done(function(data) {
@@ -192,17 +192,7 @@ $(document).ready(function(){
 var timer ;
         // 点击开关
         var _off = true;
-        var wechat_login = {"debug":false,"app_id":"wx9f067ceaa70375b2","secret":"d87679629b24e48e64d2b01f6a1ec47b","url":"http:\/\/next.wezchina.com\/wechat\/opencallback","oauth":{"only_wechat_browser":false,"scopes":["snsapi_login"],"callback":"\/wechat\/opencallback"}};
-        /*
-        var obj = new WxLogin({
-            id:"login_container",
-            appid: wechat_login['app_id'],
-            scope: "snsapi_login",
-            state: "next",
-            href:"https://next.wezchina.com/css/wxlogin.css",
-            redirect_uri: wechat_login['url']
-        });
-        */
+        var wechat_login = {"debug":false,"app_id":"wx9f067ceaa70375b2","secret":"d87679629b24e48e64d2b01f6a1ec47b","url":"#","oauth":{"only_wechat_browser":false,"scopes":["snsapi_login"],"callback":"\/wechat\/opencallback"}};
         // 定时器开关
         var onOff = true;
         $(function(){
@@ -230,7 +220,7 @@ var timer ;
 
 
                 $.ajax({
-                    url:"http://next.wezchina.com/api/sendVerfyCode" +  '/' + phone_num,
+                    url:"#" +  '/' + phone_num,
                     type:'get',
                     success:function(json){
                         if(json.status == 200)
@@ -306,7 +296,7 @@ var timer ;
                 xhr = new XMLHttpRequest(),
                 response,
                 loginLayer;
-                xhr.open('POST',"http://next.wezchina.com/login");
+                xhr.open('POST',"#");
                 xhr.setRequestHeader('X-CSRF-TOKEN','j01L3XvNZSuqsqegFdAi9MVTgGdAUa4DCZzJJ81x');
                 xhr.setRequestHeader('X-Requested-With','XMLHttpRequest');
                 xhr.send(formData);
@@ -440,7 +430,7 @@ $(function(){
     //关注事件
     var collectionClick=function(){
         //判断是否已经关注
-        var weid = localStorage.getItem('weid');
+        var weid = docCookies.getItem("weid");
         if(weid!=''){
             //已经登录
             var sendData={
@@ -899,7 +889,7 @@ $(function(){
             url: PROJECT_DETAIL +'/' + getUrlParam('projectid'),
             type: 'get',
             headers: {
-                    'Token': localStorage.getItem('token')
+                    'Token': docCookies.getItem("token")
                 },
             success: function(data){
                 if (data.code == 200) {
@@ -911,10 +901,10 @@ $(function(){
                     //设置头像
 
                     $.ajax({
-                        url: USERDETAIL +'/' + localStorage.getItem('weid'),
+                        url: USERDETAIL +'/' + docCookies.getItem("weid"),
                         type: 'get',
                         headers: {
-                                'Token': localStorage.getItem('token')
+                                'Token': docCookies.getItem("token")
                             },
                         success:function(data){
                             if(data.code == 200){

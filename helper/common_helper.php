@@ -9,6 +9,7 @@ function curl_action($url, $timeout = '2',$device = false)
 
     curl_setopt($ch, CURLOPT_TIMEOUT, $timeout);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查  
     //curl_setopt($ch, CURLOPT_HEADER, 0);
     //curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
     if($device){
@@ -19,6 +20,21 @@ function curl_action($url, $timeout = '2',$device = false)
     // 4. 释放curl句柄
     curl_close($ch);
     return $info;
+}
+
+// 二位数组排序
+function array_sort($arr, $keys, $type = 'asc') 
+{
+    $keysvalue = $new_array = array();
+    foreach ($arr as $k => $v){
+        $keysvalue[$k] = $v[$keys];
+    }
+    $type == 'asc' ? asort($keysvalue) : arsort($keysvalue);
+    reset($keysvalue);
+    foreach ($keysvalue as $k => $v) {
+       $new_array[$k] = $arr[$k];
+    }
+    return $new_array;
 }
 
 // 错误提示
@@ -52,6 +68,13 @@ function loader($file)
     }
 }
 
+function is_weixin()
+{ 
+    if ( strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger') !== false ) {
+        return 'yes';
+    }  
+    return 'no';
+}
 // 判断是否是手机
 function is_mobile()
 { 

@@ -5,7 +5,7 @@
         <meta charset="UTF-8">
         <link rel="shortcut icon" id="favicon" href="" />
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-
+        <script src="{{PATH_TML}}user/common/js/loading.js"></script>
         <script charset="utf-8" type="text/javascript" src="/common/js/jquery-3.2.1.min.js"></script>
         <script charset="utf-8" type="text/javascript" src="/common/layer-v3.0.3/layer-v3.0.3/layer/layer.js"></script>
         <script charset="utf-8" type="text/javascript" src="/common/js/swiper-3.3.1.min.js"></script>
@@ -93,8 +93,9 @@
                                     <input name="card_front" id="card_front" type="hidden" value="" class="form-control"/>
                                     <input id="card_front_file" name="front" type="file" class="form-control hide"/>
                                     <div id="look_front">
-                                        <img onclick="$('#card_front_file').click()" id="card_front_img" src="{{PATH_TML}}user/img/negative.png" alt="暂无预览图片" class="thumbnail col-md-2">
+                                        <img onclick="$('#card_front_file').click()" id="card_front_img" src="{{PATH_TML}}user/img/negative.png" alt="暂无预览图片" class="thumbnail col-md-3">
                                     </div>
+                                    <div class="identity_info">请提交中华人民共和国居民身份证，无居民身份证的内地居民可提交《临时居民身份证》。<br />格式要求：支持.jpg .jpeg .bmp .gif .png格式照片，大小不超过5M。</div>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -103,8 +104,9 @@
                                     <input name="card_back" id="card_back" type="hidden" value="" class="form-control"/>
                                     <input id="card_back_file" name="back" type="file" class="form-control hide"/>
                                     <div id="look_back">
-                                        <img onclick="$('#card_back_file').click()" id="card_back_img" src="{{PATH_TML}}user/img/positive.png" alt="暂无预览图片" class="thumbnail col-md-2">
+                                        <img onclick="$('#card_back_file').click()" id="card_back_img" src="{{PATH_TML}}user/img/positive.png" alt="暂无预览图片" class="thumbnail col-md-3">
                                     </div>
+                                    <div class="identity_info">请提交中华人民共和国居民身份证，无居民身份证的内地居民可提交《临时居民身份证》。<br />格式要求：支持.jpg .jpeg .bmp .gif .png格式照片，大小不超过5M。</div>
                                 </div>
                             </div>
                             <div class="form-group">

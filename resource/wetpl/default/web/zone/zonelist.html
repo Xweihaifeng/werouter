@@ -1,39 +1,33 @@
 <!DOCTYPE html>
 <html>
     <head lang="en">
-        <title>全球秦商总会</title>
+        <title></title>
         <meta charset="UTF-8">
         <link rel="shortcut icon" id="favicon" href="" />
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-
         <link rel="stylesheet" href="{{PATH_TML}}css/public_main.css">
         <link rel="stylesheet" href="/common/css/bootstrap.min.css">
         <link rel="stylesheet" href="/common/css/buttons.css">
         <link rel="stylesheet" href="{{PATH_TML}}font/iconfont.css" />
         <link rel="stylesheet" href="{{PATH_TML}}css/news_base.css" />
         <link rel="stylesheet" href="{{PATH_TML}}css/modal_login.css" />
-        <link rel="stylesheet" href="{{PATH_TML}}css/article.css">
         <link rel="stylesheet" href="{{PATH_TML}}zone/css/zone.css">
-
+        <link rel="stylesheet" href="{{PATH_TML}}css/article.css">
+        <link rel="stylesheet" href="{{PATH_TML}}css/articleList.css">
         <script src="/common/js/jquery-3.2.1.min.js"></script>
         <script src="/common/js/layer/layer.js"></script>
         <script src="{{PATH_CONFIG}}"></script>
-        <script src="/common/js/browser.min.js"></script>
-        <script src="/common/js/swiper-3.3.1.min.js"></script>
-        <script src="/common/js/buttons.js"></script>
-        <!-- <script type="text/javascript" src="{{PATH_TML}}shopping/js/jquery.qrcode.min.js"></script> -->
-        <script src="/common/js/public_use.js"></script>
-        
-         <script src="/common/js/utf.js"></script>
-        <script src="/common/js/qrcode.new.js"></script>
         <script src="{{PATH_TML}}js/modal_login.js"></script>
-
         <style>
             ::-webkit-scrollbar { width: 0; height: 0; }
             .dropdown-toggle, .get-check { height: 40px !important; }
+            html {
+                position: absolute!important;
+                overflow-y: auto!important;
+            }
         </style>
     </head>
-    <body style="width: 1366px;background: url(/common/img/dibu.jpg)">
+    <body style="width: 1366px;">
 
         <!-- 登录部分 -->
         <div class="modal_login" id="modal_login"></div>
@@ -41,13 +35,7 @@
         <ul class="news_menu" id="public_main_news_menu"></ul>
         <!-- 导航部分结束 -->
         <div class="article">
-            <div id="art-head">
-                <a class='linkto' href=''><div id="head-icon"></div></a>
-                <div id="user-name">
-                    <div class="line-0"></div>
-                    <div class="line-1"></div>
-                </div>
-            </div>
+            <#include#>template-userhead.html</#include#>
             <div id="art-body">
                 <div id="art-main">
                     <div class="circle-main">
@@ -56,9 +44,7 @@
                             <div class="line"></div>
                                 <div class = "find-circle-bg">
                                 <div class="cricle">
-                                    <ul class="red">
-                                        <li>9</li>
-                                    </ul>
+                                    <ul class="red"></ul>
                                     <div class="weiyou">位微友</div>
                                 </div>
                             </div>
@@ -67,13 +53,13 @@
                             <p class="biaoti">Ta的微友曲线</p>
                             <div class="line"></div>
                             <div style="display: inline-block;position: absolute;z-index: 1;left: 502px;">
-                                <button class="btn btn-default" onclick="changeTime(2,'http://next.wezchina.com/index/circle')" style="position: relative;">去年</button>
+                                <button class="btn btn-default" onclick="changeTime(2,'#')" style="position: relative;">去年</button>
                                 <a class="button-down-box-parent button-down-box-parent-p">
-                                    <button class="btn btn-default" onclick="changeTime(1,'http://next.wezchina.com/index/circle');$('.button-down-box').hide()" onmouseenter="$('.button-down-box').show()" >今年</button>
+                                    <button class="btn btn-default" onclick="changeTime(1,'#');$('.button-down-box').hide()" onmouseenter="$('.button-down-box').show()" >今年</button>
                                     <div  class="button-down-box-parent" style="display: inline-block; width: auto;height: auto">
                                         <ul class="button-down-box" onmouseleave="$('.button-down-box').hide()">
-                                            <li onclick="changeTime(3,'http://next.wezchina.com/index/circle')">当月</li>
-                                            <li onclick="changeTime(4,'http://next.wezchina.com/index/circle')">上月</li>
+                                            <li onclick="changeTime(3,'#')">当月</li>
+                                            <li onclick="changeTime(4,'#')">上月</li>
                                         </ul>
                                     </div>
                                 </a>
@@ -85,14 +71,14 @@
                                 <li class="" style="background:#17c295"></li>
                                 <li style="width: 80px">活跃微友</li>
                             </ul>
-                            <p class = "y">数据来源：全球秦商总会</p>
+                            <p class = "y"></p>
                         </div>
                         <img src = "/common/img/group_bottom.png" width="98%"/>
                         <div class="ditu">
                             <p class="biaoti">Ta的微友分布</p>
                             <div class="line"></div>
                             <div style="background-color: #fff;position: relative">
-                                <div id="lanuch_main"  class="" style="width:100%;height:400px;"></div>
+                                <div id="lanuch_main"  class="" style="width:100%;height:550px;"></div>
                                 <ul style="list-style: none; position: absolute; bottom: 50px;right: 10px; font-size: 14px;">
                                     <li style="margin-top: 5px;"><span style="background: #ff0000"></span><10000人</li>
                                     <li style="margin-top: 5px;"><span style="background: #ffac37"></span><5000人</li>
@@ -101,194 +87,103 @@
                                     <li style="margin-top: 5px;"><span style="background: #cccccc"></span><1人</li>
                                     <li style="margin-top: 5px;"><span style="background: #eeeeee"></span><0人</li>
                                 </ul>
-                                <p style="margin-top: 10px"><span></span>看哈，Ta成为网红潜力很大，大家帮Ta加加油！</p>
+                                <p class="rcmd" style="margin-top: 10px"><span></span></p>
                             </div>
-                            <p class="y">数据来源：全球秦商总会</p>
+                            <p class="y"></p>
                         </div>
                         <img src = "/common/img/group_bottom.png" width="98%"/>
                     </div>
                 </div>
-                <!-- <div class="all-info"> -->
-
-
-                <div id="art-info">
-                    <div id="user" style="margin-top: 24px; margin-bottom: 20px;">
-                        <div class="panel panel-default user">
-                            <div class="panel-body">
-                                <div class="user-info"></div>
-                                <a class='linkto' href=''><div class="user-head"><img src="http://next.wezchina.com/images/vrenzheng.png" alt=""></div></a>
-                                <div class="user-cnt"></div>
-                                <div class="user-part">
-                                    <div class="user-art">
-                                        <div></div>
-                                        <div>文章</div>
-                                    </div>
-                                    <div class="user-proj">
-                                        <div>4</div>
-                                        <div>项目</div>
-                                    </div>
-                                    <div class="user-type">
-                                        <div>9</div>
-                                        <div>活动</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="other" style="margin-top: 5px; margin-bottom: 20px;">
-                        <div class="panel panel-default other">
-                            <div class="panel-body">
-                                <div class="oline-0">
-                                    <div class="ocont-0">
-                                        <div>
-                                            <!-- <span><img src="/common/img/we_on.png" alt="" width="80" /></span> -->
-                                             <span id="huiyuanrengzheng"><img src="/common/img/vrenzheng.png" alt="">&nbsp;官方认证</span>
-                                        </div>
-                                        <div>
-                                            <span><img src="/common/img/shiming.png" alt="已实名认证" width="35" /></span>
-                                        </div>
-                                        <div>
-                                            <img src="/common/img/sixin.png" width="60"/>
-                                        </div>
-                                        <div><span class="vren_message">暂无认证信息</span></div>
-                                    </div>
-                                </div>
-                                <div class="oline-1">
-                                    <span><img src="/common/img/coordinates_fill.png" alt="" width="25"/></span>
-                                    <p>陕西 西安</p>
-                                </div>
-                                <div class="oline-2">
-                                    <span><img src="/common/img/document.png" alt="" width="22"/></span>
-                                    <span>微众中国CEO，工业与信息化部信息通信经济专家委员会专家委员、陕西省青年创业导师协会副会长兼项目委员会主任委员、陕西省互联网协会副秘书长。</span>
-                                </div>
-                                <div class="oline-3">
-                                    <div><img src="/common/img/wecard_qrcode.png" alt="" width="100"/></div>
-                                    <div><p>微信扫描二维码</p><p>支持Ta</p><p>或分享给好友</p></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="friend" style="margin-top: 5px; margin-bottom: 20px;">
-                        <div class="panel panel-default friend">
-                            <div class="panel-body">
-                                <div class="row">
-                                    <ul class="nav nav-tabs fri-sty">
-                                        <li role="presentation" class="fans active"><a>Ta的粉丝(21)</a></li>
-                                        <li role="presentation" class="friends"><a>Ta的关注(45)</a></li>
-                                    </ul>
-                                </div>
-
-                                <div id="fans">
-                                    <div class="fans-head">
-                                        <img style="border: 1px solid #ccc; border-radius: 50%; height: 100%;  width: 100%; " src="/common/img/avatar-389bc9635a9096bb709e3c26bfdac8a8.png" width="54" />
-                                    </div>
-                                    <div class="fans-head">
-                                        <img style="border: 1px solid #ccc; border-radius: 50%; height: 100%;  width: 100%; " src="/common/img/p2240259307.jpg" width="54" />
-                                    </div>
-                                    <div class="fans-head">
-                                        <img style="border: 1px solid #ccc; border-radius: 50%; height: 100%;  width: 100%; " src="/common/img/page.png" width="54" />
-                                    </div>
-                                    <div class="fans-head">
-                                        <img style="border: 1px solid #ccc; border-radius: 50%; height: 100%;  width: 100%; " src="/common/img/u_home_bg.png" width="54" />
-                                    </div>
-                                    <div class="fans-head">
-                                        <img style="border: 1px solid #ccc; border-radius: 50%; height: 100%;  width: 100%; " src="http://wx.qlogo.cn/mmopen/CbXm5H4HLoQTPO5D750WIhr5niaHSDmFj5oHa3iaITzDmRS7T87NX3wXYvcJtkKgxZGsV7MKEcUAEcjx1knP5xKts2jObVUtCic/0" width="54" />
-                                    </div>
-                                    <div class="fans-head">
-                                        <img style="border: 1px solid #ccc; border-radius: 50%; height: 100%;  width: 100%; " src="http://next.wezchina.com/storage/images/temp/avatar-cec281219a1ac7c548077c805a2221df.jpeg" width="54" />
-                                    </div>
-                                    <div class="fans-head">
-                                        <img style="border: 1px solid #ccc; border-radius: 50%; height: 100%;  width: 100%; " src="http://next.wezchina.com/storage/images/temp/avatar-493c206380f43ab5d998ffda155fb640.jpeg" width="54" />
-                                    </div>
-                                    <div class="fans-head">
-                                        <img style="border: 1px solid #ccc; border-radius: 50%; height: 100%;  width: 100%; " src="http://next.wezchina.com/storage/images/temp/avatar-fb8a771b610bda747e2590860df2b513.jpeg" width="54" />
-                                    </div>
-                                    <div class="fans-head">
-                                        <img style="border: 1px solid #ccc; border-radius: 50%; height: 100%;  width: 100%; " src="http://next.wezchina.com/storage/images/temp/avatar-6eb63543ba87eeaf9420b5f99aa2da0f.jpeg" width="54" />
-                                    </div>
-                                    <div class="fans-head">
-                                        <img style="border: 1px solid #ccc; border-radius: 50%; height: 100%;  width: 100%; " src="http://next.wezchina.com/storage/images/temp/avatar-6865acc207e0a86b77a414d2ec4c0b60.png" width="54" />
-                                    </div>
-                                    <div class="fans-head">
-                                        <img style="border: 1px solid #ccc; border-radius: 50%; height: 100%;  width: 100%; " src="http://next.wezchina.com/storage/images/temp/avatar-b5bcf06f9aad9fb8f98cc823862caa09.jpeg" width="54" />
-                                    </div>
-                                    <div class="fans-head">
-                                        <img style="border: 1px solid #ccc; border-radius: 50%; height: 100%;  width: 100%; " src="http://next.wezchina.com/storage/images/temp/avatar-dd889cefa6db93b6220014a3b8afb272.jpeg" width="54" />
-                                    </div>
-                                </div>
-
-                                <div id="friends">
-                                    <div class="friends-head">
-                                        <img style="border: 1px solid #ccc; border-radius: 50%; height: 100%;  width: 100%; " src="http://next.wezchina.com/storage/images/temp/avatar-2a8919670fc00f51583089a41e066ecc.jpeg" width="54" />
-                                    </div>
-                                    <div class="friends-head">
-                                        <img style="border: 1px solid #ccc; border-radius: 50%; height: 100%;  width: 100%; " src="/common/img/weizhuyebanner.png" width="54" />
-                                    </div>
-                                    <div class="friends-head">
-                                        <img style="border: 1px solid #ccc; border-radius: 50%; height: 100%;  width: 100%; " src="http://next.wezchina.com/storage/images/temp/avatar-b5bcf06f9aad9fb8f98cc823862caa09.jpeg" width="54" />
-                                    </div>
-                                    <div class="friends-head">
-                                        <img style="border: 1px solid #ccc; border-radius: 50%; height: 100%;  width: 100%; " src="http://next.wezchina.com/storage/images/temp/avatar-dd889cefa6db93b6220014a3b8afb272.jpeg" width="54" />
-                                    </div>
-                                    <div class="friends-head">
-                                        <img style="border: 1px solid #ccc; border-radius: 50%; height: 100%;  width: 100%; " src="http://next.wezchina.com/storage/images/temp/avatar-cec281219a1ac7c548077c805a2221df.jpeg" width="54" />
-                                    </div>
-                                    <div class="friends-head">
-                                        <img style="border: 1px solid #ccc; border-radius: 50%; height: 100%;  width: 100%; " src="http://next.wezchina.com/storage/images/temp/avatar-493c206380f43ab5d998ffda155fb640.jpeg" width="54" />
-                                    </div>
-                                    <div class="friends-head">
-                                        <img style="border: 1px solid #ccc; border-radius: 50%; height: 100%;  width: 100%; " src="http://next.wezchina.com/storage/images/temp/avatar-fb8a771b610bda747e2590860df2b513.jpeg" width="54" />
-                                    </div>
-                                    <div class="friends-head">
-                                        <img style="border: 1px solid #ccc; border-radius: 50%; height: 100%;  width: 100%; " src="http://next.wezchina.com/storage/images/temp/avatar-6eb63543ba87eeaf9420b5f99aa2da0f.jpeg" width="54" />
-                                    </div>
-                                    <div class="friends-head">
-                                        <img style="border: 1px solid #ccc; border-radius: 50%; height: 100%;  width: 100%; " src="/common/img/user_bg.jpg" width="54" />
-                                    </div>
-                                    <div class="friends-head">
-                                        <img style="border: 1px solid #ccc; border-radius: 50%; height: 100%;  width: 100%; " src="/common/img/p2233960011.jpg" width="54" />
-                                    </div>
-                                    <div class="friends-head">
-                                        <img style="border: 1px solid #ccc; border-radius: 50%; height: 100%;  width: 100%; " src="http://wx.qlogo.cn/mmopen/CbXm5H4HLoQTPO5D750WIhr5niaHSDmFj5oHa3iaITzDmRS7T87NX3wXYvcJtkKgxZGsV7MKEcUAEcjx1knP5xKts2jObVUtCic/0" width="54" />
-                                    </div>
-                                    <div class="friends-head">
-                                        <img style="border: 1px solid #ccc; border-radius: 50%; height: 100%;  width: 100%; " src="http://next.wezchina.com/storage/images/temp/avatar-6865acc207e0a86b77a414d2ec4c0b60.png" width="54" />
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div id="more">查看更多>></div>
-                        </div>
-                    </div>
+                <#include#>template-userbody.html</#include#>
                 </div>
-                <!-- </div> -->
-
-                   <!--  <div class="art-title">Ta的圈子</div>
-                   <div class="art-part row">
-                       <ul class="nav nav-tabs col-md-8 art-type"></ul>
-                   </div>
-                   <div class="art-cont"></div> -->
-                </div>
-
             </div>
         </div>
+        
+        <!-- 右侧大背景图 -->
+        <div id="public_main_right_bg" style="position:fixed;top:0;bottom:0;left:1190px;width:100%;"></div>
+        <script src="{{PATH_TML}}js/public_main_right_bg.js"></script>
+        <script src="/common/layui/layui.js"></script>
         <script src="/common/js/echart/echarts.js"></script>
         <script src="/common/js/echart/china.js"></script>
+        <script src="/common/js/control.js"></script>
+        <!--<script src="{{PATH_TML}}zone/js/zonelist.js"></script>-->
+        <script src="/common/js/userinfo.js"></script>
         <script src="{{PATH_TML}}zone/js/circle.js"></script>
         <script>
-            var lineChart,lineTheme,xTitle,newlyAdded,Active,mapChart,mapData,requestUrl = 'http://next.wezchina.com/ajax/circle/chart';
-            // 折线图
-            lineTheme = {color:['#C23531','#17C295']};
-            lineChart = echarts.init(document.getElementById('curve_count'), lineTheme);
-            xTitle = eval('["1\u6708","2\u6708","3\u6708","4\u6708","5\u6708","6\u6708","7\u6708","8\u6708","9\u6708","10\u6708","11\u6708","12\u6708"]');
-            newlyAdded = eval('[0,1,0,1,2,0,0,0,5,0,0,0]');
-            Active = eval('[0,1,0,1,2,0,0,0,5,0,0,0]');
-            // 地图
-            mapChart = echarts.init(document.getElementById('lanuch_main'));
-            mapData = eval('[{"name":"\u9655\u897f","value":1}]');
-            makeChart();
+            $(".y").text('数据来源：' + localStorage.getItem('title'));
+            var lineChart,lineTheme,xTitle,newlyAdded,Active,mapChart,mapData,requestUrl = apiUrl + 'circel/wcurve?domain=' + pages_info.plats_domian.domain;
+            //改变数组中固定位置的值
+            var changeArr = function(arr, id, val) {
+                let cnt = 1;
+                return arr.map(x => {
+                    if (id == cnt) {
+                        cnt++;
+                        return parseInt(val);
+                    } else {
+                        cnt++;
+                        return x;
+                    }
+                })
+            }
+
+            //生成数组
+            var genArr = function(curve, arr) {
+                let res = arr;
+                curve.map(x => res = changeArr(res, x.grow_m, x.nums))
+                return res;
+            }
+
+            String.prototype.ToUnicode = function(str) {
+                return escape(str).replace(/%u/gi, '\\u');
+            }
+
+            var genMap = function(spread) {
+                let res = [];
+//                spread.map(x => res.push({"name": String.prototype.ToUnicode(x.area_title), "value": x.nums}))
+                spread.map(x => res.push({"name": x.area_title, "value": x.nums}))
+                return res;
+            }
+
+            var checkRed = function(spread) {
+                return spread.filter(x => parseInt(x.nums) > 10000);
+            }
+
+            var getLine = function(url) {
+                $.ajax({
+                    url: url,
+                    success: function(data){
+                        console.log(data)
+                        let curve = data.data.wcurve;
+                        let spread = data.data.wspread;
+                        let slen = checkRed(spread).length;
+                        let arr = [0,0,0,0,0,0,0,0,0,0,0,0];
+                        // 折线图
+                        lineTheme = {color:['#C23531','#17C295']};
+                        lineChart = echarts.init(document.getElementById('curve_count'), lineTheme);
+                        xTitle = eval('["1\u6708","2\u6708","3\u6708","4\u6708","5\u6708","6\u6708","7\u6708","8\u6708","9\u6708","10\u6708","11\u6708","12\u6708"]');
+                        newlyAdded = genArr(curve, arr);
+                        Active = genArr(curve, arr);
+                        // 地图
+                        mapChart = echarts.init(document.getElementById('lanuch_main'));
+                        mapData = genMap(spread);
+                        if (slen == 0) {
+                            $(".rcmd").html("<span></span>看哈，Ta成为网红潜力很大，大家帮Ta加加油！")
+//                            $(".rcmd span").css("background", "#eeeeee");
+                        } else if (slen < 34 && slen > 0) {
+                            $(".rcmd").html("<span></span>Ta已经红遍中国" + slen + "省，是名副其实的小网红！")
+//                            $(".rcmd span").css("background", "#ff0000");
+                        } else if (slen >= 34) {
+                            $(".rcmd").html("<span></span>Ta已经红遍中国，是名副其实的网红！")
+//                            $(".rcmd span").css("background", "#ff0000");
+                        }
+                        makeChart();
+                    }
+                })
+            }
+
+            var url = window.location.pathname.split('/');
+            var domain = url.slice(1, 2)[0];
+            getLine(apiUrl + 'circel/index?domain=' + pages_info.plats_domian.domain);
         </script>
-        <script src="/common/js/control.js"></script>
-        <script src="{{PATH_TML}}zone/js/zonelist.js"></script>
     </body>
 </html>

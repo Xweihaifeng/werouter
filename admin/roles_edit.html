@@ -57,10 +57,10 @@
     </aside>
     <!-- content-wrapper -->
     <div class="content-wrapper">
+        <input type="hidden" name="config-url" value="roles.html">
         <section class="content-header">
             <h1>
                角色管理
-                <small>角色列表</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> 首页</a></li>
@@ -87,7 +87,8 @@
                 <div class="form-group">
                     <label class="control-label col-sm-3 col-md-2 col-lg-1">激活状态*</label>
                     <div class="col-sm-9 col-md-10 col-lg-11">
-                    <select class="form-control" id="activation"></select>
+                        <input type="radio" value="1" name="status"> 是
+                        <input type="radio" value="2" name="status"> 否
                     </div>
                 </div>
                 <div class="form-group">
@@ -110,7 +111,7 @@
 
 <!-- Bootstrap 3.3.7 -->
 <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-<script src="http://cdn.staticfile.org/jquery.bootstrapvalidator/0.5.3/js/bootstrapValidator.min.js"></script>
+<script src="//cdn.staticfile.org/jquery.bootstrapvalidator/0.5.3/js/bootstrapValidator.min.js"></script>
 <!-- DataTables -->
 <script src="bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
@@ -120,8 +121,8 @@
 <script src="bower_components/fastclick/lib/fastclick.js"></script>
 <!-- AdminLTE App -->
 <script src="dist/js/adminlte.min.js"></script>
-<script src="http://cdn.staticfile.org/plupload/2.1.8/moxie.js"></script>
-<script src="http://cdn.staticfile.org/plupload/2.1.8/plupload.dev.js"></script>
-<script src="http://cdn.staticfile.org/plupload/2.1.8/i18n/zh_CN.js"></script>
+<script src="//cdn.staticfile.org/plupload/2.1.8/moxie.js"></script>
+<script src="//cdn.staticfile.org/plupload/2.1.8/plupload.dev.js"></script>
+<script src="//cdn.staticfile.org/plupload/2.1.8/i18n/zh_CN.js"></script>
 </body>
 </html>

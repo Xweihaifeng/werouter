@@ -19,7 +19,7 @@
 <div class="login">
     <div class="left-nav">
         <div id="home">
-            <img src="http://next.wezchina.com/storage/images/906f4f7c227f67a96a859bdf64cbd5c0.png" width='90' alt="HOME" />
+            <img src="/common/img/home.png" width='90' alt="HOME" />
         </div>
         <div id="login">
             <div class="log-head"></div>
@@ -176,7 +176,7 @@
             url: 'http://apitest.wezchina.com/pages/page/getDetailByUser/' + weid,
             type: 'GET',
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data){
                 if (data.code == 200){
@@ -201,7 +201,7 @@
         })
     }
 
-    var weid = localStorage.getItem('weid');
+    var weid = docCookies.getItem("weid");
     hasDomain(weid);
 
     var isLogin = false; //判断用户登陆与否

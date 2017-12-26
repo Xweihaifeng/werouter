@@ -1,0 +1,262 @@
+<#extend#>public/domain/domain_extend.html</#extend#>
+<link rel="stylesheet" href="{{PATH_TML}}css/home.css"/>
+<link rel="stylesheet" href="{{PATH_TML}}css/common.css"/>
+<link rel="stylesheet" href="{{PATH_TML}}css/my-shopping.css"/>
+<script src="{{PATH_TML}}js/swiper-3.3.1.min.js"></script>
+<script src="/common/js/jquery.min.js"></script>
+<div class="container mall">
+    <div class="swiper-container" v-if="advList.length">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide" v-for="item in advList" v-if="item.src">
+                <a :href="item.href"><img :src="item.src | img_src" alt=""></a>
+            </div>
+        </div>
+        <div class="swiper-pagination"></div>
+    </div>
+    <div>
+        <menu class="menu" id="menu_title" :class="{'has-swiper' : advList.length}">
+            <ul id="shop_type">
+                <li v-for="item in sortList" :class="{'active' : currentShow == item.weid}" @click="getSortList(item)"
+                    :id="item.weid">
+                    <a>{{item.name}}</a>
+                </li>
+            </ul>
+        </menu>
+        <article class="shop">
+            <ul>
+                <li v-for="list in sortList" :id="list.name">
+                    <p>{{list.name}}</p>
+                    <a v-for="good in goodList" :id="good.weid" v-if="good.catename == list.name"
+                       @click="window.localStorage.setItem('shopping_weid', good.weid)"
+                       :href="'/'+ domain +'/wemall/goods/'+ good.weid">
+                        <div>
+                            <slide class="li_img_wap">
+                                <img :src="good.cover | img_src(100, 100, 3)">
+                            </slide>
+                            <slide class="li_info">
+                                <h3>{{good.title | limitLen(0,13)}}</h3>
+                                <div class="lii_price"><span>￥</span>{{good.price}}</div>
+                                <p class="lii_sold">
+                                    <!--<span>已售：{{good.sales_num}}</span><span>收藏：{{good.collections}}</span>-->
+                                    <i @click="add(good,$event)"></i>
+                                </p>
+                            </slide>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </article>
+    </div>
+    <transition name="fade">
+        <div class="modal-bg" v-show="showModal" @click="showModal=false"></div>
+    </transition>
+    <transition name="fade">
+        <div class="modal-content" v-show="showModal">
+            <div class="top">
+                <img :src="addGood.cover  | img_src" alt="">
+                <div>
+                    <p>{{addGood.title | limitLen(0,20)}}</p>
+                    <p>
+                        <span>￥</span>
+                        <span>{{addGood.price}}</span>
+                    </p>
+                </div>
+                <i @click="showModal=false"></i>
+            </div>
+            <div class="medium">
+                <p>购买数量：</p>
+                <p>
+                    <button :class="{'disabled' : unableReduce}" @click="reduceNum()"></button>
+                    <input v-model="buyNum" type="text">
+                    <button :class="{'disabled' : unablePlus}" @click="plusNum()"></button>
+                </p>
+            </div>
+            <div class="bottom">
+                <a @click="addStore()">加入购物车</a>
+                <a @click="buyNow()">立即购买</a>
+            </div>
+        </div>
+    </transition>
+    <div v-if="addStoreTip" class="add-store-tip">
+        <div class="tip-inner">{{tipMsg}}</div>
+    </div>
+</div>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            advList: [],
+            sortList: [],
+            goodList: [],
+            domain: pages_index,
+            buyNum: 1,
+            currentSort: '',
+            currentShow: '',
+            addGood: '',
+            tipMsg: '',
+            unablePlus:false,
+            unableReduce: true,
+            showModal: false,
+            addStoreTip: false
+        },
+        mounted() {
+            this.$nextTick(() => {
+                var self = this;
+                ajax.get('goods/cates/listsbyuser/' + pages_info.plats_domian.plat_user_id).then((res) => {
+                    if (res.code == 200 && res.data.length) {
+                        this.sortList = res.data;
+                        this.currentShow = this.sortList[0].weid;
+                        this.sortList.map(function (ele, ind) {
+                            self.currentSort = ele.weid;
+                            self.getList()
+                        });
+                    }
+                });
+
+                var sendData = {
+                    user_id : pages_info.plats_user.weid,
+                    style: 3
+                };
+                ajax.post('pages/banner/detail', sendData).then((res) => {
+                    console.log(res);
+                    if (res.code == 200 && res.data) {
+                        this.advList = JSON.parse(res.data.slide);
+                        console.log(this.advList)
+                    }
+                });
+                setTimeout(function () {
+                    var mySwiper = new Swiper('.swiper-container', {
+                        direction: 'horizontal',
+                        loop: true,
+                        speed: 1000,
+                        autoplay: 3000,
+                        autoplayDisableOnInteraction: false,
+                        pagination: '.swiper-pagination',
+                        onlyExternal: true,
+                        longSwipesRatio: 0.3,
+                        touchRatio: 1
+                    });
+                }, 1000)
+
+            });
+            window.addEventListener('scroll', this.menu)
+        },
+        methods: {
+            getList: function () {
+                var sendData = {
+                    userId: pages_info.plats_domian.plat_user_id,
+                    cate_id: this.currentSort
+                };
+                ajax.post('goods/lists/user', sendData).then((res) => {
+                    if (res.code == 200 && res.data.list.length) {
+                        this.goodList.push.apply(this.goodList, res.data.list);
+                    }
+                })
+            },
+            getSortList: function (item) {
+                this.currentShow = item.weid;
+                $("html,body").animate({
+                    scrollTop: $("#" + item.name).offset().top - 44
+                }, {duration: 0});
+            },
+            menu() {
+                var self = this;
+                var t = 0;
+                var scroll = document.documentElement.scrollTop || document.body.scrollTop;
+                if(this.advList.length){
+                    if (t <= scroll) {//向下滚
+                        $('.menu').css('top', 244 - scroll);
+                        if(parseInt($('.menu').css('top')) <= 44) {
+                            $('.menu').css('top', '44px')
+                        }
+                    } else {//向上滚
+                        $('.menu').css('top', scroll);
+                        if(parseInt($('.menu').css('top')) >= 244) {
+                            $('.menu').css('top', '244px')
+                        }
+                    }
+                }
+
+                if (this.sortList && this.sortList.length) {
+                    this.sortList.forEach(function (ele, ind) {
+                        var top = $("#" + ele.name).offset().top;
+                        if (top - scroll > 0 && top - scroll < document.body.offsetHeight / 2) {
+                            self.currentShow = self.sortList[ind].weid;
+                        }
+                    });
+                }
+            },
+            add : function (good,event) {
+                this.addGood = good;
+                console.log(good);
+                this.showModal = true;
+                this.buyNum = 1;
+                this.unablePlus = false;
+                this.unableReduce = true;
+                event.preventDefault();
+            },
+            buyNow : function () {
+                var url = '';
+                if(is_login == 'no')
+                {
+                    mb_login(url);
+                    return false;
+                }
+                //增加权限判断
+                ajax.get('mall/detail/' + this.addGood.mall_id).then(data => {
+                    console.log(data);
+                    if(data.code == 200 && data.data){
+                        window.location.href = '/' + pages_index + '/wemall/order/' + this.addGood.weid;
+                    }
+                });
+            },
+            addStore : function () {
+                var self = this;
+                var url = '';
+                if(is_login == 'no')
+                {
+                    mb_login(url);
+                    return false;
+                }
+                //增加权限判断
+                let sendData = {
+                    goods_id: this.addGood.weid,
+                    goods_num: this.buyNum
+                };
+                this.showModal = false;
+                ajax.post("cart/store", sendData).then(data => {
+                    console.log(data);
+                    this.addStoreTip = true;
+                    if(data.code == 200){
+                        this.tipMsg = '已成功添加到购物车'
+                    }else{
+                        this.tipMsg = '该商品已经加入购物车'
+                    }
+                    setTimeout(function () {
+                        self.addStoreTip = false
+                    },1500)
+                });
+            },
+            reduceNum : function () {
+                this.buyNum--;
+                if(this.buyNum <= 1){
+                    this.buyNum = 1;
+                    this.unableReduce = true
+                }
+                if(this.buyNum <= this.addGood.stock){
+                    this.unablePlus = false
+                }
+            },
+            plusNum : function () {
+                this.buyNum++;
+                if(1<=this.buyNum){
+                    this.unableReduce = false
+                }
+                if(this.buyNum >= this.addGood.stock){
+                    this.buyNum = this.addGood.stock;
+                    this.unablePlus = true
+                }
+            }
+        }
+    })
+</script>

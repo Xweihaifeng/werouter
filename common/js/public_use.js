@@ -57,7 +57,8 @@ var url = window.location.pathname.split('/');
                     var weid = info.weid;
                     // console.log(weid)
                     var imgUrl = info.avatar;
-                    var logoimg="/common/img/avatar.png";
+                    var logoimg = ''
+                    //var logoimg="/common/img/avatar.png";
                     if ((imgUrl != null && imgUrl != "") && imgUrl.indexOf('http') === -1){
                         imgUrl = host + imgUrl;
                        logoimg=imgUrl;
@@ -66,14 +67,14 @@ var url = window.location.pathname.split('/');
                             logoimg=imgUrl;
                             
                         } else {
-                            logoimg="/common/img/avatar.png";
+                            //logoimg="/common/img/avatar.png";
                            
                         }
                     }
                 
                     
                     
-                    qrcodefun(domain,logoimg);
+                    qrcodefun(domain, logoimg, id);
 
                     
                 }
@@ -85,28 +86,33 @@ var url = window.location.pathname.split('/');
     }
 
        // 二维码插件
-    var qrcodefun=function(domain,logoimg){
+    //$(".oline-3 div:first-child").children().remove();
+
+
+    /*var qrcodefun=function(domain,logoimg,platuserid){
         $(".oline-3 div:first-child").children().remove();
-        var qrcode_val=localhostPath+"/"+domain+"/wecard";
+        //var qrcode_val=localhostPath+"/"+domain+"/wecard";
+        console.log(localhostPath)
+        var qrcode_val=localhostPath + "/wecard" + platuserid;
         $(".oline-3 div:first-child").attr("ref",qrcode_val);
         // if ($.browser.msie && $.browser.version <= 8){
         if ($.support.msie && $.support.version <= 8){
 
             $(".oline-3 div:first-child").qrcode({
-                render  : "table",
-                width   : 90,
-                height  : 90,
+                render  : "canvas",
+                width   : 160,
+                height  : 160,
                 text    : qrcode_val,
-                src: logoimg  
+                src: logoimg
             });
         }else{
             jQuery(".oline-3 div:first-child").qrcode({
-                width   : 90,
-                height  : 90,
+                width   : 160,
+                height  : 160,
                 text    : qrcode_val,
                 src: logoimg  
             });
         }
 
     
-    }  
+    }*/

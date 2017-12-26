@@ -2,13 +2,13 @@
  * Created by Yaoer on 2017/8/6.
  */
 
-var domain;
+/*var domain;
 var hasDomain = function(weid){
     $.ajax({
         url: PAGES_PAGE_GETDETAILBYUSER + weid,
         type: 'GET',
         headers: {
-            'Token': localStorage.getItem('token')
+            'Token': docCookies.getItem("token")
         },
         success: function(data){
             if (data.code == 200){
@@ -32,20 +32,20 @@ var hasDomain = function(weid){
             console.log(xhr);
         }
     })
-}
+}*/
 
 //判断为空
 function isNull(data) {
     return (data == "" || data == undefined || data == null|| data == 'null') ? true: false;
 }
 
-var weid = localStorage.getItem('weid');
-hasDomain(weid);
+/*var weid = docCookies.getItem("weid");
+hasDomain(weid);*/
 
     //route
     var isLogin; //判断用户登陆与否
-    var router = function(route){
-        if(!window.localStorage.getItem("token")) {
+    /*var router = function(route){
+        if(!docCookies.getItem("token")) {
             isLogin = false;
         } else {
             isLogin = true;
@@ -98,15 +98,15 @@ hasDomain(weid);
         if (isMember(routerList, route) != ""){
             eval(route)();
         }
-    }
+    }*/
 
     // $("#home, #login, #article, #active, #project, #shopping, #zone, #zan").click(function(){
-    $("#home, #login, #article, #active, #zan").click(function(){
+   /* $("#home, #login, #article, #active, #zan").click(function(){
         var id = $(this).attr("id");
         router(id);
-    })
+    })*/
 
-var login = function(){
+/*var login = function(){
     window.location.href = "/login";
 }
 
@@ -116,7 +116,7 @@ var login = function(){
        url: PAGES_PAGE_GETDETAILBYUSER + weid,
        type: 'GET',
        headers: {
-         'Token': localStorage.getItem('token')
+         'Token': docCookies.getItem("token")
        },
        success: function(data){
           if (data.code == 401) {
@@ -133,9 +133,9 @@ var login = function(){
              domain = "/" + data.data.domain;
            }
          } else {
-           /*layer.msg(data.message, {
+           /!*layer.msg(data.message, {
              time: 1500
-           });*/
+           });*!/
          }
        },
        error: function(xhr){
@@ -144,8 +144,8 @@ var login = function(){
      })
  }
 
-var weid = localStorage.getItem('weid');
-hasDomain(weid);
+var weid = docCookies.getItem("weid");
+hasDomain(weid);*/
 
 
 
@@ -189,4 +189,4 @@ var init = function(token){
         }
     }*/
 
-//init(localStorage.getItem('token'));
+//init(docCookies.getItem("token"));

@@ -58,7 +58,7 @@ var wElist = function() {
 	$.ajax({
 		type: "GET",
 		headers: {
-			'Token': localStorage.getItem('token')
+			'Token': docCookies.getItem("token")
 		},
 		url: apiUrl + "users/address/list",
 		dataType: "json",
@@ -133,7 +133,7 @@ var wElist = function() {
 									$.ajax({
 										type: "GET",
 										headers: {
-											'Token': localStorage.getItem('token')
+											'Token': docCookies.getItem("token")
 										},
 										url: apiUrl+"users/address/destroy/" + weid,
 										dataType: "json",
@@ -161,7 +161,7 @@ var wElist = function() {
 					$.ajax({
 						type: "GET",
 						headers: {
-							'Token': localStorage.getItem('token')
+							'Token': docCookies.getItem("token")
 						},
 						url: apiUrl+"users/address/list",
 						dataType: "json",
@@ -232,7 +232,7 @@ var wElist = function() {
 							$.ajax({
 								type: "GET",
 								headers: {
-									'Token': localStorage.getItem('token')
+									'Token': docCookies.getItem("token")
 								},
 								url: apiUrl+"province/list",
 								dataType: "json",
@@ -267,7 +267,7 @@ var wElist = function() {
 										$.ajax({
 											type: "GET",
 											headers: {
-												'Token': localStorage.getItem('token')
+												'Token': docCookies.getItem("token")
 											},
 											url: apiUrl+"area/list/" + weHaH,
 											dataType: "json",
@@ -293,7 +293,7 @@ var wElist = function() {
 													$.ajax({
 														type: "GET",
 														headers: {
-															'Token': localStorage.getItem('token')
+															'Token': docCookies.getItem("token")
 														},
 														url: apiUrl+"county/list/" + countyid,
 														dataType: "json",
@@ -335,7 +335,7 @@ var wElist = function() {
 								$.ajax({
 									type: "GET",
 									headers: {
-										'Token': localStorage.getItem('token')
+										'Token': docCookies.getItem("token")
 									},
 									url: apiUrl+"area/list/" + $('#we_province2 option:selected').attr('id'),
 									dataType: "json",
@@ -361,7 +361,7 @@ var wElist = function() {
 								$.ajax({
 									type: "GET",
 									headers: {
-										'Token': localStorage.getItem('token')
+										'Token': docCookies.getItem("token")
 									},
 									url: apiUrl+"county/list/" + $('#we_city3 option:selected').attr('id'),
 									dataType: "json",
@@ -396,7 +396,7 @@ var wElist = function() {
 								$.ajax({
 									type: "POST",
 									headers: {
-										'Token': localStorage.getItem('token')
+										'Token': docCookies.getItem("token")
 									},
 									url: apiUrl+"users/address/update",
 									data: {
@@ -418,10 +418,10 @@ var wElist = function() {
 												time: 2000
 											});
 
-											$.ajax({
+											/*$.ajax({
 												type: "GET",
 												headers: {
-													'Token': localStorage.getItem('token')
+													'Token': docCookies.getItem("token")
 												},
 												url: apiUrl+"users/address/destroy/" + index1[0].getAttribute("id"),
 												dataType: "json",
@@ -432,7 +432,7 @@ var wElist = function() {
 													window.history.go(0);
 												}
 
-											})
+											})*/
 
 										}
 									},
@@ -458,7 +458,7 @@ var wElist = function() {
 					$.ajax({
 						type: "POST",
 						headers: {
-							'Token': localStorage.getItem('token')
+							'Token': docCookies.getItem("token")
 						},
 						url: apiUrl+"users/address/update",
 						data: {
@@ -577,7 +577,7 @@ $("#sh_address").on("click", function() {
 					$.ajax({
 						type: "POST",
 						headers: {
-							'Token': localStorage.getItem('token')
+							'Token': docCookies.getItem("token")
 						},
 						url: apiUrl+"users/address/store",
 						data: {
@@ -612,7 +612,7 @@ $("#sh_address").on("click", function() {
 			$.ajax({
 				type: "GET",
 				headers: {
-					'Token': localStorage.getItem('token')
+					'Token': docCookies.getItem("token")
 				},
 				url: apiUrl+"province/list",
 				dataType: "json",
@@ -637,7 +637,7 @@ $("#sh_address").on("click", function() {
 						$.ajax({
 							type: "GET",
 							headers: {
-								'Token': localStorage.getItem('token')
+								'Token': docCookies.getItem("token")
 							},
 							url: apiUrl+"area/list/" + weHaH,
 							dataType: "json",
@@ -653,7 +653,7 @@ $("#sh_address").on("click", function() {
 									$.ajax({
 										type: "GET",
 										headers: {
-											'Token': localStorage.getItem('token')
+											'Token': docCookies.getItem("token")
 										},
 										url: apiUrl+"county/list/" + $('#we_city option:selected').attr('id'),
 										dataType: "json",
@@ -694,7 +694,7 @@ $("#sh_address").on("click", function() {
 		$.ajax({
 			type: "GET",
 			headers: {
-				'Token': localStorage.getItem('token')
+				'Token': docCookies.getItem("token")
 			},
 			url: apiUrl+"area/list/" + $('#we_province option:selected').attr('id'),
 			dataType: "json",
@@ -719,7 +719,7 @@ $("#sh_address").on("click", function() {
 		$.ajax({
 			type: "GET",
 			headers: {
-				'Token': localStorage.getItem('token')
+				'Token': docCookies.getItem("token")
 			},
 			url: apiUrl+"county/list/" + $('#we_city option:selected').attr('id'),
 			dataType: "json",

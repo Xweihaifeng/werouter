@@ -59,6 +59,7 @@
         </aside>
         <!-- content-wrapper -->
         <div class="content-wrapper">
+            <input type="hidden" name="config-url" value="contentCategory.html">
             <section class="content-header">
                 <h1> 编辑栏目 </h1>
                 <!--
@@ -82,10 +83,18 @@
                                 <form id="form" action="" method="post" class="form-horizontal" enctype="multipart/form-data">
                                     <input type="hidden" name="_token" value="pKw8le5hYJQSNk4EKWUGEs23SQPbqdGlZeQF94fZ">
                                     <div class="form-group">
-                                        <label class="control-label col-sm-2">所属频道*</label>
+                                        <label class="control-label col-sm-2">所属频道</label>
                                         <div class="col-sm-5">
-                                            <select name="channel_id" class="form-control">
+                                            <select name="channel_id" class="form-control" disabled>
 										</select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2">上级栏目</label>
+                                        <div class="col-sm-5">
+                                            <select name="parent_id" class="form-control" disabled>
+                                                        <option value="">设为顶级</option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -107,6 +116,8 @@
                                             <select name="type" class="form-control">
                                             <option value="0">文章集合</option>
                                             <option value="1">图文单页</option>
+                                            <option value="2">专题</option>
+                                            <option value="3">视频</option>
                                         </select>
                                         </div>
                                     </div>
@@ -133,7 +144,29 @@
                                             <input name="thumb_image" type="hidden" value="" class="form-control" />
                                             <input id="pickfiles" name="cover" type="file" class="form-control hide" />
                                             <div id="look">
-                                                <img onclick="$('#pickfiles').click()" id="img" width="100px;" src="http://oty3r3tmi.bkt.clouddn.com/upload.png" alt="暂无预览图片" class="thumbnail">
+                                                <img onclick="$('#pickfiles').click()" id="img" width="100px;" src="//oty3r3tmi.bkt.clouddn.com/upload.png" alt="暂无预览图片" class="thumbnail">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">展示图</label>
+                                        <div class="col-sm-5">
+                                            <p style="padding-top:7px" class="info"> 上传格式： .png、.jpg、 .gif</p>
+                                            <input name="big_image" type="hidden" value="" class="form-control" />
+                                            <input id="pickfiles2" name="cover" type="file" class="form-control hide" />
+                                            <div id="look">
+                                                <img onclick="$('#pickfiles2').click()" id="img2" width="100px;" src="//oty3r3tmi.bkt.clouddn.com/upload.png" alt="暂无预览图片" class="thumbnail">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">背景图</label>
+                                        <div class="col-sm-5">
+                                            <p style="padding-top:7px" class="info"> 上传格式： .png、.jpg、 .gif</p>
+                                            <input name="back_image" type="hidden" value="" class="form-control" />
+                                            <input id="pickfiles3" name="cover" type="file" class="form-control hide" />
+                                            <div id="look">
+                                                <img onclick="$('#pickfiles3').click()" id="img3" width="100px;" src="//oty3r3tmi.bkt.clouddn.com/upload.png" alt="暂无预览图片" class="thumbnail">
                                             </div>
                                         </div>
                                     </div>
@@ -179,7 +212,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group editor1" style="display:none">
                                         <label class="control-label col-sm-2">页面内容</label>
                                         <div class="col-sm-5">
                                             <textarea id="editor1" rows="3" name="content" class="form-control" placeholder="请输入页面展示内容"></textarea>
@@ -423,7 +456,7 @@
     <script src="js/jquery-3.2.1.min.js"></script>
     <!-- Bootstrap 3.3.7 -->
     <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="http://cdn.staticfile.org/jquery.bootstrapvalidator/0.5.3/js/bootstrapValidator.min.js"></script>
+    <script src="//cdn.staticfile.org/jquery.bootstrapvalidator/0.5.3/js/bootstrapValidator.min.js"></script>
     <!-- DataTables -->
     <script src="bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
     <script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
@@ -449,10 +482,10 @@
     <script src="js/template/index.js"></script>
 
     <!-- page script -->
-    <script src="http://cdn.staticfile.org/jquery/1.9.1/jquery.min.js"></script>
-    <script src="http://cdn.staticfile.org/plupload/2.1.8/moxie.js"></script>
-    <script src="http://cdn.staticfile.org/plupload/2.1.8/plupload.dev.js"></script>
-    <script src="http://cdn.staticfile.org/plupload/2.1.8/i18n/zh_CN.js"></script>
+    <script src="//cdn.staticfile.org/jquery/1.9.1/jquery.min.js"></script>
+    <script src="//cdn.staticfile.org/plupload/2.1.8/moxie.js"></script>
+    <script src="//cdn.staticfile.org/plupload/2.1.8/plupload.dev.js"></script>
+    <script src="//cdn.staticfile.org/plupload/2.1.8/i18n/zh_CN.js"></script>
 
     <script src="bower_components/qiniu/dist/qiniu.min.js"></script>
     <script>
@@ -460,10 +493,10 @@
 
         var qiniu_uptoken = '';
         var saveto = 'qiniu';
-        var qiniu_upload_domain = 'http://upload.qiniu.com';
+        var qiniu_upload_domain = '//upload.qiniu.com';
         var qiniu_bucket_domain = ApiMaterPlatQiniuDomain;
         CKEDITOR.replace('editor1', {
-            "extraPlugins": "filebrowser,image,imagepaste,filetools"
+            "extraPlugins": "filebrowser,image,imagepaste,filetools,flash"
         });
 
         $(function($) {
@@ -493,6 +526,7 @@
                                 $.each(data_.data.list, function(k_, v_) {
                                     if (v_.weid == data.data.channel_id) {
                                         var option = `<option value="` + v_.weid + `" selected>` + v_.title + `</option>`;
+                                        __cate_init(data.data.channel_id, data.data.parent_id);
                                     } else {
                                         var option = `<option value="` + v_.weid + `">` + v_.title + `</option>`;
                                     }
@@ -506,9 +540,26 @@
                         $('input[name=title]').val(data.data.title);
                         $('input[name=domain]').val(data.data.domain);
                         $('select[name=type]').val(data.data.type);
+                        if (data.data.type == 1) {
+                            $(".editor1").show();
+                        }
+                        if (data.data.init == 1) {
+                            $('select[name=channel_id]').attr("disabled", true);
+                            $('input[name=title]').attr("disabled", true);
+                            $('input[name=domain]').attr("disabled", true);
+                            $('select[name=type]').attr("disabled", true);
+                        }
                         if (data.data.thumb_image) {
                             $('#img').attr("src", ApiMaterPlatQiniuDomain + data.data.thumb_image);
                             $('input[name=thumb_image]').val(data.data.thumb_image);
+                        }
+                        if (data.data.big_image) {
+                            $('#img2').attr("src", ApiMaterPlatQiniuDomain + data.data.big_image);
+                            $('input[name=big_image]').val(data.data.big_image);
+                        }
+                        if (data.data.back_image) {
+                            $('#img3').attr("src", ApiMaterPlatQiniuDomain + data.data.back_image);
+                            $('input[name=back_image]').val(data.data.back_image);
                         }
                         $("[name=index_show]:checkbox").attr("checked", data.data.index_show ? true : false);
                         $("[name=index_pose]:checkbox").attr("checked", data.data.index_pose ? true : false);
@@ -536,6 +587,30 @@
                 });
             }
             __init();
+            var __cate_init = function(channel_id, parent_id) {
+                $.ajax({
+                    url: ApiUrl + 'cms/channel_categories?channel=' + channel_id,
+                    type: 'get',
+                    dataType: 'json',
+                    success: function(rep) {
+                        var option = '<option value="">设为顶级</option>';
+                        $.each(rep.data, function(k, v) {
+                            if (v.weid == parent_id)
+                                option += `<option value="` + v.weid + `" selected>` + v.title + `</option>`;
+                            else
+                                option += `<option value="` + v.weid + `">` + v.title + `</option>`;
+                        });
+                        $('select[name=parent_id]').html(option);
+                    },
+                    error: function(xhr) {
+                        console.log(xhr);
+                    }
+                });
+            }
+            $(document).on('change', 'select[name=channel_id]', function() {
+                var channel_id = $(this).val();
+                __cate_init(channel_id);
+            });
             var uploader = Qiniu.uploader({
                 runtimes: 'html5,flash,html4',
                 browse_button: 'pickfiles',
@@ -544,7 +619,7 @@
                 domain: ApiMaterPlatQiniuDomain,
                 container: 'look',
                 max_file_size: '100mb',
-                flash_swf_url: 'http://cdn.staticfile.org/plupload/2.1.8/Moxie.swf',
+                flash_swf_url: '//cdn.staticfile.org/plupload/2.1.8/Moxie.swf',
                 max_retries: 3,
                 dragdrop: true,
                 drop_element: 'look',
@@ -576,6 +651,86 @@
                     }
                 }
             });
+            var uploader2 = Qiniu.uploader({
+                runtimes: 'html5,flash,html4',
+                browse_button: 'pickfiles2',
+                uptoken_url: ApiUrl + 'file/qiniu_token',
+                get_new_uptoken: false,
+                domain: ApiMaterPlatQiniuDomain,
+                container: 'look',
+                max_file_size: '100mb',
+                flash_swf_url: '//cdn.staticfile.org/plupload/2.1.8/Moxie.swf',
+                max_retries: 3,
+                dragdrop: true,
+                drop_element: 'look',
+                chunk_size: '4mb',
+                auto_start: true,
+                filters: {
+                    max_file_size: '5mb',
+                    prevent_duplicates: true,
+                    // Specify what files to browse for
+                    mime_types: [{
+                        title: "Image files",
+                        extensions: "jpg,gif,png"
+                    }, ]
+                },
+                init: {
+                    'FileUploaded': function(up, file, info) {
+                        var domain = up.getOption('domain');
+                        res = JSON.parse(info.response);
+                        $("input[name=big_image]").val(res.key);
+                        var sourceLink = domain + res.key;
+                        $("#img2").attr('src', sourceLink);
+                    },
+                    'Error': function(up, err, errTip) {},
+                    'UploadComplete': function() {},
+                    'Key': function(up, file) {
+                        var key = "plats/resource/";
+                        key += new Date().valueOf() + '.' + file.name.substring(file.name.indexOf('.') + 1);
+                        return key;
+                    }
+                }
+            });
+            var uploader3 = Qiniu.uploader({
+                runtimes: 'html5,flash,html4',
+                browse_button: 'pickfiles3',
+                uptoken_url: ApiUrl + 'file/qiniu_token',
+                get_new_uptoken: false,
+                domain: ApiMaterPlatQiniuDomain,
+                container: 'look',
+                max_file_size: '100mb',
+                flash_swf_url: '//cdn.staticfile.org/plupload/2.1.8/Moxie.swf',
+                max_retries: 3,
+                dragdrop: true,
+                drop_element: 'look',
+                chunk_size: '4mb',
+                auto_start: true,
+                filters: {
+                    max_file_size: '5mb',
+                    prevent_duplicates: true,
+                    // Specify what files to browse for
+                    mime_types: [{
+                        title: "Image files",
+                        extensions: "jpg,gif,png"
+                    }, ]
+                },
+                init: {
+                    'FileUploaded': function(up, file, info) {
+                        var domain = up.getOption('domain');
+                        res = JSON.parse(info.response);
+                        $("input[name=back_image]").val(res.key);
+                        var sourceLink = domain + res.key;
+                        $("#img3").attr('src', sourceLink);
+                    },
+                    'Error': function(up, err, errTip) {},
+                    'UploadComplete': function() {},
+                    'Key': function(up, file) {
+                        var key = "plats/resource/";
+                        key += new Date().valueOf() + '.' + file.name.substring(file.name.indexOf('.') + 1);
+                        return key;
+                    }
+                }
+            });
             $('button.pop-modal').click(function() {
                 $('#bootstrapModal').modal('show');
                 var type = $(this).data('type');
@@ -593,6 +748,14 @@
                         console.log(xhr);
                     }
                 });
+            });
+
+            $(document).on('change', 'select[name=type]', function() {
+                if ($(this).val() == 1) {
+                    $(".editor1").show();
+                } else {
+                    $(".editor1").hide();
+                }
             });
             $('#bootstrapModal').on('hidden.bs.modal', function(e) {
                 $('.template-lists-table tbody').html('');
@@ -628,8 +791,11 @@
                     'index_show': $('input[name="index_show"]').is(':checked') ? 1 : 0,
                     'index_pose': $('input[name="index_pose"]').is(':checked') ? 1 : 0,
                     'thumb_image': $('input[name=thumb_image]').val(),
+                    'big_image': $('input[name=big_image]').val(),
+                    'back_image': $('input[name=back_image]').val(),
                     'content': CKEDITOR.instances.editor1.getData(),
                     'channel_id': $('select[name=channel_id]').val(),
+                    'parent_id': $('select[name=parent_id]').val(),
                     'list_id': $('input[name=list_field]').val(),
                     'show_id': $('input[name=show_field]').val(),
                     'page_id': $('input[name=page_field]').val(),
@@ -676,8 +842,8 @@
                                 message: '别名长度为1到10位'
                             },
                             regexp: {
-                                regexp: /^[a-z]+$/,
-                                message: '别名只能由小写字母组成'
+                                regexp: /^[a-z0-9]+$/,
+                                message: '别名只能由小写字母或数字组成'
                             }
                         }
                     },

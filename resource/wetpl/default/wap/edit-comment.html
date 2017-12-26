@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title> 发表评价 </title>
+
+    <link href="{{PATH_TML}}css/edit-comment.css" rel="stylesheet">
+
+    <script src="{{PATH_TML}}js/jquery-3.2.1.min.js"></script>
+    <script src="{{PATH_CONFIG}}"></script>
+    <script src="{{PATH_TML}}js/vue.min.js"></script>
+    <script src="{{PATH_TML}}js/vue-resource.min.js"></script>
+    <script type="text/javascript" src="/common/layer-v3.0.3/layer-v3.0.3/layer/layer.js"></script>
+</head>
+<body>
+<div id="comment-app" v-cloak>
+    <header>
+        <span> 发表评价 </span>
+        <a class="back" href="javascript:void(0)" onclick="javascript:history.back(-1)"></a>
+    </header>
+    <div class="comment-container">
+        <div class="commit-btn"><a @click="submitComment()">提交</a></div>
+        <div v-for="item in orderObj.goods">
+            <div class="good">
+                <img :src="ApiMaterPlatQiniuDomain+item.goods_cover" alt="">
+                <span>商品评分</span>
+                <span v-for="star in item.starList" class="star" :class="{'not-red' : !star.check}" @click="goStar(item,star)"></span>
+            </div>
+            <textarea placeholder="在这里分享使用商品的体验吧~" v-model="item.comment"></textarea>
+        </div>
+    </div>
+</div>
+<script>
+    //Vue.http.headers.common['token'] = 'eyJpdiI6IlFzb1wveHJVRDJ3Vk9SOVVLcngwVU53PT0iLCJ2YWx1ZSI6IkhjdTFRdUQ0eHlcL0VCeVFlbW10eTQ0OHRJVDl4R3hiSGR0dzE0Z042MlBnWXYxa0pXRzByWjhCMjFQbWtXeEZHeVJrZXVrS1dvOXVGNHQ5WjR1emtmSVRnY1VpRHRWRVhGb3l2SVpLZmpvOD0iLCJtYWMiOiI5ZDZkZWYxMTA3NTI0MjhjZGQ1OTM5YjZjMjNhYjk5NzM0ZjBjMThjMmI2ZDk0ZjdjYmE1NTIyZjUyOGI2ZTk4In0='
+
+    Vue.http.headers.common['token'] = window.localStorage.getItem("token");
+    var commentApp = new Vue({
+        el : "#comment-app",
+        data : {
+            orderObj : {}
+        },
+        mounted : function () {
+            var originData = JSON.parse(window.localStorage.getItem('orderObj'));
+            for(var i=0; i< originData.goods.length;i++){
+                var arr = [];
+                for(var a=0;a<5;a++){
+                    var obj = {};
+                    obj.id = a;
+                    obj.check = true;
+                    arr.push(obj)
+                }
+                originData.goods[i].starList = arr;
+                originData.goods[i].comment = '';
+            }
+            this.orderObj = originData;
+            console.log(this.orderObj)
+        },
+        methods : {
+            goStar : function (item,star) {
+               star.check = !star.check;
+               if(star.check){
+                 //该位置的index值是几，红色星星选到几
+                   for(var i=0; i<=star.id;i++){
+                       item.starList[i].check = true;
+                   }
+               }else{
+                   //如果取消打星，则将从index+1开始到最后的星星置灰
+                   star.check = true;
+                   for(var i=star.id+1;i<=4;i++){
+                       item.starList[i].check = false;
+                   }
+               }
+            },
+            submitComment : function () {
+                for(var a=0; a<this.orderObj.goods.length; a++){
+                    var sendObj = {
+                        order_id : this.orderObj.weid,
+                        data : []
+                    };
+                    var obj = {};
+                    obj.goods_id = this.orderObj.goods[a].weid;
+                    obj.order_id = this.orderObj.weid;
+                    obj.title = '';
+                    obj.content = this.orderObj.goods[a].comment;
+                    var arr = this.orderObj.goods[a].starList.filter(function (s) {
+                        return s.check === true;
+                    });
+                    obj.grade = arr.length;
+                    sendObj.data.push(obj);
+                    this.sendRequest(sendObj)
+                }
+            },
+            sendRequest : function (data) {
+                this.$http.post(apiUrl + 'goods/comment/store',data).then(function (res) {
+                    console.log(res);
+                    if(res.data && res.data.code === 200){
+                        layer.msg('评价成功');
+                        window.location.href = '/shopping/allOrder'
+                    }else{
+                        layer.msg('评价失败')
+                    }
+                },function (err) {
+                    layer.msg('评价失败')
+                })
+            }
+        }
+
+    });
+
+</script>
+</body>
+</html>

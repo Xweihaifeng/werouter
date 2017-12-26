@@ -322,6 +322,24 @@ var __init_weixin_config = function() {
                 console.log(xhr);
             }
         });
+        $.ajax({
+            url: ApiUrl + 'setting/alias/weChatOpenConfig',
+            type: 'get',
+            dataType: 'json',
+            success: function(result) {
+                if (result.code === 200) {
+                    $('#wechat_open_appid').val(result.data.appid);
+                    $('#wechat_open_secret').val(result.data.appsecret);
+                } else {
+                    parent.layer.msg(result.message);
+
+                    return false;
+                }
+            },
+            error: function(xhr) {
+                console.log(xhr);
+            }
+        });
         // 客户端证书
         var uploader = Qiniu.uploader({
             runtimes: 'html5,flash,html4',
@@ -429,6 +447,32 @@ $('.weChatPaySet').click(function() {
     };
     $.ajax({
         url: ApiUrl + 'setting/alias/weChatPayConfig',
+        type: 'post',
+        dataType: 'json',
+        data: {
+            config: wechatList
+        },
+        success: function(data) {
+            console.log(data);
+            if (data.code === 200) {
+                swal('提示', '保存成功', 'success');
+            } else {
+                console.log('error: -200');
+            }
+        },
+        error: function(xhr) {
+            console.log(xhr);
+        }
+    });
+});
+// 微信开放平台保存
+$('.weChatOpenSet').click(function() {
+    var wechatList = {
+        'appid': $('#wechat_open_appid').val(),
+        'appsecret': $('#wechat_open_secret').val(),
+    };
+    $.ajax({
+        url: ApiUrl + 'setting/alias/weChatOpenConfig',
         type: 'post',
         dataType: 'json',
         data: {

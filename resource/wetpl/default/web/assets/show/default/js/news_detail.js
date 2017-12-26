@@ -20,7 +20,7 @@ $(function() {
     var get_param = window.location.pathname.split('/').pop();
     var praise_if, original;
     // token 加载值请求头（Headers）
-    var token = window.localStorage.getItem('token'), isLogin = false;
+    var token = docCookies.getItem("token"), isLogin = false;
 
     if(token) {
         $.ajaxSetup({
@@ -72,8 +72,8 @@ $(function() {
     // 新问内容部分显示
     var news_detail = function(result) {
         document.title = result.title;
-        var thumb_image = window.localStorage.getItem("logo"),
-            publisher   = window.localStorage.getItem("title");
+        var thumb_image = localStorage.getItem("logo"),
+            publisher   = localStorage.getItem("title");
 
         if(!thumb_image) {
             thumb_image = "/common/img/news_default.jpg";
@@ -101,7 +101,7 @@ $(function() {
                 <a href="/`+ pathname[0] + "/" + result.category.domain +`" class="original" target="_blank">`+ result.category.title + `</a>
             </div>
             <hr class="hr" />
-            <p class="page-title"><img src="http://next.wezchina.com/images/daoyu.png" alt=""><span>` + result.summary + `</span></p>
+            <p class="page-title"><img src="/common/img/daoyu.png" alt=""><span>` + result.summary + `</span></p>
             <div class="page-info"><div class="page-details"><p>` + result.content + `</p></div></div>
             <div class="evaluate"><p class="readings"><a class="read_original" href="`+ result.source_url +`" target="_blank"> 阅读原文 </a><span>阅读 ` + result.views + `</span><span class="zan" id="zan"><i class="gesture"></i><span class="zanCount">` + result.praise_num + `<span></span></p></div>`
 

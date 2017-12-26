@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title> 我的订单 </title>
+
+    <link href="{{PATH_TML}}css/all-order.css" rel="stylesheet">
+
+    <script src="{{PATH_TML}}js/jquery-3.2.1.min.js"></script>
+    <script src="{{PATH_CONFIG}}"></script>
+    <script src="{{PATH_TML}}js/vue.min.js"></script>
+    <script src="{{PATH_TML}}js/vue-resource.min.js"></script>
+    <script type="text/javascript" src="/common/layer-v3.0.3/layer-v3.0.3/layer/layer.js"></script>
+</head>
+<body>
+<div id="order-app" v-cloak>
+    <header>
+        <span> 我的订单 </span>
+        <a class="back" href="javascript:void(0)" onclick="javascript:history.back(-1)"></a>
+    </header>
+    <div class="order-container">
+        <ul>
+            <li :class="{'red-line':sortNum === index}" v-for="(sort,index) in sortList" @click="getSort(index)">{{sort}}</li>
+        </ul>
+        <div class="singleOrder" v-for="order in orderList">
+            <div class="order-number">
+                <span>订单号：{{order.order_num}}</span>
+            </div>
+            <div class="order-status">
+                <div>
+                    <p>状态：{{getStatus(order.order_status)}}</p>
+                    <p>总价：￥{{order.order_price}}</p>
+                </div>
+                <a v-for="item in operList(order.order_status)" @click="operation(item.oper,order)">{{item.text}}</a>
+            </div>
+            <div class="order-detail" v-for="good in order.goods">
+                <img :src="ApiMaterPlatQiniuDomain+good.goods_cover" alt="">
+                <div>
+                    <p>{{good.goods_summary}}</p>
+                    <p>{{good.goods_num}}件</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    //Vue.http.headers.common['token'] = 'eyJpdiI6IlFzb1wveHJVRDJ3Vk9SOVVLcngwVU53PT0iLCJ2YWx1ZSI6IkhjdTFRdUQ0eHlcL0VCeVFlbW10eTQ0OHRJVDl4R3hiSGR0dzE0Z042MlBnWXYxa0pXRzByWjhCMjFQbWtXeEZHeVJrZXVrS1dvOXVGNHQ5WjR1emtmSVRnY1VpRHRWRVhGb3l2SVpLZmpvOD0iLCJtYWMiOiI5ZDZkZWYxMTA3NTI0MjhjZGQ1OTM5YjZjMjNhYjk5NzM0ZjBjMThjMmI2ZDk0ZjdjYmE1NTIyZjUyOGI2ZTk4In0='
+
+    Vue.http.headers.common['token'] = window.localStorage.getItem("token");
+    var commentApp = new Vue({
+        el : "#order-app",
+        data : {
+            sortNum : 0,
+            orderList : [],
+            sortList : ["全部","待付款","待发货","待收货","已取消"]
+        },
+        mounted : function () {
+            var data = {
+                "plat_user_id" : window.localStorage.getItem('weid')
+                //"plat_user_id" : 'aafc6a60-c2b6-11e7-804f-2b2e90492ab4'
+            };
+            this.init(data);
+        },
+        methods : {
+            init : function (data) {
+                if(!data){
+                    data = {
+                        "plat_user_id" : window.localStorage.getItem('weid')
+                        //"plat_user_id" : 'aafc6a60-c2b6-11e7-804f-2b2e90492ab4'
+                    }
+                }
+                this.$http.post(apiUrl+'order/list',data).then(function (res) {
+                    console.log(res);
+                    if(res.data && res.data.code === 200){
+                        this.orderList = res.data.data.list
+                    }
+                })
+            },
+            getStatus : function (num) {
+                if(num){
+                    switch (num){
+                        case 1:
+                            return '已下单';
+                        case 2:
+                            return '已付款';
+                        case 3:
+                            return '已发货';
+                        case 4:
+                            return '已签收';
+                        case 5:
+                            return '已评价';
+                        case 6:
+                            return '已取消';
+                        case 7:
+                            return '已完成';
+                        case 8:
+                            return '已退款';
+                        case 9:
+                            return '已确认退款';
+                    }
+                }
+            },
+            operList : function (num) {
+                if(num){
+                    switch (num){
+                        case 1:
+                            return [
+                                {
+                                    text : '去付款',
+                                    oper : 'pay'
+                                },
+                                {
+                                    text : '取消订单',
+                                    oper : 'cancel'
+                                }
+                            ];
+                        case 3:
+                            return [
+                                {
+                                    text : '确认收货',
+                                    oper : 'takeOrder'
+                                },
+                                {
+                                    text : '查看物流',
+                                    oper : 'distribution'
+                                }
+                            ];
+                        case 4:
+                            return [
+                                {
+                                    text : '去评价',
+                                    oper : 'comment'
+                                },
+                                {
+                                    text : '确认交易',
+                                    oper : 'deal'
+                                },
+                                {
+                                    text : '退款',
+                                    oper : 'refund'
+                                }
+                            ];
+                        case 5:
+                            return [
+                                {
+                                    text : '确认交易',
+                                    oper : 'deal'
+                                },
+                                {
+                                    text : '退款',
+                                    oper : 'refund'
+                                }
+                            ];
+                        case 6:
+                            return [
+                                {
+                                    text : '删除订单',
+                                    oper : 'delete'
+                                }
+                            ];
+                        case 7:
+                            return [
+                                {
+                                    text : '删除订单',
+                                    oper : 'delete'
+                                }
+                            ];
+                        case 9:
+                            return [
+                                {
+                                    text : '删除订单',
+                                    oper : 'delete'
+                                }
+                            ];
+                    }
+                }
+            },
+            operation : function (oper,order) {
+                if(oper){
+                    switch (oper){
+                        case 'pay':
+                            this.pay(order);
+                            break;
+                        case 'cancel':
+                            this.cancel(order);
+                            break;
+                        case 'takeOrder':
+                            this.takeOrder(order);
+                            break;
+                        case 'distribution':
+                            this.distribution(order);
+                            break;
+                        case 'comment':
+                            this.comment(order);
+                            break;
+                        case 'deal':
+                            this.deal(order);
+                            break;
+                        case 'refund':
+                            this.refund(order);
+                            break;
+                        case 'delete':
+                            this.deleteOrder(order);
+                            break;
+                    }
+                }
+            },
+//            取消订单
+            cancel : function (order) {
+                var self = this;
+                var data = {
+                    "order_id" : order.weid
+                };
+                layer.confirm('确认取消该条订单吗？', {
+                    title: false,
+                    btn: ['确定','取消']
+                }, function(index){
+                    self.$http.post(apiUrl+'order/cancel',data).then(function (res) {
+                        if(res.data && res.data.code === 200){
+                            this.init();
+                            this.sortNum = 0;
+                        }else{
+                            layer.msg('取消订单失败');
+                        }
+                        layer.close(index);
+                    })
+                });
+
+            },
+//            删除订单
+            deleteOrder : function (order) {
+                var self = this;
+                var data = {
+                    "order_id" : order.weid
+                };
+                layer.confirm('确认删除该条订单吗？', {
+                    title: false,
+                    btn: ['确定','取消']
+                }, function(index){
+                    self.$http.post(apiUrl+'order/delete',data).then(function (res) {
+                        console.log(res);
+                        if(res.data && res.data.code === 200){
+                            this.init();
+                            this.sortNum = 0;
+                        }else{
+                            layer.msg('删除订单失败');
+                        }
+                        layer.close(index);
+                    })
+                });
+            },
+//            确认收货
+            takeOrder : function (order) {
+                var data = {
+                    "order_id" : order.weid
+                };
+                this.$http.post(apiUrl+'order/take',data).then(function (res) {
+                    console.log(res);
+                    if(res.data && res.data.code === 200){
+                        layer.msg("已收货");
+                        this.init();
+                        this.sortNum = 0;
+                    }else{
+                        layer.msg('删除订单失败');
+                    }
+                });
+            },
+//            查看物流
+            distribution : function (order) {
+                this.$http.get(apiUrl + 'order/detail/'+order.weid).then(function (res) {
+                    console.log(res);
+                    var obj = {};
+                    if(res.data && res.data.code === 200){
+                        obj.logistics_NO = res.data.data.send.logistics_no;
+                        obj.company_code = res.data.data.send.logistics_company_code;
+                        window.localStorage.setItem('sendObj',JSON.stringify(obj));
+                        window.location.href = '/distribution/detail'
+                    }
+
+                })
+            },
+//            评价
+            comment : function (order) {
+                window.localStorage.setItem('orderObj',JSON.stringify(order));
+                window.location.href = '/shopping/edit_comment'
+            },
+//            确认交易
+            deal : function (order) {
+                var data = {
+                    "order_id" : order.weid
+                };
+                this.$http.post(apiUrl+'order/ok',data).then(function (res) {
+                    console.log(res);
+                    if(res.data && res.data.code === 200){
+                        layer.msg("交易成功");
+                        this.init();
+                        this.sortNum = 0;
+                    }else{
+                        layer.msg('确认交易失败');
+                    }
+                });
+            },
+//            退款
+            refund : function (order) {
+                var data = {
+                    "order_id" : order.weid
+                };
+                this.$http.post(apiUrl+'order/refund',data).then(function (res) {
+                    console.log(res);
+                    if(res.data && res.data.code === 200){
+                        layer.msg("申请退款成功");
+                        this.init();
+                        this.sortNum = 0;
+                    }else{
+                        layer.msg('申请退款失败');
+                    }
+                });
+            },
+//            付款
+            pay : function (order) {
+                window.location.href = `/pay/shopping?store_num=`+ order.weid +``;
+            },
+            getSort : function(ind){
+                this.sortNum = ind;
+                var data = {
+                    "plat_user_id" : window.localStorage.getItem('weid')
+                    //"plat_user_id" : 'aafc6a60-c2b6-11e7-804f-2b2e90492ab4'
+                };
+                switch (ind) {
+                    case 1:
+                        data.order_status = 1;
+                        break;
+                    case 2:
+                        data.order_status = 2;
+                        break;
+                    case 3:
+                        data.order_status = 3;
+                        break;
+                    case 4:
+                        data.order_status = 6;
+                        break;
+                }
+
+                this.init(data);
+            }
+        }
+    });
+
+</script>
+</body>
+</html>

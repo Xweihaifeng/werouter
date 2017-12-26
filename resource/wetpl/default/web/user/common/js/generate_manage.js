@@ -3,7 +3,7 @@
 var listchange=function(curr){
     var curr = curr;
     var status = true;
-    var list = ['we-set','we-art','we-shop','we-active','we-project','we-app','we-crm','we-log'];
+    var list = ['we-set','we-art','we-mall','we-active','we-project','we-app','we-crm','we-log'];
 
     var remove = function(id, list) {
         return list.filter(x => x != id);
@@ -86,7 +86,7 @@ var genMenu = function(mark, domain) {
     var template = '';
     
     $.ajax({
-        url: 'http://api.mp.wezchina.com/menu_config?mark=' + mark + '&domain=' + domain,
+        url: controlUrl + mark + '&domain=' + domain,
         type: 'GET',
         async: false,
         success: function(data) {
@@ -104,7 +104,7 @@ var genMenu = function(mark, domain) {
 
 // console.log(genMenu(mark, "qqxqs.com"))
 $(document).ready(function(){
-    $("#middle").append(genMenu(mark, "qqxqs.com"))
+    $("#middle").append(genMenu(mark, domainHost))
 
     console.log('currpage:', currPage)
 
@@ -116,6 +116,10 @@ $(document).ready(function(){
             case 'article' : return 'we-art'; break;
             case 'activity' : return 'we-active'; break;
             case 'apps': return 'we-app'; break;
+            case 'project' : return 'we-project'; break;
+            case 'quan' : return 'we-crm'; break;
+            case 'system' : return 'we-log'; break;
+            case 'wemall' : return 'we-mall'; break;
             default: break;
         }
     }
@@ -154,7 +158,7 @@ $(function(){
 
 let mainLeft = `
         <div id="home">
-            <img src="http://next.wezchina.com/storage/images/906f4f7c227f67a96a859bdf64cbd5c0.png" width='90' alt="HOME" />
+            <img src="/common/img/home.png" width='90' alt="HOME" />
         </div>
         <div id="login">
             <div class="log-head"></div>
@@ -400,7 +404,7 @@ var modulelist=function(){
         url: apiUrl+"pages/module/platlist",
         type: 'GET',
         headers: {
-            'Token': localStorage.getItem('token')
+            'Token': docCookies.getItem("token")
         },
         success: function(data){
             console.log(data);
@@ -445,7 +449,7 @@ if(sessionStorage.statedata!=null && sessionStorage.statedata!="" && sessionStor
             url: PAGES_MODULERUN_LIST,
             type: 'GET',
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data){
                 if (data.code == 200){
@@ -532,7 +536,7 @@ $(".we-title").on("click", function() {
 })*/
 
 //  登录token参数
-var token = window.localStorage.getItem('token');
+var token = docCookies.getItem("token");
 if(token) {
     $.ajaxSetup({
         global: true,
@@ -691,48 +695,58 @@ var init = function(token){
     }
 }
 
-init(localStorage.getItem('token'));
+init(docCookies.getItem("token"));
 
-var domain;
-var hasDomain = function(weid){
-    $.ajax({
-        url: PAGES_PAGE_GETDETAILBYUSER + weid,
-        type: 'GET',
-        headers: {
-            'Token': localStorage.getItem('token')
-        },
-        success: function(data){
-            if (data.code == 200){
-                console.log(data);
-                if (data.data.domain == null) {
-                    //没有个性域名
-                    domain = '/index';
-                } else {
-                    //存在个性域名
-                    domain = "/" + data.data.domain;
-                }
-
-            } else {
-                layer.msg(data.message, {
-                    time: 1500
-                });
-                // window.localStorage.removeItem('token')
+    var domain;
+    var hasDomain = function(weid){
+        $.ajax({
+            url: PAGES_PAGE_GETDETAILBYUSER + weid,
+            type: 'GET',
+            headers: {
+                'Token': docCookies.getItem("token")
+            },
+            success: function(data){
+                // if (data.code == 401) {
+                // domain = '/index';
+                // localStorage.removeItem('token')
                 // window.location.href = '/login'
+                // }
+                if (data.code == 200){
+                    // console.log(data);
+                    if (data.code == 200){
+                        console.log(data);
+                        if (data.data != null) {
+                            if (data.data.domain == null) {
+                                //没有个性域名
+                                domain = '/index';
+                            } else {
+                                //存在个性域名
+                                domain = "/" + data.data.domain;
+                            }
+                        } else {
+                            domain = '/index';
+                        }
+                    }
+                }
+                /*else {
+                 layer.msg(data.message, {
+                 time: 1500
+                 });
+                 }*/
+            },
+            error: function(xhr){
+                console.log(xhr);
             }
-        },
-        error: function(xhr){
-            console.log(xhr);
-        }
-    })
-}
+        })
+    }
 
-var weid = localStorage.getItem('weid');
-hasDomain(weid);
+    var weid = docCookies.getItem("weid");
+    hasDomain(weid);
 
     //route
     var isLogin; //判断用户登陆与否
     var router = function(route){
-        if(!window.localStorage.getItem("token")) {
+        if(!docCookies.getItem("token")) {
             isLogin = false;
         } else {
             isLogin = true;
@@ -758,27 +772,27 @@ hasDomain(weid);
 
         var article = function(){
             showLogin = false;
-            window.location.href = "/index/article";
+            window.location.href = domain + "/article";
         }
 
         var active = function(){
             showLogin = false;
-            window.location.href = "/index/activity";
+            window.location.href = domain + "/activity";
         }
         var project = function(){
             showLogin = false;
-            window.location.href = "/index/project";
+            window.location.href = domain + "/project";
         }
 
 
         var shopping = function(){
             showLogin = false;
-            window.location.href = "/index/wemall";
+            window.location.href = domain + "/wemall";
         }
 
         var zone = function(){
             showLogin = false;
-            window.location.href = "/index/quan";
+            window.location.href = domain + "/quan";
         }
 
         if (isMember(routerList, route) != ""){
@@ -825,3 +839,15 @@ $("#avatar, #dropdown").hover(function () {
     $(".avatar").hide();
 })
 })
+
+ //监听加载状态改变
+ document.onreadystatechange = completeLoading;
+ function completeLoading() {
+     if (document.readyState == "complete") {
+         if ($("#loadingDiv").length > 0) {
+             $("#loadingDiv").animate({
+                 opacity: "hide"
+             }, 300);
+         }
+     }
+ }

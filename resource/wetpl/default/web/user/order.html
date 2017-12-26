@@ -6,9 +6,9 @@
 		<link rel="stylesheet" href="/common/css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="{{PATH_TML}}user/common/css/bootstrap-datetimepicker.min.css">
 		<link rel="stylesheet" href="{{PATH_TML}}user/common/css/main.css">
-		<link rel="stylesheet" type="text/css" href="{{PATH_TML}}user/css/order.css">
 
 		<link rel="stylesheet" href="/common/css/buttons.css">
+		<script src="{{PATH_TML}}user/common/js/loading.js"></script>
 		<script src="/common/js/jquery-3.2.1.min.js"></script>
 		<script type="text/javascript" src="/common/js/bootstrap.min.js"></script>
 		<script src="/common/js/browser.min.js"></script>
@@ -16,6 +16,7 @@
 		<link rel="stylesheet" href="{{PATH_TML}}user/css/manage.css">
 		<link rel="stylesheet" type="text/css" href="{{PATH_TML}}user/css/laydate.css">
 		<link rel="stylesheet" type="text/css" href="{{PATH_TML}}user/css/mall_manage.css">
+		<link rel="stylesheet" type="text/css" href="{{PATH_TML}}user/css/order.css">
 
 		<script src="/common/js/plupload/plupload.full.min.js"></script>
 		<script src="{{PATH_CONFIG}}"></script>
@@ -27,6 +28,7 @@
 		<script src="/common/js/ckeditor/ckeditor.js"></script>
 
     <!-- <script type="text/javascript" src="/user/js/ship_addressmode.js"></script> -->
+		<script src="/common/js/layer/layer.js"></script>
 		<script src="/common/js/qiniu.js"></script>
 		<script type="text/javascript" src="{{PATH_TML}}user/js/laydate.js"></script>
 		<script src="{{PATH_TML}}user/common/js/generate_manage.js"></script>
@@ -94,7 +96,11 @@
 
 						                    <li><a href="javascript:;" title="" data-id="3" class="filter-btn status-btn btn-select btn-3">已发货<!-- (<span></span>) --></a></li>
 
-						                    <li><a href="javascript:;" title="" data-id="4" class="filter-btn status-btn btn-select btn-4">已完成<!-- (<span></span>) --></a></li>
+						                    <li><a href="javascript:;" title="" data-id="7" class="filter-btn status-btn btn-select btn-4">已完成<!-- (<span></span>) --></a></li>
+
+											<li><a href="javascript:;" title="" data-id="8" class="filter-btn status-btn btn-select btn-8">已申请退款<!-- (<span></span>) --></a></li>
+
+											<li><a href="javascript:;" title="" data-id="9" class="filter-btn status-btn btn-select btn-9">已退款<!-- (<span></span>) --></a></li>
 						            	</ul>
 									</div>
 
@@ -110,15 +116,21 @@
 									   <div class="orders_screen btn-num">筛选</div>
 									</div>
 
+									<ul class="list-header">
+										<li style="width: 550px;">宝贝</li>
+										<li>单价</li>
+										<li>数量</li>
+										<li style="width: 100px;">实付款</li>
+										<li>订单操作</li>
+									</ul>
 									<div class="ordertable">
-
 									</div>
                 				</div>
 
 
-								<div class="modal fade bs-example-modal-sm" id="myModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
-									<div class="modal-dialog modal-sm" role="document">
-										<div class="modal-content">
+								<div class="modal fade bs-example-modal-md" id="myModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+									<div class="modal-dialog modal-md" role="document">
+										<div class="modal-content sendModal">
 											<div class="modal-header">
 												<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 												<h4 class="modal-title">填写发货信息</h4>
@@ -126,13 +138,17 @@
 											<div class="modal-body">
 												<form>
 													<input type="hidden" value="" id="myModal_input">
-													<div class="form-group">
-														<label for="exampleInputEmail1">物流公司</label>
-														<input type="text" name="wuliu_company" class="form-control" id="exampleInputEmail1">
-													</div>
-													<div class="form-group">
-														<label for="exampleInputPassword1">物流编号</label>
-														<input type="text" name="wuliu_card" class="form-control" id="exampleInputPassword1">
+													<div class="dynamic-dom">
+														<div class="imgContainer"></div>
+														<div class="form-group">
+															<label for="exampleInputEmail1">物流公司</label>
+															<select name="wuliu_company" class="form-control" id="exampleInputEmail1"></select>
+														</div>
+														<div class="form-group">
+															<label for="exampleInputPassword1">物流编号</label>
+															<input type="text" name="wuliu_card" class="form-control" id="exampleInputPassword1">
+														</div>
+														<span id="addDom"> 添加+ </span>
 													</div>
 													<div class="modal-footer">
 														<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -156,12 +172,21 @@
 				</div>
 
 			</div>
+
+			<div class="comment_mongolia_layer"></div>
+			<div class="comment_bomb_box">
+				<div class="comment_bomb_box_header">
+					<div class="comment_bomb_box_title"> 物流信息 </div>
+					<div class="comment_bomb_box_close"> x </div>
+				</div>
+				<div class="comment_bomb_box_content">
+
+				</div>
+			</div >
 	</body>
 
 </html>
 <!-- 加载编辑器的容器 -->
-<!-- <script src="http://next.wezchina.com/static/distpicker-master/js/bootstrap-datetimepicker.min.js"></script> -->
-<!-- <script src="http://next.wezchina.com/static/layer/layer.js"></script> -->
 <!-- 实例化编辑器 -->
 
 <script type="text/javascript">

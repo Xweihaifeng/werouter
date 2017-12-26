@@ -15,7 +15,7 @@ function makeLineOption() {
             trigger: 'axis'
         },
         legend: {
-            show: false,
+            show: true,
             data: ['新增微友数', '活跃微友数']
         },
         toolbox: {
@@ -144,11 +144,11 @@ function makeMapOption() {
                 {start: 1000, end: 5000, color: '#C1E461'},
                 {start: 100, end: 1000, color: '#F4F77D'},
                 {start: 1, end: 100, color: '#CCCCCC'},
-                {start:0, end: 0, color: '#EEEEEE'}
+                {start: 0, end: 0, color: '#EEEEEE'}
             ]
         },
-        layoutCenter: ['45%', '50%'],
-        layoutSize: 450,
+        layoutCenter: ['40%', '50%'],
+        layoutSize: 600,
 
         series: [
             {
@@ -205,19 +205,23 @@ function changeTime(timeType, fromUrl) {
     var requestData;
     switch (timeType) {
         case 1:
-            requestData = ['year'];
+            //requestData = ['year'];
+            sendRequest(requestData, 1, new Date().getFullYear(), ''); //今年
             break;
         case 2:
-            requestData = ['year'];
+            //requestData = ['year'];
+            sendRequest(requestData, 1, new Date().getFullYear() - 1, ''); //去年
             break;
         case 3:
-            requestData = ['month'];
+            //requestData = ['month'];
+            sendRequest(requestData, 2, new Date().getFullYear(), new Date().getMonth() + 1); //本年本月
             break;
         case 4:
-            requestData = ['month', getPreMonth()];
+            //requestData = ['month', getPreMonth()];
+            sendRequest(requestData, 2, new Date().getFullYear(), new Date().getMonth()); //本年上月
             break;
     }
-    sendRequest(requestData, timeType, fromUrl);
+    //sendRequest(requestData, timeType, fromUrl);
 }
 
 
@@ -225,15 +229,31 @@ function changeTime(timeType, fromUrl) {
  * 发送请求
  * @param requestData
  */
-function sendRequest(requestData, timeType, fromUrl) {
-    $.post(requestUrl, {titleData:requestData, timeType:timeType, fromUrl:fromUrl}, function (data) {
-        eval(" var data = " + data);
-        var resopnse = data.data;
-        eval(" xTitle =" + resopnse.xTitle);
-        eval(" newlyAdded =" + resopnse.newlyAdded);
-        eval(" Active =" + resopnse.active);
-        eval(" mapData =" + resopnse.mapData);
-        friendNum = resopnse.friendNum;
+function sendRequest(requestData, timeType, year, month) {
+    //$.post(requestUrl, {titleData:requestData, timeType:timeType, fromUrl:fromUrl}, function (data) {
+    //console.log(requestUrl)
+    $.get(requestUrl + '&type=' + timeType + '&y=' + year + '&m=' + month, function (data) {
+        console.log('echarts: ', data);
+        //eval(" var data = " + data);
+        let resopnse = data.data;
+        let arr = [0,0,0,0,0,0,0,0,0,0,0,0];
+        let curve = data.data;
+        if (curve != '') {
+            xTitle = eval('["1\u6708","2\u6708","3\u6708","4\u6708","5\u6708","6\u6708","7\u6708","8\u6708","9\u6708","10\u6708","11\u6708","12\u6708"]');
+            newlyAdded = genArr(curve, arr);
+            Active = genArr(curve, arr);
+        } else {
+            layer.msg("没有查询到数据", {
+                time: 1500,
+                offset: ['640px', '500px'],
+            })
+        }
+
+        //eval(" xTitle =" + resopnse.xTitle);
+        //eval(" newlyAdded =" + resopnse.newlyAdded);
+        //eval(" Active =" + resopnse.active);
+        //eval(" mapData =" + resopnse.mapData);
+        //friendNum = resopnse.friendNum;
         makeChart();
     })
 }

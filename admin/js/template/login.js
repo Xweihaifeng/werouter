@@ -1,5 +1,4 @@
 var hosts = window.location.protocol + '//' + window.location.host + '/api/';
-//var hosts = 'http://api.qqxqs.com/';
 var ApiUrl = hosts + 'backend/';
 
 var init = function() {
@@ -36,7 +35,8 @@ var init = function() {
                         window.location.replace('index.html');
                     } else {
                         //parent.layer.msg(data.message);
-                        swal('提示', data.message, 'error');
+                        // swal('提示', data.message, 'error');
+                        swal({text: data.message,type: 'error', timer: 20000});
                         console.log('error: -200');
                     }
                 },

@@ -57,15 +57,16 @@
     </aside>
     <!-- content-wrapper -->
     <div class="content-wrapper">
+        <input type="hidden" name="config-url" value="admins.html">
         <section class="content-header">
             <h1>
-                管理员管理
-                <small>管理员列表</small>
+                账号管理
+                <small>管理列表</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> 首页</a></li>
                 <li><a href="#">系统设置</a></li>
-                <li class="active">管理员列表</li>
+                <li class="active">管理列表</li>
             </ol>
         </section>
         <!-- Main content -->
@@ -73,50 +74,66 @@
         	<div class="box">
             <form id="fromManager"class="box-body form-horizontal" style="padding: 30px;">
                 <div class="form-group">
-                    <label class="control-label col-sm-3 col-md-2 col-lg-1">角色*</label>
+                    <label class="control-label col-sm-3 col-md-2 col-lg-1">账  号</label>
                     <div class="col-sm-9 col-md-10 col-lg-11">
-                      <select class="form-control" id="role_id"></select>
+                        <input type="text" class="form-control" id="username1" name="username1" placeholder="账号">
+                        <span class="wenhao"><i class="iconfont ion-ios-help"></i></span>
+                        <div class="wenhao-tishi">
+                            账号不能为空</br>用于管理后台登录账号
+                        </div>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-sm-3 col-md-2 col-lg-1">用户名*</label>
+                    <label class="control-label col-sm-3 col-md-2 col-lg-1">密  码</label>
                     <div class="col-sm-9 col-md-10 col-lg-11">
-                    <input type="text" class="form-control" id="username" name="username" placeholder="用户名">
+                        <input type="password" class="form-control" id="password" name="password" placeholder="密码">
+                        <span class="wenhao1"><i class="iconfont ion-ios-help"></i></span>
+                        <div class="wenhao-tishi1">
+                            密码不能为空</br>用于管理后台登录密码
+                        </div>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-sm-3 col-md-2 col-lg-1">密  码*</label>
+                    <label class="control-label col-sm-3 col-md-2 col-lg-1">重复密码</label>
                     <div class="col-sm-9 col-md-10 col-lg-11">
-                    <input type="password" class="form-control" id="password" name="password" placeholder="密码">
+                        <input type="password" class="form-control" id="rePassword" name="rePassword" placeholder="重复密码">
+                        <span class="wenhao2"><i class="iconfont ion-ios-help"></i></span>
+                        <div class="wenhao-tishi2">
+                            重复密码不能为空
+                        </div>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-sm-3 col-md-2 col-lg-1">重复密码*</label>
+                    <label class="control-label col-sm-3 col-md-2 col-lg-1">管理权限</label>
                     <div class="col-sm-9 col-md-10 col-lg-11">
-                    <input type="password" class="form-control" id="rePassword" name="rePassword" placeholder="重复密码">
+                        <select class="form-control" id="role_id"></select>
+                        <span class="wenhao3"><i class="iconfont ion-ios-help"></i></span>
+                        <div class="wenhao-tishi3">
+                            权限组不能为空</br>每个权限组拥有不同权限
+                        </div>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-sm-3 col-md-2 col-lg-1">电话号码*</label>
+                    <label class="control-label col-sm-3 col-md-2 col-lg-1">真实姓名</label>
+                    <div class="col-sm-9 col-md-10 col-lg-11">
+                        <input type="text" class="form-control" id="real_name" name="real_name" placeholder="真实姓名">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3 col-md-2 col-lg-1">性  别</label>
+                    <div class="col-sm-9 col-md-10 col-lg-11">
+                        <label class="radio-inline">
+                            <input type="radio" name="list" id="inlineRadio1" value="0"> 男
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="list" id="inlineRadio2" value="1"> 女
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3 col-md-2 col-lg-1">电话号码</label>
                     <div class="col-sm-9 col-md-10 col-lg-11">
                     <input type="text" class="form-control" id="phone" name="phone" placeholder="电话号码">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-sm-3 col-md-2 col-lg-1">真实姓名*</label>
-                    <div class="col-sm-9 col-md-10 col-lg-11">
-                    <input type="text" class="form-control" id="real_name" name="real_name" placeholder="真实姓名">
-                    </div>
-                </div>
-                <div class="form-group">
-                	<label class="control-label col-sm-3 col-md-2 col-lg-1">性别*</label>
-                	<div class="col-sm-9 col-md-10 col-lg-11">
-                    <label class="radio-inline">
-                        <input type="radio" name="list" id="inlineRadio1" value="0"> 男
-                    </label>
-                    <label class="radio-inline">
-                        <input type="radio" name="list" id="inlineRadio2" value="1"> 女
-                    </label>
                     </div>
                 </div>
                 <div class="form-group">
@@ -139,7 +156,7 @@
 
 <!-- Bootstrap 3.3.7 -->
 <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-<script src="http://cdn.staticfile.org/jquery.bootstrapvalidator/0.5.3/js/bootstrapValidator.min.js"></script>
+<script src="//cdn.staticfile.org/jquery.bootstrapvalidator/0.5.3/js/bootstrapValidator.min.js"></script>
 <!-- DataTables -->
 <script src="bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
@@ -149,8 +166,8 @@
 <script src="bower_components/fastclick/lib/fastclick.js"></script>
 <!-- AdminLTE App -->
 <script src="dist/js/adminlte.min.js"></script>
-<script src="http://cdn.staticfile.org/plupload/2.1.8/moxie.js"></script>
-<script src="http://cdn.staticfile.org/plupload/2.1.8/plupload.dev.js"></script>
-<script src="http://cdn.staticfile.org/plupload/2.1.8/i18n/zh_CN.js"></script>
+<script src="//cdn.staticfile.org/plupload/2.1.8/moxie.js"></script>
+<script src="//cdn.staticfile.org/plupload/2.1.8/plupload.dev.js"></script>
+<script src="//cdn.staticfile.org/plupload/2.1.8/i18n/zh_CN.js"></script>
 </body>
 </html>

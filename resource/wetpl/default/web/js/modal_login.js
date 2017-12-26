@@ -6,11 +6,14 @@ function getResponse(resp)
 }
 
 $(function() {
+    function GetQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]);
+        return null;
+    }
 
-    // localStorage.removeItem('token');
-    // localStorage.removeItem('weid');
-    
-    var token = window.localStorage.getItem('token'), get_weid;
+    var token = docCookies.getItem('token'), get_weid;
     if(token) {
         $.ajaxSetup({
             global: true,
@@ -18,8 +21,7 @@ $(function() {
                 'Token': token,
             }
         });
-
-        get_weid = window.localStorage.getItem("weid");
+        get_weid = docCookies.getItem("weid");
         var pathname = window.location.pathname.split('/').slice(1,3);
         if(pathname[0] == 'login') {
             // window.location.href = "/";
@@ -61,17 +63,15 @@ $(function() {
                 </div>
                 <div id="log-in">
                     <a class="button button-lowercase button-primary login-bt"> 登录 </a>
+                    <div id="qrcode"></div>
                 </div>
+            </div>
+            <div class="wexin" style="display: none;">
+                <div id="qrcode-block" style="margin-left:25px;"></div>
+                <div class="to-login"></div>
             </div>
         </div>
     </div>`
-
-/*                <div class="input-group flex">
-                    <input type="text" class="form-control image_code" maxlength="5" placeholder="请输入图片验证码">
-                    <span class="input-group-btn">
-                        <img src="" class="btn btn-default" id="image_code_id_url" alt="图片验证码" style="height:40px" title="图片验证码">
-                    </span>
-                </div>*/
 
     $("#modal_login").append(template_login);
 
@@ -86,64 +86,36 @@ $(function() {
 
     $("#public_main_news_menu").append(template);
 
-    var options1 = $.get(USERDETAIL + "/" + get_weid);
-    options1.done(function(data) {
-        if(data.code == 200) {
-            if(!data.data) {
-                return false;
-            }
-
-            var imgUrl = data.data.avatar;
-            if(!imgUrl) {                
-                imgUrl = "/common/img/my.png";
-                console.log(imgUrl);
-                $("#login a").css({"background": "url("+ imgUrl +") center center / cover no-repeat"});
-                $("#login a").addClass("i-header").html("");
-
-            } else if (imgUrl.indexOf('http') != 0 && imgUrl != "") {                
-                imgUrl = ApiMaterPlatQiniuDomain + imgUrl;
-                console.log(imgUrl);
-                $("#login a").css({"background": "url(" + imgUrl + ") center center / cover no-repeat"});
-                $("#login a").addClass("i-header").html("");
-                showLogin = false;
-                isLogin = true;
-
-            }
-            
-            window.localStorage.setItem("avatar", imgUrl);
+    if (get_weid != undefined) {
+        var imgUrl = plats_user_info.avatar;
+        if (!imgUrl) {
+            imgUrl = "/common/img/my.png";
+            $("#login a").css({"background": "url(" + imgUrl + ") center center / cover no-repeat"});
+            $("#login a").addClass("i-header").html("");
+        } else if (imgUrl.indexOf('http') != 0 && imgUrl != "") {
+            imgUrl = ApiMaterPlatQiniuDomain + imgUrl;
+            $("#login a").css({"background": "url(" + imgUrl + ") center center / cover no-repeat"});
+            $("#login a").addClass("i-header").html("");
+            showLogin = false;
+            isLogin = true;
         }
-    });
-    options1.fail(function(error) {
-        console.error(error);
-    });
+    }
 
-    var options0 = $.get(apiUrl + "cms/setting/show");
-    options0.done(function(data) {
-        if(data.code == 200) {
-            if(!data.data) {
-                return false;
-            }
+    var setting = plats_info;
+    window.localStorage.setItem("logo", setting.logo);
+    window.localStorage.setItem("fav", setting.favicon);
 
-            var setting = data.data;
-            window.localStorage.setItem("logo", setting.logo);
-            window.localStorage.setItem("fav", setting.favicon);
+    $("#corporation").text(setting.title);
 
-            $("#corporation").text(setting.title);
+    if(!setting.favicon == false) {
+        var favicon = ApiMaterPlatQiniuDomain + setting.favicon;
+        $("#public_icon").attr("href", favicon);
+    }
 
-            if(!setting.favicon == false) {
-                var favicon = ApiMaterPlatQiniuDomain + setting.favicon;
-                $("#public_icon").attr("href", favicon);
-            }
-
-            if(!setting.logo == false) {
-                var logo = ApiMaterPlatQiniuDomain + setting.logo;
-                $("#home .logoImg").css({"background-image": "url(" + logo + ")"});
-            }
-        }
-    });
-    options0.fail(function(error) {
-        console.error(error);
-    });
+    if(!setting.logo == false) {
+        var logo = ApiMaterPlatQiniuDomain + setting.logo;
+        $("#home .logoImg").css({"background-image": "url(" + logo + ")"});
+    }
 
     var showLogin = false; //调整窗口大小时登陆框是否存在
     $(window).resize(function(){
@@ -153,15 +125,17 @@ $(function() {
     })
 
     //route
+    var domain = '/' + pages_index;
+
+    //route
     var isLogin; //判断用户登陆与否
-    var router = function(route){
-        if(!window.localStorage.getItem("token")) {
+    var router = function(route, domain){
+        if(!docCookies.getItem("token")) {
             isLogin = false;
         } else {
             isLogin = true;
         }
-        // var routerList = ['home', 'login', 'article', 'active', 'project', 'shopping', 'zone', 'zan'];
-        var routerList = ['home', 'login', 'article', 'active', 'zan'];
+        var routerList = ['home', 'login', 'article', 'active', 'project', 'shopping', 'zone', 'zan'];
 
         var isMember = function(routerList, route){
             return routerList.filter(x => x === route);
@@ -182,27 +156,27 @@ $(function() {
 
         var article = function(){
             showLogin = false;
-            window.location.href = "/index/article";
+            window.location.href = domain + "/article";
         }
 
         var active = function(){
             showLogin = false;
-            window.location.href = "/index/activity";
+            window.location.href = domain + "/activity";
         }
         var project = function(){
             showLogin = false;
-            window.location.href = "/index/project";
+            window.location.href = domain + "/project";
         }
 
 
         var shopping = function(){
             showLogin = false;
-            window.location.href = "/index/wemall";
+            window.location.href = domain + "/wemall";
         }
 
         var zone = function(){
             showLogin = false;
-            window.location.href = "/index/quan";
+            window.location.href = domain + "/quan";
         }
 
         if (isMember(routerList, route) != ""){
@@ -210,10 +184,9 @@ $(function() {
         }
     }
 
-    // $("#home, #login, #article, #active, #project, #shopping, #zone, #zan").click(function(){
-    $("#home, #login, #article, #active, #zan").click(function(){
+    $("#home, #login, #article, #active, #project, #shopping, #zone, #zan").click(function(){
         var id = $(this).attr("id");
-        router(id);
+        router(id, '/' + pages_index);
     })
 
     //关闭登录模态框
@@ -223,33 +196,41 @@ $(function() {
         $("body").css("overflow", "auto");
     })
 
-    function setCookie(token, expiredays)
+    function setCookie(token, weid, expiredays)
     {
         var Days = expiredays;
         var exp = new Date();
+        var domain = '.'+root_domain;
         exp.setTime(exp.getTime() + Days*24*60*60*1000);
-        document.cookie = "token="+ escape (token) + ";expires=" + exp.toGMTString() +";path=/";
+        document.cookie = "token="+ escape (token) + ";weid=" + escape (weid) + ";expires=" + exp.toGMTString() +";path=/;domain="+domain;
     }
 
-    var saveUserInfo = function(token, weid, imgUrl) {
-        localStorage.setItem('token', token);
-        localStorage.setItem('weid', weid);
-        setCookie(token, 7);
-        if(!imgUrl) {
+    function clearCookie() {
+        var keys = document.cookie.match(/[^ =;]+(?=\=)/g);
+        if (keys) {
+            for (var i = keys.length; i--;)
+                document.cookie = keys[i] + '=0;expires=' + new Date(0).toUTCString()
+        }
+    }
 
+    var saveUserInfo = function(token, weid, imgUrl, identity) {
+        //localStorage.setItem('token', token);
+        //localStorage.setItem('weid', weid);
+        localStorage.setItem('identity', identity);
+        //setCookie(token, weid, 7);
+        docCookies.setItem("token", token, new Date().getTime() + 7 * 24*60*60*1000, "/", '.' + root_domain);
+        docCookies.setItem("weid", weid, new Date().getTime() + 7 * 24*60*60*1000, "/", '.' + root_domain);
+        if(!imgUrl) {
             imgUrl = "/common/img/my.png";
             $("#login a").css({"background": "url("+ imgUrl +") center center / 100% no-repeat"});
 
         } else if (imgUrl.indexOf('http') != 0 && imgUrl != "") {
-
             imgUrl = ApiMaterPlatQiniuDomain + imgUrl;
-            $("#login a").css({"background": "url(" + window.localStorage.getItem('avatar') + ") center center / 100% no-repeat"});
+            $("#login a").css({"background": "url(" + localStorage.getItem('avatar') + ") center center / 100% no-repeat"});
             $("#login a").addClass("i-header").html("");
             showLogin = false;
             isLogin = true;
-
         } else if(imgUrl.indexOf('http') == 0 && imgUrl != "") {
-
             $("#login a").css({"background": "url(" + imgUrl + ") center center / 100% no-repeat"});
         }
         window.localStorage.setItem("avatar", imgUrl);
@@ -334,7 +315,8 @@ $(function() {
                 return false;
             }
             if (reg.test(phoneNum) && phoneNum.length == 11){
-/*                $.ajax({
+                $(".get-check").html(`<img src="/common/img/loading.gif" alt="" />`);
+              /*$.ajax({
                     url: USER_GETIMAGECODE + imageCodeID,
                     async: false,
                     success: function(data) {
@@ -361,26 +343,109 @@ $(function() {
             }
         }
     })
+    
+    // 扫码登录
+    /*function setCookie(token, expiredays) {
+        var Days = expiredays;
+        var exp = new Date();
+        exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000);
+        document.cookie = "token=" + escape(token) + ";expires=" + exp.toGMTString() + ";path=/";
+    }*/
+
+    var code = GetQueryString('code');
+    var state = GetQueryString('state');
+    var ref_id = localStorage.getItem('ref_id');
+    var ref_url = localStorage.getItem('ref_url');
+    var domain = localStorage.getItem('domain');
+
+    if (code !== null && code !== undefined && code !== '') {
+        console.log(ref_id);
+        console.log(domain);
+        $.ajax({
+            url: apiUrl + "wx/scan_callback",
+            data: {
+                'code': code,
+                'state': state,
+                'ref_id': ref_id,
+                'ref_url': ref_url,
+                'domain': domain
+            },
+            success: function(data) {
+                //localStorage.setItem('token', data.token);
+                //localStorage.setItem('weid', data.data.weid);
+                localStorage.setItem('phone', data.data.phone);
+                //setCookie(data.token, data.weid, 7);
+                docCookies.setItem("token", data.token, new Date().getTime() + 7 * 24*60*60*1000, "/", '.' + root_domain);
+                docCookies.setItem("weid", data.weid, new Date().getTime() + 7 * 24*60*60*1000, "/", '.' + root_domain);
+                if (data.data.phone === null || data.data.phone === undefined || data.data.phone === '') {
+                    location.href = siteUrl + "/bind";
+                } else {
+                    location.href = siteUrl + "/user";
+                }
+
+            }
+        });
+    }
+
+    var qrlogin = function(){
+        $.getScript("https://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js", function(){
+            $.ajax({
+                url: apiUrl + 'setting/alias/weChatOpenConfig',
+                type: 'get',
+                dataType: 'json',
+                success: function(result) {
+                    if (result.code === 200) {
+                        var obj = new WxLogin({
+                            id: "qrcode-block",
+                            appid: result.data.appid,
+                            scope: "snsapi_login",
+                            redirect_uri: window.location.href,
+                            href: 'https://wezchina.com/common/css/wechat.css',
+                            state: ""
+                        });
+                    } else {
+                        parent.layer.msg(result.message);
+
+                        return false;
+                    }
+                },
+                error: function(xhr) {
+                    console.log(xhr);
+                }
+            });
+        })
+    }
+
+    var only = true;
+    $("#qrcode").click(function(){
+        if (only) {
+            only = false;
+            qrlogin();
+        }        
+    })
 
     //用户登录
-    var login = function(phoneNum, checkNum/*, imageCode, imageCodeID*/){
+    var login = function(phoneNum, checkNum, ref_id, ref_url, domain/*, imageCode, imageCodeID*/){
         $.ajax({
             url: LOGIN,
             type: 'post',
-            data: {'phone': phoneNum, 'code': checkNum/* , 'imagecode': imageCode, 'imagecode_id': imageCodeID*/ },
+            data: {'phone': phoneNum, 'code': checkNum,
+                'ref_id': ref_id,
+                'ref_url': ref_url,
+                'domain': domain
+            /* , 'imagecode': imageCode, 'imagecode_id': imageCodeID*/ },
             success: function(data){
-                console.log(data);
                 if (data.code != -200) {
-                    saveUserInfo(data.token, data.data.weid, data.data.avatar);
+                    saveUserInfo(data.token, data.data.weid, data.data.avatar, data.data.identity);
                     showLogin = false;
                     isLogin = true;
                     isCheckNum = false;
-                    window.location.href = '/user/';
+                    window.location.href = window.location.href;
                 } else {
                     lock = false;
                     clearInterval(count);
                     layer.msg(data.message, { time: 2500 });
-                    image_code_id();
+                    // image_code_id();
                     $(".get-check").text("重新获取验证码");
                 }
             },
@@ -392,13 +457,17 @@ $(function() {
 
     //点击登录按钮
     var logBt = function(){
+        var ref_id = localStorage.getItem('ref_id');
+        var ref_url = localStorage.getItem('ref_url');
+        var domain = localStorage.getItem('domain');
+        //console.log(ref_id, ref_url, domain);
         phoneNum = $(".phone-num").val();
         checkNum = $(".check-num").val();
         // imageCode = $(".image_code").val();
         var regexp = /^(13|14|17|15|18)/;
         var reg =  new RegExp(regexp);
         if (reg.test(phoneNum) && phoneNum.length == 11 && checkNum.length == 6 && isCheckNum && isChecked/* && imageCode && imageCodeID*/) {
-            login(phoneNum, checkNum/*, imageCode, imageCodeID*/);
+            login(phoneNum, checkNum, ref_id, ref_url, domain/*, imageCode, imageCodeID*/);
         } else {
             if (!(phoneNum.length == 11) || !reg.test(phoneNum)){
                 layer.msg("手机号码错误", { time: 2500 });
@@ -468,26 +537,23 @@ $(function() {
     $("#avatar-logout span").click(function () {
         localStorage.removeItem('token');
         localStorage.removeItem('weid');
+        //setCookie('', '', 0);
+        docCookies.removeItem('token');
+        docCookies.removeItem('weid');
+        clearCookie();
     })
 
     $("#avatar-admin").click(function(){
         window.location.href = "/user/admin"
     })
 
-    $("#qrcode").click(function(){
+    $("#qrcode").click(function() {
         $(".login-body").hide();
         $(".wexin").show();
     })
 
-    $(".to-login").click(function(){
+    $(".to-login").click(function() {
         $(".login-body").show();
         $(".wexin").hide();
     })
-    $("#more").click(function(){
-        $(this).text("没有更多");
-    })
-
-
-    
-   
 })

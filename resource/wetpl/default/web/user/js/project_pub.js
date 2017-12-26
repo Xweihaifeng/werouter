@@ -45,7 +45,7 @@ sessionStorage.listname='we-project';
             url:PROJECT_REPAY_DESTORY+'/'+$(obj).closest('.reset-t').data('id'),
             type:'get',
             headers: {
-                    'Token': localStorage.getItem('token')
+                    'Token': docCookies.getItem("token")
                 },
             success:function(data){
                 // console.log(data);
@@ -175,7 +175,7 @@ $(function(){
             url: PAGES_PAGE_GETDETAILBYUSER + weid,
             type: 'GET',
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data){
                 if (data.code == 401) {
@@ -205,7 +205,7 @@ $(function(){
         })
     }
 
-    var weid = localStorage.getItem('weid');
+    var weid = docCookies.getItem("weid");
     hasDomain(weid);
 
     /*var isLogin = false; //判断用户登陆与否
@@ -364,7 +364,7 @@ var pj_cate_detail=function(weid){
             url: PROJECT_CATE_DETAIL+'/'+weid,
             type: 'get',
             headers: {
-              'Token': localStorage.getItem('token')
+              'Token': docCookies.getItem("token")
             },
             success:function(data){
                 // console.log(data)
@@ -595,7 +595,7 @@ var init_detail=function(){
                     type: 'post',
                     data: sendData,
                     headers: {
-                        'Token': localStorage.getItem('token')
+                        'Token': docCookies.getItem("token")
                     },
                     success: function(data){
                         // console.log(data);
@@ -639,7 +639,7 @@ var init_detail=function(){
                     type: 'post',
                     data: sendData,
                      headers: {
-                    'Token': localStorage.getItem('token')
+                    'Token': docCookies.getItem("token")
                 },
                 success: function(data){
                     // console.log(data);
@@ -721,7 +721,7 @@ var saverepay=function(projectid,btnstatus,add){
                 type: 'post',
                 data:sendData,
                 headers: {
-                    'Token': localStorage.getItem('token')
+                    'Token': docCookies.getItem("token")
                 },
                 success: function(data){
                     console.log(data);
@@ -759,7 +759,7 @@ var saverepay=function(projectid,btnstatus,add){
                 type: 'post',
                 data:sendData,
                 headers: {
-                    'Token': localStorage.getItem('token')
+                    'Token': docCookies.getItem("token")
                 },
                 success: function(data){
                      console.log(data);
@@ -1012,7 +1012,7 @@ var repay_list=function(data,index=''){
             url: PROJECT_DETAIL+"/"+id,
             type: 'get',
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data){
                 // console.log(data);
@@ -1088,7 +1088,7 @@ var repay_list=function(data,index=''){
             type: 'post',
             data: sendData,
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data){
                 // console.log(data);
@@ -1191,7 +1191,7 @@ $("#unbtn,.close1").bind("click",function() {
             url: PAGES_MODULERUN_LIST,
             type: 'GET',
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data){
                 if (data.code == 200){
@@ -1321,7 +1321,7 @@ $("#unbtn,.close1").bind("click",function() {
       }
     }
 
-    init__(localStorage.getItem('token'));*/
+    init__(docCookies.getItem("token"));*/
 })
 
 

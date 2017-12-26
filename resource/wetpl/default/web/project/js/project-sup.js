@@ -10,7 +10,7 @@ var projectid = url.pop();
     if(window.location.pathname=="/wemall"){
         window.location="/index/wemall";
     }
-    var weid = localStorage.getItem('weid');
+    var weid = docCookies.getItem("weid");
 
     var url = window.location.pathname.split('/');
     var active = url.pop();
@@ -38,7 +38,7 @@ checkdomain(domain);*/
     //route
     var isLogin; //判断用户登陆与否
     var router = function(route){
-        if(!window.localStorage.getItem("token")) {
+        if(!docCookies.getItem("token")) {
             isLogin = false;
         } else {
             isLogin = true;
@@ -139,7 +139,7 @@ checkdomain(domain);*/
         }
     }
 
-    init(localStorage.getItem('token'));
+    init(docCookies.getItem("token"));
 
    var options0 = $.get(CMS_ADVS);
     options0.done(function(data) {
@@ -469,7 +469,7 @@ var getprovince=function(){
         url:PROVINCE_LIST,
         type:'get',
         headers: {
-            'Token': localStorage.getItem('token')
+            'Token': docCookies.getItem("token")
         },
         success: function(data){
             console.log(data);
@@ -503,7 +503,7 @@ var getcity=function(pid){
         type:'get',
         data:{province_id:pid},
         headers: {
-            'Token': localStorage.getItem('token')
+            'Token': docCookies.getItem("token")
         },
         success: function(data){
             console.log(data);

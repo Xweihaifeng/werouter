@@ -5,6 +5,7 @@
         <meta charset="UTF-8">
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <link rel="shortcut icon" id="favicon" href="" />
+        <script src="{{PATH_TML}}user/common/js/loading.js"></script>
         <script src="/common/js/jquery-3.2.1.min.js"></script>
         <script src="/common/js/browser.min.js"></script>
         <script src="/common/js/jquery.imagecompress.js"></script>
@@ -197,13 +198,20 @@
                                     <input type="text" class="form-control" id="customerTel" placeholder="客服电话">
                                 </div>
                             </div>
-                            <div class="form-group row">
+                            <!--<div class="form-group row">
                                 <label for="inputPassword3" class="col-sm-2 control-label"> 模式：</label>
                                 <div class="col-sm-4">
                                     <select class="form-control">
                                         <option>开放模式</option>
                                         <option>圈内模式</option>
                                     </select>
+                                </div>
+                            </div>-->
+                            <div class="form-group row" style="align-items: end;">
+                                <label for="slogan" class="col-sm-2 control-label"> 品牌宣传口号：</label>
+                                <div class="col-sm-4">
+                                    <textarea id="slogan" maxlength="68" cols="30" rows="10" class="col-sm-2 form-control" style="margin: 0px; width: 400px; height: 100px; resize: none; z-index: 25;"></textarea>
+                                    <p id="count" style="position: relative; font-size: 14px; margin-top: -15px; top: 10px;">剩余字数： 0/68</p>
                                 </div>
                             </div>
                             <div class="form-group">

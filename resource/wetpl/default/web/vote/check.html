@@ -264,7 +264,7 @@
                 _self.rankurl= "/vote/report/" + globalWeid;
                 _self.indexurl= "/vote/" + globalWeid;
 
-                var imgHost = 'http://images.new.wezchina.com/';
+                var imgHost = ApiMaterPlatQiniuDomain;
                 var fav = data.data.favicon;
                 if (fav.indexOf('http') === -1) {
                   fav = imgHost + fav;
@@ -290,6 +290,8 @@
                   'width': width,                  
                 })                                               
           
+              } else {
+                window.location.href = '/404'
               }
             }
           })

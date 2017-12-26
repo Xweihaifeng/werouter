@@ -1,3 +1,7 @@
+<!--
+ * Created by weifeng on 2017/11/12.
+-->
+
 <!DOCTYPE html>
 <html>
 
@@ -10,12 +14,14 @@
         <link rel="stylesheet" type="text/css" href="{{PATH_TML}}css/news_base.css" />
         <link rel="stylesheet" type="text/css" href="{{PATH_TML}}assets/list/organize/css/organize.css" />
         <link rel="stylesheet" type="text/css" href="{{PATH_TML}}css/modal_login.css" />
+        <link rel="stylesheet" type="text/css" href="{{PATH_TML}}css/paging.css" />
 
         <script src="/common/js/jquery-3.2.1.min.js"></script> 
         <script src="/common/layer-v3.0.3/layer-v3.0.3/layer/layer.js"></script>
         <script src="{{PATH_CONFIG}}"></script>
         <script src="{{PATH_TML}}js/modal_login.js"></script>
         <script src="{{PATH_TML}}assets/list/organize/js/organize.js"></script>
+        <script src="{{PATH_TML}}js/paging.js"></script>
     </head>
 
     <body>
@@ -28,26 +34,33 @@
         <div class="organize-content">
             <div class="weizhuye-gerenfencai">
                 <div class="top-nav">
-                    <img id="thumb_image" src="http://next.wezchina.com/static/pc/plat/images/weizhuyegerenxinxi.png" alt="">
+                    <div id="thumb_image"></div>
                     <ul class="center-disperse" id="menuX">
-                        <a class="chan_li" id="oooo"> 最新发布 </a>
+                        <a class="chan_li" id="oooo"> 商会首页 </a>
                     </ul>
                 </div>
             </div>
             <div class="weizhuye-gerenfencai" id="firstStage">
                 <div class="fengcai fengcai-main">
                     <div class="main-top center-disperse">
-                        <div><div class="z article_list">文章列表</div></div>
-                        <div class="y">当前位置：首页&gt; <a id="menuY"> 最新发布 </a></div>
+                        <div class="article_list clearfix">
+                            <!-- <input type="button" id="prev_btn"> -->
+                            <div id="menuTwo"></div>
+                            <!-- <input type="button" id="next_btn"> -->
+                        </div>
+                        <div class="y">当前位置：首页&gt; 组织 &gt; <a id="menuY"> 最新发布 </a></div>
                     </div>
                     <ul class="list-article-ul"></ul>
-                    <div class="paging"><button class="prev-page">上一页</button><button class="next-page">下一页</button></div>
+                    <div class="paging"><div class="box" id="box"></div></div>
                 </div>
             </div>
             <div class="prompt-info"></div>
             <div id="plat-two-back-top"><img src="{{PATH_TML}}images/gotop.png"></div>
         </div>
         <!-- 组织部分结束 -->
+        <!-- 右侧大背景图 -->
+        <div id="public_main_right_bg" style="position:fixed;top:0;bottom:0;left:1190px;width:100%;"></div>
+        <script src="{{PATH_TML}}js/public_main_right_bg.js"></script>
     </body>
 
 </html>

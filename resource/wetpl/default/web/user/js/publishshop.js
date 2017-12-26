@@ -72,9 +72,20 @@ var favicon = ApiMaterPlatQiniuDomain + localStorage.getItem('fav');
 $('#favicon').attr('href', favicon);
 
 
-
 $(function(){
      __init();
+
+    var memberDom = function(data){
+        var isPrice = data.price ? data.price : "";
+        var dom =
+            '<div class="form-group member" weid="'+data.weid+'">'+
+            '<label class="col-sm-2 control-label">'+data.name+'</label>'+
+            '<div class="col-sm-3">'+
+            '<input type="text" class="form-control" name="member-price" value="'+isPrice+'">'+
+                '</div>'+
+                '</div>';
+        return dom;
+    };
 
      $("input[name='price'],input[name='market_price'],input[name='reserve'],input[name='floor']").keyup(function(){
              var c=$(this);
@@ -88,8 +99,77 @@ $(function(){
              }
 
         })
+    $("input[name='discount_status']").click(function () {
+        $('.insert-member').children().remove();
+        if($("input[name='discount_status']:checked").val() == 1){
+            $.ajax({
+                url : apiUrl + 'plat/member_level',
+                type : 'get',
+                headers: {
+                    'Token': docCookies.getItem("token")
+                },
+                success : function (res) {
+                    console.log('dfsdfs',res);
+                    if(res.code == 200 && res.data.length){
+                        for(var i=0; i<res.data.length; i++){
+                            $('.insert-member').append(memberDom(res.data[i]))
+                        }
+                    }
+                },
+                error : function (xhr) {
+                    console.log(xhr)
+                }
+            })
+        }
+    })
+
+    //添加服务
+    $(".add_service").click(function () {
 
 
+        var html=initServiceHtml('');
+
+        $(".insert-service").append(html);
+        delServiceDelete();
+
+    });
+     var initServiceHtml=function (data) {
+         if (isNull(data)) {
+             var html='<div class="service_list"><div class="operate" style="font-size: 20px;position: absolute;right: 50px;"><i class="fa fa-close J_Service_Delete" style="top: 2px;color: #adadad;cursor: pointer;font-size: 24px;"></i></div>'+
+                 '<div class="form-group"><label class="col-sm-2 control-label">服务标题:</label><div class="col-sm-3"><input type="text" class="form-control" name="service_title" value=""></div></div>'+
+                 '<div class="form-group">'+
+                 '<label for="" class="col-sm-2 control-label">服务内容:</label>'+
+                 '<div class="col-sm-6">'+
+                 '<textarea class="form-control" name="service_content" rows="5"></textarea>'+
+                 '</div>'+
+                 '</div>'+
+                 '</div>';
+             return html;
+         } else {
+             //编辑使用（循环data）
+             var html='';
+             for (var i=0;i<data.length;i++){
+                 html+='<div class="service_list"><div class="operate" style="font-size: 20px;position: absolute;right: 50px;"><i class="fa fa-close J_Service_Delete" style="top: 2px;color: #adadad;cursor: pointer;font-size: 24px;"></i></div>'+
+                     '<div class="form-group"><label class="col-sm-2 control-label">服务标题:</label><div class="col-sm-3"><input type="text" class="form-control" name="service_title" value="'+data[i].service_title+'"></div></div>'+
+                     '<div class="form-group">'+
+                     '<label for="" class="col-sm-2 control-label">服务内容:</label>'+
+                     '<div class="col-sm-6">'+
+                    '<textarea class="form-control" name="service_content" rows="5">'+data[i].service_content+'</textarea>'+
+                    '</div>'+
+                    '</div>'+
+                    '</div>';
+             }
+             return html;
+         }
+     }
+     //删除服务
+    var delServiceDelete=function () {
+        $(".J_Service_Delete").click(function () {
+            $(this).closest(".service_list").remove();
+        });
+    }
+
+     
    /* //route
     var isLogin = false; //判断用户登陆与否
     var router = function(route){
@@ -147,7 +227,7 @@ $(function(){
             url: PAGES_PAGE_GETDETAILBYUSER + weid,
             type: 'GET',
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data){
                 if (data.code == 401) {
@@ -175,7 +255,7 @@ $(function(){
         })
     }
 
-    var weid = localStorage.getItem('weid');
+    var weid = docCookies.getItem("weid");
     hasDomain(weid);
 
     var isLogin = false; //判断用户登陆与否
@@ -326,14 +406,14 @@ $(function(){
      // 获取商品分类
     var weid = getUrlParam('id');
     var cateType = [];
-    var userid=localStorage.getItem('weid');
+    var userid=docCookies.getItem("weid");
     var catesfun = function(userid){
         $.ajax({
             // url: "http://apitest.wezchina.com/goods/cates/list",
-            url: GOODS_CATES_LIST_USERID+"/"+userid,
+            url: apiUrl + 'goods/cates/listsAllByUser/'+userid,
             type: 'get',
             headers: {
-                    'Token': localStorage.getItem('token')
+                    'Token': docCookies.getItem("token")
                 },
             success: function(data){
                 // console.log(data);
@@ -371,7 +451,7 @@ $(function(){
             url:MALL_USERDETAIL,
             type:'get',
             headers: {
-                    'Token': localStorage.getItem('token')
+                    'Token': docCookies.getItem("token")
                 },
             success:function(data){
                 // console.log(data);
@@ -406,7 +486,7 @@ malldetail();
                     url:apiUrl+'goods/range/lists',
                     type:'post',
                     headers: {
-                        'Token': localStorage.getItem('token')
+                        'Token': docCookies.getItem("token")
                     },
                     success: function(data){
                         console.log(data);
@@ -438,7 +518,7 @@ malldetail();
             url: GOODS_RANGE_DETAIL+'/' + weid,
             type:'get',
             headers: {
-                    'Token': localStorage.getItem('token')
+                    'Token': docCookies.getItem("token")
                 },
             dataType: 'json',
             success: function(data){
@@ -475,7 +555,7 @@ malldetail();
             url: GOODS_DETAIL+'/' + id,
             type:'get',
             headers: {
-                    'Token': localStorage.getItem('token')
+                    'Token': docCookies.getItem("token")
                 },
             dataType: 'json',
             success: function(data){
@@ -491,7 +571,31 @@ malldetail();
                     $("[name='reserve']").val(goods.stock);
                     $("[name='floor']").val(goods.sort);
                     $("[name='note']").val(goods.note);
-                        CKEDITOR.instances.editor1.setData(goods.content);
+                    $("[name='note']").val(goods.note);
+                    $("input[name='postage']").val(goods.postage);
+                    $("input[name='postage_max_money']").val(goods.postage_max_money);
+                    if(goods.postage_status==2){
+                        $(".postage").show();
+                        $(".postage_max_money").show();
+                    }
+                    if(goods.discount_status == 1){
+                        $("input[value='1']").removeAttr('checked').attr("checked","checked");
+                    }
+                    $('.insert-member').children().remove();
+                    if(goods.discount_status == 1 && goods.discount.length){
+                        for(var i=0; i<goods.discount.length; i++){
+                             $('.insert-member').append(memberDom(goods.discount[i]))
+                        }
+                    }
+                    //加入服务列表
+                    if(!isNull(goods.service)){
+                        var html=initServiceHtml(JSON.parse(goods.service));
+                        $(".insert-service").append(html);
+                        delServiceDelete();
+                    }
+
+                    //解决部分情况加载不出来的情况 add by lisheng 2017-12-15 22:03
+                    setTimeout(function () { CKEDITOR.instances.editor1.setData(goods.content); }, 200);
                     $("select[name='cate_id']").find("#"+goods.cate_id).attr("selected","selected");
                     if(goods.picture!=null){
                         var picturearr=goods.picture.split(',');
@@ -503,7 +607,11 @@ malldetail();
                     }else{
                         var picturearr="";
                     }
-
+                    if(goods.postage_status==1){
+                        $(":radio[name='postage_status'][value='1']").attr("checked","checked");
+                    }else{
+                        $(":radio[name='postage_status'][value='2']").attr("checked","checked");
+                    }
                     var i=1;
                     //var picbtn=$(".addimgmore").html();
                     //$(".addimgmore").children().remove();
@@ -581,12 +689,29 @@ malldetail();
             var range_id=$("[name='distribution_id']").val();
             var picture=filesnamestr;
             var addimglength=$(".addimg").length;
+            var postage_status=$("input[name='postage_status']:checked").val();
+            var postage=$("[name='postage']").val();
+            var postage_max_money=$("[name='postage_max_money']").val();
+            var discount_status = $("input[name='discount_status']:checked").val();
             $(".addimg").each(function(index){
                 if(index+1<addimglength){
 
                     picture[index]=$(this).find("input[name='thumb_image_"+(index+1)+"']").val();
                 }
+            });
+            var formatMoney = true;
+            $("input[name='member-price']").each(function(ind,el){
+                if($(el).val()){
+                    var reg = /(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/;
+                    if(!reg.test($(el).val())){
+                        formatMoney = false;
+                    }
+                }
             })
+            if(!formatMoney){
+                mess_tusi('输入金额格式有误');
+                return;
+            }
             if (title == '') {
                 mess_tusi('请输入标题');
                 return;
@@ -605,11 +730,38 @@ malldetail();
                 mess_tusi('请输入库存');
                 return;
             }
+            /* 配送地址先注释
             if (range_id == ''|| range_id==null) {
                 mess_tusi('请选择配送范围');
                 return;
             }
+            */
+            if(postage_status==2){
+                if(postage == ''|| postage==null){
+                    mess_tusi('请输入邮费');
+                    return;    
+                }   
+            }
+            if(discount_status == 1){
+                var discount = []
+                $('.member').each(function (ind,item) {
+                    var obj = {};
+                    if($(item).find("input[name='member-price']").val()){
+                        obj.weid = $(item).attr('weid');
+                        obj.name = $(item).find("label")[0].innerText;
+                        obj.price = $(item).find("input[name='member-price']").val();
+                        discount.push(obj)
+                    }
+                })
+            }
+            var service=[];
+            $('.service_list').each(function (ind,item) {
+                var obj = {};
+                obj.service_title = $(item).find("input[name='service_title']").val();
+                obj.service_content = $(item).find("[name='service_content']").val();
+                service.push(obj);
 
+            });
             var sendData = {
                 title: title,
                 price: price,
@@ -624,7 +776,13 @@ malldetail();
                 cate_id: cate_id,
                 page_id:page_id,
                 mall_id:mall_id,
-                range_id:range_id
+                range_id:range_id,
+                postage_status:postage_status,
+                postage:postage,
+                postage_max_money:postage_max_money,
+                discount_status:discount_status,
+                discount:discount,
+                service:service
             }
             // console.log(sendData);
 
@@ -637,7 +795,7 @@ malldetail();
                     type: 'post',
                     data: sendData,
                     headers: {
-                        'Token': localStorage.getItem('token')
+                        'Token': docCookies.getItem("token")
                     },
                     success: function(data){
                         // console.log(data);
@@ -661,7 +819,7 @@ malldetail();
                     type: 'post',
                     data: sendData,
                     headers: {
-                        'Token': localStorage.getItem('token')
+                        'Token': docCookies.getItem("token")
                     },
                     success: function(data){
                         // console.log(data);
@@ -687,7 +845,7 @@ malldetail();
             url:PROVINCE_LIST,
             type:'get',
             headers: {
-                        'Token': localStorage.getItem('token')
+                        'Token': docCookies.getItem("token")
                     },
             success: function(data){
                 // console.log(data);
@@ -771,7 +929,7 @@ getprovincedetail();
             url: PAGES_MODULERUN_LIST,
             type: 'GET',
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data){
                 if (data.code == 200){
@@ -901,7 +1059,7 @@ getprovincedetail();
       }
     }
 
-    init__(localStorage.getItem('token'));*/
+    init__(docCookies.getItem("token"));*/
 })
 
 // 配送列表
@@ -910,7 +1068,7 @@ getprovincedetail();
                     url:GOODS_RANGE_LISTS,
                     type:'post',
                     headers: {
-                        'Token': localStorage.getItem('token')
+                        'Token': docCookies.getItem("token")
                     },
                     success: function(data){
                         // console.log(data);
@@ -942,8 +1100,17 @@ getprovincedetail();
 
 // 外部js文件
 $(function(){
+    //邮费事件不包邮是弹出需要填写的邮费信息
+    $('input[name="postage_status"]').click(function(){
+        if($('input[name="postage_status"]:checked').val()==2){
 
-
+            $(".postage").show();
+            $(".postage_max_money").show();       
+        }else{
+            $(".postage").hide();
+            $(".postage_max_money").hide();    
+        }
+    });
     //添加商品页面---添加修改配送范围
         //添加配送范围
         $(".set_adr").click(function(){
@@ -1246,7 +1413,7 @@ $(function(){
                     type:'post',
                     data:params,
                     headers: {
-                        'Token': localStorage.getItem('token')
+                        'Token': docCookies.getItem("token")
                     },
                     success: function(data){
                         // console.log(data);

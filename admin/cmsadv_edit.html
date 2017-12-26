@@ -58,6 +58,7 @@
     </aside>
     <!-- content-wrapper -->
     <div class="content-wrapper">
+        <input type="hidden" name="config-url" value="advertisements.html">
         <section class="content-header"> 
            <h1> 添加广告  </h1>
             <!--
@@ -94,6 +95,12 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                    <!-- <label class="control-label col-sm-2">网站描述*</label> -->
+                                    <div class="col-sm-5">
+                                         <input type="text" class="form-control" name="description" placeholder="描述">
+                                    </div>
+                                </div>
+                                <div class="form-group">
                                     <!-- <label class="control-label col-sm-2">关键词*</label> -->
                                     <div class="col-sm-5">
                                         <select name="type_id" id="type-select"  style="width:200px;" class="form-control">
@@ -109,7 +116,7 @@
                                                    class="form-control"/>
                                             <input id="pickfiles" name="cover" type="file" class="form-control hide"/>
                                             <div id="look">
-                                                <img onclick="$('#pickfiles').click()" id="img"  src="http://oty3r3tmi.bkt.clouddn.com/upload.png" alt="暂无预览图片" class="thumbnail">
+                                                <img onclick="$('#pickfiles').click()" id="img"  src="//oty3r3tmi.bkt.clouddn.com/upload.png" alt="暂无预览图片" class="thumbnail">
                                             </div>
                                         </div>
                                 </div>
@@ -133,7 +140,7 @@
 
 <!-- Bootstrap 3.3.7 -->
 <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-<script src="http://cdn.staticfile.org/jquery.bootstrapvalidator/0.5.3/js/bootstrapValidator.min.js"></script>
+<script src="//cdn.staticfile.org/jquery.bootstrapvalidator/0.5.3/js/bootstrapValidator.min.js"></script>
 <!-- DataTables -->
 <script src="bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
@@ -143,9 +150,9 @@
 <script src="bower_components/fastclick/lib/fastclick.js"></script>
 <!-- AdminLTE App -->
 <script src="dist/js/adminlte.min.js"></script>
-<script src="http://cdn.staticfile.org/plupload/2.1.8/moxie.js"></script>
-<script src="http://cdn.staticfile.org/plupload/2.1.8/plupload.dev.js"></script>
-<script src="http://cdn.staticfile.org/plupload/2.1.8/i18n/zh_CN.js"></script>
+<script src="//cdn.staticfile.org/plupload/2.1.8/moxie.js"></script>
+<script src="//cdn.staticfile.org/plupload/2.1.8/plupload.dev.js"></script>
+<script src="//cdn.staticfile.org/plupload/2.1.8/i18n/zh_CN.js"></script>
 <script src="bower_components/qiniu/dist/qiniu.min.js"></script>
 </body>
 </html>

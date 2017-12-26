@@ -33,6 +33,10 @@
         .table>tbody>tr>td:first-child {
             text-align: center;
         }
+        
+        .action.label {
+            cursor: pointer;
+        }
     </style>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -71,6 +75,7 @@
         </aside>
         <!-- content-wrapper -->
         <div class="content-wrapper">
+            <input type="hidden" name="config-url" value="contents.html">
             <section class="content-header">
                 <h1> 内容管理 </h1>
                 <!--
@@ -108,6 +113,15 @@
                                             <div class="col-sm-1 col-xs-1 col-lg-1">
                                                 <div class="row row-fix tpl-category-container">
                                                     <select class="form-control" name="cate">
+                                                </select>
+
+                                                </div>
+                                            </div>
+                                            <label class="col-xs-12 col-sm-3 col-md-1 control-label">子栏目</label>
+                                            <div class="col-sm-1 col-xs-1 col-lg-1">
+                                                <div class="row row-fix tpl-category-container">
+                                                    <select class="form-control" name="cate_child">
+                                                        <option value="">不限</option>
                                                 </select>
 
                                                 </div>
@@ -368,6 +382,8 @@
     <script src="bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
     <script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
     <script src="/common/sweetalert2/dist/sweetalert2.min.js"></script>
+    <script src="/common/layer-v3.0.3/layer-v3.0.3/layer/layer.js"></script>
+
     <script src="/common/zoom/zoom.js"></script>
     <!-- Include a polyfill for ES6 Promises (optional) for IE11 and Android browser -->
 
@@ -424,7 +440,7 @@
                     });
                     aoData.push({
                         "name": "cate",
-                        "value": $('select[name=cate]').val()
+                        "value": ($('select[name=cate_child]').val() ? $('select[name=cate_child]').val() : $('select[name=cate]').val())
                     });
                     aoData.push({
                         "name": "title",
@@ -459,7 +475,7 @@
                 }, {
                     "mData": 'title',
                     "render": function(data, type, full) {
-                        return `<a title="` + full.title + `" href="` + window.location.protocol + `//` + window.location.host + `/news/` + full.weid + `" target="_blank">` + shorten_str(full.title, 15) + `</a>`;
+                        return `<a class="title-link" title="` + full.title + `" href="javascript:void(0);" target="_blank" data-id="` + full.weid + `">` + shorten_str(full.title, 15) + `</a>`;
                     }
                 }, {
                     "mData": 'thumb_image',
@@ -476,16 +492,24 @@
                     'render': function(data, type, full) {
                         var label = '';
                         if (full.is_original == 1) {
-                            label += '<span class="label label-primary">原创</span> ';
+                            label += '<span title="点击关闭"  data-id="' + full.weid + '" data-label="is_original" data-state="1" class="label label-success action">原创</span> ';
+                        } else {
+                            label += '<span title="点击激活" data-id="' + full.weid + '" data-label="is_original" data-state="2" class="label label-default action">原创</span> ';
                         }
                         if (full.is_hot == 1) {
-                            label += '<span class="label label-info">头条</span> ';
+                            label += '<span title="点击关闭" data-id="' + full.weid + '" data-label="is_hot" data-state="1" class="label label-success action">头条</span> ';
+                        } else {
+                            label += '<span title="点击激活" data-id="' + full.weid + '" data-label="is_hot" data-state="2" class="label label-default action">头条</span> ';
                         }
                         if (full.is_pose == 1) {
-                            label += '<span class="label label-default">特荐</span> ';
+                            label += '<span title="点击关闭" data-id="' + full.weid + '" data-label="is_pose" data-state="1" class="label label-success action">特荐</span> ';
+                        } else {
+                            label += '<span title="点击激活" data-id="' + full.weid + '" data-label="is_pose" data-state="2" class="label label-default action">特荐</span> ';
                         }
                         if (full.index_show == 1) {
-                            label += '<span class="label label-success">推荐</span> ';
+                            label += '<span title="点击关闭" data-id="' + full.weid + '" data-label="index_show" data-state="1" class="label label-success action">推荐</span> ';
+                        } else {
+                            label += '<span title="点击激活" data-id="' + full.weid + '" data-label="index_show" data-state="2" class="label label-default action">推荐</span> ';
                         }
                         return label;
                     }
@@ -497,7 +521,7 @@
                 }, {
                     "mData": 'status',
                     'render': function(data, type, full) {
-                        return full.status == 1 ? '<span class="label label-success">启用</span>' : full.status == 2 ? '<span class="label label-default">草稿</span>' : '<span class="label label-danger">禁用</span>';
+                        return full.status == 1 ? '<span class="label label-success status">已启用</span>' : full.status == 2 ? '<span class="label label-default status">草稿</span>' : '<span class="label label-danger status">已禁用</span>';
                     }
                 }, {
                     "mData": 'operation',
@@ -506,7 +530,7 @@
 						<button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							设置 <span class="caret"></span>
 							</button>
-							<ul class="dropdown-menu">` +
+							<ul class="dropdown-menu status-menu-ul">` +
                             (full.status != 1 ? `<li><a href="#" class="set-status" data-type="1" data-id="` + full.weid + `" >启用</a></li>` : ``) +
                             (full.status != 2 ? `<li><a href="#" class="set-status" data-type="2" data-id="` + full.weid + `" >草稿</a></li>` : ``) +
                             (full.status != 3 ? `<li><a href="#" class="set-status" data-type="3" data-id="` + full.weid + `" >禁用</a></li>` : ``) +
@@ -516,21 +540,21 @@
                 }],
                 "aoColumnDefs": [{
                     "bSortable": false,
-                    "aTargets": [1, 2, 3, 4, 5, 6, 7]
+                    "aTargets": [0, 1, 2, 3, 4, 6, 7]
                 }, {
                     "bSearchable": false,
                     "aTargets": [0, 1, 2, 3, 4, 5, 6, 7]
                 }, ],
                 　　　　　　　　　　"aaSorting": [
-                    [0, "DESC"]
+                    [5, "DESC"]
                 ],
                 "fnRowCallback": function(nRow, aData, iDisplayIndex) {
                     return nRow;
                 },
-                "fnInitComplete": function(oSettings, json) {
+                "fnInitComplete": function(oSettings, json) {},
+                "drawCallback": function(settings) {
                     $('[data-toggle="popover"]').popover();
                 }
-
             });
         };
 
@@ -580,26 +604,63 @@
             });
         }
 
+        var __cate_child_init = function(parent_id) {
+            $.ajax({
+                url: ApiUrl + 'cms/cate_categories?cate=' + parent_id,
+                type: 'get',
+                dataType: 'json',
+                success: function(data) {
+                    var option = '<option value="">不限</option>';
+                    $.each(data.data, function(k, v) {
+                        option += `<option value="` + v.weid + `">` + v.title + `</option>`;
+                    });
+                    $('select[name=cate_child]').html(option);
+                },
+                error: function(xhr) {
+                    console.log(xhr);
+                }
+            });
+        }
+
 
         $(document).ready(function() {
             __init();
             initList();
         });
+        $(document).on('mouseenter', '.title-link', function() {
+            var content_id = $(this).data('id');
+            var that = this;
+            if ($(that).attr("href").indexOf('javascript:void(0)') === -1) {
+                return;
+            }
+            $.ajax({
+                url: ApiUrl + 'cms/contents/show_channel_by_content_id',
+                type: 'post',
+                data: {
+                    content_id: content_id
+                },
+                dataType: 'json',
+                success: function(data) {
+                    $(that).attr('href', '/' + data.data.domain + '/' + content_id, '_blank');
+                    $(that).click();
+                },
+                error: function(xhr) {
+                    console.log(xhr);
+                }
+            });
+        });
+
         $(document).on('change', 'select[name=channel]', function() {
             var channel_id = $(this).val();
             __cate_init(channel_id);
         });
-        $(document).on('change', 'select[name=channel],select[name=cate],input[name=title],select[name=is_original],select[name=is_hot],select[name=is_pose],select[name=index_show],select[name=status]', function() {
+        $(document).on('change', 'select[name=cate]', function() {
+            var parent_id = $(this).val();
+            __cate_child_init(parent_id);
+        });
+        $(document).on('change', 'select[name=channel],select[name=cate],select[name=cate_child],input[name=title],select[name=is_original],select[name=is_hot],select[name=is_pose],select[name=index_show],select[name=status]', function() {
             dt_table.fnSettings().sAjaxSource = ApiUrl + 'cms/contents/lists';
             dt_table.fnDraw();
-            setTimeout(function() {
-                $('[data-toggle="popover"]').popover();
-            }, 500);
-        });
-        $(document).on('click', '.pagination a', function() {
-            setTimeout(function() {
-                $('[data-toggle="popover"]').popover();
-            }, 500);
         });
         $(document).on('click', '.btn-delete-confirm', function() {
             $.ajax({
@@ -610,14 +671,54 @@
                 },
                 dataType: 'json',
                 success: function(data) {
-                    location.reload();
+                    layer.msg('删除成功！');
+                    dt_table.fnSettings().sAjaxSource = ApiUrl + 'cms/contents/lists';
+                    dt_table.fnDraw();
                 },
                 error: function(xhr) {
                     console.log(xhr);
                 }
             });
         });
+        $(document).on('click', '.action.label', function() {
+            var the = this;
+            var id = $(the).data('id');
+            var state = $(the).data('state') == 1 ? 2 : 1;
+            var label = $(the).data('label');
+            $.ajax({
+                url: ApiUrl + 'cms/contents/change_label_state',
+                type: 'post',
+                data: {
+                    content_id: id,
+                    state: state,
+                    label: label,
+                },
+                dataType: 'json',
+                success: function(data) {
+                    if (data.code == 200) {
+                        layer.closeAll('loading');
+                        $(the).data("state", data.data.state);
+                        if (data.data.state == 1) {
+                            $(the).removeClass('label-default').addClass('label-success').attr('title', '点击关闭');
+                        } else {
+                            $(the).removeClass('label-success').addClass('label-default').attr('title', '点击激活');
+                        }
+                    } else {
+                        swal({
+                            text: data.message,
+                            type: 'error',
+                            timer: 15000
+                        });
+                    }
+                },
+                error: function(xhr) {
+                    console.log(xhr);
+                }
+            });
+            layer.load();
+        });
         $(document).on('click', '.set-status', function() {
+            var the = this;
             var id = $(this).data('id');
             var type = $(this).data('type');
             $.ajax({
@@ -629,26 +730,27 @@
                 },
                 dataType: 'json',
                 success: function(data) {
-                    swal({
-                        text: '设置成功！',
-                        type: 'success',
-                        timer: 20000
-                    }).then(
-                        function() {
-                            location.reload();
-                        },
-                        // handling the promise rejection
-                        function(dismiss) {
-                            if (dismiss === 'timer') {
-                                location.reload();
-                            }
+                    if (data.code == 200) {
+                        layer.closeAll('loading');
+                        layer.msg('设置成功！');
+                        if (type == 1) {
+                            $(the).closest('tr').find('.label').filter('.status').text('已启用').removeClass("label-default").removeClass("label-danger").addClass('label-success');
+                        } else if (type == 2) {
+                            $(the).closest('tr').find('.label').filter('.status').text('草稿').removeClass("label-success").removeClass("label-danger").addClass('label-default');
+                        } else {
+                            $(the).closest('tr').find('.label').filter('.status').text('已禁用').removeClass("label-success").removeClass("label-danger").addClass('label-danger');
                         }
-                    )
+                        $(the).closest('tr').find('.status-menu-ul').html();
+                        $(the).closest('tr').find('.status-menu-ul').html((data.data.status != 1 ? `<li><a href="#" class="set-status" data-type="1" data-id="` + data.data.weid + `" >启用</a></li>` : ``) +
+                            (data.data.status != 2 ? `<li><a href="#" class="set-status" data-type="2" data-id="` + data.data.weid + `" >草稿</a></li>` : ``) +
+                            (data.data.status != 3 ? `<li><a href="#" class="set-status" data-type="3" data-id="` + data.data.weid + `" >禁用</a></li>` : ``));
+                    }
                 },
                 error: function(xhr) {
                     console.log(xhr);
                 }
             });
+            layer.load();
         });
     </script>
 </body>

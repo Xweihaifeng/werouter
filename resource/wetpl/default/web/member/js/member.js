@@ -10,6 +10,29 @@ var column_list = function(data) {
     return template;
 }
 
+// 根据别名获取频道详情
+var options = $.get(CMS_CHANNELS_DOMAIN_QUERY + "org");
+options.done(function(data) {
+    if(data.code === 200) {
+        domain_weid = data.data.weid;
+        var thumb_image = data.data.big_image;
+
+        if(!thumb_image) {
+            thumb_image = "/common/img/org_banner01.jpg";
+
+        } else if (thumb_image.indexOf('http') != 0 && thumb_image != "") {
+            thumb_image = imgSet(thumb_image, 1100, 320, 3);
+        }
+        $(".weizhuye-title").css("background-image", `url(`+ thumb_image + `)`);
+
+    } else {
+        console.error(data.message);
+    }
+});
+options.fail(function(error) {
+    console.error(error);
+});
+
 // 查询组织栏目分类
 $.ajax({
     url: apiUrl + "/cms/channel_categories?channel=org",
@@ -26,6 +49,14 @@ $.ajax({
 });
 
 function member_issue(result, result2, result3) {
+
+    var title_info = localStorage.getItem("title");
+    if(!title_info) {
+        document.title = result2.plat_name+``+result2.level_name+``+result3.real_name;
+    } else {
+        document.title = result2.plat_name+``+result2.level_name+``+result3.real_name + " — " + localStorage.getItem("title");
+    }
+
     console.log(result2, result3);
     var result_weid = "http://" + window.location.host +"/cert/"+ result;
     var template12;

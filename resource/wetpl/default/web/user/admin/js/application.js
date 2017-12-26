@@ -3,7 +3,7 @@
  */
 
 $(document).ready(function(){
-    const ApiMaterPlatQiniuDomain       = 'http://images.new.wezchina.com/';
+    // const ApiMaterPlatQiniuDomain       = 'http://images.new.wezchina.com/';
 
     var favicon = ApiMaterPlatQiniuDomain + localStorage.getItem('fav');
     console.log('logo:',favicon);
@@ -51,7 +51,7 @@ $(document).ready(function(){
             url: 'http://apitest.wezchina.com/pages/page/getDetailByUser/' + weid,
             type: 'GET',
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data){
                 /*if (data.code == 401) {            
@@ -90,7 +90,7 @@ $(document).ready(function(){
         })
     }
 
-    var weid = localStorage.getItem('weid');
+    var weid = docCookies.getItem("weid");
     hasDomain(weid);
 
     var isLogin = false; //判断用户登陆与否
@@ -149,7 +149,7 @@ $(document).ready(function(){
             url: 'http://apitest.wezchina.com/pages/page/update',
             type: "POST",
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             data: {
                 weid: pageId,
@@ -164,7 +164,7 @@ $(document).ready(function(){
         })
     }
 
-    var weid = localStorage.getItem('weid');
+    var weid = docCookies.getItem("weid");
     $("#toggle-button-app").click(function(){
         if (!btState){
             $("#toggle-button-app").prop("checked", true);
@@ -187,7 +187,7 @@ $(document).ready(function(){
             url: 'http://apitest.wezchina.com/pages/modulerun/list',
             type: 'GET',
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data){
                 if (data.code == 200){
@@ -273,7 +273,7 @@ $(document).ready(function(){
     }
 
     //登录token参数
-    var token = window.localStorage.getItem('token');
+    var token = docCookies.getItem("token");
     if(token) {
         $.ajaxSetup({
             global: true,
@@ -603,5 +603,5 @@ $(document).ready(function(){
       }
     }
 
-    init__(localStorage.getItem('token'));
+    init__(docCookies.getItem("token"));
 })

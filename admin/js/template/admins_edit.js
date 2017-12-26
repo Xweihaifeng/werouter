@@ -10,35 +10,33 @@ $(document).ready(function() {
 				if(result.code === 200) {
 					var opt = '';
 					$.each(result.data.list, function(key, val) {
-						opt += '<option name="options" value=' + val.weid + ' selected=\"selected\">' + val.display_name + '</option>';
+						opt += '<option name="options" value=' + val.weid + '>' + val.display_name + '</option>';
 					});
 					$("#role_id").html(opt);
+					$.ajax({
+						url: ApiUrl + "admins/detail/" + adminWeId,
+						type: 'get',
+						dataType: 'JSON',
+						success: function(result) {
+							if(result.code === 200) {
+								$("#role_id").find("option[value=" + result.data.role_id + "]").attr("selected", true);
+								$('#userName').val(result.data.username);
+								$('#phone').val(result.data.phone);
+								$('#real_name').val(result.data.real_name);
+								$('input:radio[name="list"]').get(result.data.sex-1).checked = true;
+								$('#memox').val(result.data.memo);
+							} else {
+								parent.layer.msg(result.message);
+								return false;
+							}
+						}
+					});
 				} else {
 					parent.layer.msg(result.message);
 					return false;
 				}
 			}
-		});
-		$.ajax({
-			url: ApiUrl + "admins/detail/" + adminWeId,
-			type: 'get',
-			dataType: 'JSON',
-			success: function(result) {
-				if(result.code === 200) {
-					$("#role_id").find("option[value=" + result.data.weid + "]").attr("selected", true);
-					$('#userName').val(result.data.username);
-					$('#password').val(result.data.password);
-					$('#rePassword').val(result.data.rePassword);
-					$('#phone').val(result.data.phone);
-					$('#real_name').val(result.data.real_name);
-					$('input:radio[name="list"]').get(result.data.sex-1).checked = true;
-					$('#memox').val(result.data.memo);
-				} else {
-					parent.layer.msg(result.message);
-					return false;
-				}
-			}
-		});
+		});		
 	};
 
 	function getParam(paramName) {
@@ -98,10 +96,7 @@ $(document).ready(function() {
          fields: {
             password :{  
                     message:'密码无效',  
-                    validators:{  
-                        notEmpty:{  
-                            message:'密码不能为空'  
-                        },  
+                    validators:{
                         stringLength:{  
                             min:6,  
                             max:32,  
@@ -118,20 +113,12 @@ $(document).ready(function() {
 		                        regexp: {
 		                         regexp: /^1[34578]\d{9}$/,
 		                         message: '手机号码错误'
-		                     },
-		                        // stringLength:{  
-		                        //     min:11,  
-		                        //     max:11,  
-		                        //     message:'手机号码错误'  
-		                        // }
+		                     }
 		                    }  
 		            }, 
 		rePassword :{  
 		                    message:'重复密码无效',  
-		                    validators:{  
-		                        notEmpty:{  
-		                            message:'重复密码不能为空'  
-		                        },  
+		                    validators:{
 		                        stringLength:{  
 		                            min:6,  
 		                            max:32,  
@@ -167,4 +154,24 @@ $(document).ready(function() {
         );
     }
 	init();
+    $(".wenhao").hover(function(){
+        $(".wenhao-tishi").show();
+    },function(){
+        $(".wenhao-tishi").hide();
+    });
+    $(".wenhao1").hover(function(){
+        $(".wenhao-tishi1").show();
+    },function(){
+        $(".wenhao-tishi1").hide();
+    });
+    $(".wenhao2").hover(function(){
+        $(".wenhao-tishi2").show();
+    },function(){
+        $(".wenhao-tishi2").hide();
+    });
+    $(".wenhao3").hover(function(){
+        $(".wenhao-tishi3").show();
+    },function(){
+        $(".wenhao-tishi3").hide();
+    });
 });

@@ -2,208 +2,272 @@
 <html>
 
 	<head lang="en">
+		<title>我的订单</title>
 		<meta charset="UTF-8">
 		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-		<script src="/common/js/jquery-3.2.1.min.js"></script>
-		<script src="/common/js/browser.min.js"></script>
-		<script src="/common/js/jquery.imagecompress.js"></script>
+
 		<link rel="shortcut icon" id="favicon" href="" />
-		<link rel="stylesheet" href="/common/css/main.css">
-		<link rel="stylesheet" href="{{PATH_TML}}user/css/myOrder.css">
+
+
 		<link rel="stylesheet" href="/common/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="{{PATH_TML}}user/common/css/bootstrap-datetimepicker.min.css">
+		<link rel="stylesheet" href="/common/css/main.css">
+
 		<link rel="stylesheet" href="/common/css/buttons.css">
-		<link rel="stylesheet" href="/common/css/swiper.min.css">
-		<link rel="stylesheet" type="text/css" href="{{PATH_TML}}user/js/bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.min.css">
-		<!-- <link rel="stylesheet" href="css/manage.css"> -->
+		<script src="{{PATH_TML}}user/common/js/loading.js"></script>
+		<script src="/common/js/jquery-3.2.1.min.js"></script>
+		<script type="text/javascript" src="/common/js/bootstrap.min.js"></script>
+		<script src="/common/js/browser.min.js"></script>
+		<link rel="shortcut icon" id="favicon" href="" />
+		<link rel="stylesheet" href="{{PATH_TML}}user/css/manage.css">
 		<link rel="stylesheet" type="text/css" href="{{PATH_TML}}user/css/laydate.css">
 		<link rel="stylesheet" type="text/css" href="{{PATH_TML}}user/css/mall_manage.css">
-		<link rel="stylesheet" type="text/css" href="{{PATH_TML}}user/css/page.css" />
-		<script src="{{PATH_TML}}user/js/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.min.js"></script>
-		<script src="{{PATH_TML}}user/js/bootstrap-datetimepicker-master/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
-		<script src="{{PATH_TML}}user/common/js/bootstrap.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="{{PATH_TML}}user/css/order.css">
+
+		<script src="/common/js/plupload/plupload.full.min.js"></script>
+		<script src="{{PATH_CONFIG}}"></script>
+		<script src="/common/js/control.js"></script>
+		<script src="{{PATH_TML}}user/js/common.js"></script>
+
 		<script src="/common/js/swiper-3.3.1.min.js"></script>
 		<script src="/common/js/buttons.js"></script>
+		<script src="/common/js/ckeditor/ckeditor.js"></script>
+
+		<!-- <script type="text/javascript" src="/user/js/ship_addressmode.js"></script> -->
+		<script src="/common/js/layer/layer.js"></script>
+		<script src="/common/js/qiniu.js"></script>
 		<script type="text/javascript" src="{{PATH_TML}}user/js/laydate.js"></script>
 
-		<title>我的订单</title>
+
+
+		<script type="text/javascript" src="{{PATH_TML}}user/js/user_my_order.js"></script>
+
+
+
+
+
 	</head>
 
 	<body style="width: 100%; background: #F7F6F2;">
-		<div class="left-nav">
-			
-		</div>
+		<div class="left-nav"></div>
 		<div class="login">
-			<div id="top">
-			</div>
-			<div id="middle">
-			</div>
+			<div id="top"></div>
+			<div id="middle"></div>
+
+			<!-- 右侧内容 -->
 			<div id="right">
-				<div class="header">
-					<p>我的账户 > 我的订单</p>
-				</div>
-				<!-- new html -->
-				<div class="product_manage_box">
-		            <div class="manage_tit">
-		    			<ul class="clearfloat filter-status-ul">
-		                    <li class="current"><a href="javascript:;" title="" data-id="0" class="filter-btn status-btn btn-select btn-all">全部<!-- (<span></span>) --></a></li>
-		                    						        
-		                    <li><a href="javascript:;" title="" data-id="1" class="filter-btn status-btn btn-select btn-1">待支付<!-- (<span></span>) --></a></li>
-		        
-		                    <li><a href="javascript:;" title="" data-id="2" class="filter-btn status-btn btn-select btn-2">待发货<!-- (<span></span>) --></a></li>
-		               
+				<div class="">
 
-		                    <li><a href="javascript:;" title="" data-id="3" class="filter-btn status-btn btn-select btn-3">已发货<!-- (<span></span>) --></a></li>
-		        
-		                    <li><a href="javascript:;" title="" data-id="4" class="filter-btn status-btn btn-select btn-4">已完成<!-- (<span></span>) --></a></li>
-		            	</ul>
-					</div>
+					<div class="order-table">
 
-					<div class="list_time">
-					   <div class="orders_time">成交时间:</div>
-					    <div class="orders_time_list">
-					        <div class="control-text">
-					            <input placeholder="开始时间" value="" name="start_time" class="laydate-icon" id="start_time">
-					            <input placeholder="结束时间" value="" name="end_time" class="laydate-icon" id="end_time"></div>
-					        <div class="clear"></div>
-					   </div>
-					    <input placeholder="订单号搜索" value="" name="order-num" id="filter_no" class="orders_no" type="text">
-					   <div class="orders_screen btn-num">筛选</div>
-					</div>						
-		
-					<div class="ordertable">
-						
-					</div>			
-				</div>
-
-
-				<!-- <div class="nav">
-					<div class="btn-group">
-						<button type="button" data-id="0" class="btn-select btn btn-default dropdown-toggle" aria-haspopup="true" aria-expanded="false">全部</button>
-						<button type="button" data-id="1" class="btn-select btn btn-default dropdown-toggle" aria-haspopup="true" aria-expanded="false">未支付</button>
-						<button type="button" data-id="2" class="btn-select btn btn-default dropdown-toggle" aria-haspopup="true" aria-expanded="false">待发货</button>
-						<button type="button" data-id="3" class="btn-select btn btn-default dropdown-toggle" aria-haspopup="true" aria-expanded="false">已发货</button>
-						<button type="button" data-id="4" class="btn-select btn btn-default dropdown-toggle" aria-haspopup="true" aria-expanded="false">已完成</button>
-					</div>
-				</div> -->
-				<!-- <div class="box-body">
-					<div class="form-group">
-						<div class="input-group">
-							<input type="date" name="start-time" class="form-control">
-							<input type="date" name="end-time" class="form-control">
-							<input type="text" name="order-num" class="form-control" placeholder="订单号搜索" aria-describedby="basic-addon3">
-							<div class="btn-group">
-								<button type="button" class="btn btn-danger btn-num" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">筛选</button>
+						<div class="use-right">
+							<div class="list_title clearfix">
+								<div class="cur">
+									<span>我的账户 >我的订单</span>
+								</div>
 							</div>
-						</div>
-					</div>
-				</div> -->
-				<div class="content">
-					<div class="row">
-						<div class="col-xs-12">
-							<div class="box">
-								<div class="box-body">
-									<!-- <table id="example2" class="table table-bordered table-hover ordertable">
-										<thead>
-											<tr>
-												<th>单号</th>
-												<th>商品</th>
-												<th>数量</th>
-												<th>总价</th>
-												<th>物流公司</th>
-												<th>物流单号</th>
-												<th>状态</th>
-												<th>操作</th>
-											</tr>
-										</thead>
-										<tbody id="money_tab">
-										</tbody>
-									</table> -->
-									<div class="col-sm-7">
-										<div class="dataTables_paginate paging_simple_numbers" id="example2_paginate">
-											<!-- <ul class="page" id="page">
 
-											</ul> -->
-											<ul class="pagination">
-												<!-- <li  id="prev"><a href="javascript:void(0);">&laquo;</a></li>
-												<li class="active"><span>1</span></li> -->
-												
-											</ul>
-										</div>
+							<div class="use-right-box">
+								<!-- new html start -->
+								<div class="product_manage_box">
+									<div class="manage_tit">
+										<ul class="clearfloat filter-status-ul">
+											<li class="current"><a href="javascript:;" title="" data-id="0" class="filter-btn status-btn btn-select btn-all">全部<!-- (<span></span>) --></a></li>
+
+											<li><a href="javascript:;" title="" data-id="1" class="filter-btn status-btn btn-select btn-1">待支付<!-- (<span></span>) --></a></li>
+
+											<li><a href="javascript:;" title="" data-id="2" class="filter-btn status-btn btn-select btn-2">待发货<!-- (<span></span>) --></a></li>
+
+
+											<li><a href="javascript:;" title="" data-id="3" class="filter-btn status-btn btn-select btn-3">已发货<!-- (<span></span>) --></a></li>
+
+											<li><a href="javascript:;" title="" data-id="7" class="filter-btn status-btn btn-select btn-4">已完成<!-- (<span></span>) --></a></li>
+
+											<li><a href="javascript:;" title="" data-id="8" class="filter-btn status-btn btn-select btn-8">已申请退款<!-- (<span></span>) --></a></li>
+
+											<li><a href="javascript:;" title="" data-id="9" class="filter-btn status-btn btn-select btn-9">已退款<!-- (<span></span>) --></a></li>
+										</ul>
 									</div>
-									<div class="modal fade bs-example-modal-sm" id="myModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
-									<div class="modal-dialog modal-sm" role="document">
-										<div class="modal-content">
+
+									<div class="list_time">
+										<div class="orders_time">成交时间:</div>
+										<div class="orders_time_list">
+											<div class="control-text">
+												<input placeholder="开始时间" value="" name="start_time" class="laydate-icon" id="start_time">
+												<input placeholder="结束时间" value="" name="end_time" class="laydate-icon" id="end_time"></div>
+											<div class="clear"></div>
+										</div>
+										<input placeholder="订单号搜索" value="" name="no" id="filter_no" class="orders_no" type="text">
+										<div class="orders_screen btn-num">筛选</div>
+									</div>
+
+									<ul class="list-header">
+										<li style="width: 550px;">宝贝</li>
+										<li>单价</li>
+										<li>数量</li>
+										<li style="width: 100px;">实付款</li>
+										<li>订单操作</li>
+									</ul>
+									<div class="ordertable">
+									</div>
+								</div>
+
+
+								<div class="modal fade bs-example-modal-md" id="myModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+									<div class="modal-dialog modal-md" role="document">
+										<div class="modal-content sendModal">
 											<div class="modal-header">
 												<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-												<h4 class="modal-title">扫描二维码支付</h4>
+												<h4 class="modal-title">填写发货信息</h4>
 											</div>
-											<div class="modal-body payimg sendmess">
-												<!-- <form>
+											<div class="modal-body">
+												<form>
 													<input type="hidden" value="" id="myModal_input">
-													<div class="form-group">
-														<label for="exampleInputEmail1">物流公司</label>
-														<input type="text" name="wuliu_company" class="form-control" id="exampleInputEmail1">
-													</div>
-													<div class="form-group">
-														<label for="exampleInputPassword1">物流编号</label>
-														<input type="text" name="wuliu_card" class="form-control" id="exampleInputPassword1">
+													<div class="dynamic-dom">
+														<div class="imgContainer"></div>
+														<div class="form-group">
+															<label for="exampleInputEmail1">物流公司</label>
+															<select name="wuliu_company" class="form-control" id="exampleInputEmail1"></select>
+														</div>
+														<div class="form-group">
+															<label for="exampleInputPassword1">物流编号</label>
+															<input type="text" name="wuliu_card" class="form-control" id="exampleInputPassword1">
+														</div>
+														<span id="addDom"> 添加+ </span>
 													</div>
 													<div class="modal-footer">
 														<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
 														<button type="button" class="btn btn-primary save">确定</button>
 													</div>
-												</form> -->
+												</form>
 											</div>
 										</div>
 									</div>
 								</div>
+								<ul class="pagination">
+									<!-- <li  id="prev"><a href="javascript:void(0);">&laquo;</a></li>
+									<li class="active"><span>1</span></li> -->
 
-								</div>
+								</ul>
+
 							</div>
+						</div>
+
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+		<div class="comment_mongolia_layer"></div>
+		<!-- 查看物流 -->
+		<div class="comment_bomb_box">
+			<div class="comment_bomb_box_header">
+				<div class="comment_bomb_box_title"> 物流信息 </div>
+				<div class="comment_bomb_box_close"> x </div>
+			</div>
+			<div class="comment_bomb_box_content">
+
+			</div>
+			<div class="comment_bomb_box_footer">
+			</div>
+		</div >
+
+
+
+
+		<!-- 评论弹框 -->
+		<div class="comment_mongolia_layer">
+
+			<!--<div class="comment_bomb_box">
+				<div class="comment_bomb_box_header">
+					<div class="comment_bomb_box_title"> 我要评论 </div>
+					<div class="comment_bomb_box_close"> x </div>
+				</div>
+				<div class="comment_bomb_box_content">
+					<div class="comment_bomb_box_group">
+						<div class="comment_bomb_box_name"> 商品名称： </div>
+						<div class="comment_bomb_box_input">
+							<input class="bomb_box_title" type="text">
+						</div>
+					</div>
+					<div class="comment_bomb_box_group">
+						<div class="comment_bomb_box_name"> 评论内容： </div>
+						<div class="comment_bomb_box_input">
+							<textarea class="bomb_box_textarea" cols="52" maxlength="52" rows="3" name="textarea"> </textarea>
+						</div>
+					</div>
+					<div class="comment_bomb_box_group">
+						<div class="comment_bomb_box_name"> 好评率： </div>
+						<div class="bomb_box_star">
+							&lt;!&ndash; <span class="bomb_box_praise"></span> &ndash;&gt;
+							<div id="star2"></div>
+							<div id="result2"></div>
 						</div>
 					</div>
 				</div>
-			</div>
+				<div class="comment_bomb_box_footer">
+					<button class="comment_save"> 保存评论 </button>
+				</div>
+			</div>-->
 		</div>
-		<script src="{{PATH_CONFIG}}"></script>
-		<script src="{{PATH_TML}}user/common/js/generate.js"></script>
-			<!--模块引入-->
-		<script src="/common/js/control.js"></script>
-		<script src="{{PATH_TML}}user/js/common.js"></script>
-		<script src="{{PATH_TML}}user/js/page.js"></script>
-		<script src="{{PATH_TML}}user/js/myOrder.js"></script>
-		<script>
-			var start = {
-	        elem: '#start_time',
-	        format: 'YYYY-MM-DD',
-	        max: '2099-06-16', //最大日期
-	        istime: true,
-	        istoday: false,
-	        choose: function(datas){
-	             end.min = datas; //开始日选好后，重置结束日的最小日期
-	             end.start = datas //将结束日的初始值设定为开始日
-	        }
-	    };
-	    var end = {
-	        elem: '#end_time',
-	        format: 'YYYY-MM-DD',
-	        max: '2099-06-16',
-	        istime: true,
-	        istoday: false,
-	        choose: function(datas){
-	            start.max = datas; //结束日选好后，重置开始日的最大日期
-	        }
-	    };
-	    laydate(start);
-	    laydate(end);
-			$('.datetimepicker').datetimepicker({
-				autoclose: true
-			});
 
-			$('.datetimepicker').blur(function() {
-				// $('.dropdown-menu').hide();
-			})
+
+		<script type="text/javascript">
+			/*
+			rat('star2','result2',1);
+			function rat(star,result,m){
+				star= '#' + star;
+				result= '#' + result;
+				$(result).hide();//将结果DIV隐藏
+				$(star).raty({
+					hints: ['1','2', '3', '4', '5'],
+					path: "/common/img",
+					starOff: 'star-off-big.png',
+					starOn: 'star-on-big.png',
+					size: 24,
+					start: 40,
+					showHalf: true,
+					target: result,
+					targetKeep : true,
+					click: function (score, evt) {
+						alert('你的评分是'+score*m+'分');
+					}
+				});
+			}
+			*/
+			var start = {
+		        elem: '#start_time',
+		        format: 'YYYY-MM-DD',
+		        max: '2099-06-16', //最大日期
+		        istime: true,
+		        istoday: false,
+		        choose: function(datas){
+		             end.min = datas; //开始日选好后，重置结束日的最小日期
+		             end.start = datas //将结束日的初始值设定为开始日
+		        }
+		    };
+		    var end = {
+		        elem: '#end_time',
+		        format: 'YYYY-MM-DD',
+		        max: '2099-06-16',
+		        istime: true,
+		        istoday: false,
+		        choose: function(datas){
+		            start.max = datas; //结束日选好后，重置开始日的最大日期
+		        }
+		    };
+		    laydate(start);
+		    laydate(end);
+			// $('.datetimepicker').datetimepicker({
+			// 	autoclose: true
+			// });
+
+			// $('.datetimepicker').blur(function() {
+			// 	// $('.dropdown-menu').hide();
+			// })
 		</script>
+		<script src="{{PATH_TML}}user/common/js/generate.js"></script>
 	</body>
 
 </html>

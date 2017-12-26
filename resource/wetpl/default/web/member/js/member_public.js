@@ -1,5 +1,5 @@
 function token_data() {
-    var token = window.localStorage.getItem('token');
+    var token = docCookies.getItem("token");
     if(token) {
         $.ajaxSetup({
             global: true,
@@ -247,6 +247,7 @@ function submit_modify_btn() {
                 }
                 $(".member_official").show().siblings().hide();
 
+                submit_btn(4);
                 var options1 = $.get(CERT_REALNAME_DETAIL);
                 options1.done(function(data) {
                     if(data.code == 200) {
@@ -533,7 +534,7 @@ function auth_certification() {
         type: 'get',
         async: false,
         headers: {
-            'Token': window.localStorage.getItem("token")
+            'Token': docCookies.getItem("token")
         },
         success: function(data) {
             if(data.code == 200) {
@@ -610,7 +611,7 @@ function auth_certification() {
                         type: 'get',
                         async: false,
                         headers: {
-                            'Token': window.localStorage.getItem("token")
+                            'Token': docCookies.getItem("token")
                         },
                         success: function(body) {
                             if(body.code == 200) {
@@ -819,7 +820,7 @@ function login(phoneNum, checkNum){
         url: LOGIN,
         type: 'post',
         headers: {
-            'Token': window.localStorage.getItem("token")
+            'Token': docCookies.getItem("token")
         },
         data: {'phone': phoneNum, 'code': checkNum},
         success: function(data){
@@ -926,7 +927,7 @@ $(".member_type_tab").click(function() {
 
 // 触发电话号码input框，实名认证、官方认证判断，自动补全信息
 $("#member_per_tel").focus(function() {
-    if(!window.localStorage.getItem("token")) {
+    if(!docCookies.getItem("token")) {
         if($("#personal_apply.member_type_tab_selected").length == 1) {
             $("#personal_apply_content .member_link_login").html(pro_login_member()).slideDown(60);
         } else {
@@ -940,7 +941,7 @@ $("#member_per_tel").focus(function() {
 });
 
 $("#member_int_tel").focus(function() {
-    if(!window.localStorage.getItem("token")) {
+    if(!docCookies.getItem("token")) {
 
         if($("#institution_apply.member_type_tab_selected").length == 1) {
             $("#institution_apply_content .member_link_login").html(pro_login_member()).slideDown(60);

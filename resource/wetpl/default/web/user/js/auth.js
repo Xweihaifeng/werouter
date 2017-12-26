@@ -151,7 +151,7 @@ $(document).ready(function(){
     });
 
     //  登录token参数
-    var token = window.localStorage.getItem('token');
+    var token = docCookies.getItem("token");
     if(token) {
         $.ajaxSetup({
             global: true,
@@ -163,6 +163,15 @@ $(document).ready(function(){
 
     var weid='';
 
+    function plusXing (str,frontLen,endLen) { 
+        var len = str.length-frontLen-endLen;
+        var xing = '';
+        for (var i=0;i<len;i++) {
+            xing+='*';
+        }
+        return str.substring(0,frontLen)+xing+str.substring(str.length-endLen);
+    }
+
     var auth_info = function(data) {
         var operation_status;
         if(data.operation_status == 2) {
@@ -173,7 +182,7 @@ $(document).ready(function(){
         var template = `
         <ul class="jumu">
             <li class="jumu-list"><label>身份证姓名：</label><span>`+ data.name +`</span></li>
-            <li class="jumu-list"><label>身份证号码：</label><span>`+ data.card_id +`</span></li>
+            <li class="jumu-list"><label>身份证号码：</label><span>`+ plusXing(data.card_id, 3, 4) +`</span></li>
             <li class="jumu-list"><label>认 证 时 间 ：</label><span>`+ data.updated_at +`</span><label>&emsp;认证状态：</label><span class="success-status">`+ operation_status +`</span></li>
         </ul>`
         return template;

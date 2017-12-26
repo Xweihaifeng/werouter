@@ -30,6 +30,7 @@
         }
         return format;
     }
+
     var initAdvList = function(data){
         var params=null;
         $('#listTable').DataTable({
@@ -180,9 +181,6 @@
         };
         initAdvList(data);
     });
-
-
-
 
     $(document).on('click', '.set-status', function(){
         var id = $(this).data('id');

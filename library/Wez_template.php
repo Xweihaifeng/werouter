@@ -4,16 +4,27 @@
 */
 class Wez_template
 {
-
 	private static $variable;
-
-	public static function init($file ,  $content , $config_file , $directory)
+	
+	public static function init($file ,  $content , $config_file , $directory ,$additional_config)
 	{
 		$content = self::_replace($content , $file , $directory);
+		
 		$content = str_replace('{{PATH_CONFIG}}', $config_file.'?t='.time() , $content);
 		$content = str_replace('{{PATH_TML}}', $file.$directory.'/' , $content);
-
+		if(is_mobile() !== TRUE)
+		{
+			$content = str_replace('</body>', '<script src="//captcha.luosimao.com/static/js/api.js"></script></body>' , $content);
+		}
+		preg_match("@<html[^>]*>@si",$content, $regs);
+		$html_tag = current($regs);
+		$content = str_replace($html_tag, $html_tag.'<script>'.$additional_config.'</script>' , $content);
 		return $content;
+		//return self::_compress_html($content);
+	}
+	
+	public static function _compress_html($string) {
+    	return ltrim(rtrim(preg_replace(array("/> *([^ ]*) *</","//","'/\*[^*]*\*/'","/\r\n/","/\n/","/\t/",'/>[ ]+</'),array(">\\1<",'','','','','','><'),$string)));
 	}
 
 	//解析模板
@@ -87,6 +98,7 @@ class Wez_template
 			{
 				$replace_content = self::{'_'.$value}($replace_value[$key] , $file , $directory);
 				$content = str_replace($replace_key[$key], $replace_content , $content);
+				
 			}
 			else
 			{
@@ -99,6 +111,7 @@ class Wez_template
 		{
 			$content = self::{'_'.$last['key']}($last['value'] , $file , $directory , $content , $last['lable']);
 		}
+		$content = str_replace('{{PATH_TML}}', $file.$directory.'/' , $content);
 		return $content;
 	}
 

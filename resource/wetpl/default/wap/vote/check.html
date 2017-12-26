@@ -220,7 +220,7 @@
           url: globalHost + '/cms/setting/show',
           type: 'GET',
           success: function(data){
-            var imgHost = 'http://images.new.wezchina.com/';
+            var imgHost = ApiMaterPlatQiniuDomain;
             var fav = data.data.favicon;
             if (fav.indexOf('http') === -1) {
               fav = imgHost + fav;
@@ -262,7 +262,7 @@
                 },
                 10000);
 
-                var imgHost = 'http://images.new.wezchina.com/';
+                var imgHost = ApiMaterPlatQiniuDomain;
                 var fav = data.data.favicon;
                 if (fav.indexOf('http') === -1) {
                   fav = imgHost + fav;
@@ -295,6 +295,8 @@
                   'width': width,       
                   'height': height           
                 })
+              } else {
+                window.location.href = '/404'
               }
 
             }

@@ -274,7 +274,7 @@ var vm=new Vue({
           url: globalHost + '/cms/setting/show',
           type: 'GET',
           success: function(data){
-            var imgHost = 'http://images.new.wezchina.com/';
+            var imgHost = ApiMaterPlatQiniuDomain;
             var fav = data.data.favicon;
             if (fav.indexOf('http') === -1) {
               fav = imgHost + fav;
@@ -347,7 +347,7 @@ var vm=new Vue({
                           },
                           1000);
 
-                          var imgHost = 'http://images.new.wezchina.com/';
+                          var imgHost = ApiMaterPlatQiniuDomain;
                           var fav = data.data.favicon;
                           if (fav.indexOf('http') === -1) {
                             fav = imgHost + fav;
@@ -387,6 +387,8 @@ var vm=new Vue({
                             })   
 
                             // initWx(_self.detail.title, _self.detail.summary, ApiMaterPlatQiniuDomain + _self.detail.cover);
+                        } else {
+                            window.location.href = '/404'
                         }
                     }
                 })

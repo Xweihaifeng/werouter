@@ -1,4 +1,3 @@
-
 $(function() {
     //图片上传接口
     var ajaxImageUploadUrl = $('#J_ImageUploadUrl').val();
@@ -22,7 +21,7 @@ $(function() {
     var TAG_BUTTON_ANIM_TIME = 500;
     //本地存储key
     var KEY_DATA_ACTIVITY = 'activityData';
-    var interval='';
+    var interval = '';
     //缓存时间间隔
     var CACHE_TIME = 5000;
     //编辑器对象
@@ -62,9 +61,9 @@ $(function() {
             //城市选择
             citySelect.init();
             //票务
-            ticket.init();
+            //ticket.init();
             //嘉宾
-            guest.init();
+            //guest.init();
 
             if (isFillAcccountInfo == 0) {
                 account.init();
@@ -92,10 +91,10 @@ $(function() {
                 opacity: 0.5
             });
             //初始化编辑器
-           /* um = UE.getEditor('J_ActivityDetail', {
-                serverUrl: editorContorllerUrl,
-                autoClearinitialContent: autoClearinitialContent
-            });*/
+            /* um = UE.getEditor('J_ActivityDetail', {
+                 serverUrl: editorContorllerUrl,
+                 autoClearinitialContent: autoClearinitialContent
+             });*/
             template.config('openTag', '((');
             template.config('closeTag', '))');
         },
@@ -142,11 +141,11 @@ $(function() {
             $('#J_ActivityAddr').keyup($.debounce(250, function() {
                 var address = $.trim($('#J_ActivityAddr').val());
                 if (address) {
-                    // map.loadMap();
+                    map.loadMap();
                     $('#J_ActivityAddressHistory').hide();
-                    // $('#J_ActivityAddressMap').fadeIn(ANIM_TIME);
+                    $('#J_ActivityAddressMap').fadeIn(ANIM_TIME);
                 } else {
-                    // $('#J_ActivityAddressMap').hide();
+                    $('#J_ActivityAddressMap').hide();
                     $('#J_ActivityAddressHistory').fadeIn(ANIM_TIME);
                 }
 
@@ -154,7 +153,7 @@ $(function() {
             //失去活动地址输入框的焦点时隐藏活动历史地址
             $('#J_ActivityAddr').blur(function() {
                 $('#J_ActivityAddressHistory').fadeOut(ANIM_TIME);
-                //$('#J_ActivityAddressMap').fadeOut(ANIM_TIME);
+                $('#J_ActivityAddressMap').fadeOut(ANIM_TIME);
             });
             //选择城市列表
             $('.J_ActivityAddressHistoryItem').click(function() {
@@ -165,16 +164,16 @@ $(function() {
                 $('#J_ActivityAddr').focus();
             });
             //活动保存和发布按钮
-           /* $('.J_BtnActivitySave').click(function() {
-                
-                if (formObj.init(this)) {
-                    if (isFillAcccountInfo == 0 && data.type == 1) {
-                        dialog.show('#J_DialogAccount');
-                    } else {
-                        _self.submitData();
-                    }
-                }
-            });*/
+            /* $('.J_BtnActivitySave').click(function() {
+                 
+                 if (formObj.init(this)) {
+                     if (isFillAcccountInfo == 0 && data.type == 1) {
+                         dialog.show('#J_DialogAccount');
+                     } else {
+                         _self.submitData();
+                     }
+                 }
+             });*/
             //添加主办方输入框获得焦点是显示历史列表
             $('#J_InputSponor').focus(function() {
                 $('#J_SponorHistoryList').slideDown(ANIM_TIME);
@@ -195,14 +194,17 @@ $(function() {
             });
             //收费和免费切换事件
             $('input[name=type]').change(function() {
-                $('.J_LayoutFree').toggle();
-                $('.J_LayoutFee').toggle();
-                $('.J_FeeTips').toggle();
                 var type = $('input[name=type]:checked').val();
                 //alert(type);
-                if (type == 1) {
+                if (type == 2) {
+                    $('.J_LayoutFree').hide();
+                    $('.J_LayoutFee').show();
+                    $('.J_FeeTips').show();
                     $('.J_audit').hide();
-                }else{
+                } else {
+                    $('.J_LayoutFee').hide();
+                    $('.J_LayoutFree').show();
+                    $('.J_FeeTips').hide();
                     $('.J_audit').show();
                 }
 
@@ -290,13 +292,13 @@ $(function() {
                         hideLoading();
                         notice.alert(res.msg, function() {
                             if (res.status == 1) {
-                                clearInterval(interval);//清除定时器
-                                cache.clean();//清除缓存
+                                clearInterval(interval); //清除定时器
+                                cache.clean(); //清除缓存
                                 isSave = true;
                                 setTimeout(function() {
                                     document.location.href = res.data.url;
                                 }, 500);
-                            }else if (res.status == 2){
+                            } else if (res.status == 2) {
                                 setTimeout(function() {
                                     window.location.href = res.data.url;
                                 }, 500);
@@ -608,7 +610,7 @@ $(function() {
                 $('#J_TicketPrice').removeClass('readonly');
                 $('.J_TicketForm').find('input').removeClass('error');
                 $('.J_TicketForm').get(0).reset();
-                $('#J_TicketId').val(0);//新增 清除上次打开的id
+                $('#J_TicketId').val(0); //新增 清除上次打开的id
             });
         },
         //保存门票并验证
@@ -663,7 +665,8 @@ $(function() {
                     var reg = /^\d+(\.\d{1,2})?$/;
                     if (!reg.test(data.price)) {
                         repeatFlag = false;
-                        notice.alert('活动票价格不允许超过两位小数');return;
+                        notice.alert('活动票价格不允许超过两位小数');
+                        return;
                     }
                     data.result = JsonObj.encode(data);
                     if (_self._isNew) //将门票添加到表单信息中
@@ -1035,28 +1038,29 @@ $(function() {
                 notice.alert('请选择活动结束时间');
                 $('#J_ActivityOverDate').focus();
             } else if (!data.entryEndTime) {
-                   notice.alert('请选择活动报名截止时间');
-                   $('#J_ActivityEntryOverDate').focus();
+                notice.alert('请选择活动报名截止时间');
+                $('#J_ActivityEntryOverDate').focus();
             } else if (data.beginTime >= data.endTime) {
                 notice.alert('活动结束时间不能早于活动开始时间');
                 $('#J_ActivityOverTime').focus();
-            }
-            else if (data.entryEndTime > data.endTime) {
+            } else if (data.entryEndTime > data.endTime) {
                 notice.alert('报名截止时间不能晚于活动结束时间');
                 $('#J_ActivityEntryOverTime').focus();
-            }
-            else if (data.sponors.length < 1) {
+            } else if (data.sponors.length < 1) {
                 notice.alert('请填写主办方');
                 $('.form-group-sponors').focus();
             } else if (!data.content) {
                 notice.alert('请填写活动详情');
                 $('.form-group-detail').focus();
-            } else if (data.type == 0 && data.limit && isNaN(data.limit)) {
+            } else if (data.type == 1 && data.limit && isNaN(data.limit)) {
                 notice.alert('人数限制必须为数字');
                 $('#J_ActivityLimit').focus();
-            } else if (data.type == 1 && data.tickets.length <= 0) {
-                notice.alert('请添加门票');
-                $('.form-group-type').focus();
+            } else if (data.type == 2 && isNaN(data.price)) {
+                notice.alert('票价必须为数字');
+                $('#J_ActivityPrice').focus();
+                // } else if (data.type == 1 && data.tickets.length <= 0) {
+                //     notice.alert('请添加门票');
+                //     $('.form-group-type').focus();
             } else if (!data.isAgreeProtocal) {
                 notice.alert('请阅读活动协议并同意');
             } else {
@@ -1072,7 +1076,7 @@ $(function() {
 
             var beginDate = this.parseDate($('#J_ActivityStartDate').val(), $('#J_ActivityStartTime').val());
             var endDate = this.parseDate($('#J_ActivityOverDate').val(), $('#J_ActivityOverTime').val());
-            var entryEndDate = this.parseDate($('#J_ActivityEntryOverDate').val(), $('#J_ActivityEntryOverTime').val()); 
+            var entryEndDate = this.parseDate($('#J_ActivityEntryOverDate').val(), $('#J_ActivityEntryOverTime').val());
 
             var ticketArr = [];
             var guestArr = [];
@@ -1081,6 +1085,7 @@ $(function() {
             var title = $('#J_ActivityTitle').val();
             var address = $('#J_ActivityAddr').val();
             var limit = $('#J_ActivityLimit').val();
+            var price = $('#J_ActivityPrice').val();
             var content = '';
             var groupChart = 0;
             var isPrivacy = 0;
@@ -1120,17 +1125,17 @@ $(function() {
             }
             /*********end*********/
             //判断编辑器是否是提示内容
-          /*  if (um.getContentTxt() != PLACEHOLDER_CONTENT) {
-                content = um.getContent();
-            }*/
+            /*  if (um.getContentTxt() != PLACEHOLDER_CONTENT) {
+                  content = um.getContent();
+              }*/
             //获取是否公开活动
             /*if ($('#J_ActivityProperty').get(0).checked) {
                 isPrivacy = 1;
             }*/
-           /* //获取是否配置群聊
-            if ($('#J_GroupChat').get(0).checked) {
-                groupChart = 1;
-            }*/
+            /* //获取是否配置群聊
+             if ($('#J_GroupChat').get(0).checked) {
+                 groupChart = 1;
+             }*/
             //数据对象
             return {
                 id: $('#J_ActivityId').val(),
@@ -1147,6 +1152,7 @@ $(function() {
                 content: content,
                 type: $('input[name=type]:checked').val(),
                 limit: limit,
+                price: price,
                 tickets: ticketArr,
                 guests: guestArr,
                 sponors: sponorArr,
@@ -1155,18 +1161,18 @@ $(function() {
                 isPrivacy: isPrivacy,
                 isAgreeProtocal: $('#J_ActivityProtocal').get(0).checked ? 1 : 0,
                 status: status,
-                audit:$('input[name=audit]:checked').val(),
+                audit: $('input[name=audit]:checked').val(),
             };
         },
-       /* //格式化时间对象
-        parseDate: function(yearStr, hourStr) {
-            yearStr = yearStr.split('-');
-            hourStr = hourStr.split(':');
-            var date = new Date();
-            date.setFullYear(yearStr[0], yearStr[1] - 1, yearStr[2]);
-            date.setHours(hourStr[0], hourStr[1], 0, 0);
-            return date;
-        },*/
+        /* //格式化时间对象
+         parseDate: function(yearStr, hourStr) {
+             yearStr = yearStr.split('-');
+             hourStr = hourStr.split(':');
+             var date = new Date();
+             date.setFullYear(yearStr[0], yearStr[1] - 1, yearStr[2]);
+             date.setHours(hourStr[0], hourStr[1], 0, 0);
+             return date;
+         },*/
         formatDate: function(time) {
             var oDate = new Date(time);
             return {
@@ -1258,7 +1264,7 @@ $(function() {
                 var item = data.fields[i];
                 other.createTag($('.J_BtnAddTag[data-type="field"]'), 'field', item);
             }
-             //配置群聊
+            //配置群聊
             if (data.groupChart) {
                 $('#J_GroupChat').attr('checked', 'true');
             } else {
@@ -1307,6 +1313,8 @@ $(function() {
             $('.J_FeeTips').hide();
             //票种
             $('.J_ActivityTicket').remove();
+            //价格
+            $('#J_ActivityPrice').val('');
             //人数限制
             $('#J_ActivityLimit').val('');
             //嘉宾
@@ -1411,11 +1419,11 @@ $(function() {
                 },
                 //验证完毕后提交事件
                 submitHandler: function(form) {
-                    if($('input[name="payType"]:checked').val() == null) {
+                    if ($('input[name="payType"]:checked').val() == null) {
                         notice.alert('收款方式不能为空');
                         return false;
                     }
-                    if(!$('#J_AccountIdcard').val() && !$('#J_AccountLicense').val()) {
+                    if (!$('#J_AccountIdcard').val() && !$('#J_AccountLicense').val()) {
                         notice.alert('请上传证件');
                         return false;
                     }
@@ -1437,25 +1445,25 @@ $(function() {
                 $('.J_CacheTips').fadeOut();
             });
             if (window.localStorage) {
-               /* um.ready(function() {
-                    _self._defaultData = JsonObj.encode(formObj.formatData(2));
-                    var activityData = localStorage.getItem(KEY_DATA_ACTIVITY);
-                    if (activityData != null && activityData != _self._defaultData) {
-                        $('.J_CacheTips').fadeIn();
-                        activityData = JsonObj.decode(activityData);
-                        formObj.fill(activityData);
-                    } else {
-                        $('#J_GroupChat').attr('checked', 'true');
-                    }
-                    interval = setInterval(function() {
-                        _self.save();
-                    }, CACHE_TIME);
-                });*/
+                /* um.ready(function() {
+                     _self._defaultData = JsonObj.encode(formObj.formatData(2));
+                     var activityData = localStorage.getItem(KEY_DATA_ACTIVITY);
+                     if (activityData != null && activityData != _self._defaultData) {
+                         $('.J_CacheTips').fadeIn();
+                         activityData = JsonObj.decode(activityData);
+                         formObj.fill(activityData);
+                     } else {
+                         $('#J_GroupChat').attr('checked', 'true');
+                     }
+                     interval = setInterval(function() {
+                         _self.save();
+                     }, CACHE_TIME);
+                 });*/
             }
         },
         save: function() {
             var data = formObj.formatData(2);
-                data = JsonObj.encode(data);
+            data = JsonObj.encode(data);
             var _cache = localStorage.getItem(KEY_DATA_ACTIVITY);
             if (data != _cache) {
                 localStorage.setItem(KEY_DATA_ACTIVITY, data);
@@ -1470,7 +1478,7 @@ $(function() {
         }
     };
 
-   /* var map = {
+    var map = {
         _init: 0,
         city: "",
         point: null,
@@ -1559,12 +1567,12 @@ $(function() {
             });
             window.baiduMap.addOverlay(baiduMapMarker);
         }
-    };*/
+    };
 
     /*window.onload = function() {
         console.log("ccbbaa");
         activity.init();
     }*/
-        activity.init();
+    activity.init();
 
 });

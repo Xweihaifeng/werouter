@@ -24,8 +24,8 @@ $(document).ready(function () {
 
     $('#updateSet').click(function(){
     	var formList = {
-    		'id'         : $("#role_id").find("option:selected").val(),
-    		'username'   :$('#username').val(),
+    		'id'         :$("#role_id").find("option:selected").val(),
+    		'username'   :$('#username1').val(),
     		'password'   :$('#password').val(),
     		'rePassword' :$('#rePassword').val(),
     		'phone'      :$('#phone').val(),
@@ -85,5 +85,25 @@ $(document).ready(function () {
         }, (time * 1000)
         );
     }
+    $(".wenhao").hover(function(){
+        $(".wenhao-tishi").show();
+    },function(){
+        $(".wenhao-tishi").hide();
+    });
+    $(".wenhao1").hover(function(){
+        $(".wenhao-tishi1").show();
+    },function(){
+        $(".wenhao-tishi1").hide();
+    });
+    $(".wenhao2").hover(function(){
+        $(".wenhao-tishi2").show();
+    },function(){
+        $(".wenhao-tishi2").hide();
+    });
+    $(".wenhao3").hover(function(){
+        $(".wenhao-tishi3").show();
+    },function(){
+        $(".wenhao-tishi3").hide();
+    });
     init();
 });

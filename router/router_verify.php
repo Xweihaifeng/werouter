@@ -4,11 +4,11 @@
  *
  * @author Guanz
  */
-class router_verify {
+class router_verify{
     	
     private $_rouert_match;
     private $_rule;
-
+    
     public $router = FALSE;
     public $controllerRouter;
     public function __construct($router = array() , $uri = array() , $rule = array() , $weid = '') 
@@ -38,7 +38,7 @@ class router_verify {
         		$basics_router[] = $value;
         	}
         }
-
+        
         $rouert_match = $this->_router_count($basics_router , $uri);
 
         $is_router = $this->_router_match($rouert_match , $uri);
@@ -60,8 +60,6 @@ class router_verify {
         	$this->router['config'] = $this->controllerRouter->config;
 
         }
-
-
         return TRUE;
     }
 
@@ -122,9 +120,9 @@ class router_verify {
                 $method = ltrim($router_stirng , ':');
 
                 // 当有设置正则验证事 需要做验证
-                if(!empty($match = $this->_rule[$method]))
+                if(!empty($this->_rule[$method]))
                 {
-  
+                    $match = $this->_rule[$method];
                     //var_dump(preg_match("/^$match$/" , $uri_string));
                     if(preg_match("/^$match$/" , $uri_string))
                     {

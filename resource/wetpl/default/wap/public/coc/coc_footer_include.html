@@ -1,0 +1,143 @@
+<div id="footer" style="display: none;">
+	<div class="dbback" v-if="cuupage!='' && cuupage!='so'">
+		<ul>
+			<li><a :href="'/' | href"><span><img src="/resource/wetpl/default/wap/img/index/home2.png"></span><p>回首页</p></a></li>
+			<li><a href="javascript:scroll(0,0)" id="top"><span><img src="/resource/wetpl/default/wap/img/index/back.png"></span><p>回顶部</p></a></li>
+		</ul>
+		<div class="clear"></div>
+	</div>
+<footer >
+	<br/><br/><br/>
+	
+	<ul>
+		<li :id="key" v-for="(item , key) in footer_nav" @click="open(key);">
+			<div class="up" v-if="item.nav == false"></div>
+			<div class="down" v-if="item.nav == false"></div>
+			
+			<img :src="item.select_img"  v-if="key == router" />
+			<img :src="item.img"  v-else />
+			
+			<span v-if="item.nav != false" :class="{'footer_selecte' : key == router}">{{item.name}}</span>
+		</li>
+	</ul>
+</footer>
+</div>
+<script type="text/javascript">
+	// header 渲染
+	function init_header(show) {
+	    if(show == 'no') return false;
+
+	    $('#header').show();
+	    var dom_id = '#header';
+	    if(show != 'yes')
+	    {
+	    	dom_id = '#'+show;
+	    }
+	    new Vue({
+	        el: dom_id,
+	        data: {
+	           plats : plats_info,
+	        },
+	        watch: {
+	          
+	        },
+	        mounted() {
+	            this.$nextTick( function () {
+	            });
+	        },
+	        methods:{
+	        }
+	    });
+	}
+	
+	// footer 渲染
+	function init_footer(show) {
+		if(show == 'no') return false;
+	    var dom_id = '#footer';
+	    if(show != 'yes')
+	    {
+	    	dom_id = '#'+show;
+	    }
+		$('#footer').show();
+		return new Vue({
+	        el: '#footer',
+	        data: {
+	            router : window.location.pathname.split('/').slice(1,2),
+	            cuupage : window.location.pathname.split('/').pop(),
+	            footer_nav : {
+	                home :{
+	                    'name' : '首页',
+	                    'nav' : true,
+	                    'login' : false,
+	                    'img' : '/common/img/homeblue.png',
+	                    'select_img' : '/common/img/homeblue.png',
+	                    'href' : all_domian
+	                },
+	                discovery : {
+	                    'name' : '发现',
+	                    'nav' : true,
+	                    'login' : false,
+	                    'img' : '/common/img/discovery.png',
+	                    'select_img' : '/common/img/discoveryblue.png',
+	                    'href' : all_domian + 'discovery/dynamic'
+	                },
+	                add : {
+	                    'name' : '添加',
+	                    'nav' : false,
+	                    'login' : false,
+	                    'img' : '/common/img/add.png',
+	                    'select_img' : '/common/img/add.png',
+	                    'href' : false
+	                },
+	                message : {
+	                    'name' : '消息',
+	                    'nav' : true,
+	                    'login' : false,
+	                    'img' : '/common/img/message.png',
+	                    'select_img' : '/common/img/messageblue.png',
+	                    'href' : all_domian + 'message'
+	                },
+	                user : {
+	                    'name' : '我的',
+	                    'nav' : true,
+	                    'login' : true,
+	                    'img' : '/common/img/user.png',
+	                    'select_img' : '/common/img/userblue.png',
+	                    'href' : all_domian + 'user'
+	                }
+	            },
+	            page : '',
+	        },
+	        mounted() {
+	            this.$nextTick( function () {
+	            	if(is_domain == 'yes')
+	            	{
+	            		this.router = 'home';
+	            	}
+	            });
+	        },
+	        methods:{
+	        	open(val)
+	        	{
+	        		if(this.cuupage != val)
+	                {
+	                	var select = this.footer_nav[val];
+	                	if(select.login == true)
+	                	{
+	                		if(is_login != 'yes')
+	                		{
+	                			mb_login(select.href);
+	                			return ;
+	                		}
+	                	}
+	                    window.location.href = select.href;
+	                }
+	        	}
+	        }
+	    });
+	}
+	
+	init_header(show.header);
+	init_footer(show.footer);
+</script>
+</body>

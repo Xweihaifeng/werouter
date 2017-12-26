@@ -8,8 +8,8 @@ sessionStorage.listname='we-shop';
 var qiniu_bucket_domain = ApiMaterPlatQiniuDomain;
 //const ApiMaterPlatQiniuDomain  = 'http://images.new.wezchina.com/';
 
-
 $(document).ready(function(){
+    var domNum = 0;
     var favicon = ApiMaterPlatQiniuDomain + localStorage.getItem('fav');
     console.log('logo:',favicon);
     $('#favicon').attr('href', favicon);
@@ -17,34 +17,6 @@ $(document).ready(function(){
     var logo = ApiMaterPlatQiniuDomain + localStorage.getItem('logo');
     console.log('logo:',logo);
     $('#home img').attr('src', logo);
-
-    var tusitemp="";
-    function mess_tusi(strs){
-        //清除事件
-        clearTimeout(tusitemp);
-        $("#mess_tusi").remove();
-        //创建吐丝层并写入内容
-        if(!$("#mess_tusi").attr("id")){ //吐丝层不存在创建
-            $("body").append("<div id='mess_tusi' style='z-index: 100002;position:fixed;font-size:16px;border-radius:4px !important;background:rgba(0,0,0,.7);color:#fff;display:none;'><span style='display:block;padding:5px 15px;'>"+strs+"</span></div>"); //写入内容
-        }else{
-            $("#mess_tusi").html(strs);  //写入内容
-        }
-
-        //定义吐丝层位置
-        var left=($(window).width()-$("#mess_tusi").width())/2 -180;//居中
-        var top=$(window).height()*0.5;
-        $("#mess_tusi").css({"left":left+"px","top":top+"px"});
-
-        //显示吐丝层
-        $("#mess_tusi").css("display",'');
-
-        //2秒后关闭
-        tusitemp =  setTimeout(function (){
-            $("#mess_tusi").remove();
-            $("#mess_tusi").html("");
-        },2000);
-        return false;
-    }
 
     var saveUserInfo = function(token) {
         localStorage.setItem('token', token);
@@ -56,7 +28,7 @@ $(document).ready(function(){
             url: 'http://apitest.wezchina.com/pages/page/getDetailByUser/' + weid,
             type: 'GET',
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data){
                 if (data.code == 200){
@@ -87,7 +59,7 @@ $(document).ready(function(){
         })
     }
 
-    var weid = localStorage.getItem('weid');
+    var weid = docCookies.getItem("weid");
     //console.log(weid)
     init(weid);*/
 
@@ -97,10 +69,10 @@ $(document).ready(function(){
             url: PAGES_PAGE_GETDETAILBYUSER + weid,
             type: 'GET',
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data){
-                if (data.code == 401) {            
+                if (data.code == 401) {
                     // domain = '/index';
                     localStorage.removeItem('token')
                     // window.location.href = '/login'
@@ -126,92 +98,8 @@ $(document).ready(function(){
         })
     }
 
-    var weid = localStorage.getItem('weid');
+    var weid = docCookies.getItem("weid");
     hasDomain(weid);
-
-   /* var isLogin = false; //判断用户登陆与否
-    var router = function(route){
-        var routerList = ['home', 'login', 'article','project','active','zone', 'shopping'];
-
-        var isMember = function(routerList, route){
-            return routerList.filter(x => x === route);
-        }
-
-        var home = function(){
-            window.location.href = '/';
-        }
-
-        var login = function(){
-            if (!isLogin) {
-                showLogin = true;
-                $("#modal").show();
-                $(".show-login").css({
-                    "margin-left": width,
-                    "margin-top": height
-                });
-                $(".show-login").fadeIn(300);
-                $("body").css("overflow", "hidden");
-            } else {
-                window.location.href = "/user";
-            }
-        }
-
-        var article = function(){
-
-            showLogin = false;
-            window.location.href = domain + "/article";
-//          window.history.go(0);
-        }
-
-        var shopping = function(){
-            showLogin = false;
-            window.location.href = domain + "/wemall";
-        }
-        var active = function(){
-            showLogin = false;
-            window.location.href = domain + "/activity";
-        }
-        var project = function(){
-            showLogin = false;
-            window.location.href = domain + "/project";
-        }
-        var zone = function(){
-            showLogin = false;
-            window.location.href = domain + "/quan";
-        }
-
-        if (isMember(routerList, route) != ""){
-            eval(route)();
-        }
-    }
-
-    $("#home, #login, #article,#active,#project,#zone, #shopping").click(function(){
-        var id = $(this).attr("id");
-        router(id);
-    })*/
-
-    /* //主页初始化
-    var isLogin = false;
-    var init = function(token){
-        if (token != 'null' && token != undefined) {
-            isLogin = true;
-            $(".left-nav, .login, #middle, #right").show();
-
-            //加载用户头像
-
-            $("#login div img").hide();
-            $(".log-head").css({
-                'background': 'url(../../common/img/p2240276035.jpg) no-repeat center',
-                'background-size': '100% 100%'
-            })
-            $(".log-head").show();
-        } else {
-            login();
-        }
-
-    }
-
-    init(localStorage.getItem('token'));*/
 
     // 获取个人商城信息
     var mall_id="";
@@ -220,7 +108,7 @@ $(document).ready(function(){
             url:MALL_USERDETAIL,
             type:'get',
             headers: {
-                    'Token': localStorage.getItem('token')
+                    'Token': docCookies.getItem("token")
                 },
             dataType: 'json',
             success: function(data){
@@ -243,48 +131,21 @@ $(document).ready(function(){
             }
         })
     }
-usermall();
+    usermall();
     console.log(mall_id);
 
     //获取订单列表
-        var flag=true;
-    var  orderlist=function(mall_id,page,type=0,dataobj=""){
-        /*// var page="";
-        var keywords="";
-        var sendData={
-            mall_id:  mall_id,
-            limit:limit,
-            page:page,
-            keywords:keywords
-        }*/
-         var limit="5";
-        // var page="";
+    var flag=true;
+    var  orderlist=function(mall_id,page,type,dataobj){
+        if(!type){
+            type = 0;
+        }
+        if(!dataobj){
+            dataobj = ''
+        }
+        var limit="5";
         var keywords=time_start=time_end="";
         var status=order_num="";
-        var logistics_status="";
-        if(type==1 ){
-            // 未支付
-            status=type;
-            logistics_status="";
-        }else if(type==2){
-            //待发货
-            status=type;
-            logistics_status=1;
-        }else if(type==3){
-            // 已发货
-            status="";
-            logistics_status=2;
-        }else if(type==4){
-            // 已完成
-            status="";
-            logistics_status=3;
-        }else{
-            /*// 订单号筛选
-            time_start=type.time_start;
-            time_end=type.time_end;
-            order_num=type.order_num;*/
-
-        }
         if(dataobj!=""){
             // 订单号筛选
             time_start=dataobj.time_start;
@@ -292,52 +153,209 @@ usermall();
             order_num=dataobj.order_num;
         }
         var sendData={
-            // mall_id:  mall_id,
             limit:limit,
             mall_id:mall_id,
             page:page,
-            status:status,
-            logistics_status:logistics_status,
+            order_status:type,
             time_start:time_start,
             time_end:time_end,
             order_num:order_num,
             keywords:keywords
-        }
-        console.log(sendData);
+        };
         $.ajax({
             url:ORDER_LIST,
             type:'post',
             data:sendData,
             headers: {
-                    'Token': localStorage.getItem('token')
+                    'Token': docCookies.getItem("token")
                 },
             dataType: 'json',
             success: function(data){
-                console.log(data);
+                console.log("订单列表：",data);
                 if (data.code == 200) {
                     var listdata=data.data.list;
                     $(".ordertable").children().remove();
                     listdata.map(x => {
                         $(".ordertable").append(orderlisthtml(x));
+                        if(x.order_status == 8){
+                            var refundDom = '';
+                            var reasonTip = '无退款原因';
+                            if(x.refund && x.refund.length>0 && x.refund[0].order_refund_reason){
+                                reasonTip = x.refund[0].order_refund_reason;
+                            }
+                            refundDom =
+                                '<p class="refund">' +
+                                '<span></span>'+
+                                '<span class="reason">'+ reasonTip +'</span>'+
+                                '</p>';
+                            $('#h'+x.weid+' .order').append(refundDom);
+                        }
+                        $('#'+x.weid).children().remove();
+                        if(x.goods.length){
+                            for(var i=0; i<x.goods.length; i++){
+                                var freight=0;
+                                if(x.goods[i].postage_status==1){
+                                    freight=0;
+                                }else{
+                                    if(x.goods[i].postage_max_money && parseInt(x.goods[i].postage_max_money) > 0 ){
+                                        if(parseFloat(x.goods[i].goods_price * x.goods[i].goods_num) < parseFloat(x.goods[i].postage_max_money)){
+                                            freight = parseFloat(x.goods[i].postage * x.goods[i].goods_num);
+                                        }
+                                    }else{
+                                        freight = parseFloat(x.goods[i].postage * x.goods[i].goods_num);
+                                    }
+                                }
+                                var goodItem =
+                                    '<tr id="'+x.weid+'">'+
+                                        '<td style="width: 106px;padding-top: 8px;"><img src="'+qiniu_bucket_domain+x.goods[i].goods_cover+'" alt=""></td>'+
+                                        '<td style="width: 460px;"><a href="/'+x.domain +'/wemall/goods/'+x.goods[i].goods_id+'" target="_blank">'+x.goods[i].goods_title+'</a></td>'+
+                                        '<td>￥'+x.goods[i].goods_price+'<br>(运费￥'+freight+')</td>'+
+                                        '<td>'+x.goods[i].goods_num+'</td>'+
+                                        '<td rowspan="'+x.goods.length+'" class="price">￥'+x.order_price+'</td>'+
+                                        '<td rowspan="'+x.goods.length+'" class="oper" style="width: 92px;" id="'+x.status+'">'+
+                                            ' <div class="orders_list_details">'+
+                                                '<a href="/user/order/detail/'+x.weid+'" target="_blank">订单详情</a>'+
+                                                '<div class="status-oper"></div>'+
+                                            '</div>'+
+                                        '</td>'+
+                                    '</tr>';
+                                $('#'+x.weid).append(goodItem);
+                            }
+                        }
+                        $('#'+x.weid+' .status-oper').children().remove();
+                            var operList = [];
+                            if(x.send!=''){
+                                operList.push({
+                                    name : '查看物流',
+                                    oper : 'distribute'
+                                });
+                            }
+                            switch (x.order_status){
+                                case 2:
+                                    operList.push({
+                                        name : '发货',
+                                        oper : 'deliver'
+                                    });
+                                    break;
+                                case 3:
+                                    break;
+                                case 4:
+                                    break;
+                                case 5:
+
+                                    break;
+                                case 7:
+
+                                    break;
+                                case 8:
+                                    operList.push({
+                                        name : '确认退款',
+                                        oper : 'confirmRefund'
+                                    });
+                                    break;
+                                case 9:
+                                    break;
+                            }
+                            if(operList.length){
+                                for(var i=0;i<operList.length;i++){
+                                    var operDom =
+                                        '<a class="'+ operList[i].oper +'">'+operList[i].name+'</a>';
+                                    $('#'+x.weid+' .status-oper').append(operDom);
+                                }
+                            }
                     })
+                    //分页 start
+                    var prevNum=0;
+                    var prevNumLenth=0;
+                    var nextNum=0;
+                    var nextNumLenth=0;
                     var pagenum=Math.ceil(data.data.total/limit);
+                    pagenum=parseInt(pagenum);
+                    if(pagenum>5){
+                        nextNumLenth=parseInt(parseInt(page)+2);
+                        prevNumLenth=parseInt(parseInt(page)-2);
+                        prevNum=parseInt(parseInt(page)-1);
+                        nextNum=parseInt(parseInt(page)+1);
+                        if(parseInt(parseInt(page)-2)<1){
+                            if(parseInt(parseInt(page)-1)<=1){
+                                prevNum=1;
+                            }else{
+                                prevNum=parseInt(parseInt(page)-1);
+                            }
+                            prevNumLenth=1;
+                            nextNum=parseInt(parseInt(page)+1);
+                            nextNumLenth=parseInt(parseInt(page)+2);
+                        }
+                        if(parseInt(parseInt(page)+2)>pagenum){
+                            if(parseInt(page)<pagenum){
+                                nextNum=parseInt(parseInt(page)+1);
+                            }else{
+                                nextNum=parseInt(pagenum);
+                            }
+                            nextNumLenth=pagenum;
+                            prevNum=parseInt(parseInt(page)-1);
+                            prevNumLenth=parseInt(parseInt(page)-2);
+                        }
+                    }else{
+                        //全部输出
+                        if(pagenum==1){
+                            prevNumLenth=1;
+                            nextNumLenth=parseInt(pagenum);
+                            prevNum=1;
+                            nextNum=1;
+                        }else{
+                            prevNumLenth=1;
+                            nextNumLenth=parseInt(pagenum);
+                            if(parseInt(page)==1){
+                                prevNum=1;
+                                nextNum=parseInt(parseInt(page)+1);
+                            }else{
+                                prevNum=parseInt(parseInt(page)-1);
+                            }
+                            if(parseInt(page)==parseInt(pagenum)){
+                                prevNum=parseInt(parseInt(page)-1);
+                                nextNum=parseInt(page);
+                            }else{
+                                nextNum=parseInt(parseInt(page)+1);
+                            }
+                        }
+                    }
+                    //分页 start
+
                     // console.log(page+":page");
                     var pagestr="";
-                    if(flag){
+
                         $('.pagination').children().remove();
-                        $('.pagination').append('<li id="prev"><a href="javascript:void(0);">«</a></li><li class="active"><span>1</span></li>');
+                        $('.pagination').append('<li id="prev" page="'+prevNum+'"><a href="javascript:void(0);">«</a></li>');
 
-                        for(i=1;i<pagenum;i++){
+                        for(i=prevNumLenth;i<=nextNumLenth;i++){
                             // $('.pagination').append(pagelisthtml(i));
-                            pagestr+='<li><a href="javascript:void(0)" id="'+(i+1)+'">'+(i+1)+'</a></li>';
-
+                            if(i==page){
+                                pagestr+='<li page="'+i+'" class="active"><span>'+i+'</span></li>';
+                            }else{
+                                pagestr+='<li page="'+i+'" ><a href="javascript:void(0)" >'+i+'</a></li>';
+                            }
                         }
                         $('.pagination').append(pagestr);
-                        $(".pagination").append('<li id="next"><a href="javascript:void(0)" class="next" rel="next">&raquo;</a></li>');
+                        $(".pagination").append('<li id="next" page="'+nextNum+'"><a href="javascript:void(0)" class="next" rel="next">&raquo;</a></li>');
                         // 点击页码事件
                         $(".pagination li").bind("click",function(){
+
+                            //查询条件
+                            var time_start=$("input[name='start_time']").val();
+                            var time_end=$("input[name='end_time']").val();
+                            var order_num=$("input[name='no']").val();
+
+                            orderlist(mall_id,$(this).attr("page"),type,{time_start:time_start,time_end:time_end,order_num:order_num});
+
+                            /*
                             flag=false;
                             // console.log($(this).attr("id"));
+                            for(i=prevPageNum;i<nextPageNum;i++){
+                                // $('.pagination').append(pagelisthtml(i));
+                                pagestr+='<li><a href="javascript:void(0)" id="'+(i+1)+'">'+(i+1)+'</a></li>';
+
+                            }
                             if($(this).attr('class')!="active"){
                                 var prevactive=parseInt($(this).parent().find('.active span').text());
                                 var curr=$(this).find('a').text();
@@ -365,16 +383,15 @@ usermall();
                                 }
 
                             }
+                            */
 
 
                         })
-                    }
 
-                    sendshop();
                      // 1acc8080-769f-11e7-afe9-a1e618177dd9
-                    __init(localStorage.getItem("weid"));
+                    __init(docCookies.getItem("weid"));
                     // __init("1acc8080-769f-11e7-afe9-a1e618177dd9");
-
+                    sendshop();
                 }
             }
         })
@@ -387,39 +404,36 @@ usermall();
         return pagelisthtml;
     }
     //订单列表模板
-    var status_pay=sendgoods=log_company=log_num="";
+    var status_pay="";
     var orderlisthtml=function(data){
-        if(data.status>1){
-            if(data.logistics_status==1){
-                status_pay="发货";
-                // sendgoods='<button type="button" class="btn btn-info btn-primary id btn-send" data-toggle="modal" data-id="486" data-target=".bs-example-modal-sm" >发货</button>';
-               sendgoods= '<div class="list_details_btn btn-send" type="" id="'+data.status+'" data-toggle="modal"  data-target=".bs-example-modal-sm" data-no="'+data.order_num+'">'+status_pay+' </div>';
-
-            } else if(data.logistics_status==2){
-                status_pay="已发货";
-                sendgoods=status_pay;
- // '<div class="list_details_btn" type="" id="'+data.status+'" data-no="'+data.order_num+'">'+status_pay+sendgoods+' </div>'+
-
-
-            }else if(data.logistics_status==3){
-                status_pay="已完成";
-                sendgoods=status_pay;
-
-            }
-        }else{
-            status_pay="未支付";
-            sendgoods=status_pay;
-        }
-
-        if(data.logistics_company==null || data.logistics_company==""){
-            log_company="";
-        }else{
-            log_company=data.logistics_company;
-        }
-        if(data.logistics_NO==null || data.logistics_NO==""){
-            log_num="";
-        }else{
-            log_num=data.logistics_NO;
+        switch (data.order_status){
+            case 1:
+                status_pay = '已下单';
+                break;
+            case 2:
+                status_pay = '已付款';
+                break;
+            case 3:
+                status_pay = '已发货';
+                break;
+            case 4:
+                status_pay = '已收货';
+                break;
+            case 5:
+                status_pay = '已评价';
+                break;
+            case 6:
+                status_pay = '已取消';
+                break;
+            case 7:
+                status_pay = '已完成';
+                break;
+            case 8:
+                status_pay = '已申请退款';
+                break;
+            case 9:
+                status_pay = '已确认退款';
+                break;
         }
         /*var listhtml='<tr id="'+data.weid+'">'+
                 '<td>'+data.order_num+'</td>'+
@@ -434,62 +448,86 @@ usermall();
                 '<td class="btn-sendgoods">'+sendgoods+'</td>'+
             '</tr>';
 */
-
-        var listhtml='<table class="orders_list_title">'+
-                        '<tbody>'+
-                        '<tr class="orders_list_msg">'+
-                            '<td class="list_left" colspan="3">'+
-                                '<span class="list_left_date">'+data.created_at+'</span>'+
-                                '<span class="list_left_num">订单号:<em>'+data.order_num+'</em></span>'+
-                            '</td>'+
-                            '<td class="list_right" colspan="2" align="right">'+
-                                '<div class="contact_seller" data-mobile="18966700695" onmouseover="$(this).find(\'span\').show();" onmouseout="$(this).find(\'span\').hide();">'+
-                                    '<i></i>联系买家'+
-                                    '<span style="display: none;">联系电话：'+data.phone+'</span>'+
-                                '</div>'+
-                            '</td>'+
-                        '</tr>'+
-                        '<tr class="orders_list_content" id="'+data.weid+'">'+
-                           ' <td width="40%">'+
-                                '<div class="orders_list_pic">'+
-                                    '<a href="wemall/goods/'+data.goods_id+'" target="_blank">'+
-                                        '<img class="img" src="'+qiniu_bucket_domain+data.goods_cover+'" alt="">'+
-                                        '<p class="txt">'+data.goods_title+'</p>'+
-                                    '</a>'+
-                                '</div>'+
-                            '</td>'+
-                            '<td width="10%">'+
-                                '<div class="orders_list_buy">'+
-                                    '<span>x'+data.goods_num+'</span>'+
-                                '</div>'+
-                            '</td>'+
-                            '<td width="15%">'+
-                               '<div class="orders_list_buy">'+
-                                    '<span class="list_right_gj"><p>￥'+data.order_price+'</p><p>(含运费:0.00)</p></span>'+
-                                '</div>'+
-                            '</td>'+
-                            '<td width="25%">'+
-                                '<div class="orders_list_addr">'+
-                                    '<p>'+data.username+'<em>'+data.phone+'</em></p>'+
-                                    '<p>'+data.address_detail+'</p>'+
-                                    '<p>备注:<span>'+data.note+'</span></p>'+
-                                '</div>'+
-                            '</td>'+
-                            '<td width="10%" class="status_pay" id="'+data.status+'"">'+
-                               ' <div class="orders_list_details">'+
-                                    '<a href="/user/order/detail/'+data.weid+'" target="_blank">订单详情</a>'+
-                                        '<div class="orderstatus">'+ sendgoods+'</div>'+
-                                     '</div>'+
-                            '</td>'+
-                        '</tr>'+
-                    '</tbody>'+
-                    '</table>'
+        var listhtml=
+            '<table>'+
+                '<thead>'+
+                    '<tr id="h'+data.weid+'">'+
+                        '<th>'+data.created_at.substring(0,data.created_at.indexOf(" "))+'</th>'+
+                        '<th class="order" colspan="3">' +
+                            '订单号:'+data.order_num+'<a style="margin-left:10px">'+ status_pay+'</a>' +
+                        '</th>'+
+                        '<th style="text-align: right" colspan="2">'+
+                            '<div class="contact_seller" data-mobile="18966700695" onmouseover="$(this).find(\'span\').show();" onmouseout="$(this).find(\'span\').hide();">'+
+                                '<i></i>联系买家'+
+                                '<span style="display: none;">联系电话：'+data.phone+'</span>'+
+                            '</div>'+
+                        '</th>'+
+                    '</tr>'+
+                '</thead>'+
+                '<tbody class="list-dom" id="'+data.weid+'">'+
+                '</tbody>'+
+            '</table>';
+        // var listhtml='<table class="orders_list_title">'+
+        //                 '<tbody>'+
+        //                 '<tr class="orders_list_msg">'+
+        //                     '<td class="list_left" colspan="3">'+
+        //                         '<span class="list_left_date">'+data.created_at+'</span>'+
+        //                         '<span class="list_left_num">订单号:<em>'+data.order_num+'</em></span>'+
+        //                     '</td>'+
+        //                     '<td class="list_right" colspan="2" align="right">'+
+        //                         '<div class="contact_seller" data-mobile="18966700695" onmouseover="$(this).find(\'span\').show();" onmouseout="$(this).find(\'span\').hide();">'+
+        //                             '<i></i>联系买家'+
+        //                             '<span style="display: none;">联系电话：'+data.phone+'</span>'+
+        //                         '</div>'+
+        //                     '</td>'+
+        //                 '</tr>'+
+        //             '</tbody>'+
+        //             '</table>';
+        // if(data.goods.length){
+        //     for(var i=0; i<data.goods.length; i++){
+        //         var goodItem =
+        //             '<tr class="orders_list_content" id="'+data.weid+'">'+
+        //                 ' <td width="40%">'+
+        //                     '<div class="orders_list_pic">'+
+        //                         '<a href="wemall/goods/'+data.goods[i].goods_id+'" target="_blank">'+
+        //                             '<img class="img" src="'+qiniu_bucket_domain+data.goods[i].goods_cover+'" alt="">'+
+        //                             '<p class="txt">'+data.goods[i].goods_title+'</p>'+
+        //                         '</a>'+
+        //                     '</div>'+
+        //                 '</td>'+
+        //                 '<td width="10%">'+
+        //                     '<div class="orders_list_buy">'+
+        //                         '<span>x'+data.goods[i].goods_num+'</span>'+
+        //                     '</div>'+
+        //                 '</td>'+
+        //                 '<td width="15%">'+
+        //                     '<div class="orders_list_buy">'+
+        //                         '<span class="list_right_gj"><p>￥'+data.order_price+'</p><p>(含运费:0.00)</p></span>'+
+        //                     '</div>'+
+        //                 '</td>'+
+        //                 '<td width="25%">'+
+        //                     '<div class="orders_list_addr">'+
+        //                         '<p>'+data.username+'<em>'+data.phone+'</em></p>'+
+        //                         '<p>'+data.address_detail+'</p>'+
+        //                         '<p>备注:<span>'+data.note+'</span></p>'+
+        //                     '</div>'+
+        //                 '</td>'+
+        //                 '<td width="10%" class="status_pay" id="'+data.status+'"">'+
+        //                     ' <div class="orders_list_details">'+
+        //                         '<a href="/user/order/detail/'+data.weid+'" target="_blank">订单详情</a>'+
+        //                         '<div class="orderstatus">'+ sendgoods+'</div>'+
+        //                     '</div>'+
+        //                 '</td>'+
+        //             '</tr>'
+        //     }
+        //
+        //
+        // }
         return listhtml;
     }
   // var selectorder=function(){
     $(".btn-select").bind("click",function(){
         flag=true;
-        // $(this).addClass("btn_active").siblings().removeClass("btn_active");
         $(this).closest("li").addClass("current").siblings().removeClass("current");
         var statusid=$(this).data("id");
         if(statusid==0){
@@ -509,7 +547,6 @@ usermall();
         var time_start=$("input[name='start_time']").val();
         var time_end=$("input[name='end_time']").val();
         var order_num=$("input[name='no']").val();
-        // var statusid=$(".btn-select.btn_active").data("id");
         var statusid=$(".current .btn-select").data("id");
         console.log(statusid);
 
@@ -537,76 +574,395 @@ usermall();
     $("#toTop").click(function(){
         $('.read').animate({scrollTop:0}, 300);
     })
-
     var sendshop=function(){
         var orderid="";
-        $(".btn-send").bind("click",function(){
+        $(".deliver").bind("click",function(){
             console.log($(this));
-            // orderid=$(this).parent().parent().attr("id");
+            $(".deliver").attr('data-toggle','modal');
+            $(".deliver").attr('data-target','#myModal');
             orderid=$(this).closest('tr').attr("id");
             $("#myModal_input").val(orderid);
-            // var status_pay=$(this).parent().parent().find(".status_pay").attr("id");
             var status_pay=$(this).closest('tr').attr("id");
                 console.log(orderid);
-        })
-      company(orderid,status_pay);
+            $(".imgContainer").children().remove();
+            $.ajax({
+                url : apiUrl + 'order/detail/' + orderid,
+                type : 'get',
+                headers : {
+                    'Token' : docCookies.getItem("token")
+                },
+                dataType : 'json',
+                success : function (res) {
+                    console.log("订单详情：",res);
+                    if(res.code == 200){
+                        var goods = res.data.goods;
+                        for(var i=0; i<goods.length; i++){
+                            var imgDom =
+                                '<div style="display: inline-block;"><img weid="'+goods[i].weid+'" src="'+qiniu_bucket_domain + goods[i].goods_cover+'"><span style="display:block;margin-right: 10px;text-align: center;width: 100px;">'+goods[i].goods_title+'</span></div>';
+                            $(".imgContainer").append(imgDom)
+                        }
+                        $(".dynamic-dom").attr("id",domNum);
+                        operFormDom();
 
+                    }
+                }
+            })
+                $.ajax({
+                    url : apiUrl + 'pages/logistics/lists',
+                    type : 'post',
+                    data : {
+                        'user_id' : docCookies.getItem("weid"),
+                        'status' : 1
+                    },
+                    headers : {
+                        "Token" : docCookies.getItem("token")
+                    },
+                    dataType : 'json',
+                    success : function (res) {
+                        console.log("物流列表：",res)
+                        if(res.data && res.code===200){
+                            var optionList = res.data.list;
+                            $('#exampleInputEmail1').children().remove();
+                            for(var i=0; i<optionList.length; i++){
+                                var optionDom =
+                                    '<option value='+ optionList[i].logistics_id +'>'+optionList[i].logistics_company+'</option>';
+                                $('#exampleInputEmail1').append(optionDom)
+                            }
+                            company(orderid,status_pay);
+                        }
+                    }
+                })
+        closeSendModel()
+        })
+
+        $(".confirmRefund").bind("click",function () {
+            var orderId = $(this).closest('tr').attr("id");
+            console.log(orderId)
+            $.ajax({
+                url : apiUrl + '/pages/wechatPay/orderPayRefund',
+                type : 'post',
+                data : {
+                    order_id : orderId
+                },
+                headers: {
+                    'Token': docCookies.getItem("token")
+                },
+                dataType: 'json',
+                success : function (data) {
+                    console.log(data);
+                    if(data.code===200){
+                        layer.msg(data.data);
+                        setTimeout(function() {
+                            var time_start=$("input[name='start_time']").val();
+                            var time_end=$("input[name='end_time']").val();
+                            var order_num=$("input[name='no']").val();
+                            var statusid=$(".current .btn-select").data("id");
+                            var page=$(".pagination").find(".active").find("span").text();
+                            orderlist(mall_id,page,statusid,{time_start:time_start,time_end:time_end,order_num:order_num});
+                        },1500);
+                    }else{
+                        layer.msg('退款失败  ' + data.message);
+                    }
+                }
+            })
+        })
+
+        $(".distribute").bind('click',function () {
+            $('.comment_mongolia_layer, .comment_bomb_box').fadeIn("slow");
+            $('.comment_bomb_box_content').text('正在加载...')
+            $('.comment_bomb_box_content .goodImg').children().remove();
+            $('.comment_bomb_box_content .detail').children().remove();
+            var orderId = $(this).closest('tr').attr("id");
+            $.ajax({
+                url : apiUrl + 'order/detail/'+orderId,
+                type : 'get',
+                headers : {
+                    "Token": docCookies.getItem("token")
+                },
+                dataType : 'json',
+                success : function (data) {
+                    console.log("订单详情：",data);
+                    $('.comment_bomb_box_content').text('');
+                    $('.comment_bomb_box_content').children().remove();
+                    if(data.data.send && data.data.send.length > 0){
+                        var sendList = data.data.send;
+                        var goodsList = data.data.goods;
+                        for(var i=0; i<sendList.length; i++){
+
+                            var domGroup =
+                                '<div class="send-group" id="group'+i+'" no="'+sendList[i].logistics_no+'" code="'+sendList[i].logistics_company_code+'">' +
+                                    '<div class="goodImg"></div>' +
+                                    '<div class="detail"></div>' +
+                                '</div>';
+
+
+                            $('.comment_bomb_box_content').append(domGroup);
+                            if(!isNull(sendList[i].order_goods_id)){
+                                var goodsSendGroup = sendList[i].order_goods_id.split(',');
+                                for(var a=0; a<goodsList.length; a++){
+                                    for(var good = 0; good<goodsSendGroup.length; good++){
+                                        if(goodsList[a].weid == goodsSendGroup[good]){
+                                            var imgDom =
+                                                '<div style="text-align: center;">' +
+                                                    '<img src="'+qiniu_bucket_domain+goodsList[a].goods_cover+'">'+
+                                                    '<span>'+goodsList[a].goods_title+'</span>'+
+                                                '</div>';
+
+                                            $('#group'+i+' .goodImg').append(imgDom);
+                                        }
+                                    }
+                                }
+                            }
+
+                            //$('#group'+i+' .detail').text('正在加载，请稍候...');
+                            if(!isNull(sendList[i].logistics_info)){
+                                //字符串转json
+                                var logistics_info=$.parseJSON(sendList[i].logistics_info);
+                                for(var j=0; j<logistics_info.data.length;j++){
+                                    var dom =
+                                        '<p>' +
+                                        '<i></i>'+
+                                        '<span class="time">'+logistics_info.data[j].time+'</span>' +
+                                        '<span class="content">'+logistics_info.data[j].context+'</span>'+
+                                        '</p>';
+                                    $('#group'+i+' .detail').append(dom);
+                                }
+                            }
+                        }
+                        getDistributionInfo();
+
+                    }
+
+
+                }
+            })
+
+        closeModel();
+        })
+    }
+    var getDistributionInfo = function () {
+
+        $('.send-group').each(function (ind, ele) {
+            var no = $(ele).attr('no');
+            var code = $(ele).attr('code');
+            if(isNull($('#group'+ind+' .detail').text())){
+                $.ajax({
+                    url : apiUrl + 'pages/logistics/getLogisticsInfo',
+                    type : 'post',
+                    data : {
+                        logistics_NO : no,
+                        company_code : code
+                    },
+                    headers : {
+                        "Token": docCookies.getItem("token")
+                    },
+                    dataType : 'json',
+                    success : function (res) {
+                        console.log("根据订单详情查看物流信息",res);
+                        $('#group'+ind+' .detail').text('')
+                        if(res.code === 200){
+                            var logistList = res.data.data;
+                            for(var i=0; i<logistList.length;i++){
+                                var dom =
+                                    '<p>' +
+                                    '<i></i>'+
+                                    '<span class="time">'+logistList[i].time+'</span>' +
+                                    '<span class="content">'+logistList[i].context+'</span>'+
+                                    '</p>';
+                                $('#group'+ind+' .detail').append(dom)
+                            }
+                        }else{
+                            $('#group'+ind+' .detail').text(res.message.message);
+                        }
+
+                    }
+                })
+            }
+        })
+
+    }
+    var closeSendModel = function () {
+        $('.sendModal .close').click(function(){
+            window.location.reload()
+        })
+    }
+    var operFormDom = function () {
+        var oper =
+            '<span id="addDom"> 添加+ </span>' +
+            '<span id="removeDom"> 删除- </span>';
+        var imgInfo = [];
+        var noSelectImgInfo = [];
+        $(".imgContainer img").click(function () {
+            if($(this).hasClass('has-border')){
+                $(this).removeClass('has-border');
+            }else{
+                $(this).addClass('has-border');
+            }
+            $(".dynamic-dom").eq(domNum).find($(".imgContainer img")).each(function (ind,item) {
+                var obj = {};
+                if($(item).hasClass('has-border')){
+                    var isHas = imgInfo.filter(function(i){return i == $(item).attr('weid')})
+                    if(!isHas.length){
+                        imgInfo.push($(item).attr('weid'))
+                    }
+                    for(var i=0; i<noSelectImgInfo.length; i++){
+                        if(noSelectImgInfo[i].weid == $(item).attr('weid') && noSelectImgInfo[i].src == $(item).attr('src')){
+                            noSelectImgInfo.splice(i,1)
+                        }
+                    }
+
+                }else{
+                    var equal = false;
+                    for(var i=0; i<noSelectImgInfo.length; i++){
+                        if(noSelectImgInfo[i].weid == $(item).attr('weid') && noSelectImgInfo[i].src == $(item).attr('src')){
+                            equal = true;
+                        }
+                    }
+                    if(!equal){
+                        obj.weid = $(item).attr('weid');
+                        obj.src = $(item).attr('src');
+                        obj.title = $(item).next("span").text();
+                        noSelectImgInfo.push(obj);
+                    }
+
+                    for(var i=0; i<imgInfo.length; i++){
+                        if(imgInfo[i] == $(item).attr('weid')){
+                            imgInfo.splice(i,1)
+                        }
+                    }
+
+                }
+            });
+            console.log(imgInfo,noSelectImgInfo)
+            $(".dynamic-dom").eq(domNum).attr('weid',imgInfo.join(','));
+        });
+
+        $("#addDom").click(function () {
+            var hasCheck = false;
+            $(".dynamic-dom").eq(domNum).find($(".imgContainer img")).each(function (ind, item) {
+                if($(item).hasClass('has-border')){
+                    hasCheck = true
+                }
+            })
+            if(!hasCheck){
+                layer.msg('请先选择要发货的商品');
+                return
+            }
+            if(!$(".dynamic-dom").eq(domNum).find($("input[name=wuliu_card]")).val()){
+                layer.msg('请填写物流编号');
+                return
+            }
+            if(!noSelectImgInfo.length){
+                layer.msg('没有可选择的商品');
+                return;
+            }
+            $(".dynamic-dom").eq(domNum).find($('#addDom')).remove();
+            $(".dynamic-dom").eq(domNum).find($('#removeDom')).remove();
+            $(".dynamic-dom").eq(domNum).after($(".dynamic-dom").eq(domNum).clone(true).attr("id",domNum+1).append(oper));
+            $(".dynamic-dom").eq(domNum).find($(".imgContainer img")).each(function (ind, item) {
+                if(!$(item).hasClass('has-border')){
+                    //$(item).remove();
+                    $(item).closest("div").remove();
+                }
+            });
+            domNum +=1;
+            $(".dynamic-dom").eq(domNum).find($("input[name=wuliu_card]")).val('');
+            $(".dynamic-dom").eq(domNum).find($(".imgContainer")).children().remove();
+            for(var i = 0; i < noSelectImgInfo.length; i++){
+                var imgDom =
+                    '<div style="display:inline-block;"><img weid="'+noSelectImgInfo[i].weid+'" src="'+noSelectImgInfo[i].src+'"><span style="display:block;margin-right: 10px;text-align: center;width: 100px;">'+noSelectImgInfo[i].title+'</span></div>';
+                $(".dynamic-dom").eq(domNum).find($(".imgContainer")).append(imgDom)
+            }
+            operFormDom()
+        });
+        $("#removeDom").click(function () {
+            var reduceImg = $(".dynamic-dom").eq(domNum).find($(".imgContainer")).children()
+            domNum -=1;
+            $(this).parent().remove();
+            if(domNum === 0){
+                $(".dynamic-dom").eq(0).append('<span id="addDom"> 添加+ </span>');
+            }else{
+                $(".dynamic-dom").eq(domNum).append(oper);
+            }
+            $(".dynamic-dom").eq(domNum).find($(".imgContainer")).append(reduceImg);
+            $(".dynamic-dom").eq(domNum).removeAttr('weid')
+            $(".dynamic-dom").eq(domNum).find($(".imgContainer img")).each(function (ind, item) {
+                $(item).removeClass('has-border')
+            })
+            operFormDom()
+        })
+
+    }
+    var closeModel = function () {
+        $('.comment_bomb_box_close').click(function () {
+            $('.comment_mongolia_layer, .comment_bomb_box').fadeOut("slow");
+        });
+        $(".comment_mongolia_layer").click(function () {
+            $('.comment_mongolia_layer, .comment_bomb_box').fadeOut("slow");
+        })
     }
     // 填写物流公司
     var company=function(orderid,status_pay){
         $('.save').bind('click', function() {
-            var l_company = $("input[name=wuliu_company]").val();
-            var l_card = $("input[name=wuliu_card]").val();
+            var checkNoSelect = false;
+            var checkEmpty = false;
+            $('.dynamic-dom').each(function (ind, item) {
+                if(!$(item).find($("input[name=wuliu_card]")).val()){
+                    checkEmpty = true;
+                }
+                $(item).find($(".imgContainer img")).each(function (ind, img) {
+                    if(!$(img).hasClass('has-border')){
+                        checkNoSelect = true
+                    }
+                })
+            })
+
+            if(checkNoSelect){
+                layer.msg('请选择发货商品');
+                return
+            }
+
+            if(checkEmpty){
+                layer.msg('请完善物流单号信息')
+                return
+            }
+
+            var sendList = [];
+            $(".dynamic-dom").each(function (ind, elem) {
+                var obj = {}
+                obj.logistics_id = $(elem).find($("select[name=wuliu_company]")).val();
+                obj.logistics_no = $(elem).find($("input[name=wuliu_card]")).val();
+                obj.order_goods_id = $(elem).attr('weid');
+                sendList.push(obj)
+            })
             var id = $("#myModal_input").val();
-            var l_status=2;
+            // var l_status=2;
             // var a = csrf.csrfToken;
             var sendData={
-                weid:id,
-                logistics_status:l_status,
-                logistics_NO:l_card,
-                logistics_company:l_company
-                // status:
-                // pay_way:
+                order_id:id,
+                logistics_list : sendList
             }
-                         // $('#myModal').modal('hide');
-
-            //console.log(sendData);
             $.ajax({
-                url: ORDER_UPDATE,
+                url: apiUrl + 'order/send',
                 type:'post',
                 data:sendData,
                 headers: {
-                        'Token': localStorage.getItem('token')
+                        'Token': docCookies.getItem("token")
                     },
                 dataType: 'json',
                 success: function(data){
                     console.log(data);
                     if (data.code == 200) {
-                        mess_tusi("发货成功");
-
-                         $('#myModal').modal('hide');
-                        // $("#"+id).find(".log_company").text(l_company);
-                        // $("#"+id).find(".log_num").text(l_card);
-                        console.log($("#"+id).find(".status_pay .orders_list_details .btn-send"));
-
-                        $("#"+id).find(".orderstatus").children().remove();
-                        console.log($("#"+id).find(".orderstatus"));
-                         $("#"+id).find(".orderstatus").append("<div>已发货</div>");
-                        $("#"+id).find(".status_pay").attr("id",l_status);
-                        // $("#"+id).find(".btn-sendgoods").text('');
-
-                        $("input[name=wuliu_company]").val('');
-                        $("input[name=wuliu_card]").val('');
-                        // var l_company = $("input[name=wuliu_company]").val('');
-                        // var l_card = $("input[name=wuliu_card]").val('');
-
-                        // layer.alert('订单填写成功', function() {
-                        //     location.reload();
-                        // });
-
-
+                        layer.msg("发货成功");
+                        $('#myModal').modal('hide');
+                        var time_start=$("input[name='start_time']").val();
+                        var time_end=$("input[name='end_time']").val();
+                        var order_num=$("input[name='no']").val();
+                        var statusid=$(".current .btn-select").data("id");
+                        var page=$(".pagination").find(".active").find("span").text();
+                        orderlist(mall_id,page,statusid,{time_start:time_start,time_end:time_end,order_num:order_num});
                     }else {
-                        mess_tusi(data.message);
+                        layer.msg(data.message);
                     }
                 }
             })
@@ -646,7 +1002,7 @@ usermall();
             url: url + id,
             type: 'get',
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data){
                 console.log(data);
@@ -690,7 +1046,7 @@ usermall();
             url: PAGES_PAGE_GETDETAILBYUSER + weid,
             type: 'GET',
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data){
                 if (data.code == 200){
@@ -727,134 +1083,5 @@ usermall();
             }
         })
     }
-
-  /*  var modeleName = [];
-    var moduleState = function() {
-        $.ajax({
-            url: PAGES_MODULERUN_LIST,
-            type: 'GET',
-            headers: {
-                'Token': localStorage.getItem('token')
-            },
-            success: function(data){
-                if (data.code == 200){
-                    console.log('module:', data.data.list);
-                    var state = data.data.list;
-                    state.map(x => {
-                        modeleName.push(x.module_id);
-                        if (x.module_id === '4009ea20-8ede-11e7-83a8-156d1da77933') {
-                            if (x.status == 1) {
-                                //$(".we-art").slideDown(500)
-                                $(".we-art").show();
-                                $('#toggle-button').prop("checked", true);
-                            }
-                        }
-                        if (x.module_id === '44fd5620-8d7f-11e7-9e08-e356d0b019f1') {
-                            if (x.status == 1) {
-                                //$(".we-shop").slideDown(500)
-                                $(".we-shop").show();
-                                $('#toggle-button-4').prop("checked", true);
-                            }
-                        }
-						if (x.module_id === 'b3c00b00-a4e2-11e7-b542-2d038cc12c12') {
-                            if (x.status == 1) {
-                                //$(".we-shop").slideDown(500)
-                                $(".we-active").show();
-                                $('#toggle-button-2').prop("checked", true);
-                                
-                            }
-                        }
-                        if (x.module_id === 'c30c2160-a4e2-11e7-a2ad-35371a8cf051') {
-                            if (x.status == 1) {
-                                //$(".we-shop").slideDown(500)
-                                $(".we-project").show();
-                                $('#toggle-button-1').prop("checked", true);
-                                
-                            }
-                        }
-                    })
-                } else {
-                    layer.msg(data.message, {
-                        time: 1500
-                    });
-                }
-
-                //列表折叠
-                var curr = 'we-shop';
-                var status = true;
-				var list = ['we-set', 'we-art', 'we-shop','we-active','we-project', 'we-app', 'we-log'];
-
-                var remove = function(id, list) {
-                    return list.filter(x => x != id);
-                }
-
-                $("." + curr + ":eq(0)").css("border-bottom", "1px solid #eeeeee");
-                remove(curr, list).map(x => $("." + x + ":eq(1)").hide());
-
-                var showList = function(state, id) {
-                    var id = "." + id;
-                    if (state) {
-                        $(id + ":eq(1)").hide(500);
-                        if (id != ".we-log") {
-                            $(id + ":eq(0)").css("border-bottom", "0");
-                        }
-                        $(id + " span img").attr('src', '/common/img/more1.png');
-                        status = false;
-                    } else {
-                        $(id + ":eq(1)").show(500);
-                        $(id + " span img").attr('src', '/common/img/more_unfold.png');
-                        $(id + ":eq(0)").css("border-bottom", "1px solid #eeeeee");
-                        status = true;
-                    }
-                }
-
-                list.map(x => {
-                    $("." + x).click(function() {
-                        if (curr == x) {
-                            remove(x, list).map(x => {
-                                $("." + x + ":eq(1)").hide(500)
-                                $("." + x + " span img").attr('src', '/common/img/more1.png');
-                            });
-                            showList(status, x);
-                        } else {
-                            status = false;
-                            $("." + curr + ":eq(0)").css("border-bottom", "0");
-                            curr = x;
-                            remove(x, list).map(x => {
-                                $("." + x + ":eq(1)").hide(500)
-                                $("." + x + " span img").attr('src', '/common/img/more1.png');
-                            });
-                            showList(status, x);
-                        }
-                    })
-                })
-            },
-            error: function(xhr){
-                console.log(xhr);
-            }
-        })
-    }
-*/
-  /* //主页初始化
-    var init__ = function(token){
-        moduleState();
-      if (token != 'null' && token != undefined) {
-        showLogin = false;
-        isLogin = true;
-        //加载用户头像
-        $("#login div img").hide();
-        $(".log-head").css({
-          'background': 'url(' + localStorage.getItem('avatar') + ') no-repeat center',
-          'background-size': '100% 100%'
-        })
-        $("#avatar .avatar-icon").css({
-          'background': 'url(' + localStorage.getItem('avatar') + ') no-repeat center',
-          'background-size': '100% 100%'
-        })
-        $(".log-head").show();
-      }
-    }
-
-    init__(localStorage.getItem('token'));*/
 
 })

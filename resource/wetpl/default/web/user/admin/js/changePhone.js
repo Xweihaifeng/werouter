@@ -74,7 +74,7 @@ $("#btn_1").on("click", function() {
 		$.ajax({
 			type: "GET",
 			headers: {
-				'Token': localStorage.getItem('token')
+				'Token': docCookies.getItem("token")
 			},
 			url: "http://apitest.wezchina.com/common/code",
 			data: {
@@ -109,7 +109,7 @@ $("#btn").on("click", function() {
 			$.ajax({
 				type: "GET",
 				headers: {
-					'Token': localStorage.getItem('token')
+					'Token': docCookies.getItem("token")
 				},
 				url: "http://apitest.wezchina.com/common/verfycode",
 				data: {
@@ -162,7 +162,7 @@ $("#btn").on("click", function() {
 				$.ajax({
 					type: "GET",
 					headers: {
-						'Token': localStorage.getItem('token')
+						'Token': docCookies.getItem("token")
 					},
 					url: "http://apitest.wezchina.com/common/verfycode",
 					data: {
@@ -211,7 +211,7 @@ $("#btn_fs").on("click", function() {
 	$.ajax({
 		type: "GET",
 		headers: {
-			'Token': localStorage.getItem('token')
+			'Token': docCookies.getItem("token")
 		},
 		url: "http://apitest.wezchina.com/common/code",
 		data: {

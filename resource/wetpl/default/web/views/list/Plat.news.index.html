@@ -1,3 +1,7 @@
+<!--
+ * Created by weifeng on 2017/11/12.
+-->
+
 <!DOCTYPE html>
 <html>
 
@@ -28,7 +32,7 @@
         <!-- 新问中心开始 -->
         <div class="details-content">
             <div class="new-top-images">
-                <p>新闻中心</p>
+                <p class="center_center">新闻中心</p>
             </div>
             <div class="news-center-top">
                 <div class="hotspot">热点新闻</div>
@@ -37,12 +41,14 @@
                 <a class="chan_li" id="newN"> 最新发布 </a>
             </ul>
             <ul class="news-center-main"></ul>
-            <div align="center" id="news_loadingsImg" class="news-loadingsImg"> 加载显示更多 </div>
-            <div align="center" id="news_loadingsImg1" class="news-loadingsImg1"> 加载显示更多 </div>
+            <div align="center" id="news_loadingsImg" class="news-loadingsImg"> 查看更多 </div>
+            <div align="center" id="news_loadingsImg1" class="news-loadingsImg1"> 查看更多 </div>
             <div id="plat-two-back-top"><img src="{{PATH_TML}}images/gotop.png"></div>
         </div>
         <!-- 新闻中心结束 -->
-
+        <!-- 右侧大背景图 -->
+        <div id="public_main_right_bg" style="position:fixed;top:0;bottom:0;left:1190px;width:100%;z-index:-10;"></div>
+        <script src="{{PATH_TML}}js/public_main_right_bg.js"></script>
     </body>
 
 </html>

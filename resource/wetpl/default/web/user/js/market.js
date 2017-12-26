@@ -46,7 +46,7 @@ $(document).ready(function(){
             url: PAGES_PAGE_GETDETAILBYUSER + weid,
             type: 'GET',
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data){
                 /*if (data.code == 401) {
@@ -76,13 +76,13 @@ $(document).ready(function(){
         })
     }
 
-    var weid = localStorage.getItem('weid');
+    var weid = docCookies.getItem("weid");
     hasDomain(weid);
 
     //route
     var isLogin; //判断用户登陆与否
     var router = function(route){
-        if(!window.localStorage.getItem("token")) {
+        if(!docCookies.getItem("token")) {
             isLogin = false;
         } else {
             isLogin = true;
@@ -162,5 +162,5 @@ $(document).ready(function(){
       }
     }
 
-    init__(localStorage.getItem('token'));
+    init__(docCookies.getItem("token"));
 })

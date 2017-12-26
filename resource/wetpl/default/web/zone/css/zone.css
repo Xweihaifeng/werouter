@@ -34,16 +34,20 @@
     height: 188px;
     background: url("/common/img/group_top.jpg") no-repeat;
     background-size: 100% 100%;
-    position: relative;
+    /*position: relative;*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .find-circle-bg .cricle{
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top:40%;
-    left: 35%;
-
+    display: flex;
+    align-items: center;
+    margin-top: 35px;
 }
+/*.red {*/
+    /*padding-top: 75px;*/
+    /*padding-left: 200px;*/
+/*}*/
 #art-info {
     margin-top: 0;
     width: 334px;
@@ -160,4 +164,42 @@
     display: block;
     float: left;
     margin-right: 10px;
+}
+.rz {
+    display: inline-block;
+    margin-left: 20px;
+}
+
+.ct {
+    position: absolute;
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    margin-left: 3px;
+}
+
+.wd {
+    position: relative;
+    margin-left: 16px;
+    text-align: center;
+    top: -14px;
+    display: block;
+}
+
+.collection {
+    position: absolute;
+    width: 67px;
+    height: 20px;
+    margin-top: 17px;
+    margin-left: 25px;
+    background: #ff9900;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    font-size: 13px;
+    color: white;
+    display: inline-block;
+}
+
+.collection:hover {
+    cursor: pointer;
 }

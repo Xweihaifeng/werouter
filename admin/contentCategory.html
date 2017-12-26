@@ -44,6 +44,10 @@
         .table>tbody>tr>td:first-child {
             text-align: center;
         }
+        
+        .list-btn {
+            width: 80px;
+        }
     </style>
 </head>
 
@@ -69,6 +73,7 @@
         </aside>
         <!-- content-wrapper -->
         <div class="content-wrapper">
+            <input type="hidden" name="config-url" value="contentCategory.html">
             <section class="content-header">
                 <h1> 栏目管理 </h1>
                 <!--
@@ -92,20 +97,40 @@
                             </div>
                             <div class="panel panel-info">
                                 <div class="panel-body">
-                                    <form action="" method="get" class="form-horizontal" role="form">
-                                        <input type="hidden" name="c" value="site">
-                                        <div class="form-group">
+                                    <!-- <form action="" method="get" class="form-horizontal" role="form">
+                                        <div class="form-group channel-list">
                                             <label class="col-xs-12 col-sm-3 col-md-1 control-label">所属频道</label>
-                                            <div class="col-sm-8 col-xs-12">
-                                                <div class="row row-fix tpl-category-container">
-                                                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
-                                                        <select class="form-control" name="channel">
-                          </select>
-                                                    </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-xs-12 col-sm-3 col-md-1 control-label">上级栏目</label>
+                                            <div class="col-sm-1 col-xs-1 col-lg-1">
+                                                <div class="row row-fix tpl-category-container cate-list">
+                                                    <button type="button" class="btn btn-success" data-toggle="button" aria-pressed="false" autocomplete="off">
+                                                            新闻中心
+                                                    </button>
                                                 </div>
                                             </div>
+
+                                        </div> -->
+                                    <div class="form-group">
+                                        <label class="col-xs-12 col-sm-3 col-md-1 control-label">所属频道</label>
+                                        <div class="col-sm-1 col-xs-1 col-lg-1">
+                                            <div class="row row-fix tpl-category-container">
+                                                <select class="form-control" name="channel">
+                                                </select>
+
+                                            </div>
                                         </div>
-                                        <div class="form-group"> </div>
+                                        <label class="col-xs-12 col-sm-3 col-md-1 control-label">所属栏目</label>
+                                        <div class="col-sm-1 col-xs-1 col-lg-1">
+                                            <div class="row row-fix tpl-category-container">
+                                                <select class="form-control" name="cate">
+                                                </select>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group"> </div>
                                     </form>
                                 </div>
                             </div>
@@ -316,20 +341,40 @@
     <!-- page script -->
     <script>
         $(function() {
+            var types = ['文章集合', '图文单页', '专题', '视频'];
             var channel = getQueryParam('channel') ? getQueryParam('channel') : '';
+            var cate = getQueryParam('parent_id') ? getQueryParam('parent_id') : '';
             var __init = function() {
                 $.ajax({
                     url: ApiUrl + 'cms/channels',
                     type: 'get',
                     dataType: 'json',
                     success: function(data) {
+                        var option = '';
+                        var channels = '';
                         $.each(data.data.list, function(k, v) {
-                            if (v.weid == channel)
-                                var option = `<option value="` + v.weid + `" selected>` + v.title + `</option>`;
-                            else
-                                var option = `<option value="` + v.weid + `">` + v.title + `</option>`;
-                            $('select[name=channel]').append(option);
+                            if (k === 0 && !channel) {
+                                __cate_init(v.weid);
+                            }
+                            if (v.weid == channel) {
+                                __cate_init(v.weid);
+                                channels += `<div class="col-sm-1 col-xs-1 col-lg-1">
+                                                <div class="row row-fix tpl-category-container">
+                                                        <button type="button" class="btn btn-success list-btn active" data-toggle="button" aria-pressed="true" autocomplete="off" data-id="` + v.weid + `">` + v.title + `</button>
+                                                </div>
+                                            </div>`;
+                                option += `<option value="` + v.weid + `" selected>` + v.title + `</option>`;
+                            } else {
+                                channels += `<div class="col-sm-1 col-xs-1 col-lg-1">
+                                                <div class="row row-fix tpl-category-container">
+                                                        <button type="button" class="btn btn-success list-btn" data-toggle="button" aria-pressed="false" autocomplete="off" data-id="` + v.weid + `">` + v.title + `</button>
+                                                </div>
+                                            </div>`;
+                                option += `<option value="` + v.weid + `">` + v.title + `</option>`;
+                            }
                         });
+                        $('select[name=channel]').append(option);
+                        $('.channel-list').append(channels);
                     },
                     error: function(xhr) {
                         console.log(xhr);
@@ -337,9 +382,36 @@
                 });
             };
             __init();
+            var __cate_init = function(channel_id) {
+                $.ajax({
+                    url: ApiUrl + 'cms/channel_categories?channel=' + channel_id,
+                    type: 'get',
+                    dataType: 'json',
+                    success: function(data) {
+                        var option = '<option value=""><顶级></option>';
+                        $.each(data.data, function(k, v) {
+                            option += `<option value="` + v.weid + `">` + v.title + `</option>`;
+                        });
+                        $('select[name=cate]').html(option);
+                    },
+                    error: function(xhr) {
+                        console.log(xhr);
+                    }
+                });
+            }
+            $(document).on('change', 'select[name=channel]', function() {
+                var channel_id = $(this).val();
+                __cate_init(channel_id);
+            });
+
+            if (cate) {
+                var apiType = "cate_categories";
+            } else {
+                var apiType = "channel_categories";
+            }
             $.datatableSetting = {
                 "ajax": {
-                    url: ApiUrl + "cms/channel_categories?channel=" + channel,
+                    url: ApiUrl + "cms/" + apiType + "?channel=" + channel + "&cate=" + cate,
                     type: "get",
                     data: {},
                     "dataSrc": function(json) {
@@ -348,9 +420,9 @@
 
                             json.data[i].id = i + 1;
                             json.data[i].thumb_image = json.data[i].thumb_image ? '<img src="' + ApiMaterPlatQiniuDomain + json.data[i].thumb_image + '" data-action="zoom" width="50" height="50">' : '';
-                            json.data[i].type = json.data[i].type ? '图文单页' : '文章集合';
+                            json.data[i].type = types[json.data[i].type];
                             json.data[i].init = json.data[i].init ? '<span class="label label-primary">是</span>' : '<span class="label label-default">否</span>';
-                            json.data[i].operation = (_init != 1 ? '<a href="contentCategory_edit.html?id=' + json.data[i].weid + '" class="btn btn-info">编辑</a>' : '') + '&nbsp;&nbsp;' + (_init == 1 ? '' : '<button class="btn btn-danger btn-delete"  data-id="' + json.data[i].weid + '" data-toggle="popover" data-placement="left" data-trigger="focus" data-html="true" title="确定要删除？" data-content="<button class=' + "'btn btn-danger btn-delete-confirm'" + '  data-id=' + "'" + json.data[i].weid + "'" + '>确认</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class=' + "'btn btn-default'" + '>取消</button>" >删除</button>');
+                            json.data[i].operation = '<a href="contentCategory_edit.html?id=' + json.data[i].weid + '" class="btn btn-info">编辑</a>' + '&nbsp;&nbsp;' + (json.data[i].level == 1 ? '<a href="contentCategory.html?channel=' + json.data[i].channel_id + '&parent_id=' + json.data[i].weid + '" class="btn btn-success">查看子栏目</a>' : "") + '&nbsp;&nbsp;' + (_init == 1 ? '' : '<button class="btn btn-danger btn-delete"  data-id="' + json.data[i].weid + '" data-toggle="popover" data-placement="left" data-trigger="focus" data-html="true" title="确定要删除？" data-content="<button class=' + "'btn btn-danger btn-delete-confirm'" + '  data-id=' + "'" + json.data[i].weid + "'" + '>确认</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class=' + "'btn btn-default'" + '>取消</button>" >删除</button>');
                         }
                         return json.data;
                     }
@@ -405,8 +477,14 @@
                 $('[data-toggle="popover"]').popover();
             });
             tab = $('#listTable').dataTable($.datatableSetting);
-            $('select[name=channel]').change(function() {
-                $.datatableSetting.ajax.url = ApiUrl + "cms/channel_categories?channel=" + $('select[name=channel]').val();
+            $('select[name=channel],select[name=cate]').change(function() {
+                var cate = $('select[name=cate]').val();
+                if (cate) {
+                    var apiType = "cate_categories";
+                } else {
+                    var apiType = "channel_categories";
+                }
+                $.datatableSetting.ajax.url = ApiUrl + "cms/" + apiType + "?channel=" + $('select[name=channel]').val() + "&cate=" + $('select[name=cate]').val();
                 tab.fnDestroy(false);
                 tab = $("#listTable").dataTable($.datatableSetting);
                 tab.fnPageChange(0);

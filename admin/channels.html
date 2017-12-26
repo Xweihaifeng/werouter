@@ -69,6 +69,7 @@
         </aside>
         <!-- content-wrapper -->
         <div class="content-wrapper">
+            <input type="hidden" name="config-url" value="channels.html">
             <section class="content-header">
                 <h1> 频道管理 </h1>
                 <!--
@@ -95,8 +96,10 @@
                                         <tr>
                                             <th width="30px">序号</th>
                                             <th>频道名称</th>
+                                            <th>搜索名</th>
                                             <th>缩略图</th>
                                             <th>个性别名</th>
+                                            <th>排序</th>
                                             <th>是否为初始化频道</th>
                                             <th>初始化类型</th>
                                             <th>操作</th>
@@ -365,7 +368,7 @@
                             json.data.list[i].id = i + 1;
                             json.data.list[i].thumb_image = json.data.list[i].thumb_image ? '<img src="' + ApiMaterPlatQiniuDomain + json.data.list[i].thumb_image + '"  data-action="zoom" width="50" height="50">' : '';
                             json.data.list[i].init = json.data.list[i].init ? '<span class="label label-primary">是</span>' : '<span class="label label-default">否</span>';
-                            json.data.list[i].operation = '<a href="contentCategory.html?channel=' + json.data.list[i].weid + '" class="btn btn-success">查看栏目</a>' + '&nbsp;&nbsp;' + (_init != 1 ? '<a href="channel_edit.html?id=' + json.data.list[i].weid + '" class="btn btn-info">编辑</a>' : '') + '&nbsp;&nbsp;' + (_init == 1 ? '' : '<button class="btn btn-danger btn-delete"  data-id="' + json.data.list[i].weid + '" data-toggle="popover" data-placement="left" data-trigger="focus" data-html="true" title="确定要删除？" data-content="<button class=' + "'btn btn-danger btn-delete-confirm'" + '  data-id=' + "'" + json.data.list[i].weid + "'" + '>确认</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class=' + "'btn btn-default'" + '>取消</button>" >删除</button>');
+                            json.data.list[i].operation = '<a href="contentCategory.html?channel=' + json.data.list[i].weid + '" class="btn btn-success">查看栏目</a>' + '&nbsp;&nbsp;' + '<a href="channel_edit.html?id=' + json.data.list[i].weid + '" class="btn btn-info">编辑</a>' + '&nbsp;&nbsp;' + (_init == 1 ? '' : '<button class="btn btn-danger btn-delete"  data-id="' + json.data.list[i].weid + '" data-toggle="popover" data-placement="left" data-trigger="focus" data-html="true" title="确定要删除？" data-content="<button class=' + "'btn btn-danger btn-delete-confirm'" + '  data-id=' + "'" + json.data.list[i].weid + "'" + '>确认</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class=' + "'btn btn-default'" + '>取消</button>" >删除</button>');
                         }
                         return json.data.list;
 
@@ -376,9 +379,13 @@
                 }, {
                     "data": "title"
                 }, {
+                    "data": "search_name"
+                }, {
                     "data": "thumb_image"
                 }, {
                     "data": "domain"
+                }, {
+                    "data": "sort"
                 }, {
                     "data": "init"
                 }, {

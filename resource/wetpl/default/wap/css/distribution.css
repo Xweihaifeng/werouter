@@ -1,0 +1,82 @@
+html{
+    font-size:26.66vw;
+}
+*{
+    margin:0;
+    padding:0;
+}
+body{
+    font-size:0.14rem;
+    background-color: #e8e8ed;
+}
+[v-cloak] {
+    display:none;
+}
+body::-webkit-scrollbar {
+    display: none;
+}
+a{
+    text-decoration: none;
+}
+header{
+    width:100%;
+    height:0.45rem;
+    line-height:0.45rem;
+    background: linear-gradient(180deg,#fff,#efefef);
+    text-align: center;
+    position: fixed;
+}
+header a{
+    display: inline-block;
+    width:0.42rem;
+    height:0.45rem;
+    position: absolute;
+    left:0;
+    top:0;
+}
+header a:after{
+    content: '';
+    display: block;
+    width:0.12rem;
+    height:0.12rem;
+    border-top:1px solid #848689;
+    border-left:1px solid #848689;
+    -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    -o-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+    position: absolute;
+    top:50%;
+    left:0.18rem;
+    margin-top:-0.06rem;
+}
+header span{
+    font-size:0.16rem;
+    color: #333;
+}
+.distri-container{
+    background: #fff;
+    padding:0.45rem 0.1rem 0;
+}
+.distri-container > div{
+    margin:0.1rem 0;
+    overflow: hidden;
+}
+.distri-container > div > span{
+    float: left;
+}
+.distri-container > div:first-child > span{
+    color: orange;
+}
+.distri-container > div > span:first-child{
+    margin-right:0.1rem;
+    color: #838383;
+    font-size:0.12rem;
+}
+.distri-container > div > span:last-child{
+    width: 2rem;
+}
+.tips{
+    text-align: center;
+}

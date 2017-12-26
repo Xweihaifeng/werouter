@@ -95,7 +95,7 @@ function time_axis_sub(result1) {
 
 // 初审
 function time_axis_app(result1) {
-    var apply_wait_days = window.localStorage.getItem("apply_wait_days");
+    var apply_wait_days = localStorage.getItem("apply_wait_days");
     if(!apply_wait_days) {
         apply_wait_days = 1;
     }
@@ -152,8 +152,8 @@ function member_issue(result2) {
     var member_time_axis = `
     <div class="plat_logo"></div>
     <div class="member_level">`+ result2.member_level +`</div>
-    <div class="plat_name">`+ result2.plat_name +`</div>
     <div class="cert_words">`+ result2.cert_words +`</div>
+    <div class="end_number">证书编号：`+ result2.cert_number +`</div>
     <div class="begin_time">发证日期：`+ result2.begin_time +`</div>
     <div class="end_time">截止日期：`+ result2.end_time +`</div>
     <div class="cert_seal"></div>`

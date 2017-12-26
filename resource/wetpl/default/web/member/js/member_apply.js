@@ -159,7 +159,7 @@ $("#member_individual_application_submit").click(function() {
         type: 'post',
         async: false,
         headers: {
-            'Token': window.localStorage.getItem("token")
+            'Token': docCookies.getItem("token")
         },
         data: body,
         success: function(data) {

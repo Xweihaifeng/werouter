@@ -1,0 +1,257 @@
+<footer id="footer" style="display: none;">
+	<ul>
+		<li :id="key" v-for="(item , key) in footer_nav" @click="open(key);">
+			<div class="up" v-if="item.nav == false"></div>
+			<div class="down" v-if="item.nav == false"></div>
+			
+			<img :src="item.select_img"  v-if="key == router" />
+			<img :src="item.img"  v-else />
+			
+			<span v-if="item.nav != false" :class="{'footer_selecte' : key == router}">{{item.name}}</span>
+		</li>
+	</ul>
+</footer>
+<script type="text/javascript">
+	// header 渲染
+	function init_header(show) {
+	    if(show == 'no') return false;
+	    var dom_id = '#header';
+	    if(show != 'yes')
+	    {
+	    	dom_id = '#'+show;
+	    }
+	    new Vue({
+	        el: dom_id,
+	        data: {
+	            router : $app.get_router(),
+	            is_domain : is_domain,
+	            cuupage : window.location.pathname.split('/').pop(),
+	            header_nav : {
+	                index :{
+	                    'name' : '推荐',
+	                    'nav' : true,
+	                },
+	                article : {
+	                    'name' : '文章',
+	                    'nav' : true,
+	                },
+	                // project : {
+	                //     'name' : '项目',
+	                //     'nav' : false,
+	                // },
+	                activity : {
+	                    'name' : '活动',
+	                    'nav' : true,
+	                },
+	                wemall : {
+	                    'name' : '商城',
+	                    'nav' : true,
+	                }
+	            },
+	           	discovery_header_nav : {
+	                dynamic :{
+	                    'name' : '动态',
+	                    'nav' : true,
+	                },
+	                article : {
+	                    'name' : '文章',
+	                    'nav' : true,
+	                },
+	                // project : {
+	                //     'name' : '项目',
+	                //     'nav' : false,
+	                // },
+	                activity : {
+	                    'name' : '活动',
+	                    'nav' : true,
+	                },
+	                goods : {
+	                    'name' : '商品',
+	                    'nav' : true,
+	                }
+	            },
+	            page : '',
+	        },
+	        // watch: {
+	        //     page(val)
+	        //     {
+	               
+	        //     }
+	        // },
+	        mounted() {
+	        	
+	            this.$nextTick( function () {
+
+	            	var title = '';
+	                // 当根路由变成 discovery 改变导航字样
+	                if(is_domain == 'no')
+	                {
+	                    this.header_nav.index.name = '动态';
+	                    this.router = 'discovery';
+	                    title = '发现' + this.discovery_header_nav[this.cuupage].name;
+	                    // $app.set_title('动态');
+	                }
+	                else
+	                {
+	                    this.router = pages_index;
+	                    // if(pages_info.)
+	                    title = pages_info.plats_show.main_title;
+
+	                    var two_router =  $app.get_router(2);
+
+	                    if($app.empty(two_router) == false)
+	                    {
+	                    	this.cuupage = 'index';
+	                    }
+	                }
+	                
+	                this.title(title);
+	            });
+	        },
+	        methods:{
+	        	pages: function(val)
+	        	{
+	        		if(this.cuupage != val)
+	                {
+	                	if(is_domain == 'yes')
+	                	{
+	                		if(this.header_nav[val].nav == false) return false;
+	                	}
+	                	else
+	                	{
+	                		if(this.discovery_header_nav[val].nav == false) return false;
+	                	}
+
+	                	if(val == 'index')
+	                	{
+	                		val = '';
+	                	}
+	                	
+	                    var mod = '/'+ val;
+	                    var get_params = $app.get_query_string('from');
+	                    if(get_params != false)
+	                    {
+	                    	window.location.href= all_domian + this.router + mod + '?from='+get_params;
+	                    }
+	                    else
+	                    {
+	                    	window.location.href= all_domian + this.router + mod;
+	                    }
+	                    
+	                }
+	        	},
+	        	title (title){
+	        		$app.set_title(title);
+	        	}
+	        }
+	    });
+	}
+	
+	// footer 渲染
+	function init_footer(show) {
+		if(show == 'no') return false;
+	    var dom_id = '#footer';
+	    if(show != 'yes')
+	    {
+	    	dom_id = '#'+show;
+	    }
+		$('#footer').show();
+		new Vue({
+	        el: '#footer',
+	        data: {
+	            router : $app.get_router(),
+	            cuupage : window.location.pathname.split('/').pop(),
+	            footer_nav : {
+	                home :{
+	                    'name' : '首页',
+	                    'nav' : true,
+	                    'login' : false,
+	                    'img' : '/common/img/home.png',
+	                    'select_img' : '/common/img/homeblue.png',
+	                    'href' : all_domian + pages_index
+	                },
+	                discovery : {
+	                    'name' : '发现',
+	                    'nav' : true,
+	                    'login' : false,
+	                    'img' : '/common/img/discovery.png',
+	                    'select_img' : '/common/img/discoveryblue.png',
+	                    'href' : all_domian + 'discovery/dynamic'
+	                },
+	                add : {
+	                    'name' : '添加',
+	                    'nav' : false,
+	                    'login' : false,
+	                    'img' : '/common/img/add.png',
+	                    'select_img' : '/common/img/add.png',
+	                    'href' : false
+	                },
+	                message : {
+	                    'name' : '消息',
+	                    'nav' : true,
+	                    'login' : false,
+	                    'img' : '/common/img/message.png',
+	                    'select_img' : '/common/img/messageblue.png',
+	                    'href' : all_domian + 'message'
+	                },
+	                user : {
+	                    'name' : '我的',
+	                    'nav' : true,
+	                    'login' : true,
+	                    'img' : '/common/img/user.png',
+	                    'select_img' : '/common/img/userblue.png',
+	                    'href' : all_domian + 'user'
+	                }
+	            },
+	            page : '',
+	        },
+	        mounted() {
+	            this.$nextTick( function () {
+	            	if(is_domain == 'yes')
+	            	{
+	            		this.router = 'home';
+	            	}
+	            });
+	        },
+	        methods:{
+	        	open(val)
+	        	{
+	        		if(this.cuupage != val)
+	                {
+	                	var select = this.footer_nav[val];
+	                	if(select.login == true)
+	                	{
+	                		if(is_login != 'yes')
+	                		{
+	                			mb_login(select.href);
+	                			return ;
+	                		}
+	                	}
+	                	var cookie_domain = $app.get_cookie('domain');
+	                	if(val == 'home')
+	                	{
+	                		if(cookie_domain != false)
+	                		{
+	                			if(cookie_domain == '/')
+	                			{
+	                				window.location.href= all_domian;
+	                			}
+	                			else
+	                			{
+	                				window.location.href= all_domian + cookie_domain;
+	                			}
+	                			
+	                			return false;
+	                		}
+	                	}
+	                    window.location.href= select.href;
+	                }
+	        	}
+	        }
+	    });
+	}
+	
+	init_header(show.header);
+	init_footer(show.footer);
+</script>
+</body>
