@@ -7,7 +7,7 @@
     <div class="swiper-container" v-if="advList.length">
         <div class="swiper-wrapper">
             <div class="swiper-slide" v-for="item in advList" v-if="item.src">
-                <a :href="item.href"><img :src="item.src | img_src" alt=""></a>
+                <a :href="item.href"><img :src="item.src | img_src(750 , 375)" alt=""></a>
             </div>
         </div>
         <div class="swiper-pagination"></div>
@@ -17,7 +17,7 @@
         <a v-for="item in bannerList" v-if="item.src" :href="item.href"><img :src="item.src | img_src" alt=""></a>&nbsp;
     </div> -->
     <div v-for="item in list_data">
-        <a :href="item.domain + '/article/' + item.relation_id  | href"  v-if="item.dynamic_type == 1">
+        <a :href="item.domain + '/article/' + item.relation_id  | href('weplats')"  v-if="item.dynamic_type == 1">
             <div class="art-content" >
                 <span><img class="lazy" :src="JSON.parse(item.other).cover | img_src(110, 69, 1)" width="110" height="69" /></span>
                 <span style="padding-left:0.1rem;" class="art-des-text">
@@ -27,7 +27,7 @@
             </div>
         </a>
         <div v-if="item.dynamic_type == 4">
-            <a :href="item.domain + '/wemall/goods/' + item.relation_id  | href">
+            <a :href="item.domain + '/wemall/goods/' + item.relation_id  | href('weplats')">
                 <div class="art-content" style="background: #fff;">
                     <div class="act-cover">
                         <img class="lazy" :src="JSON.parse(item.other).cover | img_src(110, 69, 1)" width="110" height="69" />
@@ -42,7 +42,7 @@
                 </div>
             </a>
         </div>
-        <a v-if="item.dynamic_type == 3" :href="item.domain + '/activity/' + item.relation_id  | href">
+        <a v-if="item.dynamic_type == 3" :href="item.domain + '/activity/' + item.relation_id  | href('weplats')">
         <div class="art-content" style="background: #fff;">
             <div class="act-cover">
                 <img class="lazy" :src="JSON.parse(item.other).cover | img_src(110, 69, 1)" width="110" height="69" />
