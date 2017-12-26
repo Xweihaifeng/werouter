@@ -535,15 +535,26 @@ $(document).ready(function() {
                                             '</li>')
                                 , '')
                             );
-                            $(".mp ul li").click(function(e) {
-                                var id = $(e.target).parents('li').attr('id');
+                            var add = (id) => {
                                 tid = id;
-                                ids.filter(x => x != id).map(x => $('#' + x).css('border', '1px solid #dddddd'));
+                                $("#" + id).css('border', '2px solid #007cd3');
+                                $("#" + id + ' .price').css('color', '#007cd3');
+                                $("#" + id + ' img').attr('src', '/common/img/rmbo.png');
+                                $("#" + id + ' div').css({'background': '#007cd3'});
+                                $("#" + id + ' div p').css({'color': 'white'});
+                            }
+                            var remove = (id) => {
+                                ids.filter(x => x != id).map(x => $('#' + x).css('border', '2px solid #dddddd'));
+                                ids.filter(x => x != id).map(x => $('#' + x + ' div').css({'background': 'white'}));
+                                ids.filter(x => x != id).map(x => $('#' + x + ' div p').css({'color': '#555'}));
                                 ids.filter(x => x != id).map(x => $('#' + x + ' .price').css('color', '#555'));
                                 ids.filter(x => x != id).map(x => $('#' + x + ' img').attr('src', '/common/img/rmb.png'));
-                                $('#' + id).css('border', '1px solid #ffb03f');
-                                $('#' + id + ' .price').css('color', '#ffb03f');
-                                $('#' + id + ' img').attr('src', '/common/img/rmbo.png');
+                            }
+                            add(ids[0]);
+                            $(".mp ul li").click(function(e) {
+                                var id = $(e.target).parents('li').attr('id');
+                                remove(id);
+                                add(id);
                             })
                         }
                     })

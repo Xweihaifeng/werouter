@@ -15,14 +15,14 @@
     <![endif]-->
     <!-- <link rel="stylesheet" type="text/css" href="css/entry.css"> -->
 
-    <link rel="stylesheet" type="text/css" href="{{PATH_TML}}user/css/active - common.css">
-    <link rel="stylesheet" type="text/css" href="{{PATH_TML}}user/css/active - font-min.css">
     <link rel="stylesheet" type="text/css" href="/common/css/main.css">
     <link rel="stylesheet" type="text/css" href="/common/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/common/css/buttons.css">
     <link rel="stylesheet" type="text/css" href="/common/css/swiper.min.css">
     <link rel="stylesheet" type="text/css" href="{{PATH_TML}}user/css/apply_rg.css">
+    <link rel="stylesheet" href="{{PATH_TML}}user/css/activitycommon.css">
     <script charset="utf-8" type="text/javascript" src="/common/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="/common/layer-v3.0.3/layer-v3.0.3/layer/layer.js"></script>
     <script charset="utf-8" type="text/javascript" src="/common/js/swiper-3.3.1.min.js"></script>
     <script src="{{PATH_CONFIG}}"></script>
 
@@ -131,6 +131,33 @@
             color: #aaa;
             font-size: 12px;
         }
+        
+        .user-block {
+            padding: 30px;
+        }
+        
+        .user-block table {
+            width: 100%;
+        }
+        
+        .user-block table tr {}
+        
+        .user-block table tr td {
+            padding: 10px;
+        }
+        
+        #user-avatar {
+            max-width: 140px;
+        }
+        
+        .user-title {
+            font-weight: bold;
+        }
+        
+        .user-ticket-title {
+            font-weight: bold;
+            color: #E85349;
+        }
     </style>
 
 </head>
@@ -174,12 +201,19 @@
                         </div>
 
 
-
+                        <div class="title" id="J_ActivityTitle">Loading...</div>
                         <div class="result">
                             <div class="pull-left entry-num"><span class="word-blue">0</span>人已签到</div>
-                            <div class="pull-right btn-group">
-                                <a data-toggle="dialog" data-target="#J_DialogSign" class="btn btn-active">签到管理</a>
-                            </div>
+                            <form class="form" action="#">
+                                <div class="form-group pull-left" style="width:700px;">
+                                    <!-- <a data-toggle="dialog" data-target="#J_DialogSign" class="btn btn-active">签到管理</a> -->
+                                    <input type="text" class="input-control" name="e_number" placeholder="活动开始时输入票号核验" maxlength="50" value="" style="width:300px;">
+                                    <button id="verify_ticket" type="button" class="btn btn-success">验票</button>
+                                </div>
+                                <div class="form-group pull-right" style="width:80px;">
+                                    <button type="button" class="btn btn-success" onclick="goEnroll()">报名数据</button>
+                                </div>
+                            </form>
                         </div>
                         <div class="operation">
                             <div class="pull-left">

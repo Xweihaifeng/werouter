@@ -1,3 +1,4 @@
+
 Vue.filter('img_src', function (value , width , height, mode) {
 
     if (!value) return '';
@@ -79,8 +80,27 @@ Vue.filter('formateTime',function (value,type) {
         case 'MD-C':
             return month + '月' + day + '号';
     }
+});
 
+Vue.filter('formateString',function (value , state) {
+    if($app.empty(value) == false) return '';
 
+    var update =  (new Date(value)).getTime();//时间戳要乘1000
+    update = new Date(update);
+    year   = update.getFullYear();
+    month  = (update.getMonth()+1<10)?('0'+(update.getMonth()+1)):(update.getMonth()+1);
+    day    = (update.getDate()<10)?('0'+update.getDate()):(update.getDate());
+    hour   = (update.getHours()<10)?('0'+update.getHours()):(update.getHours());
+    minute = (update.getMinutes()<10)?('0'+update.getMinutes()):(update.getMinutes());
+    second = (update.getSeconds()<10)?('0'+update.getSeconds()):(update.getSeconds());
+    if (state == 3){
+        str = year+'-'+month+'-'+day;
+    }else if (state == 2){
+        str = month+':'+day;
+    }else{
+        str = year+'-'+month+'-'+day+' '+hour+':'+minute+':'+second;
+    }
+    return str;
 });
 
 Vue.filter('limitLen',function (value,min,max) {

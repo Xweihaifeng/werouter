@@ -17,7 +17,7 @@
         <div class="xinxlt_lb" v-if="show_content == false">
             <ul id="con_list">
                 <li v-for="(item, index) in list_data">
-                    <a :href="cate_name+ '/' + item.weid | href('weplats')">
+                    <a :href="params.channel_id+ '/' + item.weid | href('weplats')">
                         <h2><b style="font-weight:normal" v-html="item.title"></b></h2><span class="dwgklb_sj">{{item.publish_time.substr(0, 10)}}</span></a>
                 </li>
             </ul>
@@ -51,7 +51,7 @@
             dom : '#viewport_list'
         },
         mounted() {
-
+            //底部对话框
             $app.set_title(plats_info.title); 
             if(this.params.channel_id != $app.get_router('pop'))
             {

@@ -55,8 +55,32 @@
         })
     }*/
 
+var id = window.location.href.split('/').pop();
 
-// 活动签到数
+var goEnroll = function() {
+    window.location.href = '/user/admin/activity/apply/' + id;
+}
+
+// 活动详情
+var loadActivity = function(weid, callback) {
+        $.ajax({
+            url: ACTIVITY_DETAIL + '/' + weid,
+            type: 'GET',
+            headers: {
+                'Token': docCookies.getItem("token")
+            },
+            success: function(data) {
+                if (data.code == 200)
+                    callback(data.data);
+                else
+                    notice.alert(data.message);
+            },
+            error: function(xhr) {
+                console.log(xhr);
+            }
+        });
+    }
+    // 活动签到数
 var loadAttendCount = function(weid, callback) {
     $.ajax({
         url: ACTIVITY_ENROLL_ATTENDCOUNT,
@@ -79,7 +103,97 @@ var loadAttendCount = function(weid, callback) {
     });
 }
 
+// 持票人查询
+var getTicketUser = function(e_number, activity_id, callback) {
+    layer.load();
+    $.ajax({
+        url: ACTIVITY_ENROLL_GET_TICKET_USER,
+        type: 'GET',
+        headers: {
+            'Token': docCookies.getItem("token")
+        },
+        data: {
+            e_number: e_number,
+            activity_id: activity_id
+        },
+        success: function(data) {
+            layer.closeAll('loading');
+            if (data.code == 200)
+                callback(data.data);
+            else
+                notice.alert(data.message);
+        },
+        error: function(xhr) {
+            layer.closeAll('loading');
+            console.log(xhr);
+        }
+    });
+}
+
+$("#verify_ticket").bind('click', function() {
+    var e_number = $('input[name=e_number]').val();
+    var activity_id = id;
+    if (e_number.length <= 0) {
+        layer.msg('请输入票号');
+        return;
+    }
+    getTicketUser(e_number, activity_id, function(data) {
+        var userAlert = layer.open({
+            skin: 'winning-class',
+            type: 1,
+            area: ['500px', '470px'],
+            title: 0,
+            closeBtn: true,
+            shadeClose: true,
+            scrollbar: false,
+            btn: ['确认验票', '取消'],
+            yes: function() {
+                $.ajax({
+                    url: ACTIVITY_ENROLL_CHECK,
+                    type: 'POST',
+                    headers: {
+                        'Token': docCookies.getItem("token")
+                    },
+                    data: {
+                        e_number: e_number,
+                        activity_id: activity_id
+                    },
+                    success: function(data) {
+                        layer.closeAll('loading');
+                        if (data.code == 200) {
+                            layer.msg('已验票！');
+                            layer.close(userAlert);
+                            $(".entry-num>span").text(parseInt($(".entry-num>span").text()) + 1);
+                        } else {
+                            layer.msg(data.message);
+                        }
+                    },
+                    error: function(xhr) {
+                        layer.closeAll('loading');
+                        console.log(xhr);
+                    }
+                });
+            },
+            content: `<div class="user-block">
+                <table>
+                    <tbody>
+                        <tr><td><span class="user-title">用户形象</span></td><td><img id="user-avatar" src="` + ApiMaterPlatQiniuDomain + data.user_info.avatar + `"></td></tr>
+                        <tr><td><span class="user-title">真实姓名</span></td><td>` + data.user_info.real_name + `</td></tr>
+                        <tr><td><span class="user-title">平台昵称</span></td><td>` + data.user_info.nickname + `</td></tr>
+                        <tr><td><span class="user-title">手机号码</span></td><td>` + data.user_info.phone + `</td></tr>
+                        <tr><td><span class="user-ticket-title">门票种类</span></td><td>` + data.ticket_info.name + `</td></tr>
+                        <tr><td><span class="user-ticket-title">门票价格</span></td><td>` + (data.ticket_info.type == 1 ? '免费' : data.ticket_info.price) + `</td></tr>
+                    </tbody>
+                </table>
+            </div>`,
+            end: function() {},
+            shade: 0.2
+        });
+    });
+});
+
 $(document).ready(function() {
+
     // const ApiMaterPlatQiniuDomain       = 'http://images.new.wezchina.com/';
 
     var favicon = ApiMaterPlatQiniuDomain + localStorage.getItem('fav');
@@ -181,6 +295,10 @@ $(document).ready(function() {
         router(id);
     })*/
 
+    // 加载活动详情
+    loadActivity(id, function(data) {
+        $("#J_ActivityTitle").text(data.title);
+    })
     var domain;
     var hasDomain = function(weid) {
         $.ajax({
@@ -314,8 +432,9 @@ $(document).ready(function() {
             }
         })
     }
-    var id = window.location.href.split('/').pop();
-    console.log(id);
+
+
+
     if (id != null && id != '' && id.length == 36) { applylistdetail(id); }
     // applylistdetail(weid);
 

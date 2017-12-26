@@ -1,5 +1,5 @@
 <div id="footer" style="display: none;">
-	<div class="dbback" v-if="cuupage!='' && cuupage!='so'">
+	<div class="dbback" v-if="cuupage!='' && cuupage!='so' && cuupage.length !=36">
 		<ul>
 			<li><a :href="'/' | href"><span><img src="/resource/wetpl/default/wap/img/index/home2.png"></span><p>回首页</p></a></li>
 			<li><a href="javascript:scroll(0,0)" id="top"><span><img src="/resource/wetpl/default/wap/img/index/back.png"></span><p>回顶部</p></a></li>
@@ -39,6 +39,7 @@
 	        el: dom_id,
 	        data: {
 	           plats : plats,
+	           menu_open : false
 	        },
 	        watch: {
 	          
