@@ -82,11 +82,13 @@
                     });
                 }
             });
-
+            
             ajax.get("cms/channels/domain_query/"+this.pathname).then((res) => {
                 if (res.data && res.code === 200) {
                     $app.set_title(plats_info.title);
-                    plats.show_title = res.data.title;
+                    plats.show_title = '首页';
+                    plats.title = res.data.title;
+                    plats.url = all_domain + this.pathname;
                 }
             })
 
