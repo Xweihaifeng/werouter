@@ -23,6 +23,8 @@
 </footer>
 </div>
 <script type="text/javascript">
+
+
 	// header 渲染
 	function init_header(show) {
 	    if(show == 'no') return false;
@@ -126,6 +128,10 @@
 	        		if(this.cuupage != val)
 	                {
 	                	var select = this.footer_nav[val];
+	                	if(select.href == false) {
+	                		mb_add();
+	                		return;
+	                	}
 	                	if(select.login == true)
 	                	{
 	                		if(is_login != 'yes')
