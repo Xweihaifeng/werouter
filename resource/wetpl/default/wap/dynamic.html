@@ -20,7 +20,7 @@
             <div class="art-right">
                 <span class="art-title">{{item.nickname}}</span>
                 <p>{{item.motto}}</p>
-                <a :href="'/' + item.domain + '/article/' + JSON.parse(item.other).weid | href">
+                <a :href="'/' + item.domain + '/article/' + JSON.parse(item.other).weid | href('weplats')">
                     <div class="art-content">
                         <span><img class="lazy" :src="JSON.parse(item.other).cover" width="88" /></span>
                         <span class="art-des-text">
@@ -39,7 +39,7 @@
         <div v-if="item.dynamic_type == 3">
             <div class="act">
                 <div class="act-avatar">
-                    <a :href="'/' + item.domain + '/wecard' | href">
+                    <a :href="'/' + item.domain + '/wecard' | href('weplats')">
                         <img class="lazy" :src="item.avatar | img_src(60,60)" width="60" height="60" />
                     </a>
                 </div>
@@ -51,7 +51,7 @@
                         </ul>
                         <div class="act-hot"><span>热门</span></div>
                     </div>
-                    <a :href="'/' + item.domain + '/activity-detail/' + JSON.parse(item.other).weid | href">
+                    <a :href="'/' + item.domain + '/activity-detail/' + JSON.parse(item.other).weid | href('weplats')">
                         <div class="act-content">
                             <div class="act-cover"><img class="lazy" :src="JSON.parse(item.other).cover | img_src(110, 69, 1)" width="110" height="69" /></div>
                             <div class="act-cont">
@@ -81,7 +81,7 @@
         <div v-if="item.dynamic_type == 4" id="container" class="section">
             <slide>
                 <slide class="li_img_wap">
-                    <a :href="'/' + item.domain + '/wecard' | href">
+                    <a :href="'/' + item.domain + '/wecard' | href('weplats')">
                         <img class="lazy" :src="item.avatar | img_src(36, 36)" width="60" height="60">
                     </a>
                 </slide>
@@ -92,7 +92,7 @@
                         <img class="lazy" v-for="x in JSON.parse(item.other).picture.split(',')" :src="x | img_src(102, 97, 1)" width="102" height="97" />
                     </div>
                     <div class="lii_sold">
-                        <a :href="'/' + item.domain + '/wemall/goods/' + JSON.parse(item.other).weid | href">
+                        <a :href="'/' + item.domain + '/wemall/goods/' + JSON.parse(item.other).weid | href('weplats')">
                             <slide class="li_img_wap">
                                 <img class="lazy" :src="JSON.parse(item.other).cover | img_src(55, 55, 1)" />
                             </slide>

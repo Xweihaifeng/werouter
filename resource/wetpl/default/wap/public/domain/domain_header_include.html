@@ -31,7 +31,7 @@
     <nav>
         <ul v-if="is_domain == 'yes'">
             <li v-for="(item , key) in header_nav" @click="pages(key);page=key"  :class="{'header_selecte' : key == cuupage}">{{item.name}}</li>
-            <li  id="my-center"><img src="/common/img/adds.png" alt="add"></li>
+            <li id="my-center"><img src="/common/img/adds.png" alt="add"></li>
         </ul>
         <ul v-else>
             <li v-for="(item , key) in discovery_header_nav" @click="pages(key);page=key"  :class="{'header_selecte' : key == cuupage}">{{item.name}}</li>

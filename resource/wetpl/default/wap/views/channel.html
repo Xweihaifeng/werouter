@@ -13,7 +13,7 @@
         <div id='mySwipe' class='swipe'>
             <div class='swipe-wrap'>
                 <div v-for="(item,index) in especial_news" v-if="index < 3"> 
-                    <a :href="pathname + '/' + item.weid"><img :src="item.thumb_image | img_src(300 , 200 , 1)" width="100%" height="220px" /></a> 
+                    <a :href="pathname + '/' + item.weid | href('weplats')"><img :src="item.thumb_image | img_src(300 , 200 , 1)" width="100%" height="220px" /></a> 
                     <div class="mySwipeceng">
                         <div class="left"><b style='font-weight:normal'>{{item.title | limitLen(0,21)}}</b></div>
                         <div class="mySwip_rg"> <span class="mySwipetabdiancurr"></span><span class="mySwipetabdian"></span>
@@ -27,8 +27,8 @@
 
     <!--头条-->
     <div class="lthot" v-for="(item, index) in hot">
-        <h1><a :href="pathname + '/' + item.weid"><b style="font-weight:normal;text-align:left" v-html="item.title"></b></a></h1>
-        <p><a :href="pathname + '/' + item.weid">{{item.summary | limitLen(0,80)}}<span>[查看全文]</span></a></p>
+        <h1><a :href="pathname + '/' + item.weid | href('weplats')"><b style="font-weight:normal;text-align:left;color:#007cd3;width: 388px;overflow: hidden;white-space: nowrap;display: inline-block;" >{{item.title | limitLen(0,24)}}</b></a></h1>
+        <p><a :href="pathname + '/' + item.weid | href('weplats')">{{item.summary | limitLen(0,83)}}<span>[查看全文]</span></a></p>
         <div class="clear"></div>
     </div>
     <div class="clear"></div>
@@ -50,7 +50,7 @@
                 </div>
                 <ul class="Content_wz">
                     <li v-for="(val, inde) in value.detail">
-                        <a :href="pathname + '/' + val.weid">
+                        <a :href="pathname + '/' + val.weid | href('weplats')">
                             <h2><b style="font-weight:normal;" v-html="val.title"></b></h2><span class="sytjlb_sj">{{val.publish_time.substr(0, 10)}}</span>
                         </a>
                     </li>
@@ -82,11 +82,13 @@
                     });
                 }
             });
-
+            
             ajax.get("cms/channels/domain_query/"+this.pathname).then((res) => {
                 if (res.data && res.code === 200) {
-                    $app.set_title(res.data.search_name + ' - ' + plats_info.title);
-                    plats_info.show_title = res.data.search_name;
+                    $app.set_title(plats_info.title);
+                    plats.show_title = '首页';
+                    plats.title = res.data.title;
+                    plats.url = all_domian + this.pathname;
                 }
             })
 

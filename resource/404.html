@@ -1,50 +1,776 @@
-<!DOCTYPE html>
-<html lang="en">
+<!--
+<html>
 <head>
-	<meta charset="UTF-8">
-	<title>404</title>
-	<style>
-		* {
-			margin: 0;
-			padding: 0;
-		}
+    <meta charset="utf-8">
+    <title>404</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <script src="/common/js/jquery-3.2.1.min.js"></script>
+    <style type="text/css">
+        html {
+            height: 100%;
+            color: #7a7a7a;
+            background-color: #e6e6e6;
+            -ms-text-size-adjust: 100%;
+            _text-overflow: ellipsis
+        }
 
-		body,html {
-			width: 100%;
-			height: 100%;
-		}
+        body, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, textarea, select, p, blockquote, th, td, hr, button, article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+            margin: 0;
+            padding: 0
+        }
 
-		.logo {
-			width: 100%;
-			height: 100%;
-			background: url('/common/img/404.png') no-repeat;
-			background-size: 100%;
-			position: absolute;
-		}
-		
-		.back {
-			position: relative;
-			width: 10%;
-			top: 70%;
-			left: 14.3%;
-		}
+        article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+            display: block
+        }
 
-		.back a {
-			font-size: 20px;
-			color: #999;
-		}
+        audio, canvas, video {
+            display: inline-block;
+            *display: inline;
+            *zoom: 1
+        }
 
-		.back a:hover {
-			color: #ec0000;
-		}
+        body, button, input, select, textarea {
+            font: 12px/1.8 hiragino sans gb, microsoft yahei, simsun, sans-serif
+        }
 
-	</style>
+        h1, h2, h3, h4, h5, h6 {
+            font-size: 1em;
+            font-family: helvetica neue, hiragino sans gb, microsoft yahei, sans-serif
+        }
+
+        a {
+            color: #2a2a2a;
+            text-decoration: none
+        }
+
+        a:active {
+            outline: 0 none
+        }
+
+        @media screen and (-ms-high-contrast: active),(-ms-high-contrast: none) {
+            a:active {
+                background-color: transparent
+            }
+        }
+
+        small, cite, code, em, th, i, b {
+            font-size: 1em;
+            font-style: normal;
+            font-weight: 500
+        }
+
+        input, select, textarea, button {
+            font-size: 1em;
+            -webkit-box-sizing: content-box;
+            -moz-box-sizing: content-box;
+            box-sizing: content-box
+        }
+
+        button, input[type=button], input[type=submit] {
+            cursor: pointer
+        }
+
+        button::-moz-focus-inner, button::-moz-focus-outer, input::-moz-focus-inner, input::-moz-focus-outer {
+            border: 0 none;
+            padding: 0;
+            margin: 0
+        }
+
+        input[type=search] {
+            -webkit-appearance: textfield
+        }
+
+        input:focus::-webkit-input-placeholder {
+            color: transparent
+        }
+
+        textarea {
+            resize: vertical;
+            overflow-y: auto
+        }
+
+        table {
+            border-collapse: collapse;
+            border-spacing: 0
+        }
+
+        th {
+            text-align: inherit
+        }
+
+        fieldset, img, iframe {
+            border: 0 none
+        }
+
+        img {
+            display: inline-block;
+            vertical-align: bottom;
+            -ms-interpolation-mode: bicubic
+        }
+
+        iframe {
+            display: block
+        }
+
+        ul, ol {
+            list-style: none
+        }
+
+        li {
+            vertical-align: top
+        }
+
+        q:before, q:after {
+            content: ''
+        }
+
+        body {
+            height: 100%
+        }
+
+        .cl {
+            clear: both;
+            display: block;
+            overflow: hidden;
+            visibility: hidden;
+            width: 0;
+            height: 0;
+            line-height: 0
+        }
+
+        .cf:before, .cf:after {
+            content: '';
+            display: table
+        }
+
+        .cf:after {
+            clear: both
+        }
+
+        .cf {
+            *zoom: 1
+        }
+
+        .mod_404 .wrapper {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 520px;
+            margin-top: -300px;
+            background: url(image/bg_page.png) bottom center no-repeat
+        }
+
+        .mod_404 .mod_hd {
+            width: 700px;
+            margin: 0 auto 10px
+        }
+
+        .mod_404 .title {
+            display: block;
+            width: 700px;
+            height: 70px;
+            background: url(image/txt_title.png) 0 0 no-repeat;
+            _background-image: url(image/txt_title.ie6.png)
+        }
+
+        .mod_404 .title .title_inner {
+            display: none;
+            line-height: 1.2
+        }
+
+        .mod_404 .desc {
+            font-size: 16px;
+            color: #5e5e5e
+        }
+
+        .mod_404 .desc .desc_num {
+            padding: 0 5px;
+            font-weight: 700
+        }
+
+        .mod_404 .desc .desc_link {
+            padding: 0 5px;
+            text-decoration: underline
+        }
+
+        .mod_404 .mod_bd {
+            margin-bottom: 50px
+        }
+
+        .mod_404 .child_main {
+            margin-bottom: 30px
+        }
+
+        .mod_404 .child_box {
+            position: relative;
+            z-index: 100;
+            width: 640px;
+            padding: 30px;
+            border-radius: 30px;
+            margin: 0 auto;
+            background: #fff;
+            zoom: 1
+        }
+
+        .mod_404 .child_box .child_avatar {
+            float: left;
+            width: 160px;
+            height: 216px;
+            margin-right: 20px;
+            background: #f0f0f0
+        }
+
+        .mod_404 .child_box .child_avatar img {
+            width: 160px
+        }
+
+        .mod_404 .child_box .child_info {
+            float: left;
+            width: 460px;
+            overflow: hidden;
+            font-size: 14px
+        }
+
+        .mod_404 .child_box .child_info .info_item {
+            line-height: 32px
+        }
+
+        .mod_404 .child_box .child_info .info_name {
+            margin-bottom: 10px;
+            font-size: 18px
+        }
+
+        .mod_404 .child_box .child_info .info_name .name_inner {
+            margin-right: 5px
+        }
+
+        .mod_404 .child_box .child_info .info_sex {
+            font-weight: 500
+        }
+
+        .mod_404 .child_box .child_info .info_desc {
+            height: 72px;
+            line-height: 24px;
+            overflow: hidden
+        }
+
+        .mod_404 .child_box .child_info .info_lbl {
+            color: #666
+        }
+
+        .mod_404 .child_box .link_view {
+            display: block;
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            height: 28px;
+            line-height: 30px;
+            color: #666
+        }
+
+        .mod_404 .child_box .ico_corner {
+            display: block;
+            position: absolute;
+            bottom: -60px;
+            left: 50%;
+            width: 120px;
+            height: 60px;
+            margin-left: -60px;
+            background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHgAAAA8CAYAAACtrX6oAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyRpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo1OEYyQTcxNjdCRTYxMUU0QUY0OUNFODY1NUQyNEUwQSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDo1OEYyQTcxNzdCRTYxMUU0QUY0OUNFODY1NUQyNEUwQSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjU4RjJBNzE0N0JFNjExRTRBRjQ5Q0U4NjU1RDI0RTBBIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU4RjJBNzE1N0JFNjExRTRBRjQ5Q0U4NjU1RDI0RTBBIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+7agj4gAABbVJREFUeNrsnW1oW1UYx0+Sm62JaTdsfZmV6ZwftOvG0E0cojIUnKjzZaMw9mH4/qXqh37YtwoVEREpflBB8A1BpNLuw5DZF6iWdVM2Rd20OC1Bt7LZtGqlTbIm98b/s3suHuMS0+bm3ntOzgM/Qtp7n9ycf55znnOec5NQoVBgFVoYrAIR/ngFWAOuBteDDWAjaGHa3LBZ8B34HvwEpsBZ8BuYAyZ/tMo5CS1B4EqtFdwO7uBs0FpVZKfA52CM86sbTmshcLFdBx7i3MZ7Am22fQUGwAEwUYsX8EJg0a4Fj4F9YG2divo7+AC8DU7U+sW8FtgxGscfBPvBLXUi7CR4BbwHznv1on4JLNp28Dy4U1FhfwbdoI8nRp5aEAR2bCd4CbQpIuwMeBG8ARb9uoggCUxmgE7wAkhIKmyBd8Nd4A+/LyZoAjt2DXgd3CeZuEnwNBgOygUFdcryC7gfPAHmJRGXxtjNQRI3yBEs2g3gY9Ae0OvLgufAW0G8OBkEZnw8fh88ErDrmmb2As7RoDacLKtK1E3v5llpUD6RtEZ8a5DFlSmCRXuKTz0iPl7DMbCD2atSTAvsvu3hXXbUh9c+zBPAORkaSlaByR7myZeXkfwluAssyNJIMld2qALzuIdj8o/gAZnElV1gxrvpLg9ehwrtd4OUbA2kQm22F7xZQ/+LPIM/I2PjqFJ8fwZ8ViPfz4IjsjaMzElWsV0OvgVXuujzQ7BX5kZRSWCye8Ahel8u+DoNNoE/ZW4Q1fZHDYLXXPBDn/p9sourYgSTNYCTYH0VPt7hUzCmBQ6m7eBd9XKMqkNUj55WoSFU3cL6KRiqYm49rUpDqBrBZHSXxRcgvoRzUjyxOqdKI6i8CZ32HD/JKt/JmGH2gsY5lRpB9bsMaB67k095ytkPzN62O6ZaA6jcRYsWA48yuwJ1E7iUj7PUhVNF6iOQV/GN14vAdWv6RjAtsDYtsLbAmiFt8hAK+X4NMuQvRh18iEMlHi9oVOJRR7AkwjqEi56LAjtYRc/1GBxgYcMc2nEZnZiY2LKwsPBqLpc7bJpmEl3rHD3Sc/o7/Z/ZW3AjwrkhJVqDxhEZ+R9xSayG8fHx9mw2exDHW4XyZtFxdDyzy43RSkSWop0UEjjkRCytXE1OTu6yLGuusASj4+k8vvLlRHRIC+y/wGLkxpPJ5B4cky8sz/J0PrOrUGUjWQvsncCOuLHBwcGbEYnzhSqMzh8aGtoiRHJYVoGlXYsW5sFi9K5Mp9MHYrHY9mr9ZzKZ0Xg8TsUJ+kacnJBlSzUPDiuUNRujo6Nb3RCXjPyQPz6VlDarDisgrpNcGW1tbR1uOuf+DCHZCmmB/XkPF7LnxsbGrW46bmpq2lY0P9YR7GMER6LR6FVuOoe/tTqCgzMGRwzDaHbTcSQSaRKiV4/Bfq83m6bp6r278PdXmXVsLbDXQmez2dNuOoW/M4J/piPYxyV1YmZm5ms3naZSqeOCfy2wX8I6jIyMHHTT+fDw8CdM8jKi7CtZYZ7lUgXoEprZIIrfbW5u3lat/9nZ2aMtLS201ZbGYRrb6Z6lPBN+I0GvZHkXwSZv/Fxvb+/LSI4yVSZXWfLD7CXKPPcv50YAyYsNzhyYIng1s38B5sb+/v4uy7LMZRYaTDqf/HB/q7n//5QOdTXJm2qSU2ig77O8DKwDGwcGBvbn8/n0kuqEOJ7OY/aNa+u4vwQrUVHSAnsjsBjF9HtO9B0ddPP3ps7Ozl1TU1NjlYhLx9HxzL67cD33s6pU9MoisArlQnE92km4iDinobu7u72jo+Pe1tbWzYlEYo1hGAlE6zzsLIT9pq+v71BPT89JnkilOVkhsTLZRX6ASoa2U0VgcU2autMVgtBUtF/J/24UdbWWk5wxu+6b4aKeZ//UgUsmWHpftLfZtCNYrii7znHBV7B/13YLgsCLFyFfNAeW0v4WYADMaEioDQ+U4gAAAABJRU5ErkJggg==) 0 0 no-repeat
+        }
+
+        .mod_404 .child_box .child_in {
+            display: block
+        }
+
+        .mod_404 .child_box .child_out {
+            display: none
+        }
+
+        .mod_404 .child_bottom {
+            position: relative;
+            zoom: 1
+        }
+
+        .mod_404 .child_bottom .logo_list {
+            font-size: 0
+        }
+
+        .mod_404 .child_bottom .logo_list li {
+            display: inline-block;
+            *display: inline;
+            zoom: 1;
+            height: 34px;
+            margin-right: 12px;
+            vertical-align: top
+        }
+
+        .mod_404 .child_bottom .bottom_right {
+            position: absolute;
+            top: -3px;
+            right: 0
+        }
+
+        .mod_404 .mod_share {
+            width: 56px;
+            height: 40px;
+            line-height: 40px;
+            padding: 0 10px;
+            border-radius: 20px;
+            overflow: hidden;
+            background: #6eaf08;
+            color: #fff;
+            font-size: 0
+        }
+
+        .mod_404 .mod_share_hover {
+            width: 215px
+        }
+
+        .mod_404 .mod_share .share_inner {
+            display: inline-block;
+            *display: inline;
+            zoom: 1;
+            height: 24px;
+            line-height: 24px;
+            margin: 9px 0;
+            padding: 0 10px;
+            font-size: 18px;
+            float: left
+        }
+
+        .mod_404 .mod_share .share_list {
+            display: none;
+            height: 24px;
+            line-height: 24px;
+            margin-top: 9px;
+            padding-left: 10px;
+            border-left: 1px solid #639d07;
+            font-size: 0;
+            vertical-align: top;
+            overflow: hidden;
+            float: left
+        }
+
+        .mod_404 .mod_share:hover .share_list, .mod_404 .mod_share_hover .share_list {
+            display: inline-block;
+            *display: inline;
+            zoom: 1
+        }
+
+        .mod_404 .mod_share .share_list li {
+            display: inline-block;
+            *display: inline;
+            zoom: 1;
+            width: 24px;
+            height: 24px;
+            padding: 0 5px;
+            vertical-align: top
+        }
+
+        .mod_404 .mod_share .share_list .share_link {
+            display: block;
+            cursor: pointer
+        }
+
+        .mod_404 .mod_share .share_list .link_inner {
+            display: none
+        }
+
+        .ico_tencentweibo, .ico_qzone, .ico_sinaweibo, .ico_qqmail, .ico_kaixin, .ico_renren, .ico_weixin {
+            display: inline-block;
+            *display: inline;
+            zoom: 1;
+            width: 24px;
+            height: 24px;
+            overflow: hidden;
+            vertical-align: top;
+            background: url(image/icon_share.png);
+            _background: url(image/icon_share.jpg);
+            background-repeat: no-repeat
+        }
+
+        .ico_tencentweibo {
+            background-position: 0 0
+        }
+
+        .ico_qzone {
+            background-position: -25px 0
+        }
+
+        .ico_sinaweibo {
+            background-position: -50px 0
+        }
+
+        .ico_qqmail {
+            background-position: -75px 0
+        }
+
+        .ico_kaixin {
+            background-position: -100px 0
+        }
+
+        .ico_renren {
+            background-position: -125px 0
+        }
+
+        .ico_weixin {
+            background-position: -152px 0;
+            width: 26px
+        }
+
+        .mod_404 .mod_share .share_list a:hover .ico_tencentweibo {
+            background-position: 0 -25px
+        }
+
+        .mod_404 .mod_share .share_list a:hover .ico_qzone {
+            background-position: -25px -25px
+        }
+
+        .mod_404 .mod_share .share_list a:hover .ico_sinaweibo {
+            background-position: -50px -25px
+        }
+
+        .mod_404 .mod_share .share_list a:hover .ico_qqmail {
+            background-position: -75px -25px
+        }
+
+        .mod_404 .mod_share .share_list a:hover .ico_kaixin {
+            background-position: -100px -25px
+        }
+
+        .mod_404 .mod_share .share_list a:hover .ico_renren {
+            background-position: -125px -25px
+        }
+
+        .mod_404 .mod_share .share_list a:hover .ico_weixin {
+            background-position: -152px -25px
+        }
+
+        .mod_404_children ul {
+            text-align: center;
+            font-size: 0
+        }
+
+        .mod_404_children li {
+            display: inline-block;
+            *display: inline;
+            zoom: 1;
+            width: 80px;
+            height: 80px;
+            border-radius: 100px;
+            margin: 10px;
+            overflow: hidden;
+            border: 5px solid transparent;
+            opacity: .8
+        }
+
+        .mod_404_children li.current {
+            opacity: 1;
+            border-color: #6eaf08
+        }
+
+        .mod_404_children li img {
+            width: 80px;
+            cursor: pointer
+        }
+
+        .mod_404_children li a {
+            display: table-cell;
+            width: 80px;
+            height: 80px;
+            text-align: center;
+            vertical-align: middle;
+            cursor: pointer;
+            background: #fff
+        }
+
+        @media screen and (max-width: 720px) {
+            .mod_404 {
+                height: 100%;
+                background: url(image/bg_page.png) center center no-repeat
+            }
+
+            .mod_404 .wrapper {
+                position: static;
+                width: auto;
+                height: 100%;
+                margin: 20px 0;
+                text-align: center;
+                background: 0
+            }
+
+            .mod_404 .child_main {
+                margin-bottom: 10px
+            }
+
+            .mod_404 .mod_hd {
+                width: auto;
+                margin-bottom: 20px
+            }
+
+            .mod_404 .title {
+                width: 100%;
+                height: auto;
+                background: 0
+            }
+
+            .mod_404 .title .title_inner {
+                display: block;
+                padding: 0 20px;
+                font-size: 38px;
+                font-weight: normal
+            }
+
+            .mod_404 .mod_bd {
+                margin-bottom: 20px
+            }
+
+            .mod_404 .desc {
+                font-size: 30px
+            }
+
+            .mod_404 .child_box {
+                width: auto;
+                border-radius: 0;
+                background: rgba(256, 256, 256, 0.8)
+            }
+
+            .mod_404 .child_box .child_avatar {
+                float: none;
+                width: auto;
+                height: auto;
+                background: 0
+            }
+
+            .mod_404 .child_box .child_avatar img {
+                width: 100%
+            }
+
+            .mod_404 .child_box .child_info {
+                float: none;
+                width: auto;
+                font-size: 20px
+            }
+
+            .mod_404 .child_box .child_info .info_desc {
+                height: auto
+            }
+
+            .mod_404 .child_box .child_info .info_name {
+                font-size: 30px
+            }
+
+            .mod_404 .child_box .link_view {
+                position: static
+            }
+
+            .mod_404 .child_bottom .bottom_logo {
+                margin-bottom: 20px
+            }
+
+            .mod_404 .child_bottom .bottom_right {
+                position: static
+            }
+
+            .mod_404 .mod_share {
+                display: none
+            }
+
+            .mod_404 .child_box .link_view {
+                display: inline-block;
+                width: 200px;
+                height: 40px;
+                line-height: 40px;
+                border-radius: 20px;
+                margin: 20px 0;
+                overflow: hidden;
+                background: #6eaf08;
+                color: #fff;
+                font-size: 20px
+            }
+
+            .mod_404_children {
+                padding-bottom: 40px
+            }
+
+            .mod_404_children li {
+                width: 16.66%;
+                margin: 0;
+                border-radius: 0;
+                text-align: center
+            }
+
+            .mod_404 .child_box .ico_corner {
+                display: none
+            }
+        }
+
+        @media screen and (max-width: 640px) {
+            .mod_404 .title .title_inner {
+                font-size: 28px
+            }
+
+            .mod_404 .desc {
+                font-size: 18px
+            }
+
+            .mod_404 .child_box .child_info .info_name {
+                font-size: 24px
+            }
+
+            .mod_404 .child_box .child_info {
+                font-size: 18px
+            }
+
+            .mod_404_children ul {
+                white-space: nowrap;
+                margin-left: -10px;
+                text-align: center
+            }
+
+            .mod_404_children li {
+                width: 13%;
+                height: auto;
+                margin: 0 5px;
+                overflow: visible;
+                border: 0;
+                border-radius: 0
+            }
+
+            .mod_404_children li.current {
+                outline: 5px solid #6eaf08
+            }
+
+            .mod_404_children li a {
+                display: inline-block;
+                width: 100%;
+                height: auto
+            }
+
+            .logo_list {
+                display: -webkit-box;
+                display: -webkit-flex;
+                display: -ms-flexbox;
+                display: flex;
+                -webkit-box-pack: justify;
+                -webkit-justify-content: space-between;
+                -ms-flex-pack: justify;
+                justify-content: space-between
+            }
+
+            .logo_list > li {
+                display: block
+            }
+
+            .logo_list > li > a > img {
+                height: 17px
+            }
+
+            .mod_404_children li a img {
+                width: 100%;
+                height: auto
+            }
+        }
+
+        .desc_cd {
+            color: #7bad35;
+            margin-left: 10px;
+        }
+
+        .desc_link:hover {
+            color: #6DA2E0;
+        }
+
+        .mod_404 .child_box {
+            position: relative;
+            z-index: 100;
+            width: 640px;
+            height: 308px;
+            padding: 30px;
+            border-radius: 30px;
+            margin: 0 auto;
+            background: #fff;
+            zoom: 1;
+        }
+
+        .mod_404 .title {
+            display: block;
+            width: 700px;
+            height: 70px;
+            background: url(/common/image/404w.png) 0 0 no-repeat;
+            /*_background-image: url(image/txt_title.ie6.png);*/
+        }
+
+        .child_box {
+            background: url(/common/img/404s.png) no-repeat center;
+            background-size: 100%;
+        }
+    </style>
 </head>
 <body>
-	<div class="logo">
-		<div class="back">
-			<a href="/">返回首页</a>
-		</div>
-	</div>
+<div class="mod_404">
+    <div class="wrapper" id="mainWrap">
+        <div class="mod_hd"><h1 class="title"><span class="title_inner">404，您访问的页面找不回来了，5秒后带您回家！</span></h1>
+
+            <div class="desc"><span class="desc_cd"><span id="J_countdown">6</span>秒后</span><a href="/" class="desc_link">返回首页</a>
+            </div>
+        </div>
+        <div class="mod_bd">
+            <div class="child_box">
+                <i class="ico_corner"></i>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var time = 5;
+    /*var count = setInterval(function(){
+     if (time > 0) {
+     $("#J_countdown").text(time);
+     time -= 1;
+     } else {
+     clearInterval(count);
+     window.location.href = '/';
+     }
+     }, 1000)*/
+</script>
+</body>
+</html>-->
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>404</title>
+    <style type="text/css">
+        .desc_cd {
+            color: #7bad35;
+            margin-left: 10px;
+        }
+
+        .desc_link:hover {
+            color: #6DA2E0;
+        }
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" type="text/css" href="//qzonestyle.gtimg.cn/qzone/hybrid/app/404/style/404style_min.css">
+</head>
+<body>
+<div class="mod_404">
+    <div class="wrapper" id="mainWrap">
+        <div class="mod_hd"><h1 class="title"><span class="title_inner"></span></h1>
+
+            <div class="desc"><span class="desc_cd"><span id="J_countdown"></span>秒后</span><a
+                    href="/" class="desc_link">返回腾讯网首页</a></div>
+        </div>
+        <div class="mod_bd">
+            <div class="child_box">
+
+
+                <i class="ico_corner"></i>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

@@ -1,4 +1,84 @@
 <script src="/common/public/js/layer_mobile/layer.js"></script>
+<div id="footer_add" class="box" style="display: none;">
+    <div class="release">
+        <img src="/common/img/activity_06.jpg" width="100%" height="100%" alt="">
+        <div class="content_s" style="margin-bottom: -400px;">
+            <div class="list_t">
+                <a href="javascript:void(0);">
+                    <img class="list_02" src="/common/img/activity_02.png" alt="">
+                    <p class="list_text">发项目</p>
+                </a>
+            </div>
+            <div class="list">
+                <div class="list_footer_text">
+                    <a href="javascript:void(0);">
+                        <img class="list_01" src="/common/img/activity_03.png" alt="">
+                        <p class="list_text_left">发文章</p>
+                    </a>
+                </div>
+                <div class="list_footer_active">
+                    <a href="javascript:void(0);">
+                        <img class="list_03" src="/common/img/activity_04.png" alt="">
+                        <p class="list_text_right">发活动</p>
+                    </a>
+                </div>
+            </div>
+            <img class="list_last" src="/common/img/activity_1.png" alt="">
+        </div>
+    </div>
+</div>
+<script>
+    window.onload=function(){
+        $("#add").click(function(){
+            $(".box").show();
+            $(".content_s").css({"margin-bottom":"0px"});
+        });
+        $(".list_last").click(function(){
+            $(".box").hide();
+            $(".content_s").css({"margin-bottom":"-400px"});
+        });
+    };
+</script>
+<style>
+    .box{position: fixed;
+        left:0;
+        top:0;
+        right:0;
+        bottom:0;
+        z-index: 10000;}
+    .release{width: 100%;
+        background-size:100% 100%;}
+/*    p,body{padding:0;
+        margin:0;
+        font-size:14px;}
+    a{text-decoration:none;}*/
+    .content_s{width:100%;
+        position: absolute;
+        bottom:0;
+        margin-bottom: -400px;
+        transition:margin-bottom 0.5s;
+        -webkit-transition:margin-bottom 0.5s;}
+/*    img{max-width: 100%;
+        display: block;
+        margin: 0 auto;}*/
+    .list{width:100%;
+        height:70px;
+        overflow: hidden;}
+    .list_01{width:55px;}
+    .list_02{width:65px; z-index: -10px;}
+    .list_03{width:55px;}
+    .list_last{margin-bottom:18px;
+        margin-top:27px;
+        width:20px;}
+    .list_text,.list_text_left,.list_text_right{text-align: center;
+        color:#000;
+        margin-top:10px;}
+    .list_t{margin-bottom:-30px;}
+    .list_footer_text{float:left;
+        margin-left: 15%;}
+    .list_footer_active{float:right;
+        margin-right:15%;}
+</style>
 <style>
     .layui-m-layerchild {
         border-radius: 2px;
@@ -50,6 +130,23 @@
     }
 </style>
 <script type="text/javascript">
+// mb_add
+/*function mb_add()
+{ 
+    // return false;
+    layer.open({
+      type: 1
+      ,content: $('#footer_add').html()
+      ,anim: false
+      ,style: 'position:fixed; left:0; top:0; width:100%; height:100%; border: none;'
+    });
+}
+
+function close_footer_add()
+{
+    layer.closeAll();
+}*/
+
 // 需要依赖layer moble
 function mb_login(href){
     var weid = $app.get_storage('weid');

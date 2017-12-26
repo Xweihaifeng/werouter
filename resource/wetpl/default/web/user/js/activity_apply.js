@@ -54,7 +54,10 @@
             }
         })
     }*/
-
+var id = window.location.href.split('/').pop();
+var goAttend = function() {
+    window.location.href = '/user/admin/activity/attend/' + id;
+}
 var chart = {
     init: function(weid) {
         var _self = this;
@@ -386,7 +389,7 @@ $(document).ready(function() {
         console.log(num);
         num++;
         var listhtml = '<tr data-id="' + data.weid + '">' +
-            '<td class="chk"><input type="checkbox" class="boxsty J_CkbItem" data-id="' + data.weid + '"></td>' +
+            // '<td class="chk"><input type="checkbox" class="boxsty J_CkbItem" data-id="' + data.weid + '"></td>' +
             '<td class="queue">' + num + '</td>' +
             `<td class="user">
             <div class="user-avatar"><img src="` + ApiMaterPlatQiniuDomain + data.avatar + `" width="45"></div>` +
@@ -484,7 +487,7 @@ $(document).ready(function() {
             }
         })
     }
-    var id = window.location.href.split('/').pop();
+
     if (id != null && id != '' && id.length == 36) { applylistdetail(id); }
     // applylistdetail(weid);
 

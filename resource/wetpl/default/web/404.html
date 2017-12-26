@@ -1,50 +1,74 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-	<meta charset="UTF-8">
-	<title>404</title>
+    <meta charset="utf-8">
+    <title>404</title>
+    <style type="text/css">
+        .desc_cd {
+            color: #7bad35;
+            margin-left: 10px;
+        }
+
+        .desc_link:hover {
+            color: #6DA2E0;
+        }
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<script src="/common/js/jquery-3.2.1.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="//qzonestyle.gtimg.cn/qzone/hybrid/app/404/style/404style_min.css">
 	<style>
-		* {
-			margin: 0;
-			padding: 0;
-		}
-
-		body,html {
-			width: 100%;
-			height: 100%;
-		}
-
-		.logo {
-			width: 100%;
-			height: 100%;
-			background: url('/common/img/404.png') no-repeat;
-			background-size: 100%;
-			position: absolute;
-		}
-		
-		.back {
+		.mod_404 .child_box {
 			position: relative;
-			width: 10%;
-			top: 70%;
-			left: 14.3%;
+			z-index: 100;
+			width: 640px;
+			height: 300px;
+			padding: 30px;
+			border-radius: 30px;
+			margin: 0 auto;
+			background: #fff;
+			zoom: 1;
 		}
-
-		.back a {
-			font-size: 20px;
-			color: #999;
+		.mod_404 .title {
+			display: block;
+			width: 700px;
+			height: 70px;
+			background: url(/common/img/404w.png) 0 0 no-repeat;
 		}
-
-		.back a:hover {
-			color: #ec0000;
+		.child_box div {
+			display: block;
+			width: 640px;
+			height: 300px;
+			background: url(/common/img/404s.png) no-repeat;
+			position: absolute;
+			z-index: 1000;
 		}
-
 	</style>
 </head>
 <body>
-	<div class="logo">
-		<div class="back">
-			<a href="/">返回首页</a>
-		</div>
-	</div>
+<div class="mod_404">
+    <div class="wrapper" id="mainWrap">
+        <div class="mod_hd"><h1 class="title"><span class="title_inner"></span></h1>
+            <div class="desc"><span class="desc_cd"><span id="J_countdown">6 </span>秒后</span><a
+                    href="/" class="desc_link">返回首页</a></div>
+        </div>
+        <div class="mod_bd">
+            <div class="child_box">
+				<div></div>
+                <i class="ico_corner"></i>
+            </div>
+        </div>
+    </div>
+	<script>
+		var time = 5;
+		var count = setInterval(function(){
+		 if (time > 0) {
+		 $("#J_countdown").text(time + ' ');
+		 time -= 1;
+		 } else {
+		 clearInterval(count);
+		 window.location.href = '/';
+		 }
+		 }, 1000)
+	</script>
+</div>
 </body>
 </html>

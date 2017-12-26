@@ -86,12 +86,20 @@
 
 	//获取第一段路由
 	app.get_router = function(params){
+
+		var pathname = window.location.pathname;
+
 		if($app.empty(params) == false)
 		{
 			params = 1;
 		}
-		// .;
-		var pathname = window.location.pathname;
+		else
+		{
+			if(params == 'pop')
+			{
+				return pathname.substr(1).split('/').pop();
+			}
+		}		
 		//var pathname_obj = pathname.substr(1).split('/');
 		var pathname_string = pathname.substr(1).split('/').shift();
 		if(pathname_string == 'm')
