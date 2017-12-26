@@ -1,57 +1,58 @@
 <#extend#>public/coc/coc_extend.html</#extend#>
 <script type="text/javascript">
-    show.header = 'no';
+    if($app.get_query_string('from') == 'weplats') {
+        show.footer = 'yes';
+        show.footer = 'yes';
+    }
 </script>
-<style>
-    [v-cloak] { display: none; }
-</style>
+<link rel="stylesheet" href="{{PATH_TML}}views/css/Plat.news.detail.css">
 
-<div id="viewport" class="viewport" v-cloak style="width:100%;margin-bottom:15px">
-    <div class="tcshow_dh">
-        <div class="tcshow_dhlf">
-            <a href="javascript:history.back()"><img src="{{PATH_TML}}img/index/back02.png"></a>
-        </div>
-        <h2>{{category.title}}</h2>
+<div class="clear"></div>
+<div id="read" style="background-color:#fff">
+    <div class="read-title">
+        <p class="title" v-html="news_detail.title"></p>
     </div>
-    <div class="clear"></div>
-    <div class="xxsh_wk">
-        <div class="xxsh_tit">
-            <div stlyle="color:"><h1 v-html="news_detail.title"></h1></div>
-            <span>{{news_detail.created_at}}&ensp;{{news_detail.source}}&ensp;浏览次数：{{news_detail.views}}次</span>
+    <div class="auth-info">
+        <div class="auth-original" style="" v-if="news_detail.is_original == 1">原创</div>
+        <div class="auth-date">{{news_detail.publish_time.substring(0,10)}}</div>
+        <div class="auth-name" style="display: none;"></div>
+        <div class="auth-publisher" style="margin-right: 0.08rem;" v-html="news_detail.publisher"></div>
+        <div class="auth-main">
+            <a :href="'/'+channels+'/'+category.domain" style="color: #607fa6; text-decoration: none;" v-html="category.title"></a>
         </div>
-        <div class="clear"></div>
-        <div class="xxsh_js" style="padding:0 0;">
-            <p v-html="news_detail.content"></p>
+    </div>
+    <div id="read-art" v-html="news_detail.content"></div>
+    <div id="footer_bottom">
+        <div class="read-org" style="">
+            <a :href="news_detail.source_url">阅读原文</a>
         </div>
-        <div>
-            <div class="xxsh_fen">
-                <!-- <span>分享给好友阅读：</span> -->
-                <div class="left">
-                    <a href="javascript:void(0)" class="bds_more" style="display: flex; align-items: flex-end;">
-                        <img src="/common/img/like.png" @click="zan()" style="width: 20px; height: 20px; margin-top: 3px; padding-right: 0.3em;">{{news_detail.praise_num}}
-                    </a>
-                </div>
-            </div>
+        <div class="read-count">阅读 <span>{{news_detail.views}}</span></div>
+        <div class="read-like" @click="zan()">
+            <img src="/common/img/like.png" alt="" />
+            <span class="like-count">{{news_detail.praise_num}}</span>
         </div>
+        <div class="read-complain">投诉</div>
     </div>
 </div>
-
 <script>
     var app = new Vue({
         el: '#app',
         data: {
-            news_detail: '',
+            news_detail: {},
             category : '',
             zan_true : '',
             plats_info: plats_info,
-			id : window.location.pathname.split('/').pop()
+            channels : $app.get_router(1),
+            id : $app.get_router(2),
         },
         mounted: function() {
             ajax.get('cms/detail/'+this.id).then((res) => {
                 if (res.data && res.code === 200) {
+                    console.log(this.news_detail);
                     this.news_detail = res.data;
                     this.category = res.data.category;
-					$app.set_title(this.news_detail.title);
+                    plats.title = res.data.category.title;
+                    $app.set_title(this.news_detail.title);
                 }
             });
         },

@@ -1,0 +1,75 @@
+<#extend#>public/coc/coc_extend.html</#extend#>
+<script type="text/javascript">
+    show.header = 'no';
+</script>
+<style>
+    [v-cloak] { display: none; }
+</style>
+
+<div id="viewport" class="viewport" v-cloak style="width:100%;margin-bottom:15px">
+    <div class="tcshow_dh">
+        <div class="tcshow_dhlf">
+            <a href="javascript:history.back()"><img src="{{PATH_TML}}img/index/back02.png"></a>
+        </div>
+        <h2>{{category.title}}</h2>
+    </div>
+    <div class="clear"></div>
+    <div class="xxsh_wk">
+        <div class="xxsh_tit">
+            <div stlyle="color:"><h1 v-html="news_detail.title"></h1></div>
+            <span>{{news_detail.created_at}}&ensp;{{news_detail.source}}&ensp;浏览次数：{{news_detail.views}}次</span>
+        </div>
+        <div class="clear"></div>
+        <div class="xxsh_js" style="padding:0 0;">
+            <p v-html="news_detail.content"></p>
+        </div>
+        <div>
+            <div class="xxsh_fen">
+                <!-- <span>分享给好友阅读：</span> -->
+                <div class="left">
+                    <a href="javascript:void(0)" class="bds_more" style="display: flex; align-items: flex-end;">
+                        <img src="/common/img/like.png" @click="zan()" style="width: 20px; height: 20px; margin-top: 3px; padding-right: 0.3em;">{{news_detail.praise_num}}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            news_detail: '',
+            category : '',
+            zan_true : '',
+            plats_info: plats_info,
+			id : window.location.pathname.split('/').pop()
+        },
+        mounted: function() {
+            ajax.get('cms/detail/'+this.id).then((res) => {
+                if (res.data && res.code === 200) {
+                    this.news_detail = res.data;
+                    this.category = res.data.category;
+					$app.set_title(this.news_detail.title);
+                }
+            });
+        },
+        methods: {
+            zan(){
+                var data = new Object();
+                data.content_id = this.news_detail.weid;
+                ajax.post('cms/contents/praise', data).then((res) => {
+                    if (res.data && res.code === 200) {
+                        this.zan_true = res.data.praise;
+                        if(!this.zan_true) {
+                            mb_message('已经点赞过了');
+                            return false;
+                        }
+                        mb_message('点赞成功');
+                    }
+                });
+            }
+        }
+    })
+</script>
