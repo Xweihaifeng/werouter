@@ -36,7 +36,7 @@
 	    new Vue({
 	        el: dom_id,
 	        data: {
-	           plats : plats_info,
+	           plats : plats,
 	        },
 	        watch: {
 	          
@@ -46,6 +46,10 @@
 	            });
 	        },
 	        methods:{
+	        	open(val)
+	        	{
+	        		$app.open_page(val);
+	        	}
 	        }
 	    });
 	}

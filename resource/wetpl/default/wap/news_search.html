@@ -31,7 +31,7 @@
 		<div class="r-results">
 			<div v-for="item in list_data">
 				<div class=" g-card res-list og " v-if="item.thumb_image==''">
-					<a :href="item.channel_domain+'/'+item.weid | href" class="alink">
+					<a :href="item.channel_domain+'/'+item.weid | href('weplats')" class="alink">
 						<h3 class="res-title" v-html="getSummary(item.title)"></h3>
 						<p class="g-main summary" v-html="getSummary(item.summary)"> </p>
 					</a>
@@ -40,9 +40,9 @@
 
 
 				<div class="g-card res-list sumext-tpl-image mso" v-if="item.thumb_image!=''">
-					<a class="alink" :href="item.channel_domain+'/'+item.weid | href">
+					<a class="alink" :href="item.channel_domain+'/'+item.weid | | href('weplats')">
 					<h3 class="res-title" v-html="getSummary(item.title)"></h3>
-					</a><a :href="item.channel_domain+'/'+item.weid | href" class="alink" >
+					</a><a :href="item.channel_domain+'/'+item.weid | | href('weplats')" class="alink" >
 					<div class="res-con">
 						<div class="img">
 							<div class="imgholder">
