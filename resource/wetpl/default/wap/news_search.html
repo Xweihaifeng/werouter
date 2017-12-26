@@ -1,260 +1,259 @@
 <#extend#>public/coc/coc_extend.html</#extend#>
 <script type="text/javascript">
-	show.header = 'no';
+    show.header = 'no';
 </script>
 <link rel="stylesheet" type="text/css" href="{{PATH_TML}}css/search.css" />
 
 <header  class="g-header g-header-v2">
-	<div class="g-header-search-wrap">
-		<div class="g-header-nav-wrap">
-			<h1  class="g-header-logo" style="vertical-align:middle"><img :src="logo_bg | img_src(28 ,28)" /> <img src="/common/img/sou_title.png" height="28px" /></h1>
-			<div class="g-header-nav">
-				<div class="g-header-nav-inner">
-					<nav v-if="index < 4" v-for="(item , index) in columnList" @click="currentActive=item.domain;goSearchOpen()">
-						<a :style="{color:'#38f'}" v-if="item.domain == currentActive" href="javascript:void(0)">{{item.search_name}}</a>
-						<a v-else  href="javascript:void(0)">{{item.search_name}}</a>
-					</nav>	
-				</div>
-			</div>
-		</div>
-		<div class="g-header-search-box" id="search-box">
-			<div class="g-header-search-form-container" style="position: relative;">
-				<div :class="form_class"  >
-					<div class="g-header-input-container"> <input placeholder="请输入关键字" keyup.enter="goSearchOpen()" id="q" name="q" class="g-header-q" maxlength="100" autocomplete="off" autocorrect="off" x-webkit-speech="" v-model="searchText" value=""> </div> <button type="submit" class="g-header-search-button" @click="goSearchOpen();">搜索</button> </div>
-				<div class="suggest-reset" style="display: none;"><i></i></div>
-			</div>
-		</div>
-	</div>
+    <div class="g-header-search-wrap">
+        <div class="g-header-nav-wrap">
+            <h1  class="g-header-logo" style="vertical-align:middle"><img :src="logo_bg | img_src(28 ,28)" /> <img src="/common/img/sou_title.png" height="28px" /></h1>
+            <div class="g-header-nav">
+                <div class="g-header-nav-inner">
+                    <nav v-if="index < 4" v-for="(item , index) in columnList" @click="currentActive=item.domain;goSearchOpen()">
+                        <a :style="{color:'#38f'}" v-if="item.domain == currentActive" href="javascript:void(0)">{{item.search_name}}</a>
+                        <a v-else  href="javascript:void(0)">{{item.search_name}}</a>
+                    </nav>    
+                </div>
+            </div>
+        </div>
+        <div class="g-header-search-box" id="search-box">
+            <div class="g-header-search-form-container" style="position: relative;">
+                <div :class="form_class"  >
+                    <div class="g-header-input-container"> <input placeholder="请输入关键字" keyup.enter="goSearchOpen()" id="q" name="q" class="g-header-q" maxlength="100" autocomplete="off" autocorrect="off" x-webkit-speech="" v-model="searchText" value=""> </div> <button type="submit" class="g-header-search-button" @click="goSearchOpen();">搜一下</button> </div>
+                <div class="suggest-reset" style="display: none;"><i></i></div>
+            </div>
+        </div>
+    </div>
 </header>
 <section class="page-content">
-	<div id="main">
-		<div class="r-results">
-			<div v-for="item in list_data">
-				<div class=" g-card res-list og " v-if="item.thumb_image==''">
-					<a :href="item.channel_domain+'/'+item.weid | href('weplats')" class="alink">
-						<h3 class="res-title" v-html="getSummary(item.title)"></h3>
-						<p class="g-main summary" v-html="getSummary(item.summary)"> </p>
-					</a>
-					<div class="res-supplement"> <cite><span class="res-site-url" v-html="all_domian+item.channel_domain+'/...'"></span></cite><!-- <time>09-20</time> --></div>
-				</div>
+    <div id="main">
+        <div class="r-results">
+            <div v-for="item in list_data">
+                <div class=" g-card res-list og " v-if="item.thumb_image==''">
+                    <a :href="item.channel_domain+'/'+item.weid | href('weplats')" class="alink">
+                        <h3 class="res-title" v-html="getSummary(item.title)"></h3>
+                        <p class="g-main summary" v-html="getSummary(item.summary)"> </p>
+                    </a>
+                    <div class="res-supplement"> <cite><span class="res-site-url" v-html="all_domian+item.channel_domain+'/...'"></span></cite><!-- <time>09-20</time> --></div>
+                </div>
+                <div class="g-card res-list sumext-tpl-image mso" v-if="item.thumb_image!=''">
+                    <a class="alink" :href="item.channel_domain+'/'+item.weid | | href('weplats')">
+                        <h3 class="res-title" v-html="getSummary(item.title)"></h3>
+                    </a>
+                    <a :href="item.channel_domain+'/'+item.weid | | href('weplats')" class="alink" >
+                        <div class="res-con">
+                            <div class="img">
+                                <div class="imgholder">
+                                    <img :src="item.thumb_image | img_src(120,120 )">
+                                </div>
+                            </div>
+                            <div class="con hasImg">
+                                <div class="summary" v-html="getSummary(item.summary)">
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <div class="res-supplement">
+                        <cite><span class="res-site-url" v-html="all_domian+item.channel_domain+'/...'"></span></cite><!-- <time>09-20</time> -->
+                    </div>
+                </div>
 
-
-				<div class="g-card res-list sumext-tpl-image mso" v-if="item.thumb_image!=''">
-					<a class="alink" :href="item.channel_domain+'/'+item.weid | | href('weplats')">
-					<h3 class="res-title" v-html="getSummary(item.title)"></h3>
-					</a><a :href="item.channel_domain+'/'+item.weid | | href('weplats')" class="alink" >
-					<div class="res-con">
-						<div class="img">
-							<div class="imgholder">
-								<img :src="item.thumb_image | img_src(120,120)">
-							</div>
-						</div>
-						<div class="con hasImg">
-							<div class="summary" v-html="getSummary(item.summary)">
-							</div>
-						</div>
-					</div>
-					</a>
-					<div class="res-supplement">
-						<cite><span class="res-site-url" v-html="all_domian+item.channel_domain+'/...'"></span></cite><!-- <time>09-20</time> -->
-					</div>
-				</div>
-
-			</div>
-		</div>
-	</div>
+            </div>
+        </div>
+    </div>
 </section>
 <script>
 var app = new Vue({
-	el: '#app',
-	data: {
-		form_class:'g-header-search-form',
-		channel: '',
-		spinner: false,
-		currentActive: '',
-		sortTime: null,
-		byTitle: null,
-		isShow: true,
-		order: '',
-		logo: '',
-		total: 0,
-		list_data: [],
-		searchText: '',
-		columnList: [],
-		limit: 10,
-		page: 1,
-		title: '',
-		post: window.location.host,
-		logo_bg: plats_info.logo,
-		params: {
-			title: this.searchText,
-			channel_id: this.currentActive,
-			time_scope: this.sortTime,
-			order: this.order,
-			page: 1,
-			limit: 10
-		},
-		dom:'#main'
-	},
-	mounted: function() {
-		this.title = plats_info.title;
+    el: '#app',
+    data: {
+        form_class:'g-header-search-form',
+        channel: '',
+        spinner: false,
+        currentActive: '',
+        sortTime: null,
+        byTitle: null,
+        isShow: true,
+        order: '',
+        logo: '',
+        total: 0,
+        list_data: [],
+        searchText: '',
+        columnList: [],
+        limit: 10,
+        page: 1,
+        title: '',
+        post: window.location.host,
+        logo_bg: plats_info.logo,
+        params: {
+            title: this.searchText,
+            channel_id: this.currentActive,
+            time_scope: this.sortTime,
+            order: this.order,
+            page: 1,
+            limit: 10
+        },
+        dom:'#main'
+    },
+    mounted: function() {
+        this.title = plats_info.title;
 
-		this.getCloumn();
+        this.getCloumn();
 
-		this.currentActive = $app.get_query_string('c') ? $app.get_query_string('c') : '';
+        this.currentActive = $app.get_query_string('c') ? $app.get_query_string('c') : '';
 
-		this.params.channel_id = $app.get_query_string('c') ? $app.get_query_string('c') : '';
+        this.params.channel_id = $app.get_query_string('c') ? $app.get_query_string('c') : '';
 
-		this.params.title = $app.get_query_string('q') ? $app.get_query_string('q') : '';
+        this.params.title = $app.get_query_string('q') ? $app.get_query_string('q') : '';
 
-		this.searchText = $app.get_query_string('q') ? $app.get_query_string('q') : '';
-		
-		if(this.currentActive == '' && this.searchText) {
-			document.title = this.searchText +'_搜索 - '+ plats_info.title;
-		} else {
-			document.title = '搜索 - ' + plats_info.title;
-		}
-		//this.$nextTick(()=>{
-			this.data_list();
-		//});
-		
-	},
-	methods: {
-		// 使用common_page 方法必须定义data方法 以及对象 params
-    	data(params , call){
-    		console.log(this.params);
-    		ajax.get('cms/content_search', {params:this.params}).then((res) => {
-				this.spinner = false;
-				if(res.code == 200) {
+        this.searchText = $app.get_query_string('q') ? $app.get_query_string('q') : '';
+        
+        if(this.currentActive == '' && this.searchText) {
+            document.title = this.searchText +'_搜索 - '+ plats_info.title;
+        } else {
+            document.title = '搜索 - ' + plats_info.title;
+        }
+        //this.$nextTick(()=>{
+            this.data_list();
+        //});
+        
+    },
+    methods: {
+        // 使用common_page 方法必须定义data方法 以及对象 params
+        data(params , call){
+            console.log(this.params);
+            ajax.get('cms/content_search', {params:this.params}).then((res) => {
+                this.spinner = false;
+                if(res.code == 200) {
 
-					this.total = res.data.total;
-					if(this.total == 0)
-					{
-						call(false);
-						return false;
-					}
-					if(Math.ceil(this.total / this.limit) <= 1) {
-						this.isShow = false;
-					}
+                    this.total = res.data.total;
+                    if(this.total == 0)
+                    {
+                        call(false);
+                        return false;
+                    }
+                    if(Math.ceil(this.total / this.limit) <= 1) {
+                        this.isShow = false;
+                    }
 
-					var pageCount = Math.ceil(res.data.total / params.limit);
-	                var post = {
-	                    data : {
-	                        code : 200,
-	                        list: res.data.list,
-	                        params : {
-	                            pageCount : pageCount,
-	                            currPage : params.page,
-	                        }
-	                    },
-	                };
-	                call(post);
-				}
-			});
-    		//return $mob_ajax.cms_lists(params , call);
-    	},
-    	data_list() {
-    		$mob_ajax.common_page(this , this.params);
-    	},
-		goSearchOpen: function() {
-			var url = '';
-			if($app.empty(this.currentActive) == false) {
-				url = all_domian + "so?q=" + this.searchText;
-			} else {
+                    var pageCount = Math.ceil(res.data.total / params.limit);
+                    var post = {
+                        data : {
+                            code : 200,
+                            list: res.data.list,
+                            params : {
+                                pageCount : pageCount,
+                                currPage : params.page,
+                            }
+                        },
+                    };
+                    call(post);
+                }
+            });
+            //return $mob_ajax.cms_lists(params , call);
+        },
+        data_list() {
+            $mob_ajax.common_page(this , this.params);
+        },
+        goSearchOpen: function() {
+            var url = '';
+            if($app.empty(this.currentActive) == false) {
+                url = all_domian + "so?q=" + this.searchText;
+            } else {
 
-				url = all_domian + "so?c=" + this.currentActive + "&q=" + this.searchText;
-			}
-			$app.open_page(url);
-		},
-		getCloumn: function() {
-			ajax.get('cms/channel_search').then((res) => {
-				if(res.code == 200 && res.data.list.length) {
-					this.columnList = res.data.list;
-					for(var item of this.columnList) {
-						if(item.domain == this.currentActive) {
-							// document.title = item.search_name + '_搜索 - ' + this.searchText + ' - ' + plats_info.title;
+                url = all_domian + "so?c=" + this.currentActive + "&q=" + this.searchText;
+            }
+            $app.open_page(url);
+        },
+        getCloumn: function() {
+            ajax.get('cms/channel_search').then((res) => {
+                if(res.code == 200 && res.data.list.length) {
+                    this.columnList = res.data.list;
+                    for(var item of this.columnList) {
+                        if(item.domain == this.currentActive) {
+                            // document.title = item.search_name + '_搜索 - ' + this.searchText + ' - ' + plats_info.title;
                             if(!this.searchText) {
                                 document.title = '搜索 - ' + plats_info.title;
                             } else {
                                 document.title = this.searchText +'_搜索 - '+ plats_info.title;
                             }
-						}
-					}
-				}
-			});
-		},
+                        }
+                    }
+                }
+            });
+        },
 
-		toRed: function(text) {
-			var reg = new RegExp(app.searchText, "gi");
-			var result = text.replace(reg, function(key) {
-				var template = '<span style="color:#c00;">' + key + '</span>';
+        toRed: function(text) {
+            var reg = new RegExp(app.searchText, "gi");
+            var result = text.replace(reg, function(key) {
+                var template = '<span style="color:#c00;">' + key + '</span>';
 
-				return template;
-			});
-			return result
-		},
-		getSort: function(item) {
-			if(!item) {
-				this.currentActive = '';
-				document.title = '搜索 - ' + plats_info.title
-			} else {
-				this.currentActive = item.domain;
-				document.title = item.title + '_搜索 - ' + plats_info.title
-			}
-			this.page = 1;
-			this.goSearch();
-		},
-		getSummary: function(text) {
-			if(text.length > 100) {
-				text = text.substring(0, 80) + '...';
-			}
-			var res = this.toRed(text);
-			return res;
-		},
-		goPage: function(n) {
-			this.page = n;
-			this.goSearch();
-		},
-		previous: function() {
-			this.page -= 1;
-			if(this.page < 1) {
-				this.page = 1;
-				return
-			}
-			this.goSearch();
-		},
-		next: function() {
-			this.page += 1;
-			if(this.page > Math.ceil((this.total / this.limit).toFixed(2))) {
-				this.page = Math.ceil((this.total / this.limit).toFixed(2))
-				return
-			}
-			this.goSearch();
-		},
-		getSearchByTime: function(time) {
-			if(time == 'day') {
-				this.sortTime = 1
-			} else if(time == 'week') {
-				this.sortTime = 7
-			} else if(time == 'mon') {
-				this.sortTime = 30
-			} else {
-				this.sortTime = ''
-			}
-			this.goSearch();
-		},
-		getOrder: function(order) {
-			if(order == 'publish') {
-				this.order = 'publish_time'
-			} else if(order == 'update') {
-				this.order = 'updated_at'
-			}
-			this.goSearch();
-		},
-		getTitle: function(title) {
-			this.byTitle = title;
-			this.goSearch();
-		}
-	}
+                return template;
+            });
+            return result
+        },
+        getSort: function(item) {
+            if(!item) {
+                this.currentActive = '';
+                document.title = '搜索 - ' + plats_info.title
+            } else {
+                this.currentActive = item.domain;
+                document.title = item.title + '_搜索 - ' + plats_info.title
+            }
+            this.page = 1;
+            this.goSearch();
+        },
+        getSummary: function(text) {
+            if(text.length > 100) {
+                text = text.substring(0, 80) + '...';
+            }
+            var res = this.toRed(text);
+            return res;
+        },
+        goPage: function(n) {
+            this.page = n;
+            this.goSearch();
+        },
+        previous: function() {
+            this.page -= 1;
+            if(this.page < 1) {
+                this.page = 1;
+                return
+            }
+            this.goSearch();
+        },
+        next: function() {
+            this.page += 1;
+            if(this.page > Math.ceil((this.total / this.limit).toFixed(2))) {
+                this.page = Math.ceil((this.total / this.limit).toFixed(2))
+                return
+            }
+            this.goSearch();
+        },
+        getSearchByTime: function(time) {
+            if(time == 'day') {
+                this.sortTime = 1
+            } else if(time == 'week') {
+                this.sortTime = 7
+            } else if(time == 'mon') {
+                this.sortTime = 30
+            } else {
+                this.sortTime = ''
+            }
+            this.goSearch();
+        },
+        getOrder: function(order) {
+            if(order == 'publish') {
+                this.order = 'publish_time'
+            } else if(order == 'update') {
+                this.order = 'updated_at'
+            }
+            this.goSearch();
+        },
+        getTitle: function(title) {
+            this.byTitle = title;
+            this.goSearch();
+        }
+    }
 })
 </script>
