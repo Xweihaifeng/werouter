@@ -372,6 +372,12 @@
 .fade-enter, .fade-leave-to /* .fade-leave-active in below version 2.1.8 */ {
     opacity: 0
 }
+.slide-enter-active, .slide-leave-active {
+    transition: height .2s linear;
+}
+.slide-enter, .slide-leave-to /* .fade-leave-active in below version 2.1.8 */ {
+    height: 0
+}
 .modal-content .top{
     border-bottom: 0.02rem solid #e5e5e5;
     padding: 0.1rem 0;
