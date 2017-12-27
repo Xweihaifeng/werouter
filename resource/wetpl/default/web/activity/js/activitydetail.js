@@ -457,9 +457,9 @@ $(document).ready(function() {
                     '<div class="sign_head_contain">' +
                     '<div class="act_title">' +
                     '<div class="mp">' +
-                        '<ul>' +
+                    '<ul>' +
 
-                        '</ul>' +
+                    '</ul>' +
                     '</div>' +
                     /*(rep.data.type == 1 ? '<img src="\/common\/img\/ticket-jia.png" >' : '<p>￥<b>' +
                         rep.data.price + `</b> / 每人</p>`) +*/
@@ -519,34 +519,33 @@ $(document).ready(function() {
                     $.ajax({
                         url: apiUrl + 'activity/tickets?activity_id=' + window.location.pathname.split('/').pop(),
                         type: 'GET',
-                        success: function(data){
+                        success: function(data) {
                             console.log(data);
                             var ids = [];
                             $(".mp ul").append(
                                 data.data.reduce((res, e, i) =>
                                     (ids.push(e.weid),
-                                    res += '<li id="' + e.weid + '">' +
-                                            '<img src="/common/img/rmb.png">' +
-                                            '<p class="price">' + e.price + '</p>' +
-                                            '<div>' +
-                                            '<p class="tkname">' + e.name + '</p>' +
-                                            '<p class="tkdscp">' + e.description + '</p>' +
-                                            '</div>' +
-                                            '</li>')
-                                , '')
+                                        res += '<li id="' + e.weid + '">' +
+                                        '<img src="/common/img/rmb.png">' +
+                                        '<p class="price">' + e.price + '</p>' +
+                                        '<div>' +
+                                        '<p class="tkname">' + e.name + '</p>' +
+                                        '<p class="tkdscp">' + e.description + '</p>' +
+                                        '</div>' +
+                                        '</li>'), '')
                             );
                             var add = (id) => {
                                 tid = id;
                                 $("#" + id).css('border', '2px solid #007cd3');
                                 $("#" + id + ' .price').css('color', '#007cd3');
                                 $("#" + id + ' img').attr('src', '/common/img/rmbo.png');
-                                $("#" + id + ' div').css({'background': '#007cd3'});
-                                $("#" + id + ' div p').css({'color': 'white'});
+                                $("#" + id + ' div').css({ 'background': '#007cd3' });
+                                $("#" + id + ' div p').css({ 'color': 'white' });
                             }
                             var remove = (id) => {
                                 ids.filter(x => x != id).map(x => $('#' + x).css('border', '2px solid #dddddd'));
-                                ids.filter(x => x != id).map(x => $('#' + x + ' div').css({'background': 'white'}));
-                                ids.filter(x => x != id).map(x => $('#' + x + ' div p').css({'color': '#555'}));
+                                ids.filter(x => x != id).map(x => $('#' + x + ' div').css({ 'background': 'white' }));
+                                ids.filter(x => x != id).map(x => $('#' + x + ' div p').css({ 'color': '#555' }));
                                 ids.filter(x => x != id).map(x => $('#' + x + ' .price').css('color', '#555'));
                                 ids.filter(x => x != id).map(x => $('#' + x + ' img').attr('src', '/common/img/rmb.png'));
                             }
@@ -922,6 +921,7 @@ $(document).ready(function() {
                                 $(".support").css("background", "#ccc");
 
                             }
+                            qrcodefun(id);
                             $(".support").unbind().bind("click", function() {
 
 
@@ -950,7 +950,7 @@ $(document).ready(function() {
                                 }
 
                             })
-                            qrcodefun(id);
+
                         }
 
                     } else {
