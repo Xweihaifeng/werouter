@@ -27,9 +27,9 @@
 	            // 分享标题
 	            link: data_share.link,
 	            // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-	            desc: data_share.summary,
+	            desc: data_share.desc,
 	            //分享描述
-	            imgUrl: data_share.cover,
+	            imgUrl: data_share.imgUrl,
 	            //imgUrl: 'http://images.wezchina.com/pages/article/1512179569854.png',
 	            // 分享图标
 	            success: function() {
@@ -44,9 +44,9 @@
 	            // 分享标题
 	            link: data_share.link,
 	            // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-	            desc: data_share.summary,
+	            desc: data_share.desc,
 	            //分享描述
-	            imgUrl: data_share.cover,
+	            imgUrl: data_share.imgUrl,
 	            // 分享图标
 	            type: '',
 	            // 分享类型,music、video或link，不填默认为link
