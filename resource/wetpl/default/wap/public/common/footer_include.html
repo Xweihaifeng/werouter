@@ -1,0 +1,147 @@
+<div id="footer" style="display:none;padding-top:25px;">
+<!-- 	<div class="dbback" v-if="cuupage!='' && cuupage!='so' && cuupage.length !=36">
+		<ul>
+			<li><a :href="'/' | href"><span><img src="/resource/wetpl/default/wap/img/index/home2.png"></span><p>回首页</p></a></li>
+			<li><a href="javascript:scroll(0,0)" id="top"><span><img src="/resource/wetpl/default/wap/img/index/back.png"></span><p>回顶部</p></a></li>
+		</ul>
+		<div class="clear"></div>
+	</div> -->
+	<!-- <div style="padding-top: 20px;" v-if></div> -->
+	<footer >
+		<br/><br/><br/>
+		
+		<ul>
+			<li :id="key" v-for="(item , key) in footer_nav" @click="open(key);">
+				<div class="up" v-if="item.nav == false"></div>
+				<div class="down" v-if="item.nav == false"></div>
+				
+				<img :src="item.select_img"  v-if="key == router" />
+				<img :src="item.img"  v-else />
+				
+				<span v-if="item.nav != false" :class="{'footer_selecte' : key == router}">{{item.name}}</span>
+			</li>
+		</ul>
+	</footer>
+</div>
+<script type="text/javascript">	
+	// footer 渲染
+	function init_footer(show) {
+		if(show == 'no') return false;
+	    var dom_id = '#footer';
+	    if(show != 'yes')
+	    {
+	    	dom_id = '#'+show;
+	    }
+		$('#footer').show();
+		return new Vue({
+	        el: '#footer',
+	        data: {
+	            router : $app.get_router(),
+	            cuupage : $app.get_router('pop'),
+	            footer_nav : {
+	                home :{
+	                    'name' : '首页',
+	                    'nav' : true,
+	                    'login' : false,
+	                    'img' : '/common/img/home.png',
+	                    'select_img' : '/common/img/homeblue.png',
+	                    'href' : all_domian
+	                },
+	                discovery : {
+	                    'name' : '发现',
+	                    'nav' : true,
+	                    'login' : false,
+	                    'img' : '/common/img/discovery.png',
+	                    'select_img' : '/common/img/discoveryblue.png',
+	                    'href' : all_domian + 'discovery/dynamic'
+	                },
+	                add : {
+	                    'name' : '添加',
+	                    'nav' : false,
+	                    'login' : false,
+	                    'img' : '/common/img/add.png',
+	                    'select_img' : '/common/img/add.png',
+	                    'href' : false
+	                },
+	                message : {
+	                    'name' : '消息',
+	                    'nav' : true,
+	                    'login' : false,
+	                    'img' : '/common/img/message.png',
+	                    'select_img' : '/common/img/messageblue.png',
+	                    'href' : all_domian + 'message'
+	                },
+	                user : {
+	                    'name' : '我的',
+	                    'nav' : true,
+	                    'login' : true,
+	                    'img' : '/common/img/user.png',
+	                    'select_img' : '/common/img/userblue.png',
+	                    'href' : all_domian + 'user'
+	                }
+	            },
+	            page : '',
+	        },
+	        mounted() {
+	            this.$nextTick( function () {
+	            	if(is_domain == 'yes' || $app.empty(this.router) == false)
+	            	{
+	            		this.router = 'home';
+	            	}
+	            	else
+	            	{
+	            		var router = this.footer_nav[this.router];
+	            		if($app.empty(router) == false)
+	            		{
+	            			this.router = 'home';
+	            		}
+	            	}
+
+	            });
+	        },
+	        methods:{
+	        	open(val)
+	        	{
+	        		if(this.cuupage != val)
+	                {
+	                	var select = this.footer_nav[val];
+	                	if(select.href == false) {
+	                		// mb_add();
+	                		return false;
+	                	}
+	                	if(select.login == true)
+	                	{
+	                		if(is_login != 'yes')
+	                		{
+	                			mb_login(select.href);
+	                			return ;
+	                		}
+	                	}
+	                	var cookie_domain = $app.get_cookie('domain');
+	                	if(val == 'home')
+	                	{
+	                		if(cookie_domain != false)
+	                		{
+	                			if(cookie_domain == '/')
+	                			{
+	                				window.location.href= all_domian;
+	                			}
+	                			else
+	                			{
+	                				window.location.href= all_domian + cookie_domain;
+	                			}
+	                			
+	                			return false;
+	                		}
+	                	}
+	                    window.location.href = select.href;
+	                }
+	        	}
+	        }
+	    });
+	}
+	
+	init_header(show.header);
+	init_footer(show.footer);
+</script>
+</body>

@@ -8,9 +8,12 @@ $(document).ready(function() {
 			dataType: 'JSON',
 			success: function(result) {
 				if(result.code === 200) {
-					$('#name').val(result.data.name);
+                    $('#name').val(result.data.name);
+					if (result.data.name == 'superManager') {
+                        $('#name').val(result.data.name).attr('readonly', true);
+					}
 					$('#display_name').val(result.data.display_name);
-                    $("input[name=status][value=" + result.data.status +  "]").attr('checked', true);
+                    $("input[name=status][value=" + result.data.status + "]").attr('checked', true);
 					$('#describe').val(result.data.description);
 				} else {
 					parent.layer.msg(result.message);
