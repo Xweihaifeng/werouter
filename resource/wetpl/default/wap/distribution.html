@@ -35,7 +35,8 @@
         </aside>
         <div class="distri-container">
             <div v-if="!disList.length" class="tips">{{tips}}</div>
-            <div v-for="item in disList" class="disList "><!-- disList_orange -->
+            <div v-for="(item, index) in disList" :class="index == 0? 'disList disList_orange' : 'disList'">
+                <i></i>
                 <aside>{{item.context}}</aside>
                 <aside>{{item.time.substr(0,10)}}</aside>
             </div>

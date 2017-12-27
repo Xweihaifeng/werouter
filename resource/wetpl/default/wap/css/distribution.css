@@ -77,20 +77,18 @@ section {
     position: relative;
 }
 
-.distri-container::before {
-    content: "";
+.disList:not(:last-child)::before {
     position: absolute;
-    left: 0.05rem;
-    top: 5%;
+    content: "";
+    left: -0.15rem;
+    top: 0.2rem;
     width: 1px;
-    height: 90%;
+    height: 100%;
     background-color: #3985ff;
 }
 
 .distri-container > div{
     padding: 0.05rem 0;
-    /*overflow: hidden;*/
-    /*display: flex;*/
 }
 .distri-container > div > aside{
 }
@@ -153,8 +151,8 @@ section {
 }
 
 .shop_box_list > li > img {
-    width: 80px;
-    height: 80px;
+    width: 90%;
+    height: 70%;
 }
 
 .shop_box_list > li > div {
@@ -165,7 +163,7 @@ section {
     position: relative;
 }
 
-.disList::before {
+.disList > i {
     position: absolute;
     z-index: 1;
     content: "";
@@ -179,10 +177,10 @@ section {
     border: 1px solid #3985ff;
 }
 
-.disList::after {
+.disList > i::after {
     position: absolute;
-    top: 0.15rem;
-    left: -0.18rem;
+    top: 0.01rem;
+    left: 0.01rem;
     content: "";
     width: 0.06rem;
     height: 0.06rem;
@@ -191,14 +189,18 @@ section {
     z-index: 1;
 }
 
-.disList_orange::before {
+.disList_orange > i {
     border: 1px solid #fb8a00;
 }
 
-.disList_orange::after {
+.disList_orange > i::after {
     background-color: #fb8a00;
 }
 
 .disList_orange > aside:first-child {
     color: #e4393c!important;
+}
+
+.disList_orange::before {
+    background-color: #fb8a00!important;
 }
