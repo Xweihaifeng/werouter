@@ -18,48 +18,46 @@
 				signature: res.data.signature,
 				jsApiList: ['onMenuShareTimeline' , 'onMenuShareAppMessage']
 			});
+			wx.ready(function() {
+		        wx.onMenuShareTimeline({
+		            title: data_share.title,
+		            // 分享标题
+		            link: data_share.link,
+		            // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+		            desc: data_share.desc,
+		            //分享描述
+		            imgUrl: data_share.imgUrl,
+		            //imgUrl: 'http://images.wezchina.com/pages/article/1512179569854.png',
+		            // 分享图标
+		            success: function() {
+		                mb_message('分享成功');
+		            },
+		            cancel: function() {
+		                mb_message('分享失败');
+		            }
+		        });
+		        wx.onMenuShareAppMessage({
+		            title: data_share.title,
+		            // 分享标题
+		            link: data_share.link,
+		            // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+		            desc: data_share.desc,
+		            //分享描述
+		            imgUrl: data_share.imgUrl,
+		            // 分享图标
+		            type: '',
+		            // 分享类型,music、video或link，不填默认为link
+		            dataUrl: '',
+		            // 如果type是music或video，则要提供数据链接，默认为空
+		            success: function() {
+		                mb_message('分享成功');
+		            },
+		            cancel: function() {
+		                mb_message('分享失败');
+		            }
+		        });
+	    	});
 		});
-
-        wx.ready(function() {
-
-	        wx.onMenuShareTimeline({
-	            title: '关钊',
-	            // 分享标题
-	            link: data_share.link,
-	            // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-	            desc: data_share.desc,
-	            //分享描述
-	            imgUrl: data_share.imgUrl,
-	            //imgUrl: 'http://images.wezchina.com/pages/article/1512179569854.png',
-	            // 分享图标
-	            success: function() {
-	                mb_message('分享成功');
-	            },
-	            cancel: function() {
-	                mb_message('分享失败');
-	            }
-	        });
-	        wx.onMenuShareAppMessage({
-	            title: '关钊',
-	            // 分享标题
-	            link: data_share.link,
-	            // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-	            desc: data_share.desc,
-	            //分享描述
-	            imgUrl: data_share.imgUrl,
-	            // 分享图标
-	            type: '',
-	            // 分享类型,music、video或link，不填默认为link
-	            dataUrl: '',
-	            // 如果type是music或video，则要提供数据链接，默认为空
-	            success: function() {
-	                mb_message('分享成功');
-	            },
-	            cancel: function() {
-	                mb_message('分享失败');
-	            }
-	        });
-    	});
 	}
 	wx_init.get_openid = function(name){
 		if(is_wx == 'no') return false;
