@@ -1,0 +1,55 @@
+<#extend#>public/domain/domain_extend.html</#extend#>
+<script type="text/javascript">
+    $app.set_title('查看电子票');
+    show.header = 'no';
+    show.footer = 'no';
+</script>
+<link rel="stylesheet" href="{{PATH_TML}}css/home.css"/>
+<link rel="stylesheet" href="{{PATH_TML}}css/common.css"/>
+<link rel="stylesheet" href="{{PATH_TML}}css/E-ticket.css">
+<link rel="stylesheet" href="/common/font/iconfont.css" />
+<script src="/common/js/jquery.min.js"></script>
+<script src="/common/js/jquery.qrcode.min.js"></script>
+<div class="ticket-content">
+    <div class="toolbar"></div>
+    <div class="info">
+        <div class="qr">
+            <div class="qr-content"></div>
+            <p>票号：D1478523695</p>
+        </div>
+        <div class="des">
+            <h3>创IN中国 最后一站城市赛：杭州未来科技城站 | 人工智能全国创业大赛</h3>
+            <p class="time">2017/12/28 星期四 13:00 ~ 17:30</p>
+            <p>杭州余杭区未来科技城高教路与向往街交汇处高新汇人工智能产业园3号楼A座1楼大厅</p>
+        </div>
+        <ul>
+            <li>
+                <i style="background:url('/common/img/sign2.png') no-repeat center center"></i>
+                <span>郑晓娇</span>
+            </li>
+            <li>
+                <i style="background:url('/common/img/sign3.png') no-repeat center center"></i>
+                <span>13227723564</span>
+            </li>
+            <li>
+                <i style="background:url('/common/img/sign4.png') no-repeat center center"></i>
+                <span>技术</span>
+            </li>
+            <li>
+                <i style="background:url('/common/img/sign.png') no-repeat center center"></i>
+                <span>微众中国</span>
+            </li>
+        </ul>
+    </div>
+</div>
+<script>
+    new Vue({
+        el : '#app',
+        data : {
+
+        },
+        mounted : function () {
+
+        }
+    })
+</script>
