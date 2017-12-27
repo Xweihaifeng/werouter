@@ -1,26 +1,27 @@
 <div id="footer" style="display: none;">
-	<div class="dbback" v-if="cuupage!='' && cuupage!='so' && cuupage.length !=36">
+<!-- 	<div class="dbback" v-if="cuupage!='' && cuupage!='so' && cuupage.length !=36">
 		<ul>
 			<li><a :href="'/' | href"><span><img src="/resource/wetpl/default/wap/img/index/home2.png"></span><p>回首页</p></a></li>
 			<li><a href="javascript:scroll(0,0)" id="top"><span><img src="/resource/wetpl/default/wap/img/index/back.png"></span><p>回顶部</p></a></li>
 		</ul>
 		<div class="clear"></div>
-	</div>
-<footer >
-	<br/><br/><br/>
-	
-	<ul>
-		<li :id="key" v-for="(item , key) in footer_nav" @click="open(key);">
-			<div class="up" v-if="item.nav == false"></div>
-			<div class="down" v-if="item.nav == false"></div>
-			
-			<img :src="item.select_img"  v-if="key == router" />
-			<img :src="item.img"  v-else />
-			
-			<span v-if="item.nav != false" :class="{'footer_selecte' : key == router}">{{item.name}}</span>
-		</li>
-	</ul>
-</footer>
+	</div> -->
+	<div style="margin-top: 20px" v-else></div>
+	<footer >
+		<br/><br/><br/>
+		
+		<ul>
+			<li :id="key" v-for="(item , key) in footer_nav" @click="open(key);">
+				<div class="up" v-if="item.nav == false"></div>
+				<div class="down" v-if="item.nav == false"></div>
+				
+				<img :src="item.select_img"  v-if="key == router" />
+				<img :src="item.img"  v-else />
+				
+				<span v-if="item.nav != false" :class="{'footer_selecte' : key == router}">{{item.name}}</span>
+			</li>
+		</ul>
+	</footer>
 </div>
 <script type="text/javascript">
 
@@ -130,8 +131,8 @@
 	                {
 	                	var select = this.footer_nav[val];
 	                	if(select.href == false) {
-	                		mb_add();
-	                		return;
+	                		// mb_add();
+	                		return false;
 	                	}
 	                	if(select.login == true)
 	                	{

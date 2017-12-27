@@ -1,83 +1,204 @@
-<!DOCTYPE html>
 
+<#extend#>public/domain/domain_extend.html</#extend#>
+<script type="text/javascript">
+    show.header = 'no';
+    show.footer = 'no';
+</script>
+<!--
 <html>
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-    <title> 我的订单 </title>
-
-    <link href="{{PATH_TML}}css/all-order.css" rel="stylesheet">
-
-    <script src="{{PATH_TML}}js/jquery-3.2.1.min.js"></script>
-    <script src="{{PATH_CONFIG}}"></script>
-    <script src="{{PATH_TML}}js/vue.min.js"></script>
-    <script src="{{PATH_TML}}js/vue-resource.min.js"></script>
-    <script type="text/javascript" src="/common/layer-v3.0.3/layer-v3.0.3/layer/layer.js"></script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,minimum-scale=1" />
+    <title>我的订单</title>
+    -->
+    <link rel="stylesheet" type="text/css" href="{{PATH_TML}}shopping/css/base.css">
+    <link rel="stylesheet" type="text/css" href="{{PATH_TML}}shopping/css/nctouch_member.css">
+    <link rel="stylesheet" type="text/css" href="{{PATH_TML}}shopping/css/nctouch_common.css">
+    <link rel="stylesheet" type="text/css" href="{{PATH_TML}}shopping/css/nctouch_cart.css">
 </head>
+
 <body>
-<div id="order-app" v-cloak>
-    <header>
-        <span> 我的订单 </span>
-        <a class="back" href="javascript:void(0)" onclick="javascript:history.back(-1)"></a>
-    </header>
-    <div class="order-container">
-        <ul>
-            <li :class="{'red-line':sortNum === index}" v-for="(sort,index) in sortList" @click="getSort(index)">{{sort}}</li>
+<div class="nctouch-main-layout" id="app">
+    <div id="fixed_nav" class="nctouch-single-nav">
+        <ul id="filtrate_ul" class="w20h">
+            <li :class="{'selected':sortNum === sort.status}" v-for="(sort,index) in sortList" @click="getSort(sort.status)"><a href="javascript:void(0);">{{sort.text}}</a></li>
         </ul>
-        <div class="singleOrder" v-for="order in orderList">
-            <div class="order-number">
-                <span>订单号：{{order.order_num}}</span>
-            </div>
-            <div class="order-status">
-                <div>
-                    <p>状态：{{getStatus(order.order_status)}}</p>
-                    <p>总价：￥{{order.order_price}}</p>
+    </div>
+
+    <div class="nctouch-order-list" style="margin-top: 0px;">
+        <ul id="order-list">
+            <li class="green-order-skin" v-for="(order, index) in orderList" style="background: #FFF;">
+
+                <div class="nctouch-order-item">
+
+                    <div class="nctouch-order-item-con" style="background: #FFF;">
+
+                        <div class="goods-block" v-for="good in order.goods" style="background: #FFF;">
+                            <a :href="'/'+order.domain+'/wemall/goods/'+good.goods_id | href('weplats')">
+                                <div class="goods-pic">
+                                    <img :src="ApiMaterPlatQiniuDomain+good.goods_cover">
+                                </div>
+
+                                <dl class="goods-info">
+                                    <dt class="goods-name" style="line-height: 1.5!important"></dt>
+                                    <dd class="goods-type" style="width: 12rem; padding-left: 5%;">
+                                        {{good.goods_title}}
+                                    </dd>
+                                </dl>
+
+                                <div class="goods-subtotal" >
+                                    <span class="goods-price">￥<em>{{good.goods_price}}</em></span>
+                                    <span class="goods-num">x{{good.goods_num}}</span>
+                                </div>
+                            </a>
+                        </div>
+
+                    </div>
+                    <div class="nctouch-order-item-footer">
+                        <p style="padding: 0 0.681818rem;text-align: right;font-size: 0.545454rem;color: #F6A623;">
+                            {{getStatus(order.order_status)}}
+                        </p>
+                        <div class="store-totle">
+                            <span>共 <em> {{getNum(order)}} </em> 件商品，合计</span><span class="sum">￥<em> {{order.order_price}}</em> </span> <span class="freight"> (运费￥{{getCountPostage(order)}})</span>
+                        </div>
+                        <div class="handle">
+                            <a v-for="item in operList(order.order_status,order)" @click="operation(item.oper,order,index)" class="btn" style="margin-right: 8px;">{{item.text}}</a>
+                        </div>
+                    </div>
                 </div>
-                <a v-for="item in operList(order.order_status)" @click="operation(item.oper,order)">{{item.text}}</a>
+            </li>
+
+
+
+
+
+            <div class="nctouch-norecord order" id="otherGo" style="display: block;">
+                <div class="norecord-ico"><i></i></div>
+                <dl>
+                    <dt>亲，您还没有相关的订单</dt>
+                    <dd>猜您会喜欢这些地道尖货</dd>
+                </dl>
+                <a href="/shop_wap/html/didao/index.html" class="btn">逛商城</a>
             </div>
-            <div class="order-detail" v-for="good in order.goods">
-                <img :src="ApiMaterPlatQiniuDomain+good.goods_cover" alt="">
-                <div>
-                    <p>{{good.goods_summary}}</p>
-                    <p>{{good.goods_num}}件</p>
+        </ul>
+    </div>
+    <!--底部总金额固定层End-->
+    <div class="nctouch-bottom-mask hide">
+        <div class="nctouch-bottom-mask-bg"></div>
+        <div class="nctouch-bottom-mask-block">
+            <div class="nctouch-bottom-mask-tip"><i></i>点击此处返回</div>
+            <div class="nctouch-bottom-mask-top">
+                <p class="nctouch-cart-num">本次交易需在线支付<em id="onlineTotal">0.00</em>元</p>
+                <p style="display:none" id="isPayed"></p>
+                <a href="javascript:void(0);" class="nctouch-bottom-mask-close"><i></i></a> </div>
+            <div class="nctouch-inp-con nctouch-inp-cart">
+                <ul class="form-box" id="internalPay">
+                    <p class="rpt_error_tip" style="display:none;color:red;"></p>
+                    <li class="form-item" id="wrapperUseRCBpay">
+                        <div class="input-box pl5">
+                            <label>
+                                <input type="checkbox" class="checkbox" id="useRCBpay" autocomplete="off" /> 使用充值卡支付 <span class="power"><i></i></span> </label>
+                            <p>可用充值卡余额 ￥<em id="availableRcBalance"></em></p>
+                        </div>
+                    </li>
+                    <li class="form-item" id="wrapperUsePDpy">
+                        <div class="input-box pl5">
+                            <label>
+                                <input type="checkbox" class="checkbox" id="usePDpy" autocomplete="off" /> 使用预存款支付 <span class="power"><i></i></span> </label>
+                            <p>可用预存款余额 ￥<em id="availablePredeposit"></em></p>
+                        </div>
+                    </li>
+                    <li class="form-item" id="wrapperPaymentPassword" style="display:none">
+                        <div class="input-box"> <span class="txt">输入支付密码</span>
+                            <input type="password" class="inp" id="paymentPassword" autocomplete="off" />
+                            <span class="input-del"></span></div>
+                        <a href="../member/member_paypwd_step1.html" class="input-box-help" style="display:none"><i>i</i>尚未设置</a> </li>
+                </ul>
+                <div class="nctouch-pay">
+                    <div class="spacing-div"><span>在线支付方式</span></div>
+                    <div class="pay-sel">
+                        <label style="display:none">
+                            <input type="radio" name="payment_code" class="checkbox" id="alipay" autocomplete="off" />
+                            <span class="alipay">支付宝</span></label>
+                        <label style="display:none">
+                            <input type="radio" name="payment_code" class="checkbox" id="wxpay_jsapi" autocomplete="off" />
+                            <span class="wxpay">微信</span></label>
+                    </div>
                 </div>
+                <div class="pay-btn"> <a href="javascript:void(0);" id="toPay" class="btn-l">确认支付</a> </div>
             </div>
         </div>
     </div>
 </div>
-<script>
-    //Vue.http.headers.common['token'] = 'eyJpdiI6IlFzb1wveHJVRDJ3Vk9SOVVLcngwVU53PT0iLCJ2YWx1ZSI6IkhjdTFRdUQ0eHlcL0VCeVFlbW10eTQ0OHRJVDl4R3hiSGR0dzE0Z042MlBnWXYxa0pXRzByWjhCMjFQbWtXeEZHeVJrZXVrS1dvOXVGNHQ5WjR1emtmSVRnY1VpRHRWRVhGb3l2SVpLZmpvOD0iLCJtYWMiOiI5ZDZkZWYxMTA3NTI0MjhjZGQ1OTM5YjZjMjNhYjk5NzM0ZjBjMThjMmI2ZDk0ZjdjYmE1NTIyZjUyOGI2ZTk4In0='
+<div class="fix-block-r">
+    <a href="javascript:void(0);" class="gotop-btn gotop hide" id="goTopBtn"><i></i></a>
+</div>
+<!--
+</body>
 
-    Vue.http.headers.common['token'] = window.localStorage.getItem("token");
-    var commentApp = new Vue({
-        el : "#order-app",
-        data : {
+</html>
+
+-->
+
+<script>
+    new Vue({
+        el: '#app',
+        data: {
             sortNum : 0,
             orderList : [],
-            sortList : ["全部","待付款","待发货","待收货","已取消"]
+            sortList : [{'text':'全部','status':0},{'text':'待付款','status':1},{'text':'待发货','status':2},{'text':'待收货','status':3},{'text':'待评价','status':4}]
         },
-        mounted : function () {
-            var data = {
-                "plat_user_id" : window.localStorage.getItem('weid')
-                //"plat_user_id" : 'aafc6a60-c2b6-11e7-804f-2b2e90492ab4'
-            };
+        mounted: function () {
+            data={};
+            data.plat_user_id=plats_user_info.weid;
+            data.limit=10;
+            data.page=1;
             this.init(data);
         },
-        methods : {
+        methods:{
             init : function (data) {
-                if(!data){
-                    data = {
-                        "plat_user_id" : window.localStorage.getItem('weid')
-                        //"plat_user_id" : 'aafc6a60-c2b6-11e7-804f-2b2e90492ab4'
+                ajax.post('order/list', data).then((res)=>{
+                    if(res.code==200){
+                        this.orderList = res.data.list;
+                        //计算价格
+
+                    }
+                });
+
+            },
+            getNum:function (order) {
+                console.log(order);
+                var num=0;
+                if(order){
+                    for (var i=0;i<order.goods.length;i++)
+                    {
+                        num+=parseInt(order.goods[i].goods_num);
                     }
                 }
-                this.$http.post(apiUrl+'order/list',data).then(function (res) {
-                    console.log(res);
-                    if(res.data && res.data.code === 200){
-                        this.orderList = res.data.data.list
+                return num;
+            },
+            getCountPostage:function (order) {
+                //订单总价-商品总价
+                var postage=0;
+                var postagePrice=0;
+                if(order){
+                    for (var i=0;i<order.goods.length;i++)
+                    {
+                        postagePrice+=parseFloat(order.goods[i].goods_price)*parseInt(order.goods[i].goods_num);
                     }
-                })
+                }
+                postage=parseFloat(order.order_price)-postagePrice;
+                postage=postage.toFixed(2);
+                return postage;
+
             },
             getStatus : function (num) {
                 if(num){
@@ -103,252 +224,263 @@
                     }
                 }
             },
-            operList : function (num) {
+            operList : function (num,order) {
+                var operList = [];
+                if(order.send.length>0){
+                    operList.push({
+                        text : '查看物流',
+                        oper : 'distribution'
+                    })
+                }
                 if(num){
                     switch (num){
                         case 1:
-                            return [
-                                {
-                                    text : '去付款',
-                                    oper : 'pay'
-                                },
-                                {
-                                    text : '取消订单',
-                                    oper : 'cancel'
-                                }
-                            ];
+                            operList.push({
+                                text : '付款',
+                                oper : 'pay'
+                            });
+                            operList.push({
+                                text : '取消订单',
+                                oper : 'cancel'
+                            });
+                            break;
                         case 3:
-                            return [
-                                {
-                                    text : '确认收货',
-                                    oper : 'takeOrder'
-                                },
-                                {
-                                    text : '查看物流',
-                                    oper : 'distribution'
-                                }
-                            ];
+                            operList.push({
+                                text : '确认收货',
+                                oper : 'takeOrder'
+                            });
+                            break;
                         case 4:
-                            return [
-                                {
-                                    text : '去评价',
-                                    oper : 'comment'
-                                },
-                                {
-                                    text : '确认交易',
-                                    oper : 'deal'
-                                },
-                                {
-                                    text : '退款',
-                                    oper : 'refund'
-                                }
-                            ];
+                            operList.push({
+                                text : '去评价',
+                                oper : 'comment'
+                            });
+                            operList.push({
+                                text : '确认交易',
+                                oper : 'deal'
+                            });
+                            operList.push({
+                                text : '申请退款',
+                                oper : 'refund'
+                            });
+                            break;
                         case 5:
-                            return [
-                                {
-                                    text : '确认交易',
-                                    oper : 'deal'
-                                },
-                                {
-                                    text : '退款',
-                                    oper : 'refund'
-                                }
-                            ];
+                            operList.push({
+                                text : '确认交易',
+                                oper : 'deal'
+                            });
+                            operList.push({
+                                text : '申请退款',
+                                oper : 'refund'
+                            });
+                            break;
                         case 6:
-                            return [
-                                {
-                                    text : '删除订单',
-                                    oper : 'delete'
-                                }
-                            ];
+                            operList.push({
+                                text : '删除订单',
+                                oper : 'delete'
+                            });
+                            break;
                         case 7:
-                            return [
-                                {
-                                    text : '删除订单',
-                                    oper : 'delete'
-                                }
-                            ];
+                            operList.push({
+                                text : '删除订单',
+                                oper : 'delete'
+                            });
+                            break;
                         case 9:
-                            return [
-                                {
-                                    text : '删除订单',
-                                    oper : 'delete'
-                                }
-                            ];
-                    }
-                }
-            },
-            operation : function (oper,order) {
-                if(oper){
-                    switch (oper){
-                        case 'pay':
-                            this.pay(order);
-                            break;
-                        case 'cancel':
-                            this.cancel(order);
-                            break;
-                        case 'takeOrder':
-                            this.takeOrder(order);
-                            break;
-                        case 'distribution':
-                            this.distribution(order);
-                            break;
-                        case 'comment':
-                            this.comment(order);
-                            break;
-                        case 'deal':
-                            this.deal(order);
-                            break;
-                        case 'refund':
-                            this.refund(order);
-                            break;
-                        case 'delete':
-                            this.deleteOrder(order);
+                            operList.push({
+                                text : '删除订单',
+                                oper : 'delete'
+                            });
                             break;
                     }
                 }
-            },
-//            取消订单
-            cancel : function (order) {
-                var self = this;
-                var data = {
-                    "order_id" : order.weid
-                };
-                layer.confirm('确认取消该条订单吗？', {
-                    title: false,
-                    btn: ['确定','取消']
-                }, function(index){
-                    self.$http.post(apiUrl+'order/cancel',data).then(function (res) {
-                        if(res.data && res.data.code === 200){
-                            this.init();
-                            this.sortNum = 0;
-                        }else{
-                            layer.msg('取消订单失败');
-                        }
-                        layer.close(index);
-                    })
-                });
-
-            },
-//            删除订单
-            deleteOrder : function (order) {
-                var self = this;
-                var data = {
-                    "order_id" : order.weid
-                };
-                layer.confirm('确认删除该条订单吗？', {
-                    title: false,
-                    btn: ['确定','取消']
-                }, function(index){
-                    self.$http.post(apiUrl+'order/delete',data).then(function (res) {
-                        console.log(res);
-                        if(res.data && res.data.code === 200){
-                            this.init();
-                            this.sortNum = 0;
-                        }else{
-                            layer.msg('删除订单失败');
-                        }
-                        layer.close(index);
-                    })
-                });
-            },
-//            确认收货
-            takeOrder : function (order) {
-                var data = {
-                    "order_id" : order.weid
-                };
-                this.$http.post(apiUrl+'order/take',data).then(function (res) {
-                    console.log(res);
-                    if(res.data && res.data.code === 200){
-                        layer.msg("已收货");
-                        this.init();
-                        this.sortNum = 0;
-                    }else{
-                        layer.msg('删除订单失败');
-                    }
-                });
-            },
-//            查看物流
-            distribution : function (order) {
-                this.$http.get(apiUrl + 'order/detail/'+order.weid).then(function (res) {
-                    console.log(res);
-                    var obj = {};
-                    if(res.data && res.data.code === 200){
-                        obj.logistics_NO = res.data.data.send.logistics_no;
-                        obj.company_code = res.data.data.send.logistics_company_code;
-                        window.localStorage.setItem('sendObj',JSON.stringify(obj));
-                        window.location.href = '/distribution/detail'
-                    }
-
-                })
-            },
-//            评价
-            comment : function (order) {
-                window.localStorage.setItem('orderObj',JSON.stringify(order));
-                window.location.href = '/shopping/edit_comment'
-            },
-//            确认交易
-            deal : function (order) {
-                var data = {
-                    "order_id" : order.weid
-                };
-                this.$http.post(apiUrl+'order/ok',data).then(function (res) {
-                    console.log(res);
-                    if(res.data && res.data.code === 200){
-                        layer.msg("交易成功");
-                        this.init();
-                        this.sortNum = 0;
-                    }else{
-                        layer.msg('确认交易失败');
-                    }
-                });
-            },
-//            退款
-            refund : function (order) {
-                var data = {
-                    "order_id" : order.weid
-                };
-                this.$http.post(apiUrl+'order/refund',data).then(function (res) {
-                    console.log(res);
-                    if(res.data && res.data.code === 200){
-                        layer.msg("申请退款成功");
-                        this.init();
-                        this.sortNum = 0;
-                    }else{
-                        layer.msg('申请退款失败');
-                    }
-                });
-            },
-//            付款
-            pay : function (order) {
-                window.location.href = `/pay/shopping?store_num=`+ order.weid +``;
+                return operList;
             },
             getSort : function(ind){
                 this.sortNum = ind;
-                var data = {
-                    "plat_user_id" : window.localStorage.getItem('weid')
-                    //"plat_user_id" : 'aafc6a60-c2b6-11e7-804f-2b2e90492ab4'
-                };
-                switch (ind) {
-                    case 1:
-                        data.order_status = 1;
-                        break;
-                    case 2:
-                        data.order_status = 2;
-                        break;
-                    case 3:
-                        data.order_status = 3;
-                        break;
-                    case 4:
-                        data.order_status = 6;
-                        break;
+                var data={};
+                data.plat_user_id=plats_user_info.weid;
+                if(ind!=0){
+                    data.order_status=ind;
                 }
-
                 this.init(data);
+            },
+            operation : function (oper,order,index) {
+                if(oper){
+                    switch (oper){
+                        case 'pay':
+                            this.pay(order,index);
+                            break;
+                        case 'cancel':
+                            this.cancel(order,index);
+                            break;
+                        case 'takeOrder':
+                            this.takeOrder(order,index);
+                            break;
+                        case 'distribution':
+                            this.distribution(order,index);
+                            break;
+                        case 'comment':
+                            this.comment(order,index);
+                            break;
+                        case 'deal':
+                            this.deal(order,index);
+                            break;
+                        case 'refund':
+                            this.refund(order,index);
+                            break;
+                        case 'delete':
+                            this.deleteOrder(order,index);
+                            break;
+                    }
+                }
+            },
+            //取消订单
+            cancel : function (order,index) {
+                var self = this;
+                var data = {
+                    "order_id" : order.weid
+                };
+                layer.open({
+                    content: '确认取消该条订单吗？'
+                    ,style: 'background-color:#fff;'
+                    ,btn: ['确定', '取消']
+                    ,yes: function(index){
+                        ajax.post('order/cancel', data).then((res)=>{
+                            if(res.code==200){
+                                self.orderList[0].order_status=6;
+                            }else{
+                                layer.open({
+                                    content: res.message
+                                    ,skin: 'msg'
+                                    ,time: 2
+                                });
+                            }
+                            layer.close(index);
+                        });
+                    }
+                });
+            },
+            //删除订单
+            deleteOrder : function (order,index) {
+                var self = this;
+                var data = {
+                    "order_id" : order.weid
+                };
+                layer.open({
+                    content: '确认删除该条订单吗？'
+                    ,style: 'background-color:#fff;'
+                    ,btn: ['确定', '取消']
+                    ,yes: function(index){
+                        ajax.post('order/delete', data).then((res)=>{
+                            if(res.code==200){
+                                self.orderList.splice(index,1);
+                            }else{
+                                layer.open({
+                                    content: res.message
+                                    ,skin: 'msg'
+                                    ,time: 2
+                                });
+                            }
+                            layer.close(index);
+                        });
+                    }
+                });
+            },
+            //确认收货
+            takeOrder : function (order,index) {
+                var data = {
+                    "order_id" : order.weid
+                };
+                layer.open({
+                    content: '请确保所有商品都收货后确认收货？'
+                    ,style: 'background-color:#fff;'
+                    ,btn: ['确定', '取消']
+                    ,yes: function(index){
+                        ajax.post('order/take', data).then((res)=>{
+                            if(res.code==200){
+                                layer.open({
+                                    content: '已收货'
+                                    ,skin: 'msg'
+                                    ,time: 2
+                                });
+                            }else{
+                                layer.open({
+                                    content: res.message
+                                    ,skin: 'msg'
+                                    ,time: 2
+                                });
+                            }
+                            layer.close(index);
+                        });
+                    }
+                });
+            },
+            //查看物流
+            distribution : function (order,index) {
+                ajax.get('order/detail/'+order.weid).then((res)=>{
+                    if(res.code==200){
+                        var obj = {};
+                        obj.logistics_NO = res.data.send.logistics_no;
+                        obj.company_code = res.data.send.logistics_company_code;
+                        window.localStorage.setItem('sendObj',JSON.stringify(obj));
+                        window.location.href = '/distribution/detail';
+                    }
+                });
+            },
+            //评价
+            comment : function (order,index) {
+                //window.localStorage.setItem('orderObj',JSON.stringify(order));
+                //window.location.href = '/shopping/edit_comment'
+            },
+            //确认交易
+            deal : function (order,index) {
+                var data = {
+                    "order_id" : order.weid
+                };
+                ajax.post('order/ok', data).then((res)=>{
+                    if(res.code==200){
+                        layer.open({
+                            content: "交易成功"
+                            ,skin: 'msg'
+                            ,time: 2
+                        });
+                    }else{
+                        layer.open({
+                            content: res.message
+                            ,skin: 'msg'
+                            ,time: 2
+                        });
+                    }
+                });
+            },
+            //退款
+            refund : function (order,index) {
+                var data = {
+                    "order_id" : order.weid
+                };
+                ajax.post('order/refund', data).then((res)=>{
+                    if(res.code==200){
+                        layer.open({
+                            content: "申请退款成功"
+                            ,skin: 'msg'
+                            ,time: 2
+                        });
+                    }else{
+                        layer.open({
+                            content: res.message
+                            ,skin: 'msg'
+                            ,time: 2
+                        });
+                    }
+
+                });
+            },
+            //付款
+            pay : function (order,index) {
+                window.location.href = `/pay/shopping?store_num=`+ order.weid +``;
             }
         }
-    });
+    })
 
 </script>
-</body>
-</html>
