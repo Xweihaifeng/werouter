@@ -529,7 +529,7 @@ $(document).ready(function() {
                                     (ids.push([e.weid, e.type, e.total_num - e.sold_num]),
                                     res += `<li id="${e.weid}">
                                             ${e.type == 1 ?
-                                                `<div id="p1"><p class="free">免费</p></div>`
+                                                `<div id="p1"><p class="free" style="padding-right: 15px;">免费</p></div>`
                                                 :
                                                 `<div id="p1"><img src="/common/img/rmb.png">
                                                 <p class="price">${e.price}</p></div>`
