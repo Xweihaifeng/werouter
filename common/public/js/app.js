@@ -7,6 +7,16 @@
 		var r = window.location.search.substr(1).match(reg);
 		if(r!=null)return  decodeURIComponent(r[2]); return false;
 	}
+
+	// 七牛图片
+	app.qiniu = function(url){
+		if (!url) return '';
+
+		if(url.indexOf('http') !== -1){
+		    return url;
+		}
+		return http_type + plats_qiniu.domain_custom + '/' + url;
+	}
 	
 	//验证是否是空
 	app.empty = function(params){
