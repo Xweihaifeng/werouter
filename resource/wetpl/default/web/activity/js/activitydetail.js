@@ -15,519 +15,520 @@ var domain = url.slice(1, 2)[0];
 console.log('domain', domain);
 $(".linkto").attr('href', '/' + domain)
 $(document).ready(function() {
-    var qiniu_bucket_domain = ApiMaterPlatQiniuDomain;
-    //获取当前网址，如： http://localhost:8083/proj/meun.jsp
-    var curWwwPath = window.document.location.href;
-    //获取主机地址之后的目录，如： proj/meun.jsp
-    var pathName = window.document.location.pathname;
-    var pos = curWwwPath.indexOf(pathName);
-    //获取主机地址，如： http://localhost:8083
-    var localhostPath = curWwwPath.substring(0, pos);
-    // token 加载值请求头（Headers）
-    var token = docCookies.getItem("token"),
-        isLogin = false;
-    if (token) {
-        $.ajaxSetup({
-            global: true,
-            headers: {
-                'Token': token,
+            var qiniu_bucket_domain = ApiMaterPlatQiniuDomain;
+            //获取当前网址，如： http://localhost:8083/proj/meun.jsp
+            var curWwwPath = window.document.location.href;
+            //获取主机地址之后的目录，如： proj/meun.jsp
+            var pathName = window.document.location.pathname;
+            var pos = curWwwPath.indexOf(pathName);
+            //获取主机地址，如： http://localhost:8083
+            var localhostPath = curWwwPath.substring(0, pos);
+            // token 加载值请求头（Headers）
+            var token = docCookies.getItem("token"),
+                isLogin = false;
+            if (token) {
+                $.ajaxSetup({
+                    global: true,
+                    headers: {
+                        'Token': token,
+                    }
+                });
             }
-        });
-    }
 
-    //主页初始化
-    var init = function(token) {
-        if (token != 'null' && token != undefined) {
-            showLogin = false;
-            isLogin = true;
-            //加载用户头像
+            //主页初始化
+            var init = function(token) {
+                if (token != 'null' && token != undefined) {
+                    showLogin = false;
+                    isLogin = true;
+                    //加载用户头像
 
-            $("#login div img").hide();
-            $(".log-head").css({
-                // 'background': 'url(/common/img/p2240276035.jpg) no-repeat center',
-                'background': 'url(' + localStorage.getItem('avatar') + ') no-repeat center',
+                    $("#login div img").hide();
+                    $(".log-head").css({
+                        // 'background': 'url(/common/img/p2240276035.jpg) no-repeat center',
+                        'background': 'url(' + localStorage.getItem('avatar') + ') no-repeat center',
 
-                'background-size': '100% 100%'
-            })
-            $(".log-head").show();
-            var favicon = ApiMaterPlatQiniuDomain + localStorage.getItem('fav');
-            $('#favicon').attr('href', favicon);
-        }
-    }
+                        'background-size': '100% 100%'
+                    })
+                    $(".log-head").show();
+                    var favicon = ApiMaterPlatQiniuDomain + localStorage.getItem('fav');
+                    $('#favicon').attr('href', favicon);
+                }
+            }
 
-    init(token);
+            init(token);
 
-    var router = function(route) {
-        if (!isLogin) {
-            showLogin = true;
-            $("#modal_login").fadeIn(300);
-        } else {
-            window.location.href = "/";
-        }
-    }
+            var router = function(route) {
+                if (!isLogin) {
+                    showLogin = true;
+                    $("#modal_login").fadeIn(300);
+                } else {
+                    window.location.href = "/";
+                }
+            }
 
-    var showLogin = false; //调整窗口大小时登陆框是否存在
-    var currWidth = $(window).width();
-    var currHeight = $(window).height();
-    var width = $(window).width() / 2 - 180;
-    var height = $(window).height() / 2 - 165;
-    var readHeight = $(".read").height();
+            var showLogin = false; //调整窗口大小时登陆框是否存在
+            var currWidth = $(window).width();
+            var currHeight = $(window).height();
+            var width = $(window).width() / 2 - 180;
+            var height = $(window).height() / 2 - 165;
+            var readHeight = $(".read").height();
 
-    if (readHeight == 768) {
-        $(".left-nav").css("min-height", currHeight);
-        $(".read").css("min-height", currHeight);
-        $(window).resize(function() {
-            currWidth = $(window).width();
-            currHeight = $(window).height();
-            width = $(window).width() / 2 - 180;
-            height = $(window).height() / 2 - 165;
-            var top = $(window).scrollTop();
-            $(".left-nav").css("min-height", currHeight);
-            $(".read").css("min-height", currHeight);
-            $(".show-login").css({
-                "margin-top": top + height,
-                "margin-left": width
-            });
-        })
-    }
+            if (readHeight == 768) {
+                $(".left-nav").css("min-height", currHeight);
+                $(".read").css("min-height", currHeight);
+                $(window).resize(function() {
+                    currWidth = $(window).width();
+                    currHeight = $(window).height();
+                    width = $(window).width() / 2 - 180;
+                    height = $(window).height() / 2 - 165;
+                    var top = $(window).scrollTop();
+                    $(".left-nav").css("min-height", currHeight);
+                    $(".read").css("min-height", currHeight);
+                    $(".show-login").css({
+                        "margin-top": top + height,
+                        "margin-left": width
+                    });
+                })
+            }
 
-    var tusitemp = "";
+            var tusitemp = "";
 
-    function mess_tusi(strs) {
-        clearTimeout(tusitemp);
-        $("#mess_tusi").remove();
-        //创建吐丝层并写入内容
-        if (!$("#mess_tusi").attr("id")) { //吐丝层不存在创建
-            $("body").append("<div id='mess_tusi' style='z-index: 100002;position:fixed;font-size:16px;border-radius:4px !important;background:rgba(0,0,0,.7);color:#fff;display:none;'><span style='display:block;padding:5px 15px;'>" + strs + "</span></div>"); //写入内容
-        } else {
-            $("#mess_tusi").html(strs); //写入内容
-        }
-        //定义吐丝层位置
-        var left = (1200 - $("#mess_tusi").width()) / 2; //居中
-        var top = $(window).height() * 0.5;
-        $("#mess_tusi").css({ "left": left + "px", "top": top + "px" });
+            function mess_tusi(strs) {
+                clearTimeout(tusitemp);
+                $("#mess_tusi").remove();
+                //创建吐丝层并写入内容
+                if (!$("#mess_tusi").attr("id")) { //吐丝层不存在创建
+                    $("body").append("<div id='mess_tusi' style='z-index: 100002;position:fixed;font-size:16px;border-radius:4px !important;background:rgba(0,0,0,.7);color:#fff;display:none;'><span style='display:block;padding:5px 15px;'>" + strs + "</span></div>"); //写入内容
+                } else {
+                    $("#mess_tusi").html(strs); //写入内容
+                }
+                //定义吐丝层位置
+                var left = (1200 - $("#mess_tusi").width()) / 2; //居中
+                var top = $(window).height() * 0.5;
+                $("#mess_tusi").css({ "left": left + "px", "top": top + "px" });
 
-        //显示吐丝层rou't
-        $("#mess_tusi").css("display", '');
+                //显示吐丝层rou't
+                $("#mess_tusi").css("display", '');
 
-        //2秒后关闭
-        tusitemp = setTimeout(function() {
-            $("#mess_tusi").remove();
-            $("#mess_tusi").html("");
-        }, 2000);
-        return false;
-    }
-
-    var options0 = $.get(CMS_ADVS);
-    options0.done(function(data) {
-        console.log(data);
-        if (data.code == 200) {
-            if (!data.data) {
+                //2秒后关闭
+                tusitemp = setTimeout(function() {
+                    $("#mess_tusi").remove();
+                    $("#mess_tusi").html("");
+                }, 2000);
                 return false;
             }
 
-            var setting = data.data.setting;
-            window.localStorage.setItem("logo", setting.logo);
-            window.localStorage.setItem("fav", setting.favicon);
+            var options0 = $.get(CMS_ADVS);
+            options0.done(function(data) {
+                console.log(data);
+                if (data.code == 200) {
+                    if (!data.data) {
+                        return false;
+                    }
 
-            if (!setting.favicon == false) {
-                var favicon = ApiMaterPlatQiniuDomain + setting.favicon;
-                $("#public_icon").attr("href", favicon);
-            }
+                    var setting = data.data.setting;
+                    window.localStorage.setItem("logo", setting.logo);
+                    window.localStorage.setItem("fav", setting.favicon);
 
-            if (!setting.logo == false) {
-                var logo = ApiMaterPlatQiniuDomain + setting.logo;
-                // $("#home .logoImg").css({"background-image": "url(" + logo + ")"});
-                $("#home img").attr("src", logo);
-            }
-        }
-    });
+                    if (!setting.favicon == false) {
+                        var favicon = ApiMaterPlatQiniuDomain + setting.favicon;
+                        $("#public_icon").attr("href", favicon);
+                    }
 
-    var weid = docCookies.getItem("weid");
-    console.log(weid)
-    var activityid = window.location.href.split('/').pop();
-    var activityid_all = activityid.split('#');
-    console.log(activityid_all[0])
-    console.log(activityid)
-    var url = window.location.href.split('/');
-    var urlall = window.location.href.split('#');
-    console.log(urlall);
-    var urlpath = urlall.pop();
-    console.log(urlpath)
-    var domain = url.slice(3, 4)[0];
-    console.log(url);
-    console.log(domain);
-    // console.log(userToken);
-    var checkdomain = function(domain, id) {
-        // if(domain!="index" && domain!="activity"){
-        if (domain != "activity") {
+                    if (!setting.logo == false) {
+                        var logo = ApiMaterPlatQiniuDomain + setting.logo;
+                        // $("#home .logoImg").css({"background-image": "url(" + logo + ")"});
+                        $("#home img").attr("src", logo);
+                    }
+                }
+            });
 
-            $.ajax({
-                url: ACTIVITY_DOMAINISTRUE,
-                type: 'post',
-                data: { domain: domain, activityid: id },
-                dataType: 'json',
-                headers: {
-                    'Token': docCookies.getItem("token")
-                },
-                success: function(data) {
-                    console.log(data);
-                    if (data.code == 200) {
-                        init(id);
+            var weid = docCookies.getItem("weid");
+            console.log(weid)
+            var activityid = window.location.href.split('/').pop();
+            var activityid_all = activityid.split('#');
+            console.log(activityid_all[0])
+            console.log(activityid)
+            var url = window.location.href.split('/');
+            var urlall = window.location.href.split('#');
+            console.log(urlall);
+            var urlpath = urlall.pop();
+            console.log(urlpath)
+            var domain = url.slice(3, 4)[0];
+            console.log(url);
+            console.log(domain);
+            // console.log(userToken);
+            var checkdomain = function(domain, id) {
+                // if(domain!="index" && domain!="activity"){
+                if (domain != "activity") {
 
-                    } else {
-                        if (urlpath == 'acitivty-detail' || urlpath == 'acitivty-honored' || urlpath == 'acitivty-guests') {
-                            window.location = urlall[0]
+                    $.ajax({
+                        url: ACTIVITY_DOMAINISTRUE,
+                        type: 'post',
+                        data: { domain: domain, activityid: id },
+                        dataType: 'json',
+                        headers: {
+                            'Token': docCookies.getItem("token")
+                        },
+                        success: function(data) {
+                            console.log(data);
+                            if (data.code == 200) {
+                                init(id);
 
-                        } else {
-                            window.location = '/404';
+                            } else {
+                                if (urlpath == 'acitivty-detail' || urlpath == 'acitivty-honored' || urlpath == 'acitivty-guests') {
+                                    window.location = urlall[0]
+
+                                } else {
+                                    window.location = '/404';
+                                }
+
+                            }
+                        },
+                        error: function(xhr) {
+                            console.log(xhr);
                         }
 
+                    })
+                } else if (domain == "activity") {
+                    window.location = "/index/activity/detail/" + id;
+                }
+                console.log(domain);
+            }
+
+            // 设置token cookie
+            function setCookie(token, expiredays) {
+                var Days = expiredays;
+                var exp = new Date();
+                exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000);
+                document.cookie = "token=" + escape(token) + ";expires=" + exp.toGMTString() + ";path=/";
+            }
+            // avatar animation
+            $(".top_avatar img").trigger("mouseover");
+            var AvatarInterval = 0;
+            var AvatarFlag = 0;
+            var AvatarTimer = setInterval(function() {
+                if (AvatarInterval % 5 == 0) {
+                    if (AvatarFlag == 0) {
+                        AvatarFlag = 1;
+                        $(".top_avatar img").trigger("mouseover");
+                    } else {
+                        AvatarFlag = 0;
+                        $(".top_avatar img").trigger("mouseout");
                     }
-                },
-                error: function(xhr) {
-                    console.log(xhr);
                 }
+                AvatarInterval++;
+            }, 5000);
 
-            })
-        } else if (domain == "activity") {
-            window.location = "/index/activity/detail/" + id;
-        }
-        console.log(domain);
-    }
 
-    // 设置token cookie
-    function setCookie(token, expiredays) {
-        var Days = expiredays;
-        var exp = new Date();
-        exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000);
-        document.cookie = "token=" + escape(token) + ";expires=" + exp.toGMTString() + ";path=/";
-    }
-    // avatar animation
-    $(".top_avatar img").trigger("mouseover");
-    var AvatarInterval = 0;
-    var AvatarFlag = 0;
-    var AvatarTimer = setInterval(function() {
-        if (AvatarInterval % 5 == 0) {
-            if (AvatarFlag == 0) {
-                AvatarFlag = 1;
-                $(".top_avatar img").trigger("mouseover");
-            } else {
-                AvatarFlag = 0;
-                $(".top_avatar img").trigger("mouseout");
+            checkdomain(domain, activityid)
+
+            //报名成功弹出票据模态框
+            var activity_ebroll_detail = function(id) {
+                $.ajax({
+                    url: ACTIVITY_ENROLL_DETAIL + "/" + id, //活动报名详情
+                    type: 'get',
+                    headers: {
+                        'Token': docCookies.getItem("token")
+                    },
+                    success: function(data) {
+                        if (data.code == 200) {
+                            console.log(urlall[0])
+                            Ticket(data.data);
+                            qrcodefun1(data.data.ticket_num);
+                        }
+
+                    },
+                    error: function(xhr) {
+                        console.log(xhr);
+                    }
+                })
             }
-        }
-        AvatarInterval++;
-    }, 5000);
 
+            //微信扫码支付下单
+            var wechat_scan_pay = function(number) {
+                $.ajax({
+                    url: ACTIVITY_WX_ORDER,
+                    type: 'post',
+                    data: {
+                        number: number
+                    },
+                    headers: {
+                        'Token': docCookies.getItem("token")
+                    },
+                    success: function(data) {
+                        if (data.code == 200) {
+                            PaymentQR(data.data.qrcode_url, data.data.number);
+                        } else {
+                            console.log(number);
+                        }
 
-    checkdomain(domain, activityid)
+                    },
+                    error: function(xhr) {
+                        console.log(xhr);
+                    }
+                })
+            }
 
-    //报名成功弹出票据模态框
-    var activity_ebroll_detail = function(id) {
-        $.ajax({
-            url: ACTIVITY_ENROLL_DETAIL + "/" + id, //活动报名详情
-            type: 'get',
-            headers: {
-                'Token': docCookies.getItem("token")
-            },
-            success: function(data) {
-                if (data.code == 200) {
-                    console.log(urlall[0])
-                    Ticket(data.data);
-                    qrcodefun1(data.data.ticket_num);
+            //判断是否报名
+            var isEnroll = function() {
+                var sendData = { 'user_id': docCookies.getItem("weid"), 'activity_id': activityid_all[0] };
+                $.ajax({
+                    url: ACTIVITY_ENROLL_ISENROLL,
+                    dataType: 'json',
+                    type: 'post',
+                    data: sendData,
+                    success: function(data) {
+                        console.log(data)
+                        if (data.code == 200) {
+                            suported();
+                        } else {
+                            // layer.msg(data.message)
+                        }
+                    },
+                    error: function(err) {
+                        console.log(err);
+                    }
+                })
+            }
+            isEnroll();
+            //报名之后的状态
+            var suported = function() {
+                $('.bbbao').empty();
+                $('.bbbao').append('<span> <a href="javascript:" data-id="1" class="support1" disabled="disabled" style="background: #ccc">已经报名</a></span>')
+            }
+            var Ticket = function(data) {
+                    layer.config({
+                        skin: 'winning-class' //自定义样式demo-class
+                    })
+                    var closeticket = layer.open({
+                        skin: 'winning-class',
+                        type: 1,
+                        area: ['500px', '650px'],
+                        title: 0,
+                        closeBtn: 0,
+                        shadeClose: true,
+                        scrollbar: false,
+                        content: '<div class="ticket-box">' +
+                            '<div class="ticket-box-top">' +
+                            '<div class="t_blank"></div>' +
+                            '<div class="ticket-qr"></div>' +
+
+                            '<div style="width:92%;text-align:center;padding:10px 0;margin:0 auto;">票号：' + data.ticket_num + '</div>' +
+                            '<div style="width:92%;text-align:center;padding:10px 0;margin:0 auto;">活动时请向发起人展示，该码可在个人中心查看</div>' +
+                            '</div>' +
+                            '<div class="ticket-box-bottom">' +
+                            '<div class="ticket-title">' + data.title + '</div>' +
+                            '<div class="ticket-time">' + data.begain_time + '&nbsp;' + data.begain_week + '&nbsp;' + data.begain_hour + '~~' + data.end_time + '&nbsp;' + data.end_week + '&nbsp;' + data.end_hour + '</div>' +
+                            '<div class="ticket-addr"><span><i class="fa fa-map-marker"></i></span>&nbsp;：' + data.area_name + data.address + '</div>' +
+                            '<div class="ticket-detail">' +
+                            '<div class="ticket-name">' +
+                            '<span class="sign_ticname"></span>：' + data.name +
+                            '</div>' +
+                            '<div class="ticket-phone">' +
+                            '<span class="sign_telphone"></span>：' + data.telphone +
+                            '</div>' +
+                            '<div class="ticket-position">' +
+                            '<span class="sign-ticzw"></span>：' + data.poistion +
+                            '</div>' +
+                            '<div class="ticket-company">' +
+                            '<span class="sign-ticcom"></span>：' + data.company +
+                            '</div>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>',
+                        end: function() {
+                            location.reload();
+                        },
+                        shade: 0.7
+                    });
                 }
-
-            },
-            error: function(xhr) {
-                console.log(xhr);
-            }
-        })
-    }
-
-    //微信扫码支付下单
-    var wechat_scan_pay = function(number) {
-        $.ajax({
-            url: ACTIVITY_WX_ORDER,
-            type: 'post',
-            data: {
-                number: number
-            },
-            headers: {
-                'Token': docCookies.getItem("token")
-            },
-            success: function(data) {
-                if (data.code == 200) {
-                    PaymentQR(data.data.qrcode_url, data.data.number);
-                } else {
-                    console.log(number);
-                }
-
-            },
-            error: function(xhr) {
-                console.log(xhr);
-            }
-        })
-    }
-
-    //判断是否报名
-    var isEnroll = function() {
-        var sendData = { 'user_id': docCookies.getItem("weid"), 'activity_id': activityid_all[0] };
-        $.ajax({
-            url: ACTIVITY_ENROLL_ISENROLL,
-            dataType: 'json',
-            type: 'post',
-            data: sendData,
-            success: function(data) {
-                console.log(data)
-                if (data.code == 200) {
-                    suported();
-                } else {
-                    // layer.msg(data.message)
-                }
-            },
-            error: function(err) {
-                console.log(err);
-            }
-        })
-    }
-    isEnroll();
-    //报名之后的状态
-    var suported = function() {
-        $('.bbbao').empty();
-        $('.bbbao').append('<span> <a href="javascript:" data-id="1" class="support1" disabled="disabled" style="background: #ccc">已经报名</a></span>')
-    }
-    var Ticket = function(data) {
-            layer.config({
-                skin: 'winning-class' //自定义样式demo-class
-            })
-            var closeticket = layer.open({
-                skin: 'winning-class',
-                type: 1,
-                area: ['500px', '650px'],
-                title: 0,
-                closeBtn: 0,
-                shadeClose: true,
-                scrollbar: false,
-                content: '<div class="ticket-box">' +
-                    '<div class="ticket-box-top">' +
-                    '<div class="t_blank"></div>' +
-                    '<div class="ticket-qr"></div>' +
-
-                    '<div style="width:92%;text-align:center;padding:10px 0;margin:0 auto;">票号：' + data.ticket_num + '</div>' +
-                    '<div style="width:92%;text-align:center;padding:10px 0;margin:0 auto;">活动时请向发起人展示，该码可在个人中心查看</div>' +
-                    '</div>' +
-                    '<div class="ticket-box-bottom">' +
-                    '<div class="ticket-title">' + data.title + '</div>' +
-                    '<div class="ticket-time">' + data.begain_time + '&nbsp;' + data.begain_week + '&nbsp;' + data.begain_hour + '~~' + data.end_time + '&nbsp;' + data.end_week + '&nbsp;' + data.end_hour + '</div>' +
-                    '<div class="ticket-addr"><span><i class="fa fa-map-marker"></i></span>&nbsp;：' + data.area_name + data.address + '</div>' +
-                    '<div class="ticket-detail">' +
-                    '<div class="ticket-name">' +
-                    '<span class="sign_ticname"></span>：' + data.name +
-                    '</div>' +
-                    '<div class="ticket-phone">' +
-                    '<span class="sign_telphone"></span>：' + data.telphone +
-                    '</div>' +
-                    '<div class="ticket-position">' +
-                    '<span class="sign-ticzw"></span>：' + data.poistion +
-                    '</div>' +
-                    '<div class="ticket-company">' +
-                    '<span class="sign-ticcom"></span>：' + data.company +
-                    '</div>' +
-                    '</div>' +
-                    '</div>' +
-                    '</div>',
-                end: function() {
-                    location.reload();
-                },
-                shade: 0.7
-            });
-        }
-        // 调起支付
-    var PaymentQR = function(qr_url, number) {
-            paymentLayer = layer.open({
-                skin: 'layui-layer-rim',
-                type: 1,
-                area: ['400px', '430px'],
-                title: '微信扫码支付',
-                closeBtn: 2,
-                shadeClose: false,
-                scrollbar: false,
-                //content: '<img src="' + QRCODE + '?url=' + qr_url + '" width="300">',
-                content: `<div class="payment-block">
+                // 调起支付
+            var PaymentQR = function(qr_url, number) {
+                    paymentLayer = layer.open({
+                        skin: 'layui-layer-rim',
+                        type: 1,
+                        area: ['400px', '430px'],
+                        title: '微信扫码支付',
+                        closeBtn: 2,
+                        shadeClose: false,
+                        scrollbar: false,
+                        //content: '<img src="' + QRCODE + '?url=' + qr_url + '" width="300">',
+                        content: `<div class="payment-block">
                             <div class="payment-qrcode"><img src="` + QRCODE + `?url=` + qr_url + `" width="300"></div>
                             <div class="payment-desc">
                                 <p>付款金额：<b>￥` + CurrentActivity.price + `</b></p>
                             </div>
                             <div class="payment-mark"><img src="/common/img/wepay-logo.png" width="100"></div>
                         </div>`,
-                end: function() {
-                    clearInterval(tmr);
-                    //location.reload();
-                },
-                shade: 0.7
-            });
-            tmr = setInterval(function() {
+                        end: function() {
+                            clearInterval(tmr);
+                            //location.reload();
+                        },
+                        shade: 0.7
+                    });
+                    tmr = setInterval(function() {
+                        $.ajax({
+                            url: ACTIVITY_ENROLL_ORDER_DETECT,
+                            type: 'post',
+                            dataType: 'json',
+                            data: {
+                                number: number
+                            },
+                            success: function(rep) {
+                                if (rep.data.state == 2) {
+                                    clearInterval(tmr);
+                                    layer.close(paymentLayer);
+                                    activity_ebroll_detail(rep.data.enroll_id);
+                                }
+                            },
+                            error: function(xhr) {
+                                console.log(xhr);
+                            }
+                        });
+                    }, 1000)
+                }
+                // 获取我的订单<针对本活动>
+            var GetOrder = function(activity_id, callback) {
                 $.ajax({
-                    url: ACTIVITY_ENROLL_ORDER_DETECT,
+                    url: ACTIVITY_ENROLL_MYORDER,
                     type: 'post',
                     dataType: 'json',
                     data: {
-                        number: number
+                        activity_id: activity_id
                     },
                     success: function(rep) {
-                        if (rep.data.state == 2) {
-                            clearInterval(tmr);
-                            layer.close(paymentLayer);
-                            activity_ebroll_detail(rep.data.enroll_id);
-                        }
+                        callback(rep);
                     },
                     error: function(xhr) {
                         console.log(xhr);
                     }
                 });
-            }, 1000)
-        }
-        // 获取我的订单<针对本活动>
-    var GetOrder = function(activity_id, callback) {
-        $.ajax({
-            url: ACTIVITY_ENROLL_MYORDER,
-            type: 'post',
-            dataType: 'json',
-            data: {
-                activity_id: activity_id
-            },
-            success: function(rep) {
-                callback(rep);
-            },
-            error: function(xhr) {
-                console.log(xhr);
             }
-        });
-    }
 
 
-    var Support = function(id, nickname, imgUrl, applyid) {
-        var datauser = '';
-        var realname = '';
-        var disa = '';
-        if (docCookies.getItem("weid") != null && docCookies.getItem("token") != null) {
-            datauser = localStorage.getItem('dataPhone');
-            realname = localStorage.getItem('realName');
-            disa = 'disabled="disabled"';
-        } else {
-            datauser = '请输入手机号码';
-            realname = '请输入姓名';
-            disa = '';
-        }
+            var Support = function(id, nickname, imgUrl, applyid) {
+                    var datauser = '';
+                    var realname = '';
+                    var disa = '';
+                    if (docCookies.getItem("weid") != null && docCookies.getItem("token") != null) {
+                        datauser = localStorage.getItem('dataPhone');
+                        realname = localStorage.getItem('realName');
+                        disa = 'disabled="disabled"';
+                    } else {
+                        datauser = '请输入手机号码';
+                        realname = '请输入姓名';
+                        disa = '';
+                    }
 
-        GetActivity(id, function(rep) {
-            closeindex = layer.open({
-                type: 1,
-                area: ['600px', '740px'],
-                title: 0,
-                closeBtn: 0,
-                shadeClose: true,
-                scrollbar: false,
-                content: '<div id="signBg">' +
-                    '<div class="signBox">' +
-                    '<div class="sign_head">' +
-                    '<div class="sign_head_title">' +
-                    '确认报名' +
-                    '</div>' +
-                    '<div class="clon1"></div>' +
-                    '<div class="sign_head_contain">' +
-                    '<p class="act_title activity_title_apply"></p>' +
-                    '<p class="act_ttt">' +
-                    '<span class="act_time">' +
-                    '时间： <span class=" act_time_all" >' + rep.data.begain_time + ' ~ ' + rep.data.end_time + '</span>' +
-                    '</span>' +
-                    '<span class="act_time">' +
-                    '<span class="act_time_deadline">' + rep.data.enroll_deadline + '</span> 报名截止' +
-                    '</span>' +
-                    '</p>' +
-                    '<p class="act_dress">地点：' + rep.data.area_name + rep.data.address + '</p>' +
-                    '</div>' +
-                    '</div>' +
-
-
-                    '<div class="sign_head">' +
-                    '<div class="sign_head_title">门票信息</div>' +
-                    '<div class="clon1"></div>' +
-                    '<div class="sign_head_contain">' +
-                    '<div class="act_title">' +
-                    '<div class="mp">' +
-                        '<ul></ul>' +
-                        '<div id="tickets"><span>购买数量： </span>' +
-                            '<span id="mins">-</span>' +
-                            '<span><input type="text" class="form-control" id="num" pattern="[0-9]*" maxlength="3" value="1"></span>' +
-                            '<span id="adds">+</span>' +
-                        '</div>' +
-                    '</div>' +
-
-                    '</div></div>' +
-                    '</div>' +
+                    GetActivity(id, function(rep) {
+                                closeindex = layer.open({
+                                            type: 1,
+                                            area: ['600px', '740px'],
+                                            title: 0,
+                                            closeBtn: 0,
+                                            shadeClose: true,
+                                            scrollbar: false,
+                                            content: '<div id="signBg">' +
+                                                '<div class="signBox">' +
+                                                '<div class="sign_head">' +
+                                                '<div class="sign_head_title">' +
+                                                '确认报名' +
+                                                '</div>' +
+                                                '<div class="clon1"></div>' +
+                                                '<div class="sign_head_contain">' +
+                                                '<p class="act_title activity_title_apply"></p>' +
+                                                '<p class="act_ttt">' +
+                                                '<span class="act_time">' +
+                                                '时间： <span class=" act_time_all" >' + rep.data.begain_time + ' ~ ' + rep.data.end_time + '</span>' +
+                                                '</span>' +
+                                                '<span class="act_time">' +
+                                                '<span class="act_time_deadline">' + rep.data.enroll_deadline + '</span> 报名截止' +
+                                                '</span>' +
+                                                '</p>' +
+                                                '<p class="act_dress">地点：' + rep.data.area_name + rep.data.address + '</p>' +
+                                                '</div>' +
+                                                '</div>' +
 
 
+                                                '<div class="sign_head">' +
+                                                '<div class="sign_head_title">门票信息</div>' +
+                                                '<div class="clon1"></div>' +
+                                                '<div class="sign_head_contain">' +
+                                                '<div class="act_title">' +
+                                                '<div class="mp">' +
 
-                    '<div class="sign_section">' +
-                    '<div class="">' +
-                    '<div class="sign_section_title">' +
-                    '确认信息' +
-                    '</div>' +
-                    '<div class="clon2"></div>' +
-                    '<div class="sign_section_contain">' +
-                    '<div class="sign_name sign_input">' +
-                    '<div class="text">' +
-                    '<input id="username" type="text" ' + disa + ' placeholder="' + realname + '">' +
-                    '</div>' +
-                    '</div>' +
+                                                '<ul></ul>' +
+                                                '<div id="tickets"><span>购买数量： </span>' +
+                                                '<span id="mins">-</span>' +
+                                                '<span><input type="text" class="form-control" id="num" pattern="[0-9]*" maxlength="3" value="1"></span>' +
+                                                '<span id="adds">+</span>' +
+                                                '</div>' +
+                                                '</div>' +
 
-                    '<div class="sign_phone sign_input" style="width: 540px;height: 38px;">' +
-                    '<div class="text">' +
-                    '<input id="phone" type="text"  ' + disa + '  placeholder="' + datauser + '">' +
-                    '</div>' +
-                    '<button class="sign_code" style="display: none" ">获取验证码</button>' +
-                    '</div>' +
-                    '<div class="sign_yz sign_input" style="display: none;">' +
-                    '<div class="text">' +
-                    '<input type="text" class="check-num-apply" placeholder="请输入验证码">' +
-                    '</div>' +
-                    '<button class="sign_yz_on">在线验证</button>' +
-                    '</div>' +
-                    '<div class="sign_zw sign_input" >' +
-                    '<div class="text">' +
-                    '<input id="zhiw" type="text" placeholder="请填写您的所在职位">' +
-                    '</div>' +
-                    '</div>' +
-                    '<div class="sign_com sign_input">' +
-                    '<div class="text">' +
-                    '<input id="gongsi" type="text" placeholder="请填写您的所在公司">' +
-                    '</div>' +
-                    '</div>' +
-                    '</div>' +
-                    '</div>' +
-                    '</div>' +
+                                                '</div></div>' +
+                                                '</div>' +
 
-                    '<div class="sign_foot">' +
-                    '<div class="sign_foot_contn">' +
-                    '<span class="apply_submit" ">确认</span>' +
-                    '</div>' +
-                    '</div>' +
-                    '</div>' +
-                    '</div>',
-                success: function() {
-                    CurrentActivity = rep.data;
-                    $.ajax({
-                        url: apiUrl + 'activity/tickets?activity_id=' + window.location.pathname.split('/').pop(),
-                        type: 'GET',
-                        success: function(data){
-                            console.log(data);
-                            var ids = [];
-                            $(".mp ul").append(
-                                data.data.reduce((res, e, i) =>
-                                    (ids.push([e.weid, e.type, e.total_num - e.sold_num]),
-                                    res += `<li id="${e.weid}">
+
+
+                                                '<div class="sign_section">' +
+                                                '<div class="">' +
+                                                '<div class="sign_section_title">' +
+                                                '确认信息' +
+                                                '</div>' +
+                                                '<div class="clon2"></div>' +
+                                                '<div class="sign_section_contain">' +
+                                                '<div class="sign_name sign_input">' +
+                                                '<div class="text">' +
+                                                '<input id="username" type="text" ' + disa + ' placeholder="' + realname + '">' +
+                                                '</div>' +
+                                                '</div>' +
+
+                                                '<div class="sign_phone sign_input" style="width: 540px;height: 38px;">' +
+                                                '<div class="text">' +
+                                                '<input id="phone" type="text"  ' + disa + '  placeholder="' + datauser + '">' +
+                                                '</div>' +
+                                                '<button class="sign_code" style="display: none" ">获取验证码</button>' +
+                                                '</div>' +
+                                                '<div class="sign_yz sign_input" style="display: none;">' +
+                                                '<div class="text">' +
+                                                '<input type="text" class="check-num-apply" placeholder="请输入验证码">' +
+                                                '</div>' +
+                                                '<button class="sign_yz_on">在线验证</button>' +
+                                                '</div>' +
+                                                '<div class="sign_zw sign_input" >' +
+                                                '<div class="text">' +
+                                                '<input id="zhiw" type="text" placeholder="请填写您的所在职位">' +
+                                                '</div>' +
+                                                '</div>' +
+                                                '<div class="sign_com sign_input">' +
+                                                '<div class="text">' +
+                                                '<input id="gongsi" type="text" placeholder="请填写您的所在公司">' +
+                                                '</div>' +
+                                                '</div>' +
+                                                '</div>' +
+                                                '</div>' +
+                                                '</div>' +
+
+                                                '<div class="sign_foot">' +
+                                                '<div class="sign_foot_contn">' +
+                                                '<span class="apply_submit" ">确认</span>' +
+                                                '</div>' +
+                                                '</div>' +
+                                                '</div>' +
+                                                '</div>',
+                                            success: function() {
+                                                    CurrentActivity = rep.data;
+                                                    $.ajax({
+                                                                url: apiUrl + 'activity/tickets?activity_id=' + window.location.pathname.split('/').pop(),
+                                                                type: 'GET',
+                                                                success: function(data) {
+                                                                        console.log(data);
+                                                                        var ids = [];
+                                                                        $(".mp ul").append(
+                                                                                data.data.reduce((res, e, i) =>
+                                                                                    (ids.push([e.weid, e.type, e.total_num - e.sold_num]),
+                                                                                        res += `<li id="${e.weid}">
                                             ${e.type == 1 ?
                                                 `<div id="p1"><p class="free" style="padding-right: 15px;">免费</p></div>`
                                                 :
@@ -978,6 +979,7 @@ $(document).ready(function() {
                                 $(".support").css("background", "#ccc");
 
                             }
+                            qrcodefun(id);
                             $(".support").unbind().bind("click", function() {
 
 
@@ -1006,7 +1008,7 @@ $(document).ready(function() {
                                 }
 
                             })
-                            qrcodefun(id);
+
                         }
 
                     } else {
