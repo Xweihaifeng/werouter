@@ -12,7 +12,7 @@
     <div class="banner1">
         <div id='mySwipe' class='swipe'>
             <div class='swipe-wrap'>
-                <div v-for="(item,index) in especial_news" v-if="index < 3"> 
+                <div v-for="(item,index) in recommend"> 
                     <a :href="pathname + '/' + item.weid | href('weplats')"><img :src="item.thumb_image | img_src(300 , 200 , 1)" width="100%" height="220px" /></a> 
                     <div class="mySwipeceng">
                         <div class="left"><b style='font-weight:normal'>{{item.title | limitLen(0,21)}}</b></div>
@@ -67,22 +67,31 @@
             selected : 0,
             isTrue : false,
             hot  : [],
-            especial_news: [],
+            recommend : [],
             channel_list : [],
             pathname : $app.get_router(),
             isShow: []
         },
         mounted: function() {
-            ajax.get('cms/index/grid').then((res) => {
-                if (res.code === 200) {
-                    this.hot  = res.data.hot;
-                    this.especial_news = res.data.especial_news;
+
+            // 热点新闻
+            ajax.get('cms/contents', {params: {channel_id: this.pathname, limit: 1, hot: 1, index_show: 1}}).then((res) => {
+                if (res.data && res.code === 200) {
+                    this.hot  = res.data.list;
+                }
+            })
+
+            // 推荐新闻
+            ajax.get('cms/contents', {params: {channel_id: this.pathname, limit: 3, is_pose: 1, index_show: 1}}).then((res) => {
+                if (res.data && res.code === 200) {
+                    this.recommend = res.data.list;
                     this.$nextTick(()=>{
                         this.swiper();
                     });
                 }
-            });
-            
+            })
+
+            // 频道详情
             ajax.get("cms/channels/domain_query/"+this.pathname).then((res) => {
                 if (res.data && res.code === 200) {
                     $app.set_title(plats_info.title);
@@ -92,7 +101,8 @@
                 }
             })
 
-            ajax.get("cms/index/list_news_by_channel", {params : {channel: this.pathname, limit: 8}}).then((res) => {
+            // 栏目列表 、 文章列表
+            ajax.get("cms/index/list_news_by_channel", {params: {channel: this.pathname, limit: 8}}).then((res) => {
                 if (res.data && res.code === 200) {
                     var channel_list = [];
                     res.data.forEach((item, index)=>{
