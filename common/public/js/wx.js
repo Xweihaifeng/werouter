@@ -6,7 +6,7 @@
 	{
 		if(is_wx == 'no') return false;
 		var pop = $app.get_router('pop');
-		
+
 		ajax.post('wxjssdk' , {currenturl: window.location.href}).then((res)=>{
 			if($app.empty(res.data) == false) return false;
 			wx.config({
@@ -20,6 +20,8 @@
 		});
 
         wx.ready(function() {
+
+        	console.log(data_share);
 	        wx.onMenuShareTimeline({
 	            title: data_share.title,
 	            // 分享标题

@@ -54,14 +54,13 @@
                     plats.title = res.data.category.title;
                     $app.set_title(this.news_detail.title);
                     $('#footer_bottom').show(500);
-                    console.log(this.news_detail);
 
                     // 增加微信分享代码
                     var share = {
                         'title' : this.news_detail.title ,
                         'link' : all_domian + this.channels + '/' +  this.news_detail.weid,
                         'desc' : this.news_detail.summary ,
-                        'imgUrl' : $app.qiniu(this.news_detail.cover),
+                        'imgUrl' : $app.qiniu(this.news_detail.thumb_image),
                     };
                     $wx.share(share); 
                     
