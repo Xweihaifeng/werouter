@@ -562,7 +562,7 @@ $(document).ready(function() {
                                 ids.filter(x => x[0] != id).map(x => $('#' + x[0] + ' img').attr('src', '/common/img/rmb.png'));
                             }
                             add(ids[0][0], ids[0][1]);
-                            $("#num").val(ids[0][2]);
+                            $("#num").val(ids[0][2] != 0 ? 1 : 0);
                             var id = ids[0][0];
                             $(".mp ul li").click(function(e) {
                                 id = $(e.target).parents('li').attr('id');
