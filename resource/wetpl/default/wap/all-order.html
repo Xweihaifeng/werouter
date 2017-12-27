@@ -229,7 +229,7 @@
                 if(order.send.length>0){
                     operList.push({
                         text : '查看物流',
-                        oper : 'distribute'
+                        oper : 'distribution'
                     })
                 }
                 if(num){
@@ -392,7 +392,6 @@
                 var data = {
                     "order_id" : order.weid
                 };
-
                 layer.open({
                     content: '请确保所有商品都收货后确认收货？'
                     ,style: 'background-color:#fff;'
@@ -419,11 +418,11 @@
             },
             //查看物流
             distribution : function (order,index) {
-                ajax.post('order/detail/'+order.weid).then((res)=>{
+                ajax.get('order/detail/'+order.weid).then((res)=>{
                     if(res.code==200){
                         var obj = {};
-                        obj.logistics_NO = res.data.send.logistics_no;
-                        obj.company_code = res.data.send.logistics_company_code;
+                        obj.logistics_NO = res.data.send[0].logistics_no;
+                        obj.company_code = res.data.send[0].logistics_company_code;
                         window.localStorage.setItem('sendObj',JSON.stringify(obj));
                         window.location.href = '/distribution/detail';
                     }
