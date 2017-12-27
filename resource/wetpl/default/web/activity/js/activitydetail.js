@@ -457,12 +457,14 @@ $(document).ready(function() {
                     '<div class="sign_head_contain">' +
                     '<div class="act_title">' +
                     '<div class="mp">' +
-                        '<ul>' +
-
-                        '</ul>' +
+                        '<ul></ul>' +
+                        '<div id="tickets"><span>购买数量： </span>' +
+                            '<span id="mins">-</span>' +
+                            '<span><input type="text" class="form-control" id="num" pattern="[0-9]*" maxlength="3" value="1"></span>' +
+                            '<span id="adds">+</span>' +
+                        '</div>' +
                     '</div>' +
-                    /*(rep.data.type == 1 ? '<img src="\/common\/img\/ticket-jia.png" >' : '<p>￥<b>' +
-                        rep.data.price + `</b> / 每人</p>`) +*/
+
                     '</div></div>' +
                     '</div>' +
 
@@ -524,37 +526,81 @@ $(document).ready(function() {
                             var ids = [];
                             $(".mp ul").append(
                                 data.data.reduce((res, e, i) =>
-                                    (ids.push(e.weid),
-                                    res += '<li id="' + e.weid + '">' +
-                                            '<img src="/common/img/rmb.png">' +
-                                            '<p class="price">' + e.price + '</p>' +
-                                            '<div>' +
-                                            '<p class="tkname">' + e.name + '</p>' +
-                                            '<p class="tkdscp">' + e.description + '</p>' +
-                                            '</div>' +
-                                            '</li>')
+                                    (ids.push([e.weid, e.type, e.total_num - e.sold_num]),
+                                    res += `<li id="${e.weid}">
+                                            ${e.type == 1 ?
+                                                `<div id="p1"><p class="free">免费</p></div>`
+                                                :
+                                                `<div id="p1"><img src="/common/img/rmb.png">
+                                                <p class="price">${e.price}</p></div>`
+                                            }
+                                            <div id="p2">
+                                            <p class="tkname">${e.name}</p>
+                                            <p class="tkdscp">${e.description}</p>
+                                            </div>
+                                            </li>`)
                                 , '')
                             );
-                            var add = (id) => {
+                            var add = (id, type) => {
                                 tid = id;
-                                $("#" + id).css('border', '2px solid #007cd3');
-                                $("#" + id + ' .price').css('color', '#007cd3');
-                                $("#" + id + ' img').attr('src', '/common/img/rmbo.png');
-                                $("#" + id + ' div').css({'background': '#007cd3'});
-                                $("#" + id + ' div p').css({'color': 'white'});
+                                if (type == 1) {
+                                    $("#" + id).css('border', '2px solid #ffb03f');
+                                    $("#" + id + ' #p2').css({'background': '#ffb03f'});
+                                } else {
+                                    $("#" + id).css('border', '2px solid #007cd3');
+                                    $("#" + id + ' #p2').css({'background': '#007cd3'});
+                                    $("#" + id + ' .price').css('color', '#007cd3');
+                                    $("#" + id + ' img').attr('src', '/common/img/rmbo.png');
+                                }
+                                $("#" + id + ' #p2 p').css({'color': 'white'});
                             }
                             var remove = (id) => {
-                                ids.filter(x => x != id).map(x => $('#' + x).css('border', '2px solid #dddddd'));
-                                ids.filter(x => x != id).map(x => $('#' + x + ' div').css({'background': 'white'}));
-                                ids.filter(x => x != id).map(x => $('#' + x + ' div p').css({'color': '#555'}));
-                                ids.filter(x => x != id).map(x => $('#' + x + ' .price').css('color', '#555'));
-                                ids.filter(x => x != id).map(x => $('#' + x + ' img').attr('src', '/common/img/rmb.png'));
+                                ids.filter(x => x[0] != id).map(x => $('#' + x[0]).css('border', '2px solid #dddddd'));
+                                ids.filter(x => x[0] != id).map(x => $('#' + x[0] + ' div').css({'background': 'white'}));
+                                ids.filter(x => x[0] != id).map(x => $('#' + x[0] + ' div p').css({'color': '#555'}));
+                                ids.filter(x => x[0] != id).map(x => $('#' + x[0] + ' .price').css('color', '#555'));
+                                ids.filter(x => x[0] != id).map(x => $('#' + x[0] + ' img').attr('src', '/common/img/rmb.png'));
                             }
-                            add(ids[0]);
+                            add(ids[0][0], ids[0][1]);
+                            $("#num").val(ids[0][2]);
+                            var id = ids[0][0];
                             $(".mp ul li").click(function(e) {
-                                var id = $(e.target).parents('li').attr('id');
+                                id = $(e.target).parents('li').attr('id');
                                 remove(id);
-                                add(id);
+                                add(id, ids.filter(x => x[0] == id)[0][1]);
+                                $("#num").val(ids.filter(x => x[0] == id)[0][2] != 0 ? 1 : 0);
+                            })
+                            $("#num").keyup(function(){
+                                var curr = parseInt($("#num").val());
+                                var total = ids.filter(x => x[0] == id)[0][2];
+                                if (curr > total) {
+                                    $("#num").val(total);
+                                    layer.msg('已超出最大购票数', {
+                                        time: 1000
+                                    })
+                                }
+                            })
+
+                            $("#mins").click(function(){
+                                var curr = parseInt($("#num").val()) - 1;
+                                if (curr >= 1) {
+                                    $("#num").val(curr);
+                                } else {
+                                    layer.msg('票数不可少于1张', {
+                                        time: 1000
+                                    })
+                                }
+                            })
+                            $("#adds").click(function(){
+                                var curr = parseInt($("#num").val()) + 1;
+                                var total = ids.filter(x => x[0] == id)[0][2];
+                                if (curr <= total) {
+                                    $("#num").val(curr);
+                                } else {
+                                    layer.msg('已无余票', {
+                                        time: 1000
+                                    })
+                                }
                             })
                         }
                     })
@@ -723,6 +769,7 @@ $(document).ready(function() {
             }
         });
         var tid; //购票id
+        var number; //购票数
         setTimeout(function() {
             $(".apply_submit").bind("click", function() {
                 var name = $('#username').val();
@@ -768,13 +815,22 @@ $(document).ready(function() {
                     });
                     return;
                 }
+
+                number = parseInt($("#num").val());
+                if (number == 0) {
+                    layer.msg('请购买门票', {
+                        time: 1000
+                    })
+                    return;
+                }
                 var sendData = {
                     activity_id: activityid,
                     name: name,
                     telphone: telphone,
                     poistion: poistion,
                     company: company,
-                    ticket_id: tid
+                    ticket_id: tid,
+                    num: number
                 }
                 $.ajax({
                     url: ACTIVITY_ENROLL_STORE,
