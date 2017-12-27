@@ -1,4 +1,4 @@
-<div id="footer" style="display: none;">
+<div id="footer" style="display:none;padding-top:25px;">
 <!-- 	<div class="dbback" v-if="cuupage!='' && cuupage!='so' && cuupage.length !=36">
 		<ul>
 			<li><a :href="'/' | href"><span><img src="/resource/wetpl/default/wap/img/index/home2.png"></span><p>回首页</p></a></li>
@@ -6,7 +6,7 @@
 		</ul>
 		<div class="clear"></div>
 	</div> -->
-	<div style="margin-top: 20px" v-else></div>
+	<!-- <div style="padding-top: 20px;" v-if></div> -->
 	<footer >
 		<br/><br/><br/>
 		
@@ -70,14 +70,14 @@
 		return new Vue({
 	        el: '#footer',
 	        data: {
-	            router : window.location.pathname.split('/').slice(1,2),
-	            cuupage : window.location.pathname.split('/').pop(),
+	            router : $app.get_router(),
+	            cuupage : $app.get_router('pop'),
 	            footer_nav : {
 	                home :{
 	                    'name' : '首页',
 	                    'nav' : true,
 	                    'login' : false,
-	                    'img' : '/common/img/homeblue.png',
+	                    'img' : '/common/img/home.png',
 	                    'select_img' : '/common/img/homeblue.png',
 	                    'href' : all_domian
 	                },
@@ -118,10 +118,19 @@
 	        },
 	        mounted() {
 	            this.$nextTick( function () {
-	            	if(is_domain == 'yes')
+	            	if(is_domain == 'yes' || $app.empty(this.router) == false)
 	            	{
 	            		this.router = 'home';
 	            	}
+	            	else
+	            	{
+	            		var router = this.footer_nav[this.router];
+	            		if($app.empty(router) == false)
+	            		{
+	            			this.router = 'home';
+	            		}
+	            	}
+
 	            });
 	        },
 	        methods:{
