@@ -27,7 +27,7 @@
 
     <!--头条-->
     <div class="lthot" v-for="(item, index) in hot">
-        <h1><a :href="pathname + '/' + item.weid | href('weplats')"><b style="font-weight:normal;text-align:left;color:#007cd3;width: 388px;overflow: hidden;white-space: nowrap;display: inline-block;" >{{item.title | limitLen(0,24)}}</b></a></h1>
+        <h1><a :href="pathname + '/' + item.weid | href('weplats')"><b style="font-weight:normal;text-align:left;color:#007cd3;width: 388px;overflow: hidden;white-space: nowrap;display: inline-block;" >{{item.title | limitLen(0,18)}}</b></a></h1>
         <p><a :href="pathname + '/' + item.weid | href('weplats')">{{item.summary | limitLen(0,83)}}<span>[查看全文]</span></a></p>
         <div class="clear"></div>
     </div>
