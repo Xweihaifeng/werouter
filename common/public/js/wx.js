@@ -6,11 +6,11 @@
 	{
 		if(is_wx == 'no') return false;
 		var pop = $app.get_router('pop');
-
+		
 		ajax.post('wxjssdk' , {currenturl: window.location.href}).then((res)=>{
 			if($app.empty(res.data) == false) return false;
 			wx.config({
-				debug: true,
+				debug: false,
 				appId: res.data.appId,
 				timestamp: res.data.timestamp,
 				nonceStr: res.data.nonceStr,
