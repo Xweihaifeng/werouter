@@ -4,6 +4,7 @@
 	// 初始化微信SDK
 	wx_init.share = function(data_share)
 	{
+		console.log(data_share);
 		if(is_wx == 'no') return false;
 		var pop = $app.get_router('pop');
 
@@ -21,7 +22,6 @@
 
         wx.ready(function() {
 
-        	console.log(data_share);
 	        wx.onMenuShareTimeline({
 	            title: data_share.title,
 	            // 分享标题
