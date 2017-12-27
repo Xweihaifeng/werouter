@@ -60,7 +60,7 @@
                         'title' : this.news_detail.title ,
                         'link' : all_domian + this.channels + '/' +  this.news_detail.weid,
                         'desc' : this.news_detail.summary ,
-                        'imgUrl' : $app.qiniu(this.news_detail.thumb_image),
+                        'imgUrl' : $app.qiniu(this.news_detail.thumb_image , 280 , 280),
                     };
                     $wx.share(share); 
                     

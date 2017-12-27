@@ -9,13 +9,24 @@
 	}
 
 	// 七牛图片
-	app.qiniu = function(url){
-		if (!url) return '';
+	app.qiniu = function(value , width , height , mode){
+		if (!value) return '';
 
-		if(url.indexOf('http') !== -1){
-		    return url;
+		if(value.indexOf('http') !== -1){
+		    return value;
 		}
-		return http_type + plats_qiniu.domain_custom + '/' + url;
+		if($app.empty(width) == false || $app.empty(height) == false )
+	    {
+	        return settings + value;
+	    }
+	    else
+	    {
+	        if (mode != undefined) {
+	            return settings + value + '?imageView2/' + mode + '/w/' + width + '/h/' + height;
+	        } else {
+	            return settings + value + '?imageView2/3/w/' + width + '/h/' + height;
+	        }
+	    }
 	}
 	
 	//验证是否是空
