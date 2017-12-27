@@ -1,7 +1,27 @@
 // 微众微信公共方法调用
 (function(window) {
-	var wx = {};
-	wx.get_openid = function(name){
+	var wx_init = {};
+	// 初始化微信SDK
+	wx_init.init = function()
+	{
+		if(is_wx == 'no') return false;
+		var pop = $app.get_router('pop');
+
+		if(pop.length < 36) return false;
+		
+		ajax.post('wxjssdk' , {currenturl: window.location.href}).then((res)=>{
+			if($app.empty(res.data) == false) return false;
+			wx.config({
+				debug: true,
+				appId: res.data.appId,
+				timestamp: res.data.timestamp,
+				nonceStr: res.data.nonceStr,
+				signature: res.data.signature,
+				jsApiList: ['onMenuShareTimeline']
+			});
+		});
+	}
+	wx_init.get_openid = function(name){
 		if(is_wx == 'no') return false;
 
 		var openid = $app.get_query_string('openid');
@@ -15,7 +35,7 @@
 		{
 			$app.set_cookie('openid' , openid );
 			//顺便微信登陆下 
-			wx.wx_login(openid);
+			wx_init.wx_login(openid);
 		}
 		else
 		{
@@ -24,7 +44,7 @@
 	}
 	// ref_type 1.微信登陆 2.手机号码传  3PC扫码 
 	//微信登陆依赖VUE AXIOS
-	wx.wx_login = function(openid){
+	wx_init.wx_login = function(openid){
 		if(is_wx == 'no') return false;
 		var data_post = {
 			'openid': openid,
@@ -42,5 +62,5 @@
 		});
 	}
 
-	window.$wx = wx;
+	window.$wx = wx_init;
 })(window);
