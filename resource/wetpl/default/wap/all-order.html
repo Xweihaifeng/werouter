@@ -421,8 +421,8 @@
                 ajax.get('order/detail/'+order.weid).then((res)=>{
                     if(res.code==200){
                         var obj = {};
-                        obj.logistics_NO = res.data.send.logistics_no;
-                        obj.company_code = res.data.send.logistics_company_code;
+                        obj.logistics_NO = res.data.send[0].logistics_no;
+                        obj.company_code = res.data.send[0].logistics_company_code;
                         window.localStorage.setItem('sendObj',JSON.stringify(obj));
                         window.location.href = '/distribution/detail';
                     }
