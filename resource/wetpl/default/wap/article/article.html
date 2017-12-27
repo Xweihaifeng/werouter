@@ -13,6 +13,9 @@
         <!--</div>-->
         <!--<div class="swiper-pagination"></div>-->
     <!--</div>-->
+    <div class="banner" v-if="bannerList.length">
+        <a v-for="item in bannerList" v-if="item.src" :href="item.href"><img :src="item.src | img_src" alt=""></a>
+    </div>
     <div id="box" class="section my_container" @touchstart="touchStart($event)" @touchmove="touchMove($event)"
          @touchend="touchEnd($event)" style="transform:translate(0,-30px)">
         <div class="fresh-tip">
@@ -67,6 +70,7 @@
         el: '#app',
         data: {
             advList: [],
+            bannerList: [],
             start: '',
             end: '',
             offset: 30,
@@ -85,6 +89,7 @@
                 console.log(res);
                 if (res.code == 200 && res.data) {
                     this.advList = JSON.parse(res.data.slide);
+                    this.bannerList = JSON.parse(res.data.banner);
                     console.log(this.advList)
                 }
             });

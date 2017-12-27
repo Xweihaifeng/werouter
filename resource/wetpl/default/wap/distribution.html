@@ -41,13 +41,18 @@
         },
         mounted : function () {
             var data = JSON.parse(window.localStorage.getItem('sendObj'));
+            //测试用账户
+            var data = {};
+            data.logistics_NO = '382351534';
+            data.company_code = 'tnt';
+            //测试账户
             this.tips = '正在加载...请稍候...';
             this.$http.post(apiUrl + 'pages/logistics/getLogisticsInfo',data).then(function (res) {
                 console.log(res);
                 if(res.data && res.data.code === 200){
                     this.disList = res.data.data.data;
                 }else{
-                    this.tips = '加载失败';
+                    this.tips = res.data.message.message;
                 }
             },function (err) {
                 this.tips = '加载失败';
