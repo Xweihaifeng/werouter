@@ -258,7 +258,7 @@ $(document).ready(function() {
                     },
                     success: function(data) {
                         if (data.code == 200) {
-                            PaymentQR(data.data.qrcode_url, data.data.number);
+                            PaymentQR(data.data.qrcode_url, data.data.number, data.data.total_fee);
                         } else {
                             console.log(number);
                         }
@@ -344,7 +344,7 @@ $(document).ready(function() {
                     });
                 }
                 // 调起支付
-            var PaymentQR = function(qr_url, number) {
+            var PaymentQR = function(qr_url, number, fee) {
                     paymentLayer = layer.open({
                         skin: 'layui-layer-rim',
                         type: 1,
@@ -357,7 +357,7 @@ $(document).ready(function() {
                         content: `<div class="payment-block">
                             <div class="payment-qrcode"><img src="` + QRCODE + `?url=` + qr_url + `" width="300"></div>
                             <div class="payment-desc">
-                                <p>付款金额：<b>￥` + CurrentActivity.price + `</b></p>
+                                <p>付款金额：<b>￥` + fee + `</b></p>
                             </div>
                             <div class="payment-mark"><img src="/common/img/wepay-logo.png" width="100"></div>
                         </div>`,
