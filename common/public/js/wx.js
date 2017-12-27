@@ -7,7 +7,7 @@
 		if(is_wx == 'no') return false;
 		var pop = $app.get_router('pop');
 		
-		ajax.post('wxjssdk' , {currenturl: data_share.link}).then((res)=>{
+		ajax.post('wxjssdk' , {currenturl: window.location.href}).then((res)=>{
 			if($app.empty(res.data) == false) return false;
 			wx.config({
 				debug: true,
