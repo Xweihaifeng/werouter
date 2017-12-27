@@ -23,7 +23,7 @@
         </div>
     </div>
     <div id="read-art" v-html="news_detail.content"></div>
-    <div id="footer_bottom">
+    <div id="footer_bottom" style="display: none;">
         <div class="read-org" style="">
             <a :href="news_detail.source_url">阅读原文</a>
         </div>
@@ -53,6 +53,7 @@
                     this.category = res.data.category;
                     plats.title = res.data.category.title;
                     $app.set_title(this.news_detail.title);
+                    $('#footer_bottom').show(500);
                     console.log(this.news_detail);
                 }
             });

@@ -6,7 +6,7 @@
 		</ul>
 		<div class="clear"></div>
 	</div> -->
-	<div style="margin-top: 20px" v-else></div>
+	<div style="margin-top: 10px" v-if></div>
 	<footer >
 		<br/><br/><br/>
 		
@@ -23,41 +23,7 @@
 		</ul>
 	</footer>
 </div>
-<script type="text/javascript">
-
-
-	// header 渲染
-	function init_header(show) {
-	    if(show == 'no') return false;
-
-	    $('#header').show();
-	    var dom_id = '#header';
-	    if(show != 'yes')
-	    {
-	    	dom_id = '#'+show;
-	    }
-	    new Vue({
-	        el: dom_id,
-	        data: {
-	           plats : plats,
-	           menu_open : false
-	        },
-	        watch: {
-	          
-	        },
-	        mounted() {
-	            this.$nextTick( function () {
-	            });
-	        },
-	        methods:{
-	        	open(val)
-	        	{
-	        		$app.open_page(val);
-	        	}
-	        }
-	    });
-	}
-	
+<script type="text/javascript">	
 	// footer 渲染
 	function init_footer(show) {
 		if(show == 'no') return false;
@@ -70,14 +36,14 @@
 		return new Vue({
 	        el: '#footer',
 	        data: {
-	            router : window.location.pathname.split('/').slice(1,2),
-	            cuupage : window.location.pathname.split('/').pop(),
+	            router : $app.get_router(),
+	            cuupage : $app.get_router('pop'),
 	            footer_nav : {
 	                home :{
 	                    'name' : '首页',
 	                    'nav' : true,
 	                    'login' : false,
-	                    'img' : '/common/img/homeblue.png',
+	                    'img' : '/common/img/home.png',
 	                    'select_img' : '/common/img/homeblue.png',
 	                    'href' : all_domian
 	                },
@@ -118,10 +84,19 @@
 	        },
 	        mounted() {
 	            this.$nextTick( function () {
-	            	if(is_domain == 'yes')
+	            	if(is_domain == 'yes' || $app.empty(this.router) == false)
 	            	{
 	            		this.router = 'home';
 	            	}
+	            	else
+	            	{
+	            		var router = this.footer_nav[this.router];
+	            		if($app.empty(router) == false)
+	            		{
+	            			this.router = 'home';
+	            		}
+	            	}
+
 	            });
 	        },
 	        methods:{
@@ -140,6 +115,23 @@
 	                		{
 	                			mb_login(select.href);
 	                			return ;
+	                		}
+	                	}
+	                	var cookie_domain = $app.get_cookie('domain');
+	                	if(val == 'home')
+	                	{
+	                		if(cookie_domain != false)
+	                		{
+	                			if(cookie_domain == '/')
+	                			{
+	                				window.location.href= all_domian;
+	                			}
+	                			else
+	                			{
+	                				window.location.href= all_domian + cookie_domain;
+	                			}
+	                			
+	                			return false;
 	                		}
 	                	}
 	                    window.location.href = select.href;
