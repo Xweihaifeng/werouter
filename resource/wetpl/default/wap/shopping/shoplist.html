@@ -13,6 +13,9 @@
         </div>
         <div class="swiper-pagination"></div>
     </div>
+    <div class="banner" v-if="bannerList.length">
+        <a v-for="item in bannerList" v-if="item.src" :href="item.href"><img :src="item.src | img_src" alt=""></a>
+    </div>
     <div>
         <menu class="menu" id="menu_title" :class="{'has-swiper' : advList.length}">
             <ul id="shop_type">
@@ -89,6 +92,7 @@
         el: '#app',
         data: {
             advList: [],
+            bannerList: [],
             sortList: [],
             goodList: [],
             domain: pages_index,
@@ -125,6 +129,7 @@
                     console.log(res);
                     if (res.code == 200 && res.data) {
                         this.advList = JSON.parse(res.data.slide);
+                        this.bannerList = JSON.parse(res.data.banner);
                         console.log(this.advList)
                     }
                 });
@@ -169,14 +174,14 @@
                 var scroll = document.documentElement.scrollTop || document.body.scrollTop;
                 if(this.advList.length){
                     if (t <= scroll) {//向下滚
-                        $('.menu').css('top', 244 - scroll);
+                        $('.menu').css('top', 299 - scroll);
                         if(parseInt($('.menu').css('top')) <= 44) {
                             $('.menu').css('top', '44px')
                         }
                     } else {//向上滚
                         $('.menu').css('top', scroll);
-                        if(parseInt($('.menu').css('top')) >= 244) {
-                            $('.menu').css('top', '244px')
+                        if(parseInt($('.menu').css('top')) >= 299) {
+                            $('.menu').css('top', '299px')
                         }
                     }
                 }
