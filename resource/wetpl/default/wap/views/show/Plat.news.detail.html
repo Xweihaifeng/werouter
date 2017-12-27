@@ -44,31 +44,35 @@
             zan_true : '',
             plats_info: plats_info,
             channels : $app.get_router(1),
-            id : $app.get_router(2),
+            id : $app.get_router('pop'),
         },
         mounted: function() {
             ajax.get('cms/detail/'+this.id).then((res) => {
                 if (res.data && res.code === 200) {
-                    console.log(this.news_detail);
                     this.news_detail = res.data;
                     this.category = res.data.category;
                     plats.title = res.data.category.title;
                     $app.set_title(this.news_detail.title);
+                    console.log(this.news_detail);
                 }
             });
         },
         methods: {
             zan(){
-                var data = new Object();
-                data.content_id = this.news_detail.weid;
-                ajax.post('cms/contents/praise', data).then((res) => {
+                if(is_login == 'no') {
+                    mb_login();
+                    return false;
+                }
+                ajax.post('cms/contents/praise', {"content_id": this.id}).then((res) => {
                     if (res.data && res.code === 200) {
                         this.zan_true = res.data.praise;
                         if(!this.zan_true) {
-                            mb_message('已经点赞过了');
+                            this.news_detail.praise_num -= 1;
+                            mb_message('取消点赞');
                             return false;
                         }
-                        mb_message('点赞成功');
+                        this.news_detail.praise_num += 1;
+                        mb_message('成功点赞');
                     }
                 });
             }
