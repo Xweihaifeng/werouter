@@ -4,7 +4,6 @@
 	// 初始化微信SDK
 	wx_init.share = function(data_share)
 	{
-		console.log(data_share);
 		if(is_wx == 'no') return false;
 		var pop = $app.get_router('pop');
 
