@@ -36,8 +36,8 @@
 		return new Vue({
 	        el: '#footer',
 	        data: {
-	            router : window.location.pathname.split('/').slice(1,2),
-	            cuupage : window.location.pathname.split('/').pop(),
+	            router : $app.get_router(),
+	            cuupage : $app.get_router('pop'),
 	            footer_nav : {
 	                home :{
 	                    'name' : '首页',
@@ -84,10 +84,19 @@
 	        },
 	        mounted() {
 	            this.$nextTick( function () {
-	            	if(is_domain == 'yes')
+	            	if(is_domain == 'yes' || $app.empty(this.router) == false)
 	            	{
 	            		this.router = 'home';
 	            	}
+	            	else
+	            	{
+	            		var router = this.footer_nav[this.router];
+	            		if($app.empty(router) == false)
+	            		{
+	            			this.router = 'home';
+	            		}
+	            	}
+
 	            });
 	        },
 	        methods:{
