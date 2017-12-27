@@ -21,18 +21,31 @@
         <span> 物流详情 </span>
         <a class="back" href="javascript:void(0)" onclick="javascript:history.back(-1)"></a>
     </header>
-    <div class="distri-container">
-        <div v-if="!disList.length" class="tips">{{tips}}</div>
-        <div v-for="item in disList">
-            <span>{{item.time}}</span>
-            <span>{{item.context}}</span>
+    <section>
+        <aside class="bution_box">
+            <span class="bution">物流单号：</span><span class="bution_num">564687464658453</span>
+        </aside>
+        <aside class="shop_box_list">
+            <li><img src="/common/img/shopping_1.jpg" width="80px" height="80px" alt=""><div>物流详情物</div></li>
+            <li><img src="/common/img/shopping_1.jpg" width="80px" height="80px" alt=""><div>物流详情物</div></li>
+            <li><img src="/common/img/shopping_1.jpg" width="80px" height="80px" alt=""><div>物流详情物</div></li>
+            <li><img src="/common/img/shopping_1.jpg" width="80px" height="80px" alt=""><div>物流详情物</div></li>
+            <li><img src="/common/img/shopping_1.jpg" width="80px" height="80px" alt=""><div>物流详情物</div></li>
+            <li><img src="/common/img/shopping_1.jpg" width="80px" height="80px" alt=""><div>物流详情物</div></li>
+        </aside>
+        <div class="distri-container">
+            <div v-if="!disList.length" class="tips">{{tips}}</div>
+            <div v-for="item in disList" class="disList "><!-- disList_orange -->
+                <aside>{{item.context}}</aside>
+                <aside>{{item.time.substr(0,10)}}</aside>
+            </div>
         </div>
-    </div>
+    </section>
 </div>
 <script>
 //    Vue.http.headers.common['token'] = 'eyJpdiI6IlwvTFZlRU5lQ2FlMHE3MW16dkFmNUVnPT0iLCJ2YWx1ZSI6Ijc2ZWt3M1o5U2RcL2tWNTlYazBSVDVsMDIwaHpcL2dWZ2VwSVY1V2hib3o0RmxTMzBvU2o1SEMyZ2U2UjRVV0xielFBWlROb1ArbGhyRTY3VHBXTlwvenZwUXF6aHBpUmROeFJJNE5CRUh2YyswPSIsIm1hYyI6ImIzYjBiYzM2YjBlMjkxNDAzMjZlYzM5YWJmMWNhOGEzMDJkY2FjMzFiNGQwMGM0NGFlYTRkMTVlMzNhZGU1N2EifQ=='
 
-    Vue.http.headers.common['token'] = window.localStorage.getItem("token");
+    Vue.http.headers.common['token'] = docCookies.getItem("token");
     var commentApp = new Vue({
         el : "#distribution-app",
         data : {
