@@ -15,6 +15,9 @@
 		if(value.indexOf('http') !== -1){
 		    return value;
 		}
+		
+		var settings = http_type + plats_qiniu.domain_custom + '/';
+
 		if($app.empty(width) == false || $app.empty(height) == false )
 	    {
 	        return settings + value;
