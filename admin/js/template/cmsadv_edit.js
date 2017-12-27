@@ -22,9 +22,9 @@ $(document).ready(function(){
                         }
                                 //分类select初始化
                                 var advTypes='';
-                                 $.getJSON(ApiUrl+"cms/advTypes",function(result){
+                                 $.getJSON(ApiUrl+"cms/advTypes?limit=30",function(result){
                                       //console.log(result);
-                                    $.each(result.data, function(i,item){
+                                    $.each(result.data.list, function(i,item){
                                       if(type_id==item.weid){
                                          advTypes=advTypes+'<option value="'+item.weid+'" description="'+item.description+'" selected=\"selected\">'+item.title+'</option>';
                                        }else{
