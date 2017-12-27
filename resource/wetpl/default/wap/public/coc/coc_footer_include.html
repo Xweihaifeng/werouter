@@ -23,7 +23,41 @@
 		</ul>
 	</footer>
 </div>
-<script type="text/javascript">	
+<script type="text/javascript">
+
+
+	// header 渲染
+	function init_header(show) {
+	    if(show == 'no') return false;
+
+	    $('#header').show();
+	    var dom_id = '#header';
+	    if(show != 'yes')
+	    {
+	    	dom_id = '#'+show;
+	    }
+	    new Vue({
+	        el: dom_id,
+	        data: {
+	           plats : plats,
+	           menu_open : false
+	        },
+	        watch: {
+	          
+	        },
+	        mounted() {
+	            this.$nextTick( function () {
+	            });
+	        },
+	        methods:{
+	        	open(val)
+	        	{
+	        		$app.open_page(val);
+	        	}
+	        }
+	    });
+	}
+	
 	// footer 渲染
 	function init_footer(show) {
 		if(show == 'no') return false;
@@ -115,23 +149,6 @@
 	                		{
 	                			mb_login(select.href);
 	                			return ;
-	                		}
-	                	}
-	                	var cookie_domain = $app.get_cookie('domain');
-	                	if(val == 'home')
-	                	{
-	                		if(cookie_domain != false)
-	                		{
-	                			if(cookie_domain == '/')
-	                			{
-	                				window.location.href= all_domian;
-	                			}
-	                			else
-	                			{
-	                				window.location.href= all_domian + cookie_domain;
-	                			}
-	                			
-	                			return false;
 	                		}
 	                	}
 	                    window.location.href = select.href;

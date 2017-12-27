@@ -36,37 +36,5 @@
 		</div>
 	</div>
 </div>
-<script type="text/javascript">
-// header 渲染
-function init_header(show) {
-    if(show == 'no') return false;
 
-    $('#header').show();
-    var dom_id = '#header';
-    if(show != 'yes')
-    {
-    	dom_id = '#'+show;
-    }
-    new Vue({
-        el: dom_id,
-        data: {
-           plats : plats,
-           menu_open : false
-        },
-        watch: {
-          
-        },
-        mounted() {
-            this.$nextTick( function () {
-            });
-        },
-        methods:{
-        	open(val)
-        	{
-        		$app.open_page(val);
-        	}
-        }
-    });
-}
-</script>
 
