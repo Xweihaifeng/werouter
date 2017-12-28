@@ -15,29 +15,29 @@
     <div class="info">
         <div class="qr">
             <div class="qr-content"></div>
-            <p>票号：D1478523695</p>
+            <p>票号：{{infoData.ticket_num}}</p>
         </div>
         <div class="des">
-            <h3>创IN中国 最后一站城市赛：杭州未来科技城站 | 人工智能全国创业大赛</h3>
-            <p class="time">2017/12/28 星期四 13:00 ~ 17:30</p>
-            <p>杭州余杭区未来科技城高教路与向往街交汇处高新汇人工智能产业园3号楼A座1楼大厅</p>
+            <h3>{{infoData.title}}</h3>
+            <p class="time">{{infoData.begain_time}} {{infoData.begain_week}} {{infoData.begain_hour}} ~ {{infoData.end_time}} {{infoData.end_week}} {{infoData.end_hour}}</p>
+            <p>{{infoData.address}}</p>
         </div>
         <ul>
             <li>
                 <i style="background:url('/common/img/sign2.png') no-repeat center center"></i>
-                <span>郑晓娇</span>
+                <span>{{infoData.name}}</span>
             </li>
             <li>
                 <i style="background:url('/common/img/sign3.png') no-repeat center center"></i>
-                <span>13227723564</span>
+                <span>{{infoData.telphone}}</span>
             </li>
             <li>
                 <i style="background:url('/common/img/sign4.png') no-repeat center center"></i>
-                <span>技术</span>
+                <span>{{infoData.poistion}}</span>
             </li>
             <li>
                 <i style="background:url('/common/img/sign.png') no-repeat center center"></i>
-                <span>微众中国</span>
+                <span>{{infoData.company}}</span>
             </li>
         </ul>
     </div>
@@ -46,10 +46,21 @@
     new Vue({
         el : '#app',
         data : {
-
+            infoData : {}
         },
         mounted : function () {
-
+            ajax.get('activity/enroll/detail/fa192620-eb6d-11e7-afb1-7fe8d81f2754').then((res)=>{
+                console.log(res);
+                if(res.code == 200 && res.data){
+                    this.infoData = res.data;
+                    var qrcode_val = apiUrl+"activity/enroll/check_ticket_number?e_number=" + res.data.ticket_num;
+                    jQuery(".qr-content").qrcode({
+                        width: 120,
+                        height: 120,
+                        text: qrcode_val
+                    });
+                }
+            })
         }
     })
 </script>
