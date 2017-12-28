@@ -7,7 +7,6 @@
 <link rel="stylesheet" href="{{PATH_TML}}css/home.css"/>
 <link rel="stylesheet" href="{{PATH_TML}}css/common.css"/>
 <link rel="stylesheet" href="{{PATH_TML}}css/E-ticket.css">
-<link rel="stylesheet" href="/common/font/iconfont.css" />
 <script src="/common/js/jquery.min.js"></script>
 <script src="/common/js/jquery.qrcode.min.js"></script>
 <div class="ticket-content">
@@ -54,9 +53,11 @@
                 if(res.code == 200 && res.data){
                     this.infoData = res.data;
                     var qrcode_val = apiUrl+"activity/enroll/check_ticket_number?e_number=" + res.data.ticket_num;
+                    var clientWidth = document.documentElement.clientWidth;
+                    var canvasWidth = Math.floor(clientWidth*120/375);
                     jQuery(".qr-content").qrcode({
-                        width: 120,
-                        height: 120,
+                        width: canvasWidth,
+                        height: canvasWidth,
                         text: qrcode_val
                     });
                 }
