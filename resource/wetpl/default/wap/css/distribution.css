@@ -80,7 +80,7 @@ section {
 .disList:not(:last-child)::before {
     position: absolute;
     content: "";
-    left: -0.15rem;
+    left: -0.154rem;
     top: 0.2rem;
     width: 1px;
     height: 100%;
@@ -137,13 +137,20 @@ section {
 }
 
 .shop_box_list > li {
-    width: 50%;
+    width: 32%;
+    margin-right: 2%;
+    margin-bottom: 0.05rem;
     min-height: 1.2rem;
     height: 1.2rem;
     display: inline-flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    box-shadow: inset 0px 0px 0px 0.004rem #ccc;
+}
+
+.shop_box_list > li:nth-child(3n) {
+    margin-right: 0;
 }
 
 .shop_box_list > li:hover {
