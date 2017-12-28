@@ -56,6 +56,15 @@
                     $app.set_title(this.news_detail.title);
                     $('#footer_bottom').show(500);
                     $('#auth_info').show(500);
+
+                    // 增加微信分享代码
+                    var share = {
+                        'title' : this.news_detail.title ,
+                        'link' : all_domian + pages_index + '/article/' +  this.news_detail.weid,
+                        'desc' : this.news_detail.summary ,
+                        'imgUrl' : $app.qiniu(this.news_detail.thumb_image , 500 , 500),
+                    };
+                    $wx.share(share);
                 }
             });
 
