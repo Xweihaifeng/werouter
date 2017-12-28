@@ -358,6 +358,7 @@ a,li{
     width:100%;
     height:100%;
     background-color:rgba(0,0,0,.7);
+    z-index:99;
 }
 .modal-content{
     position: fixed;
@@ -370,13 +371,13 @@ a,li{
     z-index:999;
 }
 .fade-enter-active, .fade-leave-active {
-    transition: opacity .2s ease-out;
+    transition: opacity .2s;
 }
 .fade-enter, .fade-leave-to /* .fade-leave-active in below version 2.1.8 */ {
     opacity: 0
 }
 .slide-enter-active, .slide-leave-active {
-    transition: height .2s linear;
+    transition: height .2s;
 }
 .slide-enter, .slide-leave-to /* .fade-leave-active in below version 2.1.8 */ {
     height: 0
@@ -474,8 +475,11 @@ a,li{
     font-size:0.14rem;
     outline: none;
     float: left;
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    border-radius: 0px;
 }
-.modal-content .medium p button::before{
+.modal-content .medium p button:before{
     height: 0.01rem;
     width: 0.09rem;
     background-color: #666;
@@ -487,7 +491,7 @@ a,li{
     content: '';
     position: absolute;
 }
-.modal-content .medium p button:last-child::after{
+.modal-content .medium p button:last-child:after{
     width: 0.01rem;
     height: 0.09rem;
     background-color: #666;
@@ -509,7 +513,7 @@ a,li{
 .modal-content .medium p button.disabled:before{
     background-color: #bbb;
 }
-.modal-content .medium p button.disabled:last-child::after{
+.modal-content .medium p button.disabled:last-child:after{
     background-color: #bbb;
 }
 .modal-content .bottom{

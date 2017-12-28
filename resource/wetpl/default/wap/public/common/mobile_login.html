@@ -1,29 +1,29 @@
 <script src="/common/public/js/layer_mobile/layer.js"></script>
 <div id="footer_add" class="box" style="display: none;">
     <div class="release">
-        <img src="/common/img/activity_06.jpg" width="100%" height="100%" alt="">
+        <img class="other" src="/common/img/activity_06.jpg" width="100%" height="100%" alt="">
         <div class="content_s" style="margin-bottom: -400px;">
             <div class="list_t">
-                <a href="javascript:void(0);">
-                    <img class="list_02" src="/common/img/activity_02.png" alt="">
+                <a href="javascript:void(0);" style="display:block;">
+                    <img class="list_02 other" src="/common/img/activity_02.png" alt="">
                     <p class="list_text">发项目</p>
                 </a>
             </div>
             <div class="list">
                 <div class="list_footer_text">
                     <a href="javascript:void(0);">
-                        <img class="list_01" src="/common/img/activity_03.png" alt="">
+                        <img class="list_01 other" src="/common/img/activity_03.png" alt="">
                         <p class="list_text_left">发文章</p>
                     </a>
                 </div>
                 <div class="list_footer_active">
                     <a href="javascript:void(0);">
-                        <img class="list_03" src="/common/img/activity_04.png" alt="">
+                        <img class="list_03 other" src="/common/img/activity_04.png" alt="">
                         <p class="list_text_right">发活动</p>
                     </a>
                 </div>
             </div>
-            <img class="list_last" src="/common/img/activity_1.png" alt="">
+            <img class="list_last other" src="/common/img/activity_1.png" alt="">
         </div>
     </div>
 </div>
@@ -48,21 +48,22 @@
         z-index: 10000;}
     .release{width: 100%;
         background-size:100% 100%;}
-/*    p,body{padding:0;
+    /*p,body{padding:0;
         margin:0;
         font-size:14px;}
-    a{text-decoration:none;}*/
+    */
+    /*a{text-decoration:none;}*/
     .content_s{width:100%;
         position: absolute;
         bottom:0;
         margin-bottom: -400px;
         transition:margin-bottom 0.5s;
         -webkit-transition:margin-bottom 0.5s;}
-/*    img{max-width: 100%;
+    .other{max-width: 100%;
         display: block;
-        margin: 0 auto;}*/
+        margin: 0 auto;}
     .list{width:100%;
-        height:70px;
+        height:90px;
         overflow: hidden;}
     .list_01{width:55px;}
     .list_02{width:65px; z-index: -10px;}
@@ -72,7 +73,8 @@
         width:20px;}
     .list_text,.list_text_left,.list_text_right{text-align: center;
         color:#000;
-        margin-top:10px;}
+        margin-top:10px;
+        font-size: 0.14rem;}
     .list_t{margin-bottom:-30px;}
     .list_footer_text{float:left;
         margin-left: 15%;}

@@ -113,6 +113,12 @@
                                         <input type="text"  class="form-control" name="icp" placeholder="">
                                     </div>
                             </div>
+                            <div class="form-group">
+                                    <label class="control-label col-sm-2">原网站url</label>
+                                    <div class="col-sm-5">
+                                        <input type="text"  class="form-control" name="old_link" placeholder="">
+                                    </div>
+                            </div>
 
                              <div class="form-group">
                                     <label class="control-label col-sm-2">微博show</label>
@@ -126,7 +132,7 @@
                              <div class="form-group">
                                     <label class="control-label col-sm-2">copyright</label>
                                     <div class="col-sm-5">
-                                        <textarea rows="8" placeholder="" name="copyright" class="form-control" id="editor1" placeholder="摘要"></textarea>
+                                        <textarea rows="8" placeholder="" name="copyright" class="form-control" id="editor1" placeholder=""></textarea>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -163,6 +169,31 @@
                                             <input id="wap_logofile" name="cover" type="file" class="form-control hide"/>
                                             <div id="look">
                                                 <img onclick="$('#wap_logofile').click()" id="img_wap_logo" width="100px;" src="//oty3r3tmi.bkt.clouddn.com/upload.png" alt="暂无预览图片" class="thumbnail">
+                                            </div>
+                                        </div>
+                                </div>
+
+                                 <div class="form-group">
+                                        <label class="col-sm-2 control-label">微信二维码</label>
+                                        <div class="col-sm-5">
+                                            <p style="padding-top:7px" class="info"> 上传格式： .png 建议尺寸：415像素 * 100像素</p>
+                                            <input name="wx_qrcode" type="hidden" value=""
+                                                   class="form-control"/>
+                                            <input id="wx_qrcodefile" name="cover" type="file" class="form-control hide"/>
+                                            <div id="look">
+                                                <img onclick="$('#wx_qrcodefile').click()" id="img_wx_qrcode" width="100px;" src="//oty3r3tmi.bkt.clouddn.com/upload.png" alt="暂无预览图片" class="thumbnail">
+                                            </div>
+                                        </div>
+                                </div>
+                                 <div class="form-group">
+                                        <label class="col-sm-2 control-label">微博二维码</label>
+                                        <div class="col-sm-5">
+                                            <p style="padding-top:7px" class="info"> 上传格式： .png 建议尺寸：415像素 * 100像素</p>
+                                            <input name="wb_qrcode" type="hidden" value=""
+                                                   class="form-control"/>
+                                            <input id="wb_qrcodefile" name="cover" type="file" class="form-control hide"/>
+                                            <div id="look">
+                                                <img onclick="$('#wb_qrcodefile').click()" id="img_wb_qrcode" width="100px;" src="//oty3r3tmi.bkt.clouddn.com/upload.png" alt="暂无预览图片" class="thumbnail">
                                             </div>
                                         </div>
                                 </div>
