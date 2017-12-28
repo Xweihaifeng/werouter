@@ -58,6 +58,13 @@
                 </span>
                 <img src="/common/img/you.png" alt="">
             </li>
+            <li onclick="window.location.href='/collection'">
+                <span>
+                    <i style="background: url('/common/img/我的订单@2x.png') no-repeat center center;background-size: 50%; background-color: #F26D5F;"></i>
+                    <a>我的收藏</a>
+                </span>
+                <img src="/common/img/you.png" alt="">
+            </li>
         </ul>
         <ul>
             <li>
@@ -109,40 +116,38 @@
     </div>
 </div>
 <script>
-new Vue({
-    el: '#app',
-    data: {
-        name: '阿尔卑斯山',
-        phone: 'Alps',
-        pages_index : '',
-        card_show : false,
-        auth_show : false,
-        avatar : '/common/img/avatar.png',
-        nums : {
-            wnums : 0,
-            gnums : 0,
-            fnums : 0,
+    new Vue({
+        el: '#app',
+        data: {
+            name: '阿尔卑斯山',
+            phone: 'Alps',
+            pages_index: '',
+            card_show: false,
+            auth_show: false,
+            avatar: '/common/img/avatar.png',
+            nums: {
+                wnums: 0,
+                gnums: 0,
+                fnums: 0,
+            }
+        },
+        mounted: function () {
+            this.$nextTick(() => {
+                $app.set_title('我的');
+                this.name = (plats_user_info.real_name != '神秘人') ? plats_user_info.real_name : plats_user_info.nickname;
+                this.phone = plats_user_info.phone;
+                this.pages_index = plats_user_info.domian + '?from=' + pages_index;
+                if (plats_user_info.avatar) {
+                    this.avatar = ApiMaterPlatQiniuDomain + plats_user_info.avatar;
+                }
+                if ($app.empty(plats_user_info.domian) == true) {
+                    // 获取统计数据
+                    ajax.get('/circel/index', {params: {'domain': plats_user_info.domian}})
+                        .then((data) => {
+                            this.nums = data.data;
+                        });
+                }
+            })
         }
-    },
-    mounted: function(){
-        this.$nextTick(()=>{
-            $app.set_title('我的');
-            this.name = (plats_user_info.real_name != '神秘人') ? plats_user_info.real_name  : plats_user_info.nickname ;
-            this.phone =  plats_user_info.phone;
-            this.pages_index = plats_user_info.domian + '?from=' + pages_index;
-            if(plats_user_info.avatar)
-            {
-                this.avatar = ApiMaterPlatQiniuDomain + plats_user_info.avatar;
-            }
-            if($app.empty(plats_user_info.domian) == true)
-            {
-                // 获取统计数据
-                ajax.get('/circel/index' , {params : {'domain' : plats_user_info.domian}})
-                .then((data)=>{
-                    this.nums = data.data;
-                });
-            }
-        })
-    }
-});
+    });
 </script>

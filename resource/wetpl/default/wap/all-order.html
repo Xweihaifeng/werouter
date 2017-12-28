@@ -17,8 +17,8 @@
     <meta name="format-detection" content="telephone=no" />
     <meta name="msapplication-tap-highlight" content="no" />
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,minimum-scale=1" />
-    <title>我的订单</title>
     -->
+    <title>我的订单</title>
     <link rel="stylesheet" type="text/css" href="{{PATH_TML}}shopping/css/base.css">
     <link rel="stylesheet" type="text/css" href="{{PATH_TML}}shopping/css/nctouch_member.css">
     <link rel="stylesheet" type="text/css" href="{{PATH_TML}}shopping/css/nctouch_common.css">
@@ -137,6 +137,10 @@
 <div class="fix-block-r">
     <a href="javascript:void(0);" class="gotop-btn gotop hide" id="goTopBtn"><i></i></a>
 </div>
+
+
+
+
 <!--
 </body>
 
@@ -150,25 +154,49 @@
         data: {
             sortNum : 0,
             orderList : [],
-            sortList : [{'text':'全部','status':0},{'text':'待付款','status':1},{'text':'待发货','status':2},{'text':'待收货','status':3},{'text':'待评价','status':4}]
+            sortList : [{'text':'全部','status':0},{'text':'待付款','status':1},{'text':'待发货','status':2},{'text':'待收货','status':3},{'text':'待评价','status':4}],
+            isBottom : true,
+            order_status:''
         },
         mounted: function () {
             data={};
             data.plat_user_id=plats_user_info.weid;
-            data.limit=10;
+            data.limit=1;
             data.page=1;
+            data.order_status=this.order_status;
             this.init(data);
+            window.addEventListener('scroll',this.handleScroll);
         },
         methods:{
             init : function (data) {
+                this.isBottom = false;
                 ajax.post('order/list', data).then((res)=>{
                     if(res.code==200){
-                        this.orderList = res.data.list;
-                        //计算价格
+                        var appendData = res.data.list;
+                        if(!appendData.length) {
 
+                        }else{
+                            for(var i=0;i<appendData.length;i++){
+                                this.orderList.push(appendData[i])
+                            }
+                            this.isBottom = true;
+                        }
                     }
                 });
 
+            },
+            handleScroll:function () {
+                var self = this;
+                if(window.pageYOffset + window.innerHeight === document.documentElement.scrollHeight && this.isBottom){
+                    this.isBottom = false;
+                    data={};
+                    data.plat_user_id=plats_user_info.weid;
+                    data.limit=1;
+                    data.page= (self.orderList.length/1)+1;
+                    data.order_status=this.order_status;
+                    this.init(data);
+
+                }
             },
             getNum:function (order) {
                 console.log(order);
@@ -214,7 +242,7 @@
                         case 7:
                             return '已完成';
                         case 8:
-                            return '已退款';
+                            return '已申请退款';
                         case 9:
                             return '已确认退款';
                     }
@@ -315,9 +343,15 @@
                 this.sortNum = ind;
                 var data={};
                 data.plat_user_id=plats_user_info.weid;
+                data.limit=1;
                 if(ind!=0){
                     data.order_status=ind;
+                    this.order_status=ind;
+                }else{
+                    this.order_status='';
                 }
+                this.isBottom=true;
+                this.orderList=[],
                 this.init(data);
             },
             operation : function (oper,order,index) {
@@ -363,7 +397,7 @@
                     ,yes: function(index){
                         ajax.post('order/cancel', data).then((res)=>{
                             if(res.code==200){
-                                self.orderList[0].order_status=6;
+                                self.orderList[index].order_status=6;
                             }else{
                                 layer.open({
                                     content: res.message
@@ -404,6 +438,7 @@
             },
             //确认收货
             takeOrder : function (order,index) {
+                var self = this;
                 var data = {
                     "order_id" : order.weid
                 };
@@ -414,6 +449,7 @@
                     ,yes: function(index){
                         ajax.post('order/take', data).then((res)=>{
                             if(res.code==200){
+                                self.orderList[index].order_status=4;
                                 layer.open({
                                     content: '已收货'
                                     ,skin: 'msg'
@@ -433,15 +469,20 @@
             },
             //查看物流
             distribution : function (order,index) {
+                window.localStorage.setItem('sendObj',order.weid);
+                window.location.href = '/distribution/detail/';
+
+                /*
                 ajax.get('order/detail/'+order.weid).then((res)=>{
                     if(res.code==200){
                         var obj = {};
                         obj.logistics_NO = res.data.send[0].logistics_no;
                         obj.company_code = res.data.send[0].logistics_company_code;
                         window.localStorage.setItem('sendObj',JSON.stringify(obj));
-                        window.location.href = '/distribution/detail';
+                        window.location.href = '/distribution/detail/'+order.weid;
                     }
                 });
+                */
             },
             //评价
             comment : function (order,index) {
@@ -450,11 +491,13 @@
             },
             //确认交易
             deal : function (order,index) {
+                var self = this;
                 var data = {
                     "order_id" : order.weid
                 };
                 ajax.post('order/ok', data).then((res)=>{
                     if(res.code==200){
+                        self.orderList[index].order_status=7;
                         layer.open({
                             content: "交易成功"
                             ,skin: 'msg'
@@ -471,24 +514,86 @@
             },
             //退款
             refund : function (order,index) {
-                var data = {
-                    "order_id" : order.weid
-                };
-                ajax.post('order/refund', data).then((res)=>{
-                    if(res.code==200){
-                        layer.open({
-                            content: "申请退款成功"
-                            ,skin: 'msg'
-                            ,time: 2
-                        });
-                    }else{
-                        layer.open({
-                            content: res.message
-                            ,skin: 'msg'
-                            ,time: 2
+                var self = this;
+
+                layer.open({
+                    type: 1
+                    ,content: `<div style="padding:20px;font-size: 0.590909rem;color: rgb(35, 34, 34);line-height: 1;text-align: center;" id="apprefund">
+                   <p style="margin-bottom: 20px;">退款原因</p>
+                   <textarea style="
+                width: 100%;height: 150px;border: 1px solid #ccc;border-radius: 5px;outline: none;padding: 10px 0;color: #555;
+                " name="refund_reason"></textarea>
+                   <div style="text-align: center;padding-top: 30px;">
+                    <a href="javascript:;" class="button" onclick="layer.closeAll();  " style="
+                    display: inline-block;
+                    vertical-align: top;
+                    margin: 0 5px 10px 0;
+                    height: 36px;
+                    line-height: 36px;
+                    border-radius: 3px;
+                    padding: 0 30px;
+                    background-color: orange;
+                    color: #fff;
+                    border: none;
+                ">取消</a>
+                    <a href="javascript:;" class="button" style="
+                    display: inline-block;
+                    vertical-align: top;
+                    margin: 0 5px 10px 0;
+                    height: 36px;
+                    line-height: 36px;
+                    border-radius: 3px;
+                    padding: 0 30px;
+                    background-color: orange;
+                    color: #fff;
+                    border: none;
+                " @click="refundclick()" >确认</a>
+                   </div>
+                  </div>`
+                    ,anim: 'up'
+                    ,style: 'position:fixed; left:0; top:0; width:100%; height:100%; border: none; -webkit-animation-duration: .5s; animation-duration: .5s;    background-color: #fff;',
+                    success: function(layero, index_lay){
+                        new Vue({
+                            el: '#apprefund',
+                            created: function(){
+
+                            },
+                            methods: {
+                                refundclick: function() {
+                                    var data = {
+                                        "order_id" : order.weid,
+                                        "reason" : $("textarea[name=refund_reason]").val()
+                                    };
+                                    if(data.reason!=''){
+                                        ajax.post('order/refund', data).then((res)=>{
+                                            if(res.code==200){
+                                                self.orderList[index].order_status=8;
+                                                layer.open({
+                                                    content: "申请退款成功"
+                                                    ,skin: 'msg'
+                                                    ,time: 2
+                                                });
+                                            }else{
+                                                layer.open({
+                                                    content: res.message
+                                                    ,skin: 'msg'
+                                                    ,time: 2
+                                                });
+                                            }
+                                            layer.closeAll();
+                                        });
+                                    }else{
+                                        layer.open({
+                                            content: "退款原因不能为空"
+                                            ,skin: 'msg'
+                                            ,time: 2
+                                        });
+                                        layer.closeAll();
+                                    }
+                                },
+                            }
                         });
                     }
-
                 });
             },
             //付款

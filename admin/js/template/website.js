@@ -21,6 +21,7 @@ $(document).ready(function(){
                     $('textarea[name=description]').val(info.description);
                     $('textarea[name=key_word]').val(info.key_word);
                     $('textarea[name=weibo_show]').val(info.weibo_show);
+                    $('textarea[name=copyright]').val(info.copyright);
                     $('input[name=icp]').val(info.icp);
                     $('input[name=favicon]').val(info.favicon);
                     $('input[name=logo]').val(info.logo);
@@ -154,6 +155,7 @@ init();
 	            key_word:$('textarea[name=key_word]').val(),
 	            icp:$('input[name=icp]').val(),
 	            weibo_show:$('textarea[name=weibo_show]').val(),
+              copyright:CKEDITOR.instances.editor1.getData(),
 	            favicon:$('input[name=favicon]').val(),
 	            logo:$('input[name=logo]').val(),
               wap_logo:$('input[name=wap_logo]').val(),

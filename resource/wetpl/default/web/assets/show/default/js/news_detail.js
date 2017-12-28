@@ -33,15 +33,11 @@ $(function() {
 
     //主页初始化
     var init = function(token){
+        console.log(token);
         if (token != 'null' && token != undefined) {
             showLogin = false;
             isLogin = true;
             //加载用户头像
-            $("#login a").css({
-                'background': 'url(/common/img/my.png) no-repeat center',
-                'background-size': '100%'
-            });
-            $("#login a").addClass("i-header").html("");
 
             // 判断该篇新闻是否点赞
             var options2 = $.get(CMS_CONTENTS_PRAISE_USER + get_param + "/praise_if");

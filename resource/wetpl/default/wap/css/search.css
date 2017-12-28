@@ -2817,14 +2817,21 @@ input.g-f-btn {
 }
 
 .g-card .res-title {
-	-webkit-box-orient: vertical;
-	display: -webkit-box;
+	/*-webkit-box-orient: vertical;*/
+	/*display: -webkit-box;*/
+	/*display: unset;*/
 	font-size: 18px;
 	-webkit-line-clamp: 2;
 	line-height: 1.5;
 	min-height: 27px;
 	overflow: hidden;
-	text-overflow: ellipsis
+	text-overflow: ellipsis;
+    display: flex;
+    flex-wrap: wrap;
+	
+/*	overflow: hidden;
+	text-overflow:ellipsis;
+	white-space: nowrap;*/
 }
 
 .g-main {
@@ -2847,11 +2854,13 @@ input.g-f-btn {
 }
 
 .summary {
-	-webkit-box-orient: vertical;
-	display: -webkit-box;
+	/*-webkit-box-orient: vertical;*/
+	/*display: -webkit-box;*/
 	-webkit-line-clamp: 3;
 	overflow: hidden;
-	text-overflow: ellipsis
+	text-overflow: ellipsis;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .summary,

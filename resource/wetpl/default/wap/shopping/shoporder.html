@@ -133,7 +133,7 @@
         <!--正在使用的默认地址Begin-->
         <div class="nctouch-cart-add-default"><a href="javascript:void(0);" id="list-address-valve"><i
                 class="icon-add"></i>
-            <dl @click="add_address">
+            <dl onclick="select_address();">
                 <input type="hidden" class="inp" name="address_id" id="address_id" value="249068">
                 <dt>收货人：<span id="true_name">{{order_address_default.name}}</span><span id="mob_phone">{{order_address_default.telophone}}</span></dt>
                 <dd>收货地址：<span id="address">{{order_address_default.province_name}} {{order_address_default.area_name}} {{order_address_default.detail}}</span></dd>
@@ -142,29 +142,7 @@
         <!--正在使用的默认地址End-->
     </div>
 
-    <!--选择收货地址Begin-->
-    <div id = "select_address" class="hide">
-        <div class="nctouch-main-layout"
-             style="display: block; position: absolute; top: 2rem; right: 0; left: 0; bottom:4.6rem; overflow: scroll; z-index: 1;"
-             id="list-address-scroll">
-            <ul class="nctouch-cart-add-list" id="list-address-add-list-ul"
-                style="transition-timing-function: cubic-bezier(0.1, 0.57, 0.1, 1); transition-duration: 0ms; transform: translate(0px, 0px) translateZ(0px);">
-                <li class="selected" v-for="item in order_address_list"> 
-                    <i></i>
-                    <dl>
-                        <dt>收货人：<span id="">{{item.name}}</span><span>{{item.telophone}}</span><sub v-if="item.status == 1">默认</sub>
-                        </dt>
-                        <dd><span id="">{{order_address_default.province_name}} {{order_address_default.area_name}} {{order_address_default.detail}}</span>
-                        </dd>
-                    </dl>
-                </li>
-            </ul>
-        </div>
-        <div id="addresslist" class="mt10" style="position: absolute; right: 0; left: 0; bottom: 0; z-index: 1;"><a
-                href="javascript:void(0);" class="btn-l" id="new-address-valve"
-                style="font-size: .72727273rem;background: none;border: 1px solid #7A232E;">+ 添加地址</a></div>
-    </div>
-    <!--选择收货地址End-->
+
     <!--新增收货地址Begin-->
     <div id="new-address-wrapper" class="nctouch-full-mask hide">
         <div class="nctouch-full-mask-bg"></div>
@@ -303,8 +281,10 @@
     </div>
 </div>
 
+
 <script>
-new Vue({
+var address;
+var order = new Vue({
     el: "#app",
     data : {
         'order_detail' : {},
@@ -338,6 +318,14 @@ new Vue({
         }
     },
     methods:{
+        select_address()
+        {
+            select_address();
+        },
+        close(name)
+        {
+            layer.closeAll();
+        },
         // 获取产品信息
         get_goods()
         {
@@ -401,13 +389,7 @@ new Vue({
         // 添加收货地址方法
         add_address()
         {   
-            // return false;
-            layer.open({
-              type: 1
-              ,content: $('#select_address').html()
-              ,anim: 'up'
-              ,style: 'background:#fff;position:fixed; left:0; top:0; width:100%; height:100%; border: none; -webkit-animation-duration: .5s; animation-duration: .5s;'
-            });
+            
         },
         // 修改收货地址
         up_address()
@@ -421,4 +403,48 @@ new Vue({
         }
     }
 });
+
+function select_address()
+{
+    // return false;
+    layer.open({
+        type: 1
+        ,content : `<div id = "select_address" class="hide">
+            <div class="nctouch-main-layout"
+                 style="display: block; position: absolute; top: 2rem; right: 0; left: 0; bottom:4.6rem; overflow: scroll; z-index: 1;"
+                 id="list-address-scroll">
+                <ul class="nctouch-cart-add-list" id="list-address-add-list-ul"
+                    style="transition-timing-function: cubic-bezier(0.1, 0.57, 0.1, 1); transition-duration: 0ms; transform: translate(0px, 0px) translateZ(0px);">
+                    <li class="selected" v-for="item in order_address_list"> 
+                        <i></i>
+                        <dl onclick="order.select_address();">
+                            <dt>收货人：<span id="">{{item.name}}</span><span>{{item.telophone}}</span><sub v-if="item.status == 1">默认</sub>
+                            </dt>
+                            <dd><span id="">{{item.province_name}} {{item.area_name}} {{item.detail}}</span>
+                            </dd>
+                        </dl>
+                    </li>
+                </ul>
+            </div>
+            <div id="addresslist" class="mt10" style="position: absolute; right: 0; left: 0; bottom: 0; z-index: 1;"><a
+                    href="javascript:void(0);" class="btn-l" id="new-address-valve"
+                    style="font-size: .72727273rem;background: none;border: 1px solid #7A232E;" onclick="layer.closeAll();">+ 添加地址</a></div>
+        </div>`
+        ,anim: 'up'
+        ,style: 'background:#fff;position:fixed; left:0; top:0; width:100%; height:100%; border: none; -webkit-animation-duration: .5s; animation-duration: .5s;'
+        ,success: function(elem){
+            address  = new Vue({
+                el: '#select_address',
+                data: {
+                    order_address_list : []
+                },
+                mounted() {
+                    console.log(order);
+                    this.order_address_list = order.order_address_list;
+                }
+            });
+        }    
+    });
+
+}
 </script>

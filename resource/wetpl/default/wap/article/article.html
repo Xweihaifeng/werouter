@@ -57,7 +57,7 @@
                         <p class="title">{{value[0].title}}</p>
                         <span class="pt">{{value[0].created_at | formateTime('MD-C')}}</span>
                         <img :src="value[0].cover" alt="">
-                        <span class="detail">{{value[0].summary}}</span>
+                        <span class="detail" v-html="value[0].summary"></span>
                         <p>查看全文</p>
                     </div>
                 </a>

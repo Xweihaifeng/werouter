@@ -1,3 +1,11 @@
+
+<#extend#>public/domain/domain_extend.html</#extend#>
+<script type="text/javascript">
+    show.header = 'no';
+    show.footer = 'no';
+</script>
+
+<!--
 <!DOCTYPE html>
 
 <html>
@@ -5,34 +13,111 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    -->
     <title> 物流详情 </title>
 
     <link href="{{PATH_TML}}css/distribution.css" rel="stylesheet">
-
+    <!--
     <script src="{{PATH_TML}}js/jquery-3.2.1.min.js"></script>
     <script src="{{PATH_CONFIG}}"></script>
     <script src="{{PATH_TML}}js/vue.min.js"></script>
     <script src="{{PATH_TML}}js/vue-resource.min.js"></script>
     <script type="text/javascript" src="/common/layer-v3.0.3/layer-v3.0.3/layer/layer.js"></script>
+    -->
 </head>
 <body>
-<div id="distribution-app" v-cloak>
+<div>
     <header>
         <span> 物流详情 </span>
         <a class="back" href="javascript:void(0)" onclick="javascript:history.back(-1)"></a>
     </header>
-    <div class="distri-container">
-        <div v-if="!disList.length" class="tips">{{tips}}</div>
-        <div v-for="item in disList">
-            <span>{{item.time}}</span>
-            <span>{{item.context}}</span>
+
+
+    <section v-for="(item, index) in disList">
+        <aside class="bution_box">
+            <span class="bution">物流单号：</span><span class="bution_num">{{item.logistics_no}}</span>
+        </aside>
+        <aside class="shop_box_list">
+            <li v-for="goods in item.goods"><img :src="ApiMaterPlatQiniuDomain+goods.goods_cover" width="80px" height="80px" alt=""><div>{{goods.goods_title}}</div></li>
+        </aside>
+        <div class="distri-container">
+            <div v-for="(Listitem, Listindex) in item.logistics" :class="Listindex == 0? 'disList disList_orange' : 'disList'">
+                <i></i>
+                <aside>{{Listitem.context}}</aside>
+                <aside>{{Listitem.time}}</aside>
+            </div>
         </div>
-    </div>
+        <!--
+        <div class="distri-container">
+            <div v-if="!disList.length" class="tips">{{tips}}</div>
+            <div v-for="(item, index) in disList" :class="index == 0? 'disList disList_orange' : 'disList'">
+                <i></i>
+                <aside>{{item.context}}</aside>
+                <aside>{{item.time.substr(0,10)}}</aside>
+            </div>
+        </div>
+        -->
+    </section>
 </div>
 <script>
-//    Vue.http.headers.common['token'] = 'eyJpdiI6IlwvTFZlRU5lQ2FlMHE3MW16dkFmNUVnPT0iLCJ2YWx1ZSI6Ijc2ZWt3M1o5U2RcL2tWNTlYazBSVDVsMDIwaHpcL2dWZ2VwSVY1V2hib3o0RmxTMzBvU2o1SEMyZ2U2UjRVV0xielFBWlROb1ArbGhyRTY3VHBXTlwvenZwUXF6aHBpUmROeFJJNE5CRUh2YyswPSIsIm1hYyI6ImIzYjBiYzM2YjBlMjkxNDAzMjZlYzM5YWJmMWNhOGEzMDJkY2FjMzFiNGQwMGM0NGFlYTRkMTVlMzNhZGU1N2EifQ=='
 
-    Vue.http.headers.common['token'] = window.localStorage.getItem("token");
+    new Vue({
+        el : "#app",
+        data : {
+            disList : [],
+            tips : ''
+        },
+        mounted:function () {
+            var orderid=window.localStorage.getItem('sendObj')
+            this.init(orderid);
+            console.log(this.disList);
+        },
+        methods:{
+            init:function (orderid) {
+                ajax.get('order/detail/'+orderid).then((res)=>{
+                    if(res.code==200){
+                        console.log(res);
+                        if(res.data.send.length>0){
+                            for(var i=0;i<res.data.send.length;i++){
+                                var goods=[];
+                                //生成新商品数组
+                                var goodsSendGroup = res.data.send[i].order_goods_id.split(',');
+                                for(var j=0;j<goodsSendGroup.length;j++){
+                                    for(var k=0;k<res.data.goods.length;k++){
+                                        if(goodsSendGroup[j]==res.data.goods[k].weid){
+                                            goods.push(res.data.goods[k]);
+                                        }
+                                    }
+                                }
+                                if(res.data.send[i].logistics_info){
+                                    var logistics_info=$.parseJSON(res.data.send[i].logistics_info);
+                                    this.disList.push({'goods':goods,logistics:logistics_info.data,logistics_no:res.data.send[i].logistics_no})
+                                }else{
+                                    //通过在线取数据
+                                    var data={};
+                                    data.logistics_NO=res.data.send[i].logistics_no;
+                                    data.company_code=res.data.send[i].logistics_company_code;
+                                    ajax.post('pages/logistics/getLogisticsInfo',{logistics_NO:'382351534',company_code:'tnt'}).then((res)=>{
+                                        if(res.code==200){
+                                            this.disList.push({'goods':goods,logistics:res.data.data,logistics_no:data.logistics_NO});
+                                        }else{
+                                            this.tips = res.message.message;
+                                        }
+                                    });
+                                }
+                            }
+                        }
+                    }else{
+                        this.tips = '加载失败';
+                    }
+                });
+            }
+        }
+    })
+
+//    Vue.http.headers.common['token'] = 'eyJpdiI6IlwvTFZlRU5lQ2FlMHE3MW16dkFmNUVnPT0iLCJ2YWx1ZSI6Ijc2ZWt3M1o5U2RcL2tWNTlYazBSVDVsMDIwaHpcL2dWZ2VwSVY1V2hib3o0RmxTMzBvU2o1SEMyZ2U2UjRVV0xielFBWlROb1ArbGhyRTY3VHBXTlwvenZwUXF6aHBpUmROeFJJNE5CRUh2YyswPSIsIm1hYyI6ImIzYjBiYzM2YjBlMjkxNDAzMjZlYzM5YWJmMWNhOGEzMDJkY2FjMzFiNGQwMGM0NGFlYTRkMTVlMzNhZGU1N2EifQ=='
+    /*
+    Vue.http.headers.common['token'] = docCookies.getItem("token");
     var commentApp = new Vue({
         el : "#distribution-app",
         data : {
@@ -60,7 +145,10 @@
             })
         }
     });
-
+    */
 </script>
+<!--
 </body>
 </html>
+
+-->

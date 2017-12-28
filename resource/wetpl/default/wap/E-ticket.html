@@ -1,0 +1,67 @@
+<#extend#>public/domain/domain_extend.html</#extend#>
+<script type="text/javascript">
+    $app.set_title('查看电子票');
+    show.header = 'no';
+    show.footer = 'no';
+</script>
+<link rel="stylesheet" href="{{PATH_TML}}css/home.css"/>
+<link rel="stylesheet" href="{{PATH_TML}}css/common.css"/>
+<link rel="stylesheet" href="{{PATH_TML}}css/E-ticket.css">
+<script src="/common/js/jquery.min.js"></script>
+<script src="/common/js/jquery.qrcode.min.js"></script>
+<div class="ticket-content">
+    <div class="toolbar"></div>
+    <div class="info">
+        <div class="qr">
+            <div class="qr-content"></div>
+            <p>票号：{{infoData.ticket_num}}</p>
+        </div>
+        <div class="des">
+            <h3>{{infoData.title}}</h3>
+            <p class="time">{{infoData.begain_time}} {{infoData.begain_week}} {{infoData.begain_hour}} ~ {{infoData.end_time}} {{infoData.end_week}} {{infoData.end_hour}}</p>
+            <p>{{infoData.address}}</p>
+        </div>
+        <ul>
+            <li>
+                <i style="background:url('/common/img/sign2.png') no-repeat center center"></i>
+                <span>{{infoData.name}}</span>
+            </li>
+            <li>
+                <i style="background:url('/common/img/sign3.png') no-repeat center center"></i>
+                <span>{{infoData.telphone}}</span>
+            </li>
+            <li>
+                <i style="background:url('/common/img/sign4.png') no-repeat center center"></i>
+                <span>{{infoData.poistion}}</span>
+            </li>
+            <li>
+                <i style="background:url('/common/img/sign.png') no-repeat center center"></i>
+                <span>{{infoData.company}}</span>
+            </li>
+        </ul>
+    </div>
+</div>
+<script>
+    new Vue({
+        el : '#app',
+        data : {
+            infoData : {}
+        },
+        mounted : function () {
+            ajax.get('activity/enroll/detail/fa192620-eb6d-11e7-afb1-7fe8d81f2754').then((res)=>{
+                console.log(res);
+                if(res.code == 200 && res.data){
+                    this.infoData = res.data;
+                    var qrcode_val = apiUrl+"activity/enroll/check_ticket_number?e_number=" + res.data.ticket_num;
+                    var clientWidth = document.documentElement.clientWidth;
+                    var canvasWidth = Math.floor(clientWidth*120/375);
+                    jQuery(".qr-content").qrcode({
+                        width: canvasWidth,
+                        height: canvasWidth,
+                        text: qrcode_val
+                    });
+                }
+            })
+        }
+    })
+</script>

@@ -7,6 +7,30 @@
 		var r = window.location.search.substr(1).match(reg);
 		if(r!=null)return  decodeURIComponent(r[2]); return false;
 	}
+
+	// 七牛图片
+	app.qiniu = function(value , width , height , mode){
+		if (!value) return '';
+
+		if(value.indexOf('http') !== -1){
+		    return value;
+		}
+		
+		var settings = http_type + plats_qiniu.domain_custom + '/';
+
+		if($app.empty(width) == false || $app.empty(height) == false )
+	    {
+	        return settings + value;
+	    }
+	    else
+	    {
+	        if (mode != undefined) {
+	            return settings + value + '?imageView2/' + mode + '/w/' + width + '/h/' + height;
+	        } else {
+	            return settings + value + '?imageView2/3/w/' + width + '/h/' + height;
+	        }
+	    }
+	}
 	
 	//验证是否是空
 	app.empty = function(params){
