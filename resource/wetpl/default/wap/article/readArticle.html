@@ -62,7 +62,7 @@
                         'title' : this.news_detail.title ,
                         'link' : all_domian + pages_index + '/article/' +  this.news_detail.weid,
                         'desc' : this.news_detail.summary ,
-                        'imgUrl' : $app.qiniu(this.news_detail.thumb_image , 500 , 500),
+                        'imgUrl' : $app.qiniu(this.news_detail.cover , 500 , 500),
                     };
                     $wx.share(share);
                 }
