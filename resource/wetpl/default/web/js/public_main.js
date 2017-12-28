@@ -119,11 +119,7 @@ const home = `
                                     <a href="javascript:void(0)">站点地图</a>
                                     <a id="contact" href="javascript:void(0)">联系我们</a>
                                 </div>
-                                <div class="copyright">
-                                    <p>全球秦商大会组委会 陕西省秦商联合会 | 地址：西安市新城大院省政府院内综合楼B101 邮编：710006</p>
-                                    <p>办公电话：029-87298395 87298138 | 传真：029-87298138 | 电子邮件: sxsqslhh@163.com</p>
-                                    <p>版权所有 陕西省秦商联合会 | 网站备案信息：<a id="icp" href="javascript:void(0)"></a></p>
-                                </div>
+                                <div class="copyright"></div>
                                 <div class="_ideConac"><img src="/common/img/gabeian.png" width="60" height="60" /></div>
                             </footer>
                         </div>
@@ -204,8 +200,14 @@ const header = `
         <div id="hr">
             <div id="ht">
                 <span>手机版</span>
+                <img src="http://www.qqxqs.com/api//file/qrcode?margin=4&url=http://m.qqxqs.com" class="weixin img-responsive" width="80"
+                style="display: inline-block;position:absolute;display:none;margin-left:-10px;margin-top:10px;">
                 <span>微信</span>
+                <img src="${ApiMaterPlatQiniuDomain + plats_info.wx_qrcode}" alt="" width="80"
+                style="display: inline-block;position:absolute;display:none;margin-left:-70px;margin-top:30px;">
                 <span>微博</span>
+                <img src="${ApiMaterPlatQiniuDomain + plats_info.wb_qrcode}" alt="" width="80"
+                style="display: inline-block;position:absolute;display:none;margin-left:-70px;margin-top:30px;">
                 <a href="http://2017.qqxqs.com" target="_blank"><span style="border-right: none;">访问旧版</span></a>
             </div>
             <div id="hs">
@@ -330,7 +332,22 @@ req().then((data) => {
         $(".left-nav").css("height", ch);
         //$("#right-nav, #nav-news, #nav-org, #nav-news, #nav-help, #nav-share").css("height", ch);
     }
-
+    $(".copyright").html(plats_info.copyright);
+    $("#ht span:eq(0)").hover(function(){
+        $("#ht img:eq(0)").fadeIn(300);
+    }, function(){
+        $("#ht img:eq(0)").fadeOut(300);
+    })
+    $("#ht span:eq(1)").hover(function(){
+        $("#ht img:eq(1)").fadeIn(300);
+    }, function(){
+        $("#ht img:eq(1)").fadeOut(300);
+    })
+    $("#ht span:eq(2)").hover(function(){
+        $("#ht img:eq(2)").fadeIn(300);
+    }, function(){
+        $("#ht img:eq(2)").fadeOut(300);
+    })
     var showLogin = false; //调整窗口大小时登陆框是否存在
     var width = $(window).width() / 2 - 180;
     var height = $(window).height() / 2 - 165;
