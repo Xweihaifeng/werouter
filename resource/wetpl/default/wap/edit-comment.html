@@ -34,8 +34,6 @@
     </div>
 </div>
 <script>
-    //Vue.http.headers.common['token'] = 'eyJpdiI6IlFzb1wveHJVRDJ3Vk9SOVVLcngwVU53PT0iLCJ2YWx1ZSI6IkhjdTFRdUQ0eHlcL0VCeVFlbW10eTQ0OHRJVDl4R3hiSGR0dzE0Z042MlBnWXYxa0pXRzByWjhCMjFQbWtXeEZHeVJrZXVrS1dvOXVGNHQ5WjR1emtmSVRnY1VpRHRWRVhGb3l2SVpLZmpvOD0iLCJtYWMiOiI5ZDZkZWYxMTA3NTI0MjhjZGQ1OTM5YjZjMjNhYjk5NzM0ZjBjMThjMmI2ZDk0ZjdjYmE1NTIyZjUyOGI2ZTk4In0='
-
     Vue.http.headers.common['token'] = window.localStorage.getItem("token");
     var commentApp = new Vue({
         el : "#comment-app",
