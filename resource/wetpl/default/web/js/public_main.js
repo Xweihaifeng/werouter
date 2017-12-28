@@ -334,19 +334,19 @@ req().then((data) => {
     }
     $(".copyright").html(plats_info.copyright);
     $("#ht span:eq(0)").hover(function(){
-        $("#ht img:eq(0)").fadeIn(300);
+        $("#ht img:eq(0)").fadeIn(0);
     }, function(){
-        $("#ht img:eq(0)").fadeOut(300);
+        $("#ht img:eq(0)").fadeOut(0);
     })
     $("#ht span:eq(1)").hover(function(){
-        $("#ht img:eq(1)").fadeIn(300);
+        $("#ht img:eq(1)").fadeIn(0);
     }, function(){
-        $("#ht img:eq(1)").fadeOut(300);
+        $("#ht img:eq(1)").fadeOut(0);
     })
     $("#ht span:eq(2)").hover(function(){
-        $("#ht img:eq(2)").fadeIn(300);
+        $("#ht img:eq(2)").fadeIn(0);
     }, function(){
-        $("#ht img:eq(2)").fadeOut(300);
+        $("#ht img:eq(2)").fadeOut(0);
     })
     var showLogin = false; //调整窗口大小时登陆框是否存在
     var width = $(window).width() / 2 - 180;
