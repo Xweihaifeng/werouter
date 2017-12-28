@@ -56,6 +56,15 @@
 		exp.setTime(exp.getTime() + Days*24*60*60*1000);
 		document.cookie = key+"="+ escape (val) + ";expires=" + exp.toGMTString() +";path=/;domain="+domain;
 	}
+	app.del_cookie = function(name)
+	{
+        var keys = document.cookie.match(/[^ =;]+(?=\=)/g);
+        console.log(keys);
+        if (keys) {
+            for (var i = keys.length; i--;)
+                document.cookie = keys[i] + '=0;expires=' + new Date(0).toUTCString()
+        }
+	}
 	// 获取COOKIE
 	app.get_cookie = function(name){
 		var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
@@ -89,6 +98,7 @@
 	// 登陆成功后需要添加的数据
 	app.set_login_data = function(data)
 	{
+
 		// localStorage.setItem('weid', data.data.weid);
 		// localStorage.setItem('token', data.token);
 		// if(app.empty(data.data.activation_status) == true)
