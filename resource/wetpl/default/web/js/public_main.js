@@ -905,10 +905,10 @@ req().then((data) => {
                     })
                 }
 
-                if (data.data.header1.image != null) {
+                if (data.data.header1 != null) {
                     addBg(data.data.header1.image, '#hl', 196, 45);
                 }
-                if (data.data.header2.image != null) {
+                if (data.data.header2 != null) {
                     addBg(data.data.header2.image, '#big', 960, 235);
                     $(".big a").attr('href', data.data.header2.url);
                 }
@@ -1303,8 +1303,6 @@ req().then((data) => {
 
                 //官方发布
                 $("#release").html(setting.weibo_show);
-                
-
                 var title = setting.title;
                 var favicon = setting.favicon;
                 var keyWord = setting.key_word;
