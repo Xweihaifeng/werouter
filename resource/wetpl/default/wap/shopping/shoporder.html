@@ -202,7 +202,7 @@
             <p id="rptInfo">无可用红包</p>
         </div>
     </div>-->
-      
+    
     <!--底部总金额固定层Begin-->
     <div class="nctouch-cart-bottom" style="bottom: 0rem; z-index: 9">
         <div class="total order-detail-total"><span id="online-total-wrapper"></span>
@@ -219,7 +219,7 @@
 
 <script>
 var address;
-var select_address_open,address,add_address_open,select_area_html;
+var select_address_open,address_list_vue,add_address_open,add_address_open_vue,select_area_html,select_area_vue;
 var order = new Vue({
     el: "#app",
     data : {
@@ -228,7 +228,7 @@ var order = new Vue({
         'order_address_list' : [],
         'order_address_default' : {},
         'order_goods_detail' : {},
-        'order_goods_id' : window.location.pathname.split('/').pop(),
+        'order_goods_id' : $app.get_router('pop'),
         'order' : {
             'price' : 0,
             'num' : ($app.get_query_string('num')) ? $app.get_query_string('num') : 1  , 
@@ -283,14 +283,13 @@ var order = new Vue({
             this.postage = this.postage.toFixed(2);
         },
         // 获取全部收货地址
-        get_address_list()
+        get_address_list(call)
         {
             ajax.get('users/address/list').then((res)=>{
                 this.order_address_list = res.data.list;
 
                 if(this.order_address_list.length > 0)
                 {
-
                     // 遍历元素获取默认的收货地址.
                     for(var item of this.order_address_list)
                     {
@@ -308,26 +307,20 @@ var order = new Vue({
                     }
                 }
 
-                //用户没有收货地址,发起添加收货地址
-                if($app.empty(this.order_address_default) == false){
-                    this.add_address();
+                if($app.empty(call) != false)
+                {
+                    call(res);
                 }
+
+                // //用户没有收货地址,发起添加收货地址
+                // if($app.empty(this.order_address_default) == false){
+                //     this.add_address();
+                // }
             });
         },
-        // 添加收货地址方法
-        add_address()
-        {   
-            
-        },
-        // 修改收货地址
-        up_address()
+        sub_order(item)
         {
 
-        },
-        // 删除收货地址
-        del_address()
-        {
-            
         }
     }
 });
@@ -338,15 +331,30 @@ function select_address()
     // return false;
     select_address_open = layer.open({
         type: 1
-        ,content : `<div id = "select_address">
+        ,content : `<div id = "select_address" >
             <div class="nctouch-main-layout"
-                 style="display: block; position: absolute; top: 2rem; right: 0; left: 0; bottom:4.6rem; overflow: scroll; z-index: 1;"
+                 style="display: block; top: 0; right: 0; left: 0; bottom:4.6rem; overflow: scroll; z-index: 1;"
                  id="list-address-scroll">
 
-                <div onclick="layer.closeAll();">关闭</div>
-
+                <div class="header" >
+                    <div class="header-wrap" >
+                        <div class="header-l">
+                            <a  onclick="layer.close(select_address_open);">
+                                <i class="back"></i>
+                            </a>
+                        </div>
+                        <div class="header-title">
+                            <h1>添加收货地址</h1>
+                        </div>
+                        <div class="header-r">
+                            <a href="javascript:void(0);">
+                                <i class="close"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
                 <ul class="nctouch-cart-add-list" id="list-address-add-list-ul"
-                    style="transition-timing-function: cubic-bezier(0.1, 0.57, 0.1, 1); transition-duration: 0ms; transform: translate(0px, 0px) translateZ(0px);">
+                    style="margin-top: 38px;transition-timing-function: cubic-bezier(0.1, 0.57, 0.1, 1); transition-duration: 0ms; transform: translate(0px, 0px) translateZ(0px);">
                     <li class="selected" v-for="item in order_address_list"> 
                         <i></i>
                         <dl @click="check_select_address(item);">
@@ -365,18 +373,29 @@ function select_address()
         ,anim: 'up'
         ,style: 'background:#fff;position:fixed; left:0; top:0; width:100%; height:100%; border: none; -webkit-animation-duration: .5s; animation-duration: .5s;'
         ,success: function(elem){
-            address  = new Vue({
+            address_list_vue  = new Vue({
                 el: '#select_address',
                 data: {
                     order_address_list : []
                 },
                 mounted() {
-                    console.log(order);
                     this.$nextTick( function () {
                         this.order_address_list = order.order_address_list;
                     });
                 },
                 methods:{
+                    delete_address(weid)
+                    {
+                        ajax.get('users/address/destroy/'+weid).then((res)=>{
+                            if(res.data == true)
+                            {
+                                order.get_address_list((res)=>{
+                                    address_list_vue.order_address_list = res.data.list;
+                                    mb_message('删除成功');
+                                });
+                            }
+                        });
+                    },
                     check_select_address(item)
                     {
                         order.order_address_default = item;
@@ -394,15 +413,29 @@ function add_address()
     // return false;
     add_address_open = layer.open({
         type: 1
-        ,content : `<div class="nctouch-main-layout" id="new-address-scroll">
-
-            <div onclick="layer.close(add_address_open);">返回列表</div>
-            <div class="nctouch-inp-con">
+        ,content : `<div class="nctouch-main-layout" style="top:0.05rem !important;" id="new-address-scroll">
+            <div class="header" >
+                <div class="header-wrap" >
+                    <div class="header-l">
+                        <a href="javascript:void(0);" onclick="layer.close(add_address_open);">
+                            <i class="back"></i>
+                        </a>
+                    </div>
+                    <div class="header-title">
+                        <h1>添加收货地址</h1>
+                    </div>
+                    <div class="header-r">
+                        <a href="javascript:void(0);">
+                            <i class="close"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="nctouch-inp-con" style="margin-top: 50px;">
                 <form id="add_address_form">
                     <ul class="form-box">
                         <li class="form-item">
                             <h4>姓名</h4>
-
                             <div class="input-box">
                                 <input type="text" class="inp" v-model="address.name" name="true_name" id="vtrue_name" autocomplete="off"
                                         placeholder="收货人姓名">
@@ -410,7 +443,6 @@ function add_address()
                         </li>
                         <li class="form-item">
                             <h4>联系手机</h4>
-
                             <div class="input-box">
                                 <input type="tel" class="inp" v-model="address.telophone" name="mob_phone" id="vmob_phone" autocomplete="off"
                                         maxlength="11" placeholder="11位手机号">
@@ -418,15 +450,13 @@ function add_address()
                         </li>
                         <li class="form-item">
                             <h4>地区选择</h4>
-
                             <div class="input-box">
-                                <input name="area_info" type="text" class="inp" id="varea_info" autocomplete="off"
-                                       onclick="select_area();" placeholder="地区信息" readonly="">
+                                <input name="area_info" v-model="select_area_obj.names" type="text" class="inp" 
+                                       onclick="select_area();" placeholder="地区信息">
                             </div>
                         </li>
                         <li class="form-item">
                             <h4>详细地址</h4>
-
                             <div class="input-box">
                                 <input type="text" v-model="address.detail" class="inp" name="vaddress" id="vaddress" autocomplete="off"
                                         placeholder="街道门牌信息">
@@ -434,27 +464,42 @@ function add_address()
                         </li>
                         <li class="form-item" style="text-align: center;font-size: 0.7rem;line-height: 2rem;">
                             <label>
-                                <input type="checkbox" v-model="address.stats" class="checkbox" name="is_default" id="is_default" value="1">&nbsp;&nbsp;<i>设为默认地址</i>
+                                <input type="checkbox" v-model="stats" class="checkbox" name="is_default" id="is_default" value="1">&nbsp;&nbsp;<i>设为默认地址</i>
                             </label>
                         </li>
                     </ul>
                     <div class="error-tips"></div>
-                    <div class="form-btn" @click="save();"><a class="btn">保存地址</a></div>
+                    
+                    <div v-if="address.name!='' && address.telophone!='' && address.detail!='' && select_area_obj.names !=''" class="form-btn ok" @click="save();"><a class="btn">保存地址</a></div>
+                    <div v-else class="form-btn" ><a class="btn">保存地址</a></div>
                 </form>
             </div>
         </div>`
         ,anim: 'up'
         ,style: 'background:#fff;position:fixed; left:0; top:0; width:100%; height:100%; border: none; -webkit-animation-duration: .5s; animation-duration: .5s;'
         ,success: function(elem){
-            address  = new Vue({
+            add_address_open_vue  = new Vue({
                 el: '#new-address-scroll',
                 data: {
+                    verification : {
+                        'phone' : /^((1[1-9]{1})+\d{9})$/,
+                    },
                     address : {
                         name: '',
                         telophone: '',
                         detail: '',
                         zipcode: '',
-                        stats: ''
+                        status: '',
+                    },
+                    stats : 0,
+                    select_area_obj : {
+                        ids:{
+                            province_id : '',
+                            area_id : '',
+                            county_id : '',
+                            code : ''
+                        },
+                        names : ''
                     }
                 },
                 mounted() {
@@ -462,6 +507,41 @@ function add_address()
                 },
                 methods:{
                     save(){
+                        if($app.empty(this.address.name) == false) 
+                        {
+                            mb_message('姓名为空!');
+                            return false;
+                        }
+                        if(!this.verification.phone.test(this.address.telophone))
+                        {
+                            mb_message('手机号不正确!');
+                            return false;
+                        }
+                        if(this.select_area_obj.names == '')
+                        {
+                            mb_message('必须选择地区!');
+                            return false;
+                        }
+                        if($app.empty(this.address.detail) == false) 
+                        {
+                            mb_message('详细地址为空!');
+                            return false;
+                        }
+                        this.address.zipcode = this.select_area_obj.ids.code;
+                        this.address.province_id = this.select_area_obj.ids.province_id;
+                        this.address.area_id = this.select_area_obj.ids.area_id;
+                        this.address.county_id = this.select_area_obj.ids.county_id;
+                        this.address.stats = (this.stats == true) ? 1 : 2 ;
+                        
+                        ajax.post('users/address/store' , this.address).then((res)=>{
+                            if(res.data > 0)
+                            {
+                                order.get_address_list((res)=>{
+                                    address_list_vue.order_address_list = res.data.list;
+                                    layer.close(add_address_open);
+                                });
+                            }
+                        });
 
                     }
                 }
@@ -477,8 +557,25 @@ function select_area()
     select_area_html = layer.open({
         type: 1
         ,content : `
-        <div class="nctouch-main-layout-a" id="select_area_html">
-            <ul class="nctouch-default-list" style="transition-timing-function: cubic-bezier(0.1, 0.57, 0.1, 1); transition-duration: 0ms; transform: translate(0px, 0px) translateZ(0px);">
+        <div class="nctouch-main-layout-a" style="top:0.05rem !important;" id="select_area_html">
+            <div class="header" >
+                <div class="header-wrap" >
+                    <div class="header-l">
+                        <a href="javascript:void(0);" onclick="layer.close(select_area_html);">
+                            <i class="back"></i>
+                        </a>
+                    </div>
+                    <div class="header-title">
+                        <h1>选择地区</h1>
+                    </div>
+                    <div class="header-r">
+                        <a href="javascript:void(0);">
+                            <i class="close"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <ul class="nctouch-default-list" style="transition-timing-function: cubic-bezier(0.1, 0.57, 0.1, 1); transition-duration: 0ms; transform: translate(0px, 0px) translateZ(0px);margin-top: 50px;">
                 <li v-for="item in area_list"><a  @click="select_area(item);">
                     <h4>{{item.name}}</h4>
                     <span class="arrow-r"></span></a>
@@ -488,30 +585,59 @@ function select_area()
         ,anim: 'up'
         ,style: 'background:#fff;position:fixed; left:0; top:0; width:100%; height:100%; border: none; -webkit-animation-duration: .5s; animation-duration: .5s;'
         ,success: function(elem){
-            address  = new Vue({
+            select_area_vue  = new Vue({
                 el: '#select_area_html',
                 data: {
-                    select_area_obj : {},
-                    area_list : []
+                    select_area_obj : {
+                        ids:{
+                            province_id : '',
+                            area_id : '',
+                            county_id : '',
+                            code : ''
+                        },
+                        names : ''
+                    },
+                    area_list : [],
+                    action : 'province/list',
+                    leval : 1,
                 },
                 mounted() {
-                    this.$nextTick( function () {
+                    this.$nextTick(function () {
                         this.province();
                     });
                 },
                 methods:{
                     province()
                     {
-                        ajax.get('province/list').then((res)=>{
+                        ajax.get(this.action).then((res)=>{
                             this.area_list = res.data.list;
                         });
                     },
                     select_area(item)
                     {
-                        console.log(item);
-                    },
-                    save(){
+                        this.select_area_obj.names += item.name + ' ';
+                        if(this.leval == 1)
+                        {
+                            this.select_area_obj.ids.province_id = item.id;
+                            this.action = 'area/list/' + item.id;
+                        }
+                        else if(this.leval == 2)
+                        {
+                            this.select_area_obj.ids.area_id = item.id;
+                            this.action = 'county/list/' + item.id;
+                        }
+                        else
+                        {
+                            this.select_area_obj.ids.county_id = item.id;
+                            this.select_area_obj.ids.code = item.code;
+                            add_address_open_vue.select_area_obj = this.select_area_obj;
+                            layer.close(select_area_html);
+                        }
 
+                        ajax.get(this.action).then((res)=>{
+                            this.area_list = res.data.list;
+                        });
+                        this.leval++;
                     }
                 }
             });
