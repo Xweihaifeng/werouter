@@ -72,7 +72,7 @@
 		{
 			$app.set_cookie('openid' , openid );
 			//顺便微信登陆下 
-			wx_init.wx_login(openid);
+			wx_init.wx_login(openid , true);
 		}
 		else
 		{
@@ -81,7 +81,7 @@
 	}
 	// ref_type 1.微信登陆 2.手机号码传  3PC扫码 
 	//微信登陆依赖VUE AXIOS
-	wx_init.wx_login = function(openid){
+	wx_init.wx_login = function(openid , type){
 		if(is_wx == 'no') return false;
 		var data_post = {
 			'openid': openid,
@@ -94,7 +94,10 @@
 		ajax.post('wxlogin' , data_post).then((res)=>{
 			if(res.code == 200){
 				$app.set_login_data(res);
-				location.reload();
+				if($app.empty(type) == false)
+				{
+					location.reload();
+				}
 			}
 		});
 	}
