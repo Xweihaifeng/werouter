@@ -13,13 +13,13 @@
     <div class="read-title">
         <p class="title" v-html="news_detail.title"></p>
     </div>
-    <div class="auth-info">
+    <div class="auth-info" id="auth_info" style="display: none">
         <div class="auth-original" style="" v-if="news_detail.is_original == 1">原创</div>
         <div class="auth-date">{{news_detail.created_at | formateString(3)}}</div>
         <div class="auth-name" v-if="news_detail.auth">{{news_detail.auth}}</div>
         <div class="auth-publisher" v-if="news_detail.publisher" v-html="news_detail.publisher"></div>
         <div class="auth-main" style="margin-right:0">
-            <a :href="pages_index + '/'+ 'wecard' | href('weplats')" style="color:#607fa6;text-decoration:none;" v-html="pages_info.plats_user_cert.name"></a>
+            <a :href="pages_index + '/'+ 'wecard' | href('weplats')" style="color:#607fa6;text-decoration:none;" >{{name}}</a>
         </div>
     </div>
     <div id="read-art" v-html="news_detail.content"></div>
@@ -43,6 +43,7 @@
             category : '',
             zan_true : '',
             pages_info : pages_info,
+            name : domain_title_if,
             channels : $app.get_router(1),
             id : $app.get_router('pop'),
         },
@@ -54,6 +55,16 @@
                     console.log(this.news_detail);
                     $app.set_title(this.news_detail.title);
                     $('#footer_bottom').show(500);
+                    $('#auth_info').show(500);
+
+                    // 增加微信分享代码
+                    var share = {
+                        'title' : this.news_detail.title ,
+                        'link' : all_domian + pages_index + '/article/' +  this.news_detail.weid,
+                        'desc' : this.news_detail.summary ,
+                        'imgUrl' : $app.qiniu(this.news_detail.thumb_image , 500 , 500),
+                    };
+                    $wx.share(share);
                 }
             });
 

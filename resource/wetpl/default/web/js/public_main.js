@@ -57,7 +57,7 @@ const home = `
                 <div id="home-body">
                     <div class="fc">
                         <div class="qsfc">
-                            <p class="imgs-title">秦商风采</p>
+                            <p class="imgs-title"></p>
                             <p class="imgs-more">更多&gt;&gt;</p>
                         </div>
                     </div>
@@ -895,7 +895,7 @@ req().then((data) => {
             url: CMS_ADVS,
             dataType: 'json',
             success: function(data){
-                //console.log(data.data);                
+                //console.log(data.data);
 
                 //显示header
                 var addBg = (url, id, w, h) => {
@@ -905,9 +905,13 @@ req().then((data) => {
                     })
                 }
 
-                addBg(data.data.header1.image, '#hl', 196, 45);
-                addBg(data.data.header2.image, '#big', 960, 235);
-                $(".big a").attr('href', data.data.header2.url);
+                if (data.data.header1.image != null) {
+                    addBg(data.data.header1.image, '#hl', 196, 45);
+                }
+                if (data.data.header2.image != null) {
+                    addBg(data.data.header2.image, '#big', 960, 235);
+                    $(".big a").attr('href', data.data.header2.url);
+                }
 
                 /*var isEnter = true; // 鼠标在main中
                 var isFirst = true; // 鼠标第一次离开main
@@ -1055,7 +1059,7 @@ req().then((data) => {
                 if (data.data.peoples_title != null) {
                     $(".imgs-title").text(data.data.peoples_title.title);
                 } else {
-                    $(".imgs-title").text('风采');
+                    $(".imgs-title").text('企商风采');
                 }
 
                 //会长
@@ -1341,33 +1345,35 @@ req().then((data) => {
                     var vdinfo = data.data.spzx;
                     var magazine = data.data.mag;
                     var report = data.data.ztbd;
-                    $("#hbl div:eq(0) p:eq(0)").text(vdinfo.title);
-                    $("#hbl div:eq(0) p:eq(1)").html(`<a href="${'/' + vdinfo.domain}">更多>></a>`);
-                    $("#hbm div:eq(0) p:eq(0)").text(magazine.title);
-                    $("#hbm div:eq(0) p:eq(1)").html(`<a href="${'/magazine/' + magazine.domain}">更多>></a>`);
-                    $("#hbr div:eq(0) p:eq(0)").text(report.title);
-                    //$("#hbr div:eq(0) p:eq(1)").html(`<a href="${'/' + report.domain}">更多>></a>`);
-                    $("#hbr div:eq(0) p:eq(1)").html('更多>>');
-                    var mgztpl = magazine.list.reduce((tpl, e, i) =>
-                        i < 6 ? 
-                        tpl += `<a href="${'/magazine/' + magazine.domain + '/' + e.weid}" target="_blank"><li><img src="${imgSet(e.cover, 94, 128)}" /></li></a>`
-                        : tpl, '');
-
-                    var rptpl = report.list.reduce((tpl, e, i) => 
-                        i < 4 ? tpl += `<a href="${'/' + report.domain + '/' + e.domain}" target="_blank"><li><img src="${imgSet(e.thumb_image, 240, 60)}" height="60" /></li></a>` : tpl, '');
-
-                    var vdtpl = vdinfo.list.reduce((tpl, e, i) =>
-                        i >= 1 && i < 3 ?
-                        tpl += `<div class="hbs"><p><a href="${vdinfo.domain + '/' + e.weid}">> ${e.title.substr(0, 14)}</p>
+                    if (vdinfo != null) {
+                        $("#hbl div:eq(0) p:eq(0)").text(vdinfo.title);
+                        $("#hbl div:eq(0) p:eq(1)").html(`<a href="${'/' + vdinfo.domain}">更多>></a>`);
+                        var vdtpl = vdinfo.list.reduce((tpl, e, i) =>
+                            i >= 1 && i < 3 ?
+                                tpl += `<div class="hbs"><p><a href="${vdinfo.domain + '/' + e.weid}">> ${e.title.substr(0, 14)}</p>
                         <p style="margin-right: 10px;">${new Date(e.publish_time * 1000).getFullYear()}-${(new Date(e.publish_time * 1000).getMonth() + 1).toString().length == 1 ? '0' + (new Date(e.publish_time * 1000).getMonth() + 1) : new Date(e.publish_time * 1000).getMonth() + 1}-${new Date(e.publish_time * 1000).getDate().toString().length == 1 ? '0' + new Date(e.publish_time * 1000).getDate() : new Date(e.publish_time * 1000).getDate()}</p></div>`
-                        : tpl, '')
-
-                    $("#hbm ul").append(mgztpl);
-                    $("#hbr ul").append(rptpl);
-                    $("#hbl").append(vdtpl);
-                    $(".hb1").html(`<a href="${vdinfo.domain + '/' + vdinfo.list[0].weid}">${vdinfo.list[0].title}</a>`);
-                    $(".hb2").html(vdinfo.list[0].summary);
-
+                                : tpl, '')
+                        $("#hbl").append(vdtpl);
+                        $(".hb1").html(`<a href="${vdinfo.domain + '/' + vdinfo.list[0].weid}">${vdinfo.list[0].title}</a>`);
+                        $(".hb2").html(vdinfo.list[0].summary);
+                    }
+                    if (magazine != null) {
+                        $("#hbm div:eq(0) p:eq(0)").text(magazine.title);
+                        $("#hbm div:eq(0) p:eq(1)").html(`<a href="${'/magazine/' + magazine.domain}">更多>></a>`);
+                        var mgztpl = magazine.list.reduce((tpl, e, i) =>
+                            i < 6 ?
+                                tpl += `<a href="${'/magazine/' + magazine.domain + '/' + e.weid}" target="_blank"><li><img src="${imgSet(e.cover, 94, 128)}" /></li></a>`
+                                : tpl, '');
+                        $("#hbm ul").append(mgztpl);
+                    }
+                    if (report != null) {
+                        $("#hbr div:eq(0) p:eq(0)").text(report.title);
+                        //$("#hbr div:eq(0) p:eq(1)").html(`<a href="${'/' + report.domain}">更多>></a>`);
+                        $("#hbr div:eq(0) p:eq(1)").html('更多>>');
+                        var rptpl = report.list.reduce((tpl, e, i) =>
+                            i < 4 ? tpl += `<a href="${'/' + report.domain + '/' + e.domain}" target="_blank"><li><img src="${imgSet(e.thumb_image, 240, 60)}" height="60" /></li></a>` : tpl, '');
+                        $("#hbr ul").append(rptpl);
+                    }
                     $("#vd").click(() => {
                         layer.open({
                           type: 2,

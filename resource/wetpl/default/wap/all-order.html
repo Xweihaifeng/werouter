@@ -17,8 +17,8 @@
     <meta name="format-detection" content="telephone=no" />
     <meta name="msapplication-tap-highlight" content="no" />
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,minimum-scale=1" />
-    <title>我的订单</title>
     -->
+    <title>我的订单</title>
     <link rel="stylesheet" type="text/css" href="{{PATH_TML}}shopping/css/base.css">
     <link rel="stylesheet" type="text/css" href="{{PATH_TML}}shopping/css/nctouch_member.css">
     <link rel="stylesheet" type="text/css" href="{{PATH_TML}}shopping/css/nctouch_common.css">
@@ -351,6 +351,7 @@
                     this.order_status='';
                 }
                 this.isBottom=true;
+                this.orderList=[],
                 this.init(data);
             },
             operation : function (oper,order,index) {
@@ -468,15 +469,20 @@
             },
             //查看物流
             distribution : function (order,index) {
+                window.localStorage.setItem('sendObj',order.weid);
+                window.location.href = '/distribution/detail/';
+
+                /*
                 ajax.get('order/detail/'+order.weid).then((res)=>{
                     if(res.code==200){
                         var obj = {};
                         obj.logistics_NO = res.data.send[0].logistics_no;
                         obj.company_code = res.data.send[0].logistics_company_code;
                         window.localStorage.setItem('sendObj',JSON.stringify(obj));
-                        window.location.href = '/distribution/detail';
+                        window.location.href = '/distribution/detail/'+order.weid;
                     }
                 });
+                */
             },
             //评价
             comment : function (order,index) {

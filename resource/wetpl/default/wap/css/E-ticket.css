@@ -20,9 +20,15 @@ body,ul,li{
 }
 .info{
     margin:0 6px;
+    margin-top:-3px;
+}
+.info>.qr,.info>.des,.info>ul{
+    background: url('/common/img/ticket-logo.png') no-repeat center center;
+    -webkit-background-size: cover;
+    background-size: cover;
 }
 .qr{
-    background: #fff;
+    background-color: #fff;
     padding:20px 0;
     -webkit-border-radius: 0 0 16px 16px;
     -moz-border-radius: 0 0 16px 16px;
@@ -38,18 +44,17 @@ body,ul,li{
     margin-bottom:10px;
 }
 .des{
-    padding:20px;
-    padding-top:0;
+    padding:0 20px;
     background-color: #fff;
     -webkit-border-radius: 16px 16px 0 0;
     -moz-border-radius: 16px 16px 0 0;
     border-radius: 16px 16px 0 0;
-    border-bottom:1px dashed #9a9a9a;
 }
 .des h3{
     font-size:16px;
     padding-top:20px;
-    border-top:1px dashed #9a9a9a;
+    font-weight:normal;
+    border-top:1px dashed #dbdbdb;
 }
 .des p{
     font-size:12px;
@@ -57,6 +62,10 @@ body,ul,li{
 }
 .des>p.time{
     margin:10px 0;
+}
+.des>p.time+p{
+    padding-bottom:20px;
+    border-bottom:1px solid #ececec;
 }
 .info ul{
     padding:20px;
