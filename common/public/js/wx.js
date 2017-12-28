@@ -98,6 +98,14 @@
 				{
 					location.reload();
 				}
+				else
+				{
+					if(res.data.activation_status == 3)
+					{
+						is_login = 'yes';
+						plats_token = res.data.token;
+					}
+				}
 			}
 		});
 	}
