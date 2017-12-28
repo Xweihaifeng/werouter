@@ -42,7 +42,7 @@
                 </div>
                 <div class="g-card res-list sumext-tpl-image mso" v-if="item.thumb_image!=''">
                     <a class="alink" :href="item.channel_domain+'/'+item.weid | | href('weplats')">
-                        <h3 class="res-title" v-html="getSummary(item.title)"></h3>
+                        <h3 class="res-title" v-html="getSummary(item.title.substr(0, 37))"></h3>
                     </a>
                     <a :href="item.channel_domain+'/'+item.weid | | href('weplats')" class="alink" >
                         <div class="res-con">
@@ -52,7 +52,7 @@
                                 </div>
                             </div>
                             <div class="con hasImg">
-                                <div class="summary" v-html="getSummary(item.summary)">
+                                <div class="summary" v-html="getSummary(item.summary.substr(0, 80))">
                                 </div>
                             </div>
                         </div>
