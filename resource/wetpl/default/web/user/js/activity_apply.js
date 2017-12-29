@@ -498,7 +498,8 @@ $(document).ready(function() {
 
     // 加载报名数
     loadCount(id, function(data) {
-        $(".entry-num>span").text(data.enrollCount);
+        $(".entry-num span.ticket-count").text(data.enrollCount);
+        $(".entry-num span.peaple-count").text(data.peapleCount);
     });
 
     // 加载售票情况
