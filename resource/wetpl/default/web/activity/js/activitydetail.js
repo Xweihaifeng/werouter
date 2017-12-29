@@ -607,7 +607,7 @@ $(document).ready(function() {
                                     $("." + id).text(curr);
                                     tickets.filter(x => x.id == id)[0].num = curr;
                                 } else {
-                                    layer.msg('票数不可少于1张', {
+                                    layer.msg('票数不可少于0张', {
                                         time: 1000
                                     })
                                 }
