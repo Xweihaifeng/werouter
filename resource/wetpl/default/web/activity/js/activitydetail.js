@@ -520,15 +520,15 @@ $(document).ready(function() {
                                             success: function() {
                                                     CurrentActivity = rep.data;
                                                     $.ajax({
-                                                        url: apiUrl + 'activity/tickets?activity_id=' + window.location.pathname.split('/').pop(),
-                                                        type: 'GET',
-                                                        success: function(data) {
-                                                                console.log(data);
-                                                                var ids = [];
-                                                                $(".mp ul").append(
-                                                                        data.data.reduce((res, e, i) =>
-                                                                            (ids.push([e.weid, e.type, e.total_num - e.sold_num]), tickets.push({id: e.weid, num: 0}),
-                                                                                res += `<li id="${e.weid}">
+                                                                url: apiUrl + 'activity/tickets?activity_id=' + window.location.pathname.split('/').pop(),
+                                                                type: 'GET',
+                                                                success: function(data) {
+                                                                        console.log(data);
+                                                                        var ids = [];
+                                                                        $(".mp ul").append(
+                                                                                data.data.reduce((res, e, i) =>
+                                                                                    (ids.push([e.weid, e.type, e.total_num - e.sold_num]), tickets.push({ id: e.weid, num: 0 }),
+                                                                                        res += `<li id="${e.weid}">
                                                                                 ${e.type == 1 ?
                                                                                     `<div id="p1"><p class="free" style="padding-right: 15px;">免费</p></div>`
                                                                                     :
@@ -974,7 +974,8 @@ $(document).ready(function() {
                             $(".activity_time").text(data.data.begain_time.split(" ")[0] + " -- " + data.data.end_time.split(" ")[0]);
                             $(".deadline").text(data.data.enroll_deadline);
                             $(".view_num").text(data.data.view_num);
-                            $(".city").text(data.data.area_name);
+                            $(".city").text(data.data.area_name + data.data.address);
+                            $(".city-link").attr("href", "http://map.baidu.com/?newmap=1&from=alamap&tpl=mapdots&s=con%26wd%3D" + data.data.area_name + data.data.address + "%26c%3D233");
                             $(".apply_num").text(data.data.enroll_num);
                             if (data.data.type == 1) {
                                 $(".pay-type span").text('免费');
