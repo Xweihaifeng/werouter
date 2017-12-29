@@ -188,7 +188,7 @@ dTree.prototype.node = function(node, nodeId) {
             '<span style="padding: 20px;"><input type="checkbox" name="permission" value="edit" onclick="return false;">编辑</span>' +
             '<span><input type="checkbox" name="permission" value="del" onclick="return false;">删除</span></span>';
         if (node.cshow == '频道管理') {
-            str1 = '</a><span onclick="c_alert()" style="padding: 20px;display: block;width: 145px;position: absolute;top: -21px;left: 150px;">频道权限设置</span>';
+            str1 = '</a><span onclick="c_alert()" style="padding: 20px;display: block;width: 145px;position: absolute;top: -21px;left: 150px;cursor:pointer">频道权限设置</span>';
         }
         str += str1;
     }
