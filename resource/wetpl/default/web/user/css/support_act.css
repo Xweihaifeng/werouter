@@ -6,7 +6,7 @@
 .show-tiket{width:50%;border-left:1px solid #eee;}
 .ticket-modal {
     margin-top: 12%;
-    max-width: 340px;
+    max-width: 530px;
 }
 .show-shade{z-index: 999;}
 .modal-body{padding:0;}
@@ -19,22 +19,18 @@
 .ticket-name{
     padding: 0 20px 10px;
     font-size: 14px;
-    font-weight: 600;
 }
 .ticket-phone{
   padding: 0 20px 10px;
     font-size: 14px;
-    font-weight: 600;
 }
 .ticket-position{
     padding: 0 20px 10px;
     font-size: 14px;
-    font-weight: 600;
 }
 .ticket-company{
-    padding: 0 20px 10px;
+    padding: 0 20px 20px;
     font-size: 14px;
-    font-weight: 600;
 }
 .ticket-box{
       width: 100%;
@@ -47,14 +43,11 @@
 .ticket-qr{
     text-align: center;
     padding-top: 20px;
-    paddign-bottom: 20px;
-    padding-bottom: 20px;
+    /*paddign-bottom: 20px;*/
     border-radius: 20px;
     // background: #f6f6f6;
 }
 .ticket-time{
-     padding: 0px 20px 10px ;
-    /*width: 82%;*/
     margin: 0 auto;
     font-size: 14px;
     padding-bottom: 10px;
@@ -62,7 +55,6 @@
 .ticket-addr{
     padding: 0 20px 10px;
     font-size: 14px;
-    font-weight: 600;
 }
 .t_blank{
 width: 100%;
@@ -157,4 +149,80 @@ width: 100%;
     outline: 0;
      -webkit-box-shadow: 0 0px 0px rgba(0,0,0,.5);
      box-shadow: 0 0px 0px rgba(0,0,0,.5);
+}
+.ticket{
+    padding:0 20px 0;
+    background: #fff;
+}
+.ticket-item{
+    position: relative;
+    min-height: 45px;
+    padding: 10px;
+    border: 1px solid #04a6e9;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    margin-bottom: 10px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.ticket-item:before{
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 68%;
+    display: block;
+    width: 7px;
+    height: 100%;
+    content: "";
+    background: url('/common/img/ticket_center.png') no-repeat;
+    background-size: 100% 100%;
+}
+.ticket-item>p{
+    float: left;
+    width: 68%;
+    height: 18px;
+    font-size: 15px;
+    font-weight: bold;
+    color: #555;
+}
+.ticket-item>.tic-price{
+    float: right;
+    width: 30%;
+    text-align: center;
+    position: relative;
+}
+.ticket-item .tic-price span{
+    position: absolute;
+    z-index: 1;
+    width:100%;
+    display: block;
+    color: #04a6e9;
+    font-size: 18px;
+    font-weight:bold;
+}
+.ticket-item .num{
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 0;
+    height: 0;
+    border-right: 40px solid transparent;
+    border-bottom: 40px solid #f9f9f9;
+    border-top-right-radius: 7px;
+    background-color: #04a6e9;
+}
+.ticket-item .num span{
+    font-size: 12px;
+    position: relative;
+    top: 5px;
+    left: 5px;
+    display: block;
+    width: 40px;
+    height: 20px;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+    text-align: center;
+    color: #fff;
 }
