@@ -208,7 +208,7 @@ const header = `
                 <span>微博</span>
                 <img src="${ApiMaterPlatQiniuDomain + plats_info.wb_qrcode}" alt="" width="80"
                 style="display: inline-block;position:absolute;display:none;margin-left:-70px;margin-top:30px;">
-                <a href="http://2017.qqxqs.com" target="_blank"><span style="border-right: none;">访问旧版</span></a>
+                <a href="" target="_blank" id="old"><span style="border-right: none;">访问旧版</span></a>
             </div>
             <div id="hs">
                 <span><input type="text" id="search" class="form-control" placeholder="请输入关键字"></span>
@@ -332,6 +332,7 @@ req().then((data) => {
         $(".left-nav").css("height", ch);
         //$("#right-nav, #nav-news, #nav-org, #nav-news, #nav-help, #nav-share").css("height", ch);
     }
+    $("#old").attr('href', plats_info.old_link);
     $(".copyright").html(plats_info.copyright);
     $("#ht span:eq(0)").hover(function(){
         $("#ht img:eq(0)").fadeIn(0);
