@@ -34,12 +34,100 @@
     <script src="js/jquery-3.2.1.min.js"></script>
     <script src="js/browser.min.js"></script>
     <script src="js/config.js"></script>
+    <script src="js/template/config.js"></script>
     <script src="js/dtree.js"></script>
     <script src="js/template/role.js"></script>
     <!-- Google Font -->
-    <style>::-webkit-scrollbar { width: 0; }</style>
+    <style>
+        :-webkit-scrollbar { width: 0; }
+        .span_h{
+            line-height: 60px;
+            height: 50px;
+        }
+        .span_h span {
+            padding:20px;
+        }
+        #alert{
+            overflow-y:scroll;
+            width: 900px;
+            height: 800px;
+            box-shadow: 0 0 1000000px 10000px rgba(0,0,0,0.6);
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            margin: auto;
+            background: #fff;
+            display: none;
+            z-index: 1000;
+            padding-bottom: 30px;
+        }
+        .close{
+            width: 20px;
+            height: auto;
+            font-size: 20px;
+            line-height: 20px;
+            text-align: center;
+            position: fixed;
+            top: 90px;
+            left: 850px;
+            bottom: 300px;
+            right: 0;
+            margin: auto;
+        }
+        .alert_con{
+            width: 100%;
+            height: auto;
+            padding: 15px 15px 15px 20px;
+        }
+        .alert_con > p{
+            font-size: 14px;
+            color: #333333;
+        }
+        .alert_con ul{
+            width: 100%;
+            padding: 10px;
+        }
+        .alert_con ul li{
+            height: 40px;
+            box-sizing: border-box;
+            padding-right: 35%;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        /*.alert_con > ul > li >div{*/
+        /*float: left;*/
+        /*}*/
+        .alert_img{
+            width: 18px;
+            height: 18px;
+            background: url("img/join.gif") no-repeat center/cover;
+        }
+        .alerts_img{
+            width: 18px;
+            height: 18px;
+            background: url("img/join.gif") no-repeat center/cover;
+        }
+        .title_img{
+            width: 118px;
+            height: 20px;
+        }
+        .title_img div{
+            float: left;
+        }
+    </style>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
+<div id="alert">
+    <div class="alert_con">
+        <div id="res1"></div>
+        <div class="col-sm-7"><button type="button" class="btn btn-info pull-left" name='bTest' id='channel' style="margin-top: 25px;">保存</button></div>
+    </div>
+    <div class="close" onclick="$('#alert').css({'display':'none'})">X</div>
+</div>
 <div class="wrapper">
     <aside class="main-sidebar">
         <!-- sidebar: style can be found in sidebar.less -->
@@ -80,7 +168,6 @@
                     <!-- /.box-header -->
                     <div class="box-body no-padding">
                         <div class="dtree">
-                            <p><a href="javascript: d.closeAll();">展开</a> | <a href="javascript: d.openAll();">收起</a></p>
                             <div id="res"></div>
                         </div>
                         <div>

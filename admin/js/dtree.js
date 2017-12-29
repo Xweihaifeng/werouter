@@ -138,7 +138,7 @@ dTree.prototype.addNode = function(pNode) {
 
 // Creates the node icon, url and text
 dTree.prototype.node = function(node, nodeId) {
-    var str = '<div class="dTreeNode">' + this.indent(node, nodeId);
+    var str = '<div style="position: relative;width: 700px;" class="dTreeNode span_h">' + this.indent(node, nodeId);
     if (this.config.useIcons) {
         if (!node.icon) node.icon = (this.root.id == node.pid) ? this.icon.root : ((node._hc) ? this.icon.folder : this.icon.node);
         if (!node.iconOpen) node.iconOpen = (node._hc) ? this.icon.folderOpen : this.icon.node;
@@ -149,7 +149,7 @@ dTree.prototype.node = function(node, nodeId) {
         str += '<img id="i' + this.obj + nodeId + '" src="' + ((node._io) ? node.iconOpen : node.icon) + '" alt="" />';
     }
     if (node.url) {
-        str += '<a id="s' + this.obj + nodeId + '" class="' + ((this.config.useSelection) ? ((node._is ? 'nodeSel' : 'node')) : 'node') + '" href="' + node.url + '"';
+        str += '</span><span style="position: relative;margin-right: 200px;width: 100px;"><a id="s' + this.obj + nodeId + '" class="' + ((this.config.useSelection) ? ((node._is ? 'nodeSel' : 'node')) : 'node') + '" href="' + node.url + '"';
         if (node.title) str += ' title="' + node.title + '"';
         if (node.target) str += ' target="' + node.target + '"';
         if (this.config.useStatusText) str += ' onmouseover="window.status=\'' + node.cname + '\';return true;" onmouseout="window.status=\'\';return true;" ';
@@ -181,16 +181,17 @@ dTree.prototype.node = function(node, nodeId) {
     }
 
     if (node.url) {
-        var str1 = '</a><span style="padding: 20px;">操作权限 <input type="checkbox" name="permission" checked>全选</span>' +
-			'<span style="padding: 20px;"><input type="checkbox" name="permission" value="list" checked>列表</span>' +
-			'<span style="padding: 20px;"><input type="checkbox" name="permission" value="add" checked>增加</span>' +
-			'<span style="padding: 20px;"><input type="checkbox" name="permission" value="edit" checked>编辑</span>' +
-			'<span><input type="checkbox" name="permission" value="del" checked>删除</span>';
+        var str1 = '</a><span style="padding: 20px;display: block;width: 145px;position: absolute;top: -21px;left: 150px;">操作权限 <input type="checkbox" name="permission" checked>全选</span></span>' +
+            '<span style="padding: 20px;display: block;width: 145px;position: absolute;top: -21px;left: 330px;">' +
+            '<span style="padding: 20px;"><input type="checkbox" name="permission" value="list" onclick="return false;">列表</span>' +
+            '<span style="padding: 20px;"><input type="checkbox" name="permission" value="add" onclick="return false;">增加</span>' +
+            '<span style="padding: 20px;"><input type="checkbox" name="permission" value="edit" onclick="return false;">编辑</span>' +
+            '<span><input type="checkbox" name="permission" value="del" onclick="return false;">删除</span></span>';
         if (node.cshow == '频道管理') {
-            str1 = '</a><span style="padding: 20px;">频道权限设置</span>';
-		}
+            str1 = '</a><span onclick="c_alert()" style="padding: 20px;display: block;width: 145px;position: absolute;top: -21px;left: 150px;cursor:pointer">频道权限设置</span>';
+        }
         str += str1;
-	}
+    }
 
     if (((!this.config.folderLinks || !node.url) && node._hc)) str += '</a>';
 

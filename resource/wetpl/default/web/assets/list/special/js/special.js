@@ -23,7 +23,8 @@ $(function() {
             if(data.code === 200) {
                 tpl = data.data.title;
                 icp = data.data.icp;
-                $("#copy_icp").text(icp);
+                $(".copyright").html(data.data.copyright);
+                // $("#copy_icp").text(icp);
             } else {
                 console.error(data.message);
             }
