@@ -141,13 +141,14 @@ $("#verify_ticket").bind('click', function() {
         var userAlert = layer.open({
             skin: 'winning-class',
             type: 1,
-            area: ['500px', '470px'],
+            area: ['500px', '530px'],
             title: 0,
             closeBtn: true,
             shadeClose: true,
             scrollbar: false,
             btn: ['确认验票', '取消'],
             yes: function() {
+                layer.load();
                 $.ajax({
                     url: ACTIVITY_ENROLL_CHECK,
                     type: 'POST',
@@ -177,6 +178,7 @@ $("#verify_ticket").bind('click', function() {
             content: `<div class="user-block">
                 <table>
                     <tbody>
+                        <tr><td colspan="2"><span class="ticket-enumber">` + data.ticket_info.e_number + `</span></td></tr>
                         <tr><td><span class="user-title">用户形象</span></td><td><img id="user-avatar" src="` + ApiMaterPlatQiniuDomain + data.user_info.avatar + `"></td></tr>
                         <tr><td><span class="user-title">真实姓名</span></td><td>` + data.user_info.real_name + `</td></tr>
                         <tr><td><span class="user-title">平台昵称</span></td><td>` + data.user_info.nickname + `</td></tr>

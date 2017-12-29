@@ -35,6 +35,7 @@
 
     <div class="nctouch-order-list">
         <ul id="order-list">
+
             <li class="green-order-skin" v-for="(order, index) in orderList" style="background: #FFF;">
                 <div class="nctouch-order-item">
                     <div style="padding: 0.681818rem;font-size: 0;text-align: left;border-bottom: solid 0.05rem #E5E5E5;line-height: 1;"><span style="display: inline-block;font-size: 0.590909rem;color: #232222;line-height: 1;">订单号：{{order.order_num}}</span></div>
@@ -71,18 +72,12 @@
                     </div>
                 </div>
             </li>
-
-
-
-
-
-            <div class="nctouch-norecord order" id="otherGo" style="display: block;">
+            <div class="nctouch-norecord order" id="otherGo"  :style="flag_display? 'display: block;' : 'display: none;'">
                 <div class="norecord-ico"><i></i></div>
                 <dl>
                     <dt>亲，您还没有相关的订单</dt>
-                    <dd>猜您会喜欢这些地道尖货</dd>
                 </dl>
-                <a href="/shop_wap/html/didao/index.html" class="btn">逛商城</a>
+                <!--<a href="/shop_wap/html/didao/index.html" class="btn">逛商城</a>-->
             </div>
         </ul>
     </div>
@@ -156,7 +151,8 @@
             orderList : [],
             sortList : [{'text':'全部','status':0},{'text':'待付款','status':1},{'text':'待发货','status':2},{'text':'待收货','status':3},{'text':'待评价','status':4}],
             isBottom : true,
-            order_status:''
+            order_status:'',
+            flag_display:false,
         },
         mounted: function () {
             data={};
@@ -180,6 +176,11 @@
                                 this.orderList.push(appendData[i])
                             }
                             this.isBottom = true;
+                        }
+                        if(this.orderList.length<=0){
+                            this.flag_display=true;
+                        }else{
+                            this.flag_display=false;
                         }
                     }
                 });
@@ -299,7 +300,7 @@
                             operList.push({
                                 text : '确认交易',
                                 oper : 'deal',
-                                status:'5'
+                                status:5
                             });
                             operList.push({
                                 text : '申请退款',

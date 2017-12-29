@@ -406,7 +406,7 @@ $(document).ready(function() {
                 });
             }
 
-
+            var tickets = [];
             var Support = function(id, nickname, imgUrl, applyid) {
                     var datauser = '';
                     var realname = '';
@@ -461,7 +461,7 @@ $(document).ready(function() {
                                                 '<ul></ul>' +
                                                 '<div id="tickets"><span>购买数量： </span>' +
                                                 '<span id="mins">-</span>' +
-                                                '<span><input type="text" class="form-control" id="num" pattern="[0-9]*" maxlength="3" value="1"></span>' +
+                                                '<span><input type="text" class="form-control" id="num" pattern="[0-9]*" maxlength="3" value="0"></span>' +
                                                 '<span id="adds">+</span>' +
                                                 '</div>' +
                                                 '</div>' +
@@ -520,74 +520,94 @@ $(document).ready(function() {
                                             success: function() {
                                                     CurrentActivity = rep.data;
                                                     $.ajax({
-                                                                url: apiUrl + 'activity/tickets?activity_id=' + window.location.pathname.split('/').pop(),
-                                                                type: 'GET',
-                                                                success: function(data) {
-                                                                        console.log(data);
-                                                                        var ids = [];
-                                                                        $(".mp ul").append(
-                                                                                data.data.reduce((res, e, i) =>
-                                                                                    (ids.push([e.weid, e.type, e.total_num - e.sold_num]),
-                                                                                        res += `<li id="${e.weid}">
-                                            ${e.type == 1 ?
-                                                `<div id="p1"><p class="free" style="padding-right: 15px;">免费</p></div>`
-                                                :
-                                                `<div id="p1"><img src="/common/img/rmb.png">
-                                                <p class="price">${e.price}</p></div>`
-                                            }
-                                            <div id="p2">
-                                            <p class="tkname">${e.name}</p>
-                                            <p class="tkdscp">${e.description}</p>
-                                            </div>
-                                            </li>`)
-                                , '')
+                                                        url: apiUrl + 'activity/tickets?activity_id=' + window.location.pathname.split('/').pop(),
+                                                        type: 'GET',
+                                                        success: function(data) {
+                                                                console.log(data);
+                                                                var ids = [];
+                                                                $(".mp ul").append(
+                                                                        data.data.reduce((res, e, i) =>
+                                                                            (ids.push([e.weid, e.type, e.total_num - e.sold_num]), tickets.push({id: e.weid, num: 0}),
+                                                                                res += `<li id="${e.weid}">
+                                                                                ${e.type == 1 ?
+                                                                                    `<div id="p1"><p class="free" style="padding-right: 15px;">免费</p></div>`
+                                                                                    :
+                                                                                    `<div id="p1"><img src="/common/img/rmb.png">
+                                                                                    <p class="price">${e.price}</p></div>`
+                                                                                }
+                                                                                <div id="p2">
+                                                                                <p class="tkname">${e.name}</p>
+                                                                                <p class="tkdscp">${e.description}</p>
+                                                                                </div>
+                                                                                <div id="p3">
+                                                                                <p class="tkbuy">已订票</p>
+                                                                                <p class="tknum"><span class="${e.weid}">0</span>张</p>
+                                                                                </div>
+                                                                                </li>`)
+                                                                    , '')
                             );
                             var add = (id, type) => {
-                                tid = id;
                                 if (type == 1) {
                                     $("#" + id).css('border', '2px solid #ffb03f');
                                     $("#" + id + ' #p2').css({'background': '#ffb03f'});
+                                    $("#" + id + ' #p3').css({'background': '#ffb03f'});
                                 } else {
                                     $("#" + id).css('border', '2px solid #007cd3');
                                     $("#" + id + ' #p2').css({'background': '#007cd3'});
+                                    $("#" + id + ' #p3').css({'background': '#007cd3'});
                                     $("#" + id + ' .price').css('color', '#007cd3');
                                     $("#" + id + ' img').attr('src', '/common/img/rmbo.png');
                                 }
                                 $("#" + id + ' #p2 p').css({'color': 'white'});
+                                $("#" + id + ' #p3 p').css({'color': 'white'});
                             }
                             var remove = (id) => {
                                 ids.filter(x => x[0] != id).map(x => $('#' + x[0]).css('border', '2px solid #dddddd'));
-                                ids.filter(x => x[0] != id).map(x => $('#' + x[0] + ' div').css({'background': 'white'}));
-                                ids.filter(x => x[0] != id).map(x => $('#' + x[0] + ' div p').css({'color': '#555'}));
+                                ids.filter(x => x[0] != id).map(x => $('#' + x[0] + ' div').css({'background': 'white', 'color': '#555'}));
+                                ids.filter(x => x[0] != id).map(x => $('#' + x[0] + '  #p2 p').css({'color': '#555'}));
+                                ids.filter(x => x[0] != id).map(x => $('#' + x[0] + '  #p3 p').css({'color': '#555'}));
                                 ids.filter(x => x[0] != id).map(x => $('#' + x[0] + ' .price').css('color', '#555'));
                                 ids.filter(x => x[0] != id).map(x => $('#' + x[0] + ' img').attr('src', '/common/img/rmb.png'));
                             }
                             add(ids[0][0], ids[0][1]);
-                            $("#num").val(ids[0][2] != 0 ? 1 : 0);
                             var id = ids[0][0];
                             $(".mp ul li").click(function(e) {
                                 id = $(e.target).parents('li').attr('id');
                                 remove(id);
                                 add(id, ids.filter(x => x[0] == id)[0][1]);
-                                $("#num").val(ids.filter(x => x[0] == id)[0][2] != 0 ? 1 : 0);
+                                $("#num").val(parseInt($("." + id).text()));
                             })
                             $("#num").keyup(function(){
                                 var curr = parseInt($("#num").val());
                                 var total = ids.filter(x => x[0] == id)[0][2];
+                                if (isNaN(curr)) {
+                                    $("#num").val(0);
+                                    $("." + id).text(0);
+                                    tickets.filter(x => x.id == id)[0].num = 0;
+                                    return;
+                                }
                                 if (curr > total) {
                                     $("#num").val(total);
+                                    $("." + id).text(total);
+                                    tickets.filter(x => x.id == id)[0].num = curr;
                                     layer.msg('已超出最大购票数', {
                                         time: 1000
                                     })
+                                } else {
+                                    $("#num").val(curr);
+                                    $("." + id).text(curr);
+                                    tickets.filter(x => x.id == id)[0].num = curr;
                                 }
                             })
 
                             $("#mins").click(function(){
                                 var curr = parseInt($("#num").val()) - 1;
-                                if (curr >= 1) {
+                                if (curr >= 0) {
                                     $("#num").val(curr);
+                                    $("." + id).text(curr);
+                                    tickets.filter(x => x.id == id)[0].num = curr;
                                 } else {
-                                    layer.msg('票数不可少于1张', {
+                                    layer.msg('票数不可少于0张', {
                                         time: 1000
                                     })
                                 }
@@ -597,6 +617,8 @@ $(document).ready(function() {
                                 var total = ids.filter(x => x[0] == id)[0][2];
                                 if (curr <= total) {
                                     $("#num").val(curr);
+                                    $("." + id).text(curr);
+                                    tickets.filter(x => x.id == id)[0].num = curr;
                                 } else {
                                     layer.msg('已无余票', {
                                         time: 1000
@@ -769,18 +791,27 @@ $(document).ready(function() {
                     logBt();
             }
         });
-        var tid; //购票id
-        var number; //购票数
         setTimeout(function() {
             $(".apply_submit").bind("click", function() {
                 var name = $('#username').val();
                 var telphone = $('#phone').val();
                 var poistion = $("#zhiw").val();
                 var company = $("#gongsi").val();
-                if (tid == undefined) {
+                var tid = []; //购票id
+                var number = []; //购票数
+                tickets = tickets.filter(x => x.num != 0);
+                tickets.map(x => (tid.push(x.id), number.push(x.num)));
+                if (tid == "") {
                     layer.msg('请选择门票', {
                         time: 1000
                     })
+                    return;
+                }
+                if (number == 0) {
+                    layer.msg('请购买门票', {
+                        time: 1000
+                    })
+                    return;
                 }
                 if (name == "") {
                     layer.msg("请输入名字", {
@@ -794,9 +825,6 @@ $(document).ready(function() {
                     });
                     return;
                 }
-
-
-
                 if (isNull(docCookies.getItem("weid")) || isNull(docCookies.getItem("token"))) {
                     layer.msg("请验证您的手机号", {
                         time: 1000
@@ -814,14 +842,6 @@ $(document).ready(function() {
                     layer.msg("请输入公司", {
                         time: 1000
                     });
-                    return;
-                }
-
-                number = parseInt($("#num").val());
-                if (number == 0) {
-                    layer.msg('请购买门票', {
-                        time: 1000
-                    })
                     return;
                 }
                 var sendData = {
