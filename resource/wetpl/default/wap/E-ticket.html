@@ -4,8 +4,6 @@
     show.header = 'no';
     show.footer = 'no';
 </script>
-<link rel="stylesheet" href="{{PATH_TML}}css/home.css"/>
-<link rel="stylesheet" href="{{PATH_TML}}css/common.css"/>
 <link rel="stylesheet" href="{{PATH_TML}}css/E-ticket.css">
 <script src="/common/js/jquery.min.js"></script>
 <script src="/common/js/jquery.qrcode.min.js"></script>
@@ -17,7 +15,7 @@
             <p>票号：{{infoData.ticket_num}}</p>
         </div>
         <div class="des">
-            <h3>{{infoData.title}}</h3>
+            <h3>{{infoData.title}} <span @click="chat(infoData.wx_qun_qrcode)">[群聊]</span></h3>
             <p class="time">{{infoData.begain_time}} {{infoData.begain_week}} {{infoData.begain_hour}} ~ {{infoData.end_time}} {{infoData.end_week}} {{infoData.end_hour}}</p>
             <p>{{infoData.address}}</p>
         </div>
@@ -51,28 +49,45 @@
             </div>
         </div>
     </div>
+    <div class="chat-qr-bg" v-if="showChatQr" @click="showChatQr=false">
+        <img :src="chatQrUrl | img_src" alt="" @click="notCancel($event)">
+    </div>
 </div>
 <script>
     new Vue({
         el : '#app',
         data : {
-            infoData : {}
+            infoData : {},
+            chatQrUrl:'',
+            showChatQr:false
         },
         mounted : function () {
             ajax.get('activity/enroll/detail/8b02d5d0-ec5f-11e7-aef4-91531e55149b').then((res)=>{
                 console.log(res);
                 if(res.code == 200 && res.data){
                     this.infoData = res.data;
-                    var qrcode_val = apiUrl+"activity/enroll/check_ticket_number?e_number=" + res.data.ticket_num;
-                    var clientWidth = document.documentElement.clientWidth;
-                    var canvasWidth = Math.floor(clientWidth*120/375);
-                    jQuery(".qr-content").qrcode({
-                        width: canvasWidth,
-                        height: canvasWidth,
-                        text: qrcode_val
-                    });
+                    this.makeQr(apiUrl+"activity/enroll/check_ticket_number?e_number=" + res.data.ticket_num);
                 }
             })
+        },
+        methods:{
+            makeQr : function (url) {
+                var qrcode_val = url;
+                var clientWidth = document.documentElement.clientWidth;
+                var canvasWidth = Math.floor(clientWidth*120/375);
+                jQuery(".qr-content").qrcode({
+                    width: canvasWidth,
+                    height: canvasWidth,
+                    text: qrcode_val
+                });
+            },
+            chat : function (url) {
+                this.chatQrUrl = url;
+                this.showChatQr = true
+            },
+            notCancel : function (ev) {
+                ev.stopPropagation()
+            }
         }
     })
 </script>
