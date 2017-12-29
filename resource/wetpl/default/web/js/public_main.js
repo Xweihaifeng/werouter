@@ -195,20 +195,29 @@ const goodsBox = `
             `
 
 const header = `
-    <div class="header">
+    <div class="header clearfix">
         <div id="hl"></div>
-        <div id="hr">
+        <div id="hr" class="clearfix">
             <div id="ht">
-                <span>手机版</span>
-                <img src="http://www.qqxqs.com/api//file/qrcode?margin=4&url=http://m.qqxqs.com" class="weixin img-responsive" width="80"
-                style="display: inline-block;position:absolute;display:none;margin-left:-10px;margin-top:10px;">
-                <span>微信</span>
-                <img src="${ApiMaterPlatQiniuDomain + plats_info.wx_qrcode}" alt="" width="80"
-                style="display: inline-block;position:absolute;display:none;margin-left:-70px;margin-top:30px;">
-                <span>微博</span>
-                <img src="${ApiMaterPlatQiniuDomain + plats_info.wb_qrcode}" alt="" width="80"
-                style="display: inline-block;position:absolute;display:none;margin-left:-70px;margin-top:30px;">
-                <a href="" target="_blank" id="old"><span style="border-right: none;">访问旧版</span></a>
+                <aside>
+                    <span>手机版</span>
+                    <div>
+                        <img src="http://www.qqxqs.com/api//file/qrcode?margin=4&url=http://m.qqxqs.com" class="weixin img-responsive">
+                    </div>
+                </aside>
+                <aside>
+                    <span>微信</span>
+                    <div>
+                        <img src="${ApiMaterPlatQiniuDomain + plats_info.wx_qrcode}" alt="">
+                    </div>
+                </aside>
+                <aside>
+                    <span>微博</span>
+                    <div>
+                        <img src="${ApiMaterPlatQiniuDomain + plats_info.wb_qrcode}" alt="">
+                    </div>
+                </aside>
+                <aside><a href="" target="_blank" id="old"><span style="border-right:none;padding-left:12px;">访问旧版</span></a></aside>
             </div>
             <div id="hs">
                 <span><input type="text" id="search" class="form-control" placeholder="请输入关键字"></span>
@@ -334,21 +343,13 @@ req().then((data) => {
     }
     $("#old").attr('href', plats_info.old_link);
     $(".copyright").html(plats_info.copyright);
-    $("#ht span:eq(0)").hover(function(){
-        $("#ht img:eq(0)").fadeIn(0);
+
+    $("#ht>aside").hover(function(){
+        $(this).find("div").fadeIn(0);
     }, function(){
-        $("#ht img:eq(0)").fadeOut(0);
+        $(this).find("div").fadeOut(0);
     })
-    $("#ht span:eq(1)").hover(function(){
-        $("#ht img:eq(1)").fadeIn(0);
-    }, function(){
-        $("#ht img:eq(1)").fadeOut(0);
-    })
-    $("#ht span:eq(2)").hover(function(){
-        $("#ht img:eq(2)").fadeIn(0);
-    }, function(){
-        $("#ht img:eq(2)").fadeOut(0);
-    })
+
     var showLogin = false; //调整窗口大小时登陆框是否存在
     var width = $(window).width() / 2 - 180;
     var height = $(window).height() / 2 - 165;

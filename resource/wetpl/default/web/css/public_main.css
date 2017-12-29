@@ -50,6 +50,16 @@ li {
 	list-style: none;
 }
 
+.clearfix:after {
+    content: " ";
+    display: block;
+    clear: both;
+}
+
+.clearfix {
+    zoom: 1;
+}
+
 .left-nav {
 	position: fixed;
 	width: 90px;
@@ -1833,28 +1843,66 @@ li .active {
 }
 
 #ht {
-	width: 280px;
-	height: 30px;
+	width: 257px;
+	height: 16px;
 	margin-top: 12px;
 	margin-left: 123px;
+	margin-bottom: 14px;
 	font-size: 13px;
 	color: #666666;
-	float: left;
+	display: flex;
+	/*float: left;*/
 }
 
-#ht span {
+#ht > aside > div {
+	position: relative;
+	height: 90px;
+	width: auto;
+	margin-top: 13px;
+	display: none;
+}
+
+#ht > aside > div::before {
+    position: absolute;
+    content: " ";
+    transform: rotate(45deg) translateX(-50%);
+    left: 50%;
+    top: -1px;
+    width: 10px;
+    height: 10px;
+    border-left: 1px solid #ccc;
+    border-top: 1px solid #ccc;
+    background-color: #fff;
+    z-index: 1;
+}
+
+#ht > aside > span {
 	border-right: 1px solid #d9d9d9;
 	padding-left: 12px;
 	padding-right: 12px;
 	display: inline-block;
 }
 
-#ht span:nth-child(4) {
+#ht > aside > span:nth-child(4) {
 	border-right: none;
 }
 
-#ht span:hover {
+#ht > aside > span:hover {
 	cursor: pointer;
+}
+
+#ht > aside > div > img {
+	position: absolute;
+	width: 90px;
+	height: 90px;
+	max-width: unset;
+	transform: translateX(-50%);
+	left: 50%;
+	border: #e6e6e6 1px solid;
+}
+
+#hs {
+	height: 32px;
 }
 
 #search {
