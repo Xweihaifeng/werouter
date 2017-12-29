@@ -551,6 +551,9 @@ $(document).ready(function() {
                                     $("#" + id).css('border', '2px solid #ffb03f');
                                     $("#" + id + ' #p2').css({'background': '#ffb03f'});
                                     $("#" + id + ' #p3').css({'background': '#ffb03f'});
+                                    $("#tickets").hide();
+                                    $(".tknum span").text(1);
+                                    tickets.filter(x => x.id == id)[0].num = 1;
                                 } else {
                                     $("#" + id).css('border', '2px solid #007cd3');
                                     $("#" + id + ' #p2').css({'background': '#007cd3'});
