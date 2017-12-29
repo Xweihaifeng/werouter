@@ -27,8 +27,8 @@ $(document).ready(function() {
             '<div class="t_blank"></div>' +
             '<div class="ticket-qr"></div>' +
 
-            '<div style="width:92%;text-align:center;padding:10px 0;margin:0 auto;">票号：' + data.ticket_num + '</div>' +
-            '<div style="width:92%;text-align:center;padding:10px 0;margin:0 auto;">活动时请向发起人展示</div>' +
+            '<div style="width:92%;text-align:center;margin:0 auto;">票号：' + data.ticket_num + '</div>' +
+            '<div style="width:92%;text-align:center;margin:0 auto;">活动时请向发起人展示</div>' +
             '</div>' +
             '<div class="ticket-box-bottom">' +
             '<div class="ticket-title">' + data.title + '</div>' +
@@ -48,6 +48,7 @@ $(document).ready(function() {
             '<span class="sign-ticcom"></span>：' + data.company +
             '</div>' +
             '</div>' +
+            '<div class="ticket"></div>'+
             '</div>' +
             '</div>';
         return tickethtml;
@@ -65,6 +66,22 @@ $(document).ready(function() {
                     // console.log(urlall[0])
                     $(".modal-body .ticket_apply").children().remove();
                     $(".modal-body .ticket_apply").append(tickettemplate(data.data));
+                    $('.ticket').children().remove();
+                    if(data.data.type == 2){
+                        for(var i=0; i<data.data.tickets.length; i++){
+                            var dom =
+                                '<div class="ticket-item">'+
+                                '<p>'+data.data.tickets[i].name+'</p>'+
+                                '<div class="tic-price">'+
+                                '<span>￥'+data.data.tickets[i].price+'</span>'+
+                                '</div>'+
+                                '<div class="num">'+
+                                '<span>×'+data.data.tickets[i].count+'</span>'+
+                                '</div>'+
+                                '</div>';
+                            $('.ticket').append(dom);
+                        }
+                    }
                     qrcodefun1(activityid, domainid, data.data.ticket_num);
                 }
 

@@ -39,6 +39,17 @@
                 <span>{{infoData.company}}</span>
             </li>
         </ul>
+        <div class="ticket" v-if="infoData.type == 2">
+            <div class="ticket-item" v-for="item in infoData.tickets">
+                <p>{{item.name}}</p>
+                <div class="price">
+                    <span>￥{{item.price}}</span>
+                </div>
+                <div class="num">
+                    <span>×{{item.count}}</span>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <script>
@@ -48,7 +59,7 @@
             infoData : {}
         },
         mounted : function () {
-            ajax.get('activity/enroll/detail/fa192620-eb6d-11e7-afb1-7fe8d81f2754').then((res)=>{
+            ajax.get('activity/enroll/detail/8b02d5d0-ec5f-11e7-aef4-91531e55149b').then((res)=>{
                 console.log(res);
                 if(res.code == 200 && res.data){
                     this.infoData = res.data;
