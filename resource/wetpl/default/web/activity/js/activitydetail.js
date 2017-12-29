@@ -986,11 +986,10 @@ $(document).ready(function() {
                                 //$(".pay-type span").html('￥<b>' + data.data.price + '</b>');
                                 $(".pay-type span").html('收费');
                             }
-                            if (data.data.enroll_limit > 0) {
+                            if (data.data.type == 1) {
+                                $('.baomingrenshu').append('<span style="margin-left: 10px">限 <span class="enroll_limit"></span> 人报名</span>');
                                 $(".enroll_limit").text(data.data.enroll_limit);
 
-                            } else {
-                                $(".enroll_limit").text("多");
                             }
                             $("#acitivty-detail").html(data.data.content);
 
