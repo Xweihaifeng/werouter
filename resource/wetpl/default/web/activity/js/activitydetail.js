@@ -580,6 +580,12 @@ $(document).ready(function() {
                             $("#num").keyup(function(){
                                 var curr = parseInt($("#num").val());
                                 var total = ids.filter(x => x[0] == id)[0][2];
+                                if (isNaN(curr)) {
+                                    $("#num").val(0);
+                                    $("." + id).text(0);
+                                    tickets.filter(x => x.id == id)[0].num = 0;
+                                    return;
+                                }
                                 if (curr > total) {
                                     $("#num").val(total);
                                     $("." + id).text(total);
@@ -587,6 +593,10 @@ $(document).ready(function() {
                                     layer.msg('已超出最大购票数', {
                                         time: 1000
                                     })
+                                } else {
+                                    $("#num").val(curr);
+                                    $("." + id).text(curr);
+                                    tickets.filter(x => x.id == id)[0].num = curr;
                                 }
                             })
 
