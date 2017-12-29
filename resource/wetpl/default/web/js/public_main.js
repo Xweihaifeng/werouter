@@ -202,7 +202,7 @@ const header = `
                 <aside>
                     <span>手机版</span>
                     <div>
-                        <img src="http://www.qqxqs.com/api//file/qrcode?margin=4&url=http://m.qqxqs.com" class="weixin img-responsive">
+                        <img src="http://www.qqxqs.com/api//file/qrcode?margin=2&url=http://m.qqxqs.com" class="weixin img-responsive">
                     </div>
                 </aside>
                 <aside>
