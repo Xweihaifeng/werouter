@@ -207,6 +207,11 @@ class controllerRouter extends controller
         }
         if(empty($_COOKIE['token']))
         {
+            if(is_weixin() == 'yes')
+            {
+                redirect('/');
+                return FALSE;
+            }
             return TRUE;
         }
         $user_info = $this->user_token();
@@ -224,6 +229,11 @@ class controllerRouter extends controller
         $this->_user_id = $user_info['weid'];
         if(empty($this->_user_id))
         {
+            if(is_weixin() == 'yes')
+            {
+                redirect('/');
+                return FALSE;
+            }
             redirect('/login');
         }
     }
