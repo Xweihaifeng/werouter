@@ -336,10 +336,7 @@ var order = new Vue({
             this.order_post.phone = this.order_address_default.telophone;
             this.order_post.address_detail = this.order_address_default.province_name + this.order_address_default.area_name + this.order_address_default.detail;
 
-            this.order_post.goods_list.push({
-                'goods_id' : this.order_goods_detail.weid,
-                'goods_num' : order.num
-            });
+            this.order_post.goods_list.push({'goods_id' : this.order_goods_detail.weid,'goods_num' : 1});
 
             ajax.post('order/store' , this.order_post).then((res)=>{
                 if(res.data != 0)
