@@ -331,7 +331,7 @@ var order = new Vue({
                 mb_message('收货地址为空');
                 return false;
             }
-            
+
             this.order_post.address_id = this.order_address_default.weid;
             this.order_post.username = this.order_address_default.name;
             this.order_post.phone = this.order_address_default.telophone;
@@ -342,7 +342,7 @@ var order = new Vue({
             ajax.post('order/store' , this.order_post).then((res)=>{
                 if(res.data != 0)
                 {
-                    $app.open_page(all_domian + '/pay/shopping?store_num='+ res.data); 
+                    $app.open_page(all_domian + 'pay/shopping?store_num='+ res.data); 
                 }
             }); 
         }

@@ -61,9 +61,10 @@
             {
                 var wxpay = { 'order_id' : this.store_num , 'openid' : this.openid};
                 ajax.post('pages/wechatPay/mallOrderPhonePay' , wxpay).then((res)=>{
-                    console.log(res);
+                    
                     if(res.code == 200)
                     {
+                        alert(res.data.config.timeStamp);
                         $wx.pay(res.data.config , function(wx_res){
                             mb_message('支付成功');
                         });
