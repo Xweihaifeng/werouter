@@ -344,9 +344,9 @@ var order = new Vue({
                     var openid = $app.get_cookie('openid');
                     var wxpay = {order_id : res.data , openid , openid};
                     ajax.post('pages/wechatPay/mallOrderPhonePay' , wxpay).then((res)=>{
-                        wx_init.pay(res.data.config);
-                    })
-
+                        $wx.pay(res.data.config);
+                    });
+ 
                 }
             }); 
         }
