@@ -178,7 +178,7 @@
                         <dd>快递 <em id="storeFreight364">{{postage}}</em>元</dd>
                     </dl>
                     <div class="message">
-                        <input type="text" name="remarks" placeholder="买家备注" rel="364" id="storeMessage364">
+                        <input type="text" v-model="order_post.note" name="remarks" placeholder="买家备注" rel="364" id="storeMessage364">
                     </div>
                     <div class="store-total">
                         共{{order.num}}件商品&nbsp;小计：<span style="font-size:0.6rem;">￥<em id="storeTotal364">{{total_price}}</em></span>
@@ -234,15 +234,21 @@ var order = new Vue({
             'num' : ($app.get_query_string('num')) ? $app.get_query_string('num') : 1  , 
         },
         'postage' : 0,
-        'total_price' : 0
+        'total_price' : 0,
+        'order_post' : {
+            'goods_list' : [],
+            'address_id' : '',
+            'username' : '',
+            'phone' : '',
+            'address_detail' : '',
+            'note' : ''
+        }
     },
     mounted: function(){
         $app.set_title('确认订单');
         this.$nextTick(()=>{
-
             // 获取收货地址列表
             this.get_address_list();
-
             // 获取产品信息
             this.get_goods();
         });
@@ -320,7 +326,32 @@ var order = new Vue({
         },
         sub_order(item)
         {
+            if($app.empty(this.order_address_default) == false)
+            {
+                mb_message('收货地址为空');
+                return false;
+            }
+            this.order_post.address_id = this.order_address_default.weid;
+            this.order_post.username = this.order_address_default.name;
+            this.order_post.phone = this.order_address_default.telophone;
+            this.order_post.address_detail = this.order_address_default.province_name + this.order_address_default.area_name + this.order_address_default.detail;
 
+            this.order_post.goods_list.push({
+                'goods_id' : this.order_goods_detail.weid,
+                'goods_num' : order.num
+            });
+
+            ajax.post('order/store' , this.order_post).then((res)=>{
+                if(res.data != 0)
+                {
+                    var openid = $app.get_cookie('openid');
+                    var wxpay = {order_id : res.data , openid , openid};
+                    ajax.post('pages/wechatPay/mallOrderPhonePay' , wxpay).then((res)=>{
+                        wx_init.pay(res.data.config);
+                    })
+
+                }
+            }); 
         }
     }
 });
