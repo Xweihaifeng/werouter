@@ -29,7 +29,7 @@
 	    	});
 		});
 	}
-	
+
 	//微信支付
 	wx_init.pay = function(data)
 	{
@@ -96,7 +96,7 @@
 		var openid = $app.get_query_string('openid');
 		var get_storage_openid = $app.get_cookie('openid');
 		// console.log(get_storage_openid);
-		if(get_storage_openid != false){
+		if(get_storage_openid != false && is_login == 'yes'){
 			return true;
 		}
 		// console.log(get_storage_openid);
