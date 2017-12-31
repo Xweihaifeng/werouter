@@ -16,7 +16,7 @@
 		ajax.post('wxjssdk' , {currenturl: window.location.href}).then((res)=>{
 			if($app.empty(res.data) == false) return false;
 			wx_init_call = {
-				debug: false,
+				debug: true,
 				appId: res.data.appId,
 				timestamp: res.data.timestamp,
 				nonceStr: res.data.nonceStr,
