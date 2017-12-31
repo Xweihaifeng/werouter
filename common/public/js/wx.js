@@ -3,7 +3,7 @@
 	var wx_init = {};
 	var wx_init_call = false;
 	// 使用微信JSSDK 初始化
-	wx_init.init = function(data , call)
+	wx_init.init = function(data , call , inside_call)
 	{
 		if(is_wx == 'no') return false;
 		if(wx_init_call != false)
@@ -16,7 +16,7 @@
 		ajax.post('wxjssdk' , {currenturl: window.location.href}).then((res)=>{
 			if($app.empty(res.data) == false) return false;
 			wx_init_call = {
-				debug: false,
+				debug: true,
 				appId: res.data.appId,
 				timestamp: res.data.timestamp,
 				nonceStr: res.data.nonceStr,
@@ -25,23 +25,26 @@
 			};
 			wx.config(wx_init_call);
 			wx.ready(function() {
-				call(data , wx);
+				call(data , wx , inside_call);
 	    	});
 		});
 	}
 
 	//微信支付
-	wx_init.pay = function(data)
+	wx_init.pay = function(data , inside_call)
 	{
-		wx_init.init(data , function(data , wx){
+		wx_init.init(data , function(data , wx , inside_call){
 			wx.chooseWXPay({
 	            timestamp: data.timestamp,
 	            nonceStr: data.nonceStr,
 	            package: data.package,
 	            signType: data.signType,
 	            paySign: data.paySign,
+	            success: function (res) {  
+			        inside_call(res); 
+			    }  
 	        });
-		});
+		} , inside_call);
 	}
 
 	// 微信分享

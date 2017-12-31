@@ -1,151 +1,80 @@
-<!--
- * Created by weifeng on 2017/11/12.
--->
+<#extend#>public/domain/domain_extend.html</#extend#>
+<script type="text/javascript">
+    show.header = 'no';
+    show.footer = 'no';
+</script>
+<link rel="stylesheet" type="text/css" href="{{PATH_TML}}css/shopping-pay-method.css" />
+<!-- 支付方式头部开始 -->
+<header class="pay_header">
+    <nav class="pay_nav">
+        <a href="javascript:void(0)" onclick="javascript:history.back(-1)">
+            <li class="pay_icon_img pay_icon_img_clear"></li>
+        </a>
+        <a href="javascript:void(0)"><li class="pay_nav_title"> 支付方式 </li></a>
+        <a href="javascript:void(0)"></a>
+    </nav>
+</header>
+<!-- 支付方式头部结束 -->
 
-<!DOCTYPE html>
+<!-- 支付方式内容开始 -->
+<section class="pay_section" id="pay_section">
+	<slide class="pay_order background">
+		<slide class="pay_order_img"></slide>
+		<slide class="pay_order_info">
+			<li> 订单号：{{order_detail.order_num}} </li>
+			<li> 网上支付订单等待支付 </li>
+			<li> 您共需支付：<em>￥</em><span>{{order_detail.order_price}}</span> </li>
+		</slide>
+	</slide>
+	<slide class="pay_wechat">
+		<slide class="pay_wechat_img background"></slide>
+		<slide class="pay_wechat_title"> 微信支付 <span class="pay_recommend"> 推荐 </span> </slide>
+		<slide class="pay_wechat_select pay_select"></slide>
+	</slide>
+	<slide class="pay_immediately">
+		<a href="javascript:void(0)" @click="order_pay"> 立即支付 </a>
+	</slide>
+</section>
 
-<html>
-
-    <head>
-        <title> 支付方式 </title>
-        <meta charset="utf-8">
-        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-
-        <link rel="shortcut icon" id="favicon" href="" />
-        <link rel="stylesheet" type="text/css" href="{{PATH_TML}}css/shopping-pay-method.css" />
-
-        <script type="text/javascript" src="{{PATH_TML}}js/jquery-3.2.1.min.js"></script>
-        <script type="text/javascript" src="{{PATH_CONFIG}}"></script>
-        <script src="{{PATH_TML}}js/vue.min.js"></script>
-        <script src="{{PATH_TML}}js/vue-resource.min.js"></script>
-        <script src="/common/layer-v3.0.3/layer-v3.0.3/layer/layer.js"></script>
-        <!-- <script src="{{PATH_TML}}js/layui/layui.all.js"></script> -->
-        <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
-
-    </head>
-	<body>
-        <!-- 支付方式头部开始 -->
-        <header class="pay_header">
-            <nav class="pay_nav">
-                <a href="javascript:void(0)" onclick="javascript:history.back(-1)">
-                    <li class="pay_icon_img pay_icon_img_clear"></li>
-                </a>
-                <a href="javascript:void(0)"><li class="pay_nav_title"> 支付方式 </li></a>
-                <a href="javascript:void(0)"></a>
-            </nav>
-        </header>
-        <!-- 支付方式头部结束 -->
-
-        <!-- 支付方式内容开始 -->
-        <section class="pay_section" id="pay_section">
-			<slide class="pay_order background">
-				<slide class="pay_order_img"></slide>
-				<slide class="pay_order_info">
-					<li> 订单号：{{order_detail.order_num}} </li>
-					<li> 网上支付订单等待支付 </li>
-					<li> 您共需支付：<em>￥</em><span>{{order_detail.order_price}}</span> </li>
-				</slide>
-			</slide>
-			<slide class="pay_wechat">
-				<slide class="pay_wechat_img background"></slide>
-				<slide class="pay_wechat_title"> 微信支付 <span class="pay_recommend"> 推荐 </span> </slide>
-				<slide class="pay_wechat_select pay_select"></slide>
-			</slide>
-			<slide class="pay_immediately">
-				<a href="javascript:void(0)" @click="order_pay"> 立即支付 </a>
-			</slide>
-		</section>
-
-        <script>
-            // 全局请求添加token
-            Vue.http.headers.common['token'] = window.localStorage.getItem("token");
-            // 创建vue根实例
-            var app = new Vue({
-                el: "#pay_section",
-                data: {
-                    store_num       : '',
-                    order_detail    : '',
-                    config          : '',
-                    openid          : ''
-                },
-                mounted: function() {
-                    var self = this;
-                    var getQueryString = function(name) {  
-                        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");  
-                        var r = window.location.search.substr(1).match(reg);  
-                        if (r != null) return unescape(r[2]);  
-                        return null;  
-                    }
-                    //判断是否有openid
-                    if(!getQueryString("openid")) {
-                        //没有直接跳转获取openid
-                        self.store_num = getQueryString("store_num");
-                        window.location.href = apiUrl + 'mall/getMallOpenid?url=' + window.location.href + '&orderid=' + self.store_num + '&style=1';   
-                    }else{
-                        self.openid=getQueryString("openid");
-                        self.store_num = getQueryString("store_num");
-                        // 获取订单详情
-                        self.$http.get(apiUrl + 'order/detail/' + self.store_num).then(function (data) {
-                            if(data.data.code=='200'){
-                                self.order_detail = data.data.data;
-                            }
-                        });
-                        var body1 = {
-                            order_id: self.store_num,
-                            openid  : self.openid
-                        };
-                        self.$http.post(apiUrl + 'pages/wechatPay/mallOrderPhonePay', body1).then(function (data) {
-                            if(data.data.code=='200'){
-                                self.config = data.data.data.config;
-                            }else{
-                                layer.msg(data.data.message);
-                            }
+<script>
+    // 创建vue根实例
+    new Vue({
+        el: "#app",
+        data: {
+            store_num       : '',
+            order_detail    : {},
+            openid          : ''
+        },
+        mounted: function() 
+        {
+            $app.set_title('订单支付');
+            this.$nextTick(()=>{
+                this.store_num = $app.get_query_string('store_num');
+                this.openid = $app.get_cookie('openid');
+                ajax.get('order/detail/' + this.store_num).then((res)=>{
+                    this.order_detail = res.data;
+                });
+            });
+        },
+        methods:{
+            order_pay() 
+            {
+                var wxpay = { 'order_id' : this.store_num , 'openid' : this.openid};
+                ajax.post('pages/wechatPay/mallOrderPhonePay' , wxpay).then((res)=>{
+                    console.log(res);
+                    if(res.code == 200)
+                    {
+                        $wx.pay(res.data.config , function(wx_res){
+                            mb_message('支付成功');
                         });
                     }
-                    //回调
-
-                },
-                ready: function() {
-
-                },
-                computed : {
-
-                },
-                methods : {
-                    order_pay: function() {
-                        // Mall - 商城 - 下单页返回openid
-                        var self = this;
-                        if (typeof WeixinJSBridge == "undefined"){
-                            if( document.addEventListener ){
-                                document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
-                            }else if (document.attachEvent){
-                                document.attachEvent('WeixinJSBridgeReady', jsApiCall);
-                                document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
-                            }
-                        }else{
-                            this.jsApiCall();
-                        }
-                    },
-                    jsApiCall:function (){
-                        WeixinJSBridge.invoke(
-                            'getBrandWCPayRequest',
-                            this.config,
-                            function(res){
-                                WeixinJSBridge.log(res.err_msg);
-                                if (res.err_msg == "get_brand_wcpay_request:ok") {
-                                    layer.msg("微信支付完成", { time: 1500 });
-
-                                } else if (res.err_msg == "get_brand_wcpay_request:cancel") {
-                                    //取消支付!
-                                    layer.msg("已取消支付", { time: 1500 });
-                                } else {
-                                    layer.msg("微信支付失败！", { time: 1500 });
-                                }
-                            }
-                        );
+                    else
+                    {
+                        mb_message('订单异常无法支付');
                     }
-                }
-            })
-        </script>
-	</body>
-</html>
+
+                });
+            }
+        }
+    })
+</script>
