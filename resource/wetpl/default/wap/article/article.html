@@ -17,9 +17,9 @@
         <!--<a v-for="item in bannerList" v-if="item.src" :href="item.href"><img :src="item.src | img_src" alt=""></a>-->
     <!--</div>-->
     <div id="box" class="section my_container" @touchstart="touchStart($event)" @touchmove="touchMove($event)"
-         @touchend="touchEnd($event)" style="transform:translate(0,-30px)">
+         @touchend="touchEnd($event)">
         <div class="fresh-tip">
-            <span>下拉加载更多...</span>
+            <span>{{freshTip}}</span>
         </div>
         <div v-for="(value,key) in artListObj">
             <!--多个模板-->
@@ -73,6 +73,7 @@
             bannerList: [],
             start: '',
             end: '',
+            freshTip: '松手加载更多...',
             offset: 30,
             isScroll: false,
             endTime: '',
@@ -115,6 +116,7 @@
                     userId: pages_info.plats_user.weid,
                     endtime: this.endTime
                 };
+                this.freshTip = '加载中...';
                 ajax.post('articles/getListByDay', sendData).then((res) => {
                     console.log(res);
                     if (res.code == 200 && res.data.list && JSON.stringify(res.data.list) != '{}') {
@@ -124,8 +126,9 @@
                     if (res.data.lastdate) {
                         this.endTime = res.data.lastdate;
                     }
+                    document.getElementById('box').style.transform = 'translate(0,' + (-this.offset) + 'px)';
+                    this.freshTip = '松手加载更多...';
                 });
-                document.getElementById('box').style.transform = 'translate(0,' + (-this.offset) + 'px)';
             },
             getMin: function (arr) {
                 var min = arr[0];
@@ -207,7 +210,7 @@
             },
             touchEnd: function (ev) {
                 if (this.isScroll) {
-                    document.getElementById('box').style.transform = 'translate(0,-30px)';
+                    document.getElementById('box').style.transform = 'translate(0,0)';
                     this.getArtData();
                     this.isScroll = false;
                 }
