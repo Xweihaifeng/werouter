@@ -74,6 +74,7 @@
             start: '',
             end: '',
             offset: 30,
+            isScroll: false,
             endTime: '',
             artListObj: {},
             domain: pages_index
@@ -123,7 +124,7 @@
                     if (res.data.lastdate) {
                         this.endTime = res.data.lastdate;
                     }
-                })
+                });
                 document.getElementById('box').style.transform = 'translate(0,' + (-this.offset) + 'px)';
             },
             getMin: function (arr) {
@@ -197,17 +198,17 @@
             touchMove: function (ev) {
                 this.end = ev.touches[0].pageY;
                 if (document.body.scrollTop == 0) {
-                    if (this.start < this.end) {
-                        document.getElementById('box').style.transform = 'translate(0,' + parseInt(this.end - this.start) + 'px)'
+                    if(this.end > this.start){
+                        document.getElementById('box').style.transform = 'translate(0,' + parseInt(this.end - this.start) + 'px)';
+                        this.isScroll = true;
                     }
                 }
             },
             touchEnd: function (ev) {
-                if (document.body.scrollTop == 0) {
-                    if (this.end - this.start >= this.offset) {
-                        document.getElementById('box').style.transform = 'translate(0,-30px)';
-                        this.getArtData();
-                    }
+                if (this.isScroll) {
+                    document.getElementById('box').style.transform = 'translate(0,-30px)';
+                    this.getArtData();
+                    this.isScroll = false;
                 }
             }
         }
