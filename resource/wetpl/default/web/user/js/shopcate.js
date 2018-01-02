@@ -87,93 +87,7 @@ $(document).ready(function(){
 
     var weid = docCookies.getItem("weid");
     hasDomain(weid);
-
-    /*var isLogin = false; //判断用户登陆与否
-    var router = function(route){
-        var routerList = ['home', 'login', 'article','project','active','zone', 'shopping'];
-
-        var isMember = function(routerList, route){
-            return routerList.filter(x => x === route);
-        }
-
-        var home = function(){
-            window.location.href = '/';
-        }
-
-        var login = function(){
-            if (!isLogin) {
-                showLogin = true;
-                $("#modal").show();
-                $(".show-login").css({
-                    "margin-left": width,
-                    "margin-top": height
-                });
-                $(".show-login").fadeIn(300);
-                $("body").css("overflow", "hidden");
-            } else {
-                window.location.href = "/user";
-            }
-        }
-
-        var article = function(){
-
-            showLogin = false;
-            window.location.href = domain + "/article";
-//          window.history.go(0);
-        }
-
-        var shopping = function(){
-            showLogin = false;
-            window.location.href = domain + "/wemall";
-        }
-         var active = function(){
-            showLogin = false;
-            window.location.href = domain + "/activity";
-        }
-         var project = function(){
-            showLogin = false;
-            window.location.href = domain + "/project";
-        }
-         var  zone= function(){
-            showLogin = false;
-            window.location.href = domain + "/quan";
-        }
-       
-
-        if (isMember(routerList, route) != ""){
-            eval(route)();
-        }
-    }
-
-    $("#home, #login, #article,#active,#project,#zone, #shopping").click(function(){
-        var id = $(this).attr("id");
-        router(id);
-    })*/
-
-    /* //主页初始化
-    var isLogin = false;
-    var init = function(token){
-        if (token != 'null' && token != undefined) {
-            isLogin = true;
-            $(".left-nav, .login, #middle, #right").show();
-
-            //加载用户头像
-
-            $("#login div img").hide();
-            $(".log-head").css({
-                'background': 'url(../../common/img/p2240276035.jpg) no-repeat center',
-                'background-size': '100% 100%'
-            })
-            $(".log-head").show();
-        } else {
-            login();
-        }
-
-    }
-
-    init(docCookies.getItem("token"));*/
-
-   //商品分类列表模板
+    //商品分类列表模板
     var catelisthtml=function(data){
 
         /*var listhtml='<tr id="'+data.weid+'">'+
@@ -236,7 +150,29 @@ $(document).ready(function(){
             }
         })
     }
-catesfun(weid);
+
+    catesfun(weid);
+    //获取商城信息
+    var malluserinfo = function () {
+        $.ajax({
+            url: apiUrl + 'mall/userdetail',
+            type: 'get',
+            headers: {
+                'Token': docCookies.getItem("token")
+            },
+            success: function (data) {
+                if (data.code == 200) {
+                    //设置商城信息
+                    $("input[name=mall_weid]").val(data.data.weid);
+                    $("input[name=mall_name]").val(data.data.title);
+                }
+            },
+            error: function (xhr) {
+                console.log(xhr);
+            }
+        })
+    }
+    malluserinfo();
 
     //back to top
     $("#toTop").hide();
@@ -428,6 +364,36 @@ catesfun(weid);
                 //requestAjax(params, 'post', '/index.php?ctl=mywemall&act=do_categories', callback, true);
             }
         });
+        //保存商城 add by lisheng 2018.01.02
+        $(document).on("click","#save_mall",function () {
+            //获取商城名称
+            var mall_weid=$("input[name=mall_weid]").val();
+            var mall_title=$("input[name=mall_name]").val();
+            if(isNull(mall_weid)){
+                mess_tusi("还未开通商城！");
+                return false;
+            }
+            if(isNull(mall_title)){
+                mess_tusi("商城名称不能为空！");
+                return false;
+            }
+            $.ajax({
+                url: apiUrl + 'mall/update',
+                type:'post',
+                data:{'weid':mall_weid,'title':mall_title},
+                headers: {
+                    'Token': docCookies.getItem("token")
+                },
+                dataType: 'json',
+                success: function(data){
+                    if (data.code == 200) {
+                        mess_tusi("修改商城信息成功！");
+                    }else {
+                        mess_tusi(data.message);
+                    }
+                }
+            })
+        })
 
     }
     // 添加/编辑分类

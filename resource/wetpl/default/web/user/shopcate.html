@@ -103,17 +103,32 @@
 					                    <span class="sort_order">排序</span>
 					                    <span class="sort_operate">操作</span>
 					                </p>
-					                <ul class="operate_box">
-					                    
-					                    
-						            </ul>
+					                <ul class="operate_box" style="height:auto;">
+									</ul>
+
 						        </div>
 						    </div>
 						</div>
 
 					</div>
 				</div>
-
+				<div class="order-table">
+					<div class="use-right">
+						<div class="list_title clearfix">
+							<div class="cur">
+								<span>商城设置</span>
+							</div>
+						</div>
+					</div>
+					<div class="sort_box">
+						<div style="text-align: center;">
+							<label><span style="margin-right: 50px;">商城名称:</span></label><input type="hidden" name="mall_weid"><input type="text" name="mall_name" class="sort_info">
+						</div>
+						<li style="text-align: center;margin: 20px;">
+							<a href="javascript:;" id="save_mall"  style="display: inline-block;color: #fff!important; width: 148px;height: 44px;background-color: #ff9c00;line-height: 44px;">保存</a>
+						</li>
+					</div>
+				</div>
 			</div>
 		</div>
 	</body>
@@ -156,135 +171,4 @@
 		localStorage.removeItem('token');
 		localStorage.removeItem('weid');
 	})
-
-
-
-	$(function(){
-		/*var categoryItemValue = [];
-		var newCIV = [];
-		var subB = false;
-		$(".category-item").each(function(){
-			categoryItemValue.push($(this).find(".category-name").val());
-			newCIV.push($(this).find(".category-name").val())
-		});
-        //添加商品分类
-        $('#add_sort').on('click',function(){
-            var sortList = "<li class='clearfloat category-item'><input type='text' class='sort_info category-name' value=''><input type='number' class='order_info category-floor' value=''>&nbsp;F<div class='operate_info'><a href='javascript:;' class='delete_sort'>删除</a></div></li>";
-            $('.operate_box').append(sortList);
-            $('.no_sort').remove();	
-			newCIV.push("")
-        });
-
-		$(".operate_box").on("blur",".category-name",function(){
-			var _This =  $(this)
-			var _index = $(this).parents("li").index();
-			for (var i=0;i<newCIV.length ;i++ )
-			{				
-				if (newCIV[i] == $(this).val() )//判断是否重复
-				{
-					if (i != _index)
-					{
-						$.showSuccess("分类名称不能重复",function(){return false});
-						_This.val('');
-					}
-				}else	if(_index>newCIV.length-1){
-					newCIV.push($(this).val())
-				}else {
-					newCIV[_index] = $(this).val();
-				}
-			}
-
-			return false;
-		})
-
-		
-        //删除分类
-        $('.operate_box').on('click','.delete_sort',function(){
-            var _lidom = $(this).closest('li');
-			newCIV.splice(_lidom.index(),1);
-			categoryItemValue.splice(_lidom.index(),1);
-            if(_lidom.data("id")){
-                var params = {id:_lidom.data("id"),ajax:1};
-                var callback = function(msg){
-                    if(msg.result == 0){
-                        _lidom.remove();
-                    }else{
-                        $.showErr(msg.description);
-                    }
-                }
-                requestAjax(params, 'post', '/index.php?ctl=mywemall&act=del_category', callback, true);
-            }else{
-                _lidom.remove();
-            }
-        })
-		//保存分类
-        $(document).on("click",".save-btn",function(){
-            var categories = new Array();
-			var noneVal = {};
-            $(".category-item").each(function(){
-                var item = {};
-                item.id = $(this).data("id");
-                item.name = $(this).find(".category-name").val();
-                item.floor = $(this).find(".category-floor").val();
-                if(!item.name){
-					noneVal.nD = item.id;
-                    return;
-                }
-                if(!item.floor){
-                    item.floor = 0;
-                }
-                categories.push(item);
-            })
-            if(categories.length == 0){
-                return;
-            }
-            var params = {categories:categories,ajax:1};
-		
-			if (categoryItemValue.length == newCIV.length){
-				var cn_arr = []
-				for(var s in categoryItemValue){
-					for(var x in newCIV){
-						if(categoryItemValue[s] == newCIV[x]){
-							cn_arr.push(categoryItemValue[s]);
-						}
-					}
-				}
-				if (cn_arr.length != categoryItemValue.length)
-				{
-					subB = false;
-				}else{
-					subB = true;
-				}
-			}else{
-				subB = false;
-			}
-
-			if (noneVal.nD)
-			{
-				$.showSuccess("商品名称不能为空",function(){
-					return false;
-				})
-			}else if (subB)
-			{
-				$.showSuccess("没有修改分类",function(){
-					return false;
-				})
-			}else{
-				var callback = function(msg){
-					if(msg.result == 0){
-							$.showSuccess("保存成功",function(){
-								window.location.reload();					
-							});
-					}else{
-						$.showErr(msg.description,function(){
-							if(msg.data){
-								window.location.href = msg.data;
-							}
-						});
-					}
-				}				
-				requestAjax(params, 'post', '/index.php?ctl=mywemall&act=do_categories', callback, true);
-			}
-        });*/
-    })
 </script>
