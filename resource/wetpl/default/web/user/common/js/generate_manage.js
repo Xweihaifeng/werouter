@@ -169,10 +169,10 @@ let mainLeft = `
             <div class="art-img"><img src="/common/img/wz.png" width='29' alt="article" /></div>
             <div class="word">文章</div>
         </div>
-        <div id="project">
+        <!--<div id="project">
             <div class="art-img"><img src="/common/img/pj.png" width='29' alt="project" /></div>
             <div class="word">项目</div>
-        </div>
+        </div>-->
         <div id="active">
             <div class="art-img"><img src="/common/img/at.png" width='29' alt="active" /></div>
             <div class="word">活动</div>

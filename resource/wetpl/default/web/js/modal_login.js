@@ -79,7 +79,7 @@ $(function() {
     <li id="home" style="height: 90px"><a class="logoImg"></a></li>
     <li id="login" class="my-header"><a style="height: 90px"><i class="iconfont">&#xe618;</i><div class="menu-title"> 登录 </div></a></li>
     <li id="article"><a><i class="iconfont">&#xe608;</i><div class="menu-title"> 文章 </div></a></li>
-    <li id="project"><a><i class="iconfont">&#xe61f;</i><div class="menu-title"> 项目 </div></a></li>
+    <!--<li id="project"><a><i class="iconfont">&#xe61f;</i><div class="menu-title"> 项目 </div></a></li>-->
     <li id="active"><a><i class="iconfont">&#xe637;</i><div class="menu-title"> 活动 </div></a></li>
     <li id="shopping"><a><i class="iconfont">&#xe603;</i><div class="menu-title"> 商城 </div></a></li>
     <li id="zone"><a><i class="iconfont">&#xe639;</i><div class="menu-title"> 圈子 </div></a></li>`;
