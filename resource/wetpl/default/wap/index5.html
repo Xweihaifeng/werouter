@@ -56,7 +56,7 @@
 	</div>
 
 <upload
-    ref="upload"
+    ref="upload3"
     :show-upload-list="false"
     :default-file-list="defaultList"
     :on-success="handleSuccess"
@@ -76,8 +76,8 @@
 <modal title="View Image" v-model="visible">
     <img :src="'https://o5wwk8baw.qnssl.com/' + imgName + '/large'" v-if="visible" style="width: 100%">
 </modal>
-
-
+</div>
+<div id="app">
 	<div class="demo-upload-list" v-for="item in uploadList">
 	    <template v-if="item.status === 'finished'">
 	        <img :src="item.url">
@@ -92,7 +92,7 @@
 	</div>
 
 <upload
-    ref="upload"
+    ref="upload1"
     :show-upload-list="false"
     :default-file-list="defaultList"
     :on-success="handleSuccess"
@@ -112,8 +112,8 @@
 <modal title="View Image" v-model="visible">
     <img :src="'https://o5wwk8baw.qnssl.com/' + imgName + '/large'" v-if="visible" style="width: 100%">
 </modal>
-
-
+</div>
+<div id="app">
 	<div class="demo-upload-list" v-for="item in uploadList">
 	    <template v-if="item.status === 'finished'">
 	        <img :src="item.url">
@@ -126,9 +126,9 @@
 	        <i-progress v-if="item.showProgress" :percent="item.percentage" hide-info></i-progress>
 	    </template>
 	</div>
-
+</div>
 <upload
-    ref="upload"
+    ref="upload2"
     :show-upload-list="false"
     :default-file-list="defaultList"
     :on-success="handleSuccess"

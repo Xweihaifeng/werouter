@@ -92,8 +92,8 @@
         {
             return false;
         }
-        // var dataJson = JSON.parse(dataString);
-        return dataString;
+        var dataJson = JSON.parse(dataString);
+        return dataJson;
 	}
 	// 登陆成功后需要添加的数据
 	app.set_login_data = function(data)
@@ -111,7 +111,12 @@
 	}
 	// 页面跳转
 	app.open_page = function(href){
-		window.location.href = href;
+		if(href.indexOf('http') !== -1){
+			window.location.href = href;
+			return false;
+		}
+		window.location.href = all_domian + href;
+		return true;
 	}
 	// 修改页面标题
 	app.set_title = function(title){

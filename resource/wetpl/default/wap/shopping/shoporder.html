@@ -150,25 +150,25 @@
                 <ul class="nctouch-cart-item">
                     <div class="ding hide">
                     </div>
-                    <li class="buy-item">
+                    <li class="buy-item" v-for="item in order_goods_detail">
                         <div class="goods-pic" >
                             <a>
-                                <img :src="order_goods_detail.cover | img_src(100,100)">
+                                <img :src="item.cover | img_src(100,100)">
                             </a>
                         </div>
                         <dl class="goods-info">
                             <dt class="goods-name">
                                 <a>
-                                    {{order_goods_detail.title}}
+                                    {{item.title}}
                                 </a>
                             </dt>
                            <!--  <dd class="goods-type">规格:2.5L</dd> -->
                         </dl>
                         <div class="goods-subtotal">
-                            <span class="goods-price" style="top:1.3rem">￥{{order_goods_detail.price}}</span>
+                            <span class="goods-price" style="top:1.3rem">￥{{item.price}}</span>
                         </div>
                         <div class="goods-num" style="top: 1.939393rem;">
-                            x {{order.num}}
+                            x {{item.goods_num}}
                         </div>
                     </li>
                 </ul>
@@ -227,7 +227,7 @@ var order = new Vue({
         'order_sell_list' : [],
         'order_address_list' : [],
         'order_address_default' : {},
-        'order_goods_detail' : {},
+        'order_goods_detail' : [],
         'order_goods_id' : $app.get_router('pop'),
         'order' : {
             'price' : 0,
@@ -242,7 +242,8 @@ var order = new Vue({
             'phone' : '',
             'address_detail' : '',
             'note' : ''
-        }
+        },
+        'order_type' : ($app.get_query_string('type')) ? $app.get_query_string('type') : ''  , 
     },
     mounted: function(){
         $app.set_title('确认订单');
@@ -263,10 +264,18 @@ var order = new Vue({
         // 获取产品信息
         get_goods()
         {
-            ajax.get('goods/detail/'+ this.order_goods_id).then((res)=>{
-                this.order_goods_detail = res.data;
-                this.price();
-            });
+            if(this.order_type == 'cart')
+            {
+                this.order_goods_detail = $app.get_storage('cart_list');
+                console.log(this.order_goods_detail);
+            }
+            else
+            {
+                ajax.get('goods/detail/'+ this.order_goods_id).then((res)=>{
+                    this.order_goods_detail = res.data;
+                    //this.price();
+                }); 
+            }
         },
         price()
         {

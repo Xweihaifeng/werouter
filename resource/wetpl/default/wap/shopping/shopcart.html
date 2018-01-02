@@ -81,6 +81,7 @@
                 ajax.post('cart/lists', data).then(function (res) {
                     if(res.code == 200 && res.data.list.length){
                         var resList = res.data.list;
+                        //console.log(resList);
                         for(var i=0; i<resList.length; i++){
                             resList[i].mall["pCheck"] = false;
                             for(var a = 0; a < resList[i].goods.length; a++){
@@ -88,7 +89,7 @@
                             }
                         }
                         self.list = res.data.list;
-                        console.log(self.list)
+                        //console.log(self.list)
                     }
                 })
             },
@@ -158,8 +159,7 @@
                 this.getNumber(storeObj)
             },
             goOrder : function (storeObj) {
-                console.log(storeObj);
-                return false;
+
                 var orderObj = {
                     name : storeObj.mall.title,
                     goodsList : []
@@ -171,17 +171,14 @@
                         }
                     }
                 }
-                
-                window.localStorage.setItem('orderObj',JSON.stringify(orderObj));
+
+                $app.set_storage('cart_list' , orderObj);
+                //window.localStorage.setItem('orderObj',JSON.stringify(orderObj));
 
                 if(storeObj.storeAllMoney > 0){
-                    var domain = window.sessionStorage.getItem("domain");
-
-                    var shopping_weid = window.localStorage.getItem("shopping_weid");
-                    if(!domain) {
-                        domain = 'index';
-                    }
-                    window.location.href = all_domian + domain +'/wemall/order/'+ shopping_weid + '?type=cart';
+                    var domain = (storeObj.mall.domain) ? storeObj.mall.domain : 'tomlee' ;
+                    var shopping_weid = storeObj.mall.weid;
+                    $app.open_page(domain +'/wemall/order/'+ shopping_weid + '?type=cart');
                 }
             },
             deletePro : function (pro) {
