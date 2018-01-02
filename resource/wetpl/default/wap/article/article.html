@@ -199,6 +199,7 @@
                 this.end = ev.touches[0].pageY;
                 if (document.body.scrollTop == 0) {
                     if(this.end > this.start){
+                        ev.preventDefault();
                         document.getElementById('box').style.transform = 'translate(0,' + parseInt(this.end - this.start) + 'px)';
                         this.isScroll = true;
                     }
