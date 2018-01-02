@@ -69,6 +69,7 @@
             user_id: plats_user_info.weid
         },
         mounted: function () {
+            $app.set_title('购物车');
             this.init()
         },
         methods: {
@@ -77,7 +78,7 @@
                 var data = {
                     "user_id" : self.user_id,
                 };
-                ajax.post(apiUrl+'cart/lists', data).then(function (res) {
+                ajax.post('cart/lists', data).then(function (res) {
                     if(res.code == 200 && res.data.list.length){
                         var resList = res.data.list;
                         for(var i=0; i<resList.length; i++){
@@ -157,6 +158,8 @@
                 this.getNumber(storeObj)
             },
             goOrder : function (storeObj) {
+                console.log(storeObj);
+                return false;
                 var orderObj = {
                     name : storeObj.mall.title,
                     goodsList : []
@@ -168,18 +171,18 @@
                         }
                     }
                 }
-
+                
                 window.localStorage.setItem('orderObj',JSON.stringify(orderObj));
 
                 if(storeObj.storeAllMoney > 0){
                     var domain = window.sessionStorage.getItem("domain");
+
                     var shopping_weid = window.localStorage.getItem("shopping_weid");
                     if(!domain) {
                         domain = 'index';
                     }
-                    window.location.href = '/'+ domain +'/wemall/order/'+ shopping_weid;
+                    window.location.href = all_domian + domain +'/wemall/order/'+ shopping_weid + '?type=cart';
                 }
-
             },
             deletePro : function (pro) {
                 console.log(pro);
@@ -188,7 +191,7 @@
                     content: '确认删除该条商品吗？'
                     ,btn: ['确定','取消']
                     ,yes: function(index){
-                        ajax.post(apiUrl+'cart/destroy',{'weid' : pro.cartweid}).then(function (res) {
+                        ajax.post('cart/destroy',{'weid' : pro.cartweid}).then(function (res) {
                             console.log(res);
                             if(res.code === 200){
                                 self.init()

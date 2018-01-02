@@ -344,6 +344,10 @@ var order = new Vue({
                 {
                     $app.open_page(all_domian + 'pay/shopping?store_num='+ res.data); 
                 }
+                else
+                {
+                    mb_message(res.message);
+                }
             }); 
         }
     }
