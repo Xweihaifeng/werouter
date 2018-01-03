@@ -1,7 +1,7 @@
 var ajax = {};
 ajax = axios.create({
     // baseURL: api_domain,
-    baseURL: apiUrl,
+    baseURL: 'http://m.cnew.wezchina.com/api/',
     timeout: 30000,
 });
 
