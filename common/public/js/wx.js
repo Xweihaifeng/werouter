@@ -93,6 +93,26 @@
 
 	}
 
+	// 获取商家关联的OPENID
+	wx_init.pages_openid = function(data)
+	{
+		if(is_wx == 'no') return false;
+		
+		ajax.post('pages/page/isHaveMallOpenid' , {userId : data.userid , mallUserid : data.page_user_id}).then((res)=>
+        {
+            if(res.code == 200 && $app.empty(res.data.openid) != false)
+            {
+                call(res.data.openid);
+                return false;
+            }
+            else
+            {
+                $app.open_page(api_domain + 'mall/getMallOpenid?url=' + window.location.href + '&orderid=' + data.store_num + '&style=1');
+            }
+        });
+	}
+
+	// 获取平台关联的OPENID
 	wx_init.get_openid = function(name){
 		if(is_wx == 'no') return false;
 

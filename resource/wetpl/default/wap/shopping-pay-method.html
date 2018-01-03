@@ -61,16 +61,8 @@
             // 获取商户与微信号对应的OPENID
             isopenid()
             {
-                ajax.post('pages/page/isHaveMallOpenid' , {userId : plats_user_info.weid, mallUserid : this.order_detail.mall_plat_user_id}).then((res)=>
-                {
-                    if(res.code == 200 && $app.empty(res.data.openid) != false)
-                    {
-                        this.openid = res.data.openid;
-                    }
-                    else
-                    {
-                        $app.open_page(api_domain + 'mall/getMallOpenid?url=' + window.location.href + '&orderid=' + this.store_num + '&style=1');
-                    }
+                $wx.pages_openid({userid : plats_user_info.weid , page_user_id : this.order_detail.mall_plat_user_id , store_num : this.store_num} , (openid)=>{
+                    this.openid = openid;
                 });
             },
             order_pay() 
