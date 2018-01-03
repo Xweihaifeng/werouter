@@ -18,6 +18,9 @@ body::-webkit-scrollbar {
 a{
     text-decoration: none;
 }
+li {
+    list-style: none;
+}
 header{
     width:100%;
     height:0.45rem;
@@ -91,7 +94,7 @@ header span{
 }
 textarea{
     width:100%;
-    height:2rem;
+    height:1rem;
     outline:none;
     padding-top:0.1rem;
     margin-bottom: 0.1rem;
@@ -106,6 +109,48 @@ textarea{
     margin-bottom:0;
     text-align: right;
     color: orange;
+}
+
+/*----*/
+
+.hide {
+    display: none!important;
+}
+
+#imglabel {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.imgmore {
+    width: 66px;
+    height: 66px;
+    box-shadow: inset 0px 0px 0px 1px #ccc;
+    margin: 0px 5.5px 5.5px 0;
+    border-radius: 3px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.more {
+    background: url(/common/img/img-1.png) no-repeat center center;
+    background-size: 90%;    
+}
+
+.imgmore img {
+    width: 90%;
+    height: 90%;
+}
+
+.imgmore:nth-child(5n) {
+    margin-right: 0;
+}
+
+.img-val {
+    width: 66px;
+    height: 66px;
+    opacity: 0;
 }
 
 /*----*/

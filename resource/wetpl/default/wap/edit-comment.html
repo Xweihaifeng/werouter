@@ -1,161 +1,73 @@
 <#extend#>public/domain/domain_extend.html</#extend#>
-<script type="text/javascript" src="/common/iview/iview.min.js"></script>
-<link rel="stylesheet" href="/common/iview/iview.css">
 <link href="{{PATH_TML}}css/edit-comment.css" rel="stylesheet">
 
 <script type="text/javascript">
     show.header = 'no';
     show.footer = 'no';
 </script>
-<style type="text/css">
 
-</style>
 <header>
     <span> 发表评价 </span>
     <a class="back" href="javascript:void(0)" onclick="javascript:history.back(-1)"></a>
 </header>
 <div class="comment-container">
     <div class="commit-btn" @click="submitComment()">提交</div>
-    <div v-for="(item, index) in orderObj.goods">
+    <div v-for="(item, index) in goods">
+
+        <!-- 商品信息 -->
         <div class="good">
             <img :src="ApiMaterPlatQiniuDomain+item.goods_cover" alt="">
             <span>商品评分</span>
             <span v-for="star in item.starList" class="star" :class="{'not-red' : !star.check}" @click="goStar(item,star)"></span>
         </div>
+
+        <!-- 评价内容 -->
         <textarea placeholder="在这里分享使用商品的体验吧~" v-model="item.comment"></textarea>
-        <!--
-        <div class="col-sm-10 form-group addimgmore">
-            <div class="imglabel">
-                <div :id="'container_'+index" style="position: relative;">
-                    <a class="btn btn-default btn-lg btn-file" :id="'pickfiles_more_'+index" href="#" @click="InitQiNiv(index)" style="position: relative; z-index: 1;"> <span>上传图片</span> </a>
-                    <div id="html5_1c2e16ctg57v1adh18ko1q7n15jv3_container" class="moxie-shim moxie-shim-html5" style="position: absolute; top: 0px; left: 14px; width: 88px; height: 38px; overflow: hidden; z-index: 0;">
-                        <input id="html5_1c2e16ctg57v1adh18ko1q7n15jv3" type="file" style="font-size: 999px; opacity: 0; position: absolute; top: 0px; left: 0px; width: 100%; height: 100%;" multiple="" accept="" />
-                    </div>
-                </div>
+
+        <!-- 商品评价多图上传 -->
+        <form id="imglabel">
+            <li v-for="(value, key) in uploadList" class="imgmore" :id="key">
+                <img :src="ApiMaterPlatQiniuDomain+value" alt="" >
+            </li>
+            <div :id="'look'+index" class="imgmore more">
+                <input :id="'pickfiles'+index" :name="'front'+index" multiple="" accept="" type="file" class="img-val" @change="InitQiNiv(index,item,item.weid)"/>
             </div>
-            <div style="display:none" id="success" class="col-md-12">
-                <div class="alert-success">
-                    队列全部文件处理完毕
-                </div>
-            </div>
-            <div class="imgmore" style="padding-left: 15px;">
-                <div class="imgsdiv">
-                    <div :id="'fsUploadProgress_'+index"></div>
-                </div>
-            </div>
-        </div>
-        -->
-        <div class="col-sm-10 form-group addimgmore">
-            <div class="demo-upload-list" v-for="item in uploadList">
-                <template v-if="item.status === 'finished'">
-                    <img :src="item.url">
-                    <div class="demo-upload-list-cover">
-                        <icon type="ios-eye-outline" @click.native="handleView(item.name)"></icon>
-                        <icon type="ios-trash-outline" @click.native="handleRemove(item)"></icon>
-                    </div>
-                </template>
-                <template v-else>
-                    <i-progress v-if="item.showProgress" :percent="item.percentage" hide-info></i-progress>
-                </template>
-            </div>
-            <upload
-                ref="upload"
-                :show-upload-list="false"
-                :default-file-list="defaultList"
-                :on-success="handleSuccess"
-                :format="['jpg','jpeg','png']"
-                :max-size="2048"
-                :on-format-error="handleFormatError"
-                :on-exceeded-size="handleMaxSize"
-                :before-upload="handleBeforeUpload"
-                multiple
-                type="drag"
-                action="//jsonplaceholder.typicode.com/posts/"
-                style="display: inline-block;width:58px;">
-                <div style="width:58px;height:58px;line-height:58px;display:inline-flex;align-items:center;justify-content:center;">
-                    <icon type="camera" size="24"></icon>
-                </div>
-            </upload>
-            <modal title="View Image" v-model="visible">
-                <img :src="'https://o5wwk8baw.qnssl.com/' + imgName + '/large'" v-if="visible" style="width: 100%">
-            </modal>
-        </div>
+        </form> 
     </div>
-</div>
 </div>
 <script>
     new Vue({
         el : "#app",
         data : {
             orderObj : {},
-            defaultList: [
-                {
-                    'name': 'a42bdcc1178e62b4694c830f028db5c0',
-                    'url': 'https://o5wwk8baw.qnssl.com/a42bdcc1178e62b4694c830f028db5c0/avatar'
-                },
-                {
-                    'name': 'bc7521e033abdd1e92222d733590f104',
-                    'url': 'https://o5wwk8baw.qnssl.com/bc7521e033abdd1e92222d733590f104/avatar'
-                }
-            ],
-            imgName: '',
-            visible: false,
-            uploadList: []
+            uploadList: [],
+            goods: []
         },
         mounted() {
-            var originData = JSON.parse(window.localStorage.getItem('orderObj'));
-            for(var i=0; i< originData.goods.length;i++){
-                var arr = [];
-                for(var a=0;a<5;a++){
-                    var obj = {};
-                    obj.id = a;
-                    obj.check = true;
-                    arr.push(obj)
-                }
-                originData.goods[i].starList = arr;
-                originData.goods[i].comment = '';
-            }
-            this.orderObj = originData;
-
             this.$nextTick(()=>{
-                console.log(this.$refs.upload[0]);
-                this.uploadList = this.$refs.upload[0].fileList;
+                var originData = JSON.parse(window.localStorage.getItem('orderObj'));
+                for(var i=0; i< originData.goods.length;i++){
+                    var arr = [];
+                    for(var a=0;a<5;a++){
+                        var obj = {};
+                        obj.id = a;
+                        obj.check = true;
+                        arr.push(obj)
+                    }
+                    originData.goods[i].starList = arr;
+                    originData.goods[i].comment = '';
+                }
+                this.orderObj = originData;
+                for (var i = 0; i < this.orderObj.goods.length; i++) {
+                    this.orderObj.goods[i]['imgs'] = [];
+                }         
+                this.goods = this.orderObj.goods;
+                // this.orderObj.goods.map(x => this.uploadList.push({id: x.weid, imgs: []}))
+                // console.log(this.orderObj.goods)
             })
+
         },
         methods :{
-            handleView (name) {
-                this.imgName = name;
-                this.visible = true;
-            },
-            handleRemove (file) {
-                const fileList = this.$refs.upload[0].fileList;
-                this.$refs.upload[0].fileList.splice(fileList.indexOf(file), 1);
-            },
-            handleSuccess (res, file) {
-                file.url = 'https://o5wwk8baw.qnssl.com/7eb99afb9d5f317c912f08b5212fd69a/avatar';
-                file.name = '7eb99afb9d5f317c912f08b5212fd69a';
-            },
-            handleFormatError (file) {
-                this.$Notice.warning({
-                    title: 'The file format is incorrect',
-                    desc: 'File format of ' + file.name + ' is incorrect, please select jpg or png.'
-                });
-            },
-            handleMaxSize (file) {
-                this.$Notice.warning({
-                    title: 'Exceeding file size limit',
-                    desc: 'File  ' + file.name + ' is too large, no more than 2M.'
-                });
-            },
-            handleBeforeUpload () {
-                const check = this.uploadList.length < 9;
-                if (!check) {
-                    this.$Notice.warning({
-                        title: 'Up to nine pictures can be uploaded.'
-                    });
-                }
-                return check;
-            },
             goStar : function (item,star) {
                 star.check = !star.check;
                 if(star.check){
@@ -216,6 +128,34 @@
                     }
 
                 });
+            },
+            InitQiNiv(index,item,weid) {
+                // if(this.uploadList.length >= 9) {
+                if(item.imgs.length >= 9) {
+                    layer.open({
+                        content: '上传图片不得超过9张！',
+                        skin: 'msg',
+                        time: 2,
+                    });
+                    return false;
+                }
+
+                var input = $("#pickfiles"+index);
+                var formData = new FormData();
+                formData.append("file", input[0].files[0]);
+
+                ajax.post('file/uploadfile', formData).then((res)=>{
+                    if(res.code == 200) {
+                        var result = res.data;
+                        console.log(result);
+                        this.uploadList.push(result.key);
+                       /* this.$nextTick(()=>{
+                            item.imgs.push(result.key);
+                            console.log(this.goods);
+                            this.goods = this.orderObj.goods;
+                        })*/
+                    }
+                })
             }
         }
     })
