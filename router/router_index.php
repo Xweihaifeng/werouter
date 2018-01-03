@@ -384,7 +384,7 @@ class router_index extends controller
     private function _domain_data($weid)
     {
         $protocol = ($this->data['http_type'] == 1) ? 'http://' : 'https://' ;
-
+        $this->daata['domain'] = $_SERVER['HTTP_HOST'];
         $plats['var auth_code'] = auth_code($this->data['domain']);
         if(is_mobile() == TRUE && $this->data['wap_domain'] == 1)
         {
