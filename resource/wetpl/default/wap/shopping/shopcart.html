@@ -17,7 +17,7 @@
                         type="checkbox"></label>
                 <p>
                     <i></i>
-                    <span>{{store.mall.title}}</span>
+                    <a :href="store.mall.domain + '/wemall/goods/' | href('weplats')"><span>{{store.mall.title}}</span></a>
                 </p>
             </div>
             <ul>
@@ -25,9 +25,9 @@
                     <label class="circle" :class="{'checked-item-circle' : item.checked}" :for="pIndex+''+index">
                         <input @click="selectItem(store,item,index)" v-model="item.checked" class="circle"
                                :id="pIndex+''+index" type="checkbox"></label>
-                    <img :src="ApiMaterPlatQiniuDomain + item.cover" alt="">
+                    <a :href="store.mall.domain + '/wemall' + item.weid | href('weplats')"><img :src="ApiMaterPlatQiniuDomain + item.cover" alt=""></a>
                     <div class="product">
-                        <p class="des">{{item.title}}</p>
+                        <p class="des"><a :href="store.mall.domain + '/wemall/goods/' + item.weid | href('weplats')">{{item.title}}</a></p>
                         <p class="price">
                             <span>{{item.price * item.goods_num ? parseFloat(item.price * item.goods_num).toFixed(2) : parseFloat(item.price).toFixed(2)}}</span>
                             <span class="status-tip" v-if="item.status == 2">已下架</span>
@@ -171,9 +171,8 @@
                         }
                     }
                 }
-
+                
                 $app.set_storage('cart_list' , orderObj);
-                //window.localStorage.setItem('orderObj',JSON.stringify(orderObj));
 
                 if(storeObj.storeAllMoney > 0){
                     var domain = (storeObj.mall.domain) ? storeObj.mall.domain : 'tomlee' ;
@@ -182,15 +181,16 @@
                 }
             },
             deletePro : function (pro) {
-                console.log(pro);
                 var self = this;
                 layer.open({
                     content: '确认删除该条商品吗？'
                     ,btn: ['确定','取消']
+                    ,style: 'color: #818180; background-color: #fff ;'
                     ,yes: function(index){
-                        ajax.post('cart/destroy',{'weid' : pro.cartweid}).then(function (res) {
+                        ajax.post('cart/destroy',{'weid' : [pro.cartweid]}).then(function (res) {
                             console.log(res);
                             if(res.code === 200){
+                                mb_message('删除成功');
                                 self.init()
                             }else{
                                 layer.open({

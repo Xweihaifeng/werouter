@@ -50,17 +50,28 @@
             $app.set_title('订单支付');
             this.$nextTick(()=>{
                 this.store_num = $app.get_query_string('store_num');
-                this.openid = $app.get_cookie('openid');
+                //this.openid = $app.get_cookie('openid');
                 ajax.get('order/detail/' + this.store_num).then((res)=>{
                     this.order_detail = res.data;
+                    this.isopenid();
                 });
             });
         },
         methods:{
             // 获取商户与微信号对应的OPENID
-            openid()
+            isopenid()
             {
-                // 判断用户是否获取过OPNEID
+                ajax.post('pages/page/isHaveMallOpenid' , {userId : plats_user_info.weid, mallUserid : this.order_detail.mall_plat_user_id}).then((res)=>
+                {
+                    if(res.code == 200 && $app.empty(res.data.openid) != false)
+                    {
+                        this.openid = res.data.openid;
+                    }
+                    else
+                    {
+                        $app.open_page('mall/getMallOpenid?url=' + window.location.href + '&orderid=' + this.store_num + '&style=1');
+                    }
+                });
                 
             },
             order_pay() 
