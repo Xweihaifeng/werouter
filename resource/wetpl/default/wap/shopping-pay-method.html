@@ -31,7 +31,7 @@
 		<slide class="pay_wechat_title"> 微信支付 <span class="pay_recommend"> 推荐 </span> </slide>
 		<slide class="pay_wechat_select pay_select"></slide>
 	</slide>
-	<slide class="pay_immediately">
+	<slide class="pay_immediately" v-if="openid!=''">
 		<a href="javascript:void(0)" @click="order_pay"> 立即支付 </a>
 	</slide>
 </section>
@@ -68,7 +68,6 @@
             order_pay() 
             {
                 var wxpay = { 'order_id' : this.store_num , 'openid' : this.openid};
-                alert(this.openid);
                 ajax.post('pages/wechatPay/mallOrderPhonePay' , wxpay).then((res)=>{
                     
                     if(res.code == 200)
