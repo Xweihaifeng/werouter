@@ -11,6 +11,7 @@ ajax.interceptors.request.use(
         if(is_login == 'yes'){
             config.headers.Token = plats_token;
         }
+        config.headers.apiAuth = auth_code;
         return config;
     }
 );

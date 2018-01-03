@@ -22,6 +22,68 @@ function curl_action($url, $timeout = '2',$device = false)
     return $info;
 }
 
+// 获取网站秘钥
+function auth_code($string, $key = 'wezchina' , $operation = 'ENCODE', $expiry = 7200)
+{
+    $c_key_length = 6;
+
+    $key = md5($key);
+
+    $expiry = $expiry;
+
+    $key_a = md5(substr($key, 0, 16));
+
+    $key_b = md5(substr($key, 16, 16));
+
+    $key_c = $c_key_length ? ($operation == 'DECODE' ? substr($string, 0, $c_key_length)
+        : substr(md5(microtime()), -$c_key_length)) : '';
+
+    $crypt_key = $key_a . md5($key_a . $key_c);
+
+    $key_length = strlen($crypt_key);
+
+    $string = $operation == 'DECODE' ? base64_decode(substr($string, $c_key_length))
+        : sprintf('%010d', $expiry ? $expiry + time() : 0) . substr(md5($string . $key_b), 0, 16) . $string;
+
+    $string_length = strlen($string);
+    $result = '';
+    $box = range(0, 255);
+    $rnd_key = array();
+    for ($i = 0; $i <= 255; $i++) {
+        $rnd_key[$i] = ord($crypt_key[$i % $key_length]);
+    }
+
+    for ($j = $i = 0; $i < 256; $i++) {
+        $j = ($j + $box[$i] + $rnd_key[$i]) % 256;
+        $tmp = $box[$i];
+        $box[$i] = $box[$j];
+        $box[$j] = $tmp;
+    }
+
+    for ($a = $j = $i = 0; $i < $string_length; $i++) {
+        $a = ($a + 1) % 256;
+        $j = ($j + $box[$a]) % 256;
+        $tmp = $box[$a];
+        $box[$a] = $box[$j];
+        $box[$j] = $tmp;
+        $result .= chr(ord($string[$i]) ^ ($box[($box[$a] + $box[$j]) % 256]));
+    }
+
+    if ($operation == 'DECODE') {
+
+        if ((substr($result, 0, 10) == 0 || substr($result, 0, 10) - time() > 0) &&
+            substr($result, 10, 16) == substr(md5(substr($result, 26) . $key_b), 0, 16)) {
+
+            return substr($result, 26);
+        } else {
+
+            return '';
+        }
+    } else {
+        return $key_c . str_replace('=', '', base64_encode($result));
+    }
+}
+
 // 二位数组排序
 function array_sort($arr, $keys, $type = 'asc') 
 {
