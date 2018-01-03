@@ -61,7 +61,7 @@
             // 获取商户与微信号对应的OPENID
             isopenid()
             {
-                $wx.pages_openid({userid : plats_user_info.weid , page_user_id : this.order_detail.mall_plat_user_id , store_num : this.store_num} , (openid)=>{
+                $wx.pages_openid({userid : plats_user_info.weid , page_user_id : this.order_detail.mall_plat_user_id} , (openid)=>{
                     this.openid = openid;
                 });
             },
@@ -69,12 +69,13 @@
             {
                 var wxpay = { 'order_id' : this.store_num , 'openid' : this.openid};
                 ajax.post('pages/wechatPay/mallOrderPhonePay' , wxpay).then((res)=>{
-                    
                     if(res.code == 200)
                     {
-                        alert(res.data.config.timeStamp);
                         $wx.pay(res.data.config , function(wx_res){
                             mb_message('支付成功');
+                            setTimeout(()=>{
+                                $app.open_page(all_domian + 'shopping/allOrder');
+                            },1000); 
                         });
                     }
                     else

@@ -16,7 +16,7 @@
 		ajax.post('wxjssdk' , {currenturl: window.location.href}).then((res)=>{
 			if($app.empty(res.data) == false) return false;
 			wx_init_call = {
-				debug: false,
+				debug: true,
 				appId: res.data.appId,
 				timestamp: res.data.timestamp,
 				nonceStr: res.data.nonceStr,
@@ -35,7 +35,7 @@
 	{
 		wx_init.init(data , function(data , wx , inside_call){
 			wx.chooseWXPay({
-	            timestamp: data.timestamp,
+	            timestamp: data.timeStamp,
 	            nonceStr: data.nonceStr,
 	            package: data.package,
 	            signType: data.signType,
@@ -107,7 +107,7 @@
             }
             else
             {
-                $app.open_page(api_domain + 'mall/getMallOpenid?url=' + window.location.href + '&orderid=' + data.store_num + '&style=1');
+                $app.open_page(api_domain + 'mall/getMallOpenid?url=' + window.location.href + '&userid=' + data.userid + '&mall_userid='+data.page_user_id);
             }
         });
 	}
