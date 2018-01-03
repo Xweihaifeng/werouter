@@ -94,10 +94,10 @@
 	}
 
 	// 获取商家关联的OPENID
-	wx_init.pages_openid = function(data)
+	wx_init.pages_openid = function(data , call)
 	{
 		if(is_wx == 'no') return false;
-		
+
 		ajax.post('pages/page/isHaveMallOpenid' , {userId : data.userid , mallUserid : data.page_user_id}).then((res)=>
         {
             if(res.code == 200 && $app.empty(res.data.openid) != false)
