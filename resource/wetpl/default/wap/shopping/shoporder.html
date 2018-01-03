@@ -269,7 +269,7 @@ var order = new Vue({
             else
             {
                 ajax.get('goods/detail/'+ this.order_goods_id).then((res)=>{
-                    this.order_goods_detail = res.data;
+                    this.order_goods_detail = [res.data];
                     this.price();
                 }); 
             }
