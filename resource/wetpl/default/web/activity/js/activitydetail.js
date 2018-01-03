@@ -304,7 +304,7 @@ $(document).ready(function() {
                     var closeticket = layer.open({
                         skin: 'winning-class',
                         type: 1,
-                        area: ['500px', '650px'],
+                        area: ['530px'],
                         title: 0,
                         closeBtn: 0,
                         shadeClose: true,
@@ -314,11 +314,11 @@ $(document).ready(function() {
                             '<div class="t_blank"></div>' +
                             '<div class="ticket-qr"></div>' +
 
-                            '<div style="width:92%;text-align:center;padding:10px 0;margin:0 auto;">票号：' + data.ticket_num + '</div>' +
-                            '<div style="width:92%;text-align:center;padding:10px 0;margin:0 auto;">活动时请向发起人展示，该码可在个人中心查看</div>' +
+                            '<div style="width:92%;text-align:center;margin:0 auto;">票号：' + data.ticket_num + '</div>' +
+                            '<div style="width:92%;text-align:center;margin:0 auto;">活动时请向发起人展示，该码可在个人中心查看</div>' +
                             '</div>' +
                             '<div class="ticket-box-bottom">' +
-                            '<div class="ticket-title">' + data.title + '</div>' +
+                            '<div class="ticket-title">' + data.title + '<span class="qun-chat">[群聊]</span></div>' +
                             '<div class="ticket-time">' + data.begain_time + '&nbsp;' + data.begain_week + '&nbsp;' + data.begain_hour + '~~' + data.end_time + '&nbsp;' + data.end_week + '&nbsp;' + data.end_hour + '</div>' +
                             '<div class="ticket-addr"><span><i class="fa fa-map-marker"></i></span>&nbsp;：' + data.area_name + data.address + '</div>' +
                             '<div class="ticket-detail">' +
@@ -335,6 +335,7 @@ $(document).ready(function() {
                             '<span class="sign-ticcom"></span>：' + data.company +
                             '</div>' +
                             '</div>' +
+                            '<div class="ticket"></div>'+
                             '</div>' +
                             '</div>',
                         end: function() {
@@ -342,6 +343,39 @@ $(document).ready(function() {
                         },
                         shade: 0.7
                     });
+
+                    if(data.type == 2){
+                        for(var i=0; i<data.tickets.length; i++){
+                            var dom =
+                                '<div class="ticket-item">'+
+                                '<p>'+data.tickets[i].name+'</p>'+
+                                '<div class="tic-price">'+
+                                '<span>￥'+data.tickets[i].price+'</span>'+
+                                '</div>'+
+                                '<div class="num">'+
+                                '<span>×'+data.tickets[i].count+'</span>'+
+                                '</div>'+
+                                '</div>';
+                            $('.ticket').append(dom);
+                        }
+                    }
+
+                    if(data.is_open_qun == 2){
+                        $('.qun-chat').css('display','inline-block');
+                    }
+                    var qrImg = imgSet(data.wx_qun_qrcode,0,0);
+                    $('.qun-chat').click(function () {
+                        layer.open({
+                            type: 1,
+                            area: ['320px','320px'],
+                            title: 0,
+                            closeBtn: 0,
+                            shadeClose: true,
+                            scrollbar: false,
+                            content:'<div class="qun-qrcode"><img src="'+qrImg+'" alt=""></div>'
+                        });
+                    });
+
                 }
                 // 调起支付
             var PaymentQR = function(qr_url, number, fee) {
@@ -424,7 +458,7 @@ $(document).ready(function() {
                     GetActivity(id, function(rep) {
                                 closeindex = layer.open({
                                             type: 1,
-                                            area: ['600px', '740px'],
+                                            area: ['600px'],
                                             title: 0,
                                             closeBtn: 0,
                                             shadeClose: true,
