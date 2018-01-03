@@ -15,7 +15,7 @@
             <p>票号：{{infoData.ticket_num}}</p>
         </div>
         <div class="des">
-            <h3>{{infoData.title}} <span @click="chat(infoData.wx_qun_qrcode)">[群聊]</span></h3>
+            <h3>{{infoData.title}} <span v-if="infoData.is_open_qun == 2" @click="chat(infoData.wx_qun_qrcode)">[群聊]</span></h3>
             <p class="time">{{infoData.begain_time}} {{infoData.begain_week}} {{infoData.begain_hour}} ~ {{infoData.end_time}} {{infoData.end_week}} {{infoData.end_hour}}</p>
             <p>{{infoData.address}}</p>
         </div>
@@ -62,7 +62,7 @@
             showChatQr:false
         },
         mounted : function () {
-            ajax.get('activity/enroll/detail/8b02d5d0-ec5f-11e7-aef4-91531e55149b').then((res)=>{
+            ajax.get('activity/enroll/detail/fd8ce440-f05f-11e7-9f3c-b36323899eb3').then((res)=>{
                 console.log(res);
                 if(res.code == 200 && res.data){
                     this.infoData = res.data;

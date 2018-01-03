@@ -31,7 +31,7 @@ $(document).ready(function() {
             '<div style="width:92%;text-align:center;margin:0 auto;">活动时请向发起人展示</div>' +
             '</div>' +
             '<div class="ticket-box-bottom">' +
-            '<div class="ticket-title">' + data.title + '</div>' +
+            '<div class="ticket-title">' + data.title + '<span class="qun-chat">[群聊]</span></div>' +
             '<div class="ticket-time">' + data.begain_time + '&nbsp;' + data.begain_week + '&nbsp;' + data.begain_hour + '~~' + data.end_time + '&nbsp;' + data.end_week + '&nbsp;' + data.end_hour + '</div>' +
             '<div class="ticket-addr"><span><i class="fa fa-map-marker"></i></span>&nbsp;：' + data.area_name + data.address + '</div>' +
             '<div class="ticket-detail">' +
@@ -61,11 +61,26 @@ $(document).ready(function() {
                 'Token': docCookies.getItem("token")
             },
             success: function(data) {
-                console.log(data)
+                console.log(data);
                 if (data.code == 200) {
                     // console.log(urlall[0])
                     $(".modal-body .ticket_apply").children().remove();
                     $(".modal-body .ticket_apply").append(tickettemplate(data.data));
+                    if(data.data.is_open_qun == 2){
+                        $('.qun-chat').css('display','inline-block');
+                    }
+                    var qrImg = imgSet(data.data.wx_qun_qrcode,0,0);
+                    $('.qun-chat').click(function () {
+                        layer.open({
+                            type: 1,
+                            area: ['320px','320px'],
+                            title: 0,
+                            closeBtn: 0,
+                            shadeClose: true,
+                            scrollbar: false,
+                            content:'<div class="qun-qrcode"><img src="'+qrImg+'" alt=""></div>'
+                        });
+                    });
                     $('.ticket').children().remove();
                     if(data.data.type == 2){
                         for(var i=0; i<data.data.tickets.length; i++){

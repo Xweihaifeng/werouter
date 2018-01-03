@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="/common/css/buttons.css">
     <link rel="stylesheet" href="/common/layer-v3.0.3/layer-v3.0.3/layer/skin/default/layer.css">
     <!-- <link rel="stylesheet" type="text/css" href="css/shopcommon.css"> -->
+    <link rel="stylesheet" type="text/css" href="{{PATH_TML}}user/css/support_act.css">
     <link rel="stylesheet" type="text/css" href="{{PATH_TML}}activity/css/activity.css">
     <link rel="stylesheet" type="text/css" href="{{PATH_TML}}activity/css/activitydetail.css">
 
@@ -264,43 +265,28 @@
     // 光标离开事件
     $(document).on('focus', '#phone', function() {
         console.log($('.layui-layer').height());
-        $('.layui-layer-content').height('760px');
-        $('.layui-layer').height('760px');
-        $('.sign_section').height('350px');
         $('.sign_code').css('display', 'block');
         $('.sign_yz').css('display', 'block');
-        $('.signBox .sign_foot span').css('top', '24px');
-        $('.signBox .sign_foot').css('top', '3px')
+        $('.signBox .sign_section').css('height', '354px');
     });
     $(document).on('focus', '#username', function() {
         $('.sign_code').css('display', 'none');
         $('.sign_yz').css('display', 'none');
-        $('.layui-layer-content').height('740px');
-        $('.layui-layer').height('740px');
-        $('.sign_section').height('300px');
-        $('.signBox .sign_foot span').css('top', '32px');
+        $('.signBox .sign_section').css('height', '306px');
     });
     $(document).on('focus', '#zhiw', function() {
         $('.sign_code').css('display', 'none');
         $('.sign_yz').css('display', 'none');
-        $('.layui-layer-content').height('740px');
-        $('.layui-layer').height('740px');
-        $('.sign_section').height('320px');
-        $('.signBox .sign_foot').css('top', '18px');
-        $('.signBox .sign_foot span').css('top', '14px');
+        $('.signBox .sign_section').css('height', '306px');
     });
     $(document).on('focus', '#gongsi', function() {
         $('.sign_code').css('display', 'none');
         $('.sign_yz').css('display', 'none');
-        $('.layui-layer-content').height('740px');
-        $('.layui-layer').height('740px');
-        $('.sign_section').height('320px');
+        $('.signBox .sign_section').css('height', '306px');
     });
     $(document).on('focus', '#gongsi', function() {
         $('.sign_code').css('display', 'none');
         $('.sign_yz').css('display', 'none');
-        $('.layui-layer-content').height('740px');
-        $('.layui-layer').height('740px');
-        $('.sign_section').height('320px');
+        $('.signBox .sign_section').css('height', '306px');
     });
 </script>
