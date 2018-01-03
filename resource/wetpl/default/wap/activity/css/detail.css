@@ -1,0 +1,393 @@
+body {
+    height: 100%;
+}
+
+.wrap {
+    padding-bottom: 4.5rem;
+}
+
+.wl-poster>img {
+    width: 100%;
+    min-height: 238px;
+}
+
+.wl-poster>.wl-poster-title {
+    font-size: 1.6rem;
+    font-weight: bold;
+    line-height: 1.8rem;
+    padding: 1rem;
+    padding-top: .75rem;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+section.info {
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.info .inline {
+    display: block;
+    position: relative;
+    padding: 1rem 0;
+    padding-left: 3rem;
+    color: #7d7d7d;
+}
+
+.info .inline:after {
+    content: '';
+    border-bottom: 1px solid #e5e5e5;
+    display: block;
+    position: relative;
+    bottom: -1rem;
+}
+
+.info .inline .icon {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+.info .inline:last-child {
+    padding-bottom: .25rem;
+}
+
+.info .inline:nth-child(3) .icon {
+    top: 1.5rem;
+    -webkit-transform: translateY(0);
+    -ms-transform: translateY(0);
+    transform: translateY(0);
+}
+
+.info .inline:nth-child(3):after {
+    content: none;
+}
+
+.info .inline .control {
+    line-height: 1.5;
+    padding-right: 2rem;
+}
+
+.info .inline .arraw {
+    position: absolute;
+    right: .5rem;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+.info .sponor {
+    color: #7d7d7d;
+    padding: .2rem .5rem;
+    background-color: #F3F3F3;
+    border: 1px solid #d3d3d3;
+    border-radius: 1.2rem;
+    margin-right: .5rem;
+    margin-bottom: .5rem;
+    display: inline-block;
+}
+
+.split {
+    width: 100%;
+    height: 1rem;
+    background-color: #f2f2f2;
+}
+
+.guest > h4 {
+    font-weight: normal;
+    color: #7d7d7d;
+    padding: .75rem 1rem;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.guest > ul {
+    padding: 0 1rem;
+}
+
+.guest .wl-user {
+    border-bottom: 0;
+}
+
+.record > h4 {
+    font-weight: normal;
+    color: #7d7d7d;
+    padding: .75rem 1rem;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.record .record-list {
+    padding: 1rem;
+    height: 4.25rem;
+    overflow: hidden;
+}
+
+.record .record-list ul {
+    height: 25px;
+    overflow: hidden;
+}
+
+.record .record-list ul > li {
+    float: left;
+    margin-right: 5px;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    overflow: hidden;
+    background-color: #e5e5e5;
+}
+
+.record .record-list:after {
+    content: '';
+    display: block;
+    clear: both;
+}
+
+.introduce > h4 {
+    font-weight: normal;
+    color: #7d7d7d;
+    padding: .75rem 1rem;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.detail {
+    width: 100%;
+    padding: 1rem;
+    line-height: 2;
+}
+
+.detail *:not(img) {
+    max-width: 100% !important;
+    height: auto !important;
+    word-break: break-word !important;
+    white-space: normal !important;
+}
+
+.detail>p {
+    margin-bottom: 10px;
+}
+
+.detail img {
+    max-width: 100% !important;
+    height: auto !important;
+}
+
+.copyright {
+    width: 100%;
+    text-align: center;
+    color: #adadad;
+    background-color: #f2f2f2;
+    font-size: 1.2rem;
+    padding: 1rem 0;
+}
+
+.sponor-another-activity>header>a {
+    display: block;
+    padding: .75rem 1rem;
+    font-size: 1.4rem;
+    color: #7d7d7d;
+    border-bottom: 1px solid #eaeaea;
+}
+
+.sponor-another-activity>header>a>span {
+    color: #04A6E9;
+    font-size: 1.3rem;
+}
+
+.wl-layout {
+    background-color: #fff;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1000;
+    -webkit-transform: translateY(100%);
+    transform: translateY(100%);
+    -webkit-transition: -webkit-transform .2s ease-out;
+    transition: transform .2s ease-out;
+}
+
+.wl-layout.active {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+}
+
+.wl-layout .tk-list-title {
+    text-align: center;
+    padding: 1rem;
+    color: #555;
+}
+
+.wl-layout .tk-list-content {
+    max-height: 21rem;
+    overflow-y: scroll;
+    padding: 0 1rem;
+}
+
+
+.wl-layout .tk-list-content >ul > li {
+    margin-bottom: 1rem;
+}
+
+.wl-layout .tk-list-content >ul > li:after {
+    content: '';
+    display: block;
+    clear: both;
+}
+
+.wl-layout .wl-fixed-button {
+    position: static;
+}
+
+.ticket .price {
+    float: left;
+    margin-top: 1rem;
+    color: #555;
+}
+
+.ticket .operate {
+    float: right;
+    width: 9rem;
+    height: 2.5rem;
+    border: 1px solid #e5e5e5;
+    border-radius: .5rem;
+    margin-top: .5rem;
+    overflow: hidden;
+}
+
+.ticket .operate>div {
+    width: 33%;
+    height: 2.5rem;
+    text-align: center;
+    float: left;
+    color: #7d7d7d;
+    position: relative;
+}
+
+.ticket .operate>div>span {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -0.7rem;
+    margin-top: -1px;
+}
+
+.ticket .operate>div:first-child {
+    border-right: 1px solid #e5e5e5;
+}
+
+.ticket .operate>div:nth-child(2) {
+    color: #555;
+    line-height: 2.5rem;
+}
+
+.ticket .operate>div:last-child {
+    border-left: 1px solid #e5e5e5;
+}
+
+.ticket .operate.oversale {
+    border: 0;
+    text-align: right;
+    line-height: 3rem;
+    color: #adadad;
+}
+
+.my-ticket {
+    border-bottom: 0;
+}
+
+
+/* ?????????????????????????¡±¡§??¡ã???????¡ª??????? */
+
+.my-ticket .card {
+    margin-left: 2rem;
+    width: 20rem;
+    height: 6.4rem;
+    padding: 1.2rem 0;
+    background-color: #f7f7f7;
+    border: 1px solid #e6e6e6;
+    border-left: 0;
+    border-right: 0;
+    float: left;
+    position: relative;
+}
+
+.my-ticket .card:before,
+.my-ticket .card:after {
+    display: block;
+    width: 2rem;
+    height: 6.4rem;
+    content: '';
+    position: absolute;
+    top: 0;
+}
+
+.my-ticket .card:before {
+    left: -2rem;
+    background: url(http://fed.welian.com/2_h5/ticket_left.png);
+    background-size: cover;
+}
+
+.my-ticket .card:after {
+    right: -2rem;
+    background: url(http://fed.welian.com/2_h5/ticket_right.png);
+    background-size: cover;
+}
+
+.my-ticket .info {
+    float: left;
+    line-height: 2rem;
+    width: 13rem;
+}
+
+.my-ticket .info>div {
+    width: 100%;
+    height: 2rem;
+    overflow: hidden;
+}
+
+.my-ticket .tk-all-price {
+    float: right;
+    text-align: right;
+    line-height: 4rem;
+    height: 4rem;
+    min-width: 6.5rem;
+    border-left: 1px solid #e6e6e6;
+    overflow: hidden;
+}
+
+.my-ticket .num {
+    float: right;
+    font-size: 2.4rem;
+    line-height: 6.4rem;
+}
+
+.my-ticket .num>span {
+    font-size: 2rem;
+    font-weight: bolder;
+    color: #adadad;
+    position: relative;
+    top: -1px;
+}
+
+
+@media screen and (min-width: 1024px) {
+    .J_LayoutTicket {
+        width: 740px;
+        margin: 0 auto;
+    }
+}
+
+/**add by wxz20170221**/
+.wl-ad{
+    width: 100%;
+    height: 100%;
+    background: #f2f2f2;
+    display: block;
+    padding: 15px;
+}
+.wl-ad img{
+    width:100%;
+    height:auto;
+}
