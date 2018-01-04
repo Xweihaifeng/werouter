@@ -487,8 +487,8 @@
             },
             //评价
             comment : function (order,index) {
-                window.localStorage.setItem('orderObj',JSON.stringify(order));
-                window.location.href = '/shopping/edit_comment'
+                //window.localStorage.setItem('orderObj',JSON.stringify(order));
+                window.location.href = '/shopping/edit_comment?orderid='+order.weid;
             },
             //确认交易
             deal : function (order,index) {
