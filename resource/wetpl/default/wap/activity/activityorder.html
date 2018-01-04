@@ -138,6 +138,7 @@
             },
             success: function (data) {
                 console.log(data);
+                alert(JSON.stringify(data))
                 if (data.code == 200) {
                     if (data.data.status == 2) {
                         mb_message("报名成功");
@@ -214,6 +215,7 @@
             $("title").text(this.title);
             $("#favicon").attr('href', ApiMaterPlatQiniuDomain + plats_info.logo);
             $wx.pages_openid({userid : plats_user_info.weid , page_user_id : this.activity_info.plat_user_id} , (openid) => {
+                alert(openid)
                 this.openid = openid;
             });
         },
