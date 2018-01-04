@@ -1,5 +1,5 @@
 <#include#>public/common/public.html</#include#>
-<#include#>public/common/mobile_login.html</#include#>  
+<#include#>public/common/mobile_login.html</#include#>
 <link href="{{PATH_TML}}activity/css/common.css" rel="stylesheet">
 <link href="{{PATH_TML}}activity/css/order.css" rel="stylesheet">
 <!--<script src="{{PATH_TML}}activity/js/sea.js"></script>-->
@@ -89,23 +89,23 @@
                 openid: openid
             },
             success: function(data) {
-                if (typeof WeixinJSBridge == "undefined"){
+                /*if (typeof WeixinJSBridge == "undefined"){
                     if( document.addEventListener ){
                         document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
                     }else if (document.attachEvent){
                         document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
                         document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
                     }
-                }else{
+                }else{*/
                     alert(JSON.stringify(data));
                     WeixinJSBridge.invoke(
                             'getBrandWCPayRequest', {
                                 "appId":data.data.appId,     //公众号名称，由商户传入
                                 "timeStamp":data.data.timeStamp,         //时间戳，自1970年以来的秒数
-                                "nonceStr":"e61463f8efa94090b1f366cccfbbb444", //随机串
+                                "nonceStr":data.data.nonceStr, //随机串
                                 "package":"prepay_id=u802345jgfjsdfgsdg888",
                                 "signType":"MD5",         //微信签名方式：
-                                "paySign":"70EA570631E4BB79628FBCA90534C63FF7FADD89" //微信签名
+                                "paySign":data.data.paySign //微信签名
                             },
                             function(res){
                                 if(res.err_msg == "get_brand_wcpay_request:ok" ) {
@@ -113,7 +113,7 @@
                                 }     // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。
                             }
                     );
-                }
+//                }
             }
         })
     }
@@ -140,18 +140,16 @@
                 console.log(data);
                 if (data.code == 200) {
                     if (data.data.status == 2) {
-                        layer.msg('报名成功', {
-                            time: 1500
-                        })
-                        window.location.href = '/user/myactivity/support/ticket/' + data.data.enroll_id; //取票
+                        mb_message("报名成功");
+                        setTimeout(function(){
+                            window.location.href = '/user/myactivity/support/ticket/' + data.data.enroll_id; //取票
+                        }, 1000);
                     } else if (data.data.status == 1) {
                         ref.state = '立即支付';
                         pay(data.data.number, ref.openid);
                     }
                 } else {
-                    layer.msg(data.message, {
-                        time: 1500
-                    })
+                    mb_message(data.message);
                 }
             }
         })
@@ -185,11 +183,6 @@
             openid: ''
         },
         created: function(){
-            $wx.pages_openid({userid : plats_user_info.weid , page_user_id : this.activity_info.plat_user_id} , (openid) => {
-                this.openid = openid;
-            });
-        },
-        mounted: function(){
             this.activity_info = JSON.parse(sessionStorage.getItem("activity_info")).data;
             let p = this.activity_info;
             let t = JSON.parse(sessionStorage.getItem("tickets"));
@@ -220,6 +213,12 @@
             this.company = plats_user_info.company;
             $("title").text(this.title);
             $("#favicon").attr('href', ApiMaterPlatQiniuDomain + plats_info.logo);
+            $wx.pages_openid({userid : plats_user_info.weid , page_user_id : this.activity_info.plat_user_id} , (openid) => {
+                this.openid = openid;
+            });
+        },
+        mounted: function(){
+
         },
         methods: {
             goPay: function() {

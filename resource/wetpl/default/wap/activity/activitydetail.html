@@ -319,9 +319,14 @@
         methods: {
             apply: function(type){
                 //获取token 如不存在则跳转登录页 如存在则显示活动申请框
-                if (type == 1) {
-                    window.location.href = '/activity/order/' + this.weid;
+                if (this.state != '已报名') {
+                    if (type == 1) {
+                        window.location.href = '/activity/order/' + this.weid;
+                    }
+                } else {
+                    alert('已报名');
                 }
+
 
                 /*if (true) {
                     window.location.href = '/activity/apply/' + this.weid;
