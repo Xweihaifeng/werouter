@@ -384,7 +384,7 @@ class router_index extends controller
     private function _domain_data($weid)
     {
         $protocol = ($this->data['http_type'] == 1) ? 'http://' : 'https://' ;
-        $this->daata['domain'] = $_SERVER['HTTP_HOST'];
+        //$this->data['domain'] = $_SERVER['HTTP_HOST'];
         $plats['var auth_code'] = auth_code($this->data['domain']);
         if(is_mobile() == TRUE && $this->data['wap_domain'] == 1)
         {
@@ -394,7 +394,7 @@ class router_index extends controller
         $plats['var http_type'] = $protocol;
         $plats['var pages_type'] = 6;
         $plats['var site_domian'] = $this->data['domain'];
-        $plats['var api_domain'] = $protocol.$this->data['domain'].'/api/';
+        $plats['var api_domain'] = $protocol.$_SERVER['HTTP_HOST'].'/api/';
         //$plats['var all_domian'] = $protocol.$this->data['domain'].'/'; 正式环境使用
         $plats['var all_domian'] = $protocol.$_SERVER['HTTP_HOST'].'/';  //测试环境使用
         if(is_mobile() == TRUE && $this->data['wap_domain'] == 2)
