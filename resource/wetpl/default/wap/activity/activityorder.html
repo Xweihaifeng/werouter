@@ -2,8 +2,6 @@
 <#include#>public/common/mobile_login.html</#include#>
 <link href="{{PATH_TML}}activity/css/common.css" rel="stylesheet">
 <link href="{{PATH_TML}}activity/css/order.css" rel="stylesheet">
-<!--<script src="{{PATH_TML}}activity/js/sea.js"></script>-->
-<!--<script src="{{PATH_TML}}activity/js/config.js"></script>-->
 <div  class="wrap" id="J_wrap" style="min-height: 667px;">
     <div class="activity-info">
         <header>
@@ -68,10 +66,6 @@
 <script>
     //下单
     var isRepeat = false;
-/*    seajs.use('order', function(order) {
-        //初始化
-        order.init();
-    });*/
 
     document.getElementById('J_wrap').style.minHeight = document.body.offsetHeight + 'px';
 
@@ -81,7 +75,6 @@
 
     //支付
     const pay = (number, openid) => {
-        //alert(number + '/' + openid)
         $.ajax({
             url: apiUrl + '/pages/wechatpay/enroll_order_phone_pay',
             type: 'POST',
@@ -93,32 +86,23 @@
                 openid: openid
             },
             success: function(data) {
-                /*if (typeof WeixinJSBridge == "undefined"){
-                    if( document.addEventListener ){
-                        document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
-                    }else if (document.attachEvent){
-                        document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
-                        document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
-                    }
-                }else{*/
-                    alert(JSON.stringify(data));
-                    WeixinJSBridge.invoke(
-                            'getBrandWCPayRequest', {
-                                "appId":data.data.config.appId,     //公众号名称，由商户传入
-                                "timeStamp":data.data.config.timeStamp,//时间戳，自1970年以来的秒数
-                                "nonceStr":data.data.config.nonceStr, //随机串
-                                "package":data.data.config.package,
-                                "signType":data.data.config.signType,//微信签名方式：
-                                "paySign":data.data.config.paySign //微信签名
-                            },
-                            function(res){
-                                alert(JSON.stringify(res))
-                                if(res.err_msg == "get_brand_wcpay_request:ok" ) {
-                                    alert('支付成功')
-                                }     // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。
-                            }
-                    );
-//                }
+                alert(JSON.stringify(data));
+                WeixinJSBridge.invoke(
+                        'getBrandWCPayRequest', {
+                            "appId":data.data.config.appId,     //公众号名称，由商户传入
+                            "timeStamp":data.data.config.timeStamp,//时间戳，自1970年以来的秒数
+                            "nonceStr":data.data.config.nonceStr, //随机串
+                            "package":data.data.config.package,
+                            "signType":data.data.config.signType,//微信签名方式：
+                            "paySign":data.data.config.paySign //微信签名
+                        },
+                        function(res){
+                            alert(JSON.stringify(res))
+                            if(res.err_msg == "get_brand_wcpay_request:ok" ) {
+                                alert('支付成功')
+                            }     // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。
+                        }
+                );
             }
         })
     }
