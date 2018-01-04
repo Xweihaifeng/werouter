@@ -178,7 +178,7 @@ $("#verify_ticket").bind('click', function() {
             content: `<div class="user-block">
                 <table>
                     <tbody>
-                        <tr><td colspan="2"><span class="ticket-enumber">` + data.ticket_info.e_number + `</span></td></tr>
+                        <tr><td colspan="2"><span class="ticket-enumber">` + data.e_number + `</span></td></tr>
                         <tr><td><span class="user-title">用户形象</span></td><td><img id="user-avatar" src="` + ApiMaterPlatQiniuDomain + data.user_info.avatar + `"></td></tr>
                         <tr><td><span class="user-title">真实姓名</span></td><td>` + data.user_info.real_name + `</td></tr>
                         <tr><td><span class="user-title">平台昵称</span></td><td>` + data.user_info.nickname + `</td></tr>
