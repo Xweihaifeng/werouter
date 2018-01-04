@@ -81,9 +81,13 @@
 
     //支付
     const pay = (number, openid) => {
+        alert(number + '/' + openid)
         $.ajax({
             url: apiUrl + '/pages/wechatpay/enroll_order_phone_pay',
             type: 'POST',
+            headers: {
+                'Token': docCookies.getItem("token")
+            },
             data: {
                 number: number,
                 openid: openid
