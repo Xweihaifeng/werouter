@@ -104,7 +104,7 @@
                     alert(JSON.stringify(data));
                     WeixinJSBridge.invoke(
                             'getBrandWCPayRequest', {
-                                "appId":data.data.config.configappId,     //公众号名称，由商户传入
+                                "appId":data.data.config.appId,     //公众号名称，由商户传入
                                 "timeStamp":data.data.config.timeStamp,//时间戳，自1970年以来的秒数
                                 "nonceStr":data.data.config.nonceStr, //随机串
                                 "package":data.data.config.package,
