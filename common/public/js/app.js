@@ -76,18 +76,26 @@
 	    }
 	}
 	// 写入本地容器
-	app.set_storage = function(val , params){
+	app.set_storage = function(val , params , type){
 		var dataJson = params;
 		if(typeof params == 'object')
 		{
 			var dataJson = JSON.stringify(params);
 		}
-		
-        localStorage.setItem(val , dataJson);
+
+		if(app.empty(type) != false) {
+			sessionStorage.setItem(val , dataJson);
+		} else {
+			localStorage.setItem(val , dataJson);
+		}
 	}
 	// 获取本地容器
-	app.get_storage = function(val){
-		var dataString = localStorage.getItem(val);
+	app.get_storage = function(val, type){
+		if(app.empty(type) != false) {
+			var dataString = sessionStorage.getItem(val);
+		} else {
+			var dataString = localStorage.getItem(val);
+		}
         if (dataString == null || dataString == 'undefined')
         {
             return false;
