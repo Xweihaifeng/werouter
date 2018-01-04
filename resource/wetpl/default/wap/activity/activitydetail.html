@@ -12,15 +12,9 @@
     <link href="{{PATH_TML}}activity/css/common.css" rel="stylesheet">
     <link href="{{PATH_TML}}activity/css/detail.css" rel="stylesheet">
     <link rel="stylesheet" href="{{PATH_TML}}css/activity-detail.css"/>
-    <link rel="stylesheet" href="{{PATH_TML}}js/layui/css/layui.css"/>
-    <script src="{{PATH_TML}}js/layui/layui.js"></script>
     <style>
         [v-cloak] {
             display: none !important;
-        }
-        a {
-            text-decoration: none;
-            color: #7d7d7d;
         }
     </style>
 </head>
@@ -36,7 +30,10 @@
         <!-- 活动海报及标题 -->
         <figure class="wl-poster">
             <img :src="cover" style="opacity: 1;">
-            <div class="wl-poster-title">{{main}}</div>
+            <div class="wl-poster-title">
+                <span :style="{'background': 'url(' + img + ') no-repeat center'}" @click="like(collect)"></span>
+                {{title}}
+            </div>
         </figure>
         <!-- 活动信息 -->
         <section class="info">
@@ -191,7 +188,6 @@
                     }
                     ref.type = p.type;
                     ref.title = p.title;
-                    ref.main = p.title;
                     ref.cover = ApiMaterPlatQiniuDomain + p.cover;
                     ref.sponsor = p.Sponsor.split(',');
                     ref.content = p.content;
@@ -275,7 +271,6 @@
         el: "#app",
         data: {
             title: "",
-            main: "",
             cover: "",
             weid: window.location.pathname.split('/').pop(),
             state: '立即报名',
@@ -300,7 +295,9 @@
             tickets: [],
             limit: '',
             order: "/activity/order/",
-            type: '' //1:免费 2:收费
+            type: '', //1:免费 2:收费,
+            collect: false,
+            img: '/common/img/star-off-big.png'
         },
         created: function(){
             sessionStorage.removeItem('activity_info');
@@ -365,6 +362,21 @@
                 } else {
                     ref.num++;
                     sessionStorage.setItem('tickets', JSON.stringify(this.tickets));
+                }
+            },
+            like: function(collect){
+                if (collect) {
+//                    $.get("activity/collection/destroy/" + this.weid).then(res => {
+//                        console.log(res)
+                        this.collect = false;
+                        this.img = '/common/img/star-off-big.png';
+//                    })
+                } else {
+//                    $.post("activity/collection/store", {activity_id: this.weid}).then(res => {
+//                        console.log(res)
+                        this.collect = true;
+                        this.img = '/common/img/star-on-big.png';
+//                    });
                 }
             }
         }

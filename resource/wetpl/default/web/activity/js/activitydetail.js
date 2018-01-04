@@ -599,12 +599,13 @@ $(document).ready(function() {
                                 $("#" + id + ' #p3 p').css({'color': 'white'});
                             }
                             var remove = (id) => {
-                                ids.filter(x => x[0] != id).map(x => $('#' + x[0]).css('border', '2px solid #dddddd'));
-                                ids.filter(x => x[0] != id).map(x => $('#' + x[0] + ' div').css({'background': 'white', 'color': '#555'}));
-                                ids.filter(x => x[0] != id).map(x => $('#' + x[0] + '  #p2 p').css({'color': '#555'}));
-                                ids.filter(x => x[0] != id).map(x => $('#' + x[0] + '  #p3 p').css({'color': '#555'}));
-                                ids.filter(x => x[0] != id).map(x => $('#' + x[0] + ' .price').css('color', '#555'));
-                                ids.filter(x => x[0] != id).map(x => $('#' + x[0] + ' img').attr('src', '/common/img/rmb.png'));
+                                var res = ids.filter(x => x[0] != id);
+                                res.map(x => $('#' + x[0]).css('border', '2px solid #dddddd'));
+                                res.map(x => $('#' + x[0] + ' div').css({'background': 'white', 'color': '#555'}));
+                                res.map(x => $('#' + x[0] + '  #p2 p').css({'color': '#555'}));
+                                res.map(x => $('#' + x[0] + '  #p3 p').css({'color': '#555'}));
+                                res.map(x => $('#' + x[0] + ' .price').css('color', '#555'));
+                                res.map(x => $('#' + x[0] + ' img').attr('src', '/common/img/rmb.png'));
                             }
                             add(ids[0][0], ids[0][1]);
                             var id = ids[0][0];
