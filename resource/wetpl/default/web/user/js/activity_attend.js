@@ -120,6 +120,22 @@ var getTicketUser = function(e_number, activity_id, callback) {
             layer.closeAll('loading');
             if (data.code == 200)
                 callback(data.data);
+                if(data.data.ticket_info.length){
+                    var list = data.data.ticket_info;
+                    for(var i=0; i<list.length; i++){
+                        var dom =
+                            '<div class="ticket-item">'+
+                            '<p>'+list[i].name+'</p>'+
+                            '<div class="tic-price">'+
+                            '<span>￥'+list[i].price+'</span>'+
+                            '</div>'+
+                            '<div class="num">'+
+                            '<span>×'+list[i].count+'</span>'+
+                            '</div>'+
+                            '</div>';
+                        $('.ticket').append(dom);
+                    }
+                }
             else
                 notice.alert(data.message);
         },
@@ -183,10 +199,9 @@ $("#verify_ticket").bind('click', function() {
                         <tr><td><span class="user-title">真实姓名</span></td><td>` + data.user_info.real_name + `</td></tr>
                         <tr><td><span class="user-title">平台昵称</span></td><td>` + data.user_info.nickname + `</td></tr>
                         <tr><td><span class="user-title">手机号码</span></td><td>` + data.user_info.phone + `</td></tr>
-                        <tr><td><span class="user-ticket-title">门票种类</span></td><td>` + data.ticket_info.name + `</td></tr>
-                        <tr><td><span class="user-ticket-title">门票价格</span></td><td>` + (data.ticket_info.type == 1 ? '免费' : data.ticket_info.price) + `</td></tr>
                     </tbody>
                 </table>
+                <div class="ticket"></div>
             </div>`,
             end: function() {},
             shade: 0.2

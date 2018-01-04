@@ -157,6 +157,7 @@ var activitydetail=function(id,nickname,imgUrl,applyid=0){
                         var linkurl=localhostPath+domain+"/activity/"+id;
                         $(".activity_link").text(linkurl);
                         $(".activity_link").attr("href",linkurl);
+                        $('.J_Copy').attr("data-text",linkurl);
                         var canvas = document.createElement('canvas'),
                             options = {
                                 width: $('#qrcode').width(),

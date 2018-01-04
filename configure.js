@@ -291,6 +291,8 @@ const ACTIVITY_ENROLL_MYORDER = apiUrl + 'activity/enroll_my_order'; // 指定�
 //const ACTIVITY_ENROLL_CHECK = apiUrl + 'activity/enroll/check_number'; // 票号核验
 const ACTIVITY_ENROLL_CHECK = apiUrl + 'activity/enroll/check_ticket_number'; // 票号核验
 const ACTIVITY_ENROLL_GET_TICKET_USER = apiUrl + 'activity/enroll/get_ticket_user'; // 票号核验
+const ACTIVITY_USER_ORDER_LIST = apiUrl + 'activity/user_order_list'; // 活动订单
+const ACTIVITY_MANAGE_ORDER_LIST = apiUrl + 'activity/manage_order_list?'; // 管理中心活动订单
 
 //项目接口
 const PROJECT_CATE_LIST = apiUrl + 'project/cate/list'; //项目 -分类列表（根据用户ID�?
