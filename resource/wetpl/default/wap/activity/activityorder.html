@@ -103,8 +103,14 @@
                 }else{*/
                     alert(JSON.stringify(data));
                     WeixinJSBridge.invoke(
-                            'getBrandWCPayRequest',
-                            JSON.parse(data.data.config),
+                            'getBrandWCPayRequest', {
+                                "appId":data.data.config.configappId,     //公众号名称，由商户传入
+                                "timeStamp":data.data.config.timeStamp,//时间戳，自1970年以来的秒数
+                                "nonceStr":data.data.config.nonceStr, //随机串
+                                "package":data.data.config.package,
+                                "signType":data.data.config.signType,//微信签名方式：
+                                "paySign":data.data.config.paySign //微信签名
+                            },
                             function(res){
                                 alert(JSON.stringify(res))
                                 if(res.err_msg == "get_brand_wcpay_request:ok" ) {
@@ -214,6 +220,7 @@
             $("title").text(this.title);
             $("#favicon").attr('href', ApiMaterPlatQiniuDomain + plats_info.logo);
             $wx.pages_openid({userid : plats_user_info.weid , page_user_id : this.activity_info.plat_user_id} , (openid) => {
+                alert(openid)
                 this.openid = openid;
             });
         },
