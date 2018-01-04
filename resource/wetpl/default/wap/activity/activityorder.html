@@ -81,7 +81,7 @@
 
     //支付
     const pay = (number, openid) => {
-        alert(number + '/' + openid)
+        //alert(number + '/' + openid)
         $.ajax({
             url: apiUrl + '/pages/wechatpay/enroll_order_phone_pay',
             type: 'POST',
@@ -104,8 +104,9 @@
                     alert(JSON.stringify(data));
                     WeixinJSBridge.invoke(
                             'getBrandWCPayRequest',
-                            data.data.config,
+                            JSON.parse(data.data.config),
                             function(res){
+                                alert(JSON.stringify(res))
                                 if(res.err_msg == "get_brand_wcpay_request:ok" ) {
                                     alert('支付成功')
                                 }     // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。
@@ -213,7 +214,6 @@
             $("title").text(this.title);
             $("#favicon").attr('href', ApiMaterPlatQiniuDomain + plats_info.logo);
             $wx.pages_openid({userid : plats_user_info.weid , page_user_id : this.activity_info.plat_user_id} , (openid) => {
-                alert(openid)
                 this.openid = openid;
             });
         },
