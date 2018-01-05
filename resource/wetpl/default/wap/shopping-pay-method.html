@@ -113,7 +113,6 @@
             // 获取商户与微信号对应的OPENID
             isopenid()
             {
-                alert(this.order_detail)
                 $wx.pages_openid({userid : plats_user_info.weid , page_user_id : this.order_detail} , (openid)=>{
                     this.openid = openid;
                     this.wx_pay = [{type: 'activity', data: {'number' : this.store_num , 'openid' : this.openid}},
@@ -124,10 +123,10 @@
             {
                 var wxpay = this.wx_pay.filter(x => x.type == this.type)[0].data;
                 var path = this.wx_post.filter(x => x.type == this.type)[0].path;
-                alert(path);
-                alert(JSON.stringify(wxpay));
+//                alert(path);
+//                alert(JSON.stringify(wxpay));
                 ajax.post(path, wxpay).then((res)=> {
-                    alert(JSON.stringify(res))
+//                    alert(JSON.stringify(res))
                     if(res.code == 200)
                     {
                         $wx.pay(res.data.config , function(wx_res){
