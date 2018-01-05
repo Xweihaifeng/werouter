@@ -82,7 +82,7 @@
             total: 0,
         },
         created: function() {
-            this.type = $app.get_query_string('order_type');
+            this.type = this.order_type;
             this.tickets.filter(x => x.num != 0).map(x => this.total += x.num * x.price);
         },
         mounted: function() 
