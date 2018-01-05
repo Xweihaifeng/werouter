@@ -74,7 +74,7 @@
             order_detail    : '',
             openid          : '',
             order_type      : ($app.get_query_string('order_type')) ? $app.get_query_string('order_type') : 'shop',
-            wx_post         : [{type: 'activity', path: '/pages/wechatpay/enroll_order_phone_pay'},
+            wx_post         : [{type: 'activity', path: 'pages/wechatpay/enroll_order_phone_pay'},
                                {type: 'shop', path: 'pages/wechatPay/mallOrderPhonePay'}],
             wx_pay          : [],
             activity: $app.get_storage('activity_info', 'session'),
