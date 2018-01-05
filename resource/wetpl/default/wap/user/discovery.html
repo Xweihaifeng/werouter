@@ -4,63 +4,77 @@
     show.header = 'no';
 </script>
 <div class="content">
-	<form action="">
-		<div ><img src="{{PATH_TML}}shopping/images/bbc-bg45.png" width="10" height="10"></div>
-		<input type="text" class="sousuo" placeholder="搜索文章">
-		<input type="button" class="s-sub">
-	</form>
+	<div class="head">
+		<div class="back" @click="window.location.href='/user'"></div>
+		<input type="text" class="sousuo" placeholder="搜索文章" v-model="keyword" @keyup.enter="getData(true)">
+	</div>
 	<ul class="cont-list">
-		<li>
-			<a href="">
-				 <div class="cont-left">
-					 <div class="time">2017-12-28</div>
-					 <h4>坚持早起的人打不败，早起让我的2017年赚到了</h4>
-					 <div class="operate">
-						 <span>阅读4808</span>
-					 </div>
-				 </div>
-				 <div class="cont-right">
-					 <img src="common/img/3459828-dfdd9e2f52fe7fec.jpeg" alt="">
-				 </div>
-			</a>
-		</li>
-		<li>
+		<li v-for="item in myArtList">
 			<a href="">
 				<div class="cont-left">
-					<div class="time">2017-12-28</div>
-					<h4>先做你应做的事，才能做你想做的事</h4>
+					<div class="time">{{item.updated_at | formateTime('YMD')}}</div>
+					<h4>{{item.title}}</h4>
+					<p>{{item.summary | limitLen(0,30)}}</p>
 					<div class="operate">
-						<span>阅读4808</span>
+						<span>阅读 {{item.views}}</span>
 					</div>
 				</div>
 				<div class="cont-right">
-					<img src="common/img/2542851-a62c64c213c198c2.jpg" alt="">
-				</div>
-			</a>
-		</li>
-		<li>
-			<a href="">
-				<div class="cont-left">
-					<div class="time">2017-12-28</div>
-					<h4>旅行&想法-7年走遍24国，我和爸爸的幸福之旅才刚刚开始</h4>
-					<div class="operate">
-						<span>阅读4808</span>
-					</div>
-				</div>
-				<div class="cont-right">
-					<img src="common/img/8951345-579d596811a8fa6b.jpg" alt="">
+					<img :src="item.cover | img_src" alt="">
 				</div>
 			</a>
 		</li>
 	</ul>
-	<div class="cont-end"><a href="">没有文章了！赶快去发表</a></div>
+	<div class="cont-end"><a href="">{{textTip}}</a></div>
 </div>
 <script>
 $app.set_title('我的文章');
 new Vue({
     el: '#app',
     data: {
+		myArtList : [],
+        keyword : '',
+        totalPage : '',
+		page : 1,
+		limit : 10,
+        isBottom : false,
+		textTip : '没有文章了！赶快去发表'
     },
-    mounted: function(){}
+    mounted: function(){
+		this.getData();
+        window.addEventListener('scroll',this.handleScroll)
+	},
+	methods : {
+        getData : function (flag) {
+            if(flag){
+                this.page = 1;
+                this.myArtList = [];
+			}
+            ajax.get('articles',{params:{limit:this.limit,page:this.page,keywords:this.keyword}}).then((res)=>{
+                console.log(res);
+                this.isBottom = true;
+                this.textTip = '';
+                if(res.code == 200){
+					this.myArtList.push.apply(this.myArtList,res.data.list);
+                    this.totalPage = Math.ceil(res.data.total/10);
+                }
+                if(flag && !res.data.list.length){
+                    this.textTip = '没有找到您要的信息哦~'
+				}
+            })
+        },
+		handleScroll : function () {
+            if(window.pageYOffset + window.innerHeight === document.documentElement.scrollHeight && this.isBottom){
+                if(this.page >= this.totalPage){
+                    this.textTip = '没有文章了！赶快去发表';
+                    return;
+				}
+                this.page+=1;
+                this.isBottom = false;
+                this.textTip = '加载中，请稍候...'
+				this.getData();
+			}
+        }
+	}
 });
 </script>

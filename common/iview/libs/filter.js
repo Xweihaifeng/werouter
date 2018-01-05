@@ -68,11 +68,11 @@ Vue.filter('formateTime',function (value,type) {
         case 'MDHM':
             return month +'-'+day+' '+hour+':'+min;
         case 'YMDHM':
-            date = new Date(value * 1000);
+            date = new Date(value);
             year = date.getFullYear();
             return year + '-' +month +'-'+day+' '+hour+':'+min;
         case 'YMD':
-            date = new Date(value * 1000);
+            date = new Date(value);
             year = date.getFullYear();
             return year + '-' +month +'-'+day;
         case 'HM':
