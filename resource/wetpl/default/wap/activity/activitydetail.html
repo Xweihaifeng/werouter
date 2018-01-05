@@ -168,6 +168,9 @@
                     if (data.data.status == 2) {
                         sessionStorage.setItem('act-orderId', data.data.number);
                     }
+                    if (data.data.status == 3) {
+                        sessionStorage.setItem('enroll_id', data.data.enroll_id);
+                    }
                 }
             }
         })
