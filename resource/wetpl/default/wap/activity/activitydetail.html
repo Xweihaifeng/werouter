@@ -88,7 +88,7 @@
     </div>
     <!-- 活动报名按钮 -->
     <aside class="wl-fixed-button J_BtnActivity">
-        <button class="wl-btn wl-btn-blue J_BtnBuyTicket" @click="apply(type)">{{state}}</button>
+        <button class="wl-btn J_BtnBuyTicket" style="background: transparent; border: none;" @click="apply(type)">{{state}}</button>
     </aside>
     <!-- 活动门票列表 -->
     <aside class="wl-layout J_LayoutTicket">
@@ -156,17 +156,19 @@
                 if (data.code == 200) {
                     switch (data.data.status) {
                         case 1: ref.state = '立即报名';
+                            $(".J_BtnBuyTicket").css({'background': '#04a6e9', 'box-shadow': '5px 5px 15px 0 #ff7105', 'border': '1px solid #04a6e9'});
                             break;
                         case 2: ref.state = '立即支付';
-                            $(".wl-btn-blue").css({'background': '#ff7105', 'box-shadow': '5px 5px 15px 0 #ff7105', 'border': '1px solid #ff7105'});
+                            $(".J_BtnBuyTicket").css({'background': '#ff7105', 'box-shadow': '5px 5px 15px 0 #ff7105', 'border': '1px solid #ff7105'});
                             break;
                         case 3: ref.state = '已报名';
-                            $(".wl-btn-blue").css({'background': '#FEC52B', 'box-shadow': '5px 5px 15px 0 #FEC52B', 'border': '1px solid #FEC52B'});
+                            $(".J_BtnBuyTicket").css({'background': '#FEC52B', 'box-shadow': '5px 5px 15px 0 #FEC52B', 'border': '1px solid #FEC52B'});
                             break;
                         default: break;
                     }
                     if (data.data.status == 2) {
-                        sessionStorage.setItem('act-orderId', data.data.number);
+                        sessionStorage.setItem('activity_orderId', data.data.number);
+                        sessionStorage.setItem('activity_total', data.data.money);
                     }
                     if (data.data.status == 3) {
                         sessionStorage.setItem('enroll_id', data.data.enroll_id);
@@ -345,7 +347,7 @@
                         window.location.href = '/activity/order/' + this.weid;
                     }; break;
                     case '立即支付': $(".J_LayoutTicket, .backdrop").addClass('hide');
-                        window.location.href = '/pay/shopping?order_type=activity&store_num=' + sessionStorage.getItem('act-orderId');
+                        window.location.href = '/pay/shopping?order_type=activity&store_num=' + sessionStorage.getItem('activity_orderId');
                         break;
                     case '已报名': $(".J_LayoutTicket, .backdrop").addClass('hide');
                         window.location.href = '/user/myactivity/support/ticket/';
