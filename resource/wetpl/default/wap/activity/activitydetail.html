@@ -141,7 +141,7 @@
         detail.init();
     });
 
-    const userDetail = (weid, token, ref) => {
+    const userDetail = (weid, ref) => {
         $.ajax({
             url:  apiUrl + 'activity/enroll_my_order',
             type: 'POST',
@@ -310,7 +310,7 @@
             reqData(url_info, _self);
             reqUsers(url_users, {activity_id: _self.weid}, _self);
             reqGuest(url_guests, {activity_id: _self.weid}, _self);
-            userDetail(_self.weid, _self.token, _self);
+            userDetail(_self.weid, _self);
             reqTickets(_self.weid, _self);
         },
         methods: {
@@ -320,8 +320,10 @@
                         window.location.href = '/activity/order/' + this.weid;
                     }; break;
                     case '立即支付': $(".J_LayoutTicket, .backdrop").addClass('hide');
-                        window.location.href = '/pay/shopping?order_type=activity&store_num=' + sessionStorage.getItem('enroll_id');
+                        window.location.href = '/pay/shopping?order_type=activity&store_num=' + sessionStorage.getItem('number');
                         break;
+                    case '已报名': $(".J_LayoutTicket, .backdrop").addClass('hide');
+                        window.location.href = '/user/myactivity/support/ticket/';
                 }
             },
             detail: function(type){
