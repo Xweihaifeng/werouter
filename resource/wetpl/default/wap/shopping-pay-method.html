@@ -108,11 +108,7 @@
             activity_data()
             {
                 this.order_detail = this.activity.data.plat_user_id;
-                alert(this.order_detail);
                 this.isopenid();
-                alert(this.openid);
-                alert(JSON.stringify(this.wx_pay));
-                alert(JSON.stringify(this.wx_post));
             },
             // 获取商户与微信号对应的OPENID
             isopenid()
@@ -121,6 +117,9 @@
                     this.openid = openid;
                     this.wx_pay = [{type: 'activity', data: {'order_id' : this.store_num , 'openid' : this.openid}},
                                    {type: 'shop', data: {'number' : this.store_num , 'openid' : this.openid}}];
+                alert(this.openid);
+                alert(JSON.stringify(this.wx_pay));
+                alert(JSON.stringify(this.wx_post));
                 });
             },
             order_pay()
