@@ -92,14 +92,10 @@
                 //this.openid = $app.get_cookie('openid');
                 this.wx_pay = [{type: 'activity', data: {'order_id' : this.store_num , 'openid' : this.openid}},
                                {type: 'shop', data: {'number' : this.store_num , 'openid' : this.openid}}];
-                if (this.type == 'shop') {
-                    this.shop_data();
-                } else {
-                    this.activity_data();
+                switch(this.type) {
+                    case 'shop': this.shop_data(); break;
+                    case 'activity': this.activity_data(); break;
                 }
-                $wx.pages_openid({userid : plats_user_info.weid , page_user_id : this.order_detail} , (openid)=>{
-                    this.openid = openid;
-                });
             });
         },
         methods:{
@@ -107,29 +103,36 @@
             {
                 ajax.get('order/detail/' + this.store_num).then((res)=>{
                     this.order_detail = res.data.mall_plat_user_id;
-                    //this.isopenid();
+                    this.isopenid();
                 });
             },
             activity_data()
             {
                     this.order_detail = this.activity.plat_user_id;
-                    //this.isopenid();
+                    this.isopenid();
             },
             // 获取商户与微信号对应的OPENID
             isopenid()
             {
-
+                $wx.pages_openid({userid : plats_user_info.weid , page_user_id : this.order_detail} , (openid)=>{
+                    this.openid = openid;
+                });
             },
             order_pay(type)
             {
                 var wxpay = this.wx_pay.filter(x => x.type == type)[0].data;
-                ajax.post('pages/wechatPay/mallOrderPhonePay' , wxpay).then((res)=>{
+                var path = this.wx_post.filter(x => x.type ==type)[0].path;
+                ajax.post(path, wxpay).then((res)=>{
                     if(res.code == 200)
                     {
                         $wx.pay(res.data.config , function(wx_res){
                             mb_message('支付成功');
                             setTimeout(()=>{
-                                $app.open_page(all_domian + 'shopping/allOrder');
+                                switch(this.type) {
+                                    case 'shop': $app.open_page(all_domian + 'shopping/allOrder'); break;
+                                    case 'activity': $app.open_page(all_domian + '/pay/activity?order_type=activity&store_num=' + $app.get_storage('enroll_id', 'session')); break;
+                                    default: break;
+                                }
                             },1000); 
                         });
                     }
