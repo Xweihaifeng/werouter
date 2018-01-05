@@ -117,15 +117,15 @@
                     this.openid = openid;
                     this.wx_pay = [{type: 'activity', data: {'order_id' : this.store_num , 'openid' : this.openid}},
                                    {type: 'shop', data: {'number' : this.store_num , 'openid' : this.openid}}];
-                alert(this.openid);
-                alert(JSON.stringify(this.wx_pay));
-                alert(JSON.stringify(this.wx_post));
                 });
             },
             order_pay()
             {
                 var wxpay = this.wx_pay.filter(x => x.type == this.type)[0].data;
                 var path = this.wx_post.filter(x => x.type == this.type)[0].path;
+                alert(this.openid);
+                alert(wxpay);
+                alert(path));
                 ajax.post(path, wxpay).then((res)=> {
                     if(res.code == 200)
                     {
