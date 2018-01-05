@@ -115,8 +115,8 @@
             {
                 $wx.pages_openid({userid : plats_user_info.weid , page_user_id : this.order_detail} , (openid)=>{
                     this.openid = openid;
-                    this.wx_pay = [{type: 'activity', data: {'order_id' : this.store_num , 'openid' : this.openid}},
-                                   {type: 'shop', data: {'number' : this.store_num , 'openid' : this.openid}}];
+                    this.wx_pay = [{type: 'activity', data: {'number' : this.store_num , 'openid' : this.openid}},
+                                   {type: 'shop', data: {'order_id' : this.store_num , 'openid' : this.openid}}];
                 });
             },
             order_pay()
