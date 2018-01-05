@@ -130,7 +130,7 @@
                     } else if (data.data.status == 1) {
                         ref.state = '立即支付';
                         setTimeout(function(){
-                            window.location.href = '/pay/shopping?order_type=activity&store_num=' + data.data.enroll_id; //支付
+                            window.location.href = '/pay/shopping?order_type=activity&store_num=' + data.data.number; //支付
                         }, 1000);
 //                        pay(data.data.number, ref.openid);
                     }
