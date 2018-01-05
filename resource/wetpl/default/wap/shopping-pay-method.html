@@ -91,12 +91,10 @@
             this.$nextTick(()=>{
                 this.store_num = $app.get_query_string('store_num');
                 //this.openid = $app.get_cookie('openid');
-                this.wx_pay = [{type: 'activity', data: {'order_id' : this.store_num , 'openid' : this.openid}},
-                               {type: 'shop', data: {'number' : this.store_num , 'openid' : this.openid}}];
                 switch(this.type) {
                     case 'shop': this.shop_data(); break;
                     case 'activity': this.activity_data(); break;
-                }
+                };
             });
         },
         methods:{
@@ -117,16 +115,15 @@
             {
                 $wx.pages_openid({userid : plats_user_info.weid , page_user_id : this.order_detail} , (openid)=>{
                     this.openid = openid;
+                    this.wx_pay = [{type: 'activity', data: {'order_id' : this.store_num , 'openid' : this.openid}},
+                                   {type: 'shop', data: {'number' : this.store_num , 'openid' : this.openid}}];
                 });
             },
             order_pay()
             {
                 var wxpay = this.wx_pay.filter(x => x.type == this.type)[0].data;
                 var path = this.wx_post.filter(x => x.type == this.type)[0].path;
-                alert(openid);
-                alert(JSON.stringify(wxpay))
-                alert(JSON.stringify(path))
-                ajax.post(path, wxpay).then((res)=>{
+                ajax.post(path, wxpay).then((res)=> {
                     if(res.code == 200)
                     {
                         $wx.pay(res.data.config , function(wx_res){
@@ -144,7 +141,6 @@
                     {
                         mb_message('订单异常无法支付');
                     }
-
                 });
             }
         }
