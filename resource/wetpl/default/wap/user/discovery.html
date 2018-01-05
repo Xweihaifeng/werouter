@@ -10,7 +10,7 @@
 	</div>
 	<ul class="cont-list">
 		<li v-for="item in myArtList">
-			<a href="">
+			<a :href="'/' + item.domain + '/article/' + item.weid | href('weplats')">
 				<div class="cont-left">
 					<div class="time">{{item.updated_at | formateTime('YMD')}}</div>
 					<h4>{{item.title}}</h4>

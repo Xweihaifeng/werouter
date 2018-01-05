@@ -26,20 +26,20 @@
         },
         mounted: function(){},
         methods : {
-            tipMsg : function (msg) {
+            tipMsg : function (msg,time) {
                 layer.open({
                     content: msg,
                     skin: 'msg',
-                    time: 2 //2秒后自动关闭
+                    time: time //time秒后自动关闭
                 });
             },
             submit : function () {
                 if(!this.suggest){
-                    this.tipMsg('意见反馈不能为空');
+                    this.tipMsg('意见反馈不能为空',2);
                     return
                 }
                 if(!this.contact){
-                    this.tipMsg('联系方式不能为空');
+                    this.tipMsg('联系方式不能为空',2);
                     return
                 }
                 var sendData = {
@@ -50,8 +50,10 @@
                 ajax.post('feedback/store',sendData).then((res)=>{
                     console.log(res);
                     if(res.code == 200){
-                        this.tipMsg('提交成功');
-                        window.location.href='/user'
+                        this.tipMsg('提交成功',5);
+                        setTimeout(function () {
+                            window.location.href='/user'
+                        },1000)
                     }
                 })
             }
