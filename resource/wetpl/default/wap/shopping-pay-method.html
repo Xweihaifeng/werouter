@@ -136,7 +136,8 @@
                             setTimeout(()=>{
                                 switch(this.type) {
                                     case 'shop': $app.open_page(all_domian + 'shopping/allOrder'); break;
-                                    case 'activity': $app.open_page(all_domian + '/user/myactivity/support/ticket/'); break;
+//                                    case 'activity': $app.open_page(all_domian + '/user/myactivity/support/ticket/'); break;
+                                    case 'activity': window.location.href = '/user/myactivity/support/ticket/'; break;
                                     default: break;
                                 }
                             },1000); 
