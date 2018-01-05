@@ -27,6 +27,7 @@
         <!-- 商品评价多图上传 -->
         <form id="imglabel">
             <li v-for="(value, key) in item.goodscomment.pictures" class="imgmore" :id="key" v-if="item.goodscomment.pictures[0] != ''">
+                <sup @click="remove(index,key,item.goodscomment)">×</sup>
                 <img :src="ApiMaterPlatQiniuDomain+value" alt="" >
             </li>
             <div :id="'look'+index" class="imgmore more" v-show="ok">
@@ -163,6 +164,22 @@
                         item.pictures.push(result.key);
                     }
                 })
+            },
+            remove(index,key,item) {
+                var data = new Object();
+                data.imgurl = item.pictures[key];
+
+                ajax.post('file/deluploadfile', data).then((res)=>{
+                    if(res.code != 200) {
+                        layer.open({
+                            content: res.message,
+                            skin: 'msg',
+                            time: 2,
+                        });
+                    }
+                })
+
+                item.pictures.splice(key, 1);
             }
         }
     })
