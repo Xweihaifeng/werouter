@@ -312,6 +312,28 @@
             reqGuest(url_guests, {activity_id: _self.weid}, _self);
             userDetail(_self.weid, _self);
             reqTickets(_self.weid, _self);
+            new Promise(resolve => {
+                $.ajax({
+                    url: ACTIVITY_COLLECTION_ISCOLLECTION,
+                    type: 'POST',
+                    data: { user_id: plats_user_info.weid, activity_id: this.weid },
+                    headers: {
+                        'Token': docCookies.getItem("token")
+                    },
+                    success: function(data) {
+                        //console.log(data);
+                        if (data.code == 200) {
+                            resolve(1);
+                        }
+                    },
+                    error: function(xhr) {
+                        console.log(xhr);
+                    }
+                })
+            }).then(data => {
+                this.collect = true;
+                this.img = '/common/img/star-on-big.png';
+            })
         },
         methods: {
             apply: function(){
@@ -354,18 +376,42 @@
                 }
             },
             like: function(collect){
+                var self = this;
                 if (collect) {
-                    $.get(apiUrl + "activity/collection/destroy/" + this.weid).then(res => {
-                        console.log(res)
-                        this.collect = false;
-                        this.img = '/common/img/star-off-big.png';
+                    new Promise(resolve =>
+                    {
+                        $.ajax({
+                            url: apiUrl + "activity/collection/destroy/" + this.weid,
+                            headers: {
+                                'Token': docCookies.getItem("token")
+                            },
+                            success: function (data) {
+                                //console.log(data)
+                                resolve(1);
+                            }
+                        })
+                    }).then(data => {
+                        self.collect = false;
+                        self.img = '/common/img/star-off-big.png';
                     })
                 } else {
-                    $.post(apiUrl + "activity/collection/store", {activity_id: this.weid}).then(res => {
-                        console.log(res)
-                        this.collect = true;
-                        this.img = '/common/img/star-on-big.png';
-                    });
+                    new Promise(resolve =>
+                    {
+                        $.ajax({
+                            url: apiUrl + "activity/collection/store",
+                            type: 'POST',
+                            data: {activity_id: this.weid},
+                            headers: {
+                                'Token': docCookies.getItem("token")
+                            },
+                            success: function (data) {
+                                console.log(data)
+                            }
+                        })
+                    }).then(data => {
+                        self.collect = true;
+                        self.img = '/common/img/star-on-big.png';
+                    })
                 }
             }
         }
