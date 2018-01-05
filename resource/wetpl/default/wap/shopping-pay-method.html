@@ -107,8 +107,11 @@
             },
             activity_data()
             {
-                    this.order_detail = this.activity.plat_user_id;
-                    this.isopenid();
+                this.order_detail = this.activity.plat_user_id;
+                this.isopenid();
+                alert(this.openid);
+                alert(JSON.stringify(this.wx_pay));
+                alert(JSON.stringify(this.wx_post));
             },
             // 获取商户与微信号对应的OPENID
             isopenid()
