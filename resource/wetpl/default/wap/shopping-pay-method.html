@@ -123,6 +123,9 @@
             {
                 var wxpay = this.wx_pay.filter(x => x.type == this.type)[0].data;
                 var path = this.wx_post.filter(x => x.type == this.type)[0].path;
+                alert(openid);
+                alert(JSON.stringify(wxpay))
+                alert(JSON.stringify(path))
                 ajax.post(path, wxpay).then((res)=>{
                     if(res.code == 200)
                     {
