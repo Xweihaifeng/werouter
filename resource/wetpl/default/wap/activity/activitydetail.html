@@ -342,7 +342,7 @@
                         window.location.href = '/activity/order/' + this.weid;
                     }; break;
                     case '立即支付': $(".J_LayoutTicket, .backdrop").addClass('hide');
-                        window.location.href = '/pay/shopping?order_type=activity&store_num=' + sessionStorage.getItem('number');
+                        window.location.href = '/pay/shopping?order_type=activity&store_num=' + sessionStorage.getItem('act-orderId');
                         break;
                     case '已报名': $(".J_LayoutTicket, .backdrop").addClass('hide');
                         window.location.href = '/user/myactivity/support/ticket/';
