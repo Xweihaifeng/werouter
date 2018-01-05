@@ -123,10 +123,8 @@
             {
                 var wxpay = this.wx_pay.filter(x => x.type == this.type)[0].data;
                 var path = this.wx_post.filter(x => x.type == this.type)[0].path;
-                alert(path);
-                alert(JSON.stringify(wxpay));
                 ajax.post(path, wxpay).then((res)=> {
-                    alert(JSON.stringify(res))
+//                    alert(JSON.stringify(res))
                     if(res.code == 200)
                     {
                         $wx.pay(res.data.config , function(wx_res){
@@ -134,7 +132,7 @@
                             setTimeout(()=>{
                                 switch(this.type) {
                                     case 'shop': $app.open_page(all_domian + 'shopping/allOrder'); break;
-                                    case 'activity': $app.open_page(all_domian + '/pay/activity?order_type=activity&store_num=' + $app.get_storage('enroll_id', 'session')); break;
+                                    case 'activity': $app.open_page(all_domian + '/user/myactivity/support/ticket/'); break;
                                     default: break;
                                 }
                             },1000); 
