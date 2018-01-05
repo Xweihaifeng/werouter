@@ -134,10 +134,11 @@
                         $wx.pay(res.data.config , function(wx_res){
                             mb_message('支付成功');
                             setTimeout(()=>{
+                                window.location.href = '/user/myactivity/support/ticket/'
                                 switch(this.type) {
                                     case 'shop': $app.open_page(all_domian + 'shopping/allOrder'); break;
 //                                    case 'activity': $app.open_page(all_domian + '/user/myactivity/support/ticket/'); break;
-                                    case 'activity': window.location.href = '/user/myactivity/support/ticket/'; break;
+                                    case 'activity': window.location.href = '/user/myactivity/support/ticket/';
                                     default: break;
                                 }
                             },1000); 
