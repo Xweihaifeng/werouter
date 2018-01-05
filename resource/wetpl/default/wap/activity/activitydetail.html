@@ -156,7 +156,7 @@
                 if (data.code == 200) {
                     switch (data.data.status) {
                         case 1: ref.state = '立即报名';
-                            $(".J_BtnBuyTicket").css({'background': '#04a6e9', 'box-shadow': '5px 5px 15px 0 #ff7105', 'border': '1px solid #04a6e9'});
+                            $(".J_BtnBuyTicket").css({'background': '#04a6e9', 'box-shadow': '5px 5px 15px 0 #04a6e9', 'border': '1px solid #04a6e9'});
                             break;
                         case 2: ref.state = '立即支付';
                             $(".J_BtnBuyTicket").css({'background': '#ff7105', 'box-shadow': '5px 5px 15px 0 #ff7105', 'border': '1px solid #ff7105'});
@@ -206,7 +206,9 @@
                     ref.order += ref.weid;
                     $("title").text(ref.title);
                     $("#favicon").attr('href', ApiMaterPlatQiniuDomain + plats_info.logo);
-                    $wx.share({title: ref.title, imgUrl: ApiMaterPlatQiniuDomain + ref.cover, link: window.location.href, desc: ''})
+                    $wx.pages_openid({userid : plats_user_info.weid , page_user_id : data.data.plat_user_id} , (openid)=>{
+                        $wx.share({title: ref.title, imgUrl: ApiMaterPlatQiniuDomain + ref.cover, link: window.location.href, desc: ''})
+                    })
                 }
             }
         })
