@@ -74,7 +74,7 @@
             order_detail    : '',
             openid          : '',
             order_type      : ($app.get_query_string('order_type')) ? $app.get_query_string('order_type') : 'shop',
-            wx_post         : [{type: 'activity', path: 'pages/wechatpay/enroll_order_phone_pay'},
+            wx_post         : [{type: 'activity', path: '/pages/wechatpay/enroll_order_phone_pay'},
                                {type: 'shop', path: 'pages/wechatPay/mallOrderPhonePay'}],
             wx_pay          : [],
             activity: $app.get_storage('activity_info', 'session'),
@@ -123,10 +123,11 @@
             {
                 var wxpay = this.wx_pay.filter(x => x.type == this.type)[0].data;
                 var path = this.wx_post.filter(x => x.type == this.type)[0].path;
-                alert(this.openid);
-                alert(JSON.stringify(wxpay));
-                alert(path);
+//                alert(this.openid);
+//                alert(JSON.stringify(wxpay));
+//                alert(path);
                 ajax.post(path, wxpay).then((res)=> {
+                    alert(JSON.stringify(res))
                     if(res.code == 200)
                     {
                         $wx.pay(res.data.config , function(wx_res){
