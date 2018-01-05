@@ -206,9 +206,7 @@
                     ref.order += ref.weid;
                     $("title").text(ref.title);
                     $("#favicon").attr('href', ApiMaterPlatQiniuDomain + plats_info.logo);
-                    $wx.pages_openid({userid : plats_user_info.weid , page_user_id : data.data.plat_user_id} , (openid)=>{
-                        $wx.share({title: ref.title, imgUrl: ApiMaterPlatQiniuDomain + ref.cover, link: window.location.href, desc: ''})
-                    })
+                    $wx.share({title: ref.title, imgUrl: ref.cover, link: window.location.href, desc: ''})
                 }
             }
         })
