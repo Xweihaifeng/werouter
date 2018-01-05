@@ -1,4 +1,6 @@
 <#extend#>public/domain/domain_extend.html</#extend#>
+<link rel="stylesheet" href="{{PATH_TML}}css/home.css"/>
+<link rel="stylesheet" href="{{PATH_TML}}css/activity-detail.css"/>
 <script type="text/javascript">
     show.header = 'no';
     show.footer = 'no';
@@ -42,8 +44,8 @@
 <div v-if="order_type=='activity'">
     <ul class="header">
         <li>¥{{total}}</li>
-        <li><img :src="ApiMaterPlatQiniuDomain + activity.cover" width="60" height="60" /></li>
-        <li>{{activity.title}}</li>
+        <li><img :src="ApiMaterPlatQiniuDomain + activity.data.cover" width="60" height="60" /></li>
+        <li>{{activity.data.title}}</li>
     </ul>
     <div class="pay">
         <ul>
@@ -78,7 +80,6 @@
             activity: $app.get_storage('activity_info', 'session'),
             tickets: $app.get_storage('tickets', 'session'),
             total: 0,
-            cover: '',
         },
         created: function() {
             this.type = $app.get_query_string('order_type');
@@ -118,10 +119,10 @@
                     this.openid = openid;
                 });
             },
-            order_pay(type)
+            order_pay()
             {
-                var wxpay = this.wx_pay.filter(x => x.type == type)[0].data;
-                var path = this.wx_post.filter(x => x.type ==type)[0].path;
+                var wxpay = this.wx_pay.filter(x => x.type == this.type)[0].data;
+                var path = this.wx_post.filter(x => x.type == this.type)[0].path;
                 ajax.post(path, wxpay).then((res)=>{
                     if(res.code == 200)
                     {

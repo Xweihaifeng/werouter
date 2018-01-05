@@ -314,28 +314,15 @@
             reqTickets(_self.weid, _self);
         },
         methods: {
-            apply: function(type){
-                //获取token 如不存在则跳转登录页 如存在则显示活动申请框
-                if (this.state != '已报名') {
-                    if (type == 1) {
+            apply: function(){
+                switch(this.state) {
+                    case '立即报名': if (this.type == 1) {
                         window.location.href = '/activity/order/' + this.weid;
-                    }
-                } else {
-                    alert('已报名');
+                    }; break;
+                    case '立即支付': $(".J_LayoutTicket, .backdrop").addClass('hide');
+                        window.location.href = '/pay/shopping?order_type=activity&store_num=' + sessionStorage.getItem('enroll_id');
+                        break;
                 }
-
-
-                /*if (true) {
-                    window.location.href = '/activity/apply/' + this.weid;
-                } else {
-                    //login
-                }
-
-                if (false) {
-                    layer.msg('活动暂未开始', {
-                        time: 1500
-                    })
-                }*/
             },
             detail: function(type){
                 switch(type) {
@@ -366,17 +353,17 @@
             },
             like: function(collect){
                 if (collect) {
-//                    $.get("activity/collection/destroy/" + this.weid).then(res => {
-//                        console.log(res)
+                    $.get(apiUrl + "activity/collection/destroy/" + this.weid).then(res => {
+                        console.log(res)
                         this.collect = false;
                         this.img = '/common/img/star-off-big.png';
-//                    })
+                    })
                 } else {
-//                    $.post("activity/collection/store", {activity_id: this.weid}).then(res => {
-//                        console.log(res)
+                    $.post(apiUrl + "activity/collection/store", {activity_id: this.weid}).then(res => {
+                        console.log(res)
                         this.collect = true;
                         this.img = '/common/img/star-on-big.png';
-//                    });
+                    });
                 }
             }
         }
