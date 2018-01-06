@@ -161,7 +161,7 @@
                         case 2: ref.state = '立即支付';
                             $(".J_BtnBuyTicket").css({'background': '#ff7105', 'box-shadow': '5px 5px 15px 0 #ff7105', 'border': '1px solid #ff7105'});
                             break;
-                        case 3: ref.state = '已报名';
+                        case 3: ref.state = '查看门票';
                             $(".J_BtnBuyTicket").css({'background': '#FEC52B', 'box-shadow': '5px 5px 15px 0 #FEC52B', 'border': '1px solid #FEC52B'});
                             break;
                         default: break;
@@ -351,7 +351,7 @@
                     case '立即支付': $(".J_LayoutTicket, .backdrop").addClass('hide');
                         window.location.href = '/pay/shopping?order_type=activity&store_num=' + sessionStorage.getItem('activity_orderId');
                         break;
-                    case '已报名': $(".J_LayoutTicket, .backdrop").addClass('hide');
+                    case '查看门票': $(".J_LayoutTicket, .backdrop").addClass('hide');
                         window.location.href = '/user/myactivity/support/ticket/';
                 }
             },
