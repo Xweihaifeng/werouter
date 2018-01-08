@@ -14,14 +14,6 @@
     <link rel="stylesheet" href="{{PATH_TML}}css/activity-detail.css"/>
     <!--<link rel="stylesheet" href="/common/layui/css/layui.css"/>-->
     <!--<script src="/common/layui/layui.js"></script>-->
-    <script src="{{PATH_TML}}activity/js/vue.min.js"></script>
-    <script src="{{PATH_TML}}activity/js/jquery.min.js"></script>
-    <script src="{{PATH_TML}}activity/js/jquery.lazyload.js"></script>
-    <script type="text/javascript" src="{{PATH_CONFIG}}"></script>
-    <script src="{{PATH_TML}}activity/js/sea.js"></script>
-    <script src="{{PATH_TML}}activity/js/config.js"></script>
-    <link rel="stylesheet" href="/common/jquery.animsition/css/animsition.min.css">
-    <script src="/common/jquery.animsition/js/jquery.animsition.min.js"></script>
     <style>
         [v-cloak] {
             display: none !important;
@@ -134,8 +126,17 @@
     </form>
     <aside class="backdrop fade"></aside>
 </div>
-
+<#include#>public/common/public.html</#include#>
+<#include#>public/common/mobile_login.html</#include#>
 <!--<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>-->
+<script src="{{PATH_TML}}activity/js/vue.min.js"></script>
+<script src="{{PATH_TML}}activity/js/jquery.min.js"></script>
+<script src="{{PATH_TML}}activity/js/jquery.lazyload.js"></script>
+<script type="text/javascript" src="{{PATH_CONFIG}}"></script>
+<script src="{{PATH_TML}}activity/js/sea.js"></script>
+<script src="{{PATH_TML}}activity/js/config.js"></script>
+<link rel="stylesheet" href="/common/jquery.animsition/css/animsition.min.css">
+<script src="/common/jquery.animsition/js/jquery.animsition.min.js"></script>
 <script>
     //详情页初始化
     seajs.use(['common', 'detail'], function(common, detail) {
@@ -230,7 +231,6 @@
                     ref.order += ref.weid;
                     $("title").text(ref.title);
                     $("#favicon").attr('href', ApiMaterPlatQiniuDomain + plats_info.logo);
-                    alert(ref.cover)
                     if (is_wx == 'yes') {
                         $wx.share({title: ref.title, imgUrl: ref.cover, link: window.location.href, desc: ''})
                     }
