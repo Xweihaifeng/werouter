@@ -15,12 +15,13 @@ $(function(){
             $(".yson").eq(now).css({background:"#fc114a"})
         });
     }
+    
     //右按钮
-    $(".btn-bR").click(function(){
-        aa()
-    })
-    // 左按钮
-    $(".btn-bL").click(function(){
+    $(".btn-bR").on('click' , function(){
+        aa();
+    });
+    
+    $(".btn-bL").on('click' , function(){
         now--;
         if(now==-1){
             now=$(".banner li").length-1;

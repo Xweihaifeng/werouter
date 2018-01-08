@@ -258,7 +258,7 @@ class controllerRouter extends controller
     // 分站频道额外规则
     public function sub_channel( $param, $match = array())
     {
-        if(config::$plats['sub_state'] == TRUE)
+        if(config::$plats['sub_state'] !== FALSE)
         {
             return TRUE;
         }
@@ -276,10 +276,24 @@ class controllerRouter extends controller
         return TRUE;
     }
     
+    // 分站栏目额外规则
+    public function sub_channel_detailid( $param, $match = array())
+    {
+        if(config::$plats['sub_state'] == FALSE)
+        {
+            return FALSE;
+        }
+        $this->config['template'] = '/views/show/detail.html';
+        return TRUE;
+    }
+
     // 频道额外规则
     public function channel( $param, $match = array())
     {
-
+        if(config::$plats['sub_state'] !== FALSE)
+        {
+            return FALSE;
+        }
         $sql = 'SELECT we_plat_cms_template.template AS tml FROM we_plat_cms_channel  
                 LEFT JOIN we_plat_cms_template ON we_plat_cms_channel.list_id = we_plat_cms_template.weid
                 WHERE we_plat_cms_channel.plat_id =? AND  we_plat_cms_channel.domain = ?';
@@ -303,6 +317,10 @@ class controllerRouter extends controller
     // 频道额外规则
     public function channel_art( $param, $match = array())
     {
+        if(config::$plats['sub_state'] !== FALSE)
+        {
+            return FALSE;
+        }
         $sql = 'SELECT B.template AS tml FROM we_plat_cms_cate A LEFT JOIN we_plat_cms_template B on A.list_id=B.weid  WHERE A.plat_id =? AND A.domain=?';
         $row = $this->db->queryOne($sql , array($this->weid , $param));
 
@@ -320,6 +338,10 @@ class controllerRouter extends controller
     // 频道详情页
     public function channel_detailid($param , $match = array())
     {
+        if(config::$plats['sub_state'] !== FALSE)
+        {
+            return FALSE;
+        }
         $sql = 'SELECT C.template AS tml FROM we_plat_cms_content
              A LEFT JOIN we_plat_cms_cate B ON A.cate_id=B.weid
              LEFT JOIN we_plat_cms_template C ON B.show_id=C.weid
