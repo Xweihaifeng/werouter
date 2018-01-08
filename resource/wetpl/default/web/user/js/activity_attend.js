@@ -141,7 +141,7 @@ $("#verify_ticket").bind('click', function() {
         var userAlert = layer.open({
             skin: 'winning-class',
             type: 1,
-            area: ['500px', '530px'],
+            area: ['500px', '580px'],
             title: 0,
             closeBtn: true,
             shadeClose: true,
@@ -190,18 +190,18 @@ $("#verify_ticket").bind('click', function() {
             end: function() {},
             shade: 0.2
         });
-        if(data.data.ticket_info.length){
-            var list = data.data.ticket_info;
-            for(var i=0; i<list.length; i++){
+        if (data.ticket_info.length) {
+            var list = data.ticket_info;
+            for (var i = 0; i < list.length; i++) {
                 var dom =
-                    '<div class="ticket-item">'+
-                    '<p>'+list[i].name+'</p>'+
-                    '<div class="tic-price">'+
-                    '<span>￥'+list[i].price+'</span>'+
-                    '</div>'+
-                    '<div class="num">'+
-                    '<span>×'+list[i].count+'</span>'+
-                    '</div>'+
+                    '<div class="ticket-item">' +
+                    '<p>' + list[i].name + '</p>' +
+                    '<div class="tic-price">' +
+                    '<span>￥' + list[i].price + '</span>' +
+                    '</div>' +
+                    '<div class="num">' +
+                    '<span>×' + list[i].count + '</span>' +
+                    '</div>' +
                     '</div>';
                 $('.ticket').append(dom);
             }
