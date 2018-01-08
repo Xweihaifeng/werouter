@@ -11,92 +11,29 @@
 			  <div class="s1-lb">
 				  <div class="s1-lbleft">
 					   <ul class="banner">
-						   <li>
-							   <a href="">
-								   <img src="{{PATH_TML}}image/20171201101148-0.png" alt="">
-							   </a>
-							   <a href="" class="banner-jie" title="【关注】马云对话全球浙商：今天的中国是最佳经商时代">【关注】马云对话全球浙商：今天的中...</a>
-						   </li>
-						   <li>
-							   <a href="">
-								   <img src="{{PATH_TML}}image/20171130132043-0.png" alt="">
-							   </a>
-							   <a href="" class="banner-jie" title="【关注】第四届世界浙商大会开幕 在沪浙商整体表现抢眼">【关注】第四届世界浙商大会开幕 在...</a>
-						   </li>
-						   <li>
-							   <a href="">
-								   <img src="{{PATH_TML}}image/20171128110726-0.png" alt="">
-							   </a>
-							   <a href="" class="banner-jie" title="金融新起点  浙商新作为 第五届外滩国际金融峰会举办">金融新起点  浙商新作为 第五届外滩国...</a>
-						   </li>
-						   <li>
-							   <a href="">
-								   <img src="{{PATH_TML}}image/20171107095010-0.png" alt="">
-							   </a>
-							   <a href="" class="banner-jie" title="【商会】浙商闵行战略签约，携手打造创新创业新高地">【商会】浙商闵行战略签约，携手打造...</a>
-						   </li>
-						   <li>
-							   <a href="">
-								   <img src="{{PATH_TML}}image/20171107094908-0.png" alt="">
-							   </a>
-							   <a href="" class="banner-jie" title="【商会】在沪浙商要做新时代中国特色社会主义思想的践行者和美好生活的创造者">【商会】在沪浙商要做新时代中国特色...</a>
-						   </li>
-						   <li>
-							   <a href="">
-								   <img src="{{PATH_TML}}image/20171024133110-0.png" alt="">
-							   </a>
-							   <a href="" class="banner-jie" title="【商会】陈希副区长：让浙商在浦东新区和自贸区茁壮成长">【商会】陈希副区长：让浙商在浦东新...</a>
-						   </li>
-					   </ul>
-					   <div class="btn">
+						    <li v-for="item in sub_ads.banners.list">
+							    <a :href="item.url">
+								   <img :src="item.image  | img_src(430 , 310 , 1)" alt="">
+							    </a>
+							    <a :href="item.url" class="banner-jie" title="{{item.title}}">{{item.title | limitLen(0,12)}}</a>
+						    </li>
+					    </ul>
+					    <div class="btn">
 						   <div class="btn-bL"></div>
 						   <div class="btn-bR"></div>
-					   </div>
-					   <ul class="yuan">
-						  <li class="yson"></li>
-						  <li class="yson"></li>
-						  <li class="yson"></li>
-						  <li class="yson"></li>
-						  <li class="yson"></li>
-						  <li class="yson"></li>
-					  </ul>
-				   </div>
-				  <div class="s1-lbright">
+					    </div>
+					    <ul class="yuan">
+							<li v-for="item in sub_ads.banners.list" class="yson"></li>
+					    </ul>
+				    </div>
+				    <div class="s1-lbright">
 						<ul class="s1-lbr">
-							<li>
-								<a href="">【商会】浙商回归任重道远 借势聚力再创...</a>
-								<span>[ 商会动态 ]</span>
-							</li>
-							<li>
-								<a href="">【关注】马云对话全球浙商：今天的中国...</a>
-								<span>[ 商会要闻 ]</span>
-							</li>
-							<li>
-								<a href="">【关注】第四届世界浙商大会开幕 在沪浙...</a>
-								<span>[ 商会要闻 ]</span>
-							</li>
-							<li>
-								<a href="">金融新起点 浙商新作为 第五届外滩国际...</a>
-								<span>[ 商会要闻 ]</span>
-							</li>
-							<li>
-								<a href="">【两青】郑永刚为青年打call：正直、创...</a>
-								<span>[ 商会要闻 ]</span>
-							</li>
-							<li>
-								<a href="">【人物】郭广昌荣获“亚洲商业领袖终身...</a>
-								<span>[ 媒体摘要 ]</span>
-							</li>
-							<li>
-								<a href="">【商会】浙商闵行战略签约，携手打造创...</a>
-								<span>[ 商会要闻 ]</span>
-							</li>
-							<li>
-								<a href="">【商会】在沪浙商要做新时代中国特色社...</a>
-								<span>[ 商会要闻 ]</span>
+							<li v-for="item in sub_index.news">
+								<a :href="'news/'+item.weid | sub_href">{{item.title | limitLen(0,20)}}</a>
+								<span>[ {{item.cate_title}} ]</span>
 							</li>
 						</ul>
-				  </div>
+				    </div>
 			  </div>
 		  </div>
 		  <div class="s1-r">
@@ -105,48 +42,40 @@
 				  <a href="" class="long">更多</a>
 			  </div>
 			  <ul class="list">
-				  <li>
+				  <li v-for="item in sub_index.nitoce">
 					  <div class="list-d"></div>
-					  <a href="">【通知】关于开展2017年上海...</a>
-				  </li>
-				  <li>
-					  <div class="list-d"></div>
-					  <a href="">【荐号】“杭州市投资促进局”网...</a>
-				  </li>
-				  <li>
-					  <div class="list-d"></div>
-					  <a href="">【通知】关于上海市浙江商会教育...</a>
+					  <a href="">{{item.title | limitLen(0,15)}}</a>
 				  </li>
 				  <div class="list-x"></div>
 			  </ul>
-			  <div class="s1-rt">
+<!-- 			  <div class="s1-rt">
 				  <h2>活动预告</h2>
 				  <a href="" class="long">更多</a>
 			  </div>
 			  <div class="come">
 				  <a href="">在线入会</a>
-			  </div>
+			  </div> -->
 		  </div>
 	 </div>
 	 <div class="main-s2">
 		 <div class="s2-lt">
-			 <span class="qz">浙商风采</span>
+			 <span class="qz">{{sub_ads.peoples_title.title}}</span>
 			 <a href="">更多</a>
 		 </div>
 		 <div class="fc">
 			 <div class="fc-left">
 				  <a href="">
-					  <img src="{{PATH_TML}}image/huizhang.jpg" alt="">
+					  <img :src="sub_ads.leader.image | img_src" alt="">
 					  <div class="jie">
-						  <h3>郭广昌</h3>
-						  <span>上海市浙江商会会长</span>
-						  <span>复星国际董事长</span>
+						  <h3>{{sub_ads.leader.title}}</h3>
+<!-- 						  <span>上海市浙江商会会长</span>
+						  <span>复星国际董事长</span> -->
 					  </div>
 				  </a>
 			  </div>
 			 <div class="fc-right">
 				 <ul class="fc-big fc1">
-					 <li>
+					 <li v-for="item in sub_ads.nitoce">
 						 <a href="">
 							 <img src="{{PATH_TML}}image/20170728100344-0.jpg" alt="">
 							 <div class="jie1">
@@ -392,52 +321,25 @@
     var app = new Vue({
         el: '#content_app',
         data: {
-            searchText: '',
-            views_show : false,
-            especial_news: [],
-            banners_list : [],
-            init_domian: {},
-            ztbd : [],
-            news : [],
-            plats : plats_info
+            sub_index : {}, // 首页公用接口
+            sub_ads : {}, // 网站广告接口
         },
         mounted: function() {
-            //$app.set_title(plats_info.title);
+            $app.set_title('秦商总会-河南分会');
             this.$nextTick(()=>{
-            	
-            	$model.new_list();
-                ajax.get('cms/advs').then((res) => {
-                    if (res.code === 200) {
-                        console.log(res.data);
-                        this.banners_list = res.data.banners.list;
-                    } 
-                });
+            	// 首页相关接口
+            	$sub_ajax.index((res)=>{
+            		this.sub_index = res.data;
+            	});
 
-                ajax.get('cms/index/grid').then((res) => {
-                    if (res.code === 200) {
-                        console.log(res.data);
-                        // this.especial_news = res.data.especial_news;
-                        this.init_domian = res.data.init_domian;
-                        this.news = res.data.news;
-                        this.ztbd = res.data.ztbd;
-                        this.$nextTick(()=>{
-                            this.swiper();
-                        });
-                    } 
-                });
+            	// 首页广告信息
+            	$sub_ajax.ads((res)=>{
+            		this.sub_ads = res.data;
+            		console.log(this.sub_ads.banners.list);
+            	});
             });
         },
         methods: {
-            swiper() {
-                var elem = document.getElementById('mySwipe');
-                Swipe(elem, {
-                    startSlide: 0,
-                    auto: 3000,
-                    continuous: true,
-                    disableScroll: true,
-                    stopPropagation: true
-                });
-            },
             video() {
 
             },

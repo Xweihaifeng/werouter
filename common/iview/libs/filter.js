@@ -54,6 +54,37 @@ Vue.filter('href', function (value , from) {
     return url;
     
 });
+// f分站URL拼接
+Vue.filter('sub_href', function (value , from) {
+    if (!value) return '';
+
+    var string = value.substr(0 , 1);
+    var url = '';
+    if(string == '/')
+    {
+        url =  all_domian.substring(0 , all_domian.length-1) + value;
+    }
+    else
+    {
+        url =  all_domian + value;
+    }
+
+    if($app.empty(from) == true)
+    {
+        if(url.indexOf('?') == '-1')
+        {
+            url += '?from='+from;
+        }
+        else
+        {
+            url += '&from='+from;
+        }
+        
+    }
+
+    return url;
+    
+});
 
 Vue.filter('formateTime',function (value,type) {
 
