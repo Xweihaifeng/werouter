@@ -12,9 +12,14 @@
     <link href="{{PATH_TML}}activity/css/common.css" rel="stylesheet">
     <link href="{{PATH_TML}}activity/css/detail.css" rel="stylesheet">
     <link rel="stylesheet" href="{{PATH_TML}}css/activity-detail.css"/>
+    <link rel="stylesheet" href="/common/layui/css/layui.css"/>
+    <script src="/common/layui/layui.js"></script>
     <style>
         [v-cloak] {
             display: none !important;
+        }
+        .layui-layer-msg {
+            width: auto!important;
         }
     </style>
 </head>
@@ -404,12 +409,20 @@
                         //console.log(data);
                         self.collect = false;
                         self.img = '/common/img/star-off-big.png';
+                        /*layui.use('layer', function() {
+                            var $ = layui.jquery, layer = layui.layer;
+                            layer.msg("取消收藏", { time: 100000 })
+                        })*/
                     })
                 } else {
                     this.coll().then(data => {
                         //console.log(data)
                         self.collect = true;
                         self.img = '/common/img/star-on-big.png';
+                        /*layui.use('layer', function() {
+                            var $ = layui.jquery, layer = layui.layer;
+                            layer.msg("收藏成功", { time: 100000 })
+                        })*/
                     })
                 }
             }
