@@ -335,7 +335,7 @@ $(document).ready(function() {
                             '<span class="sign-ticcom"></span>：' + data.company +
                             '</div>' +
                             '</div>' +
-                            '<div class="ticket"></div>'+
+                            '<div class="ticket"></div>' +
                             '</div>' +
                             '</div>',
                         end: function() {
@@ -344,35 +344,35 @@ $(document).ready(function() {
                         shade: 0.7
                     });
 
-                    if(data.type == 2){
-                        for(var i=0; i<data.tickets.length; i++){
+                    if (data.type == 2) {
+                        for (var i = 0; i < data.tickets.length; i++) {
                             var dom =
-                                '<div class="ticket-item">'+
-                                '<p>'+data.tickets[i].name+'</p>'+
-                                '<div class="tic-price">'+
-                                '<span>￥'+data.tickets[i].price+'</span>'+
-                                '</div>'+
-                                '<div class="num">'+
-                                '<span>×'+data.tickets[i].count+'</span>'+
-                                '</div>'+
+                                '<div class="ticket-item">' +
+                                '<p>' + data.tickets[i].name + '</p>' +
+                                '<div class="tic-price">' +
+                                '<span>￥' + data.tickets[i].price + '</span>' +
+                                '</div>' +
+                                '<div class="num">' +
+                                '<span>×' + data.tickets[i].count + '</span>' +
+                                '</div>' +
                                 '</div>';
                             $('.ticket').append(dom);
                         }
                     }
 
-                    if(data.is_open_qun == 2){
-                        $('.qun-chat').css('display','inline-block');
+                    if (data.is_open_qun == 2) {
+                        $('.qun-chat').css('display', 'inline-block');
                     }
-                    var qrImg = imgSet(data.wx_qun_qrcode,0,0);
-                    $('.qun-chat').click(function () {
+                    var qrImg = imgSet(data.wx_qun_qrcode, 0, 0);
+                    $('.qun-chat').click(function() {
                         layer.open({
                             type: 1,
-                            area: ['320px','320px'],
+                            area: ['320px', '320px'],
                             title: 0,
                             closeBtn: 0,
                             shadeClose: true,
                             scrollbar: false,
-                            content:'<div class="qun-qrcode"><img src="'+qrImg+'" alt=""></div>'
+                            content: '<div class="qun-qrcode"><img src="' + qrImg + '" alt=""></div>'
                         });
                     });
 
@@ -1048,12 +1048,12 @@ $(document).ready(function() {
                                     GetOrder(id, function(rep) {
                                         layer.closeAll('loading');
                                         if (rep.code == 401 || rep.data.status == 1) {
-                                            if (data.data.enroll_num < data.data.enroll_limit || data.data.enroll_limit == 0) {
+                                            if (data.data.enroll_num < data.data.enroll_limit || data.data.enroll_limit == 0 || data.data.type == 2) {
                                                 Support(id, nickname, imgUrl, $(this).data('id'));
                                                 $('#phone').val(localStorage.getItem('dataPhone'));
                                                 $('#username').val(localStorage.getItem('realName'));
                                             } else {
-                                                mess_tusi("来晚啦，该活动报名人数已满");
+                                                mess_tusi("来晚啦，该活动报名人数已满~");
                                             }
                                         } else if (rep.data.status == 2) {
                                             wechat_scan_pay(rep.data.number);
