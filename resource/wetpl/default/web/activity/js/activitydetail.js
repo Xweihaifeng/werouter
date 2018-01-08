@@ -257,6 +257,7 @@ $(document).ready(function() {
                         'Token': docCookies.getItem("token")
                     },
                     success: function(data) {
+                        //console.log(data)
                         if (data.code == 200) {
                             PaymentQR(data.data.qrcode_url, data.data.number, data.data.total_fee);
                         } else {
@@ -837,8 +838,7 @@ $(document).ready(function() {
                 var company = $("#gongsi").val();
                 var tid = []; //购票id
                 var number = []; //购票数
-                tickets = tickets.filter(x => x.num != 0);
-                tickets.map(x => (tid.push(x.id), number.push(x.num)));
+                tickets.filter(x => x.num != 0).map(x => (tid.push(x.id), number.push(x.num)));
                 if (tid == "") {
                     layer.msg('请选择门票', {
                         time: 1000
