@@ -17,48 +17,50 @@ $(document).ready(function(){
 	    return r;
 	}
 
-	function test(select, weid) {
-		var sendUrl = ApiUrl + 'admins/set_' + select;
-		var count = 0;
-		var obj = document.all.m;
-		var res = [];
-		var find = (ls, id) => ls.filter(x => x.id == id);
-		for(i=0;i<obj.length;i++){
-			if(obj[i].checked){
-				res.push(obj[i].id);
-				count ++;
-			}
-		}
-		res = res.map(x => find(set.all, x.substr(2))).map(x => x[0]);
-		for (let i = 0; i < res.length; i++) {
-			res[i]['checked'] = true;
-			delete res[i]['children'];
-		}
-		var sendData = transData(res, 'id', 'parent_id', 'children');
-		console.log(sendData);
-		var data = {};
-		data['role_id'] = weid;
-		data[select] = sendData;
+	// function test(select, weid) {
+	// 	var sendUrl = ApiUrl + 'admins/set_' + select;
+	// 	console.log(sendUrl)
+	// 	var count = 0;
+	// 	var obj = document.all.m;
+	// 	var res = [];
+	// 	var find = (ls, id) => ls.filter(x => x.id == id);
+	// 	for(i=0;i<obj.length;i++){
+	// 		if(obj[i].checked){
+	// 			res.push(obj[i].id);
+	// 			count ++;
+	// 		}
+	// 	}
+	// 	res = res.map(x => find(set.all, x.substr(2))).map(x => x[0]);
+	// 	for (let i = 0; i < res.length; i++) {
+	// 		res[i]['checked'] = true;
+	// 		delete res[i]['children'];
+	// 	}
+	// 	var sendData = transData(res, 'id', 'parent_id', 'children');
+	// 	console.log(sendData);
+	// 	var data = {};
+	// 	data['role_id'] = weid;
+	// 	data[select] = sendData;
+    //
+		// $.ajax({
+		// 	url: sendUrl,
+		// 	type: 'POST',
+		// 	headers: {
+		// 		'Token': set.token
+		// 	},
+		// 	data: data,
+		// 	success: function(data) {
+		// 		if (data.code === 200) {
+    //                 swal('', '保存成功', 'success');
+    //             } else {
+    //                 swal('', data.message, 'error');
+    //             }
+		// 	},
+		// 	error: function(xhr) {
+		// 		console.log(xhr)
+		// 	}
+		// })
+    // }
 
-		$.ajax({
-			url: sendUrl,
-			type: 'POST',
-			headers: {
-				'Token': set.token
-			},
-			data: data,
-			success: function(data) {
-				if (data.code === 200) {
-                    swal('', '保存成功', 'success');
-                } else {
-                    swal('', data.message, 'error');
-                }
-			},
-			error: function(xhr) {
-				console.log(xhr)
-			}
-		})
-	}
 
 	// 默认菜单
 	authority('config', weid, 'res', '后台管理');
