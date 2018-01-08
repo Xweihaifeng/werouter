@@ -120,22 +120,6 @@ var getTicketUser = function(e_number, activity_id, callback) {
             layer.closeAll('loading');
             if (data.code == 200)
                 callback(data.data);
-                if(data.data.ticket_info.length){
-                    var list = data.data.ticket_info;
-                    for(var i=0; i<list.length; i++){
-                        var dom =
-                            '<div class="ticket-item">'+
-                            '<p>'+list[i].name+'</p>'+
-                            '<div class="tic-price">'+
-                            '<span>￥'+list[i].price+'</span>'+
-                            '</div>'+
-                            '<div class="num">'+
-                            '<span>×'+list[i].count+'</span>'+
-                            '</div>'+
-                            '</div>';
-                        $('.ticket').append(dom);
-                    }
-                }
             else
                 notice.alert(data.message);
         },
@@ -206,6 +190,22 @@ $("#verify_ticket").bind('click', function() {
             end: function() {},
             shade: 0.2
         });
+        if(data.data.ticket_info.length){
+            var list = data.data.ticket_info;
+            for(var i=0; i<list.length; i++){
+                var dom =
+                    '<div class="ticket-item">'+
+                    '<p>'+list[i].name+'</p>'+
+                    '<div class="tic-price">'+
+                    '<span>￥'+list[i].price+'</span>'+
+                    '</div>'+
+                    '<div class="num">'+
+                    '<span>×'+list[i].count+'</span>'+
+                    '</div>'+
+                    '</div>';
+                $('.ticket').append(dom);
+            }
+        }
     });
 });
 

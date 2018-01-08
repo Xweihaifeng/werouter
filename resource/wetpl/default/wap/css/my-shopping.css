@@ -3,12 +3,12 @@
  */
 
 @charset "utf-8";
-body{background:#fff}
+body{font-size:0.14rem}
 footer { position: fixed; height: 0.5rem; display: block; bottom: 0; width: 100%; }
 a { display: inline-block;  text-decoration: none;}
-.mall { width: 100%; background-color: #fff; padding-top: 0.44rem; }
+.mall { width: 100%; background-color: #f9f9f9; padding-top: 0.44rem; }
 .menu { height: -webkit-fill-available; background-color: #f2f2f2; font-size: 0.13rem; overflow-x: scroll; overflow-y: hidden; -webkit-overflow-scrolling: touch; width:0.8rem; position: fixed;  left: 0;top:0.44rem}
-.menu.has-swiper{top:2.99rem}
+/*.menu.has-swiper{top:2.99rem}*/
 .menu > ul > li { height: 0.5rem; font-size: 0.12rem; line-height: 0.5rem; text-align: center; cursor:pointer;  padding:0 0.1rem; border-right:1px solid  #e5e5e5;
     border-right: 1px solid #f2f2f2;  border-bottom: 1px solid #f2f2f2; background-color:#f8f8f8;}
 .menu > ul > li.active{ border-left:2px solid #f44; background-color:#fff;color:#333;font-weight:700}
@@ -60,4 +60,73 @@ a { display: inline-block;  text-decoration: none;}
     background : url('/common/img/icons_sprite_store.png') no-repeat -100px -100px;
     -webkit-background-size: 3rem 1.5rem;
     background-size: 3rem 1.5rem;
+}
+.card{
+    overflow: hidden;
+    padding:0 0.04rem;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.card a{
+    float: left;
+    display: block;
+    width:1.21rem;
+    height:1.04rem;
+}
+.card a img{
+    display: block;
+    width:100%;
+    height:100%;
+}
+.recommend{
+    margin:0.15rem;
+    color: #333;
+    background-color: #fff;
+    overflow: hidden;
+    border:1px solid #f2f2f2;
+}
+.recommend>img{
+    display: block;
+    width:1.18rem;
+    height:1.18rem;
+    float: left;
+}
+.recommend>div{
+    float: left;
+    margin:0.1rem;
+}
+.recommend div h3{
+    font-size:0.14rem;
+    font-weight:normal;
+    margin-bottom:0.53rem;
+}
+.recommend div p{
+    font-size:0.16rem;
+    color: #f44;
+    overflow: hidden;
+}
+.recommend div p em{
+    float: left;
+    font:inherit;
+}
+.recommend div p i{
+    float: right;
+    display: block;
+    width:0.24rem;
+    height:0.24rem;
+    border:1px solid #f44;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    background: url('/common/img/store-recomment-icon.png') no-repeat center center;
+    -webkit-background-size: cover;
+    background-size: cover;
+}
+.rec-title{
+    font-size:0.18rem;
+    padding:0.1rem 0;
+    text-align: center;
+    font-weight:normal;
+    border-bottom:1px solid #ddd;
 }
