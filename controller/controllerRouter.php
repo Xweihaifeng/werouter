@@ -254,6 +254,27 @@ class controllerRouter extends controller
         }
         redirect('/user/settings/realname');
     }
+
+    // 分站频道额外规则
+    public function sub_channel( $param, $match = array())
+    {
+        if(config::$plats['sub_state'] == TRUE)
+        {
+            return TRUE;
+        }
+        
+    }
+
+    // 分站栏目额外规则
+    public function sub_column( $param, $match = array())
+    {
+        if(config::$plats['sub_state'] == FALSE)
+        {
+            return FALSE;
+        }
+        $this->config['template'] = '/views/list/mult_img_list.html';
+        return TRUE;
+    }
     
     // 频道额外规则
     public function channel( $param, $match = array())

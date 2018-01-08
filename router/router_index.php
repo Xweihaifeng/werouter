@@ -269,13 +269,13 @@ class router_index extends controller
         {
             $uri = substr($uri, strlen($first_cate) + 1  , strlen($uri));
             $this->data['template'] = 'substation/default';
+            config::$plats['sub_state'] = TRUE;
         }
         //END 获取目录第一段
 
         $router_verify = new router_verify($router , $uri , $rule , $weid);
 
         if(empty($router_verify->router)) {
-
             error(404);
         }
 
@@ -286,7 +286,7 @@ class router_index extends controller
         {
             $router_map = $controller_router_config['template'];
         }
-
+        
         $additional_config = array();
         if(!empty($controller_router_config['config']))
         {
@@ -294,7 +294,7 @@ class router_index extends controller
         }
 
         $this->file = '/resource/wetpl/'.$this->data['template'].'/';
-
+        
         $add_public_config = [];
 
         foreach (config::$plats as $key => $value) {
