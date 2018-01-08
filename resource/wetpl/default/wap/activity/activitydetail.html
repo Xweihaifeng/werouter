@@ -230,6 +230,7 @@
                     ref.order += ref.weid;
                     $("title").text(ref.title);
                     $("#favicon").attr('href', ApiMaterPlatQiniuDomain + plats_info.logo);
+                    alert(ref.cover)
                     if (is_wx == 'yes') {
                         $wx.share({title: ref.title, imgUrl: ref.cover, link: window.location.href, desc: ''})
                     }
