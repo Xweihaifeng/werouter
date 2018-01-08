@@ -261,6 +261,17 @@ class router_index extends controller
             $uri = substr($uri, 2  , strlen($uri));
         }
 
+        //获取目录第一段
+        $first_cate = '';
+        $first_array = explode('/', trim($uri , '/'));
+        $first_cate = current($first_array);
+        if($first_cate == 'sub_he')
+        {
+            $uri = substr($uri, strlen($first_cate) + 1  , strlen($uri));
+            $this->data['template'] = 'substation/default';
+        }
+        //END 获取目录第一段
+
         $router_verify = new router_verify($router , $uri , $rule , $weid);
 
         if(empty($router_verify->router)) {

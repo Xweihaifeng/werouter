@@ -137,7 +137,7 @@ $(function() {
                     notice.alert('请选择城市');
                 }
             });
-            //活动地址
+            // 输入时打开地图
             $('#J_ActivityAddr').keyup($.debounce(250, function() {
                 var address = $.trim($('#J_ActivityAddr').val());
                 if (address) {
@@ -150,6 +150,11 @@ $(function() {
                 }
 
             }));
+            // 点击标记按钮打开地图
+            $('.map-clicker').click(function() {
+                $('#J_ActivityAddr').focus();
+                $('#J_ActivityAddr').keyup();
+            });
             //失去活动地址输入框的焦点时隐藏活动历史地址
             $('#J_ActivityAddr').blur(function() {
                 $('#J_ActivityAddressHistory').fadeOut(ANIM_TIME);

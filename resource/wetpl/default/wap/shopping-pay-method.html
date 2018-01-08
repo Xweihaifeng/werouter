@@ -125,28 +125,32 @@
             },
             order_pay()
             {
-                var self = this;
-                var wxpay = this.wx_pay.filter(x => x.type == this.type)[0].data;
-                var path = this.wx_post.filter(x => x.type == this.type)[0].path;
-                ajax.post(path, wxpay).then((res)=> {
-                    if(res.code == 200)
-                    {
-                        $wx.pay(res.data.config , function(wx_res){
-                            mb_message('支付成功');
-                            setTimeout(()=>{
-                                switch(self.type) {
-                                    case 'shop': $app.open_page(all_domian + 'shopping/allOrder'); break;
-                                    case 'activity': $app.open_page(all_domian + 'user/myactivity/support/ticket/'); break;
-                                    default: break;
-                                }
-                            },1000);
-                        });
-                    }
-                    else
-                    {
-                        mb_message('订单异常无法支付');
-                    }
-                });
+                if (is_wx == 'yes') {
+                    var self = this;
+                    var wxpay = this.wx_pay.filter(x => x.type == this.type)[0].data;
+                    var path = this.wx_post.filter(x => x.type == this.type)[0].path;
+                    ajax.post(path, wxpay).then((res)=> {
+                        if(res.code == 200)
+                        {
+                            $wx.pay(res.data.config , function(wx_res){
+                                mb_message('支付成功');
+                                setTimeout(()=>{
+                                    switch(self.type) {
+                                        case 'shop': $app.open_page(all_domian + 'shopping/allOrder'); break;
+                                        case 'activity': $app.open_page(all_domian + 'user/myactivity/support/ticket/'); break;
+                                        default: break;
+                                    }
+                                },1000);
+                            });
+                        }
+                        else
+                        {
+                            mb_message('订单异常无法支付');
+                        }
+                    });
+                } else {
+                    mb_message("请登录微信");
+                }
             }
         }
     })
