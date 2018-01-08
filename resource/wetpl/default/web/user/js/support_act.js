@@ -48,7 +48,7 @@ $(document).ready(function() {
             '<span class="sign-ticcom"></span>：' + data.company +
             '</div>' +
             '</div>' +
-            '<div class="ticket"></div>'+
+            '<div class="ticket"></div>' +
             '</div>' +
             '</div>';
         return tickethtml;
@@ -66,33 +66,33 @@ $(document).ready(function() {
                     // console.log(urlall[0])
                     $(".modal-body .ticket_apply").children().remove();
                     $(".modal-body .ticket_apply").append(tickettemplate(data.data));
-                    if(data.data.is_open_qun == 2){
-                        $('.qun-chat').css('display','inline-block');
+                    if (data.data.is_open_qun == 2) {
+                        $('.qun-chat').css('display', 'inline-block');
                     }
-                    var qrImg = imgSet(data.data.wx_qun_qrcode,0,0);
-                    $('.qun-chat').click(function () {
+                    var qrImg = imgSet(data.data.wx_qun_qrcode, 0, 0);
+                    $('.qun-chat').click(function() {
                         layer.open({
                             type: 1,
-                            area: ['320px','320px'],
+                            area: ['320px', '320px'],
                             title: 0,
                             closeBtn: 0,
                             shadeClose: true,
                             scrollbar: false,
-                            content:'<div class="qun-qrcode"><img src="'+qrImg+'" alt=""></div>'
+                            content: '<div class="qun-qrcode"><img src="' + qrImg + '" alt=""></div>'
                         });
                     });
                     $('.ticket').children().remove();
-                    if(data.data.type == 2){
-                        for(var i=0; i<data.data.tickets.length; i++){
+                    if (data.data.type == 2) {
+                        for (var i = 0; i < data.data.tickets.length; i++) {
                             var dom =
-                                '<div class="ticket-item">'+
-                                '<p>'+data.data.tickets[i].name+'</p>'+
-                                '<div class="tic-price">'+
-                                '<span>￥'+data.data.tickets[i].price+'</span>'+
-                                '</div>'+
-                                '<div class="num">'+
-                                '<span>×'+data.data.tickets[i].count+'</span>'+
-                                '</div>'+
+                                '<div class="ticket-item">' +
+                                '<p>' + data.data.tickets[i].name + '</p>' +
+                                '<div class="tic-price">' +
+                                '<span>￥' + data.data.tickets[i].price + '</span>' +
+                                '</div>' +
+                                '<div class="num">' +
+                                '<span>×' + data.data.tickets[i].count + '</span>' +
+                                '</div>' +
                                 '</div>';
                             $('.ticket').append(dom);
                         }
