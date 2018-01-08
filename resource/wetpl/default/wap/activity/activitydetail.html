@@ -321,7 +321,7 @@
             reqTickets(_self.weid, _self);
             new Promise(resolve => {
                 $.ajax({
-                    url: ACTIVITY_COLLECTION_ISCOLLECTION,
+                    url: ACTIVITY_COLLECTION_ISCOLLECTION, //关注状态
                     type: 'POST',
                     data: { user_id: plats_user_info.weid, activity_id: this.weid },
                     headers: {
@@ -382,35 +382,35 @@
                     sessionStorage.setItem('tickets', JSON.stringify(this.tickets));
                 }
             },
+            coll: function(){
+                return new Promise(resolve => {
+                    $.ajax({
+                        url: apiUrl + "activity/collection/collection_or_cancel",
+                        type: "POST",
+                        headers: {
+                            'Token': docCookies.getItem("token")
+                        },
+                        data: {activity_id: this.weid},
+                        success: function (data) {
+                            resolve(data)
+                        }
+                    })
+                })
+            },
             like: function(collect){
                 var self = this;
                 if (collect) {
-                    $.ajax({
-                        url: apiUrl + "activity/collection/destroy/" + this.weid,
-                        headers: {
-                            'Token': docCookies.getItem("token")
-                        },
-                        success: function (data) {
-                            //console.log(data)
-                            resolve(1);
-                        }
+                    this.coll().then(data => {
+                        console.log(data);
+                        self.collect = false;
+                        self.img = '/common/img/star-off-big.png';
                     })
-                    self.collect = false;
-                    self.img = '/common/img/star-off-big.png';
                 } else {
-                    $.ajax({
-                        url: apiUrl + "activity/collection/store",
-                        type: 'POST',
-                        data: {activity_id: this.weid},
-                        headers: {
-                            'Token': docCookies.getItem("token")
-                        },
-                        success: function (data) {
-                            console.log(data)
-                        }
+                    this.coll().then(data => {
+                        console.log(data)
+                        self.collect = true;
+                        self.img = '/common/img/star-on-big.png';
                     })
-                    self.collect = true;
-                    self.img = '/common/img/star-on-big.png';
                 }
             }
         }
