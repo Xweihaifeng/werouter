@@ -1383,6 +1383,8 @@ req().then((data) => {
                                 tpl += `<a href="${'/magazine/' + magazine.domain + '/' + e.weid}" target="_blank"><li><img src="${imgSet(e.cover, 94, 128)}" /></li></a>`
                                 : tpl, '');
                         $("#hbm ul").append(mgztpl);
+                    } else {
+                        $("#hbm ul").css({"background": "url(/common/img/page.png) no-repeat center", "background-size": "100%"})
                     }
                     if (report != null) {
                         $("#hbr div:eq(0) p:eq(0)").text(report.title);
