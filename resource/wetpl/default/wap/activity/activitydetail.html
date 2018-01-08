@@ -152,7 +152,7 @@
                 activity_id: weid
             },
             success: function(data) {
-                console.log(data);
+                //console.log(data);
                 if (data.code == 200) {
                     switch (data.data.status) {
                         case 1: ref.state = '立即报名';
@@ -184,7 +184,7 @@
             url: url,
             type: 'GET',
             success: function(data) {
-                console.log(data)
+                //console.log(data)
                 sessionStorage.setItem('activity_info', JSON.stringify(data));
                 if (data.code == 200) {
                     let p = data.data;
@@ -219,7 +219,7 @@
             type: 'POST',
             data: data,
             success: function(data) {
-                console.log(data);
+                //console.log(data);
                 if (data.code == 200) {
                     data.data.list.map(x => ref.users.push(
                             {
@@ -239,7 +239,7 @@
             type: 'POST',
             data: data,
             success: function(data) {
-                console.log(data);
+                //console.log(data);
                 if (data.code == 200) {
                     data.data.list.map(x => ref.guests.push(
                             {
@@ -262,7 +262,7 @@
             url: apiUrl + 'activity/tickets?activity_id=' + weid,
             type: 'GET',
             success: function(data) {
-                console.log(data);
+                //console.log(data);
                 if (data.code == 200) {
                     if (data.data[0].type == 1) { //免费
                         sessionStorage.setItem('tickets', JSON.stringify(data.data.map(x => (x.num = 1, x.type = 1, x))));
@@ -401,13 +401,13 @@
                 var self = this;
                 if (collect) {
                     this.coll().then(data => {
-                        console.log(data);
+                        //console.log(data);
                         self.collect = false;
                         self.img = '/common/img/star-off-big.png';
                     })
                 } else {
                     this.coll().then(data => {
-                        console.log(data)
+                        //console.log(data)
                         self.collect = true;
                         self.img = '/common/img/star-on-big.png';
                     })
