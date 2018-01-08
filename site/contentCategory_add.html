@@ -686,7 +686,7 @@
                 $('#bootstrapModal').modal('show');
                 var type = $(this).data('type');
                 $.ajax({
-                    url: ApiUrl + 'cms/template?type=' + type,
+                    url: ApiUrl + 'scms/template?type=' + type,
                     type: 'get',
                     dataType: 'json',
                     success: function(data) {
