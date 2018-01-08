@@ -14,7 +14,6 @@ $.ajax({
         console.log(xhr);
     }
 })
-
 var token = sessionStorage.getItem('token');
 
 var number_per_page = 10;
