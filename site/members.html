@@ -1,0 +1,1298 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.7 -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="bower_components/Ionicons/css/ionicons.min.css">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
+    <!-- Select2 -->
+    <link rel="stylesheet" href="bower_components/select2/dist/css/select2.min.css">
+
+    <link rel="stylesheet" href="/common/sweetalert2/dist/sweetalert2.min.css">
+    <link rel="stylesheet" href="/common/zoom/zoom.css">
+    <style>
+        .table>thead:first-child>tr:first-child>th {
+            text-align: center;
+        }
+        
+        .table>tbody>tr>td:first-child {
+            text-align: center;
+        }
+        
+        .info-switch {
+            width: 100%;
+            height: 45px;
+            color: #fff;
+            background-color: rgba(58, 161, 223, 0.75);
+            padding: 0px 15px;
+            line-height: 45px;
+            cursor: pointer;
+            border-radius: 3px;
+            font-size: 15px;
+            font-weight: unset;
+        }
+        
+        .flow-info ul li {
+            list-style-type: none;
+        }
+        
+        .last-flow {
+            font-family: microsoft yahei;
+            color: #f7a700;
+            font-size: 14px;
+            font-weight: 800;
+            background-color: rgba(247, 167, 0, 0.2);
+            border-left: #e69900 5px solid;
+        }
+        
+        .last-flow:hover {
+            background-color: rgba(247, 167, 0, 0.25) !important;
+        }
+        
+        .last-flow .flowinfo-step {
+            font-size: 20px;
+            font-weight: 800;
+        }
+        
+        .common-flow .flowinfo-title {
+            font-weight: 800;
+            color: #666;
+            width: 70px;
+            display: inline-block;
+        }
+        
+        .common-flow .flowinfo-step {
+            font-size: 20px;
+            color: #666;
+            font-weight: 800;
+        }
+        
+        .toggle-off {
+            display: none;
+        }
+        
+        .toggle-on {
+            display: block;
+        }
+        
+        .certificate-head-box {
+            width: 100%;
+            min-width: 1170px;
+            margin: 0 auto;
+            height: 80px;
+            line-height: 80px;
+            box-shadow: #999 0px 0px 5px;
+        }
+        
+        .icon-sousuo {
+            position: absolute;
+            margin-left: 14px;
+            margin-top: 2px;
+        }
+        
+        .certificate-logo-box {
+            width: 14%;
+            display: inline-block;
+            text-align: center;
+        }
+        
+        .certificate-logo-box img {
+            width: 48px;
+            height: 48px;
+            vertical-align: middle;
+        }
+        
+        .certificate-logo-box span {
+            margin-left: 17px;
+            color: #0b0b0b;
+        }
+        
+        .certificate-search-box {
+            width: 76%;
+            display: inline-block;
+        }
+        
+        .certificate-search-box input {
+            height: 34px;
+            padding-left: 40px;
+            width: calc(100% - 150px);
+        }
+        
+        .certificate-more-box {
+            width: 3%;
+            display: inline-block;
+        }
+        
+        .search-btn {
+            width: 90px;
+            height: 40px;
+            background-color: #e54a2b;
+            color: #fff;
+            font-size: 15px;
+            border: 0;
+            cursor: pointer;
+            outline: none;
+            vertical-align: middle;
+            margin-left: -5px;
+        }
+        
+        .search-btn:hover {
+            background-color: #bd3b20;
+        }
+        
+        .more-btn {
+            width: 125px;
+            height: 40px;
+            background-color: #e54a2b;
+            color: #fff;
+            font-size: 15px;
+            border: 0;
+            cursor: pointer;
+            outline: none;
+            vertical-align: middle;
+            margin-left: -5px;
+        }
+        
+        .more-btn:hover {
+            background-color: #bd3b20;
+        }
+        /*证书内容*/
+        
+        .certificate-content-box {
+            width: 1170px;
+            margin: 0 auto;
+            margin-top: 60px;
+            position: relative;
+        }
+        
+        .certificate-img-box {
+            text-align: center;
+            width: 760px;
+            margin: auto;
+        }
+        
+        .content-1 {
+            width: 760px;
+            height: 590px;
+        }
+        
+        .content-2 {
+            position: absolute;
+            top: 0;
+            width: 760px;
+            height: 590px;
+        }
+        
+        .content-3 {
+            width: 110px;
+            height: 110px;
+            margin-top: 80px;
+        }
+        
+        .content-4 {
+            font-family: '黑体';
+            text-align: center;
+            margin: 18px 80px 0;
+            font-size: 50px;
+        }
+        
+        .content-5 {
+            font-family: '宋体';
+            text-align: left;
+            margin: 10px 80px 0;
+            font-size: 30px;
+        }
+        
+        .content-6 {
+            font-family: '宋体';
+            text-align: left;
+            margin: 10px 80px 30px;
+            font-size: 30px;
+            text-indent: 2em;
+        }
+        
+        .content-7 {
+            text-align: left;
+            text-indent: 485px;
+            margin-top: 8px;
+            font-size: 17px;
+        }
+        
+        .content-8 {
+            text-align: left;
+            margin-top: 8px;
+            text-indent: 485px;
+            font-size: 17px;
+        }
+        
+        .content-9 {
+            position: absolute;
+            bottom: 70px;
+            right: 77px;
+            width: 170px;
+            height: 150px;
+        }
+        
+        .content-10 {
+            width: 754px;
+            margin: 0 auto;
+            margin-top: 30px;
+            color: #555555;
+            font-size: 14px;
+        }
+        
+        .content-11 {
+            margin-top: 12px;
+        }
+        
+        .content-12 {
+            width: 754px;
+            margin: 0 auto;
+            margin-top: 30px;
+            text-align: center;
+            color: #333333;
+            font-size: 18px;
+        }
+        
+        .content-13 {
+            margin-bottom: 7.5px;
+        }
+        
+        .content-14 {
+            width: 180px;
+            border-bottom: 1px solid #d4d0d0;
+            float: left;
+        }
+        
+        .content-15 {
+            width: 180px;
+            border-bottom: 1px solid #d4d0d0;
+            float: right;
+        }
+        
+        .content-16 {
+            margin-top: 7.5px;
+        }
+        
+        .content-16 font {
+            margin-left: 17px;
+        }
+        
+        .content-17 {
+            margin: 30px auto;
+            height: 62px;
+        }
+        
+        .content-18 {
+            width: 754px;
+            margin: 0 auto;
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .report-btn {
+            width: 83px;
+            height: 24px;
+            background-color: #e54a2b;
+            color: #fff;
+            font-size: 12px;
+            border: 0;
+            border-radius: 3px;
+            cursor: pointer;
+            outline: none;
+            margin-left: 14px;
+        }
+        
+        .report-btn:hover {
+            background-color: #bd3b20;
+        }
+        
+        .approval-btn {
+            width: 180px;
+            height: 40px;
+            background-color: #e54a2b;
+            color: #fff;
+            font-size: 16px;
+            border: 0;
+            border-radius: 3px;
+            cursor: pointer;
+            outline: none;
+        }
+        
+        .approval-btn:hover {
+            background-color: #bd3b20;
+        }
+        
+        @media screen and (max-width: 1320px) {
+            .certificate-logo-box {
+                width: 234px;
+            }
+            .certificate-search-box {
+                width: 765px;
+            }
+            .certificate-more-box {
+                width: 160px;
+            }
+        }
+        
+        @media screen and (max-width: 1200px) {}
+    </style>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.min.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Google Font -->
+    <style>
+         ::-webkit-scrollbar {
+            width: 0;
+        }
+    </style>
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+    <div class="wrapper">
+        <aside class="main-sidebar">
+            <!-- sidebar: style can be found in sidebar.less -->
+            <section class="sidebar">
+                <!-- search form -->
+                <form action="#" method="get" class="sidebar-form">
+                    <div class="input-group">
+                        <input type="text" name="q" class="form-control" placeholder="Search...">
+                        <span class="input-group-btn">
+                    <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+                    </button>
+                  </span>
+                    </div>
+                </form>
+                <!-- /.search form -->
+                <ul id="root" class="sidebar-menu" data-widget="tree"></ul>
+            </section>
+            <!-- /.sidebar -->
+        </aside>
+        <!-- content-wrapper -->
+        <div class="content-wrapper">
+            <input type="hidden" name="config-url" value="members.html">
+            <section class="content-header">
+                <h1> 会员管理 </h1>
+                <!--
+            <ol class="breadcrumb"> 
+                <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li> 
+                <li><a href="#">Tables</a></li> 
+                <li class="active">Data tables</li> 
+            </ol>
+           -->
+            </section>
+            <!-- Main content -->
+            <section class="content">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="box">
+                            <div class="box-header with-border" style="line-height: 35px;">
+                                <h3 class="box-title">已颁发会员</h3>
+                                <div class="btn-group pull-right">
+                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    快捷切换 <span class="caret"></span>
+                                </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="member_wait_first_audit.html">待初审</a></li>
+                                        <li><a href="member_wait_pay.html">待缴费</a></li>
+                                        <li><a href="member_wait_sec_audit.html">待复审</a></li>
+                                        <li><a href="member_wait_info.html">待完善信息</a></li>
+                                        <li><a href="member_wait_final_audit.html">待终审</a></li>
+                                        <li><a href="member_wait_issue.html">待颁发证书</a></li>
+                                        <li role="separator" class="divider"></li>
+                                        <li><a href="members.html">会员列表</a></li>
+                                    </ul>
+                                </div>
+                                <!-- <div class="pull-right" style="margin-right:20px">
+                                    <a class="btn btn-primary" href="member_add.html">新增会员</a>
+                                </div> -->
+                            </div>
+                            <div class="panel panel-info">
+                                <div class="panel-body">
+                                    <form action="" method="get" class="form-horizontal" role="form">
+                                        <div class="form-group">
+                                            <label class="col-xs-12 col-sm-3 col-md-1 control-label">昵称</label>
+                                            <div class="col-sm-1 col-xs-1 col-lg-1">
+                                                <div class="row row-fix tpl-category-container">
+                                                    <input class="form-control" type="text" name="nickname" placeholder="输入用户昵称筛选">
+                                                </div>
+                                            </div>
+                                            <label class="col-xs-12 col-sm-3 col-md-1 control-label">手机</label>
+                                            <div class="col-sm-1 col-xs-1 col-lg-1">
+                                                <div class="row row-fix tpl-category-container">
+                                                    <input class="form-control" type="text" name="phone" placeholder="输入手机筛选">
+                                                </div>
+                                            </div>
+                                            <label class="col-xs-12 col-sm-3 col-md-1 control-label">实名姓名</label>
+                                            <div class="col-sm-1 col-xs-1 col-lg-1">
+                                                <div class="row row-fix tpl-category-container">
+                                                    <input class="form-control" type="text" name="name" placeholder="输入姓名筛选">
+                                                </div>
+                                            </div>
+                                            <label class="col-xs-12 col-sm-3 col-md-1 control-label">首页推荐</label>
+                                            <div class="col-sm-1 col-xs-1 col-lg-1">
+                                                <div class="row row-fix tpl-category-container">
+                                                    <select class="form-control" name="is_pose">
+                                                    <option value="">不限制</option>
+                                                    <option value="1">已推荐</option>
+                                                    <option value="2">未推荐</option>
+                                                </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <!-- <label class="col-xs-12 col-sm-3 col-md-1 control-label">状态</label>
+                                        <div class="col-sm-1 col-xs-1 col-lg-1">
+                                            <div class="row row-fix tpl-category-container">
+                                                <select class="form-control"  name="denied">
+                                                    <option value="">不限</option>
+                                                    <option value="2">正常</option>
+                                                    <option value="1">黑名单</option>
+                                                </select>
+                                            </div>
+                                        </div> -->
+                                            <label class="col-xs-12 col-sm-3 col-md-1 control-label">到期</label>
+                                            <div class="col-sm-1 col-xs-1 col-lg-1">
+                                                <div class="row row-fix tpl-category-container">
+                                                    <select class="form-control" name="expires">
+                                                        <option value="">不限</option>
+                                                        <option value="1">即将到期(1月内)</option>
+                                                        <option value="2">已到期</option>
+                                                </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <!-- /.box-header -->
+                            <div class="box-body">
+                                <table id="listTable" class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th width="30px">序号</th>
+                                            <th>认证姓名</th>
+                                            <th>用户头像</th>
+                                            <th>用户昵称</th>
+                                            <th>类型</th>
+                                            <th>信息资料</th>
+                                            <th>证书</th>
+                                            <th>标签</th>
+                                            <th>加入时间</th>
+                                            <th>有效期</th>
+                                            <th>操作</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.box-body -->
+                        </div>
+                        <!-- /.box -->
+
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+            </section>
+        </div>
+
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Create the tabs -->
+            <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
+                <li><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
+                <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
+            </ul>
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <!-- Home tab content -->
+                <div class="tab-pane" id="control-sidebar-home-tab">
+                    <h3 class="control-sidebar-heading">Recent Activity</h3>
+                    <ul class="control-sidebar-menu">
+                        <li>
+                            <a href="javascript:void(0)"> <i class="menu-icon fa fa-birthday-cake bg-red"></i>
+                                <div class="menu-info">
+                                    <h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
+                                    <p>Will be 23 on April 24th</p>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)"> <i class="menu-icon fa fa-user bg-yellow"></i>
+                                <div class="menu-info">
+                                    <h4 class="control-sidebar-subheading">Frodo Updated His Profile</h4>
+                                    <p>New phone +1(800)555-1234</p>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)"> <i class="menu-icon fa fa-envelope-o bg-light-blue"></i>
+                                <div class="menu-info">
+                                    <h4 class="control-sidebar-subheading">Nora Joined Mailing List</h4>
+                                    <p>nora@type.com</p>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)"> <i class="menu-icon fa fa-file-code-o bg-green"></i>
+                                <div class="menu-info">
+                                    <h4 class="control-sidebar-subheading">Cron Job 254 Executed</h4>
+                                    <p>Execution time 5 seconds</p>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- /.control-sidebar-menu -->
+
+                    <h3 class="control-sidebar-heading">Tasks Progress</h3>
+                    <ul class="control-sidebar-menu">
+                        <li>
+                            <a href="javascript:void(0)">
+                                <h4 class="control-sidebar-subheading"> Custom Template Design <span class="label label-danger pull-right">70%</span></h4>
+                                <div class="progress progress-xxs">
+                                    <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)">
+                                <h4 class="control-sidebar-subheading"> Update Resume <span class="label label-success pull-right">95%</span></h4>
+                                <div class="progress progress-xxs">
+                                    <div class="progress-bar progress-bar-success" style="width: 95%"></div>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)">
+                                <h4 class="control-sidebar-subheading"> Laravel Integration <span class="label label-warning pull-right">50%</span></h4>
+                                <div class="progress progress-xxs">
+                                    <div class="progress-bar progress-bar-warning" style="width: 50%"></div>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)">
+                                <h4 class="control-sidebar-subheading"> Back End Framework <span class="label label-primary pull-right">68%</span></h4>
+                                <div class="progress progress-xxs">
+                                    <div class="progress-bar progress-bar-primary" style="width: 68%"></div>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- /.control-sidebar-menu -->
+
+                </div>
+                <!-- /.tab-pane -->
+                <!-- Stats tab content -->
+                <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div>
+                <!-- /.tab-pane -->
+                <!-- Settings tab content -->
+                <div class="tab-pane" id="control-sidebar-settings-tab">
+                    <form method="post">
+                        <h3 class="control-sidebar-heading">General Settings</h3>
+                        <div class="form-group">
+                            <label class="control-sidebar-subheading"> Report panel usage
+                            <input type="checkbox" class="pull-right" checked>
+                        </label>
+                            <p> Some information about this general settings option </p>
+                        </div>
+                        <!-- /.form-group -->
+
+                        <div class="form-group">
+                            <label class="control-sidebar-subheading"> Allow mail redirect
+                            <input type="checkbox" class="pull-right" checked>
+                        </label>
+                            <p> Other sets of options are available </p>
+                        </div>
+                        <!-- /.form-group -->
+
+                        <div class="form-group">
+                            <label class="control-sidebar-subheading"> Expose author name in posts
+                            <input type="checkbox" class="pull-right" checked>
+                        </label>
+                            <p> Allow the user to show his name in blog posts </p>
+                        </div>
+                        <!-- /.form-group -->
+
+                        <h3 class="control-sidebar-heading">Chat Settings</h3>
+                        <div class="form-group">
+                            <label class="control-sidebar-subheading"> Show me as online
+                            <input type="checkbox" class="pull-right" checked>
+                        </label>
+                        </div>
+                        <!-- /.form-group -->
+
+                        <div class="form-group">
+                            <label class="control-sidebar-subheading"> Turn off notifications
+                            <input type="checkbox" class="pull-right">
+                        </label>
+                        </div>
+                        <!-- /.form-group -->
+
+                        <div class="form-group">
+                            <label class="control-sidebar-subheading"> Delete chat history <a href="javascript:void(0)"
+                                                                                          class="text-red pull-right"><i
+                                class="fa fa-trash-o"></i></a> </label>
+                        </div>
+                        <!-- /.form-group -->
+                    </form>
+                </div>
+                <!-- /.tab-pane -->
+            </div>
+        </aside>
+        <!-- /.control-sidebar -->
+        <!-- Add the sidebar's background. This div must be placed
+           immediately after the control sidebar -->
+        <div class="control-sidebar-bg"></div>
+    </div>
+    <!-- ./wrapper -->
+    <!--modal-->
+    <div class="modal fade" id="bootstrapModal" tabindex="-1" role="dialog" aria-labelledby="bootstrapModal">
+        <div class="modal-dialog" role="document" style="width:850px; height:660px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="bootstrapModal">证书预览</h4>
+                </div>
+                <div class="modal-body">
+                    <input name="weid" type="hidden">
+                    <div id="cert">
+                        <div class="certificate-img-box">
+                            <img class="content-1 cert_template">
+                            <div class="content-2">
+                                <img class="content-3 plat_logo">
+                                <div class="content-4 member_level"></div>
+                                <div class="content-6 cert_words"></div>
+                                <div class="content-8" style="">证书编号：<span class="end_number"></span></div>
+                                <div class="content-7">发证日期：<span class="begin_time"></span></div>
+                                <div class="content-8" style="">截止日期：<span class="end_time"></span></div>
+                                <img class="content-9 cert_seal">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default btn-cancel" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--modal-->
+    <div class="modal fade" id="bootstrapModal2" tabindex="-1" role="dialog" aria-labelledby="bootstrapModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="bootstrapModal">会员信息</h4>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-hover model-table" width="100%">
+                        <tbody>
+                            <form id="form" action="" method="post" class="form-horizontal" enctype="multipart/form-data">
+                                <input type="hidden" name="weid">
+                                <tr>
+                                    <td>个人简介</td>
+                                    <td><textarea name="intro" cols="70" rows="5" placeholder="请输入个人简介"></textarea></td>
+                                </tr>
+                                <tr>
+                                    <td>业务范围</td>
+                                    <td><textarea name="business" cols="70" rows="10" placeholder="请输入业务范围"></textarea></td>
+                                </tr>
+                                <tr>
+                                    <td>社会职务</td>
+                                    <td><textarea name="position" cols="70" rows="10" placeholder="请输入社会职务"></textarea></td>
+                                </tr>
+                                <tr>
+                                    <td>个人荣誉</td>
+                                    <td><textarea name="honor" cols="70" rows="10" placeholder="请输入个人荣誉"></textarea></td>
+                                </tr>
+                                <tr>
+                                    <td>个人履历</td>
+                                    <td><textarea name="resume" cols="70" rows="10" placeholder="请输入个人履历"></textarea></td>
+                                </tr>
+                            </form>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success sub-info">更改</button> <button type="button" class="btn btn-default btn-cancel" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--modal-->
+    <div class="modal fade" id="bootstrapModal3" tabindex="-1" role="dialog" aria-labelledby="bootstrapModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="bootstrapModal">线下续费</h4>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-hover model-table" width="100%">
+                        <tbody>
+                            <form id="form" action="" method="post" class="form-horizontal" enctype="multipart/form-data">
+                                <input type="hidden" name="weid">
+                                <input type="hidden" name="price">
+                                <tr>
+                                    <td>年数</td>
+                                    <td><input type="number" class="form-control" name="years" placeholder="输入续费年数"></td>
+                                </tr>
+                            </form>
+                            <tr>
+                                <td>应收金额(元)</td>
+                                <td><span class="total-money">0</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success sub-renew">立即续费</button> <button type="button" class="btn btn-default btn-cancel" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--modal-->
+    <div class="modal fade" id="bootstrapModal4" tabindex="-1" role="dialog" aria-labelledby="bootstrapModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="bootstrapModal">流程查看</h4>
+                </div>
+                <div class="modal-body">
+                    <table id="flows" class="table table-hover model-table" width="100%">
+                        <thead>
+                            <th width="15%"></th>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default btn-cancel" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery 3 -->
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="/common/js/canvas.js"></script>
+    <script type="text/javascript" src="/common/js/canvas2image.js"></script>
+    <!-- Bootstrap 3.3.7 -->
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="//cdn.staticfile.org/jquery.bootstrapvalidator/0.5.3/js/bootstrapValidator.min.js"></script>
+    <!-- DataTables -->
+    <script src="bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script src="/common/sweetalert2/dist/sweetalert2.min.js"></script>
+    <script src="/common/zoom/zoom.js"></script>
+    <!-- Include a polyfill for ES6 Promises (optional) for IE11 and Android browser -->
+
+    <!-- SlimScroll -->
+    <script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+    <!-- FastClick -->
+    <script src="bower_components/fastclick/lib/fastclick.js"></script>
+    <!-- AdminLTE App -->
+    <script src="dist/js/adminlte.min.js"></script>
+
+    <!-- AdminLTE for demo purposes -->
+    <script src="dist/js/demo.js"></script>
+    <script src="js/react.js"></script>
+    <script src="js/react-dom.js"></script>
+    <script src="js/browser.min.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/template/index.js"></script>
+
+    <!-- page script -->
+    <script>
+        var dt_table;
+        var __init = function() {
+            dt_table = $('#listTable').dataTable({
+                "sPaginationType": "full_numbers",
+                "sDom": "<'row-fluid inboxHeader'<'span6'<'dt_actions'>l><'span6'f>r>t<'row-fluid inboxFooter'<'span6'i><'span6'p>>",
+                "iDisplayLength": number_per_page,
+                "bAutoWidth": false,
+                　　　　　　　　　　"bLengthChange": false,
+                　　　　　　　　　　"bFilter": false,
+                "oLanguage": {
+                    "sSearch": "搜索",
+                    "sLengthMenu": "每页显示 _MENU_ 条记录",
+                    "sZeroRecords": "没有检索到数据",
+                    "sInfo": "显示 _START_ 至 _END_ 条 &nbsp;&nbsp;共 _TOTAL_ 条",
+                    "sInfoFiltered": "(筛选自 _MAX_ 条数据)",
+                    "sInfoEmtpy": "没有数据",
+                    "sProcessing": "正在加载数据...",
+                    "oPaginate": {
+                        "sFirst": "首页",
+                        "sPrevious": "前一页",
+                        "sNext": "后一页",
+                        "sLast": "末页"
+                    }
+                },
+                "bProcessing": true,
+                "bServerSide": true,
+                "sAjaxSource": ApiUrl + "member?kind=4",
+                "fnServerParams": function(aoData) {
+                    aoData.push({
+                        "name": "nickname",
+                        "value": $('input[name=nickname]').val()
+                    });
+                    aoData.push({
+                        "name": "phone",
+                        "value": $('input[name=phone]').val()
+                    });
+                    aoData.push({
+                        "name": "name",
+                        "value": $('input[name=name]').val()
+                    });
+                    aoData.push({
+                        "name": "is_pose",
+                        "value": $('select[name=is_pose]').val()
+                    });
+                    aoData.push({
+                        "name": "denied",
+                        "value": $('select[name=denied]').val()
+                    });
+                    aoData.push({
+                        "name": "expires",
+                        "value": $('select[name=expires]').val()
+                    });
+                },
+                "aoColumns": [{
+                    "mData": 'id',
+                    "render": function(data, type, full, others) {
+                        return others.settings._iDisplayStart + others.row + 1;
+                    }
+                }, {
+                    "mData": 'name',
+                    "render": function(data, type, full) {
+                        return (full.denied != 1 ? full.name : `<s>` + full.name + `</s>`) + (full.denied != 1 ? `<span class="pull-right"><a href="` + window.location.protocol + `//` + window.location.host + `/u/` + full.weid + `" target="_blank"><i class="fa fa-user" title="转到名片页"></i></a> &nbsp;<a  href="` + window.location.protocol + `//` + window.location.host + `/cert/` + full.weid + `" target="_blank"><i class="fa fa-credit-card" title="转到证书"></i></a></span>` : ``);
+                    }
+                }, {
+                    "mData": 'avatar',
+                    "render": function(data, type, full) {
+                        return full.avatar ? `<img src="` + ApiMaterPlatQiniuDomain + full.avatar + `"  width="60">` : ``;
+                    }
+                }, {
+                    "mData": 'nickname'
+                }, {
+                    "mData": 'level_name',
+                    'render': function(data, type, full) {
+                        return '<span class="label label-info">' + data + '</span>';
+                    }
+                }, {
+                    "mData": 'is_info',
+                    'render': function(data, type, full) {
+                        return data == 1 ? '<span class="label label-success">已完善</span>' : '<span class="label label-default">待完善</span>';
+                    }
+                }, {
+                    "mData": 'is_issued',
+                    'render': function(data, type, full) {
+                        return data == 1 ? '<span class="label label-success">已颁发</span>' : '<span class="label label-default">待颁发</span>';
+                    }
+                }, {
+                    "mData": 'is_pose',
+                    'render': function(data, type, full) {
+                        return (data == 1 ? `<span class="label label-success">封面人物</span> ` : ``) +
+                            (full.denied == 1 ? `<span class="label label-danger">黑名单</span>` : ``);
+                    }
+                }, {
+                    "mData": 'begin_time'
+                }, {
+                    "mData": 'end_time'
+                }, {
+                    "mData": 'operation',
+                    'render': function(data, type, full) {
+                        return `<div class="btn-group" data-id="` + full.weid + `">
+                                                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        功能 <span class="caret"></span>
+                                                    </button>
+                                                    <ul class="dropdown-menu">
+                                                        <li><a class="action action-cert">证书预览</a></li>
+                                                        <li><a class="action action-info">会员信息</a></li>
+                                                        <li><a class="action action-flows">流程查看</a></li>
+                                                        <li role="separator" class="divider"></li>` +
+                            (full.is_pose == 1 ? `<li><a class="action action-pose" data-is="2">取消封面推荐</a></li>` : `<li><a class="action action-pose" data-is="1">推荐到封面</a></li>`) +
+                            //(full.denied == 1 ? `<li><a class="action action-denied" data-is="2">取消拉黑</a></li>` : `<li><a class="action action-denied" data-is="1">拉黑处理</a></li>`) +
+                            `<li><a class="action action-renew">续费</a></li>` +
+                            `</ul>
+                                                </div>`;
+                    }
+                }],
+                "aoColumnDefs": [{
+                        "bSortable": false,
+                        "aTargets": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10]
+                    }, //can't be sorted
+                    {
+                        "bSearchable": false,
+                        "aTargets": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+                    }, //can't be searched 
+                ],
+                　　　　　　　　　　"aaSorting": [
+                    [0, "DESC"]
+                ],
+                "fnRowCallback": function(nRow, aData, iDisplayIndex) {
+                    return nRow;
+                },
+                "fnInitComplete": function(oSettings, json) {}
+
+            });
+        }
+        $(function() {
+            __init();
+        });
+
+        //证书图片下载
+        $(document).on('click', '#dw', function() {
+            var oCanvas = document.getElementById("thecanvas");
+
+            /*自动保存为png*/
+            // 获取图片资源
+            var img_data1 = Canvas2Image.saveAsPNG(oCanvas, true).getAttribute('src');
+            saveFile(img_data1, 'cert.png');
+
+
+            /*下面的为原生的保存，不带格式名*/
+            // 这将会提示用户保存PNG图片
+            // Canvas2Image.saveAsPNG(oCanvas);
+        });
+        // 保存文件函数
+        var saveFile = function(data, filename) {
+            var save_link = document.createElementNS('//www.w3.org/1999/xhtml', 'a');
+            save_link.href = data;
+            save_link.download = filename;
+
+            var event = document.createEvent('MouseEvents');
+            event.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+            save_link.dispatchEvent(event);
+        };
+        $('#bootstrapModal').on('hidden.bs.modal', function(e) {
+                $("#cert").parent().find('canvas').remove();
+                $("#cert").parent().find('.down-link').remove();
+                $("#cert").show();
+            })
+            //证书图片下载
+
+        // refresh data (filter)
+        $("input[name=nickname],input[name=phone],input[name=name],select[name=is_pose],select[name=denied],select[name=expires]").change(function() {
+            dt_table.fnSettings().sAjaxSource = ApiUrl + 'member?kind=4';
+            dt_table.fnDraw();
+        });
+
+        $(document).on('click', '.action', function() {
+            var weid = $(this).closest('.btn-group').data('id');
+            if (!weid) return;
+            if ($(this).hasClass('action-cert')) {
+                $('#bootstrapModal').modal('show');
+                $('#bootstrapModal input[name=weid]').val(weid);
+                $.ajax({
+                    url: ApiUrl + 'member/' + weid + '/cert',
+                    type: 'post',
+                    dataType: 'json',
+                    success: function(data) {
+                        if (data.code == 200) {
+                            console.log(data.data);
+                            $('.cert_template').attr('src', ApiMaterPlatQiniuDomain + data.data.cert_template);
+                            $('.cert_seal').attr('src', ApiMaterPlatQiniuDomain + data.data.cert_seal);
+                            $('.plat_logo').attr('src', ApiMaterPlatQiniuDomain + data.data.plat_logo);
+                            $('.member_level').text(data.data.member_level);
+                            $('.cert_words').text(data.data.cert_words);
+                            $('.end_number').text(data.data.cert_number);
+                            $('.begin_time').text(data.data.begin_time);
+                            $('.end_time').text(data.data.end_time);
+                            //生成图片证书
+                            html2canvas($("#cert"), {
+                                useCORS: true,
+                                onrendered: function(canvas) {
+                                    //生成base64图片数据 
+                                    canvas.setAttribute('id', 'thecanvas');
+                                    // var dataUrl = canvas.toDataURL();  
+                                    // var newImg = document.createElement("img");  
+                                    // newImg.src =  dataUrl;  
+                                    $("#cert").parent().append(canvas);
+                                    // $("#cert").parent().append('<div class="content-8 down-link" style=""><a id="dw" href="javascript:void;">一键下载</a></div>');
+                                    $("#cert").hide();
+                                }
+                            });
+                        } else {
+                            swal('提示', data.message, 'error');
+                        }
+                    },
+                    error: function(xhr) {
+                        console.log(xhr);
+                    }
+                });
+            }
+            if ($(this).hasClass('action-info')) {
+                $('#bootstrapModal2').modal('show');
+                $('#bootstrapModal2 input[name=weid]').val(weid);
+                $.ajax({
+                    url: ApiUrl + 'member/' + weid + '/info',
+                    type: 'get',
+                    dataType: 'json',
+                    success: function(data) {
+                        if (data.code == 200) {
+                            $('#bootstrapModal2 textarea[name=intro]').text(data.data.intro);
+                            $('#bootstrapModal2 textarea[name=business]').text(data.data.business);
+                            $('#bootstrapModal2 textarea[name=position]').text(data.data.position);
+                            $('#bootstrapModal2 textarea[name=honor]').text(data.data.honor);
+                            $('#bootstrapModal2 textarea[name=resume]').text(data.data.resume);
+                        } else {
+                            swal('提示', data.message, 'error');
+                        }
+                    },
+                    error: function(xhr) {
+                        console.log(xhr);
+                    }
+                });
+            }
+            if ($(this).hasClass('action-pose')) {
+                var is = $(this).data('is');
+                $.ajax({
+                    url: ApiUrl + 'member/' + weid + '/pose/' + is,
+                    type: 'get',
+                    dataType: 'json',
+                    success: function(data) {
+                        if (data.code == 200) {
+                            swal({
+                                text: is == 1 ? '已成功推荐到首页展示！' : '已取消首页推荐',
+                                type: 'success',
+                                timer: 20000
+                            }).then(
+                                function() {
+                                    location.reload();
+                                },
+                                // handling the promise rejection
+                                function(dismiss) {
+                                    if (dismiss === 'timer') {
+                                        location.reload();
+                                    }
+                                }
+                            );
+                        } else {
+                            swal('提示', data.message, 'error');
+                        }
+                    },
+                    error: function(xhr) {
+                        console.log(xhr);
+                    }
+                });
+            }
+            if ($(this).hasClass('action-denied')) {
+                var is = $(this).data('is');
+                $.ajax({
+                    url: ApiUrl + 'member/' + weid + '/denied/' + is,
+                    type: 'get',
+                    dataType: 'json',
+                    success: function(data) {
+                        if (data.code == 200) {
+                            swal({
+                                text: is == 1 ? '已拉黑！' : '已取消拉黑',
+                                type: 'success',
+                                timer: 20000
+                            }).then(
+                                function() {
+                                    location.reload();
+                                },
+                                // handling the promise rejection
+                                function(dismiss) {
+                                    if (dismiss === 'timer') {
+                                        location.reload();
+                                    }
+                                }
+                            );
+                        } else {
+                            swal('提示', data.message, 'error');
+                        }
+                    },
+                    error: function(xhr) {
+                        console.log(xhr);
+                    }
+                });
+            }
+            if ($(this).hasClass('action-renew')) {
+                $('#bootstrapModal3').modal('show');
+                $('#bootstrapModal3 input[name=weid]').val(weid);
+                $.ajax({
+                    url: ApiUrl + 'member/' + weid + '/renew_price',
+                    type: 'get',
+                    dataType: 'json',
+                    success: function(data) {
+                        if (data.code == 200) {
+                            $('#bootstrapModal3 input[name=price]').val(data.data.price);
+                        } else {
+                            swal('提示', data.message, 'error');
+                        }
+                    },
+                    error: function(xhr) {
+                        console.log(xhr);
+                    }
+                });
+            }
+            if ($(this).hasClass('action-flows')) {
+                $('#bootstrapModal4').modal('show');
+                $.ajax({
+                    url: ApiUrl + 'member/flows',
+                    type: 'post',
+                    dataType: 'json',
+                    data: {
+                        union_id: weid,
+                        type: 2
+                    },
+                    success: function(data) {
+                        var html = "";
+                        $(data.data).each(function(k, v) {
+                            if (k === 0) {
+                                var __html = `<tr class="last-flow">
+                            <td>` + new Date(v.time * 1000).format('yyyy/MM/dd hh:mm:ss') + `
+                            </td>
+                            <td>
+                                <div class="flow-title"></div>
+                                <div class="flow-info">
+                                    <ul>
+                                        <li><span class="flowinfo-step">` + v.step + `</span></li>` +
+                                    (v.result != "" ? `<li><span class="flowinfo-title">结果：</span><span class="flowinfo-val">` + v.result + `</span></li>` : ``) +
+                                    (v.remark != "" ? `<li><span class="flowinfo-title">备注：</span><span class="flowinfo-val">` + v.remark + `</span></li>` : ``) +
+                                    (v.real_name != "" && v.real_name != null ? `<li><span class="flowinfo-title">操作人：</span><span class="flowinfo-val">` + v.real_name + `</span></li>` : ``) +
+                                    `</ul>
+                                </div>
+                            </td>
+                        </tr>`;
+                            } else {
+                                var __html = `<tr class="common-flow">
+                            <td>` + new Date(v.time * 1000).format('yyyy-MM-dd hh:mm:ss') + `
+                            </td>
+                            <td>
+                                <div class="flow-title"></div>
+                                <div class="flow-info">
+                                    <ul>
+                                        <li><span class="flowinfo-step">` + v.step + `</span></li>` +
+                                    (v.result != "" ? `<li><span class="flowinfo-title">结果：</span><span class="flowinfo-val">` + v.result + `</span></li>` : ``) +
+                                    (v.remark != "" ? `<li><span class="flowinfo-title">备注：</span><span class="flowinfo-val">` + v.remark + `</span></li>` : ``) +
+                                    (v.real_name != "" && v.real_name != null ? `<li><span class="flowinfo-title">操作人：</span><span class="flowinfo-val">` + v.real_name + `</span></li>` : ``) +
+                                    `</ul>
+                                </div>
+                            </td>
+                        </tr>`;
+                            }
+                            html += __html;
+
+                        });
+                        $("#flows tbody").html(html);
+
+                    },
+                    error: function(xhr) {
+                        console.log(xhr);
+                    }
+                });
+            }
+        });
+        // update memebr info
+        $(document).on('click', '.sub-info', function() {
+            var weid = $('#bootstrapModal2 input[name=weid]').val();
+            var info = {
+                'intro': $('#bootstrapModal2 textarea[name=intro]').val(),
+                'business': $('#bootstrapModal2 textarea[name=business]').val(),
+                'position': $('#bootstrapModal2 textarea[name=position]').val(),
+                'honor': $('#bootstrapModal2 textarea[name=honor]').val(),
+                'resume': $('#bootstrapModal2 textarea[name=resume]').val(),
+            };
+            $.ajax({
+                url: ApiUrl + 'member/' + weid + '/info_alter',
+                type: 'post',
+                dataType: 'json',
+                data: {
+                    info: info,
+                },
+                success: function(data) {
+                    if (data.code == 200) {
+                        swal({
+                            text: '会员信息更新成功！',
+                            type: 'success',
+                            timer: 20000
+                        }).then(
+                            function() {
+                                location.reload();
+                            },
+                            function(dismiss) {
+                                if (dismiss === 'timer') {
+                                    location.reload();
+                                }
+                            }
+                        )
+                    } else {
+                        swal('提示', data.message, 'error');
+                    }
+                },
+                error: function(xhr) {
+                    console.log(xhr);
+                }
+            });
+        });
+        // renew the member
+        $(document).on('click', '.sub-renew', function() {
+            var weid = $('#bootstrapModal3 input[name=weid]').val();
+            var years = Math.abs($('#bootstrapModal3 input[name=years]').val());
+            $.ajax({
+                url: ApiUrl + 'member/' + weid + '/renew_offline',
+                type: 'post',
+                dataType: 'json',
+                data: {
+                    years: years,
+                },
+                success: function(data) {
+                    if (data.code == 200) {
+                        swal({
+                            text: '会员续期成功！',
+                            type: 'success',
+                            timer: 20000
+                        }).then(
+                            function() {
+                                location.reload();
+                            },
+                            function(dismiss) {
+                                if (dismiss === 'timer') {
+                                    location.reload();
+                                }
+                            }
+                        )
+                    } else {
+                        swal('提示', data.message, 'error');
+                    }
+                },
+                error: function(xhr) {
+                    console.log(xhr);
+                }
+            });
+        });
+        $(document).on('keyup', 'input[name=years]', function() {
+            $("span.total-money").text($("input[name=price]").val() * Math.abs($("input[name=years]").val()));
+        });
+    </script>
+</body>
+
+</html>
