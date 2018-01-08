@@ -64,7 +64,8 @@
         mounted : function () {
             var id = sessionStorage.getItem('enroll_id');
             if(!id){
-                window.location.href='/404'
+                alert(sessionStorage.getItem('enroll_id'))
+                //window.location.href='/404'
             }
             ajax.get('activity/enroll/detail/'+id).then((res)=>{
                 console.log(res);

@@ -612,6 +612,8 @@ malldetail();
                     }else{
                         $(":radio[name='postage_status'][value='2']").attr("checked","checked");
                     }
+                    goods.voucher_status==1?$(":radio[name='voucher_status'][value='1']").attr("checked","checked"):$(":radio[name='voucher_status'][value='2']").attr("checked","checked");
+                    goods.benefit_status==1?$(":radio[name='benefit_status'][value='1']").attr("checked","checked"):$(":radio[name='benefit_status'][value='2']").attr("checked","checked");
                     var i=1;
                     //var picbtn=$(".addimgmore").html();
                     //$(".addimgmore").children().remove();
@@ -689,6 +691,8 @@ malldetail();
             var range_id=$("[name='distribution_id']").val();
             var picture=filesnamestr;
             var addimglength=$(".addimg").length;
+            var voucher_status=$("input[name='voucher_status']:checked").val();
+            var benefit_status=$("input[name='benefit_status']:checked").val();
             var postage_status=$("input[name='postage_status']:checked").val();
             var postage=$("[name='postage']").val();
             var postage_max_money=$("[name='postage_max_money']").val();
@@ -782,7 +786,9 @@ malldetail();
                 postage_max_money:postage_max_money,
                 discount_status:discount_status,
                 discount:discount,
-                service:service
+                service:service,
+                benefit_status:benefit_status,
+                voucher_status:voucher_status,
             }
             // console.log(sendData);
 

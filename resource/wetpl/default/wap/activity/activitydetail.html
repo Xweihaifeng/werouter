@@ -88,7 +88,7 @@
     </div>
     <!-- 活动报名按钮 -->
     <aside class="wl-fixed-button J_BtnActivity">
-        <button class="wl-btn wl-btn-blue J_BtnBuyTicket" @click="apply(type)">{{state}}</button>
+        <button class="wl-btn J_BtnBuyTicket" style="background: transparent; border: none;" @click="apply(type)">{{state}}</button>
     </aside>
     <!-- 活动门票列表 -->
     <aside class="wl-layout J_LayoutTicket">
@@ -141,7 +141,7 @@
         detail.init();
     });
 
-    const userDetail = (weid, token, ref) => {
+    const userDetail = (weid, ref) => {
         $.ajax({
             url:  apiUrl + 'activity/enroll_my_order',
             type: 'POST',
@@ -152,21 +152,27 @@
                 activity_id: weid
             },
             success: function(data) {
-                console.log(data);
+                //console.log(data);
                 if (data.code == 200) {
                     switch (data.data.status) {
                         case 1: ref.state = '立即报名';
+                            $(".J_BtnBuyTicket").css({'background': '#04a6e9', 'box-shadow': '5px 5px 15px 0 #04a6e9', 'border': '1px solid #04a6e9'});
                             break;
                         case 2: ref.state = '立即支付';
-                            $(".wl-btn-blue").css({'background': '#ff7105', 'box-shadow': '5px 5px 15px 0 #ff7105', 'border': '1px solid #ff7105'});
+                            $(".J_BtnBuyTicket").css({'background': '#ff7105', 'box-shadow': '5px 5px 15px 0 #ff7105', 'border': '1px solid #ff7105'});
                             break;
-                        case 3: ref.state = '已报名';
-                            $(".wl-btn-blue").css({'background': '#FEC52B', 'box-shadow': '5px 5px 15px 0 #FEC52B', 'border': '1px solid #FEC52B'});
+                        case 3: ref.state = '查看门票';
+                            $(".J_BtnBuyTicket").css({'background': '#FEC52B', 'box-shadow': '5px 5px 15px 0 #FEC52B', 'border': '1px solid #FEC52B'});
                             break;
                         default: break;
                     }
                     if (data.data.status == 2) {
-                        sessionStorage.setItem('act-orderId', data.data.number);
+                        sessionStorage.setItem('activity_orderId', data.data.number);
+                        sessionStorage.setItem('activity_total', data.data.money);
+                        sessionStorage.setItem('enroll_id', data.data.enroll_id);
+                    }
+                    if (data.data.status == 3) {
+                        sessionStorage.setItem('enroll_id', data.data.enroll_id);
                     }
                 }
             }
@@ -178,7 +184,7 @@
             url: url,
             type: 'GET',
             success: function(data) {
-                console.log(data)
+                //console.log(data)
                 sessionStorage.setItem('activity_info', JSON.stringify(data));
                 if (data.code == 200) {
                     let p = data.data;
@@ -201,6 +207,7 @@
                     ref.order += ref.weid;
                     $("title").text(ref.title);
                     $("#favicon").attr('href', ApiMaterPlatQiniuDomain + plats_info.logo);
+                    $wx.share({title: ref.title, imgUrl: ref.cover, link: window.location.href, desc: ''})
                 }
             }
         })
@@ -212,7 +219,7 @@
             type: 'POST',
             data: data,
             success: function(data) {
-                console.log(data);
+                //console.log(data);
                 if (data.code == 200) {
                     data.data.list.map(x => ref.users.push(
                             {
@@ -232,7 +239,7 @@
             type: 'POST',
             data: data,
             success: function(data) {
-                console.log(data);
+                //console.log(data);
                 if (data.code == 200) {
                     data.data.list.map(x => ref.guests.push(
                             {
@@ -255,7 +262,7 @@
             url: apiUrl + 'activity/tickets?activity_id=' + weid,
             type: 'GET',
             success: function(data) {
-                console.log(data);
+                //console.log(data);
                 if (data.code == 200) {
                     if (data.data[0].type == 1) { //免费
                         sessionStorage.setItem('tickets', JSON.stringify(data.data.map(x => (x.num = 1, x.type = 1, x))));
@@ -300,8 +307,8 @@
             img: '/common/img/star-off-big.png'
         },
         created: function(){
-            sessionStorage.removeItem('activity_info');
-            sessionStorage.removeItem("tickets");
+            let removeItems = ['activity_info', 'tickets', 'enroll_id', 'activity_orderId', 'activity_total'];
+            removeItems.map(e => sessionStorage.removeItem(e))
             let _self = this;
             const url_info = apiUrl + 'activity/detail/' + _self.weid;
             const url_users = apiUrl + 'activity/enroll/lists';
@@ -310,32 +317,43 @@
             reqData(url_info, _self);
             reqUsers(url_users, {activity_id: _self.weid}, _self);
             reqGuest(url_guests, {activity_id: _self.weid}, _self);
-            userDetail(_self.weid, _self.token, _self);
+            userDetail(_self.weid, _self);
             reqTickets(_self.weid, _self);
+            new Promise(resolve => {
+                $.ajax({
+                    url: ACTIVITY_COLLECTION_ISCOLLECTION, //关注状态
+                    type: 'POST',
+                    data: { user_id: plats_user_info.weid, activity_id: this.weid },
+                    headers: {
+                        'Token': docCookies.getItem("token")
+                    },
+                    success: function(data) {
+                        //console.log(data);
+                        if (data.code == 200) {
+                            resolve(1);
+                        }
+                    },
+                    error: function(xhr) {
+                        console.log(xhr);
+                    }
+                })
+            }).then(data => {
+                this.collect = true;
+                this.img = '/common/img/star-on-big.png';
+            })
         },
         methods: {
-            apply: function(type){
-                //获取token 如不存在则跳转登录页 如存在则显示活动申请框
-                if (this.state != '已报名') {
-                    if (type == 1) {
+            apply: function(){
+                switch(this.state) {
+                    case '立即报名': if (this.type == 1) {
                         window.location.href = '/activity/order/' + this.weid;
-                    }
-                } else {
-                    alert('已报名');
+                    }; break;
+                    case '立即支付': $(".J_LayoutTicket, .backdrop").addClass('hide');
+                        window.location.href = '/pay/shopping?order_type=activity&store_num=' + sessionStorage.getItem('activity_orderId');
+                        break;
+                    case '查看门票': $(".J_LayoutTicket, .backdrop").addClass('hide');
+                        window.location.href = '/user/myactivity/support/ticket/';
                 }
-
-
-                /*if (true) {
-                    window.location.href = '/activity/apply/' + this.weid;
-                } else {
-                    //login
-                }
-
-                if (false) {
-                    layer.msg('活动暂未开始', {
-                        time: 1500
-                    })
-                }*/
             },
             detail: function(type){
                 switch(type) {
@@ -364,19 +382,35 @@
                     sessionStorage.setItem('tickets', JSON.stringify(this.tickets));
                 }
             },
+            coll: function(){
+                return new Promise(resolve => {
+                    $.ajax({
+                        url: apiUrl + "activity/collection/collection_or_cancel",
+                        type: "POST",
+                        headers: {
+                            'Token': docCookies.getItem("token")
+                        },
+                        data: {activity_id: this.weid},
+                        success: function (data) {
+                            resolve(data)
+                        }
+                    })
+                })
+            },
             like: function(collect){
+                var self = this;
                 if (collect) {
-//                    $.get("activity/collection/destroy/" + this.weid).then(res => {
-//                        console.log(res)
-                        this.collect = false;
-                        this.img = '/common/img/star-off-big.png';
-//                    })
+                    this.coll().then(data => {
+                        //console.log(data);
+                        self.collect = false;
+                        self.img = '/common/img/star-off-big.png';
+                    })
                 } else {
-//                    $.post("activity/collection/store", {activity_id: this.weid}).then(res => {
-//                        console.log(res)
-                        this.collect = true;
-                        this.img = '/common/img/star-on-big.png';
-//                    });
+                    this.coll().then(data => {
+                        //console.log(data)
+                        self.collect = true;
+                        self.img = '/common/img/star-on-big.png';
+                    })
                 }
             }
         }

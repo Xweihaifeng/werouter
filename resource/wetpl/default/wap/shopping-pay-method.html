@@ -1,4 +1,6 @@
 <#extend#>public/domain/domain_extend.html</#extend#>
+<link rel="stylesheet" href="{{PATH_TML}}css/home.css"/>
+<link rel="stylesheet" href="{{PATH_TML}}css/activity-detail.css"/>
 <script type="text/javascript">
     show.header = 'no';
     show.footer = 'no';
@@ -42,8 +44,8 @@
 <div v-if="order_type=='activity'">
     <ul class="header">
         <li>¥{{total}}</li>
-        <li><img :src="ApiMaterPlatQiniuDomain + activity.cover" width="60" height="60" /></li>
-        <li>{{activity.title}}</li>
+        <li><img :src="ApiMaterPlatQiniuDomain + activity.data.cover" width="60" height="60" /></li>
+        <li>{{activity.data.title}}</li>
     </ul>
     <div class="pay">
         <ul>
@@ -78,11 +80,14 @@
             activity: $app.get_storage('activity_info', 'session'),
             tickets: $app.get_storage('tickets', 'session'),
             total: 0,
-            cover: '',
         },
         created: function() {
-            this.type = $app.get_query_string('order_type');
-            this.tickets.filter(x => x.num != 0).map(x => this.total += x.num * x.price);
+            this.type = this.order_type;
+            if (this.tickets) {
+                this.tickets.filter(x => x.num != 0).map(x => this.total += x.num * x.price);
+            } else {
+                this.total = $app.get_storage('activity_total', 'session');
+            }
         },
         mounted: function() 
         {
@@ -90,16 +95,10 @@
             this.$nextTick(()=>{
                 this.store_num = $app.get_query_string('store_num');
                 //this.openid = $app.get_cookie('openid');
-                this.wx_pay = [{type: 'activity', data: {'order_id' : this.store_num , 'openid' : this.openid}},
-                               {type: 'shop', data: {'number' : this.store_num , 'openid' : this.openid}}];
-                if (this.type == 'shop') {
-                    this.shop_data();
-                } else {
-                    this.activity_data();
-                }
-                $wx.pages_openid({userid : plats_user_info.weid , page_user_id : this.order_detail} , (openid)=>{
-                    this.openid = openid;
-                });
+                switch(this.type) {
+                    case 'shop': this.shop_data(); break;
+                    case 'activity': this.activity_data(); break;
+                };
             });
         },
         methods:{
@@ -107,37 +106,46 @@
             {
                 ajax.get('order/detail/' + this.store_num).then((res)=>{
                     this.order_detail = res.data.mall_plat_user_id;
-                    //this.isopenid();
+                    this.isopenid();
                 });
             },
             activity_data()
             {
-                    this.order_detail = this.activity.plat_user_id;
-                    //this.isopenid();
+                this.order_detail = this.activity.data.plat_user_id;
+                this.isopenid();
             },
             // 获取商户与微信号对应的OPENID
             isopenid()
             {
-
+                $wx.pages_openid({userid : plats_user_info.weid , page_user_id : this.order_detail} , (openid)=>{
+                    this.openid = openid;
+                    this.wx_pay = [{type: 'activity', data: {'number' : this.store_num , 'openid' : this.openid}},
+                                   {type: 'shop', data: {'order_id' : this.store_num , 'openid' : this.openid}}];
+                });
             },
-            order_pay(type)
+            order_pay()
             {
-                var wxpay = this.wx_pay.filter(x => x.type == type)[0].data;
-                ajax.post('pages/wechatPay/mallOrderPhonePay' , wxpay).then((res)=>{
+                var self = this;
+                var wxpay = this.wx_pay.filter(x => x.type == this.type)[0].data;
+                var path = this.wx_post.filter(x => x.type == this.type)[0].path;
+                ajax.post(path, wxpay).then((res)=> {
                     if(res.code == 200)
                     {
                         $wx.pay(res.data.config , function(wx_res){
                             mb_message('支付成功');
                             setTimeout(()=>{
-                                $app.open_page(all_domian + 'shopping/allOrder');
-                            },1000); 
+                                switch(self.type) {
+                                    case 'shop': $app.open_page(all_domian + 'shopping/allOrder'); break;
+                                    case 'activity': $app.open_page(all_domian + 'user/myactivity/support/ticket/'); break;
+                                    default: break;
+                                }
+                            },1000);
                         });
                     }
                     else
                     {
                         mb_message('订单异常无法支付');
                     }
-
                 });
             }
         }
