@@ -238,6 +238,26 @@ var loadTickets = function(weid, callback) {
     });
 }
 
+$(document).on('click', '.all-sms-notify', function() {
+    layer.confirm('群发短信可能消耗大量短信余额，确认要群发？', {
+        title: '群发短信通知',
+        btn: ['确认发送', '取消']
+    }, function() {
+        layer.msg('正在发送...');
+        // todo..
+    }, function() {});
+});
+
+$(document).on('click', '.sms-notify', function() {
+    var enroll_id = $(this).closest('tr').data('id');
+    layer.confirm('确认要发送？', {
+        title: '短信通知',
+        btn: ['确认发送', '取消']
+    }, function() {
+        layer.msg('正在发送...' + enroll_id);
+        // todo..
+    }, function() {});
+});
 
 
 $(document).ready(function() {
@@ -409,6 +429,14 @@ $(document).ready(function() {
 
 
             ' <span style="color:#34b0df;">报名成功</span>' +
+
+
+            '</td>' +
+
+            '<td class="operate">' +
+
+
+            ' <span style="color:#34b0df;"><button class="btn btn-primary sms-notify">短信通知</button></span>' +
 
 
             '</td>' +
