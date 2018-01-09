@@ -30,7 +30,7 @@
                 <div class="title">
                     <span>{{cate_info.title}}</span>
                 </div>
-                <div class="fengcai">
+                <div class="fengcai" v-if="sub_rcon.length > 0">
                     <ul class="rongyu">
                         <li v-for="item in sub_rcon">
                             <a :href="channel_domain+'/'+item.weid | href">
@@ -46,15 +46,16 @@
                         </li>
 
                     </ul>
-                    <div class="fenye">
-                        <a href="">首页</a>
-                        <a href="">上一页</a>
-                        <a href="">1</a>
-                        <a href="">2</a>
-                        <a href="">3</a>
-                        <a href="">下一页</a>
-                        <a href="">尾页</a>
+                    <div class="fenye" v-if="total > limit">
+                        <a @click="page_fun(1);" v-if="page>1" style="cursor:pointer">首页</a>
+                        <a style="cursor:pointer" v-if="page>1" @click="page_fun(parseInt(page - 1));" >上一页</a>
+                        <a style="cursor:pointer" :class="{'pageT' : page == index}" v-for="index in page_show" @click="page_fun(index);" >{{index}}</a>
+                        <a v-if="page<total_page" style="cursor:pointer" @click="page_fun(parseInt(page) + 1);" >下一页</a>
+                        <a v-if="page<total_page" style="cursor:pointer" @click="page_fun(total_page);" >尾页</a>
                     </div>
+                </div>
+                <div class="null-block" v-if="sub_rcon.length <= 0">
+                       最近没有新鲜事，去其他地方逛逛吧！
                 </div>
             </div>
         </div>
@@ -72,7 +73,10 @@ var app = new Vue({
         cate_domain : $app.get_router(3), // 分类个性域名
         cate_info : {}, // 分类详细信息
         limit : 10,
-        page : 1
+        page : ($app.get_query_string('page')) ? $app.get_query_string('page') : 1,
+        total : 0,
+        total_page : 0,
+        page_show : []
     },
     mounted: function() {
         //$app.set_title('风采页面');
@@ -97,18 +101,23 @@ var app = new Vue({
             // 右侧新闻中心
             $sub_ajax.cms_content({cate_id : this.cate_domain , limit : this.limit , page : this.page} , (res)=>{
                 this.sub_rcon = res.data.list;
-                console.log(this.sub_rcon);
+                this.total = res.data.total;
+                //this.total = 100;
+                this.total_page = Math.ceil(this.total / this.limit);
+                //this.page_show = (this.total_page - this.page > 6 ) ? 6 : this.total_page ;
+                var left = ( (this.page -3) > 0 ) ? this.page -3 : 1;
+                var right = ( (this.page + 3) < this.total_page ) ? this.page + 3 : this.total_page;
+
+                for (var i = left; i < right + 1 ; i++) {
+                    this.page_show.push(i);
+                }
             });
             
         });
     },
     methods: {
-        video() {
-
-        },
-        goSearchOpen() {
-            var url = '';
-            url = all_domian + "so?q=" + this.searchText;
+        page_fun(index) {
+            var url = this.channel_domain +'/'+this.cate_domain + '?page=' + index;
             $app.open_page(url);
         }
     }

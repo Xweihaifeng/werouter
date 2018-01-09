@@ -571,7 +571,7 @@
             });
             $('#bootstrapModal').on('show.bs.modal', function(e) {
                 $.ajax({
-                    url: ApiUrl + 'cms/template?type=1',
+                    url: ApiUrl + 'scms/template?type=1',
                     type: 'get',
                     dataType: 'json',
                     success: function(data) {
@@ -601,7 +601,7 @@
                     'big_image': $('input[name=big_image]').val(),
                     'list_id': $('input[name=list_field]').val(),
                 };
-                $.post(ApiUrl + 'cms/channels', data, function(ret) {
+                $.post(ApiUrl + 'scms/channels', data, function(ret) {
                     if (ret.code == 200) {
                         location.href = 'channels.html';
                     } else {

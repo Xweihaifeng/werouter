@@ -2,21 +2,21 @@
         var params=null;
         $('#advListTable').DataTable({
             "ajax": {
-                url:ApiUrl+"scms/advs/lists",
+                url:ApiUrl+"cms/site/lists",
                 type:"GET",
                 data:data,
                 "dataSrc": function ( json ) {
                     // console.log(json.data.list);
                     for ( var i=0, ien=json.data.list.length ; i<ien ; i++ ) {
                         json.data.list[i].id=i+1;
-                        if(json.data.list[i].image!='#'){
-                            if(json.data.list[i].image.indexOf('http://')!=-1){
-                                 json.data.list[i].image='<img src="'+json.data.list[i].image+'" height="80px" width="200px" alt="" data-action="zoom">';
-                            }else{
-                             json.data.list[i].image='<img src="'+ApiMaterPlatQiniuDomain+json.data.list[i].image+'" height="80px" width="200px" alt="" data-action="zoom">';
-                             }
-                        } 
-                         json.data.list[i].operation="<a href=cmsadv_edit.html?weid="+json.data.list[i].weid+" class=\"btn btn-info\">编辑</a>&nbsp;&nbsp;<button class=\"btn btn-danger btn-delete\"  data-id="+json.data.list[i].weid+" data-toggle=\"popover\" data-placement=\"left\" data-trigger=\"focus\" data-html=\"true\" title=\"确定要删除？\" data-content=\"<button class='btn btn-danger btn-delete-confirm'  data-id="+json.data.list[i].weid+">确认</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class='btn btn-default'>取消</button>\" >删除</button>";
+                        // if(json.data.list[i].image!='#'){
+                        //     if(json.data.list[i].image.indexOf('http://')!=-1){
+                        //          json.data.list[i].image='<img src="'+json.data.list[i].image+'" height="80px" width="200px" alt="" data-action="zoom">';
+                        //     }else{
+                        //      json.data.list[i].image='<img src="'+ApiMaterPlatQiniuDomain+json.data.list[i].image+'" height="80px" width="200px" alt="" data-action="zoom">';
+                        //      }
+                        // } 
+                         json.data.list[i].operation="<a href=site_edit.html?weid="+json.data.list[i].weid+" class=\"btn btn-info\">编辑</a>&nbsp;&nbsp;<button class=\"btn btn-danger btn-delete\"  data-id="+json.data.list[i].weid+" data-toggle=\"popover\" data-placement=\"left\" data-trigger=\"focus\" data-html=\"true\" title=\"确定要删除？\" data-content=\"<button class='btn btn-danger btn-delete-confirm'  data-id="+json.data.list[i].weid+">确认</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class='btn btn-default'>取消</button>\" >删除</button>";
                     }
                      params=json.data.params;
                     return json.data.list;
@@ -25,10 +25,10 @@
                 },
             "columns": [
                 {"data": "id"},
-                {"data": "title"},
-                {"data": "image"},
-                {"data": "url"},
-                {"data": "type_title"},
+                {"data": "site_name"},
+                {"data": "phone"},
+                {"data": "domain"},
+                // {"data": "site_domain"},
                 {"data": "operation"},
             ],
             "destroy":true,//允许表格重新加载
@@ -100,38 +100,16 @@
  }
 $(document).ready(function(){
     start();
-     //分类select初始化
-     var initSelect = function(){
-        var advTypes='';
-         $.getJSON(ApiUrl+"scms/advTypes?limit=30",function(result){
-            $.each(result.data.list, function(i,item){
-               advTypes=advTypes+'<option value="'+item.weid+'" description="'+item.description+'">'+item.title+'</option>';
-            });
-             $("#type-select").append(advTypes);
-        });
-    };
-    initSelect();
     initAdvList(null);
-    $('#type-select').change(function(){ 
-        var type_id=$(this).children('option:selected').val(); 
-        var data = {
-            type_id:type_id,
-        };
-        initAdvList(data);
-    })
       $(document).on('click', '.btn-delete-confirm', function(){
             $.ajax({
-              url: ApiUrl + 'scms/advs/destroy',
+              url: ApiUrl + 'cms/site/destroy',
               type: 'post',
               data:{weid:$(this).data('id')},
               dataType: 'json',
               success: function(data){
                 if (data.code === 200){
-                      var type_id=$("#type-select").val(); 
-                      var data = {
-                          type_id:type_id,
-                      };
-                      initAdvList(data);
+                      initAdvList(null);
                   }else {
                      console.log('error: -200');
                 }

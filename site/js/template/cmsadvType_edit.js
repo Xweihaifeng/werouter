@@ -4,7 +4,7 @@ $(document).ready(function(){
      var init = function(){
          var type_id='';
         //数据初始化
-        $.getJSON(ApiUrl+"cms/advTypes/show?weid="+getUrlParam('weid'),function(result){
+        $.getJSON(ApiUrl+"scms/advTypes/show?weid="+getUrlParam('weid'),function(result){
             if (result.code === 200){
                        //console.log(result);
                         $('input[name=title]').val(result.data.title);
@@ -56,7 +56,7 @@ $(document).ready(function(){
                     type: "POST",
                     dataType: "json",
                     data:data,
-                    url: ApiUrl + 'cms/advTypes/update',
+                    url: ApiUrl + 'scms/advTypes/update',
                     success: function (data) {
                         if (data.code === 200){
                             window.location.replace('advTypes.html');

@@ -9,7 +9,7 @@ $(document).ready(function(){
     //网站详情获取
     var init = function(){
         $.ajax({
-            url: ApiUrl + 'cms/setting/show',
+            url: ApiUrl + 'scms/setting/show',
             type: 'get',
             dataType: 'json',
             success: function(data){
@@ -172,7 +172,7 @@ init();
                     type: "POST",
                     dataType: "json",
                     data:data,
-                    url: ApiUrl + 'cms/setting/'+weid,
+                    url: ApiUrl + 'scms/setting/'+weid,
                     success: function (data) {
                     	if (data.code === 200){
                            swal({text: '保存成功',type: 'success', timer: 20000});
@@ -202,7 +202,7 @@ init();
                     type: "POST",
                     dataType: "json",
                     data:data,
-                    url: ApiUrl + 'cms/setting/'+weid,
+                    url: ApiUrl + 'scms/setting/'+weid,
                     success: function (data) {
                       if (data.code === 200){
                          swal({text: '保存成功',type: 'success', timer: 20000});
@@ -235,7 +235,7 @@ init();
 
                     dataType: "json",
                     data:data,
-                    url: ApiUrl + 'cms/setting/'+weid,
+                    url: ApiUrl + 'scms/setting/'+weid,
                     success: function (data) {
                       if (data.code === 200){
                            swal({text: '保存成功',type: 'success', timer: 20000});
@@ -554,7 +554,7 @@ init();
                     type: "POST",
                     dataType: "json",
                     data:data,
-                    url: ApiUrl + 'cms/setting/'+weid,
+                    url: ApiUrl + 'scms/setting/'+weid,
                     success: function (data) {
                       if (data.code === 200){
                            swal({text: '保存成功',type: 'success', timer: 20000});

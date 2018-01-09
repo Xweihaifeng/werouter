@@ -514,12 +514,12 @@
                 });
                 id = getQueryParam('id');
                 $.ajax({
-                    url: ApiUrl + 'cms/categories/' + id,
+                    url: ApiUrl + 'scms/categories/' + id,
                     type: 'get',
                     dataType: 'json',
                     success: function(data) {
                         $.ajax({
-                            url: ApiUrl + 'cms/channels',
+                            url: ApiUrl + 'scms/channels',
                             type: 'get',
                             dataType: 'json',
                             success: function(data_) {
@@ -568,7 +568,7 @@
                         $('input[name=page_field]').val(data.data.page_id);
                         $('textarea[name=content]').html(data.data.content);
                         $.ajax({
-                            url: ApiUrl + 'cms/categories/' + id + '/template',
+                            url: ApiUrl + 'scms/categories/' + id + '/template',
                             type: 'get',
                             dataType: 'json',
                             success: function(data) {
@@ -589,7 +589,7 @@
             __init();
             var __cate_init = function(channel_id, parent_id) {
                 $.ajax({
-                    url: ApiUrl + 'cms/channel_categories?channel=' + channel_id,
+                    url: ApiUrl + 'scms/channel_categories?channel=' + channel_id,
                     type: 'get',
                     dataType: 'json',
                     success: function(rep) {
@@ -735,7 +735,7 @@
                 $('#bootstrapModal').modal('show');
                 var type = $(this).data('type');
                 $.ajax({
-                    url: ApiUrl + 'cms/template?type=' + type,
+                    url: ApiUrl + 'scms/template?type=' + type,
                     type: 'get',
                     dataType: 'json',
                     success: function(data) {
@@ -800,7 +800,7 @@
                     'show_id': $('input[name=show_field]').val(),
                     'page_id': $('input[name=page_field]').val(),
                 };
-                $.post(ApiUrl + 'cms/categories/' + id, data, function(ret) {
+                $.post(ApiUrl + 'scms/categories/' + id, data, function(ret) {
                     if (ret.code == 200) {
                         location.href = 'contentCategory.html';
                     } else {

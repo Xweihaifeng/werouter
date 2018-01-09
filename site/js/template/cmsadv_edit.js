@@ -4,7 +4,7 @@ $(document).ready(function(){
      var init = function(){
          var type_id='';
         //数据初始化
-        $.getJSON(ApiUrl+"cms/advs/show?weid="+getUrlParam('weid'),function(result){
+        $.getJSON(ApiUrl+"scms/advs/show?weid="+getUrlParam('weid'),function(result){
             if (result.code === 200){
                        //console.log(result);
                         $('input[name=title]').val(result.data.title);
@@ -22,7 +22,7 @@ $(document).ready(function(){
                         }
                                 //分类select初始化
                                 var advTypes='';
-                                 $.getJSON(ApiUrl+"cms/advTypes?limit=30",function(result){
+                                 $.getJSON(ApiUrl+"scms/advTypes?limit=30",function(result){
                                       //console.log(result);
                                     $.each(result.data.list, function(i,item){
                                       if(type_id==item.weid){
@@ -90,7 +90,7 @@ $(document).ready(function(){
                     type: "POST",
                     dataType: "json",
                     data:data,
-                    url: ApiUrl + 'cms/advs/update',
+                    url: ApiUrl + 'scms/advs/update',
                     success: function (data) {
                         if (data.code === 200){
                             window.location.replace('advertisements.html');

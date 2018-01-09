@@ -258,7 +258,7 @@ class controllerRouter extends controller
     // 分站频道额外规则
     public function sub_channel( $param, $match = array())
     {
-        if(config::$plats['sub_state'] !== FALSE)
+        if(config::$plats['sub_state'] != FALSE)
         {
             return TRUE;
         }
@@ -290,7 +290,7 @@ class controllerRouter extends controller
     // 频道额外规则
     public function channel( $param, $match = array())
     {
-        if(config::$plats['sub_state'] !== FALSE)
+        if(!empty(config::$plats['sub_state']) && config::$plats['sub_state'] != FALSE)
         {
             return FALSE;
         }
@@ -317,7 +317,7 @@ class controllerRouter extends controller
     // 频道额外规则
     public function channel_art( $param, $match = array())
     {
-        if(config::$plats['sub_state'] !== FALSE)
+        if(!empty(config::$plats['sub_state']) && config::$plats['sub_state'] != FALSE)
         {
             return FALSE;
         }
@@ -338,7 +338,7 @@ class controllerRouter extends controller
     // 频道详情页
     public function channel_detailid($param , $match = array())
     {
-        if(config::$plats['sub_state'] !== FALSE)
+        if(!empty(config::$plats['sub_state']) && config::$plats['sub_state'] != FALSE)
         {
             return FALSE;
         }

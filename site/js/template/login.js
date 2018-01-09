@@ -20,7 +20,6 @@ var init = function() {
                         var menuList = '';
                         var info = data.data.info;
                         var setting = JSON.stringify(data.data.setting);
-                        console.log(info);
                         var menu = JSON.stringify(JSON.parse(info.config).list);
                         sessionStorage.setItem('weId', info.weid);
                         sessionStorage.setItem('username', info.username);
@@ -30,6 +29,7 @@ var init = function() {
                         sessionStorage.setItem('role_id', info.role_id);
                         sessionStorage.setItem('token', data.token);
                         sessionStorage.setItem('setting', setting);
+                        sessionStorage.setItem('domain', info.domain);
                         //菜单修改
                         localStorage.setItem('cms_menulist', menu);
                         //console.log(localStorage.getItem('cms_menulist'));

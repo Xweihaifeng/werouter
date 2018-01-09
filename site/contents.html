@@ -432,7 +432,7 @@
                 },
                 "bProcessing": true,
                 "bServerSide": true,
-                "sAjaxSource": ApiUrl + "cms/contents/lists",
+                "sAjaxSource": ApiUrl + "scms/contents/lists",
                 "fnServerParams": function(aoData) {
                     aoData.push({
                         "name": "channel_id",
@@ -562,7 +562,7 @@
         var __init = function() {
             channel = getQueryParam('channel') ? getQueryParam('channel') : '';
             $.ajax({
-                url: ApiUrl + 'cms/channels',
+                url: ApiUrl + 'scms/channels',
                 type: 'get',
                 dataType: 'json',
                 success: function(data) {
@@ -588,7 +588,7 @@
 
         var __cate_init = function(channel_id) {
             $.ajax({
-                url: ApiUrl + 'cms/channel_categories?channel=' + channel_id,
+                url: ApiUrl + 'scms/channel_categories?channel=' + channel_id,
                 type: 'get',
                 dataType: 'json',
                 success: function(data) {
@@ -606,7 +606,7 @@
 
         var __cate_child_init = function(parent_id) {
             $.ajax({
-                url: ApiUrl + 'cms/cate_categories?cate=' + parent_id,
+                url: ApiUrl + 'scms/cate_categories?cate=' + parent_id,
                 type: 'get',
                 dataType: 'json',
                 success: function(data) {
@@ -634,7 +634,7 @@
                 return;
             }
             $.ajax({
-                url: ApiUrl + 'cms/contents/show_channel_by_content_id',
+                url: ApiUrl + 'scms/contents/show_channel_by_content_id',
                 type: 'post',
                 data: {
                     content_id: content_id
@@ -659,12 +659,12 @@
             __cate_child_init(parent_id);
         });
         $(document).on('change', 'select[name=channel],select[name=cate],select[name=cate_child],input[name=title],select[name=is_original],select[name=is_hot],select[name=is_pose],select[name=index_show],select[name=status]', function() {
-            dt_table.fnSettings().sAjaxSource = ApiUrl + 'cms/contents/lists';
+            dt_table.fnSettings().sAjaxSource = ApiUrl + 'scms/contents/lists';
             dt_table.fnDraw();
         });
         $(document).on('click', '.btn-delete-confirm', function() {
             $.ajax({
-                url: ApiUrl + 'cms/contents/' + $(this).data('id'),
+                url: ApiUrl + 'scms/contents/' + $(this).data('id'),
                 type: 'post',
                 data: {
                     _method: 'delete'
@@ -672,7 +672,7 @@
                 dataType: 'json',
                 success: function(data) {
                     layer.msg('删除成功！');
-                    dt_table.fnSettings().sAjaxSource = ApiUrl + 'cms/contents/lists';
+                    dt_table.fnSettings().sAjaxSource = ApiUrl + 'scms/contents/lists';
                     dt_table.fnDraw();
                 },
                 error: function(xhr) {
@@ -686,7 +686,7 @@
             var state = $(the).data('state') == 1 ? 2 : 1;
             var label = $(the).data('label');
             $.ajax({
-                url: ApiUrl + 'cms/contents/change_label_state',
+                url: ApiUrl + 'scms/contents/change_label_state',
                 type: 'post',
                 data: {
                     content_id: id,
@@ -722,7 +722,7 @@
             var id = $(this).data('id');
             var type = $(this).data('type');
             $.ajax({
-                url: ApiUrl + 'cms/contents/' + id,
+                url: ApiUrl + 'scms/contents/' + id,
                 type: 'post',
                 data: {
                     _method: 'put',

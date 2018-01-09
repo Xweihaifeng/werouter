@@ -405,6 +405,8 @@ class router_index extends controller
         //$this->data['domain'] = $_SERVER['HTTP_HOST'];
         $plats['var auth_code'] = auth_code($this->data['domain']);
 
+        $plats['var sub_domain'] = '';
+
         $this->data['domain'] = $_SERVER['HTTP_HOST'];
 
         // if(is_mobile() == TRUE && $this->data['wap_domain'] == 1)

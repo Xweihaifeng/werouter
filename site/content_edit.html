@@ -469,7 +469,7 @@
                 });
 
                 $.ajax({
-                    url: ApiUrl + 'cms/contents/' + id,
+                    url: ApiUrl + 'scms/contents/' + id,
                     type: 'get',
                     dataType: 'json',
                     success: function(data) {
@@ -508,13 +508,13 @@
             }
             var __init_channel = function(cate_id) {
                 $.ajax({
-                    url: ApiUrl + 'cms/categories/' + cate_id,
+                    url: ApiUrl + 'scms/categories/' + cate_id,
                     type: 'get',
                     dataType: 'json',
                     success: function(data) {
                         channel_id = data.data.channel_id;
                         $.ajax({
-                            url: ApiUrl + 'cms/channels',
+                            url: ApiUrl + 'scms/channels',
                             type: 'get',
                             dataType: 'json',
                             success: function(data_) {
@@ -544,7 +544,7 @@
 
             var __cate_init = function(channel_id, init) {
                 $.ajax({
-                    url: ApiUrl + 'cms/channel_categories?channel=' + channel_id,
+                    url: ApiUrl + 'scms/channel_categories?channel=' + channel_id,
                     type: 'get',
                     dataType: 'json',
                     success: function(data) {
@@ -566,7 +566,7 @@
             }
             var __cate_child_init = function(parent_id) {
                 $.ajax({
-                    url: ApiUrl + 'cms/cate_categories?cate=' + parent_id,
+                    url: ApiUrl + 'scms/cate_categories?cate=' + parent_id,
                     type: 'get',
                     dataType: 'json',
                     success: function(data) {
@@ -650,7 +650,7 @@
                         'publish_time': $('input[name=publish_time]').val(),
                         'status': $('select[name=status]').val(),
                     };
-                    $.post(ApiUrl + 'cms/contents/' + id, data, function(ret) {
+                    $.post(ApiUrl + 'scms/contents/' + id, data, function(ret) {
                         if (ret.code == 200) {
                             location.href = 'contents.html';
                         } else {
