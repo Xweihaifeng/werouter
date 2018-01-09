@@ -21,7 +21,7 @@ $(function(){
             aa();
         });
 
-        $(".btn-bL").on('click' , function(){
+        $(".Ibtn-bL").on('click' , function(){
             now--;
             if(now==-1){
                 now=$(".banner li").length-1;
