@@ -400,10 +400,13 @@ $(document).ready(function(){
                         }
                     })
                     console.log(data);
+                    var sendData = {};
+                    sendData['role_id'] = weid;
+                    sendData['config'] = data;
                     $.ajax({
                         url: ApiUrl + 'admins/set_config',
                         type: 'POST',
-                        data: data,
+                        data: sendData,
                         success: function(data) {
                             if (data.code === 200) {
                                 swal('', '保存成功', 'success');
