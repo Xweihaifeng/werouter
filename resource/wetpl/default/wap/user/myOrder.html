@@ -193,7 +193,7 @@
                     data={};
                     data.plat_user_id=plats_user_info.weid;
                     data.limit=10;
-                    data.page= (self.orderList.length/10)+1;
+                    data.page=Math.ceil((self.orderList.length/10)+1);
                     data.order_status=this.order_status;
                     this.init(data);
 
