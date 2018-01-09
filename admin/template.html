@@ -81,6 +81,28 @@
             border-bottom: 2px solid #36C6D3;
             color: #0b3e6f;
         }
+        .form-top > li:nth-of-type(2){
+            position: relative;
+        }
+        .form-top > li:nth-of-type(2) > span:nth-of-type(2){
+            color: #FFF;
+            font-size: 6px;
+            font-weight: bold;
+            position: absolute;
+            left: 0px;
+            top: -11px;
+        }
+        .hott{
+            display: block;
+            position: absolute;
+            top: -20px;
+            left: -19px;
+            width: 0px;
+            height: 0px;
+            border: 20px solid transparent;
+            border-top: 20px solid red;
+            transform:rotate(135deg);
+        }
 
         .form-child {
             width: 100%;
@@ -193,6 +215,8 @@
                         <ul class="form-top">
                             <li class="shown"><span>默认模板</span></li>
                             <li data-step="2" data-intro="点击进行自定义" data-position='right' data-scrollTo='tooltip'><span>自定义模板</span>
+                                <div class="hott"></div>
+                                <span>diy</span>
                             </li>
                         </ul>
                         <ul class="form-child">
@@ -457,7 +481,6 @@
                                                     </tbody>
                                                 </table>
                                             </div>
-
                                             <div class="row fc-list-footer table-checkable ">
                                                 <div class="col-md-5 fc-list-select">
                                                     <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
@@ -470,6 +493,9 @@
                                                     </button>
                                                 </div>
                                                 <div class="col-md-7 fc-list-page">
+                                                </div>
+                                                <div class="pull-right">
+                                                    <button type="button" class="btn btn-info pull-right" id="updateSet">保存</button>
                                                 </div>
                                             </div>
                                         </form>

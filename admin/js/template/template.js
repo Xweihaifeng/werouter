@@ -21,24 +21,9 @@ $(document).ready(function () {
                                 '<span style="padding-left: 15px;">预览</span></div>';
                         }
                     });
-
                     $("#default").html(defaults);
                     $("#custom").html(customs);
-                    $.ajax({
-                        url: ApiUrl + 'plat_setting',
-                        type: 'get',
-                        dataType: 'json',
-                        success: function (data) {
-                            if (data.code === 200) {
-                                $("#templateId").find("input[name=templateId][value=" + data.data.template_id + "]").attr("checked", true);
-                            } else {
-                                console.log('error: -200');
-                            }
-                        },
-                        error: function (xhr) {
-                            console.log(xhr);
-                        }
-                    });
+
                 } else {
                     parent.layer.msg(result.message);
                     return false;
