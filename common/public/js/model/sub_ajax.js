@@ -22,5 +22,27 @@
 			call(res);
 		});
 	}
+
+	//查询组织分类接口
+    sub_ajax.org = function(call){
+        ajax.get('cms/channels/domain_query/org').then((res)=>{
+            call(res);
+        });
+    }
+
+	// 分站侧导航接口
+    sub_ajax.aside = function(param,call){
+        ajax.get('cms/channel_categories',{params:param}).then((res)=>{
+            call(res);
+        });
+    }
+
+	//
+	sub_ajax.rcon = function(call){
+		ajax.get('cms/channels/domain_query/news').then((res)=>{
+			call(res);
+		});
+	}
+
 	window.$sub_ajax = sub_ajax;
 })(window);
