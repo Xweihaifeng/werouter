@@ -30,7 +30,7 @@
                 <div class="title">
                     <span>{{cate_info.title}}</span>
                 </div>
-                <div class="fengcai">
+                <div class="fengcai" v-if="sub_rcon.length > 0">
                     <ul class="rongyu">
                         <li v-for="item in sub_rcon">
                             <a :href="channel_domain+'/'+item.weid | href">
@@ -53,6 +53,9 @@
                         <a v-if="page<total_page" style="cursor:pointer" @click="page_fun(parseInt(page) + 1);" >下一页</a>
                         <a v-if="page<total_page" style="cursor:pointer" @click="page_fun(total_page);" >尾页</a>
                     </div>
+                </div>
+                <div class="null-block" v-if="sub_rcon.length <= 0">
+                       最近没有新鲜事，去其他地方逛逛吧！
                 </div>
             </div>
         </div>
@@ -104,7 +107,7 @@ var app = new Vue({
                 //this.page_show = (this.total_page - this.page > 6 ) ? 6 : this.total_page ;
                 var left = ( (this.page -3) > 0 ) ? this.page -3 : 1;
                 var right = ( (this.page + 3) < this.total_page ) ? this.page + 3 : this.total_page;
-                
+
                 for (var i = left; i < right + 1 ; i++) {
                     this.page_show.push(i);
                 }
