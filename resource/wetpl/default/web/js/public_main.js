@@ -1366,6 +1366,7 @@ req().then((data) => {
                     if (vdinfo != null) {
                         $("#hbl div:eq(0) p:eq(0)").text(vdinfo.title);
                         $("#hbl div:eq(0) p:eq(1)").html(`<a href="${'/' + vdinfo.domain}">更多>></a>`);
+                        $("#hbl div:eq(1)").css({'background': 'url(' + ApiMaterPlatQiniuDomain + vdinfo.list[0].thumb_image + ') no-repeat center'});
                         var vdtpl = vdinfo.list.reduce((tpl, e, i) =>
                             i >= 1 && i < 3 ?
                                 tpl += `<div class="hbs"><p><a href="${vdinfo.domain + '/' + e.weid}">> ${e.title.substr(0, 14)}</p>
@@ -1385,7 +1386,7 @@ req().then((data) => {
                         $("#hbm ul").append(mgztpl);
                     } else {
                         $("#hbm div:eq(0) p:eq(0)").text('杂志中心');
-                        $("#hbm ul").css({"background": "url(/common/img/page.png) no-repeat center", "background-size": "100%"});
+                        $("#hbm ul").css({"background": "url(/common/img/page.png) no-repeat center", "background-size": "100% 100%", "width": "300px", "height": "150px", "margin-top": "13px", "margin-left": "30px"});
                     }
                     if (report != null) {
                         $("#hbr div:eq(0) p:eq(0)").text(report.title);
