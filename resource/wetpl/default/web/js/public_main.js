@@ -57,7 +57,7 @@ const home = `
                 <div id="home-body">
                     <div class="fc">
                         <div class="qsfc">
-                            <p class="imgs-title">秦商风采</p>
+                            <p class="imgs-title"></p>
                             <p class="imgs-more">更多&gt;&gt;</p>
                         </div>
                     </div>
@@ -119,11 +119,7 @@ const home = `
                                     <a href="javascript:void(0)">站点地图</a>
                                     <a id="contact" href="javascript:void(0)">联系我们</a>
                                 </div>
-                                <div class="copyright">
-                                    <p>全球秦商大会组委会 陕西省秦商联合会 | 地址：西安市新城大院省政府院内综合楼B101 邮编：710006</p>
-                                    <p>办公电话：029-87298395 87298138 | 传真：029-87298138 | 电子邮件: sxsqslhh@163.com</p>
-                                    <p>版权所有 陕西省秦商联合会 | 网站备案信息：<a id="icp" href="javascript:void(0)"></a></p>
-                                </div>
+                                <div class="copyright"></div>
                                 <div class="_ideConac"><img src="/common/img/gabeian.png" width="60" height="60" /></div>
                             </footer>
                         </div>
@@ -199,14 +195,29 @@ const goodsBox = `
             `
 
 const header = `
-    <div class="header">
+    <div class="header clearfix">
         <div id="hl"></div>
-        <div id="hr">
+        <div id="hr" class="clearfix">
             <div id="ht">
-                <span>手机版</span>
-                <span>微信</span>
-                <span>微博</span>
-                <a href="http://2017.qqxqs.com" target="_blank"><span style="border-right: none;">访问旧版</span></a>
+                <aside>
+                    <span>手机版</span>
+                    <div>
+                        <img src="http://www.qqxqs.com/api//file/qrcode?margin=2&url=http://m.qqxqs.com" class="weixin img-responsive">
+                    </div>
+                </aside>
+                <aside>
+                    <span>微信</span>
+                    <div>
+                        <img src="${ApiMaterPlatQiniuDomain + plats_info.wx_qrcode}" alt="">
+                    </div>
+                </aside>
+                <aside>
+                    <span>微博</span>
+                    <div>
+                        <img src="${ApiMaterPlatQiniuDomain + plats_info.wb_qrcode}" alt="">
+                    </div>
+                </aside>
+                <aside><a href="" target="_blank" id="old"><span style="border-right:none;padding-left:12px;">访问旧版</span></a></aside>
             </div>
             <div id="hs">
                 <span><input type="text" id="search" class="form-control" placeholder="请输入关键字"></span>
@@ -330,6 +341,14 @@ req().then((data) => {
         $(".left-nav").css("height", ch);
         //$("#right-nav, #nav-news, #nav-org, #nav-news, #nav-help, #nav-share").css("height", ch);
     }
+    $("#old").attr('href', plats_info.old_link);
+    $(".copyright").html(plats_info.copyright);
+
+    $("#ht>aside").hover(function(){
+        $(this).find("div").fadeIn(0);
+    }, function(){
+        $(this).find("div").fadeOut(0);
+    })
 
     var showLogin = false; //调整窗口大小时登陆框是否存在
     var width = $(window).width() / 2 - 180;
@@ -895,7 +914,7 @@ req().then((data) => {
             url: CMS_ADVS,
             dataType: 'json',
             success: function(data){
-                //console.log(data.data);                
+                //console.log(data.data);
 
                 //显示header
                 var addBg = (url, id, w, h) => {
@@ -905,9 +924,13 @@ req().then((data) => {
                     })
                 }
 
-                addBg(data.data.header1.image, '#hl', 196, 45);
-                addBg(data.data.header2.image, '#big', 960, 235);
-                $(".big a").attr('href', data.data.header2.url);
+                if (data.data.header1 != null) {
+                    addBg(data.data.header1.image, '#hl', 196, 45);
+                }
+                if (data.data.header2 != null) {
+                    addBg(data.data.header2.image, '#big', 960, 235);
+                    $(".big a").attr('href', data.data.header2.url);
+                }
 
                 /*var isEnter = true; // 鼠标在main中
                 var isFirst = true; // 鼠标第一次离开main
@@ -1055,7 +1078,7 @@ req().then((data) => {
                 if (data.data.peoples_title != null) {
                     $(".imgs-title").text(data.data.peoples_title.title);
                 } else {
-                    $(".imgs-title").text('风采');
+                    $(".imgs-title").text('企商风采');
                 }
 
                 //会长
@@ -1299,8 +1322,6 @@ req().then((data) => {
 
                 //官方发布
                 $("#release").html(setting.weibo_show);
-                
-
                 var title = setting.title;
                 var favicon = setting.favicon;
                 var keyWord = setting.key_word;
@@ -1337,37 +1358,43 @@ req().then((data) => {
                 url: CMS_INDEX_GRID,
                 dataType: 'json',
                 success: function(data){
-                    //console.log(data.data);
+                    console.log(data.data);
                     var vdinfo = data.data.spzx;
+                    var vdsource = vdinfo.list[0].source_url;
                     var magazine = data.data.mag;
                     var report = data.data.ztbd;
-                    $("#hbl div:eq(0) p:eq(0)").text(vdinfo.title);
-                    $("#hbl div:eq(0) p:eq(1)").html(`<a href="${'/' + vdinfo.domain}">更多>></a>`);
-                    $("#hbm div:eq(0) p:eq(0)").text(magazine.title);
-                    $("#hbm div:eq(0) p:eq(1)").html(`<a href="${'/magazine/' + magazine.domain}">更多>></a>`);
-                    $("#hbr div:eq(0) p:eq(0)").text(report.title);
-                    //$("#hbr div:eq(0) p:eq(1)").html(`<a href="${'/' + report.domain}">更多>></a>`);
-                    $("#hbr div:eq(0) p:eq(1)").html('更多>>');
-                    var mgztpl = magazine.list.reduce((tpl, e, i) =>
-                        i < 6 ? 
-                        tpl += `<a href="${'/magazine/' + magazine.domain + '/' + e.weid}" target="_blank"><li><img src="${imgSet(e.cover, 94, 128)}" /></li></a>`
-                        : tpl, '');
-
-                    var rptpl = report.list.reduce((tpl, e, i) => 
-                        i < 4 ? tpl += `<a href="${'/' + report.domain + '/' + e.domain}" target="_blank"><li><img src="${imgSet(e.thumb_image, 240, 60)}" height="60" /></li></a>` : tpl, '');
-
-                    var vdtpl = vdinfo.list.reduce((tpl, e, i) =>
-                        i >= 1 && i < 3 ?
-                        tpl += `<div class="hbs"><p><a href="${vdinfo.domain + '/' + e.weid}">> ${e.title.substr(0, 14)}</p>
+                    if (vdinfo != null) {
+                        $("#hbl div:eq(0) p:eq(0)").text(vdinfo.title);
+                        $("#hbl div:eq(0) p:eq(1)").html(`<a href="${'/' + vdinfo.domain}">更多>></a>`);
+                        var vdtpl = vdinfo.list.reduce((tpl, e, i) =>
+                            i >= 1 && i < 3 ?
+                                tpl += `<div class="hbs"><p><a href="${vdinfo.domain + '/' + e.weid}">> ${e.title.substr(0, 14)}</p>
                         <p style="margin-right: 10px;">${new Date(e.publish_time * 1000).getFullYear()}-${(new Date(e.publish_time * 1000).getMonth() + 1).toString().length == 1 ? '0' + (new Date(e.publish_time * 1000).getMonth() + 1) : new Date(e.publish_time * 1000).getMonth() + 1}-${new Date(e.publish_time * 1000).getDate().toString().length == 1 ? '0' + new Date(e.publish_time * 1000).getDate() : new Date(e.publish_time * 1000).getDate()}</p></div>`
-                        : tpl, '')
-
-                    $("#hbm ul").append(mgztpl);
-                    $("#hbr ul").append(rptpl);
-                    $("#hbl").append(vdtpl);
-                    $(".hb1").html(`<a href="${vdinfo.domain + '/' + vdinfo.list[0].weid}">${vdinfo.list[0].title}</a>`);
-                    $(".hb2").html(vdinfo.list[0].summary);
-
+                                : tpl, '')
+                        $("#hbl").append(vdtpl);
+                        $(".hb1").html(`<a href="${vdinfo.domain + '/' + vdinfo.list[0].weid}">${vdinfo.list[0].title}</a>`);
+                        $(".hb2").html(vdinfo.list[0].summary);
+                    }
+                    if (magazine != null) {
+                        $("#hbm div:eq(0) p:eq(0)").text(magazine.title);
+                        $("#hbm div:eq(0) p:eq(1)").html(`<a href="${'/magazine/' + magazine.domain}">更多>></a>`);
+                        var mgztpl = magazine.list.reduce((tpl, e, i) =>
+                            i < 6 ?
+                                tpl += `<a href="${'/magazine/' + magazine.domain + '/' + e.weid}" target="_blank"><li><img src="${imgSet(e.cover, 94, 128)}" /></li></a>`
+                                : tpl, '');
+                        $("#hbm ul").append(mgztpl);
+                    } else {
+                        $("#hbm div:eq(0) p:eq(0)").text('杂志中心');
+                        $("#hbm ul").css({"background": "url(/common/img/page.png) no-repeat center", "background-size": "100%"});
+                    }
+                    if (report != null) {
+                        $("#hbr div:eq(0) p:eq(0)").text(report.title);
+                        //$("#hbr div:eq(0) p:eq(1)").html(`<a href="${'/' + report.domain}">更多>></a>`);
+                        $("#hbr div:eq(0) p:eq(1)").html('更多>>');
+                        var rptpl = report.list.reduce((tpl, e, i) =>
+                            i < 4 ? tpl += `<a href="${'/' + report.domain + '/' + e.domain}" target="_blank"><li><img src="${imgSet(e.thumb_image, 240, 60)}" height="60" /></li></a>` : tpl, '');
+                        $("#hbr ul").append(rptpl);
+                    }
                     $("#vd").click(() => {
                         layer.open({
                           type: 2,
@@ -1376,7 +1403,7 @@ req().then((data) => {
                           shade: 0.8,
                           closeBtn: 1,
                           shadeClose: true,
-                          content: `http://image.qqxqs.com/qqxqs_video.mp4`
+                          content: `${vdsource}`
                         });
                     })
 
@@ -1449,7 +1476,7 @@ req().then((data) => {
             type:'post',
             data:sendData,
             headers: {
-                    'Token': localStorage.getItem('token')
+                    'Token': docCookies.getItem("token")
                 },
             success:function(data){
                 //console.log(data);
@@ -1579,7 +1606,7 @@ req().then((data) => {
             type:'post',
             data:sendData,
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             //console.log(token)
             success:function(data){
@@ -1639,7 +1666,7 @@ req().then((data) => {
             type:'post',
             data:{user_id:userid},
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success:function(data){
                 if(data.code == 200){
@@ -1717,7 +1744,7 @@ req().then((data) => {
             type:'post',
             data: sendData,
             headers: {
-                'Token': localStorage.getItem('token')
+                'Token': docCookies.getItem("token")
             },
             success: function(data){
                 //console.log(data);
@@ -1822,7 +1849,6 @@ req().then((data) => {
             $("#nav-help,#nav-share").css("margin-left", "0");
             $("#nav-org,#nav-help,#nav-share").css({ "position":"static", "left":"0" });
             list.filter(x => x.id == id)[0].val();
-            // mySwiper.startAutoplay();
         })
 
         // 首页组织模块
@@ -1833,8 +1859,6 @@ req().then((data) => {
             $("#nav-org,#nav-share").css({ "margin-left": "0", "position":"static" });
             $("#nav-help").css({ "position":"static", "left":"0", "margin-left":"105px" });
             list.filter(x => x.id == id)[0].val();
-            // mySwiper.startAutoplay();
-            //mySwiper.stopAutoplay();
         })
 
         // 首页互助模块
@@ -1846,8 +1870,6 @@ req().then((data) => {
             $("#nav-help").css({ "margin-left": "0", "position":"static" });
             $("#nav-share").css({ "position":"static", "left":"0", "margin-left":"210px" });
             list.filter(x => x.id == id)[0].val();
-            // mySwiper.startAutoplay();
-            //mySwiper.stopAutoplay();
         })
 
         // 首页共享模块
@@ -1859,8 +1881,6 @@ req().then((data) => {
             $("#nav-org").css({ "position":"absolute", "left":"-855px" });
             $("#nav-help").css({ "position":"absolute", "left":"-750px" });
             list.filter(x => x.id == id)[0].val();
-            // mySwiper.startAutoplay();
-            //mySwiper.stopAutoplay();
         })
     }
 
