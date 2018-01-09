@@ -1384,7 +1384,8 @@ req().then((data) => {
                                 : tpl, '');
                         $("#hbm ul").append(mgztpl);
                     } else {
-                        $("#hbm ul").css({"background": "url(/common/img/page.png) no-repeat center", "background-size": "100%"})
+                        $("#hbm div:eq(0) p:eq(0)").text('杂志中心');
+                        $("#hbm ul").css({"background": "url(/common/img/page.png) no-repeat center", "background-size": "100%"});
                     }
                     if (report != null) {
                         $("#hbr div:eq(0) p:eq(0)").text(report.title);
