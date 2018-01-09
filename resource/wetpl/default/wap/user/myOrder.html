@@ -157,7 +157,7 @@
         mounted: function () {
             data={};
             data.plat_user_id=plats_user_info.weid;
-            data.limit=1;
+            data.limit=10;
             data.page=1;
             data.order_status=this.order_status;
             this.init(data);
@@ -192,8 +192,8 @@
                     this.isBottom = false;
                     data={};
                     data.plat_user_id=plats_user_info.weid;
-                    data.limit=1;
-                    data.page= (self.orderList.length/1)+1;
+                    data.limit=10;
+                    data.page= (self.orderList.length/10)+1;
                     data.order_status=this.order_status;
                     this.init(data);
 
@@ -344,7 +344,7 @@
                 this.sortNum = ind;
                 var data={};
                 data.plat_user_id=plats_user_info.weid;
-                data.limit=1;
+                data.limit=10;
                 if(ind!=0){
                     data.order_status=ind;
                     this.order_status=ind;
