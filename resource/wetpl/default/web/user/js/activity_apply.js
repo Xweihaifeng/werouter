@@ -240,46 +240,78 @@ var loadTickets = function(weid, callback) {
 
 // 短信通知
 var smsNotify = function(weid, enroll_id, callback) {
+        layer.load();
+        $.ajax({
+            url: ACTIVITY_ENROLL_SMS_NOTIFY,
+            type: 'POST',
+            data: {
+                activity_id: weid,
+                enroll_id: enroll_id
+            },
+            headers: {
+                'Token': docCookies.getItem("token")
+            },
+            success: function(data) {
+                layer.closeAll('loading');
+                if (data.code == 200)
+                    callback(data.data);
+                else
+                    notice.alert(data.message);
+            },
+            error: function(xhr) {
+                layer.closeAll('loading');
+                console.log(xhr);
+            }
+        });
+    }
+    // 群发短信通知
+var allSmsNotify = function(weid, callback) {
+    layer.load();
     $.ajax({
-        url: ACTIVITY_ENROLL_SMS_NOTIFY,
+        url: ACTIVITY_ENROLL_ALL_SMS_NOTIFY,
         type: 'POST',
         data: {
-            activity_id: weid,
-            enroll_id: enroll_id
+            activity_id: weid
         },
         headers: {
             'Token': docCookies.getItem("token")
         },
         success: function(data) {
+            layer.closeAll('loading');
             if (data.code == 200)
                 callback(data.data);
             else
                 notice.alert(data.message);
         },
         error: function(xhr) {
+            layer.closeAll('loading');
             console.log(xhr);
         }
     });
 }
 
 $(document).on('click', '.all-sms-notify', function() {
-    layer.confirm('群发短信可能消耗大量短信余额，确认要群发？', {
+    confirmer = layer.confirm('群发短信可能消耗大量短信余额，确认要群发？', {
         title: '群发短信通知',
         btn: ['确认发送', '取消']
     }, function() {
-        layer.msg('正在发送...');
-        // todo..
+        layer.close(confirmer);
+        smsNotify(id, function(data) {
+            layer.msg('已发送!');
+        });
     }, function() {});
 });
 
 $(document).on('click', '.sms-notify', function() {
     var enroll_id = $(this).closest('tr').data('id');
-    layer.confirm('确认要发送？', {
+    confirmer = layer.confirm('确认要发送？', {
         title: '短信通知',
         btn: ['确认发送', '取消']
     }, function() {
-        layer.msg('正在发送...' + enroll_id);
-        // todo..
+        layer.close(confirmer);
+        smsNotify(id, enroll_id, function(data) {
+            layer.msg('已发送!');
+        });
     }, function() {});
 });
 
@@ -330,9 +362,9 @@ $(document).ready(function() {
     // var token="eyJpdiI6IlN0Y0o4T3lRVjRSMTJrU1pSVG16NVE9PSIsInZhbHVlIjoiNlpRXC9qMlV0cUtObkorcnQxcDczVTM3VXVPaXdHVGNqWTJmM0h5dktkcTVKbWYrU09jXC91eTY4eFRjRTFPdUNIUlc4eVZ4T0tvc3dZWTlqV0p1U2drejhBN0JNamltTWZhenVvaWp1SmFIWT0iLCJtYWMiOiJiNzFmNzBjNmE2ZjE2NWU1OGJmOThiYWU1MDNjNWU2MmY4MGFjZTZkOGY2NzRiYjg0NjM2NGQxNDNkMDU4NTBlIn0=";
 
     var saveUserInfo = function(token) {
-        localStorage.setItem('token', token);
-    }
-    // saveUserInfo(token);
+            localStorage.setItem('token', token);
+        }
+        // saveUserInfo(token);
 
     /*//route
     var isLogin = false; //判断用户登陆与否
@@ -399,7 +431,7 @@ $(document).ready(function() {
                 if (data.code == 401) {
                     // domain = '/index';
                     localStorage.removeItem('token')
-                    // window.location.href = '/login'
+                        // window.location.href = '/login'
                 }
                 if (data.code == 200) {
                     console.log(data);
@@ -512,7 +544,7 @@ $(document).ready(function() {
                     data.data.list.map(x => {
                         $(".J_EntryList").append(listtemplate(x));
 
-                })
+                    })
 
                     // 页码start
                     var pagenum = Math.ceil(data.data.total / limit);
@@ -712,26 +744,26 @@ $(document).ready(function() {
             }, function() {
                 ids.map(x => {
                     flagapply++;
-                console.log(x);
-                $.ajax({
-                    type: 'get',
-                    url: ACTIVITY_ENROLL_DESTROY + "/" + x,
-                    headers: {
-                        'Token': docCookies.getItem("token")
-                    },
-                    success: function(data) {
-                        console.log(data);
-                        if (data.code == 200) {
-                            if (flagapply >= ids.length) {
-                                mess_tusi('删除成功');
-                                location.reload();
+                    console.log(x);
+                    $.ajax({
+                        type: 'get',
+                        url: ACTIVITY_ENROLL_DESTROY + "/" + x,
+                        headers: {
+                            'Token': docCookies.getItem("token")
+                        },
+                        success: function(data) {
+                            console.log(data);
+                            if (data.code == 200) {
+                                if (flagapply >= ids.length) {
+                                    mess_tusi('删除成功');
+                                    location.reload();
+                                }
+                            } else {
+                                mess_tusi('删除失败');
                             }
-                        } else {
-                            mess_tusi('删除失败');
                         }
-                    }
+                    })
                 })
-            })
             }, function() {
 
             });
@@ -819,114 +851,114 @@ $(document).ready(function() {
 
     })
     var offon = function(_that, statusid) {
-        if (statusid == 2) {
-            _that.text("上架")
-            // _that.attr("data-id",statusid-1);
-            _that.data("id", statusid - 1);
+            if (statusid == 2) {
+                _that.text("上架")
+                    // _that.attr("data-id",statusid-1);
+                _that.data("id", statusid - 1);
 
-        } else if (statusid == 1) {
-            _that.text("下架");
-            // _that.attr("data-id",statusid+1);
-            _that.data("id", statusid + 1);
+            } else if (statusid == 1) {
+                _that.text("下架");
+                // _that.attr("data-id",statusid+1);
+                _that.data("id", statusid + 1);
 
+            }
         }
-    }
-    //4.商品分类
+        //4.商品分类
     var cateType = [];
     var catesfun = function(weid, id) {
-        $.ajax({
-            // url: "http://apitest.wezchina.com/goods/cates/list",
-            url: GOODS_CATES_LIST_USERID + "/" + weid,
-            type: 'get',
-            headers: {
-                'Token': docCookies.getItem("token")
-            },
-            success: function(data) {
-                console.log(data);
-                if (data.code == 200) {
-                    var cate = data.data;
-                    // $(".filter-category").children().remove();
+            $.ajax({
+                // url: "http://apitest.wezchina.com/goods/cates/list",
+                url: GOODS_CATES_LIST_USERID + "/" + weid,
+                type: 'get',
+                headers: {
+                    'Token': docCookies.getItem("token")
+                },
+                success: function(data) {
+                    console.log(data);
+                    if (data.code == 200) {
+                        var cate = data.data;
+                        // $(".filter-category").children().remove();
 
-                    cate.map(x => {
-                        if (x.weid == id) {
-                        var selected = "selected";
-                    } else {
-                        var selected = "";
-                    }
-                    $(".filter-category").append(
-                        '<option ' + selected + ' value=' + x.weid + '>' + x.name + '</option>'
-                    )
-                    cateType.push({ id: x.weid, name: x.name });
-                })
-                    if (id.length == 36) {
-                        usershoplist(id, type = 1);
-                    }
-                    $(".filter-category").bind("change", function() {
-                        flagpage = true;
-                        console.log($(".nav-filter .current").data("id"));
-                        // 通过分类查找商品列表
-                        if ($(".nav-filter .current").data("id") > 0) {
-                            usershoplist({ cateid: $(this).val(), statusid: $(".nav-filter .current").data("id") }, type = 4);
-
-                        } else {
-                            usershoplist($(this).val(), type = 1);
-
+                        cate.map(x => {
+                            if (x.weid == id) {
+                                var selected = "selected";
+                            } else {
+                                var selected = "";
+                            }
+                            $(".filter-category").append(
+                                '<option ' + selected + ' value=' + x.weid + '>' + x.name + '</option>'
+                            )
+                            cateType.push({ id: x.weid, name: x.name });
+                        })
+                        if (id.length == 36) {
+                            usershoplist(id, type = 1);
                         }
-                    })
+                        $(".filter-category").bind("change", function() {
+                            flagpage = true;
+                            console.log($(".nav-filter .current").data("id"));
+                            // 通过分类查找商品列表
+                            if ($(".nav-filter .current").data("id") > 0) {
+                                usershoplist({ cateid: $(this).val(), statusid: $(".nav-filter .current").data("id") }, type = 4);
 
+                            } else {
+                                usershoplist($(this).val(), type = 1);
+
+                            }
+                        })
+
+                    }
+                },
+                error: function(xhr) {
+                    console.log(xhr);
                 }
-            },
-            error: function(xhr) {
-                console.log(xhr);
-            }
-        })
-    }
-    // catesfun(weid);
-    // 5.商品下架请求
+            })
+        }
+        // catesfun(weid);
+        // 5.商品下架请求
     var flagstatus = 0;
     var _that = "";
     var offlinefun = function(id, statusid, checklen = 1) {
-        console.log(statusid);
+            console.log(statusid);
 
-        var sendData = {
-            weid: id,
-            status: statusid
-        }
-        $.ajax({
-            url: GOODS_UPDATE,
-            type: 'post',
-            data: sendData,
-            headers: {
-                'Token': docCookies.getItem("token")
-            },
-            success: function(data) {
-                console.log(data);
-                if (data.code == 200) {
-                    var shopdata = data.data;
-                    //下架成功后
-                    flagstatus++;
-                    console.log(checklen + ":checklen");
-                    console.log(flagstatus + ":flagstatus");
-                    if (checklen > 1) {
-                        if (flagstatus == checklen) {
-                            location.reload();
-
-
-                        }
-                    } else {
-                        mess_tusi("修改成功");
-                        offon(_that, statusid);
-                    }
-
-
-                }
-            },
-            error: function(xhr) {
-                console.log(xhr);
+            var sendData = {
+                weid: id,
+                status: statusid
             }
-        })
-    }
-    // 6.删除商品
+            $.ajax({
+                url: GOODS_UPDATE,
+                type: 'post',
+                data: sendData,
+                headers: {
+                    'Token': docCookies.getItem("token")
+                },
+                success: function(data) {
+                    console.log(data);
+                    if (data.code == 200) {
+                        var shopdata = data.data;
+                        //下架成功后
+                        flagstatus++;
+                        console.log(checklen + ":checklen");
+                        console.log(flagstatus + ":flagstatus");
+                        if (checklen > 1) {
+                            if (flagstatus == checklen) {
+                                location.reload();
+
+
+                            }
+                        } else {
+                            mess_tusi("修改成功");
+                            offon(_that, statusid);
+                        }
+
+
+                    }
+                },
+                error: function(xhr) {
+                    console.log(xhr);
+                }
+            })
+        }
+        // 6.删除商品
     var delshop = function(id) {
         console.log(id);
         $.ajax({
@@ -1085,13 +1117,13 @@ $(document).ready(function() {
 
     // 鼠标滑动到列表时加hover
     var lihover = function() {
-        $(".ws_item li").mouseenter(function() {
-            $(this).addClass("hover")
-        }).mouseleave(function() {
-            $(this).removeClass("hover")
-        })
-    }
-    // 没有商品时显示
+            $(".ws_item li").mouseenter(function() {
+                $(this).addClass("hover")
+            }).mouseleave(function() {
+                $(this).removeClass("hover")
+            })
+        }
+        // 没有商品时显示
     var ulnone = function(obj) {
         obj.each(function() {
             var liLen = $(this).children("li").length;
@@ -1107,143 +1139,143 @@ $(document).ready(function() {
 
     //left-navbar show words
     $("#login, #article, #project, #active, #shopping, #zone").hover(function(e) {
-        var id = $(this).attr("id");
-        if (id != 'login') {
-            $(this).find(".word").show();
-            $(this).css({
-                "line-height": "65px",
-                "padding-top": "10px"
-            });
-            $("#" + id + " .word").css("margin-top", "-35px");
-        } else {
-            if (!isLogin) {
+            var id = $(this).attr("id");
+            if (id != 'login') {
+                $(this).find(".word").show();
                 $(this).css({
                     "line-height": "65px",
+                    "padding-top": "10px"
                 });
-                // $("#" + id + " .word").css("margin-top", "-20px");
-            }
-        }
-    }, function() {
-        var id = $(this).attr("id");
-        $(this).find(".word").hide();
-        $(this).css("line-height", "65px");
-        $("#" + id + " .word").css("margin-top", "-55px");
-    })
-    /*
-        var modeleName = [];
-        var moduleState = function() {
-            $.ajax({
-                url: PAGES_MODULERUN_LIST,
-                type: 'GET',
-                headers: {
-                    'Token': docCookies.getItem("token")
-                },
-                success: function(data){
-                    if (data.code == 200){
-                        console.log('module:', data.data.list);
-                        var state = data.data.list;
-                        state.map(x => {
-                            modeleName.push(x.module_id);
-                            if (x.module_id === '4009ea20-8ede-11e7-83a8-156d1da77933') {
-                                if (x.status == 1) {
-                                    //$(".we-art").slideDown(500)
-                                    $(".we-art").show();
-                                    $('#toggle-button').prop("checked", true);
-                                }
-                            }
-                            if (x.module_id === '44fd5620-8d7f-11e7-9e08-e356d0b019f1') {
-                                if (x.status == 1) {
-                                    //$(".we-shop").slideDown(500)
-                                    $(".we-shop").show();
-                                    $('#toggle-button-4').prop("checked", true);
-                                }
-                            }
-                            if (x.module_id === 'b3c00b00-a4e2-11e7-b542-2d038cc12c12') {
-                                if (x.status == 1) {
-                                    //$(".we-shop").slideDown(500)
-                                    $(".we-active").show();
-                                    $('#toggle-button-2').prop("checked", true);
-
-                                }
-                            }
-                            if (x.module_id === 'c30c2160-a4e2-11e7-a2ad-35371a8cf051') {
-                                if (x.status == 1) {
-                                    //$(".we-shop").slideDown(500)
-                                    $(".we-project").show();
-                                    $('#toggle-button-1').prop("checked", true);
-
-                                }
-                            }
-                            if (x.module_id === 'a9d16bc0-ada0-11e7-8c59-993d3b1d7e06') {
-                                if (x.status == 1) {
-                                    //$(".we-shop").slideDown(500)
-                                    $(".we-crm").show();
-                                    $('#toggle-button-3').prop("checked", true);
-
-                                }
-                            }
-                        })
-                    } else {
-                        layer.msg(data.message, {
-                            time: 1500
-                        });
-                    }
-
-                    //列表折叠
-                    var curr = 'we-active';
-                    var status = true;
-                    var list = ['we-set', 'we-art', 'we-shop','we-active','we-project', 'we-app','we-crm', 'we-log'];
-
-                    var remove = function(id, list) {
-                        return list.filter(x => x != id);
-                    }
-
-                    $("." + curr + ":eq(0)").css("border-bottom", "1px solid #eeeeee");
-                    remove(curr, list).map(x => $("." + x + ":eq(1)").hide());
-
-                    var showList = function(state, id) {
-                        var id = "." + id;
-                        if (state) {
-                            $(id + ":eq(1)").hide(500);
-                            if (id != ".we-log") {
-                                $(id + ":eq(0)").css("border-bottom", "0");
-                            }
-                            $(id + " span img").attr('src', '/common/img/more1.png');
-                            status = false;
-                        } else {
-                            $(id + ":eq(1)").show(500);
-                            $(id + " span img").attr('src', '/common/img/more_unfold.png');
-                            $(id + ":eq(0)").css("border-bottom", "1px solid #eeeeee");
-                            status = true;
-                        }
-                    }
-
-                    list.map(x => {
-                        $("." + x).click(function() {
-                            if (curr == x) {
-                                remove(x, list).map(x => {
-                                    $("." + x + ":eq(1)").hide(500)
-                                    $("." + x + " span img").attr('src', '/common/img/more1.png');
-                                });
-                                showList(status, x);
-                            } else {
-                                status = false;
-                                $("." + curr + ":eq(0)").css("border-bottom", "0");
-                                curr = x;
-                                remove(x, list).map(x => {
-                                    $("." + x + ":eq(1)").hide(500)
-                                    $("." + x + " span img").attr('src', '/common/img/more1.png');
-                                });
-                                showList(status, x);
-                            }
-                        })
-                    })
-                },
-                error: function(xhr){
-                    console.log(xhr);
+                $("#" + id + " .word").css("margin-top", "-35px");
+            } else {
+                if (!isLogin) {
+                    $(this).css({
+                        "line-height": "65px",
+                    });
+                    // $("#" + id + " .word").css("margin-top", "-20px");
                 }
-            })
-        }*/
+            }
+        }, function() {
+            var id = $(this).attr("id");
+            $(this).find(".word").hide();
+            $(this).css("line-height", "65px");
+            $("#" + id + " .word").css("margin-top", "-55px");
+        })
+        /*
+            var modeleName = [];
+            var moduleState = function() {
+                $.ajax({
+                    url: PAGES_MODULERUN_LIST,
+                    type: 'GET',
+                    headers: {
+                        'Token': docCookies.getItem("token")
+                    },
+                    success: function(data){
+                        if (data.code == 200){
+                            console.log('module:', data.data.list);
+                            var state = data.data.list;
+                            state.map(x => {
+                                modeleName.push(x.module_id);
+                                if (x.module_id === '4009ea20-8ede-11e7-83a8-156d1da77933') {
+                                    if (x.status == 1) {
+                                        //$(".we-art").slideDown(500)
+                                        $(".we-art").show();
+                                        $('#toggle-button').prop("checked", true);
+                                    }
+                                }
+                                if (x.module_id === '44fd5620-8d7f-11e7-9e08-e356d0b019f1') {
+                                    if (x.status == 1) {
+                                        //$(".we-shop").slideDown(500)
+                                        $(".we-shop").show();
+                                        $('#toggle-button-4').prop("checked", true);
+                                    }
+                                }
+                                if (x.module_id === 'b3c00b00-a4e2-11e7-b542-2d038cc12c12') {
+                                    if (x.status == 1) {
+                                        //$(".we-shop").slideDown(500)
+                                        $(".we-active").show();
+                                        $('#toggle-button-2').prop("checked", true);
+
+                                    }
+                                }
+                                if (x.module_id === 'c30c2160-a4e2-11e7-a2ad-35371a8cf051') {
+                                    if (x.status == 1) {
+                                        //$(".we-shop").slideDown(500)
+                                        $(".we-project").show();
+                                        $('#toggle-button-1').prop("checked", true);
+
+                                    }
+                                }
+                                if (x.module_id === 'a9d16bc0-ada0-11e7-8c59-993d3b1d7e06') {
+                                    if (x.status == 1) {
+                                        //$(".we-shop").slideDown(500)
+                                        $(".we-crm").show();
+                                        $('#toggle-button-3').prop("checked", true);
+
+                                    }
+                                }
+                            })
+                        } else {
+                            layer.msg(data.message, {
+                                time: 1500
+                            });
+                        }
+
+                        //列表折叠
+                        var curr = 'we-active';
+                        var status = true;
+                        var list = ['we-set', 'we-art', 'we-shop','we-active','we-project', 'we-app','we-crm', 'we-log'];
+
+                        var remove = function(id, list) {
+                            return list.filter(x => x != id);
+                        }
+
+                        $("." + curr + ":eq(0)").css("border-bottom", "1px solid #eeeeee");
+                        remove(curr, list).map(x => $("." + x + ":eq(1)").hide());
+
+                        var showList = function(state, id) {
+                            var id = "." + id;
+                            if (state) {
+                                $(id + ":eq(1)").hide(500);
+                                if (id != ".we-log") {
+                                    $(id + ":eq(0)").css("border-bottom", "0");
+                                }
+                                $(id + " span img").attr('src', '/common/img/more1.png');
+                                status = false;
+                            } else {
+                                $(id + ":eq(1)").show(500);
+                                $(id + " span img").attr('src', '/common/img/more_unfold.png');
+                                $(id + ":eq(0)").css("border-bottom", "1px solid #eeeeee");
+                                status = true;
+                            }
+                        }
+
+                        list.map(x => {
+                            $("." + x).click(function() {
+                                if (curr == x) {
+                                    remove(x, list).map(x => {
+                                        $("." + x + ":eq(1)").hide(500)
+                                        $("." + x + " span img").attr('src', '/common/img/more1.png');
+                                    });
+                                    showList(status, x);
+                                } else {
+                                    status = false;
+                                    $("." + curr + ":eq(0)").css("border-bottom", "0");
+                                    curr = x;
+                                    remove(x, list).map(x => {
+                                        $("." + x + ":eq(1)").hide(500)
+                                        $("." + x + " span img").attr('src', '/common/img/more1.png');
+                                    });
+                                    showList(status, x);
+                                }
+                            })
+                        })
+                    },
+                    error: function(xhr){
+                        console.log(xhr);
+                    }
+                })
+            }*/
 
     //主页初始化
     /*var init__ = function(token){
