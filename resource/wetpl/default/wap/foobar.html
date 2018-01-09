@@ -17,35 +17,9 @@
         font-size: 26.66vw;
     }
 
-    /*
-    body {
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        font-family: "Helvetica Neue", Helvetica, sans-serif;
-        font-size: .85rem;
-        line-height: 1.5;
-        color: #3d4145;
-        background: #eee;
-        overflow: hidden
+    nav {
+        height: 0.48rem;
     }
-
-    a, button, input, select, textarea {
-        outline: 0
-    }
-
-    p {
-        margin: 1em 0
-    }
-
-    a {
-        color: #0894ec;
-        text-decoration: none;
-        -webkit-tap-highlight-color: transparent
-    }
-    */
 
     @font-face {
         font-family: "iconfont";
@@ -302,7 +276,7 @@
         transform-origin: 50% 0;
     }
 
-    .bar:after {
+    /*.bar:after {
         content: '';
         position: absolute;
         left: 0;
@@ -316,7 +290,7 @@
         z-index: 15;
         -webkit-transform-origin: 50% 100%;
         transform-origin: 50% 100%;
-    }
+    }*/
 
     .footer_bar {
         background: #fff!important;
@@ -364,9 +338,9 @@
 
     .bar-tab .tab-item .icon ~ .tab-label {
         display: block;
-        font-size: .05rem;
+        font-size: .04rem;
         position: relative;
-        top: .04rem;
+        top: .015rem;
     }
 
     .bar-tab .tab-item.active, .bar-tab .tab-item:active {
@@ -378,7 +352,7 @@
     }*/
 
     .bar-tab .tab-item .icon {
-        top: .03rem;
+        /*top: .03rem;*/
         width: 0.24rem;
         height: 0.24rem;
         font-size: 0.24rem;
@@ -429,13 +403,14 @@
     .box {
         position: absolute;
         left: 0;
+        right: 0;
         bottom: 0;
         z-index: 99999;
     }
 
     .release {
         width: 100%;
-        background-size: 100% 100%;
+        background-size: 100%;
     }
 
     p, body {
@@ -458,6 +433,7 @@
     }
 
     img {
+        width: 100%;
         max-width: 100%;
         display: block;
         margin: 0 auto;
@@ -506,6 +482,9 @@
         margin-right: 15%;
     }
 </style>
+
+<div style="width: 10px; height: 10px; margin:100px; transform: rotate(30deg)">x2</div>
+<div style=""></div>
 <!-- footer-nav 开始 -->
 <nav class="bar bar-tab footer_bar ">
     <a class="tab-item closed-item active" href="javascript:void(0);">
