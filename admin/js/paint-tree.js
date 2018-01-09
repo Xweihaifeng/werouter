@@ -2,7 +2,6 @@ $(function () {
     function aa() {
         $.ajax({
             url: 'http://new.wezchina.com/api/backend/admins/get_config?role_id=b4209b80-775e-11e7-a88a-0771558f58b6',
-            // url: ApiUrl + 'admins/get_channel' + '?role_id=' + 'b4209b80-775e-11e7-a88a-0771558f58b6',
             async: false,
             headers: {
                 'Token': 'eyJpdiI6InR5SEdaYTJibHZueTFaRUx2VUd2MlE9PSIsInZhbHVlIjoiZWdyMFwvOFdtSnJpd2pKVUZsb0VvaGZ3MVFcL1dESXd1OFRkSHVmbldHRmJPZ0hUeGRlK3RnYVFXRkVDNTF1Z0JcL0RNc1ZoVmV0UEFuVHZiVlBSUkdMQzZ1bFF5aUJNRnNvMzFJWFFhOGpcLzEwPSIsIm1hYyI6IjI0MmRjZGRkMDU5NGUxNDQ2MjcyN2RjMjRkYzJhYjRkZGIzZThiNmE5M2YyZGViMjdjOGE2ZTM1MDY2ZWU2YTEifQ==',
@@ -202,9 +201,7 @@ $(function () {
                                     </tr>
                                 `;
                                                 }
-
                                             })
-
                                     }else {
                                         str += `
                                     <tr class="odd gradeX">
@@ -239,8 +236,6 @@ $(function () {
                                     </tr>
                                 `;
                                     }
-
-
                                 })
                         }
                     }else {
