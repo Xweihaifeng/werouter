@@ -1,0 +1,78 @@
+<#extend#>public/domain/domain_extend.html</#extend#>
+<script type="text/javascript">
+    $app.set_title('优惠券详情');
+    show.header = 'no';
+</script>
+<link rel="stylesheet" href="{{PATH_TML}}shopping/css/ticket-info.css">
+<div class="ticket-info">
+    <div class="top">
+        <label>
+            <i></i>
+            <span>您已经领过该优惠券</span>
+        </label>
+        <div class="info-content">
+            <div>
+                <p>优惠券</p>
+                <p>
+                    <span>您已经领过了</span>
+                    <span>每人限领2张</span>
+                </p>
+            </div>
+            <a :href="'/' + pages_index + '/wemall'">进店逛逛</a>
+        </div>
+        <div class="footer-img"></div>
+    </div>
+    <div class="me">
+        <i></i>
+        <p>
+            <span>我领到的优惠券总额</span>
+            <span>24.00元</span>
+        </p>
+    </div>
+    <div class="line">
+        <span>看看其他朋友</span>
+    </div>
+    <ul>
+        <li>
+            <img src="/common/img/slice.jpg" alt="">
+            <div class="detail">
+                <h3>
+                    <span>霞</span>
+                    <span>01-09 11:00:54</span>
+                </h3>
+                <p>抢优惠券，选对货，做对事</p>
+            </div>
+        </li>
+        <li>
+            <img src="/common/img/slice.jpg" alt="">
+            <div class="detail">
+                <h3>
+                    <span>霞</span>
+                    <span>01-09 11:00:54</span>
+                </h3>
+                <p>抢优惠券，选对货，做对事</p>
+            </div>
+        </li>
+        <li>
+            <img src="/common/img/slice.jpg" alt="">
+            <div class="detail">
+                <h3>
+                    <span>霞</span>
+                    <span>01-09 11:00:54</span>
+                </h3>
+                <p>抢优惠券，选对货，做对事</p>
+            </div>
+        </li>
+    </ul>
+</div>
+<script>
+    new Vue({
+        el : '#app',
+        data : {
+
+        },
+        mounted : function () {
+
+        }
+    })
+</script>
