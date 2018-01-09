@@ -11,6 +11,9 @@ ajax.interceptors.request.use(
         if(is_login == 'yes'){
             config.headers.Token = plats_token;
         }
+        if($app.empty(sub_domain) != false){
+            config.headers.channel = sub_domain;
+        }
         config.headers.apiAuth = auth_code;
         return config;
     }

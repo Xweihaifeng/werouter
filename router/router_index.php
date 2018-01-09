@@ -41,9 +41,12 @@ class router_index extends controller
 
     // 协议类型
     public $http;
+
+    // 是否是分站
+    public $sub_state = FALSE;
     
     public function __construct()
-    {	
+    {   
         parent::__construct();
         // 获取域名用于验证网站
         $this->_domain = $_SERVER['HTTP_HOST'];
@@ -249,17 +252,7 @@ class router_index extends controller
 
         $rule = $this->data['match'];
 
-        config::$plats = $this->_domain_data($weid);
-        //$this->data($this->_domain_data($weid));
-
         $uri = current(explode('?', $_SERVER['REQUEST_URI']));
-
-        $controller_varify = $this->_controller($uri , $this->data);
-
-        if($this->data['wap_domain'] == 2 && $this->_mark_domain == 'm')
-        {
-            $uri = substr($uri, 2  , strlen($uri));
-        }
 
         //获取目录第一段
         $first_cate = '';
@@ -269,9 +262,23 @@ class router_index extends controller
         {
             $uri = substr($uri, strlen($first_cate) + 1  , strlen($uri));
             $this->data['template'] = 'substation/default';
+            $this->sub_state = $first_cate;
+        }
+         //END 获取目录第一段
+        config::$plats = $this->_domain_data($weid);
+        //$this->data($this->_domain_data($weid));
+        if($first_cate == 'sub_he')
+        {
             config::$plats['sub_state'] = TRUE;
         }
-        //END 获取目录第一段
+        $controller_varify = $this->_controller($uri , $this->data);
+
+        if($this->data['wap_domain'] == 2 && $this->_mark_domain == 'm')
+        {
+            $uri = substr($uri, 2  , strlen($uri));
+        }
+
+       
 
         $router_verify = new router_verify($router , $uri , $rule , $weid);
 
@@ -397,17 +404,26 @@ class router_index extends controller
         $protocol = ($this->data['http_type'] == 1) ? 'http://' : 'https://' ;
         //$this->data['domain'] = $_SERVER['HTTP_HOST'];
         $plats['var auth_code'] = auth_code($this->data['domain']);
-        if(is_mobile() == TRUE && $this->data['wap_domain'] == 1)
+
+        $this->data['domain'] = $_SERVER['HTTP_HOST'];
+
+        // if(is_mobile() == TRUE && $this->data['wap_domain'] == 1)
+        // {
+        //     $this->data['domain'] = 'm.'.$this->data['domain'];
+        // }
+        $plats['var api_domain'] = $protocol.$this->data['domain'].'/api/';
+        if($this->sub_state != FALSE)
         {
-            $this->data['domain'] = 'm.'.$this->data['domain'];
+            $this->data['domain'] = $this->data['domain'].'/'.$this->sub_state;
+            $plats['var sub_domain'] = $this->sub_state;
         }
         //JS 环境变量初始化
         $plats['var http_type'] = $protocol;
         $plats['var pages_type'] = 6;
         $plats['var site_domian'] = $this->data['domain'];
-        $plats['var api_domain'] = $protocol.$_SERVER['HTTP_HOST'].'/api/';
+        
         //$plats['var all_domian'] = $protocol.$this->data['domain'].'/'; 正式环境使用
-        $plats['var all_domian'] = $protocol.$_SERVER['HTTP_HOST'].'/';  //测试环境使用
+        $plats['var all_domian'] = $protocol.$this->data['domain'].'/';  //测试环境使用
         if(is_mobile() == TRUE && $this->data['wap_domain'] == 2)
         {
             $plats['var all_domian'] = $protocol.$_SERVER['HTTP_HOST'].'/m/';  //测试环境使用

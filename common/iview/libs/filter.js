@@ -1,13 +1,13 @@
 
 Vue.filter('img_src', function (value , width , height, mode) {
 
-    if (!value) return '';
+    if (!value) return '/common/img/news_default.jpg';
 
     if(value.indexOf('http') !== -1){
 
         return value;
     }
-
+    
     var settings = http_type + plats_qiniu.domain_custom + '/';
 
     if($app.empty(width) == false || $app.empty(height) == false )
