@@ -1,12 +1,9 @@
 <#extend#>public/sub_extend.html</#extend#>
 <link rel="stylesheet" href="{{PATH_TML}}css/main1.css">
-<<<<<<< HEAD
 <script src="{{PATH_TML}}js/main1.js"></script>
-=======
 <div class="ban">
 	<img src="{{PATH_TML}}image/20170816110124-0.0_副本_副本.jpg" alt="">
 </div>
->>>>>>> 63803bece6a20ca35e8c967de16238087a6a965f
 <div class="main-bg">
  <main>
 	 <div class="main-s1">
@@ -26,13 +23,14 @@
 						    </li>
 					    </ul>
 					    <div class="btn">
-						   <div class="btn-bL"></div>
-						   <div class="btn-bR"></div>
+						   <div class="Ibtn-bL"></div>
+						   <div class="Ibtn-bR"></div>
 					    </div>
 					    <ul class="yuan">
 							<li v-for="item in sub_ads.banners.list" class="yson"></li>
 					    </ul>
 				    </div>
+
 				    <div class="s1-lbright">
 						<ul class="s1-lbr">
 							<li v-for="item in sub_index.news">
@@ -147,7 +145,7 @@
 					 </li>
 				 </ul>
 				 <ul class="fc-big fc2">
-					 <li>
+					 <li v-for="item in sub_ads.nitoce">
 						 <a href="">
 							 <img src="{{PATH_TML}}image/20170728100344-0.jpg" alt="">
 							 <div class="jie1">
