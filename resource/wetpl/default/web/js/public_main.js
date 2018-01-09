@@ -1358,8 +1358,9 @@ req().then((data) => {
                 url: CMS_INDEX_GRID,
                 dataType: 'json',
                 success: function(data){
-                    //console.log(data.data);
+                    console.log(data.data);
                     var vdinfo = data.data.spzx;
+                    var vdsource = vdinfo.list[0].source_url;
                     var magazine = data.data.mag;
                     var report = data.data.ztbd;
                     if (vdinfo != null) {
@@ -1382,6 +1383,9 @@ req().then((data) => {
                                 tpl += `<a href="${'/magazine/' + magazine.domain + '/' + e.weid}" target="_blank"><li><img src="${imgSet(e.cover, 94, 128)}" /></li></a>`
                                 : tpl, '');
                         $("#hbm ul").append(mgztpl);
+                    } else {
+                        $("#hbm div:eq(0) p:eq(0)").text('杂志中心');
+                        $("#hbm ul").css({"background": "url(/common/img/page.png) no-repeat center", "background-size": "100%"});
                     }
                     if (report != null) {
                         $("#hbr div:eq(0) p:eq(0)").text(report.title);
@@ -1399,7 +1403,7 @@ req().then((data) => {
                           shade: 0.8,
                           closeBtn: 1,
                           shadeClose: true,
-                          content: `http://image.qqxqs.com/qqxqs_video.mp4`
+                          content: `${vdsource}`
                         });
                     })
 
@@ -1845,7 +1849,6 @@ req().then((data) => {
             $("#nav-help,#nav-share").css("margin-left", "0");
             $("#nav-org,#nav-help,#nav-share").css({ "position":"static", "left":"0" });
             list.filter(x => x.id == id)[0].val();
-            // mySwiper.startAutoplay();
         })
 
         // 首页组织模块
@@ -1856,8 +1859,6 @@ req().then((data) => {
             $("#nav-org,#nav-share").css({ "margin-left": "0", "position":"static" });
             $("#nav-help").css({ "position":"static", "left":"0", "margin-left":"105px" });
             list.filter(x => x.id == id)[0].val();
-            // mySwiper.startAutoplay();
-            //mySwiper.stopAutoplay();
         })
 
         // 首页互助模块
@@ -1869,8 +1870,6 @@ req().then((data) => {
             $("#nav-help").css({ "margin-left": "0", "position":"static" });
             $("#nav-share").css({ "position":"static", "left":"0", "margin-left":"210px" });
             list.filter(x => x.id == id)[0].val();
-            // mySwiper.startAutoplay();
-            //mySwiper.stopAutoplay();
         })
 
         // 首页共享模块
@@ -1882,8 +1881,6 @@ req().then((data) => {
             $("#nav-org").css({ "position":"absolute", "left":"-855px" });
             $("#nav-help").css({ "position":"absolute", "left":"-750px" });
             list.filter(x => x.id == id)[0].val();
-            // mySwiper.startAutoplay();
-            //mySwiper.stopAutoplay();
         })
     }
 
