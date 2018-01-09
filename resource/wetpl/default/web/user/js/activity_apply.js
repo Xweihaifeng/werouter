@@ -457,14 +457,6 @@ $(document).ready(function() {
 
             '</td>' +
 
-            '<td class="operate">' +
-
-
-            ' <span style="color:#34b0df;"><button class="btn btn-primary sms-notify">短信通知</button></span>' +
-
-
-            '</td>' +
-
             '</tr>';
         return listhtml;
     }

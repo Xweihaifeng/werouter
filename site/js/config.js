@@ -14,6 +14,7 @@ $.ajax({
         console.log(xhr);
     }
 })
+
 var token = sessionStorage.getItem('token');
 
 var number_per_page = 10;
@@ -49,21 +50,21 @@ var hearderTpl = `<header class="main-header">
 
                         <img src="dist/img/avatar.jpg" class="img-circle" alt="User-Image">
                         <p>
-                            <span id="username">Full Stack Developer</span>
-                            <small id="memo">Let's Create a New World!</small>
+                            <span id="username">sky hao - Full Stack Developer</span>
+                            <small id="memo">Let's Creat!</small>
                         </p>
                     </li>
                     <!-- Menu Body -->
                     <li class="user-body">
                         <div class="row">
                             <div class="col-xs-4 text-center">
-                                <a href="contents.html">内容</a>
+                                <a href="contents.html">CMS</a>
                             </div>
                             <div class="col-xs-4 text-center">
-                                <a href="contentCategory.html">栏目</a>
+                                <a href="votes.html">投票</a>
                             </div>
                             <div class="col-xs-4 text-center">
-                                <a href="channels.html">频道</a>
+                                <a href="apps.html">应用阀</a>
                             </div>
                         </div>
                         <!-- /.row -->
@@ -108,7 +109,7 @@ var start = function() {
     //if (avatar) $(".user-image,.img-circle").attr('src', ApiMaterPlatQiniuDomain + avatar);
     if (avatar == 'avatar.jpg') $(".user-image,.img-circle").attr('src', 'image/' + avatar);
     $("#username").text(username);
-    // $("#memo").text(memo ? memo : "");
+    $("#memo").text(memo ? memo : "");
     // var menu = JSON.parse(sessionStorage.getItem('menu'));
     // var len = menu.length;
     // genSideBarMenu(menu, len - 2);

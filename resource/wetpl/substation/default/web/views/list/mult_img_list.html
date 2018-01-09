@@ -4,9 +4,9 @@
 <div class="list1">
     <main>
         <div class="seat">
-            <img src="image/fanhui.png" alt="">
+            <img src="{{PATH_TML}}image/fanhui.png" alt="">
             当前位置在：
-            <a href="">首页</a>
+            <a href="http://cnew.wezchina.com/sub_he">首页</a>
             > 商会概括
         </div>
         <div class="main-big">
@@ -16,16 +16,8 @@
                     <span>Chamber of Commerce</span>
                 </h2>
                 <ul class="aside">
-                    <li><a href="">荣誉主席团</a></li>
-                    <li><a href="">名誉会长</a></li>
-                    <li><a href="">会长</a></li>
-                    <li><a href="">党委书记</a></li>
-                    <li><a href="">轮值会长</a></li>
-                    <li><a href="">执行副会长</a></li>
-                    <li><a href="">副会长</a></li>
-                    <li><a href="">常务理事</a></li>
-                    <li><a href="">理事</a></li>
-                    <li><a href="">监事会</a></li>
+                    <li><a href="">商会首页</a></li>
+                    <li v-for="item in sub_aside"><a href="">{{item.title}}</a></li>
                 </ul>
                 <div class="company">
                     <p>电话：021-50939588</p>
@@ -38,104 +30,104 @@
                     <span>商会简介</span>
                 </div>
                 <div class="fengcai">
-                    <ul class="rongyu">
-                        <li>
-                            <a href="">
-                                <img src="image/20170731101834-0.jpg" alt="">
-                            </a>
-                            <div class="rongyu-left">
-                                <h2>马云</h2>
-                                <p>马云，男，浙江杭州人，中共党员，阿里巴巴董事局主席。</p>
-                                <div class="gengduo">
-                                    <a href="">查看更多</a>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <a href="">
-                                <img src="image/20170731101834-0.jpg" alt="">
-                            </a>
-                            <div class="rongyu-left">
-                                <h2>马云</h2>
-                                <p>马云，男，浙江杭州人，中共党员，阿里巴巴董事局主席。</p>
-                                <div class="gengduo">
-                                    <a href="">查看更多</a>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <a href="">
-                                <img src="image/20170731101834-0.jpg" alt="">
-                            </a>
-                            <div class="rongyu-left">
-                                <h2>马云</h2>
-                                <p>马云，男，浙江杭州人，中共党员，阿里巴巴董事局主席。</p>
-                                <div class="gengduo">
-                                    <a href="">查看更多</a>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <a href="">
-                                <img src="image/20170731101834-0.jpg" alt="">
-                            </a>
-                            <div class="rongyu-left">
-                                <h2>马云</h2>
-                                <p>马云，男，浙江杭州人，中共党员，阿里巴巴董事局主席。</p>
-                                <div class="gengduo">
-                                    <a href="">查看更多</a>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <a href="">
-                                <img src="image/20170731101834-0.jpg" alt="">
-                            </a>
-                            <div class="rongyu-left">
-                                <h2>马云</h2>
-                                <p>马云，男，浙江杭州人，中共党员，阿里巴巴董事局主席。</p>
-                                <div class="gengduo">
-                                    <a href="">查看更多</a>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <a href="">
-                                <img src="image/20170731101834-0.jpg" alt="">
-                            </a>
-                            <div class="rongyu-left">
-                                <h2>马云</h2>
-                                <p>马云，男，浙江杭州人，中共党员，阿里巴巴董事局主席。</p>
-                                <div class="gengduo">
-                                    <a href="">查看更多</a>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <a href="">
-                                <img src="image/20170731101834-0.jpg" alt="">
-                            </a>
-                            <div class="rongyu-left">
-                                <h2>马云</h2>
-                                <p>马云，男，浙江杭州人，中共党员，阿里巴巴董事局主席。</p>
-                                <div class="gengduo">
-                                    <a href="">查看更多</a>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <a href="">
-                                <img src="image/20170731101834-0.jpg" alt="">
-                            </a>
-                            <div class="rongyu-left">
-                                <h2>马云</h2>
-                                <p>马云，男，浙江杭州人，中共党员，阿里巴巴董事局主席。</p>
-                                <div class="gengduo">
-                                    <a href="">查看更多</a>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
+                    <!--<ul class="rongyu">-->
+                        <!--<li>-->
+                            <!--<a href="">-->
+                                <!--<img src="image/20170731101834-0.jpg" alt="">-->
+                            <!--</a>-->
+                            <!--<div class="rongyu-left">-->
+                                <!--<h2>马云</h2>-->
+                                <!--<p>马云，男，浙江杭州人，中共党员，阿里巴巴董事局主席。</p>-->
+                                <!--<div class="gengduo">-->
+                                    <!--<a href="">查看更多</a>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a href="">-->
+                                <!--<img src="image/20170731101834-0.jpg" alt="">-->
+                            <!--</a>-->
+                            <!--<div class="rongyu-left">-->
+                                <!--<h2>马云</h2>-->
+                                <!--<p>马云，男，浙江杭州人，中共党员，阿里巴巴董事局主席。</p>-->
+                                <!--<div class="gengduo">-->
+                                    <!--<a href="">查看更多</a>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a href="">-->
+                                <!--<img src="image/20170731101834-0.jpg" alt="">-->
+                            <!--</a>-->
+                            <!--<div class="rongyu-left">-->
+                                <!--<h2>马云</h2>-->
+                                <!--<p>马云，男，浙江杭州人，中共党员，阿里巴巴董事局主席。</p>-->
+                                <!--<div class="gengduo">-->
+                                    <!--<a href="">查看更多</a>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a href="">-->
+                                <!--<img src="image/20170731101834-0.jpg" alt="">-->
+                            <!--</a>-->
+                            <!--<div class="rongyu-left">-->
+                                <!--<h2>马云</h2>-->
+                                <!--<p>马云，男，浙江杭州人，中共党员，阿里巴巴董事局主席。</p>-->
+                                <!--<div class="gengduo">-->
+                                    <!--<a href="">查看更多</a>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a href="">-->
+                                <!--<img src="image/20170731101834-0.jpg" alt="">-->
+                            <!--</a>-->
+                            <!--<div class="rongyu-left">-->
+                                <!--<h2>马云</h2>-->
+                                <!--<p>马云，男，浙江杭州人，中共党员，阿里巴巴董事局主席。</p>-->
+                                <!--<div class="gengduo">-->
+                                    <!--<a href="">查看更多</a>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a href="">-->
+                                <!--<img src="image/20170731101834-0.jpg" alt="">-->
+                            <!--</a>-->
+                            <!--<div class="rongyu-left">-->
+                                <!--<h2>马云</h2>-->
+                                <!--<p>马云，男，浙江杭州人，中共党员，阿里巴巴董事局主席。</p>-->
+                                <!--<div class="gengduo">-->
+                                    <!--<a href="">查看更多</a>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a href="">-->
+                                <!--<img src="image/20170731101834-0.jpg" alt="">-->
+                            <!--</a>-->
+                            <!--<div class="rongyu-left">-->
+                                <!--<h2>马云</h2>-->
+                                <!--<p>马云，男，浙江杭州人，中共党员，阿里巴巴董事局主席。</p>-->
+                                <!--<div class="gengduo">-->
+                                    <!--<a href="">查看更多</a>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a href="">-->
+                                <!--<img src="image/20170731101834-0.jpg" alt="">-->
+                            <!--</a>-->
+                            <!--<div class="rongyu-left">-->
+                                <!--<h2>马云</h2>-->
+                                <!--<p>马云，男，浙江杭州人，中共党员，阿里巴巴董事局主席。</p>-->
+                                <!--<div class="gengduo">-->
+                                    <!--<a href="">查看更多</a>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</li>-->
+                    <!--</ul>-->
                     <div class="fenye">
                         <a href="">首页</a>
                         <a href="">上一页</a>
@@ -154,21 +146,30 @@
 var app = new Vue({
     el: '#content_app',
     data: {
-        sub_index : {}, // 首页公用接口
-        sub_ads : {}, // 网站广告接口
+        sub_aside : [],   //侧导航接口
+        sub_rcon : {},    //右侧展示接口
     },
     mounted: function() {
         $app.set_title('风采页面');
         this.$nextTick(()=>{
-        	// 首页相关接口
-        	$sub_ajax.index((res)=>{
-        		this.sub_index = res.data;
-        	});
+            var self = this;
+            //查询组织id接口
+            $sub_ajax.org((res)=>{
+                console.log(res);
+                // 首页相关接口
+                var param = {
+                    channel : res.data.weid
+                };
+                $sub_ajax.aside(param,function (data) {
+                    console.log('fsadfa',data)
+                    self.sub_aside = data.data;
+                });
+            });
 
         	// 首页广告信息
-        	$sub_ajax.ads((res)=>{
-        		this.sub_ads = res.data;
-        		console.log(this.sub_ads.banners.list);
+        	$sub_ajax.rcon((res)=>{
+        		this.sub_rcon = res.data;
+
         	});
         });
     },
