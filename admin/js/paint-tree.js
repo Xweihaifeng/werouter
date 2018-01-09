@@ -87,9 +87,9 @@ $(function () {
                                     </label>
                                 </td>
                                 <td style="text-align:center">
-                                    ${l.id}                           </td>
+                                    ${g.id}                           </td>
                                 <td>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└&nbsp;&nbsp;&nbsp;<i class="fa"></i> ${l.name}</td>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└&nbsp;&nbsp;&nbsp;<i class="fa"></i> ${g.name}</td>
                                 <td style="text-align:center" class="myselect">
                                 </td>
                                 <td style="text-align:center" class="myselect">
