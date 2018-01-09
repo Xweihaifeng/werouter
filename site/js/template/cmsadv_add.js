@@ -3,7 +3,7 @@ $(document).ready(function(){
      //分类select初始化
      var initSelect = function(){
         var advTypes='';
-         $.getJSON(ApiUrl+"cms/advTypes?limit=30",function(result){
+         $.getJSON(ApiUrl+"scms/advTypes?limit=30",function(result){
             $.each(result.data.list, function(i,item){
                advTypes=advTypes+'<option value="'+item.weid+'" description="'+item.description+'">'+item.title+'</option>';
             });
@@ -50,7 +50,7 @@ $(document).ready(function(){
           }
           var data = {
                 title:$('input[name=title]').val(),
-                description:$('input[name=description]').val(),title:$('input[name=description]').val(),
+                description:$('input[name=description]').val(),
                 url:url,
                 type_id:$("#type-select").val(),
                 image:image,
@@ -60,7 +60,7 @@ $(document).ready(function(){
                     type: "POST",
                     dataType: "json",
                     data:data,
-                    url: ApiUrl + 'cms/advs/create',
+                    url: ApiUrl + 'scms/advs/create',
                     success: function (data) {
                         if (data.code === 200){
                             window.location.replace('advertisements.html');

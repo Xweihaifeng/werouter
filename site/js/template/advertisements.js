@@ -2,7 +2,7 @@
         var params=null;
         $('#advListTable').DataTable({
             "ajax": {
-                url:ApiUrl+"cms/advs/lists",
+                url:ApiUrl+"scms/advs/lists",
                 type:"GET",
                 data:data,
                 "dataSrc": function ( json ) {
@@ -103,7 +103,7 @@ $(document).ready(function(){
      //分类select初始化
      var initSelect = function(){
         var advTypes='';
-         $.getJSON(ApiUrl+"cms/advTypes?limit=30",function(result){
+         $.getJSON(ApiUrl+"scms/advTypes?limit=30",function(result){
             $.each(result.data.list, function(i,item){
                advTypes=advTypes+'<option value="'+item.weid+'" description="'+item.description+'">'+item.title+'</option>';
             });
@@ -121,7 +121,7 @@ $(document).ready(function(){
     })
       $(document).on('click', '.btn-delete-confirm', function(){
             $.ajax({
-              url: ApiUrl + 'cms/advs/destroy',
+              url: ApiUrl + 'scms/advs/destroy',
               type: 'post',
               data:{weid:$(this).data('id')},
               dataType: 'json',

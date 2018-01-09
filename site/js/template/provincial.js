@@ -2,7 +2,7 @@
         var params=null;
         $('#advListTable').DataTable({
             "ajax": {
-                url:ApiUrl+"cms/advs/lists",
+                url:ApiUrl+"scms/advs/lists",
                 type:"GET",
                 data:data,
                 "dataSrc": function ( json ) {

@@ -2,7 +2,7 @@
         var params=null;
         $('#advListTable').DataTable({
             "ajax": {
-                url:ApiUrl+"cms/advTypes",
+                url:ApiUrl+"scms/advTypes",
                 type:"GET",
                 data:data,
                 "dataSrc": function ( json ) {
@@ -93,7 +93,7 @@ $(document).ready(function(){
       initAdvList(null);
       $(document).on('click', '.btn-delete-confirm', function(){
             $.ajax({
-              url: ApiUrl + 'cms/advTypes/destroy',
+              url: ApiUrl + 'scms/advTypes/destroy',
               type: 'post',
               data:{weid:$(this).data('id')},
               dataType: 'json',

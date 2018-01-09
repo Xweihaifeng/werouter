@@ -16,6 +16,7 @@ $.ajax({
 })
 
 var token = sessionStorage.getItem('token');
+var domain = sessionStorage.getItem('domain');
 
 var number_per_page = 10;
 
@@ -86,7 +87,8 @@ $.ajaxSetup({
     global: true,
     dataType: 'json',
     headers: {
-        'Token': token
+        'Token': token,
+        'channel':domain
     },
     error: function() {
         location.href = 'login.html';

@@ -358,7 +358,7 @@
         $(function() {
             $('#listTable').DataTable({
                 "ajax": {
-                    url: ApiUrl + "cms/channels",
+                    url: ApiUrl + "scms/channels",
                     type: "get",
                     data: {},
                     "dataSrc": function(json) {
@@ -425,7 +425,7 @@
         })
         $(document).on('click', '.btn-delete-confirm', function() {
             $.ajax({
-                url: ApiUrl + 'cms/channels/' + $(this).data('id'),
+                url: ApiUrl + 'scms/channels/' + $(this).data('id'),
                 type: 'post',
                 data: {
                     _method: 'delete'
@@ -447,7 +447,7 @@
         $(document).on('click', '.btn-csh-confirm', function() {
            $('#'+$(this).data('id')).attr("disabled","true");
             $.ajax({
-                url: ApiUrl + 'cms/initCate',
+                url: ApiUrl + 'scms/initCate',
                 type: 'post',
                 data: {
                     channel_id:$(this).data('id'),

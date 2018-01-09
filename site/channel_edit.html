@@ -444,7 +444,7 @@
             var __init = function() {
                 id = getQueryParam('id');
                 $.ajax({
-                    url: ApiUrl + 'cms/channels/' + id,
+                    url: ApiUrl + 'scms/channels/' + id,
                     type: 'get',
                     dataType: 'json',
                     success: function(data) {
@@ -467,7 +467,7 @@
                         }
                         $('input[name=list_field]').val(data.data.list_id);
                         $.ajax({
-                            url: ApiUrl + 'cms/template/' + data.data.list_id,
+                            url: ApiUrl + 'scms/template/' + data.data.list_id,
                             type: 'get',
                             dataType: 'json',
                             success: function(data) {
@@ -616,7 +616,7 @@
             });
             $('#bootstrapModal').on('show.bs.modal', function(e) {
                 $.ajax({
-                    url: ApiUrl + 'cms/template?type=1',
+                    url: ApiUrl + 'scms/template?type=1',
                     type: 'get',
                     dataType: 'json',
                     success: function(data) {
@@ -647,7 +647,7 @@
                     'big_image': $('input[name=big_image]').val(),
                     'list_id': $('input[name=list_field]').val(),
                 };
-                $.post(ApiUrl + 'cms/channels/' + id, data, function(ret) {
+                $.post(ApiUrl + 'scms/channels/' + id, data, function(ret) {
                     if (ret.code == 200) {
                         location.href = 'channels.html';
                     } else {
