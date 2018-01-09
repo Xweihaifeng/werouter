@@ -1,13 +1,13 @@
-/*测导航第一栏显示*/
-.aside li:first-of-type{
+/*侧导航选中样式*/
+.aside .cenav_cur{
     padding-left: 36px;
     background: #fff;
     border-left: 4px solid #97BE0D;
 }
-.aside li:first-of-type a{
+.aside .cenav_cur a{
     color: #333;
 }
-/*测导航第一栏显示*/
+/*侧导航选中样式结束*/
 .fengcai{
     width: 100%;
     height: auto;
@@ -43,12 +43,16 @@
     height: 135px;
     float: left;
     padding: 0 20px;
+    position: relative;
 }
 .rongyu-left h2{
+    width: 100%;
+    height: 48px;
     font-size: 18px;
-    margin-bottom: 10px;
+    margin-bottom:5px;
     margin-top: 5px;
     font-weight: bold;
+    overflow: hidden;
 }
 .rongyu-left p{
     width: 100%;
@@ -64,6 +68,9 @@
     text-align: right;
     font-size: 14px;
     font-family: "微软雅黑";
+    position: absolute;
+    right: 13px;
+    bottom:5px;
 }
 .gengduo a{
     color: #999;
@@ -92,7 +99,7 @@
     margin-left: 5px;
     color: #666666;
 }
-.fenye a:nth-of-type(3){
+.fenye .pageT{
     border: 1px solid #fff;
 }
 /*分页结束*/
