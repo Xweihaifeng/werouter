@@ -296,7 +296,7 @@ $(document).on('click', '.all-sms-notify', function() {
         btn: ['确认发送', '取消']
     }, function() {
         layer.close(confirmer);
-        smsNotify(id, function(data) {
+        allSmsNotify(id, function(data) {
             layer.msg('已发送!');
         });
     }, function() {});
