@@ -238,6 +238,30 @@ var loadTickets = function(weid, callback) {
     });
 }
 
+// 短信通知
+var smsNotify = function(weid, enroll_id, callback) {
+    $.ajax({
+        url: ACTIVITY_ENROLL_SMS_NOTIFY,
+        type: 'POST',
+        data: {
+            activity_id: weid,
+            enroll_id: enroll_id
+        },
+        headers: {
+            'Token': docCookies.getItem("token")
+        },
+        success: function(data) {
+            if (data.code == 200)
+                callback(data.data);
+            else
+                notice.alert(data.message);
+        },
+        error: function(xhr) {
+            console.log(xhr);
+        }
+    });
+}
+
 $(document).on('click', '.all-sms-notify', function() {
     layer.confirm('群发短信可能消耗大量短信余额，确认要群发？', {
         title: '群发短信通知',
