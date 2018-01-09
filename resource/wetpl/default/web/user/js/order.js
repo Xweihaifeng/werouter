@@ -326,8 +326,10 @@ $(document).ready(function(){
                     var pagestr="";
 
                         $('.pagination').children().remove();
-                        $('.pagination').append('<li id="prev" page="'+prevNum+'"><a href="javascript:void(0);">«</a></li>');
-
+                        //首页
+                        $('.pagination').append('<li id="prev" page="1"><a href="javascript:void(0);">«</a></li>');
+                        //上一页
+                        $('.pagination').append('<li id="prev" page="'+prevNum+'"><a href="javascript:void(0);">‹</a></li>');
                         for(i=prevNumLenth;i<=nextNumLenth;i++){
                             // $('.pagination').append(pagelisthtml(i));
                             if(i==page){
@@ -337,7 +339,10 @@ $(document).ready(function(){
                             }
                         }
                         $('.pagination').append(pagestr);
-                        $(".pagination").append('<li id="next" page="'+nextNum+'"><a href="javascript:void(0)" class="next" rel="next">&raquo;</a></li>');
+                        //下一页
+                        $(".pagination").append('<li id="next" page="'+nextNum+'"><a href="javascript:void(0)" class="next" rel="next">›</a></li>');
+                        //尾页
+                        $(".pagination").append('<li id="next" page="'+pagenum+'"><a href="javascript:void(0)" class="next" rel="next">»</a></li>');
                         // 点击页码事件
                         $(".pagination li").bind("click",function(){
 
