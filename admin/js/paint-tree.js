@@ -1,11 +1,17 @@
-$(function () {
+$(document).ready(function(){
+    start();
+
+    function GetQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]);
+        return null;
+    }
+    var weid = GetQueryString('weid');
     function aa() {
         $.ajax({
-            url: 'http://new.wezchina.com/api/backend/admins/get_config?role_id=b4209b80-775e-11e7-a88a-0771558f58b6',
+            url: ApiUrl + 'admins/get_config?role_id=' + weid,
             async: false,
-            headers: {
-                'Token': 'eyJpdiI6InR5SEdaYTJibHZueTFaRUx2VUd2MlE9PSIsInZhbHVlIjoiZWdyMFwvOFdtSnJpd2pKVUZsb0VvaGZ3MVFcL1dESXd1OFRkSHVmbldHRmJPZ0hUeGRlK3RnYVFXRkVDNTF1Z0JcL0RNc1ZoVmV0UEFuVHZiVlBSUkdMQzZ1bFF5aUJNRnNvMzFJWFFhOGpcLzEwPSIsIm1hYyI6IjI0MmRjZGRkMDU5NGUxNDQ2MjcyN2RjMjRkYzJhYjRkZGIzZThiNmE5M2YyZGViMjdjOGE2ZTM1MDY2ZWU2YTEifQ==',
-            },
             success: function (data) {
                 console.log(data)
                 let str = '';
@@ -393,15 +399,29 @@ $(function () {
                             }
                         }
                     })
-                    console.log(data)
+                    console.log(data);
+                    $.ajax({
+                        url: ApiUrl + 'admins/set_config',
+                        type: 'POST',
+                        data: data,
+                        success: function(data) {
+                            if (data.code === 200) {
+                                swal('', '保存成功', 'success');
+                            } else {
+                                swal('', data.message, 'error');
+                            }
+                        },
+                        error: function(xhr) {
+                            console.log(xhr)
+                        }
+                    })
                 })
-
             },
             error: function (xhr) {
                 console.log(xhr)
             }
         })
     }
-    aa()
+    aa();
 })
 

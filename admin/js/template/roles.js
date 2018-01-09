@@ -37,7 +37,7 @@ $(document).ready(function() {
                         } else {
                             html += 
                             '<td class="text-center">' +
-                            '<a title = "权限设置" class="btn btn-info" style="margin-right:10px;"  href="roles_config.html?weid=' + val.weid + '&type=config">权限设置</a>' +
+                            '<a title = "权限设置" class="btn btn-info" style="margin-right:10px;"  href="roles_config.html?weid=' + val.weid + '">权限设置</a>' +
                             '<a title = "编辑" class="btn btn-info" style="margin-right:10px;"  href="roles_edit.html?weid=' + val.weid + '">编辑</a>' +
                             '<a title = "删除" class="btn btn-danger" data-toggle="modal" data-target="#myModal" data-id="' + val.weid + '" data-name="' + val.name + '"  href="#">删除</a>' +
                             '</td></tr>';
