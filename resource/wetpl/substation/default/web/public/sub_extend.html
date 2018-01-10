@@ -126,7 +126,6 @@
                                 result.forEach(function(value, key) {
                                 	value.ok = false;
                                 });
-                                // result = result.map(e => (e['ok'] = false, e))
 
                                 this.channel = result;
                                 console.log(this.channel);
@@ -141,7 +140,6 @@
                     },
                     visible(item) {
                     	item.ok = true;
-                    	console.log(item.ok)
                     },
                     channel_show(item) {
                     	item.ok = false;
