@@ -258,7 +258,11 @@ class router_index extends controller
         $first_cate = '';
         $first_array = explode('/', trim($uri , '/'));
         $first_cate = current($first_array);
-        if($first_cate == 'sub_he')
+
+        $sub_sql = 'SELECT domain FROM we_plat_site WHERE plat_id=? AND domain=?';
+        $sub_data = $this->db->queryOne($sub_sql , array($weid , $first_cate));
+
+        if($sub_data !== FALSE)
         {
             $uri = substr($uri, strlen($first_cate) + 1  , strlen($uri));
             $this->data['template'] = 'substation/default';
@@ -267,7 +271,7 @@ class router_index extends controller
          //END 获取目录第一段
         config::$plats = $this->_domain_data($weid);
         //$this->data($this->_domain_data($weid));
-        if($first_cate == 'sub_he')
+        if($sub_data !== FALSE)
         {
             config::$plats['sub_state'] = TRUE;
         }
@@ -277,8 +281,6 @@ class router_index extends controller
         {
             $uri = substr($uri, 2  , strlen($uri));
         }
-
-       
 
         $router_verify = new router_verify($router , $uri , $rule , $weid);
 
