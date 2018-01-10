@@ -110,6 +110,8 @@ class TemplateManage{
                     }
                 $arr=array_merge($arrback,$arrfolder,$arrfile);
                 return $this->success($arr);
+                }else{
+                    return $this->fail("文件或文件夹不存在！");
                 }
         }else{
             return $this->fail("参数有误！");
