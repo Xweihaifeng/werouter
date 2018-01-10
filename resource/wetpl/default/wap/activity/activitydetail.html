@@ -198,8 +198,12 @@
                     if (data.data.status == 3) {
                         sessionStorage.setItem('enroll_id', data.data.enroll_id);
                     }
+                } else {
+                    ref.state = '立即登录';
+                    $(".J_BtnBuyTicket").css({'background': '#04a6e9', 'box-shadow': '5px 5px 15px 0 #04a6e9', 'border': '1px solid #04a6e9'});
                 }
             }
+
         })
     }
 

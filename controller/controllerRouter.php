@@ -260,10 +260,14 @@ class controllerRouter extends controller
     {
         if(config::$plats['sub_state'] != FALSE)
         {
+            if(is_mobile() == TRUE)
+            {
+                $this->config['template'] = '/views/channel.html';
+            }
             return TRUE;
         }
     }
-
+    
     // 分站栏目额外规则
     public function sub_column( $param, $match = array())
     {

@@ -1,0 +1,74 @@
+<link rel="stylesheet" href="/resource/wetpl/default/wap/css/home.css">
+<link rel="stylesheet" href="/resource/wetpl/default/wap/css/common.css">
+<link rel="stylesheet" href="/resource/wetpl/default/wap/css/swiper.min.css">
+<link rel="stylesheet" href="/common/jquery.animsition/css/animsition.min.css">
+<link rel="stylesheet" href="{{PATH_TML}}css/coc/mtcstyle.css">
+<link rel="stylesheet" href="{{PATH_TML}}css/coc/component.css">
+<script type="text/javascript">
+	var plats = {
+		'title' : '',
+		'show_title' : '',
+		'url' : ''
+	};
+</script>
+<div id="header" style="display: none;" class="hea">
+	<div @click=open(plats.url); class="hea_lf">
+		<img src="/resource/wetpl/default/wap/img/index/home.png">
+		<h1>{{plats.title}}</h1>
+	</div>
+	<div class="hea_rg">
+		<h2>{{plats.show_title}}</h2>
+<!-- 		<div id="dl-menu" class="dl-menuwrapper">
+			<button id="dl-menu-button" class="">
+			<div  class="dl-menu-wz" @click="menu_open=!menu_open">
+				<img src="/resource/wetpl/default/wap/img/index/fllm.png">导航
+			</div>
+			</button>
+			<ul :class="{'dl-menu' :true , 'dl-menuopen' : menu_open}">
+				<li><a :href="'/' | href">首页</a></li>
+				<li><a :href="'news' | href">新闻中心</a></li>
+				<li><a :href="'org' | href">走近商会</a></li>
+				<li><a href="javascript:void(0)">互助专区</a></li>
+				<li><a href="javascript:void(0)">共享中心</a></li>
+				<li><a href="javascript:void(0)">天下秦商</a></li>
+				<li><a href="javascript:void(0)">网站导航</a></li>
+			</ul>
+		</div> -->
+	</div>
+</div>
+
+<script type="text/javascript">
+	// header 渲染
+function init_header(show) {
+    if(show == 'no') return false;
+
+    $('#header').show();
+    var dom_id = '#header';
+    if(show != 'yes')
+    {
+    	dom_id = '#'+show;
+    }
+    new Vue({
+        el: dom_id,
+        data: {
+           plats : plats,
+           menu_open : false
+        },
+        watch: {
+          
+        },
+        mounted() {
+            this.$nextTick( function () {
+            });
+        },
+        methods:{
+        	open(val)
+        	{
+        		$app.open_page(val);
+        	}
+        }
+    });
+}
+</script>
+
+
