@@ -18,7 +18,7 @@
 	
 	// 首页接口
 	sub_ajax.index = function(call){
-		ajax.get('cms/index/grid').then((res)=>{
+		ajax.get('scms/index/grid').then((res)=>{
 			call(res);
 		});
 	}
