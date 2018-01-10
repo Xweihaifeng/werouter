@@ -214,54 +214,6 @@
 
                             <script src="js/codemirror.js" type="text/javascript"></script>
                             <script src="js/htmlmixed.js" type="text/javascript"></script>
-
-
-                            <script type="text/javascript">
-                                jQuery(document).ready(function () {
-
-                                    $('#updateSet3').click(function () {
-                                        var myTextArea = document.getElementById('file_code');
-                                        var myCodeMirror = CodeMirror.fromTextArea(myTextArea, {
-                                            lineNumbers: true,
-                                            matchBrackets: true,
-                                            styleActiveLine: true,
-                                            theme: "neat",
-                                            mode: 'html'
-                                        });
-                                        var fileurl = localStorage.getItem('template_editfileurl');
-                                        $.ajax({
-                                            url: document.location.protocol + '//' + document.domain + '/admin/template.php',
-                                            type: 'post',
-                                            data: {
-                                                operation: 'templateSave',
-                                                url: fileurl,
-                                                content: myCodeMirror.getValue()
-                                            },
-                                            dataType: 'json',
-                                            success: function (data) {
-                                                if (data.code == 200) {
-                                                    swal({
-                                                        title: "保存成功!",
-                                                        timer: 2000,
-                                                        showConfirmButton: false
-                                                    });
-                                                    setTimeout("window.location.reload(true)", 2000);
-                                                } else {
-                                                    swal({
-                                                        title: data.message,
-                                                        timer: 2000,
-                                                        showConfirmButton: false
-                                                    });
-                                                }
-                                            },
-                                            error: function (xhr) {
-                                                console.log(xhr);
-                                            }
-                                        })
-                                    });
-                                });
-
-                            </script>
                             <form class="form-horizontal" method="post" name="myform" id="myform">
                                 <input name="isform" type="hidden" value="1">
                                 <input name="csrf_token" type="hidden" value="e5499db18be739994921d80a8d19a080">
@@ -409,7 +361,6 @@
                                 }
                             })
                         });
-
                     }
                 },
                 error: function (xhr) {
