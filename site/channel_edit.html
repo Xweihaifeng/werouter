@@ -171,6 +171,16 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                     <div class="form-group">
+                                        <label class="control-label col-sm-2">链接栏目</label>
+                                        <div class="col-sm-5">
+                                            <select name="url_cate_id" id="type-select" class="form-control">
+                                                    <option value="">请选择</option>
+                                        </select>
+                                        </div>
+                                    </div>
+
                                 </form>
                                 <div class="col-sm-7" style="margin-bottom: 35px;">
                                     <button type="button" class="btn btn-info submit">提交</button>
@@ -441,6 +451,7 @@
     <script>
         jQuery.noConflict();
         $(function($) {
+            var type_id='';
             var __init = function() {
                 id = getQueryParam('id');
                 $.ajax({
@@ -466,6 +477,7 @@
                             $('input[name=big_image]').val(data.data.big_image);
                         }
                         $('input[name=list_field]').val(data.data.list_id);
+                        type_id=data.data.url_cate_id;
                         $.ajax({
                             url: ApiUrl + 'scms/template/' + data.data.list_id,
                             type: 'get',
@@ -488,6 +500,24 @@
                 });
             }
             __init();
+
+             //栏目select初始化
+             var initSelect = function(){
+                var advTypes='';
+                 $.getJSON(ApiUrl+"scms/channel_categories?channel="+id,function(result){
+                    console.log(result);
+                    $.each(result.data, function(i,item){
+                          if(type_id==item.weid){
+                                    advTypes=advTypes+'<option value="'+item.weid+'" description="'+item.description+'" selected=\"selected\">'+item.title+'</option>';
+                            }else{
+                                    advTypes=advTypes+'<option value="'+item.weid+'" description="'+item.description+'">'+item.title+'</option>';
+                            }
+                    });
+                     $("#type-select").append(advTypes);
+                });
+            };
+             initSelect();
+
             var uploader = Qiniu.uploader({
                 runtimes: 'html5,flash,html4',
                 browse_button: 'pickfiles',
@@ -646,7 +676,9 @@
                     'back_image': $('input[name=back_image]').val(),
                     'big_image': $('input[name=big_image]').val(),
                     'list_id': $('input[name=list_field]').val(),
+                    'url_cate_id': $("#type-select").val(),
                 };
+                console.log(data);
                 $.post(ApiUrl + 'scms/channels/' + id, data, function(ret) {
                     if (ret.code == 200) {
                         location.href = 'channels.html';
