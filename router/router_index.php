@@ -259,7 +259,7 @@ class router_index extends controller
         $first_array = explode('/', trim($uri , '/'));
         $first_cate = current($first_array);
 
-        $sub_sql = 'SELECT domain FROM we_plat_site WHERE plat_id=? AND domain=?';
+        $sub_sql = 'SELECT domain,weid FROM we_plat_site WHERE plat_id=? AND domain=?';
         $sub_data = $this->db->queryOne($sub_sql , array($weid , $first_cate));
 
         if($sub_data !== FALSE)
@@ -267,6 +267,7 @@ class router_index extends controller
             $uri = substr($uri, strlen($first_cate) + 1  , strlen($uri));
             $this->data['template'] = 'substation/default';
             $this->sub_state = $first_cate;
+            $this->sub_weid = $sub_data['weid'];
         }
          //END 获取目录第一段
         config::$plats = $this->_domain_data($weid);
@@ -408,6 +409,7 @@ class router_index extends controller
         $plats['var auth_code'] = auth_code($this->data['domain']);
 
         $plats['var sub_domain'] = '';
+        $plats['sub_state'] = FALSE;
 
         $this->data['domain'] = $_SERVER['HTTP_HOST'];
 
@@ -461,22 +463,37 @@ class router_index extends controller
             $plats['qiniu']['buckut'] = $this->qiniu_cofing['buckut'];
         }
 
-        //平台信息相关
-        $plats_sql = 'SELECT plat_name FROM we_plats
-                WHERE weid=? ';
-        $plats_row = $this->db->queryOne($plats_sql , array($weid));
-        if(empty($plats_row)) error(404);
+        if($this->sub_state == FALSE)
+        {
+            //平台信息相关
+            $plats_sql = 'SELECT plat_name FROM we_plats
+                    WHERE weid=? ';
+            $plats_row = $this->db->queryOne($plats_sql , array($weid));
+            if(empty($plats_row)) error(404);
 
-        $plats_cms_sql = 'SELECT title , description , key_word
-                         , icp , favicon , logo , background , weibo_show 
-                         , background_up , block , bar1 , bar2 , bar3 , background_right
-                         ,bar4 , block ,wap_logo , copyright , old_link , wx_qrcode , wb_qrcode FROM we_plat_cms WHERE plat_id=?';
-        $plats['plats_info'] = $this->db->queryOne($plats_cms_sql , array($weid));
+            $plats_cms_sql = 'SELECT title , description , key_word
+                             , icp , favicon , logo , background , weibo_show 
+                             , background_up , block , bar1 , bar2 , bar3 , background_right
+                             ,bar4 , block ,wap_logo , copyright , old_link , wx_qrcode , wb_qrcode FROM we_plat_cms WHERE plat_id=?';
+            $plats['plats_info'] = $this->db->queryOne($plats_cms_sql , array($weid));
 
-        $block = array_sort(json_decode($plats['plats_info']['block'] , TRUE) , 'sort' , 'asc');
-        $plats['plats_info']['blocks'] = $block;
-        $plats['plats_info']['plat_name'] = $plats_row['plat_name'];
-        $plats['plats_info']['show_title'] = '';
+            $block = array_sort(json_decode($plats['plats_info']['block'] , TRUE) , 'sort' , 'asc');
+            $plats['plats_info']['blocks'] = $block;
+            $plats['plats_info']['plat_name'] = $plats_row['plat_name'];
+            $plats['plats_info']['show_title'] = '';
+        }
+        else
+        {
+            //分站相关信息
+            $plats_sql = 'SELECT title , description , key_word
+                             , icp , favicon , logo , background , weibo_show 
+                             , background_up , block , bar1 , bar2 , bar3 , background_right
+                             ,bar4 , block ,wap_logo , copyright , old_link , wx_qrcode , wb_qrcode FROM we_plat_site_cms
+                    WHERE site_id=?';
+            $plats['plats_info'] = $this->db->queryOne($plats_sql , array($this->sub_weid));
+            if(empty($plats['plats_info'])) error(404);
+        }
+
 
         if(empty($_COOKIE['token']))
         {
