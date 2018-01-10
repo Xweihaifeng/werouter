@@ -80,20 +80,23 @@ class TemplateManage{
         if(!empty($url)){
             if(is_dir($this->to_dir.$url)){
                 $arr=[];
+                $arrback=[];
+                $arrfolder=[];
+                $arrfile=[];
                 foreach(scandir($this->to_dir.$url) as $afile)
                     {
                         if($afile=='.'||$afile=='..'){
                             if($afile=='..'){
                                 //返回上一及
                                 $rest = substr($url,0,strrpos($url,'/'));
-                                array_push($arr,['name'=>$afile,'url'=>$rest,'style'=>'back']);
+                                array_push($arrback,['name'=>$afile,'url'=>$rest,'style'=>'back']);
                             }
                             continue;
                         }
                         if(is_dir($this->to_dir.$url.'/'.$afile))
                         {
                             //文件夹类型
-                            array_push($arr,['name'=>$afile,'url'=>$url.'/'.$afile,'style'=>'folder']);
+                            array_push($arrfolder,['name'=>$afile,'url'=>$url.'/'.$afile,'style'=>'folder']);
                         } else {
                             //文件类型
                             if(preg_match("/[.](html|css|js)$/",$afile)){
@@ -101,10 +104,11 @@ class TemplateManage{
                                 $size=round($size/1024,2);
                                 $updated=filemtime($this->to_dir.$url.'/'.$afile);
                                 $updated=date("Y-m-d H:i:s",$updated);
-                                array_push($arr,['name'=>$afile,'url'=>$url.'/'.$afile,'style'=>'file','size'=>$size,'updated'=>$updated]);
+                                array_push($arrfile,['name'=>$afile,'url'=>$url.'/'.$afile,'style'=>'file','size'=>$size,'updated'=>$updated]);
                             }
                         }
                     }
+                $arr=array_merge($arrback,$arrfolder,$arrfile);
                 return $this->success($arr);
                 }
         }else{
