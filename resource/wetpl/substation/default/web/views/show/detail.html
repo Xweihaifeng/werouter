@@ -61,7 +61,7 @@
             //$app.set_title('风采页面');
             this.$nextTick(()=>{
                 // 右侧详情展示
-                ajax.get('/cms/detail/'+this.cate_domain).then((res)=>{
+                ajax.get('/scms/detail/'+this.cate_domain).then((res)=>{
                     if(res.code === 200) {
                         this.cat_par=res.data.category.domain;
                         var result = res.data;

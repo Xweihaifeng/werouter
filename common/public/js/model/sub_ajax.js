@@ -4,7 +4,7 @@
 	
 	//CMS 新闻查询
 	sub_ajax.cms_content  = function(params , call){
-		ajax.get('cms/contents' , {params: params}).then((res)=>{
+		ajax.get('scms/contents' , {params: params}).then((res)=>{
 			call(res);
 		});
 	}
