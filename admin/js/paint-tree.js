@@ -61,8 +61,7 @@ $(document).ready(function(){
                             </tr>
                             `;
                             }
-
-                                $(v.children).each((j,k) => {
+                            $(v.children).each((j,k) => {
                                     if(k.children.length > 0){
                                         if(k.checked == true){
                                             str += `
@@ -107,8 +106,7 @@ $(document).ready(function(){
                             </tr>
                             `;
                                         }
-
-                                            $(k.children).each((p,l)=>{
+                                        $(k.children).each((p,l)=>{
                                                 if(l.children.length > 0){
                                                     if(l.checked == true){
                                                         str += `
@@ -153,7 +151,6 @@ $(document).ready(function(){
                             </tr>
                             `;
                                                     }
-
                                                     $(l.children).each((f,g)=>{
                                                         if(g.children.length > 0){
                                                             if(g.checked == true){
@@ -182,7 +179,7 @@ $(document).ready(function(){
                                <tr class=" odd gradeX" id="row${g.id}">
                                 <td class="myselect">
                                     <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
-                                        <input type="checkbox" class="checkboxes group-checkable menu${k.id} menu${l.id} menu${v.id} menu" data-set=".menu${g.id}" name="data[mark][]" checked="" value="home">
+                                        <input type="checkbox" class="checkboxes group-checkable menu${k.id} menu${l.id} menu${v.id} menu" data-set=".menu${g.id}" name="data[mark][]" value="home">
                                         <span></span>
                                     </label>
                                 </td>
@@ -199,7 +196,6 @@ $(document).ready(function(){
                             </tr>
                             `;
                                                             }
-
                                                             $(g.children).each((w,s)=>{
                                                                 if(s.checked == true){
                                                                     str += `
@@ -268,10 +264,10 @@ $(document).ready(function(){
                                     </tr>
                                 `;
                                                                 }
-
                                                             })
                                                         }else {
-                                                            str += `
+                                                            if(g.checked == true){
+                                                                str += `
                                     <tr class="odd gradeX">
                                         <td class="myselect">
                                             <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
@@ -303,10 +299,45 @@ $(document).ready(function(){
                                         </td>
                                     </tr>
                                 `;
+                                                            } else {
+                                                                str += `
+                                    <tr class="odd gradeX">
+                                        <td class="myselect">
+                                            <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
+                                                <input type="checkbox" id="${g.id}" aid="${l.id}" bid="${k.id}" cid="${v.id}"  class="checkboxes group-checkable menu${v.id} menu${l.id} menu${k.id}" data-set=".zsg${g.id}" name="data[mark][]" value="home/main">
+                                                <span></span>
+                                            </label>
+                                        </td>
+                                        <td style="text-align:center">
+                                            ${g.id}                            </td>
+                                        <td>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├&nbsp;&nbsp; <i class="fa"></i> ${g.name}                          </td>
+                                        <td style="text-align:center" class="myselect">
+                                            <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
+                                                <input type="checkbox" id="${l.id}z" aid="${g.id}" bid="${l.id}" cid="${k.id}" did="${v.id}" disabled="disabled"  class="checkboxes zsg${l.id}  menu${v.id} menu${k.id}" name="data[auth][home/main][]" value="add">
+                                                <span></span>
+                                            </label>
+                                        </td>
+                                        <td style="text-align:center" class="myselect">
+                                            <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
+                                                <input type="checkbox" id="${l.id}s" aid="${g.id}" bid="${l.id}" cid="${k.id}" did="${v.id}" disabled="disabled" class="checkboxes zsg${l.id}   menu${v.id} menu${k.id}"  name="data[auth][home/main][]" value="edit">
+                                                <span></span>
+                                            </label>
+                                        </td>
+                                        <td style="text-align:center" class="myselect">
+                                            <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
+                                                <input type="checkbox" id="${l.id}c" aid="${g.id}" bid="${l.id}" cid="${k.id}" did="${v.id}" disabled="disabled" class="checkboxes zsg${l.id}  menu${v.id} menu${k.id}"  name="data[auth][home/main][]" value="del">
+                                                <span></span>
+                                            </label>
+                                        </td>
+                                    </tr>
+                                `;
+                                                            }
                                                         }
                                                     })
                                                 }else {
-                                                    str += `
+                                                    if(l.checked == true){
+                                                        str += `
                                     <tr class="odd gradeX">
                                         <td class="myselect">
                                             <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
@@ -338,10 +369,45 @@ $(document).ready(function(){
                                         </td>
                                     </tr>
                                 `;
+                                                    }else {
+                                                        str += `
+                                    <tr class="odd gradeX">
+                                        <td class="myselect">
+                                            <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
+                                                <input type="checkbox" id="${l.id}" bid="${k.id}" cid="${v.id}"  class="checkboxes group-checkable menu${v.id}  menu${k.id}" data-set=".zsg${l.id}" name="data[mark][]" value="home/main">
+                                                <span></span>
+                                            </label>
+                                        </td>
+                                        <td style="text-align:center">
+                                            ${l.id}                            </td>
+                                        <td>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├&nbsp;&nbsp; <i class="fa"></i> ${l.name} </td>
+                                        <td style="text-align:center" class="myselect">
+                                            <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
+                                                <input type="checkbox" id="${l.id}z" aid="${l.id}" bid="${v.id}" cid="${k.id}" class="checkboxes zsg${l.id}  menu${v.id} d menu${k.id}" disabled="disabled"  name="data[auth][home/main][]" value="add">
+                                                <span></span>
+                                            </label>
+                                        </td>
+                                        <td style="text-align:center" class="myselect">
+                                            <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
+                                                <input type="checkbox" id="${l.id}s" aid="${l.id}" bid="${v.id}" cid="${k.id}" class="checkboxes zsg${l.id}  menu${v.id} menu${k.id}" disabled="disabled"  name="data[auth][home/main][]" value="edit">
+                                                <span></span>
+                                            </label>
+                                        </td>
+                                        <td style="text-align:center" class="myselect">
+                                            <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
+                                                <input type="checkbox" id="${l.id}c" aid="${l.id}" bid="${v.id}" cid="${k.id}" class="checkboxes zsg${l.id}  menu${v.id} menu${k.id}" disabled="disabled" name="data[auth][home/main][]" value="del">
+                                                <span></span>
+                                            </label>
+                                        </td>
+                                    </tr>
+                                `;
+                                                    }
                                                 }
                                             })
                                     }else {
-                                        str += `
+                                        if(k.checked == true ){
+                                            str += `
                                     <tr class="odd gradeX">
                                         <td class="myselect">
                                             <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
@@ -373,11 +439,46 @@ $(document).ready(function(){
                                         </td>
                                     </tr>
                                 `;
+                                        }else {
+                                            str += `
+                                    <tr class="odd gradeX">
+                                        <td class="myselect">
+                                            <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
+                                                <input type="checkbox" id="${k.id}" bid="${v.id}" cid=""  class="checkboxes group-checkable menu${v.id}  menu${k.id}" data-set=".zsg${l.id}" name="data[mark][]" value="home/main">
+                                                <span></span>
+                                            </label>
+                                        </td>
+                                        <td style="text-align:center">
+                                            ${k.id}                            </td>
+                                        <td>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├&nbsp;&nbsp; <i class="fa"></i> ${k.name}   </td>
+                                        <td style="text-align:center" class="myselect">
+                                            <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
+                                                <input type="checkbox" id="${k.id}z" aid="${k.id}" bid="${v.id}" cid="" disabled="disabled"  class="checkboxes zsg${l.id}  menu${v.id} menu${k.id}"  name="data[auth][home/main][]" value="add">
+                                                <span></span>
+                                            </label>
+                                        </td>
+                                        <td style="text-align:center" class="myselect">
+                                            <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
+                                                <input type="checkbox" id="${k.id}s" aid="${k.id}" bid="${v.id}" cid="" disabled="disabled"  class="checkboxes zsg${l.id}  menu${v.id} menu${k.id}"  name="data[auth][home/main][]" value="edit">
+                                                <span></span>
+                                            </label>
+                                        </td>
+                                        <td style="text-align:center" class="myselect">
+                                            <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
+                                                <input type="checkbox" id="${k.id}c" aid="${k.id}" bid="${v.id}" cid="" disabled="disabled"  class="checkboxes zsg${l.id}  menu${v.id} menu${k.id}"  name="data[auth][home/main][]" value="del">
+                                                <span></span>
+                                            </label>
+                                        </td>
+                                    </tr>
+                                `;
+                                        }
                                     }
                                 })
                         }
                     }else {
-                        str += `
+                        if(v.checked == true){
+                            str += `
                                     <tr class="odd gradeX">
                                         <td class="myselect">
                                             <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
@@ -409,6 +510,41 @@ $(document).ready(function(){
                                         </td>
                                     </tr>
                                 `;
+                        }else {
+                            str += `
+                                    <tr class="odd gradeX">
+                                        <td class="myselect">
+                                            <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
+                                                <input type="checkbox" id="${v.id}" bid="" cid=""  class="checkboxes group-checkable menu" data-set=".zsg${v.id}" name="data[mark][]" value="home/main">
+                                                <span></span>
+                                            </label>
+                                        </td>
+                                        <td style="text-align:center">
+                                            ${v.id}                            </td>
+                                        <td>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├&nbsp;&nbsp; <i class="fa"></i> ${v.name} </td>
+                                        <td style="text-align:center" class="myselect">
+                                            <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
+                                                <input type="checkbox" id="${v.id}z" aid="${v.id}" bid="" cid="" disabled="disabled"  class="checkboxes" name="data[auth][home/main][]" value="add">
+                                                <span></span>
+                                            </label>
+                                        </td>
+                                        <td style="text-align:center" class="myselect">
+                                            <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
+                                                <input type="checkbox" id="${v.id}s" aid="${v.id}" bid="" cid="" disabled="disabled"  class="checkboxes" name="data[auth][home/main][]" value="edit">
+                                                <span></span>
+                                            </label>
+                                        </td>
+                                        <td style="text-align:center" class="myselect">
+                                            <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
+                                                <input type="checkbox" id="${v.id}c" aid="${v.id}" bid="" cid="" disabled="disabled"  class="checkboxes"  name="data[auth][home/main][]" value="del">
+                                                <span></span>
+                                            </label>
+                                        </td>
+                                    </tr>
+                                `;
+                        }
+
                     }
                 })
                 $("#tab_0 > table > tbody").append(str);
