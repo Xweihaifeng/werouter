@@ -122,6 +122,8 @@ class TemplateManage{
         if(file_exists($this->to_dir.$url)){
             $arr=[];
             $countent=file_get_contents($this->to_dir.$url);
+            $rest = substr($url,strrpos($url,'/')+1);
+            $arr['name']=$rest;
             $arr['countent']=$countent;
             return $this->success($arr);
         }else{
