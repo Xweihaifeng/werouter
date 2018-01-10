@@ -18,7 +18,8 @@ $(document).ready(function(){
                 $(data).each((i,v)=>{
                     if(v.children.length > 0){
                         if(v.name !== undefined){
-                            str += `
+                            if(v.checked == true){
+                                str += `
                              <tr class=" my_pid_menu odd gradeX" id="${v.id}">
                                 <td class="myselect">
                                     <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
@@ -38,9 +39,33 @@ $(document).ready(function(){
                                 </td>
                             </tr>
                             `;
+                            }else {
+                                str += `
+                             <tr class=" my_pid_menu odd gradeX" id="${v.id}">
+                                <td class="myselect">
+                                    <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
+                                        <input type="checkbox" class="checkboxes group-checkable menu" data-set=".menu${v.id}" name="data[mark][]" value="home">
+                                        <span></span>
+                                    </label>
+                                </td>
+                                <td style="text-align:center">
+                                    ${v.id}                           </td>
+                                <td>
+                                    <i class="fa"></i> ${v.name}</td>
+                                <td style="text-align:center" class="myselect">
+                                </td>
+                                <td style="text-align:center" class="myselect">
+                                </td>
+                                <td style="text-align:center" class="myselect">
+                                </td>
+                            </tr>
+                            `;
+                            }
+
                                 $(v.children).each((j,k) => {
                                     if(k.children.length > 0){
-                                        str += `
+                                        if(k.checked == true){
+                                            str += `
                                <tr class=" odd gradeX" id="row${k.id}">
                                 <td class="myselect">
                                     <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
@@ -60,9 +85,33 @@ $(document).ready(function(){
                                 </td>
                             </tr>
                             `;
+                                        }else {
+                                            str += `
+                               <tr class=" odd gradeX" id="row${k.id}">
+                                <td class="myselect">
+                                    <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
+                                        <input type="checkbox" class="checkboxes group-checkable menu${v.id}  menu" data-set=".menu${k.id}" name="data[mark][]" value="home">
+                                        <span></span>
+                                    </label>
+                                </td>
+                                <td style="text-align:center">
+                                    ${k.id}                           </td>
+                                <td>
+                                    &nbsp;└&nbsp;&nbsp;<i class="fa"></i> ${k.name}</td>
+                                <td style="text-align:center" class="myselect">
+                                </td>
+                                <td style="text-align:center" class="myselect">
+                                </td>
+                                <td style="text-align:center" class="myselect">
+                                </td>
+                            </tr>
+                            `;
+                                        }
+
                                             $(k.children).each((p,l)=>{
                                                 if(l.children.length > 0){
-                                                    str += `
+                                                    if(l.checked == true){
+                                                        str += `
                                <tr class=" odd gradeX" id="row${l.id}">
                                 <td class="myselect">
                                     <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
@@ -82,9 +131,33 @@ $(document).ready(function(){
                                 </td>
                             </tr>
                             `;
+                                                    }else {
+                                                        str += `
+                               <tr class=" odd gradeX" id="row${l.id}">
+                                <td class="myselect">
+                                    <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
+                                        <input type="checkbox" class="checkboxes group-checkable menu${k.id} menu${v.id} menu" data-set=".menu${l.id}" name="data[mark][]" value="home">
+                                        <span></span>
+                                    </label>
+                                </td>
+                                <td style="text-align:center">
+                                    ${l.id}                           </td>
+                                <td>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└&nbsp;&nbsp;<i class="fa"></i> ${l.name}</td>
+                                <td style="text-align:center" class="myselect">
+                                </td>
+                                <td style="text-align:center" class="myselect">
+                                </td>
+                                <td style="text-align:center" class="myselect">
+                                </td>
+                            </tr>
+                            `;
+                                                    }
+
                                                     $(l.children).each((f,g)=>{
                                                         if(g.children.length > 0){
-                                                            str += `
+                                                            if(g.checked == true){
+                                                                str += `
                                <tr class=" odd gradeX" id="row${g.id}">
                                 <td class="myselect">
                                     <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
@@ -104,7 +177,31 @@ $(document).ready(function(){
                                 </td>
                             </tr>
                             `;
+                                                            }else {
+                                                                str += `
+                               <tr class=" odd gradeX" id="row${g.id}">
+                                <td class="myselect">
+                                    <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
+                                        <input type="checkbox" class="checkboxes group-checkable menu${k.id} menu${l.id} menu${v.id} menu" data-set=".menu${g.id}" name="data[mark][]" checked="" value="home">
+                                        <span></span>
+                                    </label>
+                                </td>
+                                <td style="text-align:center">
+                                    ${g.id}                           </td>
+                                <td>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└&nbsp;&nbsp;&nbsp;<i class="fa"></i> ${g.name}</td>
+                                <td style="text-align:center" class="myselect">
+                                </td>
+                                <td style="text-align:center" class="myselect">
+                                </td>
+                                <td style="text-align:center" class="myselect">
+                                </td>
+                            </tr>
+                            `;
+                                                            }
+
                                                             $(g.children).each((w,s)=>{
+                                                                if(s.checked == true){
                                                                     str += `
                                     <tr class="odd gradeX">
                                         <td class="myselect">
@@ -119,24 +216,59 @@ $(document).ready(function(){
                                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├&nbsp;&nbsp; <i class="fa"></i> ${s.name}</td>
                                         <td style="text-align:center" class="myselect">
                                             <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
-                                                <input type="checkbox" id="${s.id}z" aid="${s.id}" bid="${g.id}" cid="${l.id}" did="${k.id}" eid="${v.id}" class="checkboxes zsg${s.id} menu${g.id} menu${l.id} menu${v.id} menu${k.id}" checked="" name="data[auth][home/main][]" value="add">
+                                                <input type="checkbox" id="${s.id}z" aid="${s.id}" bid="${g.id}" cid="${l.id}" did="${k.id}" eid="${v.id}" disabled="disabled" class="checkboxes zsg${s.id} menu${g.id} menu${l.id} menu${v.id} menu${k.id}" checked="" name="data[auth][home/main][]" value="add">
                                                 <span></span>
                                             </label>
                                         </td>
                                         <td style="text-align:center" class="myselect">
                                             <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
-                                                <input type="checkbox" id="${s.id}s" aid="${s.id}" bid="${g.id}" cid="${l.id}" did="${k.id}" eid="${v.id}" class="checkboxes zsg${s.id} menu${g.id} menu${l.id} menu${v.id} menu${k.id}" checked="" name="data[auth][home/main][]" value="edit">
+                                                <input type="checkbox" id="${s.id}s" aid="${s.id}" bid="${g.id}" cid="${l.id}" did="${k.id}" eid="${v.id}" disabled="disabled" class="checkboxes zsg${s.id} menu${g.id} menu${l.id} menu${v.id} menu${k.id}" checked="" name="data[auth][home/main][]" value="edit">
                                                 <span></span>
                                             </label>
                                         </td>
                                         <td style="text-align:center" class="myselect">
                                             <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
-                                                <input type="checkbox" id="${s.id}c" aid="${s.id}" bid="${g.id}" cid="${l.id}" did="${k.id}" eid="${v.id}" class="checkboxes zsg${s.id} menu${g.id} menu${l.id} menu${v.id} menu${k.id}" checked="" name="data[auth][home/main][]" value="del">
+                                                <input type="checkbox" id="${s.id}c" aid="${s.id}" bid="${g.id}" cid="${l.id}" did="${k.id}" eid="${v.id}" disabled="disabled" class="checkboxes zsg${s.id} menu${g.id} menu${l.id} menu${v.id} menu${k.id}" checked="" name="data[auth][home/main][]" value="del">
                                                 <span></span>
                                             </label>
                                         </td>
                                     </tr>
                                 `;
+                                                                }else {
+                                                                    str += `
+                                    <tr class="odd gradeX">
+                                        <td class="myselect">
+                                            <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
+                                                <input type="checkbox" id="${s.id}" aid="${g.id}" bid="${l.id}" cid="${k.id}" did="${v.id}"  class="checkboxes group-checkable menu${v.id}  menu${k.id} menu${g.id} menu${l.id}" data-set=".zsg${s.id}" name="data[mark][]" value="home/main">
+                                                <span></span>
+                                            </label>
+                                        </td>
+                                        <td style="text-align:center">
+                                            ${s.id}                            </td>
+                                        <td>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├&nbsp;&nbsp; <i class="fa"></i> ${s.name}</td>
+                                        <td style="text-align:center" class="myselect">
+                                            <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
+                                                <input type="checkbox" id="${s.id}z" aid="${s.id}" bid="${g.id}" cid="${l.id}" did="${k.id}" eid="${v.id}" disabled="disabled" class="checkboxes zsg${s.id} menu${g.id} menu${l.id} menu${v.id} menu${k.id}"  name="data[auth][home/main][]" value="add">
+                                                <span></span>
+                                            </label>
+                                        </td>
+                                        <td style="text-align:center" class="myselect">
+                                            <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
+                                                <input type="checkbox" id="${s.id}s" aid="${s.id}" bid="${g.id}" cid="${l.id}" did="${k.id}" eid="${v.id}" disabled="disabled" class="checkboxes zsg${s.id} menu${g.id} menu${l.id} menu${v.id} menu${k.id}"  name="data[auth][home/main][]" value="edit">
+                                                <span></span>
+                                            </label>
+                                        </td>
+                                        <td style="text-align:center" class="myselect">
+                                            <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
+                                                <input type="checkbox" id="${s.id}c" aid="${s.id}" bid="${g.id}" cid="${l.id}" did="${k.id}" eid="${v.id}" disabled="disabled" class="checkboxes zsg${s.id} menu${g.id} menu${l.id} menu${v.id} menu${k.id}"  name="data[auth][home/main][]" value="del">
+                                                <span></span>
+                                            </label>
+                                        </td>
+                                    </tr>
+                                `;
+                                                                }
+
                                                             })
                                                         }else {
                                                             str += `
@@ -153,19 +285,19 @@ $(document).ready(function(){
                                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├&nbsp;&nbsp; <i class="fa"></i> ${g.name}                          </td>
                                         <td style="text-align:center" class="myselect">
                                             <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
-                                                <input type="checkbox" id="${l.id}z" aid="${g.id}" bid="${l.id}" cid="${k.id}" did="${v.id}" class="checkboxes zsg${l.id}  menu${v.id} menu${k.id}" checked="" name="data[auth][home/main][]" value="add">
+                                                <input type="checkbox" id="${l.id}z" aid="${g.id}" bid="${l.id}" cid="${k.id}" did="${v.id}" disabled="disabled"  class="checkboxes zsg${l.id}  menu${v.id} menu${k.id}" checked="" name="data[auth][home/main][]" value="add">
                                                 <span></span>
                                             </label>
                                         </td>
                                         <td style="text-align:center" class="myselect">
                                             <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
-                                                <input type="checkbox" id="${l.id}s" aid="${g.id}" bid="${l.id}" cid="${k.id}" did="${v.id}" class="checkboxes zsg${l.id}  menu${v.id} menu${k.id}" checked="" name="data[auth][home/main][]" value="edit">
+                                                <input type="checkbox" id="${l.id}s" aid="${g.id}" bid="${l.id}" cid="${k.id}" did="${v.id}" disabled="disabled" class="checkboxes zsg${l.id}   menu${v.id} menu${k.id}" checked="" name="data[auth][home/main][]" value="edit">
                                                 <span></span>
                                             </label>
                                         </td>
                                         <td style="text-align:center" class="myselect">
                                             <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
-                                                <input type="checkbox" id="${l.id}c" aid="${g.id}" bid="${l.id}" cid="${k.id}" did="${v.id}" class="checkboxes zsg${l.id}  menu${v.id} menu${k.id}" checked="" name="data[auth][home/main][]" value="del">
+                                                <input type="checkbox" id="${l.id}c" aid="${g.id}" bid="${l.id}" cid="${k.id}" did="${v.id}" disabled="disabled" class="checkboxes zsg${l.id}  menu${v.id} menu${k.id}" checked="" name="data[auth][home/main][]" value="del">
                                                 <span></span>
                                             </label>
                                         </td>
@@ -188,19 +320,19 @@ $(document).ready(function(){
                                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├&nbsp;&nbsp; <i class="fa"></i> ${l.name} </td>
                                         <td style="text-align:center" class="myselect">
                                             <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
-                                                <input type="checkbox" id="${l.id}z" aid="${l.id}" bid="${v.id}" cid="${k.id}" class="checkboxes zsg${l.id}  menu${v.id} menu${k.id}" checked="" name="data[auth][home/main][]" value="add">
+                                                <input type="checkbox" id="${l.id}z" aid="${l.id}" bid="${v.id}" cid="${k.id}" class="checkboxes zsg${l.id}  menu${v.id} d menu${k.id}" disabled="disabled" checked="" name="data[auth][home/main][]" value="add">
                                                 <span></span>
                                             </label>
                                         </td>
                                         <td style="text-align:center" class="myselect">
                                             <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
-                                                <input type="checkbox" id="${l.id}s" aid="${l.id}" bid="${v.id}" cid="${k.id}" class="checkboxes zsg${l.id}  menu${v.id} menu${k.id}" checked="" name="data[auth][home/main][]" value="edit">
+                                                <input type="checkbox" id="${l.id}s" aid="${l.id}" bid="${v.id}" cid="${k.id}" class="checkboxes zsg${l.id}  menu${v.id} menu${k.id}" disabled="disabled" checked="" name="data[auth][home/main][]" value="edit">
                                                 <span></span>
                                             </label>
                                         </td>
                                         <td style="text-align:center" class="myselect">
                                             <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
-                                                <input type="checkbox" id="${l.id}c" aid="${l.id}" bid="${v.id}" cid="${k.id}" class="checkboxes zsg${l.id}  menu${v.id} menu${k.id}" checked="" name="data[auth][home/main][]" value="del">
+                                                <input type="checkbox" id="${l.id}c" aid="${l.id}" bid="${v.id}" cid="${k.id}" class="checkboxes zsg${l.id}  menu${v.id} menu${k.id}" disabled="disabled" checked="" name="data[auth][home/main][]" value="del">
                                                 <span></span>
                                             </label>
                                         </td>
@@ -223,19 +355,19 @@ $(document).ready(function(){
                                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├&nbsp;&nbsp; <i class="fa"></i> ${k.name}   </td>
                                         <td style="text-align:center" class="myselect">
                                             <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
-                                                <input type="checkbox" id="${k.id}z" aid="${k.id}" bid="${v.id}" cid="" class="checkboxes zsg${l.id}  menu${v.id} menu${k.id}" checked="" name="data[auth][home/main][]" value="add">
+                                                <input type="checkbox" id="${k.id}z" aid="${k.id}" bid="${v.id}" cid="" disabled="disabled"  class="checkboxes zsg${l.id}  menu${v.id} menu${k.id}" checked="" name="data[auth][home/main][]" value="add">
                                                 <span></span>
                                             </label>
                                         </td>
                                         <td style="text-align:center" class="myselect">
                                             <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
-                                                <input type="checkbox" id="${k.id}s" aid="${k.id}" bid="${v.id}" cid="" class="checkboxes zsg${l.id}  menu${v.id} menu${k.id}" checked="" name="data[auth][home/main][]" value="edit">
+                                                <input type="checkbox" id="${k.id}s" aid="${k.id}" bid="${v.id}" cid="" disabled="disabled"  class="checkboxes zsg${l.id}  menu${v.id} menu${k.id}" checked="" name="data[auth][home/main][]" value="edit">
                                                 <span></span>
                                             </label>
                                         </td>
                                         <td style="text-align:center" class="myselect">
                                             <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
-                                                <input type="checkbox" id="${k.id}c" aid="${k.id}" bid="${v.id}" cid="" class="checkboxes zsg${l.id}  menu${v.id} menu${k.id}" checked="" name="data[auth][home/main][]" value="del">
+                                                <input type="checkbox" id="${k.id}c" aid="${k.id}" bid="${v.id}" cid="" disabled="disabled"  class="checkboxes zsg${l.id}  menu${v.id} menu${k.id}" checked="" name="data[auth][home/main][]" value="del">
                                                 <span></span>
                                             </label>
                                         </td>
@@ -259,19 +391,19 @@ $(document).ready(function(){
                                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├&nbsp;&nbsp; <i class="fa"></i> ${v.name} </td>
                                         <td style="text-align:center" class="myselect">
                                             <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
-                                                <input type="checkbox" id="${v.id}z" aid="${v.id}" bid="" cid="" class="checkboxes" checked="" name="data[auth][home/main][]" value="add">
+                                                <input type="checkbox" id="${v.id}z" aid="${v.id}" bid="" cid="" disabled="disabled"  class="checkboxes" checked="" name="data[auth][home/main][]" value="add">
                                                 <span></span>
                                             </label>
                                         </td>
                                         <td style="text-align:center" class="myselect">
                                             <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
-                                                <input type="checkbox" id="${v.id}s" aid="${v.id}" bid="" cid="" class="checkboxes" checked="" name="data[auth][home/main][]" value="edit">
+                                                <input type="checkbox" id="${v.id}s" aid="${v.id}" bid="" cid="" disabled="disabled"  class="checkboxes" checked="" name="data[auth][home/main][]" value="edit">
                                                 <span></span>
                                             </label>
                                         </td>
                                         <td style="text-align:center" class="myselect">
                                             <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
-                                                <input type="checkbox" id="${v.id}c" aid="${v.id}" bid="" cid="" class="checkboxes" checked="" name="data[auth][home/main][]" value="del">
+                                                <input type="checkbox" id="${v.id}c" aid="${v.id}" bid="" cid="" disabled="disabled"  class="checkboxes" checked="" name="data[auth][home/main][]" value="del">
                                                 <span></span>
                                             </label>
                                         </td>
