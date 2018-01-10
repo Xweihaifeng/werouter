@@ -285,10 +285,10 @@ class controllerRouter extends controller
             ],
             '1' => [
                 'weid' => $cate_row['page_id'],
-                'cate' => 'show'
+                'cate' => 'list'
             ],
         ];
-
+        
         $cate_tml_weid = $cate_tml[$cate_row['type']]['weid'];
         
         $tml_sql = 'SELECT template FROM we_plat_site_cms_template WHERE plat_id =? AND weid=?';
@@ -328,7 +328,7 @@ class controllerRouter extends controller
                 LEFT JOIN we_plat_cms_template ON we_plat_cms_channel.list_id = we_plat_cms_template.weid
                 WHERE we_plat_cms_channel.plat_id =? AND  we_plat_cms_channel.domain = ?';
         $row = $this->db->queryOne($sql , array($this->weid , $param));
-
+        
         if(!empty($row['tml']))
         {   
             if($match['current'] == $match['total'])
