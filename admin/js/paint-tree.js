@@ -27,7 +27,7 @@ $(document).ready(function(){
                                         <span></span>
                                     </label>
                                 </td>
-                                <td style="text-align:center">
+                                <td style="text-align:center;">
                                     ${v.id}                           </td>
                                 <td>
                                     <i class="fa"></i> ${v.name}</td>

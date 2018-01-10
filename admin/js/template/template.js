@@ -6,15 +6,17 @@ $(document).ready(function () {
         dataType: 'json',
         success: function (data) {
             if (data.code === 200) {
-                $("#plat_id").val(data.data.weid)
-                if (data.data.is_custom == null) {
+                console.log(data.data.is_custom)
+                if (data.data.is_custom === null) {
                     $(".hidde").slideDown();
-                    $("#show_val").val(null)
+                    $("#show_val").val('first')
+                    $(".module_li").removeClass("block");
+                    $(".module").removeClass("block");
+                    console.log($("#show_val").val())
                 }
                 if (data.data.is_custom == 2) {
                     $("#show_val").val(2)
-                    $(".module").removeClass("block");
-                    $(".module_li").addClass("block");
+                    $(".module_li").removeClass("block");
                 }
                 if(data.data.is_custom == 1){
                     $("#show_val").val(1)
@@ -146,17 +148,14 @@ $(document).ready(function () {
                         dataType: 'json',
                         success: function (data) {
                             if (data.code === 200) {
-                                console.log(data.data.is_custom)
                                 if (data.data.is_custom != 1) {
                                     $("#templateId").find("input[name=templateId][value=" + data.data.template_id + "]").attr("checked", true);
                                 }
-                                // if(data.data.is_custom == 1){
-                                //     $(".but").animate({left: -40},0);
-                                // }
                                 if (data.data.is_custom == null) {
                                     $(".hidde").slideDown();
-                                    $(".module").removeClass("block");
-                                    $(".module_li").addClass("block");
+                                    // $(".module").addClass("block");
+                                    $(".module_li").removeClass("block");
+                                    $("#show_val").val(null)
                                 }
                             } else {
                                 console.log('error: -200');
