@@ -172,7 +172,7 @@ $(document).ready(function () {
             url: ApiUrl + 'plat_set_template',
             type: 'post',
             dataType: 'json',
-            data: {template_id: templateId, is_custom: 2},
+            data: {template_id: templateId},
             success: function (data) {
                 if (data.code === 200) {
                     swal('', '保存成功', 'success');
