@@ -264,7 +264,7 @@ class controllerRouter extends controller
         }
         
     }
-
+    
     // 分站栏目额外规则
     public function sub_column( $param, $match = array())
     {
@@ -272,7 +272,7 @@ class controllerRouter extends controller
         {
             return FALSE;
         }
-        $this->config['template'] = '/views/list/mult_img_list.html';
+        $this->config['template'] = '/views/list/one_img_list.html';
         return TRUE;
     }
     
