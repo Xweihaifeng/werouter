@@ -186,7 +186,8 @@
             left: 100px;
             top: -8px;
         }
-        .bottoms{
+
+        .bottoms {
             margin-bottom: 30px;
         }
     </style>
@@ -234,7 +235,8 @@
                         <!-- /.box-header -->
                         <ul class="form-top">
                             <li class="shown"><span>默认模板</span></li>
-                            <li id="diy" data-step="2" data-intro="点击进行自定义" data-position='right' data-scrollTo='tooltip'><span>自定义模板</span>
+                            <li id="diy" data-step="2" data-intro="点击进行自定义" data-position='right'
+                                data-scrollTo='tooltip'><span>自定义模板</span>
                                 <div class="hott"></div>
                                 <span>diy</span>
                             </li>
@@ -248,8 +250,6 @@
                                     <div class="form-group">
                                         <div class="col-sm-5" id="default"></div>
                                     </div>
-
-
                                     <div class="pull-right">
                                         <button type="button" class="btn btn-info pull-right" id="updateSet">保存</button>
                                     </div>
@@ -261,13 +261,15 @@
                                     <div class="form-group">
                                         <label class="control-label col-sm-3 col-md-2 col-lg-1">启用模板：</label>
                                         <div class="col-sm-5">
-                                            <div class="button bottoms" data-step="3" data-intro="点击打开模板" data-position='right'
+                                            <div class="button bottoms" data-step="3" data-intro="点击打开模板"
+                                                 data-position='right'
                                                  data-scrollTo='tooltip'>
                                                 <ul class="but">
                                                     <li>开启</li>
                                                     <li></li>
                                                     <li>关闭</li>
                                                 </ul>
+                                                <input type="hidden" id="show_val">
                                             </div>
                                             <!-- Modal -->
                                             <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
@@ -287,7 +289,7 @@
                                                             <button type="button" class="btn btn-default"
                                                                     data-dismiss="modal">取消
                                                             </button>
-                                                            <button type="button" class="btn btn-primary">狠心关掉</button>
+                                                            <button type="button" class="btn btn-primary" data-dismiss="modal" id="Close_modul">狠心关掉</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -312,17 +314,20 @@
                                             <div class="form-group">
                                                 <label class="control-label col-sm-3 col-md-2 col-lg-1">自定义模板名：</label>
                                                 <div class="col-sm-5">
-                                                    <input type="text" class="form-control" id="custom_name" name="custom_name"
+                                                    <input type="text" class="form-control" id="custom_name"
+                                                           name="custom_name"
                                                            placeholder="自定义模板名">
                                                 </div>
                                             </div>
+                                            <div class="pull-right">
+                                                <button type="button" class="btn btn-info pull-right" data-step="4"
+                                                        data-intro="点击进行保存" data-position='right'
+                                                        data-scrollTo='tooltip'
+                                                        id="updateSet2">保存
+                                                </button>
+                                            </div>
                                         </div>
-                                        <div class="pull-right">
-                                            <button type="button" class="btn btn-info pull-right" data-step="4"
-                                                    data-intro="点击进行保存" data-position='right' data-scrollTo='tooltip'
-                                                    id="updateSet2">保存
-                                            </button>
-                                        </div>
+
                                     </div>
                                     <div class="module_li">
                                         <form class="form-horizontal" role="form" id="myform">
@@ -344,256 +349,48 @@
                                                     </tr>
                                                     </thead>
                                                     <tbody>
-                                                    <tr class="odd gradeX" id="dr_row_0">
-                                                        <td class="myselect">
-                                                            <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
-                                                                <input type="checkbox" class="checkboxes" name="ids[]"
-                                                                       value="">
-                                                                <span></span>
-                                                            </label>
-                                                        </td>
-                                                        <td>
-                                                            <a href="http://demo.php7cms.com/admin.php?c=tpl_pc&amp;m=index&amp;dir=default%2Fmember">
-                                                                <img src="image/folder.png"
-                                                                     style="width:30px;margin-right:10px">.. </a>
-                                                        </td>
-                                                        <td style="text-align:center"> -</td>
-                                                        <td></td>
-                                                        <td>
-                                                        </td>
-                                                    </tr>
-                                                    <tr class="odd gradeX" id="dr_row_55471a0970fac4f0bf31bd7f85dcdf2d">
-                                                        <td class="myselect">
-                                                            <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
-                                                                <input type="checkbox" class="checkboxes" name="ids[]"
-                                                                       value="flink_list.html">
-                                                                <span></span>
-                                                            </label>
-                                                        </td>
-                                                        <td>
-                                                            <a href="template_detail.html">
-                                                                <img src="image/html.png"
-                                                                     style="width:30px;margin-right:10px">flink_list.html
-                                                            </a>
-                                                        </td>
-                                                        <td style="text-align:center">3.21 KB</td>
-                                                        <td><font color="red">2018-01-08 07:59:49</font></td>
-                                                        <td>
-                                                            <label><a href="template_detail.html"
-                                                                      class="btn btn-xs green"> <i
-                                                                    class="fa fa-edit"></i> 修改</a></label>
-                                                        </td>
-                                                    </tr>
-                                                    <tr class="odd gradeX" id="dr_row_308c1a26ca252d432d71e927ed286652">
-                                                        <td class="myselect">
-                                                            <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
-                                                                <input type="checkbox" class="checkboxes" name="ids[]"
-                                                                       value="category_all.html">
-                                                                <span></span>
-                                                            </label>
-                                                        </td>
-                                                        <td>
-                                                            <a href="http://demo.php7cms.com/admin.php?c=tpl_pc&amp;m=edit&amp;file=default%2Fmember%2Fspace%2Fcategory_all.html&amp;mtype=file">
-                                                                <img src="image/html.png"
-                                                                     style="width:30px;margin-right:10px">category_all.html
-                                                            </a>
-                                                        </td>
-                                                        <td style="text-align:center">4.05 KB</td>
-                                                        <td><font color="red">2018-01-08 07:59:49</font></td>
-                                                        <td>
-                                                            <label><a
-                                                                    href="http://demo.php7cms.com/admin.php?c=tpl_pc&amp;m=edit&amp;file=default%2Fmember%2Fspace%2Fcategory_all.html&amp;mtype=file"
-                                                                    class="btn btn-xs green"> <i class="fa fa-edit"></i>
-                                                                修改</a></label>
-                                                            <label><a
-                                                                    href="javascript:javascript:dr_iframe(&#39;edit&#39;, &#39;admin.php?c=tpl_pc&amp;m=edit&amp;file=default%2Fmember%2Fspace%2Fcategory_all.html&amp;mtype=filecname&#39;, &#39;500px&#39;,&#39;240px&#39;);;"
-                                                                    class="btn btn-xs blue"> <i
-                                                                    class="fa fa-refresh"></i> 重命名</a></label>
-                                                        </td>
-                                                    </tr>
-                                                    <tr class="odd gradeX" id="dr_row_d949f5d77cfbe694791a390ecf781c29">
-                                                        <td class="myselect">
-                                                            <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
-                                                                <input type="checkbox" class="checkboxes" name="ids[]"
-                                                                       value="category_post.html">
-                                                                <span></span>
-                                                            </label>
-                                                        </td>
-                                                        <td>
-                                                            <a href="http://demo.php7cms.com/admin.php?c=tpl_pc&amp;m=edit&amp;file=default%2Fmember%2Fspace%2Fcategory_post.html&amp;mtype=file">
-                                                                <img src="image/html.png"
-                                                                     style="width:30px;margin-right:10px">category_post.html
-                                                            </a>
-                                                        </td>
-                                                        <td style="text-align:center">10.9 KB</td>
-                                                        <td><font color="red">2018-01-08 07:59:49</font></td>
-                                                        <td>
-                                                            <label><a
-                                                                    href="http://demo.php7cms.com/admin.php?c=tpl_pc&amp;m=edit&amp;file=default%2Fmember%2Fspace%2Fcategory_post.html&amp;mtype=file"
-                                                                    class="btn btn-xs green"> <i class="fa fa-edit"></i>
-                                                                修改</a></label>
-                                                            <label><a
-                                                                    href="javascript:javascript:dr_iframe(&#39;edit&#39;, &#39;admin.php?c=tpl_pc&amp;m=edit&amp;file=default%2Fmember%2Fspace%2Fcategory_post.html&amp;mtype=filecname&#39;, &#39;500px&#39;,&#39;240px&#39;);;"
-                                                                    class="btn btn-xs blue"> <i
-                                                                    class="fa fa-refresh"></i> 重命名</a></label>
-                                                        </td>
-                                                    </tr>
-                                                    <tr class="odd gradeX" id="dr_row_380e4dc4159e1393ff9db3b95ba285f6">
-                                                        <td class="myselect">
-                                                            <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
-                                                                <input type="checkbox" class="checkboxes" name="ids[]"
-                                                                       value="liuyan_show.html">
-                                                                <span></span>
-                                                            </label>
-                                                        </td>
-                                                        <td>
-                                                            <a href="http://demo.php7cms.com/admin.php?c=tpl_pc&amp;m=edit&amp;file=default%2Fmember%2Fspace%2Fliuyan_show.html&amp;mtype=file">
-                                                                <img src="image/html.png"
-                                                                     style="width:30px;margin-right:10px">liuyan_show.html
-                                                            </a>
-                                                        </td>
-                                                        <td style="text-align:center">1.32 KB</td>
-                                                        <td><font color="red">2018-01-08 07:59:49</font></td>
-                                                        <td>
-                                                            <label><a
-                                                                    href="http://demo.php7cms.com/admin.php?c=tpl_pc&amp;m=edit&amp;file=default%2Fmember%2Fspace%2Fliuyan_show.html&amp;mtype=file"
-                                                                    class="btn btn-xs green"> <i class="fa fa-edit"></i>
-                                                                修改</a></label>
-                                                            <label><a
-                                                                    href="javascript:javascript:dr_iframe(&#39;edit&#39;, &#39;admin.php?c=tpl_pc&amp;m=edit&amp;file=default%2Fmember%2Fspace%2Fliuyan_show.html&amp;mtype=filecname&#39;, &#39;500px&#39;,&#39;240px&#39;);;"
-                                                                    class="btn btn-xs blue"> <i
-                                                                    class="fa fa-refresh"></i> 重命名</a></label>
-                                                        </td>
-                                                    </tr>
-                                                    <tr class="odd gradeX" id="dr_row_badea883d90e2ceabaaf813e860adbd1">
-                                                        <td class="myselect">
-                                                            <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
-                                                                <input type="checkbox" class="checkboxes" name="ids[]"
-                                                                       value="category_list.html">
-                                                                <span></span>
-                                                            </label>
-                                                        </td>
-                                                        <td>
-                                                            <a href="http://demo.php7cms.com/admin.php?c=tpl_pc&amp;m=edit&amp;file=default%2Fmember%2Fspace%2Fcategory_list.html&amp;mtype=file">
-                                                                <img src="image/html.png"
-                                                                     style="width:30px;margin-right:10px">category_list.html
-                                                            </a>
-                                                        </td>
-                                                        <td style="text-align:center">7.84 KB</td>
-                                                        <td><font color="red">2018-01-08 07:59:49</font></td>
-                                                        <td>
-                                                            <label><a
-                                                                    href="http://demo.php7cms.com/admin.php?c=tpl_pc&amp;m=edit&amp;file=default%2Fmember%2Fspace%2Fcategory_list.html&amp;mtype=file"
-                                                                    class="btn btn-xs green"> <i class="fa fa-edit"></i>
-                                                                修改</a></label>
-                                                            <label><a
-                                                                    href="javascript:javascript:dr_iframe(&#39;edit&#39;, &#39;admin.php?c=tpl_pc&amp;m=edit&amp;file=default%2Fmember%2Fspace%2Fcategory_list.html&amp;mtype=filecname&#39;, &#39;500px&#39;,&#39;240px&#39;);;"
-                                                                    class="btn btn-xs blue"> <i
-                                                                    class="fa fa-refresh"></i> 重命名</a></label>
-                                                        </td>
-                                                    </tr>
-                                                    <tr class="odd gradeX" id="dr_row_f354bd8d01cd372bacdeda0f245145f7">
-                                                        <td class="myselect">
-                                                            <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
-                                                                <input type="checkbox" class="checkboxes" name="ids[]"
-                                                                       value="flink_post.html">
-                                                                <span></span>
-                                                            </label>
-                                                        </td>
-                                                        <td>
-                                                            <a href="http://demo.php7cms.com/admin.php?c=tpl_pc&amp;m=edit&amp;file=default%2Fmember%2Fspace%2Fflink_post.html&amp;mtype=file">
-                                                                <img src="image/html.png"
-                                                                     style="width:30px;margin-right:10px">flink_post.html
-                                                            </a>
-                                                        </td>
-                                                        <td style="text-align:center">1.55 KB</td>
-                                                        <td><font color="red">2018-01-08 07:59:49</font></td>
-                                                        <td>
-                                                            <label><a
-                                                                    href="http://demo.php7cms.com/admin.php?c=tpl_pc&amp;m=edit&amp;file=default%2Fmember%2Fspace%2Fflink_post.html&amp;mtype=file"
-                                                                    class="btn btn-xs green"> <i class="fa fa-edit"></i>
-                                                                修改</a></label>
-                                                            <label><a
-                                                                    href="javascript:javascript:dr_iframe(&#39;edit&#39;, &#39;admin.php?c=tpl_pc&amp;m=edit&amp;file=default%2Fmember%2Fspace%2Fflink_post.html&amp;mtype=filecname&#39;, &#39;500px&#39;,&#39;240px&#39;);;"
-                                                                    class="btn btn-xs blue"> <i
-                                                                    class="fa fa-refresh"></i> 重命名</a></label>
-                                                        </td>
-                                                    </tr>
-                                                    <tr class="odd gradeX" id="dr_row_5d6384216d10cdef3c9c01b408ccea29">
-                                                        <td class="myselect">
-                                                            <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
-                                                                <input type="checkbox" class="checkboxes" name="ids[]"
-                                                                       value="sync.html">
-                                                                <span></span>
-                                                            </label>
-                                                        </td>
-                                                        <td>
-                                                            <a href="http://demo.php7cms.com/admin.php?c=tpl_pc&amp;m=edit&amp;file=default%2Fmember%2Fspace%2Fsync.html&amp;mtype=file">
-                                                                <img src="image/html.png"
-                                                                     style="width:30px;margin-right:10px">sync.html </a>
-                                                        </td>
-                                                        <td style="text-align:center">5.57 KB</td>
-                                                        <td><font color="red">2018-01-08 07:59:49</font></td>
-                                                        <td>
-                                                            <label><a
-                                                                    href="http://demo.php7cms.com/admin.php?c=tpl_pc&amp;m=edit&amp;file=default%2Fmember%2Fspace%2Fsync.html&amp;mtype=file"
-                                                                    class="btn btn-xs green"> <i class="fa fa-edit"></i>
-                                                                修改</a></label>
-                                                            <label><a
-                                                                    href="javascript:javascript:dr_iframe(&#39;edit&#39;, &#39;admin.php?c=tpl_pc&amp;m=edit&amp;file=default%2Fmember%2Fspace%2Fsync.html&amp;mtype=filecname&#39;, &#39;500px&#39;,&#39;240px&#39;);;"
-                                                                    class="btn btn-xs blue"> <i
-                                                                    class="fa fa-refresh"></i> 重命名</a></label>
-                                                        </td>
-                                                    </tr>
-                                                    <tr class="odd gradeX" id="dr_row_d408108594e4feb97d8d9bf5e9f0b947">
-                                                        <td class="myselect">
-                                                            <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
-                                                                <input type="checkbox" class="checkboxes" name="ids[]"
-                                                                       value="liuyan_list.html">
-                                                                <span></span>
-                                                            </label>
-                                                        </td>
-                                                        <td>
-                                                            <a href="http://demo.php7cms.com/admin.php?c=tpl_pc&amp;m=edit&amp;file=default%2Fmember%2Fspace%2Fliuyan_list.html&amp;mtype=file">
-                                                                <img src="image/html.png"
-                                                                     style="width:30px;margin-right:10px">liuyan_list.html
-                                                            </a>
-                                                        </td>
-                                                        <td style="text-align:center">2.57 KB</td>
-                                                        <td><font color="red">2018-01-08 07:59:49</font></td>
-                                                        <td>
-                                                            <label><a
-                                                                    href="http://demo.php7cms.com/admin.php?c=tpl_pc&amp;m=edit&amp;file=default%2Fmember%2Fspace%2Fliuyan_list.html&amp;mtype=file"
-                                                                    class="btn btn-xs green"> <i class="fa fa-edit"></i>
-                                                                修改</a></label>
-                                                            <label><a
-                                                                    href="javascript:javascript:dr_iframe(&#39;edit&#39;, &#39;admin.php?c=tpl_pc&amp;m=edit&amp;file=default%2Fmember%2Fspace%2Fliuyan_list.html&amp;mtype=filecname&#39;, &#39;500px&#39;,&#39;240px&#39;);;"
-                                                                    class="btn btn-xs blue"> <i
-                                                                    class="fa fa-refresh"></i> 重命名</a></label>
-                                                        </td>
-                                                    </tr>
+                                                    <!--<tr class="odd gradeX" id="dr_row_0">-->
+                                                        <!--<td class="myselect">-->
+                                                            <!--<label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">-->
+                                                                <!--<input type="checkbox" class="checkboxes" name="ids[]"-->
+                                                                       <!--value="">-->
+                                                                <!--<span></span>-->
+                                                            <!--</label>-->
+                                                        <!--</td>-->
+                                                        <!--<td>-->
+                                                            <!--<a href="http://demo.php7cms.com/admin.php?c=tpl_pc&amp;m=index&amp;dir=default%2Fmember">-->
+                                                                <!--<img src="image/folder.png"-->
+                                                                     <!--style="width:30px;margin-right:10px">.. </a>-->
+                                                        <!--</td>-->
+                                                        <!--<td style="text-align:center"> -</td>-->
+                                                        <!--<td></td>-->
+                                                        <!--<td>-->
+                                                        <!--</td>-->
+                                                    <!--</tr>-->
+                                                    <!--<tr class="odd gradeX" id="dr_row_55471a0970fac4f0bf31bd7f85dcdf2d">-->
+                                                        <!--<td class="myselect">-->
+                                                            <!--<label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">-->
+                                                                <!--<input type="checkbox" class="checkboxes" name="ids[]"-->
+                                                                       <!--value="flink_list.html">-->
+                                                                <!--<span></span>-->
+                                                            <!--</label>-->
+                                                        <!--</td>-->
+                                                        <!--<td>-->
+                                                            <!--<a href="template_detail.html">-->
+                                                                <!--<img src="image/html.png"-->
+                                                                     <!--style="width:30px;margin-right:10px">flink_list.html-->
+                                                            <!--</a>-->
+                                                        <!--</td>-->
+                                                        <!--<td style="text-align:center">3.21 KB</td>-->
+                                                        <!--<td><font color="red">2018-01-08 07:59:49</font></td>-->
+                                                        <!--<td>-->
+                                                            <!--<label><a href="template_detail.html"-->
+                                                                      <!--class="btn btn-xs green"> <i-->
+                                                                    <!--class="fa fa-edit"></i> 修改</a></label>-->
+                                                        <!--</td>-->
+                                                    <!--</tr>-->
                                                     </tbody>
                                                 </table>
-                                            </div>
-                                            <div class="row fc-list-footer table-checkable ">
-                                                <div class="col-md-5 fc-list-select">
-                                                    <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
-                                                        <input type="checkbox" class="group-checkable"
-                                                               data-set=".checkboxes">
-                                                        <span></span>
-                                                    </label>
-                                                    <button type="button"
-                                                            onclick="dr_ajax_option(&#39;admin.php?c=tpl_pc&amp;m=del&amp;dir=default%2Fmember%2Fspace&#39;, &#39;你确定要删除它们吗？&#39;, 1)"
-                                                            class="btn red btn-sm"><i class="fa fa-trash"></i> 删除
-                                                    </button>
-                                                </div>
-                                                <div class="col-md-7 fc-list-page">
-                                                </div>
-                                                <div class="pull-right">
-                                                    <button type="button" class="btn btn-info pull-right"
-                                                            id="updateSet3">保存
-                                                    </button>
-                                                </div>
                                             </div>
                                         </form>
                                     </div>
@@ -644,9 +441,7 @@
     $(function () {
 
 
-
-
     })
-    
+
 
 </script>

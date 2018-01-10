@@ -6,12 +6,20 @@ $(document).ready(function () {
         dataType: 'json',
         success: function (data) {
             if (data.code === 200) {
-                if (data.data.is_custom != 1) {
-                    $(".but").animate({left: -40},0);
+                $("#plat_id").val(data.data.weid)
+                if (data.data.is_custom == null) {
                     $(".hidde").slideDown();
+                    $("#show_val").val(null)
+                }
+                if (data.data.is_custom == 2) {
+                    $("#show_val").val(2)
                     $(".module").removeClass("block");
                     $(".module_li").addClass("block");
-                }else {
+                }
+                if(data.data.is_custom == 1){
+                    $("#show_val").val(1)
+                    console.log(data.data.is_custom)
+                    $(".but").animate({left: -40},0);
                     $(".module").removeClass("block");
                     $(".module_li").addClass("block");
                     $("#diy").addClass("shown").siblings().removeClass("shown");
@@ -138,11 +146,14 @@ $(document).ready(function () {
                         dataType: 'json',
                         success: function (data) {
                             if (data.code === 200) {
+                                console.log(data.data.is_custom)
                                 if (data.data.is_custom != 1) {
                                     $("#templateId").find("input[name=templateId][value=" + data.data.template_id + "]").attr("checked", true);
                                 }
+                                // if(data.data.is_custom == 1){
+                                //     $(".but").animate({left: -40},0);
+                                // }
                                 if (data.data.is_custom == null) {
-                                    $(".but").animate({left: -40},0);
                                     $(".hidde").slideDown();
                                     $(".module").removeClass("block");
                                     $(".module_li").addClass("block");
