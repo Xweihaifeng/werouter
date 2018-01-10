@@ -149,7 +149,8 @@
 		}		
 		//var pathname_obj = pathname.substr(1).split('/');
 		var pathname_string = pathname.substr(1).split('/').shift();
-		if(pathname_string == 'm')
+		
+		if(pathname_string == 'm' || sub_state == true)
 		{
 			if($app.empty(pathname.substr(1).split('/')[params]))
 			{
