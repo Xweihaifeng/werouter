@@ -152,13 +152,13 @@
 		
 		if(pathname_string == 'm' || sub_state == true)
 		{
-			if($app.empty(pathname.substr(1).split('/')[params]))
+			if($app.empty(pathname.substr(1).split('/')[params]) != false)
 			{
 				return pathname.substr(1).split('/')[params];
 			}
 			return '';
 		}
-		if($app.empty(pathname.substr(1).split('/')[params-1]))
+		if($app.empty(pathname.substr(1).split('/')[params-1]) != false)
 		{
 			return pathname.substr(1).split('/')[params-1]; 
 		}

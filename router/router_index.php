@@ -412,7 +412,7 @@ class router_index extends controller
         $plats['sub_state'] = FALSE;
 
         $this->data['domain'] = $_SERVER['HTTP_HOST'];
-
+        $plats['var site_domian'] = $protocol.$this->data['domain'].'/';
         // if(is_mobile() == TRUE && $this->data['wap_domain'] == 1)
         // {
         //     $this->data['domain'] = 'm.'.$this->data['domain'];
@@ -426,7 +426,6 @@ class router_index extends controller
         //JS 环境变量初始化
         $plats['var http_type'] = $protocol;
         $plats['var pages_type'] = 6;
-        $plats['var site_domian'] = $this->data['domain'];
         
         //$plats['var all_domian'] = $protocol.$this->data['domain'].'/'; 正式环境使用
         $plats['var all_domian'] = $protocol.$this->data['domain'].'/';  //测试环境使用

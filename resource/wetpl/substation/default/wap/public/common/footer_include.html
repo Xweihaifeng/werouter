@@ -51,7 +51,7 @@
 	                    'login' : false,
 	                    'img' : '/common/img/discovery.png',
 	                    'select_img' : '/common/img/discoveryblue.png',
-	                    'href' : all_domian + 'discovery/dynamic'
+	                    'href' : site_domian + 'discovery/dynamic'
 	                },
 	                add : {
 	                    'name' : '添加',
@@ -67,7 +67,7 @@
 	                    'login' : false,
 	                    'img' : '/common/img/message.png',
 	                    'select_img' : '/common/img/messageblue.png',
-	                    'href' : all_domian + 'message'
+	                    'href' : site_domian + 'message'
 	                },
 	                user : {
 	                    'name' : '我的',
@@ -75,7 +75,7 @@
 	                    'login' : true,
 	                    'img' : '/common/img/user.png',
 	                    'select_img' : '/common/img/userblue.png',
-	                    'href' : all_domian + 'user'
+	                    'href' : site_domian + 'user'
 	                }
 	            },
 	            page : '',
@@ -122,11 +122,11 @@
 	                		{
 	                			if(cookie_domain == '/')
 	                			{
-	                				window.location.href= all_domian;
+	                				window.location.href= site_domian;
 	                			}
 	                			else
 	                			{
-	                				window.location.href= all_domian + cookie_domain;
+	                				window.location.href= site_domian + cookie_domain;
 	                			}
 	                			
 	                			return false;
