@@ -1,7 +1,6 @@
 <#extend#>public/sub_extend.html</#extend#>
 <link rel="stylesheet" href="{{PATH_TML}}css/list.css">
 <link rel="stylesheet" href="{{PATH_TML}}css/detail.css">
-<!--<script src="{{PATH_TML}}js/detail.js"></script>-->
 <script src="/common/iview/iview.min.js"></script>
 
 <div class="list1">
@@ -78,7 +77,6 @@
                         {
                             if(item.title == this.cate_info)
                             {
-                                console.log("123",item)
                                 this.cate_info = item;
                                 $app.set_title(this.sub_aside_info.title + '-' + item.title);
                                 break;
@@ -90,13 +88,8 @@
             });
         },
         methods: {
-            page_fun(index) {
-                var url = this.channel_domain +'/'+this.cate_domain + '?page=' + index;
-                $app.open_page(url);
-            },
             zan(){
                 if(is_login == 'no') {
-                    alert(1)
                     mb_login();
                     return false;
                 }
