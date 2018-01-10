@@ -85,6 +85,7 @@ $(function () {
         var custom_file = $('#custom_file').val();
         var custom_name = $('#custom_name').val();
         var template_id = $("#module_list").find("option:selected").val();
+        var template_mark = $("#module_list").find("option:selected").attr('data-name');
         $.ajax({
             url: ApiUrl + 'plat_set_template',
             type: 'post',
@@ -92,12 +93,21 @@ $(function () {
             data: {template_id: template_id,custom_name: custom_name, custom_file: custom_file, is_custom: is_custom},
             success: function (data) {
                 if (data.code === 200) {
-                    swal('', '保存成功', 'success');
-                    // $(".module").removeClass("block");
-                    $(".module_li").addClass("block");
-                    $(".module").slideUp();
-                    $(".but").animate({left: -40}, 600);
-                    // 111111111
+                    $.ajax({
+                        url: document.location.protocol+'//'+document.domain+'/admin/template.php',
+                        type: 'post',
+                        data:{operation : 'creatTemplate', from:template_mark, to:custom_file},
+                        dataType: 'json',
+                        success: function (data) {
+                            if (data.code === 200) {
+                                swal('', '保存成功', 'success');
+
+                                $(".module_li").addClass("block");
+                                $(".module").slideUp();
+                                $(".but").animate({left: -40}, 600);
+                            }
+                        }
+                    });
                 } else {
                     swal('', data.message, 'error');
                 }

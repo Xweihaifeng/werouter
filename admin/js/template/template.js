@@ -136,7 +136,7 @@ $(document).ready(function () {
                             '<img width="200" src="/resource/wetpl/' + val.mark + '/' + val.cover + '"></br>' +
                             '<input type="radio" name="templateId" value=' + val.id + '>' + val.title +
                             '<span style="padding-left: 15px;">预览</span></div>';
-                        template += '<option name="options" value=' + val.id + '>' + val.title + '</option>';
+                        template += '<option name="options" value=' + val.id + ' data-name=' + val.mark + '>' + val.title + '</option>';
                     });
                     $("#default").html(defaults);
                     $("#module_list").html(template);
