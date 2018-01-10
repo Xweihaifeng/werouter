@@ -1,0 +1,120 @@
+<#extend#>public/sub_extend.html</#extend#>
+<link rel="stylesheet" href="{{PATH_TML}}css/list.css">
+<link rel="stylesheet" href="{{PATH_TML}}css/detail.css">
+<!--<script src="{{PATH_TML}}js/detail.js"></script>-->
+<script src="/common/iview/iview.min.js"></script>
+
+<div class="list1">
+    <main>
+        <div class="seat">
+            <img src="{{PATH_TML}}image/fanhui.png" alt="">
+            当前位置在：
+            <a :href="all_domian">首页</a>
+            > {{sub_aside_info.title}} > {{cate_info.title}}
+        </div>
+        <div class="main-big">
+            <div class="main">
+                <h2>
+                    <strong>{{sub_aside_info.title}}</strong>
+                    <span>{{sub_aside_info.init_type}}</span>
+                </h2>
+                <ul class="aside">
+                    <li :class="{cenav_cur : item.title==cate_info.title}" v-for="item in sub_aside"><a :href="channel_domain+'/'+item.domain | href">{{item.title}}</a></li>
+                </ul>
+                <div class="company">
+                    <p>电话：029-853363598</p>
+                    <p>传真：029-853363598</p>
+                    <p>地址：陕西省西安市高新区绿地领海大厦</p>
+                </div>
+            </div>
+            <div class="list-big">
+                <div class="detail-list">
+                    <h2>{{detail.title}}</h2>
+                    <div class="det_btn">
+                        <span>来源：</span>
+                        <span>作者：{{detail.publisher}}</span>
+                        <span>时间：{{detail.publish_time}}</span>
+                    </div>
+                    <div class="det_con" v-html="detail.content"></div>
+                    <div class="del_hot">
+                        <span>阅读 {{detail.views}}</span>
+                        <span class="del_zan" @click="zan()">{{detail.praise_num}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script>
+    var app = new Vue({
+        el: '#content_app',
+        data: {
+            sub_aside : [],   //侧导航接口
+            sub_aside_info : {},
+            channel_domain : $app.get_router(2), // 频道个性域名
+            cate_domain : $app.get_router(3), // 分类个性域名
+            detail : {},
+            cate_info:{},
+        },
+        mounted: function() {
+            //$app.set_title('风采页面');
+            this.$nextTick(()=>{
+                // 右侧详情展示
+                ajax.get('/cms/detail/'+this.cate_domain).then((res)=>{
+                    if(res.code === 200) {
+                        var result = res.data;
+                        this.cate_info=result.category.title
+                        this.detail = result;
+                    }
+                });
+
+                //左侧频道相关
+                $sub_ajax.cate(this.channel_domain,(res)=>{
+                    this.sub_aside_info = res.data;
+                    $sub_ajax.cate_tree({channel : this.sub_aside_info.weid} , (res)=>{
+                        this.sub_aside = res.data;
+                        for(var item of this.sub_aside)
+                        {
+                            if(item.title == this.cate_info)
+                            {
+                                console.log("123",item)
+                                this.cate_info = item;
+                                $app.set_title(this.sub_aside_info.title + '-' + item.title);
+                                break;
+                            }
+                        }
+                    });
+                });
+
+            });
+        },
+        methods: {
+            page_fun(index) {
+                var url = this.channel_domain +'/'+this.cate_domain + '?page=' + index;
+                $app.open_page(url);
+            },
+            zan(){
+                if(is_login == 'no') {
+                    alert(1)
+                    mb_login();
+                    return false;
+                }
+                ajax.post('cms/contents/praise', {"content_id": this.cate_domain}).then((res) => {
+                    if (res.data && res.code === 200) {
+                        this.zan_true = res.data.praise;
+                        if(!this.zan_true) {
+                            this.news_detail.praise_num -= 1;
+                            mb_message('取消点赞');
+                            return false;
+                        }
+                        this.news_detail.praise_num += 1;
+                        mb_message('成功点赞');
+                        $(this).css({"background":"url(/common/img/zan.png) no-repeat 13px 0px"})
+                    }
+                });
+            }
+
+        }
+    });
+</script>

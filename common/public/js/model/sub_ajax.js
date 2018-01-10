@@ -35,5 +35,13 @@
             call(res);
         });
     }
+
+    // 详情页
+    // sub_ajax.cont_list = function(params ,call){
+    //     ajax.get('/cms/detail',{params : params}).then((res)=>{
+    //         call(res);
+    //     });
+    // }
+
 	window.$sub_ajax = sub_ajax;
 })(window);

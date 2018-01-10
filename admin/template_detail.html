@@ -158,6 +158,13 @@
             height: 500px;
         }
 
+        .CodeMirror {
+            width: 80%;
+            position: relative;
+            top: -20px;
+            left: 135px;
+        }
+
     </style>
 </head>
 
@@ -211,66 +218,60 @@
 
                             <script type="text/javascript">
                                 jQuery(document).ready(function () {
-                                    var myTextArea = document.getElementById('file_code');
-                                    var myCodeMirror = CodeMirror.fromTextArea(myTextArea, {
-                                        lineNumbers: true,
-                                        matchBrackets: true,
-                                        styleActiveLine: true,
-                                        theme: "neat",
-                                        mode: 'html'
-                                    });
-                                    $('#my_submit').click(function () {
 
-                                        url = 'http://demo.php7cms.com/admin.php?c=tpl_pc&m=edit&file=default%2Fmember%2Fspace%2Fflink_list.html&mtype=file';
-
-                                        var loading = layer.load(2, {
-                                            shade: [0.3, '#fff'], //0.1透明度的白色背景
-                                            time: 1000
+                                    $('#updateSet3').click(function () {
+                                        var myTextArea = document.getElementById('file_code');
+                                        var myCodeMirror = CodeMirror.fromTextArea(myTextArea, {
+                                            lineNumbers: true,
+                                            matchBrackets: true,
+                                            styleActiveLine: true,
+                                            theme: "neat",
+                                            mode: 'html'
                                         });
-
-                                        $("#html_result").html(' ... ');
-
+                                        var fileurl = localStorage.getItem('template_editfileurl');
                                         $.ajax({
-                                            type: "POST",
-                                            dataType: "json",
-                                            url: url,
+                                            url: document.location.protocol + '//' + document.domain + '/admin/template.php',
+                                            type: 'post',
                                             data: {
-                                                cname: $("#cname").val(),
-                                                code: myCodeMirror.getValue(),
-                                                csrf_token: "e5499db18be739994921d80a8d19a080"
+                                                operation: 'templateSave',
+                                                url: fileurl,
+                                                content: myCodeMirror.getValue()
                                             },
-                                            success: function (json) {
-                                                layer.close(loading);
-                                                if (json.code == 1) {
-                                                    dr_tips(1, json.msg);
-                                                    setTimeout("window.location.reload(true)", 2000)
+                                            dataType: 'json',
+                                            success: function (data) {
+                                                if (data.code == 200) {
+                                                    swal({
+                                                        title: "保存成功!",
+                                                        timer: 2000,
+                                                        showConfirmButton: false
+                                                    });
+                                                    setTimeout("window.location.reload(true)", 2000);
                                                 } else {
-                                                    dr_tips(0, '模板语法解析错误');
-                                                    $("#html_result").html('<div class="alert alert-danger">' + json.msg + '</div>');
+                                                    swal({
+                                                        title: data.message,
+                                                        timer: 2000,
+                                                        showConfirmButton: false
+                                                    });
                                                 }
                                             },
-                                            error: function (HttpRequest, ajaxOptions, thrownError) {
-                                                layer.closeAll('loading');
-                                                alert(HttpRequest.responseText);
+                                            error: function (xhr) {
+                                                console.log(xhr);
                                             }
-                                        });
+                                        })
                                     });
                                 });
 
                             </script>
-                            <form action="http://demo.php7cms.com/admin.php?c=tpl_pc&amp;m=edit&amp;file=default%2Fmember%2Fspace%2Fflink_list.html&amp;mtype=file"
-                                  class="form-horizontal" method="post" name="myform" id="myform">
+                            <form class="form-horizontal" method="post" name="myform" id="myform">
                                 <input name="isform" type="hidden" value="1">
                                 <input name="csrf_token" type="hidden" value="e5499db18be739994921d80a8d19a080">
                                 <div class="row myfbody">
                                     <div class="col-md-12">
-
                                         <div class="portlet light bordered">
                                             <div class="portlet-title">
                                                 <div class="caption">
                                                     <span class="caption-subject font-green">文件修改</span>
                                                 </div>
-
                                                 <div class="actions">
                                                     <div class="btn-group">
                                                         <a class="btn"
@@ -285,9 +286,7 @@
                                                     <div class="form-group">
                                                         <label class="col-xs-1 control-label ">文件别名</label>
                                                         <div class="col-xs-3">
-                                                            <input type="text" class="form-control" id="cname"
-                                                                   name="cname"
-                                                                   value="">
+                                                            <input type="text" class="form-control" id="cname" disabled="disabled" name="cname" value="">
                                                         </div>
                                                     </div>
 
@@ -295,18 +294,20 @@
                                                         <label class="col-xs-1 control-label ">内容编辑</label>
                                                         <div class="col-xs-10 textarea">
                                                        <textarea id="file_code" name="code" style="display: none;">
-                                                           {template "mheader.html"}
 
-
-                                                           {template "mfooter.html"}
                                                        </textarea>
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <div class="pull-right">
+                                                    <button type="button" class="btn btn-info pull-right"
+                                                            id="updateSet3">保存
+                                                    </button>
+                                                </div>
                                             </div>
+
                                         </div>
                                     </div>
-
                                     <div class="form-group" style="padding-top:30px">
                                         <label class="col-xs-1 control-label "> </label>
                                         <div class="col-xs-10" id="html_result">
@@ -354,6 +355,70 @@
 
 <!--Basic usage-->
 <script src="js/intro.js"></script>
+
+<script>
+    $(function () {
+        var fileurl = localStorage.getItem('template_editfileurl');
+        if (fileurl == '' || fileurl == null || fileurl == "undefined") {
+
+        } else {
+            $.ajax({
+                url: document.location.protocol + '//' + document.domain + '/admin/template.php',
+                type: 'post',
+                data: {operation: 'templateInfo', url: fileurl},
+                dataType: 'json',
+                success: function (data) {
+                    if (data.code == 200) {
+                        $("#cname").val(data.data.name)
+                        $("#file_code").empty();
+                        $("#file_code").text(data.data.countent);
+                        var myTextArea = document.getElementById('file_code');
+                        var myCodeMirror = CodeMirror.fromTextArea(myTextArea, {
+                            lineNumbers: true,
+                            matchBrackets: true,
+                            styleActiveLine: true,
+                            theme: "neat",
+                            mode: 'html'
+                        });
+
+                        $('#updateSet3').click(function () {
+                            var fileurl = localStorage.getItem('template_editfileurl');
+                            $.ajax({
+                                url: document.location.protocol + '//' + document.domain + '/admin/template.php',
+                                type: 'post',
+                                data: {operation: 'templateSave', url: fileurl, content: myCodeMirror.getValue()},
+                                dataType: 'json',
+                                success: function (data) {
+                                    if (data.code == 200) {
+                                        swal({
+                                            title: "保存成功!",
+                                            timer: 2000,
+                                            showConfirmButton: false
+                                        });
+                                        setTimeout("window.location.reload(true)", 2000);
+                                    } else {
+                                        swal({
+                                            title: data.message,
+                                            timer: 2000,
+                                            showConfirmButton: false
+                                        });
+                                    }
+                                },
+                                error: function (xhr) {
+                                    console.log(xhr);
+                                }
+                            })
+                        });
+
+                    }
+                },
+                error: function (xhr) {
+                    console.log(xhr);
+                }
+            })
+        }
+    })
+</script>
 </body>
 
 </html>

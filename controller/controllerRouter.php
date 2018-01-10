@@ -262,7 +262,6 @@ class controllerRouter extends controller
         {
             return TRUE;
         }
-        
     }
 
     // 分站栏目额外规则
@@ -272,8 +271,38 @@ class controllerRouter extends controller
         {
             return FALSE;
         }
-        $this->config['template'] = '/views/list/mult_img_list.html';
-        return TRUE;
+
+        $cate_sql = 'SELECT list_id , page_id , show_id , type FROM we_plat_site_cms_cate WHERE plat_id =? AND domain=?';
+        $cate_row = $this->db->queryOne($cate_sql , array($this->weid , $param));
+        if($cate_row == FALSE)
+        {
+            return FALSE;
+        }
+        $cate_tml = [
+            '0' => [
+                'weid' => $cate_row['list_id'],
+                'cate' => 'list'
+            ],
+            '1' => [
+                'weid' => $cate_row['page_id'],
+                'cate' => 'list'
+            ],
+        ];
+        
+        $cate_tml_weid = $cate_tml[$cate_row['type']]['weid'];
+        
+        $tml_sql = 'SELECT template FROM we_plat_site_cms_template WHERE plat_id =? AND weid=?';
+        $tml_row = $this->db->queryOne($tml_sql , array($this->weid , $cate_tml_weid));
+
+        if(!empty($tml_row['template']))
+        {
+            if($match['current'] == $match['total'])
+            {
+                $this->config['template'] = '/views/'.$cate_tml[$cate_row['type']]['cate'].'/'.$tml_row['template'].'.html';
+            }
+            return TRUE;
+        }
+        return FALSE;
     }
     
     // 分站栏目额外规则
@@ -283,6 +312,7 @@ class controllerRouter extends controller
         {
             return FALSE;
         }
+        
         $this->config['template'] = '/views/show/detail.html';
         return TRUE;
     }
@@ -298,7 +328,7 @@ class controllerRouter extends controller
                 LEFT JOIN we_plat_cms_template ON we_plat_cms_channel.list_id = we_plat_cms_template.weid
                 WHERE we_plat_cms_channel.plat_id =? AND  we_plat_cms_channel.domain = ?';
         $row = $this->db->queryOne($sql , array($this->weid , $param));
-
+        
         if(!empty($row['tml']))
         {   
             if($match['current'] == $match['total'])

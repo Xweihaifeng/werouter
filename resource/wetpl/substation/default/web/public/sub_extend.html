@@ -1,200 +1,151 @@
 <!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title></title>
-    <link rel="stylesheet" href="{{PATH_TML}}css/header.css">
-    <link rel="stylesheet" href="{{PATH_TML}}css/footer.css">
-    <script src="/common/public/js/app.js"></script>
-    <script src="/common/iview/vue.min.js"></script>
-	<script src="/common/iview/axios.min.js"></script>
-	<script src="/common/iview/libs/util.js"></script>
-	<script src="/common/iview/libs/filter.js"></script>
-	<script src="/common/public/js/model/sub_ajax.js"></script>
-    <script src="{{PATH_TML}}js/jquery-3.2.1.js"></script>
-    <script src="{{PATH_TML}}js/nav.js"></script>
-</head>
-<body>
-<div id="header">
-	<header>
-		<main>
-			<div class="head-left">
-				<a href="">
-					<img src="{{PATH_TML}}image/logo.png" alt="">
-				</a>
-			</div>
-			<div class="head-middle">
-				<img src="{{PATH_TML}}image/logo_by.png" alt="">
-			</div>
-			<div class="head-right">
-				<div class="hr-top">
-					<a href="">联系我们</a>
-					<a href="">返回首页</a>
-				</div>
-				<form action="" class="search">
-					<input type="text" placeholder="搜索..." name="s">
-					<input type="submit" value="搜索" name="submit">
-				</form>
-			</div>
-		</main>
-	</header>
-	<nav>
-		<main>
-			<ul class="big-nav">
-				<li><a href="">首页</a></li>
-				<li>
-					<a href="about1.html">
-						商会概况
-					</a>
-					<ul class="nav-list">
-						<li><a href="">商会简介</a></li>
-						<li><a href="">商会章程</a></li>
-						<li><a href="">组织机构</a></li>
-						<li><a href="">入会表格</a></li>
-						<li><a href="">联系我们</a></li>
-					</ul>
-				</li>
-				<li>
-					<a href="newsert.html">
-						商会新闻
-					</a>
-					<ul class="nav-list">
-						<li><a href="newsert.html">商会要闻</a></li>
-						<li><a href="newsert.html">商会动态</a></li>
-						<li><a href="newsert.html">会员动态</a></li>
-						<li><a href="newsert.html">活动预告</a></li>
-						<li><a href="newsert.html">媒体摘要</a></li>
-					</ul>
-				</li>
-				<li>
-					<a href="newsert.html">
-						分会动态
-					</a>
-					<ul class="nav-list">
-						<li><a href="newsert.html">女企业家联谊会</a></li>
-						<li><a href="newsert.html">房地产联合会</a></li>
-						<li><a href="newsert.html">青年人才联合会</a></li>
-						<li><a href="newsert.html">青年企业家协会</a></li>
-						<li><a href="newsert.html">法律委员会</a></li>
-						<li><a href="newsert.html">医疗人才智库委员会</a></li>
-						<li><a href="newsert.html">金融服务委员会</a></li>
-					</ul>
-				</li>
-				<li>
-					<a href="f-mingyu.html">浙商风采</a>
-					<ul class="nav-list">
-						<li><a href="fengcai.html">荣誉主席团</a></li>
-						<li><a href="fengcai.html">名誉会长</a></li>
-						<li><a href="f-mingyu.html">会长</a></li>
-						<li><a href="f-mingyu.html">党委书记</a></li>
-						<li><a href="f-mingyu.html">轮值会长</a></li>
-						<li><a href="fengcai.html">执行副会长</a></li>
-						<li><a href="fengcai.html">副会长</a></li>
-						<li><a href="fengcai.html">常务理事</a></li>
-						<li><a href="fengcai.html">理事</a></li>
-						<li><a href="fengcai.html">监事会</a></li>
-					</ul>
-				</li>
-				<li>
-					<a href="newsert.html">会员服务</a>
-					<ul class="nav-list">
-						<li><a href="">政策动向</a></li>
-						<li><a href="">法律援助</a></li>
-						<li><a href="">回乡投资</a></li>
-						<li><a href="hyuan.html">产品展示</a></li>
-					</ul>
-				</li>
-				<li>
-					<a href="newsert.html">党建园地</a>
-					<ul class="nav-list">
-						<li><a href="newsert.html">党建新闻</a></li>
-						<li><a href="dangzu.html">党组成员</a></li>
-						<li><a href="zuzi.html">组织架构</a></li>
-					</ul>
-				</li>
-				<li>
-					<a href="jijin.html">公益基金会</a>
-					<ul class="nav-list">
-						<li><a href="jijin.html">机构简介</a></li>
-						<li><a href="jijin.html">机构章程</a></li>
-						<li><a href="jijin.html">组织架构</a></li>
-						<li><a href="newsert.html">活动简讯</a></li>
-					</ul>
-				</li>
-			</ul>
-		</main>
-	</nav>
-</div>
-<div id="content_app">
-	{{extend-content}}
-</div>	
-	
-<footer id="footer">
-	<main>
-		<ul class="footer-nav">
-			<li><a href="">首页</a></li>
-			<li><a href="">商会概括</a></li>
-			<li><a href="">商会新闻</a></li>
-			<li><a href="">分会动态</a></li>
-			<li><a href="">浙商风采</a></li>
-			<li><a href="">会员服务</a></li>
-			<li><a href="">党建园地</a></li>
-			<li><a href="">公益基金会</a></li>
-		</ul>
-		<div class="fo-bo">
-			<div class="fo-bl">
-				<img src="{{PATH_TML}}image/flogo.png" alt="">
-			</div>
-			<div class="fo-bm">
-				<span class="fo-son">上海市浙江商会(www.zccs.org)@2008-2012 All Rights Reserved </span>
-				<a href="" class="fo-son">沪ICP备17020763号-1</a>
-				<span class="fo-son">Email：shzjsh@yahoo.com.cn</span>
-				<div class="fo-son">
-					<span>Tel：021-50939588</span>
-					<span>Fax：021-50939388</span>
-				</div>
-				<span class="fo-son">地址：上海市浦东大道900号华辰金融大厦25楼</span>
-			</div>
-			<div class="fo-br">
-				<img src="{{PATH_TML}}image/erweima.png" alt="">
-			</div>
-		</div>
-	</main>
-</footer>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport"
+              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title></title>
+        <link rel="stylesheet" href="{{PATH_TML}}css/header.css">
+        <link rel="stylesheet" href="{{PATH_TML}}css/footer.css">
+        <script src="/common/public/js/app.js"></script>
+        <script src="/common/iview/vue.min.js"></script>
+        <script src="/common/iview/axios.min.js"></script>
+        <script src="/common/iview/libs/util.js"></script>
+        <script src="/common/iview/libs/filter.js"></script>
+        <script src="/common/public/js/model/sub_ajax.js"></script>
+        <script src="{{PATH_TML}}js/jquery-3.2.1.js"></script>
+        <script src="{{PATH_TML}}js/nav.js"></script>
+    </head>
+    <body>
+        <div id="header">
+            <header>
+                <main>
+                    <div class="head-left">
+                        <a href="">
+                            <img src="{{PATH_TML}}image/logo.png" alt="">
+                        </a>
+                    </div>
+                    <div class="head-middle">
+                        <img src="{{PATH_TML}}image/logo_by.png" alt="">
+                    </div>
+                    <div class="head-right">
+                        <div class="hr-top">
+                            <a href="">联系我们</a>
+                            <a href="">返回首页</a>
+                        </div>
+                        <form action="" class="search">
+                            <input type="text" placeholder="搜索..." name="s">
+                            <input type="submit" value="搜索" name="submit">
+                        </form>
+                    </div>
+                </main>
+            </header>
+            <nav>
+                <main>
+                    <ul class="big-nav">
+                        <li><a href="">首页</a></li>
+                        <li v-for="(item, index) in channel">
+                            <a :href="'/'+child_z+'/'+item.domain" @mouseenter="visible(item)" @mouseleave="channel_show(item)">{{item.title}}</a>
+                            <ul class="nav-list" v-if="item.ok">
+                                <li v-for="(value, key) in item.children"><a :href="'/'+child_z+'/'+item.domain+'/'+value.domain">{{value.title}}</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </main>
+            </nav>
+        </div>
 
-<script>
-var header = new Vue({
-    el: '#header',
-    data: {
-        sub_aside : [],   //侧导航接口
-        sub_aside_info : {},
-        sub_rcon : [],    //右侧展示接口
-        channel_domain : $app.get_router(2), // 频道个性域名
-        cate_domain : $app.get_router(3), // 分类个性域名
-        cate_info : {}, // 分类详细信息
-        limit : 10,
-        page : ($app.get_query_string('page')) ? $app.get_query_string('page') : 1,
-        total : 0,
-        total_page : 0,
-        page_show : []
-    },
-    mounted: function() {
-        //$app.set_title('风采页面');
-        this.$nextTick(()=>{
+        <div id="content_app">
+            {{extend-content}}
+        </div>    
             
-            
-        });
-    },
-    methods: {
-        page_fun(index) {
-            var url = this.channel_domain +'/'+this.cate_domain + '?page=' + index;
-            $app.open_page(url);
-        }
-    }
-});
-</script>
-</body>
+        <footer id="footer">
+            <main>
+                <ul class="footer-nav">
+                    <li><a href="">首页</a></li>
+                    <li><a href="">商会概括</a></li>
+                    <li><a href="">商会新闻</a></li>
+                    <li><a href="">分会动态</a></li>
+                    <li><a href="">浙商风采</a></li>
+                    <li><a href="">会员服务</a></li>
+                    <li><a href="">党建园地</a></li>
+                    <li><a href="">公益基金会</a></li>
+                </ul>
+                <div class="fo-bo">
+                    <div class="fo-bl">
+                        <img src="{{PATH_TML}}image/flogo.png" alt="">
+                    </div>
+                    <div class="fo-bm">
+                        <span class="fo-son">上海市浙江商会(www.zccs.org)@2008-2012 All Rights Reserved </span>
+                        <a href="" class="fo-son">沪ICP备17020763号-1</a>
+                        <span class="fo-son">Email：shzjsh@yahoo.com.cn</span>
+                        <div class="fo-son">
+                            <span>Tel：021-50939588</span>
+                            <span>Fax：021-50939388</span>
+                        </div>
+                        <span class="fo-son">地址：上海市浦东大道900号华辰金融大厦25楼</span>
+                    </div>
+                    <div class="fo-br">
+                        <img src="{{PATH_TML}}image/erweima.png" alt="">
+                    </div>
+                </div>
+            </main>
+        </footer>
+
+        <script>
+            var header = new Vue({
+                el: '#header',
+                data: {
+                    sub_aside : [],   //侧导航接口
+                    sub_aside_info : {},
+                    sub_rcon : [],    //右侧展示接口
+                    channel_domain : $app.get_router(2), // 频道个性域名
+                    cate_domain : $app.get_router(3), // 分类个性域名
+                    cate_info : {}, // 分类详细信息
+                    limit : 10,
+                    page : ($app.get_query_string('page')) ? $app.get_query_string('page') : 1,
+                    total : 0,
+                    total_page : 0,
+                    page_show : [],
+                    channel: [],
+                    child_z: $app.get_router(1),
+                },
+                mounted: function() {
+                    //$app.set_title('风采页面');
+                    this.$nextTick(()=>{
+                        ajax.get('scms/setting/show').then((res)=>{
+                            if(res.code == 200) {
+                                console.log(res.data);
+                            }
+                        })
+
+                        ajax.get('scms/channelAndCate').then((res)=>{
+                            if(res.code == 200) {
+                                var result = res.data.list;
+                                result.forEach(function(value, key) {
+                                	value.ok = false;
+                                });
+
+                                this.channel = result;
+                                console.log(this.channel);
+                            }
+                        })
+                    });
+                },
+                methods: {
+                    page_fun(index) {
+                        var url = this.channel_domain +'/'+this.cate_domain + '?page=' + index;
+                        $app.open_page(url);
+                    },
+                    visible(item) {
+                    	item.ok = true;
+                    },
+                    channel_show(item) {
+                    	item.ok = false;
+                    }
+                }
+            });
+        </script>
+    </body>
 </html>
