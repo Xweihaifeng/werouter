@@ -263,7 +263,7 @@ class controllerRouter extends controller
             return TRUE;
         }
     }
-
+    
     // 分站栏目额外规则
     public function sub_column( $param, $match = array())
     {
