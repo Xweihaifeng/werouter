@@ -31,6 +31,10 @@ var __init = function() {
 
     __init_weixin_config();
 
+    // initialize a app of wepages configuration
+
+    __init_wepages_config();
+
     // initialize another app
 
     __init_another();
@@ -499,6 +503,72 @@ $('.tab-content').children().each(function() {
         $('.tab-body').eq(index).css('display', 'block').siblings('.tab-body').css('display', 'none');
     });
 });
+
+
+/**
+ * ------------------------------------------------
+ * apps script
+ * ------------------------------------------------
+ */
+
+// 微主页配置 - wepages_config
+var allowTpl = ['UA', 'UG', 'UM'];
+var __init_wepages_config = function() {
+    $.ajax({
+        url: ApiUrl + 'setting/alias/wepagesConfig',
+        type: 'get',
+        dataType: 'json',
+        success: function(result) {
+            if (result.code === 200) {
+                var open_allow_source = result.data.open_allow_source;
+                if (open_allow_source.length > 0) {
+                    $(open_allow_source).each(function(k, v) {
+                        $('input[name=open_allow_source][value=' + v + ']').attr('checked', true);
+                    });
+                }
+            } else {
+                parent.layer.msg(result.message);
+
+                return false;
+            }
+        },
+        error: function(xhr) {
+            console.log(xhr);
+        }
+    });
+}
+$('#wepagesSet').click(function() {
+    var open_allow_source = [];
+    $("input[name=open_allow_source]:checked").each(function(k, v) {
+        open_allow_source.push($(v).val());
+    });
+    var formList = {
+        'open_allow_source': open_allow_source,
+    };
+    $.ajax({
+        url: ApiUrl + 'setting/alias/wepagesConfig',
+        type: 'post',
+        dataType: 'json',
+        data: {
+            config: formList
+        },
+        success: function(data) {
+            console.log(data);
+            if (data.code === 200) {
+                swal('提示', '保存成功', 'success');
+            } else {
+                console.log('error: -200');
+            }
+        },
+        error: function(xhr) {
+            console.log(xhr);
+        }
+    });
+});
+
+
+
+
 
 // 另一个app - another
 
