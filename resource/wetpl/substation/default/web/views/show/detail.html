@@ -18,7 +18,7 @@
                     <span>{{sub_aside_info.init_type}}</span>
                 </h2>
                 <ul class="aside">
-                    <li :class="{cenav_cur : item.title==cate_info.title}" v-for="item in sub_aside"><a :href="channel_domain+'/'+item.domain | href">{{item.title}}</a></li>
+                    <li :class="{cenav_cur : item.domain==cat_par}" v-for="item in sub_aside"><a :href="channel_domain+'/'+item.domain | href">{{item.title}}</a></li>
                 </ul>
                 <div class="company">
                     <p>电话：029-853363598</p>
@@ -51,10 +51,11 @@
         data: {
             sub_aside : [],   //侧导航接口
             sub_aside_info : {},
-            channel_domain : $app.get_router(2), // 频道个性域名
-            cate_domain : $app.get_router(3), // 分类个性域名
+            channel_domain : $app.get_router(1), // 频道个性域名
+            cate_domain : $app.get_router(2), // 分类个性域名
             detail : {},
             cate_info:{},
+            cat_par : {}  //父集分类
         },
         mounted: function() {
             //$app.set_title('风采页面');
@@ -62,6 +63,7 @@
                 // 右侧详情展示
                 ajax.get('/cms/detail/'+this.cate_domain).then((res)=>{
                     if(res.code === 200) {
+                        this.cat_par=res.data.category.domain;
                         var result = res.data;
                         this.cate_info=result.category.title
                         this.detail = result;
