@@ -1,0 +1,91 @@
+<#extend#>public/sub_extend.html</#extend#>
+
+<link rel="stylesheet" href="{{PATH_TML}}css/list.css">
+<link rel="stylesheet" href="{{PATH_TML}}css/search.css">
+<script src="{{PATH_TML}}js/banner.js"></script>
+
+<!--列表页2开始-->
+<div class="list1">
+    <main>
+        <div class="main-big">
+            <div class="list-big">
+                <div class="newsert">
+                    <ul class="new2">
+                        <li v-for="(item, index) in sub_rcon">
+                            <a href="">
+                                <img src="{{PATH_TML}}image/20171227112312-0.png" alt="">
+                            </a>
+                            <div class="new2-left">
+                                <h2>
+                                    <a :href="channel+'/'+item.weid | href">【{{item.cate_name}}】{{item.title}}</a>
+                                </h2>
+                                <p>
+                                    <a :href="channel+'/'+item.weid | href">{{item.summary| limitLen(0,50)}}</a>
+                                </p>
+                                <div class="all">
+                                    <span>时间：{{item.publish_time}}</span>
+                                    <a :href="channel+'/'+item.weid | href">查看更多 +</a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="fenye" v-if="total > limit">
+                        <a @click="page_fun(1)" v-if="page>1" style="cursor:pointer">首页</a>
+                        <a style="cursor:pointer" v-if="page>1" @click="page_fun(parseInt(page - 1))" >上一页</a>
+                        <a style="cursor:pointer" :name="'page'+index" :class="{'pageT' : page === index}" v-for="index in page_show" @click="page_fun(index)" >{{index}}</a>
+                        <a v-if="page<total_page" style="cursor:pointer" @click="page_fun(parseInt(page) + 1)" >下一页</a>
+                        <a v-if="page<total_page" style="cursor:pointer" @click="page_fun(total_page)" >尾页</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script>
+    var app = new Vue({
+        el: '#content_app',
+        data: {
+            sub_aside : [],                     // 侧导航接口
+            sub_rcon : [],                      // 右侧展示接口
+            cate_domain : $app.get_router(2),   // 分类个性域名
+            limit : 10,
+            page : ($app.get_query_string('page')) ? $app.get_query_string('page') : 1,
+            total : 0,
+            total_page : 0,
+            page_show : [],
+            title : $app.get_query_string('q'),
+            channel : $app.get_query_string('s'),// 频道个性域名
+        },
+        mounted: function() {
+
+            this.$nextTick(()=>{
+                ajax.get("scms/content_search", {
+                    params:{
+                        title       :this.title,
+                        // channel_id  :this.channel,
+                        page        :this.page,
+                        limit       :this.limit
+                    }
+                }).then((res) => {
+                    console.log("data:",res.data)
+                    this.sub_rcon = res.data.list;
+                    this.total = res.data.total;
+                    this.total_page = Math.ceil(this.total / this.limit);
+                    var left = ( (this.page -3) > 0 ) ? this.page -3 : 1;
+                    var right = ( (this.page + 3) < this.total_page ) ? this.page + 3 : this.total_page;
+
+                    for (var i = left; i < right + 1 ; i++) {
+                        this.page_show.push(i);
+                    }
+                });
+            });
+        },
+        methods: {
+            page_fun(index) {
+                var url = this.channel +'/'+this.cate_domain + '?page=' + index;
+                $app.open_page(url);
+            }
+        }
+    });
+</script>
