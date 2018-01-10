@@ -105,7 +105,9 @@ $(function () {
                                 $(".module_li").addClass("block");
                                 $(".module").slideUp();
                                 $(".but").animate({left: -40}, 600);
-                                document.location.reload();
+                                setTimeout(function () {
+                                    document.location.reload();
+                                }, 3000);
                             }
                         }
                     });
