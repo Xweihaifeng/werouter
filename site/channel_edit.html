@@ -450,7 +450,6 @@
     <script>
         jQuery.noConflict();
         $(function($) {
-            var type_id='';
             var __init = function() {
                 id = getQueryParam('id');
                 $.ajax({
@@ -476,7 +475,7 @@
                             $('input[name=big_image]').val(data.data.big_image);
                         }
                         $('input[name=list_field]').val(data.data.list_id);
-                        type_id=data.data.url_cate_id;
+                        var type_id=data.data.url_cate_id;
                         $.ajax({
                             url: ApiUrl + 'scms/template/' + data.data.list_id,
                             type: 'get',
@@ -492,6 +491,17 @@
                             $('input[name=title]').attr("disabled", true);
                             $('input[name=domain]').attr("disabled", true);
                         }
+                        var advTypes='';
+                        $.getJSON(ApiUrl+"scms/channel_categories?channel="+id,function(result){
+                            $.each(result.data, function(i,item){
+                                if(type_id==item.weid){
+                                    advTypes=advTypes+'<option value="'+item.weid+'" description="'+item.description+'" selected=\"selected\">'+item.title+'</option>';
+                                }else{
+                                    advTypes=advTypes+'<option value="'+item.weid+'" description="'+item.description+'">'+item.title+'</option>';
+                                }
+                            });
+                            $("#type-select").append(advTypes);
+                        });
                     },
                     error: function(xhr) {
                         console.log(xhr);
@@ -499,23 +509,6 @@
                 });
             }
             __init();
-
-             //栏目select初始化
-             var initSelect = function(){
-                var advTypes='';
-                 $.getJSON(ApiUrl+"scms/channel_categories?channel="+id,function(result){
-                    console.log(result);
-                    $.each(result.data, function(i,item){
-                          if(type_id==item.weid){
-                                    advTypes=advTypes+'<option value="'+item.weid+'" description="'+item.description+'" selected=\"selected\">'+item.title+'</option>';
-                            }else{
-                                    advTypes=advTypes+'<option value="'+item.weid+'" description="'+item.description+'">'+item.title+'</option>';
-                            }
-                    });
-                     $("#type-select").append(advTypes);
-                });
-            };
-             initSelect();
 
             var uploader = Qiniu.uploader({
                 runtimes: 'html5,flash,html4',
@@ -677,7 +670,6 @@
                     'list_id': $('input[name=list_field]').val(),
                     'url_cate_id': $("#type-select").val(),
                 };
-                console.log(data);
                 $.post(ApiUrl + 'scms/channels/' + id, data, function(ret) {
                     if (ret.code == 200) {
                         location.href = 'channels.html';
