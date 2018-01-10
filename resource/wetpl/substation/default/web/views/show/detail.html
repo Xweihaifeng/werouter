@@ -1,6 +1,7 @@
 <#extend#>public/sub_extend.html</#extend#>
 <link rel="stylesheet" href="{{PATH_TML}}css/list.css">
 <link rel="stylesheet" href="{{PATH_TML}}css/detail.css">
+<!--<script src="{{PATH_TML}}js/detail.js"></script>-->
 <script src="/common/iview/iview.min.js"></script>
 
 <div class="list1">
@@ -18,7 +19,7 @@
                     <span>{{sub_aside_info.init_type}}</span>
                 </h2>
                 <ul class="aside">
-                    <li :class="{cenav_cur : item.domain==cate_domain}" v-for="item in sub_aside"><a :href="channel_domain+'/'+item.domain | href">{{item.title}}</a></li>
+                    <li :class="{cenav_cur : item.title==cate_info.title}" v-for="item in sub_aside"><a :href="channel_domain+'/'+item.domain | href">{{item.title}}</a></li>
                 </ul>
                 <div class="company">
                     <p>电话：029-853363598</p>
@@ -37,7 +38,7 @@
                     <div class="det_con" v-html="detail.content"></div>
                     <div class="del_hot">
                         <span>阅读 {{detail.views}}</span>
-                        <span>{{detail.praise_num}}</span>
+                        <span class="del_zan" @click="zan()">{{detail.praise_num}}</span>
                     </div>
                 </div>
             </div>
@@ -54,11 +55,20 @@
             channel_domain : $app.get_router(2), // 频道个性域名
             cate_domain : $app.get_router(3), // 分类个性域名
             detail : {},
-            cate_info:{}
+            cate_info:{},
         },
         mounted: function() {
             //$app.set_title('风采页面');
             this.$nextTick(()=>{
+                // 右侧详情展示
+                ajax.get('/cms/detail/'+this.cate_domain).then((res)=>{
+                    if(res.code === 200) {
+                        var result = res.data;
+                        this.cate_info=result.category.title
+                        this.detail = result;
+                    }
+                });
+
                 //左侧频道相关
                 $sub_ajax.cate(this.channel_domain,(res)=>{
                     this.sub_aside_info = res.data;
@@ -66,8 +76,9 @@
                         this.sub_aside = res.data;
                         for(var item of this.sub_aside)
                         {
-                            if(item.domain == this.cate_domain)
+                            if(item.title == this.cate_info)
                             {
+                                console.log("123",item)
                                 this.cate_info = item;
                                 $app.set_title(this.sub_aside_info.title + '-' + item.title);
                                 break;
@@ -76,21 +87,34 @@
                     });
                 });
 
-                // 右侧详情展示
-                ajax.get('/cms/detail/'+this.cate_domain).then((res)=>{
-                    if(res.code === 200) {
-                        var result = res.data;
-                        this.detail = result;
-                    }
-                });
-
             });
         },
         methods: {
             page_fun(index) {
                 var url = this.channel_domain +'/'+this.cate_domain + '?page=' + index;
                 $app.open_page(url);
+            },
+            zan(){
+                if(is_login == 'no') {
+                    alert(1)
+                    mb_login();
+                    return false;
+                }
+                ajax.post('cms/contents/praise', {"content_id": this.cate_domain}).then((res) => {
+                    if (res.data && res.code === 200) {
+                        this.zan_true = res.data.praise;
+                        if(!this.zan_true) {
+                            this.news_detail.praise_num -= 1;
+                            mb_message('取消点赞');
+                            return false;
+                        }
+                        this.news_detail.praise_num += 1;
+                        mb_message('成功点赞');
+                        $(this).css({"background":"url(/common/img/zan.png) no-repeat 13px 0px"})
+                    }
+                });
             }
+
         }
     });
 </script>
