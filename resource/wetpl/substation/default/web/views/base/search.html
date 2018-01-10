@@ -48,14 +48,14 @@
         data: {
             sub_aside : [],                     // 侧导航接口
             sub_rcon : [],                      // 右侧展示接口
-            cate_domain : $app.get_router(3),   // 分类个性域名
+            cate_domain : $app.get_router(2),   // 分类个性域名
             limit : 10,
             page : ($app.get_query_string('page')) ? $app.get_query_string('page') : 1,
             total : 0,
             total_page : 0,
             page_show : [],
-            title : $app.get_query_string('s'),
-            channel : $app.get_query_string('q'),// 频道个性域名
+            title : $app.get_query_string('q'),
+            channel : $app.get_query_string('s'),// 频道个性域名
         },
         mounted: function() {
 
