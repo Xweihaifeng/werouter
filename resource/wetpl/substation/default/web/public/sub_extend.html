@@ -125,6 +125,19 @@
                             if(res.code == 200) {
                                 var result = res.data.list;
                                 result.forEach(function(value, key) {
+                                    value.old_domain = value.domain;
+                                    if(value.url_cate_id != null)
+                                    {
+                                        for(var item of value.children)
+                                        {
+                                            if(item.weid == value.url_cate_id)
+                                            {
+                                                value.domain = value.domain + '/' + item.domain;
+                                            }
+                                        }
+                                    }else{
+                                        value.domain = value.domain + '/' + value.children[0].domain;
+                                    }
                                     value.ok = false;
                                 });
 
