@@ -285,6 +285,7 @@ class router_index extends controller
 
         $router_verify = new router_verify($router , $uri , $rule , $weid);
 
+
         if(empty($router_verify->router)) {
             error(404);
         }
