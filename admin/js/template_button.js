@@ -1,10 +1,20 @@
 $(function () {
+    var none = 1;
     $(".but").click(() => {
         let is_custom = $("#show_val").val();
         if(!is_custom){
-            $(".module").slideDown();
-            $("#show_val").val(1);
-            // $(".module").addClass("block");
+            if(none%2 == 1){
+                $(".module").slideDown();
+                $(".but").animate({left: -40}, 600);
+                console.log(is_custom);
+                none ++;
+            }else {
+                $(".module").slideUp();
+                $(".but").animate({left: 0}, 600);
+                none ++;
+                console.log(none)
+            }
+
         }else {
             if(!is_custom){
                 var show = 2;
@@ -12,6 +22,7 @@ $(function () {
                 var show = is_custom;
             }
             if (show == 2) {
+                $(".but").animate({left: -40}, 600);
                 let is_custom = 1;
                 $.ajax({
                     url: ApiUrl + 'plat_set_custom',
@@ -21,7 +32,6 @@ $(function () {
                     success: function (data) {
                         if (data.code === 200) {
                             swal('', '保存成功', 'success');
-                            $(".but").animate({left: -40}, 600);
                             $(".module_li").addClass("block");
                             $("#show_val").val(1);
 
@@ -34,11 +44,9 @@ $(function () {
                     }
                 });
             } else if( show == 1) {
-                // $(".but").animate({left: 0}, 600);
+                $(".but").animate({left: 0}, 600);
                 $(".but").attr("data-toggle","modal");
                 $(".but").attr("data-target","#myModal");
-                // // show = 2;
-                // $("#show_val").val(show)
             }
 
         }
@@ -82,6 +90,9 @@ $(function () {
 
     $("#updateSet2").click(function () {
         var is_custom = $("#show_val").val();
+        if(!is_custom){
+            is_custom = 1;
+        }
         var custom_file = $('#custom_file').val();
         var custom_name = $('#custom_name').val();
         var template_id = $("#module_list").find("option:selected").val();

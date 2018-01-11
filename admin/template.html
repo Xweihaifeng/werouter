@@ -234,9 +234,9 @@
                     <div class="box">
                         <!-- /.box-header -->
                         <ul class="form-top">
-                            <li class="shown"><span>默认模板</span></li>
+                            <li class="shown"><span style="cursor:pointer;">默认模板</span></li>
                             <li id="diy" data-step="2" data-intro="点击进行自定义" data-position='right'
-                                data-scrollTo='tooltip'><span>自定义模板</span>
+                                data-scrollTo='tooltip'><span  style="cursor:pointer;">自定义模板</span>
                                 <div class="hott"></div>
                                 <span>diy</span>
                             </li>
@@ -251,7 +251,25 @@
                                         <div class="col-sm-5" id="default"></div>
                                     </div>
                                     <div class="pull-right">
-                                        <button type="button" class="btn btn-info pull-right" id="updateSet">保存</button>
+                                        <button type="button" class="btn btn-info pull-right" id="updateSet" >保存</button>
+                                    </div>
+
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close"><span aria-hidden="true">&times;</span></button>
+                                                    <!--<h4 class="modal-title" id="myModalLabel1">Modal title</h4>-->
+                                                </div>
+                                                <div class="modal-body">
+                                                    请关闭自定义模板后再来保存
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </form>
                             </li>
@@ -259,15 +277,15 @@
                                 <form id="form" class="box-body form-horizontal" id="templateId2"
                                       style="padding: 30px;">
                                     <div class="form-group">
-                                        <label class="control-label col-sm-3 col-md-2 col-lg-1">启用模板：</label>
+                                        <label class="control-label col-sm-3 col-md-2 col-lg-1">是否启用模板：</label>
                                         <div class="col-sm-5">
                                             <div class="button bottoms" data-step="3" data-intro="点击打开模板"
                                                  data-position='right'
                                                  data-scrollTo='tooltip'>
                                                 <ul class="but">
-                                                    <li>开启</li>
+                                                    <li><span style="cursor:pointer;">开启</span></li>
                                                     <li></li>
-                                                    <li>关闭</li>
+                                                    <li><span style="cursor:pointer;">关闭</span></li>
                                                 </ul>
                                                 <input type="hidden" id="show_val">
                                             </div>
