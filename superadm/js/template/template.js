@@ -107,7 +107,7 @@ $(document).ready(function () {
                             if(url){
                                 //跳转编辑页记录URL
                                 localStorage.setItem('template_editfileurl', url);
-                                window.location.href="/admin/template_detail.html";
+                                window.location.href="/superadm/template_detail.html";
                             }
                         })
                     }
