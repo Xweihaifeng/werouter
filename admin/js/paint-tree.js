@@ -19,7 +19,7 @@ $(document).ready(function(){
                         if(v.name !== undefined){
                             if(v.checked == true){
                                 str += `
-                             <tr class=" my_pid_menu odd gradeX" id="${v.id}">
+                             <tr class=" my_pid_menu odd gradeX" style="background: #dadbdd!important;" id="${v.id}">
                                 <td class="myselect">
                                     <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
                                         <input type="checkbox" class="checkboxes group-checkable menu" data-set=".menu${v.id}" name="data[mark][]" checked="" value="home">
@@ -29,7 +29,7 @@ $(document).ready(function(){
                                 <td style="text-align:center;">
                                     ${v.id}                           </td>
                                 <td>
-                                    <i class="fa"></i> ${v.name}</td>
+                                    <i class="fa" style="margin-left: 0" ></i>${v.name}</td>
                                 <td style="text-align:center" class="myselect">
                                 </td>
                                 <td style="text-align:center" class="myselect">
@@ -40,7 +40,7 @@ $(document).ready(function(){
                             `;
                             }else {
                                 str += `
-                             <tr class=" my_pid_menu odd gradeX" id="${v.id}">
+                             <tr class=" my_pid_menu odd gradeX" style="background: #dadbdd!important;" id="${v.id}">
                                 <td class="myselect">
                                     <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
                                         <input type="checkbox" class="checkboxes group-checkable menu" data-set=".menu${v.id}" name="data[mark][]" value="home">
@@ -50,7 +50,7 @@ $(document).ready(function(){
                                 <td style="text-align:center">
                                     ${v.id}                           </td>
                                 <td>
-                                    <i class="fa"></i> ${v.name}</td>
+                                    <i class="fa" style="margin-left: 0"></i> ${v.name}</td>
                                 <td style="text-align:center" class="myselect">
                                 </td>
                                 <td style="text-align:center" class="myselect">
@@ -64,7 +64,7 @@ $(document).ready(function(){
                                     if(k.children.length > 0){
                                         if(k.checked == true){
                                             str += `
-                               <tr class=" odd gradeX" id="row${k.id}">
+                               <tr class=" odd gradeX" id="row${k.id}" style="background: #f4f5f6!important;">
                                 <td class="myselect">
                                     <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
                                         <input type="checkbox" class="checkboxes group-checkable menu${v.id}  menu" data-set=".menu${k.id}" name="data[mark][]" checked="" value="home">
@@ -74,7 +74,7 @@ $(document).ready(function(){
                                 <td style="text-align:center">
                                     ${k.id}                           </td>
                                 <td>
-                                    &nbsp;└&nbsp;&nbsp;<i class="fa"></i> ${k.name}</td>
+                                    <i class="fa" style="margin-left: 30px">└</i> ${k.name}</td>
                                 <td style="text-align:center" class="myselect">
                                 </td>
                                 <td style="text-align:center" class="myselect">
@@ -85,7 +85,7 @@ $(document).ready(function(){
                             `;
                                         }else {
                                             str += `
-                               <tr class=" odd gradeX" id="row${k.id}">
+                               <tr class=" odd gradeX" id="row${k.id}" style="background: #f4f5f6!important;">
                                 <td class="myselect">
                                     <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
                                         <input type="checkbox" class="checkboxes group-checkable menu${v.id}  menu" data-set=".menu${k.id}" name="data[mark][]" value="home">
@@ -95,7 +95,7 @@ $(document).ready(function(){
                                 <td style="text-align:center">
                                     ${k.id}                           </td>
                                 <td>
-                                    &nbsp;└&nbsp;&nbsp;<i class="fa"></i> ${k.name}</td>
+                                    <i class="fa" style="margin-left: 30px">└</i> ${k.name}</td>
                                 <td style="text-align:center" class="myselect">
                                 </td>
                                 <td style="text-align:center" class="myselect">
@@ -109,7 +109,7 @@ $(document).ready(function(){
                                                 if(l.children.length > 0){
                                                     if(l.checked == true){
                                                         str += `
-                               <tr class=" odd gradeX" id="row${l.id}">
+                               <tr class=" odd gradeX" id="row${l.id}" style="background: #fbfcfc!important;">
                                 <td class="myselect">
                                     <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
                                         <input type="checkbox" class="checkboxes group-checkable menu${k.id} menu${v.id} menu" data-set=".menu${l.id}" name="data[mark][]" checked="" value="home">
@@ -119,7 +119,7 @@ $(document).ready(function(){
                                 <td style="text-align:center">
                                     ${l.id}                           </td>
                                 <td>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└&nbsp;&nbsp;<i class="fa"></i> ${l.name}</td>
+                                    <i class="fa" style="margin-left: 60px">└</i> ${l.name}</td>
                                 <td style="text-align:center" class="myselect">
                                 </td>
                                 <td style="text-align:center" class="myselect">
@@ -130,7 +130,7 @@ $(document).ready(function(){
                             `;
                                                     }else {
                                                         str += `
-                               <tr class=" odd gradeX" id="row${l.id}">
+                               <tr class=" odd gradeX" id="row${l.id}" style="background: #fbfcfc!important;">
                                 <td class="myselect">
                                     <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
                                         <input type="checkbox" class="checkboxes group-checkable menu${k.id} menu${v.id} menu" data-set=".menu${l.id}" name="data[mark][]" value="home">
@@ -140,7 +140,7 @@ $(document).ready(function(){
                                 <td style="text-align:center">
                                     ${l.id}                           </td>
                                 <td>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└&nbsp;&nbsp;<i class="fa"></i> ${l.name}</td>
+                                    <i class="fa" style="margin-left: 60px">└</i> ${l.name}</td>
                                 <td style="text-align:center" class="myselect">
                                 </td>
                                 <td style="text-align:center" class="myselect">
@@ -164,7 +164,7 @@ $(document).ready(function(){
                                 <td style="text-align:center">
                                     ${g.id}                           </td>
                                 <td>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└&nbsp;&nbsp;&nbsp;<i class="fa"></i> ${g.name}</td>
+                                    <i class="fa" style="margin-left: 90px">└</i> ${g.name}</td>
                                 <td style="text-align:center" class="myselect">
                                 </td>
                                 <td style="text-align:center" class="myselect">
@@ -185,7 +185,7 @@ $(document).ready(function(){
                                 <td style="text-align:center">
                                     ${g.id}                           </td>
                                 <td>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└&nbsp;&nbsp;&nbsp;<i class="fa"></i> ${g.name}</td>
+                                    <i class="fa" style="margin-left: 90px">└</i> ${g.name}</td>
                                 <td style="text-align:center" class="myselect">
                                 </td>
                                 <td style="text-align:center" class="myselect">
@@ -208,7 +208,7 @@ $(document).ready(function(){
                                         <td style="text-align:center">
                                             ${s.id}                            </td>
                                         <td>
-                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├&nbsp;&nbsp; <i class="fa"></i> ${s.name}</td>
+                                            <i class="fa" style="margin-left: 120px;">├</i> ${s.name}</td>
                                         <td style="text-align:center" class="myselect">
                                             <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
                                                 <input type="checkbox" id="${s.id}z" aid="${s.id}" bid="${g.id}" cid="${l.id}" did="${k.id}" eid="${v.id}" disabled="disabled" class="checkboxes zsg${s.id} menu${g.id} menu${l.id} menu${v.id} menu${k.id}" checked="" name="data[auth][home/main][]" value="add">
@@ -241,7 +241,7 @@ $(document).ready(function(){
                                         <td style="text-align:center">
                                             ${s.id}                            </td>
                                         <td>
-                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├&nbsp;&nbsp; <i class="fa"></i> ${s.name}</td>
+                                            <i class="fa" style="margin-left: 120px;">├</i> ${s.name}</td>
                                         <td style="text-align:center" class="myselect">
                                             <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
                                                 <input type="checkbox" id="${s.id}z" aid="${s.id}" bid="${g.id}" cid="${l.id}" did="${k.id}" eid="${v.id}" disabled="disabled" class="checkboxes zsg${s.id} menu${g.id} menu${l.id} menu${v.id} menu${k.id}"  name="data[auth][home/main][]" value="add">
@@ -277,7 +277,7 @@ $(document).ready(function(){
                                         <td style="text-align:center">
                                             ${g.id}                            </td>
                                         <td>
-                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├&nbsp;&nbsp; <i class="fa"></i> ${g.name}                          </td>
+                                            <i class="fa" style="margin-left: 90px;">├</i> ${g.name}                          </td>
                                         <td style="text-align:center" class="myselect">
                                             <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
                                                 <input type="checkbox" id="${g.id}z" aid="${g.id}" bid="${l.id}" cid="${k.id}" did="${v.id}" disabled="disabled"  class="checkboxes zsg${l.id}  menu${v.id} menu${k.id}" checked="" name="data[auth][home/main][]" value="add">
@@ -310,7 +310,7 @@ $(document).ready(function(){
                                         <td style="text-align:center">
                                             ${g.id}                            </td>
                                         <td>
-                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├&nbsp;&nbsp; <i class="fa"></i> ${g.name}                          </td>
+                                            <i class="fa" style="margin-left: 90px;">├</i> ${g.name}                          </td>
                                         <td style="text-align:center" class="myselect">
                                             <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
                                                 <input type="checkbox" id="${l.id}z" aid="${g.id}" bid="${l.id}" cid="${k.id}" did="${v.id}" disabled="disabled"  class="checkboxes zsg${g.id}  menu${v.id} menu${v.id} menu${k.id}" name="data[auth][home/main][]" value="add">
@@ -337,7 +337,7 @@ $(document).ready(function(){
                                                 }else {
                                                     if(l.checked == true){
                                                         str += `
-                                    <tr class="odd gradeX">
+                                    <tr class="odd gradeX" style="background: #fbfcfc!important;">
                                         <td class="myselect">
                                             <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
                                                 <input type="checkbox" id="${l.id}" bid="${k.id}" cid="${v.id}"  class="checkboxes group-checkable menu${v.id}  menu${k.id}" data-set=".zsg${l.id}" name="data[mark][]" checked="" value="home/main">
@@ -347,7 +347,7 @@ $(document).ready(function(){
                                         <td style="text-align:center">
                                             ${l.id}                            </td>
                                         <td>
-                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├&nbsp;&nbsp; <i class="fa"></i> ${l.name} </td>
+                                           <i class="fa" style="margin-left: 60px">├</i> ${l.name} </td>
                                         <td style="text-align:center" class="myselect">
                                             <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
                                                 <input type="checkbox" id="${l.id}z" aid="${l.id}" bid="${v.id}" cid="${k.id}" class="checkboxes zsg${l.id}  menu${v.id} d menu${k.id}" disabled="disabled" checked="" name="data[auth][home/main][]" value="add">
@@ -370,7 +370,7 @@ $(document).ready(function(){
                                 `;
                                                     }else {
                                                         str += `
-                                    <tr class="odd gradeX">
+                                    <tr class="odd gradeX" style="background: #fbfcfc!important;">
                                         <td class="myselect">
                                             <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
                                                 <input type="checkbox" id="${l.id}" bid="${k.id}" cid="${v.id}"  class="checkboxes group-checkable menu${v.id}  menu${k.id}" data-set=".zsg${l.id}" name="data[mark][]" value="home/main">
@@ -380,7 +380,7 @@ $(document).ready(function(){
                                         <td style="text-align:center">
                                             ${l.id}                            </td>
                                         <td>
-                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├&nbsp;&nbsp; <i class="fa"></i> ${l.name} </td>
+                                             <i class="fa" style="margin-left: 60px">├</i> ${l.name} </td>
                                         <td style="text-align:center" class="myselect">
                                             <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
                                                 <input type="checkbox" id="${l.id}z" aid="${l.id}" bid="${v.id}" cid="${k.id}" class="checkboxes zsg${l.id}  menu${v.id} d menu${k.id}" disabled="disabled"  name="data[auth][home/main][]" value="add">
@@ -407,7 +407,7 @@ $(document).ready(function(){
                                     }else {
                                         if(k.checked == true ){
                                             str += `
-                                    <tr class="odd gradeX">
+                                    <tr class="odd gradeX" style="background: #f4f5f6!important;">
                                         <td class="myselect">
                                             <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
                                                 <input type="checkbox" id="${k.id}" bid="${v.id}" cid=""  class="checkboxes group-checkable menu${v.id}  menu${k.id}" data-set=".zsg${l.id}" name="data[mark][]" checked="" value="home/main">
@@ -417,7 +417,7 @@ $(document).ready(function(){
                                         <td style="text-align:center">
                                             ${k.id}                            </td>
                                         <td>
-                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├&nbsp;&nbsp; <i class="fa"></i> ${k.name}   </td>
+                                            <i class="fa" style="margin-left: 30px">├</i> ${k.name}   </td>
                                         <td style="text-align:center" class="myselect">
                                             <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
                                                 <input type="checkbox" id="${k.id}z" aid="${k.id}" bid="${v.id}" cid="" disabled="disabled"  class="checkboxes zsg${l.id}  menu${v.id} menu${k.id}" checked="" name="data[auth][home/main][]" value="add">
@@ -440,7 +440,7 @@ $(document).ready(function(){
                                 `;
                                         }else {
                                             str += `
-                                    <tr class="odd gradeX">
+                                    <tr class="odd gradeX" style="background: #f4f5f6!important;">
                                         <td class="myselect">
                                             <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
                                                 <input type="checkbox" id="${k.id}" bid="${v.id}" cid=""  class="checkboxes group-checkable menu${v.id}  menu${k.id}" data-set=".zsg${l.id}" checked="" name="data[mark][]" value="home/main">
@@ -450,7 +450,7 @@ $(document).ready(function(){
                                         <td style="text-align:center">
                                             ${k.id}                            </td>
                                         <td>
-                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├&nbsp;&nbsp; <i class="fa"></i> ${k.name}   </td>
+                                             <i class="fa"style="margin-left: 30px">├</i> ${k.name}   </td>
                                         <td style="text-align:center" class="myselect">
                                             <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
                                                 <input type="checkbox" id="${k.id}z" aid="${k.id}" bid="${v.id}" cid="" disabled="disabled"  class="checkboxes zsg${l.id}  menu${v.id} menu${k.id}"  name="data[auth][home/main][]" value="add">
@@ -478,7 +478,7 @@ $(document).ready(function(){
                     }else {
                         if(v.checked == true){
                             str += `
-                                    <tr class="odd gradeX">
+                                    <tr class="odd gradeX" style="background: #dadbdd!important;">
                                         <td class="myselect">
                                             <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
                                                 <input type="checkbox" id="${v.id}" bid="" cid=""  class="checkboxes group-checkable menu" data-set=".zsg${v.id}" name="data[mark][]" checked="" value="home/main">
@@ -488,7 +488,7 @@ $(document).ready(function(){
                                         <td style="text-align:center">
                                             ${v.id}                            </td>
                                         <td>
-                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├&nbsp;&nbsp; <i class="fa"></i> ${v.name} </td>
+                                            <i class="fa" style="margin-left: 0"></i> ${v.name} </td>
                                         <td style="text-align:center" class="myselect">
                                             <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
                                                 <input type="checkbox" id="${v.id}z" aid="${v.id}" bid="" cid="" disabled="disabled"  class="checkboxes" checked="" name="data[auth][home/main][]" value="add">
@@ -511,7 +511,7 @@ $(document).ready(function(){
                                 `;
                         }else {
                             str += `
-                                    <tr class="odd gradeX">
+                                    <tr class="odd gradeX" style="background: #dadbdd!important;">
                                         <td class="myselect">
                                             <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
                                                 <input type="checkbox" id="${v.id}" bid="" cid=""  class="checkboxes group-checkable menu" data-set=".zsg${v.id}" checked="" name="data[mark][]" value="home/main">
@@ -521,7 +521,7 @@ $(document).ready(function(){
                                         <td style="text-align:center">
                                             ${v.id}                            </td>
                                         <td>
-                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├&nbsp;&nbsp; <i class="fa"></i> ${v.name} </td>
+                                            <i class="fa" style="margin-left: 0"></i> ${v.name} </td>
                                         <td style="text-align:center" class="myselect">
                                             <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
                                                 <input type="checkbox" id="${v.id}z" aid="${v.id}" bid="" cid="" disabled="disabled"  class="checkboxes" checked="" name="data[auth][home/main][]" value="add">
