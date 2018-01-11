@@ -196,12 +196,12 @@
                         longSwipesRatio: 0.3,
                         touchRatio: 1
                     });
-                }, 1000)
+                }, 1000);
 
+                this.offsetDomHeight += $('.card').height() + $('.rec-content').height()+14;
+                $('.menu').css('top',this.offsetDomHeight + 'px');
+                window.addEventListener('scroll', this.menu)
             });
-            this.offsetDomHeight += $('.card').height() + $('.rec-content').height()+14;
-            $('.menu').css('top',this.offsetDomHeight + 'px');
-            window.addEventListener('scroll', this.menu)
         },
         methods: {
             getList: function () {
