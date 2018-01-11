@@ -106,10 +106,10 @@
              <div class="s2-b">
                  <div class="s2-b1">
                      <div class="s2-lt">
-                         <span class="qz">{{sub_index.spzx.title}}</span>
+                         <span class="qz">{{sub_index.spzx.title | limitLen(0,6)}}</span>
                          <a :href="sub_index.spzx.domain | href">更多</a>
                      </div>
-                     <div class="s-video">
+<!--                      <div class="s-video">
                          <a href="">
                              <img src="{{PATH_TML}}image/20170628105519-0.png" alt="">
                              <div class="s-jie">
@@ -117,31 +117,31 @@
                                  <span>《不忘初心 筑梦前行》</span>
                              </div>
                          </a>
-                     </div>
-                     <ul class="b1-list">
-                         <li v-for="item in sub_index.spzx.list">
-                             <a :href="item.source_url | href">{{item.title}}</a>
+                     </div> -->
+                     <ul class="b1-list" style="margin-top:18px;">
+                         <li v-for="(item, index) in sub_index.spzx.list" v-if="index<8">
+                             <a :href="item.source_url | href">{{item.title | limitLen(0,15)}}</a>
                              <span>{{item.publish_time | formateTime('YMD')}}</span>
                          </li>
                      </ul>
                  </div>
                  <div class="s2-b2">
                      <div class="s2-lt">
-                         <span class="qz">{{sub_index.mag.title}}</span>
+                         <span class="qz">{{sub_index.mag.title | limitLen(0,6)}}</span>
                          <a :href="'magazine/'+sub_index.mag.domain | href">更多</a>
                      </div>
                      <ul class="b2-list">
-                         <li v-for="item in sub_index.mag.list"><a :href="'magazine/'+sub_index.mag.domain+'/'+item.weid | href"><img :src="item.cover | img_src(130,130)" :alt="item.title" :title="item.title"></a></li>
+                         <li v-for="(item, index) in sub_index.mag.list" v-if="index<6"><a :href="'magazine/'+sub_index.mag.domain+'/'+item.weid | href"><img :src="item.cover | img_src(130,130)" :alt="item.title" :title="item.title"></a></li>
                      </ul>
                  </div>
                  <div class="s2-b3">
                      <div class="s2-lt">
-                         <span class="qz">{{sub_index.gzdt.title}}</span>
+                         <span class="qz">{{sub_index.gzdt.title | limitLen(0,6)}}</span>
                          <a :href="sub_index.gzdt.domain | href">更多</a>
                      </div>
                      <ul class="b3-list">
-                         <li v-for="item in sub_index.gzdt.list">
-                             <a :href="item.source_url | href">{{item.title}}</a>
+                         <li v-for="(item, index) in sub_index.gzdt.list" v-if="index<8">
+                             <a :href="item.source_url | href">{{item.title | limitLen(0,15)}}</a>
                              <span>{{item.publish_time | formateTime('YMD')}}</span>
                          </li>
                      </ul>
