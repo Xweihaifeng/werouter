@@ -2,160 +2,162 @@
 <link rel="stylesheet" href="{{PATH_TML}}css/main1.css">
 <script src="{{PATH_TML}}js/banner.js"></script>
 <script src="{{PATH_TML}}js/main1.js"></script>
-<div class="ban">
-    <img :src="sub_ads.header2.image | img_src(1920 , 450 , 1)" alt="">
-</div>
-<div class="main-bg">
- <main>
-     <div class="main-s1">
-          <div class="s1-l">
-              <div class="s1-lt">
-                  <span class="qz">商会新闻</span>
-                  <a href="">更多</a>
-              </div>
-              <div class="s1-lb">
-                  <div class="s1-lbleft">
-                       <ul class="banner">
-                            <li v-for="item in sub_ads.banners.list">
-                                <a :href="item.url">
-                                   <img :src="item.image  | img_src(430 , 310 , 1)" alt="">
-                                </a>
-                                <a :href="item.url" class="banner-jie" title="{{item.title}}">{{item.title | limitLen(0,12)}}</a>
-                            </li>
-                        </ul>
-                        <div class="btn">
-                           <div class="Ibtn-bL"></div>
-                           <div class="Ibtn-bR"></div>
-                        </div>
-                        <ul class="yuan">
-                            <li v-for="item in sub_ads.banners.list" class="yson"></li>
-                        </ul>
-                    </div>
 
-                    <div class="s1-lbright">
-                        <ul class="s1-lbr">
-                            <li v-for="item in sub_index.news">
-                                <a :href="'news/'+item.weid | sub_href">{{item.title | limitLen(0,20)}}</a>
-                                <span>[ {{item.cate_title}} ]</span>
-                            </li>
-                        </ul>
-                    </div>
+<div class="main-bg">
+    <div class="ban">
+        <img :src="sub_ads.header2.image | img_src(1920 , 450 , 1)" alt="">
+    </div>
+    <main>
+         <div class="main-s1">
+              <div class="s1-l">
+                  <div class="s1-lt">
+                      <span class="qz">商会新闻</span>
+                      <a :href="sub_index.init_domian.news | href">更多</a>
+                  </div>
+                  <div class="s1-lb">
+                      <div class="s1-lbleft">
+                           <ul class="banner">
+                                <li v-for="item in sub_ads.banners.list">
+                                    <a :href="item.url | href">
+                                       <img :src="item.image  | img_src(430 , 310 , 1)" alt="">
+                                    </a>
+                                    <a :href="item.url | href" class="banner-jie" title="{{item.title}}">{{item.title | limitLen(0,12)}}</a>
+                                </li>
+                            </ul>
+                            <div class="btn">
+                               <div class="Ibtn-bL"></div>
+                               <div class="Ibtn-bR"></div>
+                            </div>
+                            <ul class="yuan">
+                                <li v-for="item in sub_ads.banners.list" class="yson"></li>
+                            </ul>
+                        </div>
+
+                        <div class="s1-lbright">
+                            <ul class="s1-lbr">
+                                <li v-for="item in sub_index.news">
+                                    <a :href="'news/'+item.weid | href">{{item.title | limitLen(0,20)}}</a>
+                                    <span>[ {{item.cate_title}} ]</span>
+                                </li>
+                            </ul>
+                        </div>
+                  </div>
               </div>
-          </div>
-          <div class="s1-r">
-              <div class="s1-rt">
-                  <h2>最新公告</h2>
-                  <a href="" class="long">更多</a>
+              <div class="s1-r">
+                  <div class="s1-rt">
+                      <h2>最新公告</h2>
+                      <a class="long">更多</a>
+                  </div>
+                  <ul class="list">
+                      <li v-for="item in sub_index.nitoce">
+                          <div class="list-d"></div>
+                          <a :href="'news/'+item.weid | href">{{item.title | limitLen(0,15)}}</a>
+                      </li>
+                      <div class="list-x"></div>
+                  </ul>
               </div>
-              <ul class="list">
-                  <li v-for="item in sub_index.nitoce">
-                      <div class="list-d"></div>
-                      <a href="">{{item.title | limitLen(0,15)}}</a>
-                  </li>
-                  <div class="list-x"></div>
-              </ul>
-          </div>
-     </div>
-     <div class="main-s2">
-         <div class="s2-lt">
-             <span class="qz" v-if="!sub_ads.peoples_title">{{peoples_title.title}}</span>
-             <span class="qz" v-else>{{sub_ads.peoples_title.title}}</span>
-             <a href="">更多</a>
          </div>
-         <div class="fc">
-             <div class="fc-left">
-                  <a href="" v-if="!sub_ads.leader">
-                      <img :src="leader.image | img_src(195 , 190 , 1)" alt="">
-                      <div class="jie">
-                          <h3>{{leader.title}}</h3>
-                      </div>
-                  </a>
-                  <a href="" v-else>
-                      <img :src="sub_ads.leader.image | img_src(195 , 190 , 1)" alt="">
-                      <div class="jie">
-                          <h3>{{sub_ads.leader.title}}</h3>
-                      </div>
-                  </a>
-              </div>
-             <div class="fc-right">
-                 <ul class="fc-big fc1">
-                     <li v-for="item in T_users">
-                         <a :href="'/u/'+item.weid | href">
-                             <img :src="item.avatar" alt="">
-                             <div class="jie1">
-                                 <h3>{{item.real_name}}</h3>
-                                 <p>{{item.position}}</p>
+         <div class="main-s2">
+             <div class="s2-lt">
+                 <span class="qz" v-if="!sub_ads.peoples_title">{{peoples_title.title}}</span>
+                 <span class="qz" v-else>{{sub_ads.peoples_title.title}}</span>
+                 <!-- <a href="">更多</a> -->
+             </div>
+             <div class="fc">
+                 <div class="fc-left">
+                      <a href="" v-if="!sub_ads.leader">
+                          <img :src="leader.image | img_src(195 , 190 , 1)" alt="">
+                          <div class="jie">
+                              <h3>{{leader.title}}</h3>
+                          </div>
+                      </a>
+                      <a href="" v-else>
+                          <img :src="sub_ads.leader.image | img_src(195 , 190 , 1)" alt="">
+                          <div class="jie">
+                              <h3>{{sub_ads.leader.title}}</h3>
+                          </div>
+                      </a>
+                  </div>
+                 <div class="fc-right">
+                     <ul class="fc-big fc1">
+                         <li v-for="item in T_users">
+                             <a :href="'/u/'+item.weid | href">
+                                 <img :src="item.avatar" alt="">
+                                 <div class="jie1">
+                                     <h3>{{item.real_name}}</h3>
+                                     <p>{{item.position}}</p>
+                                 </div>
+                             </a>
+                         </li>
+                     </ul>
+                     <ul class="fc-big fc2">
+                         <li v-for="item in T_users">
+                             <a :href="'/u/'+item.weid | href">
+                                 <img :src="item.avatar" alt="">
+                                 <div class="jie1">
+                                     <h3>{{item.real_name}}</h3>
+                                     <p>{{item.position}}</p>
+                                 </div>
+                             </a>
+                         </li>
+                     </ul>
+                 </div>
+             </div>
+             <div class="s2-b">
+                 <div class="s2-b1">
+                     <div class="s2-lt">
+                         <span class="qz">{{sub_index.spzx.title}}</span>
+                         <a :href="sub_index.spzx.domain | href">更多</a>
+                     </div>
+                     <div class="s-video">
+                         <a href="">
+                             <img src="{{PATH_TML}}image/20170628105519-0.png" alt="">
+                             <div class="s-jie">
+                                 <span>上海市浙江商会30周年宣传片</span>
+                                 <span>《不忘初心 筑梦前行》</span>
                              </div>
                          </a>
-                     </li>
-                 </ul>
-                 <ul class="fc-big fc2">
-                     <li v-for="item in T_users">
-                         <a :href="'/u/'+item.weid | href">
-                             <img :src="item.avatar" alt="">
-                             <div class="jie1">
-                                 <h3>{{item.real_name}}</h3>
-                                 <p>{{item.position}}</p>
-                             </div>
-                         </a>
-                     </li>
-                 </ul>
+                     </div>
+                     <ul class="b1-list">
+                         <li v-for="item in sub_index.spzx.list">
+                             <a :href="item.source_url | href">{{item.title}}</a>
+                             <span>{{item.publish_time | formateTime('YMD')}}</span>
+                         </li>
+                     </ul>
+                 </div>
+                 <div class="s2-b2">
+                     <div class="s2-lt">
+                         <span class="qz">{{sub_index.mag.title}}</span>
+                         <a :href="'magazine/'+sub_index.mag.domain | href">更多</a>
+                     </div>
+                     <ul class="b2-list">
+                         <li v-for="item in sub_index.mag.list"><a :href="'magazine/'+sub_index.mag.domain+'/'+item.weid | href"><img :src="item.cover | img_src(130,130)" :alt="item.title" :title="item.title"></a></li>
+                     </ul>
+                 </div>
+                 <div class="s2-b3">
+                     <div class="s2-lt">
+                         <span class="qz">{{sub_index.gzdt.title}}</span>
+                         <a :href="sub_index.gzdt.domain | href">更多</a>
+                     </div>
+                     <ul class="b3-list">
+                         <li v-for="item in sub_index.gzdt.list">
+                             <a :href="item.source_url | href">{{item.title}}</a>
+                             <span>{{item.publish_time | formateTime('YMD')}}</span>
+                         </li>
+                     </ul>
+                 </div>
              </div>
          </div>
-         <div class="s2-b">
-             <div class="s2-b1">
-                 <div class="s2-lt">
-                     <span class="qz">{{sub_index.spzx.title}}</span>
-                     <a :href="sub_index.spzx.domain">更多</a>
-                 </div>
-                 <div class="s-video">
-                     <a href="">
-                         <img src="{{PATH_TML}}image/20170628105519-0.png" alt="">
-                         <div class="s-jie">
-                             <span>上海市浙江商会30周年宣传片</span>
-                             <span>《不忘初心 筑梦前行》</span>
-                         </div>
-                     </a>
-                 </div>
-                 <ul class="b1-list">
-                     <li v-for="item in sub_index.spzx.list">
-                         <a :href="item.source_url">{{item.title}}</a>
-                         <span>{{item.publish_time | formateString(3)}}</span>
-                     </li>
-                 </ul>
+         <div class="main-s2">
+             <div class="s2-lt">
+                 <span class="qz">{{sub_ads.link.yqlj.title}}</span>
+                 <!-- <a href="">更多</a> -->
              </div>
-             <div class="s2-b2">
-                 <div class="s2-lt">
-                     <span class="qz">{{sub_index.mag.title}}</span>
-                     <a :href="'magazine/'+sub_index.mag.domain">更多</a>
-                 </div>
-                 <ul class="b2-list">
-                     <li v-for="item in sub_index.mag.list"><a :href="'magazine/'+sub_index.mag.domain+'/'+item.weid"><img :src="item.cover | img_src(130,130)" :alt="item.title" :title="item.title"></a></li>                 </ul>
-             </div>
-             <div class="s2-b3">
-                 <div class="s2-lt">
-                     <span class="qz">{{sub_index.gzdt.title}}</span>
-                     <a :href="sub_index.gzdt.domain">更多</a>
-                 </div>
-                 <ul class="b3-list">
-                     <li v-for="item in sub_index.gzdt.list">
-                         <a href="">{{item.title}}</a>
-                         <span>{{item.publish_time | formateString(3)}}</span>
-                     </li>
-                 </ul>
-             </div>
+             <ul class="yq">
+                 <li v-for="(item, index) in sub_ads.link.yqlj.list"><a :href="item.url | href">{{item.title}}</a></li>
+             </ul>
          </div>
-     </div>
-     <div class="main-s2">
-         <div class="s2-lt">
-             <span class="qz">{{sub_ads.link.yqlj.title}}</span>
-             <a href="">更多</a>
-         </div>
-         <ul class="yq">
-             <li v-for="(item, index) in sub_ads.link.yqlj.list"><a :href="item.url">{{item.title}}</a></li>
-         </ul>
-     </div>
- </main>
+     </main>
  </div>
 
 <script>
@@ -173,7 +175,7 @@
             },
             link    : {},    // 微链接
             peoples_title : {   // 秦商风采
-            	description: '秦商风采', image: 'plats/resource/1515564250290.png', title: '秦商风采', type_id: '3c399426-bbbc-4c1b-acd9-74ada5be3d18', url: '#', weid: '2480ec11-ffdb-48eb-abb8-c8138839b621'
+                description: '秦商风采', image: 'plats/resource/1515564250290.png', title: '秦商风采', type_id: '3c399426-bbbc-4c1b-acd9-74ada5be3d18', url: '#', weid: '2480ec11-ffdb-48eb-abb8-c8138839b621'
             },
             setting : {},    // 网站信息
             users   : [],    // 会员风采
@@ -190,6 +192,7 @@
         mounted: function() {
             $app.set_title('秦商总会-河南分会');
             this.$nextTick(()=>{
+
                 // 首页相关接口
                 $sub_ajax.index((res)=>{
                     this.sub_index = res.data;
@@ -202,10 +205,6 @@
                     this.sub_ads = result;
                     console.log("sub_ads", this.sub_ads);
                 });
-
-                // ajax.get("scms/channelAndContent").then((res) => {
-                //     console.log("res", res);
-                // })
             });
         },
         methods: {
