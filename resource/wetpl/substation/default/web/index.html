@@ -58,13 +58,14 @@
      </div>
      <div class="main-s2">
          <div class="s2-lt">
-             <span class="qz">{{sub_ads.peoples_title.title}}</span>
+             <span class="qz" v-if="!sub_ads.peoples_title">{{peoples_title.title}}</span>
+             <span class="qz" v-else>{{sub_ads.peoples_title.title}}</span>
              <a href="">更多</a>
          </div>
          <div class="fc">
              <div class="fc-left">
                   <a href="">
-                      <img :src="sub_ads.leader.image | img_src" alt="">
+                      <img :src="sub_ads.leader.image | img_src(195 , 190 , 1)" alt="">
                       <div class="jie">
                           <h3>{{sub_ads.leader.title}}</h3>
                       </div>
@@ -174,7 +175,9 @@
             banner2 : {},    // 头部横图
             leader  : {},    // 商会会长
             link    : {},    // 微链接
-            peoples_title : {},   // 秦商风采
+            peoples_title : {   // 秦商风采
+            	description: '', image: '#', title: '秦商风采', type_id: '3c399426-bbbc-4c1b-acd9-74ada5be3d18', url: '#', weid: '2480ec11-ffdb-48eb-abb8-c8138839b621'
+            },
             setting : {},    // 网站信息
             users   : [],    // 会员风采
             T_users : [
@@ -199,8 +202,8 @@
                 // 首页广告信息
                 $sub_ajax.ads((res)=>{
                     var result = res.data;
-                    if(!res.leader) {
-                        res.leader = {
+                    if(!result.leader) {
+                        result.leader = {
                             description : '',
                             image : '',
                             title : '',
@@ -210,7 +213,8 @@
                         }
 
                     }
-                    this.sub_ads = res.data;
+                    console.log("result", result);
+                    this.sub_ads = result;
                     console.log("sub_ads", this.sub_ads);
                 });
 

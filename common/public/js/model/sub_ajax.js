@@ -11,7 +11,7 @@
 	
 	// 广告查询
 	sub_ajax.ads = function( call){
-		ajax.get('cms/advs').then((res)=>{
+		ajax.get('scms/advs').then((res)=>{
 			call(res);
 		});
 	}
