@@ -12,8 +12,8 @@
     <link href="{{PATH_TML}}activity/css/common.css" rel="stylesheet">
     <link href="{{PATH_TML}}activity/css/detail.css" rel="stylesheet">
     <link rel="stylesheet" href="{{PATH_TML}}css/activity-detail.css"/>
-    <!--<link rel="stylesheet" href="/common/layui/css/layui.css"/>-->
-    <!--<script src="/common/layui/layui.js"></script>-->
+    <!--<link rel="stylesheet" href="/common/layui/css/layui.css"/>
+    <script src="/common/layui/layui.js"></script>-->
     <style>
         [v-cloak] {
             display: none !important;
@@ -21,7 +21,6 @@
         .layui-layer-msg {
             width: auto!important;
         }
-
     </style>
 </head>
 
@@ -138,6 +137,91 @@
 <script src="{{PATH_TML}}activity/js/config.js"></script>
 <link rel="stylesheet" href="/common/jquery.animsition/css/animsition.min.css">
 <script src="/common/jquery.animsition/js/jquery.animsition.min.js"></script>
+<style>
+    #login_vue {
+        width: 320px!important;
+        height: 206px!important;
+        border-radius: 6px!important;
+        background-color: #ecf0f3!important;
+        padding-top: 1px!important;
+    }
+    #login-info {
+        margin: 15px 27.5px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    #login-info ul {
+        width: 100%;
+    }
+    #phonenum, #checknum, #forget {
+        position: relative;
+        width: 100%;
+        height: 49px;
+        border-bottom: 1px solid #eeeeee;
+        color: #25c3fe;
+        display: flex;
+        align-items: center;
+    }
+    #phonenum input {
+        width: 100%;
+        height: 40px;
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
+        border-radius: 4px;
+        padding-left: 8px;
+        border: none;
+        outline: none;
+        color: #999999;
+        margin-top: 30px;
+        font-size: 16px;
+    }
+    #checknum input {
+        width: 52%;
+        height: 40px;
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
+        border-radius: 4px;
+        border: none;
+        outline: none;
+        color: #999999;
+        padding-left: 8px;
+        font-size: 16px;
+    }
+    #checknum span {
+        display: inline-block;
+        height: 39px;
+        line-height: 39.6px;
+        background-color: #ff605d;
+        color: #fff;
+        font-size: 14px;
+        width: 44%;
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
+        border-radius: 4px;
+        text-align: center;
+    }
+    #checknum {
+        justify-content: space-between;
+        margin-top: 20px;
+    }
+    .layui-layer-btn0 {
+        width: 83% !important;
+        height: 40px !important;
+        line-height: 40px !important;
+        background: #24c3fb !important;
+        color: #fff !important;
+        -webkit-border-radius: 4px !important;
+        -moz-border-radius: 4px !important;
+        border-radius: 4px !important;
+        font-size: 14px !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        box-sizing: border-box !important;
+        display: block;
+        margin-left: 27px !important;
+    }
+</style>
 <script>
     //详情页初始化
     seajs.use(['common', 'detail'], function(common, detail) {
