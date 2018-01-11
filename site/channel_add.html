@@ -420,7 +420,7 @@
     <!-- AdminLTE for demo purposes -->
     <script src="dist/js/demo.js"></script>
 
-    <script src="../node_modules/sweetalert2/dist/sweetalert2.min.js"></script>
+    <script src="/common/sweetalert2/dist/sweetalert2.min.js"></script>
 
 
 
@@ -605,7 +605,7 @@
                     if (ret.code == 200) {
                         location.href = 'channels.html';
                     } else {
-                        swal('提示', ret.message, 'error');
+                        swal({text: ret.message,type: 'error', timer: 20000});
                     }
                 }, 'JSON');
             });
