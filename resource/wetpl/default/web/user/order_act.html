@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <title>活动订单</title>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" id="favicon" href="" />
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <script src="{{PATH_TML}}user/common/js/loading.js"></script>
+    <script charset="utf-8" type="text/javascript" src="/common/js/jquery-3.2.1.min.js"></script>
+    <script charset="utf-8" type="text/javascript" src="/common/js/swiper-3.3.1.min.js"></script>
+    <script charset="utf-8" type="text/javascript" src="{{PATH_CONFIG}}"></script>
+    <script charset="utf-8" type="text/javascript" src="/common/js/browser.min.js"></script>
+    <script charset="utf-8" type="text/javascript" src="/common/js/jquery.imagecompress.js"></script>
+    <script charset="utf-8" type="text/javascript" src="/common/js/buttons.js"></script>
+    <script src="/common/js/bootstrap.min.js"></script>
+
+
+    <link rel="stylesheet" type="text/css" href="/common/css/main.css">
+    <link rel="stylesheet" type="text/css" href="/common/css/fontawesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/common/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/common/css/buttons.css">
+    <link rel="stylesheet" type="text/css" href="/common/css/swiper.min.css">
+    <link rel="stylesheet" type="text/css" href="{{PATH_TML}}user/css/discovery.css">
+    <link rel="stylesheet" href="/common/layer-v3.0.3/layer-v3.0.3/layer/skin/default/layer.css">
+    <link rel="stylesheet" type="text/css" href="{{PATH_TML}}user/css/order_act.css">
+</head>
+
+<body style="width: 100%; background: #F7F6F2;">
+<div class="left-nav"></div>
+<div id="top"></div>
+<div id="middle"></div>
+<div id="right">
+    <div class="we-art-nav" style="height: 30px; border-radius: none;margin-bottom: 20px;">
+        <ol class="breadcrumb" style="height: 30px;border-radius: 0; background-color: #ccc; color: #fff;line-height: 30px;">
+            <li class="homepage"><a style="color: #fff!important;">我的活动</a></li>
+            <li class="active" style="color: #fff!important;">活动订单</li>
+        </ol>
+    </div>
+    <div class="ticket-order-container">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>订单号</th>
+                <th>活动</th>
+                <th>状态</th>
+                <th>金额</th>
+                <th>时间</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+    </div>
+</div>
+<!--模块引入-->
+<script charset="utf-8" type="text/javascript" src="{{PATH_TML}}user/common/js/generate.js"></script>
+<script charset="utf-8" type="text/javascript" src="/common/js/control.js"></script>
+<script charset="utf-8" type="text/javascript" src="{{PATH_TML}}user/js/common.js"></script>
+<script charset="utf-8" type="text/javascript" src="{{PATH_TML}}user/js/order_act.js"></script>
+<script>
+    $(document).ready(function () {
+        var trTemp = function (data) {
+            var state;
+            if(data.state == 1){
+                state = '未付款'
+            }else if(data.state == 2){
+                state = '已付款'
+            }
+            var dom = '<tr>' +
+                        '<td>'+data.out_trade_no+'</td>'+
+                        '<td style="width:40%">'+data.activity_title+'</td>'+
+                        '<td>'+state+'</td>'+
+                        '<td>'+data.total_fee+'</td>'+
+                        '<td>'+data.created_at+'</td>'+
+                    '</tr>';
+            return dom;
+        };
+        $.ajax({
+            url : ACTIVITY_USER_ORDER_LIST,
+            type : 'get',
+            headers : {
+                'Token': docCookies.getItem("token")
+            },
+            success : function (res) {
+                console.log(res);
+                if(res.code == 200){
+                    var list = res.data.list;
+                    $('.table tbody').children().remove();
+                    for(var i=0; i<list.length; i++){
+                        $('.table tbody').append(trTemp(list[i]));
+                    }
+                }
+            },
+            error : function (xhr) {
+                console.log(xhr)
+            }
+        })
+    })
+</script>
+</body>
+</html>
