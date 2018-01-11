@@ -518,7 +518,7 @@ req().then((data) => {
 
     //会员轮播图模板
     var memberCnt = 0;
-    var memberTemplete = function(data, flag){        
+    var memberTemplete = function(data, flag){
         var memberId = 'member_' + memberCnt;    
         var imgUrl = data.avatar;
         if (imgUrl != null && imgUrl.indexOf('http') === -1 && imgUrl.indexOf('common') === -1){
