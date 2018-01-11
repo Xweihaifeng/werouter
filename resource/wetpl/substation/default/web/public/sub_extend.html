@@ -136,6 +136,8 @@
                                                 value.domain = value.domain + '/' + item.domain;
                                             }
                                         }
+                                    }else{
+                                        value.domain = value.domain + '/' + value.children[0].domain;
                                     }
                                     value.ok = false;
                                 });
