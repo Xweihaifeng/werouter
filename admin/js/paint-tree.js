@@ -13,7 +13,6 @@ $(document).ready(function(){
             url: ApiUrl + 'admins/get_config?role_id=' + weid,
             async: false,
             success: function (data) {
-                console.log(data)
                 let str = '';
                 $(data).each((i,v)=>{
                     if(v.children.length > 0){
@@ -202,7 +201,7 @@ $(document).ready(function(){
                                     <tr class="odd gradeX">
                                         <td class="myselect">
                                             <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
-                                                <input type="checkbox" id="${s.id}" aid="${g.id}" bid="${l.id}" cid="${k.id}" did="${v.id}"  class="checkboxes group-checkable menu${v.id}  menu${k.id} menu${g.id} menu${l.id}" data-set=".zsg${s.id}" name="data[mark][]" checked="" value="home/main">
+                                                <input type="checkbox" id="${s.id}" aid="${g.id}" bid="${l.id}" cid="${k.id}" did="${v.id}"  checked="" class="checkboxes group-checkable menu${v.id}  menu${k.id} menu${g.id} menu${l.id}" data-set=".zsg${s.id}" name="data[mark][]" value="home/main">
                                                 <span></span>
                                             </label>
                                         </td>
@@ -281,19 +280,19 @@ $(document).ready(function(){
                                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├&nbsp;&nbsp; <i class="fa"></i> ${g.name}                          </td>
                                         <td style="text-align:center" class="myselect">
                                             <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
-                                                <input type="checkbox" id="${l.id}z" aid="${g.id}" bid="${l.id}" cid="${k.id}" did="${v.id}" disabled="disabled"  class="checkboxes zsg${l.id}  menu${v.id} menu${k.id}" checked="" name="data[auth][home/main][]" value="add">
+                                                <input type="checkbox" id="${g.id}z" aid="${g.id}" bid="${l.id}" cid="${k.id}" did="${v.id}" disabled="disabled"  class="checkboxes zsg${l.id}  menu${v.id} menu${k.id}" checked="" name="data[auth][home/main][]" value="add">
                                                 <span></span>
                                             </label>
                                         </td>
                                         <td style="text-align:center" class="myselect">
                                             <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
-                                                <input type="checkbox" id="${l.id}s" aid="${g.id}" bid="${l.id}" cid="${k.id}" did="${v.id}" disabled="disabled" class="checkboxes zsg${l.id}   menu${v.id} menu${k.id}" checked="" name="data[auth][home/main][]" value="edit">
+                                                <input type="checkbox" id="${g.id}s" aid="${g.id}" bid="${l.id}" cid="${k.id}" did="${v.id}" disabled="disabled" class="checkboxes zsg${l.id}   menu${v.id} menu${k.id}" checked="" name="data[auth][home/main][]" value="edit">
                                                 <span></span>
                                             </label>
                                         </td>
                                         <td style="text-align:center" class="myselect">
                                             <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
-                                                <input type="checkbox" id="${l.id}c" aid="${g.id}" bid="${l.id}" cid="${k.id}" did="${v.id}" disabled="disabled" class="checkboxes zsg${l.id}  menu${v.id} menu${k.id}" checked="" name="data[auth][home/main][]" value="del">
+                                                <input type="checkbox" id="${g.id}c" aid="${g.id}" bid="${l.id}" cid="${k.id}" did="${v.id}" disabled="disabled" class="checkboxes zsg${l.id}  menu${v.id} menu${k.id}" checked="" name="data[auth][home/main][]" value="del">
                                                 <span></span>
                                             </label>
                                         </td>
@@ -374,7 +373,7 @@ $(document).ready(function(){
                                     <tr class="odd gradeX">
                                         <td class="myselect">
                                             <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
-                                                <input type="checkbox" id="${l.id}" bid="${k.id}" cid="${v.id}"  class="checkboxes group-checkable menu${v.id}  menu${k.id}" checked="" data-set=".zsg${l.id}" name="data[mark][]" value="home/main">
+                                                <input type="checkbox" id="${l.id}" bid="${k.id}" cid="${v.id}"  class="checkboxes group-checkable menu${v.id}  menu${k.id}" data-set=".zsg${l.id}" name="data[mark][]" value="home/main">
                                                 <span></span>
                                             </label>
                                         </td>
@@ -566,10 +565,10 @@ $(document).ready(function(){
                                 crr.push($(v).attr("cid"));
                             };
                             if($(v).attr("did")){
-                                crr.push($(v).attr("cid"));
+                                crr.push($(v).attr("did"));
                             };
                             if($(v).attr("eid")){
-                                crr.push($(v).attr("cid"));
+                                crr.push($(v).attr("eid"));
                             }
 
                         }
@@ -675,7 +674,7 @@ $(document).ready(function(){
                             }
                         }
                     })
-                    console.log(data);
+                    console.log(data,+1);
                     var sendData = {};
                     sendData['role_id'] = weid;
                     sendData['config'] = data;
