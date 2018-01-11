@@ -313,19 +313,19 @@ $(document).ready(function(){
                                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├&nbsp;&nbsp; <i class="fa"></i> ${g.name}                          </td>
                                         <td style="text-align:center" class="myselect">
                                             <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
-                                                <input type="checkbox" id="${l.id}z" aid="${g.id}" bid="${l.id}" cid="${k.id}" did="${v.id}" disabled="disabled"  class="checkboxes zsg${l.id}  menu${v.id} menu${k.id}" name="data[auth][home/main][]" value="add">
+                                                <input type="checkbox" id="${l.id}z" aid="${g.id}" bid="${l.id}" cid="${k.id}" did="${v.id}" disabled="disabled"  class="checkboxes zsg${g.id}  menu${v.id} menu${v.id} menu${k.id}" name="data[auth][home/main][]" value="add">
                                                 <span></span>
                                             </label>
                                         </td>
                                         <td style="text-align:center" class="myselect">
                                             <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
-                                                <input type="checkbox" id="${l.id}s" aid="${g.id}" bid="${l.id}" cid="${k.id}" did="${v.id}" disabled="disabled" class="checkboxes zsg${l.id}   menu${v.id} menu${k.id}"  name="data[auth][home/main][]" value="edit">
+                                                <input type="checkbox" id="${l.id}s" aid="${g.id}" bid="${l.id}" cid="${k.id}" did="${v.id}" disabled="disabled" class="checkboxes zsg${g.id}   menu${v.id} menu${v.id} menu${k.id}"  name="data[auth][home/main][]" value="edit">
                                                 <span></span>
                                             </label>
                                         </td>
                                         <td style="text-align:center" class="myselect">
                                             <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
-                                                <input type="checkbox" id="${l.id}c" aid="${g.id}" bid="${l.id}" cid="${k.id}" did="${v.id}" disabled="disabled" class="checkboxes zsg${l.id}  menu${v.id} menu${k.id}"  name="data[auth][home/main][]" value="del">
+                                                <input type="checkbox" id="${l.id}c" aid="${g.id}" bid="${l.id}" cid="${k.id}" did="${v.id}" disabled="disabled" class="checkboxes zsg${g.id}  menu${v.id} menu${l.id} menu${k.id}"  name="data[auth][home/main][]" value="del">
                                                 <span></span>
                                             </label>
                                         </td>
@@ -383,19 +383,19 @@ $(document).ready(function(){
                                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├&nbsp;&nbsp; <i class="fa"></i> ${l.name} </td>
                                         <td style="text-align:center" class="myselect">
                                             <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
-                                                <input type="checkbox" id="${l.id}z" aid="${l.id}" bid="${v.id}" cid="${k.id}" class="checkboxes zsg${l.id}  menu${v.id} d menu${k.id}" checked="" disabled="disabled"  name="data[auth][home/main][]" value="add">
+                                                <input type="checkbox" id="${l.id}z" aid="${l.id}" bid="${v.id}" cid="${k.id}" class="checkboxes zsg${l.id}  menu${v.id} d menu${k.id}" disabled="disabled"  name="data[auth][home/main][]" value="add">
                                                 <span></span>
                                             </label>
                                         </td>
                                         <td style="text-align:center" class="myselect">
                                             <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
-                                                <input type="checkbox" id="${l.id}s" aid="${l.id}" bid="${v.id}" cid="${k.id}" class="checkboxes zsg${l.id}  menu${v.id} menu${k.id}" checked="" disabled="disabled"  name="data[auth][home/main][]" value="edit">
+                                                <input type="checkbox" id="${l.id}s" aid="${l.id}" bid="${v.id}" cid="${k.id}" class="checkboxes zsg${l.id}  menu${v.id} menu${k.id}" disabled="disabled"  name="data[auth][home/main][]" value="edit">
                                                 <span></span>
                                             </label>
                                         </td>
                                         <td style="text-align:center" class="myselect">
                                             <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
-                                                <input type="checkbox" id="${l.id}c" aid="${l.id}" bid="${v.id}" cid="${k.id}" class="checkboxes zsg${l.id}  menu${v.id} menu${k.id}" checked="" disabled="disabled" name="data[auth][home/main][]" value="del">
+                                                <input type="checkbox" id="${l.id}c" aid="${l.id}" bid="${v.id}" cid="${k.id}" class="checkboxes zsg${l.id}  menu${v.id} menu${k.id}" disabled="disabled" name="data[auth][home/main][]" value="del">
                                                 <span></span>
                                             </label>
                                         </td>
@@ -453,19 +453,19 @@ $(document).ready(function(){
                                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├&nbsp;&nbsp; <i class="fa"></i> ${k.name}   </td>
                                         <td style="text-align:center" class="myselect">
                                             <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
-                                                <input type="checkbox" id="${k.id}z" aid="${k.id}" bid="${v.id}" cid="" disabled="disabled"  class="checkboxes zsg${l.id}  menu${v.id} menu${k.id}" checked="" name="data[auth][home/main][]" value="add">
+                                                <input type="checkbox" id="${k.id}z" aid="${k.id}" bid="${v.id}" cid="" disabled="disabled"  class="checkboxes zsg${l.id}  menu${v.id} menu${k.id}"  name="data[auth][home/main][]" value="add">
                                                 <span></span>
                                             </label>
                                         </td>
                                         <td style="text-align:center" class="myselect">
                                             <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
-                                                <input type="checkbox" id="${k.id}s" aid="${k.id}" bid="${v.id}" cid="" disabled="disabled"  class="checkboxes zsg${l.id}  menu${v.id} menu${k.id}" checked="" name="data[auth][home/main][]" value="edit">
+                                                <input type="checkbox" id="${k.id}s" aid="${k.id}" bid="${v.id}" cid="" disabled="disabled"  class="checkboxes zsg${l.id}  menu${v.id} menu${k.id}"  name="data[auth][home/main][]" value="edit">
                                                 <span></span>
                                             </label>
                                         </td>
                                         <td style="text-align:center" class="myselect">
                                             <label class="mt-table mt-checkbox mt-checkbox-single mt-checkbox-outline">
-                                                <input type="checkbox" id="${k.id}c" aid="${k.id}" bid="${v.id}" cid="" disabled="disabled"  class="checkboxes zsg${l.id}  menu${v.id} menu${k.id}" checked="" name="data[auth][home/main][]" value="del">
+                                                <input type="checkbox" id="${k.id}c" aid="${k.id}" bid="${v.id}" cid="" disabled="disabled"  class="checkboxes zsg${l.id}  menu${v.id} menu${k.id}" name="data[auth][home/main][]" value="del">
                                                 <span></span>
                                             </label>
                                         </td>
