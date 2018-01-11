@@ -148,22 +148,11 @@
      </div>
      <div class="main-s2">
          <div class="s2-lt">
-             <span class="qz">友情链接</span>
+             <span class="qz">{{sub_ads.link.yqlj.title}}</span>
              <a href="">更多</a>
          </div>
          <ul class="yq">
-             <li><a href="">上海市杭州商会</a></li>
-             <li><a href="">上海市宁波商会</a></li>
-             <li><a href="">上海市温州商会</a></li>
-             <li><a href="">上海市嘉兴商会</a></li>
-             <li><a href="">上海市湖州商会</a></li>
-             <li><a href="">上海市绍兴商会</a></li>
-             <li><a href="">上海市金华商会</a></li>
-             <li><a href="">上海市丽水商会</a></li>
-             <li><a href="">上海市台州商会</a></li>
-             <li><a href="">上海市舟山商会</a></li>
-             <li><a href="">上海市衢州商会</a></li>
-             <li><a href="">上海市投资促进局</a></li>
+             <li v-for="(item, index) in sub_ads.link.yqlj.list"><a :href="item.url">{{item.title}}</a></li>
          </ul>
      </div>
  </main>

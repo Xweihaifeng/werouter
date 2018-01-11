@@ -24,7 +24,7 @@
                 <main>
                     <div class="head-left">
                         <a href="">
-                            <img src="{{PATH_TML}}image/logo.png" alt="">
+                            <img :src="plats_info.logo | img_src" alt="">
                         </a>
                     </div>
                     <div class="head-middle">
@@ -45,11 +45,11 @@
             <nav>
                 <main>
                     <ul class="big-nav">
-                        <li><a href="">首页</a></li>
+                        <li><a :href="all_domian">首页</a></li>
                         <li v-for="(item, index) in channel" @mouseenter="visible(item)" @mouseleave="channel_show(item)">
-                            <a :href="'/'+item.domain">{{item.title}}</a>
+                            <a :href="item.domain | href">{{item.title}}</a>
                             <ul class="nav-list" v-if="item.ok">
-                                <li v-for="(value, key) in item.children"><a :href="'/'+item.domain+'/'+value.domain">{{value.title}}</a></li>
+                                <li v-for="(value, key) in item.children"><a :href="'/'+item.old_domain+'/'+value.domain | href">{{value.title}}</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -64,14 +64,8 @@
         <footer id="footer">
             <main>
                 <ul class="footer-nav">
-                    <li><a href="">首页</a></li>
-                    <li><a href="">商会概括</a></li>
-                    <li><a href="">商会新闻</a></li>
-                    <li><a href="">分会动态</a></li>
-                    <li><a href="">浙商风采</a></li>
-                    <li><a href="">会员服务</a></li>
-                    <li><a href="">党建园地</a></li>
-                    <li><a href="">公益基金会</a></li>
+                    <li><a :href="all_domian">首页</a></li>
+                    <li v-for="(item, index) in foot_channel"><a :href="item.domain | href">{{item.title}}</a></li>
                 </ul>
                 <div class="fo-bo">
                     <div class="fo-bl">
@@ -115,12 +109,6 @@
                 mounted: function() {
                     //$app.set_title('风采页面');
                     this.$nextTick(()=>{
-                        ajax.get('scms/setting/show').then((res)=>{
-                            if(res.code == 200) {
-                                // console.log("风采页面",res.data);
-                            }
-                        })
-
                         ajax.get('scms/channelAndCate').then((res)=>{
                             if(res.code == 200) {
                                 var result = res.data.list;
@@ -142,6 +130,7 @@
                                 });
 
                                 this.channel = result;
+                                footer();
                             }
                         })
                     });
@@ -162,6 +151,24 @@
                     }
                 }
             });
+            function footer()
+            {
+                var footer = new Vue({
+                    el: "#footer",
+                    data: {
+                        foot_channel: header.channel,
+                    },
+                    mounted: function() {
+                        // ajax.get('scms/setting/show').then((res)=>{
+                        //     if(res.code == 200) {
+                        //         console.log("风采页面",res.data);
+                        //     }
+                        // })
+                    }
+                })
+            }
+
+
         </script>
     </body>
 </html>
