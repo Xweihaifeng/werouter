@@ -34,7 +34,6 @@ $(function () {
                             swal('', '保存成功', 'success');
                             $(".module_li").addClass("block");
                             $("#show_val").val(1);
-
                         } else {
                             swal('', data.message, 'error');
                         }
