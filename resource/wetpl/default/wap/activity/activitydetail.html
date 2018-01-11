@@ -21,6 +21,7 @@
         .layui-layer-msg {
             width: auto!important;
         }
+
     </style>
 </head>
 
@@ -383,6 +384,10 @@
                         break;
                     case '查看门票': $(".J_LayoutTicket, .backdrop").addClass('hide');
                         window.location.href = '/user/myactivity/support/ticket/';
+                        break;
+                    case '立即登录': $(".J_LayoutTicket, .backdrop").addClass('hide');
+                        mb_login(window.location.href);
+                        break;
                 }
             },
             detail: function(type){
