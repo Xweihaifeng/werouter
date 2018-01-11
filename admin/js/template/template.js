@@ -12,7 +12,6 @@ $(document).ready(function () {
                     $("#show_val").val('first')
                     $(".module_li").removeClass("block");
                     $(".module").removeClass("block");
-                    console.log($("#show_val").val())
                 }
                 if (data.data.is_custom == 2) {
                     $("#show_val").val(2)
@@ -20,7 +19,6 @@ $(document).ready(function () {
                 }
                 if(data.data.is_custom == 1){
                     $("#show_val").val(1)
-                    console.log(data.data.is_custom)
                     $(".but").animate({left: -40},0);
                     $(".module").removeClass("block");
                     $(".module_li").addClass("block");
@@ -136,7 +134,7 @@ $(document).ready(function () {
                             '<img width="200" src="/resource/wetpl/' + val.mark + '/' + val.cover + '"></br>' +
                             '<input type="radio" name="templateId" value=' + val.id + '>' + val.title +
                             '<span style="padding-left: 15px;">预览</span></div>';
-                        template += '<option name="options" value=' + val.id + '>' + val.title + '</option>';
+                        template += '<option name="options" value=' + val.id + ' data-name=' + val.mark + '>' + val.title + '</option>';
                     });
                     $("#default").html(defaults);
                     $("#module_list").html(template);
@@ -177,23 +175,33 @@ $(document).ready(function () {
 
     // Save
     $("#updateSet").click(function () {
-        var templateId = $("input[name='templateId']:checked").val();
-        $.ajax({
-            url: ApiUrl + 'plat_set_template',
-            type: 'post',
-            dataType: 'json',
-            data: {template_id: templateId},
-            success: function (data) {
-                if (data.code === 200) {
-                    swal('', '保存成功', 'success');
-                } else {
-                    swal('', data.message, 'error');
+        let yesorno = $("#show_val").val();
+        // console.log(yesorno)
+        if(yesorno == 1){
+            // alert(1)
+            $(this).attr("data-toggle","modal");
+            $(this).attr("data-target","#myModal1");
+            // console.log('sdfsdfsdf')
+        }else{
+            var templateId = $("input[name='templateId']:checked").val();
+            $.ajax({
+                url: ApiUrl + 'plat_set_template',
+                type: 'post',
+                dataType: 'json',
+                data: {template_id: templateId},
+                success: function (data) {
+                    if (data.code === 200) {
+                        swal('', '保存成功', 'success');
+                    } else {
+                        swal('', data.message, 'error');
+                    }
+                },
+                error: function (xhr) {
+                    console.log(xhr);
                 }
-            },
-            error: function (xhr) {
-                console.log(xhr);
-            }
-        });
+            });
+        }
+
     });
 
 

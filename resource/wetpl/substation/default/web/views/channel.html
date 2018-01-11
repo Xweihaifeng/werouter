@@ -30,7 +30,7 @@
             </div>
             <div class="list-big">
                 <div class="title">
-                    <span>{{cate_info.title}}</span>
+                    <span>{{sub_aside_info.title}}</span>
                 </div>
                 <div class="newsert">
                     <div class="new1">
@@ -129,7 +129,7 @@
                 });
 
                 // 右侧新闻中心
-                $sub_ajax.cms_content({cate_id : this.cate_domain , limit : this.limit , page : this.page} , (res)=>{
+                $sub_ajax.cms_content({channel_id : this.channel_domain , limit : this.limit , page : this.page} , (res)=>{
                     this.sub_rcon = res.data.list;
                     this.total = res.data.total;
                     this.total_page = Math.ceil(this.total / this.limit);
@@ -140,7 +140,7 @@
                         this.page_show.push(i);
                     }
                 });
-
+                
                 $sub_ajax.cms_content({channel_id: this.channel_domain, limit: 5, index_show: 1}, (res) => {
                     this.recommend = res.data.list;
                 });
