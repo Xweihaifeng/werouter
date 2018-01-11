@@ -24,7 +24,7 @@
                 <main>
                     <div class="head-left">
                         <a href="">
-                            <img :src="plats_info.logo | img_src" alt="">
+                            <img src="{{PATH_TML}}image/logo.png" alt="">
                         </a>
                     </div>
                     <div class="head-middle">
@@ -45,11 +45,11 @@
             <nav>
                 <main>
                     <ul class="big-nav">
-                        <li><a :href="all_domian">首页</a></li>
+                        <li><a href="">首页</a></li>
                         <li v-for="(item, index) in channel" @mouseenter="visible(item)" @mouseleave="channel_show(item)">
-                            <a :href="item.domain | href">{{item.title}}</a>
+                            <a :href="'/'+item.domain">{{item.title}}</a>
                             <ul class="nav-list" v-if="item.ok">
-                                <li v-for="(value, key) in item.children"><a :href="'/'+item.old_domain+'/'+value.domain | href">{{value.title}}</a></li>
+                                <li v-for="(value, key) in item.children"><a :href="'/'+item.domain+'/'+value.domain">{{value.title}}</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -124,7 +124,6 @@
                         ajax.get('scms/channelAndCate').then((res)=>{
                             if(res.code == 200) {
                                 var result = res.data.list;
-
                                 result.forEach(function(value, key) {
                                     value.old_domain = value.domain;
                                     if(value.url_cate_id != null)

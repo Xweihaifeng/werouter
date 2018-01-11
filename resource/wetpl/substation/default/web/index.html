@@ -3,7 +3,7 @@
 <script src="{{PATH_TML}}js/banner.js"></script>
 <script src="{{PATH_TML}}js/main1.js"></script>
 <div class="ban">
-    <img :src="sub_ads.header2.image | img_src" alt="">
+    <img :src="sub_ads.header2.image | img_src(1920 , 450 , 1)" alt="">
 </div>
 <div class="main-bg">
  <main>
@@ -64,7 +64,13 @@
          </div>
          <div class="fc">
              <div class="fc-left">
-                  <a href="">
+                  <a href="" v-if="!sub_ads.leader">
+                      <img :src="leader.image | img_src(195 , 190 , 1)" alt="">
+                      <div class="jie">
+                          <h3>{{leader.title}}</h3>
+                      </div>
+                  </a>
+                  <a href="" v-else>
                       <img :src="sub_ads.leader.image | img_src(195 , 190 , 1)" alt="">
                       <div class="jie">
                           <h3>{{sub_ads.leader.title}}</h3>
@@ -173,10 +179,12 @@
             banner  : {},    // 轮播滚动图
             banner1 : {},    // 头部广告图
             banner2 : {},    // 头部横图
-            leader  : {},    // 商会会长
+            leader  : {      // 商会会长
+                description: '商会会长', image: 'user/avatar/1501747945200.jpg', title: '商会会长', type_id: '5df8a481-71f2-4940-840a-9be3b9bd6078', url: '#', weid: 'e3003f5e-e93d-444e-ac93-0bbac75521c4'
+            },
             link    : {},    // 微链接
             peoples_title : {   // 秦商风采
-            	description: '', image: '#', title: '秦商风采', type_id: '3c399426-bbbc-4c1b-acd9-74ada5be3d18', url: '#', weid: '2480ec11-ffdb-48eb-abb8-c8138839b621'
+            	description: '秦商风采', image: 'plats/resource/1515564250290.png', title: '秦商风采', type_id: '3c399426-bbbc-4c1b-acd9-74ada5be3d18', url: '#', weid: '2480ec11-ffdb-48eb-abb8-c8138839b621'
             },
             setting : {},    // 网站信息
             users   : [],    // 会员风采
@@ -202,18 +210,6 @@
                 // 首页广告信息
                 $sub_ajax.ads((res)=>{
                     var result = res.data;
-                    if(!result.leader) {
-                        result.leader = {
-                            description : '',
-                            image : '',
-                            title : '',
-                            type_id : '',
-                            url : '',
-                            weid : ''
-                        }
-
-                    }
-                    console.log("result", result);
                     this.sub_ads = result;
                     console.log("sub_ads", this.sub_ads);
                 });
