@@ -32,13 +32,13 @@
                     </div>
                     <div class="head-right">
                         <div class="hr-top">
-                            <a href="">联系我们</a>
-                            <a href="">返回首页</a>
+                            <a href="javascript:void(0)">联系我们</a>
+                            <a :href="all_domian">返回首页</a>
                         </div>
-                        <form action="" class="search">
+                        <div action="" class="search search-box">
                             <input type="text" placeholder="搜索..." name="s" v-model="searchText" @keyup.enter="goSearchOpen()">
                             <input type="submit" value="搜索" name="submit" @click="goSearchOpen()">
-                        </form>
+                        </div>
                     </div>
                 </main>
             </header>
@@ -147,7 +147,7 @@
                         item.ok = false;
                     },
                     goSearchOpen: function() {
-                        window.location.href = "/sub_search?q=" + this.searchText;
+                        window.location.href = all_domian +"sub_search?q="+ this.searchText;
                     }
                 }
             });
