@@ -52,6 +52,10 @@ $(function () {
 
     })
 
+    $("#close").click(() =>{
+        $(".but").animate({left: -40}, 600);
+    })
+
     $(".form-top > li").each((i, v) => {
         $(v).click(() => {
             $(v).addClass("shown").siblings().removeClass("shown");
