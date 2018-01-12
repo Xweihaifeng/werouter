@@ -127,10 +127,10 @@
                  <div class="s2-b2">
                      <div class="s2-lt">
                          <span class="qz">{{sub_index.mag.title}}</span>
-                         <a :href="'/magazine/'+sub_index.mag.domain | href">更多</a>
+                         <a :href="'/magazine/'+sub_index.mag.domain">更多</a>
                      </div>
                      <ul class="b2-list">
-                         <li v-for="(item, index) in sub_index.mag.list" v-if="index<6"><a :href="'/magazine/'+sub_index.mag.domain+'/'+item.weid | href"><img :src="item.cover | img_src(130,130)" :alt="item.title" :title="item.title"></a></li>
+                         <li v-for="(item, index) in sub_index.mag.list" v-if="index<6"><a :href="'/magazine/'+sub_index.mag.domain+'/'+item.weid"><img :src="item.cover | img_src(130,130)" :alt="item.title" :title="item.title"></a></li>
                      </ul>
                  </div>
 
@@ -166,6 +166,7 @@
     var app = new Vue({
         el: '#content_app',
         data: {
+            pathname  : window.location.host,
             sub_index : {},    // 首页公用接口
             sub_ads   : {},    // 网站广告接口
         },

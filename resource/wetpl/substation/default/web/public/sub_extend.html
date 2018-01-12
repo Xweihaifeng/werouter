@@ -32,8 +32,13 @@
                     </div>
                     <div class="head-right">
                         <div class="hr-top">
-                            <a href="javascript:void(0)">联系我们</a>
-                            <a :href="all_domian">返回首页</a>
+                            <aside v-for="(item, index) in qrcode" @mouseenter="hide(item)" @mouseleave="show(item)">
+                                <span>{{item.title}}</span>
+                                <div v-show="item.ok">
+                                    <img :src="item.image" v-if="index==0">
+                                    <img :src="item.image | href" v-else>
+                                </div>
+                            </aside>
                         </div>
                         <div action="" class="search search-box">
                             <input type="text" placeholder="搜索..." name="s" v-model="searchText" @keyup.enter="goSearchOpen()">
@@ -71,18 +76,9 @@
                     <div class="fo-bl">
                         <img src="{{PATH_TML}}image/flogo.png" alt="">
                     </div>
-                    <div class="fo-bm">
-                        <span class="fo-son">上海市浙江商会(www.zccs.org)@2008-2012 All Rights Reserved </span>
-                        <a href="" class="fo-son">沪ICP备17020763号-1</a>
-                        <span class="fo-son">Email：shzjsh@yahoo.com.cn</span>
-                        <div class="fo-son">
-                            <span>Tel：021-50939588</span>
-                            <span>Fax：021-50939388</span>
-                        </div>
-                        <span class="fo-son">地址：上海市浦东大道900号华辰金融大厦25楼</span>
-                    </div>
+                    <div class="fo-bm" v-html="footer.copyright"></div>
                     <div class="fo-br">
-                        <img src="{{PATH_TML}}image/erweima.png" alt="">
+                        <img :src="footer.code_id" alt="">
                     </div>
                 </div>
             </main>
@@ -105,6 +101,11 @@
                     page_show : [],
                     searchText : '',
                     channel: [],
+                    qrcode: [
+                        {ok: false, title: "手机版", image: "/api//file/qrcode?margin=2&url="+window.location.href},
+                        {ok: false, title: "微信", image: plats_info.wx_qrcode? plats_info.wx_qrcode : ''},
+                        {ok: false, title: "微博", image: plats_info.wb_qrcode? plats_info.wx_qrcode : ''},
+                    ]
                 },
                 mounted: function() {
                     //$app.set_title('风采页面');
@@ -144,6 +145,12 @@
                     channel_show(item) {
                         item.ok = false;
                     },
+                    hide(item) {
+                        item.ok = true;
+                    },
+                    show(item) {
+                        item.ok = false;
+                    },
                     goSearchOpen: function() {
                         window.location.href = all_domian +"sub_search?q="+ this.searchText;
                     }
@@ -154,7 +161,11 @@
                 var footer = new Vue({
                     el: "#footer",
                     data: {
+                        host        : window.location.host,
+                        href        : window.location.href,
                         foot_channel: header.channel,
+                        footer      : {},
+                        // footer      : plats_info,
                     },
                     mounted: function() {
                         // ajax.get('scms/setting/show').then((res)=>{
@@ -162,6 +173,21 @@
                         //         console.log("风采页面",res.data);
                         //     }
                         // })
+                        var result = plats_info;
+                        result.code_id = '/api/file/qrcode?margin=2&url=' + this.href;
+                        if(!result.copyright) {
+                            result.copyright = `
+                            <span class="fo-son">上海市浙江商会(www.zccs.org)@2008-2012 All Rights Reserved </span>
+                            <a href="" class="fo-son">沪ICP备17020763号-1</a>
+                            <span class="fo-son">Email：shzjsh@yahoo.com.cn</span>
+                            <div class="fo-son">
+                                <span>Tel：021-50939588</span>
+                                <span>Fax：021-50939388</span>
+                            </div>
+                            <span class="fo-son">地址：上海市浦东大道900号华辰金融大厦25楼</span>`
+                        }
+                        this.footer = result;
+                        console.log(this.footer);
                     }
                 })
             }
