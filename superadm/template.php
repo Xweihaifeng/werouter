@@ -152,7 +152,7 @@ class TemplateManage{
             return $this->fail("模版不存在！");
         }
     }
-
+    //删除文件以及文件夹
     private function deleteAll($path) {
          $op = dir($path);
          while(false != ($item = $op->read())) {
@@ -165,7 +165,6 @@ class TemplateManage{
              } else {
                  unlink($op->path.'/'.$item);
              }
-
          }
     }
 
