@@ -1,7 +1,9 @@
 $("#content_app").ready(function(){
     setTimeout(function(){
         // 浙商风采开始
-        var b=setInterval(bb,20);
+        if($(".fc1").position()){
+            var b=setInterval(bb,20);
+        }
         function bb(){
             var speed=1;
             var Lefts=$(".fc1").position().left-speed;

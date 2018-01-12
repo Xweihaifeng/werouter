@@ -11,7 +11,7 @@
             <img src="{{PATH_TML}}image/fanhui.png" alt="">
             当前位置在：
             <a :href="all_domian">首页</a>
-            > {{sub_aside_info.title}} > {{cate_info.title}}
+            > {{sub_aside_info.title}}
         </div>
         <div class="main-big">
             <div class="main">
@@ -81,7 +81,7 @@
                     <div class="fenye" v-if="total > limit">
                         <a @click="page_fun(1)" v-if="page>1" style="cursor:pointer">首页</a>
                         <a style="cursor:pointer" v-if="page>1" @click="page_fun(parseInt(page - 1))" >上一页</a>
-                        <a style="cursor:pointer" :name="'page'+index" :class="{'pageT' : page === index}" v-for="index in page_show" @click="page_fun(index)" >{{index}}</a>
+                        <a style="cursor:pointer" :name="'page'+index" :class="{'pageT' : page == index}" v-for="index in page_show" @click="page_fun(index)" >{{index}}</a>
                         <a v-if="page<total_page" style="cursor:pointer" @click="page_fun(parseInt(page) + 1)" >下一页</a>
                         <a v-if="page<total_page" style="cursor:pointer" @click="page_fun(total_page)" >尾页</a>
                     </div>
