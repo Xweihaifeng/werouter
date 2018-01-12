@@ -6,6 +6,7 @@ $(document).ready(function () {
         dataType: 'json',
         success: function (data) {
             if (data.code === 200) {
+                var fileurl=localStorage.getItem('template_listfileurl');
                 console.log(data.data.is_custom)
                 if (data.data.is_custom === null) {
                     $(".hidde").slideDown();
@@ -18,6 +19,8 @@ $(document).ready(function () {
                     $(".module_li").removeClass("block");
                 }
                 if(data.data.is_custom == 1){
+                    let st = `resource/diytpl/${fileurl}`;
+                    $("#url_url").val(st)
                     $("#show_val").val(1)
                     $(".but").animate({left: -40},0);
                     $(".module").removeClass("block");
@@ -25,7 +28,6 @@ $(document).ready(function () {
                     $("#diy").addClass("shown").siblings().removeClass("shown");
                     $(".form-child > li:nth-of-type(2)").addClass("block").siblings().removeClass("block");
                     //模版列表渲染
-                    var fileurl=localStorage.getItem('template_listfileurl');
                     if(fileurl==''||fileurl==null||fileurl=="undefined"){
                         fileurl=data.data.custom_file;
                     }
