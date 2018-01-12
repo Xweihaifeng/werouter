@@ -17,20 +17,20 @@
             <div class="main">
                 <h2>
                     <strong>{{sub_aside_info.title}}</strong>
-                    <span>{{sub_aside_info.init_type}}</span>
+                    <span>{{sub_aside_info.ename}}</span>
                 </h2>
                 <ul class="aside">
                     <li :class="{cenav_cur : item.domain==cate_domain}" v-for="item in sub_aside"><a :href="channel_domain+'/'+item.domain | href">{{item.title}}</a></li>
                 </ul>
-                <div class="company">
+<!--                 <div class="company">
                     <p>电话：029-853363598</p>
                     <p>传真：029-853363598</p>
                     <p>地址：陕西省西安市高新区绿地领海大厦</p>
-                </div>
+                </div> -->
             </div>
             <div class="list-big">
                 <div class="title">
-                    <span>商会新闻</span>
+                    <span>{{cate_info.title}}</span>
                 </div>
                 <div class="newsert">
                     <div class="new1">
@@ -61,8 +61,8 @@
                     </div>
                     <ul class="new2">
                         <li v-for="(item, index) in sub_rcon">
-                            <a href="">
-                                <img src="{{PATH_TML}}image/20171227112312-0.png" alt="">
+                            <a :href="channel_domain+'/'+item.weid | href">
+                                <img :src="item.thumb_image | img_src" alt="">
                             </a>
                             <div class="new2-left">
                                 <h2>
@@ -81,7 +81,7 @@
                     <div class="fenye" v-if="total > limit">
                         <a @click="page_fun(1)" v-if="page>1" style="cursor:pointer">首页</a>
                         <a style="cursor:pointer" v-if="page>1" @click="page_fun(parseInt(page - 1))" >上一页</a>
-                        <a style="cursor:pointer" :name="'page'+index" :class="{'pageT' : page === index}" v-for="index in page_show" @click="page_fun(index)" >{{index}}</a>
+                        <a style="cursor:pointer" :name="'page'+index" :class="{'pageT' : page == index}" v-for="index in page_show" @click="page_fun(index)" >{{index}}</a>
                         <a v-if="page<total_page" style="cursor:pointer" @click="page_fun(parseInt(page) + 1)" >下一页</a>
                         <a v-if="page<total_page" style="cursor:pointer" @click="page_fun(total_page)" >尾页</a>
                     </div>
@@ -110,7 +110,6 @@
         },
         mounted: function() {
             this.$nextTick(()=>{
-
                 //左侧频道相关
                 $sub_ajax.cate(this.channel_domain,(res)=>{
                     this.sub_aside_info = res.data;

@@ -266,6 +266,7 @@ class controllerRouter extends controller
             }
             return TRUE;
         }
+        return FALSE;
     }
     
     // 分站栏目额外规则

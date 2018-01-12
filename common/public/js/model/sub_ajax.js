@@ -4,21 +4,21 @@
 	
 	//CMS 新闻查询
 	sub_ajax.cms_content  = function(params , call){
-		ajax.get('cms/contents' , {params: params}).then((res)=>{
+		ajax.get('scms/contents' , {params: params}).then((res)=>{
 			call(res);
 		});
 	}
 	
 	// 广告查询
 	sub_ajax.ads = function( call){
-		ajax.get('cms/advs').then((res)=>{
+		ajax.get('scms/advs').then((res)=>{
 			call(res);
 		});
 	}
 	
 	// 首页接口
 	sub_ajax.index = function(call){
-		ajax.get('cms/index/grid').then((res)=>{
+		ajax.get('scms/index/grid').then((res)=>{
 			call(res);
 		});
 	}

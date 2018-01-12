@@ -46,12 +46,12 @@
         <div class="Contentbox">
             <div v-for="(value, key) in item" :class="'list_'+index+'_'+key" v-if="isShow.filter(x => value.weid == x.id)[0].type">
                 <div class="Menumore">
-                    <a :href="pathname + '/' + value.domain | href('weplats')">更多</a>
+                    <a :href="value.domain | href('weplats')">更多</a>
                 </div>
                 <ul class="Content_wz">
-                    <li v-for="(val, inde) in value.detail">
+                    <li v-for="(val, inde) in value.detail.list">
                         <a :href="pathname + '/' + val.weid | href('weplats')">
-                            <h2><b style="font-weight:normal;" v-html="val.title"></b></h2><span class="sytjlb_sj">{{val.publish_time.substr(0, 10)}}</span>
+                            <h2><b style="font-weight:normal;" v-html="val.title"></b></h2><span class="sytjlb_sj">{{val.publish_time}}</span>
                         </a>
                     </li>
                 </ul>
@@ -95,17 +95,20 @@
             ajax.get("scms/channels/domain_query/"+this.pathname).then((res) => {
                 if (res.data && res.code === 200) {
                     $app.set_title(plats_info.title);
-                    plats.show_title = '首页';
-                    plats.title = res.data.title;
+                    // plats.show_title = '首页';
+                    plats.show_title = '';
+                    // plats.title = res.data.title;
+                    plats.title = "首页";
                     plats.url = all_domian + this.pathname;
                 }
             })
 
             // 栏目列表 、 文章列表
-            ajax.get("scms/index/list_news_by_channel", {params: {channel: this.pathname, limit: 8}}).then((res) => {
+            ajax.get("scms/channelAndContent").then((res) => {
                 if (res.data && res.code === 200) {
+                    console.log(res.data);
                     var channel_list = [];
-                    res.data.forEach((item, index)=>{
+                    res.data.list.forEach((item, index)=>{
                         if(index % 2 === 0) {
                             channel_list[Math.floor(index/2)] = new Array();
                             this.isShow.push({id: item.weid, type: true, flag: 0})
@@ -115,9 +118,9 @@
                         channel_list[Math.floor(index/2)][index%2] = item;
                     });
                     this.channel_list = channel_list;
+                    console.log(this.channel_list);
                 }
             });
-
         },
         methods: {
             swiper() {

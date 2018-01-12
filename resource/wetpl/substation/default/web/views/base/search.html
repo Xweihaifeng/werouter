@@ -17,14 +17,14 @@
                             </a>
                             <div class="new2-left">
                                 <h2>
-                                    <a :href="channel+'/'+item.weid | href">【{{item.cate_name}}】{{item.title}}</a>
+                                    <a :href="item.channel_domain+'/'+item.weid | href">【{{item.cate_name}}】{{item.title}}</a>
                                 </h2>
                                 <p>
-                                    <a :href="channel+'/'+item.weid | href">{{item.summary| limitLen(0,50)}}</a>
+                                    <a :href="item.channel_domain+'/'+item.weid | href">{{item.summary| limitLen(0,50)}}</a>
                                 </p>
                                 <div class="all">
                                     <span>时间：{{item.publish_time}}</span>
-                                    <a :href="channel+'/'+item.weid | href">查看更多 +</a>
+                                    <a :href="item.channel_domain+'/'+item.weid | href">查看更多 +</a>
                                 </div>
                             </div>
                         </li>
@@ -32,7 +32,7 @@
                     <div class="fenye" v-if="total > limit">
                         <a @click="page_fun(1)" v-if="page>1" style="cursor:pointer">首页</a>
                         <a style="cursor:pointer" v-if="page>1" @click="page_fun(parseInt(page - 1))" >上一页</a>
-                        <a style="cursor:pointer" :name="'page'+index" :class="{'pageT' : page === index}" v-for="index in page_show" @click="page_fun(index)" >{{index}}</a>
+                        <a style="cursor:pointer" :name="'page'+index" :class="{'pageT' : page == index}" v-for="index in page_show" @click="page_fun(index)" >{{index}}</a>
                         <a v-if="page<total_page" style="cursor:pointer" @click="page_fun(parseInt(page) + 1)" >下一页</a>
                         <a v-if="page<total_page" style="cursor:pointer" @click="page_fun(total_page)" >尾页</a>
                     </div>
@@ -68,10 +68,12 @@
                         limit       :this.limit
                     }
                 }).then((res) => {
-                    console.log("data:",res.data)
+                    console.log(this.title);
+                    console.log(this.page)
                     this.sub_rcon = res.data.list;
                     this.total = res.data.total;
                     this.total_page = Math.ceil(this.total / this.limit);
+
                     var left = ( (this.page -3) > 0 ) ? this.page -3 : 1;
                     var right = ( (this.page + 3) < this.total_page ) ? this.page + 3 : this.total_page;
 
@@ -83,7 +85,7 @@
         },
         methods: {
             page_fun(index) {
-                var url = this.channel +'/'+this.cate_domain + '?page=' + index;
+                var url = all_domian +"sub_search?q="+ this.title + '&page=' + index;
                 $app.open_page(url);
             }
         }
