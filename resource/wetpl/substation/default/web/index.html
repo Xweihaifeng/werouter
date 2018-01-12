@@ -3,20 +3,25 @@
 <script src="{{PATH_TML}}js/banner.js"></script>
 <script src="{{PATH_TML}}js/main1.js"></script>
 
+
+<!-- 中间内容模块 -->
 <div class="main-bg">
+
+    <!-- 顶部大图 -->
     <div class="ban">
         <img :name="sub_ads.header2" :src="sub_ads.header2.image | img_src(1920, 450, 1)" alt="">
     </div>
     <main>
-         <div class="main-s1">
-              <div class="s1-l">
-                  <div class="s1-lt">
-                      <span class="qz">商会新闻</span>
-                      <!-- <a :href="sub_index.init_domian.news | href">更多</a> -->
-                      <a :href="all_domian+'news'">更多</a>
-                  </div>
-                  <div class="s1-lb">
-                      <div class="s1-lbleft">
+        <div class="main-s1">
+                <div class="s1-l">
+                    <div class="s1-lt">
+                        <span class="qz">商会新闻</span>
+                        <a :href="all_domian+'news'">更多</a>
+                    </div>
+                    <div class="s1-lb">
+
+                        <!-- 新闻滚动图 -->
+                        <div class="s1-lbleft">
                            <ul class="banner">
                                 <li v-for="item in sub_ads.banners.list">
                                     <a :href="item.url | href">
@@ -33,7 +38,8 @@
                                 <li v-for="item in sub_ads.banners.list" class="yson"></li>
                             </ul>
                         </div>
-
+                        
+                        <!-- 商会新闻 -->
                         <div class="s1-lbright">
                             <ul class="s1-lbr">
                                 <li v-for="item in sub_index.news">
@@ -44,6 +50,8 @@
                         </div>
                   </div>
               </div>
+
+              <!-- 最新公告 -->
               <div class="s1-r">
                   <div class="s1-rt">
                       <h2>最新公告</h2>
@@ -62,20 +70,15 @@
              <div class="s2-lt">
                  <span class="qz" v-if="!sub_ads.peoples_title">{{peoples_title.title}}</span>
                  <span class="qz" v-else>{{sub_ads.peoples_title.title}}</span>
-                 <!-- <a href="">更多</a> -->
              </div>
+
+             <!-- 会员风采 -->
              <div class="fc">
                  <div class="fc-left">
-                  <!--     <a href="" v-if="!sub_ads.leader">
-                          <img :src="leader.image | img_src(195 , 190 , 1)" alt="">
-                          <div class="jie">
-                              <h3>{{leader.title}}</h3>
-                          </div>
-                      </a> -->
                       <a href="">
                           <img :src="sub_ads.leader.image | img_src(195 , 190 , 1)" alt="">
                           <div class="jie">
-                              <h3>{{sub_ads.leader.title}}</h3>
+                              <h3>{{sub_ads.leader.title | ''}}</h3>
                           </div>
                       </a>
                   </div>
@@ -105,20 +108,13 @@
                  </div>
              </div>
              <div class="s2-b">
+
+                <!-- 视频 -->
                  <div class="s2-b1">
                      <div class="s2-lt">
                          <span class="qz" v-html="sub_index.spzx.title"></span>
                          <a :href="sub_index.spzx.domain | href">更多</a>
                      </div>
-<!--                      <div class="s-video">
-                         <a href="">
-                             <img src="{{PATH_TML}}image/20170628105519-0.png" alt="">
-                             <div class="s-jie">
-                                 <span>上海市浙江商会30周年宣传片</span>
-                                 <span>《不忘初心 筑梦前行》</span>
-                             </div>
-                         </a>
-                     </div> -->
                      <ul class="b1-list" style="margin-top:18px;">
                          <li v-for="(item, index) in sub_index.spzx.list" v-if="index<8">
                              <a :href="'news/'+item.weid | href">{{item.title | limitLen(0,15)}}</a>
@@ -126,23 +122,26 @@
                          </li>
                      </ul>
                  </div>
+
+                 <!-- 杂志 -->
                  <div class="s2-b2">
                      <div class="s2-lt">
-                         <span class="qz">{{sub_index.mag.title | limitLen(0,6)}}</span>
-                         <a :href="'magazine/'+sub_index.mag.domain | href">更多</a>
+                         <span class="qz">{{sub_index.mag.title}}</span>
+                         <a :href="'/magazine/'+sub_index.mag.domain | href">更多</a>
                      </div>
                      <ul class="b2-list">
-                         <li v-for="(item, index) in sub_index.mag.list" v-if="index<6"><a :href="'magazine/'+sub_index.mag.domain+'/'+item.weid | href"><img :src="item.cover | img_src(130,130)" :alt="item.title" :title="item.title"></a></li>
+                         <li v-for="(item, index) in sub_index.mag.list" v-if="index<6"><a :href="'/magazine/'+sub_index.mag.domain+'/'+item.weid | href"><img :src="item.cover | img_src(130,130)" :alt="item.title" :title="item.title"></a></li>
                      </ul>
                  </div>
+
+                 <!-- 工作动态 -->
                  <div class="s2-b3">
                      <div class="s2-lt">
-                         <span class="qz">{{sub_index.gzdt.title | limitLen(0,6)}}</span>
+                         <span class="qz">{{sub_index.gzdt.title}}</span>
                          <a :href="sub_index.gzdt.domain | href">更多</a>
                      </div>
                      <ul class="b3-list">
                          <li v-for="(item, index) in sub_index.gzdt.list" v-if="index<8">
-                             <!-- <a :href="item.source_url | href">{{item.title | limitLen(0,15)}}</a> -->
                              <a :href="'news/'+item.weid | href">{{item.title | limitLen(0,15)}}</a>
                              <span>{{item.publish_time | formateTime('YMD')}}</span>
                          </li>
@@ -150,10 +149,11 @@
                  </div>
              </div>
          </div>
+
+         <!-- 微链接 -->
          <div class="main-s2">
              <div class="s2-lt">
                  <span class="qz">{{sub_ads.link.yqlj.title}}</span>
-                 <!-- <a href="">更多</a> -->
              </div>
              <ul class="yq">
                  <li v-for="(item, index) in sub_ads.link.yqlj.list"><a :href="item.url">{{item.title}}</a></li>
@@ -166,11 +166,10 @@
     var app = new Vue({
         el: '#content_app',
         data: {
-            sub_index : {},  // 首页公用接口
-            sub_ads : {},    // 网站广告接口
+            sub_index : {},    // 首页公用接口
+            sub_ads   : {},    // 网站广告接口
         },
         mounted: function() {
-            $app.set_title('秦商总会-河南分会');
             this.$nextTick(()=>{
 
                 // 首页相关接口
@@ -180,6 +179,7 @@
                     if(!result.init_domian) {
                         result.init_domian = { news: "news" }
                     }
+
                     this.sub_index = result;
                     console.log("sub_index", this.sub_index);
                 });
@@ -187,6 +187,7 @@
                 // 首页广告信息
                 $sub_ajax.ads((res)=>{
                     var result = res.data;
+
                     if(!result.header2 || result.header2 == '[]') {
                         result.header2 = { weid: "c9db9680-dff3-11e7-ae70-2f6645bd73f3", type_id: "a56119c0-765b-11e7-a42e-770589f0tou2", title: "头部横图", image: "plats/resource/1513496560434.jpg", url: "http://sx.sina.com.cn/zt_d/2017qinshang/", description: "" }
                     }
@@ -241,15 +242,14 @@
                             {weid: "71f96b93-da75-11e7-85d7-fa5985d0eee7", avatar: "{{PATH_TML}}image/20170731094034-0.jpg", real_name: "江南春", position: "分众传媒（中国）控股有限公司 董事局主席兼CEO", nickname: "江南春"},
                         ]
                     }
+
                     this.sub_ads = result;
                     console.log("sub_ads", this.sub_ads);
+                    $app.set_title(this.sub_ads.setting.title);
                 });
             });
         },
         methods: {
-            video() {
-
-            },
             goSearchOpen() {
                 var url = '';
                 url = all_domian + "so?q=" + this.searchText;
