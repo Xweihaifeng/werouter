@@ -1,6 +1,5 @@
 var hosts = window.location.protocol + '//' + window.location.host + '/api/';
 var ApiUrl = hosts + 'backend/';
-
 var init = function() {
     $(".btn-flat").click(function() {
         var username = $('#username').val();
