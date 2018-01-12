@@ -357,7 +357,7 @@
                 <script type="text/javascript">marqueeStart(1, "left");</script>
             </div>
         </div>
-        <!--<div id="center">
+        <div id="media-center">
             <div id="hb-center">
                 <div id="hbl">
                     <div>
@@ -386,7 +386,20 @@
                     <ul><a href="/zt/jiulyh" target="_blank"><li><img src="http://images.wezchina.com/plats/resource/1514201325245.png?imageView2/3/w/240/h/60" height="60"></li></a><a href="/zt/qiqsdh" target="_blank"><li><img src="http://images.wezchina.com/plats/resource/1514201309592.png?imageView2/3/w/240/h/60" height="60"></li></a><a href="/zt/liuqsdh" target="_blank"><li><img src="http://images.wezchina.com/plats/resource/1514201292583.png?imageView2/3/w/240/h/60" height="60"></li></a><a href="/zt/2017ndfh" target="_blank"><li><img src="http://images.wezchina.com/plats/resource/1513221291907.png?imageView2/3/w/240/h/60" height="60"></li></a></ul>
                 </div>
             </div>
-        </div>-->
+        </div>
+        <div id="cp-show">
+            <div class="swiper-container" id="my-swiper-3">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide"><img src="/common/img/new/BANNER.png" alt=""/></div>
+                    <div class="swiper-slide"><img src="/common/img/new/BANNER.png" alt=""/></div>
+                    <div class="swiper-slide"><img src="/common/img/new/BANNER.png" alt=""/></div>
+                    <div class="swiper-slide"><img src="/common/img/new/BANNER.png" alt=""/></div>
+                </div>
+                <div class="swiper-pagination"></div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+            </div>
+        </div>
     </div>
 
 
@@ -410,7 +423,7 @@
         observeParents:true,//修改swiper的父元素时，自动初始化swiper
     })
 
-    var mySwiper = new Swiper ('#my-swiper-2', {
+    var mySwiper2 = new Swiper ('#my-swiper-2', {
         direction: 'horizontal',
         loop: true,
         speed: 1000,
@@ -425,6 +438,25 @@
         touchRatio:1,
         observer:true,//修改swiper自己或子元素时，自动初始化swiper
         observeParents:true,//修改swiper的父元素时，自动初始化swiper
+    })
+
+    var mySwiper3 = new Swiper ('#my-swiper-3', {
+        direction: 'horizontal',
+        loop: true,
+        speed: 1000,
+        autoplay : 3000,
+        autoplayDisableOnInteraction : false,
+        //pagination: '.swiper-pagination',
+        //paginationClickable :true,
+        nextButton: '.swiper-button-next',
+        prevButton: '.swiper-button-prev',
+        grabCursor : true,
+        longSwipesRatio: 0.3,
+        touchRatio:1,
+        observer:true,//修改swiper自己或子元素时，自动初始化swiper
+        observeParents:true,//修改swiper的父元素时，自动初始化swiper
+        slidesPerView : 4,
+        spaceBetween : 20,
     })
 </script>
 </body>
