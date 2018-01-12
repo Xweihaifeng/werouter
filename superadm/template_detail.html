@@ -164,6 +164,11 @@
             top: -20px;
             left: 135px;
         }
+        #url_url{
+            outline: none;
+            border: none;
+            background: #FEF7F8;
+        }
 
     </style>
 </head>
@@ -214,6 +219,9 @@
 
                             <script src="js/codemirror.js" type="text/javascript"></script>
                             <script src="js/htmlmixed.js" type="text/javascript"></script>
+                            <div class="note note-danger">
+                                <input id="url_url"></input>
+                            </div>
                             <form class="form-horizontal" method="post" name="myform" id="myform">
                                 <input name="isform" type="hidden" value="1">
                                 <input name="csrf_token" type="hidden" value="e5499db18be739994921d80a8d19a080">
@@ -320,6 +328,9 @@
                 data: {operation: 'templateInfo', url: fileurl},
                 dataType: 'json',
                 success: function (data) {
+                    let url_url = localStorage.getItem('template_editfileurl');
+                    $("#url_url").val(url_url.slice(16))
+                    console.log(data.data,1111)
                     if (data.code == 200) {
                         $("#cname").val(data.data.name)
                         $("#file_code").empty();

@@ -1,4 +1,5 @@
 $(function () {
+
     var none = 1;
     $(".but").click(() => {
         let is_custom = $("#show_val").val();
