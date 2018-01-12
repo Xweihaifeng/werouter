@@ -559,6 +559,9 @@
                      } else {
                          mess_tusi(data.message);
                      }
+                     setTimeout(function() {
+                         window.location.href = '/user/admin/activity/list';
+                     }, 2000);
                  },
                  error: function(xhr) {
                      console.log(xhr);
@@ -586,10 +589,15 @@
                              deletedGuests.splice(0, deletedGuests.length);
                              deletedTickets.splice(0, deletedTickets.length);
 
+
                          } else {
-                             mess_tusi("活动发布成功");
+
 
                          }
+                         mess_tusi("活动发布成功");
+                         setTimeout(function() {
+                             window.location.href = '/user/admin/activity/list';
+                         }, 2000);
                      } else {
                          mess_tusi(data.message);
                      }

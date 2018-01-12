@@ -135,6 +135,7 @@ const qiniu_upload_domain = httpType + '//upload.qiniu.com';
 
 // 微主页个性域名接口调�?
 const PAGES_PAGE_ISOPENPAGE = apiUrl + 'pages/page/isopenpage'; // 是否�?通微主页
+const PAGES_PAGE_INFO = apiUrl + 'pages/page/info'; // 查看微主页开通情况
 const PAGES_PAGE_GETDETAILBYUSER = apiUrl + 'pages/page/getDetailByUser/';
 
 // 认证模块接口调用
@@ -248,6 +249,9 @@ const SMS_USERSMS_UPDATE = apiUrl + 'sms/usersms/update';
 const SMS_USERSMS_DETAIBYUSERID = apiUrl + 'sms/usersms/detaibyuserid/';
 const WECHATPAY_SMSPAY = apiUrl + 'wechatpay/smspay';
 const SMS_ORDER_DETAIL = apiUrl + 'sms/order/detail/';
+const SMS_USERSMS_TOGGLE = apiUrl + 'sms/usersms/toggle';
+
+
 
 // 活动管理
 const ACTIVITY_LIST = apiUrl + 'activity/listbyuser'; //活动 - 列表（根据用户id�?
