@@ -68,6 +68,8 @@
                         limit       :this.limit
                     }
                 }).then((res) => {
+                    console.log(this.title);
+                    console.log(this.page)
                     this.sub_rcon = res.data.list;
                     this.total = res.data.total;
                     this.total_page = Math.ceil(this.total / this.limit);
