@@ -136,6 +136,7 @@ $(document).ready(function() {
         })
     }
 
+
     // 用户独立短信开关
     var toggleUsersms = function(callback) {
         layer.load();
