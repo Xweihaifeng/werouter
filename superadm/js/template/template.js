@@ -30,7 +30,7 @@ $(document).ready(function () {
                         fileurl=data.data.custom_file;
                     }
                     $.ajax({
-                        url: document.location.protocol+'//'+document.domain+'/superadm/template.php',
+                        url: 'template.php',
                         type: 'post',
                         data:{operation : 'templateList',url:fileurl},
                         dataType: 'json',

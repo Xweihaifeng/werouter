@@ -323,7 +323,7 @@
 
         } else {
             $.ajax({
-                url: document.location.protocol + '//' + document.domain + '/superadm/template.php',
+                url: 'template.php',
                 type: 'post',
                 data: {operation: 'templateInfo', url: fileurl},
                 dataType: 'json',
@@ -347,7 +347,7 @@
                         $('#updateSet3').click(function () {
                             var fileurl = localStorage.getItem('template_editfileurl');
                             $.ajax({
-                                url: document.location.protocol + '//' + document.domain + '/superadm/template.php',
+                                url: 'template.php',
                                 type: 'post',
                                 data: {operation: 'templateSave', url: fileurl, content: myCodeMirror.getValue()},
                                 dataType: 'json',

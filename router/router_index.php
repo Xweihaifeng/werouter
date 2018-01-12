@@ -304,7 +304,8 @@ class router_index extends controller
             $additional_config = $controller_router_config['config'];
         }
 
-        $this->file = '/resource/wetpl/'.$this->data['template'].'/';
+        $this->file = '/resource/' . ($this->data['is_custom'] === 1
+                ? 'diytpl/'.$this->data['custom_file'].'/' : 'wetpl/'.$this->data['template'].'/');
         
         $add_public_config = [];
 

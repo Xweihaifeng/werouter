@@ -109,7 +109,7 @@ $(function () {
             success: function (data) {
                 if (data.code === 200) {
                     $.ajax({
-                        url: document.location.protocol+'//'+document.domain+'/superadm/template.php',
+                        url: 'template.php',
                         type: 'post',
                         data:{operation : 'creatTemplate', from:template_mark, to:custom_file},
                         dataType: 'json',
