@@ -164,18 +164,26 @@ class TemplateManage{
     }
     //删除文件以及文件夹
     private function deleteAll($path) {
-         $op = dir($path);
-         while(false != ($item = $op->read())) {
-             if($item == '.' || $item == '..') {
-                 continue;
-             }
-             if(is_dir($op->path.'/'.$item)) {
-                 $this->deleteAll($op->path.'/'.$item);
-                 rmdir($op->path.'/'.$item);
-             } else {
-                 unlink($op->path.'/'.$item);
-             }
-         }
+          $path = str_replace('', '/', $path);
+                $path = substr($path, -1) == '/' ? $path : $path . '/';
+                if (!is_dir($path)) {
+                    return false;
+                }
+                $dirHandle = opendir($path);
+                while (false !== ($file = readdir($dirHandle))) {
+                    if ($file == '.' || $file == '..') {
+                        continue;
+                    }
+                    if (!is_dir($path . $file)) {
+                        if (file_exists($path . $file)) {
+                            unlink($path . $file);
+                        }
+                    } else {
+                        $this->deleteAll($path . $file);
+                    }
+                }
+        closedir($dirHandle);
+        return rmdir($path);
     }
     private function del_dir($dir)
     {
