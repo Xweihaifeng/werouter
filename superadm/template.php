@@ -145,6 +145,7 @@ class TemplateManage{
     }
     //删除模版
     public function templateDel($url='abc.com'){
+        /*
         $url=$this->to_dir.$url;
         if(file_exists($url)){
             $this->del_dir($url);
@@ -152,40 +153,46 @@ class TemplateManage{
         }else{
             return $this->fail("模版不存在！");
         }
+        */
 
-        /*
         if(file_exists($this->to_dir.$url)){
             $this->deleteAll($this->to_dir.$url);
             return $this->success(null);
         }else{
             return $this->fail("模版不存在！");
         }
-        */
-
     }
     //删除文件以及文件夹
     private function deleteAll($path) {
-         $op = dir($path);
-         while(false != ($item = $op->read())) {
-             if($item == '.' || $item == '..') {
-                 continue;
-             }
-             if(is_dir($op->path.'/'.$item)) {
-                 $this->deleteAll($op->path.'/'.$item);
-                 rmdir($op->path.'/'.$item);
-             } else {
-                 unlink($op->path.'/'.$item);
-             }
-         }
+          $path = str_replace('', '/', $path);
+                $path = substr($path, -1) == '/' ? $path : $path . '/';
+                if (!is_dir($path)) {
+                    return false;
+                }
+                $dirHandle = opendir($path);
+                while (false !== ($file = readdir($dirHandle))) {
+                    if ($file == '.' || $file == '..') {
+                        continue;
+                    }
+                    if (!is_dir($path . $file)) {
+                        if (file_exists($path . $file)) {
+                            unlink($path . $file);
+                        }
+                    } else {
+                        $this->deleteAll($path . $file);
+                    }
+                }
+        closedir($dirHandle);
+        return rmdir($path);
     }
     private function del_dir($dir)
     {
         if(strtoupper(substr(PHP_OS, 0, 3)) == 'WIN') {
-            $str = "rmdir /s/q " . $dir;
+            $str = "rd/s/q " . $dir;
         } else {
-            $str = "rm -Rf " . $dir;
+            $str = "rm -rf " . $dir;
         }
-        exec($str);
+        system($dir);
     }
 
 }

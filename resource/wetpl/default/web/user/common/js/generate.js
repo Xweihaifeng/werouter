@@ -73,8 +73,8 @@ var host = window.location.host;
 var currPage = window.location.pathname.split('/').pop();
 var parentPage = window.location.pathname.split('/').slice(2, 3)[0];
 
-var genMenu = function (mark, host) {
-    var genCont = function (data) {
+var genMenu = function(mark, host) {
+    var genCont = function(data) {
         var template = `
             <a href="/user/` + data.url + `">
                 <div id=` + data.mark + `>` + data.name + `</div>
@@ -82,14 +82,14 @@ var genMenu = function (mark, host) {
         return template;
     }
 
-    var genTitle = function (data) {
+    var genTitle = function(data) {
         var template = `
             <div class="we-title" id=` + data.id + `>
                 <img src=` + data.mark + ` width="18" alt="" />
                 <span>` + data.name + `</span>
                 <span><img src="/common/img/more1.png" width="18" class="title-img"/></span>
-                <div class="we-cont" style="display: none;">`
-            + data.children.map(x => genCont(x)).join('') +
+                <div class="we-cont" style="display: none;">` +
+            data.children.map(x => genCont(x)).join('') +
             `</div>
             </div>`;
         return template;
@@ -101,13 +101,13 @@ var genMenu = function (mark, host) {
         url: controlUrl + mark + '&domain=' + host,
         type: 'GET',
         async: false,
-        success: function (data) {
+        success: function(data) {
             console.log(data);
             if (data.code == 200) {
                 template = data.data.list.map(x => genTitle(x)).join('');
             }
         },
-        error: function (xhr) {
+        error: function(xhr) {
             console.log(xhr)
         }
     })
@@ -131,10 +131,10 @@ $("#middle").append(genMenu(mark, domainHost)) // domain
 console.log(currPage)
 if (currPage != '' && currPage != 'user') {
     $("#" + parentPage + "_" + currPage).parent().parent(".we-cont").show();
-    $("#" + parentPage + "_" + currPage).css({"color": "red", "background": "#f7f7f7"})
+    $("#" + parentPage + "_" + currPage).css({ "color": "red", "background": "#f7f7f7" })
 } else {
     $("#settings_profile").parent().parent(".we-cont").show();
-    $("#settings_profile").css({"color": "red", "background": "#f7f7f7"})
+    $("#settings_profile").css({ "color": "red", "background": "#f7f7f7" })
 }
 
 var logo = ApiMaterPlatQiniuDomain + localStorage.getItem('logo');
@@ -144,7 +144,7 @@ $("#av_online").bind("click", avatar_admin);
 
 //上滑下拉
 var flag = false;
-$(".we-title").on("click", function (event) {
+$(".we-title").on("click", function(event) {
     event.stopPropagation();
     //本地储存
     sessionStorage.lastname = $(this).attr("id");
@@ -165,7 +165,7 @@ $(".we-title").on("click", function (event) {
     }
 })
 
-$(".we-cont").click(function (event) {
+$(".we-cont").click(function(event) {
     event.stopPropagation();
 })
 
@@ -180,41 +180,41 @@ if (token) {
     });
 }
 
-$("#avatar, #dropdown").hover(function () {
+$("#avatar, #dropdown").hover(function() {
     $(".avatar").show();
-}, function () {
+}, function() {
     $(".avatar").hide();
 })
 
 // 在线认证开通状态判断
 function online_cert() {
     var options3 = $.get(CERT_REALNAME_SETTING);
-    options3.done(function (data) {
+    options3.done(function(data) {
         if (data.code === 200) {
             var result = data.data;
 
             if (!result) {
-                layer.msg("尚未开通此功能", {time: 2500});
+                layer.msg("尚未开通此功能", { time: 2500 });
                 return false;
             }
             if (result.status == 1 && result.auth_num > 0) {
-                layer.msg("页面加载中...", {time: 2500});
-                setTimeout(function () {
+                layer.msg("页面加载中...", { time: 2500 });
+                setTimeout(function() {
                     window.location.href = "verified";
                 }, 1000);
             } else {
-                layer.msg("此功能暂时无法使用", {time: 2500});
+                layer.msg("此功能暂时无法使用", { time: 2500 });
                 return false;
             }
         }
     });
-    options3.fail(function (error) {
+    options3.fail(function(error) {
         console.error(error);
     });
 }
 
 var cert_realname_setting = $.get(CERT_REALNAME_SETTING);
-cert_realname_setting.done(function (data) {
+cert_realname_setting.done(function(data) {
     if (data.code == 200) {
         var result = data.data;
         if (!result) {
@@ -225,14 +225,14 @@ cert_realname_setting.done(function (data) {
         }
     }
 });
-cert_realname_setting.fail(function (error) {
+cert_realname_setting.fail(function(error) {
     console.error(error);
 });
 
 function member_options() {
     // 是否为会员
     var member_options = $.get(MEMBER_PROFILE);
-    member_options.done(function (data) {
+    member_options.done(function(data) {
         if (data.code == 200) {
             var result = data.data;
 
@@ -246,22 +246,22 @@ function member_options() {
             }
         }
     });
-    member_options.fail(function (error) {
+    member_options.fail(function(error) {
         console.error(error);
     });
 }
 
 // 官方认证详情功能显示(是否开通官方认证)
 var options1 = $.get(CERT_OFCCERTS);
-options1.done(function (data) {
+options1.done(function(data) {
     if (data.code == 200) {
 
         var result = data.data;
         if (!result) {
             $("#v_form_list").show();
             $("#settings_personal").parent("a").attr("href", "/user/settings/personal");
-            $(".personal").attr({"disabled": false, "href": "personal"});
-            $(".institutional").attr({"disabled": false, "href": "institutional"});
+            $(".personal").attr({ "disabled": false, "href": "personal" });
+            $(".institutional").attr({ "disabled": false, "href": "institutional" });
             return false;
         }
 
@@ -283,22 +283,21 @@ options1.done(function (data) {
                 }
 
                 var options = $
-                // 判断微主页是否开通
+                    // 判断微主页是否开通
                 var options3 = $.get(PAGES_PAGE_ISOPENPAGE);
-                options3.done(function (data) {
+                options3.done(function(data) {
                     if (data.code == 200) {
                         var result_status = data.data.result;
                         if (result_status) {
-                            $(".av-on-line").hide();
+                            //$(".av-on-line").hide();
                             $("#avatar-admin").show();
-                        }
-                        else {
-                            $(".av-on-line").show();
+                        } else {
+                            //$(".av-on-line").show();
                             $("#avatar-admin").hide();
                         }
                     }
                 });
-                options3.fail(function (error) {
+                options3.fail(function(error) {
                     consolr.error(error);
                 });
                 // $(".av-on-line").show();
@@ -311,25 +310,27 @@ options1.done(function (data) {
             }
 
         } else {
-            $(".personal").attr({"disabled": false, "href": "personal"});
-            $(".institutional").attr({"disabled": false, "href": "institutional"});
+            $(".personal").attr({ "disabled": false, "href": "personal" });
+            $(".institutional").attr({ "disabled": false, "href": "institutional" });
         }
 
     }
 });
-options1.fail(function (error) {
+options1.fail(function(error) {
     console.error(error);
 });
 
 // 判断是否开通微主页
 function avatar_admin() {
     layer.open({
-        type: 1
-        , title: '请设置您的个性域名'
-        , offset: type //具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
-        , area: ['670px', '400px']
-        , id: 'layerDemo' + type //防止重复弹出
-        , content: `
+        type: 1,
+        title: '请设置您的个性域名',
+        offset: type //具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
+            ,
+        area: ['670px', '400px'],
+        id: 'layerDemo' + type //防止重复弹出
+            ,
+        content: `
             <div class="cont-hd">
                 <div class="panel panel-default">
                     <div class="panel-body">
@@ -342,17 +343,20 @@ function avatar_admin() {
                 </div>
                 <button id="submit_domain" type="submit" class="btn btn-default" style="margin-left: 10px;">立即申请</button>
             </div>`
-        //,btn: '关闭全部'
-        , btnAlign: 'c' //按钮居中
-        , shade: 0 //不显示遮罩
-        , yes: function () {
+            //,btn: '关闭全部'
+            ,
+        btnAlign: 'c' //按钮居中
+            ,
+        shade: 0 //不显示遮罩
+            ,
+        yes: function() {
             layer.closeAll();
-        }
-        , success: function (layero) {
+        },
+        success: function(layero) {
             var host = 'http://' + window.location.host;
             $("#host").text(host + "/");
             var weid = docCookies.getItem("weid");
-            var store = function (sendData) {
+            var store = function(sendData) {
                 $.ajax({
                     url: PAGESTORE,
                     type: 'POST',
@@ -360,14 +364,14 @@ function avatar_admin() {
                     headers: {
                         'Token': docCookies.getItem("token")
                     },
-                    success: function (data) {
+                    success: function(data) {
                         if (data.code == 200) {
                             console.log(data)
-                            //mess_tusi("保存设置成功");
+                                //mess_tusi("保存设置成功");
                             layer.msg('保存设置成功', {
                                 time: 1500
                             });
-                            setTimeout(function () {
+                            setTimeout(function() {
                                 window.location.reload();
                             }, 2000);
 
@@ -377,15 +381,15 @@ function avatar_admin() {
                             });
                         }
                     },
-                    error: function (xhr) {
+                    error: function(xhr) {
                         console.log(xhr);
                     }
                 })
             }
 
-            $("#submit_domain").click(function () {
+            $("#submit_domain").click(function() {
                 var domain = $("#user-domain").val();
-                var sendData = {weid: weid, domain: domain};
+                var sendData = { weid: weid, domain: domain };
                 if (domain != "") {
                     store(sendData);
                 } else {
@@ -423,7 +427,7 @@ function avatar_admin() {
 
 // 实名认证详情功能显示(是否开通实名认证)
 var options = $.get(CERT_REALNAME_DETAIL);
-options.done(function (data) {
+options.done(function(data) {
     if (data.code == 200) {
         var result = data.data;
         if (!result) {
@@ -443,17 +447,16 @@ options.done(function (data) {
         }
     }
 });
-options.fail(function (error) {
+options.fail(function(error) {
     console.error(error);
 });
 
-function setCookie(token, expiredays)
-{
+function setCookie(token, expiredays) {
     var Days = expiredays;
     var exp = new Date();
-    var domain = '.'+root_domain;
-    exp.setTime(exp.getTime() + Days*24*60*60*1000);
-    document.cookie = "token="+ escape (token) + ";expires=" + exp.toGMTString() +";path=/;domain="+domain;
+    var domain = '.' + root_domain;
+    exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000);
+    document.cookie = "token=" + escape(token) + ";expires=" + exp.toGMTString() + ";path=/;domain=" + domain;
 }
 
 function clearCookie() {
@@ -465,7 +468,7 @@ function clearCookie() {
 }
 
 //主页初始化
-var init = function (token) {
+var init = function(token) {
     if (token != 'null' && token != undefined) {
         showLogin = false;
         isLogin = true;
@@ -486,14 +489,14 @@ var init = function (token) {
 init(docCookies.getItem("token"));
 
 var domain;
-var hasDomain = function (weid) {
+var hasDomain = function(weid) {
     $.ajax({
         url: PAGES_PAGE_GETDETAILBYUSER + weid,
         type: 'GET',
         headers: {
             'Token': docCookies.getItem("token")
         },
-        success: function (data) {
+        success: function(data) {
             // if (data.code == 401) {
             // domain = '/index';
             // localStorage.removeItem('token')
@@ -519,7 +522,7 @@ var hasDomain = function (weid) {
              });
              }*/
         },
-        error: function (xhr) {
+        error: function(xhr) {
             console.log(xhr);
         }
     })
@@ -530,7 +533,7 @@ hasDomain(weid);
 
 //route
 var isLogin; //判断用户登陆与否
-var router = function (route) {
+var router = function(route) {
     if (!docCookies.getItem("token")) {
         isLogin = false;
     } else {
@@ -539,15 +542,15 @@ var router = function (route) {
     var routerList = ['home', 'login', 'article', 'active', 'project', 'shopping', 'zone', 'zan'];
     //var routerList = ['home', 'login', 'article', 'active', 'zan'];
 
-    var isMember = function (routerList, route) {
+    var isMember = function(routerList, route) {
         return routerList.filter(x => x === route);
     }
 
-    var home = function () {
+    var home = function() {
         window.location.href = '/';
     }
 
-    var login = function () {
+    var login = function() {
         if (!isLogin) {
             showLogin = true;
             $("#modal_login").fadeIn(300);
@@ -556,27 +559,27 @@ var router = function (route) {
         }
     }
 
-    var article = function () {
+    var article = function() {
         showLogin = false;
         window.location.href = domain + "/article";
     }
 
-    var active = function () {
+    var active = function() {
         showLogin = false;
         window.location.href = domain + "/activity";
     }
-    var project = function () {
+    var project = function() {
         showLogin = false;
         window.location.href = domain + "/project";
     }
 
 
-    var shopping = function () {
+    var shopping = function() {
         showLogin = false;
         window.location.href = domain + "/wemall";
     }
 
-    var zone = function () {
+    var zone = function() {
         showLogin = false;
         window.location.href = domain + "/quan";
     }
@@ -586,34 +589,33 @@ var router = function (route) {
     }
 }
 
-$("#home, #login, #article, #active, #project, #shopping, #zone, #zan").click(function () {
+$("#home, #login, #article, #active, #project, #shopping, #zone, #zan").click(function() {
     //$("#home, #login, #article, #active, #zan").click(function(){
     var id = $(this).attr("id");
     router(id);
 })
 
-$("#add").hover(function () {
+$("#add").hover(function() {
     $(".add").show();
-}, function () {
+}, function() {
     $(".add").hide();
 })
 
-$("#avatar, #dropdown").hover(function () {
+$("#avatar, #dropdown").hover(function() {
     $(".avatar").show();
-}, function () {
+}, function() {
     $(".avatar").hide();
 })
 
 //退出登陆
-function logout()
-{
+function logout() {
     $.ajax({
-        url: apiUrl+'logout',
+        url: apiUrl + 'logout',
         type: 'GET',
         headers: {
             'Token': plats_token
         },
-        success: function (data) {
+        success: function(data) {
             if (data.code == 200) {
                 // localStorage.clear();
                 localStorage.removeItem('token');
@@ -621,15 +623,16 @@ function logout()
                 setCookie('', -1);
                 clearCookie();
                 window.location.href = "/";
-            } 
+            }
         }
     });
-    
+
 }
 
 
 //监听加载状态改变
 document.onreadystatechange = completeLoading;
+
 function completeLoading() {
     if (document.readyState == "complete") {
         if ($("#loadingDiv").length > 0) {
