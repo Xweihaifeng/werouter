@@ -59,7 +59,7 @@ $(document).ready(function(){
                             //     message: '手机号码长度为11位'
                             // },
                             regexp: {
-                                regexp: /^1[3|4|5|8][0-9]\d{4,8}$/,
+                                regexp: /^1[3|4|5|7|8][0-9]\d{4,8}$/,
                                 message: '请输入有效手机号码'
                             }
                         }
