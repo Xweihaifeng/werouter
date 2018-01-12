@@ -145,6 +145,7 @@ class TemplateManage{
     }
     //删除模版
     public function templateDel($url='abc.com'){
+        /*
         $url=$this->to_dir.$url;
         if(file_exists($url)){
             $this->del_dir($url);
@@ -152,16 +153,14 @@ class TemplateManage{
         }else{
             return $this->fail("模版不存在！");
         }
+        */
 
-        /*
         if(file_exists($this->to_dir.$url)){
             $this->deleteAll($this->to_dir.$url);
             return $this->success(null);
         }else{
             return $this->fail("模版不存在！");
         }
-        */
-
     }
     //删除文件以及文件夹
     private function deleteAll($path) {
@@ -181,11 +180,11 @@ class TemplateManage{
     private function del_dir($dir)
     {
         if(strtoupper(substr(PHP_OS, 0, 3)) == 'WIN') {
-            $str = "rmdir /s/q " . $dir;
+            $str = "rd/s/q " . $dir;
         } else {
-            $str = "rm -Rf " . $dir;
+            $str = "rm -rf " . $dir;
         }
-        exec($str);
+        system($dir);
     }
 
 }
