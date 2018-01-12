@@ -103,7 +103,7 @@ var start = function() {
     $(".wrapper").prepend(hearderTpl);
     $(".content-wrapper").css("min-height", window.screen.availHeight + 'px');
     var avatar = sessionStorage.getItem('avatar');
-    var memo = sessionStorage.getItem('memo');
+    //var memo = sessionStorage.getItem('memo');
     var setting = JSON.parse(sessionStorage.getItem('setting'));
     $("title").text(setting.title + '后台管理');
     var admin_name = sessionStorage.getItem('real_name');
@@ -111,7 +111,7 @@ var start = function() {
     //if (avatar) $(".user-image,.img-circle").attr('src', ApiMaterPlatQiniuDomain + avatar);
     if (avatar == 'avatar.jpg') $(".user-image,.img-circle").attr('src', 'image/' + avatar);
     $("#username").text(username);
-    $("#memo").text(memo ? memo : "");
+    //$("#memo").text(memo ? memo : "");
     // var menu = JSON.parse(sessionStorage.getItem('menu'));
     // var len = menu.length;
     // genSideBarMenu(menu, len - 2);
