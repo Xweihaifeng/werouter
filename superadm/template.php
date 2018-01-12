@@ -143,6 +143,32 @@ class TemplateManage{
             return $this->fail("文件不存在！");
         }
     }
+    //删除模版
+    public function templateDel($url){
+        if(file_exists($this->to_dir.$url)){
+            $this->deleteAll($this->to_dir.$url);
+            return $this->success(null);
+        }else{
+            return $this->fail("模版不存在！");
+        }
+    }
+
+    private function deleteAll($path) {
+         $op = dir($path);
+         while(false != ($item = $op->read())) {
+             if($item == '.' || $item == '..') {
+                 continue;
+             }
+             if(is_dir($op->path.'/'.$item)) {
+                 $this->deleteAll($op->path.'/'.$item);
+                 rmdir($op->path.'/'.$item);
+             } else {
+                 unlink($op->path.'/'.$item);
+             }
+
+         }
+    }
+
 }
 
 $Tem=new TemplateManage();
@@ -161,6 +187,9 @@ if(!empty($post['operation'])){
             break;
         case 'templateSave':
             $Tem->templateSave($post['url'],$post['content']);
+            break;
+        case 'templateDel':
+            $Tem->templateDel($post['url']);
             break;
         default:
             return $Tem->fail("无操作！");
