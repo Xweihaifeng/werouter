@@ -24,7 +24,8 @@
                 <main>
                     <div class="head-left">
                         <a href="">
-                            <img :src="plats_info.logo | img_src" alt="">
+                            <img :src="logo | img_src" alt="" v-if="plats_info.logo">
+                            <img :src="plats_info.logo | img_src" alt="" v-else>
                         </a>
                     </div>
                     <div class="head-middle">
@@ -36,7 +37,8 @@
                                 <span>{{item.title}}</span>
                                 <div v-show="item.ok">
                                     <img :src="item.image" v-if="index==0">
-                                    <img :src="item.image | href" v-else>
+                                    <img :src="item.image" v-else-if="item.image.indexOf('http') == 0">
+                                    <img :src="item.image | img_src" v-else>
                                 </div>
                             </aside>
                         </div>
@@ -74,9 +76,18 @@
                 </ul>
                 <div class="fo-bo">
                     <div class="fo-bl">
-                        <img src="{{PATH_TML}}image/flogo.png" alt="">
+                        <img :src="footer.copyright_logo | img_src" alt="">
                     </div>
-                    <div class="fo-bm" v-html="footer.copyright"></div>
+                    <div class="fo-bm">
+                        <span class="fo-son">{{footer.copyright}}</span>
+                        <a href="" class="fo-son">{{footer.icp}}</a>
+                        <span class="fo-son">{{footer.email}}</span>
+                        <div class="fo-son">
+                            <span>{{footer.tel}}</span>
+                            <span>{{footer.fax}}</span>
+                        </div>
+                        <span class="fo-son">{{footer.addre}}</span>
+                    </div>
                     <div class="fo-br">
                         <img :src="footer.code_id" alt="">
                     </div>
@@ -101,10 +112,11 @@
                     page_show : [],
                     searchText : '',
                     channel: [],
+                    logo : 'plats/resource/1515564125368.png',
                     qrcode: [
-                        {ok: false, title: "手机版", image: "/api//file/qrcode?margin=2&url="+window.location.href},
-                        {ok: false, title: "微信", image: plats_info.wx_qrcode? plats_info.wx_qrcode : ''},
-                        {ok: false, title: "微博", image: plats_info.wb_qrcode? plats_info.wx_qrcode : ''},
+                        {ok: false, title: "手机版", image: "/api/file/qrcode?margin=2&url="+window.location.href},
+                        {ok: false, title: "微信", image: plats_info.wx_qrcode? plats_info.wx_qrcode : window.location.origin+"/api/file/qrcode?margin=2&url="+window.location.href},
+                        {ok: false, title: "微博", image: plats_info.wb_qrcode? plats_info.wx_qrcode : window.location.origin+"/api/file/qrcode?margin=2&url="+window.location.href},
                     ]
                 },
                 mounted: function() {
@@ -161,37 +173,31 @@
                 var footer = new Vue({
                     el: "#footer",
                     data: {
-                        host        : window.location.host,
-                        href        : window.location.href,
                         foot_channel: header.channel,
                         footer      : {},
                         // footer      : plats_info,
                     },
                     mounted: function() {
-                        // ajax.get('scms/setting/show').then((res)=>{
-                        //     if(res.code == 200) {
-                        //         console.log("风采页面",res.data);
-                        //     }
-                        // })
-                        var result = plats_info;
-                        result.code_id = '/api/file/qrcode?margin=2&url=' + this.href;
-                        if(!result.copyright) {
-                            result.copyright = `
-                            <span class="fo-son">上海市浙江商会(www.zccs.org)@2008-2012 All Rights Reserved </span>
-                            <a href="" class="fo-son">沪ICP备17020763号-1</a>
-                            <span class="fo-son">Email：shzjsh@yahoo.com.cn</span>
-                            <div class="fo-son">
-                                <span>Tel：021-50939588</span>
-                                <span>Fax：021-50939388</span>
-                            </div>
-                            <span class="fo-son">地址：上海市浦东大道900号华辰金融大厦25楼</span>`
-                        }
-                        this.footer = result;
-                        console.log(this.footer);
+                        ajax.get('scms/setting/show').then((res)=>{
+                            if(res.code == 200) {
+                                var result = res.data;
+
+                                result.code_id = window.location.origin +'/api/file/qrcode?margin=2&url='+ window.location.href;
+                                result.copyright_logo?result.copyright_logo:'/resource/wetpl/substation/default/web/image/flogo.png'
+                                result.copyright?result.copyright:`上海市浙江商会(www.zccs.org)@2008-2012 All Rights Reserved`
+                                footer.icp?footer.icp:`沪ICP备17020763号-1`
+                                footer.email?footer.email:`Email：shzjsh@yahoo.com.cn`
+                                footer.tel?footer.tel:`Tel：021-50939588`
+                                footer.fax?footer.fax:`Fax：021-50939388`
+                                footer.addre?footer.addre:`地址：上海市浦东大道900号华辰金融大厦25楼`
+
+                                this.footer = result;
+                                console.log(this.footer);
+                            }
+                        })
                     }
                 })
             }
-
 
         </script>
     </body>

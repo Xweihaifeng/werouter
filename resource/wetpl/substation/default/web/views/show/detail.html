@@ -20,11 +20,11 @@
                 <ul class="aside">
                     <li :class="{cenav_cur : item.domain==cat_par}" v-for="item in sub_aside"><a :href="channel_domain+'/'+item.domain | href">{{item.title}}</a></li>
                 </ul>
-<!--                 <div class="company">
-                    <p>电话：029-853363598</p>
-                    <p>传真：029-853363598</p>
-                    <p>地址：陕西省西安市高新区绿地领海大厦</p>
-                </div> -->
+                <div class="company">
+                    <p>电话：{{left.tel}}</p>
+                    <p>传真：{{left.fax}}</p>
+                    <p>地址：{{left.addre}}</p>
+                </div>
             </div>
             <div class="list-big">
                 <div class="detail-list">
@@ -55,7 +55,8 @@
             cate_domain : $app.get_router(2), // 分类个性域名
             detail : {},
             cate_info:{},
-            cat_par : {}  //父集分类
+            cat_par : {},  //父集分类
+            left : {},
         },
         mounted: function() {
             //$app.set_title('风采页面');
@@ -86,6 +87,15 @@
                         }
                     });
                 });
+
+
+                ajax.get('scms/setting/show').then((res)=>{
+                    if(res.code == 200) {
+                        var result = res.data;
+                        this.left = result;
+                        console.log(this.left);
+                    }
+                })
 
             });
         },

@@ -12,8 +12,8 @@
                 <div class="newsert">
                     <ul class="new2">
                         <li v-for="(item, index) in sub_rcon">
-                            <a href="">
-                                <img src="{{PATH_TML}}image/20171227112312-0.png" alt="">
+                            <a :href="item.channel_domain+'/'+item.weid | href">
+                                <img :src="item.thumb_image | img_src(260,160)" alt="">
                             </a>
                             <div class="new2-left">
                                 <h2>
