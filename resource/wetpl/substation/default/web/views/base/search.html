@@ -17,14 +17,14 @@
                             </a>
                             <div class="new2-left">
                                 <h2>
-                                    <a :href="channel+'/'+item.weid | href">【{{item.cate_name}}】{{item.title}}</a>
+                                    <a :href="item.channel_domain+'/'+item.weid | href">【{{item.cate_name}}】{{item.title}}</a>
                                 </h2>
                                 <p>
-                                    <a :href="channel+'/'+item.weid | href">{{item.summary| limitLen(0,50)}}</a>
+                                    <a :href="item.channel_domain+'/'+item.weid | href">{{item.summary| limitLen(0,50)}}</a>
                                 </p>
                                 <div class="all">
                                     <span>时间：{{item.publish_time}}</span>
-                                    <a :href="channel+'/'+item.weid | href">查看更多 +</a>
+                                    <a :href="item.channel_domain+'/'+item.weid | href">查看更多 +</a>
                                 </div>
                             </div>
                         </li>
@@ -68,10 +68,10 @@
                         limit       :this.limit
                     }
                 }).then((res) => {
-                    console.log("data:",res.data)
                     this.sub_rcon = res.data.list;
                     this.total = res.data.total;
                     this.total_page = Math.ceil(this.total / this.limit);
+
                     var left = ( (this.page -3) > 0 ) ? this.page -3 : 1;
                     var right = ( (this.page + 3) < this.total_page ) ? this.page + 3 : this.total_page;
 
