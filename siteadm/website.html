@@ -108,13 +108,7 @@
                                               </textarea>
                                     </div>
                                 </div>
-                             <div class="form-group">
-                                    <label class="control-label col-sm-2">icp</label>
-                                    <div class="col-sm-5">
-                                        <input type="text"  class="form-control" name="icp" placeholder="">
-                                    </div>
-                            </div>
-                            <div class="form-group">
+<!--                             <div class="form-group">
                                     <label class="control-label col-sm-2">原网站url</label>
                                     <div class="col-sm-5">
                                         <input type="text"  class="form-control" name="old_link" placeholder="">
@@ -129,13 +123,43 @@
                                               class="form-control">
                                         </textarea>
                                     </div>
-                                </div>
+                                </div> -->
                              <div class="form-group">
                                     <label class="control-label col-sm-2">copyright</label>
                                     <div class="col-sm-5">
-                                        <textarea rows="8" placeholder="" name="copyright" class="form-control" id="editor1" placeholder=""></textarea>
+                                         <input type="text"  class="form-control" name="copyright" placeholder="">
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-2">icp</label>
+                                    <div class="col-sm-5">
+                                        <input type="text"  class="form-control" name="icp" placeholder="">
+                                    </div>
+                            </div>
+                            <div class="form-group">
+                                    <label class="control-label col-sm-2">email</label>
+                                    <div class="col-sm-5">
+                                        <input type="text"  class="form-control" name="email" placeholder="">
+                                    </div>
+                            </div>
+                            <div class="form-group">
+                                    <label class="control-label col-sm-2">tel</label>
+                                    <div class="col-sm-5">
+                                        <input type="text"  class="form-control" name="tel" placeholder="">
+                                    </div>
+                            </div>
+                            <div class="form-group">
+                                    <label class="control-label col-sm-2">fax</label>
+                                    <div class="col-sm-5">
+                                        <input type="text"  class="form-control" name="fax" placeholder="">
+                                    </div>
+                            </div>
+                             <div class="form-group">
+                                    <label class="control-label col-sm-2">addre</label>
+                                    <div class="col-sm-5">
+                                        <input type="text"  class="form-control" name="addre" placeholder="">
+                                    </div>
+                            </div>
                                 <div class="form-group">
                                         <label class="col-sm-2 control-label">favicon</label>
                                         <div class="col-sm-5">
@@ -199,7 +223,7 @@
                                         </div>
                                 </div>
 
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                         <label class="col-sm-2 control-label">背景图1</label>
                                         <div class="col-sm-5">
                                             <p style="padding-top:7px" class="info"> 上传格式： .png 建议尺寸：440像素 * 440像素</p>
@@ -220,6 +244,31 @@
                                             <input id="backgroundfile" name="cover" type="file" class="form-control hide"/>
                                             <div id="look">
                                                 <img onclick="$('#backgroundfile').click()" id="img_background" width="100px;" src="//oty3r3tmi.bkt.clouddn.com/upload.png" alt="暂无预览图片" class="thumbnail">
+                                            </div>
+                                        </div>
+                                </div> -->
+
+                                <div class="form-group">
+                                        <label class="col-sm-2 control-label">copyright_logo</label>
+                                        <div class="col-sm-5">
+                                            <p style="padding-top:7px" class="info"> 上传格式： .png 建议尺寸：440像素 * 440像素</p>
+                                            <input name="copyright_logo" type="hidden" value=""
+                                                   class="form-control"/>
+                                            <input id="copyright_logofile" name="cover" type="file" class="form-control hide"/>
+                                            <div id="look">
+                                                <img onclick="$('#copyright_logofile').click()" id="img_copyright_logo" width="100px;" src="//oty3r3tmi.bkt.clouddn.com/upload.png" alt="暂无预览图片" class="thumbnail">
+                                            </div>
+                                        </div>
+                                </div>
+                                <div class="form-group">
+                                        <label class="col-sm-2 control-label">copyright_qrcode</label>
+                                        <div class="col-sm-5">
+                                            <p style="padding-top:7px" class="info"> 上传格式： .png 建议尺寸：440像素 * 440像素</p>
+                                            <input name="copyright_qrcode" type="hidden" value=""
+                                                   class="form-control"/>
+                                            <input id="copyright_qrcodefile" name="cover" type="file" class="form-control hide"/>
+                                            <div id="look">
+                                                <img onclick="$('#copyright_qrcodefile').click()" id="img_copyright_qrcode" width="100px;" src="//oty3r3tmi.bkt.clouddn.com/upload.png" alt="暂无预览图片" class="thumbnail">
                                             </div>
                                         </div>
                                 </div>

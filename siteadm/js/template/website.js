@@ -20,49 +20,59 @@ $(document).ready(function(){
                     $('input[name=title]').val(info.title);
                     $('textarea[name=description]').val(info.description);
                     $('textarea[name=key_word]').val(info.key_word);
-                    $('textarea[name=weibo_show]').val(info.weibo_show);
-                    $('textarea[name=copyright]').val(info.copyright);
+                    // $('textarea[name=weibo_show]').val(info.weibo_show);
+                    // $('textarea[name=copyright]').val(info.copyright);
+                    $('input[name=copyright]').val(info.copyright);
                     $('input[name=icp]').val(info.icp);
-                    $('input[name=old_link]').val(info.old_link);
+                    $('input[name=email]').val(info.email);
+                    $('input[name=tel]').val(info.tel);
+                    $('input[name=fax]').val(info.fax);
+                    $('input[name=addre]').val(info.addre);
+                    //$('input[name=old_link]').val(info.old_link);
                     $('input[name=favicon]').val(info.favicon);
                     $('input[name=logo]').val(info.logo);
                     $('input[name=wap_logo]').val(info.logo);
-                    $('input[name=background_up]').val(info.background_up);
-                    $('input[name=background]').val(info.background);
+                    // $('input[name=background_up]').val(info.background_up);
+                    // $('input[name=background]').val(info.background);
+                    $('input[name=copyright_logo]').val(info.copyright_logo);
+                    $('input[name=copyright_qrcode]').val(info.copyright_qrcode);
                   
                     if(info.favicon!='' && info.favicon!=null){$('#img_favicon').attr('src',ApiMaterPlatQiniuDomain+info.favicon);}
                     if(info.logo!='' && info.logo!=null){$('#img_logo').attr('src',ApiMaterPlatQiniuDomain+info.logo);}
                     if(info.wap_logo!='' && info.wap_logo!=null){$('#img_wap_logo').attr('src',ApiMaterPlatQiniuDomain+info.wap_logo);}
                     if(info.wx_qrcode!='' && info.wx_qrcode!=null){$('#img_wx_qrcode').attr('src',ApiMaterPlatQiniuDomain+info.wx_qrcode);}
                     if(info.wb_qrcode!='' && info.wx_qrcode!=null){$('#img_wx_qrcode').attr('src',ApiMaterPlatQiniuDomain+info.wx_qrcode);}
-                    if(info.background!='' && info.background!=null){$('#img_background').attr('src',ApiMaterPlatQiniuDomain+info.background);}
-                    if(info.background_up!='' && info.background_up!=null){$('#img_background_up').attr('src',ApiMaterPlatQiniuDomain+info.background_up);}
+                    // if(info.background!='' && info.background!=null){$('#img_background').attr('src',ApiMaterPlatQiniuDomain+info.background);}
+                    // if(info.background_up!='' && info.background_up!=null){$('#img_background_up').attr('src',ApiMaterPlatQiniuDomain+info.background_up);}
+                    // 
+                    if(info.copyright_logo!='' && info.copyright_logo!=null){$('#img_copyright_logo').attr('src',ApiMaterPlatQiniuDomain+info.background);}
+                    if(info.copyright_qrcode!='' && info.copyright_qrcode!=null){$('#img_copyright_qrcode').attr('src',ApiMaterPlatQiniuDomain+info.background_up);}
 
                     //发布样式
-                    $('input[name=bar1]').val(info.bar1);
-                    $('input[name=bar2]').val(info.bar2);
-                    $('input[name=bar3]').val(info.bar3);
-                    $('input[name=bar4]').val(info.bar4);
-                    $('input[name=background_right]').val(info.background_right);
+                    // $('input[name=bar1]').val(info.bar1);
+                    // $('input[name=bar2]').val(info.bar2);
+                    // $('input[name=bar3]').val(info.bar3);
+                    // $('input[name=bar4]').val(info.bar4);
+                    // $('input[name=background_right]').val(info.background_right);
                   
-                    if(info.bar1!='' && info.bar1!=null){$('#img_bar1').attr('src',ApiMaterPlatQiniuDomain+info.bar1);}
-                    if(info.bar2!='' && info.bar2!=null){$('#img_bar2').attr('src',ApiMaterPlatQiniuDomain+info.bar2);}
-                    if(info.bar3!='' && info.bar3!=null){$('#img_bar3').attr('src',ApiMaterPlatQiniuDomain+info.bar3);}
-                    if(info.bar4!='' && info.bar4!=null){$('#img_bar4').attr('src',ApiMaterPlatQiniuDomain+info.bar4);}
-                    if(info.background_right!='' && info.background_right!=null){$('#img_background_right').attr('src',ApiMaterPlatQiniuDomain+info.background_right);}
+                    // if(info.bar1!='' && info.bar1!=null){$('#img_bar1').attr('src',ApiMaterPlatQiniuDomain+info.bar1);}
+                    // if(info.bar2!='' && info.bar2!=null){$('#img_bar2').attr('src',ApiMaterPlatQiniuDomain+info.bar2);}
+                    // if(info.bar3!='' && info.bar3!=null){$('#img_bar3').attr('src',ApiMaterPlatQiniuDomain+info.bar3);}
+                    // if(info.bar4!='' && info.bar4!=null){$('#img_bar4').attr('src',ApiMaterPlatQiniuDomain+info.bar4);}
+                    // if(info.background_right!='' && info.background_right!=null){$('#img_background_right').attr('src',ApiMaterPlatQiniuDomain+info.background_right);}
 
-                    var jsond=$.parseJSON(info.block);
-                    $("input[name=xw_radio][value=" + jsond.xw.show +  "]").attr('checked', true);
-                    $("select[name=xw_select] option[value='"+jsond.xw.sort+"']").attr("selected", "selected"); 
+                    // var jsond=$.parseJSON(info.block);
+                    // $("input[name=xw_radio][value=" + jsond.xw.show +  "]").attr('checked', true);
+                    // $("select[name=xw_select] option[value='"+jsond.xw.sort+"']").attr("selected", "selected"); 
 
-                    $("input[name=zz_radio][value=" + jsond.zz.show +  "]").attr('checked', true);
-                    $("select[name=zz_select] option[value='"+jsond.zz.sort+"']").attr("selected", "selected"); 
+                    // $("input[name=zz_radio][value=" + jsond.zz.show +  "]").attr('checked', true);
+                    // $("select[name=zz_select] option[value='"+jsond.zz.sort+"']").attr("selected", "selected"); 
 
-                    $("input[name=hz_radio][value=" + jsond.hz.show +  "]").attr('checked', true);
-                     $("select[name=hz_select] option[value='"+jsond.hz.sort+"']").attr("selected", "selected"); 
+                    // $("input[name=hz_radio][value=" + jsond.hz.show +  "]").attr('checked', true);
+                    //  $("select[name=hz_select] option[value='"+jsond.hz.sort+"']").attr("selected", "selected"); 
 
-                    $("input[name=gx_radio][value=" + jsond.gx.show +  "]").attr('checked', true);
-                     $("select[name=gx_select] option[value='"+jsond.gx.sort+"']").attr("selected", "selected"); 
+                    // $("input[name=gx_radio][value=" + jsond.gx.show +  "]").attr('checked', true);
+                    //  $("select[name=gx_select] option[value='"+jsond.gx.sort+"']").attr("selected", "selected"); 
                 } else {
                     console.log('error: -200');
                 }
@@ -157,16 +167,23 @@ init();
 	            description:$('textarea[name=description]').val(),
 	            key_word:$('textarea[name=key_word]').val(),
 	            icp:$('input[name=icp]').val(),
-              old_link:$('input[name=old_link]').val(),
-	            weibo_show:$('textarea[name=weibo_show]').val(),
-              copyright:CKEDITOR.instances.editor1.getData(),
+             //  old_link:$('input[name=old_link]').val(),
+	            // weibo_show:$('textarea[name=weibo_show]').val(),
+             // copyright:CKEDITOR.instances.editor1.getData(),
+              copyright:$('input[name=copyright]').val(),
+               email:$('input[name=email]').val(),
+               tel:$('input[name=tel]').val(),
+               fax:$('input[name=fax]').val(),
+              addre:$('input[name=addre]').val(),
 	            favicon:$('input[name=favicon]').val(),
 	            logo:$('input[name=logo]').val(),
               wap_logo:$('input[name=wap_logo]').val(),
               wx_qrcode:$('input[name=wx_qrcode]').val(),
               wb_qrcode:$('input[name=wb_qrcode]').val(),
-              background_up:$('input[name=background_up]').val(),
-	            background:$('input[name=background]').val(),
+             //  background_up:$('input[name=background_up]').val(),
+	            // background:$('input[name=background]').val(),
+              copyright_logo:$('input[name=copyright_logo]').val(),
+              copyright_qrcode:$('input[name=copyright_qrcode]').val(), 
             };  
                 $.ajax({
                     type: "POST",
@@ -463,9 +480,94 @@ init();
               }
           }
      });
+     // var uploader = Qiniu.uploader({
+     //      runtimes: 'html5,flash,html4', 
+     //      browse_button: 'background_upfile', 
+     //      uptoken_url: ApiUrl + 'file/qiniu_token',
+     //      get_new_uptoken: false, 
+     //      domain: ApiMaterPlatQiniuDomain,     
+     //      container: 'look',        
+     //      max_file_size: '100mb',           
+     //      flash_swf_url: 'http://cdn.staticfile.org/plupload/2.1.8/Moxie.swf',  
+     //      max_retries: 3,  
+     //      dragdrop: true,  
+     //      drop_element: 'look',
+     //      chunk_size: '4mb', 
+     //      auto_start: true,
+     //      init: {
+     //          'FilesAdded': function(up, files) {
+     //              plupload.each(files, function(file) {
+     //              });
+     //          },
+     //          'BeforeUpload': function(up, file) {
+     //          },
+     //          'UploadProgress': function(up, file) {
+     //          },
+     //          'FileUploaded': function(up, file, info) {
+     //                 var domain = up.getOption('domain');
+     //                 res = JSON.parse(info.response);
+     //                 console.log(res);
+     //                 $("input[name=background_up]").val(res.key);
+     //                 var sourceLink = domain + res.key;
+     //                 $("#img_background_up").attr('src', sourceLink);
+     //          },
+     //          'Error': function(up, err, errTip) {
+     //          },
+     //          'UploadComplete': function() {
+     //          },
+     //          'Key': function(up, file) {
+     //              var key = "plats/resource/";
+     //              key += new Date().valueOf() + '.' + file.name.substring(file.name.indexOf('.') + 1); 
+     //              return key;
+     //          }
+     //      }
+     // });
+
+     // var uploader = Qiniu.uploader({
+     //      runtimes: 'html5,flash,html4', 
+     //      browse_button: 'backgroundfile', 
+     //      uptoken_url: ApiUrl + 'file/qiniu_token',
+     //      get_new_uptoken: false, 
+     //      domain: ApiMaterPlatQiniuDomain,     
+     //      container: 'look',        
+     //      max_file_size: '100mb',           
+     //      flash_swf_url: 'http://cdn.staticfile.org/plupload/2.1.8/Moxie.swf',  
+     //      max_retries: 3,  
+     //      dragdrop: true,  
+     //      drop_element: 'look',
+     //      chunk_size: '4mb', 
+     //      auto_start: true,
+     //      init: {
+     //          'FilesAdded': function(up, files) {
+     //              plupload.each(files, function(file) {
+     //              });
+     //          },
+     //          'BeforeUpload': function(up, file) {
+     //          },
+     //          'UploadProgress': function(up, file) {
+     //          },
+     //          'FileUploaded': function(up, file, info) {
+     //                 var domain = up.getOption('domain');
+     //                 res = JSON.parse(info.response);
+     //                 console.log(res);
+     //                 $("input[name=background]").val(res.key);
+     //                 var sourceLink = domain + res.key;
+     //                 $("#img_background").attr('src', sourceLink);
+     //          },
+     //          'Error': function(up, err, errTip) {
+     //          },
+     //          'UploadComplete': function() {
+     //          },
+     //          'Key': function(up, file) {
+     //              var key = "plats/resource/";
+     //              key += new Date().valueOf() + '.' + file.name.substring(file.name.indexOf('.') + 1); 
+     //              return key;
+     //          }
+     //      }
+     // });
      var uploader = Qiniu.uploader({
           runtimes: 'html5,flash,html4', 
-          browse_button: 'background_upfile', 
+          browse_button: 'copyright_logofile', 
           uptoken_url: ApiUrl + 'file/qiniu_token',
           get_new_uptoken: false, 
           domain: ApiMaterPlatQiniuDomain,     
@@ -490,9 +592,9 @@ init();
                      var domain = up.getOption('domain');
                      res = JSON.parse(info.response);
                      console.log(res);
-                     $("input[name=background_up]").val(res.key);
+                     $("input[name=copyright_logo]").val(res.key);
                      var sourceLink = domain + res.key;
-                     $("#img_background_up").attr('src', sourceLink);
+                     $("#img_copyright_logo").attr('src', sourceLink);
               },
               'Error': function(up, err, errTip) {
               },
@@ -508,7 +610,7 @@ init();
 
      var uploader = Qiniu.uploader({
           runtimes: 'html5,flash,html4', 
-          browse_button: 'backgroundfile', 
+          browse_button: 'copyright_qrcodefile', 
           uptoken_url: ApiUrl + 'file/qiniu_token',
           get_new_uptoken: false, 
           domain: ApiMaterPlatQiniuDomain,     
@@ -533,9 +635,9 @@ init();
                      var domain = up.getOption('domain');
                      res = JSON.parse(info.response);
                      console.log(res);
-                     $("input[name=background]").val(res.key);
+                     $("input[name=copyright_qrcode]").val(res.key);
                      var sourceLink = domain + res.key;
-                     $("#img_background").attr('src', sourceLink);
+                     $("#img_copyright_qrcode").attr('src', sourceLink);
               },
               'Error': function(up, err, errTip) {
               },

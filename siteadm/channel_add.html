@@ -90,6 +90,12 @@
                                             <input type="text" value="" class="form-control" name="title" placeholder="1到32个字符">
                                         </div>
                                     </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2">英文名称</label>
+                                        <div class="col-sm-5">
+                                            <input type="text" value="" class="form-control" name="ename" placeholder="1到32个字符">
+                                        </div>
+                                    </div>
 
                                     <div class="form-group">
                                         <label class="control-label col-sm-2">个性别名*</label>
@@ -592,6 +598,7 @@
                 }
                 var data = {
                     'title': $('input[name=title]').val(),
+                    'ename': $('input[name=ename]').val(),
                     'domain': $('input[name=domain]').val(),
                     'sort': $('input[name=sort]').val(),
                     'in_search': $('input[name="in_search"]').is(':checked') ? 1 : 0,
@@ -628,6 +635,15 @@
                                 min: 1,
                                 max: 32,
                                 message: '标题长度为1-32位'
+                            }
+                        }
+                    },
+                    ename: {
+                        message: '名称无效',
+                        validators: {
+                            stringLength: {
+                                max: 32,
+                                message: '英文名称长度小于32位'
                             }
                         }
                     },
