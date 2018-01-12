@@ -24,7 +24,7 @@ var init = function() {
                         sessionStorage.setItem('weId', info.weid);
                         sessionStorage.setItem('username', info.username);
                         sessionStorage.setItem('real_name', info.real_name);
-                        sessionStorage.setItem('memo', info.memo);
+                        //sessionStorage.setItem('memo', info.memo);
                         sessionStorage.setItem('avatar', info.avatar);
                         sessionStorage.setItem('role_id', info.role_id);
                         sessionStorage.setItem('token', data.token);
