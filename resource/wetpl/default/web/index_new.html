@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <title></title>
+    <meta charset="UTF-8" />
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <link rel="shortcut icon" id="favicon" href="" />
+    <!--<link rel="stylesheet" href="/common/css/bootstrap.min.css">-->
+    <!--<link rel="stylesheet" href="{{PATH_TML}}font/iconfont.css" />-->
+    <link rel="stylesheet" href="/common/css/swiper.min.css">
+    <!--<link rel="stylesheet" href="/common/layui/css/layui.css">-->
+    <!--<link rel="stylesheet" href="/common/css/buttons.css">-->
+    <!--<link rel="stylesheet" href="{{PATH_TML}}css/public_main.css">-->
+    <!--<link rel="stylesheet" href="{{PATH_TML}}css/news_base.css" />-->
+    <!--<link rel="stylesheet" href="{{PATH_TML}}css/modal_login.css" />-->
+    <!--<link rel="stylesheet" href="{{PATH_TML}}css/index_page.css" />-->
+    <!--<link rel="stylesheet" href="{{PATH_TML}}css/index_style.css" />-->
+    <!--<link rel="stylesheet" href="{{PATH_TML}}css/org.css" />-->
+    <!--<link rel="stylesheet" href="{{PATH_TML}}css/home_rolling.css">-->
+    <link rel="stylesheet" href="{{PATH_TML}}css/normalize.css" />
+    <link rel="stylesheet" href="{{PATH_TML}}css/index.css" />
+    <link rel="stylesheet" href="{{PATH_TML}}css/index_new.css" />
+
+    <!--<script src="/common/js/jquery-3.2.1.min.js"></script>-->
+    <!--<script src="/common/js/layer-v3.1.1/layer/layer.js"></script>-->
+    <script src="/common/js/swiper-3.3.1.min.js"></script>
+    <!--<script src="/common/layui/layui.js"></script>-->
+    <!--<script src="/common/js/buttons.js"></script>-->
+    <!--<script src="/common/js/jquery.rollGallery_yeso.js"></script>-->
+    <!--<script src="/common/js/jquery.mousewheel.js"></script>-->
+    <!--<script src="/common/js/control.js"></script>-->
+    <!-- <script src="/common/js/browser.min.js"></script> -->
+    <script src="{{PATH_CONFIG}}"></script>
+    <!-- <script src="https://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js"></script> -->
+    <script src="{{PATH_TML}}js/modal_login.js"></script>
+    <script src="{{PATH_TML}}js/public_main.js"></script>
+    <!-- <script src="/common/js/organized.js"></script> -->
+</head>
+<body>
+<main>
+    <header>
+        <ul>
+            <li><img src="/common/img/logo-so.png" alt=""/></li>
+            <li><img src="/common/img/logo-title-info.png" alt=""/></li>
+            <li>
+                <div id="ht">
+                    <aside>
+                        <span>手机版</span>
+                        <div style="display: none;">
+                            <img src="http://www.qqxqs.com/api//file/qrcode?margin=2&amp;url=http://m.qqxqs.com" class="weixin img-responsive">
+                        </div>
+                    </aside>
+                    <aside>
+                        <span>微信</span>
+                        <div style="display: none;">
+                            <img src="http://images.wezchina.com/plats/resource/1514518034252.png" alt="">
+                        </div>
+                    </aside>
+                    <aside>
+                        <span>微博</span>
+                        <div style="display: none;">
+                            <img src="http://images.wezchina.com/plats/resource/1514518042947.png" alt="">
+                        </div>
+                    </aside>
+                    <aside><a href="https://www.wezchina.com" target="_blank" id="old"><span style="border-right:none;padding-left:12px;">访问旧版</span></a></aside>
+                </div>
+                <div id="hs">
+                    <span><input type="text" id="search" class="form-control" placeholder="请输入关键字"></span>
+                    <span><img src="/common/img/find.png" style="padding: 7px"></span>
+                    <span>高级搜索</span>
+                </div>
+            </li>
+        </ul>
+        <div id="menu">
+            <li>秦商总会</li>
+            <li>商会新闻</li>
+            <li>秦商活动</li>
+            <li>秦商风采</li>
+            <li>项目互助</li>
+            <li>资源共享</li>
+            <li>加入商会</li>
+        </div>
+    </header>
+    <div id="container">
+        <div id="carousel">
+            <div class="swiper-container" id="my-swiper">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide"><img src="/common/img/new/BANNER.png" alt=""/></div>
+                    <div class="swiper-slide"><img src="/common/img/new/BANNER.png" alt=""/></div>
+                    <div class="swiper-slide"><img src="/common/img/new/BANNER.png" alt=""/></div>
+                </div>
+                <div class="swiper-pagination"></div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+            </div>
+        </div>
+        <div id="news">
+            <ul id="news-blocks">
+                <li class="news-block">
+                    <div class="swiper-container" id="my-swiper-2">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide"><img src="/common/img/new/c01.png" alt=""/></div>
+                            <div class="swiper-slide"><img src="/common/img/new/c01.png" alt=""/></div>
+                            <div class="swiper-slide"><img src="/common/img/new/c01.png" alt=""/></div>
+                        </div>
+                    </div>
+                    <div id="recommend">
+                        <div class="rcd-bt">
+                            <div class="tb" style="background: rgb(1, 167, 255); color: white;">特别推荐<div class="triangle-right" style=""></div></div>
+                            <div class="hy" style="background: none; color: black;">会员推荐<div class="triangle-right-1" style="display: none;"></div></div>
+                            <div class="circle-tb" style="border: 1px solid rgb(1, 167, 255);"><div class="sm-circle-tb" style="border: none; background: rgb(1, 167, 255);"></div></div>
+                            <div class="circle-hy" style="border: 1px solid rgb(175, 175, 175);"><div class="sm-circle-hy" style="border: 1px solid rgb(175, 175, 175);"></div></div>
+                        </div>
+                        <div class="rcd-news">
+                            <div class="rcd-tb" style=""><div class="rcd-news-line" id="08db2a70-e3d6-11e7-b49b-414b22ce6b4f"><div class="rcd-news-title" id="3ed43a90-77f3-11e7-8c21-436a649a2345"><a href="news/08db2a70-e3d6-11e7-b49b-414b22ce6b4f" target="_blank">中央经济工作会议将于18-20日</a></div><div class="rcd-news-date"><a href="news/08db2a70-e3d6-11e7-b49b-414b22ce6b4f" target="_blank">[2017-12-18]</a></div></div><div class="rcd-news-line" id="0e9cd060-83f7-11e7-a68d-eb69a74a99ba"><div class="rcd-news-title" id="3ed43a90-77f3-11e7-8c21-436a649a2182"><a href="news/0e9cd060-83f7-11e7-a68d-eb69a74a99ba" target="_blank">民营银行互联网贷款迎来强监管</a></div><div class="rcd-news-date"><a href="news/0e9cd060-83f7-11e7-a68d-eb69a74a99ba" target="_blank">[2017-08-18]</a></div></div><div class="rcd-news-line" id="9e121fc0-8161-11e7-83a4-414806529faa"><div class="rcd-news-title" id="3ed43a90-77f3-11e7-8c21-436a649a2345"><a href="news/9e121fc0-8161-11e7-83a4-414806529faa" target="_blank">阿里市值破4000亿美元，亚洲第</a></div><div class="rcd-news-date"><a href="news/9e121fc0-8161-11e7-83a4-414806529faa" target="_blank">[2017-08-15]</a></div></div><div class="rcd-news-line" id="e1dc2b60-7815-11e7-adaf-ff70da8a55ca"><div class="rcd-news-title" id="2f8d7bc0-77f3-11e7-a0f7-03161549ca26"><a href="news/e1dc2b60-7815-11e7-adaf-ff70da8a55ca" target="_blank">乐视网称孙宏斌个人偿债系误读:公</a></div><div class="rcd-news-date"><a href="news/e1dc2b60-7815-11e7-adaf-ff70da8a55ca" target="_blank">[2017-08-03]</a></div></div></div>
+                            <div class="rcd-hy" style="display: none;"><div class="rcd-news-line" id="8aadd040-f1fd-11e7-86cb-6fe3e7bcd65c"><div class="rcd-news-title" id="28d09ce0-7776-11e7-9b53-4fd9cbd5b96e"><a href="/xiyue/article/8aadd040-f1fd-11e7-86cb-6fe3e7bcd65c" target="_blank">你不是因为优秀，才值得被爱</a></div><div class="rcd-news-date"><a href="/xiyue/article/8aadd040-f1fd-11e7-86cb-6fe3e7bcd65c" target="_blank">[2018-01-05]</a></div></div><div class="rcd-news-line" id="5d2f12e0-e5f0-11e7-9584-3d13e0a04d69"><div class="rcd-news-title" id="28d09ce0-7776-11e7-9b53-4fd9cbd5b96e"><a href="/zhengxiaojiao/article/5d2f12e0-e5f0-11e7-9584-3d13e0a04d69" target="_blank">我的文章</a></div><div class="rcd-news-date"><a href="/zhengxiaojiao/article/5d2f12e0-e5f0-11e7-9584-3d13e0a04d69" target="_blank">[2017-12-22]</a></div></div><div class="rcd-news-line" id="5d2f12e0-e5f0-11e7-9584-3d13e0a04d69"><div class="rcd-news-title" id="28d09ce0-7776-11e7-9b53-4fd9cbd5b96e"><a href="/zhengxiaojiao/article/5d2f12e0-e5f0-11e7-9584-3d13e0a04d69" target="_blank">我的文章</a></div><div class="rcd-news-date"><a href="/zhengxiaojiao/article/5d2f12e0-e5f0-11e7-9584-3d13e0a04d69" target="_blank">[2017-12-21]</a></div></div><div class="rcd-news-line" id="5d2f12e0-e5f0-11e7-9584-3d13e0a04d69"><div class="rcd-news-title" id="28d09ce0-7776-11e7-9b53-4fd9cbd5b96e"><a href="/zhengxiaojiao/article/5d2f12e0-e5f0-11e7-9584-3d13e0a04d69" target="_blank">我的文章</a></div><div class="rcd-news-date"><a href="/zhengxiaojiao/article/5d2f12e0-e5f0-11e7-9584-3d13e0a04d69" target="_blank">[2017-12-21]</a></div></div></div>
+                        </div>
+                    </div>
+                </li>
+                <li class="news-block">
+                    <div class="main-news"><div class="main-news-title"><img src="/common/img/new/topline.png"><a href="news/08db2a70-e3d6-11e7-b49b-414b22ce6b4f" target="_blank">中央经济工作会议将于18-20日召开</a></div><div class="main-news-content"><a href="news/08db2a70-e3d6-11e7-b49b-414b22ce6b4f" target="_blank">中国中央经济工作会议将于18-20日召开 重点是降负债12月12日报道，中国中央经济工作会议将于18-20日召开，会议将决定明年的经济政策基调 ...  <span>[查看全文]</span></a></div></div>
+                    <div class="news-center">
+                        <ul class="nav nav-tabs">
+                            <li role="presentation" class="center active" style="border-bottom: 3px solid rgb(37, 150, 232);"><a href="news">新闻中心</a></li>
+                            <li role="presentation" class="sirase" style="border-bottom: none;"><a href="org">公示公告</a></li>
+                            <li role="presentation" class="release" style="border-bottom: none;"><a>官方发布</a></li>
+                        </ul>
+                    </div>
+                    <div class="news-link">
+                        <div id="center">
+                            <ul class="news-line">
+                                <li class="news-type" id="d69a1ec0-7d7f-11e7-bd13-51172995c3b5">[时政要闻]</li>
+                                <li class="news-title" id="9eea0240-b7b9-11e7-8e10-f1da2e8ed6b6">
+                                    <a href="news/9eea0240-b7b9-11e7-8e10-f1da2e8ed6b6" target="_blank">十九大代表热议新思想新方略：新思想引</a>
+                                </li>
+                                <li class="news-date">
+                                    2017-10-23
+                                </li>
+                            </ul>
+                            <ul class="news-line">
+                                <li class="news-type" id="d69a1ec0-7d7f-11e7-bd13-51172995c3b5">[时政要闻]</li>
+                                <li class="news-title" id="9eea0240-b7b9-11e7-8e10-f1da2e8ed6b6">
+                                    <a href="news/9eea0240-b7b9-11e7-8e10-f1da2e8ed6b6" target="_blank">十九大代表热议新思想新方略：新思想引</a>
+                                </li>
+                                <li class="news-date">
+                                    <a href="news/9eea0240-b7b9-11e7-8e10-f1da2e8ed6b6" target="_blank">2017-10-23</a>
+                                </li>
+                            </ul>
+                            <ul class="news-line">
+                                <li class="news-type" id="d69a1ec0-7d7f-11e7-bd13-51172995c3b5">[时政要闻]</li>
+                                <li class="news-title" id="9eea0240-b7b9-11e7-8e10-f1da2e8ed6b6">
+                                    <a href="news/9eea0240-b7b9-11e7-8e10-f1da2e8ed6b6" target="_blank">十九大代表热议新思想新方略：新思想引</a>
+                                </li>
+                                <li class="news-date">
+                                    <a href="news/9eea0240-b7b9-11e7-8e10-f1da2e8ed6b6" target="_blank">2017-10-23</a>
+                                </li>
+                            </ul>
+                            <ul class="news-line">
+                                <li class="news-type" id="d69a1ec0-7d7f-11e7-bd13-51172995c3b5">[时政要闻]</li>
+                                <li class="news-title" id="9eea0240-b7b9-11e7-8e10-f1da2e8ed6b6">
+                                    <a href="news/9eea0240-b7b9-11e7-8e10-f1da2e8ed6b6" target="_blank">十九大代表热议新思想新方略：新思想引</a>
+                                </li>
+                                <li class="news-date">
+                                    <a href="news/9eea0240-b7b9-11e7-8e10-f1da2e8ed6b6" target="_blank">2017-10-23</a>
+                                </li>
+                            </ul>
+                            <ul class="news-line">
+                                <li class="news-type" id="d69a1ec0-7d7f-11e7-bd13-51172995c3b5">[时政要闻]</li>
+                                <li class="news-title" id="9eea0240-b7b9-11e7-8e10-f1da2e8ed6b6">
+                                    <a href="news/9eea0240-b7b9-11e7-8e10-f1da2e8ed6b6" target="_blank">十九大代表热议新思想新方略：新思想引</a>
+                                </li>
+                                <li class="news-date">
+                                    <a href="news/9eea0240-b7b9-11e7-8e10-f1da2e8ed6b6" target="_blank">2017-10-23</a>
+                                </li>
+                            </ul>
+                            <ul class="news-line">
+                                <li class="news-type" id="d69a1ec0-7d7f-11e7-bd13-51172995c3b5">[时政要闻]</li>
+                                <li class="news-title" id="9eea0240-b7b9-11e7-8e10-f1da2e8ed6b6">
+                                    <a href="news/9eea0240-b7b9-11e7-8e10-f1da2e8ed6b6" target="_blank">十九大代表热议新思想新方略：新思想引</a>
+                                </li>
+                                <li class="news-date">
+                                    <a href="news/9eea0240-b7b9-11e7-8e10-f1da2e8ed6b6" target="_blank">2017-10-23</a>
+                                </li>
+                            </ul>
+                            <ul class="news-line">
+                                <li class="news-type" id="d69a1ec0-7d7f-11e7-bd13-51172995c3b5">[时政要闻]</li>
+                                <li class="news-title" id="9eea0240-b7b9-11e7-8e10-f1da2e8ed6b6">
+                                    <a href="news/9eea0240-b7b9-11e7-8e10-f1da2e8ed6b6" target="_blank">十九大代表热议新思想新方略：新思想引</a>
+                                </li>
+                                <li class="news-date">
+                                    <a href="news/9eea0240-b7b9-11e7-8e10-f1da2e8ed6b6" target="_blank">2017-10-23</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div id="sirase" style="display: none;"></div>
+                        <div id="release" style="display: none;"><iframe width="100%" height="550" class="share_self" frameborder="0" scrolling="no" src="https://widget.weibo.com/weiboshow/index.php?language=&amp;width&gt;=0&amp;height=550&amp;fansRow=2&amp;ptype=1&amp;speed=100&amp;skin=5&amp;isTitle=0&amp;noborder=1&amp;isWeibo=1&amp;isFans=0&amp;uid=5893762449&amp;verifier=72fb1d4f&amp;dpc=1"></iframe></div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div id="marquee">
+            <div id="fengcai">
+                <ul>
+                    <li class="fc"><i></i><span>秦商风采</span></li>
+                    <li class="fc">更多>></li>
+                </ul>
+                <div class="fleft huizhang">
+                    <a href="#">
+                        <img src="/common/img/new/member02.png">
+                    </a>
+                    <div class="hz_font">
+                        <span>郭广昌</span>
+                        <p style="height:20px;">上海市浙江商会会长</p>
+                        <p>复星国际董事长</p>
+                    </div>
+                </div>
+                <script type="text/javascript">
+                    //js无缝滚动代码
+                    function marquee(i, direction){
+                        var obj = document.getElementById("marquee" + i);
+                        var obj1 = document.getElementById("marquee" + i + "_1");
+                        var obj2 = document.getElementById("marquee" + i + "_2");
+                        if (direction == "up"){
+                            if (obj2.offsetTop - obj.scrollTop <= 0){
+                                obj.scrollTop -= (obj1.offsetHeight + 20);
+                            }else{
+                                var tmp = obj.scrollTop;
+                                obj.scrollTop++;
+                                if (obj.scrollTop == tmp){
+                                    obj.scrollTop = 1;
+                                }
+                            }
+                        }else{
+                            if (obj2.offsetWidth - obj.scrollLeft <= 0){
+                                obj.scrollLeft -= obj1.offsetWidth;
+                            }else{
+                                obj.scrollLeft++;
+                            }
+                        }
+                    }
+
+                    function marqueeStart(i, direction){
+                        var obj = document.getElementById("marquee" + i);
+                        var obj1 = document.getElementById("marquee" + i + "_1");
+                        var obj2 = document.getElementById("marquee" + i + "_2");
+
+                        obj2.innerHTML = obj1.innerHTML;
+                        var marqueeVar = window.setInterval("marquee("+ i +", '"+ direction +"')", 20);
+                        obj.onmouseover = function(){
+                            window.clearInterval(marqueeVar);
+                        }
+                        obj.onmouseout = function(){
+                            marqueeVar = window.setInterval("marquee("+ i +", '"+ direction +"')", 20);
+                        }
+                    }
+                </script>
+                <div id="marquee1" class="marqueeleft fleft" style="width:960px;">
+                    <div style="width:8000px;">
+                        <ul id="marquee1_1">
+                            <li>
+                                <a class="pic" href="#"><img src="/common/img/new/m03.png"></a>
+                                <a href="#">
+                                    <div class="hz_font hz_font2">
+                                    <span>马云 </span>
+                                    <p>阿里巴巴董事局主席</p>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="pic" href="#"><img src="/common/img/new/m04.png"></a>
+                                <a href="#">
+                                    <div class="hz_font hz_font2">
+                                    <span> 郑永刚 </span>
+                                    <p>杉杉控股董事局主席</p>
+                                </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="pic" href="#"><img src="/common/img/new/m05.png"></a>
+                                <a href="#">
+                                    <div class="hz_font hz_font2">
+                                        <span> 郑永刚 </span>
+                                        <p>杉杉控股董事局主席</p>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="pic" href="#"><img src="/common/img/new/m06.png"></a>
+                                <a href="#">
+                                    <div class="hz_font hz_font2">
+                                        <span> 郑永刚 </span>
+                                        <p>杉杉控股董事局主席</p>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="pic" href="#"><img src="/common/img/new/m07.png"></a>
+                                <a href="#">
+                                    <div class="hz_font hz_font2">
+                                        <span> 郑永刚 </span>
+                                        <p>杉杉控股董事局主席</p>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul id="marquee1_2">
+                            <li>
+                                <a class="pic" href="#"><img src="/common/img/new/m03.png"></a>
+                                <a href="#">
+                                    <div class="hz_font hz_font2">
+                                        <span>马云 </span>
+                                        <p>阿里巴巴董事局主席</p>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="pic" href="#"><img src="/common/img/new/m04.png"></a>
+                                <a href="#">
+                                    <div class="hz_font hz_font2">
+                                        <span> 郑永刚 </span>
+                                        <p>杉杉控股董事局主席</p>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="pic" href="#"><img src="/common/img/new/m05.png"></a>
+                                <a href="#">
+                                    <div class="hz_font hz_font2">
+                                        <span> 郑永刚 </span>
+                                        <p>杉杉控股董事局主席</p>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="pic" href="#"><img src="/common/img/new/m06.png"></a>
+                                <a href="#">
+                                    <div class="hz_font hz_font2">
+                                        <span> 郑永刚 </span>
+                                        <p>杉杉控股董事局主席</p>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="pic" href="#"><img src="/common/img/new/m07.png"></a>
+                                <a href="#">
+                                    <div class="hz_font hz_font2">
+                                        <span> 郑永刚 </span>
+                                        <p>杉杉控股董事局主席</p>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <script type="text/javascript">marqueeStart(1, "left");</script>
+            </div>
+        </div>
+        <div id="center">
+            <div id="hb-center">
+                <div id="hbl">
+                    <div>
+                        <p>视频中心</p>
+                        <p><a href="/v">更多&gt;&gt;</a></p>
+                    </div>
+                    <div style="background: url(&quot;http://images.wezchina.com/&quot;) center center no-repeat;"></div>
+                    <div id="vd"></div>
+                    <p class="hb1"><a href="v/772db9f0-e078-11e7-b8c4-494871d3a0f6">凝心聚力建平台...</a></p>
+                    <p class="hb2">凝心聚力建平台...</p>
+                    <div class="hbs"><p><a href="v/9bf6b810-e07a-11e7-8677-41895424a106">&gt; 犯家规，抽大烟，一个秦商大家</a></p><a href="v/9bf6b810-e07a-11e7-8677-41895424a106">
+                        <p style="margin-right: 10px;">2016-10-08</p></a></div><div class="hbs"><p><a href="v/5a7d0ac0-e07b-11e7-bbe3-9991868e3bf9">&gt; 《秦商之歌》——秦商联合会会</a></p><a href="v/5a7d0ac0-e07b-11e7-bbe3-9991868e3bf9">
+                    <p style="margin-right: 10px;">2016-08-15</p></a></div></div>
+                <div id="hbm">
+                    <div>
+                        <p>秦商杂志</p>
+                        <p><a href="/magazine/qinshang">更多&gt;&gt;</a></p>
+                    </div>
+                    <ul><a href="/magazine/qinshang/820d1280-bef4-11e7-86e7-2f6b48d4c639" target="_blank"><li><img src="http://images.wezchina.com/plats/resource/1507614354652.jpg?imageView2/3/w/94/h/128"></li></a><a href="/magazine/qinshang/820d1280-bef4-11e7-86e7-2f6b48d4c638" target="_blank"><li><img src="http://images.wezchina.com/plats/resource/1507614943402.jpg?imageView2/3/w/94/h/128"></li></a><a href="/magazine/qinshang/820d1280-bef4-11e7-86e7-2f6b48d4c637" target="_blank"><li><img src="http://images.wezchina.com/plats/resource/37-1.jpg?imageView2/3/w/94/h/128"></li></a><a href="/magazine/qinshang/820d1280-bef4-11e7-86e7-2f6b48d4c636" target="_blank"><li><img src="http://images.wezchina.com/plats/resource/36-1.jpg?imageView2/3/w/94/h/128"></li></a><a href="/magazine/qinshang/820d1280-bef4-11e7-86e7-2f6b48d4c635" target="_blank"><li><img src="http://images.wezchina.com/plats/resource/35-1.jpg?imageView2/3/w/94/h/128"></li></a><a href="/magazine/qinshang/820d1280-bef4-11e7-86e7-2f6b48d4c634" target="_blank"><li><img src="http://images.wezchina.com/plats/resource/34-1.jpg?imageView2/3/w/94/h/128"></li></a></ul>
+                </div>
+                <div id="hbr">
+                    <div>
+                        <p>专题报道</p>
+                        <p>更多&gt;&gt;</p>
+                    </div>
+                    <ul><a href="/zt/jiulyh" target="_blank"><li><img src="http://images.wezchina.com/plats/resource/1514201325245.png?imageView2/3/w/240/h/60" height="60"></li></a><a href="/zt/qiqsdh" target="_blank"><li><img src="http://images.wezchina.com/plats/resource/1514201309592.png?imageView2/3/w/240/h/60" height="60"></li></a><a href="/zt/liuqsdh" target="_blank"><li><img src="http://images.wezchina.com/plats/resource/1514201292583.png?imageView2/3/w/240/h/60" height="60"></li></a><a href="/zt/2017ndfh" target="_blank"><li><img src="http://images.wezchina.com/plats/resource/1513221291907.png?imageView2/3/w/240/h/60" height="60"></li></a></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</main>
+
+<script>
+    var mySwiper = new Swiper ('#my-swiper', {
+        direction: 'horizontal',
+        loop: true,
+        speed: 1000,
+        autoplay : 3000,
+        autoplayDisableOnInteraction : false,
+        //pagination: '.swiper-pagination',
+        //paginationClickable :true,
+        nextButton: '.swiper-button-next',
+        prevButton: '.swiper-button-prev',
+        grabCursor : true,
+        longSwipesRatio: 0.3,
+        touchRatio:1,
+        observer:true,//修改swiper自己或子元素时，自动初始化swiper
+        observeParents:true,//修改swiper的父元素时，自动初始化swiper
+    })
+
+    var mySwiper = new Swiper ('#my-swiper-2', {
+        direction: 'horizontal',
+        loop: true,
+        speed: 1000,
+        autoplay : 3000,
+        autoplayDisableOnInteraction : false,
+        //pagination: '.swiper-pagination',
+        //paginationClickable :true,
+        nextButton: '.swiper-button-next',
+        prevButton: '.swiper-button-prev',
+        grabCursor : true,
+        longSwipesRatio: 0.3,
+        touchRatio:1,
+        observer:true,//修改swiper自己或子元素时，自动初始化swiper
+        observeParents:true,//修改swiper的父元素时，自动初始化swiper
+    })
+</script>
+</body>
+</html>
