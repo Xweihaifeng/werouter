@@ -24,7 +24,7 @@
                 <main>
                     <div class="head-left">
                         <a href="">
-                            <img :src="logo | img_src" alt="" v-if="plats_info.logo">
+                            <img :src="logo | img_src" alt="" v-if="!plats_info.logo">
                             <img :src="plats_info.logo | img_src" alt="" v-else>
                         </a>
                     </div>
@@ -79,14 +79,14 @@
                         <img :src="footer.copyright_logo | img_src" alt="">
                     </div>
                     <div class="fo-bm">
-                        <span class="fo-son">{{footer.copyright}}</span>
-                        <a href="" class="fo-son">{{footer.icp}}</a>
-                        <span class="fo-son">{{footer.email}}</span>
+                        <span class="fo-son" v-html="footer.copyright"></span>
+                        <a href="" class="fo-son" v-html="footer.icp"></a>
+                        <span class="fo-son" v-html="footer.email"></span>
                         <div class="fo-son">
-                            <span>{{footer.tel}}</span>
-                            <span>{{footer.fax}}</span>
+                            <span v-html="footer.tel"></span>
+                            <span v-html="footer.fax"></span>
                         </div>
-                        <span class="fo-son">{{footer.addre}}</span>
+                        <span class="fo-son" v-html="footer.addre"></span>
                     </div>
                     <div class="fo-br">
                         <img :src="footer.code_id" alt="">
@@ -183,16 +183,15 @@
                                 var result = res.data;
 
                                 result.code_id = window.location.origin +'/api/file/qrcode?margin=2&url='+ window.location.href;
-                                result.copyright_logo?result.copyright_logo:'/resource/wetpl/substation/default/web/image/flogo.png'
-                                result.copyright?result.copyright:`上海市浙江商会(www.zccs.org)@2008-2012 All Rights Reserved`
-                                footer.icp?footer.icp:`沪ICP备17020763号-1`
-                                footer.email?footer.email:`Email：shzjsh@yahoo.com.cn`
-                                footer.tel?footer.tel:`Tel：021-50939588`
-                                footer.fax?footer.fax:`Fax：021-50939388`
-                                footer.addre?footer.addre:`地址：上海市浦东大道900号华辰金融大厦25楼`
+                                if(!result.copyright_logo) { result.copyright_logo = "plats/resource/1515752507217.png" }
+                                if(!result.copyright) {result.copyright = `上海市浙江商会(www.zccs.org)@2008-2012 All Rights Reserved` }
+                                if(!result.icp) {result.icp = `沪ICP备17020763号-1` }
+                                if(!result.email) {result.email = `Email：shzjsh@yahoo.com.cn` }
+                                if(!result.tel) {result.tel = `Tel：021-50939588` }
+                                if(!result.fax) {result.fax = `Fax：021-50939388` }
+                                if(!result.addre) {result.addre = `地址：上海市浦东大道900号华辰金融大厦25楼` }
 
                                 this.footer = result;
-                                console.log(this.footer);
                             }
                         })
                     }
