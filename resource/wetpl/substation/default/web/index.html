@@ -16,7 +16,7 @@
                 <div class="s1-l">
                     <div class="s1-lt">
                         <span class="qz">商会新闻</span>
-                        <a :href="all_domian+'news'">更多</a>
+                        <a :href="!this.sub_index.news.length ? 'javascript:void(0)' : all_domian+'news'">更多</a>
                     </div>
                     <div class="s1-lb">
 
@@ -55,7 +55,8 @@
               <div class="s1-r">
                   <div class="s1-rt">
                       <h2>最新公告</h2>
-                      <a :href="'news/ggao'" class="long">更多</a>
+                      <!-- <a :href="'news/ggao'" class="long">更多</a> -->
+                      <a :href="!sub_index.nitoce.length ? 'javascript:void(0)' : 'news/ggao'" class="long">更多</a>
                   </div>
                   <ul class="list">
                       <li v-for="item in sub_index.nitoce">
@@ -75,7 +76,7 @@
              <!-- 会员风采 -->
              <div class="fc">
                  <div class="fc-left">
-                      <a :href="sub_ads.leader.weid ? window.location.pathname+'/u/'+sub_ads.leader.weid : 'javascript:void(0)'">
+                      <a :href="sub_ads.leader.weid ? all_domian+'u/'+sub_ads.leader.weid : 'javascript:void(0)'">
                           <img :src="sub_ads.leader.image | img_src(195 , 190 , 1)" alt="">
                           <div class="jie">
                               <h3>{{sub_ads.leader.title | ''}}</h3>
@@ -86,7 +87,7 @@
                  <div class="fc-right">
                      <ul class="fc-big fc1">
                          <li v-for="item in sub_ads.users">
-                             <a :href="sub_ads.leader.weid ? window.location.pathname+'/u/'+sub_ads.leader.weid : 'javascript:void(0)'">
+                             <a :href="item.weid ? all_domian+'u/'+item.weid : 'javascript:void(0)'">
                                  <img :src="item.avatar" alt="">
                                  <div class="jie1">
                                      <h3>{{item.real_name}}</h3>
@@ -97,7 +98,7 @@
                      </ul>
                      <ul class="fc-big fc2">
                          <li v-for="item in sub_ads.users">
-                             <a :href="sub_ads.leader.weid ? window.location.pathname+'/u/'+sub_ads.leader.weid : 'javascript:void(0)'">
+                             <a :href="item.weid ? all_domian+'u/'+item.weid : 'javascript:void(0)'">
                                  <img :src="item.avatar" alt="">
                                  <div class="jie1">
                                      <h3>{{item.real_name}}</h3>
@@ -114,7 +115,7 @@
                  <div class="s2-b1">
                      <div class="s2-lt">
                          <span class="qz" v-html="sub_index.spzx.title"></span>
-                         <a :href="sub_index.spzx.domain | href">更多</a>
+                         <a :href="!sub_index.spzx.list.length ? 'javascript:void(0)' : all_domian+sub_index.spzx.domain">更多</a>
                      </div>
                      <ul class="b1-list" style="margin-top:18px;">
                          <li v-for="(item, index) in sub_index.spzx.list" v-if="index<8">
@@ -128,7 +129,7 @@
                  <div class="s2-b2">
                      <div class="s2-lt">
                          <span class="qz">{{sub_index.mag.title}}</span>
-                         <a :href="'/magazine/'+sub_index.mag.domain">更多</a>
+                         <a :href="!sub_index.mag.list.length ? 'javascript:void(0)' : '/magazine/'+sub_index.mag.domain">更多</a>
                      </div>
                      <ul class="b2-list">
                          <li v-for="(item, index) in sub_index.mag.list" v-if="index<6"><a :href="'/magazine/'+sub_index.mag.domain+'/'+item.weid"><img :src="item.cover | img_src(130,130)" :alt="item.title" :title="item.title"></a></li>
@@ -139,7 +140,7 @@
                  <div class="s2-b3">
                      <div class="s2-lt">
                          <span class="qz">{{sub_index.gzdt.title}}</span>
-                         <a :href="sub_index.gzdt.domain | href">更多</a>
+                         <a :href="!sub_index.gzdt.list.length ? 'javascript:void(0)' : all_domian+sub_index.gzdt.domain">更多</a>
                      </div>
                      <ul class="b3-list" :class="{'hide-border':sub_index.gzdt.list.length == 0}">
                          <li v-for="(item, index) in sub_index.gzdt.list" v-if="index<8">
