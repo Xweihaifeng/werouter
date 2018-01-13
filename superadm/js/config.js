@@ -109,6 +109,9 @@ var start = function() {
     //if (avatar) $(".user-image,.img-circle").attr('src', ApiMaterPlatQiniuDomain + avatar);
     if (avatar == 'avatar.jpg') $(".user-image,.img-circle").attr('src', 'image/' + avatar);
     $("#username").text(username);
+    if(memo=='null'){
+       memo='';
+    }
     $("#memo").text(memo ? memo : "");
     // var menu = JSON.parse(sessionStorage.getItem('menu'));
     // var len = menu.length;
