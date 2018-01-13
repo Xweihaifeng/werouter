@@ -639,6 +639,11 @@ function completeLoading() {
             $("#loadingDiv").animate({
                 opacity: "hide"
             }, 300);
+            if ($("#right").length>0){
+                $("#right").css("display","block");
+            }else{
+                $("#right_load_div").css("display","block");
+            }
         }
     }
 }
