@@ -59,13 +59,13 @@ var hearderTpl = `<header class="main-header">
                     <li class="user-body">
                         <div class="row">
                             <div class="col-xs-4 text-center">
-                                <a href="contents.html">CMS</a>
+                                <a href="contents.html">内容管理</a>
                             </div>
                             <div class="col-xs-4 text-center">
-                                <a href="votes.html">投票</a>
+                                <a href="contentCategory.html">栏目管理</a>
                             </div>
                             <div class="col-xs-4 text-center">
-                                <a href="apps.html">应用阀</a>
+                                <a href="channels.html">频道管理</a>
                             </div>
                         </div>
                         <!-- /.row -->
@@ -96,7 +96,7 @@ $.ajaxSetup({
 });
 
 var start = function() {
-    var username = sessionStorage.getItem('username');
+    var username = sessionStorage.getItem('site_username');
     if (!username) {
         window.location.replace('login.html');
     }
@@ -116,7 +116,7 @@ var start = function() {
     // var len = menu.length;
     // genSideBarMenu(menu, len - 2);
     //console.log(localStorage.getItem('cms_menulist'));
-    var list = JSON.parse(localStorage.getItem('cms_menulist'));
+    var list = JSON.parse(localStorage.getItem('site_cms_menulist'));
     var len = list.length - 1;
     genSideBarMenu(list, len)
 
@@ -243,7 +243,7 @@ var genClick = function(id) {
 $(function() {
     $(document).on("click", "#logout", function() {
         sessionStorage.removeItem('weId');
-        sessionStorage.removeItem('username');
+        sessionStorage.removeItem('site_username');
         sessionStorage.removeItem('real_name');
         sessionStorage.removeItem('avatar');
         sessionStorage.removeItem('token');

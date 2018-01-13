@@ -23,12 +23,19 @@
     color: #666;
 }
 .det_btn span{
-    border-right: 1px solid #667EB5;
-    padding-right:5px;
+   padding-left: 5px;
     display: inline-block;
+    font-size: 14px;
 }
-.det_btn span:last-of-type{
-    border-right: none;
+.det_btn span::after{
+    content: "|";
+    color: #000;
+    color: #666666;
+    padding-left: 5px;
+    font-size: 14px;
+}
+.det_btn span:last-of-type::after{
+    content:"";
 }
 .det_con {
     width: 100%;
@@ -67,8 +74,17 @@
     color: #9B8CAA;
     line-height: 15px;
 }
-.del_hot span:last-of-type{
-    padding-left:30px;
+.del_hot span.del_zan {
+    position: relative;
+    text-indent: 22px;
+}
+.del_hot span.del_zan::before{
+    position: absolute;
+    content: '';
+    height: 15px;
+    width: 18px;
+    left: 0;
+    /*padding-left:30px;*/
     background-image: url(/resource/wetpl/substation/default/web/image/2018-01-09_191505.png);
     background-repeat: no-repeat;
     background-position: center;

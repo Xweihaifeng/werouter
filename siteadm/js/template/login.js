@@ -21,7 +21,7 @@ var init = function() {
                         var setting = JSON.stringify(data.data.setting);
                         var menu = JSON.stringify(JSON.parse(info.config).list);
                         sessionStorage.setItem('weId', info.weid);
-                        sessionStorage.setItem('username', info.username);
+                        sessionStorage.setItem('site_username', info.username);
                         sessionStorage.setItem('real_name', info.real_name);
                         //sessionStorage.setItem('memo', info.memo);
                         sessionStorage.setItem('avatar', info.avatar);
@@ -30,7 +30,7 @@ var init = function() {
                         sessionStorage.setItem('setting', setting);
                         sessionStorage.setItem('domain', info.domain);
                         //菜单修改
-                        localStorage.setItem('cms_menulist', menu);
+                        localStorage.setItem('site_cms_menulist', menu);
                         //console.log(localStorage.getItem('cms_menulist'));
                         window.location.replace('index.html');
                     } else {

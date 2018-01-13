@@ -8,7 +8,7 @@
     <link rel="shortcut icon" id="favicon" href="" />
     <link rel="stylesheet" href="/common/css/bootstrap.min.css">
     <!--<link rel="stylesheet" href="{{PATH_TML}}font/iconfont.css" />-->
-    <link rel="stylesheet" href="/common/css/swiper.min.css">
+    <link rel="stylesheet" href="{{PATH_TML}}css/swiper.min.css">
     <!--<link rel="stylesheet" href="/common/layui/css/layui.css">-->
     <!--<link rel="stylesheet" href="/common/css/buttons.css">-->
     <!--<link rel="stylesheet" href="{{PATH_TML}}css/public_main.css">-->
@@ -77,26 +77,55 @@
         <div id="menu">
             <ol>
                 <li>秦商总会</li>
+                <span></span>
                 <li>商会新闻</li>
+                <span></span>
                 <li>秦商活动</li>
+                <span></span>
                 <li>秦商风采</li>
+                <span></span>
                 <li>项目互助</li>
+                <span></span>
                 <li>资源共享</li>
+                <span></span>
                 <li>加入商会</li>
             </ol>
         </div>
     </header>
     <div id="container">
         <div id="carousel">
+            <ul id="nav">
+               <li><img src="/common/img/new/icon01.png" alt=""/></li>
+               <li><img src="/common/img/new/icon02.png" alt=""/></li>
+               <li><img src="/common/img/new/icon03.png" alt=""/></li>
+               <li><img src="/common/img/new/icon04.png" alt=""/></li>
+               <li><img src="/common/img/new/icon05.png" alt=""/></li>
+               <li><img src="/common/img/new/icon06.png" alt=""/></li>
+            </ul>
             <div class="swiper-container" id="my-swiper">
                 <div class="swiper-wrapper">
-                    <div class="swiper-slide"><img src="/common/img/new/BANNER.png" alt=""/></div>
-                    <div class="swiper-slide"><img src="/common/img/new/BANNER.png" alt=""/></div>
-                    <div class="swiper-slide"><img src="/common/img/new/BANNER.png" alt=""/></div>
+                    <div class="swiper-slide">
+                        <img src="/common/img/new/BANNER.png" alt=""/>
+                        <p class="bg"></p>
+                        <p class="content">第七届全球秦商大会成功召开</p>
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="/common/img/new/BANNER.png" alt=""/>
+                        <p class="bg"></p>
+                        <p class="content">第七届全球秦商大会成功召开</p>
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="/common/img/new/BANNER.png" alt=""/>
+                        <p class="bg"></p>
+                        <p class="content">第七届全球秦商大会成功召开</p>
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="/common/img/new/BANNER.png" alt=""/>
+                        <p class="bg"></p>
+                        <p class="content">第七届全球秦商大会成功召开</p>
+                    </div>
                 </div>
                 <div class="swiper-pagination"></div>
-                <div class="swiper-button-prev"></div>
-                <div class="swiper-button-next"></div>
             </div>
         </div>
         <div id="news">
@@ -104,9 +133,11 @@
                 <li class="news-block">
                     <div class="swiper-container" id="my-swiper-2">
                         <div class="swiper-wrapper">
-                            <div class="swiper-slide"><img src="/common/img/new/c01.png" alt=""/></div>
-                            <div class="swiper-slide"><img src="/common/img/new/c01.png" alt=""/></div>
-                            <div class="swiper-slide"><img src="/common/img/new/c01.png" alt=""/></div>
+                            <div class="swiper-slide">
+                                <img src="/common/img/new/c01.png" alt=""/>
+                                <p class="bg2"></p>
+                                <p class="content2">2017年度秦商全球影响力人物评选网络投票启动</p>
+                            </div>
                         </div>
                     </div>
                     <div id="recommend">
@@ -220,7 +251,7 @@
         <div id="marquee">
             <div id="fengcai">
                 <ul>
-                    <li class="fc"><i></i><span>秦商风采</span></li>
+                    <li class="fc"><p class="line">秦商风采</p></li>
                     <li class="fc">更多>></li>
                 </ul>
                 <div class="fleft huizhang">
@@ -378,10 +409,12 @@
             <div id="hb-center">
                 <div id="hbl">
                     <div>
-                        <p>视频中心</p>
-                        <p><a href="/v">更多&gt;&gt;</a></p>
+                        <p class="line">视频中心</p>
+                        <p><a href="/v">更多>></a></p>
                     </div>
-                    <div style="background: url(&quot;http://images.wezchina.com/&quot;) center center no-repeat;"></div>
+                    <div>
+                        <img src="/common/img/new/play.png" alt=""/>
+                    </div>
                     <div id="vd"></div>
                     <p class="hb1"><a href="v/772db9f0-e078-11e7-b8c4-494871d3a0f6">凝心聚力建平台...</a></p>
                     <p class="hb2">凝心聚力建平台...</p>
@@ -390,36 +423,94 @@
                     <p style="margin-right: 10px;">2016-08-15</p></a></div></div>
                 <div id="hbm">
                     <div>
-                        <p>秦商杂志</p>
-                        <p><a href="/magazine/qinshang">更多&gt;&gt;</a></p>
+                        <p class="line">秦商杂志</p>
+                        <p><a href="/magazine/qinshang">更多>></a></p>
                     </div>
-                    <ul><a href="/magazine/qinshang/820d1280-bef4-11e7-86e7-2f6b48d4c639" target="_blank"><li><img src="http://images.wezchina.com/plats/resource/1507614354652.jpg?imageView2/3/w/94/h/128"></li></a><a href="/magazine/qinshang/820d1280-bef4-11e7-86e7-2f6b48d4c638" target="_blank"><li><img src="http://images.wezchina.com/plats/resource/1507614943402.jpg?imageView2/3/w/94/h/128"></li></a><a href="/magazine/qinshang/820d1280-bef4-11e7-86e7-2f6b48d4c637" target="_blank"><li><img src="http://images.wezchina.com/plats/resource/37-1.jpg?imageView2/3/w/94/h/128"></li></a><a href="/magazine/qinshang/820d1280-bef4-11e7-86e7-2f6b48d4c636" target="_blank"><li><img src="http://images.wezchina.com/plats/resource/36-1.jpg?imageView2/3/w/94/h/128"></li></a><a href="/magazine/qinshang/820d1280-bef4-11e7-86e7-2f6b48d4c635" target="_blank"><li><img src="http://images.wezchina.com/plats/resource/35-1.jpg?imageView2/3/w/94/h/128"></li></a><a href="/magazine/qinshang/820d1280-bef4-11e7-86e7-2f6b48d4c634" target="_blank"><li><img src="http://images.wezchina.com/plats/resource/34-1.jpg?imageView2/3/w/94/h/128"></li></a></ul>
+                    <ul>
+                        <a href="/magazine/qinshang/820d1280-bef4-11e7-86e7-2f6b48d4c639" target="_blank">
+                            <li><img class="mag" src="/common/img/new/05.png"></li></a>
+                        <a href="/magazine/qinshang/820d1280-bef4-11e7-86e7-2f6b48d4c638" target="_blank">
+                            <li><img class="mag" src="/common/img/new/06.png"></li></a>
+                        <a href="/magazine/qinshang/820d1280-bef4-11e7-86e7-2f6b48d4c637" target="_blank">
+                            <li><img class="mag" src="/common/img/new/05.png"></li></a>
+                        <a href="/magazine/qinshang/820d1280-bef4-11e7-86e7-2f6b48d4c636" target="_blank">
+                            <li><img class="mag" src="/common/img/new/06.png"></li></a>
+                        <a href="/magazine/qinshang/820d1280-bef4-11e7-86e7-2f6b48d4c635" target="_blank">
+                            <li><img class="mag" src="/common/img/new/05.png"></li></a>
+                        <a href="/magazine/qinshang/820d1280-bef4-11e7-86e7-2f6b48d4c634" target="_blank">
+                            <li><img class="mag" src="/common/img/new/06.png"></li></a></ul>
                 </div>
                 <div id="hbr">
                     <div>
-                        <p>专题报道</p>
-                        <p>更多&gt;&gt;</p>
+                        <p class="line">专题报道</p>
+                        <p>更多>></p>
                     </div>
-                    <ul><a href="/zt/jiulyh" target="_blank"><li><img src="http://images.wezchina.com/plats/resource/1514201325245.png?imageView2/3/w/240/h/60" height="60"></li></a><a href="/zt/qiqsdh" target="_blank"><li><img src="http://images.wezchina.com/plats/resource/1514201309592.png?imageView2/3/w/240/h/60" height="60"></li></a><a href="/zt/liuqsdh" target="_blank"><li><img src="http://images.wezchina.com/plats/resource/1514201292583.png?imageView2/3/w/240/h/60" height="60"></li></a><a href="/zt/2017ndfh" target="_blank"><li><img src="http://images.wezchina.com/plats/resource/1513221291907.png?imageView2/3/w/240/h/60" height="60"></li></a></ul>
+                    <ul>
+                        <a href="/zt/jiulyh" target="_blank">
+                            <li><img src="/common/img/new/01.png" height="70"></li>
+                        </a>
+                        <a href="/zt/qiqsdh" target="_blank">
+                            <li><img src="/common/img/new/02.png" height="70"></li>
+                        </a>
+                        <a href="/zt/liuqsdh" target="_blank">
+                            <li><img src="/common/img/new/03.png" height="70"></li>
+                        </a>
+                        <a href="/zt/2017ndfh" target="_blank">
+                            <li><img src="/common/img/new/04.png" height="70"></li>
+                        </a>
+                    </ul>
                 </div>
             </div>
         </div>
         <div id="cp-show">
-            <div class="swiper-container" id="my-swiper-3">
-                <div class="swiper-wrapper">
-                    <div class="swiper-slide"><img src="/common/img/new/BANNER.png" alt=""/></div>
-                    <div class="swiper-slide"><img src="/common/img/new/BANNER.png" alt=""/></div>
-                    <div class="swiper-slide"><img src="/common/img/new/BANNER.png" alt=""/></div>
-                    <div class="swiper-slide"><img src="/common/img/new/BANNER.png" alt=""/></div>
+            <div id="cp-inner">
+                <ul>
+                    <li><p class="line">企业和产品展示</p></li>
+                    <li>更多>></li>
+                </ul>
+                <div class="swiper-container" id="my-swiper-3">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide"><img src="/common/img/new/s09.png" alt=""/></div>
+                        <div class="swiper-slide"><img src="/common/img/new/s10.png" alt=""/></div>
+                        <div class="swiper-slide"><img src="/common/img/new/s11.png" alt=""/></div>
+                        <div class="swiper-slide"><img src="/common/img/new/s12.png" alt=""/></div>
+                    </div>
+                    <div class="swiper-pagination"></div>
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-button-next"></div>
                 </div>
-                <div class="swiper-pagination"></div>
-                <div class="swiper-button-prev"></div>
-                <div class="swiper-button-next"></div>
+            </div>
+        </div>
+        <div id="link">
+            <p class="line"></p>
+            <ul id="link-title">
+                <li id="gwdw">顾问单位</li>
+                <li id="txqs" style="color: rgb(255, 255, 255); background: rgb(1, 167, 255); font-weight: 600;">天下秦商</li>
+                <li id="hyqy">会员企业</li>
+                <li id="sqzsj">各地市招商局</li>
+                <li id="yqlj">友情链接</li>
+            </ul>
+            <div id="link-page">
+                <ul><a href="http://www.sndrc.gov.cn/" target="_blank"><li title="省发改委">省发改委</li></a><a href="http://www.snedu.gov.cn/" target="_blank"><li title="省教育厅">省教育厅</li></a><a href="http://www.sxgxt.gov.cn/" target="_blank"><li title="省工信厅">省工信厅</li></a><a href="http://www.sxmzzj.gov.cn/" target="_blank"><li title="省民委">省民委</li></a><a href="http://gtzyt.shaanxi.gov.cn/" target="_blank"><li title="省国土资源厅">省国土资源厅</li></a><a href="http://www.sxmwr.gov.cn/" target="_blank"><li title="省水利厅">省水利厅</li></a><a href="http://www.sxny.gov.cn/" target="_blank"><li title="省农业厅">省农业厅</li></a><a href="http://www.snly.gov.cn/" target="_blank"><li title="省林业厅">省林业厅</li></a><a href="http://www.sxdofcom.gov.cn/" target="_blank"><li title="省商务厅">省商务厅</li></a><a href="http://www.snwh.gov.cn/" target="_blank"><li title="省文化厅">省文化厅</li></a><a href="http://nfdnserror9.wo.com.cn:8080/issueunziped/nfdns20171122/index.html?sf=&amp;UserUrl=www.sxhealth.gov.cn&amp;loc=sx&amp;type=pc&amp;url=http%3A%2F%2Fwww.sxhealth.gov.cn%2F&amp;protocol=HTTP/1.1&amp;method=GET&amp;pageCode=nfd" target="_blank"><li title="省卫生厅">省卫生厅</li></a><a href="http://www.sxgz.gov.cn/" target="_blank"><li title="省国资委">省国资委</li></a><a href="http://www.snds.gov.cn/portal/site/site/portal/snds/index.jsp" target="_blank"><li title="省地税局">省地税局</li></a><a href="http://www.snaic.gov.cn/" target="_blank"><li title="省工商局">省工商局</li></a><a href="http://www.qqxqs.com/" target="_blank"><li title="省质监局">省质监局</li></a><a href="http://www.sxtour.com/html/pages/index.html;jsessionid=A3BDA2EBD888B6F61F4D00438FB9BD04" target="_blank"><li title="省旅游局">省旅游局</li></a><a href="http://www.sxzys.gov.cn/" target="_blank"><li title="省政府研究室">省政府研究室</li></a><a href="http://www.smte.gov.cn/" target="_blank"><li title="省中小企业局">省中小企业局</li></a><a href="http://www.snipo.gov.cn/" target="_blank"><li title="省知识产权局">省知识产权局</li></a><a href="http://www.shaanxifpb.gov.cn/" target="_blank"><li title="省扶贫办">省扶贫办</li></a><a href="http://www.sass.gov.cn/" target="_blank"><li title="省社科院">省社科院</li></a><a href="http://www.sxwcc.cn/" target="_blank"><li title="省水土保持局">省水土保持局</li></a><a href="http://www.sxfic.com/" target="_blank"><li title="省工商联">省工商联</li></a><a href="http://skl.cnwest.com/" target="_blank"><li title="省社科联">省社科联</li></a><a href="http://www.sxzffz.gov.cn/" target="_blank"><li title="省法制办">省法制办</li></a><a href="http://www.ccpit-shaanxi.org/" target="_blank"><li title="贸促会">贸促会</li></a><a href="http://www.sxfao.gov.cn/" target="_blank"><li title="省外事办">省外事办</li></a></ul>
             </div>
         </div>
     </div>
+    <div id="bottom1">
+        <footer>
+            <div class="footer-nav">
+                <a href="javascript:void(0)">咨询与建议</a>
+                <a href="javascript:void(0)">站点地图</a>
+                <a id="contact" href="/org/contact">联系我们</a>
+            </div>
+            <div class="copyright"><p>全球秦商大会组委会 陕西省秦商联合会 | 地址：西安市新城大院省政府院内综合楼B101 邮编：710006</p>
 
+                <p>办公电话：029-87298395 87298138 | 传真：029-87298138 | 电子邮件: sxsqslhh@163.com</p>
 
+                <p>版权所有 陕西省秦商联合会 | 网站备案信息：<a href="javascript:void(0)" id="icp">陕备00001</a></p>
+            </div>
+            <div class="_ideConac"><img src="/common/img/gabeian.png" width="60" height="60"></div>
+        </footer>
+    </div>
 </main>
 
 <script>
@@ -429,8 +520,8 @@
         speed: 1000,
         autoplay : 3000,
         autoplayDisableOnInteraction : false,
-        //pagination: '.swiper-pagination',
-        //paginationClickable :true,
+        pagination: '.swiper-pagination',
+        paginationClickable :true,
         nextButton: '.swiper-button-next',
         prevButton: '.swiper-button-prev',
         grabCursor : true,

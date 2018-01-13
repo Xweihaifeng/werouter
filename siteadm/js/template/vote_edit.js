@@ -168,12 +168,12 @@ $(document).ready(function(){
                           showConfirmButton: false
                         }).then(
                             function () {
-                                location.href='/admin/votes.html';
+                                location.href='votes.html';
                             },
                             // handling the promise rejection
                             function (dismiss) {
                                 if (dismiss === 'timer') {
-                                    location.href='/admin/votes.html';
+                                    location.href='votes.html';
                                 }
                             });
                     }else{
