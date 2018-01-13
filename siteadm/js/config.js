@@ -59,13 +59,13 @@ var hearderTpl = `<header class="main-header">
                     <li class="user-body">
                         <div class="row">
                             <div class="col-xs-4 text-center">
-                                <a href="contents.html">CMS</a>
+                                <a href="contents.html">内容管理</a>
                             </div>
                             <div class="col-xs-4 text-center">
-                                <a href="votes.html">投票</a>
+                                <a href="contentCategory.html">栏目管理</a>
                             </div>
                             <div class="col-xs-4 text-center">
-                                <a href="apps.html">应用阀</a>
+                                <a href="channels.html">频道管理</a>
                             </div>
                         </div>
                         <!-- /.row -->
