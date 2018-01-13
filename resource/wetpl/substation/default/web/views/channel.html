@@ -34,7 +34,7 @@
                 </div>
                 <div class="newsert">
                     <div class="new1">
-                        <div class="s1-lbleft">
+                        <div class="s1-lbleft" v-if="recommend.length != 0">
                             <ul class="banner">
                                 <li v-for="(item, index) in recommend">
                                     <a :href="channel_domain+'/'+item.weid | href">
