@@ -10,6 +10,11 @@
         <div class="main-big">
             <div class="list-big">
                 <div class="newsert">
+                    <!--无内容提示-->
+                    <div class="search-null" v-if="all==0">
+                        <span>找不到您查找的内容，请重新搜索</span>
+                        <span>看一下其他新闻吧！</span>
+                    </div>
                     <ul class="new2">
                         <li v-for="(item, index) in sub_rcon">
                             <a :href="item.channel_domain+'/'+item.weid | href">
@@ -56,6 +61,7 @@
             page_show : [],
             title : $app.get_query_string('q'),
             channel : $app.get_query_string('s'),// 频道个性域名
+            all : 1  //默认提供内容
         },
         mounted: function() {
 
@@ -68,8 +74,30 @@
                         limit       :this.limit
                     }
                 }).then((res) => {
-                    console.log(this.title);
-                    console.log(this.page)
+                    if(res.data.list.length==0){
+                        // $app.open_page(all_domian +"sub_search?q=")
+                        this.all=0;
+                        this.title=0;
+                        ajax.get("scms/content_search", {
+                            params:{
+                                title       :this.title,
+                                // channel_id  :this.channel,
+                                page        :this.page,
+                                limit       :this.limit
+                            }
+                        }).then((res) => {
+                            this.sub_rcon = res.data.list;
+                            this.total = res.data.total;
+                            this.total_page = Math.ceil(this.total / this.limit);
+                            var left = ( (this.page -3) > 0 ) ? this.page -3 : 1;
+                            var right = ( (this.page + 3) < this.total_page ) ? this.page + 3 : this.total_page;
+
+                            for (var i = left; i < right + 1 ; i++) {
+                                this.page_show.push(i);
+                            }
+                            return;
+                        });
+                    }
                     this.sub_rcon = res.data.list;
                     this.total = res.data.total;
                     this.total_page = Math.ceil(this.total / this.limit);
@@ -80,7 +108,35 @@
                     for (var i = left; i < right + 1 ; i++) {
                         this.page_show.push(i);
                     }
+                    // 默认提供内容
+                    // if(this.sub_rcon.length==0){
+                    //     this.title=0;
+                    //     ajax.get("scms/content_search", {
+                    //         params:{
+                    //             title       :this.title,
+                    //             // channel_id  :this.channel,
+                    //             page        :this.page,
+                    //             limit       :this.limit
+                    //         }
+                    //     }).then((res) => {
+                    //         console.log(this.title);
+                    //         console.log(this.page)
+                    //         this.all = res.data.list;
+                    //         this.total = res.data.total;
+                    //         this.total_page = Math.ceil(this.total / this.limit);
+                    //
+                    //         var left = ( (this.page -3) > 0 ) ? this.page -3 : 1;
+                    //         var right = ( (this.page + 3) < this.total_page ) ? this.page + 3 : this.total_page;
+                    //
+                    //         for (var i = left; i < right + 1 ; i++) {
+                    //             this.page_show.push(i);
+                    //         }
+                    //         return;
+                    //     });
+                    // }
+
                 });
+
             });
         },
         methods: {
