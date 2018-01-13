@@ -70,6 +70,9 @@ class TemplateManage{
                 return $this->fail("目标目录已经存在！");
             }
             $this->copy_dir($this->from_dir.$from,$this->to_dir.$to);
+
+            chmod($this->to_dir.$to, 0777);
+
             return $this->success(null);
         }else{
             return $this->fail("参数为空！");
