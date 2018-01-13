@@ -106,8 +106,8 @@ var app = new Vue({
                 //this.total = 100;
                 this.total_page = Math.ceil(this.total / this.limit);
                 //this.page_show = (this.total_page - this.page > 6 ) ? 6 : this.total_page ;
-                var left = ( (this.page -3) > 0 ) ? this.page -3 : 1;
-                var right = ( (this.page + 3) < this.total_page ) ? this.page + 3 : this.total_page;
+                var left = ((parseInt(this.page)-3) > 0 ) ? parseInt(this.page)-3 : 1;
+                var right = ((parseInt(this.page)+3) < this.total_page ) ? parseInt(this.page)+3 : this.total_page;
 
                 for (var i = left; i < right + 1 ; i++) {
                     this.page_show.push(i);
@@ -118,7 +118,6 @@ var app = new Vue({
                 if(res.code == 200) {
                     var result = res.data;
                     this.left = result;
-                    console.log(this.left);
                 }
             })
             
