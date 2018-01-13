@@ -8,7 +8,7 @@
     <link rel="shortcut icon" id="favicon" href="" />
     <link rel="stylesheet" href="/common/css/bootstrap.min.css">
     <!--<link rel="stylesheet" href="{{PATH_TML}}font/iconfont.css" />-->
-    <link rel="stylesheet" href="/common/css/swiper.min.css">
+    <link rel="stylesheet" href="{{PATH_TML}}css/swiper.min.css">
     <!--<link rel="stylesheet" href="/common/layui/css/layui.css">-->
     <!--<link rel="stylesheet" href="/common/css/buttons.css">-->
     <!--<link rel="stylesheet" href="{{PATH_TML}}css/public_main.css">-->
@@ -94,15 +94,38 @@
     </header>
     <div id="container">
         <div id="carousel">
+            <ul id="nav">
+               <li><img src="/common/img/new/icon01.png" alt=""/></li>
+               <li><img src="/common/img/new/icon02.png" alt=""/></li>
+               <li><img src="/common/img/new/icon03.png" alt=""/></li>
+               <li><img src="/common/img/new/icon04.png" alt=""/></li>
+               <li><img src="/common/img/new/icon05.png" alt=""/></li>
+               <li><img src="/common/img/new/icon06.png" alt=""/></li>
+            </ul>
             <div class="swiper-container" id="my-swiper">
                 <div class="swiper-wrapper">
-                    <div class="swiper-slide"><img src="/common/img/new/BANNER.png" alt=""/></div>
-                    <div class="swiper-slide"><img src="/common/img/new/BANNER.png" alt=""/></div>
-                    <div class="swiper-slide"><img src="/common/img/new/BANNER.png" alt=""/></div>
+                    <div class="swiper-slide">
+                        <img src="/common/img/new/BANNER.png" alt=""/>
+                        <p class="bg"></p>
+                        <p class="content">第七届全球秦商大会成功召开</p>
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="/common/img/new/BANNER.png" alt=""/>
+                        <p class="bg"></p>
+                        <p class="content">第七届全球秦商大会成功召开</p>
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="/common/img/new/BANNER.png" alt=""/>
+                        <p class="bg"></p>
+                        <p class="content">第七届全球秦商大会成功召开</p>
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="/common/img/new/BANNER.png" alt=""/>
+                        <p class="bg"></p>
+                        <p class="content">第七届全球秦商大会成功召开</p>
+                    </div>
                 </div>
                 <div class="swiper-pagination"></div>
-                <div class="swiper-button-prev"></div>
-                <div class="swiper-button-next"></div>
             </div>
         </div>
         <div id="news">
@@ -493,8 +516,8 @@
         speed: 1000,
         autoplay : 3000,
         autoplayDisableOnInteraction : false,
-        //pagination: '.swiper-pagination',
-        //paginationClickable :true,
+        pagination: '.swiper-pagination',
+        paginationClickable :true,
         nextButton: '.swiper-button-next',
         prevButton: '.swiper-button-prev',
         grabCursor : true,
