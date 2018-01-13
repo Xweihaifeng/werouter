@@ -134,6 +134,7 @@ const qiniu_upload_domain = httpType + '//upload.qiniu.com';
 // const ApiMaterPlatQiniuDomain 		= 'http://oty3r3tmi.bkt.clouddn.com/';
 
 // 微主页个性域名接口调�?
+const PAGES_PAGE_CHECK_DOMAIN = apiUrl + 'pages/page/check_domain'; // 个性别名合法性检测
 const PAGES_PAGE_ISOPENPAGE = apiUrl + 'pages/page/isopenpage'; // 是否�?通微主页
 const PAGES_PAGE_INFO = apiUrl + 'pages/page/info'; // 查看微主页开通情况
 const PAGES_PAGE_GETDETAILBYUSER = apiUrl + 'pages/page/getDetailByUser/';
