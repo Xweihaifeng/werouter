@@ -15,7 +15,7 @@ $("#content_app").ready(function(){
             }
             if(Lefts==0 || Lefts2<-1230){
                 $(".fc2").css({left:1230,zIndex:1})
-                console.log("fc2")
+                // console.log("fc2")
             }else{
                 $(".fc2").css({left:Lefts2,zIndex:4})
             }

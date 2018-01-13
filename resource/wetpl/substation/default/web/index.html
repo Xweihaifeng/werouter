@@ -6,7 +6,6 @@
 
 <!-- 中间内容模块 -->
 <div class="main-bg">
-
     <!-- 顶部大图 -->
     <div class="ban">
         <img :name="sub_ads.header2" :src="sub_ads.header2.image | img_src(1920, 450, 1)" alt="">
@@ -25,6 +24,7 @@
                            <ul class="banner">
                                 <li v-for="item in sub_ads.banners.list">
                                     <a :href="item.url | href">
+                                        {{item.image}}
                                        <img :src="item.image  | img_src(430 , 310 , 1)" alt="">
                                     </a>
                                     <a :href="item.url | href" class="banner-jie" title="{{item.title}}">{{item.title | limitLen(0,12)}}</a>
@@ -192,29 +192,29 @@
                 $sub_ajax.ads((res)=>{
                     var result = res.data;
 
-                    if(!result.header2 || result.header2 == '[]') {
+                    if(!result.header2 || result.header2 == '[]' || !result.header2.length) {
                         result.header2 = { weid: "", type_id: "a56119c0-765b-11e7-a42e-770589f0tou2", title: "头部横图", image: "plats/resource/1515564231387.jpg", url: "#", description: "" }
                     }
-                    if(!result.header1 || result.header1 == '[]') {
+                    if(!result.header1 || result.header1 == '[]' || !result.header1.length) {
                         result.header1 = { weid: "", type_id: "a56119c0-765b-11e7-a42e-770589f0tou1", title: "首页顶部logo图", image: "plats/resource/1513162345858.png", url: "#", description: "" }
                     }
-                    if(!result.leader || result.leader == '[]') {
+                    if(!result.leader || result.leader == '[]' || !result.leader.length) {
                         result.leader = { weid: "", type_id: "a139f5b0-765b-11e7-9a47-a55169e15a6d", title: "商会会长", image: "user/avatar/1501747945200.jpg", url: "#", description: "全球秦商总会会长" }
                     }
-                    if(!result.peoples_title || result.peoples_title == '[]') {
+                    if(!result.peoples_title || result.peoples_title == '[]' || !result.peoples_title.length) {
                         result.peoples_title = { weid: "826e44b0-d181-11e7-9c9c-9d2c0ae8ee1d", type_id: "a56119c0-765b-11e7-a42e-770589f0cdd7", title: "秦商风采", image: "plats/resource/1515564250290.png", url: "#", description: null }
                     }
-                    if(!result.banners.list || result.banners.list == '[]') {
+                    if(!result.banners.list || result.banners.list == '[]' || !result.banners.list.length) {
                         result.banners.list = [
                             { weid: "cc051fc0-d188-11e7-a1c9-e36b3a09ce0e", type_id: "8668f180-765b-11e7-b0b8-8fa37bb824de", title: "2017年度全球秦商影响力人物评选网络投票启动",image: "plats/resource/1513502499900.jpg", url: "http://sx.sina.com.cn/zt_d/2017qinshang/", description: "" },
                             { weid: "ad15ccd0-d188-11e7-be1c-2d8182daa3c7", type_id: "8668f180-765b-11e7-b0b8-8fa37bb824de", title: "秦商联合会会同辽宁省陕西商会捐资助学仪式在大荔县观音渡小学举行",image: "plats/resource/1511577041810.jpg", url: "#", description: null },
                             { weid: "9c3d19e0-d188-11e7-88c2-d10d16053a81", type_id: "8668f180-765b-11e7-b0b8-8fa37bb824de", title: "秦商联合会2017年新会员交流座谈会成功召开",image: "plats/resource/1511577022423.jpg", url: "#", description: null },
                             { weid: "917a8220-d188-11e7-bab7-b35aebb051fb", type_id: "8668f180-765b-11e7-b0b8-8fa37bb824de", title: "秦商联合会“扶贫帮困 爱心慰问”活动在永寿举行",image: "plats/resource/1511577004563.jpg", url: "#", description: null },
                             { weid: "85ad4450-d188-11e7-9db3-31c2d353ccd1", type_id: "8668f180-765b-11e7-b0b8-8fa37bb824de", title: "秦商联合会建立会员参与商会发展建设新机制座谈会成功举行",image: "plats/resource/1511576982934.jpg", url: "#", description: null }
-                        ];
-                        result.banners.total = 5;
+                        ]
+                        // result.banners.total = 5;
                     }
-                    if(!result.link.yqlj.list || result.link.yqlj.list == '[]' || result.link.yqlj.list.length == 0) {
+                    if(!result.link.yqlj.list || result.link.yqlj.list == '[]' || !result.link.yqlj.list.length) {
                         result.link.yqlj.list = [
                             { title: "百度", url  : "https://www.baidu.com/" },
                             { title: "网易", url  : "http://www.163.com/" },
@@ -235,7 +235,7 @@
                             { title: "中国人物网", url  : "http://people.china.com.cn/" }
                         ]
                     }
-                    if (!result.users || result.users == '[]' || result.users.length == 0) {
+                    if (!result.users || result.users == '[]' || !result.users.length) {
                         result.users = [
                             {weid: "", avatar: "{{PATH_TML}}image/20170728100344-0.jpg", real_name: "马云", position: "阿里巴巴董事局主席", nickname: "马云"},
                             {weid: "", avatar: "{{PATH_TML}}image/20170731093934-0.JPG", real_name: "郑永刚", position: "杉杉控股董事局主席", nickname: "郑永刚"},
