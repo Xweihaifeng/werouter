@@ -32,22 +32,21 @@ main {
     justify-content: center;
 }
 
+header div:nth-child(1) {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
 header ul{
-    /*width: 100%;*/
-    min-width: 1200px;
+    width: 1200px;
     height: 105px;
-    margin: 0 120px;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-header ul li {
-    padding: 0.1rem 0.8rem 0.1rem 0;
-}
-
 #ht {
-    width: 257px;
     height: 16px;
     margin-top: 12px;
     margin-left: 123px;
@@ -55,7 +54,6 @@ header ul li {
     font-size: 13px;
     color: #666666;
     display: flex;
-    /*float: left;*/
 }
 
 #ht > aside > div {
@@ -153,20 +151,26 @@ header ul li {
 
 #menu{
     height: 55px;
-    padding: 0 160px;
     background-color: #0579cb;
     display: flex;
-    justify-content: space-between;
     align-items: center;
     box-shadow: 1px 1px 10px #ccc;
 }
 
+#menu ol {
+    width: 1310px;
+    margin-bottom: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 #menu li {
-    width: 192px;
-    text-align: center;
-    /*margin: 0 56px;*/
     color: #fff;
-    background: url(/common/img/shutiao.png) no-repeat right;
+    background: url(/common/img/shutiao.png) no-repeat right center;
+    flex: 1;
+    display: flex;
+    justify-content: center;
 }
 
 #menu li:nth-child(7) {
@@ -460,7 +464,7 @@ li .active {
     margin-top: 17px;
     color: #404040;
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: center;
 }
 
@@ -480,8 +484,6 @@ li .active {
 }
 
 .news-date {
-    position: absolute;
-    margin-left: 490px;
     cursor: pointer;
 }
 
