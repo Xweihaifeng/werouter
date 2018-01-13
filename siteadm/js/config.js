@@ -14,6 +14,7 @@ $.ajax({
         console.log(xhr);
     }
 })
+
 var token = sessionStorage.getItem('token');
 var domain = sessionStorage.getItem('domain');
 
