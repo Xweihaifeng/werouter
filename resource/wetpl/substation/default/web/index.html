@@ -79,6 +79,7 @@
                           <img :src="sub_ads.leader.image | img_src(195 , 190 , 1)" alt="">
                           <div class="jie">
                               <h3>{{sub_ads.leader.title | ''}}</h3>
+                              <p>{{sub_ads.leader.description}}</p>
                           </div>
                       </a>
                   </div>
@@ -191,13 +192,13 @@
                     var result = res.data;
 
                     if(!result.header2 || result.header2 == '[]') {
-                        result.header2 = { weid: "c9db9680-dff3-11e7-ae70-2f6645bd73f3", type_id: "a56119c0-765b-11e7-a42e-770589f0tou2", title: "头部横图", image: "plats/resource/1515564231387.jpg", url: "http://sx.sina.com.cn/zt_d/2017qinshang/", description: "" }
+                        result.header2 = { weid: "c9db9680-dff3-11e7-ae70-2f6645bd73f3", type_id: "a56119c0-765b-11e7-a42e-770589f0tou2", title: "头部横图", image: "plats/resource/1515564231387.jpg", url: "#", description: "" }
                     }
                     if(!result.header1 || result.header1 == '[]') {
-                        result.header1 = { weid: "bd798820-dff3-11e7-bc36-35a161317e88", type_id: "a56119c0-765b-11e7-a42e-770589f0tou1", title: "首页顶部logo图", image: "plats/resource/1513162345858.png", url: "http://sx.sina.com.cn/zt_d/2017qinshang/", description: "" }
+                        result.header1 = { weid: "bd798820-dff3-11e7-bc36-35a161317e88", type_id: "a56119c0-765b-11e7-a42e-770589f0tou1", title: "首页顶部logo图", image: "plats/resource/1513162345858.png", url: "#", description: "" }
                     }
                     if(!result.leader || result.leader == '[]') {
-                        result.leader = { weid: "d1fe0600-d181-11e7-9c10-49bfb1717a52", type_id: "a139f5b0-765b-11e7-9a47-a55169e15a6d", title: "商会会长", image: "user/avatar/1501747945200.jpg", url: "/u/71f96b93-da75-11e7-85d7-fa5985d0eaa1", description: "全球秦商总会会长" }
+                        result.leader = { weid: "d1fe0600-d181-11e7-9c10-49bfb1717a52", type_id: "a139f5b0-765b-11e7-9a47-a55169e15a6d", title: "商会会长", image: "user/avatar/1501747945200.jpg", url: "#", description: "全球秦商总会会长" }
                     }
                     if(!result.peoples_title || result.peoples_title == '[]') {
                         result.peoples_title = { weid: "826e44b0-d181-11e7-9c9c-9d2c0ae8ee1d", type_id: "a56119c0-765b-11e7-a42e-770589f0cdd7", title: "秦商风采", image: "plats/resource/1515564250290.png", url: "#", description: null }
