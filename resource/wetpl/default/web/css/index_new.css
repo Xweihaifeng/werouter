@@ -54,14 +54,13 @@ header ul li:nth-child(3) {
 }
 
 #ht {
-    width: 100%;
     height: 16px;
     margin-top: 12px;
+    padding-left: 123px;
     margin-bottom: 14px;
     font-size: 13px;
     color: #666666;
     display: flex;
-    justify-content: flex-end;
 }
 
 #ht > aside > div {
@@ -116,6 +115,7 @@ header ul li:nth-child(3) {
 #hs {
     height: 32px;
     display: flex;
+    justify-content: flex-end;
 }
 
 #search {
@@ -168,19 +168,23 @@ header ul li:nth-child(3) {
 }
 
 #menu ol {
-    width: 1325px;
+    width: 1200px;
     margin-bottom: 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
-
 #menu li {
     color: #fff;
-    background: url(/common/img/shutiao.png) no-repeat right center;
-    flex: 1;
     display: flex;
     justify-content: center;
+}
+
+#menu ol span {
+    background: url(/common/img/new/nav.png) no-repeat right center;
+    display: inline-block;
+    height: 22px;
+    width: 3px;
 }
 
 #menu li:nth-child(7) {
@@ -612,22 +616,26 @@ li .active {
 
 #hbl {
     width: 100%;
+    height: 348px;
 }
 
 #hbm {
     width: 105%;
+    height: 348px;
 }
 
 #hbr {
     width: 90%;
+    height: 348px;
 }
 
 #hbl div, #hbm div, #hbr div {
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
-#hbl div:nth-child(1) p:nth-child(1),
+/*#hbl div:nth-child(1) p:nth-child(1),
 #hbm div:nth-child(1) p:nth-child(1),
 #hbr div:nth-child(1) p:nth-child(1)
 {
@@ -637,7 +645,7 @@ li .active {
     color: #4c4c4c;
     margin-top: 15px;
     padding-left: 5px;
-}
+}*/
 
 #hbl div:nth-child(1) p:nth-child(1) {
     margin-left: 0!important;
@@ -649,7 +657,7 @@ li .active {
     margin-left: 30px;
 }
 
-#hbl div:nth-child(1) p:nth-child(2),
+/*#hbl div:nth-child(1) p:nth-child(2),
 #hbm div:nth-child(1) p:nth-child(2),
 #hbr div:nth-child(1) p:nth-child(2)
 {
@@ -657,7 +665,7 @@ li .active {
     font-size: 15px;
     color: #666666;
     padding-right: 12px;
-}
+}*/
 
 #hbm ul, #hbr ul {
     display: flex;
@@ -686,11 +694,11 @@ li .active {
     background-size: 100%;
 }
 
-#hbl p {
+/*#hbl p {
     margin: 10px 0 0 10px;
     font-size: 13px;
     color: #333;
-}
+}*/
 
 .hb1 {
     font-weight: 600;
