@@ -396,7 +396,8 @@
                         <a href="/magazine/qinshang/820d1280-bef4-11e7-86e7-2f6b48d4c635" target="_blank">
                             <li><img class="mag" src="/common/img/new/05.png"></li></a>
                         <a href="/magazine/qinshang/820d1280-bef4-11e7-86e7-2f6b48d4c634" target="_blank">
-                            <li><img class="mag" src="/common/img/new/06.png"></li></a></ul>
+                            <li><img class="mag" src="/common/img/new/06.png"></li></a>
+                    </ul>
                 </div>
                 <div id="hbr">
                     <div>
@@ -427,28 +428,28 @@
                     <li>更多>></li>
                 </ul>
                 <div class="swiper-container" id="my-swiper-3">
-                    <div class="swiper-wrapper">
-                        <div class="swiper-slide">
+                    <ul class="swiper-wrapper">
+                        <li class="swiper-slide">
                             <img src="/common/img/new/s09.png" alt=""/>
                             <p class="bg3"></p>
                             <p class="content3">西安大雁塔</p>
-                        </div>
-                        <div class="swiper-slide">
+                        </li>
+                        <li class="swiper-slide">
                             <img src="/common/img/new/s10.png" alt=""/>
                             <p class="bg3"></p>
                             <p class="content3">陕西大剧院</p>
-                        </div>
-                        <div class="swiper-slide">
+                        </li>
+                        <li class="swiper-slide">
                             <img src="/common/img/new/s11.png" alt=""/>
                             <p class="bg3"></p>
                             <p class="content3">秦始皇兵马俑</p>
-                        </div>
-                        <div class="swiper-slide">
+                        </li>
+                        <li class="swiper-slide">
                             <img src="/common/img/new/s12.png" alt=""/>
                             <p class="bg3"></p>
                             <p class="content3">钟楼</p>
-                        </div>
-                    </div>
+                        </li>
+                    </ul>
                     <div class="swiper-pagination"></div>
                     <div class="swiper-button-prev"></div>
                     <div class="swiper-button-next"></div>
@@ -460,13 +461,11 @@
             <ul id="link-title">
                 <li v-for="e in link" @click="change_link(e)" :style="e.selected">{{e.title}}</li>
             </ul>
-            <div id="link-page">
-                <ul v-for="e in link" v-show="e.show">
-                    <a v-for="o in e.list" :href="o.url" target="_blank">
-                        <li :title="o.title">{{o.title | fixed_len }}</li>
-                    </a>
-                </ul>
-            </div>
+            <ul id="link-page" v-for="e in link" v-show="e.show">
+                <a v-for="o in e.list" :href="o.url" target="_blank">
+                    <li :title="o.title">{{o.title | fixed_len }}</li>
+                </a>
+            </ul>
         </div>
     </div>
     <div id="bottom1">
@@ -477,7 +476,9 @@
                 <a id="contact" href="/org/contact">联系我们</a>
             </div>
             <div class="copyright" v-html="plats_info.copyright"></div>
-            <div class="_ideConac"><img src="/common/img/gabeian.png" width="60" height="60"></div>
+            <div class="_ideConac">
+                <img src="/common/img/gabeian.png" width="60" height="60">
+            </div>
         </footer>
     </div>
 </main>
@@ -540,8 +541,9 @@
         el: '#app',
         data: {
             plats_info: plats_info,
-            link: [],
-            style: {selected: {"color": "rgb(255, 255, 255)", "background": "rgb(1, 167, 255)", "font-weight": "600"}},
+            link: [], //链接
+            magazine: [], //杂志
+            style: {selected: {"color": "#fff", "background": "#007cd3", "font-weight": "600"}},
         },
         created() {
             this.plats_info.copyright = `
@@ -550,9 +552,9 @@
             <p>版权所有 陕西省秦商联合会 | 网站备案信息：陕ICP备17021746号</p>
             `
             axios.get(CMS_ADVS).then(data => {
-                console.log(Object.values(data.data.data.link));
+                console.log(data);
                 this.link = Object.values(data.data.data.link).map(
-                        (e, i) => (i == 0 ? (e.show = true, e.selected = this.style.selected,  e) : (e.show = false, e.selected = {}, e)));
+                        (e, i) => (i == 0 ? (e.show = true, e.selected = this.style.selected, e) : (e.show = false, e.selected = {}, e)));
             })
         },
         mounted() {
