@@ -65,13 +65,13 @@
                                 </div>
 
                                 <div id="log-in">
-                                    <a style="cursor: pointer;" class="button button-lowercase button-primary login-bt">登录</a>
+                                    <a class="button button-lowercase button-primary login-bt">登录</a>
                                     <div id="qrcode"></div>
                                 </div>
                             </div>
                             <div class="wexin">
-                                <div class="wx">微信登录</div>
-                                <div class="qrcode"><!-- <img src="{{PATH_TML}}connect/qrcode/011jP-OhR6bhLw-i" alt=""/> --></div>
+                                <!-- <div class="wx">微信登录</div> -->
+                                <div id="qrcode-block" style="margin-left:25px;"></div>
                                 <div class="to-login"></div>
                             </div>
                         </div>
@@ -98,6 +98,74 @@
         <!-- <script src="/js/news_base.js"></script> -->
         <script>
             $("#favicon").attr("href", ApiMaterPlatQiniuDomain + localStorage.getItem("fav"));
+            $.getScript("https://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js", function(){
+                $.ajax({
+                    url: apiUrl + 'setting/alias/weChatOpenConfig',
+                    type: 'get',
+                    dataType: 'json',
+                    success: function(result) {
+                        if (result.code === 200) {
+                            var obj = new WxLogin({
+                                id: "qrcode-block",
+                                appid: result.data.appid,
+                                scope: "snsapi_login",
+                                redirect_uri: window.location.href,
+                                href: 'https://wezchina.com/common/css/wechat.css',
+                                state: ""
+                            });
+                        } else {
+                            parent.layer.msg(result.message);
+
+                            return false;
+                        }
+                    },
+                    error: function(xhr) {
+                        console.log(xhr);
+                    }
+                });
+            })
+
+            // 扫码登录
+            function setCookie(token, expiredays)
+            {
+                var Days = expiredays;
+                var exp = new Date();
+                var domain = '.'+root_domain;
+                exp.setTime(exp.getTime() + Days*24*60*60*1000);
+                document.cookie = "token="+ escape (token) + ";expires=" + exp.toGMTString() +";path=/;domain="+domain;
+            }
+
+            var code = GetQueryString('code');
+            var state = GetQueryString('state');
+            var ref_id = localStorage.getItem('ref_id');
+            var ref_url = localStorage.getItem('ref_url');
+            var domain = localStorage.getItem('domain');
+            if (code !== null && code !== undefined && code !== '') {
+                $.ajax({
+                    url: apiUrl + "wx/scan_callback",
+                    data: {
+                        'code': code,
+                        'state': state,
+                        'ref_id': ref_id,
+                        'ref_url': ref_url,
+                        'domain': domain
+                    },
+                    success: function(data) {
+                        localStorage.setItem('token', data.token);
+                        localStorage.setItem('weid', data.data.weid);
+                        localStorage.setItem('phone', data.data.phone);
+                        setCookie(data.token, 7);
+                        if (data.data.phone === null || data.data.phone === undefined || data.data.phone === '') {
+                            location.href = siteUrl + "/bind";
+                        } else {
+                            location.href = siteUrl + "/user";
+                        }
+
+                    }
+                });
+            }
+
+
         </script>
     </body>
 </html>
