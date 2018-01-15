@@ -6,11 +6,11 @@ class config{
         'port' => 10036,
         'username' => 'SbsBL6tnULzkI21',
         'password' => 'oNmcnKJX21JurFw',
-        'dbname' => 'new.wezchina.com',
+        'dbname' => 'wezchina',
         'charset' => 'utf8'
     );
 
-    public static $config_api_url = 'http://api.mptest.wezchina.com/plats/domain?site=';
+    public static $config_api_url = 'https://mp.wezchina.com/api/plats/domain?site=';
     
     public static $plats;
 }

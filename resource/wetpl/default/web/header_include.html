@@ -85,8 +85,8 @@
 
                 <li><a href="#" class="t">帮助</a>
                     <div class="cont" >
-                        <a v-for="item in header_help" :href="'/help/'+ item.domain"  >{{item.title}}</a>
-                    </div> 
+                        <a href="/help/wehelp">帮助中心</a>
+                    </div>
                 </li>
 
                 <li>
@@ -145,6 +145,7 @@
 
                 this.header('header_help' , 'help' , (res)=>{
                     this.header_help = res;
+                    console.log(res)
                 });
             });
         },
@@ -161,6 +162,7 @@
                     ajax.get(web_business.web_cms_channel_categories , {params:{channel:channel}}).then((res)=>{
                         win.setStorage(key , res.data);
                         val(res.data);
+                        console.log(red.data)
                     });
                 }
                 else
