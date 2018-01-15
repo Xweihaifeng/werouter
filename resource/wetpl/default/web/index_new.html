@@ -149,7 +149,7 @@
                         </div>
                         <div class="rcd-news">
                             <div class="rcd-tb">
-                                <div class="rcd-news-line" v-for="e in especial">
+                                <div class="rcd-news-line" v-for="e in especial.slice(0, 4)">
                                     <div class="rcd-news-title">
                                         <a :href="e.channel_domain + '/' + e.weid" target="_blank">{{e.title | cut(18)}}</a>
                                     </div>
@@ -171,13 +171,13 @@
                     </div>
                     <div class="news-center">
                         <ul class="nav nav-tabs">
-                            <li role="presentation" class="center active" style="border-bottom: 3px solid rgb(37, 150, 232);"><a href="news">新闻中心</a></li>
-                            <li role="presentation" class="sirase" style="border-bottom: none;"><a href="org">公示公告</a></li>
-                            <li role="presentation" class="release" style="border-bottom: none;"><a>官方发布</a></li>
+                            <li role="presentation" class="center" :style="is_border.news" @mouseenter="show('news')"><a href="news">新闻中心</a></li>
+                            <li role="presentation" class="sirase" :style="is_border.notice" @mouseenter="show('notice')"><a href="org">公示公告</a></li>
+                            <li role="presentation" class="release":style="is_border.weibo" @mouseenter="show('weibo')"><a>官方发布</a></li>
                         </ul>
                     </div>
                     <div class="news-link">
-                        <div id="center">
+                        <div id="center" v-show="is_show.news">
                             <ul class="news-line" v-for="e in news.slice(0, 7)">
                                 <div style="display: flex; align-items: center;">
                                     <li class="news-type">[{{e.cate_title}}]</li>
@@ -190,7 +190,7 @@
                                 </li>
                             </ul>
                         </div>
-                        <div id="sirase" style="display: none;">
+                        <div id="sirase" v-show="is_show.notice">
                             <ul class="news-line" v-for="e in notice.slice(0, 7)">
                                 <div style="display: flex; align-items: center;">
                                     <li class="news-type">[{{e.cate_title}}]</li>
@@ -203,7 +203,7 @@
                                 </li>
                             </ul>
                         </div>
-                        <div id="release" style="display: none;" v-html="plats_info.weibo_show"></div>
+                        <div id="release" v-html="plats_info.weibo_show" v-show="is_show.weibo"></div>
                     </div>
                 </li>
             </ul>
@@ -472,9 +472,12 @@
             ztbd: [], //专题
             link: [], //链接
             style: {
+                border: {"border-bottom": "4px solid #01a7ff"},
                 selected: {"color": "#fff", "background": "#007cd3", "font-weight": "600"},
                 video: {"background": "url(/common/img/new/08.png) no-repeat center"}
             },
+            is_show: {news: true, notice: false, weibo: false},
+            is_border: {news: {"border-bottom": "4px solid #01a7ff"}, notice: {}, weibo: {}},
             swiper: {
                 direction: 'horizontal',
                 loop: true,
@@ -511,7 +514,7 @@
             })
 
             axios.get(CMS_INDEX_GRID).then(data => {
-                console.log(data.data);
+                //console.log(data.data);
                 let resp = data.data.data;
                 this.main_news = {...resp.hot[0],
                                     title: resp.hot[0].title.substr(0, 18),
@@ -529,6 +532,10 @@
                 setTimeout(() => {
                     var mySwiper3 = new Swiper('#my-swiper-3', {...this.swiper, slidesPerView: 4, spaceBetween: 20})
                 }, 50);
+            })
+
+            axios.get(ARTICLES + "?field=domain,weid,title,cate_id,created_at").then(data => {
+                console.log(data)
             })
 
         },
@@ -551,6 +558,12 @@
                         content: url
                     });
                 })
+            },
+            show: name => {
+                let ls = ['news', 'notice', 'weibo'];
+                ls.filter(x => x !== name).map(x => (app.is_show[x] = false, app.is_border[x] = {}));
+                app.is_show[name] = true;
+                app.is_border[name] = app.style.border;
             },
             change_link: e => {
                 app.link.map(x => x.show === true ? (x.show = false, x.selected = {}) : '');
