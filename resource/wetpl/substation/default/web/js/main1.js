@@ -27,7 +27,7 @@ $("#content_app").ready(function(){
             b=setInterval(bb,20)
         })
         // 浙商风采结束
-    },2000);
+    },1000);
 
 
 })
