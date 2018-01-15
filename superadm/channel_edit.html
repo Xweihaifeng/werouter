@@ -104,6 +104,20 @@
                                             <input type="text" value="" class="form-control" name="sort" placeholder="请输入数字">
                                         </div>
                                     </div>
+                                     <div class="form-group">
+                                        <label class="control-label col-sm-2">在首页导航展示</label>
+                                        <div class="col-sm-5">
+                                            <div class="checkbox">
+                                                <label><input type="checkbox" name="index_show" value="1"></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2">外部链接</label>
+                                        <div class="col-sm-5">
+                                              <input type="input" name="url" class="form-control" placeholder="输入后将跳转到指定链接">
+                                        </div>
+                                    </div>
                                     <div class="form-group">
                                         <label class="control-label col-sm-2">在搜索展示</label>
                                         <div class="col-sm-5">
@@ -452,6 +466,8 @@
                         $('input[name=domain]').val(data.data.domain);
                         $('input[name=sort]').val(data.data.sort);
                         $("[name=in_search]:checkbox").attr("checked", data.data.in_search ? true : false);
+                        $("[name=index_show]:checkbox").attr("checked", data.data.index_show ? true : false);
+                         $('input[name=url]').val(data.data.url);
                         $('input[name=search_name]').val(data.data.search_name);
                         if (data.data.thumb_image) {
                             $('#img').attr("src", ApiMaterPlatQiniuDomain + data.data.thumb_image);
@@ -641,6 +657,8 @@
                     'domain': $('input[name=domain]').val(),
                     'sort': $('input[name=sort]').val(),
                     'in_search': $('input[name="in_search"]').is(':checked') ? 1 : 0,
+                    'index_show': $('input[name="index_show"]').is(':checked') ? 1 : 0,
+                    'url': $('input[name=url]').val(),
                     'search_name': $('input[name=search_name]').val(),
                     'thumb_image': $('input[name=thumb_image]').val(),
                     'back_image': $('input[name=back_image]').val(),
