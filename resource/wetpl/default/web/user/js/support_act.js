@@ -26,6 +26,7 @@ $(document).ready(function() {
             '<div class="ticket-box-top">' +
             '<div class="t_blank"></div>' +
             '<div class="ticket-qr"></div>' +
+            '<div class="bar-code"><svg></svg></div>' +
 
             '<div style="width:92%;text-align:center;margin:0 auto;">票号：' + data.ticket_num + '</div>' +
             '<div style="width:92%;text-align:center;margin:0 auto;">活动时请向发起人展示</div>' +
@@ -98,6 +99,7 @@ $(document).ready(function() {
                         }
                     }
                     qrcodefun1(activityid, domainid, data.data.ticket_num);
+                    barcode('.bar-code svg', data.data.ticket_num);
                 }
 
             },
@@ -107,25 +109,38 @@ $(document).ready(function() {
         })
     }
     var qrcodefun1 = function(id, domainid, ticket_num) {
-        var qrcode_val = ACTIVITY_ENROLL_CHECK + "?e_number=" + ticket_num;
-        $(".ticket-qr").attr("data-ref", qrcode_val);
-        // if ($.browser.msie && $.browser.version <= 8){
-        if ($.support.msie && $.support.version <= 8) {
+            var qrcode_val = ticket_num;
+            $(".ticket-qr").attr("data-ref", qrcode_val);
+            // if ($.browser.msie && $.browser.version <= 8){
+            if ($.support.msie && $.support.version <= 8) {
 
-            $(".ticket-qr").qrcode({
-                render: "table",
-                width: 110,
-                height: 110,
-                text: qrcode_val
-            });
-        } else {
-            jQuery(".ticket-qr").qrcode({
-                width: 110,
-                height: 110,
-                text: qrcode_val
-            });
+                $(".ticket-qr").qrcode({
+                    render: "table",
+                    width: 110,
+                    height: 110,
+                    text: qrcode_val
+                });
+            } else {
+                jQuery(".ticket-qr").qrcode({
+                    width: 110,
+                    height: 110,
+                    text: qrcode_val
+                });
+            }
+
         }
-
+        // 条形码生成
+    var barcode = function(selector, ticket_num) {
+        JsBarcode(selector, ticket_num, {
+            format: "CODE128",
+            width: 2,
+            height: 50,
+            displayValue: false,
+            text: ticket_num,
+            background: "#fff",
+            lineColor: "#000",
+            margin: 5
+        });
     }
     var articleTemplate = function(data) {
         var act_title = "";

@@ -7,11 +7,13 @@
 <link rel="stylesheet" href="{{PATH_TML}}css/E-ticket.css">
 <script src="/common/js/jquery.min.js"></script>
 <script src="/common/js/jquery.qrcode.min.js"></script>
+<script type="text/javascript" src="/common/js/JsBarcode.all.js"></script>
 <div class="ticket-content">
     <div class="toolbar"></div>
     <div class="info">
         <div class="qr">
             <div class="qr-content"></div>
+            <div class="bar-code"><svg></svg></div>
             <p>票号：{{infoData.ticket_num}}</p>
         </div>
         <div class="des">
@@ -55,42 +57,56 @@
 </div>
 <script>
     new Vue({
-        el : '#app',
-        data : {
-            infoData : {},
-            chatQrUrl:'',
-            showChatQr:false
+        el: '#app',
+        data: {
+            infoData: {},
+            chatQrUrl: '',
+            showChatQr: false
         },
-        mounted : function () {
+        mounted: function() {
             var id = sessionStorage.getItem('enroll_id');
-            if(!id){
+            if (!id) {
                 alert(sessionStorage.getItem('enroll_id'))
-                //window.location.href='/404'
+                    //window.location.href='/404'
             }
-            ajax.get('activity/enroll/detail/'+id).then((res)=>{
+            ajax.get('activity/enroll/detail/' + id).then((res) => {
                 console.log(res);
-                if(res.code == 200 && res.data){
+                if (res.code == 200 && res.data) {
                     this.infoData = res.data;
-                    this.makeQr(apiUrl+"activity/enroll/check_ticket_number?e_number=" + res.data.ticket_num);
+                    this.makeQr(res.data.ticket_num);
+                    this.barcode('.bar-code svg', res.data.ticket_num);
                 }
             })
         },
-        methods:{
-            makeQr : function (url) {
+        methods: {
+            makeQr: function(url) {
                 var qrcode_val = url;
                 var clientWidth = document.documentElement.clientWidth;
-                var canvasWidth = Math.floor(clientWidth*120/375);
+                var canvasWidth = Math.floor(clientWidth * 120 / 375);
                 jQuery(".qr-content").qrcode({
                     width: canvasWidth,
                     height: canvasWidth,
                     text: qrcode_val
                 });
             },
-            chat : function (url) {
+            // 条形码生成
+            barcode: function(selector, ticket_num) {
+                JsBarcode(selector, ticket_num, {
+                    format: "CODE128",
+                    width: 2,
+                    height: 50,
+                    displayValue: false,
+                    text: ticket_num,
+                    background: "#fff",
+                    lineColor: "#000",
+                    margin: 5
+                });
+            },
+            chat: function(url) {
                 this.chatQrUrl = url;
                 this.showChatQr = true
             },
-            notCancel : function (ev) {
+            notCancel: function(ev) {
                 ev.stopPropagation()
             }
         }

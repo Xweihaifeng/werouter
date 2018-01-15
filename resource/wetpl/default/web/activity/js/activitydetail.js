@@ -236,6 +236,7 @@ $(document).ready(function() {
                             console.log(urlall[0])
                             Ticket(data.data);
                             qrcodefun1(data.data.ticket_num);
+                            barcode('.bar-code svg', data.data.ticket_num);
                         }
 
                     },
@@ -314,6 +315,7 @@ $(document).ready(function() {
                             '<div class="ticket-box-top">' +
                             '<div class="t_blank"></div>' +
                             '<div class="ticket-qr"></div>' +
+                            '<div class="bar-code"><svg></svg></div>' +
 
                             '<div style="width:92%;text-align:center;margin:0 auto;">票号：' + data.ticket_num + '</div>' +
                             '<div style="width:92%;text-align:center;margin:0 auto;">活动时请向发起人展示，该码可在个人中心查看</div>' +
@@ -1127,7 +1129,7 @@ $(document).ready(function() {
 
     }
     var qrcodefun1 = function(ticket_num) {
-        var qrcode_val = ACTIVITY_ENROLL_CHECK + "?e_number=" + ticket_num;
+        var qrcode_val = ticket_num;
         // if ($.browser.msie && $.browser.version <= 8){
         if ($.support.msie && $.support.version <= 8) {
 
@@ -1146,6 +1148,20 @@ $(document).ready(function() {
         }
 
     }
+
+        // 条形码生成
+        var barcode = function(selector, ticket_num) {
+            JsBarcode(selector, ticket_num, {
+                format: "CODE128",
+                width: 2,
+                height: 50,
+                displayValue: false,
+                text: ticket_num,
+                background: "#fff",
+                lineColor: "#000",
+                margin: 5
+            });
+        }
 
 
     // 2.1嘉宾模板
