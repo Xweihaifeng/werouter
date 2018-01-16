@@ -928,8 +928,8 @@ req().then((data) => {
                     addBg(data.data.header1.image, '#hl', 196, 45);
                 }
                 if (data.data.header2 != null) {
-                    addBg(data.data.header2.image, '#big', 960, 235);
-                    $(".big a").attr('href', data.data.header2.url);
+                    addBg(data.data.header2.list[0].image, '#big', 960, 235);
+                    $(".big a").attr('href', data.data.header2.list[0].url);
                 }
 
                 /*var isEnter = true; // 鼠标在main中
@@ -1363,10 +1363,14 @@ req().then((data) => {
                     var vdsource = vdinfo.list[0].source_url;
                     var magazine = data.data.mag;
                     var report = data.data.ztbd;
+                    let cover = '/common/img/new/08.png'
+                    if (vdinfo.list[0].thumb_image != '') {
+                        cover = ApiMaterPlatQiniuDomain + vdinfo.list[0].thumb_image;
+                    }
                     if (vdinfo != null) {
                         $("#hbl div:eq(0) p:eq(0)").text(vdinfo.title);
                         $("#hbl div:eq(0) p:eq(1)").html(`<a href="${'/' + vdinfo.domain}">更多>></a>`);
-                        $("#hbl div:eq(1)").css({'background': 'url(' + ApiMaterPlatQiniuDomain + vdinfo.list[0].thumb_image + ') no-repeat center'});
+                        $("#hbl div:eq(1)").css({'background': 'url(' + cover + ') no-repeat center'});
                         var vdtpl = vdinfo.list.reduce((tpl, e, i) =>
                             i >= 1 && i < 3 ?
                                 tpl += `<div class="hbs"><p><a href="${vdinfo.domain + '/' + e.weid}">> ${e.title.substr(0, 14)}</p>
