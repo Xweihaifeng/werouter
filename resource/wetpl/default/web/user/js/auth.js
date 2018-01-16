@@ -120,11 +120,13 @@ function avatar_admin() {
                 })
             }
             var checkDomain = function(domain, callback) {
+                layer.load(1);
                 $.ajax({
                     url: PAGES_PAGE_CHECK_DOMAIN,
                     type: 'POST',
                     data: { domain: domain },
                     success: function(data) {
+                        layer.closeAll('loading');
                         if (data.code == 200) {
                             callback(data.data);
                         } else {
@@ -132,6 +134,7 @@ function avatar_admin() {
                         }
                     },
                     error: function(error) {
+                        layer.closeAll('loading');
                         console.log(error);
                     }
                 })
