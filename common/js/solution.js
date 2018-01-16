@@ -1,7 +1,7 @@
 $(function () {
     //导航
+    var arr = [];
     $(".nav_list > li").click(function () {
-        let arr = [];
         let index = $(".nav_list > li").index(this)
         let fool1 = $(".program").offset().top;
         let fool2 = $(".basis").offset().top;
@@ -19,30 +19,29 @@ $(function () {
     })
     $(document).scroll(function () {
         let top = $(document).scrollTop();
-        console.log(top)
         if (440 <= top) {
             $("#header").css({"display":"none"});
             $(".nav3").addClass("fixed");
             $(".main").css({"background": "#fff","box-shadow": "0px 1px 5px #e0e0e0"});
             $(".nav_list li span").css({"color": "#333"});
             $(".nav_title").css({"opacity": 1})
-            if( top <1121){
-                $(".nav_list > li:nth-of-type(1)").children("span").addClass("span").end().siblings().children("span").removeClass("span");
+            if( top <arr[0]){
+                $(".nav_list > li:nth-of-type(1)").children("span").addClass("spans").end().siblings().children("span").removeClass("spans");
                 $(".nav_list > li:nth-of-type(1)").addClass("span").siblings().removeClass("span");
-            }else if( top < 1862 ){
-                $(".nav_list > li:nth-of-type(2)").children("span").addClass("span").end().siblings().children("span").removeClass("span");
+            }else if( top < arr[1] ){
+                $(".nav_list > li:nth-of-type(2)").children("span").addClass("spans").end().siblings().children("span").removeClass("spans");
                 $(".nav_list > li:nth-of-type(2)").addClass("span").siblings().removeClass("span");
-            }else if( top < 2704){
-                $(".nav_list > li:nth-of-type(3)").children("span").addClass("span").end().siblings().children("span").removeClass("span");
+            }else if( top < arr[2]){
+                $(".nav_list > li:nth-of-type(3)").children("span").addClass("spans").end().siblings().children("span").removeClass("spans");
                 $(".nav_list > li:nth-of-type(3)").addClass("span").siblings().removeClass("span");
-            }else if(top < 3345){
-                $(".nav_list > li:nth-of-type(4)").children("span").addClass("span").end().siblings().children("span").removeClass("span");
+            }else if(top < arr[3]){
+                $(".nav_list > li:nth-of-type(4)").children("span").addClass("spans").end().siblings().children("span").removeClass("spans");
                 $(".nav_list > li:nth-of-type(4)").addClass("span").siblings().removeClass("span");
-            }else if(top <4236){
-                $(".nav_list > li:nth-of-type(5)").children("span").addClass("span").end().siblings().children("span").removeClass("span");
+            }else if(top <arr[4]){
+                $(".nav_list > li:nth-of-type(5)").children("span").addClass("spans").end().siblings().children("span").removeClass("spans");
                 $(".nav_list > li:nth-of-type(5)").addClass("span").siblings().removeClass("span");
-            }else if(4236 <= top){
-                $(".nav_list > li:nth-of-type(6)").children("span").addClass("span").end().siblings().children("span").removeClass("span");
+            }else if((arr[5]-40) <= top){
+                $(".nav_list > li:nth-of-type(6)").children("span").addClass("spans").end().siblings().children("span").removeClass("spans");
                 $(".nav_list > li:nth-of-type(6)").addClass("span").siblings().removeClass("span");
             }
             $(".nav_list > li >span").hover(
@@ -55,7 +54,7 @@ $(function () {
             $("#header").css({"display":"block"});
             $(".nav3").removeClass("fixed");
             $(".main").css({"background": "rgba(104,123,126,0.5)","box-shadow": "0px 0px 0px #e0e0e0"});
-            $(".nav_list li span").css({"color": "#fff"}).removeClass("span")   ;
+            $(".nav_list li span").css({"color": "#fff"}).removeClass("spans")   ;
             $(".nav_list li").removeClass("span");
             $(".nav_title").css({"opacity": 0})
             $(".nav_list > li > span").hover(

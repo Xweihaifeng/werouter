@@ -5,299 +5,150 @@
 <link rel="stylesheet" href="/common/css/main_help.css" />
 <script src="/common/js/help.js"></script>
 <body>
-<section class="bnaner">
-    <div class="nav1">
-        <div class="main" id="fff"></div>
-    </div>
-</section>
+<div id="app">
+    <section class="bnaner">
+        <div class="nav1">
+            <div class="main" id="fff"></div>
+        </div>
+    </section>
 
-
-<section class="content">
-    <div class="toptop">
+    <section class="content">
+        <div class="toptop">
+            <main>
+                <ul class="content_left pps">
+                    <li :class="{'current': item.domain == currPage}" v-for="item in header_news">
+                        <a :href="'/news/'+ item.domain"><span>{{item.title}}</span></a>
+                    </li>
+                </ul>
+            </main>
+        </div>
         <main>
-            <ul class="content_left pps">
-                <li>
-                    <span>快速入门</span>
-                </li>
-                <li>
-                    <span>基础知识</span>
-                </li>
-                <li>
-                    <span>应用扩展</span>
-                </li>
-                <li>
-                    <span>统计报告</span>
-                </li>
-                <li>
-                    <span>其他设置</span>
-                </li>
-                <li>
-                    <span>帮助中心</span>
-                </li>
-            </ul>
+            <div class="boxb">
+                <ul class="content_left diss">
+                    <li :class="{'current': item.domain == currPage}" v-for="item in header_news">
+                        <a :href="'/news/'+ item.domain"><span>{{item.title}}</span></a>
+                    </li>
+                </ul>
+            </div>
+            <div class="content_right">
+                <ul>
+                    <li>
+                        <ul class="content_right_top">
+                            <li>
+                                <div class="img">
+                                    <img class="pos" src="/common/img/help2.png" alt="">
+                                </div>
+                                <span>功能介绍{{channel_name}}</span>
+                            </li>
+                            <li>
+                                <div class="img">
+                                    <img class="pos" src="/common/img/help3.png" alt="">
+                                </div>
+                                <span>功能介绍</span>
+                            </li>
+                            <li>
+                                <div class="img">
+                                    <img class="pos" src="/common/img/help4.png" alt="">
+                                </div>
+                                <span>功能介绍</span>
+                            </li>
+                        </ul>
+
+                    </li>
+                    <li v-for="item in content">
+                        <div class="con_title">
+                            <p>#{{item.title}}#</p>
+                        </div>
+                        <div class="list_p">
+                            <ul class="list">
+                                <li v-for="v in item.children">
+                                    <div class="list_title">
+                                        <div class="line"></div>
+                                        <span>{{v.title}}</span>
+                                    </div>
+                                    <ul>
+                                        <li v-for="i in v.son">
+                                            <div class="line_cicle"></div>
+                                            <div class="text">
+                                                <a :href="'/news/'+i.weid"><span>{{i.title}}</span></a>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    <P>查看全部{{v.count}}篇文档</P>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </li>
+                </ul>
+
+            </div>
         </main>
+    </section>
+</div>
 
-    </div>
-    <main>
-        <div class="boxb">
-            <ul class="content_left diss">
-                <li>
-                    <span>快速入门</span>
-                </li>
-                <li>
-                    <span>基础知识</span>
-                </li>
-                <li>
-                    <span>应用扩展</span>
-                </li>
-                <li>
-                    <span>统计报告</span>
-                </li>
-                <li>
-                    <span>其他设置</span>
-                </li>
-                <li>
-                    <span>帮助中心</span>
-                </li>
-            </ul>
-        </div>
 
-        <div class="content_right">
-            <ul>
-                <li>
-                    <ul class="content_right_top">
-                        <li>
-                            <div class="img">
-                                <img class="pos" src="/common/img/help2.png" alt="">
-                            </div>
-                            <span>功能介绍</span>
-                        </li>
-                        <li>
-                            <div class="img">
-                                <img class="pos" src="/common/img/help3.png" alt="">
-                            </div>
-                            <span>功能介绍</span>
-                        </li>
-                        <li>
-                            <div class="img">
-                                <img class="pos" src="/common/img/help4.png" alt="">
-                            </div>
-                            <span>功能介绍</span>
-                        </li>
-                    </ul>
-                    <div class="con_title">
-                        <p>#新手知道和基础#</p>
-                    </div>
-                </li>
-                <li>
-                    <ul class="list">
-                        <li>
-                            <div class="list_title">
-                                <div class="line"></div>
-                                <span>快速入门</span>
-                            </div>
-                            <ul>
-                                <li>
-                                    <div class="line_cicle"></div>
-                                    <div class="text">
-                                        <span>【第一课】什么是工单系统？</span>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="line_cicle"></div>
-                                    <div class="text">
-                                        <span>【第二课】解决您的第一个工单</span>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="line_cicle"></div>
-                                    <div class="text">
-                                        <span>【第一课】自定义品牌及设置介绍</span>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="line_cicle"></div>
-                                    <div class="text">
-                                        <span>【第一课】为你的客户创造良好的客户体验</span>
-                                    </div>
-                                </li>
-                            </ul>
-                            <P>查看全部13篇文档</P>
-                            <div class="con_title">
-                                <p>#新手知道和基础#</p>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="list_title">
-                                <div class="line"></div>
-                                <span>快速入门</span>
-                            </div>
-                            <ul>
-                                <li>
-                                    <div class="line_cicle"></div>
-                                    <div class="text">
-                                        <span>【第一课】什么是工单系统？</span>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="line_cicle"></div>
-                                    <div class="text">
-                                        <span>【第二课】解决您的第一个工单</span>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="line_cicle"></div>
-                                    <div class="text">
-                                        <span>【第一课】自定义品牌及设置介绍</span>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="line_cicle"></div>
-                                    <div class="text">
-                                        <span>【第一课】为你的客户创造良好的客户体验</span>
-                                    </div>
-                                </li>
-                            </ul>
-                            <P>查看全部13篇文档</P>
-                        </li>
-                        <li>
-                            <div class="list_title">
-                                <div class="line"></div>
-                                <span>快速入门</span>
-                            </div>
-                            <ul>
-                                <li>
-                                    <div class="line_cicle"></div>
-                                    <div class="text">
-                                        <span>【第一课】什么是工单系统？</span>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="line_cicle"></div>
-                                    <div class="text">
-                                        <span>【第二课】解决您的第一个工单</span>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="line_cicle"></div>
-                                    <div class="text">
-                                        <span>【第一课】自定义品牌及设置介绍</span>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="line_cicle"></div>
-                                    <div class="text">
-                                        <span>【第一课】为你的客户创造良好的客户体验</span>
-                                    </div>
-                                </li>
-                            </ul>
-                            <P>查看全部13篇文档</P>
-                        </li>
-                        <li>
-                            <div class="list_title">
-                                <div class="line"></div>
-                                <span>快速入门</span>
-                            </div>
-                            <ul>
-                                <li>
-                                    <div class="line_cicle"></div>
-                                    <div class="text">
-                                        <span>【第一课】什么是工单系统？</span>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="line_cicle"></div>
-                                    <div class="text">
-                                        <span>【第二课】解决您的第一个工单</span>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="line_cicle"></div>
-                                    <div class="text">
-                                        <span>【第一课】自定义品牌及设置介绍</span>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="line_cicle"></div>
-                                    <div class="text">
-                                        <span>【第一课】为你的客户创造良好的客户体验</span>
-                                    </div>
-                                </li>
-                            </ul>
-                            <P>查看全部13篇文档</P>
-                        </li>
-                        <li>
-                            <div class="list_title">
-                                <div class="line"></div>
-                                <span>快速入门</span>
-                            </div>
-                            <ul>
-                                <li>
-                                    <div class="line_cicle"></div>
-                                    <div class="text">
-                                        <span>【第一课】什么是工单系统？</span>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="line_cicle"></div>
-                                    <div class="text">
-                                        <span>【第二课】解决您的第一个工单</span>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="line_cicle"></div>
-                                    <div class="text">
-                                        <span>【第一课】自定义品牌及设置介绍</span>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="line_cicle"></div>
-                                    <div class="text">
-                                        <span>【第一课】为你的客户创造良好的客户体验</span>
-                                    </div>
-                                </li>
-                            </ul>
-                            <P>查看全部13篇文档</P>
-                        </li>
-                        <li>
-                            <div class="list_title">
-                                <div class="line"></div>
-                                <span>快速入门</span>
-                            </div>
-                            <ul>
-                                <li>
-                                    <div class="line_cicle"></div>
-                                    <div class="text">
-                                        <span>【第一课】什么是工单系统？</span>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="line_cicle"></div>
-                                    <div class="text">
-                                        <span>【第二课】解决您的第一个工单</span>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="line_cicle"></div>
-                                    <div class="text">
-                                        <span>【第一课】自定义品牌及设置介绍</span>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="line_cicle"></div>
-                                    <div class="text">
-                                        <span>【第一课】为你的客户创造良好的客户体验</span>
-                                    </div>
-                                </li>
-                            </ul>
-                            <P>查看全部13篇文档</P>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            'header_news': [],
+            'currPage' : window.location.pathname.split('/').pop(),
+            'channel' : '' ,
+            'channel_name' : '',
+            'list_data' : [],
+            'show':true,
+            'empty_show':false,
+            'page':1,
+            'content':'',
+        },
+        mounted() {
+            this.$nextTick( function () {
+                this.header_news = win.getStorage('header_help');
+                this.getdata()
+                for(val in this.header_news){
+                    if(this.header_news[val].domain == this.currPage){
+                        this.channel = this.header_news[val].domain;
+                        this.channel_name = this.header_news[val].title;
+                        this.get_data(this.channel , 1);
+                        set_title(this.channel_name);
+                    }
+                }
+            });
+        },
+        methods:{
+            getdata:function () {
+                ajax.get(web_business.web_cms_channel_categories , {params:{channel:'help' , limit : 2}}).then((res)=>{
+                    this.content = res.data;
+                    console.log(this.content,1111)
+                });
+              // fetch(web_business.web_cms_channel_categories,{params:{cate_id:cate_id , limit : 10 , 'page' : this.page}}).then(console.log(res))
+            },
+            get_data : function(cate_id){
+                ajax.get(web_business.web_cms_channel_contents , {params:{cate_id:cate_id , limit : 10 , 'page' : this.page}}).then((res)=>{
+                    this.list_data = res.data;
+                    if(this.list_data.total == 0 && this.page == 1){
+                        this.empty_show = true;
+                    }
+                    var list = this.list_data.list;
+                    for(val in list){
+                        var time = (new Date(list[val].publish_time)).getTime();
+                        var time_list = new Date(time);
+                        list[val].time_year = time_list.getFullYear();
+                        list[val].time_data = time_list.getMonth()+'-'+time_list.getDate();
+                        list[val].href = '/news/'+list[val].weid;
+                        list[val].img = settings+list[val].thumb_image;
+                    }
+                    this.show = false;
+                });
+            }
+        }
+    })
+</script>
+<script>
+    function aa(){
 
-        </div>
-    </main>
-</section>
-
+    }
+    aa();
+</script>
 <#include#>footer_include.html</#include#>
