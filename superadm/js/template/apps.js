@@ -23,6 +23,10 @@ var __init = function() {
 
     __init_onlione_cert();
 
+    // initialize a app of plat sms
+
+    __init_sms_pakage();
+
     // initialize a app of qiniu configuration
 
     __init_qiniu_config();
@@ -144,7 +148,7 @@ $(document).on('click', '.online_cert .message_package_con>li>a', function() {
     $(this).addClass('current').closest('li').siblings('li').find('a').removeClass('current');
 });
 
-$(document).on('click', '.buy-instance', function() {
+$(document).on('click', '.online_cert .sms_package .buy-instance', function() {
     if ($('.online_cert .message_package_con a.pid.current').length === 0) {
         swal('提示', '请选择套餐', 'error');
         return;
@@ -210,7 +214,124 @@ $(document).on('click', '.buy-instance', function() {
     })
 });
 
+/**
+ * ------------------------------------------------
+ * apps script
+ * ------------------------------------------------
+ */
 
+// 短信 - sms_pakage
+
+var __init_sms_pakage = function() {
+    $.ajax({
+        url: ApiUrl + 'sms/plat/setting',
+        type: 'get',
+        dataType: 'json',
+        success: function(data) {
+            $('.sms_pakage input[name=rest_count]').val(data.data.num);
+        },
+        error: function(xhr) {
+            console.log(xhr);
+        }
+    });
+    $.ajax({
+        url: ApiUrl + 'sms/plat/package_list',
+        type: 'get',
+        dataType: 'json',
+        success: function(data) {
+            var html = '';
+            $.each(data.data.list, function(k, v) {
+                html += `<li>
+				<a data-weid="` + v.weid + `" data-num="` + v.num + `" class="pid" href="javascript:;">` + v.num + `条 / ` + v.price + `元</a>
+			</li>`;
+            });
+            $('.sms_package .message_package_con').html(html);
+            $('.sms_package .message_package_con').find('li:first-child').find('a').addClass('current');
+        },
+        error: function(xhr) {
+            console.log(xhr);
+        }
+    });
+}
+
+
+$(document).on('click', '.sms_package  .btn-cancel-buy', function() {
+    var that = this;
+    $(that).closest('.message_box').find('.message_buy_box').slideToggle('normal', function() {
+        $(that).text($(that).closest('.message_box').find('.message_buy_box').css('display') === 'none' ? '购买' : '取消');
+    });
+
+});
+
+$(document).on('click', '.sms_package .message_package_con>li>a', function() {
+    $(this).addClass('current').closest('li').siblings('li').find('a').removeClass('current');
+});
+
+$(document).on('click', '.sms_package .buy-instance', function() {
+    if ($('.sms_package .message_package_con a.pid.current').length === 0) {
+        swal('提示', '请选择套餐', 'error');
+        return;
+    }
+    var that = this;
+    var package = $('.sms_package .message_package_con a.pid.current').data('weid');
+    $.ajax({
+        url: ApiUrl + 'wxpay/sms_package',
+        type: 'post',
+        dataType: 'json',
+        data: {
+            package: package
+        },
+        success: function(data) {
+            swal({
+                title: '微信支付',
+                text: '请用微信扫描二维码完成支付',
+                imageUrl: hosts + 'file/qrcode?size=8&margin=2&url=' + data.data.qr_url,
+                imageWidth: 200,
+                imageHeight: 200,
+                animation: false
+            }).then(
+                function() {
+                    clearInterval(tmr);
+                },
+                // handling the promise rejection
+                function(dismiss) {
+                    if (dismiss === 'timer') {
+                        console.log(dismiss);
+                    }
+                }
+            );
+            $('.sms_package input[name=order_id]').val(data.data.order_id);
+            tmr = setInterval(function() {
+                var order = data.data.order_id;
+                $.ajax({
+                    url: ApiUrl + 'sms/plat/order/order_detect',
+                    type: 'post',
+                    dataType: 'json',
+                    data: {
+                        number: order
+                    },
+                    success: function(rep) {
+                        if (rep.data.status == 1) {
+                            swal(
+                                '支付成功!',
+                                '平台已获取' + $('.sms_package .message_package_con a.pid.current').data('num') + '次发送短信能力',
+                                'success'
+                            );
+                            clearInterval(tmr);
+                            $('.sms_package input[name=rest_count]').val(parseInt($('.sms_package input[name=rest_count]').val()) + parseInt($('.sms_package .message_package_con a.pid.current').data('num')));
+                        }
+                    },
+                    error: function(xhr) {
+                        console.log(xhr);
+                    }
+                });
+            }, 1000)
+        },
+        error: function(xhr) {
+            console.log(xhr);
+        }
+    })
+});
 
 /**
  * ------------------------------------------------
