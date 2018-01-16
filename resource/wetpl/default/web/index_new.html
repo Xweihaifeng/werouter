@@ -49,7 +49,7 @@
                 <li v-for="c in channel" @mouseleave="c.drop = false">
                     <a :href="check(c.domain, c.url)" @mouseenter="is_drop(c.weid)">{{c.title}}</a>
                     <div v-if="c.drop" @mouseleave="c.drop = false">
-                        <p v-for="e in c.children"><a :href="'/' + e.domain">{{e.title}}</a></p>
+                        <p v-for="e in c.children"><a :href="check(c.domain, c.url) + '/' + e.domain">{{e.title}}</a></p>
                     </div>
                 </li>
             </ol>
@@ -68,9 +68,11 @@
             <div class="swiper-container" id="my-swiper">
                 <div class="swiper-wrapper">
                     <div class="swiper-slide" v-for="e in header2.list">
-                        <img :src="imgSet(e.image, 1200, 476)" alt=""/>
-                        <p class="bg"></p>
-                        <p class="content">{{e.title}}</p>
+                        <a :href="e.url">
+                            <img :src="imgSet(e.image, 1200, 476)" alt=""/>
+                            <p class="bg"></p>
+                            <p class="content">{{e.title}}</p>
+                        </a>
                     </div>
                 </div>
                 <div class="swiper-pagination"></div>
@@ -82,9 +84,11 @@
                     <div class="swiper-container" id="my-swiper-2">
                         <div class="swiper-wrapper">
                             <div class="swiper-slide" v-for="e in banners.list">
-                                <img :src="imgSet(e.image, 581, 321)" alt=""/>
-                                <p class="bg2"></p>
-                                <p class="content2">{{e.title}}</p>
+                                <a :href="e.url">
+                                    <img :src="imgSet(e.image, 581, 321)" alt=""/>
+                                    <p class="bg2"></p>
+                                    <p class="content2">{{e.title}}</p>
+                                </a>
                             </div>
                         </div>
                     </div>
