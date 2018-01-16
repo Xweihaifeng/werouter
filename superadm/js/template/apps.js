@@ -148,7 +148,7 @@ $(document).on('click', '.online_cert .message_package_con>li>a', function() {
     $(this).addClass('current').closest('li').siblings('li').find('a').removeClass('current');
 });
 
-$(document).on('click', '.online_cert .sms_package .buy-instance', function() {
+$(document).on('click', '.online_cert .buy-instance', function() {
     if ($('.online_cert .message_package_con a.pid.current').length === 0) {
         swal('提示', '请选择套餐', 'error');
         return;
