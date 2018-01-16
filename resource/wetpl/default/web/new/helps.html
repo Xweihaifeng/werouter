@@ -5,35 +5,14 @@
 <link rel="stylesheet" href="/common/css/helps.css" />
 <script src="/common/js/helps.js"></script>
 <div id="app">
-    <section class="bnaner">
-        <div class="nav">
-            <div class="main" id="fff">
-
-            </div>
-        </div>
-    </section>
+    <section class="bnaner"></section>
 
     <section class="content">
         <div class="toptop">
             <main>
                 <ul class="content_left pps">
-                    <li>
-                        <span>快速入门</span>
-                    </li>
-                    <li>
-                        <span>基础知识</span>
-                    </li>
-                    <li>
-                        <span>应用扩展</span>
-                    </li>
-                    <li>
-                        <span>统计报告</span>
-                    </li>
-                    <li>
-                        <span>其他设置</span>
-                    </li>
-                    <li>
-                        <span>帮助中心</span>
+                    <li :class="{'current': item.domain == currPage}" v-for="item in header_news">
+                        <a :href="'/helps/'+ item.domain"><span>{{item.title}}</span></a>
                     </li>
                 </ul>
             </main>
@@ -42,23 +21,8 @@
         <main>
             <div class="boxb">
                 <ul class="content_left diss">
-                    <li>
-                        <span>快速入门</span>
-                    </li>
-                    <li>
-                        <span>基础知识</span>
-                    </li>
-                    <li>
-                        <span>应用扩展</span>
-                    </li>
-                    <li>
-                        <span>统计报告</span>
-                    </li>
-                    <li>
-                        <span>其他设置</span>
-                    </li>
-                    <li>
-                        <span>帮助中心</span>
+                    <li :class="{'current': item.domain == currPage}" v-for="item in header_news">
+                        <a :href="'/helps/'+ item.domain"><span>{{item.title}}</span></a>
                     </li>
                 </ul>
             </div>
