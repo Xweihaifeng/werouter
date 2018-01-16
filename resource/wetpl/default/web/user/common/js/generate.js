@@ -417,11 +417,13 @@ function avatar_admin() {
                 })
             }
             var checkDomain = function(domain, callback) {
+                layer.load(1);
                 $.ajax({
                     url: PAGES_PAGE_CHECK_DOMAIN,
                     type: 'POST',
                     data: { domain: domain },
                     success: function(data) {
+                        layer.closeAll('loading');
                         if (data.code == 200) {
                             callback(data.data);
                         } else {
@@ -429,6 +431,7 @@ function avatar_admin() {
                         }
                     },
                     error: function(error) {
+                        layer.closeAll('loading');
                         console.log(error);
                     }
                 })
@@ -716,10 +719,10 @@ function completeLoading() {
             $("#loadingDiv").animate({
                 opacity: "hide"
             }, 300);
-            if ($("#right").length>0){
-                $("#right").css("display","block");
-            }else{
-                $("#right_load_div").css("display","block");
+            if ($("#right").length > 0) {
+                $("#right").css("display", "block");
+            } else {
+                $("#right_load_div").css("display", "block");
             }
         }
     }
