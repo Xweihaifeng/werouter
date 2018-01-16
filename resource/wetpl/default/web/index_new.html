@@ -148,14 +148,12 @@
                             </div>
                         </div>
                         <div class="rcd-news">
-                            <div class="rcd-tb" style="">
-                                <div class="rcd-news-line" id="08db2a70-e3d6-11e7-b49b-414b22ce6b4f">
-                                    <div class="rcd-news-title" id="3ed43a90-77f3-11e7-8c21-436a649a2345">
-                                        <a href="news/08db2a70-e3d6-11e7-b49b-414b22ce6b4f" target="_blank">中央经济工作会议将于18-20日</a>
+                            <div class="rcd-tb">
+                                <div class="rcd-news-line" v-for="e in especial.slice(0, 4)">
+                                    <div class="rcd-news-title">
+                                        <a :href="e.channel_domain + '/' + e.weid" target="_blank">{{e.title | cut(18)}}</a>
                                     </div>
-                                    <div class="rcd-news-date">
-                                        <a href="news/08db2a70-e3d6-11e7-b49b-414b22ce6b4f" target="_blank">[2017-12-18]</a>
-                                    </div>
+                                    <div class="rcd-news-date">[{{new Date(parseInt(e.created_at * 1000)) | show_date | format_date}}]</div>
                                 </div>
                             </div>
                         </div>
@@ -163,37 +161,49 @@
                 </li>
                 <li class="news-block">
                     <div class="main-news">
-                        <div class="main-news-title"><img src="/common/img/new/topline.png">
-                            <a href="news/08db2a70-e3d6-11e7-b49b-414b22ce6b4f" target="_blank">中央经济工作会议将于18-20日召开</a>
+                        <div class="main-news-title">
+                            <img src="/common/img/new/topline.png">
+                            <a href="main_news.channel_domain + '/' + main_news.weid" target="_blank">{{main_news.title}}</a>
                         </div>
                         <div class="main-news-content">
-                            <a href="news/08db2a70-e3d6-11e7-b49b-414b22ce6b4f" target="_blank">中国中央经济工作会议将于18-20日召开 重点是降负债12月12日报道，中国中央经济工作会议将于18-20日召开，会议将决定明年的经济政策基调 ...
-                            </a>
+                            <a href="main_news.channel_domain + '/' + main_news.weid" target="_blank">{{main_news.summary}}</a>
                         </div>
                     </div>
                     <div class="news-center">
                         <ul class="nav nav-tabs">
-                            <li role="presentation" class="center active" style="border-bottom: 3px solid rgb(37, 150, 232);"><a href="news">新闻中心</a></li>
-                            <li role="presentation" class="sirase" style="border-bottom: none;"><a href="org">公示公告</a></li>
-                            <li role="presentation" class="release" style="border-bottom: none;"><a>官方发布</a></li>
+                            <li role="presentation" class="center" :style="is_border.news" @mouseenter="show('news')"><a href="news">新闻中心</a></li>
+                            <li role="presentation" class="sirase" :style="is_border.notice" @mouseenter="show('notice')"><a href="org">公示公告</a></li>
+                            <li role="presentation" class="release":style="is_border.weibo" @mouseenter="show('weibo')"><a>官方发布</a></li>
                         </ul>
                     </div>
                     <div class="news-link">
-                        <div id="center">
-                            <ul class="news-line">
+                        <div id="center" v-show="is_show.news">
+                            <ul class="news-line" v-for="e in news.slice(0, 7)">
                                 <div style="display: flex; align-items: center;">
-                                    <li class="news-type" id="d69a1ec0-7d7f-11e7-bd13-51172995c3b5">[时政要闻]</li>
-                                    <li class="news-title" id="9eea0240-b7b9-11e7-8e10-f1da2e8ed6b6">
-                                        <a href="news/9eea0240-b7b9-11e7-8e10-f1da2e8ed6b6" target="_blank">十九大代表热议新思想新方略：新思想引</a>
+                                    <li class="news-type">[{{e.cate_title}}]</li>
+                                    <li class="news-title">
+                                        <a :href="'news/' + e.weid" target="_blank">{{e.title | fixed_len(21)}}</a>
                                     </li>
                                 </div>
                                 <li class="news-date">
-                                    2017-10-23
+                                    {{new Date(parseInt(e.created_at * 1000)) | show_date | format_date}}
                                 </li>
                             </ul>
                         </div>
-                        <div id="sirase" style="display: none;"></div>
-                        <div id="release" style="display: none;"><iframe width="100%" height="550" class="share_self" frameborder="0" scrolling="no" src="https://widget.weibo.com/weiboshow/index.php?language=&amp;width&gt;=0&amp;height=550&amp;fansRow=2&amp;ptype=1&amp;speed=100&amp;skin=5&amp;isTitle=0&amp;noborder=1&amp;isWeibo=1&amp;isFans=0&amp;uid=5893762449&amp;verifier=72fb1d4f&amp;dpc=1"></iframe></div>
+                        <div id="sirase" v-show="is_show.notice">
+                            <ul class="news-line" v-for="e in notice.slice(0, 7)">
+                                <div style="display: flex; align-items: center;">
+                                    <li class="news-type">[{{e.cate_title}}]</li>
+                                    <li class="news-title">
+                                        <a :href="'news/' + e.weid" target="_blank">{{e.title | fixed_len(21)}}</a>
+                                    </li>
+                                </div>
+                                <li class="news-date">
+                                    {{new Date(parseInt(e.created_at * 1000)) | show_date | format_date}}
+                                </li>
+                            </ul>
+                        </div>
+                        <div id="release" v-html="plats_info.weibo_show" v-show="is_show.weibo"></div>
                     </div>
                 </li>
             </ul>
@@ -325,7 +335,7 @@
                     <p class="hb1"><a :href="'v/' + spzx.weid">{{spzx.title}}</a></p>
                     <p class="hb2">{{spzx.summary}}</p>
                     <div class="hbs" v-for="e in spzx.tail">
-                        <p><a :href="'v/' + e.weid">> {{e.title | cut}}</a></p>
+                        <p><a :href="'v/' + e.weid">> {{e.title | cut(14)}}</a></p>
                         <p>{{new Date(parseInt(e.publish_time) * 1000) | show_date | format_date}}</p>
                     </div>
                 </div>
@@ -383,7 +393,7 @@
             </ul>
             <ul id="link-page" v-for="e in link" v-show="e.show">
                 <a v-for="o in e.list" :href="o.url" target="_blank">
-                    <li :title="o.title">{{o.title | fixed_len }}</li>
+                    <li :title="o.title">{{o.title | fixed_len(7) }}</li>
                 </a>
             </ul>
         </div>
@@ -448,8 +458,12 @@
         el: '#app',
         data: {
             plats_info: plats_info,
-            banners: [], //轮播
             header2: [], //头图
+            banners: [], //轮播
+            main_news: {}, //头条
+            news: [], //新闻
+            notice: [], //公告
+            especial: [], //特别推荐
             leader: [], //会长
             member: [], //会员
             qycp: [], //企业产品
@@ -458,9 +472,12 @@
             ztbd: [], //专题
             link: [], //链接
             style: {
+                border: {"border-bottom": "4px solid #01a7ff"},
                 selected: {"color": "#fff", "background": "#007cd3", "font-weight": "600"},
                 video: {"background": "url(/common/img/new/08.png) no-repeat center"}
             },
+            is_show: {news: true, notice: false, weibo: false},
+            is_border: {news: {"border-bottom": "4px solid #01a7ff"}, notice: {}, weibo: {}},
             swiper: {
                 direction: 'horizontal',
                 loop: true,
@@ -472,8 +489,8 @@
                 grabCursor : true,
                 longSwipesRatio: 0.3,
                 touchRatio:1,
-                observer:true,//修改swiper自己或子元素时，自动初始化swiper
-                observeParents:true,//修改swiper的父元素时，自动初始化swiper
+                observer:true,
+                observeParents:true,
             }
         },
         created() {
@@ -491,13 +508,20 @@
                 this.link = Object.values(resp.link).map(
                         (e, i) => (i == 0 ? (e.show = true, e.selected = this.style.selected, e) : (e.show = false, e.selected = {}, e)));
                 setTimeout(() => {
-                    var mySwiper = new Swiper('#my-swiper', {...this.swiper, pagination: '.swiper-pagination', paginationClickable :true,})
+                    var mySwiper = new Swiper('#my-swiper', {...this.swiper, pagination: '.swiper-pagination', paginationClickable :true,});
+                    var mySwiper2 = new Swiper('#my-swiper-2', this.swiper);
                 }, 50);
             })
 
             axios.get(CMS_INDEX_GRID).then(data => {
-                console.log(data.data);
+                //console.log(data.data);
                 let resp = data.data.data;
+                this.main_news = {...resp.hot[0],
+                                    title: resp.hot[0].title.substr(0, 18),
+                                    summary: resp.hot[0].summary.length > 72 ? resp.hot[0].summary.substr(0, 72) + ' ...' : resp.hot[0].summary};
+                this.news = resp.news;
+                this.notice = resp.nitoce;
+                this.especial = resp.especial_news;
                 this.qycp = resp.qycp;
                 this.spzx = {head: resp.spzx.title, domain: resp.spzx.domain, ...resp.spzx.list[0], tail: resp.spzx.list.slice(1, 3)};
                 this.mag = resp.mag;
@@ -510,24 +534,14 @@
                 }, 50);
             })
 
+            axios.get(ARTICLES + "?field=domain,weid,title,cate_id,created_at").then(data => {
+                console.log(data)
+            })
+
         },
         mounted() {
             this.$nextTick(() => {
                 marqueeStart(1, "left");
-                var mySwiper2 = new Swiper ('#my-swiper-2', {
-                    direction: 'horizontal',
-                    loop: true,
-                    speed: 1000,
-                    autoplay : 3000,
-                    autoplayDisableOnInteraction : false,
-                    nextButton: '.swiper-button-next',
-                    prevButton: '.swiper-button-prev',
-                    grabCursor : true,
-                    longSwipesRatio: 0.3,
-                    touchRatio:1,
-                    observer:true,//修改swiper自己或子元素时，自动初始化swiper
-                    observeParents:true,//修改swiper的父元素时，自动初始化swiper
-                })
             })
         },
         methods: {
@@ -545,6 +559,12 @@
                     });
                 })
             },
+            show: name => {
+                let ls = ['news', 'notice', 'weibo'];
+                ls.filter(x => x !== name).map(x => (app.is_show[x] = false, app.is_border[x] = {}));
+                app.is_show[name] = true;
+                app.is_border[name] = app.style.border;
+            },
             change_link: e => {
                 app.link.map(x => x.show === true ? (x.show = false, x.selected = {}) : '');
                 e.show = true;
@@ -552,8 +572,8 @@
             }
         },
         filters: {
-            fixed_len: value => value.length > 7 ? value.substr(0, 7) : value,
-            cut: value => value.length > 14 ? value.substr(0, 14) + '...' : value,
+            fixed_len: (value, len) => value.length > len ? value.substr(0, len) : value,
+            cut: (value, len) => value.length > len ? value.substr(0, len) + '...' : value,
             show_date: value => value.getFullYear() + '-' + (value.getMonth() + 1) + '-' + value.getDate(),
             format_date: value => {
                 let res = value.split('-').reduce((res, e, i) => res += e.length === 1? '0' + e + '-' : e + '-', '');
