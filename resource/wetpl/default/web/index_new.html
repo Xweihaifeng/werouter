@@ -28,22 +28,10 @@
                 <li><img src="/common/img/logo-title-info.png" alt=""/></li>
                 <li>
                     <div id="ht">
-                        <aside>
-                            <span @mouseenter="qr.phone=true" @mouseleave="qr.phone=false">手机版</span>
-                            <div v-show="qr.phone">
-                                <img src="http://www.qqxqs.com/api/file/qrcode?margin=2&amp;url=http://m.qqxqs.com" class="weixin img-responsive">
-                            </div>
-                        </aside>
-                        <aside>
-                            <span @mouseenter="qr.wx=true" @mouseleave="qr.wx=false">微信</span>
-                            <div v-show="qr.wx">
-                                <img src="http://images.wezchina.com/plats/resource/1514518034252.png" alt="">
-                            </div>
-                        </aside>
-                        <aside>
-                            <span @mouseenter="qr.wb=true" @mouseleave="qr.wb=false">微博</span>
-                            <div v-show="qr.wb">
-                                <img src="http://images.wezchina.com/plats/resource/1514518042947.png" alt="">
+                        <aside v-for="e in qrcode" @mouseleave="e.ok=false">
+                            <span @mouseenter="e.ok=true">{{e.title}}</span>
+                            <div v-show="e.ok">
+                                <img :src="e.image" class="weixin img-responsive">
                             </div>
                         </aside>
                         <aside><a :href="plats_info.old_link" target="_blank" id="old"><span style="border-right:none;padding-left:12px;">访问旧版</span></a></aside>
@@ -58,8 +46,8 @@
         </div>
         <div id="menu">
             <ol>
-                <li v-for="c in channel">
-                    <a :href="check(c.domain, c.url)" @mouseenter="is_drop(c.weid)" @mouseleave="c.drop = false">{{c.title}}</a>
+                <li v-for="c in channel" @mouseleave="c.drop = false">
+                    <a :href="check(c.domain, c.url)" @mouseenter="is_drop(c.weid)">{{c.title}}</a>
                     <div v-if="c.drop" @mouseleave="c.drop = false">
                         <p v-for="e in c.children"><a :href="'/' + e.domain">{{e.title}}</a></p>
                     </div>
@@ -364,7 +352,7 @@
     var app = new Vue({
         el: '#app',
         data: {
-            plats_info: plats_info,
+            grid: [],
             header2: [], //头图
             channel: [], //频道
             banners: [], //轮播
@@ -381,6 +369,11 @@
             ztbd: [], //专题
             link: [], //链接
             key: '', //搜索关键字
+            qrcode: [
+                {ok: false, title: "手机版", image: "/api/file/qrcode?margin=2&url="+window.location.href},
+                {ok: false, title: "微信", image: plats_info.wx_qrcode? plats_info.wx_qrcode : window.location.origin+"/api/file/qrcode?margin=2&url="+window.location.href},
+                {ok: false, title: "微博", image: plats_info.wb_qrcode? plats_info.wx_qrcode : window.location.origin+"/api/file/qrcode?margin=2&url="+window.location.href},
+            ],
             style: {
                 border: {"border-bottom": "4px solid #01a7ff"},
                 recmd: {on: {bg: {"color": "white", "background": "#01a7ff"}, tri: {"display": "block"}, cir: {"border": "1px solid #01A7FF"}, sub: {"border": "none", "background": "#01A7FF"}},
@@ -392,7 +385,6 @@
             is_border: {news: {"border-bottom": "4px solid #01a7ff"}, notice: {}, weibo: {}},
             is_bg: {up: {on: true, bg: {"color": "white", "background": "#01a7ff"}, tri: {"display": "block"}, cir: {"border": "1px solid #01A7FF"}, sub: {"border": "none", "background": "#01A7FF"}},
                     down: {on: false, bg: {"background": "none", "color": "black"}, tri: {"display": "none"}, cir: {"border": "1px solid #AFAFAF"}, sub: {"border": "1px solid #AFAFAF"}}},
-            qr: {phone: false, wx: false, wb: false},
             swiper: {
                 direction: 'horizontal',
                 loop: true,
@@ -411,7 +403,6 @@
         },
         created() {
             axios.get(CMS_ADVS).then(data => {
-                //console.log(data);
                 let resp = data.data.data;
                 this.channel = resp.channel.list.map(e => (e.drop = false, e));
                 this.header2 = resp.header2;
@@ -422,12 +413,15 @@
                 setTimeout(() => {
                     var mySwiper = new Swiper('#my-swiper', {...this.swiper, pagination: '.swiper-pagination', paginationClickable :true,});
                     var mySwiper2 = new Swiper('#my-swiper-2', this.swiper);
-                }, 50);
+                }, 0);
+                if (resp.users != '' && resp.users != undefined) {
+                    this.users = resp.users;
+                }
             });
 
             axios.get(CMS_INDEX_GRID).then(data => {
-                //console.log(data.data);
                 let resp = data.data.data;
+                this.grid = data.data.data;
                 this.main_news = {...resp.hot[0],
                                     title: resp.hot[0].title.substr(0, 18),
                                     summary: resp.hot[0].summary.length > 72 ? resp.hot[0].summary.substr(0, 72) + ' ...' : resp.hot[0].summary};
@@ -443,17 +437,18 @@
                                     : {"background": "url(/common/img/new/08.png) no-repeat center"};
                 setTimeout(() => {
                     var mySwiper3 = new Swiper('#my-swiper-3', {...this.swiper, slidesPerView: 4, spaceBetween: 20})
-                }, 50);
+                }, 0);
             });
 
             axios.get(ARTICLES + "?field=domain,weid,title,cate_id,created_at").then(data => this.articles = data.data.data.list.slice(0, 4));
 
             $("title").text(plats_info.title);
             $("#favicon").attr('href', ApiMaterPlatQiniuDomain + plats_info.favicon);
+            marqueeStart(1, "left");
         },
         mounted() {
             this.$nextTick(() => {
-                marqueeStart(1, "left");
+
             })
         },
         methods: {
@@ -471,6 +466,7 @@
                     });
                 }),
             search: key => window.location.href = window.location.protocol + '//' + window.location.host + '/so?q=' + key,
+            simple_null: data => data != null && data != '' && data != undefined ? false : true,
             check: (domain, url) => url != null && url != '' ? url : '/' + domain,
             is_drop: id => app.channel.map(x => x.weid === id ? x.drop = true : x.drop = false),
             read: name => ['up', 'down'].map(x => x !== name ?
