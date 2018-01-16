@@ -228,7 +228,7 @@ var __init_sms_pakage = function() {
         type: 'get',
         dataType: 'json',
         success: function(data) {
-            $('.sms_pakage input[name=rest_count]').val(data.data.num);
+            $('.sms_package input[name=rest_count]').val(data.data.num);
         },
         error: function(xhr) {
             console.log(xhr);
