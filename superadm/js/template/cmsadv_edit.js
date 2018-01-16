@@ -64,6 +64,7 @@ $(document).ready(function(){
         }, 
      }
      });
+
      $("#updateAdv").click(function () {
           $('#form').data('bootstrapValidator').validate();  
             if(!$('#form').data('bootstrapValidator').isValid()){  
