@@ -65,6 +65,7 @@ header ul li:nth-child(3) {
     font-size: 13px;
     color: #666666;
     display: flex;
+    z-index: 100;
 }
 
 #ht > aside > div {
@@ -72,7 +73,6 @@ header ul li:nth-child(3) {
     height: 90px;
     width: auto;
     margin-top: 5px;
-    /*display: none;*/
 }
 
 #ht > aside > div::before {
@@ -162,13 +162,19 @@ header ul li:nth-child(3) {
     cursor: pointer;
 }
 
-#menu{
+#menu {
     height: 55px;
     background-color: #0579cb;
     display: flex;
     justify-content: center;
     align-items: center;
-    box-shadow: 1px 1px 10px #ccc;
+    box-shadow: 0px 1px 10px #ccc;
+}
+
+#dropdown {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #menu ol {
@@ -178,14 +184,71 @@ header ul li:nth-child(3) {
     justify-content: space-between;
     align-items: center;
 }
-#menu li {
+
+#menu > ol > li {
+    flex: 1;
+    position: relative;
     color: #fff;
     display: flex;
     justify-content: center;
-    width: 190px;
+    align-items: center;
+    flex-direction: column;
+    height: 55px;
+    cursor: pointer;
+    z-index: 99;
+}
+
+#menu > ol > li:not(:last-child)::before {
+    position: absolute;
+    height: 22px;
+    width: 2px;
+    right: 0;
+    content: '';
+    background: url(/common/img/new/nav.png) no-repeat right center;
+    background-size: 100%;
+}
+
+#menu > ol > li  * {
+    text-align: center;
+}
+
+#menu > ol > li > a {
+    color: #fff;
+    display: inline-block;
+    width: 100%;
     height: 55px;
     line-height: 55px;
+    text-align: center;
     cursor: pointer;
+}
+
+#menu > ol > li > div {
+    position: absolute;
+    top: 55px;
+    color: #fff;
+    width: 100%;
+    z-index: 101;
+    background-color: #0579cb;
+}
+
+#menu > ol > li > div > p {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    background: #0D71B4;
+    border-bottom: 1px solid #0d82cd;
+}
+
+#menu > ol > li > div > p:hover {
+    background: rgb(66, 138, 204);
+}
+
+#menu > ol > li > div > p > a {
+    color: #fff!important;
 }
 
 #menu ol span {
@@ -195,23 +258,14 @@ header ul li:nth-child(3) {
     width: 3px;
 }
 
+#dropdown ul span {
+    display: inline-block;
+    height: 22px;
+    width: 3px;
+}
+
 #menu li:nth-child(7) {
     background: none;
-}
-
-#menudown {
-    margin-top: 22px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-#menudown li {
-    /*width: 190px;*/
-    height: 40px;
-    background: #0D71B4;
-    border-bottom: 1px solid #4fb7ff;
 }
 
 #container {
@@ -309,7 +363,7 @@ header ul li:nth-child(3) {
 #news-blocks {
     width: 1200px;
     height: 490px;
-    box-shadow: 1px 1px 3px #eee;
+    box-shadow: 0px 1px 3px #eee;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -635,7 +689,7 @@ li .active {
     height: 408px;
     margin-top: 15px;
     background: white;
-    box-shadow: 1px 1px 3px #eee;
+    box-shadow: 0px 1px 3px #eee;
 }
 
 #fengcai ul li i {
@@ -695,7 +749,7 @@ li .active {
 #media-center {
     width: 1200px;
     height: 388px;
-    box-shadow: 1px 1px 10px #eee;
+    box-shadow: 0px 1px 10px #eee;
 }
 
 #hb-center {
@@ -805,7 +859,7 @@ li .active {
     padding: 0 15px;
     margin-top: 15px;
     background: white;
-    box-shadow: 1px 1px 3px #eee;
+    box-shadow: 0px 1px 3px #eee;
 }
 
 #cp-show ul {
@@ -841,7 +895,7 @@ li .active {
 #link {
     width: 1200px;
     padding: 0 15px;
-    box-shadow: 1px 1px 3px #eee;
+    box-shadow: 0px 1px 3px #eee;
 }
 
 #link .line {

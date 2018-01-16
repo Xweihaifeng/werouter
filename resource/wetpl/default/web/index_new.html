@@ -31,7 +31,7 @@
                         <aside>
                             <span @mouseenter="qr.phone=true" @mouseleave="qr.phone=false">手机版</span>
                             <div v-show="qr.phone">
-                                <img src="http://www.qqxqs.com/api//file/qrcode?margin=2&amp;url=http://m.qqxqs.com" class="weixin img-responsive">
+                                <img src="http://www.qqxqs.com/api/file/qrcode?margin=2&amp;url=http://m.qqxqs.com" class="weixin img-responsive">
                             </div>
                         </aside>
                         <aside>
@@ -58,19 +58,12 @@
         </div>
         <div id="menu">
             <ol>
-                <li>秦商总会</li>
-                <span></span>
-                <li>商会新闻</li>
-                <span></span>
-                <li>秦商活动</li>
-                <span></span>
-                <li>秦商风采</li>
-                <span></span>
-                <li>项目互助</li>
-                <span></span>
-                <li>资源共享</li>
-                <span></span>
-                <li>加入商会</li>
+                <li v-for="c in channel">
+                    <a :href="check(c.domain, c.url)" @mouseenter="is_drop(c.weid)">{{c.title}}</a>
+                    <div v-if="c.drop" @mouseleave="c.drop = false">
+                        <p v-for="e in c.children"><a :href="'/' + e.domain">{{e.title}}</a></p>
+                    </div>
+                </li>
             </ol>
         </div>
     </header>
@@ -373,6 +366,7 @@
         data: {
             plats_info: plats_info,
             header2: [], //头图
+            channel: [], //频道
             banners: [], //轮播
             main_news: {}, //头条
             news: [], //新闻
@@ -391,7 +385,7 @@
                 border: {"border-bottom": "4px solid #01a7ff"},
                 recmd: {on: {bg: {"color": "white", "background": "#01a7ff"}, tri: {"display": "block"}, cir: {"border": "1px solid #01A7FF"}, sub: {"border": "none", "background": "#01A7FF"}},
                         off: {bg: {"background": "none", "color": "black"}, tri: {"display": "none"}, cir: {"border": "1px solid #AFAFAF"}, sub: {"border": "1px solid #AFAFAF"}}},
-                selected: {"color": "#fff", "background": "#007cd3", "font-weight": "600"},
+                selected: {"color": "#fff", "background": "#01a7ff", "font-weight": "600"},
                 video: {"background": "url(/common/img/new/08.png) no-repeat center"}
             },
             is_show: {news: true, notice: false, weibo: false},
@@ -419,6 +413,7 @@
             axios.get(CMS_ADVS).then(data => {
                 //console.log(data);
                 let resp = data.data.data;
+                this.channel = resp.channel.list.map(e => (e.drop = false, e));
                 this.header2 = resp.header2;
                 this.banners = resp.banners;
                 this.leader = resp.leader != null ? resp.leader : {description: "全球秦商总会会长", image: "plats/resource/1513250120999.png", title: "刘阿津", url: "/u/71f96b93-da75-11e7-85d7-fa5985d0eaa1", weid: "d1fe0600-d181-11e7-9c10-49bfb1717a52"};
@@ -428,7 +423,7 @@
                     var mySwiper = new Swiper('#my-swiper', {...this.swiper, pagination: '.swiper-pagination', paginationClickable :true,});
                     var mySwiper2 = new Swiper('#my-swiper-2', this.swiper);
                 }, 50);
-            })
+            });
 
             axios.get(CMS_INDEX_GRID).then(data => {
                 //console.log(data.data);
@@ -449,10 +444,12 @@
                 setTimeout(() => {
                     var mySwiper3 = new Swiper('#my-swiper-3', {...this.swiper, slidesPerView: 4, spaceBetween: 20})
                 }, 50);
-            })
+            });
 
-            axios.get(ARTICLES + "?field=domain,weid,title,cate_id,created_at").then(data => this.articles = data.data.data.list.slice(0, 4))
+            axios.get(ARTICLES + "?field=domain,weid,title,cate_id,created_at").then(data => this.articles = data.data.data.list.slice(0, 4));
 
+            $("title").text(plats_info.title);
+            $("#favicon").attr('href', imgSet(plats_info.favicon, 30, 30));
         },
         mounted() {
             this.$nextTick(() => {
@@ -460,7 +457,7 @@
             })
         },
         methods: {
-            play: (url) => {
+            play: url =>
                 layui.use('layer', function() {
                     var $ = layui.jquery, layer = layui.layer;
                     layer.open({
@@ -472,31 +469,17 @@
                         shadeClose: true,
                         content: url
                     });
-                })
-            },
+                }),
             search: key => window.location.href = window.location.protocol + '//' + window.location.host + '/so?q=' + key,
-            read: name => {
-                let ls = ['up', 'down'];
-                ls.filter(x => x !== name).map(x =>
+            check: (domain, url) => url != null && url != '' ? url : '/' + domain,
+            is_drop: id => app.channel.map(x => x.weid === id ? x.drop = true : x.drop = false),
+            read: name => ['up', 'down'].map(x => x !== name ?
                     (app.is_bg[x].on = false, app.is_bg[x].bg = app.style.recmd.off.bg, app.is_bg[x].tri = app.style.recmd.off.tri,
-                     app.is_bg[x].cir = app.style.recmd.off.cir, app.is_bg[x].sub = app.style.recmd.off.sub));
-                app.is_bg[name].on = true;
-                app.is_bg[name].bg = app.style.recmd.on.bg;
-                app.is_bg[name].tri = app.style.recmd.on.tri;
-                app.is_bg[name].cir = app.style.recmd.on.cir;
-                app.is_bg[name].sub = app.style.recmd.on.sub;
-            },
-            show: name => {
-                let ls = ['news', 'notice', 'weibo'];
-                ls.filter(x => x !== name).map(x => (app.is_show[x] = false, app.is_border[x] = {}));
-                app.is_show[name] = true;
-                app.is_border[name] = app.style.border;
-            },
-            change_link: e => {
-                app.link.map(x => x.show === true ? (x.show = false, x.selected = {}) : '');
-                e.show = true;
-                e.selected = app.style.selected;
-            }
+                     app.is_bg[x].cir = app.style.recmd.off.cir, app.is_bg[x].sub = app.style.recmd.off.sub) :
+                    (app.is_bg[name].on = true, app.is_bg[name].bg = app.style.recmd.on.bg, app.is_bg[name].tri = app.style.recmd.on.tri,
+                     app.is_bg[name].cir = app.style.recmd.on.cir, app.is_bg[name].sub = app.style.recmd.on.sub)),
+            show: name => ['news', 'notice', 'weibo'].map(x => x !== name ? (app.is_show[x] = false, app.is_border[x] = {}) : (app.is_show[name] = true, app.is_border[name] = app.style.border)),
+            change_link: name => app.link.map(x => x !== name ? (x.show = false, x.selected = {}) : (x.show = true, x.selected = app.style.selected))
         },
         filters: {
             fixed_len: (value, len) => value.length > len ? value.substr(0, len) : value,
