@@ -444,11 +444,10 @@
 
             $("title").text(plats_info.title);
             $("#favicon").attr('href', ApiMaterPlatQiniuDomain + plats_info.favicon);
-            marqueeStart(1, "left");
         },
         mounted() {
             this.$nextTick(() => {
-
+                marqueeStart(1, "left");
             })
         },
         methods: {
