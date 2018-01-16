@@ -29,28 +29,28 @@
                 <li>
                     <div id="ht">
                         <aside>
-                            <span>手机版</span>
-                            <div style="display: none;">
+                            <span @mouseenter="qr.phone=true" @mouseleave="qr.phone=false">手机版</span>
+                            <div v-show="qr.phone">
                                 <img src="http://www.qqxqs.com/api//file/qrcode?margin=2&amp;url=http://m.qqxqs.com" class="weixin img-responsive">
                             </div>
                         </aside>
                         <aside>
-                            <span>微信</span>
-                            <div style="display: none;">
+                            <span @mouseenter="qr.wx=true" @mouseleave="qr.wx=false">微信</span>
+                            <div v-show="qr.wx">
                                 <img src="http://images.wezchina.com/plats/resource/1514518034252.png" alt="">
                             </div>
                         </aside>
                         <aside>
-                            <span>微博</span>
-                            <div style="display: none;">
+                            <span @mouseenter="qr.wb=true" @mouseleave="qr.wb=false">微博</span>
+                            <div v-show="qr.wb">
                                 <img src="http://images.wezchina.com/plats/resource/1514518042947.png" alt="">
                             </div>
                         </aside>
-                        <aside><a href="https://www.wezchina.com" target="_blank" id="old"><span style="border-right:none;padding-left:12px;">访问旧版</span></a></aside>
+                        <aside><a :href="plats_info.old_link" target="_blank" id="old"><span style="border-right:none;padding-left:12px;">访问旧版</span></a></aside>
                     </div>
                     <div id="hs">
-                        <span><input type="text" id="search" class="form-control" placeholder="请输入关键字"></span>
-                        <span><img src="/common/img/find.png" style="padding: 7px"></span>
+                        <span><input type="text" id="search" class="form-control" placeholder="请输入关键字" v-model="key"></span>
+                        <span @click="search(key)"><img src="/common/img/find.png" style="padding: 7px"></span>
                         <span>高级搜索</span>
                     </div>
                 </li>
@@ -215,102 +215,29 @@
                 <div id="marquee1" class="marqueeleft fleft" style="width:960px;">
                     <div style="width:8000px;">
                         <ul id="marquee1_1">
-                            <li>
-                                <a class="pic" href="#"><img src="/common/img/new/m03.png"></a>
-                                <a href="#">
+                            <li v-for="u in users">
+                                <a class="pic" :href="'/u/' + u.weid"><img :src="u.avatar"></a>
+                                <a :href="'/u/' + u.weid">
                                     <div class="hz_font hz_font2">
-                                    <span>马云 </span>
-                                    <p>阿里巴巴董事局主席</p>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="pic" href="#"><img src="/common/img/new/m04.png"></a>
-                                <a href="#">
-                                    <div class="hz_font hz_font2">
-                                    <span> 郑永刚 </span>
-                                    <p>杉杉控股董事局主席</p>
-                                </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="pic" href="#"><img src="/common/img/new/m05.png"></a>
-                                <a href="#">
-                                    <div class="hz_font hz_font2">
-                                        <span> 郑永刚 </span>
-                                        <p>杉杉控股董事局主席</p>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="pic" href="#"><img src="/common/img/new/m06.png"></a>
-                                <a href="#">
-                                    <div class="hz_font hz_font2">
-                                        <span> 郑永刚 </span>
-                                        <p>杉杉控股董事局主席</p>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="pic" href="#"><img src="/common/img/new/m07.png"></a>
-                                <a href="#">
-                                    <div class="hz_font hz_font2">
-                                        <span> 郑永刚 </span>
-                                        <p>杉杉控股董事局主席</p>
+                                    <span>{{u.real_name}} </span>
+                                    <p>{{u.position}}</p>
                                     </div>
                                 </a>
                             </li>
                         </ul>
                         <ul id="marquee1_2">
-                            <li>
-                                <a class="pic" href="#"><img src="/common/img/new/m03.png"></a>
-                                <a href="#">
+                            <li v-for="u in users">
+                                <a class="pic" :href="'/u/' + u.weid"><img :src="u.avatar"></a>
+                                <a :href="'/u/' + u.weid">
                                     <div class="hz_font hz_font2">
-                                        <span>马云 </span>
-                                        <p>阿里巴巴董事局主席</p>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="pic" href="#"><img src="/common/img/new/m04.png"></a>
-                                <a href="#">
-                                    <div class="hz_font hz_font2">
-                                        <span> 郑永刚 </span>
-                                        <p>杉杉控股董事局主席</p>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="pic" href="#"><img src="/common/img/new/m05.png"></a>
-                                <a href="#">
-                                    <div class="hz_font hz_font2">
-                                        <span> 郑永刚 </span>
-                                        <p>杉杉控股董事局主席</p>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="pic" href="#"><img src="/common/img/new/m06.png"></a>
-                                <a href="#">
-                                    <div class="hz_font hz_font2">
-                                        <span> 郑永刚 </span>
-                                        <p>杉杉控股董事局主席</p>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="pic" href="#"><img src="/common/img/new/m07.png"></a>
-                                <a href="#">
-                                    <div class="hz_font hz_font2">
-                                        <span> 郑永刚 </span>
-                                        <p>杉杉控股董事局主席</p>
+                                        <span>{{u.real_name}} </span>
+                                        <p>{{u.position}}</p>
                                     </div>
                                 </a>
                             </li>
                         </ul>
                     </div>
                 </div>
-                <script type="text/javascript"></script>
             </div>
         </div>
         <div id="media-center">
@@ -403,8 +330,6 @@
 </main>
 
 <script>
-
-    //js无缝滚动代码
     function marquee(i, direction){
         var obj = document.getElementById("marquee" + i);
         var obj1 = document.getElementById("marquee" + i + "_1");
@@ -461,6 +386,7 @@
             mag: [], //杂志
             ztbd: [], //专题
             link: [], //链接
+            key: '', //搜索关键字
             style: {
                 border: {"border-bottom": "4px solid #01a7ff"},
                 recmd: {on: {bg: {"color": "white", "background": "#01a7ff"}, tri: {"display": "block"}, cir: {"border": "1px solid #01A7FF"}, sub: {"border": "none", "background": "#01A7FF"}},
@@ -472,6 +398,7 @@
             is_border: {news: {"border-bottom": "4px solid #01a7ff"}, notice: {}, weibo: {}},
             is_bg: {up: {on: true, bg: {"color": "white", "background": "#01a7ff"}, tri: {"display": "block"}, cir: {"border": "1px solid #01A7FF"}, sub: {"border": "none", "background": "#01A7FF"}},
                     down: {on: false, bg: {"background": "none", "color": "black"}, tri: {"display": "none"}, cir: {"border": "1px solid #AFAFAF"}, sub: {"border": "1px solid #AFAFAF"}}},
+            qr: {phone: false, wx: false, wb: false},
             swiper: {
                 direction: 'horizontal',
                 loop: true,
@@ -485,7 +412,8 @@
                 touchRatio:1,
                 observer:true,
                 observeParents:true,
-            }
+            },
+            users: [{"weid":"71f96b93-da75-11e7-85d7-fa5985d0eaa1","avatar":"/common/img/new/m03.png","real_name":"刘阿津","position":"秦商联合会会长、第十届陕西省政协常委，中国国际投资促进会副会长","nickname":"刘阿津"},{"weid":"9a20c1b1-da77-11e7-85d7-fa5985d0eaa1","avatar":"/common/img/new/m04.png","real_name":"吴一坚","position":"陕西省人民政府决策咨询委员会专家委员，陕西省创业促进会会长，陕西省总商会副会长，陕西省医药协会副会长，陕西省民营企业协会副会长,陕西省晋商商会名誉会长","nickname":"吴一坚"},{"weid":"5819432b-da79-11e7-85d7-fa5985d0eaa1","avatar":"/common/img/new/m05.png","real_name":"孙俊良","position":"陕西省总商会第十一届副会长","nickname":"孙俊良"},{"weid":"add8b61e-da7a-11e7-85d7-fa5985d0eaa1","avatar":"/common/img/new/m06.png","real_name":"郭家学","position":"秦商联合会执行副会长","nickname":"郭家学"},{"weid":"af2ef256-da7b-11e7-85d7-fa5985d0eaa1","avatar":"/common/img/new/m07.png","real_name":"李黑记","position":"东岭集团党委书记、董事长兼总经理；东岭村党委书记、村委会主任。担任中国光彩事业促进会副会长、陕西省人大财经委委员、陕西省工商联副主席、秦商联合会执行副会长、宝鸡市工商联副主席；宝鸡市市委委员","nickname":"李黑记"},{"weid":"73946f7e-da7d-11e7-85d7-fa5985d0eaa1","avatar":"/common/img/new/m07.png","real_name":"赵涛","position":"秦商联合会执行副会长","nickname":"赵涛"}],
         },
         created() {
             axios.get(CMS_ADVS).then(data => {
@@ -493,7 +421,7 @@
                 let resp = data.data.data;
                 this.header2 = resp.header2;
                 this.banners = resp.banners;
-                this.leader = resp.leader;
+                this.leader = resp.leader != null ? resp.leader : {description: "全球秦商总会会长", image: "plats/resource/1513250120999.png", title: "刘阿津", url: "/u/71f96b93-da75-11e7-85d7-fa5985d0eaa1", weid: "d1fe0600-d181-11e7-9c10-49bfb1717a52"};
                 this.link = Object.values(resp.link).map(
                         (e, i) => (i == 0 ? (e.show = true, e.selected = this.style.selected, e) : (e.show = false, e.selected = {}, e)));
                 setTimeout(() => {
@@ -546,6 +474,7 @@
                     });
                 })
             },
+            search: key => window.location.href = window.location.protocol + '//' + window.location.host + '/so?q=' + key,
             read: name => {
                 let ls = ['up', 'down'];
                 ls.filter(x => x !== name).map(x =>
