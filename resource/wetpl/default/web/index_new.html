@@ -59,7 +59,7 @@
         <div id="menu">
             <ol>
                 <li v-for="c in channel">
-                    <a :href="check(c.domain, c.url)" @mouseenter="is_drop(c.weid)">{{c.title}}</a>
+                    <a :href="check(c.domain, c.url)" @mouseenter="is_drop(c.weid)" @mouseleave="c.drop = false">{{c.title}}</a>
                     <div v-if="c.drop" @mouseleave="c.drop = false">
                         <p v-for="e in c.children"><a :href="'/' + e.domain">{{e.title}}</a></p>
                     </div>
@@ -449,7 +449,7 @@
             axios.get(ARTICLES + "?field=domain,weid,title,cate_id,created_at").then(data => this.articles = data.data.data.list.slice(0, 4));
 
             $("title").text(plats_info.title);
-            $("#favicon").attr('href', imgSet(plats_info.favicon, 30, 30));
+            $("#favicon").attr('href', ApiMaterPlatQiniuDomain + plats_info.favicon);
         },
         mounted() {
             this.$nextTick(() => {
