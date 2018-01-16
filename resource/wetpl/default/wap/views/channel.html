@@ -38,7 +38,7 @@
     <div :id="'Tab1'+index" class="Tabs" v-for="(item, index) in channel_list">
         <div class="Menubox">
             <dl>
-                <dd v-for="(value, key) in item" :id="'list_'+index+'_'+key" @click="setTab(value.weid,'list_'+index+'_'+key)" :class="{hover:selected == key}">
+                <dd v-for="(value, key) in item" :id="'list_'+index+'_'+key" @click="setTab(value.weid,'list_'+index+'_'+key,value.title)" :class="{hover:selected == key}">
                     {{value.title | limitLen(0,6)}}
                 </dd>
             </dl>
@@ -94,10 +94,10 @@
             // 频道详情
             ajax.get("cms/channels/domain_query/"+this.pathname).then((res) => {
                 if (res.data && res.code === 200) {
-                    $app.set_title(plats_info.title);
                     plats.show_title = '首页';
                     plats.title = res.data.title;
                     plats.url = all_domian + this.pathname;
+                    $app.set_title(plats.title +' - '+ plats_info.title);
                 }
             })
 
@@ -133,8 +133,9 @@
             data(params , call){
                 return $mob_ajax.cms_lists(params , call);
             },
-            setTab(this_id, li_id) {
+            setTab(this_id, li_id, dd_title) {
 
+                $app.set_title(dd_title +' - '+ plats.title +'_'+ plats_info.title);
                 var elem=document.getElementById(li_id).parentNode;
                 var elem_child = elem.childNodes;
                 for(var i = 0; i < elem_child.length; i++){
