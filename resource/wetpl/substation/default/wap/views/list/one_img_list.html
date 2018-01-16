@@ -52,7 +52,6 @@
         },
         mounted() {
             //底部对话框
-            $app.set_title(plats_info.title); 
             if(this.params.channel_id != $app.get_router('pop'))
             {
                 this.params.cate_id = $app.get_router('pop');
@@ -79,6 +78,8 @@
                                 if(item.domain == this.params.cate_id)
                                 {
                                     plats.show_title = item.title; 
+                                    $app.set_title(plats.show_title +' - '+ plats_info.title);
+
                                     if($app.empty(item.children) == true)
                                     {
                                         this.two_name = item.children;
@@ -98,7 +99,9 @@
                                         {
                                             plats.title = item.title;
                                             plats.url = all_domian  + this.params.channel_id + '/' + item.domain;
-                                            plats.show_title = item_tree.title;  
+                                            plats.show_title = item_tree.title;
+                                            $app.set_title(plats.show_title +' - '+ plats.title +'_'+ plats_info.title);
+
                                             this.two_name = item.children;
                                             if(item_tree.type == 1)
                                             {

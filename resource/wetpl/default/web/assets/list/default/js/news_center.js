@@ -268,7 +268,7 @@ $(function() {
             $("#" + li_name_1).addClass("csdf").siblings().removeClass("csdf");
             $("#" + li_name_1 + " a").addClass("fgvg");
 
-            document.title = $("#" + li_name_1).text();
+            document.title = $("#" + li_name_1).children("a").text();
             if($("#newN").attr("class").indexOf("csdf") != -1) {
                 $('#news_loadingsImg1').show().siblings("#news_loadingsImg").hide();
                 column1(pageNum);
