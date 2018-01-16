@@ -58,12 +58,12 @@
     <div id="container">
         <div id="carousel">
             <ul id="nav">
-               <li><img src="/common/img/new/icon01.png" alt=""/></li>
-               <li><img src="/common/img/new/icon02.png" alt=""/></li>
-               <li><img src="/common/img/new/icon03.png" alt=""/></li>
-               <li><img src="/common/img/new/icon04.png" alt=""/></li>
-               <li><img src="/common/img/new/icon05.png" alt=""/></li>
-               <li><img src="/common/img/new/icon06.png" alt=""/></li>
+               <li><a href="/login"><img src="/common/img/new/icon01.png" alt=""/></a></li>
+               <li><a :href="'/' + domain + '/article'"><img src="/common/img/new/icon02.png" alt=""/></a></li>
+               <li><a href="javascript:void(0);"><img src="/common/img/new/icon03.png" alt=""/></a></li>
+               <li><a :href="'/' + domain + '/activity'"><img src="/common/img/new/icon04.png" alt=""/></a></li>
+               <li><a :href="'/' + domain + '/wemall'"><img src="/common/img/new/icon05.png" alt=""/></a></li>
+               <li><a :href="'/' + domain + '/quan'"><img src="/common/img/new/icon06.png" alt=""/></a></li>
             </ul>
             <div class="swiper-container" id="my-swiper">
                 <div class="swiper-wrapper">
@@ -263,13 +263,13 @@
                 </ul>
                 <div class="swiper-container" id="my-swiper-3">
                     <div class="swiper-wrapper">
-                        <!--<a :href="e.source_url">-->
                             <div class="swiper-slide" v-for="e in qycp.list">
-                                <img :src="imgSet(e.thumb_image, 280, 200)" alt=""/>
-                                <p class="bg3"></p>
-                                <p class="content3">{{e.title}}</p>
+                                <a :href="'/' + qycp.domain + '/' + e.weid" target="_blank">
+                                    <img :src="imgSet(e.thumb_image, 280, 200)" alt=""/>
+                                    <p class="bg3"></p>
+                                    <p class="content3">{{e.title}}</p>
+                                </a>
                             </div>
-                        <!--</a>-->
                     </div>
                     <div class="swiper-pagination"></div>
                     <div class="swiper-button-prev"></div>
@@ -347,6 +347,7 @@
         el: '#app',
         data: {
             grid: [],
+            domain: plats_user_info.domian == undefined ? 'index' : plats_user_info.domian,
             header2: [], //头图
             channel: [], //频道
             banners: [], //轮播
