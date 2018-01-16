@@ -68,6 +68,7 @@
                         var result = res.data;
                         this.cate_info=result.category.title
                         this.detail = result;
+                        $app.set_title(this.detail.title + ' - ' + plats_info.title);
                     }
                 });
 
@@ -81,7 +82,6 @@
                             if(item.title == this.cate_info)
                             {
                                 this.cate_info = item;
-                                $app.set_title(this.sub_aside_info.title + '-' + item.title);
                                 break;
                             }
                         }
