@@ -7,36 +7,17 @@
     <meta name="keywords" content="" />
     <link rel="shortcut icon" id="favicon" href="" />
     <link rel="stylesheet" href="/common/css/bootstrap.min.css">
-    <!--<link rel="stylesheet" href="{{PATH_TML}}font/iconfont.css" />-->
     <link rel="stylesheet" href="{{PATH_TML}}css/swiper.min.css">
     <link rel="stylesheet" href="/common/layui/css/layui.css">
-    <!--<link rel="stylesheet" href="/common/css/buttons.css">-->
-    <!--<link rel="stylesheet" href="{{PATH_TML}}css/public_main.css">-->
-    <!--<link rel="stylesheet" href="{{PATH_TML}}css/news_base.css" />-->
-    <!--<link rel="stylesheet" href="{{PATH_TML}}css/modal_login.css" />-->
-    <!--<link rel="stylesheet" href="{{PATH_TML}}css/index_page.css" />-->
-    <!--<link rel="stylesheet" href="{{PATH_TML}}css/index_style.css" />-->
-    <!--<link rel="stylesheet" href="{{PATH_TML}}css/org.css" />-->
-    <!--<link rel="stylesheet" href="{{PATH_TML}}css/home_rolling.css">-->
     <link rel="stylesheet" href="{{PATH_TML}}css/normalize.css" />
     <link rel="stylesheet" href="{{PATH_TML}}css/index.css" />
     <link rel="stylesheet" href="{{PATH_TML}}css/index_new.css" />
     <script src="/common/js/vue.min.js"></script>
     <script src="/common/js/axios.min.js"></script>
     <script src="/common/js/jquery-3.2.1.min.js"></script>
-    <!--<script src="/common/js/layer-v3.1.1/layer/layer.js"></script>-->
     <script src="/common/js/swiper-3.3.1.min.js"></script>
     <script src="/common/layui/layui.js"></script>
-    <!--<script src="/common/js/buttons.js"></script>-->
-    <!--<script src="/common/js/jquery.rollGallery_yeso.js"></script>-->
-    <!--<script src="/common/js/jquery.mousewheel.js"></script>-->
-    <!--<script src="/common/js/control.js"></script>-->
-    <!-- <script src="/common/js/browser.min.js"></script> -->
     <script src="{{PATH_CONFIG}}"></script>
-    <!-- <script src="https://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js"></script> -->
-    <!--<script src="{{PATH_TML}}js/modal_login.js"></script>-->
-    <!--<script src="{{PATH_TML}}js/public_main.js"></script>-->
-    <!-- <script src="/common/js/organized.js"></script> -->
 </head>
 <body>
 <main id="app" v-cloak>
@@ -134,26 +115,34 @@
                     </div>
                     <div id="recommend">
                         <div class="rcd-bt">
-                            <div class="tb" style="background: rgb(1, 167, 255); color: white;">特别推荐
-                                <div class="triangle-right" style=""></div>
+                            <div class="tb" :style="is_bg.up.bg" @mouseenter="read('up')">特别推荐
+                                <div class="triangle-right" :style="is_bg.up.tri"></div>
                             </div>
-                            <div class="hy" style="background: none; color: black;">会员推荐
-                                <div class="triangle-right-1" style="display: none;"></div>
+                            <div class="hy" :style="is_bg.down.bg" @mouseenter="read('down')">会员推荐
+                                <div class="triangle-right-1" :style="is_bg.down.tri"></div>
                             </div>
-                            <div class="circle-tb" style="border: 1px solid rgb(1, 167, 255);">
-                                <div class="sm-circle-tb" style="border: none; background: rgb(1, 167, 255);"></div>
+                            <div class="circle-tb" :style="is_bg.up.cir" @mouseenter="read('up')">
+                                <div class="sm-circle-tb" :style="is_bg.up.sub"></div>
                             </div>
-                            <div class="circle-hy" style="border: 1px solid rgb(175, 175, 175);">
-                                <div class="sm-circle-hy" style="border: 1px solid rgb(175, 175, 175);"></div>
+                            <div class="circle-hy" :style="is_bg.down.cir" @mouseenter="read('down')">
+                                <div class="sm-circle-hy" :style="is_bg.down.sub"></div>
                             </div>
                         </div>
                         <div class="rcd-news">
-                            <div class="rcd-tb">
+                            <div class="rcd-tb" v-show="is_bg.up.on">
                                 <div class="rcd-news-line" v-for="e in especial.slice(0, 4)">
                                     <div class="rcd-news-title">
                                         <a :href="e.channel_domain + '/' + e.weid" target="_blank">{{e.title | cut(18)}}</a>
                                     </div>
                                     <div class="rcd-news-date">[{{new Date(parseInt(e.created_at * 1000)) | show_date | format_date}}]</div>
+                                </div>
+                            </div>
+                            <div class="rcd-hy" v-show="is_bg.down.on">
+                                <div class="rcd-news-line" v-for="e in articles">
+                                    <div class="rcd-news-title">
+                                        <a :href="'/' + e.domain + '/article/' + e.weid" target="_blank">{{e.title | cut(18)}}</a>
+                                    </div>
+                                    <div class="rcd-news-date">[{{e.created_at.substr(0, 10)}}]</div>
                                 </div>
                             </div>
                         </div>
@@ -171,9 +160,9 @@
                     </div>
                     <div class="news-center">
                         <ul class="nav nav-tabs">
-                            <li role="presentation" class="center" :style="is_border.news" @mouseenter="show('news')"><a href="news">新闻中心</a></li>
-                            <li role="presentation" class="sirase" :style="is_border.notice" @mouseenter="show('notice')"><a href="org">公示公告</a></li>
-                            <li role="presentation" class="release":style="is_border.weibo" @mouseenter="show('weibo')"><a>官方发布</a></li>
+                            <li class="center" :style="is_border.news" @mouseenter="show('news')"><a href="news">新闻中心</a></li>
+                            <li class="sirase" :style="is_border.notice" @mouseenter="show('notice')"><a href="org">公示公告</a></li>
+                            <li class="release":style="is_border.weibo" @mouseenter="show('weibo')"><a>官方发布</a></li>
                         </ul>
                     </div>
                     <div class="news-link">
@@ -464,6 +453,7 @@
             news: [], //新闻
             notice: [], //公告
             especial: [], //特别推荐
+            articles: [], //文章
             leader: [], //会长
             member: [], //会员
             qycp: [], //企业产品
@@ -473,11 +463,15 @@
             link: [], //链接
             style: {
                 border: {"border-bottom": "4px solid #01a7ff"},
+                recmd: {on: {bg: {"color": "white", "background": "#01a7ff"}, tri: {"display": "block"}, cir: {"border": "1px solid #01A7FF"}, sub: {"border": "none", "background": "#01A7FF"}},
+                        off: {bg: {"background": "none", "color": "black"}, tri: {"display": "none"}, cir: {"border": "1px solid #AFAFAF"}, sub: {"border": "1px solid #AFAFAF"}}},
                 selected: {"color": "#fff", "background": "#007cd3", "font-weight": "600"},
                 video: {"background": "url(/common/img/new/08.png) no-repeat center"}
             },
             is_show: {news: true, notice: false, weibo: false},
             is_border: {news: {"border-bottom": "4px solid #01a7ff"}, notice: {}, weibo: {}},
+            is_bg: {up: {on: true, bg: {"color": "white", "background": "#01a7ff"}, tri: {"display": "block"}, cir: {"border": "1px solid #01A7FF"}, sub: {"border": "none", "background": "#01A7FF"}},
+                    down: {on: false, bg: {"background": "none", "color": "black"}, tri: {"display": "none"}, cir: {"border": "1px solid #AFAFAF"}, sub: {"border": "1px solid #AFAFAF"}}},
             swiper: {
                 direction: 'horizontal',
                 loop: true,
@@ -494,11 +488,6 @@
             }
         },
         created() {
-            this.plats_info.copyright = `
-                <p>全球秦商大会组委会 陕西省秦商联合会 | 地址：西安市新城大院省政府院内综合楼B101 邮编：710006</p>
-                <p>办公电话：029-87298395 87298138 | 传真：029-87298138 | 电子邮件: sxsqslhh@163.com</p>
-                <p>版权所有 陕西省秦商联合会 | 网站备案信息：陕ICP备17021746号</p>
-            `
             axios.get(CMS_ADVS).then(data => {
                 //console.log(data);
                 let resp = data.data.data;
@@ -534,9 +523,7 @@
                 }, 50);
             })
 
-            axios.get(ARTICLES + "?field=domain,weid,title,cate_id,created_at").then(data => {
-                console.log(data)
-            })
+            axios.get(ARTICLES + "?field=domain,weid,title,cate_id,created_at").then(data => this.articles = data.data.data.list.slice(0, 4))
 
         },
         mounted() {
@@ -558,6 +545,17 @@
                         content: url
                     });
                 })
+            },
+            read: name => {
+                let ls = ['up', 'down'];
+                ls.filter(x => x !== name).map(x =>
+                    (app.is_bg[x].on = false, app.is_bg[x].bg = app.style.recmd.off.bg, app.is_bg[x].tri = app.style.recmd.off.tri,
+                     app.is_bg[x].cir = app.style.recmd.off.cir, app.is_bg[x].sub = app.style.recmd.off.sub));
+                app.is_bg[name].on = true;
+                app.is_bg[name].bg = app.style.recmd.on.bg;
+                app.is_bg[name].tri = app.style.recmd.on.tri;
+                app.is_bg[name].cir = app.style.recmd.on.cir;
+                app.is_bg[name].sub = app.style.recmd.on.sub;
             },
             show: name => {
                 let ls = ['news', 'notice', 'weibo'];
