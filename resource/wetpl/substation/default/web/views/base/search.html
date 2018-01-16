@@ -64,7 +64,7 @@
             all : 1  //默认提供内容
         },
         mounted: function() {
-
+            var self = this;
             this.$nextTick(()=>{
                 ajax.get("scms/content_search", {
                     params:{
@@ -105,10 +105,11 @@
                     for (var i = left; i < right+1 ; i++) {
                         this.page_show.push(i);
                     }
-
-
                 });
 
+                var top_title = '';
+                !self.title ? top_title = '' : top_title = self.title + ' - ';
+                $app.set_title(top_title + plats_info.title);
             });
         },
         methods: {
