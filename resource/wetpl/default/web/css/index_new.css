@@ -72,7 +72,7 @@ header ul li:nth-child(3) {
     height: 90px;
     width: auto;
     margin-top: 5px;
-    display: none;
+    /*display: none;*/
 }
 
 #ht > aside > div::before {
@@ -182,6 +182,10 @@ header ul li:nth-child(3) {
     color: #fff;
     display: flex;
     justify-content: center;
+    width: 190px;
+    height: 55px;
+    line-height: 55px;
+    cursor: pointer;
 }
 
 #menu ol span {
@@ -193,6 +197,21 @@ header ul li:nth-child(3) {
 
 #menu li:nth-child(7) {
     background: none;
+}
+
+#menudown {
+    margin-top: 22px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#menudown li {
+    /*width: 190px;*/
+    height: 40px;
+    background: #0D71B4;
+    border-bottom: 1px solid #4fb7ff;
 }
 
 #container {
@@ -357,7 +376,6 @@ header ul li:nth-child(3) {
     margin-top: 16px;
     margin-right: -8px;
     float: right;
-    /*display: none;*/
 }
 
 .triangle-right-1 {
@@ -366,10 +384,10 @@ header ul li:nth-child(3) {
     border-top: 5px solid transparent;
     border-left: 8px solid #01a7ff;
     border-bottom: 5px solid transparent;
-    margin-top: 10px;
+    margin-top: 15px;
     margin-right: -8px;
     float: right;
-    display: none;
+    /*display: none;*/
 }
 
 .circle-tb {
@@ -417,8 +435,6 @@ header ul li:nth-child(3) {
 }
 
 .rcd-news {
-    width: 350px;
-    height: 100px;
     margin-left: 30px;
     margin-top: 19px;
     float: left;
@@ -956,4 +972,8 @@ li .active {
 .special-footer footer ._ideConac img {
     width: 80px;
     height: 80px;
+}
+
+#menu ol li:hover {
+    background: #0D71B4;
 }

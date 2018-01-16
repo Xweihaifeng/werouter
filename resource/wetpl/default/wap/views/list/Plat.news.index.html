@@ -9,7 +9,7 @@
         <div class="xinxi">
             <ul>
                 <li :class="{'selectd' : item.domain == cate_name}" v-for="(item, index) in two_name" >
-                    <a   @click="channel(item.domain);" >{{item.title}}</a>
+                    <a @click="channel(item.domain);" >{{item.title}}</a>
                 </li>
             </ul>
         </div>
@@ -18,7 +18,9 @@
             <ul id="con_list">
                 <li v-for="(item, index) in list_data">
                     <a :href="params.channel_id+ '/' + item.weid | href('weplats')">
-                        <h2><b style="font-weight:normal" v-html="item.title"></b></h2><span class="dwgklb_sj">{{item.publish_time.substr(0, 10)}}</span></a>
+                        <h2><b style="font-weight:normal" v-html="item.title"></b></h2>
+                        <span class="dwgklb_sj">{{item.publish_time.substr(0, 10)}}</span>
+                    </a>
                 </li>
             </ul>
         </div>
@@ -51,7 +53,6 @@
         },
         mounted() {
             //底部对话框
-            $app.set_title(plats_info.title); 
             if(this.params.channel_id != $app.get_router('pop'))
             {
                 this.params.cate_id = $app.get_router('pop');
@@ -70,6 +71,7 @@
                     //$app.set_title(res.data.title);
                     plats.title = res.data.title;
                     plats.url = all_domian + res.data.domain;
+
                     ajax.get('cms/cate_tree_by_channel' , {params:{channel:res.data.weid}}).then((res) => {
                         if (res.code === 200) {
                             this.two_name = res.data;   
@@ -77,7 +79,9 @@
                             {
                                 if(item.domain == this.params.cate_id)
                                 {
-                                    plats.show_title = item.title; 
+                                    plats.show_title = item.title;
+                                    $app.set_title(plats.show_title +' - '+ plats_info.title);
+
                                     if($app.empty(item.children) == true)
                                     {
                                         this.two_name = item.children;
@@ -97,7 +101,9 @@
                                         {
                                             plats.title = item.title;
                                             plats.url = all_domian  + this.params.channel_id + '/' + item.domain;
-                                            plats.show_title = item_tree.title;  
+                                            plats.show_title = item_tree.title;
+                                            $app.set_title(plats.show_title +' - '+ plats.title +'_'+ plats_info.title);
+
                                             this.two_name = item.children;
                                             if(item_tree.type == 1)
                                             {

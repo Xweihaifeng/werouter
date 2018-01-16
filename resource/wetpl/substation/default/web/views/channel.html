@@ -117,13 +117,13 @@
                     this.sub_aside_info = res.data;
                     $sub_ajax.cate_tree({channel : this.sub_aside_info.weid} , (res)=>{
                         this.sub_aside = res.data;
-                        for(var item of this.sub_aside)
-                        {
-                            if(item.domain == this.cate_domain)
-                            {
+                        for(var item of this.sub_aside) {
+                            if(item.domain == this.cate_domain) {
                                 this.cate_info = item;
-                                $app.set_title(this.sub_aside_info.title + '-' + item.title);
+                                $app.set_title(this.sub_aside_info.title + '-' + plats_info.title);
                                 break;
+                            } else {
+                                $app.set_title(this.sub_aside_info.title + '-' + plats_info.title);
                             }
                         }
                     });

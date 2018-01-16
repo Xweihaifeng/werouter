@@ -52,7 +52,7 @@
                     this.news_detail = res.data;
                     this.category = res.data.category;
                     plats.title = res.data.category.title;
-                    $app.set_title(this.news_detail.title);
+                    $app.set_title(this.news_detail.title +' - '+ plats_info.title);
                     $('#footer_bottom').show(500);
 
                     // 增加微信分享代码

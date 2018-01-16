@@ -6,37 +6,18 @@
     <meta name="description" content="" />
     <meta name="keywords" content="" />
     <link rel="shortcut icon" id="favicon" href="" />
-    <link rel="stylesheet" href="/common/css/bootstrap.min.css">
-    <!--<link rel="stylesheet" href="{{PATH_TML}}font/iconfont.css" />-->
-    <link rel="stylesheet" href="{{PATH_TML}}css/swiper.min.css">
-    <link rel="stylesheet" href="/common/layui/css/layui.css">
-    <!--<link rel="stylesheet" href="/common/css/buttons.css">-->
-    <!--<link rel="stylesheet" href="{{PATH_TML}}css/public_main.css">-->
-    <!--<link rel="stylesheet" href="{{PATH_TML}}css/news_base.css" />-->
-    <!--<link rel="stylesheet" href="{{PATH_TML}}css/modal_login.css" />-->
-    <!--<link rel="stylesheet" href="{{PATH_TML}}css/index_page.css" />-->
-    <!--<link rel="stylesheet" href="{{PATH_TML}}css/index_style.css" />-->
-    <!--<link rel="stylesheet" href="{{PATH_TML}}css/org.css" />-->
-    <!--<link rel="stylesheet" href="{{PATH_TML}}css/home_rolling.css">-->
+    <link rel="stylesheet" href="/common/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="{{PATH_TML}}css/swiper.min.css" />
+    <link rel="stylesheet" href="/common/layui/css/layui.css" />
     <link rel="stylesheet" href="{{PATH_TML}}css/normalize.css" />
     <link rel="stylesheet" href="{{PATH_TML}}css/index.css" />
     <link rel="stylesheet" href="{{PATH_TML}}css/index_new.css" />
     <script src="/common/js/vue.min.js"></script>
     <script src="/common/js/axios.min.js"></script>
     <script src="/common/js/jquery-3.2.1.min.js"></script>
-    <!--<script src="/common/js/layer-v3.1.1/layer/layer.js"></script>-->
     <script src="/common/js/swiper-3.3.1.min.js"></script>
     <script src="/common/layui/layui.js"></script>
-    <!--<script src="/common/js/buttons.js"></script>-->
-    <!--<script src="/common/js/jquery.rollGallery_yeso.js"></script>-->
-    <!--<script src="/common/js/jquery.mousewheel.js"></script>-->
-    <!--<script src="/common/js/control.js"></script>-->
-    <!-- <script src="/common/js/browser.min.js"></script> -->
     <script src="{{PATH_CONFIG}}"></script>
-    <!-- <script src="https://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js"></script> -->
-    <!--<script src="{{PATH_TML}}js/modal_login.js"></script>-->
-    <!--<script src="{{PATH_TML}}js/public_main.js"></script>-->
-    <!-- <script src="/common/js/organized.js"></script> -->
 </head>
 <body>
 <main id="app" v-cloak>
@@ -48,28 +29,28 @@
                 <li>
                     <div id="ht">
                         <aside>
-                            <span>手机版</span>
-                            <div style="display: none;">
+                            <span @mouseenter="qr.phone=true" @mouseleave="qr.phone=false">手机版</span>
+                            <div v-show="qr.phone">
                                 <img src="http://www.qqxqs.com/api//file/qrcode?margin=2&amp;url=http://m.qqxqs.com" class="weixin img-responsive">
                             </div>
                         </aside>
                         <aside>
-                            <span>微信</span>
-                            <div style="display: none;">
+                            <span @mouseenter="qr.wx=true" @mouseleave="qr.wx=false">微信</span>
+                            <div v-show="qr.wx">
                                 <img src="http://images.wezchina.com/plats/resource/1514518034252.png" alt="">
                             </div>
                         </aside>
                         <aside>
-                            <span>微博</span>
-                            <div style="display: none;">
+                            <span @mouseenter="qr.wb=true" @mouseleave="qr.wb=false">微博</span>
+                            <div v-show="qr.wb">
                                 <img src="http://images.wezchina.com/plats/resource/1514518042947.png" alt="">
                             </div>
                         </aside>
-                        <aside><a href="https://www.wezchina.com" target="_blank" id="old"><span style="border-right:none;padding-left:12px;">访问旧版</span></a></aside>
+                        <aside><a :href="plats_info.old_link" target="_blank" id="old"><span style="border-right:none;padding-left:12px;">访问旧版</span></a></aside>
                     </div>
                     <div id="hs">
-                        <span><input type="text" id="search" class="form-control" placeholder="请输入关键字"></span>
-                        <span><img src="/common/img/find.png" style="padding: 7px"></span>
+                        <span><input type="text" id="search" class="form-control" placeholder="请输入关键字" v-model="key"></span>
+                        <span @click="search(key)"><img src="/common/img/find.png" style="padding: 7px"></span>
                         <span>高级搜索</span>
                     </div>
                 </li>
@@ -134,26 +115,34 @@
                     </div>
                     <div id="recommend">
                         <div class="rcd-bt">
-                            <div class="tb" style="background: rgb(1, 167, 255); color: white;">特别推荐
-                                <div class="triangle-right" style=""></div>
+                            <div class="tb" :style="is_bg.up.bg" @mouseenter="read('up')">特别推荐
+                                <div class="triangle-right" :style="is_bg.up.tri"></div>
                             </div>
-                            <div class="hy" style="background: none; color: black;">会员推荐
-                                <div class="triangle-right-1" style="display: none;"></div>
+                            <div class="hy" :style="is_bg.down.bg" @mouseenter="read('down')">会员推荐
+                                <div class="triangle-right-1" :style="is_bg.down.tri"></div>
                             </div>
-                            <div class="circle-tb" style="border: 1px solid rgb(1, 167, 255);">
-                                <div class="sm-circle-tb" style="border: none; background: rgb(1, 167, 255);"></div>
+                            <div class="circle-tb" :style="is_bg.up.cir" @mouseenter="read('up')">
+                                <div class="sm-circle-tb" :style="is_bg.up.sub"></div>
                             </div>
-                            <div class="circle-hy" style="border: 1px solid rgb(175, 175, 175);">
-                                <div class="sm-circle-hy" style="border: 1px solid rgb(175, 175, 175);"></div>
+                            <div class="circle-hy" :style="is_bg.down.cir" @mouseenter="read('down')">
+                                <div class="sm-circle-hy" :style="is_bg.down.sub"></div>
                             </div>
                         </div>
                         <div class="rcd-news">
-                            <div class="rcd-tb">
+                            <div class="rcd-tb" v-show="is_bg.up.on">
                                 <div class="rcd-news-line" v-for="e in especial.slice(0, 4)">
                                     <div class="rcd-news-title">
                                         <a :href="e.channel_domain + '/' + e.weid" target="_blank">{{e.title | cut(18)}}</a>
                                     </div>
                                     <div class="rcd-news-date">[{{new Date(parseInt(e.created_at * 1000)) | show_date | format_date}}]</div>
+                                </div>
+                            </div>
+                            <div class="rcd-hy" v-show="is_bg.down.on">
+                                <div class="rcd-news-line" v-for="e in articles">
+                                    <div class="rcd-news-title">
+                                        <a :href="'/' + e.domain + '/article/' + e.weid" target="_blank">{{e.title | cut(18)}}</a>
+                                    </div>
+                                    <div class="rcd-news-date">[{{e.created_at.substr(0, 10)}}]</div>
                                 </div>
                             </div>
                         </div>
@@ -171,9 +160,9 @@
                     </div>
                     <div class="news-center">
                         <ul class="nav nav-tabs">
-                            <li role="presentation" class="center" :style="is_border.news" @mouseenter="show('news')"><a href="news">新闻中心</a></li>
-                            <li role="presentation" class="sirase" :style="is_border.notice" @mouseenter="show('notice')"><a href="org">公示公告</a></li>
-                            <li role="presentation" class="release":style="is_border.weibo" @mouseenter="show('weibo')"><a>官方发布</a></li>
+                            <li class="center" :style="is_border.news" @mouseenter="show('news')"><a href="news">新闻中心</a></li>
+                            <li class="sirase" :style="is_border.notice" @mouseenter="show('notice')"><a href="org">公示公告</a></li>
+                            <li class="release":style="is_border.weibo" @mouseenter="show('weibo')"><a>官方发布</a></li>
                         </ul>
                     </div>
                     <div class="news-link">
@@ -226,102 +215,29 @@
                 <div id="marquee1" class="marqueeleft fleft" style="width:960px;">
                     <div style="width:8000px;">
                         <ul id="marquee1_1">
-                            <li>
-                                <a class="pic" href="#"><img src="/common/img/new/m03.png"></a>
-                                <a href="#">
+                            <li v-for="u in users">
+                                <a class="pic" :href="'/u/' + u.weid"><img :src="u.avatar"></a>
+                                <a :href="'/u/' + u.weid">
                                     <div class="hz_font hz_font2">
-                                    <span>马云 </span>
-                                    <p>阿里巴巴董事局主席</p>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="pic" href="#"><img src="/common/img/new/m04.png"></a>
-                                <a href="#">
-                                    <div class="hz_font hz_font2">
-                                    <span> 郑永刚 </span>
-                                    <p>杉杉控股董事局主席</p>
-                                </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="pic" href="#"><img src="/common/img/new/m05.png"></a>
-                                <a href="#">
-                                    <div class="hz_font hz_font2">
-                                        <span> 郑永刚 </span>
-                                        <p>杉杉控股董事局主席</p>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="pic" href="#"><img src="/common/img/new/m06.png"></a>
-                                <a href="#">
-                                    <div class="hz_font hz_font2">
-                                        <span> 郑永刚 </span>
-                                        <p>杉杉控股董事局主席</p>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="pic" href="#"><img src="/common/img/new/m07.png"></a>
-                                <a href="#">
-                                    <div class="hz_font hz_font2">
-                                        <span> 郑永刚 </span>
-                                        <p>杉杉控股董事局主席</p>
+                                    <span>{{u.real_name}} </span>
+                                    <p>{{u.position}}</p>
                                     </div>
                                 </a>
                             </li>
                         </ul>
                         <ul id="marquee1_2">
-                            <li>
-                                <a class="pic" href="#"><img src="/common/img/new/m03.png"></a>
-                                <a href="#">
+                            <li v-for="u in users">
+                                <a class="pic" :href="'/u/' + u.weid"><img :src="u.avatar"></a>
+                                <a :href="'/u/' + u.weid">
                                     <div class="hz_font hz_font2">
-                                        <span>马云 </span>
-                                        <p>阿里巴巴董事局主席</p>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="pic" href="#"><img src="/common/img/new/m04.png"></a>
-                                <a href="#">
-                                    <div class="hz_font hz_font2">
-                                        <span> 郑永刚 </span>
-                                        <p>杉杉控股董事局主席</p>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="pic" href="#"><img src="/common/img/new/m05.png"></a>
-                                <a href="#">
-                                    <div class="hz_font hz_font2">
-                                        <span> 郑永刚 </span>
-                                        <p>杉杉控股董事局主席</p>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="pic" href="#"><img src="/common/img/new/m06.png"></a>
-                                <a href="#">
-                                    <div class="hz_font hz_font2">
-                                        <span> 郑永刚 </span>
-                                        <p>杉杉控股董事局主席</p>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="pic" href="#"><img src="/common/img/new/m07.png"></a>
-                                <a href="#">
-                                    <div class="hz_font hz_font2">
-                                        <span> 郑永刚 </span>
-                                        <p>杉杉控股董事局主席</p>
+                                        <span>{{u.real_name}} </span>
+                                        <p>{{u.position}}</p>
                                     </div>
                                 </a>
                             </li>
                         </ul>
                     </div>
                 </div>
-                <script type="text/javascript"></script>
             </div>
         </div>
         <div id="media-center">
@@ -414,8 +330,6 @@
 </main>
 
 <script>
-
-    //js无缝滚动代码
     function marquee(i, direction){
         var obj = document.getElementById("marquee" + i);
         var obj1 = document.getElementById("marquee" + i + "_1");
@@ -464,6 +378,7 @@
             news: [], //新闻
             notice: [], //公告
             especial: [], //特别推荐
+            articles: [], //文章
             leader: [], //会长
             member: [], //会员
             qycp: [], //企业产品
@@ -471,13 +386,19 @@
             mag: [], //杂志
             ztbd: [], //专题
             link: [], //链接
+            key: '', //搜索关键字
             style: {
                 border: {"border-bottom": "4px solid #01a7ff"},
+                recmd: {on: {bg: {"color": "white", "background": "#01a7ff"}, tri: {"display": "block"}, cir: {"border": "1px solid #01A7FF"}, sub: {"border": "none", "background": "#01A7FF"}},
+                        off: {bg: {"background": "none", "color": "black"}, tri: {"display": "none"}, cir: {"border": "1px solid #AFAFAF"}, sub: {"border": "1px solid #AFAFAF"}}},
                 selected: {"color": "#fff", "background": "#007cd3", "font-weight": "600"},
                 video: {"background": "url(/common/img/new/08.png) no-repeat center"}
             },
             is_show: {news: true, notice: false, weibo: false},
             is_border: {news: {"border-bottom": "4px solid #01a7ff"}, notice: {}, weibo: {}},
+            is_bg: {up: {on: true, bg: {"color": "white", "background": "#01a7ff"}, tri: {"display": "block"}, cir: {"border": "1px solid #01A7FF"}, sub: {"border": "none", "background": "#01A7FF"}},
+                    down: {on: false, bg: {"background": "none", "color": "black"}, tri: {"display": "none"}, cir: {"border": "1px solid #AFAFAF"}, sub: {"border": "1px solid #AFAFAF"}}},
+            qr: {phone: false, wx: false, wb: false},
             swiper: {
                 direction: 'horizontal',
                 loop: true,
@@ -491,20 +412,16 @@
                 touchRatio:1,
                 observer:true,
                 observeParents:true,
-            }
+            },
+            users: [{"weid":"71f96b93-da75-11e7-85d7-fa5985d0eaa1","avatar":"/common/img/new/m03.png","real_name":"刘阿津","position":"秦商联合会会长、第十届陕西省政协常委，中国国际投资促进会副会长","nickname":"刘阿津"},{"weid":"9a20c1b1-da77-11e7-85d7-fa5985d0eaa1","avatar":"/common/img/new/m04.png","real_name":"吴一坚","position":"陕西省人民政府决策咨询委员会专家委员，陕西省创业促进会会长，陕西省总商会副会长，陕西省医药协会副会长，陕西省民营企业协会副会长,陕西省晋商商会名誉会长","nickname":"吴一坚"},{"weid":"5819432b-da79-11e7-85d7-fa5985d0eaa1","avatar":"/common/img/new/m05.png","real_name":"孙俊良","position":"陕西省总商会第十一届副会长","nickname":"孙俊良"},{"weid":"add8b61e-da7a-11e7-85d7-fa5985d0eaa1","avatar":"/common/img/new/m06.png","real_name":"郭家学","position":"秦商联合会执行副会长","nickname":"郭家学"},{"weid":"af2ef256-da7b-11e7-85d7-fa5985d0eaa1","avatar":"/common/img/new/m07.png","real_name":"李黑记","position":"东岭集团党委书记、董事长兼总经理；东岭村党委书记、村委会主任。担任中国光彩事业促进会副会长、陕西省人大财经委委员、陕西省工商联副主席、秦商联合会执行副会长、宝鸡市工商联副主席；宝鸡市市委委员","nickname":"李黑记"},{"weid":"73946f7e-da7d-11e7-85d7-fa5985d0eaa1","avatar":"/common/img/new/m07.png","real_name":"赵涛","position":"秦商联合会执行副会长","nickname":"赵涛"}],
         },
         created() {
-            this.plats_info.copyright = `
-                <p>全球秦商大会组委会 陕西省秦商联合会 | 地址：西安市新城大院省政府院内综合楼B101 邮编：710006</p>
-                <p>办公电话：029-87298395 87298138 | 传真：029-87298138 | 电子邮件: sxsqslhh@163.com</p>
-                <p>版权所有 陕西省秦商联合会 | 网站备案信息：陕ICP备17021746号</p>
-            `
             axios.get(CMS_ADVS).then(data => {
                 //console.log(data);
                 let resp = data.data.data;
                 this.header2 = resp.header2;
                 this.banners = resp.banners;
-                this.leader = resp.leader;
+                this.leader = resp.leader != null ? resp.leader : {description: "全球秦商总会会长", image: "plats/resource/1513250120999.png", title: "刘阿津", url: "/u/71f96b93-da75-11e7-85d7-fa5985d0eaa1", weid: "d1fe0600-d181-11e7-9c10-49bfb1717a52"};
                 this.link = Object.values(resp.link).map(
                         (e, i) => (i == 0 ? (e.show = true, e.selected = this.style.selected, e) : (e.show = false, e.selected = {}, e)));
                 setTimeout(() => {
@@ -534,9 +451,7 @@
                 }, 50);
             })
 
-            axios.get(ARTICLES + "?field=domain,weid,title,cate_id,created_at").then(data => {
-                console.log(data)
-            })
+            axios.get(ARTICLES + "?field=domain,weid,title,cate_id,created_at").then(data => this.articles = data.data.data.list.slice(0, 4))
 
         },
         mounted() {
@@ -558,6 +473,18 @@
                         content: url
                     });
                 })
+            },
+            search: key => window.location.href = window.location.protocol + '//' + window.location.host + '/so?q=' + key,
+            read: name => {
+                let ls = ['up', 'down'];
+                ls.filter(x => x !== name).map(x =>
+                    (app.is_bg[x].on = false, app.is_bg[x].bg = app.style.recmd.off.bg, app.is_bg[x].tri = app.style.recmd.off.tri,
+                     app.is_bg[x].cir = app.style.recmd.off.cir, app.is_bg[x].sub = app.style.recmd.off.sub));
+                app.is_bg[name].on = true;
+                app.is_bg[name].bg = app.style.recmd.on.bg;
+                app.is_bg[name].tri = app.style.recmd.on.tri;
+                app.is_bg[name].cir = app.style.recmd.on.cir;
+                app.is_bg[name].sub = app.style.recmd.on.sub;
             },
             show: name => {
                 let ls = ['news', 'notice', 'weibo'];
