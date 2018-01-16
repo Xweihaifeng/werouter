@@ -66,12 +66,11 @@
                <li><img src="/common/img/new/icon06.png" alt=""/></li>
             </ul>
             <div class="swiper-container" id="my-swiper">
-                <div class="swiper-wrapper" v-for="e in header2.list">
-                    <div class="swiper-slide">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide" v-for="e in header2.list">
                         <img :src="imgSet(e.image, 1200, 476)" alt=""/>
                         <p class="bg"></p>
                         <p class="content">{{e.title}}</p>
-                        <!--<p class="content">第七届全球秦商大会成功召开</p>-->
                     </div>
                 </div>
                 <div class="swiper-pagination"></div>
@@ -82,11 +81,6 @@
                 <li class="news-block">
                     <div class="swiper-container" id="my-swiper-2">
                         <div class="swiper-wrapper">
-                            <div class="swiper-slide">
-                                <img src="/common/img/new/c01.png" alt=""/>
-                                <p class="bg2"></p>
-                                <p class="content2">2017年度秦商全球影响力人物评选网络投票启动</p>
-                            </div>
                             <div class="swiper-slide" v-for="e in banners.list">
                                 <img :src="imgSet(e.image, 581, 321)" alt=""/>
                                 <p class="bg2"></p>
