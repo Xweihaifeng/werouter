@@ -63,6 +63,10 @@
         .tab-content .active {
             border-bottom: #fff 3px solid
         }
+        
+        .control-label {
+            text-align: right;
+        }
     </style>
 </head>
 
@@ -126,7 +130,7 @@
                                     <div class="edit_domain_area" style="display: none;">
                                         <div class="panel-body">
                                             <div class="form-group">
-                                                <label class="col-xs-4 col-sm-4 col-md-4 control-label">付费方式：</label>
+                                                <label class="col-xs-4 col-sm-4 col-md-4 control-label">付费方式</label>
                                                 <div class="col-sm-8 col-xs-8 col-lg-8">
                                                     <div class="row row-fix tpl-category-container">
                                                         <input type="radio" value="1" name="pay_type">平台代付 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -138,7 +142,7 @@
                                         </div>
                                         <div class="panel-body">
                                             <div class="form-group">
-                                                <label class="col-xs-4 col-sm-4 col-md-4 control-label">剩余认证次数：</label>
+                                                <label class="col-xs-4 col-sm-4 col-md-4 control-label">剩余认证次数</label>
                                                 <div class="col-sm-8 col-xs-8 col-lg-8">
                                                     <div class="row row-fix tpl-category-container">
                                                         <input class="messarg_sign" type="text" name="rest_count" value="0" readonly>&nbsp;次 &nbsp;
@@ -154,7 +158,7 @@
                                                 <sapn style="color: #fa7c00;">1元/次</sapn>特价优惠。
                                             </p>
                                             <div class="message_package">
-                                                <span class="message_package_tit">选择套餐：</span>
+                                                <span class="message_package_tit">选择套餐</span>
                                                 <ul class="message_package_con">
                                                 </ul>
                                             </div>
@@ -170,18 +174,31 @@
                                             <div class="per_bottom_tit">
                                                 <span class="scad_setting">短信</span>
                                                 <span class="switch brand_set turn_on_off switch-close" data-key="is_sms_open">
-                                                    <!-- <div id="op1" class="open">
+                                                    <div id="op1" class="open">
                                                         <div id="op2" class="close"></div>
                                                         <span class="brand_on_off on">ON</span>
                                                 <span class="brand_on_off off">OFF</span>
-                                            </div> -->
+                                            </div>
                                             </span>
                                             <a class="edit_domain">展开</a>
                                     </div>
                                     <div class="edit_domain_area" style="display: none;">
                                         <div class="panel-body">
                                             <div class="form-group">
-                                                <label class="col-xs-4 col-sm-4 col-md-4 control-label">短信余量：</label>
+                                                <label class="control-label col-sm-4 col-md-4 col-lg-4">短信签名设置</label>
+                                                <div class="col-sm-8 col-md-8 col-lg-8">
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control" id="sign" name="sign" placeholder="短信签名">
+                                                        <span class="input-group-btn">
+                                                                    <button id="signSet" class="btn btn-success" type="button">保存设置</button>
+                                                                </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="form-group">
+                                                <label class="col-xs-4 col-sm-4 col-md-4 control-label">短信余量</label>
                                                 <div class="col-sm-8 col-xs-8 col-lg-8">
                                                     <div class="row row-fix tpl-category-container">
                                                         <input class="messarg_sign" type="text" name="rest_count" value="0" readonly>&nbsp;条 &nbsp;

@@ -228,7 +228,12 @@ var __init_sms_pakage = function() {
         type: 'get',
         dataType: 'json',
         success: function(data) {
+            if (data.data.status == 1)
+                $('.sms_package .switch').removeClass('switch-close').addClass('switch-open');
+            else
+                $('.sms_package .switch').removeClass('switch-open').addClass('switch-close');
             $('.sms_package input[name=rest_count]').val(data.data.num);
+            $('.sms_package input[name=sign]').val(data.data.sign);
         },
         error: function(xhr) {
             console.log(xhr);
@@ -253,6 +258,56 @@ var __init_sms_pakage = function() {
         }
     });
 }
+$(document).on('click', '.sms_package .switch', function() {
+    var that = this;
+    var status = $(that).hasClass('switch-open') ? 2 : 1;
+    $.ajax({
+        url: ApiUrl + 'sms/plat/toggle',
+        type: 'post',
+        dataType: 'json',
+        data: { status: status },
+        success: function(data) {
+            if (data.code == 200) {
+                if (data.data.status == 1) {
+                    $(that).removeClass('switch-close').addClass('switch-open');
+                } else {
+                    $(that).removeClass('switch-open').addClass('switch-close');
+                }
+            } else {
+                swal('提示', data.message, 'error');
+            }
+        },
+        error: function(xhr) {
+            console.log(xhr);
+        }
+    });
+
+});
+$('#signSet').click(function() {
+    var sign = $('input[name=sign]').val();
+    var formList = {
+        'sign': sign
+    };
+    $.ajax({
+        url: ApiUrl + 'sms/plat/setting',
+        type: 'post',
+        dataType: 'json',
+        data: {
+            config: formList
+        },
+        success: function(data) {
+            console.log(data);
+            if (data.code === 200) {
+                swal('提示', '保存成功', 'success');
+            } else {
+                swal('提示', data.message, 'error');
+            }
+        },
+        error: function(xhr) {
+            console.log(xhr);
+        }
+    });
+});
 
 
 $(document).on('click', '.sms_package  .btn-cancel-buy', function() {
