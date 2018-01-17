@@ -360,42 +360,45 @@
     margin-top: 8px;
     color: #fff;
 }
-.fc-right{
+.fc-right, .fc-right-by {
     width: calc(100% - 205px);
     height: 314px;
     float: right;
     position: relative;
     overflow: hidden;
     margin-left: 10px;
+    display: flex;
 }
-.fc-big{
-    width:1230px;
+.fc-big, .fc-big-by {
+    min-width: 975px;
     height: 100%;
     z-index: 88;
     position: absolute;
     top: 0;
     left: 0;
+    display: inline-flex;
+    flex-wrap: nowrap;
 }
 .fc1{
     left: 0;
 }
 .fc2{
-    left: 1230px;
+    /*left: 975px;*/
 }
-.fc-big li{
-    width: 195px;
+.fc-big li, .fc-big-by li{
+    width: 185px;
     height: 100%;
     margin-right: 10px;
     float: left;
     background: gray;
 }
-.fc-big li a{
+.fc-big li a, .fc-big-by li a{
     width: 100%;
     height: 100%;
     display: block;
 }
-.fc-big li a img{
-    width: 195px;
+.fc-big li a img, .fc-big-by li a img{
+    width: 185px;
     height: 190px;
     display: block;
 }

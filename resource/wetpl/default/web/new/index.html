@@ -2,6 +2,9 @@
 <script type="text/javascript">
     var main_index = false;
 </script>
+<style>
+
+</style>
 <body>
 <link rel="stylesheet" href="/common/css/main_index.css" />
 <div class="section page1">
@@ -121,8 +124,8 @@
 
     <div class="warp consultaion">
         <div class="ct_warp clearfix">
-            <ul class="nav">
-                <li :class="{'article-item' : true , 'hover' : hover_show}" @mouseover="toggleShow(1);" @mouseout="toggleShow();"  v-for="item in list_data.list">
+            <ul class="nav" style="position: relative;left: -15px;">
+                <li style="width:364px;height: 385px;box-sizing: border-box;" :class="{'article-item' : true , 'hover' : hover_show}" @mouseover="toggleShow(1);" @mouseout="toggleShow();"  v-for="item in list_data.list">
                     <a :href="item.href" class="info">
                         <span class="img"><img :src="item.thumb_image | img_src(315 , 175)" /></span>
                         <h2>{{item.title}}</h2>

@@ -221,7 +221,7 @@ $(document).on('click', '.online_cert .buy-instance', function() {
  */
 
 // 短信 - sms_pakage
-
+var is_created_chart = false;
 var __init_sms_pakage = function() {
     $.ajax({
         url: ApiUrl + 'sms/plat/setting',
@@ -258,6 +258,104 @@ var __init_sms_pakage = function() {
         }
     });
 }
+var chart = {
+    init: function(weid) {
+        var _self = this;
+        this.getData(weid, function(data) {
+            _self.createChartCity(data.city);
+            _self.createChartTimeLine(data.timeline);
+        });
+    },
+    getData: function(weid, callback) {
+        var _self = this;
+        var url = ApiUrl + 'sms/plat/statistics';
+        $.ajax({
+            url: url,
+            type: 'get',
+            dataType: 'json',
+            data: {
+                timestamp: weid
+            },
+            success: function(res) {
+                if (res.code == 200) {
+                    var data = _self.formatData(res.data);
+                    callback && callback(data);
+                } else {
+                    $('.data').hide();
+                }
+            },
+            error: function(xhr, code, error) {
+                notice.alert(error);
+            },
+            complete: function() {}
+        });
+    },
+    formatData: function(data) {
+        var colors = ['#24aa98', '#65abd0', '#d9c26c', '#db7560', '#af6dd5', '#898e93', '#32b9e6', '#8cbe52', '#ffab27', '#c88b76'];
+        var tmp = {
+            city: [],
+            timeline: {
+                labels: [],
+                datasets: [{
+                    label: "发送流量",
+                    fillColor: "rgba(151,187,205,0.2)",
+                    strokeColor: "rgba(151,187,205,1)",
+                    pointColor: "rgba(151,187,205,1)",
+                    pointStrokeColor: "#fff",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "rgba(151,187,205,1)",
+                    data: []
+                }]
+            }
+        };
+        for (var i = 0; i < data['type'].length; i++) {
+            var city = data['type'][i];
+            tmp.city.push({
+                value: city.value,
+                color: colors[i],
+                highlight: colors[i],
+                label: city.name
+            });
+        };
+        for (var i = 0; i < data['timeline'].length; i++) {
+            var time = data['timeline'][i];
+            tmp.timeline.labels.push(time.name);
+            tmp.timeline.datasets[0].data.push(time.value);
+        }
+        return tmp;
+    },
+    createChartCity: function(data) {
+        this.createDoughnut('chartPie', data);
+        this.createList('listPie', data);
+    },
+    createChartTimeLine: function(data) {
+        var chart = this.getChart('chartLine');
+        chart.Line(data);
+    },
+    createDoughnut: function(id, data, options) {
+        if (!options) options = {};
+        var chart = this.getChart(id);
+        chart.Pie(data, options);
+    },
+    getChart: function(id) {
+        var ctx = document.getElementById(id).getContext('2d');
+        var chart = new Chart(ctx);
+        return chart;
+    },
+    createList: function(id, list) {
+        var html = '';
+        var total = 0;
+        for (var i = 0; i < list.length; i++) {
+            total += parseInt(list[i].value);
+        }
+        for (var i = 0; i < list.length; i++) {
+            var item = list[i];
+            var percent = item.value / total * 100;
+            html += '<li><span class="mark" style="background-color:' + item.color + '"></span>' + item.label + ' <label>' + percent.toFixed(1) + '%</label></li>';
+        };
+        $('#' + id).append(html);
+    }
+}
 $(document).on('click', '.sms_package .switch', function() {
     var that = this;
     var status = $(that).hasClass('switch-open') ? 2 : 1;
@@ -282,6 +380,12 @@ $(document).on('click', '.sms_package .switch', function() {
         }
     });
 
+});
+$(document).on('click', '.sms_package .edit_domain', function() {
+    if (!is_created_chart) {
+        chart.init(Math.random());
+        is_created_chart = true;
+    }
 });
 $('#signSet').click(function() {
     var sign = $('input[name=sign]').val();

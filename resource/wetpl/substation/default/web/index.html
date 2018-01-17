@@ -86,11 +86,11 @@
                         </div>
                     </a>
                 </div>
-                <div class="fc-right">
+                <div class="fc-right" v-if="users.length > 4">
                     <ul class="fc-big fc1">
                         <li v-for="item in users">
                             <a :href="item.weid ? all_domian+'u/'+item.weid : 'javascript:void(0)'">
-                                <img :src="item.avatar" alt="">
+                                <img :src="item.avatar | img_src(195, 190, 1)" alt="">
                                 <div class="jie1">
                                     <h3>{{item.real_name}}</h3>
                                     <p>{{item.position}}</p>
@@ -101,7 +101,20 @@
                     <ul class="fc-big fc2">
                         <li v-for="item in users">
                             <a :href="item.weid ? all_domian+'u/'+item.weid : 'javascript:void(0)'">
-                                <img :src="item.avatar" alt="">
+                                <img :src="item.avatar | img_src(195, 190, 1)" alt="">
+                                <div class="jie1">
+                                    <h3>{{item.real_name}}</h3>
+                                    <p>{{item.position}}</p>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="fc-right-by" v-else>
+                    <ul class="fc-big-by">
+                        <li v-for="item in users">
+                            <a :href="item.weid ? all_domian+'u/'+item.weid : 'javascript:void(0)'">
+                                <img :src="item.avatar | img_src(195, 190, 1)" alt="">
                                 <div class="jie1">
                                     <h3>{{item.real_name}}</h3>
                                     <p>{{item.position}}</p>
@@ -272,6 +285,7 @@
                     this.peoples_title = result.peoples_title;
                     this.users   = result.users;
                     $app.set_title(result.setting.title);
+                    console.log(this.users)
                 });
             });
         },
