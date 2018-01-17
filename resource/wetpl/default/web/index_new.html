@@ -216,7 +216,7 @@
                             </li>
                         </ul>
                         <ul id="marquee1_2">
-                            <li v-for="u in users">
+                            <li v-for="u in users"  v-if="users.length > 4">
                                 <a class="pic" :href="'/u/' + u.weid"><img :src="set_img(u.avatar, u.avatar, 186, 220)"></a>
                                 <a :href="'/u/' + u.weid">
                                     <div class="hz_font hz_font2">
