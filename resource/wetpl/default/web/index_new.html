@@ -46,6 +46,7 @@
         </div>
         <div id="menu">
             <ol>
+                <li><a :href="window.location.protocol + '//' + window.location.host">首页</a></li>
                 <li v-for="c in channel" @mouseleave="c.drop = false">
                     <a :href="check(c.domain, c.url)" @mouseenter="is_drop(c.weid)">{{c.title}}</a>
                     <div v-if="c.drop" @mouseleave="c.drop = false">
