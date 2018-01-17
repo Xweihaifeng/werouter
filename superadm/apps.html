@@ -67,6 +67,50 @@
         .control-label {
             text-align: right;
         }
+        
+        .data {
+            padding: 35px;
+            overflow: hidden;
+            border-bottom: 1px solid #e5e5e5;
+        }
+        
+        .data>div {
+            float: left;
+            position: relative;
+        }
+        
+        .data .doughnut {
+            width: 230px;
+        }
+        
+        .data .intro {
+            position: absolute;
+            top: 5px;
+            left: 130px;
+            font-size: 12px;
+            color: #383737;
+        }
+        
+        .data .intro>ul>li {
+            margin-bottom: 10px;
+        }
+        
+        .data .intro>ul>li>label {
+            font-size: 12px;
+            color: #7d7d7d;
+        }
+        
+        .mark {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        
+        #listPie li {
+            border: none;
+        }
     </style>
 </head>
 
@@ -183,6 +227,21 @@
                                             <a class="edit_domain">展开</a>
                                     </div>
                                     <div class="edit_domain_area" style="display: none;">
+                                        <div class="panel-body">
+                                            <div class="form-group">
+                                                <div class="col-sm-12 col-md-12 col-lg-12 data">
+                                                    <div class="chart doughnut" style="width:400px">
+                                                        <canvas id="chartPie" style="width:150px;height:150px;"></canvas>
+                                                        <div class="intro" style="margin-left: 120px;">
+                                                            <ul id="listPie"></ul>
+                                                        </div>
+                                                    </div>
+                                                    <div class="chart line" style="width:400px;margin-left:20px;">
+                                                        <canvas id="chartLine" style="width:400px;height:150px;"></canvas>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div class="panel-body">
                                             <div class="form-group">
                                                 <label class="control-label col-sm-4 col-md-4 col-lg-4">短信签名设置</label>
@@ -605,9 +664,7 @@
                     <!-- /.form-group -->
 
                     <div class="form-group">
-                        <label class="control-sidebar-subheading"> Delete chat history <a href="javascript:void(0)"
-                                                                                          class="text-red pull-right"><i
-                                class="fa fa-trash-o"></i></a> </label>
+                        <label class="control-sidebar-subheading"> Delete chat history <a href="javascript:void(0)" class="text-red pull-right"><i class="fa fa-trash-o"></i></a> </label>
                     </div>
                     <!-- /.form-group -->
                 </form>
@@ -629,6 +686,7 @@
     <script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
     <script src="/common/sweetalert2/dist/sweetalert2.min.js"></script>
     <script src="/common/zoom/zoom.js"></script>
+    <script src="/common/js/Chart.min.js"></script>
     <!-- Include a polyfill for ES6 Promises (optional) for IE11 and Android browser -->
 
     <!-- SlimScroll -->
