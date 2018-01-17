@@ -217,7 +217,7 @@
                         </ul>
                         <ul id="marquee1_2">
                             <li v-for="u in users">
-                                <a class="pic" :href="'/u/' + u.weid"><img :src="u.avatar"></a>
+                                <a class="pic" :href="'/u/' + u.weid"><img :src="set_img(u.avatar, u.avatar, 186, 220)"></a>
                                 <a :href="'/u/' + u.weid">
                                     <div class="hz_font hz_font2">
                                         <span>{{u.real_name}} </span>
@@ -460,11 +460,11 @@
                     var mySwiper = new Swiper('#my-swiper', Object.assign({}, this.swiper, {pagination: '.swiper-pagination', paginationClickable :true}));
                     var mySwiper2 = new Swiper('#my-swiper-2', this.swiper);
                 }, 0);
-                if (resp.users != '' && resp.users != undefined) {
-                    this.users = resp.users;
-                } else {
+//                if (resp.users != '' && resp.users != undefined) {
+//                    this.users = resp.users;
+//                } else {
                     this.users = [{"weid":"71f96b93-da75-11e7-85d7-fa5985d0eaa1","avatar":"/common/img/new/m03.png","real_name":"刘阿津","position":"秦商联合会会长、第十届陕西省政协常委","nickname":"刘阿津"},{"weid":"9a20c1b1-da77-11e7-85d7-fa5985d0eaa1","avatar":"/common/img/new/m04.png","real_name":"吴一坚","position":"陕西省人民政府决策咨询委员会专家委员","nickname":"吴一坚"},{"weid":"5819432b-da79-11e7-85d7-fa5985d0eaa1","avatar":"/common/img/new/m05.png","real_name":"孙俊良","position":"陕西省总商会第十一届副会长","nickname":"孙俊良"},{"weid":"add8b61e-da7a-11e7-85d7-fa5985d0eaa1","avatar":"/common/img/new/m06.png","real_name":"郭家学","position":"秦商联合会执行副会长","nickname":"郭家学"},{"weid":"af2ef256-da7b-11e7-85d7-fa5985d0eaa1","avatar":"/common/img/new/m07.png","real_name":"李黑记","position":"东岭集团党委书记、董事长兼总经理","nickname":"李黑记"}]
-                }
+//                }
             });
 
             axios.get(CMS_INDEX_GRID).then(data => {
