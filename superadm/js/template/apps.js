@@ -308,8 +308,8 @@ var chart = {
                 }]
             }
         };
-        for (var i = 0; i < data['city'].length; i++) {
-            var city = data['city'][i];
+        for (var i = 0; i < data['type'].length; i++) {
+            var city = data['type'][i];
             tmp.city.push({
                 value: city.value,
                 color: colors[i],
