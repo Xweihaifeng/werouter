@@ -107,14 +107,22 @@ nav{
     background:#0D71B4;
 }
 .nav-list{
-    width: 100%;
-    height:auto;
-    background: red;
     position: absolute;
     top: 55px;
     left: 0;
+    width: 100%;
+    max-height: 0;
+    overflow: hidden;
+    background-color: transparent;
     z-index: 999;
+
+    -webkit-transition: max-height .5s ease-out;
+    -moz-transition: max-height .5s ease-out;
+    -ms-transition: max-height .5s ease-out;
+    -o-transition: max-height .5s ease-out;
+    transition: max-height .5s ease-out;
 }
+
 .nav-list li{
     width: 100%;
     height:auto;
@@ -123,12 +131,20 @@ nav{
     line-height: 40px;
     font-size: 15px;
 }
+
 .nav-list li:hover{
     background: #4493D4;
 }
-.nav-list li>a{
+
+.big-nav > li:hover > .nav-list { 
+    max-height: 410px;
+    transition: max-height .3s ease-in;
+}
+
+.nav-list li > a{
     display: block;
     color: #fff;
     border-bottom: 1px solid #1A86CB;
 }
+
 /*导航结束*/
