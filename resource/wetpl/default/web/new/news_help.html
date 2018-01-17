@@ -74,7 +74,7 @@
                                             </div>
                                         </li>
                                     </ul>
-                                    <P>查看全部{{v.count}}篇文档</P>
+                                    <P><a :href="'/helps/'+ v.domain">查看全部{{v.count}}篇文档</a></P>
                                 </li>
                             </ul>
                         </div>
@@ -119,6 +119,7 @@
             getdata:function () {
                 ajax.get(web_business.web_cms_channel_categories , {params:{channel:'help' , limit : 2}}).then((res)=>{
                     this.content = res.data;
+                    console.log(this.content)
                 });
             },
             get_data : function(cate_id){
