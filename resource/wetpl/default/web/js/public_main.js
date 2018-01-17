@@ -536,8 +536,8 @@ req().then((data) => {
                         '<div class="imgs-member">' +
                             '<img src=' + imgUrl + ' width="158" />' +
                         '</div><div class="img-title1" style="padding: 0 5px;">' +
-            '<div id=' + memberId + ' style="width: 100%; height: 35px; text-align: center; line-height: 35px; margin-top: 5px; font-size: 15px; font-weight: 600; padding-left: 2px;" class="imgs-name1">' + data.real_name + '</div>' +
-            '<div style="width: 100%; height: 63px; text-align: center; line-height: 2em;" class="imgs-occupation">' + data.position.split(/',|;|；|，|'/g)[0] + '</div>' +
+            '<div id=' + memberId + ' style="width: 100%; height: 35px; text-align: center; line-height: 35px; margin-top: 5px; font-size: 15px; font-weight: 600; padding-left: 2px;" class="imgs-name1">' + data.real_name ? data.real_name : '' + '</div>' +
+            '<div style="width: 100%; height: 63px; text-align: center; line-height: 2em;" class="imgs-occupation">' + data.position ? data.position.split(/',|;|；|，|'/g)[0] : '' + '</div>' +
                     '</div></div>' +
                 '</a>' + 
             '</div>'
@@ -549,8 +549,8 @@ req().then((data) => {
                         '<div class="imgs-member" style="padding: 0 5px;">' +
                             '<img src=' + imgUrl + ' width="158" />' +
                         '</div>' +
-                        '<div id=' + memberId + ' style="width: 100%; height: 33px; text-align: center; line-height: 33px; padding-left: 2px;">' + data.real_name + '</div>' +
-                        '<div style="width: 100%; height: 63px; text-align: center; line-height: 2em;" class="imgs-occupation">' + data.position.split(/',|;|；|，|'/g)[0] + '</div>' +
+                        '<div id=' + memberId + ' style="width: 100%; height: 33px; text-align: center; line-height: 33px; padding-left: 2px;">' + data.real_name ? data.real_name : '' + '</div>' +
+                        '<div style="width: 100%; height: 63px; text-align: center; line-height: 2em;" class="imgs-occupation">' + data.position ? data.position.split(/',|;|；|，|'/g)[0] : '' + '</div>' +
                     '</div>' +
                 '</a>' + 
             '</div>'
