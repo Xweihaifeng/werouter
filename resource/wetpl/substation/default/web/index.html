@@ -24,9 +24,9 @@
                 <div class="s1-lb">
 
                     <!-- 新闻滚动图 -->
-                    <div class="s1-lbleft" v-if="banners.list.length != 0">
+                    <div class="s1-lbleft" v-if="banners.length != 0">
                        <ul class="banner">
-                            <li v-for="item in banners.list">
+                            <li v-for="item in banners">
                                 <a :href="!item.url||!item.url.indexOf('#') ? 'javascript:void(0)' : item.url">
                                    <img :src="item.image  | img_src(430 , 310 , 1)" alt="">
                                 </a>
@@ -38,7 +38,7 @@
                            <div class="Ibtn-bR"></div>
                         </div>
                         <ul class="yuan">
-                            <li v-for="item in banners.list" class="yson"></li>
+                            <li v-for="item in banners" class="yson"></li>
                         </ul>
                     </div>
                     
@@ -117,10 +117,10 @@
                 <div class="s2-b1">
                     <div class="s2-lt">
                         <span class="qz" v-html="spzx.title"></span>
-                        <a :href="!spzx.length ? 'javascript:void(0)' : all_domian+spzx.domain">更多</a>
+                        <a :href="!spzx_list.length ? 'javascript:void(0)' : all_domian+spzx.domain">更多</a>
                     </div>
                     <ul class="b1-list" style="margin-top:18px;">
-                        <li v-for="(item, index) in spzx.list" v-if="index<8">
+                        <li v-for="(item, index) in spzx_list" v-if="index<8">
                             <a :href="'news/'+item.weid | href">{{item.title | limitLen(0,15)}}</a>
                             <span>{{item.publish_time | formateTime('YMD')}}</span>
                         </li>
@@ -131,10 +131,10 @@
                 <div class="s2-b2">
                     <div class="s2-lt">
                         <span class="qz">{{mag.title}}</span>
-                        <a :href="!mag.list.length ? 'javascript:void(0)' : '/magazine/'+mag.domain">更多</a>
+                        <a :href="!mag_list.length ? 'javascript:void(0)' : '/magazine/'+mag.domain">更多</a>
                     </div>
-                    <ul class="b2-list" v-if="mag.list.length != 0">
-                        <li v-for="(item, index) in mag.list" v-if="index<6"><a :href="'/magazine/'+mag.domain+'/'+item.weid"><img :src="item.cover | img_src(130,130)" :alt="item.title" :title="item.title"></a></li>
+                    <ul class="b2-list" v-if="mag_list.length != 0">
+                        <li v-for="(item, index) in mag_list" v-if="index<6"><a :href="'/magazine/'+mag.domain+'/'+item.weid"><img :src="item.cover | img_src(130,130)" :alt="item.title" :title="item.title"></a></li>
                     </ul>
                 </div>
 
@@ -142,10 +142,10 @@
                 <div class="s2-b3">
                     <div class="s2-lt">
                         <span class="qz">{{gzdt.title}}</span>
-                        <a :href="!gzdt.list.length ? 'javascript:void(0)' : all_domian+gzdt.domain">更多</a>
+                        <a :href="!gzdt_list.length ? 'javascript:void(0)' : all_domian+gzdt.domain">更多</a>
                     </div>
-                    <ul class="b3-list" :class="{'hide-border':gzdt.list.length == 0}">
-                        <li v-for="(item, index) in gzdt.list" v-if="index<8">
+                    <ul class="b3-list" :class="{'hide-border':gzdt_list.length == 0}">
+                        <li v-for="(item, index) in gzdt_list" v-if="index<8">
                             <a :href="'news/'+item.weid | href">{{item.title | limitLen(0,15)}}</a>
                             <span>{{item.publish_time | formateTime('YMD')}}</span>
                         </li>
@@ -177,8 +177,11 @@
             spzx      : [],
             gzdt      : [],
             mag       : [],
+            spzx_list : [],
+            gzdt_list : [],
+            mag_list  : [],
 
-            banners   : {},
+            banners   : [],
             header1   : {},
             header2   : {},
             leader    : {},
@@ -205,6 +208,9 @@
                     this.spzx      = result.spzx;
                     this.gzdt      = result.gzdt;
                     this.mag       = result.mag;
+                    this.spzx_list = result.spzx.list;
+                    this.gzdt_list = result.gzdt.list;
+                    this.mag_list  = result.mag.list;
                 });
 
                 // 首页广告信息
@@ -258,7 +264,7 @@
                         ]
                     }
 
-                    this.banners = result.banners;
+                    this.banners = result.banners.list;
                     this.header1 = result.header1;
                     this.header2 = result.header2;
                     this.leader  = result.leader;
