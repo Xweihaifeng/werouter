@@ -925,7 +925,7 @@ req().then((data) => {
                 }
 
                 if (data.data.header1 != null) {
-                    addBg(data.data.header1.image, '#hl', 196, 45);
+                    addBg(data.data.header1.image, '#hl', 382, 45);
                 }
                 if (data.data.header2 != null) {
                     addBg(data.data.header2.list[0].image, '#big', 960, 235);

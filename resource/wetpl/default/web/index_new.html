@@ -47,10 +47,12 @@
         <div id="menu">
             <ol>
                 <li><a :href="window.location.protocol + '//' + window.location.host">首页</a></li>
-                <li v-for="c in channel" @mouseleave="c.drop = false">
-                    <a :href="check(c.domain, c.url)" @mouseenter="is_drop(c.weid)">{{c.title}}</a>
-                    <div v-if="c.drop" @mouseleave="c.drop = false">
-                        <p v-for="e in c.children"><a :href="check(c.domain, c.url) + '/' + e.domain">{{e.title}}</a></p>
+                <li v-for="c in channel">
+                    <a :href="check(c.domain, c.url)">{{c.title}}</a>
+                    <div class="nav-list">
+                        <p v-for="e in c.children">
+                            <a :href="check(c.domain, c.url) + '/' + e.domain">{{e.title}}</a>
+                        </p>
                     </div>
                 </li>
             </ol>
@@ -132,10 +134,10 @@
                     <div class="main-news">
                         <div class="main-news-title">
                             <img src="/common/img/new/topline.png">
-                            <a href="main_news.channel_domain + '/' + main_news.weid" target="_blank">{{main_news.title}}</a>
+                            <a :href="main_news.channel_domain + '/' + main_news.weid" target="_blank">{{main_news.title}}</a>
                         </div>
                         <div class="main-news-content">
-                            <a href="main_news.channel_domain + '/' + main_news.weid" target="_blank">{{main_news.summary}}</a>
+                            <a :href="main_news.channel_domain + '/' + main_news.weid" target="_blank">{{main_news.summary}}</a>
                         </div>
                     </div>
                     <div class="news-center">
@@ -483,7 +485,7 @@
             search: (key) => window.location.href = window.location.protocol + '//' + window.location.host + '/so?q=' + key,
             simple_null: (data) => data != null && data != '' && data != undefined ? false : true,
             check: (domain, url) => url != null && url != '' ? url : '/' + domain,
-            is_drop: (id) => app.channel.map(x => x.weid === id ? x.drop = true : x.drop = false),
+            //is_drop: (id) => app.channel.map(x => x.weid === id ? x.drop = true : x.drop = false),
             read: (name) => ['up', 'down'].map(x => x !== name ?
                     (app.is_bg[x].on = false, app.is_bg[x].bg = app.style.recmd.off.bg, app.is_bg[x].tri = app.style.recmd.off.tri,
                      app.is_bg[x].cir = app.style.recmd.off.cir, app.is_bg[x].sub = app.style.recmd.off.sub) :
