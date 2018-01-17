@@ -43,7 +43,7 @@
                             </aside>
                         </div>
                         <div action="" class="search search-box">
-                            <input type="text" placeholder="搜索..." name="s" v-model="searchText" @keyup.enter="goSearchOpen()">
+                            <input type="text" :placeholder="placeholder" name="s" v-model="searchText" @keyup.enter="goSearchOpen()">
                             <input type="submit" value="搜索" name="submit" @click="goSearchOpen()">
                         </div>
                     </div>
@@ -99,6 +99,7 @@
             var header = new Vue({
                 el: '#header',
                 data: {
+                    placeholder : '搜索...',
                     sub_aside : [],   //侧导航接口
                     sub_aside_info : {},
                     sub_rcon : [],    //右侧展示接口
@@ -120,7 +121,6 @@
                     ]
                 },
                 mounted: function() {
-                    //$app.set_title('风采页面');
                     this.$nextTick(()=>{
                         ajax.get('scms/channelAndCate').then((res)=>{
                             if(res.code == 200) {
@@ -143,6 +143,8 @@
                                 footer();
                             }
                         })
+
+                        !$app.get_query_string('q') ? this.placeholder = '搜索...' : this.placeholder = $app.get_query_string('q');
                     });
                 },
                 methods: {
