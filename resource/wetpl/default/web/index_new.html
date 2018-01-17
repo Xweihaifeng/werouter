@@ -65,8 +65,11 @@
     <div id="container">
         <div id="carousel">
             <ul id="nav">
-               <!--<li><a href="/login"><img src="/common/img/new/icon01.png" alt=""/></a></li>-->
-               <li @click="login"><a href="javascript:void(0);"><img src="/common/img/new/icon01.png" alt=""/></a></li>
+               <li @click="login">
+                   <a href="javascript:void(0);">
+                       <img :src="set_img(plats_user_info.avatar, '/common/img/new/icon01.png', 29, 27)" id="avatar" alt=""/>
+                   </a>
+               </li>
                <li><a :href="'/' + domain + '/article'"><img src="/common/img/new/icon02.png" alt=""/></a></li>
                <li><a href="javascript:void(0);"><img src="/common/img/new/icon03.png" alt=""/></a></li>
                <li><a :href="'/' + domain + '/activity'"><img src="/common/img/new/icon04.png" alt=""/></a></li>
@@ -358,7 +361,7 @@
     var app = new Vue({
         el: '#app',
         data: {
-            grid: [],
+            avatar: '',
             domain: plats_user_info.domian == undefined ? 'index' : plats_user_info.domian,
             logo: '',
             header1: '',
@@ -461,10 +464,10 @@
         },
         methods: {
             login: () => {
-                if (is_login === 'no') {
-                    $("#modal_login").fadeIn(300)
+                if(!docCookies.getItem("token")) {
+                    $("#modal_login").fadeIn(300);
                 } else {
-                    window.location.href = '/login'
+                    window.location.href = '/user';
                 }
             },
             set_img: (url, init, w, h, mode) => {

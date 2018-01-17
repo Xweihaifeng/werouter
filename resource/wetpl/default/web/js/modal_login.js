@@ -424,6 +424,19 @@ $(function() {
         }        
     })
 
+    var set_img = function(url, init, w, h, mode) {
+        if (url != '' && url != null && url != undefined) {
+            if (url.indexOf('http') === -1) {
+                return mode != undefined ? ApiMaterPlatQiniuDomain + url + '?imageView2/' + mode + '/w/' + w + '/h/' + h
+                    : ApiMaterPlatQiniuDomain + url + '?imageView2/3/w/' + w + '/h/' + h;
+            } else {
+                return url;
+            }
+        } else {
+            return init;
+        }
+    }
+
     //用户登录
     var login = function(phoneNum, checkNum, ref_id, ref_url, domain/*, imageCode, imageCodeID*/){
         $.ajax({
@@ -435,12 +448,18 @@ $(function() {
                 'domain': domain
             /* , 'imagecode': imageCode, 'imagecode_id': imageCodeID*/ },
             success: function(data){
+                console.log(data)
                 if (data.code != -200) {
                     saveUserInfo(data.token, data.data.weid, data.data.avatar, data.data.identity);
                     showLogin = false;
                     isLogin = true;
                     isCheckNum = false;
-                    window.location.href = window.location.href;
+                    $("#modal_login").fadeOut(300);
+                    setTimeout(function(){
+                        layer.msg('您已成功登录', {time: 1500});
+                        $("#avatar").attr('src', set_img(data.data.avatar, '/common/img/new/icon01.png', 29, 27));
+                    }, 300);
+                    //window.location.href = window.location.href;
                 } else {
                     lock = false;
                     clearInterval(count);
