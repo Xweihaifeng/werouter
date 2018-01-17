@@ -17,9 +17,14 @@
         <script src="/common/public/js/model/sub_ajax.js"></script>
         <script src="{{PATH_TML}}js/jquery-3.2.1.js"></script>
         <script src="{{PATH_TML}}js/nav.js"></script>
+        <style>
+            [v-cloak] {
+                display: none;
+            }
+        </style>
     </head>
     <body>
-        <div id="header">
+        <div id="header" v-cloak>
             <header>
                 <main>
                     <div class="head-left">
@@ -64,11 +69,11 @@
             </nav>
         </div>
 
-        <div id="content_app">
+        <div id="content_app" v-cloak>
             {{extend-content}}
         </div>    
             
-        <footer id="footer">
+        <footer id="footer" v-cloak>
             <main>
                 <ul class="footer-nav">
                     <li><a :href="all_domian">首页</a></li>
@@ -144,7 +149,7 @@
                             }
                         })
 
-                        !$app.get_query_string('q') ? this.placeholder = '搜索...' : this.placeholder = $app.get_query_string('q');
+                        !$app.get_query_string('q') ? this.placeholder = '搜索...' : this.searchText = $app.get_query_string('q');
                     });
                 },
                 methods: {
