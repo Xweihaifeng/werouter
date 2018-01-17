@@ -33,7 +33,7 @@
                     <div id="ht">
                         <aside v-for="e in qrcode" @mouseleave="e.ok=false">
                             <span @mouseenter="e.ok=true">{{e.title}}</span>
-                            <div v-show="e.ok">
+                            <div v-show="e.ok" style="z-index: 15;">
                                 <img :src="e.image" class="weixin img-responsive">
                             </div>
                         </aside>
@@ -75,7 +75,7 @@
             <div class="swiper-container" id="my-swiper">
                 <div class="swiper-wrapper">
                     <div class="swiper-slide" v-for="e in header2.list">
-                        <a :href="e.url">
+                        <a :href="e.url" target="_blank">
                             <img :src="imgSet(e.image, 1200, 476)" alt=""/>
                             <p class="bg"></p>
                             <p class="content">{{e.title}}</p>
