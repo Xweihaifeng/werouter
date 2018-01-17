@@ -383,18 +383,48 @@
             key: '', //搜索关键字
             qrcode: [
                 {ok: false, title: "手机版", image: "/api/file/qrcode?margin=2&url="+window.location.href},
-                {ok: false, title: "微信", image: plats_info.wx_qrcode? plats_info.wx_qrcode : window.location.origin+"/api/file/qrcode?margin=2&url="+window.location.href},
-                {ok: false, title: "微博", image: plats_info.wb_qrcode? plats_info.wx_qrcode : window.location.origin+"/api/file/qrcode?margin=2&url="+window.location.href},
+                {ok: false, title: "微信", image: plats_info.wx_qrcode? plats_info.wx_qrcode: window.location.origin+"/api/file/qrcode?margin=2&url="+window.location.href},
+                {ok: false, title: "微博", image: plats_info.wb_qrcode? plats_info.wx_qrcode: window.location.origin+"/api/file/qrcode?margin=2&url="+window.location.href},
             ],
             style: {
-                recmd: {on: {bg: {"color": "white", "background": "#01a7ff"}, tri: {"display": "block"}, cir: {"border": "1px solid #01A7FF"}, sub: {"border": "none", "background": "#01A7FF"}},
-                        off: {bg: {"background": "none", "color": "black"}, tri: {"display": "none"}, cir: {"border": "1px solid #AFAFAF"}, sub: {"border": "1px solid #AFAFAF"}}},
+                recmd: {
+                        on:
+                        {
+                            bg: {"color": "white", "background": "#01a7ff"},
+                            tri: {"display": "block"},
+                            cir: {"border": "1px solid #01A7FF"},
+                            sub: {"border": "none", "background": "#01A7FF"}
+                        },
+                        off:
+                        {
+                            bg: {"background": "none", "color": "black"},
+                            tri: {"display": "none"},
+                            cir: {"border": "1px solid #AFAFAF"},
+                            sub: {"border": "1px solid #AFAFAF"}
+                        }
+                },
                 selected: {"color": "#fff", "background": "#01a7ff", "font-weight": "600"},
                 video: {"background": "url(/common/img/new/08.png) no-repeat center"}
             },
             is_show: {news: true, notice: false, weibo: false},
-            is_bg: {up: {on: true, bg: {"color": "white", "background": "#01a7ff"}, tri: {"display": "block"}, cir: {"border": "1px solid #01A7FF"}, sub: {"border": "none", "background": "#01A7FF"}},
-                    down: {on: false, bg: {"background": "none", "color": "black"}, tri: {"display": "none"}, cir: {"border": "1px solid #AFAFAF"}, sub: {"border": "1px solid #AFAFAF"}}},
+            is_bg: {
+                    up:
+                        {
+                            on: true,
+                            bg: {"color": "white", "background": "#01a7ff"},
+                            tri: {"display": "block"},
+                            cir: {"border": "1px solid #01A7FF"},
+                            sub: {"border": "none", "background": "#01A7FF"}
+                        },
+                    down:
+                        {
+                            on: false,
+                            bg: {"background": "none", "color": "black"},
+                            tri: {"display": "none"},
+                            cir: {"border": "1px solid #AFAFAF"},
+                            sub: {"border": "1px solid #AFAFAF"}
+                        }
+            },
             swiper: {
                 direction: 'horizontal',
                 loop: true,
@@ -409,7 +439,7 @@
                 observer:true,
                 observeParents:true,
             },
-            users: [{"weid":"71f96b93-da75-11e7-85d7-fa5985d0eaa1","avatar":"/common/img/new/m03.png","real_name":"刘阿津","position":"秦商联合会会长、第十届陕西省政协常委，中国国际投资促进会副会长","nickname":"刘阿津"},{"weid":"9a20c1b1-da77-11e7-85d7-fa5985d0eaa1","avatar":"/common/img/new/m04.png","real_name":"吴一坚","position":"陕西省人民政府决策咨询委员会专家委员，陕西省创业促进会会长，陕西省总商会副会长，陕西省医药协会副会长，陕西省民营企业协会副会长,陕西省晋商商会名誉会长","nickname":"吴一坚"},{"weid":"5819432b-da79-11e7-85d7-fa5985d0eaa1","avatar":"/common/img/new/m05.png","real_name":"孙俊良","position":"陕西省总商会第十一届副会长","nickname":"孙俊良"},{"weid":"add8b61e-da7a-11e7-85d7-fa5985d0eaa1","avatar":"/common/img/new/m06.png","real_name":"郭家学","position":"秦商联合会执行副会长","nickname":"郭家学"},{"weid":"af2ef256-da7b-11e7-85d7-fa5985d0eaa1","avatar":"/common/img/new/m07.png","real_name":"李黑记","position":"东岭集团党委书记、董事长兼总经理；东岭村党委书记、村委会主任。担任中国光彩事业促进会副会长、陕西省人大财经委委员、陕西省工商联副主席、秦商联合会执行副会长、宝鸡市工商联副主席；宝鸡市市委委员","nickname":"李黑记"},{"weid":"73946f7e-da7d-11e7-85d7-fa5985d0eaa1","avatar":"/common/img/new/m07.png","real_name":"赵涛","position":"秦商联合会执行副会长","nickname":"赵涛"}],
+            users: [],
         },
         created() {
             axios.get(CMS_ADVS).then(data => {
@@ -431,8 +461,9 @@
                     var mySwiper2 = new Swiper('#my-swiper-2', this.swiper);
                 }, 0);
                 if (resp.users != '' && resp.users != undefined) {
-//                    this.users = [];
-//                    this.users = resp.users;
+                    this.users = resp.users;
+                } else {
+                    this.user = {"weid":"71f96b93-da75-11e7-85d7-fa5985d0eaa1","avatar":"/common/img/new/m03.png","real_name":"刘阿津","position":"秦商联合会会长、第十届陕西省政协常委，中国国际投资促进会副会长","nickname":"刘阿津"},{"weid":"9a20c1b1-da77-11e7-85d7-fa5985d0eaa1","avatar":"/common/img/new/m04.png","real_name":"吴一坚","position":"陕西省人民政府决策咨询委员会专家委员，陕西省创业促进会会长，陕西省总商会副会长，陕西省医药协会副会长，陕西省民营企业协会副会长,陕西省晋商商会名誉会长","nickname":"吴一坚"},{"weid":"5819432b-da79-11e7-85d7-fa5985d0eaa1","avatar":"/common/img/new/m05.png","real_name":"孙俊良","position":"陕西省总商会第十一届副会长","nickname":"孙俊良"},{"weid":"add8b61e-da7a-11e7-85d7-fa5985d0eaa1","avatar":"/common/img/new/m06.png","real_name":"郭家学","position":"秦商联合会执行副会长","nickname":"郭家学"},{"weid":"af2ef256-da7b-11e7-85d7-fa5985d0eaa1","avatar":"/common/img/new/m07.png","real_name":"李黑记","position":"东岭集团党委书记、董事长兼总经理；东岭村党委书记、村委会主任。担任中国光彩事业促进会副会长、陕西省人大财经委委员、陕西省工商联副主席、秦商联合会执行副会长、宝鸡市工商联副主席；宝鸡市市委委员","nickname":"李黑记"},{"weid":"73946f7e-da7d-11e7-85d7-fa5985d0eaa1","avatar":"/common/img/new/m07.png","real_name":"赵涛","position":"秦商联合会执行副会长","nickname":"赵涛"}
                 }
             });
 
