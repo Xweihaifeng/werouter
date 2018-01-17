@@ -426,7 +426,7 @@ $(function() {
 
     var set_img = function(url, init, w, h, mode) {
         if (url != '' && url != null && url != undefined) {
-            if (url.indexOf('http') === -1) {
+            if (url.indexOf('http') === -1 && url.indexOf('common') === -1) {
                 return mode != undefined ? ApiMaterPlatQiniuDomain + url + '?imageView2/' + mode + '/w/' + w + '/h/' + h
                     : ApiMaterPlatQiniuDomain + url + '?imageView2/3/w/' + w + '/h/' + h;
             } else {

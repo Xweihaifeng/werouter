@@ -206,7 +206,7 @@
                     <div style="width:8000px;">
                         <ul id="marquee1_1">
                             <li v-for="u in users">
-                                <a class="pic" :href="'/u/' + u.weid"><img :src="u.avatar"></a>
+                                <a class="pic" :href="'/u/' + u.weid"><img :src="set_img(u.avatar, u.avatar, 186, 220)"></a>
                                 <a :href="'/u/' + u.weid">
                                     <div class="hz_font hz_font2">
                                     <span>{{u.real_name}} </span>
@@ -420,35 +420,38 @@
                 this.header2 = resp.header2;
                 this.banners = resp.banners;
                 this.leader = resp.leader != null ? resp.leader : {description: "全球秦商总会会长", image: "plats/resource/1513250120999.png", title: "刘阿津", url: "/u/71f96b93-da75-11e7-85d7-fa5985d0eaa1", weid: "d1fe0600-d181-11e7-9c10-49bfb1717a52"};
-                this.link = Object.values(resp.link).map(
+                let list = [];
+                for (let key in resp.link) {
+                    list.push(resp.link[key]);
+                };
+                this.link = list.map(
                         (e, i) => (i == 0 ? (e.show = true, e.selected = this.style.selected, e) : (e.show = false, e.selected = {}, e)));
                 setTimeout(() => {
-                    var mySwiper = new Swiper('#my-swiper', {...this.swiper, pagination: '.swiper-pagination', paginationClickable :true,});
+                    var mySwiper = new Swiper('#my-swiper', Object.assign({}, this.swiper, {pagination: '.swiper-pagination', paginationClickable :true}));
                     var mySwiper2 = new Swiper('#my-swiper-2', this.swiper);
                 }, 0);
                 if (resp.users != '' && resp.users != undefined) {
-                    this.users = resp.users;
+//                    this.users = [];
+//                    this.users = resp.users;
                 }
             });
 
             axios.get(CMS_INDEX_GRID).then(data => {
                 let resp = data.data.data;
                 this.grid = data.data.data;
-                this.main_news = {...resp.hot[0],
-                                    title: resp.hot[0].title.substr(0, 18),
-                                    summary: resp.hot[0].summary.length > 72 ? resp.hot[0].summary.substr(0, 72) + ' ...' : resp.hot[0].summary};
+                this.main_news = Object.assign(resp.hot[0], {title: resp.hot[0].title.substr(0, 18), summary: resp.hot[0].summary.length > 72 ? resp.hot[0].summary.substr(0, 72) + ' ...' : resp.hot[0].summary});
                 this.news = resp.news;
                 this.notice = resp.nitoce;
                 this.especial = resp.especial_news;
                 this.qycp = resp.qycp;
-                this.spzx = {head: resp.spzx.title, domain: resp.spzx.domain, ...resp.spzx.list[0], tail: resp.spzx.list.slice(1, 3)};
+                this.spzx = Object.assign(resp.spzx.list[0], {head: resp.spzx.title, domain: resp.spzx.domain, tail: resp.spzx.list.slice(1, 3)});
                 this.mag = resp.mag;
                 this.ztbd = resp.ztbd;
                 this.style.video = this.spzx.thumb_image != ""
                                     ? {"background": "url(" + this.spzx.thumb_image + ") no-repeat center"}
                                     : {"background": "url(/common/img/new/08.png) no-repeat center"};
                 setTimeout(() => {
-                    var mySwiper3 = new Swiper('#my-swiper-3', {...this.swiper, slidesPerView: 4, spaceBetween: 20})
+                    var mySwiper3 = new Swiper('#my-swiper-3', Object.assign({}, this.swiper, {slidesPerView: 4, spaceBetween: 20}))
                 }, 0);
             });
 
@@ -472,7 +475,7 @@
             },
             set_img: (url, init, w, h, mode) => {
                 if (url != '' && url != null && url != undefined) {
-                    if (url.indexOf('http') === -1) {
+                    if (url.indexOf('http') === -1 && url.indexOf('common') === -1) {
                         return mode != undefined ? ApiMaterPlatQiniuDomain + url + '?imageView2/' + mode + '/w/' + w + '/h/' + h
                                                  : ApiMaterPlatQiniuDomain + url + '?imageView2/3/w/' + w + '/h/' + h;
                     } else {
