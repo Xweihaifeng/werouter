@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="/common/css/bootstrap.min.css" />
     <link rel="stylesheet" href="{{PATH_TML}}css/swiper.min.css" />
     <link rel="stylesheet" href="/common/layui/css/layui.css" />
+    <link rel="stylesheet" href="{{PATH_TML}}css/modal_login.css" />
     <link rel="stylesheet" href="{{PATH_TML}}css/normalize.css" />
     <link rel="stylesheet" href="{{PATH_TML}}css/index.css" />
     <link rel="stylesheet" href="{{PATH_TML}}css/index_new.css" />
@@ -18,14 +19,16 @@
     <script src="/common/js/swiper-3.3.1.min.js"></script>
     <script src="/common/layui/layui.js"></script>
     <script src="{{PATH_CONFIG}}"></script>
+    <script src="{{PATH_TML}}js/modal_login.js"></script>
 </head>
 <body>
 <main id="app" v-cloak>
+    <div class="modal_login" id="modal_login"></div>
     <header>
         <div>
             <ul>
-                <li><img :src="logo" alt=""/></li>
-                <li><img :src="header1" alt=""/></li>
+                <li><img :src="logo" alt="" style="width: 209px; height: 50px; display: block;" /></li>
+                <li><img :src="header1" alt="" style="width: 382px; height: 45px; display: block;" /></li>
                 <li>
                     <div id="ht">
                         <aside v-for="e in qrcode" @mouseleave="e.ok=false">
@@ -61,7 +64,8 @@
     <div id="container">
         <div id="carousel">
             <ul id="nav">
-               <li><a href="/login"><img src="/common/img/new/icon01.png" alt=""/></a></li>
+               <!--<li><a href="/login"><img src="/common/img/new/icon01.png" alt=""/></a></li>-->
+               <li @click="login"><a href="javascript:void(0);"><img src="/common/img/new/icon01.png" alt=""/></a></li>
                <li><a :href="'/' + domain + '/article'"><img src="/common/img/new/icon02.png" alt=""/></a></li>
                <li><a href="javascript:void(0);"><img src="/common/img/new/icon03.png" alt=""/></a></li>
                <li><a :href="'/' + domain + '/activity'"><img src="/common/img/new/icon04.png" alt=""/></a></li>
@@ -142,9 +146,9 @@
                     </div>
                     <div class="news-center">
                         <ul class="nav nav-tabs">
-                            <li class="center" :style="is_border.news" @mouseenter="show('news')"><a href="news">新闻中心</a></li>
-                            <li class="sirase" :style="is_border.notice" @mouseenter="show('notice')"><a href="org">公示公告</a></li>
-                            <li class="release":style="is_border.weibo" @mouseenter="show('weibo')"><a>官方发布</a></li>
+                            <li class="center" @mouseenter="show('news')"><a href="news">新闻中心</a></li>
+                            <li class="sirase" @mouseenter="show('notice')"><a href="org">公示公告</a></li>
+                            <li class="release"@mouseenter="show('weibo')"><a>官方发布</a></li>
                         </ul>
                     </div>
                     <div class="news-link">
@@ -379,14 +383,12 @@
                 {ok: false, title: "微博", image: plats_info.wb_qrcode? plats_info.wx_qrcode : window.location.origin+"/api/file/qrcode?margin=2&url="+window.location.href},
             ],
             style: {
-                border: {"border-bottom": "4px solid #01a7ff"},
                 recmd: {on: {bg: {"color": "white", "background": "#01a7ff"}, tri: {"display": "block"}, cir: {"border": "1px solid #01A7FF"}, sub: {"border": "none", "background": "#01A7FF"}},
                         off: {bg: {"background": "none", "color": "black"}, tri: {"display": "none"}, cir: {"border": "1px solid #AFAFAF"}, sub: {"border": "1px solid #AFAFAF"}}},
                 selected: {"color": "#fff", "background": "#01a7ff", "font-weight": "600"},
                 video: {"background": "url(/common/img/new/08.png) no-repeat center"}
             },
             is_show: {news: true, notice: false, weibo: false},
-            is_border: {news: {"border-bottom": "4px solid #01a7ff"}, notice: {}, weibo: {}},
             is_bg: {up: {on: true, bg: {"color": "white", "background": "#01a7ff"}, tri: {"display": "block"}, cir: {"border": "1px solid #01A7FF"}, sub: {"border": "none", "background": "#01A7FF"}},
                     down: {on: false, bg: {"background": "none", "color": "black"}, tri: {"display": "none"}, cir: {"border": "1px solid #AFAFAF"}, sub: {"border": "1px solid #AFAFAF"}}},
             swiper: {
@@ -457,6 +459,13 @@
             })
         },
         methods: {
+            login: () => {
+                if (is_login === 'no') {
+                    $("#modal_login").fadeIn(300)
+                } else {
+                    window.location.href = '/login'
+                }
+            },
             set_img: (url, init, w, h, mode) => {
                 if (url != '' && url != null && url != undefined) {
                     if (url.indexOf('http') === -1) {
@@ -485,13 +494,12 @@
             search: (key) => window.location.href = window.location.protocol + '//' + window.location.host + '/so?q=' + key,
             simple_null: (data) => data != null && data != '' && data != undefined ? false : true,
             check: (domain, url) => url != null && url != '' ? url : '/' + domain,
-            //is_drop: (id) => app.channel.map(x => x.weid === id ? x.drop = true : x.drop = false),
             read: (name) => ['up', 'down'].map(x => x !== name ?
                     (app.is_bg[x].on = false, app.is_bg[x].bg = app.style.recmd.off.bg, app.is_bg[x].tri = app.style.recmd.off.tri,
                      app.is_bg[x].cir = app.style.recmd.off.cir, app.is_bg[x].sub = app.style.recmd.off.sub) :
                     (app.is_bg[name].on = true, app.is_bg[name].bg = app.style.recmd.on.bg, app.is_bg[name].tri = app.style.recmd.on.tri,
                      app.is_bg[name].cir = app.style.recmd.on.cir, app.is_bg[name].sub = app.style.recmd.on.sub)),
-            show: (name) => ['news', 'notice', 'weibo'].map(x => x !== name ? (app.is_show[x] = false, app.is_border[x] = {}) : (app.is_show[name] = true, app.is_border[name] = app.style.border)),
+            show: (name) => ['news', 'notice', 'weibo'].map(x => x !== name ? (app.is_show[x] = false) : (app.is_show[name] = true)),
             change_link: (name) => app.link.map(x => x !== name ? (x.show = false, x.selected = {}) : (x.show = true, x.selected = app.style.selected))
         },
         filters: {
