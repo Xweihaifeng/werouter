@@ -642,11 +642,14 @@ var __init_wepages_config = function() {
         success: function(result) {
             if (result.code === 200) {
                 var open_allow_source = result.data.open_allow_source;
+                var modifyLimit = result.data.modifyLimit;
                 if (open_allow_source.length > 0) {
                     $(open_allow_source).each(function(k, v) {
                         $('input[name=open_allow_source][value=' + v + ']').attr('checked', true);
                     });
                 }
+                $('input[name=modifyLimit]').val(modifyLimit);
+
             } else {
                 parent.layer.msg(result.message);
 
@@ -663,8 +666,10 @@ $('#wepagesSet').click(function() {
     $("input[name=open_allow_source]:checked").each(function(k, v) {
         open_allow_source.push($(v).val());
     });
+    var modifyLimit = $('input[name=modifyLimit]').val();
     var formList = {
         'open_allow_source': open_allow_source,
+        'modifyLimit': modifyLimit
     };
     $.ajax({
         url: ApiUrl + 'setting/alias/wepagesConfig',

@@ -8,7 +8,6 @@ $(function () {
             $(".toptop").removeClass("fixeds")
             $(".diss").css({"display":"block"})
         }
-        console.log(tops)
     })
 
 })

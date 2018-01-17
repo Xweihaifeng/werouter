@@ -2,7 +2,7 @@
 <script type="text/javascript">
     var main_index = false;
 </script>
-<link rel="stylesheet" href="/common/css/helps.css" />
+<link rel="stylesheet" href="/common/css/helps.css"/>
 <script src="/common/js/helps.js"></script>
 <div id="app">
     <section class="bnaner"></section>
@@ -11,19 +11,26 @@
         <div class="toptop">
             <main>
                 <ul class="content_left pps">
-                    <li :class="{'current': item.domain == currPage}" v-for="item in header_news">
-                        <a :href="'/helps/'+ item.domain"><span>{{item.title}}</span></a>
-                    </li>
+                    <template v-for="(item,index) in header_news">
+                        <li :class="{'current': item.domain == currPage}">
+                            <a :class="{'about': item.domain == currPage}"  :href="'/helps/'+ item.domain">
+                                <span>{{item.title}}</span>
+                            </a>
+                        </li>
+                    </template>
                 </ul>
             </main>
-
         </div>
         <main>
             <div class="boxb">
                 <ul class="content_left diss">
-                    <li :class="{'current': item.domain == currPage}" v-for="item in header_news">
-                        <a :href="'/helps/'+ item.domain"><span>{{item.title}}</span></a>
-                    </li>
+                    <template v-for="(item,index) in header_news">
+                        <li :class="{'current': item.domain == currPage}">
+                            <a :class="{'about': item.domain == currPage}"  :href="'/helps/'+ item.domain">
+                                <span>{{item.title}}</span>
+                            </a>
+                        </li>
+                    </template>
                 </ul>
             </div>
 
@@ -31,7 +38,7 @@
                 <ul>
                     <li>
                         <div class="about_title">
-                            <span>合作伙伴</span>
+                            <span>{{cate_name}}</span>
                         </div>
                         <ul>
                             <li v-for="item in datas">
@@ -51,59 +58,60 @@
         el: '#app',
         data: {
             'header_news': [],
-            'currPage' : window.location.pathname.split('/').pop(),
-            'channel' : '' ,
-            'channel_name' : '',
-            'list_data' : [],
-            'show':true,
-            'empty_show':false,
-            'page':1,
-            'datas':'',
+            'currPage': window.location.pathname.split('/').pop(),
+            'channel': '',
+            'channel_name': '',
+            'list_data': [],
+            'show': true,
+            'empty_show': false,
+            'page': 1,
+            'datas': '',
+            'cate_name':'',
         },
         mounted() {
-            // this.getdata()
-            this.$nextTick( function () {
+            this.$nextTick(function () {
                 this.header_news = win.getStorage('header_help');
-                for(val in this.header_news){
-                    if(this.header_news[val].domain == this.currPage){
+                for (val in this.header_news) {
+                    if (this.header_news[val].domain == this.currPage) {
                         this.channel = this.header_news[val].domain;
                         this.channel_name = this.header_news[val].title;
                         set_title(this.channel_name);
-                        this.get_data(this.channel , 1);
+                        this.get_data(this.channel, 1);
+
                     }
                 }
             });
         },
-        methods:{
-            // getdata:function () {
-            //     ajax.get(web_business.web_cms_channel_contents , {params:{cate_id:'help' , limit : 2 , page : 1}}).then((res)=>{
-            //         this.content = res.data;
-            //         console.log(this.content,1111)
-            //     });
-            //     // fetch(web_business.web_cms_channel_categories,{params:{cate_id:cate_id , limit : 10 , 'page' : this.page}}).then(console.log(res))
-            // },
-            get_data : function(cate_id){
-                ajax.get(web_business.web_cms_channel_contents , {params:{cate_id:cate_id , limit : 10 , 'page' : this.page}}).then((res)=>{
+        methods: {
+            get_data: function (cate_id) {
+                ajax.get(web_business.web_cms_channel_contents, {
+                    params: {
+                        cate_id: cate_id,
+                        limit: 10,
+                        'page': this.page
+                    }
+                }).then((res) => {
                     this.list_data = res.data;
                     this.datas = res.data.list;
-                    console.log(res.data,31321321)
-                    if(this.list_data.total == 0 && this.page == 1){
+                    this.cate_name = res.data.list[0].cate_name;
+                    if (this.list_data.total == 0 && this.page == 1) {
                         this.empty_show = true;
                     }
                     var list = this.list_data.list;
-                    for(val in list){
+                    for (val in list) {
                         var time = (new Date(list[val].publish_time)).getTime();
                         var time_list = new Date(time);
                         list[val].time_year = time_list.getFullYear();
-                        list[val].time_data = time_list.getMonth()+'-'+time_list.getDate();
-                        list[val].href = '/news/'+list[val].weid;
-                        list[val].img = settings+list[val].thumb_image;
+                        list[val].time_data = time_list.getMonth() + '-' + time_list.getDate();
+                        list[val].href = '/news/' + list[val].weid;
+                        list[val].img = settings + list[val].thumb_image;
                     }
-                    console.log(this.datas,13213)
                     this.show = false;
                 });
-            }
+            },
+            
         }
     })
 </script>
+
 <#include#>footer_include.html</#include#>
