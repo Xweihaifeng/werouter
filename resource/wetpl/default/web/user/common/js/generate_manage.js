@@ -60,6 +60,7 @@
  var domain = window.location.host;
  var currPage = window.location.pathname.split('/').pop();
  var parentPage = window.location.pathname.split('/').slice(3, 4)[0];
+ var wepageSetting = {};
  var commercialModule = ['we-mall'];
  var commercialIdentity = ['UG', 'UM'];
  var myIdentity = null;
@@ -91,8 +92,9 @@
              }
          })
      }
-     // 获取身份标志
+     // 获取微主页初始化信息（系统设置、开通情况）
  pageInfo(function(data) {
+     wepageSetting = data.setting;
      if (data.isUA) {
          myIdentity = 'UA';
      }
@@ -915,10 +917,10 @@
              $("#loadingDiv").animate({
                  opacity: "hide"
              }, 300);
-             if ($("#right").length>0){
-                 $("#right").css("display","block");
-             }else{
-                 $("#right_load_div").css("display","block");
+             if ($("#right").length > 0) {
+                 $("#right").css("display", "block");
+             } else {
+                 $("#right_load_div").css("display", "block");
              }
          }
      }
