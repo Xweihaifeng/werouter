@@ -510,14 +510,14 @@ $(function() {
     }
 
     var rem = 'center';
-    $(".center").css("border-bottom", "3px solid #2596e8");
+    $(".center").css("border-bottom", "3px solid #01a7ff");
     $(".center, .sirase, .release").hover(function(){
         $("." + rem).css("border-bottom", "none");
-        $(this).css("border-bottom", "3px solid #2596e8");
+        $(this).css("border-bottom", "3px solid #01a7ff");
         var item = $(this).attr('class').split(' ')[0];
         rem = item;
     }, function(){
-        $("." + rem).css("border-bottom", "3px solid #2596e8");
+        $("." + rem).css("border-bottom", "3px solid #01a7ff");
         var res = remove(newsItems, rem);
         res.map(x => $("." + x).css("border-bottom", "none"));
     })
