@@ -202,19 +202,19 @@ const header = `
                 <aside>
                     <span>手机版</span>
                     <div>
-                        <img src="http://www.qqxqs.com/api//file/qrcode?margin=2&url=http://m.qqxqs.com" class="weixin img-responsive">
+                        <img src=${"/api/file/qrcode?margin=2&url=" + window.location.href} class="weixin img-responsive">
                     </div>
                 </aside>
                 <aside>
                     <span>微信</span>
                     <div>
-                        <img src="${ApiMaterPlatQiniuDomain + plats_info.wx_qrcode}" alt="">
+                        <img src=${window.location.origin+"/api/file/qrcode?margin=2&url=" + window.location.href} alt="">
                     </div>
                 </aside>
                 <aside>
                     <span>微博</span>
                     <div>
-                        <img src="${ApiMaterPlatQiniuDomain + plats_info.wb_qrcode}" alt="">
+                        <img src=${window.location.origin+"/api/file/qrcode?margin=2&url=" + window.location.href} alt="">
                     </div>
                 </aside>
                 <aside><a href="" target="_blank" id="old"><span style="border-right:none;padding-left:12px;">访问旧版</span></a></aside>

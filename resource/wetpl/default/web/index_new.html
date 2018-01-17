@@ -413,15 +413,15 @@
         },
         created() {
             axios.get(CMS_ADVS).then(data => {
-                let resp = data.data.data;
+                var resp = data.data.data;
                 this.channel = resp.channel.list.map(e => (e.drop = false, e));
                 this.logo = this.set_img(resp.setting.s_logo, "/common/img/logo-so.png", 209, 50);
                 this.header1 = this.set_img(resp.header1.image, "/common/img/logo-title-info.png", 382, 45);
                 this.header2 = resp.header2;
                 this.banners = resp.banners;
                 this.leader = resp.leader != null ? resp.leader : {description: "全球秦商总会会长", image: "plats/resource/1513250120999.png", title: "刘阿津", url: "/u/71f96b93-da75-11e7-85d7-fa5985d0eaa1", weid: "d1fe0600-d181-11e7-9c10-49bfb1717a52"};
-                let list = [];
-                for (let key in resp.link) {
+                var list = [];
+                for (var key in resp.link) {
                     list.push(resp.link[key]);
                 };
                 this.link = list.map(
@@ -437,7 +437,7 @@
             });
 
             axios.get(CMS_INDEX_GRID).then(data => {
-                let resp = data.data.data;
+                var resp = data.data.data;
                 this.grid = data.data.data;
                 this.main_news = Object.assign(resp.hot[0], {title: resp.hot[0].title.substr(0, 18), summary: resp.hot[0].summary.length > 72 ? resp.hot[0].summary.substr(0, 72) + ' ...' : resp.hot[0].summary});
                 this.news = resp.news;
@@ -514,7 +514,7 @@
             cut: (value, len) => value.length > len ? value.substr(0, len) + '...' : value,
             show_date: (value) => value.getFullYear() + '-' + (value.getMonth() + 1) + '-' + value.getDate(),
             format_date: (value) => {
-                let res = value.split('-').reduce((res, e, i) => res += e.length === 1? '0' + e + '-' : e + '-', '');
+                var res = value.split('-').reduce((res, e, i) => res += e.length === 1? '0' + e + '-' : e + '-', '');
                 return res.substr(0, res.length - 1);
             }
         }
