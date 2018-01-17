@@ -24,9 +24,8 @@
     <header>
         <div>
             <ul>
-                <li><img src="/common/img/logo-so.png" alt=""/></li>
-                <li><img src="/common/img/logo-title-info.png" alt=""/></li>
-                <!--<li><img :src="" alt=""/></li>-->
+                <li><img :src="logo" alt=""/></li>
+                <li><img :src="header1" alt=""/></li>
                 <li>
                     <div id="ht">
                         <aside v-for="e in qrcode" @mouseleave="e.ok=false">
@@ -408,6 +407,8 @@
             axios.get(CMS_ADVS).then(data => {
                 let resp = data.data.data;
                 this.channel = resp.channel.list.map(e => (e.drop = false, e));
+                this.logo = this.set_img(plats_info.logo, "/common/img/logo-so.png", 209, 50);
+                this.header1 = this.set_img(resp.header1.image, "/common/img/logo-title-info.png", 382, 45);
                 this.header2 = resp.header2;
                 this.banners = resp.banners;
                 this.leader = resp.leader != null ? resp.leader : {description: "全球秦商总会会长", image: "plats/resource/1513250120999.png", title: "刘阿津", url: "/u/71f96b93-da75-11e7-85d7-fa5985d0eaa1", weid: "d1fe0600-d181-11e7-9c10-49bfb1717a52"};
@@ -454,7 +455,19 @@
             })
         },
         methods: {
-            play: url =>
+            set_img: (url, init, w, h, mode) => {
+                if (url != '' && url != null && url != undefined) {
+                    if (url.indexOf('http') === -1) {
+                        return mode != undefined ? ApiMaterPlatQiniuDomain + url + '?imageView2/' + mode + '/w/' + w + '/h/' + h
+                                                 : ApiMaterPlatQiniuDomain + url + '?imageView2/3/w/' + w + '/h/' + h;
+                    } else {
+                        return url;
+                    }
+                } else {
+                    return init;
+                }
+            },
+            play: (url) =>
                 layui.use('layer', function() {
                     var $ = layui.jquery, layer = layui.layer;
                     layer.open({
@@ -467,23 +480,23 @@
                         content: url
                     });
                 }),
-            search: key => window.location.href = window.location.protocol + '//' + window.location.host + '/so?q=' + key,
-            simple_null: data => data != null && data != '' && data != undefined ? false : true,
+            search: (key) => window.location.href = window.location.protocol + '//' + window.location.host + '/so?q=' + key,
+            simple_null: (data) => data != null && data != '' && data != undefined ? false : true,
             check: (domain, url) => url != null && url != '' ? url : '/' + domain,
-            is_drop: id => app.channel.map(x => x.weid === id ? x.drop = true : x.drop = false),
-            read: name => ['up', 'down'].map(x => x !== name ?
+            is_drop: (id) => app.channel.map(x => x.weid === id ? x.drop = true : x.drop = false),
+            read: (name) => ['up', 'down'].map(x => x !== name ?
                     (app.is_bg[x].on = false, app.is_bg[x].bg = app.style.recmd.off.bg, app.is_bg[x].tri = app.style.recmd.off.tri,
                      app.is_bg[x].cir = app.style.recmd.off.cir, app.is_bg[x].sub = app.style.recmd.off.sub) :
                     (app.is_bg[name].on = true, app.is_bg[name].bg = app.style.recmd.on.bg, app.is_bg[name].tri = app.style.recmd.on.tri,
                      app.is_bg[name].cir = app.style.recmd.on.cir, app.is_bg[name].sub = app.style.recmd.on.sub)),
-            show: name => ['news', 'notice', 'weibo'].map(x => x !== name ? (app.is_show[x] = false, app.is_border[x] = {}) : (app.is_show[name] = true, app.is_border[name] = app.style.border)),
-            change_link: name => app.link.map(x => x !== name ? (x.show = false, x.selected = {}) : (x.show = true, x.selected = app.style.selected))
+            show: (name) => ['news', 'notice', 'weibo'].map(x => x !== name ? (app.is_show[x] = false, app.is_border[x] = {}) : (app.is_show[name] = true, app.is_border[name] = app.style.border)),
+            change_link: (name) => app.link.map(x => x !== name ? (x.show = false, x.selected = {}) : (x.show = true, x.selected = app.style.selected))
         },
         filters: {
             fixed_len: (value, len) => value.length > len ? value.substr(0, len) : value,
             cut: (value, len) => value.length > len ? value.substr(0, len) + '...' : value,
-            show_date: value => value.getFullYear() + '-' + (value.getMonth() + 1) + '-' + value.getDate(),
-            format_date: value => {
+            show_date: (value) => value.getFullYear() + '-' + (value.getMonth() + 1) + '-' + value.getDate(),
+            format_date: (value) => {
                 let res = value.split('-').reduce((res, e, i) => res += e.length === 1? '0' + e + '-' : e + '-', '');
                 return res.substr(0, res.length - 1);
             }
