@@ -480,7 +480,7 @@
                 this.news = resp.news;
                 this.notice = resp.nitoce;
                 this.especial = resp.especial_news;
-                this.qycp = resp.qycp;
+                this.qycp = resp.qycp ? resp.qycp : [{"weid":"7be01700-f9c6-11e7-9c78-93c9a5c1926b","title":"陕西大剧院","summary":"","thumb_image":"plats/news/1516006758867.png","publish_time":1516030450,"source_url":""}];
                 this.spzx = Object.assign({}, resp.spzx.list[0], {head: resp.spzx.title, domain: resp.spzx.domain, tail: resp.spzx.list.slice(1, 3)});
                 this.mag = resp.mag;
                 this.ztbd = resp.ztbd;
@@ -492,7 +492,13 @@
                 }, 0);
             });
 
-            axios.get(ARTICLES + "?field=domain,weid,title,cate_id,created_at").then(data => this.articles = data.data.data.list.slice(0, 4));
+            axios.get(ARTICLES + "?field=domain,weid,title,cate_id,created_at").then(data => {
+                if (data.data.data.list) {
+                    this.articles = data.data.data.list.slice(0, 4);
+                } else {
+                    this.articles = [{"weid":"8ab52d10-f9cf-11e7-9ab5-6dee7ac99750","cate_id":"28d09ce0-7776-11e7-9b53-4fd9cbd5b96e","title":"远行","created_at":"2018-01-15 16:39:03","domain":"xiyuee"}];
+                }
+            })
 
             $("title").text(plats_info.title);
             $("#favicon").attr('href', ApiMaterPlatQiniuDomain + plats_info.favicon);
