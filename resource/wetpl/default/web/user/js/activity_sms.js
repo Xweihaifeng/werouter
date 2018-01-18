@@ -1,175 +1,7 @@
-/*
-
-    // 3.删除
-    var activitydel=function(obj){
-        console.log($(obj).closest('li').data('id'));
-         $.ajax({
-            url:ACTIVITY_DESTROY+'/'+$(obj).closest('li').data('id'),
-            type:'get',
-            headers: {
-                    'Token': docCookies.getItem("token")
-                },
-            success:function(data){
-                console.log(data);
-                if(data.code == 200){
-                    mess_tusi("删除成功");
-                    location.reload();
-
-                }else{
-                    mess_tusi(data.message);
-                }
-            },
-            error: function(xhr){
-                console.log(xhr);
-            }
-        })
-    }
-    // 4.编辑
-    var activityedit=function(obj){
-        window.location="/user/admin/activity/detail/"+$(obj).closest("li").data("id");
-    }
-    // 5.取消发布
-    var activitycancel=function(obj){
-        console.log($(obj));
-        var actiid=$(obj).closest("li").data("id");
-        $.ajax({
-            url:ACTIVITY_UPDATE,
-            type:'post',
-            data:{weid:actiid,status:1},
-            headers: {
-                    'Token': docCookies.getItem("token")
-                },
-            success:function(data){
-                console.log(data);
-                if(data.code == 200){
-                    mess_tusi("取消发布成功");
-                    location.reload();
-
-                }else{
-                    mess_tusi(data.message);
-                }
-            },
-            error: function(xhr){
-                console.log(xhr);
-            }
-        })
-    }*/
 var id = window.location.href.split('/').pop();
-var goAttend = function() {
-    window.location.href = '/user/admin/activity/attend/' + id;
-}
-var chart = {
-    init: function(weid) {
-        var _self = this;
-        this.getData(weid, function(data) {
-            _self.createChartCity(data.city);
-            _self.createChartPosition(data.position);
-            _self.createChartTimeLine(data.timeline);
-        });
-    },
-    getData: function(weid, callback) {
-        var _self = this;
-        var url = ACTIVITY_ENROLL_STATISTICS;
-        $.ajax({
-            url: url,
-            type: 'get',
-            dataType: 'json',
-            data: {
-                activity_id: weid
-            },
-            success: function(res) {
-                if (res.code == 200) {
-                    var data = _self.formatData(res.data);
-                    callback && callback(data);
-                } else {
-                    $('.data').hide();
-                }
-            },
-            error: function(xhr, code, error) {
-                notice.alert(error);
-            },
-            complete: function() {}
-        });
-    },
-    formatData: function(data) {
-        var colors = ['#24aa98', '#65abd0', '#d9c26c', '#db7560', '#af6dd5', '#898e93', '#32b9e6', '#8cbe52', '#ffab27', '#c88b76'];
-        var tmp = {
-            city: [],
-            position: [],
-            timeline: {
-                labels: [],
-                datasets: [{
-                    label: "报名数据",
-                    fillColor: "rgba(151,187,205,0.2)",
-                    strokeColor: "rgba(151,187,205,1)",
-                    pointColor: "rgba(151,187,205,1)",
-                    pointStrokeColor: "#fff",
-                    pointHighlightFill: "#fff",
-                    pointHighlightStroke: "rgba(151,187,205,1)",
-                    data: []
-                }]
-            }
-        };
-        for (var i = 0; i < data['city'].length; i++) {
-            var city = data['city'][i];
-            tmp.city.push({
-                value: city.value,
-                color: colors[i],
-                highlight: colors[i],
-                label: city.name
-            });
-        };
-        for (var i = 0; i < data['position'].length; i++) {
-            var position = data['position'][i];
-            tmp.position.push({
-                value: position.value,
-                color: colors[i],
-                highlight: colors[i],
-                label: position.name
-            });
-        };
-        for (var i = 0; i < data['timeline'].length; i++) {
-            var time = data['timeline'][i];
-            tmp.timeline.labels.push(time.name);
-            tmp.timeline.datasets[0].data.push(time.value);
-        }
-        return tmp;
-    },
-    createChartCity: function(data) {
-        this.createDoughnut('J_ChartCity', data);
-        this.createList('J_ListCity', data);
-    },
-    createChartPosition: function(data) {
-        this.createDoughnut('J_ChartPosition', data);
-        this.createList('J_ListPosition', data);
-    },
-    createChartTimeLine: function(data) {
-        var chart = this.getChart('J_ChartTimeLine');
-        chart.Line(data);
-    },
-    createDoughnut: function(id, data, options) {
-        if (!options) options = {};
-        var chart = this.getChart(id);
-        chart.Pie(data, options);
-    },
-    getChart: function(id) {
-        var ctx = document.getElementById(id).getContext('2d');
-        var chart = new Chart(ctx);
-        return chart;
-    },
-    createList: function(id, list) {
-        var html = '';
-        var total = 0;
-        for (var i = 0; i < list.length; i++) {
-            total += parseInt(list[i].value);
-        }
-        for (var i = 0; i < list.length; i++) {
-            var item = list[i];
-            var percent = item.value / total * 100;
-            html += '<li><span class="mark" style="background-color:' + item.color + '"></span>' + item.label + ' <label>' + percent.toFixed(1) + '%</label></li>';
-        };
-        $('#' + id).append(html);
-    }
+
+var goEnroll = function() {
+    window.location.href = '/user/admin/activity/apply/' + id;
 }
 
 // 活动详情
@@ -192,89 +24,17 @@ var loadActivity = function(weid, callback) {
     });
 }
 
-// 活动报名数
-var loadCount = function(weid, callback) {
-    $.ajax({
-        url: ACTIVITY_ENROLL_COUNT,
-        type: 'GET',
-        data: {
-            activity_id: weid
-        },
-        headers: {
-            'Token': docCookies.getItem("token")
-        },
-        success: function(data) {
-            if (data.code == 200)
-                callback(data.data);
-            else
-                notice.alert(data.message);
-        },
-        error: function(xhr) {
-            console.log(xhr);
-        }
-    });
-}
-
-// 活动售票情况
-var loadTickets = function(weid, callback) {
-    $.ajax({
-        url: ACTIVITY_ENROLL_TICKETS,
-        type: 'GET',
-        data: {
-            activity_id: weid
-        },
-        headers: {
-            'Token': docCookies.getItem("token")
-        },
-        success: function(data) {
-            if (data.code == 200)
-                callback(data.data);
-            else
-                notice.alert(data.message);
-        },
-        error: function(xhr) {
-            console.log(xhr);
-        }
-    });
-}
-
-// 短信通知
-var smsNotify = function(weid, enroll_id, callback) {
-        layer.load();
-        $.ajax({
-            url: ACTIVITY_ENROLL_SMS_NOTIFY,
-            type: 'POST',
-            data: {
-                activity_id: weid,
-                enroll_id: enroll_id
-            },
-            headers: {
-                'Token': docCookies.getItem("token")
-            },
-            success: function(data) {
-                layer.closeAll('loading');
-                if (data.code == 200)
-                    callback(data.data);
-                else
-                    notice.alert(data.message);
-            },
-            error: function(xhr) {
-                layer.closeAll('loading');
-                console.log(xhr);
-            }
-        });
-    }
-    // 群发短信通知
-var allSmsNotify = function(weid, callback) {
+// 模板获取
+var getTemplate = function(activity_id, callback) {
     layer.load();
     $.ajax({
-        url: ACTIVITY_ENROLL_ALL_SMS_NOTIFY,
-        type: 'POST',
-        data: {
-            activity_id: weid
-        },
+        url: ACTIVITY_SMS_TEMPLATE,
+        type: 'GET',
         headers: {
             'Token': docCookies.getItem("token")
+        },
+        data: {
+            activity_id: activity_id
         },
         success: function(data) {
             layer.closeAll('loading');
@@ -290,112 +50,40 @@ var allSmsNotify = function(weid, callback) {
     });
 }
 
-// $(document).on('click', '.all-sms-notify', function() {
-//     confirmer = layer.confirm('群发短信可能消耗大量短信余额，确认要群发？', {
-//         title: '群发短信通知',
-//         btn: ['确认发送', '取消']
-//     }, function() {
-//         layer.close(confirmer);
-//         allSmsNotify(id, function(data) {
-//             layer.msg('已发送!');
-//         });
-//     }, function() {});
-// });
-$(document).on('click', '.all-sms-notify', function() {
-    var smsAlert = layer.open({
-        skin: 'winning-class',
-        type: 1,
-        area: ['500px', '580px'],
-        title: 0,
-        closeBtn: true,
-        shadeClose: true,
-        scrollbar: false,
-        btn: ['确认发送', '取消'],
-        yes: function() {
-            layer.load();
-            $.ajax({
-                url: ACTIVITY_ENROLL_CHECK,
-                type: 'POST',
-                headers: {
-                    'Token': docCookies.getItem("token")
-                },
-                data: {
-                    e_number: e_number,
-                    activity_id: activity_id
-                },
-                success: function(data) {
-                    layer.closeAll('loading');
-                    if (data.code == 200) {
-                        layer.msg('已验票！');
-                        layer.close(userAlert);
-                        $(".entry-num>span").text(parseInt($(".entry-num>span").text()) + 1);
-                    } else {
-                        layer.msg(data.message);
-                    }
-                },
-                error: function(xhr) {
-                    layer.closeAll('loading');
-                    console.log(xhr);
-                }
-            });
+// 短信模板开关
+var toggleSelfsms = function(activity_id, callback) {
+    layer.load();
+    $.ajax({
+        url: ACTIVITY_SMS_TOGGLE,
+        type: 'POST',
+        data: {
+            activity_id: activity_id,
         },
-        content: `<div id="ui-fs" class="ui-fs">
-        <div class="ui-fs-result clearfix">
-        </div>
-        <div class="ui-fs-input">
-            <input type="text" value="输入报名人手机查找" maxlength="30" />
-            <a class="ui-fs-icon" href="javascript:void(0)" title="查看所有报名人">查看所有报名人</a>
-        </div>
-        <div class="ui-fs-list">
-            数据加载中....
-        </div>
-        <div class="ui-fs-all">
-            <div class="top">
-                <select id="ui-fs-friendtype"><option value="-1">所有报名人</option></select>
-                <div class="close" title="关闭">关闭</div>
-            </div>
-            <div class="ui-fs-allinner">
-                <div class="page clearfix">
-                    <div class="llight1">还有<b>30</b>人可选</div>
-                    <div class="button"><span class="prev">上一页</span><span class="next">下一页</span></div>
-                </div>
-                <div class="list clearfix">
-                    数据加载中...
-                </div>
-            </div>
-        </div>
-    </div>`,
-        end: function() {},
-        shade: 0.2
-    });
-    var test = new giant.ui.friendsuggest({
-        ajaxUrl: "activity/enroll/list",
-        ajaxLoadAllUrl: "activity/enroll/list",
-        ajaxGetCountUrl: "ajaxcount.asp",
-        ajaxGetFriendTypeUrl: "ajaxFriendType.asp",
-    });
-});
-$(document).on('click', '.self-sms', function() {
-    location.href = "/user/admin/activity/sms/" + id;
-});
+        success: function(data) {
+            layer.closeAll('loading');
+            if (data.code == 200) {
+                callback(data.data);
+            } else {
+                notice.alert(data.message, false, 5000);
+            }
+        },
+        error: function(error) {
+            layer.closeAll('loading');
+        }
+    })
+}
 
-$(document).on('click', '.sms-notify', function() {
-    var enroll_id = $(this).closest('tr').data('id');
-    confirmer = layer.confirm('确认要发送？', {
-        title: '短信通知',
-        btn: ['确认发送', '取消']
-    }, function() {
-        layer.close(confirmer);
-        smsNotify(id, enroll_id, function(data) {
-            layer.msg('已发送!');
-        });
-    }, function() {});
-});
-
+$("#toggle-button-app").click(function() {
+    toggleSelfsms(id, function(data) {
+        if (data.status == 1) {
+            $("#toggle-button-app").attr("checked", true);
+        } else {
+            $("#toggle-button-app").removeAttr("checked");
+        }
+    });
+})
 
 $(document).ready(function() {
-    // const ApiMaterPlatQiniuDomain       = 'http://images.new.wezchina.com/';
-
 
     var favicon = ApiMaterPlatQiniuDomain + localStorage.getItem('fav');
     console.log('logo:', favicon);
@@ -433,10 +121,22 @@ $(document).ready(function() {
         }, 2000);
         return false;
     }
+
     var saveUserInfo = function(token) {
         localStorage.setItem('token', token);
     }
 
+
+    // 加载活动详情
+    loadActivity(id, function(data) {
+            $("#J_ActivityTitle").text(data.title);
+        })
+        // 初始化模板
+    getTemplate(id, function(data) {
+        $(".J_DefaultMessage").text(data.default);
+        $(".J_InputMessage").text(data.self);
+        $("#toggle-button-app").attr('checked', data.status == 1 ? true : false);
+    });
     var domain;
     var hasDomain = function(weid) {
         $.ajax({
@@ -483,7 +183,6 @@ $(document).ready(function() {
         console.log(num);
         num++;
         var listhtml = '<tr data-id="' + data.weid + '">' +
-            // '<td class="chk"><input type="checkbox" class="boxsty J_CkbItem" data-id="' + data.weid + '"></td>' +
             '<td class="queue">' + num + '</td>' +
             `<td class="user">
             <div class="user-avatar"><img src="` + ApiMaterPlatQiniuDomain + data.avatar + `" width="45"></div>` +
@@ -493,24 +192,10 @@ $(document).ready(function() {
             </div>` +
             '</td>' +
             '<td class="mobile">' + data.telphone + '</td>' +
-            '<td class="ticket">' +
-
-            (data.type == 1 ? ' <img data-toggle="modal" data-target="#myModal" src="/common/img/ticket-apply.png">' : '<b>￥' + data.price + '<b>') +
-
-            '</td>' +
-
             '<td class="operate">' +
 
 
-            ' <span style="color:#34b0df;">报名成功</span>' +
-
-
-            '</td>' +
-
-            '<td class="operate">' +
-
-
-            ' <span style="color:#34b0df;"><button class="btn btn-primary sms-notify">短信通知</button></span>' +
+            ' <span style="color:#34b0df;">' + data.attend_at + '</span>' +
 
 
             '</td>' +
@@ -519,7 +204,6 @@ $(document).ready(function() {
         return listhtml;
     }
     var weid = docCookies.getItem("weid");
-
 
     // 1.获取活动报名列表
     var applylistdetail = function(weid, type = 0, page = 1, keywords = "") {
@@ -546,7 +230,7 @@ $(document).ready(function() {
         }
         console.log(sendData);
         $.ajax({
-            url: ACTIVITY_ENROLL_LISTS + '?status=1',
+            url: ACTIVITY_ENROLL_LISTS + '?status=1&is_attend=1',
             type: 'post',
             data: sendData,
             headers: {
@@ -556,9 +240,6 @@ $(document).ready(function() {
                 console.log(data);
                 if (data.code == 200) {
                     $(".J_EntryList").children().remove();
-                    if (data.data.list.length > 0) {
-                        $('.data').show();
-                    }
                     data.data.list.map(x => {
                         $(".J_EntryList").append(listtemplate(x));
 
@@ -566,7 +247,7 @@ $(document).ready(function() {
 
                     // 页码start
                     var pagenum = Math.ceil(data.data.total / limit);
-                    pagefun(pagenum, weid, type, keywords);
+                    // pagefun(pagenum, weid, type, keywords);
 
 
                     $('.J_CkbItem').bind('change', function() {
@@ -590,37 +271,12 @@ $(document).ready(function() {
         })
     }
 
+
+
     if (id != null && id != '' && id.length == 36) { applylistdetail(id); }
     // applylistdetail(weid);
 
-    // 加载活动详情
-    loadActivity(id, function(data) {
-        $("#J_ActivityTitle").text(data.title);
-    })
 
-    // 加载报名数
-    loadCount(id, function(data) {
-        $(".entry-num span.ticket-count").text(data.enrollCount);
-        $(".entry-num span.peaple-count").text(data.peapleCount);
-    });
-
-    // 加载售票情况
-    loadTickets(id, function(data) {
-        var html = '';
-        $.each(data.tickets, function(k, v) {
-            html += `<tr>
-            <td>` + v.name + `</td>
-            <td>` + v.total_num + `</td>
-            <td>` + v.sold_num + `</td>
-            <td>` + v.price + `</td>
-            <td>` + v.sold_fee + `</td>
-        </tr>`;
-        });
-        $(".account table tbody").html(html);
-    });
-
-    // 加载统计
-    chart.init(id);
 
     // 页码
     var pagefun = function(pagenum, weid, type = 0, keywords) {
@@ -1157,164 +813,27 @@ $(document).ready(function() {
 
     //left-navbar show words
     $("#login, #article, #project, #active, #shopping, #zone").hover(function(e) {
-            var id = $(this).attr("id");
-            if (id != 'login') {
-                $(this).find(".word").show();
+        var id = $(this).attr("id");
+        if (id != 'login') {
+            $(this).find(".word").show();
+            $(this).css({
+                "line-height": "65px",
+                "padding-top": "10px"
+            });
+            $("#" + id + " .word").css("margin-top", "-35px");
+        } else {
+            if (!isLogin) {
                 $(this).css({
                     "line-height": "65px",
-                    "padding-top": "10px"
                 });
-                $("#" + id + " .word").css("margin-top", "-35px");
-            } else {
-                if (!isLogin) {
-                    $(this).css({
-                        "line-height": "65px",
-                    });
-                    // $("#" + id + " .word").css("margin-top", "-20px");
-                }
+                // $("#" + id + " .word").css("margin-top", "-20px");
             }
-        }, function() {
-            var id = $(this).attr("id");
-            $(this).find(".word").hide();
-            $(this).css("line-height", "65px");
-            $("#" + id + " .word").css("margin-top", "-55px");
-        })
-        /*
-            var modeleName = [];
-            var moduleState = function() {
-                $.ajax({
-                    url: PAGES_MODULERUN_LIST,
-                    type: 'GET',
-                    headers: {
-                        'Token': docCookies.getItem("token")
-                    },
-                    success: function(data){
-                        if (data.code == 200){
-                            console.log('module:', data.data.list);
-                            var state = data.data.list;
-                            state.map(x => {
-                                modeleName.push(x.module_id);
-                                if (x.module_id === '4009ea20-8ede-11e7-83a8-156d1da77933') {
-                                    if (x.status == 1) {
-                                        //$(".we-art").slideDown(500)
-                                        $(".we-art").show();
-                                        $('#toggle-button').prop("checked", true);
-                                    }
-                                }
-                                if (x.module_id === '44fd5620-8d7f-11e7-9e08-e356d0b019f1') {
-                                    if (x.status == 1) {
-                                        //$(".we-shop").slideDown(500)
-                                        $(".we-shop").show();
-                                        $('#toggle-button-4').prop("checked", true);
-                                    }
-                                }
-                                if (x.module_id === 'b3c00b00-a4e2-11e7-b542-2d038cc12c12') {
-                                    if (x.status == 1) {
-                                        //$(".we-shop").slideDown(500)
-                                        $(".we-active").show();
-                                        $('#toggle-button-2').prop("checked", true);
-
-                                    }
-                                }
-                                if (x.module_id === 'c30c2160-a4e2-11e7-a2ad-35371a8cf051') {
-                                    if (x.status == 1) {
-                                        //$(".we-shop").slideDown(500)
-                                        $(".we-project").show();
-                                        $('#toggle-button-1').prop("checked", true);
-
-                                    }
-                                }
-                                if (x.module_id === 'a9d16bc0-ada0-11e7-8c59-993d3b1d7e06') {
-                                    if (x.status == 1) {
-                                        //$(".we-shop").slideDown(500)
-                                        $(".we-crm").show();
-                                        $('#toggle-button-3').prop("checked", true);
-
-                                    }
-                                }
-                            })
-                        } else {
-                            layer.msg(data.message, {
-                                time: 1500
-                            });
-                        }
-
-                        //列表折叠
-                        var curr = 'we-active';
-                        var status = true;
-                        var list = ['we-set', 'we-art', 'we-shop','we-active','we-project', 'we-app','we-crm', 'we-log'];
-
-                        var remove = function(id, list) {
-                            return list.filter(x => x != id);
-                        }
-
-                        $("." + curr + ":eq(0)").css("border-bottom", "1px solid #eeeeee");
-                        remove(curr, list).map(x => $("." + x + ":eq(1)").hide());
-
-                        var showList = function(state, id) {
-                            var id = "." + id;
-                            if (state) {
-                                $(id + ":eq(1)").hide(500);
-                                if (id != ".we-log") {
-                                    $(id + ":eq(0)").css("border-bottom", "0");
-                                }
-                                $(id + " span img").attr('src', '/common/img/more1.png');
-                                status = false;
-                            } else {
-                                $(id + ":eq(1)").show(500);
-                                $(id + " span img").attr('src', '/common/img/more_unfold.png');
-                                $(id + ":eq(0)").css("border-bottom", "1px solid #eeeeee");
-                                status = true;
-                            }
-                        }
-
-                        list.map(x => {
-                            $("." + x).click(function() {
-                                if (curr == x) {
-                                    remove(x, list).map(x => {
-                                        $("." + x + ":eq(1)").hide(500)
-                                        $("." + x + " span img").attr('src', '/common/img/more1.png');
-                                    });
-                                    showList(status, x);
-                                } else {
-                                    status = false;
-                                    $("." + curr + ":eq(0)").css("border-bottom", "0");
-                                    curr = x;
-                                    remove(x, list).map(x => {
-                                        $("." + x + ":eq(1)").hide(500)
-                                        $("." + x + " span img").attr('src', '/common/img/more1.png');
-                                    });
-                                    showList(status, x);
-                                }
-                            })
-                        })
-                    },
-                    error: function(xhr){
-                        console.log(xhr);
-                    }
-                })
-            }*/
-
-    //主页初始化
-    /*var init__ = function(token){
-        // moduleState();
-      if (token != 'null' && token != undefined) {
-        showLogin = false;
-        isLogin = true;
-        //加载用户头像
-        $("#login div img").hide();
-        $(".log-head").css({
-          'background': 'url(' + localStorage.getItem('avatar') + ') no-repeat center',
-          'background-size': '100% 100%'
-        })
-        $("#avatar .avatar-icon").css({
-          'background': 'url(' + localStorage.getItem('avatar') + ') no-repeat center',
-          'background-size': '100% 100%'
-        })
-        $(".log-head").show();
-      }
-    }
-
-    init__(docCookies.getItem("token"));*/
+        }
+    }, function() {
+        var id = $(this).attr("id");
+        $(this).find(".word").hide();
+        $(this).css("line-height", "65px");
+        $("#" + id + " .word").css("margin-top", "-55px");
+    })
 
 })
