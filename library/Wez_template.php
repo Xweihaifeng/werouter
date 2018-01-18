@@ -6,7 +6,7 @@ class Wez_template
 {
 	private static $variable;
 	
-	public static function init($file ,  $content , $config_file , $directory ,$additional_config)
+	public static function init($file ,  $content , $config_file , $directory ,$additional_config , $router_name)
 	{
 		$content = self::_replace($content , $file , $directory);
 		
@@ -20,6 +20,12 @@ class Wez_template
 		{
 			$content = str_replace('</body>', '<script src="//captcha.luosimao.com/static/js/api.js"></script></body>' , $content);
 			
+		}
+		else
+		{
+			preg_match("@<title[^>]*>@si",$content, $tregs);
+			$title_tag = current($tregs);
+			$content = str_replace($title_tag, '<title>'.$router_name.'</title>' , $content);
 		}
 		return $content;
 		// else
