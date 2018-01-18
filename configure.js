@@ -301,6 +301,10 @@ const ACTIVITY_ENROLL_GET_TICKET_USER = apiUrl + 'activity/enroll/get_ticket_use
 const ACTIVITY_USER_ORDER_LIST = apiUrl + 'activity/user_order_list'; // 活动订单
 const ACTIVITY_MANAGE_ORDER_LIST = apiUrl + 'activity/manage_order_list?'; // 管理中心活动订单
 
+const ACTIVITY_SMS_TEMPLATE = apiUrl + 'activity/sms/template'; // 活动短信模板获取
+const ACTIVITY_SMS_TEMPLATE_UPDATE = apiUrl + 'activity/sms/update'; // 活动短信模板更新
+const ACTIVITY_SMS_TOGGLE = apiUrl + 'activity/sms/toggle'; // 自动自定义短信开关
+
 //项目接口
 const PROJECT_CATE_LIST = apiUrl + 'project/cate/list'; //项目 -分类列表（根据用户ID�?
 const PROJECT_STORE = apiUrl + 'project/store'; //项目 -项目 - 保存

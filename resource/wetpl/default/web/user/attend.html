@@ -19,8 +19,9 @@
     <link rel="stylesheet" type="text/css" href="/common/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/common/css/buttons.css">
     <link rel="stylesheet" type="text/css" href="/common/css/swiper.min.css">
-    <link rel="stylesheet" type="text/css" href="{{PATH_TML}}user/css/apply_rg.css">
     <link rel="stylesheet" href="{{PATH_TML}}user/css/activitycommon.css">
+    <link rel="stylesheet" type="text/css" href="{{PATH_TML}}user/css/apply_rg.css">
+
     <script charset="utf-8" type="text/javascript" src="/common/js/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="/common/layer-v3.0.3/layer-v3.0.3/layer/layer.js"></script>
     <script charset="utf-8" type="text/javascript" src="/common/js/swiper-3.3.1.min.js"></script>
@@ -270,91 +271,6 @@
                     </div>
                 </div>
             </div>
-            <!--签到管理start-->
-            <div class="dialog" id="J_DialogSign">
-                <div class="dialog-head">
-                    <h3>签到管理</h3>
-                    <span class="fa fa-times dialog-close"></span>
-                </div>
-                <div class="dialog-body sign-style">
-                    <div class="style s1">
-                        <h4>1.报名人使用微信扫描签到二维码进行签到</h4>
-                        <div class="intro">
-                            <div class="block">
-                                <div class="pic">
-                                    <img src="{{PATH_TML}}user/img/icon_qrcode.png">
-                                </div>
-                                <div class="word">
-                                    <p>下载签到二维码</p>
-                                    <p><a href="#">点击下载</a></p>
-                                </div>
-                            </div>
-                            <div class="block">
-                                <div class="pic">
-                                    <img src="{{PATH_TML}}user/img/icon_scan.png">
-                                </div>
-                                <div class="word">
-                                    <p>使用微信扫描签到</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="style s2">
-                        <h4>2.主办方使用微信扫描活动电子票进行签到<span>（活动成员到场后主动出示报名电子票）</span>
-                        </h4>
-                        <div class="intro">
-                            <div class="block">
-                                <div class="pic">
-                                    <img src="{{PATH_TML}}user/img/icon_phone.png">
-                                </div>
-                                <div class="word">
-                                    <p>登录移动版活动下载</p>
-                                    <p><a href="#" target="_blank">点击下载</a></p>
-                                </div>
-                            </div>
-                            <div class="block">
-                                <div class="pic">
-                                    <img src="{{PATH_TML}}user/img/icon_scan.png">
-                                </div>
-                                <div class="word">
-                                    <p>主办方微信扫描电子票</p>
-                                </div>
-                            </div>
-                            <div class="block">
-                                <div class="pic">
-                                    <img src="{{PATH_TML}}user/img/icon_confirm.png">
-                                </div>
-                                <div class="word">
-                                    <p>确认签到</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--div class="end">注：通过渠道报名的用户将会收到该活动的电子票，电子票上有签到二维码，扫描即可</div-->
-                </div>
-            </div>
-
-            <!--签到管理end-->
-            <div class="dialog dialog-refuse" id="J_DialogRefuse">
-                <div class="dialog-head">
-                    <h3>拒绝信息</h3>
-                    <span class="fa fa-times dialog-close"></span>
-                </div>
-                <div class="dialog-body">
-                    <div class="msg-tips">输入拒绝的理由！<span>确定之后<span id="J_RefuseUser"></span>将会收到通知</span>
-                    </div>
-                    <div class="msg-content">
-                        <div class="message" id="J_RefuseMessage">
-                            <textarea id="J_InputRefuseMessage" maxLength="1357" placeholder="请输入理由" onkeyup="review()"></textarea>
-                            <p id="J_RefuseReason"></p>
-                        </div>
-                    </div>
-                </div>
-                <div class="dialog-footer" style="text-align:right">
-                    <button type="button" class="btn btn-cancel dialog-close">取消</button>
-                    <button type="button" class="btn btn-active" id="J_BtnRefuseSure">确认</button>
-                </div>
-            </div>
         </div>
 
 
@@ -363,87 +279,6 @@
     </div>
 
 
-
-    <!-- 模态框（Modal） -->
-    <div class="modal fade bs-example-modal-sm" id="myModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
-        <div class="modal-dialog ticket-modal" role="document">
-            <div class="modal-content">
-                <!-- <div class="modal-header">
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                          <h4 class="modal-title">添加省份</h4>
-                      </div>   -->
-                <div class="modal-body">
-                    <input type="hidden" value="" id="myModal_input">
-
-                    <div class="ticket_apply text-center">
-                        <img src="/common/img/ticket-apply.png" alt="">
-                        <!--<div class="form-group">
-                        <label for="exampleInputEmail1">省份：</label>
-                        <input type="text" name="wuliu_company" class="form-control" id="exampleInputEmail1">
-                    </div>
-                     <div class="form-group">
-                        <label for="exampleInputPassword1">物流编号</label>
-                        <input type="text" name="wuliu_card" class="form-control" id="exampleInputPassword1">
-                    </div> -->
-
-                    </div>
-                </div>
-                <!--  <div class="modal-footer">
-               <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-               <button type="button" class="btn btn-primary save">确定</button>
-           </div> -->
-            </div>
-        </div>
-    </div>
-
-    <!-- 埋点区域 -->
-    <!-- 发布和取消发布活动的接口 -->
-
-    <!-- 删除活动借口 -->
-
-
-
-    <!--     <script type="text/javascript" src="js/jqPaginator.min.js"></script>
-    <script type="text/javascript" src="js/index.js"></script> -->
-    <style>
-        .title a {
-            color: #000;
-        }
-        
-        .title a:hover {
-            color: #3474ba;
-            text-decoration: underline;
-        }
-    </style>
-    <script id="J_TmplEntry" type="text/html">
-        ((each list as entry i))
-        <tr data-id="((entry.id))">
-            <td class="chk"><input type="checkbox" class="boxsty J_CkbItem" data-id="((entry.id))"></td>
-            <td class="queue">((15 * (page - 1) + i + 1))</td>
-            <td class="user">
-                <div class="username">((entry.user.name))</div>
-                <div class="company"><span>((entry.user.position))</span><span>((entry.user.company))</span></div>
-            </td>
-            <td class="mobile">((entry.user.mobile))</td>
-            <td class="ticket">
-                ((if entry.tickets.length )) ((each entry.tickets as ticket))
-                <p><label>((ticket.name))</label><span>((ticket.price))元x((ticket.num))</span></p>
-                ((/each)) ((else)) 无 ((/if))
-            </td>
-            ((if ticketType != 1))
-            <td class="operate">
-                ((if entry.isEntry == '4'))
-                <span style="color:gray;">已拒绝</span> ((else if entry.isEntry=='3')) ((if entry.current_time>entry.end_time))
-                <span style="color:gray;">过期未审核</span> ((else))
-                <span style="color: #34b0df;margin-right: 10px;" class="J_Pass">通过</span>
-                <span style="color: #34b0df;" class="J_Refuse">拒绝</span> ((/if)) ((else)) ((if entry.signin==1))
-                <span style="color:gray;">已签到</span> ((else))
-                <span style="color:#34b0df;">已通过</span> ((/if)) ((/if))
-            </td>
-            ((/if))
-        </tr>
-        ((/each))
-    </script>
     <script type="text/javascript" src="{{PATH_TML}}user/js/activity/jquery.zclip.min.js"></script>
     <script type="text/javascript" src="{{PATH_TML}}user/js/activity/template.js"></script>
     <script type="text/javascript" src="{{PATH_TML}}user/js/activity/Chart.min.js"></script>
@@ -451,64 +286,10 @@
     <script type="text/javascript" src="{{PATH_TML}}user/js/activity/jqPaginator.min.js"></script>
     <!-- end -->
     <script type="text/javascript" src="{{PATH_TML}}user/js/activity/common-act.js"></script>
-    <!-- <script type="text/javascript" src="{{PATH_TML}}user/js/apply_rg.js"></script> -->
     <script src="{{PATH_TML}}user/common/js/generate_manage.js"></script>
 
     <script type="text/javascript" src="{{PATH_TML}}user/js/activity_attend.js"></script>
 
-    <!-- <script type="text/javascript">
-        function exportCsv(aid){
-            window.location.href='http://my.wezchina.com/event/download/'+aid;
-        }
-    
-        //预览功能
-        function review(){
-            var title = $('#J_ActivityTitle').html();
-            var html = $('#J_InputRefuseMessage').val();
-            $('#J_RefuseReason').html('<span style="line-height:20px;color:#555">当前理由不为空，对方将会受到如下短信:<br/>很遗憾,由于'+html+',你的「'+title+'」的报名未通过审核'+'</span>');
-        }
-    
-         //批量删除
-        $('.J_BtnDelAllRecord').click(function() {
-            var ticket_type = $('#J_TicketType').val();
-            if(ticket_type==1){
-                notice.alert('当前收费活动还不支持删除报名!');
-                return false;
-            }
-    
-            var activeid = $('#aid').val();
-            var ids = [],
-                type = parseInt($(this).data('type'), 10);
-            $('.J_CkbItem').each(function() {
-                if (this.checked)
-                    ids[ids.length] = parseInt($(this).data('id'), 10);
-            });
-            if (ids.length > 0) {
-                notice.confirm('确定删除所选的报名记录？删除之后，报名者的报名将会被取消', function() {
-                 $.ajax({
-                       type:'post',
-                       url:'http://my.wezchina.com/event/delJoinRecord',
-                       data:({
-                          activeid:activeid,
-                          ids:ids
-                       }),
-                       success:function(data){
-                           if(data==1000){
-                              notice.alert('删除成功',function(){
-                                window.location.href=window.location.href;
-                              });
-                           }else{
-                             notice.alert('删除失败');
-                             return false;
-                           }
-                       }
-                    })
-                 });
-            } else {
-                notice.alert('请至少勾选一个');
-            }
-        });
-    </script> -->
 
 </body>
 
