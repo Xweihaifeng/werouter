@@ -59,18 +59,19 @@
         },
         mounted() {
             this.$nextTick(function () {
-                this.header_news = win.getStorage('header_news');
-                this.getdata();
+                this.header_news = win.getStorage('header_help');
+                for(val in this.header_news){
+                    if(this.header_news[val].domain == this.currPage){
+                        this.channel = this.header_news[val].domain;
+                        this.channel_name = this.header_news[val].title;
+                        this.get_data(this.channel , 1);
+                        set_title(this.channel_name);
+                    }
+                }
                 this.get_data(window.location.pathname.split('/').pop());
             });
         },
         methods: {
-            getdata:function () {
-                ajax.get(web_business.web_cms_channel_categories , {params:{channel:'help' , limit : 2}}).then((res)=>{
-                    this.content = res.data;
-                console.log(this.content)
-            });
-            },
             get_data: function (weid) {
                 ajax.get(web_business.web_cms_contents + weid).then((res) => {
                     this.content = res.data;
