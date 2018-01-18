@@ -457,7 +457,9 @@
                 this.leader = resp.leader ? resp.leader : {description: "全球秦商总会会长", image: "/common/img/new/m03.png", title: "刘阿津", url: "/u/71f96b93-da75-11e7-85d7-fa5985d0eaa1", weid: "d1fe0600-d181-11e7-9c10-49bfb1717a52"};
                 var list = [];
                 for (var key in resp.link) {
-                    list.push(resp.link[key]);
+                    if (resp.link[key].list != null) {
+                        list.push(resp.link[key]);
+                    }
                 };
                 this.link = list.map(
                         (e, i) => (i == 0 ? (e.show = true, e.selected = this.style.selected, e) : (e.show = false, e.selected = {}, e)));
