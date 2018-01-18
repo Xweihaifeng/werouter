@@ -7,7 +7,6 @@
 <script src="/common/js/helps.js"></script>
 <div id="app">
     <section class="bnaner"></section>
-
     <section class="content">
         <div class="toptop">
             <main>
@@ -49,21 +48,7 @@
                         </ul>
                     </li>
                 </ul>
-                <section class="tye">
-                    <main>
-                        <ul class="tye_b">
-                            <li ><a href="###"><</a></li>
-                            <li><a href="###">...</a></li>
-                            <li><a href="###">1</a></li>
-                            <li><a href="###">2</a></li>
-                            <li><a href="###">3</a></li>
-                            <li><a href="###">4</a></li>
-                            <li><a href="###">5</a></li>
-                            <li><a href="###">...</a></li>
-                            <li><a href="###">></a></li>
-                        </ul>
-                    </main>
-                </section>
+                <div class="paging" style="width: auto;"><div class="box" id="box"></div></div>
             </div>
         </main>
     </section>
@@ -96,6 +81,7 @@
                         this.get_data(this.channel, 1);
                     }
                 }
+                this.paging(5);
             });
         },
         methods: {
@@ -126,8 +112,22 @@
                     this.show = false;
                 });
             },
+            // 分页显示
+            paging: function(total, limit) {
+                var setTotalCount = total;
+                $('#box').paging({
+                    initPageNo: 1,                                 // 初始页码
+                    totalPages: Math.ceil(setTotalCount/limit),    //总页数
+                    // totalCount: '合计' + setTotalCount + '条数据', // 条目总数
+                    slideSpeed: 600,                               // 缓动速度。单位毫秒
+                    jump: true,                                    //是否支持跳转
+                    callback: function(page) {                     // 回调函数
+                        page_tab(page);
+                    }
+                })
+            }
+        },
 
-        }
     })
 </script>
 

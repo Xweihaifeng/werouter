@@ -1,7 +1,3 @@
-/*
- *     组织部分数据覆盖
- */
-
 $(function() {
 
     window.localStorage.setItem("pageNum", 1);

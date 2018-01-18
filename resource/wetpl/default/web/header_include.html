@@ -26,12 +26,12 @@
     <script src="/common/public/public.js"></script>
     <script src="/common/js/jquery-3.2.1.min.js"></script>
     <script src="/common/public/js/app.js"></script>
+    <script src="/common/iview/iview.min.js"></script>
     <script src="/common/iview/axios.min.js"></script>
     <script src="/common/iview/libs/win.js"></script>
     <script src="/common/iview/libs/util.js"></script>
     <script src="/common/model/web_business.js"></script>
 
-    <script src="/common/jsjs.js"></script>
     <script src="{{PATH_CONFIG}}"></script>
     <script type="text/javascript">
         var header_scroll = 'yes';
@@ -49,6 +49,10 @@
             }
 
             $('title').html(title);
+        }
+
+        function mb_login(url) {
+            $app.open_page('login?url='+url);
         }
 
         Vue.filter('img_src', function (value, width, height) {

@@ -1,66 +1,89 @@
 <#include#>header_include.html</#include#>
 <script type="text/javascript">
-    header_scroll = 'no';
+    var main_index = false;
 </script>
-<body>
-<!--business-->
-<link rel="stylesheet" href="{{PATH_TML}}new/css/index.css" />
-<link rel="stylesheet" href="{{PATH_TML}}new/css/new.info.css">
-<div class="blank20">
 
-</div>
+<link rel="stylesheet" href="/common/css/plat.news.detail.css"/>
+<script src="/common/js/helps.js"></script>
+<div id="app">
+    <section class="bnaner"></section>
+    <section class="content">
+        <div class="toptop">
+            <main>
+                <ul class="content_left pps">
+                    <template v-for="(item,index) in header_news">
+                        <li :class="{'current': item.domain == currPage}">
+                            <a :class="{'about': item.domain == currPage}" :href="'/news/'+ item.domain">
+                                <span>{{item.title}}</span>
+                            </a>
+                        </li>
+                    </template>
+                </ul>
+            </main>
+        </div>
+        <main>
+            <div class="boxb">
+                <ul class="content_left diss">
+                    <template v-for="(item,index) in header_news">
+                        <li :class="{'current': item.domain == currPage}">
+                            <a :class="{'about': item.domain == currPage}" :href="'/news/'+ item.domain">
 
-<div class="news_top_det_img">
+                                <span>{{item.title}}</span>
+                            </a>
+                        </li>
 
-</div>
-
-<div class="info_news" >
-    <div id="colorfulPulse"  >
-        <span class="item-1"></span>
-        <span class="item-2"></span>
-        <span class="item-3"></span>
-        <span class="item-4"></span>
-        <span class="item-5"></span>
-        <span class="item-6"></span>
-        <span class="item-7"></span>
-    </div>
-    <div class="info_news_l" id="app">
-
-        <div class="info_l_tit">
-            <p class="title_new">{{content.title}}</p>
-            <div class="title_b">
-                <span class="news_sort">{{content.category.title}}</span>
-                <em class="title_line"></em>
-                <span class="news_pub_time">{{content.publish_time}}</span>
-                <em class="title_line"></em>                
+                    </template>
+                </ul>
             </div>
-        </div>
-        <div style="height: 1px;width: 120%;background: #ededed;position: relative;left: -44px;"></div>
-        <div class="news_content" v-html="content.content">
-        </div>
 
-    </div>
+            <div class="content_right" >
+                <!--{{content.title}}{{content.category.title}}-->
+                <div class="detail_title">
+                    <p><span>{{content.title}}</span></p>
+                    <p>【重要公告】&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<span>{{content.publish_time}}</span></p>
+                </div>
+                <div class="next_title">
+                    <p style="text-indent:2em;">
+                        <span>导语：</span><span>当前社会很多互联网人以及开始涉及互联网业务的传统企业的企业家与创业者们，对物联网的认知存在五大误区与陷阱：或单纯认定互联网仅仅是工具:或忽略互联网思维价值与规律；或忽略互联网思维方法论；或固守中心化思维,过分只想搞定客户卖产品,而忽略用户体验与感受。——柯尊平一阵见血指出。</span>
+                    </p>
+
+                </div>
+                <div class="con_cons" v-html="content.content">
+
+                </div>
+
+            </div>
+        </main>
+    </section>
+
 </div>
+
 <script>
     new Vue({
         el: '#app',
         data: {
-            'content' : {},
-            'show':true,
-            'page':1,
+            'header_news': [],
+            'currPage': window.location.pathname.split('/').pop(),
+            'content': {},
+            'show': true,
+            'page': 1,
         },
         mounted() {
-            this.$nextTick( function () {
+            this.$nextTick(function () {
+                this.header_news = win.getStorage('header_news');
                 this.get_data(window.location.pathname.split('/').pop());
             });
         },
-        methods:{
-            get_data : function(weid){
-                ajax.get(web_business.web_cms_contents+weid).then((res)=>{
+        methods: {
+            get_data: function (weid) {
+                ajax.get(web_business.web_cms_contents + weid).then((res) => {
                     this.content = res.data;
-                set_title(this.content.title);
-                $('#colorfulPulse').hide();
-            });
+                    console.log(this.content)
+                    console.log(this.content.content)
+
+                    set_title(this.content.title);
+                    $('#colorfulPulse').hide();
+                });
             }
         }
     });
