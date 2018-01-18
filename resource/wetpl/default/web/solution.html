@@ -602,7 +602,9 @@
                             </li>
                         </ul>
                         <div class="shop">
-                            <a v-if="item.price > 0" @click="open_solution(item);"><p>立即购买</p></a>
+                            <a v-if="item.price > 0"  @click="open_solution(item);"><p>立即购买</p></a>
+                            <a v-if="item.price == 0 && dataList.has_primary == 2" v-else  @click="open_solution(item);"><p>立即购买</p></a>
+                            <a v-if="item.price == 0 && dataList.has_primary == 1"><p>立即购买</p></a>
                         </div>
                     </div>
                 </li>

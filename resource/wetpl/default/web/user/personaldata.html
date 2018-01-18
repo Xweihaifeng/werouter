@@ -230,6 +230,9 @@
     <script>
         $(function() {
             // 设置参数
+
+            var guide_status = window.localStorage.getItem("guide_status");
+
             $('body').pagewalkthrough({
                 name: 'introduction',
                 steps: [{
@@ -276,7 +279,10 @@
             });
 
             // 一步一步显示引导页
-            $('body').pagewalkthrough('show');
+            if(!guide_status) {
+                $('body').pagewalkthrough('show');
+                window.localStorage.setItem("guide_status", true);
+            }
         });
     </script>
     <!-- <script type="text/javascript">

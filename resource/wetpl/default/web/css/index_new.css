@@ -52,6 +52,14 @@ header ul {
     align-items: center;
 }
 
+header ul li:nth-child(1) {
+    margin-top: 20px;
+}
+
+header ul li:nth-child(2) {
+    margin-top: 23px;
+}
+
 header ul li:nth-child(3) {
     display: flex;
     flex-direction: column;
@@ -299,12 +307,12 @@ header ul li:nth-child(3) {
 }
 
 #nav {
-    position: absolute;
+    position: fixed;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    margin: 43px 30px 0 1120px;
+    margin: 120px 30px 0 1225px;
     z-index: 10;
 }
 
@@ -388,6 +396,9 @@ header ul li:nth-child(3) {
     display: block;
     width: 29px;
     height: 29px;
+}
+
+#nav li:nth-child(1) img {
     border-radius: 29px;
 }
 
@@ -445,16 +456,46 @@ header ul li:nth-child(3) {
 
 #carousel {
     width: 1200px;
-    height: 491px;
+    height: 600px;
+    /*height: 491px;*/
     margin-top: 10px;
     background: #eef3fa;
 }
 
 #my-swiper {
     width: 1200px;
-    height: 476px;
+    height: 586px;
+    /*height: 476px;*/
     margin: 0 0 15px 0;
     background: #eee;
+}
+
+.swiper-button-prev {
+    width: 40px;
+    height: 74px;
+    background: url(/common/img/back.png) no-repeat center;
+    background-size: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 10;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    margin-top: -35px;
+    /*opacity: 0;*/
+}
+
+.swiper-button-next {
+    width: 40px;
+    height: 74px;
+    background: url(/common/img/more.png) no-repeat center;
+    background-size: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 10;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    margin-top: -35px;
+    /*opacity: 0;*/
 }
 
 #news-blocks {
@@ -979,6 +1020,10 @@ li .active {
 #my-swiper-3 img {
     width: 280px;
     height: 200px;
+}
+
+#my-swiper-3 a {
+    display: block;
 }
 
 .line {

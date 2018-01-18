@@ -343,6 +343,8 @@ $(function() {
                 console.log(data);
                 if (data.code != -200) {
                     saveUserInfo(data.token, data.data.weid, data.data.avatar, data.data, data.data.identity);
+                    docCookies.setItem("token", data.token, new Date().getTime() + 7 * 24*60*60*1000, "/", '.' + root_domain);
+                    docCookies.setItem("weid", data.data.weid, new Date().getTime() + 7 * 24*60*60*1000, "/", '.' + root_domain);
                     showLogin = false;
                     isLogin = true;
                     isCheckNum = false;

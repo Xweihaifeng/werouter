@@ -15,56 +15,59 @@
 <!--     <div class="banner" v-if="bannerList.length">
         <a v-for="item in bannerList" v-if="item.src" :href="item.href"><img :src="item.src | img_src" alt=""></a>&nbsp;
     </div> -->
-    <div v-for="item in list_data">
-        <a :href="item.domain + '/article/' + item.relation_id  | href('weplats')"  v-if="item.dynamic_type == 1">
-            <div class="art-content" >
-                <span><img class="lazy" :src="JSON.parse(item.other).cover | img_src(110, 69, 1)" width="110" height="69" /></span>
-                <span style="padding-left:0.1rem;" class="art-des-text">
+    <div v-if="list_data.length">
+        <div v-for="item in list_data">
+            <a :href="item.domain + '/article/' + item.relation_id  | href('weplats')"  v-if="item.dynamic_type == 1">
+                <div class="art-content" >
+                    <span><img class="lazy" :src="JSON.parse(item.other).cover | img_src(110, 69, 1)" width="110" height="69" /></span>
+                    <span style="padding-left:0.1rem;" class="art-des-text">
                     <strong>{{JSON.parse(item.other).title | limitLen(0,15) }}</strong>
                     <pre>{{item.motto | limitLen(0,55) }}</pre>
                 </span>
-            </div>
-        </a>
-        <div v-if="item.dynamic_type == 4">
-            <a :href="item.domain + '/wemall/goods/' + item.relation_id  | href('weplats')">
-                <div class="art-content" style="background: #fff;">
-                    <div class="act-cover">
-                        <img class="lazy" :src="JSON.parse(item.other).cover | img_src(110, 69, 1)" width="110" height="69" />
-                    </div>
-                    <span style="padding-left:0.1rem;" class="art-des-text">
+                </div>
+            </a>
+            <div v-if="item.dynamic_type == 4">
+                <a :href="item.domain + '/wemall/goods/' + item.relation_id  | href('weplats')">
+                    <div class="art-content" style="background: #fff;">
+                        <div class="act-cover">
+                            <img class="lazy" :src="JSON.parse(item.other).cover | img_src(110, 69, 1)" width="110" height="69" />
+                        </div>
+                        <span style="padding-left:0.1rem;" class="art-des-text">
                         <strong>{{JSON.parse(item.other).title}}</strong>
                         <p class="for-good">
                             <span> 已售：{{JSON.parse(item.other).sales_num ? JSON.parse(item.other).sales_num : 0}} 收藏：{{JSON.parse(item.other).comment_num ? JSON.parse(item.other).comment_num : 0}} </span>
                             <span>￥{{JSON.parse(item.other).price}}</span>
                         </p>
                     </span>
+                    </div>
+                </a>
+            </div>
+            <a v-if="item.dynamic_type == 3" :href="item.domain + '/activity/' + item.relation_id  | href('weplats')">
+                <div class="art-content" style="background: #fff;">
+                    <div class="act-cover">
+                        <img class="lazy" :src="JSON.parse(item.other).cover | img_src(110, 69, 1)" width="110" height="69" />
+                    </div>
+                    <div class="act-cont">
+                        <ul>
+                            <li class="act-cont-title">
+                                <p>{{JSON.parse(item.other).title}}</p>
+                                <p>免费</p>
+                            </li>
+                            <li class="act-cont-summary">
+                                <p>{{JSON.parse(item.other).Sponsor}}</p>
+                            </li>
+                            <li class="act-cont-time">
+                                <p>{{JSON.parse(item.other).updated_at | formateTime('MDHM') }} 开讲</p>
+                                <p>{{JSON.parse(item.other).area_name}}</p>
+                            </li>
+                            <li class="act-cont-info"></li>
+                        </ul>
+                    </div>
                 </div>
             </a>
         </div>
-        <a v-if="item.dynamic_type == 3" :href="item.domain + '/activity/' + item.relation_id  | href('weplats')">
-        <div class="art-content" style="background: #fff;">
-            <div class="act-cover">
-                <img class="lazy" :src="JSON.parse(item.other).cover | img_src(110, 69, 1)" width="110" height="69" />
-            </div>
-            <div class="act-cont">
-                <ul>
-                    <li class="act-cont-title">
-                        <p>{{JSON.parse(item.other).title}}</p>
-                        <p>免费</p>
-                    </li>
-                    <li class="act-cont-summary">
-                        <p>{{JSON.parse(item.other).Sponsor}}</p>
-                    </li>
-                    <li class="act-cont-time">
-                        <p>{{JSON.parse(item.other).updated_at | formateTime('MDHM') }} 开讲</p>
-                        <p>{{JSON.parse(item.other).area_name}}</p>
-                    </li>
-                    <li class="act-cont-info"></li>
-                </ul>
-            </div>
-        </div>
-        </a>
     </div>
+    <img v-else class="empty-img" src="/common/img/index_empty.png">
 </div>
 
 <script type="text/javascript">
@@ -130,7 +133,7 @@
         	});
         },
         methods:{
-        	// 使用common_page 方法必须定义data方法 以及对象 params
+//        	 使用common_page 方法必须定义data方法 以及对象 params
         	data(params , call){
         		return $mob_ajax.dynamic(params , call);
             },

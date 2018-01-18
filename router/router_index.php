@@ -285,7 +285,6 @@ class router_index extends controller
 
         $router_verify = new router_verify($router , $uri , $rule , $weid);
 
-
         if(empty($router_verify->router)) {
             error(404);
         }
@@ -342,6 +341,8 @@ class router_index extends controller
         {
             error(404);
         }
+
+        $this->router_name = $router_verify->router['router_name'];
 
         $content = file_get_contents('.'.$this->file.$directory.$router_map);
 
@@ -531,7 +532,7 @@ class router_index extends controller
     // 网站元素要替换规则
     private function _get_str_replace_content($content , $config_file , $directory ,$additional_config)
     {
-        return Wez_template::init($this->file ,  $content , $config_file , $directory ,$additional_config);
+        return Wez_template::init($this->file ,  $content , $config_file , $directory ,$additional_config , $this->router_name);
     }
 
     // 判断是否加载控制器

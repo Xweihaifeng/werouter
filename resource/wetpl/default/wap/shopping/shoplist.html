@@ -3,7 +3,7 @@
 <script src="{{PATH_TML}}js/swiper-3.3.1.min.js"></script>
 <script src="/common/js/jquery.min.js"></script>
 <div class="container mall">
-    <div class="card">
+    <div class="card" style="display: none;">
         <a :href="'/'+pages_index+'/shopping/get-ticket'">
             <img src="/common/img/6-card.png" alt="">
         </a>
@@ -14,7 +14,7 @@
             <img src="/common/img/6-card.png" alt="">
         </a>
     </div>
-    <div class="rec-content">
+    <div class="rec-content" style="display: none;">
         <h2 class="rec-title">推荐商品</h2>
         <div class="recommend">
             <img src="/common/img/slice.jpg" alt="">
@@ -58,7 +58,7 @@
     <div class="banner" v-if="bannerList.length">
         <a v-for="item in bannerList" v-if="item.src" :href="item.href"><img :src="item.src | img_src" alt=""></a>
     </div>
-    <div>
+    <div v-if="sortList.length>0">
         <menu class="menu" id="menu_title" :class="{'has-swiper' : advList.length}">
             <ul id="shop_type">
                 <li v-for="item in sortList" :class="{'active' : currentShow == item.weid}" @click="getSortList(item)"
@@ -92,6 +92,8 @@
             </ul>
         </article>
     </div>
+    <img v-else class="empty-img"  src="/common/img/shop_empty.png">
+
     <div class="store-icon" v-if="showStore">
         <i @click="window.location.href='/user/wemall/cart'"></i>
     </div>
@@ -198,7 +200,7 @@
                     });
                 }, 1000);
 
-                this.offsetDomHeight += $('.card').height() + $('.rec-content').height()+14;
+//                this.offsetDomHeight += $('.card').height() + $('.rec-content').height()+14;
                 $('.menu').css('top',this.offsetDomHeight + 'px');
                 window.addEventListener('scroll', this.menu)
             });
