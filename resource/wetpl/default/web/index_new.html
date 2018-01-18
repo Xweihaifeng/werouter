@@ -296,7 +296,7 @@
             </div>
         </div>
         <div id="link">
-            <!--<p class="line"></p>
+            <p class="line"></p>
             <ul id="link-title">
                 <li v-for="e in link" @click="change_link(e)" :style="e.selected">{{e.title}}</li>
             </ul>
@@ -304,7 +304,7 @@
                 <a v-for="o in e.list" :href="o.url" target="_blank">
                     <li :title="o.title">{{o.title | fixed_len(7) }}</li>
                 </a>
-            </ul>-->
+            </ul>
         </div>
     </div>
     <div id="bottom1">
@@ -455,12 +455,14 @@
                 this.banners = resp.banners;
                 this.peoples_title = resp.peoples_title ? resp.peoples_title : {title: '企商风采', url: '#'};
                 this.leader = resp.leader ? resp.leader : {description: "全球秦商总会会长", image: "/common/img/new/m03.png", title: "刘阿津", url: "/u/71f96b93-da75-11e7-85d7-fa5985d0eaa1", weid: "d1fe0600-d181-11e7-9c10-49bfb1717a52"};
-                /*var list = [];
+                var list = [];
                 for (var key in resp.link) {
-                    list.push(resp.link[key]);
+                    if (resp.link[key].list != null) {
+                        list.push(resp.link[key]);
+                    }
                 };
                 this.link = list.map(
-                        (e, i) => (i == 0 ? (e.show = true, e.selected = this.style.selected, e) : (e.show = false, e.selected = {}, e)));*/
+                        (e, i) => (i == 0 ? (e.show = true, e.selected = this.style.selected, e) : (e.show = false, e.selected = {}, e)));
                 setTimeout(() => {
                     var mySwiper = new Swiper('#my-swiper', Object.assign({}, this.swiper, {pagination: '.swiper-pagination', paginationClickable :true}));
                     var mySwiper2 = new Swiper('#my-swiper-2', this.swiper);
@@ -482,7 +484,7 @@
                 this.especial = resp.especial_news;
                 this.qycp = resp.qycp != null ? resp.qycp : {"weid":"7be01700-f9c6-11e7-9c78-93c9a5c1926b","title":"陕西大剧院","summary":"","thumb_image":"plats/news/1516006758867.png","publish_time":1516030450,"source_url":""};
                 this.spzx = Object.assign({}, resp.spzx.list[0], {head: resp.spzx.title, domain: resp.spzx.domain, tail: resp.spzx.list.slice(1, 3)});
-                this.mag = resp.mag;
+                this.mag = resp.mag != null ? resp.mag : [{"title":"秦商杂志","domain":"qinshang","list":[{"weid":"820d1280-bef4-11e7-86e7-2f6b48d4c639","title":"秦商电子杂志39期","summary":"秦商电子杂志39期","cover":"plats/resource/1507614354652.jpg"},{"weid":"820d1280-bef4-11e7-86e7-2f6b48d4c638","title":"秦商电子杂志38期","summary":"秦商电子杂志38期","cover":"plats/resource/1507614943402.jpg"},{"weid":"820d1280-bef4-11e7-86e7-2f6b48d4c637","title":"秦商电子杂志37期","summary":"秦商电子杂志37期","cover":"plats/resource/37-1.jpg"},{"weid":"820d1280-bef4-11e7-86e7-2f6b48d4c636","title":"秦商电子杂志36期","summary":"秦商电子杂志36期","cover":"plats/resource/36-1.jpg"},{"weid":"820d1280-bef4-11e7-86e7-2f6b48d4c635","title":"秦商电子杂志35期","summary":"秦商电子杂志35期","cover":"plats/resource/1513302973468.png"},{"weid":"820d1280-bef4-11e7-86e7-2f6b48d4c634","title":"秦商电子杂志34期","summary":"秦商电子杂志34期","cover":"plats/resource/34-1.jpg"}]}];
                 this.ztbd = resp.ztbd;
                 this.style.video = this.spzx.thumb_image != ""
                                     ? {"background": "url(" + this.set_img(this.spzx.thumb_image, '/common/img/new/08.png', 350, 175) + ") no-repeat center"}
