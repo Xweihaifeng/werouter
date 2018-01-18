@@ -11,31 +11,20 @@
         <div class="toptop">
             <main>
                 <ul class="content_left pps">
-                    <template v-for="(item,index) in header_news">
-                        <li :class="{'current': item.domain == currPage}">
-                            <a :class="{'about': item.domain == currPage}" :href="'/news/'+ item.domain">
-                                <span>{{item.title}}</span>
-                            </a>
-                        </li>
-                    </template>
+                    <li :class="{'current': item.domain == currPage}" v-for="item in header_news">
+                        <a  :href="'/helps/'+ item.domain"><span>{{item.title}}</span></a>
+                    </li>
                 </ul>
             </main>
         </div>
         <main>
             <div class="boxb">
                 <ul class="content_left diss">
-                    <template v-for="(item,index) in header_news">
-                        <li :class="{'current': item.domain == currPage}">
-                            <a :class="{'about': item.domain == currPage}" :href="'/news/'+ item.domain">
-
-                                <span>{{item.title}}</span>
-                            </a>
-                        </li>
-
-                    </template>
+                    <li :class="{'current': item.domain == currPage}" v-for="item in header_news">
+                        <a :href="'/helps/'+ item.domain"><span>{{item.title}}</span></a>
+                    </li>
                 </ul>
             </div>
-
             <div class="content_right" >
                 <!--{{content.title}}{{content.category.title}}-->
                 <div class="detail_title">
@@ -71,10 +60,17 @@
         mounted() {
             this.$nextTick(function () {
                 this.header_news = win.getStorage('header_news');
+                this.getdata();
                 this.get_data(window.location.pathname.split('/').pop());
             });
         },
         methods: {
+            getdata:function () {
+                ajax.get(web_business.web_cms_channel_categories , {params:{channel:'help' , limit : 2}}).then((res)=>{
+                    this.content = res.data;
+                console.log(this.content)
+            });
+            },
             get_data: function (weid) {
                 ajax.get(web_business.web_cms_contents + weid).then((res) => {
                     this.content = res.data;
