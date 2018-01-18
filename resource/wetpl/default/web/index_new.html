@@ -301,7 +301,7 @@
                 <li v-for="e in link" @click="change_link(e)" :style="e.selected">{{e.title}}</li>
             </ul>
             <ul id="link-page" v-for="e in link" v-show="e.show">
-                <a v-for="o in e.list" :href="o.url" target="_blank">
+                <a v-if="e.list" v-for="o in e.list" :href="o.url" target="_blank">
                     <li :title="o.title">{{o.title | fixed_len(7) }}</li>
                 </a>
             </ul>
@@ -480,7 +480,7 @@
                 this.news = resp.news;
                 this.notice = resp.nitoce;
                 this.especial = resp.especial_news;
-                this.qycp = resp.qycp ? resp.qycp : {"weid":"7be01700-f9c6-11e7-9c78-93c9a5c1926b","title":"陕西大剧院","summary":"","thumb_image":"plats/news/1516006758867.png","publish_time":1516030450,"source_url":""};
+                this.qycp = resp.qycp != null ? resp.qycp : {"weid":"7be01700-f9c6-11e7-9c78-93c9a5c1926b","title":"陕西大剧院","summary":"","thumb_image":"plats/news/1516006758867.png","publish_time":1516030450,"source_url":""};
                 this.spzx = Object.assign({}, resp.spzx.list[0], {head: resp.spzx.title, domain: resp.spzx.domain, tail: resp.spzx.list.slice(1, 3)});
                 this.mag = resp.mag;
                 this.ztbd = resp.ztbd;
