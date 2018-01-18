@@ -378,7 +378,7 @@
             articles: [], //文章
             leader: [], //会长
             member: [], //会员
-            qycp: [], //企业产品
+            qycp: {}, //企业产品
             spzx: {}, //视频
             mag: [], //杂志
             ztbd: [], //专题
@@ -480,7 +480,7 @@
                 this.news = resp.news;
                 this.notice = resp.nitoce;
                 this.especial = resp.especial_news;
-                this.qycp = resp.qycp ? resp.qycp : [{"weid":"7be01700-f9c6-11e7-9c78-93c9a5c1926b","title":"陕西大剧院","summary":"","thumb_image":"plats/news/1516006758867.png","publish_time":1516030450,"source_url":""}];
+                this.qycp = resp.qycp ? resp.qycp : {"weid":"7be01700-f9c6-11e7-9c78-93c9a5c1926b","title":"陕西大剧院","summary":"","thumb_image":"plats/news/1516006758867.png","publish_time":1516030450,"source_url":""};
                 this.spzx = Object.assign({}, resp.spzx.list[0], {head: resp.spzx.title, domain: resp.spzx.domain, tail: resp.spzx.list.slice(1, 3)});
                 this.mag = resp.mag;
                 this.ztbd = resp.ztbd;
