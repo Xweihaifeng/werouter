@@ -77,7 +77,7 @@ $(function() {
                 $('body').append('<div class="backdrop"></div>')
             }
             if ($('#J_Loading').length <= 0) {
-                $('body').append('<div class="loading" id="J_Loading"><img src="http://fed.wezchina.com/loading.gif"><p>' + tips + '</p></div>');
+                $('body').append('<div class="loading" id="J_Loading"><img src="/common/img/loading-big.gif"><p>' + tips + '</p></div>');
             }
             $('.backdrop').show();
             $('#J_Loading').children('p').text(tips);

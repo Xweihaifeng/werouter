@@ -21,7 +21,7 @@ $(function() {
     var TAG_BUTTON_ANIM_TIME = 500;
     //本地存储key
     var KEY_DATA_ACTIVITY = 'activityData';
-    var interval='';
+    var interval = '';
     //缓存时间间隔
     var CACHE_TIME = 5000;
     //编辑器对象
@@ -199,7 +199,7 @@ $(function() {
                 //alert(type);
                 if (type == 1) {
                     $('.J_audit').hide();
-                }else{
+                } else {
                     $('.J_audit').show();
                 }
 
@@ -287,13 +287,13 @@ $(function() {
                         hideLoading();
                         notice.alert(res.msg, function() {
                             if (res.status == 1) {
-                                clearInterval(interval);//清除定时器
-                                cache.clean();//清除缓存
+                                clearInterval(interval); //清除定时器
+                                cache.clean(); //清除缓存
                                 isSave = true;
                                 setTimeout(function() {
                                     document.location.href = res.data.url;
                                 }, 500);
-                            }else if (res.status == 2){
+                            } else if (res.status == 2) {
                                 setTimeout(function() {
                                     window.location.href = res.data.url;
                                 }, 500);
@@ -605,7 +605,7 @@ $(function() {
                 $('#J_TicketPrice').removeClass('readonly');
                 $('.J_TicketForm').find('input').removeClass('error');
                 $('.J_TicketForm').get(0).reset();
-                $('#J_TicketId').val(0);//新增 清除上次打开的id
+                $('#J_TicketId').val(0); //新增 清除上次打开的id
             });
         },
         //保存门票并验证
@@ -660,7 +660,8 @@ $(function() {
                     var reg = /^\d+(\.\d{1,2})?$/;
                     if (!reg.test(data.price)) {
                         repeatFlag = false;
-                        notice.alert('活动票价格不允许超过两位小数');return;
+                        notice.alert('活动票价格不允许超过两位小数');
+                        return;
                     }
                     data.result = JsonObj.encode(data);
                     if (_self._isNew) //将门票添加到表单信息中
@@ -1031,17 +1032,15 @@ $(function() {
                 notice.alert('请选择活动结束时间');
                 $('#J_ActivityOverDate').focus();
             } else if (!data.entryEndTime) {
-                   notice.alert('请选择活动报名截止时间');
-                   $('#J_ActivityEntryOverDate').focus();
+                notice.alert('请选择活动报名截止时间');
+                $('#J_ActivityEntryOverDate').focus();
             } else if (data.beginTime >= data.endTime) {
                 notice.alert('活动结束时间不能早于活动开始时间');
                 $('#J_ActivityOverTime').focus();
-            }
-            else if (data.entryEndTime > data.endTime) {
+            } else if (data.entryEndTime > data.endTime) {
                 notice.alert('报名截止时间不能晚于活动结束时间');
                 $('#J_ActivityEntryOverTime').focus();
-            }
-            else if (data.sponors.length < 1) {
+            } else if (data.sponors.length < 1) {
                 notice.alert('请填写主办方');
                 $('.form-group-sponors').focus();
             } else if (!data.content) {
@@ -1151,7 +1150,7 @@ $(function() {
                 isPrivacy: isPrivacy,
                 isAgreeProtocal: $('#J_ActivityProtocal').get(0).checked ? 1 : 0,
                 status: status,
-                audit:$('input[name=audit]:checked').val(),
+                audit: $('input[name=audit]:checked').val(),
             };
         },
         //格式化时间对象
@@ -1254,7 +1253,7 @@ $(function() {
                 var item = data.fields[i];
                 other.createTag($('.J_BtnAddTag[data-type="field"]'), 'field', item);
             }
-             //配置群聊
+            //配置群聊
             if (data.groupChart) {
                 $('#J_GroupChat').attr('checked', 'true');
             } else {
@@ -1407,11 +1406,11 @@ $(function() {
                 },
                 //验证完毕后提交事件
                 submitHandler: function(form) {
-                    if($('input[name="payType"]:checked').val() == null) {
+                    if ($('input[name="payType"]:checked').val() == null) {
                         notice.alert('收款方式不能为空');
                         return false;
                     }
-                    if(!$('#J_AccountIdcard').val() && !$('#J_AccountLicense').val()) {
+                    if (!$('#J_AccountIdcard').val() && !$('#J_AccountLicense').val()) {
                         notice.alert('请上传证件');
                         return false;
                     }
@@ -1451,7 +1450,7 @@ $(function() {
         },
         save: function() {
             var data = formObj.formatData(2);
-                data = JsonObj.encode(data);
+            data = JsonObj.encode(data);
             var _cache = localStorage.getItem(KEY_DATA_ACTIVITY);
             if (data != _cache) {
                 localStorage.setItem(KEY_DATA_ACTIVITY, data);
@@ -1528,8 +1527,8 @@ $(function() {
                 "anchor": new BMap.Size(12, 38)
             };
             var size = new BMap.Size(24, 38);
-            var mark1 = "http://fed.welian.com/common/mark1.png";
-            var mark2 = "http://fed.welian.com/common/mark2.png";
+            var mark1 = "/common/img/mark1.png";
+            var mark2 = "/common/img/mark2.png";
             var icon1 = new BMap.Icon(mark1, size, options);
             var icon2 = new BMap.Icon(mark2, size, options);
             var baiduMapMarker = new BMap.Marker(_self.point, {
