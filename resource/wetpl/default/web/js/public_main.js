@@ -208,13 +208,13 @@ const header = `
                 <aside>
                     <span>微信</span>
                     <div>
-                        <img src=${window.location.origin+"/api/file/qrcode?margin=2&url=" + window.location.href} alt="">
+                        <img src=${imgSet(plats_info.wx_qrcode? plats_info.wx_qrcode: window.location.origin+"/api/file/qrcode?margin=2&url="+window.location.href, 90, 90)} alt="">
                     </div>
                 </aside>
                 <aside>
                     <span>微博</span>
                     <div>
-                        <img src=${window.location.origin+"/api/file/qrcode?margin=2&url=" + window.location.href} alt="">
+                        <img src=${imgSet(plats_info.wb_qrcode? plats_info.wb_qrcode: window.location.origin+"/api/file/qrcode?margin=2&url="+window.location.href, 90, 90)} alt="">
                     </div>
                 </aside>
                 <aside><a href="" target="_blank" id="old"><span style="border-right:none;padding-left:12px;">访问旧版</span></a></aside>
