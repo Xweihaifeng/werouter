@@ -1,85 +1,569 @@
 <!DOCTYPE html>
 <html>
-    <head lang="en">
-        <title></title>
-        <meta charset="UTF-8" />
-        <!-- <link rel="shortcut icon" id="favicon" href="" /> -->
-        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport" />
-        <meta name="description" content="" />
-        <meta name="keywords" content="" />
-
-        <link rel="stylesheet" href="/common/css/bootstrap.min.css">
-        <link rel="stylesheet" href="{{PATH_TML}}font/iconfont.css" />
-        <link rel="stylesheet" href="/common/css/swiper.min.css">
-        <link rel="stylesheet" href="/common/layui/css/layui.css">
-        <link rel="stylesheet" href="/common/css/buttons.css">
-        <link rel="stylesheet" href="{{PATH_TML}}css/public_main.css">
-        <link rel="stylesheet" href="{{PATH_TML}}css/news_base.css" />
-        <link rel="stylesheet" href="{{PATH_TML}}css/modal_login.css" />
-        <link rel="stylesheet" href="{{PATH_TML}}css/index_page.css" />
-        <link rel="stylesheet" href="{{PATH_TML}}css/index_style.css" />
-        <link rel="stylesheet" href="{{PATH_TML}}css/org.css" />
-        <link rel="stylesheet" href="{{PATH_TML}}css/home_rolling.css">
-
-        <script src="/common/js/jquery-3.2.1.min.js"></script>        
-        <script src="/common/js/layer-v3.1.1/layer/layer.js"></script>
-        <script src="/common/js/swiper-3.3.1.min.js"></script>
-        <script src="/common/layui/layui.js"></script>
-        <script src="/common/js/buttons.js"></script>
-        <script src="/common/js/jquery.rollGallery_yeso.js"></script>
-        <script src="/common/js/jquery.mousewheel.js"></script>
-        <script src="/common/js/control.js"></script>
-        <!-- <script src="/common/js/browser.min.js"></script> -->
-        <script src="{{PATH_CONFIG}}"></script>
-        <!-- <script src="https://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js"></script> -->
-        <script src="{{PATH_TML}}js/modal_login.js"></script>
-        <script src="{{PATH_TML}}js/public_main.js"></script>
-        <!-- <script src="/common/js/organized.js"></script> -->
-    </head>
-    <body id="public_main_index">        
-        <!-- 登录部分 -->
-        <div class="modal_login" id="modal_login"></div>
-
-        <!-- 左侧导航 -->
-        <ul class="news_menu" id="public_main_news_menu"></ul>
-
-        <!-- 右侧手风琴内容 -->
-        <div class="main">
-            <div class="home"></div>
-            <div class="organization" style="display: none;"></div>
-            <div class="huzhu" style="display: none; left:210px; z-index: 10;"></div>
-            <div class="goodsBox" style="display:none;z-index: 10;"></div>
-            <!-- 右侧手风琴导航 -->
-            <div id="right-nav">
-                <div id="nav-news" style="display: none;">
-                    <div class="nav-news-title">新闻</div>
-                    <div class="nav-news-content">
-                        <ul></ul>
+<head lang="en">
+    <title></title>
+    <meta charset="UTF-8" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <link rel="shortcut icon" id="favicon" href="" />
+    <link rel="stylesheet" href="/common/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="{{PATH_TML}}css/swiper.min.css" />
+    <link rel="stylesheet" href="/common/layui/css/layui.css" />
+    <link rel="stylesheet" href="{{PATH_TML}}css/modal_login.css" />
+    <link rel="stylesheet" href="{{PATH_TML}}css/normalize.css" />
+    <link rel="stylesheet" href="{{PATH_TML}}css/index.css" />
+    <link rel="stylesheet" href="{{PATH_TML}}css/index_new.css" />
+    <script src="/common/js/vue.min.js"></script>
+    <script src="/common/js/axios.min.js"></script>
+    <script src="/common/js/jquery-3.2.1.min.js"></script>
+    <script src="/common/js/swiper-3.3.1.min.js"></script>
+    <script src="/common/js/layer-v3.1.1/layer/layer.js"></script>
+    <script src="/common/layui/layui.js"></script>
+    <script src="{{PATH_CONFIG}}"></script>
+    <script src="{{PATH_TML}}js/modal_login.js"></script>
+</head>
+<body>
+<main id="app" v-cloak>
+    <div class="modal_login" id="modal_login"></div>
+    <header>
+        <div>
+            <ul>
+                <li><img :src="logo" alt="" style="width: 209px; height: 50px; display: block;" /></li>
+                <li><img :src="header1" alt="" style="width: 382px; height: 45px; display: block;" /></li>
+                <li>
+                    <div id="ht">
+                        <aside v-for="e in qrcode" @mouseleave="e.ok=false">
+                            <span @mouseenter="e.ok=true">{{e.title}}</span>
+                            <div v-show="e.ok" style="z-index: 15;">
+                                <img :src="set_img(e.image, e.image, 90, 90)" class="weixin img-responsive">
+                            </div>
+                        </aside>
+                        <aside><a :href="plats_info.old_link" target="_blank" id="old"><span style="border-right:none;padding-left:12px;">访问旧版</span></a></aside>
+                    </div>
+                    <div id="hs">
+                        <span><input type="text" id="search" class="form-control" placeholder="请输入关键字" v-model="key"></span>
+                        <span @click="search(key)"><img src="/common/img/find.png" style="padding: 7px"></span>
+                        <span>高级搜索</span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div id="menu">
+            <ol>
+                <li><a :href="window.location.protocol + '//' + window.location.host">首页</a></li>
+                <li v-for="c in channel">
+                    <a :href="check(c.domain, c.url)">{{c.title}}</a>
+                    <div class="nav-list">
+                        <p v-for="e in c.children">
+                            <a :href="check(c.domain, c.url) + '/' + e.domain">{{e.title}}</a>
+                        </p>
+                    </div>
+                </li>
+            </ol>
+        </div>
+    </header>
+    <div id="container">
+        <div id="carousel">
+            <ul id="nav">
+               <li @click="login">
+                   <a href="javascript:void(0);">
+                       <img :src="set_img(plats_user_info.avatar, '/common/img/new/icon01.png', 29, 27)" id="avatar" alt=""/>
+                   </a>
+               </li>
+               <li><a :href="'/' + domain + '/article'"><img src="/common/img/new/icon02.png" alt=""/></a></li>
+               <li><a href="javascript:void(0);"><img src="/common/img/new/icon03.png" alt=""/></a></li>
+               <li><a :href="'/' + domain + '/activity'"><img src="/common/img/new/icon04.png" alt=""/></a></li>
+               <li><a :href="'/' + domain + '/wemall'"><img src="/common/img/new/icon05.png" alt=""/></a></li>
+               <li><a :href="'/' + domain + '/quan'"><img src="/common/img/new/icon06.png" alt=""/></a></li>
+            </ul>
+            <div class="swiper-container" id="my-swiper">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide" v-for="e in header2.list">
+                        <a :href="e.url" target="_blank">
+                            <img :src="imgSet(e.image, 1200, 586)" width="1200" height="586" alt=""/>
+                            <p class="bg"></p>
+                            <p class="content">{{e.title}}</p>
+                        </a>
                     </div>
                 </div>
-                <div id="nav-org" style="display: none;">
-                    <div class="nav-org-title">组织</div>
-                    <div class="nav-org-content">
-                        <ul></ul>
+                <div class="swiper-pagination"></div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+            </div>
+        </div>
+        <div id="news">
+            <ul id="news-blocks">
+                <li class="news-block">
+                    <div class="swiper-container" id="my-swiper-2">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide" v-for="e in banners.list">
+                                <a :href="e.url">
+                                    <img :src="imgSet(e.image, 581, 321)" alt=""/>
+                                    <p class="bg2"></p>
+                                    <p class="content2">{{e.title}}</p>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-button-next"></div>
+                    </div>
+                    <div id="recommend">
+                        <div class="rcd-bt">
+                            <div class="tb" :style="is_bg.up.bg" @mouseenter="read('up')">特别推荐
+                                <div class="triangle-right" :style="is_bg.up.tri"></div>
+                            </div>
+                            <div class="hy" :style="is_bg.down.bg" @mouseenter="read('down')">会员推荐
+                                <div class="triangle-right-1" :style="is_bg.down.tri"></div>
+                            </div>
+                            <div class="circle-tb" :style="is_bg.up.cir" @mouseenter="read('up')">
+                                <div class="sm-circle-tb" :style="is_bg.up.sub"></div>
+                            </div>
+                            <div class="circle-hy" :style="is_bg.down.cir" @mouseenter="read('down')">
+                                <div class="sm-circle-hy" :style="is_bg.down.sub"></div>
+                            </div>
+                        </div>
+                        <div class="rcd-news">
+                            <div class="rcd-tb" v-show="is_bg.up.on">
+                                <div class="rcd-news-line" v-for="e in especial.slice(0, 4)">
+                                    <div class="rcd-news-title">
+                                        <a :href="e.channel_domain + '/' + e.weid" target="_blank">{{e.title | cut(18)}}</a>
+                                    </div>
+                                    <div class="rcd-news-date">[{{new Date(parseInt(e.created_at * 1000)) | show_date | format_date}}]</div>
+                                </div>
+                            </div>
+                            <div class="rcd-hy" v-show="is_bg.down.on">
+                                <div class="rcd-news-line" v-for="e in articles">
+                                    <div class="rcd-news-title">
+                                        <a :href="'/' + e.domain + '/article/' + e.weid" target="_blank">{{e.title | cut(18)}}</a>
+                                    </div>
+                                    <div class="rcd-news-date">[{{e.created_at.substr(0, 10)}}]</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="news-block">
+                    <div class="main-news">
+                        <div class="main-news-title">
+                            <img src="/common/img/new/topline.png">
+                            <a :href="main_news.channel_domain + '/' + main_news.weid" target="_blank">{{main_news.title}}</a>
+                        </div>
+                        <div class="main-news-content">
+                            <a :href="main_news.channel_domain + '/' + main_news.weid" target="_blank">{{main_news.summary}}</a>
+                        </div>
+                    </div>
+                    <div class="news-center">
+                        <ul class="nav nav-tabs">
+                            <li class="center" @mouseenter="show('news')"><a href="news">新闻中心</a></li>
+                            <li class="sirase" @mouseenter="show('notice')"><a href="org">公示公告</a></li>
+                            <li class="release"@mouseenter="show('weibo')"><a>官方发布</a></li>
+                        </ul>
+                    </div>
+                    <div class="news-link">
+                        <div id="center" v-show="is_show.news">
+                            <ul class="news-line" v-for="e in news.slice(0, 7)">
+                                <div style="display: flex; align-items: center;">
+                                    <li class="news-type">[{{e.cate_title}}]</li>
+                                    <li class="news-title">
+                                        <a :href="'news/' + e.weid" target="_blank">{{e.title | fixed_len(21)}}</a>
+                                    </li>
+                                </div>
+                                <li class="news-date">
+                                    {{new Date(parseInt(e.created_at * 1000)) | show_date | format_date}}
+                                </li>
+                            </ul>
+                        </div>
+                        <div id="sirase" v-show="is_show.notice">
+                            <ul class="news-line" v-for="e in notice.slice(0, 7)">
+                                <div style="display: flex; align-items: center;">
+                                    <li class="news-type">[{{e.cate_title}}]</li>
+                                    <li class="news-title">
+                                        <a :href="'news/' + e.weid" target="_blank">{{e.title | fixed_len(21)}}</a>
+                                    </li>
+                                </div>
+                                <li class="news-date">
+                                    {{new Date(parseInt(e.created_at * 1000)) | show_date | format_date}}
+                                </li>
+                            </ul>
+                        </div>
+                        <div id="release" v-html="plats_info.weibo_show" v-show="is_show.weibo"></div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div id="marquee">
+            <div id="fengcai">
+                <ul>
+                    <li class="fc"><p class="line">{{peoples_title.title}}</p></li>
+                    <li class="fc"><a :href="peoples_title.url">更多>></a></li>
+                </ul>
+                <div class="fleft huizhang">
+                    <a :href="leader.url">
+                        <img :src="set_img(leader.image, leader.image, 186, 220)">
+                    </a>
+                    <div class="hz_font">
+                        <span>{{leader.title}}</span>
+                        <p style="height:20px;">{{leader.description}}</p>
                     </div>
                 </div>
-                <div id="nav-help" style="display: none;">
-                    <div class="nav-help-title">互助</div>
-                    <div class="nav-help-content">
-                        <ul></ul>
-                    </div>
-                </div>
-                <div id="nav-share" style="display: none;">
-                    <div class="nav-share-title">共享</div>
-                    <div class="nav-share-content">
-                        <ul></ul>
+                <div id="marquee1" class="marqueeleft fleft" style="width:960px;">
+                    <div style="width:18000px;">
+                        <ul id="marquee1_1">
+                            <li v-for="u in users">
+                                <a class="pic" :href="'/u/' + u.weid"><img :src="set_img(u.avatar, u.avatar, 186, 220)"></a>
+                                <a :href="'/u/' + u.weid">
+                                    <div class="hz_font hz_font2">
+                                    <span>{{u.real_name}} </span>
+                                    <p>{{u.position}}</p>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul id="marquee1_2">
+                            <li v-for="u in users"  v-if="users.length > 4">
+                                <a class="pic" :href="'/u/' + u.weid"><img :src="set_img(u.avatar, u.avatar, 186, 220)"></a>
+                                <a :href="'/u/' + u.weid">
+                                    <div class="hz_font hz_font2">
+                                        <span>{{u.real_name}} </span>
+                                        <p>{{u.position}}</p>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
+        <div id="media-center">
+            <div id="hb-center">
+                <div id="hbl">
+                    <div>
+                        <p class="line">{{spzx.head}}</p>
+                        <p><a :href='spzx.domain'>更多>></a></p>
+                    </div>
+                    <div @click="play(spzx.source_url)" :style="style.video"><img src="/common/img/new/play.png" alt=""/></div>
+                    <p class="hb1"><a :href="'v/' + spzx.weid">{{spzx.title}}</a></p>
+                    <p class="hb2">{{spzx.summary}}</p>
+                    <div class="hbs" v-for="e in spzx.tail">
+                        <p><a :href="'v/' + e.weid">> {{e.title | cut(14)}}</a></p>
+                        <p>{{new Date(parseInt(e.publish_time) * 1000) | show_date | format_date}}</p>
+                    </div>
+                </div>
 
-        <div id="beijing" style="position: absolute; left:1365px; top: 0; right: 0; bottom: 0; width:100%; height:1080px;"></div>
+                <div id="hbm">
+                    <div>
+                        <p class="line">{{mag.title}}</p>
+                        <p><a :href="'/magazine/' + mag.domain">更多>></a></p>
+                    </div>
+                    <ul>
+                        <a v-for="e in mag.list" :href="'/magazine/' + mag.domain + '/' + e.weid" target="_blank">
+                            <li><img :src="imgSet(e.cover, 110, 150)"></li>
+                        </a>
+                    </ul>
+                </div>
+                <div id="hbr">
+                    <div>
+                        <p class="line">{{ztbd.title}}</p>
+                        <p><a :href="ztbd.domain">更多>></a></p>
+                    </div>
+                    <ul>
+                        <a v-for="e in ztbd.list" :href="'/' + ztbd.domain + '/' + e.domain" target="_blank">
+                            <li><img :src="imgSet(e.thumb_image, 350, 70)" width="350" height="70"></li>
+                        </a>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div id="cp-show">
+            <div id="cp-inner">
+                <ul>
+                    <li><p class="line">{{qycp.title}}</p></li>
+                    <li><a :href="qycp.domain">更多>></a></li>
+                </ul>
+                <div class="swiper-container" id="my-swiper-3">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide" v-for="e in qycp.list">
+                            <a :href="'/' + qycp.domain + '/' + e.weid" target="_blank">
+                                <img :src="imgSet(e.thumb_image, 280, 200)" alt=""/>
+                                <p class="bg3"></p>
+                                <p class="content3">{{e.title}}</p>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-button-next"></div>
+                </div>
+            </div>
+        </div>
+        <div id="link">
+            <p class="line"></p>
+            <ul id="link-title">
+                <li v-for="e in link" @click="change_link(e)" :style="e.selected">{{e.title}}</li>
+            </ul>
+            <ul id="link-page" v-for="e in link" v-show="e.show">
+                <a v-for="o in e.list" :href="o.url" target="_blank">
+                    <li :title="o.title">{{o.title | fixed_len(7) }}</li>
+                </a>
+            </ul>
+        </div>
+    </div>
+    <div id="bottom1">
+        <footer>
+            <div class="footer-nav">
+                <a href="javascript:void(0)">咨询与建议</a>
+                <a href="javascript:void(0)">站点地图</a>
+                <a id="contact" href="/org/lxwm">联系我们</a>
+            </div>
+            <div class="copyright" v-html="plats_info.copyright"></div>
+            <div class="_ideConac">
+                <img src="/common/img/gabeian.png" width="60" height="60">
+            </div>
+        </footer>
+    </div>
+</main>
 
-        <!-- <script src="//captcha.luosimao.com/static/js/api.js"></script> -->
-    </body>
+<script>
+    function marquee(i, direction){
+        var obj = document.getElementById("marquee" + i);
+        var obj1 = document.getElementById("marquee" + i + "_1");
+        var obj2 = document.getElementById("marquee" + i + "_2");
+        if (direction == "up"){
+            if (obj2.offsetTop - obj.scrollTop <= 0){
+                obj.scrollTop -= (obj1.offsetHeight + 20);
+            }else{
+                var tmp = obj.scrollTop;
+                obj.scrollTop++;
+                if (obj.scrollTop == tmp){
+                    obj.scrollTop = 1;
+                }
+            }
+        }else{
+            if (obj2.offsetWidth - obj.scrollLeft <= 0){
+                obj.scrollLeft -= obj1.offsetWidth;
+            }else{
+                obj.scrollLeft++;
+            }
+        }
+    }
+
+    function marqueeStart(i, direction){
+        var obj = document.getElementById("marquee" + i);
+        var obj1 = document.getElementById("marquee" + i + "_1");
+        var obj2 = document.getElementById("marquee" + i + "_2");
+
+        obj2.innerHTML = obj1.innerHTML;
+        var marqueeVar = window.setInterval("marquee("+ i +", '"+ direction +"')", 20);
+        obj.onmouseover = function(){
+            window.clearInterval(marqueeVar);
+        }
+        obj.onmouseout = function(){
+            marqueeVar = window.setInterval("marquee("+ i +", '"+ direction +"')", 20);
+        }
+    }
+
+    var app = new Vue({
+        el: '#app',
+        data: {
+            avatar: '',
+            domain: plats_user_info.domian == undefined ? 'index' : plats_user_info.domian,
+            logo: '',
+            header1: '',
+            header2: [], //头图
+            channel: [], //频道
+            banners: [], //轮播
+            main_news: {}, //头条
+            news: [], //新闻
+            notice: [], //公告
+            especial: [], //特别推荐
+            articles: [], //文章
+            leader: [], //会长
+            member: [], //会员
+            qycp: {}, //企业产品
+            spzx: {}, //视频
+            mag: [], //杂志
+            ztbd: [], //专题
+            link: [], //链接
+            peoples_title: {}, //风采
+            key: '', //搜索关键字
+            qrcode: [
+                {ok: false, title: "手机版", image: "/api/file/qrcode?margin=2&url="+window.location.href},
+                {ok: false, title: "微信", image: plats_info.wx_qrcode? plats_info.wx_qrcode: window.location.origin+"/api/file/qrcode?margin=2&url="+window.location.href},
+                {ok: false, title: "微博", image: plats_info.wb_qrcode? plats_info.wb_qrcode: window.location.origin+"/api/file/qrcode?margin=2&url="+window.location.href},
+            ],
+            style: {
+                recmd: {
+                        on:
+                        {
+                            bg: {"color": "white", "background": "#01a7ff"},
+                            tri: {"display": "block"},
+                            cir: {"border": "1px solid #01A7FF"},
+                            sub: {"border": "none", "background": "#01A7FF"}
+                        },
+                        off:
+                        {
+                            bg: {"background": "none", "color": "black"},
+                            tri: {"display": "none"},
+                            cir: {"border": "1px solid #AFAFAF"},
+                            sub: {"border": "1px solid #AFAFAF"}
+                        }
+                },
+                selected: {"color": "#fff", "background": "#01a7ff", "font-weight": "600"},
+                video: {"background": "url(/common/img/new/08.png) no-repeat center"}
+            },
+            is_show: {news: true, notice: false, weibo: false},
+            is_bg: {
+                    up:
+                        {
+                            on: true,
+                            bg: {"color": "white", "background": "#01a7ff"},
+                            tri: {"display": "block"},
+                            cir: {"border": "1px solid #01A7FF"},
+                            sub: {"border": "none", "background": "#01A7FF"}
+                        },
+                    down:
+                        {
+                            on: false,
+                            bg: {"background": "none", "color": "black"},
+                            tri: {"display": "none"},
+                            cir: {"border": "1px solid #AFAFAF"},
+                            sub: {"border": "1px solid #AFAFAF"}
+                        }
+            },
+            swiper: {
+                direction: 'horizontal',
+                loop: true,
+                speed: 1000,
+                autoplay : 3000,
+                autoplayDisableOnInteraction : false,
+                nextButton: '.swiper-button-next',
+                prevButton: '.swiper-button-prev',
+                grabCursor : true,
+                longSwipesRatio: 0.3,
+                touchRatio:1,
+                observer:true,
+                observeParents:true,
+            },
+            users: [],
+        },
+        created() {
+            axios.get(CMS_ADVS).then(data => {
+                var resp = data.data.data;
+                this.channel = resp.channel.list.map(e => (e.drop = false, e));
+                this.logo = this.set_img(resp.setting.s_logo, "/common/img/logo-so.png", 209, 50);
+                this.header1 = this.set_img(resp.header1.image, "/common/img/logo-title-info.png", 382, 45);
+                this.header2 = resp.header2;
+                this.banners = resp.banners;
+                this.peoples_title = resp.peoples_title ? resp.peoples_title : {title: '企商风采', url: '#'};
+                this.leader = resp.leader ? resp.leader : {description: "全球秦商总会会长", image: "/common/img/new/m03.png", title: "刘阿津", url: "/u/71f96b93-da75-11e7-85d7-fa5985d0eaa1", weid: "d1fe0600-d181-11e7-9c10-49bfb1717a52"};
+                var list = [];
+                for (var key in resp.link) {
+                    if (resp.link[key].list != null) {
+                        list.push(resp.link[key]);
+                    }
+                };
+                this.link = list.map(
+                        (e, i) => (i == 0 ? (e.show = true, e.selected = this.style.selected, e) : (e.show = false, e.selected = {}, e)));
+                setTimeout(() => {
+                    var mySwiper = new Swiper('#my-swiper', Object.assign({}, this.swiper, {pagination: '.swiper-pagination', paginationClickable :true}));
+                    var mySwiper2 = new Swiper('#my-swiper-2', this.swiper);
+                }, 50);
+                if (resp.users != '' && resp.users != undefined) {
+                    this.users = resp.users;
+                } else {
+                    //this.users = [{"weid":"71f96b93-da75-11e7-85d7-fa5985d0eaa1","avatar":"/common/img/new/m03.png","real_name":"刘阿津","position":"秦商联合会会长、第十届陕西省政协常委","nickname":"刘阿津"},{"weid":"9a20c1b1-da77-11e7-85d7-fa5985d0eaa1","avatar":"/common/img/new/m04.png","real_name":"吴一坚","position":"陕西省人民政府决策咨询委员会专家委员","nickname":"吴一坚"},{"weid":"5819432b-da79-11e7-85d7-fa5985d0eaa1","avatar":"/common/img/new/m05.png","real_name":"孙俊良","position":"陕西省总商会第十一届副会长","nickname":"孙俊良"},{"weid":"add8b61e-da7a-11e7-85d7-fa5985d0eaa1","avatar":"/common/img/new/m06.png","real_name":"郭家学","position":"秦商联合会执行副会长","nickname":"郭家学"},{"weid":"af2ef256-da7b-11e7-85d7-fa5985d0eaa1","avatar":"/common/img/new/m07.png","real_name":"李黑记","position":"东岭集团党委书记、董事长兼总经理","nickname":"李黑记"}];
+                    this.users = [{"weid":"71f96b93-da75-11e7-85d7-fa5985d0eaa1","avatar":"tx/liuajin.png","real_name":"刘阿津","position":"秦商联合会会长、第十届陕西省政协常委","nickname":"刘阿津"},{"weid":"9a20c1b1-da77-11e7-85d7-fa5985d0eaa1","avatar":"tx/wuyijian.png","real_name":"吴一坚","position":"陕西省人民政府决策咨询委员会专家委员","nickname":"吴一坚"},{"weid":"5819432b-da79-11e7-85d7-fa5985d0eaa1","avatar":"tx/sunjunliang.png","real_name":"孙俊良","position":"陕西省总商会第十一届副会长","nickname":"孙俊良"},{"weid":"add8b61e-da7a-11e7-85d7-fa5985d0eaa1","avatar":"tx/guojiaxue.png","real_name":"郭家学","position":"秦商联合会执行副会长","nickname":"郭家学"},{"weid":"af2ef256-da7b-11e7-85d7-fa5985d0eaa1","avatar":"tx/liheiji.png","real_name":"李黑记","position":"东岭集团党委书记、董事长兼总经理","nickname":"李黑记"},{"weid":"73946f7e-da7d-11e7-85d7-fa5985d0eaa1","avatar":"tx/zhaotao.png","real_name":"赵涛","position":"秦商联合会执行副会长","nickname":"赵涛"},{"weid":"c1b7a537-da7e-11e7-85d7-fa5985d0eaa1","avatar":"tx/wangxi.png","real_name":"王茜","position":"秦商联合会执行副会长","nickname":"王茜"},{"weid":"7715b7c3-da7f-11e7-85d7-fa5985d0eaa1","avatar":"tx/zoujianhan.png","real_name":"邹剑寒","position":"陕西商会会长、秦商联合会副会长","nickname":"邹剑寒"},{"weid":"a3853ca0-da80-11e7-85d7-fa5985d0eaa1","avatar":"tx/cuironghua.png","real_name":"崔荣华","position":"秦商联合会执行副会长","nickname":"崔荣华"},{"weid":"af4d294c-da81-11e7-85d7-fa5985d0eaa1","avatar":"tx/hejianliang.png","real_name":"何建梁","position":"秦商联合会执行副会长","nickname":"何建梁"},{"weid":"aa503bd4-da85-11e7-85d7-fa5985d0eaa1","avatar":"tx/chenhua.png","real_name":"陈华","position":"秦商联合会执行副会长","nickname":"陈华"},{"weid":"97eb100c-daef-11e7-85d7-fa5985d0eaa1","avatar":"tx/songyuqing.png","real_name":"宋玉庆","position":"秦商联合会执行副会长","nickname":"宋玉庆"},{"weid":"5ea2a6bb-daf2-11e7-85d7-fa5985d0eaa1","avatar":"tx/lijihe.png","real_name":"李继和","position":"秦商联合会执行副会长","nickname":"李继和"},{"weid":"37c78719-daf3-11e7-85d7-fa5985d0eaa1","avatar":"tx/dongxiaojun.png","real_name":"董小军","position":"秦商联合会执行副会长","nickname":"董小军"},{"weid":"defd8ec8-daf4-11e7-85d7-fa5985d0eaa1","avatar":"tx/chengyan.png","real_name":"程延","position":"秦商联合会执行副会长","nickname":"程延"},{"weid":"9d4885f6-daf5-11e7-85d7-fa5985d0eaa1","avatar":"tx/gaohongpeng.png","real_name":"高鸿鹏","position":"秦商联合会执行副会长","nickname":"高鸿鹏"},{"weid":"6bde1879-daf6-11e7-85d7-fa5985d0eaa1","avatar":"tx/jinxinkang.png","real_name":"金新康","position":"秦商联合会执行副会长","nickname":"金新康"},{"weid":"3e8986f2-daf7-11e7-85d7-fa5985d0eaa1","avatar":"tx/hezhifang.png","real_name":"何志方","position":"秦商联合会副会长","nickname":"何志方"},{"weid":"c1db8669-daf8-11e7-85d7-fa5985d0eaa1","avatar":"tx/sunxi.png","real_name":"孙茵","position":"秦商联合会副会长","nickname":"孙茵"},{"weid":"81b25332-de22-11e7-85d7-fa5985d0eaa1","avatar":"tx/lvjianzhong.png","real_name":"吕建中","position":"秦商联合会执行副会长","nickname":"吕建中"}];
+                }
+            });
+
+            axios.get(CMS_INDEX_GRID).then(data => {
+                var resp = data.data.data;
+                this.grid = data.data.data;
+                this.main_news = Object.assign({}, resp.hot[0], {title: resp.hot[0].title.substr(0, 18), summary: resp.hot[0].summary.length > 72 ? resp.hot[0].summary.substr(0, 72) + ' ...' : resp.hot[0].summary});
+                this.news = resp.news;
+                this.notice = resp.nitoce;
+                this.especial = resp.especial_news;
+                this.qycp = (resp.qycp != null ? resp.qycp : {"weid":"7be01700-f9c6-11e7-9c78-93c9a5c1926b","title":"陕西大剧院","summary":"","thumb_image":"plats/news/1516006758867.png","publish_time":1516030450,"source_url":""});
+                this.spzx = Object.assign({}, resp.spzx.list[0], {head: resp.spzx.title, domain: resp.spzx.domain, tail: resp.spzx.list.slice(1, 3)});
+                this.mag = (resp.mag != null ? resp.mag : [{"title":"杂志中心","domain":"qinshang","list":[{"weid":"820d1280-bef4-11e7-86e7-2f6b48d4c639","title":"秦商电子杂志39期","summary":"秦商电子杂志39期","cover":"plats/resource/1507614354652.jpg"},{"weid":"820d1280-bef4-11e7-86e7-2f6b48d4c638","title":"秦商电子杂志38期","summary":"秦商电子杂志38期","cover":"plats/resource/1507614943402.jpg"},{"weid":"820d1280-bef4-11e7-86e7-2f6b48d4c637","title":"秦商电子杂志37期","summary":"秦商电子杂志37期","cover":"plats/resource/37-1.jpg"},{"weid":"820d1280-bef4-11e7-86e7-2f6b48d4c636","title":"秦商电子杂志36期","summary":"秦商电子杂志36期","cover":"plats/resource/36-1.jpg"},{"weid":"820d1280-bef4-11e7-86e7-2f6b48d4c635","title":"秦商电子杂志35期","summary":"秦商电子杂志35期","cover":"plats/resource/1513302973468.png"},{"weid":"820d1280-bef4-11e7-86e7-2f6b48d4c634","title":"秦商电子杂志34期","summary":"秦商电子杂志34期","cover":"plats/resource/34-1.jpg"}]}]);
+                this.ztbd = resp.ztbd;
+                this.style.video = this.spzx.thumb_image != ""
+                                    ? {"background": "url(" + this.set_img(this.spzx.thumb_image, '/common/img/new/08.png', 350, 175) + ") no-repeat center"}
+                                    : {"background": "url(/common/img/new/08.png) no-repeat center"};
+                setTimeout(() => {
+                    var mySwiper3 = new Swiper('#my-swiper-3', Object.assign({}, this.swiper, {slidesPerView: 4, spaceBetween: 20}))
+                }, 50);
+            });
+
+            axios.get(ARTICLES + "?field=domain,weid,title,cate_id,created_at").then(data => {
+                if (data.data.data.list) {
+                    this.articles = data.data.data.list.slice(0, 4);
+                } else {
+                    this.articles = [{"weid":"8ab52d10-f9cf-11e7-9ab5-6dee7ac99750","cate_id":"28d09ce0-7776-11e7-9b53-4fd9cbd5b96e","title":"远行","created_at":"2018-01-15 16:39:03","domain":"xiyuee"}];
+                }
+            })
+
+            $("title").text(plats_info.title);
+            $("#favicon").attr('href', ApiMaterPlatQiniuDomain + plats_info.favicon);
+        },
+        mounted() {
+            this.$nextTick(() => {
+                marqueeStart(1, "left");
+            })
+        },
+        methods: {
+            login: () => {
+                if(!docCookies.getItem("token")) {
+                    $("#modal_login").fadeIn(300);
+                } else {
+                    window.location.href = '/user';
+                }
+            },
+            set_img: (url, init, w, h, mode) => {
+                if (url != '' && url != null && url != undefined) {
+                    if (url.indexOf('http') === -1 && url.indexOf('common') === -1) {
+                        return mode != undefined ? ApiMaterPlatQiniuDomain + url + '?imageView2/' + mode + '/w/' + w + '/h/' + h
+                                                 : ApiMaterPlatQiniuDomain + url + '?imageView2/3/w/' + w + '/h/' + h;
+                    } else {
+                        return url;
+                    }
+                } else {
+                    return init;
+                }
+            },
+            play: (url) =>
+                layui.use('layer', function() {
+                    var $ = layui.jquery, layer = layui.layer;
+                    layer.open({
+                        type: 2,
+                        title: false,
+                        area: ['855px', '480px'],
+                        shade: 0.8,
+                        closeBtn: 1,
+                        shadeClose: true,
+                        content: url
+                    });
+                }),
+            search: (key) => window.location.href = window.location.protocol + '//' + window.location.host + '/so?q=' + key,
+            simple_null: (data) => data != null && data != '' && data != undefined ? false : true,
+            check: (domain, url) => url != null && url != '' ? url : '/' + domain,
+            read: (name) => ['up', 'down'].map(x => x !== name ?
+                    (app.is_bg[x].on = false, app.is_bg[x].bg = app.style.recmd.off.bg, app.is_bg[x].tri = app.style.recmd.off.tri,
+                     app.is_bg[x].cir = app.style.recmd.off.cir, app.is_bg[x].sub = app.style.recmd.off.sub) :
+                    (app.is_bg[name].on = true, app.is_bg[name].bg = app.style.recmd.on.bg, app.is_bg[name].tri = app.style.recmd.on.tri,
+                     app.is_bg[name].cir = app.style.recmd.on.cir, app.is_bg[name].sub = app.style.recmd.on.sub)),
+            show: (name) => ['news', 'notice', 'weibo'].map(x => x !== name ? (app.is_show[x] = false) : (app.is_show[name] = true)),
+            change_link: (name) => app.link.map(x => x !== name ? (x.show = false, x.selected = {}) : (x.show = true, x.selected = app.style.selected))
+        },
+        filters: {
+            fixed_len: (value, len) => value.length > len ? value.substr(0, len) : value,
+            cut: (value, len) => value.length > len ? value.substr(0, len) + '...' : value,
+            show_date: (value) => value.getFullYear() + '-' + (value.getMonth() + 1) + '-' + value.getDate(),
+            format_date: (value) => {
+                var res = value.split('-').reduce((res, e, i) => res += e.length === 1? '0' + e + '-' : e + '-', '');
+                return res.substr(0, res.length - 1);
+            }
+        }
+    })
+</script>
+</body>
 </html>
