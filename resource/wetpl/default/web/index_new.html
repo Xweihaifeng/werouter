@@ -282,13 +282,13 @@
                 </ul>
                 <div class="swiper-container" id="my-swiper-3">
                     <div class="swiper-wrapper">
-                            <div class="swiper-slide" v-for="e in qycp.list">
-                                <a :href="'/' + qycp.domain + '/' + e.weid" target="_blank">
-                                    <img :src="imgSet(e.thumb_image, 280, 200)" alt=""/>
-                                    <p class="bg3"></p>
-                                    <p class="content3">{{e.title}}</p>
-                                </a>
-                            </div>
+                        <div class="swiper-slide" v-for="e in qycp.list">
+                            <a :href="'/' + qycp.domain + '/' + e.weid" target="_blank">
+                                <img :src="imgSet(e.thumb_image, 280, 200)" alt=""/>
+                                <p class="bg3"></p>
+                                <p class="content3">{{e.title}}</p>
+                            </a>
+                        </div>
                     </div>
                     <div class="swiper-button-prev"></div>
                     <div class="swiper-button-next"></div>
