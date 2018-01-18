@@ -476,16 +476,16 @@
             axios.get(CMS_INDEX_GRID).then(data => {
                 var resp = data.data.data;
                 this.grid = data.data.data;
-                this.main_news = Object.assign(resp.hot[0], {title: resp.hot[0].title.substr(0, 18), summary: resp.hot[0].summary.length > 72 ? resp.hot[0].summary.substr(0, 72) + ' ...' : resp.hot[0].summary});
+                this.main_news = Object.assign({}, resp.hot[0], {title: resp.hot[0].title.substr(0, 18), summary: resp.hot[0].summary.length > 72 ? resp.hot[0].summary.substr(0, 72) + ' ...' : resp.hot[0].summary});
                 this.news = resp.news;
                 this.notice = resp.nitoce;
                 this.especial = resp.especial_news;
                 this.qycp = resp.qycp;
-                this.spzx = Object.assign(resp.spzx.list[0], {head: resp.spzx.title, domain: resp.spzx.domain, tail: resp.spzx.list.slice(1, 3)});
+                this.spzx = Object.assign({}, resp.spzx.list[0], {head: resp.spzx.title, domain: resp.spzx.domain, tail: resp.spzx.list.slice(1, 3)});
                 this.mag = resp.mag;
                 this.ztbd = resp.ztbd;
                 this.style.video = this.spzx.thumb_image != ""
-                                    ? {"background": "url(" + this.spzx.thumb_image + ") no-repeat center"}
+                                    ? {"background": "url(" + set_img(this.spzx.thumb_image, '/common/img/new/08.png', 350, 175) + ") no-repeat center"}
                                     : {"background": "url(/common/img/new/08.png) no-repeat center"};
                 setTimeout(() => {
                     var mySwiper3 = new Swiper('#my-swiper-3', Object.assign({}, this.swiper, {slidesPerView: 4, spaceBetween: 20}))
