@@ -26,12 +26,13 @@ $(document).ready(function() {
             '<div class="ticket-box-top">' +
             '<div class="t_blank"></div>' +
             '<div class="ticket-qr"></div>' +
+            '<div class="bar-code"><svg></svg></div>' +
 
             '<div style="width:92%;text-align:center;margin:0 auto;">票号：' + data.ticket_num + '</div>' +
             '<div style="width:92%;text-align:center;margin:0 auto;">活动时请向发起人展示</div>' +
             '</div>' +
             '<div class="ticket-box-bottom">' +
-            '<div class="ticket-title">' + data.title + '</div>' +
+            '<div class="ticket-title">' + data.title + '<span class="qun-chat">[群聊]</span></div>' +
             '<div class="ticket-time">' + data.begain_time + '&nbsp;' + data.begain_week + '&nbsp;' + data.begain_hour + '~~' + data.end_time + '&nbsp;' + data.end_week + '&nbsp;' + data.end_hour + '</div>' +
             '<div class="ticket-addr"><span><i class="fa fa-map-marker"></i></span>&nbsp;：' + data.area_name + data.address + '</div>' +
             '<div class="ticket-detail">' +
@@ -48,7 +49,7 @@ $(document).ready(function() {
             '<span class="sign-ticcom"></span>：' + data.company +
             '</div>' +
             '</div>' +
-            '<div class="ticket"></div>'+
+            '<div class="ticket"></div>' +
             '</div>' +
             '</div>';
         return tickethtml;
@@ -61,28 +62,44 @@ $(document).ready(function() {
                 'Token': docCookies.getItem("token")
             },
             success: function(data) {
-                console.log(data)
+                console.log(data);
                 if (data.code == 200) {
                     // console.log(urlall[0])
                     $(".modal-body .ticket_apply").children().remove();
                     $(".modal-body .ticket_apply").append(tickettemplate(data.data));
+                    if (data.data.is_open_qun == 2) {
+                        $('.qun-chat').css('display', 'inline-block');
+                    }
+                    var qrImg = imgSet(data.data.wx_qun_qrcode, 0, 0);
+                    $('.qun-chat').click(function() {
+                        layer.open({
+                            type: 1,
+                            area: ['320px', '320px'],
+                            title: 0,
+                            closeBtn: 0,
+                            shadeClose: true,
+                            scrollbar: false,
+                            content: '<div class="qun-qrcode"><img src="' + qrImg + '" alt=""></div>'
+                        });
+                    });
                     $('.ticket').children().remove();
-                    if(data.data.type == 2){
-                        for(var i=0; i<data.data.tickets.length; i++){
+                    if (data.data.type == 2) {
+                        for (var i = 0; i < data.data.tickets.length; i++) {
                             var dom =
-                                '<div class="ticket-item">'+
-                                '<p>'+data.data.tickets[i].name+'</p>'+
-                                '<div class="tic-price">'+
-                                '<span>￥'+data.data.tickets[i].price+'</span>'+
-                                '</div>'+
-                                '<div class="num">'+
-                                '<span>×'+data.data.tickets[i].count+'</span>'+
-                                '</div>'+
+                                '<div class="ticket-item">' +
+                                '<p>' + data.data.tickets[i].name + '</p>' +
+                                '<div class="tic-price">' +
+                                '<span>￥' + data.data.tickets[i].price + '</span>' +
+                                '</div>' +
+                                '<div class="num">' +
+                                '<span>×' + data.data.tickets[i].count + '</span>' +
+                                '</div>' +
                                 '</div>';
                             $('.ticket').append(dom);
                         }
                     }
                     qrcodefun1(activityid, domainid, data.data.ticket_num);
+                    barcode('.bar-code svg', data.data.ticket_num);
                 }
 
             },
@@ -92,25 +109,38 @@ $(document).ready(function() {
         })
     }
     var qrcodefun1 = function(id, domainid, ticket_num) {
-        var qrcode_val = ACTIVITY_ENROLL_CHECK + "?e_number=" + ticket_num;
-        $(".ticket-qr").attr("data-ref", qrcode_val);
-        // if ($.browser.msie && $.browser.version <= 8){
-        if ($.support.msie && $.support.version <= 8) {
+            var qrcode_val = ticket_num;
+            $(".ticket-qr").attr("data-ref", qrcode_val);
+            // if ($.browser.msie && $.browser.version <= 8){
+            if ($.support.msie && $.support.version <= 8) {
 
-            $(".ticket-qr").qrcode({
-                render: "table",
-                width: 110,
-                height: 110,
-                text: qrcode_val
-            });
-        } else {
-            jQuery(".ticket-qr").qrcode({
-                width: 110,
-                height: 110,
-                text: qrcode_val
-            });
+                $(".ticket-qr").qrcode({
+                    render: "table",
+                    width: 110,
+                    height: 110,
+                    text: qrcode_val
+                });
+            } else {
+                jQuery(".ticket-qr").qrcode({
+                    width: 110,
+                    height: 110,
+                    text: qrcode_val
+                });
+            }
+
         }
-
+        // 条形码生成
+    var barcode = function(selector, ticket_num) {
+        JsBarcode(selector, ticket_num, {
+            format: "CODE128",
+            width: 2,
+            height: 50,
+            displayValue: false,
+            text: ticket_num,
+            background: "#fff",
+            lineColor: "#000",
+            margin: 5
+        });
     }
     var articleTemplate = function(data) {
         var act_title = "";

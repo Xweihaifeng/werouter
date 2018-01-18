@@ -16,7 +16,7 @@
                 </li>
             </ul>
         </div>
-        
+
         <div class="news_info_r">
             <p class="news_top_tit">
                 <span class="title_ch">{{channel_name}}</span>
@@ -33,25 +33,25 @@
                     <div class="news_det_info">
                         <a class="news_det_tit" :href="item.href" :title="item.title" target="_blank">{{item.title}}</a>
                         <a class="news_det_desc" :href="item.href" :title="item.summary" target="_blank">
-                           {{item.summary}}                       </a>
+                            {{item.summary}}                       </a>
                     </div>
                     <div class="news_time_box">
-                       <span class="time_data">{{item.time_data}}</span> 
-                       <span class="time_year">{{item.time_year}}</span> 
-                       <span><a :href="item.href" title="item.title" class="detail_btn" target="_blank">详情</a></span> 
+                        <span class="time_data">{{item.time_data}}</span>
+                        <span class="time_year">{{item.time_year}}</span>
+                        <span><a :href="item.href" title="item.title" class="detail_btn" target="_blank">详情</a></span>
                     </div>
                 </li>
-               
+
             </ul>
             <div class="page_box" style="margin-top:30px;">
-            <!--colorful pulse-->
-				
-            	<#include#>loader_include.html</#include#>
-				<div id="colorfulPulse"  v-show="empty_show">
-					<img src="/common/img/empty_100.png" />
-					<br/>
-					<li style="margin-left: -20px;">编辑呢！报告,编辑还睡觉！</li>
-				</div>
+                <!--colorful pulse-->
+
+                <#include#>loader_include.html</#include#>
+                <div id="colorfulPulse"  v-show="empty_show">
+                    <img src="/common/img/empty_100.png" />
+                    <br/>
+                    <li style="margin-left: -20px;">编辑呢！报告,编辑还睡觉！</li>
+                </div>
             </div>
         </div>
     </div>
@@ -85,35 +85,35 @@
         },
         mounted() {
             this.$nextTick( function () {
-               this.header_news = win.getStorage('header_news');
-               for(val in this.header_news){
-               		if(this.header_news[val].domain == this.currPage){
-               			this.channel = this.header_news[val].domain;
-               			this.channel_name = this.header_news[val].title;
+                this.header_news = win.getStorage('header_news');
+                for(val in this.header_news){
+                    if(this.header_news[val].domain == this.currPage){
+                        this.channel = this.header_news[val].domain;
+                        this.channel_name = this.header_news[val].title;
                         set_title(this.channel_name);
-               			this.get_data(this.channel , 1);
-               		}
+                        this.get_data(this.channel , 1);
+                    }
                 }
             });
         },
         methods:{
-        	get_data : function(cate_id){
-        		ajax.get(web_business.web_cms_channel_contents , {params:{cate_id:cate_id , limit : 10 , 'page' : this.page}}).then((res)=>{
-        				this.list_data = res.data;
-        				if(this.list_data.total == 0 && this.page == 1){
-        					this.empty_show = true;
-        				}
-        				var list = this.list_data.list;
-        				for(val in list){
-        					var time = (new Date(list[val].publish_time)).getTime();
-        					var time_list = new Date(time);
-        					list[val].time_year = time_list.getFullYear();
-        					list[val].time_data = time_list.getMonth()+'-'+time_list.getDate();
-        					list[val].href = '/news/'+list[val].weid;
-        				}
-        				this.show = false;
-               });
-        	}
+            get_data : function(cate_id){
+                ajax.get(web_business.web_cms_channel_contents , {params:{cate_id:cate_id , limit : 10 , 'page' : this.page}}).then((res)=>{
+                    this.list_data = res.data;
+                if(this.list_data.total == 0 && this.page == 1){
+                    this.empty_show = true;
+                }
+                var list = this.list_data.list;
+                for(val in list){
+                    var time = (new Date(list[val].publish_time)).getTime();
+                    var time_list = new Date(time);
+                    list[val].time_year = time_list.getFullYear();
+                    list[val].time_data = time_list.getMonth()+'-'+time_list.getDate();
+                    list[val].href = '/news/'+list[val].weid;
+                }
+                this.show = false;
+            });
+            }
         }
     })
 </script>

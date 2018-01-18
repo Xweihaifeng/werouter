@@ -1,0 +1,95 @@
+<#extend#>public/sub_extend.html</#extend#>
+<link rel="stylesheet" href="{{PATH_TML}}css/list.css">
+<link rel="stylesheet" href="{{PATH_TML}}css/about1.css">
+<div class="list1">
+    <main>
+        <div class="seat">
+            <img src="{{PATH_TML}}image/fanhui.png" alt="">
+            当前位置在：
+            <a href="">首页</a>
+            > {{sub_aside_info.title}} > {{cate_info.title}}
+        </div>
+        <div class="main-big">
+            <div class="main">
+                <h2>
+                    <strong>{{sub_aside_info.title}}</strong>
+                    <span>{{sub_aside_info.ename}}</span>
+                </h2>
+                <ul class="aside">
+                    <li :class="{cenav_cur : item.title==cate_info.title}" v-for="item in sub_aside"><a :href="channel_domain+'/'+item.domain | href">{{item.title}}</a></li>
+                </ul>
+                <div class="company">
+                    <p>电话：{{left.tel}}</p>
+                    <p>传真：{{left.fax}}</p>
+                    <p>地址：{{left.addre}}</p>
+                </div>
+            </div>
+            <div class="list-big">
+                <div class="title">
+                    <span>{{cate_info.title}}</span>
+                </div>
+                <div class="about">
+                    <div class="list-con" v-html="pages_cont"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script>
+    var app = new Vue({
+        el: '#content_app',
+        data: {
+            sub_aside : [],   //侧导航接口
+            sub_aside_info : {},
+            sub_rcon : [],    //右侧展示接口
+            channel_domain : $app.get_router(1), // 频道个性域名
+            cate_domain : $app.get_router(2), // 分类个性域名
+            cate_info : {}, // 分类详细信息
+            pages_cont : {},
+            left: {},
+        },
+        mounted: function() {
+            this.$nextTick(()=>{
+                //左侧频道相关
+                $sub_ajax.cate(this.channel_domain,(res)=>{
+                    this.sub_aside_info = res.data;
+                    $sub_ajax.cate_tree({channel : this.sub_aside_info.weid} , (res)=>{
+                        this.sub_aside = res.data;
+                        for(var item of this.sub_aside)
+                        {
+                            if(item.domain == this.cate_domain)
+                            {
+                                this.cate_info = item;
+                                $app.set_title(item.title +' - '+ this.sub_aside_info.title + '_' + plats_info.title);
+                                this.pages_cont=item.content
+                                break;
+                            }
+                        }
+                    });
+                });
+
+                ajax.get('scms/setting/show').then((res)=>{
+                    if(res.code == 200) {
+                        var result = res.data;
+                        this.left = result;
+                        console.log(this.left);
+                    }
+                })
+
+               // ajax.get("scms/channel_categories?channel=shgk").then((res) => {
+               //      this.sub_aside=res.data;
+               //      console.log("栏目:"+res.data)
+               //  });
+
+            });
+        },
+        methods: {
+            page_fun(index) {
+                var url = this.channel_domain +'/'+this.cate_domain;
+                $app.open_page(url);
+            }
+
+        }
+    });
+</script>

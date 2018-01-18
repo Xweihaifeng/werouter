@@ -1,13 +1,13 @@
 
 Vue.filter('img_src', function (value , width , height, mode) {
 
-    if (!value) return '';
+    if (!value) return '/common/img/news_default.jpg';
 
     if(value.indexOf('http') !== -1){
 
         return value;
     }
-
+    
     var settings = http_type + plats_qiniu.domain_custom + '/';
 
     if($app.empty(width) == false || $app.empty(height) == false )
@@ -54,10 +54,44 @@ Vue.filter('href', function (value , from) {
     return url;
     
 });
+// f分站URL拼接
+Vue.filter('sub_href', function (value , from) {
+    if (!value) return '';
+
+    var string = value.substr(0 , 1);
+    var url = '';
+    if(string == '/')
+    {
+        url =  all_domian.substring(0 , all_domian.length-1) + value;
+    }
+    else
+    {
+        url =  all_domian + value;
+    }
+
+    if($app.empty(from) == true)
+    {
+        if(url.indexOf('?') == '-1')
+        {
+            url += '?from='+from;
+        }
+        else
+        {
+            url += '&from='+from;
+        }
+        
+    }
+
+    return url;
+    
+});
 
 Vue.filter('formateTime',function (value,type) {
 
     var date = new Date(value);
+    if(value.toString().length === 10){
+        date = new Date(value*1000);
+    }
     var year = date.getFullYear();
     var month = (date.getMonth() + 1).toString().length == 1 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1;
     var day = (date.getDay() + 1).toString().length == 1 ? '0' + (date.getDay() + 1) : date.getDay() + 1;
@@ -68,12 +102,8 @@ Vue.filter('formateTime',function (value,type) {
         case 'MDHM':
             return month +'-'+day+' '+hour+':'+min;
         case 'YMDHM':
-            date = new Date(value * 1000);
-            year = date.getFullYear();
             return year + '-' +month +'-'+day+' '+hour+':'+min;
         case 'YMD':
-            date = new Date(value * 1000);
-            year = date.getFullYear();
             return year + '-' +month +'-'+day;
         case 'HM':
             return hour+':'+min;

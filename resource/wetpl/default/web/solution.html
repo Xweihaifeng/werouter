@@ -1,257 +1,264 @@
 <#include#>header_include.html</#include#>
+<link rel="stylesheet" href="/common/css/solution.css">
+<script src="/common/js/solution.js"></script>
 <link rel="stylesheet" href="/common/iview/iview.css">
 <script src="/common/model/business.js"></script>
-<script src="/common/iview/iview.min.js"></script> 
-<script src="/common/iview/libs/win.js"></script>  
+<script src="/common/iview/iview.min.js"></script>
+<script src="/common/iview/libs/win.js"></script>
 <script type="text/javascript" src="/common/public/qrcode.min.js"></script>
 <body>
 <style type="text/css">
-body{
-    line-height: 1.42857143;
-}
-.page-pricing {
-    background: #F5F7FA url(/common/img/beijing.png) no-repeat;
-    background-position: center top;
-    background-size: 100% 430px !important;
-}
-.page-pricing .plan-media-bg {
-    position: static;
-}
-.gd-hero-unit-half {
-    text-align: center;
-    height: 360px;
-    position: relative;
-    background-repeat: no-repeat;
-    background-size: cover;
-    color: #fff;
-    box-sizing: border-box;
-    padding: 100px 10px;
-    background-position: center bottom;
-}
-.page-pricing .plans-container {
-    margin-top: -192px;
-    color: #222;
-}
-.gd-hero-unit-half.plan-media-bg h1 {
-    font-size: 26px;
-    margin-top: 20px;
-    margin-bottom: 10px;
-}
-a.gd-btn.gd-btn-thick.gd-btn-wide.gd-btn-success {
+    body{
+        line-height: 1.42857143;
+        background: #fff;
+    }
+    .page-pricing {
+        background: #F5F7FA url(/common/img/beijing.png) no-repeat;
+        background-position: center top;
+        background-size: 100% 430px !important;
+    }
+    .page-pricing .plan-media-bg {
+        position: static;
+    }
+    .gd-hero-unit-half {
+        text-align: center;
+        height: 360px;
+        position: relative;
+        background-repeat: no-repeat;
+        background-size: cover;
+        color: #fff;
+        box-sizing: border-box;
+        padding: 100px 10px;
+        background-position: center bottom;
+    }
+    .page-pricing .plans-container {
+        margin-top: -192px;
+        color: #222;
+    }
+    .gd-hero-unit-half.plan-media-bg h1 {
+        font-size: 26px;
+        margin-top: 20px;
+        margin-bottom: 10px;
+    }
+    a.gd-btn.gd-btn-thick.gd-btn-wide.gd-btn-success {
 
-    font-size: 12px;
-    display: inline-block;
-    padding: 0 28px;
-    width: auto;
-    height: auto;
-    text-align: center;
-    vertical-align: middle;
-    border-radius: 2px;
-    cursor: pointer;
-    background: #71B300;
-    border: 1px solid #71B300;
-    color: #FFF;
-    line-height: 36px;
-    padding-left: 50px;
-    padding-right: 50px;
-}
-a.gd-btn.gd-btn-thick.gd-btn-wide.gd-btn-primary-solid.plan-btn {
-    font-size: 12px;
-    display: inline-block;
-    padding: 0 28px;
-    width: auto;
-    height: auto;
-    text-align: center;
-    vertical-align: middle;
-    border-radius: 2px;
-    cursor: pointer;
-    background: #009AFF;
-    border: 1px solid #009AFF;
-    color: #FFF;
-    line-height: 36px;
-    padding-left: 50px;
-    padding-right: 50px;
-}
-.row.extra-plan-info {
-    margin-top: 40px;
-}
-.row.extra-plan-info .col-md-12.text-muted {
-    margin-bottom: 11px;
-    color: #848484;
-}
-@media (min-width: 1200px)
-.container {
-    width: 1154px;
-}
-@media (min-width: 992px)
-.container {
-    width: 954px;
-}
-@media (min-width: 768px)
-.container {
-    width: 734px;
-}
-.container {
-    margin-right: auto;
-    margin-left: auto;
-    padding-left: 7px;
-    padding-right: 7px;
-}
-.page-pricing .plans-nav {
-    display: none;
-    text-align: center;
-    position: relative;
-    z-index: 1;
-    bottom: -136px;
-}
-.page-pricing .plans {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    margin-top: 90px;
-    background-color: white;
-    box-shadow: 0 1px 2px 0 rgba(0,0,0,0.25);
-    border-radius: 4px;
-}
+        font-size: 12px;
+        display: inline-block;
+        padding: 0 28px;
+        width: auto;
+        height: auto;
+        text-align: center;
+        vertical-align: middle;
+        border-radius: 2px;
+        cursor: pointer;
+        background: #71B300;
+        border: 1px solid #71B300;
+        color: #FFF;
+        line-height: 36px;
+        padding-left: 50px;
+        padding-right: 50px;
+    }
+    a.gd-btn.gd-btn-thick.gd-btn-wide.gd-btn-primary-solid.plan-btn {
+        font-size: 12px;
+        display: inline-block;
+        padding: 0 28px;
+        width: auto;
+        height: auto;
+        text-align: center;
+        vertical-align: middle;
+        border-radius: 2px;
+        cursor: pointer;
+        background: #009AFF;
+        border: 1px solid #009AFF;
+        color: #FFF;
+        line-height: 36px;
+        padding-left: 50px;
+        padding-right: 50px;
+    }
+    .row.extra-plan-info {
+        margin-top: 40px;
+    }
+    .row.extra-plan-info .col-md-12.text-muted {
+        margin-bottom: 11px;
+        color: #848484;
+    }
+    @media (min-width: 1200px)
+        .container {
+            width: 1154px;
+        }
+        @media (min-width: 992px)
+            .container {
+                width: 954px;
+            }
+            @media (min-width: 768px)
+                .container {
+                    width: 734px;
+                }
+                .container {
+                    margin-right: auto;
+                    margin-left: auto;
+                    padding-left: 7px;
+                    padding-right: 7px;
+                }
+                .page-pricing .plans-nav {
+                    display: none;
+                    text-align: center;
+                    position: relative;
+                    z-index: 1;
+                    bottom: -136px;
+                }
+                .page-pricing .plans {
+                    display: -webkit-box;
+                    display: -ms-flexbox;
+                    display: flex;
+                    margin-top: 90px;
+                    background-color: white;
+                    box-shadow: 0 1px 2px 0 rgba(0,0,0,0.25);
+                    border-radius: 4px;
+                }
 
-.row, .container-fluid {
-    max-width: 995px;
-    margin: 0 auto;
-}
+                .row, .container-fluid {
+                    max-width: 995px;
+                    margin: 0 auto;
+                }
 
-.page-pricing .plan.plan-highlight {
-    z-index: 1;
-    border-color: #FF8533;
-    box-shadow: 0 0 16px 0 rgba(0,0,0,0.15);
-}
+                .page-pricing .plan.plan-highlight {
+                    z-index: 1;
+                    border-color: #FF8533;
+                    box-shadow: 0 0 16px 0 rgba(0,0,0,0.15);
+                }
 
-.page-pricing .plan:first-child {
-    border-radius: 4px 0 0 4px;
-}
+                .page-pricing .plan:first-child {
+                    border-radius: 4px 0 0 4px;
+                }
 
-.page-pricing .plan {
-    -webkit-box-flex: 1;
-    -ms-flex: 1;
-    flex: 1;
-    text-align: center;
-    position: relative;
-    background-color: transparent;
-    box-shadow: none;
-}
+                .page-pricing .plan {
+                    -webkit-box-flex: 1;
+                    -ms-flex: 1;
+                    flex: 1;
+                    text-align: center;
+                    position: relative;
+                    background-color: transparent;
+                    box-shadow: none;
+                }
 
-.page-pricing .plan .plan-inner {
-    padding: 40px 15px 40px 15px;
-}
+                .page-pricing .plan .plan-inner {
+                    padding: 40px 15px 40px 15px;
+                }
 
-.page-pricing .plan h3 {
-    font-size: 20px;
-    margin-bottom: 10px;
-}
+                .page-pricing .plan h3 {
+                    font-size: 20px;
+                    margin-bottom: 10px;
+                }
 
-.panel-title {
-    margin-top: 0;
-    margin-bottom: 0;
-    font-size: 14px;
-    color: inherit;
-}
+                .panel-title {
+                    margin-top: 0;
+                    margin-bottom: 0;
+                    font-size: 14px;
+                    color: inherit;
+                }
 
-.page-pricing .plan .price-container .price {
-    font-size: 30px;
-}
+                .page-pricing .plan .price-container .price {
+                    font-size: 30px;
+                }
 
-.page-pricing .plan .price-container {
-    position: relative;
-    border-bottom: 1px solid #E9E9E9;
-    padding: 16px 0;
-    margin-top: 16px;
-    border-top: 1px solid #E9E9E9;
-    font-size: 14px;
-}
+                .page-pricing .plan .price-container {
+                    position: relative;
+                    border-bottom: 1px solid #E9E9E9;
+                    padding: 16px 0;
+                    margin-top: 16px;
+                    border-top: 1px solid #E9E9E9;
+                    font-size: 14px;
+                }
 
-.page-pricing .plan .description {
-    margin: 15px 0;
-    display: -webkit-inline-box;
-    display: -ms-inline-flexbox;
-    display: inline-flex;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -ms-flex-direction: column;
-    flex-direction: column;
-    min-height: 145px;
-}
+                .page-pricing .plan .description {
+                    margin: 15px 0;
+                    display: -webkit-inline-box;
+                    display: -ms-inline-flexbox;
+                    display: inline-flex;
+                    -webkit-box-orient: vertical;
+                    -webkit-box-direction: normal;
+                    -ms-flex-direction: column;
+                    flex-direction: column;
+                    min-height: 145px;
+                }
 
-.page-pricing .plan .description li {
-    font-size: 14px;
-    display: inline-block;
-    text-align: left;
-}
-.page-pricing .plan .description li+li {
-    margin-top: 5px;
-    font-size: 14px;
-}
+                .page-pricing .plan .description li {
+                    font-size: 14px;
+                    display: inline-block;
+                    text-align: left;
+                }
+                .page-pricing .plan .description li+li {
+                    margin-top: 5px;
+                    font-size: 14px;
+                }
 
-.page-pricing .plan:last-child {
-    border-radius: 0 4px 4px 0;
-}
-ul.description li::before{
-    content: '';
-    display: inline-block;
-    width: 4px;
-    height: 4px;
-    border-radius: 50%;
-    background: #222222;
-    margin-right: 10px;
-    vertical-align: 3px;
-}
+                .page-pricing .plan:last-child {
+                    border-radius: 0 4px 4px 0;
+                }
+                ul.description li::before{
+                    content: '';
+                    display: inline-block;
+                    width: 4px;
+                    height: 4px;
+                    border-radius: 50%;
+                    background: #222222;
+                    margin-right: 10px;
+                    vertical-align: 3px;
+                }
 
-.main_body { display: flex; align-items: center;  }
-.main_name { margin-left: 10px; display: inline-block; font-size: 14px; }
-.main_header { width: 45px; height: 45px; border: none; border-radius: 50%; }
-.main_name > div { padding: 2.5px; }
-.main_name > div:first-child span { padding-right: 5px; }
-.main_name > div:first-child span.phone {  color: #666; }
+                .main_body { display: flex; align-items: center;  }
+                .main_name { margin-left: 10px; display: inline-block; font-size: 14px; }
+                .main_header { width: 45px; height: 45px; border: none; border-radius: 50%; }
+                .main_name > div { padding: 2.5px; }
+                .main_name > div:first-child span { padding-right: 5px; }
+                .main_name > div:first-child span.phone {  color: #666; }
 
-.disabled{
-    background: #E6E9ED !important;
-    color: #AAB2BD !important;
-    border: 1px solid #AAB2BD !important;
-    cursor: not-allowed !important;
-    box-shadow: none !important;
-}
+                .disabled{
+                    background: #E6E9ED !important;
+                    color: #AAB2BD !important;
+                    border: 1px solid #AAB2BD !important;
+                    cursor: not-allowed !important;
+                    box-shadow: none !important;
+                }
 </style>
+<script>
+    function mb_login() {
 
+    }
+</script>
 <div class="page-pricing" id="app" v-cloak>
 
     <Modal
-        v-model="open_solution_pay_val"
-        title="确认支付"
-        @on-ok="open_solution_pay_sub"
-        width="380"
-        :loading="loading_pay"
-        ok-text="已支付成功,进行下一步"
-        ref="open_solution_pay"
-        mask-closable="false"
+            v-model="open_solution_pay_val"
+            title="确认支付"
+            @on-ok="open_solution_pay_sub"
+            width="380"
+            :loading="loading_pay"
+            ok-text="已支付成功,进行下一步"
+            ref="open_solution_pay"
+            mask-closable="false"
     >
         <Card id="divPayOrder"  style= "width: 350px;height: 420px; margin: 0 auto;"  >
             <p slot="title">
                 合计: {{dataOrder.price}}元 , 请在30分钟内使用微信或支付宝扫码.
             </p>
             <p>
-                <div id="qrimgs"></div>
+            <div id="qrimgs"></div>
             </p>
-            
+
         </Card>
     </Modal>
 
     <Modal
-        v-model="open_solution_success"
-        title="确认支付"
-        @on-ok="open_solution_success_sub"
-        width="380"
-        :loading="loading_success"
-        ok-text="开通完成-查看详情"
-        ref="open_solution_success"
-        mask-closable="false"
+            v-model="open_solution_success"
+            title="确认支付"
+            @on-ok="open_solution_success_sub"
+            width="380"
+            :loading="loading_success"
+            ok-text="开通完成-查看详情"
+            ref="open_solution_success"
+            mask-closable="false"
     >
 
         <Card  style= "width: 350px;height: 420px; margin: 0 auto;"  >
@@ -268,137 +275,443 @@ ul.description li::before{
                     <p class="time">{{val.name}}</p>
                     <p class="content"><a :href="val.url" target="_blank">{{val.url}}</a></p>
                 </timeline-item>
-            </timeline>       
+            </timeline>
         </Card>
     </Modal>
 
     <Modal
-        v-model="open_solution_win"
-        title="套餐购买"
-        @on-ok="open_solution_sub"
-        width="650"
-        :loading="loading"
-        ok-text="立即购买"
-        ref="open_solution"
-        mask-closable="false"
+            v-model="open_solution_win"
+            title="套餐购买"
+            @on-ok="open_solution_sub"
+            width="650"
+            :loading="loading"
+            ok-text="立即购买"
+            ref="open_solution"
+            mask-closable="false"
     >
-    <div>
-        <card>
+        <div>
+            <card>
            <span>
                <img class="main_header" src="/common/img/my.png">
            </span>
-           <span class="main_name">
+                <span class="main_name">
                <div><span>用户&nbsp;| </span><span class="phone">{{phone}}</span></div>
-    <!--            <div>当前套餐: 未开通</div> -->
+                    <!--            <div>当前套餐: 未开通</div> -->
                <div style="font-size: 14px;  color: rgb(70, 76, 91);">选中套餐: <tag checkable color="blue">{{editionDetail.name}}</tag></div>
            </span>
-           <a><Tag color="blue" type="border">价格 :{{editionDetail.price}} 元</Tag><Tag v-if="editionDetail.time > 0" color="blue" type="border">时长 :{{editionDetail.time}} 年</Tag><Tag v-if="editionDetail.time == 0" color="blue" type="border">时长 :永久</Tag></a><br>
-       </card>
-       <br/>
-       <div class="ivu-article"><blockquote><p>开通解决方案,必须填写域名和网站名称,之后要将域名解析到指定IP或CNAME上,有任何疑问可以拨打 
-        客服电话<a>029-85858585</a> 或 QQ：<a>30696969</a>
-        <br/>
-        <p v-if="editionDetail.price==0">您当前选择的套餐是免费体验版,每一个账号只能创建一个免费体验解决方案.</p>
-       </p></blockquote></div>
-       <card>
-        <i-form ref="formInline" :model="formItem" >
-            <form-item  prop="product_id" label="域名" required>
-                <i-input type="text" v-model="formItem.domain" placeholder="请输入域名" style="width: 300px"></i-input>
-                <row style="background:#eee;" >
-                    <i-col span="24">
-                        <Card :bordered="false">
-                            <p slot="title">请通过以下CNAME或IP方式进行解析</p>
-                            <!--<p>api.{{formItem.domain}} - CNAME方式解析到:{{controlled_detail.api_domain}}</p>-->
-                            <Row>
-                                <i-col span="7">域名:{{formItem.domain}}</i-col>
-                                <i-col span="8">CNAME : {{domain.agent_domain}}</i-col>
-                                <i-col span="8">IP : {{domain.agent_ip}}</i-col>
-                            </Row>
-                            <Row>
-                                <i-col span="7">域名:m.{{formItem.domain}}</i-col>
-                                <i-col span="8">CNAME : {{domain.agent_domain}}</i-col>
-                                <i-col span="8">IP : {{domain.agent_ip}}</i-col>
-                            </Row>
-                        </Card>
-                    </i-col>
-                </row>
-            </form-item>
+                <a><Tag color="blue" type="border">价格 :{{editionDetail.price}} 元</Tag><Tag v-if="editionDetail.time > 0" color="blue" type="border">时长 :{{editionDetail.time}} 年</Tag><Tag v-if="editionDetail.time == 0" color="blue" type="border">时长 :永久</Tag></a><br>
+            </card>
+            <br/>
+            <div class="ivu-article"><blockquote><p>开通解决方案,必须填写域名和网站名称,之后要将域名解析到指定IP或CNAME上,有任何疑问可以拨打
+                客服电话<a>029-85858585</a> 或 QQ：<a>30696969</a>
+                <br/>
+                <p v-if="editionDetail.price==0">您当前选择的套餐是免费体验版,每一个账号只能创建一个免费体验解决方案.</p>
+                </p></blockquote></div>
+            <card>
+                <i-form ref="formInline" :model="formItem" >
+                    <form-item  prop="product_id" label="域名" required>
+                        <i-input type="text" v-model="formItem.domain" placeholder="请输入域名" style="width: 300px"></i-input>
+                        <row style="background:#eee;" >
+                            <i-col span="24">
+                                <Card :bordered="false">
+                                    <p slot="title">请通过以下CNAME或IP方式进行解析</p>
+                                    <!--<p>api.{{formItem.domain}} - CNAME方式解析到:{{controlled_detail.api_domain}}</p>-->
+                                    <Row>
+                                        <i-col span="7">域名:{{formItem.domain}}</i-col>
+                                        <i-col span="8">CNAME : {{domain.agent_domain}}</i-col>
+                                        <i-col span="8">IP : {{domain.agent_ip}}</i-col>
+                                    </Row>
+                                    <Row>
+                                        <i-col span="7">域名:m.{{formItem.domain}}</i-col>
+                                        <i-col span="8">CNAME : {{domain.agent_domain}}</i-col>
+                                        <i-col span="8">IP : {{domain.agent_ip}}</i-col>
+                                    </Row>
+                                </Card>
+                            </i-col>
+                        </row>
+                    </form-item>
 
-            <form-item label="名称"   prop="plat_name" :rules="{required: true, message: '平台名称不能为空', trigger: 'blur'}">
-                <i-input type="text" v-model="formItem.plat_name" placeholder="请输入平台名称" style="width: 300px"></i-input>
-            </form-item>
+                    <form-item label="名称"   prop="plat_name" :rules="{required: true, message: '平台名称不能为空', trigger: 'blur'}">
+                        <i-input type="text" v-model="formItem.plat_name" placeholder="请输入平台名称" style="width: 300px"></i-input>
+                    </form-item>
 
-            <form-item  >
-                
-            </form-item>
-        </i-form>
-        </card>
+                    <form-item  >
+
+                    </form-item>
+                </i-form>
+            </card>
         </div>
     </Modal>
 
-    <div class="gd-hero-unit-half plan-media-bg">
-        <h1>{{dataList.title}}</h1>
-        <p>{{dataList.doc}}</p>
-    </div>
+    <!--<div class="gd-hero-unit-half plan-media-bg">-->
+        <!--<h1>{{dataList.title}}</h1>-->
+        <!--<p>{{dataList.doc}}</p>-->
+    <!--</div>-->
 
-    <div class="container plans-container pay-container">
-        <div class="plans-nav">
-            <ul>
-                <li  class="plan-free" data-type="free" v-for="value in dataList.edition">
-                    <div class="inner">
-                        {{value.name}}
-                    </div>
-                </li>
-            </ul>
+    <!--bnaner-->
+    <section class="bnaner">
+        <div class="nav3">
+            <div class="main" id="fff">
+                <div class="nav_title">
+                    <img src="/common/img/solution4.png" alt="">
+                    <span>互助共享商圈平台解决方案</span>
+                </div>
+                <ul class="nav_list">
+                    <li><span>概述</span></li>
+                    <li><span>功能</span></li>
+                    <li><span>应用场景</span></li>
+                    <li><span>适用对象</span></li>
+                    <li><span>服务价格</span></li>
+                    <li><span>典型案例</span></li>
+                </ul>
+            </div>
         </div>
+    </section>
 
-        <div class="">
-            <div class="row plans">
-                <div  :class="{'plan':true , 'plan-highlight':key%2==0 , 'popular' : key%2==0}" v-for="(value,key) in dataList.edition">
-                    <div class="plan-inner">
-                        <h3 class="panel-title">{{value.name}}</h3>
-                        <div class="price-container">
-                            ￥<span class="price">{{value.price}}</span>/<span class="price-unit">年</span>
-                        </div>
-                        <ul class="description">
-                            <li v-for="item in value.function">{{item}}</li>
+    <!--Program-->
+    <section id="a" class="program">
+        <main>
+            <div class="title_box">
+                <div class="line"></div>
+                <span>商会商圈平台解决方案</span>
+                <div class="line"></div>
+            </div>
+            <div class="program_con">
+                <div class="program_left">
+                    <h3>网站采用Web软件建设</h3>
+                    <div class="program_text">
+                        <p>
+                            若Web软件爆发漏洞，则网站同样受到影响，极易因官方补丁发布不及时，而被黑客入侵骑士补丁管理功能，可共享阿里云安全漏洞应急响应。使用暗骑士补丁管理功能，极易因官方补丁发布不及时，而被黑客入侵骑士补丁管理功能，可共享阿里云安全漏洞应急响应</p>
+                        <p>
+                            第一时间使用云顿自研补丁进行漏洞修复，极易因官方补丁发布不及时，而被黑客入侵骑士补丁管理功能。使用暗骑士补丁管理功能，可共享阿里云安全漏洞应急响应，第一时间使用云顿自研补丁进行漏洞修复。</p>
+                    </div>
+                </div>
+                <div class="program_right">
+                    <img src="/common/img/solution2.png" alt="">
+                </div>
+            </div>
+        </main>
+    </section>
+
+    <!--basis-->
+    <section class="basis">
+        <main>
+            <div class="title_basic">
+                <div class="basis_line"></div>
+                <span>基础功能</span>
+                <div class="basis_line"></div>
+            </div>
+            <ul class="basis_con">
+                <li>
+                    <p><span>票数统计</span></p>
+                    <p><span>实时展示，直观清晰</span></p>
+                    <img src="/common/img/ts.png" alt="">
+                </li>
+                <li>
+                    <p><span>票数统计</span></p>
+                    <p><span>实时展示，直观清晰</span></p>
+                    <img src="/common/img/ts.png" alt="">
+                </li>
+                <li>
+                    <p><span>票数统计</span></p>
+                    <p><span>实时展示，直观清晰</span></p>
+                    <img src="/common/img/ts.png" alt="">
+                </li>
+                <li>
+                    <p><span>票数统计</span></p>
+                    <p><span>实时展示，直观清晰</span></p>
+                </li>
+                <li>
+                    <p><span>票数统计</span></p>
+                    <p><span>实时展示，直观清晰</span></p>
+                </li>
+                <li>
+                    <p><span>票数统计</span></p>
+                    <p><span>实时展示，直观清晰</span></p>
+                </li>
+                <li>
+                    <p><span>票数统计</span></p>
+                    <p><span>实时展示，直观清晰</span></p>
+                </li>
+                <li>
+                    <p><span>票数统计</span></p>
+                    <p><span>实时展示，直观清晰</span></p>
+                </li>
+
+            </ul>
+        </main>
+    </section>
+
+    <!--application-->
+    <section class="application">
+        <main>
+            <div class="title_basic">
+                <div class="basis_line"></div>
+                <span>应用场景</span>
+                <div class="basis_line"></div>
+            </div>
+            <div class="application_con">
+                <div class="application_con_top">
+                    <ul class="application_nav">
+                        <li class="active"><span>网站安全防护</span></li>
+                        <li><span>网站安全防护</span></li>
+                        <li><span>网站安全防护</span></li>
+                        <li><span>网站安全防护</span></li>
+                        <li><span>网站安全防护</span></li>
+                    </ul>
+                </div>
+                <div class="application_con_bot">
+                    <div class="application_con_bot_left">
+                        <img src="/common/img/solution3.png" alt="">
+                    </div>
+                    <div class="application_con_bot_right">
+                        <span>网络安全保护</span>
+                        <ul class="application_con_bot_right_text">
+                            <li>
+                                <p><span>客户需求描述</span></p>
+                                <p><span>运维休假一样能保证网站的数据安全</span></p>
+                            </li>
+                            <li>
+                                <p><span>阿里云解决方案</span></p>
+                                <p><span>若Web软件爆发漏洞，则网站同样受到影响，极易因官方补丁发布不及时，而被黑客入侵骑士补丁管理功能，可共享阿里云安全漏洞应急响应。使用暗骑士补丁管理功能，极易因官方补丁发布不及时，而被黑客入侵骑士补丁管理功能，可共享阿里云安全漏洞应急响应</span>
+                                </p>
+                            </li>
+                            <li>
+                                <p><span>客户需求描述</span></p>
+                                <p><span>运维休假一样能保证网站的数据安全</span></p>
+                            </li>
                         </ul>
-                        <div>
-                            <a v-if="value.price > 0" class="gd-btn gd-btn-thick gd-btn-wide gd-btn-primary-solid plan-btn" @click="open_solution(value);">立即购买</a>
-                            <a v-if="value.price == 0 && dataList.has_primary == 2" v-else class="gd-btn gd-btn-thick gd-btn-wide gd-btn-success " @click="open_solution(value);">免费体验</a>
-                            <a v-if="value.price == 0 && dataList.has_primary == 1" class="gd-btn gd-btn-thick gd-btn-wide gd-btn-success disabled">免费体验</a>
-                        </div>
                     </div>
                 </div>
             </div>
-            <div class="row extra-plan-info">
-                <p class="col-md-12 text-muted">注：付费版套餐中包含所有免费功能</p>
+        </main>
+    </section>
+
+    <!--object-->
+    <section class="object">
+        <main>
+            <div class="title_basic">
+                <div class="basis_line"></div>
+                <span>适用对象</span>
+                <div class="basis_line"></div>
             </div>
-        </div>
-    </div>
+            <ul class="object_coc">
+                <li>
+                    <div class="object_coc_top">
+                        <p><span>云商城基础班解决方案</span></p>
+                        <p>PC+O2O门店+三级分销+微信商城+触屏版商城+APP</p>
+                        <p>（安卓版+IOS版）+支付宝服务窗</p>
+                    </div>
+                    <div class="object_coc_bot">
+                        <ul class="object_coc_bot_type">
+                            <li>
+                                <p>数据策略</p>
+                                <p>全渠道数据</p>
+                            </li>
+                            <li>
+                                <p>数据策略</p>
+                                <p>全渠道数据</p>
+                            </li>
+                            <li>
+                                <p>数据策略</p>
+                                <p>全渠道数据</p>
+                            </li>
+                        </ul>
+                        <div class="details">
+                            <span>查看详情</span>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="object_coc_top">
+                        <p><span>云商城基础班解决方案</span></p>
+                        <p>PC+O2O门店+三级分销+微信商城+触屏版商城+APP</p>
+                        <p>（安卓版+IOS版）+支付宝服务窗</p>
+                    </div>
+                    <div class="object_coc_bot">
+                        <ul class="object_coc_bot_type">
+                            <li>
+                                <p>数据策略</p>
+                                <p>全渠道数据</p>
+                            </li>
+                            <li>
+                                <p>数据策略</p>
+                                <p>全渠道数据</p>
+                            </li>
+                            <li>
+                                <p>数据策略</p>
+                                <p>全渠道数据</p>
+                            </li>
+                        </ul>
+                        <div class="details">
+                            <span>查看详情</span>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="object_coc_top">
+                        <p><span>云商城基础班解决方案</span></p>
+                        <p>PC+O2O门店+三级分销+微信商城+触屏版商城+APP</p>
+                        <p>（安卓版+IOS版）+支付宝服务窗</p>
+                    </div>
+                    <div class="object_coc_bot">
+                        <ul class="object_coc_bot_type">
+                            <li>
+                                <p>数据策略</p>
+                                <p>全渠道数据</p>
+                            </li>
+                            <li>
+                                <p>数据策略</p>
+                                <p>全渠道数据</p>
+                            </li>
+                            <li>
+                                <p>数据策略</p>
+                                <p>全渠道数据</p>
+                            </li>
+                        </ul>
+                        <div class="details">
+                            <span>查看详情</span>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </main>
+    </section>
+
+    <!--saas-->
+    <section class="saas">
+        <main>
+            <div class="title_basic">
+                <div class="saas_line"></div>
+                <span>SAAS模式</span>
+                <div class="saas_line"></div>
+            </div>
+            <ul class="saas_con">
+                <li v-for="item in dataList.edition">
+                    <div class="saas_top">
+                        <p>{{item.name}}</p>
+                    </div>
+                    <div class="saas_middle">
+                        <p><span>￥</span><span>{{item.price}}</span><span>/年</span></p>
+                    </div>
+                    <div class="saas_bot">
+                        <ul>
+                            <li v-for="every in item.function">
+                                <div class="saas_cisle"></div>
+                                <div class="saas_text">{{every}}</div>
+                            </li>
+                        </ul>
+                        <div class="shop">
+                            <a v-if="item.price > 0"  @click="open_solution(item);"><p>立即购买</p></a>
+                            <a v-if="item.price == 0 && dataList.has_primary == 2" v-else  @click="open_solution(item);"><p>立即购买</p></a>
+                            <a v-if="item.price == 0 && dataList.has_primary == 1"><p>立即购买</p></a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <div class="zhu">
+                <p>注：付费版套餐包含所有免费功能</p>
+            </div>
+        </main>
+    </section>
+
+    <!--case-->
+    <section class="case">
+        <main>
+            <div class="title_basic">
+                <div class="basis_line"></div>
+                <span>典型案例</span>
+                <div class="basis_line"></div>
+            </div>
+            <div class="case_list">
+                <ul>
+                    <li>
+                        <div class="case_logo">
+                            <img src="/common/img/solution_logo_03.jpg" alt="">
+                        </div>
+                        <span><h5 class="h5">阿里云</h5></span>
+                        <p>全球领先的云计算及人工只能科技公司</p>
+                    </li>
+                    <li>
+                        <div class="case_logo">
+                            <img src="/common/img/solution_logo_16.jpg" alt="">
+                        </div>
+                        <span><h5 class="h5">腾讯云</h5></span>
+                        <p>全球领先的云计算及人工只能科技公司</p>
+                    </li>
+                    <li>
+                        <div class="case_logo">
+                            <img src="/common/img/solution_logo_18.jpg" alt="">
+                        </div>
+                        <span><h5 class="h5">友盟</h5></span>
+                        <p>全球领先的云计算及人工只能科技公司</p>
+                    </li>
+                    <li>
+                        <div class="case_logo">
+                            <img src="/common/img/solution_logo_09.jpg" alt="">
+                        </div>
+                        <span><h5 class="h5">网易七鱼</h5></span>
+                        <p>全球领先的云计算及人工只能科技公司</p>
+                    </li>
+                </ul>
+                <ul>
+                    <li>
+                        <div class="case_logo">
+                            <img src="/common/img/solution_logo_09.jpg" alt="">
+                        </div>
+                        <span><h5 class="h5">网易七鱼</h5></span>
+                        <p>全球领先的云计算及人工只能科技公司</p>
+                    </li>
+                    <li>
+                        <div class="case_logo">
+                            <img src="/common/img/solution_logo_16.jpg" alt="">
+                        </div>
+                        <span><h5 class="h5">腾讯云</h5></span>
+                        <p>全球领先的云计算及人工只能科技公司</p>
+                    </li>
+                    <li>
+                        <div class="case_logo">
+                            <img src="/common/img/solution_logo_18.jpg" alt="">
+                        </div>
+                        <span><h5 class="h5">友盟</h5></span>
+                        <p>全球领先的云计算及人工只能科技公司</p>
+                    </li>
+                    <li>
+                        <div class="case_logo">
+                            <img src="/common/img/solution_logo_03.jpg" alt="">
+                        </div>
+                        <span><h5 class="h5">阿里云</h5></span>
+                        <p>全球领先的云计算及人工只能科技公司</p>
+                    </li>
+
+                </ul>
+
+            </div>
+        </main>
+    </section>
 </div>
 <script>
     new Vue({
         el: '#app',
         data: {
             loading: true,
-            loading_pay:true,
-            loading_success:true,
-            dataList :[],
-            number:'',
-            type:'coc',
+            loading_pay: true,
+            loading_success: true,
+            dataList: [],
+            number: '',
+            type: 'coc',
             open_solution_win: false,
-            open_solution_pay_val:false,
-            open_solution_success:false,
+            open_solution_pay_val: false,
+            open_solution_success: false,
             // 单个版本详情
-            editionDetail:[],
+            editionDetail: [],
             //获取产品默认域名
-            domain:[],
-            phone:'',
-            dataOrder :{},
-            dataWebInfo:{},
+            domain: [],
+            phone: '',
+            dataOrder: {},
+            dataWebInfo: {},
             // 表单
-            formItem:{
+            formItem: {
                 // 解决方案ID
                 'solution_id': '',
                 // 版本号
@@ -408,43 +721,40 @@ ul.description li::before{
                 // 平台名称
                 'plat_name': '',
                 //被控端ID
-                'agent_id' : ''
+                'agent_id': ''
             },
         },
         mounted() {
-            this.$nextTick( function () {
+            this.$nextTick(function () {
                 // this.phone = localStorage.getItem("phone");
-                if(GetQueryString('type')){
+                if (GetQueryString('type')) {
                     this.type = GetQueryString('type');
                 }
                 this.getData();
             });
-        }, 
+        },
         methods: {
             //创建支付订单
-            open_solution_sub()
-            {
+            open_solution_sub() {
                 this.$refs['formInline'].validate((valid) => {
                     if (valid) {
                         this.formItem.agent_id = this.dataList.agent_id;
                         console.log(this.formItem);
-                        ajax.post(business.solution_order_create , this.formItem).then((res)=>{
-                            if(res.code == 200) {
+                        ajax.post(business.solution_order_create, this.formItem).then((res) => {
+                            if (res.code == 200) {
                                 var detail = res.data.detail;
                                 this.number = detail.number;
                                 this.open_solution_win = false;
-                                if( detail.status == 3 )
-                                {
+                                if (detail.status == 3) {
                                     this.open_solution_success = true;
                                 }
-                                else
-                                {
+                                else {
                                     this.open_solution_pay_val = true;
                                     this.open_solution_pay();
                                 }
 
-                                
-                            }else{
+
+                            } else {
                                 this.loading = false;
                                 this.$Message.error(res.message);
                             }
@@ -456,41 +766,42 @@ ul.description li::before{
                 })
             },
             // 生成二维
-            wQrcode(id , url)
-            {
-                if(url != ''){
-                    var qrcode = new QRCode(document.getElementById(id), {width : 300,height : 300});
+            wQrcode(id, url) {
+                if (url != '') {
+                    var qrcode = new QRCode(document.getElementById(id), {width: 300, height: 300});
                     qrcode.makeCode(url);
                 }
             },
             // 查询订单
-            getOrder(number , fun)
-            {
-                ajax.get(business.solution_order_select , {params:{number , number , time: Date.parse(new Date())}}).then((res)=>{
+            getOrder(number, fun) {
+                ajax.get(business.solution_order_select, {
+                    params: {
+                        number,
+                        number,
+                        time: Date.parse(new Date())
+                    }
+                }).then((res) => {
                     this.dataOrder = res.data.detail;
                     fun();
                 });
             },
             // 创建支付二维码
-            open_solution_pay()
-            {
-                 ajax.get(business.solution_order_pay , {params : {'number' : this.number}}).then((res)=>{
-                    if(res.code !== 200)
-                    {
+            open_solution_pay() {
+                ajax.get(business.solution_order_pay, {params: {'number': this.number}}).then((res) => {
+                    if (res.code !== 200) {
                         this.$Message.error(res.message);
                         return false;
                     }
-                    this.wQrcode('qrimgs' , res.data.code_url);
+                    this.wQrcode('qrimgs', res.data.code_url);
                 });
             },
-            open_solution_pay_sub()
-            {
-                this.getOrder(this.number , ()=>{
+            open_solution_pay_sub() {
+                this.getOrder(this.number, () => {
 
-                    if(this.dataOrder.status == 2 || this.dataOrder.status == 3){
+                    if (this.dataOrder.status == 2 || this.dataOrder.status == 3) {
 
-                        ajax.get(business.solution_web_info ,  {params:{number : this.number}}).then((res)=>{
-                            if(res.code == 200) {
+                        ajax.get(business.solution_web_info, {params: {number: this.number}}).then((res) => {
+                            if (res.code == 200) {
                                 var detail = res.data.detail;
                                 this.dataWebInfo = detail;
                                 this.number = detail.number;
@@ -498,40 +809,37 @@ ul.description li::before{
                                 this.open_solution_pay_val = false;
                                 this.open_solution_success = true;
 
-                            }else{
+                            } else {
                                 this.loading_pay = false;
                                 this.$Message.error('系统错误请稍后在尝试');
                             }
                         });
-                    }else {
+                    } else {
                         this.loading_pay = false;
                         this.$Message.error('没有支付成功,请扫码支付');
                     }
                 });
             },
-            getData()
-            {
+            getData() {
                 var token = docCookies.getItem("token");
-                ajax.get(web_business.web_solution_detail, {params:{'type': this.type}}).then((res)=>{
-                    if(res != false)
-                    {
+                ajax.get(web_business.web_solution_detail, {params: {'type': this.type}}).then((res) => {
+                    if (res != false) {
                         this.dataList = res.data.detail;
+                        console.log(res.data.detail.title)
+
                         this.dataList.doc = '无论你是商会、行业、区县、还是企业家，这里能满足你所有的需求';
-                        this.dataList.title = this.dataList.name+'解决方案';
+                        this.dataList.title = this.dataList.name + '解决方案';
                         set_title(this.dataList.name);
                     }
                 });
             },
-            open_solution_success_sub()
-            {
+            open_solution_success_sub() {
                 win.openWin('business_solution');
             },
-            open_solution(val)
-            {
+            open_solution(val) {
                 var weid = docCookies.getItem("weid");
-                ajax.get('userinfo/'+weid).then((res)=>{
-                    if(res.code == 200)
-                    {
+                ajax.get('userinfo/' + weid).then((res) => {
+                    if (res.code == 200) {
                         console.log(res.data);
                         this.phone = res.data.phone;
                         this.open_solution_win = true;
@@ -553,10 +861,10 @@ ul.description li::before{
                     }
 
                 });
-                
+
 
             }
         }
     })
-</script> 
+</script>
 <#include#>footer_include.html</#include#>

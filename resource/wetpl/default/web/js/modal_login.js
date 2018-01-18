@@ -79,7 +79,7 @@ $(function() {
     <li id="home" style="height: 90px"><a class="logoImg"></a></li>
     <li id="login" class="my-header"><a style="height: 90px"><i class="iconfont">&#xe618;</i><div class="menu-title"> 登录 </div></a></li>
     <li id="article"><a><i class="iconfont">&#xe608;</i><div class="menu-title"> 文章 </div></a></li>
-    <li id="project"><a><i class="iconfont">&#xe61f;</i><div class="menu-title"> 项目 </div></a></li>
+    <!--<li id="project"><a><i class="iconfont">&#xe61f;</i><div class="menu-title"> 项目 </div></a></li>-->
     <li id="active"><a><i class="iconfont">&#xe637;</i><div class="menu-title"> 活动 </div></a></li>
     <li id="shopping"><a><i class="iconfont">&#xe603;</i><div class="menu-title"> 商城 </div></a></li>
     <li id="zone"><a><i class="iconfont">&#xe639;</i><div class="menu-title"> 圈子 </div></a></li>`;
@@ -424,6 +424,19 @@ $(function() {
         }        
     })
 
+    var set_img = function(url, init, w, h, mode) {
+        if (url != '' && url != null && url != undefined) {
+            if (url.indexOf('http') === -1 && url.indexOf('common') === -1) {
+                return mode != undefined ? ApiMaterPlatQiniuDomain + url + '?imageView2/' + mode + '/w/' + w + '/h/' + h
+                    : ApiMaterPlatQiniuDomain + url + '?imageView2/3/w/' + w + '/h/' + h;
+            } else {
+                return url;
+            }
+        } else {
+            return init;
+        }
+    }
+
     //用户登录
     var login = function(phoneNum, checkNum, ref_id, ref_url, domain/*, imageCode, imageCodeID*/){
         $.ajax({
@@ -435,12 +448,18 @@ $(function() {
                 'domain': domain
             /* , 'imagecode': imageCode, 'imagecode_id': imageCodeID*/ },
             success: function(data){
+                console.log(data)
                 if (data.code != -200) {
                     saveUserInfo(data.token, data.data.weid, data.data.avatar, data.data.identity);
                     showLogin = false;
                     isLogin = true;
                     isCheckNum = false;
-                    window.location.href = window.location.href;
+                    $("#modal_login").fadeOut(300);
+                    setTimeout(function(){
+                        layer.msg('您已成功登录', {time: 1500});
+                        $("#avatar").attr('src', set_img(data.data.avatar, '/common/img/new/icon01.png', 29, 27));
+                    }, 300);
+                    //window.location.href = window.location.href;
                 } else {
                     lock = false;
                     clearInterval(count);
@@ -510,14 +529,14 @@ $(function() {
     }
 
     var rem = 'center';
-    $(".center").css("border-bottom", "3px solid #2596e8");
+    $(".center").css("border-bottom", "3px solid #01a7ff");
     $(".center, .sirase, .release").hover(function(){
         $("." + rem).css("border-bottom", "none");
-        $(this).css("border-bottom", "3px solid #2596e8");
+        $(this).css("border-bottom", "3px solid #01a7ff");
         var item = $(this).attr('class').split(' ')[0];
         rem = item;
     }, function(){
-        $("." + rem).css("border-bottom", "3px solid #2596e8");
+        $("." + rem).css("border-bottom", "3px solid #01a7ff");
         var res = remove(newsItems, rem);
         res.map(x => $("." + x).css("border-bottom", "none"));
     })

@@ -1,0 +1,148 @@
+*{
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    list-style: none;
+}
+/*头部开始*/
+header{
+    width:100%;
+    height:104px;
+}
+main{
+    width:1200px;
+    height: 100%;
+    margin: 0 auto;
+}
+header>main{
+    display: flex;
+    justify-content: space-between;
+}
+.head-left{
+    width:350px;
+    height:100%;
+}
+.head-left a{
+    height: 100%;
+    display: inline-flex;
+    align-items: center;
+}
+.head-left a img{
+    max-height:90%;
+    max-width:100%;
+    display: block;
+}
+.head-middle{
+    width: 419px;
+    height:28px;
+    margin-top: 42px;
+}
+.head-middle img{
+    width: 100%;
+    height:100%;
+}
+.head-right{
+    width: 201px;
+    height: auto;
+    margin-top: 27px;
+}
+.hr-top{
+    width: auto;
+    height:19px;
+    font-size: 14px;
+    font-family: "微软雅黑";
+    display: flex;
+    justify-content: flex-end;
+    color: #666;
+}
+.hr-top a{
+    color:#666;
+    margin-left: 30px;
+    text-align: right;
+    float: right;
+}
+.hr-top a:hover{
+    color:#4493D4;
+}
+
+.hr-top > aside > div {
+    position: relative;
+    height: 90px;
+    width: auto;
+    margin-top: 5px;
+    z-index: 9;
+}
+
+.hr-top > aside > div::before {
+    position: absolute;
+    content: " ";
+    transform: rotate(45deg) translateX(-50%);
+    left: 50%;
+    top: -1px;
+    width: 7px;
+    height: 7px;
+    border-left: 1px solid #ccc;
+    border-top: 1px solid #ccc;
+    background-color: #fff;
+    z-index: 1;
+}
+
+.hr-top > aside > span {
+    border-right: 1px solid #d9d9d9;
+    padding-left: 12px;
+    padding-right: 12px;
+    display: inline-block;
+}
+
+.hr-top > aside:last-child > span {
+    border-right: none;
+}
+
+.hr-top > aside > span:hover {
+    cursor: pointer;
+}
+
+.hr-top > aside > div > img {
+    position: absolute;
+    background-color: #fff;
+    padding: 2.5px;
+    width: 90px;
+    height: 90px;
+    max-width: unset;
+    transform: translateX(-50%);
+    left: 50%;
+    border: #e6e6e6 1px solid;
+}
+.search-box{
+    width:191px;
+    height:25px;
+    margin-top: 15px;
+    margin-left: 10px;
+    display: block;
+    font-family: "微软雅黑";
+}
+.search input{
+    outline: none;
+    float: left;
+}
+.search input[type="text"]{
+    width: 120px;
+    height:23px;
+    padding-left: 10px;
+    border:1px solid #A3A4A4;
+    border-right: none;
+    border-bottom-left-radius: 4px;
+    border-top-left-radius: 4px;
+}
+.search input[type="submit"]{
+    border-bottom-right-radius: 4px;
+    border-top-right-radius: 4px;
+    background-color: #A3A4A4;
+    cursor: pointer;
+    width: 60px;
+    height: 100%;
+    color: #fff;
+    border: none;
+    line-height: 23px;
+}
+/*头部结束*/

@@ -6,8 +6,8 @@
     <meta charset="UTF-8">
     <link rel="shortcut icon" id="favicon" href="" />
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <script src="{{PATH_TML}}user/common/js/loading.js"></script>
     <script charset="utf-8" type="text/javascript" src="/common/js/jquery-3.2.1.min.js"></script>
+    <script src="{{PATH_TML}}user/common/js/loading.js"></script>
     <script charset="utf-8" type="text/javascript" src="/common/js/swiper-3.3.1.min.js"></script>
     <script charset="utf-8" type="text/javascript" src="{{PATH_CONFIG}}"></script>
     <script charset="utf-8" type="text/javascript" src="/common/js/browser.min.js"></script>
@@ -26,6 +26,7 @@
     <link rel="stylesheet" type="text/css" href="{{PATH_TML}}user/css/support_act.css">
     <link rel="stylesheet" type="text/css" href="{{PATH_TML}}activity/css/activitydetail.css">
     <script type="text/javascript" src="{{PATH_TML}}shopping/js/jquery.qrcode.min.js"></script>
+    <script type="text/javascript" src="/common/js/JsBarcode.all.js"></script>
     <script type="text/javascript" src="/common/layer-v3.0.3/layer-v3.0.3/layer/layer.js"></script>
     <style>
         .payment-block {
@@ -50,6 +51,10 @@
         .payment-mark {
             text-align: center
         }
+        
+        .bar-code {
+            text-align: center;
+        }
     </style>
 </head>
 
@@ -57,7 +62,7 @@
     <div class="left-nav"></div>
     <div id="top"></div>
     <div id="middle"></div>
-    <div id="right">
+    <div id="right" style="display: none;">
         <div class="we-art-nav" style="height: 30px; border-radius: none;margin-bottom: 20px;">
             <ol class="breadcrumb" style="height: 30px;border-radius: 0; background-color: #ccc; color: #fff;line-height: 30px;">
                 <li class="homepage"><a style="color: #fff!important;">我的活动</a></li>

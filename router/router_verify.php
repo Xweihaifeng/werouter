@@ -23,6 +23,7 @@ class router_verify{
     // 初始化验证
     private function _init($router , $uri , $rule)
     {
+
         // URI数据
         $uri = array_filter(explode('/', $uri));
         
@@ -72,6 +73,7 @@ class router_verify{
             $router_config_count = array_filter(explode('/', $value['router']));
             if(count($router_config_count) == count($uri)){
                 $rouert_match[$i]['router'] = $router_config_count;
+                $rouert_match[$i]['router_name'] = $value['name'];
                 $rouert_match[$i]['router_map'] = $value['router_map'];
                 $i++;
             }

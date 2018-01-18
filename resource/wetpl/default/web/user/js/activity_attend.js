@@ -141,7 +141,7 @@ $("#verify_ticket").bind('click', function() {
         var userAlert = layer.open({
             skin: 'winning-class',
             type: 1,
-            area: ['500px', '530px'],
+            area: ['500px', '580px'],
             title: 0,
             closeBtn: true,
             shadeClose: true,
@@ -178,19 +178,34 @@ $("#verify_ticket").bind('click', function() {
             content: `<div class="user-block">
                 <table>
                     <tbody>
-                        <tr><td colspan="2"><span class="ticket-enumber">` + data.ticket_info.e_number + `</span></td></tr>
+                        <tr><td colspan="2"><span class="ticket-enumber">` + data.e_number + `</span></td></tr>
                         <tr><td><span class="user-title">用户形象</span></td><td><img id="user-avatar" src="` + ApiMaterPlatQiniuDomain + data.user_info.avatar + `"></td></tr>
                         <tr><td><span class="user-title">真实姓名</span></td><td>` + data.user_info.real_name + `</td></tr>
                         <tr><td><span class="user-title">平台昵称</span></td><td>` + data.user_info.nickname + `</td></tr>
                         <tr><td><span class="user-title">手机号码</span></td><td>` + data.user_info.phone + `</td></tr>
-                        <tr><td><span class="user-ticket-title">门票种类</span></td><td>` + data.ticket_info.name + `</td></tr>
-                        <tr><td><span class="user-ticket-title">门票价格</span></td><td>` + (data.ticket_info.type == 1 ? '免费' : data.ticket_info.price) + `</td></tr>
                     </tbody>
                 </table>
+                <div class="ticket"></div>
             </div>`,
             end: function() {},
             shade: 0.2
         });
+        if (data.ticket_info.length) {
+            var list = data.ticket_info;
+            for (var i = 0; i < list.length; i++) {
+                var dom =
+                    '<div class="ticket-item">' +
+                    '<p>' + list[i].name + '</p>' +
+                    '<div class="tic-price">' +
+                    '<span>￥' + list[i].price + '</span>' +
+                    '</div>' +
+                    '<div class="num">' +
+                    '<span>×' + list[i].count + '</span>' +
+                    '</div>' +
+                    '</div>';
+                $('.ticket').append(dom);
+            }
+        }
     });
 });
 

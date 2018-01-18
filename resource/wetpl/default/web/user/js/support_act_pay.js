@@ -99,7 +99,7 @@ var wechat_scan_pay = function(number) {
         success: function(data) {
             if (data.code == 200) {
                 GetActivity(id, function(act_rep) {
-                    PaymentQR(data.data.qrcode_url, data.data.number, act_rep.data);
+                    PaymentQR(data.data.qrcode_url, data.data.number, data.data.total_fee);
                 });
             } else {
                 console.log(number);
@@ -160,7 +160,7 @@ var Ticket = function(data) {
         });
     }
     // 调起支付
-var PaymentQR = function(qr_url, number, data) {
+var PaymentQR = function(qr_url, number, fee) {
         paymentLayer = layer.open({
             skin: 'layui-layer-rim',
             type: 1,
@@ -169,13 +169,14 @@ var PaymentQR = function(qr_url, number, data) {
             closeBtn: 2,
             shadeClose: false,
             scrollbar: false,
+            //content: '<img src="' + QRCODE + '?url=' + qr_url + '" width="300">',
             content: `<div class="payment-block">
-                            <div class="payment-qrcode"><img src="` + QRCODE + `?url=` + qr_url + `" width="300"></div>
-                            <div class="payment-desc">
-                                <p>付款金额：<b>￥` + data.price + `</b></p>
-                            </div>
-                            <div class="payment-mark"><img src="/common/img/wepay-logo.png" width="100"></div>
-                        </div>`,
+                <div class="payment-qrcode"><img src="` + QRCODE + `?url=` + qr_url + `" width="300"></div>
+                <div class="payment-desc">
+                    <p>付款金额：<b>￥` + fee + `</b></p>
+                </div>
+                <div class="payment-mark"><img src="/common/img/wepay-logo.png" width="100"></div>
+            </div>`,
             end: function() {
                 clearInterval(tmr);
                 //location.reload();

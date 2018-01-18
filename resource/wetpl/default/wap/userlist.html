@@ -45,7 +45,7 @@
             <div class="wl-user-company">
                 <span>{{user.position}}</span><!--<span>风险投资</span>-->
             </div>
-            <a :href="user.wecard" class="wl-btn wl-btn-white">+好友</a>
+            <a :href="user.wecard" class="wl-btn wl-btn-white">+关注</a>
         </li>
     </ul>
 </div>
@@ -64,7 +64,7 @@
                                 avatar: x.avatar != null ? ApiMaterPlatQiniuDomain + x.avatar : '/common/img/vote_front_cover.png',
                                 name: x.name,
                                 position: x.poistion,
-                                wecard: '/wecard/' + x.plat_user_id
+                                wecard: '/' + x.domain + '/wecard/'
                             }));
                     if (ref.users == '') {
                         $(".actd-users").text('暂无');

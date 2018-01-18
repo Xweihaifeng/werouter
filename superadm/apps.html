@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.7 -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="bower_components/Ionicons/css/ionicons.min.css">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
+    <!-- Select2 -->
+    <link rel="stylesheet" href="bower_components/select2/dist/css/select2.min.css">
+
+    <link rel="stylesheet" href="/common/sweetalert2/dist/sweetalert2.min.css">
+
+    <link rel="stylesheet" href="/common/zoom/zoom.css">
+
+    <link rel="stylesheet" href="css/apps.css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.min.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+    <!-- jQuery 3 -->
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/browser.min.js"></script>
+    <script src="js/config.js"></script>
+    <!-- Google Font -->
+    <style>
+         ::-webkit-scrollbar {
+            width: 0;
+        }
+        
+        .message_buy_tit {
+            /* border-bottom: 1px solid #f0f0f0; */
+            /* height: 48px; */
+            line-height: 48px;
+            padding-left: 11px;
+            background-color: #fffdf9;
+            color: #ff7979;
+            font-size: 16px;
+        }
+        
+        .tab-content li {
+            margin: 0;
+            margin-bottom: -5px;
+        }
+        
+        .tab-content .active {
+            border-bottom: #fff 3px solid
+        }
+        
+        .control-label {
+            text-align: right;
+        }
+        
+        .data {
+            padding: 35px;
+            overflow: hidden;
+            border-bottom: 1px solid #e5e5e5;
+        }
+        
+        .data>div {
+            float: left;
+            position: relative;
+        }
+        
+        .data .doughnut {
+            width: 230px;
+        }
+        
+        .data .intro {
+            position: absolute;
+            top: 5px;
+            left: 130px;
+            font-size: 12px;
+            color: #383737;
+        }
+        
+        .data .intro>ul>li {
+            margin-bottom: 10px;
+        }
+        
+        .data .intro>ul>li>label {
+            font-size: 12px;
+            color: #7d7d7d;
+        }
+        
+        .mark {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        
+        #listPie li {
+            border: none;
+        }
+    </style>
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+    <div class="wrapper">
+        <aside class="main-sidebar">
+            <!-- sidebar: style can be found in sidebar.less -->
+            <section class="sidebar">
+                <!-- search form -->
+                <form action="#" method="get" class="sidebar-form">
+                    <div class="input-group">
+                        <input type="text" name="q" class="form-control" placeholder="Search...">
+                        <span class="input-group-btn">
+                    <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+                    </button>
+                  </span>
+                    </div>
+                </form>
+                <!-- /.search form -->
+                <ul id="root" class="sidebar-menu" data-widget="tree"></ul>
+            </section>
+            <!-- /.sidebar -->
+        </aside>
+        <!-- content-wrapper -->
+        <div class="content-wrapper">
+            <input type="hidden" name="config-url" value="apps.html">
+            <section class="content-header">
+                <h1> 应用中心 </h1>
+                <!--
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+                <li><a href="#">Tables</a></li>
+                <li class="active">Data tables</li>
+            </ol>
+           -->
+            </section>
+            <!-- Main content -->
+            <section class="content">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="box">
+                            <div class="box-header with-border" style="line-height: 35px;">
+                                <h3 class="box-title">基础应用</h3>
+                                <!-- /.box-header -->
+                                <div class="box-body">
+                                    <div class="per_bottom apply_bottom">
+                                        <ul>
+                                            <!-- 购买认证开始 -->
+                                            <li class="message_box online_cert">
+                                                <div class="per_bottom_tit">
+                                                    <span class="scad_setting">在线实名认证</span>
+                                                    <span class="switch brand_set turn_on_off switch-close" data-key="is_sms_open">
+                                                    <div id="op1" class="open">
+                                                        <div id="op2" class="close"></div>
+                                                        <span class="brand_on_off on">ON</span>
+                                                    <span class="brand_on_off off">OFF</span>
+                                                </div>
+                                                </span>
+                                                <a class="edit_domain">展开</a>
+                                    </div>
+                                    <div class="edit_domain_area" style="display: none;">
+                                        <div class="panel-body">
+                                            <div class="form-group">
+                                                <label class="col-xs-4 col-sm-4 col-md-4 control-label">付费方式</label>
+                                                <div class="col-sm-8 col-xs-8 col-lg-8">
+                                                    <div class="row row-fix tpl-category-container">
+                                                        <input type="radio" value="1" name="pay_type">平台代付 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                        <input type="radio" value="2" name="pay_type" disabled>自费 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                        <input type="radio" value="3" name="pay_type" disabled>首次代付
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="form-group">
+                                                <label class="col-xs-4 col-sm-4 col-md-4 control-label">剩余认证次数</label>
+                                                <div class="col-sm-8 col-xs-8 col-lg-8">
+                                                    <div class="row row-fix tpl-category-container">
+                                                        <input class="messarg_sign" type="text" name="rest_count" value="0" readonly>&nbsp;次 &nbsp;
+                                                        <button type="button" class="btn btn-warning btn-cancel-buy">购买</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="message_buy_box" style="display: none;">
+                                            <div class="message_buy_tit">实名核验—身份证实名认证</div>
+                                            <p class="message_info">
+                                                在线认证功能由第三方提供，属于增值服务，平台使用前需要先购买基于“全国公民身份证号码查询服务中心”权威数据源，通过身份证号和姓名来校验是否一致。本服务由第三方提供，费用由“微众中国”实时在线代收。实名认证费用2元/次，实名认证费套餐最高享受
+                                                <sapn style="color: #fa7c00;">1元/次</sapn>特价优惠。
+                                            </p>
+                                            <div class="message_package">
+                                                <span class="message_package_tit">选择套餐</span>
+                                                <ul class="message_package_con">
+                                                </ul>
+                                            </div>
+                                            <div class="apply_buy">
+                                                <input type="hidden" name="order_id" value="">
+                                                <button type="button" class="btn btn-danger btn-lg buy-instance">购买套餐</button>
+                                            </div>
+                                        </div>
+                                        </li>
+                                        <!-- 购买认证包结束 -->
+                                        <!-- 购买短信包开始 -->
+                                        <li class="message_box sms_package">
+                                            <div class="per_bottom_tit">
+                                                <span class="scad_setting">短信</span>
+                                                <span class="switch brand_set turn_on_off switch-close" data-key="is_sms_open">
+                                                    <div id="op1" class="open">
+                                                        <div id="op2" class="close"></div>
+                                                        <span class="brand_on_off on">ON</span>
+                                                <span class="brand_on_off off">OFF</span>
+                                            </div>
+                                            </span>
+                                            <a class="edit_domain">展开</a>
+                                    </div>
+                                    <div class="edit_domain_area" style="display: none;">
+                                        <div class="panel-body">
+                                            <div class="form-group">
+                                                <div class="col-sm-12 col-md-12 col-lg-12 data">
+                                                    <div class="chart doughnut" style="width:400px">
+                                                        <canvas id="chartPie" style="width:150px;height:150px;"></canvas>
+                                                        <div class="intro" style="margin-left: 120px;">
+                                                            <ul id="listPie"></ul>
+                                                        </div>
+                                                    </div>
+                                                    <div class="chart line" style="width:400px;margin-left:20px;">
+                                                        <canvas id="chartLine" style="width:400px;height:150px;"></canvas>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="form-group">
+                                                <label class="control-label col-sm-4 col-md-4 col-lg-4">短信签名设置</label>
+                                                <div class="col-sm-8 col-md-8 col-lg-8">
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control" id="sign" name="sign" placeholder="短信签名">
+                                                        <span class="input-group-btn">
+                                                                    <button id="signSet" class="btn btn-success" type="button">保存设置</button>
+                                                                </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="form-group">
+                                                <label class="col-xs-4 col-sm-4 col-md-4 control-label">短信余量</label>
+                                                <div class="col-sm-8 col-xs-8 col-lg-8">
+                                                    <div class="row row-fix tpl-category-container">
+                                                        <input class="messarg_sign" type="text" name="rest_count" value="0" readonly>&nbsp;条 &nbsp;
+                                                        <button type="button" class="btn btn-warning btn-cancel-buy">购买</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="message_buy_box" style="display: none;">
+                                            <div class="message_buy_tit">选择购买短信套餐</div>
+                                            <p class="message_info">
+                                                短信属于增值服务，由第三方提供。使用前是要先购买套餐，该费用由微众中国代收
+                                            </p>
+                                            <div class="message_package">
+                                                <span class="message_package_tit">选择套餐：</span>
+                                                <ul class="message_package_con">
+                                                </ul>
+                                            </div>
+                                            <div class="apply_buy">
+                                                <input type="hidden" name="order_id" value="">
+                                                <button type="button" class="btn btn-danger btn-lg buy-instance">购买套餐</button>
+                                            </div>
+                                        </div>
+                                        </li>
+                                        <!-- 购买短信包结束 -->
+
+                                        <!-- 七牛配置开始 -->
+                                        <li class="message_box online_cert">
+                                            <div class="per_bottom_tit">
+                                                <span class="scad_setting">七牛对象存储</span>
+                                                <span class="switch brand_set turn_on_off switch-close" data-key="is_sms_open">
+                                                    <!-- <div id="op1" class="open">
+                                                        <div id="op2" class="close"></div>
+                                                        <span class="brand_on_off on">ON</span>
+                                                <span class="brand_on_off off">OFF</span>
+                                            </div> -->
+                                            </span>
+                                            <a class="edit_domain">展开</a>
+                                    </div>
+                                    <div class="edit_domain_area" style="display: none;">
+                                        <div class="panel-body">
+                                            <form id="fromManager" class="form-horizontal" style="padding: 30px;">
+                                                <div class="form-group">
+                                                    <label class="control-label col-sm-4 col-md-4 col-lg-4">Bucket</label>
+                                                    <div class="col-sm-8 col-md-8 col-lg-8">
+                                                        <input type="text" class="form-control" id="bucket" name="config[bucket]" placeholder="bucket仓库">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-sm-4 col-md-4 col-lg-4">授权KEY</label>
+                                                    <div class="col-sm-8 col-md-8 col-lg-8">
+                                                        <input type="text" class="form-control" id="access_key" name="config[access_key]" placeholder="access_key">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-sm-4 col-md-4 col-lg-4">认证KEY</label>
+                                                    <div class="col-sm-8 col-md-8 col-lg-8">
+                                                        <input type="text" class="form-control" id="secret_key" name="config[secret_key]" placeholder="secret_key">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-sm-4 col-md-4 col-lg-4">客户域名</label>
+                                                    <div class="col-sm-8 col-md-8 col-lg-8">
+                                                        <input type="text" class="form-control" id="domain_custom" name="config[domain_custom]" placeholder="自定义域名">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-sm-4 col-md-4 col-lg-4">默认域名</label>
+                                                    <div class="col-sm-8 col-md-8 col-lg-8">
+                                                        <input type="text" class="form-control" id="domain_default" name="config[domain_default]" placeholder="默认域名">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-sm-4 col-md-4 col-lg-4">HTTPS</label>
+                                                    <div class="col-sm-8 col-md-8 col-lg-8">
+                                                        <input type="text" class="form-control" id="domain_https" name="config[domain_https]" placeholder="HTTPS域名">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-sm-4 col-md-4 col-lg-4">回调链接</label>
+                                                    <div class="col-sm-8 col-md-8 col-lg-8">
+                                                        <input type="text" class="form-control" id="notify_url" name="config[notify_url]" placeholder="回调链接">
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <button type="button" class="btn btn-info pull-right" id="updateSet">保存</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    </li>
+                                    <!-- 七牛配置结束 -->
+                                    <!-- 微信配置开始 -->
+                                    <li class="message_box online_cert">
+                                        <div class="per_bottom_tit">
+                                            <span class="scad_setting">微信公众号与支付</span>
+                                            <span class="switch brand_set turn_on_off switch-close" data-key="is_sms_open">
+                                                    <!-- <div id="op1" class="open">
+                                                        <div id="op2" class="close"></div>
+                                                        <span class="brand_on_off on">ON</span>
+                                            <span class="brand_on_off off">OFF</span>
+                                        </div> -->
+                                        </span>
+                                        <a class="edit_domain">展开</a>
+                                </div>
+                                <div class="edit_domain_area" style="display: none;">
+                                    <ul class="tab-content nav nav-tabs form-horizontal" style="padding: 10px 60px 0px;">
+                                        <li role="presentation" class="active"><a href="javascript:;">公众号</a></li>
+                                        <li role="presentation"><a href="javascript:;">微信支付</a></li>
+                                        <li role="presentation"><a href="javascript:;">开放平台</a></li>
+                                    </ul>
+                                    <div class="panel-body tab-body">
+                                        <form id="weChat" class="form-horizontal" style="padding: 30px;">
+                                            <div class="form-group">
+                                                <label class="control-label col-sm-4 col-md-4 col-lg-4">APPID</label>
+                                                <div class="col-sm-8 col-md-8 col-lg-8">
+                                                    <input type="text" class="form-control" id="wechat_appid" name="config[wechat_appid]" placeholder="wechat_appid">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-sm-4 col-md-4 col-lg-4">SECRETKEY</label>
+                                                <div class="col-sm-8 col-md-8 col-lg-8">
+                                                    <input type="text" class="form-control" id="wechat_secretkey" name="config[wechat_secretkey]" placeholder="wechat_secretkey">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-sm-4 col-md-4 col-lg-4">验证文件</label>
+                                                <div class="col-sm-8 col-md-8 col-lg-8">
+                                                    <input type="text" class="form-control" id="wechat_verify_txt" name="config[wechat_verify_txt]" placeholder="wechat_verify_txt">
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <button type="button" class="btn btn-info pull-right weChatSet">保存</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="panel-body tab-body" style="display:none">
+                                        <form id="weChat" class="form-horizontal" style="padding: 30px;">
+                                            <div class="form-group">
+                                                <label class="control-label col-sm-4 col-md-4 col-lg-4">商户号</label>
+                                                <div class="col-sm-8 col-md-8 col-lg-8">
+                                                    <input type="text" class="form-control" id="wechat_merchant_id" name="config[wechat_merchant_id]" placeholder="商户号">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-sm-4 col-md-4 col-lg-4">商户key</label>
+                                                <div class="col-sm-8 col-md-8 col-lg-8">
+                                                    <input type="text" class="form-control" id="wechat_payment_key" name="config[wechat_payment_key]" placeholder="商户密钥">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-sm-4 col-md-4 col-lg-4">支付证书</label>
+                                                <div class="col-sm-8 col-md-8 col-lg-8">
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control" id="apiclient_cert" name="config[apiclient_cert]" placeholder="客户端支付证书">
+                                                        <span class="input-group-btn">
+                                                                          <button class="btn btn-warning" id="pickfiles" type="button">上传文件</button>
+                                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-sm-4 col-md-4 col-lg-4">证书key</label>
+                                                <div class="col-sm-8 col-md-8 col-lg-8">
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control" id="apiclient_key" name="config[apiclient_key]" placeholder="客户端证书key">
+                                                        <span class="input-group-btn">
+                                                                          <button class="btn btn-warning" id="pickfiles2" type="button">上传文件</button>
+                                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <button type="button" class="btn btn-info pull-right weChatPaySet">保存</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="panel-body tab-body" style="display:none">
+                                        <form id="weChat" class="form-horizontal" style="padding: 30px;">
+                                            <div class="form-group">
+                                                <label class="control-label col-sm-4 col-md-4 col-lg-4">AppID</label>
+                                                <div class="col-sm-8 col-md-8 col-lg-8">
+                                                    <input type="text" class="form-control" id="wechat_open_appid" name="config[open_appid]" placeholder="">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-sm-4 col-md-4 col-lg-4">AppSecret</label>
+                                                <div class="col-sm-8 col-md-8 col-lg-8">
+                                                    <input type="text" class="form-control" id="wechat_open_secret" name="config[open_secret]" placeholder="">
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <button type="button" class="btn btn-info pull-right weChatOpenSet">保存</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                </li>
+                                <!-- 微信配置结束 -->
+                                <!-- 微主页配置开始 -->
+                                <li class="message_box wepages_config">
+                                    <div class="per_bottom_tit">
+                                        <span class="scad_setting">微主页配置</span>
+                                        <span class="switch brand_set turn_on_off switch-close" data-key="is_sms_open">
+                                            <!-- <div id="op1" class="open">
+                                                <div id="op2" class="close"></div>
+                                                <span class="brand_on_off on">ON</span>
+                                        <span class="brand_on_off off">OFF</span>
+                                    </div> -->
+                                    </span>
+                                    <a class="edit_domain">展开</a>
+                            </div>
+                            <div class="edit_domain_area" style="display: none;">
+                                <div class="panel-body">
+                                    <form id="fromManager" class="form-horizontal" style="padding: 30px;">
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-4 col-md-4 col-lg-4">允许开通用户</label>
+                                            <div class="col-sm-8 col-md-8 col-lg-8">
+                                                <div class="row">
+                                                    <div class="col-sm-4 col-md-4 col-lg-4">
+                                                        <div class="checkbox">
+                                                            <label><input type="checkbox" name="open_allow_source" value="UA">实名认证</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4 col-md-4 col-lg-4">
+
+                                                        <div class="checkbox">
+                                                            <label><input type="checkbox" name="open_allow_source" value="UG">官方认证</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4 col-md-4 col-lg-4">
+
+                                                        <div class="checkbox">
+                                                            <label><input type="checkbox" name="open_allow_source" value="UM">会员</label>
+                                                        </div>
+                                                    </div>
+                                                    <p style="display: block;padding-top: 7px;padding-left:15px;color: #999;min-width: 220px;font-size: 12px;    line-height: 25px;">
+                                                        1.不同级别用户开通开通微主页功能不同,全部关闭等效于全站禁止开通微主页<br> 2.实名认证级别的用户开通的微主页限使用非商务功能<br> 3.官方认证和会员开通的微主页功能无限制<br> 4.商务功能包括（商城、文章打赏、收费活动）
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-4 col-md-4 col-lg-4">个性域名每月修改次数上限</label>
+                                            <div class="col-sm-8 col-md-8 col-lg-8">
+                                                <input type="text" class="form-control" id="modifyLimit" name="modifyLimit" placeholder="微主页个性域名月度允许修改次数">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <button type="button" class="btn btn-info pull-right" id="wepagesSet">保存</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            </li>
+                            <!-- 微主页配置结束 -->
+
+                            </ul>
+                        </div>
+
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+    </section>
+    </div>
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Create the tabs -->
+        <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
+            <li><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
+            <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
+        </ul>
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <!-- Home tab content -->
+            <div class="tab-pane" id="control-sidebar-home-tab">
+                <h3 class="control-sidebar-heading">Recent Activity</h3>
+                <ul class="control-sidebar-menu">
+                    <li>
+                        <a href="javascript:void(0)"> <i class="menu-icon fa fa-birthday-cake bg-red"></i>
+                            <div class="menu-info">
+                                <h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
+                                <p>Will be 23 on April 24th</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)"> <i class="menu-icon fa fa-user bg-yellow"></i>
+                            <div class="menu-info">
+                                <h4 class="control-sidebar-subheading">Frodo Updated His Profile</h4>
+                                <p>New phone +1(800)555-1234</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)"> <i class="menu-icon fa fa-envelope-o bg-light-blue"></i>
+                            <div class="menu-info">
+                                <h4 class="control-sidebar-subheading">Nora Joined Mailing List</h4>
+                                <p>nora@type.com</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)"> <i class="menu-icon fa fa-file-code-o bg-green"></i>
+                            <div class="menu-info">
+                                <h4 class="control-sidebar-subheading">Cron Job 254 Executed</h4>
+                                <p>Execution time 5 seconds</p>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+                <!-- /.control-sidebar-menu -->
+
+                <h3 class="control-sidebar-heading">Tasks Progress</h3>
+                <ul class="control-sidebar-menu">
+                    <li>
+                        <a href="javascript:void(0)">
+                            <h4 class="control-sidebar-subheading"> Custom Template Design <span class="label label-danger pull-right">70%</span></h4>
+                            <div class="progress progress-xxs">
+                                <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)">
+                            <h4 class="control-sidebar-subheading"> Update Resume <span class="label label-success pull-right">95%</span></h4>
+                            <div class="progress progress-xxs">
+                                <div class="progress-bar progress-bar-success" style="width: 95%"></div>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)">
+                            <h4 class="control-sidebar-subheading"> Laravel Integration <span class="label label-warning pull-right">50%</span></h4>
+                            <div class="progress progress-xxs">
+                                <div class="progress-bar progress-bar-warning" style="width: 50%"></div>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)">
+                            <h4 class="control-sidebar-subheading"> Back End Framework <span class="label label-primary pull-right">68%</span></h4>
+                            <div class="progress progress-xxs">
+                                <div class="progress-bar progress-bar-primary" style="width: 68%"></div>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+                <!-- /.control-sidebar-menu -->
+
+            </div>
+            <!-- /.tab-pane -->
+            <!-- Stats tab content -->
+            <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div>
+            <!-- /.tab-pane -->
+            <!-- Settings tab content -->
+            <div class="tab-pane" id="control-sidebar-settings-tab">
+                <form method="post">
+                    <h3 class="control-sidebar-heading">General Settings</h3>
+                    <div class="form-group">
+                        <label class="control-sidebar-subheading"> Report panel usage
+                            <input type="checkbox" class="pull-right" checked>
+                        </label>
+                        <p> Some information about this general settings option </p>
+                    </div>
+                    <!-- /.form-group -->
+
+                    <div class="form-group">
+                        <label class="control-sidebar-subheading"> Allow mail redirect
+                            <input type="checkbox" class="pull-right" checked>
+                        </label>
+                        <p> Other sets of options are available </p>
+                    </div>
+                    <!-- /.form-group -->
+
+                    <div class="form-group">
+                        <label class="control-sidebar-subheading"> Expose author name in posts
+                            <input type="checkbox" class="pull-right" checked>
+                        </label>
+                        <p> Allow the user to show his name in blog posts </p>
+                    </div>
+                    <!-- /.form-group -->
+
+                    <h3 class="control-sidebar-heading">Chat Settings</h3>
+                    <div class="form-group">
+                        <label class="control-sidebar-subheading"> Show me as online
+                            <input type="checkbox" class="pull-right" checked>
+                        </label>
+                    </div>
+                    <!-- /.form-group -->
+
+                    <div class="form-group">
+                        <label class="control-sidebar-subheading"> Turn off notifications
+                            <input type="checkbox" class="pull-right">
+                        </label>
+                    </div>
+                    <!-- /.form-group -->
+
+                    <div class="form-group">
+                        <label class="control-sidebar-subheading"> Delete chat history <a href="javascript:void(0)" class="text-red pull-right"><i class="fa fa-trash-o"></i></a> </label>
+                    </div>
+                    <!-- /.form-group -->
+                </form>
+            </div>
+            <!-- /.tab-pane -->
+        </div>
+    </aside>
+    <!-- /.control-sidebar -->
+    <!-- Add the sidebar's background. This div must be placed
+           immediately after the control sidebar -->
+    <div class="control-sidebar-bg"></div>
+    </div>
+    <!-- ./wrapper -->
+
+    <!-- Bootstrap 3.3.7 -->
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- DataTables -->
+    <script src="bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script src="/common/sweetalert2/dist/sweetalert2.min.js"></script>
+    <script src="/common/zoom/zoom.js"></script>
+    <script src="/common/js/Chart.min.js"></script>
+    <!-- Include a polyfill for ES6 Promises (optional) for IE11 and Android browser -->
+
+    <!-- SlimScroll -->
+    <script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+    <!-- FastClick -->
+    <script src="bower_components/fastclick/lib/fastclick.js"></script>
+    <!-- AdminLTE App -->
+    <script src="dist/js/adminlte.min.js"></script>
+
+    <script src="//cdn.staticfile.org/plupload/2.1.8/moxie.js"></script>
+    <script src="//cdn.staticfile.org/plupload/2.1.8/plupload.dev.js"></script>
+    <script src="//cdn.staticfile.org/plupload/2.1.8/i18n/zh_CN.js"></script>
+    <script src="bower_components/qiniu/dist/qiniu.min.js"></script>
+
+    <!-- AdminLTE for demo purposes -->
+    <script src="dist/js/demo.js"></script>
+    <script src="js/react.js"></script>
+    <script src="js/react-dom.js"></script>
+    <script src="js/template/index.js"></script>
+
+    <!-- page script -->
+    <script src="js/template/apps.js">
+    </script>
+</body>
+
+</html>

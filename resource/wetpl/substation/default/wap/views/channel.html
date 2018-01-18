@@ -1,0 +1,174 @@
+<#extend#>public/coc/coc_extend.html</#extend#>
+
+<script src="{{PATH_TML}}js/coc/swipe.min.js"></script>
+<style>
+    [v-cloak] {
+        display: none;
+    }
+</style>
+
+<div id="viewport" class="viewport" style="width:100%;margin-bottom:15px">
+    <!--图片轮换开始-->
+    <div class="banner1">
+        <div id='mySwipe' class='swipe'>
+            <div class='swipe-wrap'>
+                <div v-for="(item,index) in recommend"> 
+                    <a :href="pathname + '/' + item.weid | href('weplats')"><img :src="item.thumb_image | img_src(300 , 200 , 1)" width="100%" height="220px" /></a> 
+                    <div class="mySwipeceng">
+                        <div class="left"><b style='font-weight:normal'>{{item.title | limitLen(0,21)}}</b></div>
+                        <div class="mySwip_rg"> <span class="mySwipetabdiancurr"></span><span class="mySwipetabdian"></span>
+                            <span class="mySwipetabdian"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--头条-->
+    <div class="lthot" v-for="(item, index) in hot">
+        <h1><a :href="pathname + '/' + item.weid | href('weplats')"><b style="font-weight:normal;text-align:left;color:#007cd3;width: 388px;overflow: hidden;white-space: nowrap;display: inline-block;" >{{item.title | limitLen(0,18)}}</b></a></h1>
+        <p><a :href="pathname + '/' + item.weid | href('weplats')">{{item.summary | limitLen(0,83)}}<span>[查看全文]</span></a></p>
+        <div class="clear"></div>
+    </div>
+    <div class="clear"></div>
+    <!--头条 end-->
+
+    <!--内容一-->
+    <div :id="'Tab1'+index" class="Tabs" v-for="(item, index) in channel_list">
+        <div class="Menubox">
+            <dl>
+                <dd v-for="(value, key) in item" :id="'list_'+index+'_'+key" @click="setTab(value.weid,'list_'+index+'_'+key,value.title)" :class="{hover:selected == key}">
+                    {{value.title | limitLen(0,6)}}
+                </dd>
+            </dl>
+        </div>
+        <div class="Contentbox">
+            <div v-for="(value, key) in item" :class="'list_'+index+'_'+key" v-if="isShow.filter(x => value.weid == x.id)[0].type">
+                <div class="Menumore">
+                    <a :href="pathname + '/' + value.domain | href('weplats')">更多</a>
+                </div>
+                <ul class="Content_wz">
+                    <li v-for="(val, inde) in value.detail">
+                        <a :href="pathname + '/' + val.weid | href('weplats')">
+                            <h2><b style="font-weight:normal;" v-html="val.title"></b></h2><span class="sytjlb_sj">{{val.publish_time.substr(0, 10)}}</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            selected : 0,
+            isTrue : false,
+            hot  : [],
+            recommend : [],
+            channel_list : [],
+            pathname : 'news',
+            isShow: []
+        },
+        mounted: function() {
+
+            // 热点新闻
+            ajax.get('scms/contents', {params: {channel_id: this.pathname, limit: 1, hot: 1, index_show: 1}}).then((res) => {
+                if (res.data && res.code === 200) {
+                    this.hot  = res.data.list;
+                }
+            })
+
+            // 推荐新闻
+            ajax.get('scms/contents', {params: {channel_id: this.pathname, limit: 3, is_pose: 1, index_show: 1}}).then((res) => {
+                if (res.data && res.code === 200) {
+                    this.recommend = res.data.list;
+                    this.$nextTick(()=>{
+                        this.swiper();
+                    });
+                }
+            })
+
+            // 频道详情
+            ajax.get("scms/channels/domain_query/"+this.pathname).then((res) => {
+                if (res.data && res.code === 200) {
+                    plats.show_title = '首页';
+                    plats.title = res.data.title;
+                    plats.url = all_domian + this.pathname;
+                    $app.set_title(plats.title +' - '+ plats_info.title);
+                }
+            })
+
+            // 栏目列表 、 文章列表
+            ajax.get("scms/index/list_news_by_channel", {params: {channel: this.pathname, limit: 8}}).then((res) => {
+                if (res.data && res.code === 200) {
+                    var channel_list = [];
+                    res.data.forEach((item, index)=>{
+                        if(index % 2 === 0) {
+                            channel_list[Math.floor(index/2)] = new Array();
+                            this.isShow.push({id: item.weid, type: true, flag: 0})
+                        } else {
+                            this.isShow.push({id: item.weid, type: false, flag: 0})
+                        }
+                        channel_list[Math.floor(index/2)][index%2] = item;
+                    });
+                    this.channel_list = channel_list;
+                }
+            });
+
+        },
+        methods: {
+            swiper() {
+                var elem = document.getElementById('mySwipe');
+                Swipe(elem, {
+                    startSlide: 0,
+                    auto: 3000,
+                    continuous: true,
+                    disableScroll: true,
+                    stopPropagation: true
+                });
+            },
+            data(params , call){
+                return $mob_ajax.cms_lists(params , call);
+            },
+            setTab(this_id, li_id, dd_title) {
+
+                $app.set_title(dd_title +' - '+ plats.title +'_'+ plats_info.title);
+                var elem=document.getElementById(li_id).parentNode;
+                var elem_child = elem.childNodes;
+                for(var i = 0; i < elem_child.length; i++){
+                    if(elem_child[i].id == li_id) {
+                        event.currentTarget.className = "hover";
+                    } else {
+                        var s = elem_child[i].id;
+                        document.getElementById(s).className = '';
+                    }
+                }
+
+                this.isShow = this.isShow.map(x => {
+                    if (x.id == this_id) {
+                        x.type = true;
+                        x.flag = 1;
+                        return x;
+                    } else {
+                        return x;
+                    }
+                })
+
+                for (let i = 0; i < this.isShow.length; i++) {
+                    if (this.isShow[i].flag == 1 && this.isShow[i].id == this_id) {
+                        if (i % 2 == 0) {
+                            this.isShow[i + 1].type = false;
+                            this.isShow[i + 1].flag = 0;
+                        } else {
+                            this.isShow[i - 1].type = false;
+                            this.isShow[i - 1].flag = 0;
+                        }
+                    }
+                }
+            }
+        },
+    });
+</script>

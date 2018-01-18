@@ -175,6 +175,46 @@
          }
      }
  });
+ var uploader2 = Qiniu.uploader({
+     runtimes: 'html5,flash,html4',
+     browse_button: 'pickfiles2',
+     uptoken_url: QINIU_UPTOKEN_URL,
+     get_new_uptoken: false,
+     domain: ApiMaterPlatQiniuDomain,
+     container: 'look',
+     max_file_size: '100mb',
+     flash_swf_url: '../../common/js/plupload/Moxie.swf',
+     max_retries: 3,
+     dragdrop: true,
+     drop_element: 'look',
+     chunk_size: '4mb',
+     auto_start: true,
+     init: {
+         'FilesAdded': function(up, files) {
+             /*plupload.each(files, function(file) {
+             });*/
+         },
+         'BeforeUpload': function(up, file) {},
+         'UploadProgress': function(up, file) {},
+         'FileUploaded': function(up, file, info) {
+             var domain = up.getOption('domain');
+             res = JSON.parse(info.response);
+
+             var path = res.key;
+
+             var sourceLink = domain + res.key;
+             $("#img2").attr('src', sourceLink);
+             $("input[name=wx_qun_qrcode]").val(res.key);
+         },
+         'Error': function(up, err, errTip) {},
+         'UploadComplete': function() {},
+         'Key': function(up, file) {
+             var key = "pages/activity/";
+             key += new Date().valueOf() + '.' + file.name.substring(file.name.indexOf('.') + 1);
+             return key;
+         }
+     }
+ });
 
 
  $(function() {
@@ -338,6 +378,15 @@
          console.log($('#J_ActivityProperty').get(0).checked);
      })
 
+     // 是否为隐私活动
+     $("#is_open_qun").bind("click", function() {
+         if ($('#is_open_qun').get(0).checked) {
+             $('.qunqr').show();
+         } else {
+             $('.qunqr').hide();
+         }
+     })
+
      $(".select-control-time").bind("change", function() {
          var selectitem = $(this).attr("id");
          var beginTime = $("#J_ActivityStartTime").val();
@@ -401,6 +450,8 @@
          var type = $("input[name=type]:checked").val();
          var price = $("#J_ActivityPrice").val();
          var is_private = $('#J_ActivityProperty').get(0).checked ? 2 : 1;
+         var is_open_qun = $('#is_open_qun').get(0).checked ? 2 : 1;
+         var wx_qun_qrcode = $("input[name=wx_qun_qrcode]").val();
          if (!$("#J_ActivityProtocal").get(0).checked) {
              mess_tusi("请选择阅读并同意");
              return;
@@ -473,7 +524,9 @@
                  deletedGuests: deletedGuests,
                  deletedTickets: deletedTickets,
                  status: status,
-                 is_private: is_private
+                 is_private: is_private,
+                 is_open_qun: is_open_qun,
+                 wx_qun_qrcode: wx_qun_qrcode
              }
              // return;
              // 判断是编辑还是发布
@@ -506,6 +559,9 @@
                      } else {
                          mess_tusi(data.message);
                      }
+                     setTimeout(function() {
+                         window.location.href = '/user/admin/activity/list';
+                     }, 2000);
                  },
                  error: function(xhr) {
                      console.log(xhr);
@@ -533,10 +589,15 @@
                              deletedGuests.splice(0, deletedGuests.length);
                              deletedTickets.splice(0, deletedTickets.length);
 
+
                          } else {
-                             mess_tusi("活动发布成功");
+
 
                          }
+                         mess_tusi("活动发布成功");
+                         setTimeout(function() {
+                             window.location.href = '/user/admin/activity/list';
+                         }, 2000);
                      } else {
                          mess_tusi(data.message);
                      }
@@ -968,6 +1029,17 @@
                              $('#J_ActivityProperty').get(0).checked = true;
                          } else {
                              $('#J_ActivityProperty').get(0).checked = false;
+                         }
+                         if (data.data.is_open_qun == 2) {
+                             $('#is_open_qun').get(0).checked = true;
+                             $('.qunqr').show();
+                         } else {
+                             $('#is_open_qun').get(0).checked = false;
+                             $('.qunqr').hide();
+                         }
+                         if (data.data.wx_qun_qrcode != "" && data.data.wx_qun_qrcode != null && data.data.wx_qun_qrcode != undefined) {
+                             $("#img2").attr("src", qiniu_bucket_domain + data.data.wx_qun_qrcode);
+                             $("input[name=wx_qun_qrcode]").val(data.data.wx_qun_qrcode);
                          }
                          //if (data.data.status == 2) {
                          $(".btn-save").remove();

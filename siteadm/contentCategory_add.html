@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.7 -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="bower_components/Ionicons/css/ionicons.min.css">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
+    <!-- Select2 -->
+    <link rel="stylesheet" href="bower_components/select2/dist/css/select2.min.css">
+    <link rel="stylesheet" href="/common/sweetalert2/dist/sweetalert2.min.css">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.min.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+    <!-- Google Font -->
+    <style>
+         ::-webkit-scrollbar {
+            width: 0;
+        }
+    </style>
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+    <div class="wrapper">
+        <aside class="main-sidebar">
+            <!-- sidebar: style can be found in sidebar.less -->
+            <section class="sidebar">
+                <!-- search form -->
+                <form action="#" method="get" class="sidebar-form">
+                    <div class="input-group">
+                        <input type="text" name="q" class="form-control" placeholder="Search...">
+                        <span class="input-group-btn">
+                    <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+                    </button>
+                  </span>
+                    </div>
+                </form>
+                <!-- /.search form -->
+                <ul id="root" class="sidebar-menu" data-widget="tree"></ul>
+            </section>
+            <!-- /.sidebar -->
+        </aside>
+        <!-- content-wrapper -->
+        <div class="content-wrapper">
+            <input type="hidden" name="config-url" value="contentCategory.html">
+            <section class="content-header">
+                <h1> 新增栏目 </h1>
+                <!--
+            <ol class="breadcrumb"> 
+                <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li> 
+                <li><a href="#">Tables</a></li> 
+                <li class="active">Data tables</li> 
+            </ol>
+           -->
+            </section>
+            <!-- Main content -->
+            <section class="content">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="box box-info">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">基本信息</h3>
+                            </div>
+
+                            <div class="box-body">
+                                <form id="form" action="" method="post" class="form-horizontal" enctype="multipart/form-data">
+                                    <input type="hidden" name="_token" value="pKw8le5hYJQSNk4EKWUGEs23SQPbqdGlZeQF94fZ">
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2">所属频道*</label>
+                                        <div class="col-sm-5">
+                                            <select name="channel_id" class="form-control">
+                                                    <option value="">请选择</option>
+										</select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2">上级栏目</label>
+                                        <div class="col-sm-5">
+                                            <select name="parent_id" class="form-control">
+                                                    <option value="">设为顶级</option>
+										</select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2">栏目名称*</label>
+                                        <div class="col-sm-5">
+                                            <input type="text" value="" class="form-control" name="title" placeholder="1到32个字符">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2">个性别名*</label>
+                                        <div class="col-sm-5">
+                                            <input type="text" value="" class="form-control" name="domain" placeholder="1到10个小写英文字母">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2">类型*</label>
+                                        <div class="col-sm-5">
+                                            <select name="type" class="form-control">
+                                            <option value="0" selected>文章集合</option>
+                                            <option value="1">图文单页</option>
+                                            <option value="2">专题</option>
+                                            <option value="3">视频</option>
+                                        </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2">首页展示</label>
+                                        <div class="col-sm-5">
+                                            <div class="checkbox">
+                                                <label><input type="checkbox" name="index_show" value="1"></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2">特别推荐</label>
+                                        <div class="col-sm-5">
+                                            <div class="checkbox">
+                                                <label><input type="checkbox" name="index_pose" value="1"></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">缩略图</label>
+                                        <div class="col-sm-5">
+                                            <p style="padding-top:7px" class="info"> 上传格式： .png、.jpg、 .gif, 建议尺寸：100像素 * 100像素</p>
+                                            <input name="thumb_image" type="hidden" value="" class="form-control" />
+                                            <input id="pickfiles" name="cover" type="file" class="form-control hide" />
+                                            <div id="look">
+                                                <img onclick="$('#pickfiles').click()" id="img" width="100px;" src="//oty3r3tmi.bkt.clouddn.com/upload.png" alt="暂无预览图片" class="thumbnail">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">展示图</label>
+                                        <div class="col-sm-5">
+                                            <p style="padding-top:7px" class="info"> 上传格式： .png、.jpg、 .gif</p>
+                                            <input name="big_image" type="hidden" value="" class="form-control" />
+                                            <input id="pickfiles2" name="cover" type="file" class="form-control hide" />
+                                            <div id="look">
+                                                <img onclick="$('#pickfiles2').click()" id="img2" width="100px;" src="//oty3r3tmi.bkt.clouddn.com/upload.png" alt="暂无预览图片" class="thumbnail">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">背景图</label>
+                                        <div class="col-sm-5">
+                                            <p style="padding-top:7px" class="info"> 上传格式： .png、.jpg、 .gif</p>
+                                            <input name="back_image" type="hidden" value="" class="form-control" />
+                                            <input id="pickfiles3" name="cover" type="file" class="form-control hide" />
+                                            <div id="look">
+                                                <img onclick="$('#pickfiles3').click()" id="img3" width="100px;" src="//oty3r3tmi.bkt.clouddn.com/upload.png" alt="暂无预览图片" class="thumbnail">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group template-group">
+                                        <label class="control-label col-sm-2">模板选择*</label>
+                                        <div class="col-sm-10">
+                                            <div class="row" style="margin-bottom: 10px">
+                                                <label class="col-sm-1 control-label" style="font-weight: normal;color: #555;">列表页</label>
+                                                <div class="col-sm-4">
+                                                    <input type="text" class="form-control" name="list" value="" readonly>
+                                                    <input type="hidden" class="form-control" name="list_field">
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <button type="button" class="btn btn-primary pop-modal" data-type="1">选择模板</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <label class="control-label col-sm-2"></label>
+                                        <div class="col-sm-10">
+                                            <div class="row" style="margin-bottom: 10px">
+                                                <label class="col-sm-1 control-label" style="font-weight: normal;color: #555;">详情页</label>
+                                                <div class="col-sm-4">
+                                                    <input type="text" class="form-control" name="show" value="" readonly>
+                                                    <input type="hidden" class="form-control" name="show_field">
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <button type="button" class="btn btn-primary pop-modal" data-type="2">选择模板</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <label class="control-label col-sm-2"></label>
+                                        <div class="col-sm-10">
+                                            <div class="row" style="margin-bottom: 10px">
+                                                <label class="col-sm-1 control-label" style="font-weight: normal;color: #555;">单页面</label>
+                                                <div class="col-sm-4">
+                                                    <input type="text" class="form-control" name="page" value="" readonly>
+                                                    <input type="hidden" class="form-control" name="page_field">
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <button type="button" class="btn btn-primary pop-modal" data-type="3">选择模板</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group editor1" style="display:none">
+                                        <label class="control-label col-sm-2">页面内容</label>
+                                        <div class="col-sm-5">
+                                            <textarea id="editor1" rows="3" name="content" class="form-control" placeholder="请输入页面展示内容"></textarea>
+                                        </div>
+                                    </div>
+                                </form>
+                                <div class="col-sm-7" style="margin-bottom: 35px;">
+                                    <button type="button" class="btn btn-info submit">提交</button>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <!--modal-->
+            <div class="modal fade" id="bootstrapModal" tabindex="-1" role="dialog" aria-labelledby="bootstrapModal">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="bootstrapModal">选择模板</h4>
+                        </div>
+                        <div class="modal-body">
+                            <table class="table table-hover template-lists-table" width="100%">
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Create the tabs -->
+            <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
+                <li><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
+                <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
+            </ul>
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <!-- Home tab content -->
+                <div class="tab-pane" id="control-sidebar-home-tab">
+                    <h3 class="control-sidebar-heading">Recent Activity</h3>
+                    <ul class="control-sidebar-menu">
+                        <li>
+                            <a href="javascript:void(0)">
+                                <i class="menu-icon fa fa-birthday-cake bg-red"></i>
+
+                                <div class="menu-info">
+                                    <h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
+
+                                    <p>Will be 23 on April 24th</p>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)">
+                                <i class="menu-icon fa fa-user bg-yellow"></i>
+
+                                <div class="menu-info">
+                                    <h4 class="control-sidebar-subheading">Frodo Updated His Profile</h4>
+
+                                    <p>New phone +1(800)555-1234</p>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)">
+                                <i class="menu-icon fa fa-envelope-o bg-light-blue"></i>
+
+                                <div class="menu-info">
+                                    <h4 class="control-sidebar-subheading">Nora Joined Mailing List</h4>
+
+                                    <p>nora@type.com</p>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)">
+                                <i class="menu-icon fa fa-file-code-o bg-green"></i>
+
+                                <div class="menu-info">
+                                    <h4 class="control-sidebar-subheading">Cron Job 254 Executed</h4>
+
+                                    <p>Execution time 5 seconds</p>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- /.control-sidebar-menu -->
+
+                    <h3 class="control-sidebar-heading">Tasks Progress</h3>
+                    <ul class="control-sidebar-menu">
+                        <li>
+                            <a href="javascript:void(0)">
+                                <h4 class="control-sidebar-subheading">
+                                    Custom Template Design
+                                    <span class="label label-danger pull-right">70%</span>
+                                </h4>
+
+                                <div class="progress progress-xxs">
+                                    <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)">
+                                <h4 class="control-sidebar-subheading">
+                                    Update Resume
+                                    <span class="label label-success pull-right">95%</span>
+                                </h4>
+
+                                <div class="progress progress-xxs">
+                                    <div class="progress-bar progress-bar-success" style="width: 95%"></div>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)">
+                                <h4 class="control-sidebar-subheading">
+                                    Laravel Integration
+                                    <span class="label label-warning pull-right">50%</span>
+                                </h4>
+
+                                <div class="progress progress-xxs">
+                                    <div class="progress-bar progress-bar-warning" style="width: 50%"></div>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)">
+                                <h4 class="control-sidebar-subheading">
+                                    Back End Framework
+                                    <span class="label label-primary pull-right">68%</span>
+                                </h4>
+
+                                <div class="progress progress-xxs">
+                                    <div class="progress-bar progress-bar-primary" style="width: 68%"></div>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- /.control-sidebar-menu -->
+
+                </div>
+                <!-- /.tab-pane -->
+                <!-- Stats tab content -->
+                <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div>
+                <!-- /.tab-pane -->
+                <!-- Settings tab content -->
+                <div class="tab-pane" id="control-sidebar-settings-tab">
+                    <form method="post">
+                        <h3 class="control-sidebar-heading">General Settings</h3>
+
+                        <div class="form-group">
+                            <label class="control-sidebar-subheading">
+                            Report panel usage
+                            <input type="checkbox" class="pull-right" checked>
+                        </label>
+
+                            <p>
+                                Some information about this general settings option
+                            </p>
+                        </div>
+                        <!-- /.form-group -->
+
+                        <div class="form-group">
+                            <label class="control-sidebar-subheading">
+                            Allow mail redirect
+                            <input type="checkbox" class="pull-right" checked>
+                        </label>
+
+                            <p>
+                                Other sets of options are available
+                            </p>
+                        </div>
+                        <!-- /.form-group -->
+
+                        <div class="form-group">
+                            <label class="control-sidebar-subheading">
+                            Expose author name in posts
+                            <input type="checkbox" class="pull-right" checked>
+                        </label>
+
+                            <p>
+                                Allow the user to show his name in blog posts
+                            </p>
+                        </div>
+                        <!-- /.form-group -->
+
+                        <h3 class="control-sidebar-heading">Chat Settings</h3>
+
+                        <div class="form-group">
+                            <label class="control-sidebar-subheading">
+                            Show me as online
+                            <input type="checkbox" class="pull-right" checked>
+                        </label>
+                        </div>
+                        <!-- /.form-group -->
+
+                        <div class="form-group">
+                            <label class="control-sidebar-subheading">
+                            Turn off notifications
+                            <input type="checkbox" class="pull-right">
+                        </label>
+                        </div>
+                        <!-- /.form-group -->
+
+                        <div class="form-group">
+                            <label class="control-sidebar-subheading">
+                            Delete chat history
+                            <a href="javascript:void(0)" class="text-red pull-right"><i class="fa fa-trash-o"></i></a>
+                        </label>
+                        </div>
+                        <!-- /.form-group -->
+                    </form>
+                </div>
+                <!-- /.tab-pane -->
+            </div>
+        </aside>
+        <!-- /.control-sidebar -->
+        <!-- Add the sidebar's background. This div must be placed
+         immediately after the control sidebar -->
+        <div class="control-sidebar-bg"></div>
+    </div>
+    <!-- ./wrapper -->
+
+    <!-- jQuery 3 -->
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <!-- Bootstrap 3.3.7 -->
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="//cdn.staticfile.org/jquery.bootstrapvalidator/0.5.3/js/bootstrapValidator.min.js"></script>
+    <!-- DataTables -->
+    <script src="bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <!-- SlimScroll -->
+    <script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+    <!-- FastClick -->
+    <script src="bower_components/fastclick/lib/fastclick.js"></script>
+    <!-- AdminLTE App -->
+    <script src="dist/js/adminlte.min.js"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src="dist/js/demo.js"></script>
+    <!-- ckeditor -->
+    <script src="plugins/ckeditor/ckeditor.js"></script>
+    <script src="/common/sweetalert2/dist/sweetalert2.min.js"></script>
+
+
+
+    <script src="js/react.js"></script>
+    <script src="js/react-dom.js"></script>
+    <script src="js/browser.min.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/template/index.js"></script>
+
+    <!-- page script -->
+    <script src="//cdn.staticfile.org/jquery/1.9.1/jquery.min.js"></script>
+    <script src="//cdn.staticfile.org/plupload/2.1.8/moxie.js"></script>
+    <script src="//cdn.staticfile.org/plupload/2.1.8/plupload.dev.js"></script>
+    <script src="//cdn.staticfile.org/plupload/2.1.8/i18n/zh_CN.js"></script>
+
+    <script src="bower_components/qiniu/dist/qiniu.min.js"></script>
+    <script>
+        jQuery.noConflict();
+
+        var qiniu_uptoken = '';
+        var saveto = 'qiniu';
+        var qiniu_upload_domain = '//upload.qiniu.com';
+        var qiniu_bucket_domain = ApiMaterPlatQiniuDomain;
+        CKEDITOR.replace('editor1', {
+            "extraPlugins": "filebrowser,image,imagepaste,filetools,flash"
+        });
+
+        $(function($) {
+            var __init = function() {
+                $.ajax({
+                    url: ApiUrl + 'file/qiniu_token?t=' + Math.random(),
+                    type: 'get',
+                    dataType: 'json',
+                    success: function(data) {
+                        qiniu_uptoken = data.uptoken;
+                    },
+                    error: function(xhr) {
+                        console.log(xhr);
+                    }
+                });
+
+                $.ajax({
+                    url: ApiUrl + 'scms/channels',
+                    type: 'get',
+                    dataType: 'json',
+                    success: function(data) {
+                        $.each(data.data.list, function(k, v) {
+                            var option = `<option value="` + v.weid + `">` + v.title + `</option>`;
+                            $('select[name=channel_id]').append(option);
+                        });
+                    },
+                    error: function(xhr) {
+                        console.log(xhr);
+                    }
+                });
+            };
+            __init();
+
+            var __cate_init = function(channel_id) {
+                $.ajax({
+                    url: ApiUrl + 'scms/channel_categories?channel=' + channel_id,
+                    type: 'get',
+                    dataType: 'json',
+                    success: function(data) {
+                        var option = '<option value="">设为顶级</option>';
+                        $.each(data.data, function(k, v) {
+                            option += `<option value="` + v.weid + `">` + v.title + `</option>`;
+                        });
+                        $('select[name=parent_id]').html(option);
+                    },
+                    error: function(xhr) {
+                        console.log(xhr);
+                    }
+                });
+            }
+            $(document).on('change', 'select[name=channel_id]', function() {
+                var channel_id = $(this).val();
+                __cate_init(channel_id);
+            });
+            var uploader = Qiniu.uploader({
+                runtimes: 'html5,flash,html4',
+                browse_button: 'pickfiles',
+                uptoken_url: ApiUrl + 'file/qiniu_token',
+                get_new_uptoken: false,
+                domain: ApiMaterPlatQiniuDomain,
+                container: 'look',
+                max_file_size: '100mb',
+                flash_swf_url: '//cdn.staticfile.org/plupload/2.1.8/Moxie.swf',
+                max_retries: 3,
+                dragdrop: true,
+                drop_element: 'look',
+                chunk_size: '4mb',
+                auto_start: true,
+                filters: {
+                    max_file_size: '5mb',
+                    prevent_duplicates: true,
+                    // Specify what files to browse for
+                    mime_types: [{
+                        title: "Image files",
+                        extensions: "jpg,gif,png"
+                    }, ]
+                },
+                init: {
+                    'FilesAdded': function(up, files) {
+                        plupload.each(files, function(file) {});
+                    },
+                    'BeforeUpload': function(up, file) {},
+                    'UploadProgress': function(up, file) {},
+                    'FileUploaded': function(up, file, info) {
+                        var domain = up.getOption('domain');
+                        res = JSON.parse(info.response);
+                        $("input[name=thumb_image]").val(res.key);
+                        var sourceLink = domain + res.key;
+                        $("#img").attr('src', sourceLink);
+                    },
+                    'Error': function(up, err, errTip) {},
+                    'UploadComplete': function() {},
+                    'Key': function(up, file) {
+                        var key = "plats/resource/";
+                        key += new Date().valueOf() + '.' + file.name.substring(file.name.indexOf('.') + 1);
+                        return key;
+                    }
+                }
+            });
+            var uploader2 = Qiniu.uploader({
+                runtimes: 'html5,flash,html4',
+                browse_button: 'pickfiles2',
+                uptoken_url: ApiUrl + 'file/qiniu_token',
+                get_new_uptoken: false,
+                domain: ApiMaterPlatQiniuDomain,
+                container: 'look',
+                max_file_size: '100mb',
+                flash_swf_url: '//cdn.staticfile.org/plupload/2.1.8/Moxie.swf',
+                max_retries: 3,
+                dragdrop: true,
+                drop_element: 'look',
+                chunk_size: '4mb',
+                auto_start: true,
+                filters: {
+                    max_file_size: '5mb',
+                    prevent_duplicates: true,
+                    // Specify what files to browse for
+                    mime_types: [{
+                        title: "Image files",
+                        extensions: "jpg,gif,png"
+                    }, ]
+                },
+                init: {
+                    'FilesAdded': function(up, files) {
+                        plupload.each(files, function(file) {});
+                    },
+                    'BeforeUpload': function(up, file) {},
+                    'UploadProgress': function(up, file) {},
+                    'FileUploaded': function(up, file, info) {
+                        var domain = up.getOption('domain');
+                        res = JSON.parse(info.response);
+                        $("input[name=big_image]").val(res.key);
+                        var sourceLink = domain + res.key;
+                        $("#img2").attr('src', sourceLink);
+                    },
+                    'Error': function(up, err, errTip) {},
+                    'UploadComplete': function() {},
+                    'Key': function(up, file) {
+                        var key = "plats/resource/";
+                        key += new Date().valueOf() + '.' + file.name.substring(file.name.indexOf('.') + 1);
+                        return key;
+                    }
+                }
+            });
+            var uploader3 = Qiniu.uploader({
+                runtimes: 'html5,flash,html4',
+                browse_button: 'pickfiles3',
+                uptoken_url: ApiUrl + 'file/qiniu_token',
+                get_new_uptoken: false,
+                domain: ApiMaterPlatQiniuDomain,
+                container: 'look',
+                max_file_size: '100mb',
+                flash_swf_url: '//cdn.staticfile.org/plupload/2.1.8/Moxie.swf',
+                max_retries: 3,
+                dragdrop: true,
+                drop_element: 'look',
+                chunk_size: '4mb',
+                auto_start: true,
+                filters: {
+                    max_file_size: '5mb',
+                    prevent_duplicates: true,
+                    // Specify what files to browse for
+                    mime_types: [{
+                        title: "Image files",
+                        extensions: "jpg,gif,png"
+                    }, ]
+                },
+                init: {
+                    'FileUploaded': function(up, file, info) {
+                        var domain = up.getOption('domain');
+                        res = JSON.parse(info.response);
+                        $("input[name=back_image]").val(res.key);
+                        var sourceLink = domain + res.key;
+                        $("#img3").attr('src', sourceLink);
+                    },
+                    'Error': function(up, err, errTip) {},
+                    'UploadComplete': function() {},
+                    'Key': function(up, file) {
+                        var key = "plats/resource/";
+                        key += new Date().valueOf() + '.' + file.name.substring(file.name.indexOf('.') + 1);
+                        return key;
+                    }
+                }
+            });
+
+            $('button.pop-modal').click(function() {
+                $('#bootstrapModal').modal('show');
+                var type = $(this).data('type');
+                $.ajax({
+                    url: ApiUrl + 'scms/template?type=' + type,
+                    type: 'get',
+                    dataType: 'json',
+                    success: function(data) {
+                        $.each(data.data, function(k, v) {
+                            var template = `<tr data-weid="` + v.weid + `"><td width="40%">` + v.title + `</td><td width="40%">` + v.template + `</td><><td><button type="button" class="btn btn-success pull-right chs-btn" data-type="` + type + `">选择</button></td><tr>`;
+                            $('.template-lists-table tbody').append(template);
+                        });
+                    },
+                    error: function(xhr) {
+                        console.log(xhr);
+                    }
+                });
+            });
+            $('#bootstrapModal').on('hidden.bs.modal', function(e) {
+                $('.template-lists-table tbody').html('');
+            });
+
+            $(document).on('change', 'select[name=type]', function() {
+                if ($(this).val() == 1) {
+                    $(".editor1").show();
+                } else {
+                    $(".editor1").hide();
+                }
+            });
+            $(document).on('click', '.chs-btn', function() {
+                var type = $(this).data('type');
+                if (type == 1) {
+                    $('input[name=list_field]').val($(this).closest('tr').data('weid'));
+                    $('input[name=list]').val($(this).closest('tr').find('td').eq(0).text());
+                    $('input[name=list]').click();
+
+                } else if (type == 2) {
+                    $('input[name=show_field]').val($(this).closest('tr').data('weid'));
+                    $('input[name=show]').val($(this).closest('tr').find('td').eq(0).text());
+                    $('input[name=show]').click();
+                } else {
+                    $('input[name=page_field]').val($(this).closest('tr').data('weid'));
+                    $('input[name=page]').val($(this).closest('tr').find('td').eq(0).text());
+                    $('input[name=page]').click();
+                }
+                $('#bootstrapModal').modal('hide');
+
+            });
+            $('.submit').click(function() {
+                $('#form').data('bootstrapValidator').validate();
+                if (!$('#form').data('bootstrapValidator').isValid()) {
+                    return;
+                }
+                var data = {
+                    'title': $('input[name=title]').val(),
+                    'domain': $('input[name=domain]').val(),
+                    'type': $('select[name=type]').val(),
+                    'index_show': $('input[name="index_show"]').is(':checked') ? 1 : 0,
+                    'index_pose': $('input[name="index_pose"]').is(':checked') ? 1 : 0,
+                    'thumb_image': $('input[name=thumb_image]').val(),
+                    'big_image': $('input[name=big_image]').val(),
+                    'back_image': $('input[name=back_image]').val(),
+                    'content': CKEDITOR.instances.editor1.getData(),
+                    'channel_id': $('select[name=channel_id]').val(),
+                    'parent_id': $('select[name=parent_id]').val(),
+                    'list_id': $('input[name=list_field]').val(),
+                    'show_id': $('input[name=show_field]').val(),
+                    'page_id': $('input[name=page_field]').val(),
+                };
+                $.post(ApiUrl + 'scms/categories', data, function(ret) {
+                    if (ret.code == 200) {
+                        location.href = 'contentCategory.html';
+                    } else {
+                        swal('提示', ret.message, 'error');
+                    }
+                }, 'JSON');
+            });
+
+            $('#form').bootstrapValidator({
+                message: 'This value is not valid',
+                feedbackIcons: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    title: {
+                        message: '标题无效',
+                        validators: {
+                            notEmpty: {
+                                message: '标题不能为空'
+                            },
+                            stringLength: {
+                                min: 1,
+                                max: 32,
+                                message: '标题长度为1-32位'
+                            }
+                        }
+                    },
+                    domain: {
+                        message: '别名无效',
+                        validators: {
+                            notEmpty: {
+                                message: '别名不能为空'
+                            },
+                            stringLength: {
+                                min: 1,
+                                max: 10,
+                                message: '别名长度为1到10位'
+                            },
+                            regexp: {
+                                regexp: /^[a-z0-9]+$/,
+                                message: '别名只能由小写字母或数字组成'
+                            }
+                        }
+                    },
+                    'channel_id': {
+                        message: '栏目无效',
+                        validators: {
+                            notEmpty: {
+                                message: '栏目不能为空'
+                            }
+                        }
+                    },
+                    'list': {
+                        message: '模板无效',
+                        trigger: 'click',
+                        validators: {
+                            notEmpty: {
+                                message: '模板不能为空'
+                            }
+                        }
+                    },
+                    'show': {
+                        message: '模板无效',
+                        trigger: 'click',
+                        validators: {
+                            notEmpty: {
+                                message: '模板不能为空'
+                            }
+                        }
+                    },
+                    'page': {
+                        message: '模板无效',
+                        trigger: 'click',
+                        validators: {
+                            notEmpty: {
+                                message: '模板不能为空'
+                            }
+                        }
+                    },
+                }
+            });
+
+        });
+    </script>
+
+</body>
+
+</html>

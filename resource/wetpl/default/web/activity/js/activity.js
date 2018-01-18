@@ -125,7 +125,7 @@ var qiniu_bucket_domain = ApiMaterPlatQiniuDomain;
 
                         '<div class="content">'+
                             '<div class="title ">'+
-                                '<a class="font-weight" href="'+domain+'/activity/'+data.weid+'">'+data.title+'</a>'+
+                                '<a class="font-weight" href="/'+domain+'/activity/'+data.weid+'">'+data.title+'</a>'+
                             '</div>'+
 
                             '<div class="jutishijian">'+

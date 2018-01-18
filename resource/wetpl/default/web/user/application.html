@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head lang="en">
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -20,526 +21,536 @@
     <script src="/common/js/layer/layer.js"></script>
     <title>微应用</title>
     <style type="text/css">
-                .art-img{
-              line-height:29px;
-                }
+        .art-img {
+            line-height: 29px;
+        }
+        
+        .qr-window table {
+            width: 220px;
+        }
+        
+        .td-title {
+            text-align: right;
+        }
     </style>
 </head>
+
 <body style="width: 100%; background: #F7F6F2;">
-<div class="login">
-    <div class="left-nav">
+    <div class="login">
+        <div class="left-nav">
 
-    </div>
-    <div id="top">
+        </div>
+        <div id="top">
 
-    </div>
-    <div id="middle">
+        </div>
+        <div id="middle">
 
-    </div>
-
-    <div id="right">
-        <div class="we-art-nav">
-            <ol class="breadcrumb" style="margin-bottom:0;">
-                <li class="homepage"><a>应用管理</a></li>
-                <li class="active">基础应用</li>
-            </ol>
         </div>
 
-        <div id="center">
-            <!--brand start-->
-            <div class="bottom">
-                <div class="brand">
-                    <div class="left">
-                        <div class="left_one">
-                            <span>1</span>
-                            <p>启用独立品牌</p>
-                        </div>
-                        <div class="left_two">
-                            <!--<span>!</span>-->
-                            <!--<p>没有开通二级域名,或独立域名无权操作</p>-->
-                        </div>
-                    </div>
-                    <div class="right">
-                        <div class="toggle-button-wrapper switch">
-                            <input type="checkbox" id="toggle-button-app" name="switch" checked>
-                            <label for="toggle-button-app" class="button-label">
-                                <span class="circle"></span>
-                                <span class="text on">ON</span>
-                                <span class="text off">OFF</span>
-                            </label>
-                        </div>
-                    </div>
-                </div>
+        <div id="right" style="display: none;">
+            <div class="we-art-nav">
+                <ol class="breadcrumb" style="margin-bottom:0;">
+                    <li class="homepage"><a>应用管理</a></li>
+                    <li class="active">基础应用</li>
+                </ol>
             </div>
-            <div class="list">
-                <div class="sign">
-                    <div class="sign_set">
-                        <p>短信签名设置</p>
-                        <div class="toggle-button-wrapper switch">
-                            <input type="checkbox" id="we_toggle-button-app2" name="switch">
-                            <label for="we_toggle-button-app2" class="button-label">
-                                <span class="circle"></span>
-                                <span class="text on">ON</span>
-                                <span class="text off">OFF</span>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="open" id="open2">展开</div>
-                </div>
-                <div class="open_content open_content2" style="display: none; padding-top: 8px;">
-                    <div class="input-group signset">
-                        <span>短信签名:</span>
-                        <input type="text" id="sign" class="form-control" placeholder="请输入短信签名" aria-describedby="basic-addon1" maxlength="6">
-                        <div class="btn-group save">
-                             <button class="button button-rounded button-highlight save_btn" style="margin-right: 24px;">保存</button>
-                        </div>
-                        <p>短信内容中显示的名称，6个字符以内<span id="title"></span></p>
-                    </div>
-                    <div class="input-group surplus ">
-                        <span>短信余量:</span>
-                        <input type="text" id="surplus" readonly="readonly" class="form-control surplus-npt" placeholder="0" aria-describedby="basic-addon1" value="0">
-                        <p class="unit">条<span>?</span></p>
-                        <div class="btn-group buy">
-                            <button class="button  button-rounded button-caution buy_btn">购买</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="open_content_buy" style="display: none;">
-                    <div class="buy_name">
-                        <p>购买短信包付费功能</p>
-                    </div>
-                    <div class="buy_info">
-                        <p><i class="title_data">全球秦商总会</i>的正式会员，并成功申请开通微主页（Wepages）后，可以购买短信包，给微友、会员、发送验证短信，还可以给用户、会员发送提醒与通知短信。短信价格为0.1元/条，短信包套餐最高享受<span>8折</span>优惠</p>
-                    </div>
-                    <div class="buy_setmeal">
-                        <p style="padding-top: 10px; width: 95px;">套餐选择:</p>
-                        <div class="btn-group prices">
-                            <!--<button type="button" class="btn btn-default dropdown-toggle price " aria-haspopup="true" aria-expanded="false">1000条/&yen100</button>-->
-                            <!--<button type="button" class="btn btn-default dropdown-toggle price " aria-haspopup="true" aria-expanded="false">2000条/&yen180</button>-->
-                            <!--<button type="button" class="btn btn-default dropdown-toggle price " aria-haspopup="true" aria-expanded="false">5000条/&yen450</button>-->
-                            <!--<button type="button" class="btn btn-default dropdown-toggle price " aria-haspopup="true" aria-expanded="false">10000条/&yen850</button>-->
-                            <!--<button type="button" class="btn btn-default dropdown-toggle price " aria-haspopup="true" aria-expanded="false">50000条/&yen4000</button>-->
-                        </div>
-                    </div>
-                    <div class="buy_order">
-                        <p style="padding-top: 17px;">支付方式:</p>
-                        <!-- <div class="input-group operate">
-                            <input type="password" id="operate-1" class="form-control" placeholder="请输入操作密令" aria-describedby="basic-addon1">
-                        </div> -->
-                        <style>
-                            .weixin, .zfb {
-                                width: 90px;
-                                height: 70px;
-                            }
-                            .weixin:hover, .zfb:hover {
-                                cursor: pointer;
-                            }
-                        </style>
-                        <div class="weixin"><img id="wx" src="/common/img/wxzf1.png" width="40" alt="" style="margin-left: 20px;"><p style="padding-left: 13px; padding-top: 5px;">微信支付</p></div>
-                        <div class="zfb"><img id="zfb" src="/common/img/zfb2.png" width="40" alt="" style="margin-left: 27px;"><p style="padding-left: 13px; padding-top: 5px;">支付宝支付</p></div>
-                    </div>
-                    <div class="buyNow">
-                        <button id="buyNow" class="button button-rounded button-highlight buy-now-btn">立即购买</button>
-                    </div>
-                </div>
 
-                <div class="sign" style="display:none;">
-                    <div class="sign_set">
-                        <p>微信登录设置</p>
-                        <div class="toggle-button-wrapper switch">
-                            <input type="checkbox" id="toggle-button-2" name="switch">
-                            <label for="toggle-button-2" class="button-label">
-                                <span class="circle"></span>
-                                <span class="text on">ON</span>
-                                <span class="text off">OFF</span>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="open" id="open-1">展开</div>
-                </div>
-                <div class="open_content_1" style="display: none;">
-                    <div class="input-group signset">
-                        <span>短信签名:</span>
-                        <input type="text" class="form-control" placeholder="" aria-describedby="basic-addon1">
-                        <div class="btn-group save">
-                            <button class="button button-rounded button-highlight save_btn" style="margin-right: 24px;">保存</button>
-                        </div>
-                        <p>短信内容中显示的名称，6个字符以内<span>【微众中国】</span></p>
-                    </div>
-                    <div class="input-group surplus ">
-                        <span>短信余量:</span>
-                        <input type="text" class="form-control surplus-npt" placeholder="" aria-describedby="basic-addon1">
-                        <p class="unit">条<span>?</span></p>
-                        <div class="btn-group buy">
-                            <button class="button  button-rounded button-caution buy_btn">购买</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="open_content_buy_1" style="display: none;">
-                    <div class="buy_name">
-                        <p>购买短信包付费功能</p>
-                    </div>
-                    <div class="buy_info">
-                        <p><i class="title_data">全球秦商总会</i>的正式会员，并成功申请开通微主页（Wepages）后，可以购买短信包，给微友、会员、发送验证短信，还可以给用户、会员发送提醒与通知短信。短信价格为0.1元/条，短信包套餐最高享受<span>8折</span>优惠</p>
-                    </div>
-                    <div class="buy_setmeal">
-                        <p>套餐选择:</p>
-                        <div class="btn-group prices">
-                            <button type="button" class="btn btn-default dropdown-toggle price " aria-haspopup="true" aria-expanded="false">1000条/&yen100</button>
-                            <button type="button" class="btn btn-default dropdown-toggle price " aria-haspopup="true" aria-expanded="false">2000条/&yen180</button>
-                            <button type="button" class="btn btn-default dropdown-toggle price " aria-haspopup="true" aria-expanded="false">5000条/&yen450</button>
-                            <button type="button" class="btn btn-default dropdown-toggle price " aria-haspopup="true" aria-expanded="false">10000条/&yen850</button>
-                            <button type="button" class="btn btn-default dropdown-toggle price " aria-haspopup="true" aria-expanded="false">50000条/&yen4000</button>
-                        </div>
-                    </div>
-                    <div class="buy_order">
-                        <p>操作密令:</p>
-                        <div class="input-group operate">
-                            <input type="text" class="form-control" placeholder="请输入操作密令" aria-describedby="basic-addon1">
-                        </div>
-                    </div>
-                    <div class="buyNow">
-                        <button class="button button-rounded button-highlight buy-now-btn">立即购买</button>
-                    </div>
-                </div>
-                <div class="sign" style="display:none;">
-                    <div class="sign_set">
-                        <p>PC扫码设置&nbsp&nbsp</p>
-                        <div class="toggle-button-wrapper switch">
-                            <input type="checkbox" id="toggle-button-3" name="switch">
-                            <label for="toggle-button-3" class="button-label">
-                                <span class="circle"></span>
-                                <span class="text on">ON</span>
-                                <span class="text off">OFF</span>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="open" id="open-2">展开</div>
-                </div>
-                <div class="open_content_2" style="display: none;">
-                    <div class="input-group signset">
-                        <span>短信签名:</span>
-                        <input type="text" class="form-control" placeholder="程序猿" aria-describedby="basic-addon1">
-                        <div class="btn-group save">
-                            <button class="button button-rounded button-highlight save_btn" style="margin-right: 24px;">保存</button>
-                        </div>
-                        <p>短信内容中显示的名称，6个字符以内<span>【微众中国】</span></p>
-                    </div>
-                    <div class="input-group surplus ">
-                        <span>短信余量:</span>
-                        <input type="text" class="form-control surplus-npt" placeholder="19" aria-describedby="basic-addon1">
-                        <p class="unit">条<span>?</span></p>
-                        <div class="btn-group buy">
-                            <button class="button  button-rounded button-caution buy_btn">购买</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="open_content_buy_2" style="display: none;">
-                    <div class="buy_name">
-                        <p>购买短信包付费功能</p>
-                    </div>
-                    <div class="buy_info">
-                        <p><i class="title_data">全球秦商总会</i>的正式会员，并成功申请开通微主页（Wepages）后，可以购买短信包，给微友、会员、发送验证短信，还可以给用户、会员发送提醒与通知短信。短信价格为0.1元/条，短信包套餐最高享受<span>8折</span>优惠</p>
-                    </div>
-                    <div class="buy_setmeal">
-                        <p>套餐选择:</p>
-                        <div class="btn-group prices">
-                            <button type="button" class="btn btn-default dropdown-toggle price " aria-haspopup="true" aria-expanded="false">1000条/&yen100</button>
-                            <button type="button" class="btn btn-default dropdown-toggle price " aria-haspopup="true" aria-expanded="false">2000条/&yen180</button>
-                            <button type="button" class="btn btn-default dropdown-toggle price " aria-haspopup="true" aria-expanded="false">5000条/&yen450</button>
-                            <button type="button" class="btn btn-default dropdown-toggle price " aria-haspopup="true" aria-expanded="false">10000条/&yen850</button>
-                            <button type="button" class="btn btn-default dropdown-toggle price " aria-haspopup="true" aria-expanded="false">50000条/&yen4000</button>
-                        </div>
-                    </div>
-                    <div class="buy_order">
-                        <p>操作密令:</p>
-                        <div class="input-group operate">
-                            <input type="text" class="form-control" placeholder="请输入操作密令" aria-describedby="basic-addon1">
-                        </div>
-                    </div>
-                    <div class="buyNow">
-                        <button class="button button-rounded button-highlight buy-now-btn">立即购买</button>
-                    </div>
-                </div>
-                <div class="sign" style="display:none;">
-                    <div class="sign_set">
-                        <p>微信支付配置</p>
-                        <div class="toggle-button-wrapper switch">
-                            <input type="checkbox" id="toggle-button-4" name="switch">
-                            <label for="toggle-button-4" class="button-label">
-                                <span class="circle"></span>
-                                <span class="text on">ON</span>
-                                <span class="text off">OFF</span>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="open" id="open-3">展开</div>
-                </div>
-                <div class="open_content_3" style="display: none;">
-                    <div class="input-group signset">
-                        <span>短信签名:</span>
-                        <input type="text" class="form-control" placeholder="程序猿" aria-describedby="basic-addon1">
-                        <div class="btn-group save">
-                            <button class="button button-rounded button-highlight save_btn" style="margin-right: 24px;">保存</button>
-                        </div>
-                        <p>短信内容中显示的名称，6个字符以内<span>【微众中国】</span></p>
-                    </div>
-                    <div class="input-group surplus ">
-                        <span>短信余量:</span>
-                        <input type="text" class="form-control surplus-npt" placeholder="19" aria-describedby="basic-addon1">
-                        <p class="unit">条<span>?</span></p>
-                        <div class="btn-group buy">
-                            <button class="button  button-rounded button-caution buy_btn">购买</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="open_content_buy_3" style="display: none;">
-                    <div class="buy_name">
-                        <p>购买短信包付费功能</p>
-                    </div>
-                    <div class="buy_info">
-                        <p><i class="title_data">全球秦商总会</i>的正式会员，并成功申请开通微主页（Wepages）后，可以购买短信包，给微友、会员、发送验证短信，还可以给用户、会员发送提醒与通知短信。短信价格为0.1元/条，短信包套餐最高享受<span>8折</span>优惠</p>
-                    </div>
-                    <div class="buy_setmeal">
-                        <p>套餐选择:</p>
-                        <div class="btn-group prices">
-                            <button type="button" class="btn btn-default dropdown-toggle price " aria-haspopup="true" aria-expanded="false">1000条/&yen100</button>
-                            <button type="button" class="btn btn-default dropdown-toggle price " aria-haspopup="true" aria-expanded="false">2000条/&yen180</button>
-                            <button type="button" class="btn btn-default dropdown-toggle price " aria-haspopup="true" aria-expanded="false">5000条/&yen450</button>
-                            <button type="button" class="btn btn-default dropdown-toggle price " aria-haspopup="true" aria-expanded="false">10000条/&yen850</button>
-                            <button type="button" class="btn btn-default dropdown-toggle price " aria-haspopup="true" aria-expanded="false">50000条/&yen4000</button>
-                        </div>
-                    </div>
-                    <div class="buy_order">
-                        <p>操作密令:</p>
-                        <div class="input-group operate">
-                            <input type="text" class="form-control" placeholder="请输入操作密令" aria-describedby="basic-addon1">
-                        </div>
-                    </div>
-                    <div class="buyNow">
-                        <button class="button button-rounded button-highlight buy-now-btn">立即购买</button>
-                    </div>
-                </div>
-            </div>
-            <!--brand end -->
-
-            <!--weChat start -->
-            <div class="list">
-                <div class="sign">
-                    <div class="sign_set">
-                        <p>微信公众服务号接口配置</p>
-                        <div class="toggle-button-wrapper switch">
-                            <input type="checkbox" id="we_toggle-button-app" name="switch">
-                            <label for="we_toggle-button-app" class="button-label">
-                                <span class="circle"></span>
-                                <span class="text on">ON</span>
-                                <span class="text off">OFF</span>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="open" id="we_open">展开</div>
-                </div>
-                <div class="open_content open_content0" style="display: none;padding-top: 8px;">
-                    <form id="uploadForm" class="form-horizontal" method="post"
-                          enctype="multipart/form-data">
-                        <input type="hidden" name="weid"  value="">
-                        <div class="input-group signset">
-                            <span style="width: 100px;">公众号appID: </span>
-                            <input type="text" class="form-control" id="app_id" name="app_id"
-                                   style="width: 500px;" placeholder="公众号ID">
-                            <p></p>
-                        </div>
-                        <div class="input-group surplus">
-                            <span style="width: 100px;">公众号密钥:</span>
-                            <input type="text" class="form-control" id="app_cert" name="app_cert"
-                                   style="width: 500px;" placeholder="公众号密钥">
-                        </div>
-
-
-                        <div id="uploadForm2" class="form-horizontal" method="post"
-                             enctype="multipart/form-data">
-                            <input type="hidden" name="weid"  value="">
-                            <div class="input-group signset">
-                                <span style="width: 119px;">授权域名文件: </span>
-                                <input id="filename" readonly style="vertical-align: middle; width: 370px;margin-left: 0;" type="text" class="form-control" >
-                                <input type="hidden" name="verify_file_name"  value="">
-                                <div class="file-container" style="display:inline-block;position:relative;overflow: hidden;vertical-align:middle">
-                                    <button class="button button-rounded button-highlight fileinput-button" type="button">上传</button>
-                                    <input type="file" id="verify_file" name="verify_file"  style="position:absolute;top:0;left:0;font-size:34px;opacity: 0">
-                                </div>
-                                <!--<span id="filename" style="vertical-align: middle">未上传文件</span>-->
-                                <!--<button type="button" class="button button-rounded button-highlight" id="wechat_verify_save"> 确认保存</button>-->
+            <div id="center">
+                <!--brand start-->
+                <div class="bottom">
+                    <div class="brand">
+                        <div class="left">
+                            <div class="left_one">
+                                <span>1</span>
+                                <p>启用独立品牌</p>
+                            </div>
+                            <div class="left_two">
+                                <!--<span>!</span>-->
+                                <!--<p>没有开通二级域名,或独立域名无权操作</p>-->
                             </div>
                         </div>
-
-
-
-
-                        <div class="input-group surplus ">
-                            <button type="button" class="button button-rounded button-highlight" id="wechat_open_save"> 确认保存</button>&nbsp;&nbsp;&nbsp;&nbsp;
-                            <button type="button" class="button button-rounded button-highlight" id="service_test"> 服务号测试</button>
-                        </div>
-                    </form>
-                </div>
-                <div class="sign">
-                    <div class="sign_set">
-                        <p>微信支付接口配置</p>
-                        <div class="toggle-button-wrapper switch">
-                            <input type="checkbox" id="we_toggle-button-app1" name="switch">
-                            <label for="we_toggle-button-app1" class="button-label">
+                        <div class="right">
+                            <div class="toggle-button-wrapper switch">
+                                <input type="checkbox" id="toggle-button-app" name="switch" checked>
+                                <label for="toggle-button-app" class="button-label">
                                 <span class="circle"></span>
                                 <span class="text on">ON</span>
                                 <span class="text off">OFF</span>
                             </label>
+                            </div>
                         </div>
                     </div>
-                    <div class="open" id="open1">展开</div>
                 </div>
-                <div class="open_content open_content1" style="display: none;padding-top: 8px;">
-                    <form id="uploadForm1" class="form-horizontal" method="post"
-                          enctype="multipart/form-data">
-                        <input type="hidden" name="weid"  value="">
+                <div class="list">
+                    <div class="sign">
+                        <div class="sign_set">
+                            <p>短信签名设置</p>
+                            <div class="toggle-button-wrapper switch">
+                                <input type="checkbox" id="we_toggle-button-app2" name="switch">
+                                <label for="we_toggle-button-app2" class="button-label">
+                                <span class="circle"></span>
+                                <span class="text on">ON</span>
+                                <span class="text off">OFF</span>
+                            </label>
+                            </div>
+                        </div>
+                        <div class="open" id="open2">展开</div>
+                    </div>
+                    <div class="open_content open_content2" style="display: none; padding-top: 8px;">
                         <div class="input-group signset">
-                            <span style="width: 100px;">商户号ID: </span>
-                            <input type="text" class="form-control" id="merchant_id" name="merchant_id" style="width: 500px;" placeholder="商户号ID">
-                            <p></p>
+                            <span>短信签名:</span>
+                            <input type="text" id="sign" class="form-control" placeholder="请输入短信签名" aria-describedby="basic-addon1" maxlength="6">
+                            <div class="btn-group save">
+                                <button class="button button-rounded button-highlight save_btn" style="margin-right: 24px;">保存</button>
+                            </div>
+                            <p>短信内容中显示的名称，6个字符以内<span id="title"></span></p>
                         </div>
                         <div class="input-group surplus ">
-                            <span style="width: 100px;">商户号密钥:</span>
-                            <input type="text" class="form-control" id="merchant_key" name="merchant_key" style="width: 500px;" placeholder="商户号密钥">
+                            <span>短信余量:</span>
+                            <input type="text" id="surplus" readonly="readonly" class="form-control surplus-npt" placeholder="0" aria-describedby="basic-addon1" value="0">
+                            <p class="unit">条<span>?</span></p>
+                            <div class="btn-group buy">
+                                <button class="button  button-rounded button-caution buy_btn">购买</button>
+                            </div>
                         </div>
-                        <div class="input-group surplus " style="height:auto;">
-                            <span style="width: 100px;">api证书:</span>
-                            <textarea type="text" class="form-control" id="apiclient_cert" name="apiclient_cert" style="width: 500px;height: 120px;" placeholder="api证书"></textarea>
+                    </div>
+                    <div class="open_content_buy" style="display: none;">
+                        <div class="buy_name">
+                            <p>购买短信包付费功能</p>
                         </div>
-                        <div class="input-group surplus " style="height:auto;">
-                            <span style="width: 100px;">api证书密钥:</span>
-                            <textarea type="text" class="form-control" id="apiclient_key" name="apiclient_key" style="width: 500px;height: 120px;" placeholder="api证书密钥"></textarea>
+                        <div class="buy_info">
+                            <p><i class="title_data">全球秦商总会</i>的正式会员，并成功申请开通微主页（Wepages）后，可以购买短信包，给微友、会员、发送验证短信，还可以给用户、会员发送提醒与通知短信。短信价格为0.1元/条，短信包套餐最高享受<span>8折</span>优惠</p>
+                        </div>
+                        <div class="buy_setmeal">
+                            <p style="padding-top: 10px; width: 95px;">套餐选择:</p>
+                            <div class="btn-group prices">
+                                <!--<button type="button" class="btn btn-default dropdown-toggle price " aria-haspopup="true" aria-expanded="false">1000条/&yen100</button>-->
+                                <!--<button type="button" class="btn btn-default dropdown-toggle price " aria-haspopup="true" aria-expanded="false">2000条/&yen180</button>-->
+                                <!--<button type="button" class="btn btn-default dropdown-toggle price " aria-haspopup="true" aria-expanded="false">5000条/&yen450</button>-->
+                                <!--<button type="button" class="btn btn-default dropdown-toggle price " aria-haspopup="true" aria-expanded="false">10000条/&yen850</button>-->
+                                <!--<button type="button" class="btn btn-default dropdown-toggle price " aria-haspopup="true" aria-expanded="false">50000条/&yen4000</button>-->
+                            </div>
+                        </div>
+                        <div class="buy_order">
+                            <p style="padding-top: 17px;">支付方式:</p>
+                            <!-- <div class="input-group operate">
+                            <input type="password" id="operate-1" class="form-control" placeholder="请输入操作密令" aria-describedby="basic-addon1">
+                        </div> -->
+                            <style>
+                                .weixin,
+                                .zfb {
+                                    width: 90px;
+                                    height: 70px;
+                                }
+                                
+                                .weixin:hover,
+                                .zfb:hover {
+                                    cursor: pointer;
+                                }
+                            </style>
+                            <div class="weixin"><img id="wx" src="/common/img/wxzf1.png" width="40" alt="" style="margin-left: 20px;">
+                                <p style="padding-left: 13px; padding-top: 5px;">微信支付</p>
+                            </div>
+                            <div class="zfb"><img id="zfb" src="/common/img/zfb2.png" width="40" alt="" style="margin-left: 27px;">
+                                <p style="padding-left: 13px; padding-top: 5px;">支付宝支付</p>
+                            </div>
+                        </div>
+                        <div class="buyNow">
+                            <button id="buyNow" class="button button-rounded button-highlight buy-now-btn">立即购买</button>
+                        </div>
+                    </div>
+
+                    <div class="sign" style="display:none;">
+                        <div class="sign_set">
+                            <p>微信登录设置</p>
+                            <div class="toggle-button-wrapper switch">
+                                <input type="checkbox" id="toggle-button-2" name="switch">
+                                <label for="toggle-button-2" class="button-label">
+                                <span class="circle"></span>
+                                <span class="text on">ON</span>
+                                <span class="text off">OFF</span>
+                            </label>
+                            </div>
+                        </div>
+                        <div class="open" id="open-1">展开</div>
+                    </div>
+                    <div class="open_content_1" style="display: none;">
+                        <div class="input-group signset">
+                            <span>短信签名:</span>
+                            <input type="text" class="form-control" placeholder="" aria-describedby="basic-addon1">
+                            <div class="btn-group save">
+                                <button class="button button-rounded button-highlight save_btn" style="margin-right: 24px;">保存</button>
+                            </div>
+                            <p>短信内容中显示的名称，6个字符以内<span>【微众中国】</span></p>
                         </div>
                         <div class="input-group surplus ">
-                            <button type="button" class="button button-rounded button-highlight" id="wechat_merchant_save"> 确认保存</button>&nbsp;&nbsp;&nbsp;&nbsp;
-                            <button type="button" class="button button-rounded button-highlight" id="wechat_test_save"> 支付测试</button>
+                            <span>短信余量:</span>
+                            <input type="text" class="form-control surplus-npt" placeholder="" aria-describedby="basic-addon1">
+                            <p class="unit">条<span>?</span></p>
+                            <div class="btn-group buy">
+                                <button class="button  button-rounded button-caution buy_btn">购买</button>
+                            </div>
                         </div>
-                    </form>
+                    </div>
+                    <div class="open_content_buy_1" style="display: none;">
+                        <div class="buy_name">
+                            <p>购买短信包付费功能</p>
+                        </div>
+                        <div class="buy_info">
+                            <p><i class="title_data">全球秦商总会</i>的正式会员，并成功申请开通微主页（Wepages）后，可以购买短信包，给微友、会员、发送验证短信，还可以给用户、会员发送提醒与通知短信。短信价格为0.1元/条，短信包套餐最高享受<span>8折</span>优惠</p>
+                        </div>
+                        <div class="buy_setmeal">
+                            <p>套餐选择:</p>
+                            <div class="btn-group prices">
+                                <button type="button" class="btn btn-default dropdown-toggle price " aria-haspopup="true" aria-expanded="false">1000条/&yen100</button>
+                                <button type="button" class="btn btn-default dropdown-toggle price " aria-haspopup="true" aria-expanded="false">2000条/&yen180</button>
+                                <button type="button" class="btn btn-default dropdown-toggle price " aria-haspopup="true" aria-expanded="false">5000条/&yen450</button>
+                                <button type="button" class="btn btn-default dropdown-toggle price " aria-haspopup="true" aria-expanded="false">10000条/&yen850</button>
+                                <button type="button" class="btn btn-default dropdown-toggle price " aria-haspopup="true" aria-expanded="false">50000条/&yen4000</button>
+                            </div>
+                        </div>
+                        <div class="buy_order">
+                            <p>操作密令:</p>
+                            <div class="input-group operate">
+                                <input type="text" class="form-control" placeholder="请输入操作密令" aria-describedby="basic-addon1">
+                            </div>
+                        </div>
+                        <div class="buyNow">
+                            <button class="button button-rounded button-highlight buy-now-btn">立即购买</button>
+                        </div>
+                    </div>
+                    <div class="sign" style="display:none;">
+                        <div class="sign_set">
+                            <p>PC扫码设置&nbsp&nbsp</p>
+                            <div class="toggle-button-wrapper switch">
+                                <input type="checkbox" id="toggle-button-3" name="switch">
+                                <label for="toggle-button-3" class="button-label">
+                                <span class="circle"></span>
+                                <span class="text on">ON</span>
+                                <span class="text off">OFF</span>
+                            </label>
+                            </div>
+                        </div>
+                        <div class="open" id="open-2">展开</div>
+                    </div>
+                    <div class="open_content_2" style="display: none;">
+                        <div class="input-group signset">
+                            <span>短信签名:</span>
+                            <input type="text" class="form-control" placeholder="程序猿" aria-describedby="basic-addon1">
+                            <div class="btn-group save">
+                                <button class="button button-rounded button-highlight save_btn" style="margin-right: 24px;">保存</button>
+                            </div>
+                            <p>短信内容中显示的名称，6个字符以内<span>【微众中国】</span></p>
+                        </div>
+                        <div class="input-group surplus ">
+                            <span>短信余量:</span>
+                            <input type="text" class="form-control surplus-npt" placeholder="19" aria-describedby="basic-addon1">
+                            <p class="unit">条<span>?</span></p>
+                            <div class="btn-group buy">
+                                <button class="button  button-rounded button-caution buy_btn">购买</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="open_content_buy_2" style="display: none;">
+                        <div class="buy_name">
+                            <p>购买短信包付费功能</p>
+                        </div>
+                        <div class="buy_info">
+                            <p><i class="title_data">全球秦商总会</i>的正式会员，并成功申请开通微主页（Wepages）后，可以购买短信包，给微友、会员、发送验证短信，还可以给用户、会员发送提醒与通知短信。短信价格为0.1元/条，短信包套餐最高享受<span>8折</span>优惠</p>
+                        </div>
+                        <div class="buy_setmeal">
+                            <p>套餐选择:</p>
+                            <div class="btn-group prices">
+                                <button type="button" class="btn btn-default dropdown-toggle price " aria-haspopup="true" aria-expanded="false">1000条/&yen100</button>
+                                <button type="button" class="btn btn-default dropdown-toggle price " aria-haspopup="true" aria-expanded="false">2000条/&yen180</button>
+                                <button type="button" class="btn btn-default dropdown-toggle price " aria-haspopup="true" aria-expanded="false">5000条/&yen450</button>
+                                <button type="button" class="btn btn-default dropdown-toggle price " aria-haspopup="true" aria-expanded="false">10000条/&yen850</button>
+                                <button type="button" class="btn btn-default dropdown-toggle price " aria-haspopup="true" aria-expanded="false">50000条/&yen4000</button>
+                            </div>
+                        </div>
+                        <div class="buy_order">
+                            <p>操作密令:</p>
+                            <div class="input-group operate">
+                                <input type="text" class="form-control" placeholder="请输入操作密令" aria-describedby="basic-addon1">
+                            </div>
+                        </div>
+                        <div class="buyNow">
+                            <button class="button button-rounded button-highlight buy-now-btn">立即购买</button>
+                        </div>
+                    </div>
+                    <div class="sign" style="display:none;">
+                        <div class="sign_set">
+                            <p>微信支付配置</p>
+                            <div class="toggle-button-wrapper switch">
+                                <input type="checkbox" id="toggle-button-4" name="switch">
+                                <label for="toggle-button-4" class="button-label">
+                                <span class="circle"></span>
+                                <span class="text on">ON</span>
+                                <span class="text off">OFF</span>
+                            </label>
+                            </div>
+                        </div>
+                        <div class="open" id="open-3">展开</div>
+                    </div>
+                    <div class="open_content_3" style="display: none;">
+                        <div class="input-group signset">
+                            <span>短信签名:</span>
+                            <input type="text" class="form-control" placeholder="程序猿" aria-describedby="basic-addon1">
+                            <div class="btn-group save">
+                                <button class="button button-rounded button-highlight save_btn" style="margin-right: 24px;">保存</button>
+                            </div>
+                            <p>短信内容中显示的名称，6个字符以内<span>【微众中国】</span></p>
+                        </div>
+                        <div class="input-group surplus ">
+                            <span>短信余量:</span>
+                            <input type="text" class="form-control surplus-npt" placeholder="19" aria-describedby="basic-addon1">
+                            <p class="unit">条<span>?</span></p>
+                            <div class="btn-group buy">
+                                <button class="button  button-rounded button-caution buy_btn">购买</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="open_content_buy_3" style="display: none;">
+                        <div class="buy_name">
+                            <p>购买短信包付费功能</p>
+                        </div>
+                        <div class="buy_info">
+                            <p><i class="title_data">全球秦商总会</i>的正式会员，并成功申请开通微主页（Wepages）后，可以购买短信包，给微友、会员、发送验证短信，还可以给用户、会员发送提醒与通知短信。短信价格为0.1元/条，短信包套餐最高享受<span>8折</span>优惠</p>
+                        </div>
+                        <div class="buy_setmeal">
+                            <p>套餐选择:</p>
+                            <div class="btn-group prices">
+                                <button type="button" class="btn btn-default dropdown-toggle price " aria-haspopup="true" aria-expanded="false">1000条/&yen100</button>
+                                <button type="button" class="btn btn-default dropdown-toggle price " aria-haspopup="true" aria-expanded="false">2000条/&yen180</button>
+                                <button type="button" class="btn btn-default dropdown-toggle price " aria-haspopup="true" aria-expanded="false">5000条/&yen450</button>
+                                <button type="button" class="btn btn-default dropdown-toggle price " aria-haspopup="true" aria-expanded="false">10000条/&yen850</button>
+                                <button type="button" class="btn btn-default dropdown-toggle price " aria-haspopup="true" aria-expanded="false">50000条/&yen4000</button>
+                            </div>
+                        </div>
+                        <div class="buy_order">
+                            <p>操作密令:</p>
+                            <div class="input-group operate">
+                                <input type="text" class="form-control" placeholder="请输入操作密令" aria-describedby="basic-addon1">
+                            </div>
+                        </div>
+                        <div class="buyNow">
+                            <button class="button button-rounded button-highlight buy-now-btn">立即购买</button>
+                        </div>
+                    </div>
+                </div>
+                <!--brand end -->
+
+                <!--weChat start -->
+                <div class="list">
+                    <div class="sign">
+                        <div class="sign_set">
+                            <p>微信公众服务号接口配置</p>
+                            <div class="toggle-button-wrapper switch">
+                                <input type="checkbox" id="we_toggle-button-app" name="switch">
+                                <label for="we_toggle-button-app" class="button-label">
+                                <span class="circle"></span>
+                                <span class="text on">ON</span>
+                                <span class="text off">OFF</span>
+                            </label>
+                            </div>
+                        </div>
+                        <div class="open" id="we_open">展开</div>
+                    </div>
+                    <div class="open_content open_content0" style="display: none;padding-top: 8px;">
+                        <form id="uploadForm" class="form-horizontal" method="post" enctype="multipart/form-data">
+                            <input type="hidden" name="weid" value="">
+                            <div class="input-group signset">
+                                <span style="width: 100px;">公众号appID: </span>
+                                <input type="text" class="form-control" id="app_id" name="app_id" style="width: 500px;" placeholder="公众号ID">
+                                <p></p>
+                            </div>
+                            <div class="input-group surplus">
+                                <span style="width: 100px;">公众号密钥:</span>
+                                <input type="text" class="form-control" id="app_cert" name="app_cert" style="width: 500px;" placeholder="公众号密钥">
+                            </div>
+
+
+                            <div id="uploadForm2" class="form-horizontal" method="post" enctype="multipart/form-data">
+                                <input type="hidden" name="weid" value="">
+                                <div class="input-group signset">
+                                    <span style="width: 119px;">授权域名文件: </span>
+                                    <input id="filename" readonly style="vertical-align: middle; width: 370px;margin-left: 0;" type="text" class="form-control">
+                                    <input type="hidden" name="verify_file_name" value="">
+                                    <div class="file-container" style="display:inline-block;position:relative;overflow: hidden;vertical-align:middle">
+                                        <button class="button button-rounded button-highlight fileinput-button" type="button">上传</button>
+                                        <input type="file" id="verify_file" name="verify_file" style="position:absolute;top:0;left:0;font-size:34px;opacity: 0">
+                                    </div>
+                                    <!--<span id="filename" style="vertical-align: middle">未上传文件</span>-->
+                                    <!--<button type="button" class="button button-rounded button-highlight" id="wechat_verify_save"> 确认保存</button>-->
+                                </div>
+                            </div>
+
+
+
+
+                            <div class="input-group surplus ">
+                                <button type="button" class="button button-rounded button-highlight" id="wechat_open_save"> 确认保存</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                                <button type="button" class="button button-rounded button-highlight" id="service_test"> 服务号测试</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="sign">
+                        <div class="sign_set">
+                            <p>微信支付接口配置</p>
+                            <div class="toggle-button-wrapper switch">
+                                <input type="checkbox" id="we_toggle-button-app1" name="switch">
+                                <label for="we_toggle-button-app1" class="button-label">
+                                <span class="circle"></span>
+                                <span class="text on">ON</span>
+                                <span class="text off">OFF</span>
+                            </label>
+                            </div>
+                        </div>
+                        <div class="open" id="open1">展开</div>
+                    </div>
+                    <div class="open_content open_content1" style="display: none;padding-top: 8px;">
+                        <form id="uploadForm1" class="form-horizontal" method="post" enctype="multipart/form-data">
+                            <input type="hidden" name="weid" value="">
+                            <div class="input-group signset">
+                                <span style="width: 100px;">商户号ID: </span>
+                                <input type="text" class="form-control" id="merchant_id" name="merchant_id" style="width: 500px;" placeholder="商户号ID">
+                                <p></p>
+                            </div>
+                            <div class="input-group surplus ">
+                                <span style="width: 100px;">商户号密钥:</span>
+                                <input type="text" class="form-control" id="merchant_key" name="merchant_key" style="width: 500px;" placeholder="商户号密钥">
+                            </div>
+                            <div class="input-group surplus " style="height:auto;">
+                                <span style="width: 100px;">api证书:</span>
+                                <textarea type="text" class="form-control" id="apiclient_cert" name="apiclient_cert" style="width: 500px;height: 120px;" placeholder="api证书"></textarea>
+                            </div>
+                            <div class="input-group surplus " style="height:auto;">
+                                <span style="width: 100px;">api证书密钥:</span>
+                                <textarea type="text" class="form-control" id="apiclient_key" name="apiclient_key" style="width: 500px;height: 120px;" placeholder="api证书密钥"></textarea>
+                            </div>
+                            <div class="input-group surplus ">
+                                <button type="button" class="button button-rounded button-highlight" id="wechat_merchant_save"> 确认保存</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                                <button type="button" class="button button-rounded button-highlight" id="wechat_test_save"> 支付测试</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!--weChat end -->
+
+
+            </div>
+
+
+
+
+        </div>
+    </div>
+    <div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close close_modal" data-dismiss="modal" aria-label="Close" style="color: #333!important;margin-right: 0px;"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel"> 微信配置信息提示 </h4>
+                </div>
+                <div class="modal-body modal_info">
+
+                </div>
+                <div class="modal-footer">
                 </div>
             </div>
-            <!--weChat end -->
-
-
-        </div>
-
-
-
-
-    </div>
-</div>
-<div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close close_modal" data-dismiss="modal" aria-label="Close" style="color: #333!important;margin-right: 0px;"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel"> 微信配置信息提示 </h4>
-            </div>
-            <div class="modal-body modal_info">
-
-            </div>
-            <div class="modal-footer">
-            </div>
         </div>
     </div>
-</div>
     <script>
-
-        $('#open-1').click(function(){
+        $('#open-1').click(function() {
             var text = $(this).text();
-            if(text === "展开"){
+            if (text === "展开") {
                 $('.open_content_1').stop().slideDown(400);
                 $(this).text("收起");
 
-            }else {
+            } else {
                 $('.open_content_1, .open_content_buy_1').stop().slideUp(400);
                 $(this).text("展开");
                 $('.buy_btn_1').text("购买");
             }
         });
 
-        $('#open-2').click(function(){
+        $('#open-2').click(function() {
             var text = $(this).text();
-            if(text === "展开"){
+            if (text === "展开") {
                 $('.open_content_2').stop().slideDown(400);
                 $(this).text("收起");
-            }else {
+            } else {
                 $('.open_content_2, .open_content_buy_2').stop().slideUp(400);
                 $(this).text("展开");
                 $('.buy_btn_2').text("购买");
             }
         });
 
-        $('#open-3').click(function(){
+        $('#open-3').click(function() {
             var text = $(this).text();
-            if(text === "展开"){
+            if (text === "展开") {
                 $('.open_content_3').stop().slideDown(400);
                 $(this).text("收起");
-            }else {
+            } else {
                 $('.open_content_3, .open_content_buy_3').stop().slideUp(400);
                 $(this).text("展开");
                 $('.buy_btn_3').text("购买");
             }
         });
 
-        $('.buy_btn').click(function(){
+        $('.buy_btn').click(function() {
             var val = $(this).text();
-            if(val === '购买'){
+            if (val === '购买') {
                 $('.open_content_buy').stop().slideDown(400);
-                $(this).text('取消').css('color','#fff');
-                $('.open_content').css('padding-bottom','28px');
-            }else {
+                $(this).text('取消').css('color', '#fff');
+                $('.open_content').css('padding-bottom', '28px');
+            } else {
                 $('.open_content_buy').stop().slideUp(400);
                 $(this).text("购买");
-                $('.open_content').css('padding-bottom','0');
+                $('.open_content').css('padding-bottom', '0');
             }
         });
 
-        $('.buy_btn_1').click(function(){
+        $('.buy_btn_1').click(function() {
             var val = $(this).text();
-            if(val === '购买'){
+            if (val === '购买') {
                 $('.open_content_buy_1').stop().slideDown(400);
-                $(this).text('取消').css('color','#fff');
-                $('.open_content_1').css('padding-bottom','28px');
-            }else {
+                $(this).text('取消').css('color', '#fff');
+                $('.open_content_1').css('padding-bottom', '28px');
+            } else {
                 $('.open_content_buy_1').stop().slideUp(400);
                 $(this).text("购买");
-                $('.open_content_1').css('padding-bottom','0');
+                $('.open_content_1').css('padding-bottom', '0');
             }
         });
 
-        $('.buy_btn_2').click(function(){
+        $('.buy_btn_2').click(function() {
             var val = $(this).text();
-            if(val === '购买'){
+            if (val === '购买') {
                 $('.open_content_buy_2').stop().slideDown(400);
-                $(this).text('取消').css('color','#fff');
-                $('.open_content_2').css('padding-bottom','28px');
-            }else {
+                $(this).text('取消').css('color', '#fff');
+                $('.open_content_2').css('padding-bottom', '28px');
+            } else {
                 $('.open_content_buy_2').stop().slideUp(400);
                 $(this).text("购买");
-                $('.open_content_2').css('padding-bottom','0');
+                $('.open_content_2').css('padding-bottom', '0');
             }
         });
 
-        $('.buy_btn_3').click(function(){
+        $('.buy_btn_3').click(function() {
             var val = $(this).text();
-            if(val === '购买'){
+            if (val === '购买') {
                 $('.open_content_buy_3').stop().slideDown(400);
-                $(this).text('取消').css('color','#fff');
-                $('.open_content_3').css('padding-bottom','28px');
-            }else {
+                $(this).text('取消').css('color', '#fff');
+                $('.open_content_3').css('padding-bottom', '28px');
+            } else {
                 $('.open_content_buy_3').stop().slideUp(400);
                 $(this).text("购买");
-                $('.open_content_3').css('padding-bottom','0');
+                $('.open_content_3').css('padding-bottom', '0');
             }
         });
 
-        $('.price ').click(function(){
+        $('.price ').click(function() {
             $(this).css({
                 'border-color': '#faaa00',
                 'color': '#fbba2f',
@@ -552,17 +563,15 @@
                 'color': '#333',
             })
         });
-
     </script>
 
-<script src="{{PATH_CONFIG}}"></script>
-<script src="/common/js/control.js"></script>
-<script src="{{PATH_TML}}user/js/common.js"></script>
-<script src="{{PATH_TML}}user/common/js/generate_manage.js"></script>
+    <script src="{{PATH_CONFIG}}"></script>
+    <script src="/common/js/control.js"></script>
+    <script src="{{PATH_TML}}user/js/common.js"></script>
+    <script src="{{PATH_TML}}user/common/js/generate_manage.js"></script>
 
-<script src="{{PATH_TML}}user/js/application.js"></script>
+    <script src="{{PATH_TML}}user/js/application.js"></script>
 
 </body>
+
 </html>
-
-

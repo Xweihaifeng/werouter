@@ -6,13 +6,13 @@ class Wez_template
 {
 	private static $variable;
 	
-	public static function init($file ,  $content , $config_file , $directory ,$additional_config)
+	public static function init($file ,  $content , $config_file , $directory ,$additional_config , $router_name)
 	{
 		$content = self::_replace($content , $file , $directory);
 		
 		$content = str_replace('{{PATH_CONFIG}}', $config_file.'?t='.time() , $content);
 		$content = str_replace('{{PATH_TML}}', $file.$directory.'/' , $content);
-
+		$content = str_replace('{{PATH_COMMON}}', $file , $content);
 		preg_match("@<html[^>]*>@si",$content, $regs);
 		$html_tag = current($regs);
 		$content = str_replace($html_tag, $html_tag.'<script>'.$additional_config.'</script>' , $content);
@@ -20,6 +20,12 @@ class Wez_template
 		{
 			$content = str_replace('</body>', '<script src="//captcha.luosimao.com/static/js/api.js"></script></body>' , $content);
 			
+		}
+		else
+		{
+			preg_match("@<title[^>]*>@si",$content, $tregs);
+			$title_tag = current($tregs);
+			$content = str_replace($title_tag, '<title>'.$router_name.'</title>' , $content);
 		}
 		return $content;
 		// else

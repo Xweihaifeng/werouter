@@ -38,7 +38,7 @@
             <span class="bution">物流单号：</span><span class="bution_num">{{item.logistics_no}}</span>
         </aside>
         <aside class="shop_box_list">
-            <li v-for="goods in item.goods"><img :src="ApiMaterPlatQiniuDomain+goods.goods_cover" width="80px" height="80px" alt=""><div>{{goods.goods_title}}</div></li>
+            <li v-for="goods in item.goods"><img :src="ApiMaterPlatQiniuDomain+goods.goods_cover" width="80px" height="80px" alt=""><div style="overflow: hidden;">{{goods.goods_title}}</div></li>
         </aside>
         <div class="distri-container">
             <div class="tips" :style="tips[index]!=''? 'display: block;' : 'display: none;'" >{{tips[index]}}</div>
@@ -94,21 +94,21 @@
                                     var logistics_info=$.parseJSON(res.data.send[i].logistics_info);
                                     this.disList.push({'goods':goods,logistics:logistics_info.data,logistics_no:res.data.send[i].logistics_no})
                                 }else{
+                                    //测试用物流号
+                                    //logistics_NO:'382351534',company_code:'tnt'
                                     //通过在线取数据
                                     var data={};
                                     data.logistics_NO=res.data.send[i].logistics_no;
                                     data.company_code=res.data.send[i].logistics_company_code;
-                                    this.tips[i] = '正在加载...请稍候...';
-                                    ajax.post('pages/logistics/getLogisticsInfo',{logistics_NO:'382351534',company_code:'tnt'}).then((res)=>{
+                                    ajax.post('pages/logistics/getLogisticsInfo',{logistics_NO:data.logistics_NO,company_code:data.company_code}).then((res)=>{
                                         if(res.code==200){
                                             this.disList.push({'goods':goods,logistics:res.data.data,logistics_no:data.logistics_NO});
                                             //提示信息置空
-                                            var tips_index=i-1;
-                                            this.tips[tips_index] = '';
+                                            this.tips.push('');
                                         }else{
                                             //失败信息
-                                            var tips_index=i-1;
-                                            this.tips[tips_index] = res.message.message;
+                                            this.disList.push({'goods':goods,logistics:'',logistics_no:data.logistics_NO});
+                                            this.tips.push(res.message.message);
                                         }
                                     });
                                 }

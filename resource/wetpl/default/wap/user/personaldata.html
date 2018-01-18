@@ -44,47 +44,47 @@
     </div>
     <div class="other-me">
         <ul>
-            <li>
+            <li @click="$app.open_page('user/myaccount/packet');">
                 <span>
                     <i style="background: url('/common/img/我的钱包@2x.png') no-repeat center center;background-size: 50%; background-color: #F26D5F;"></i>
                     <a>我的钱包</a>
                 </span>
                 <img src="/common/img/you.png" alt="">
             </li>
-            <li onclick="window.location.href='/shopping/allOrder'">
+            <li @click="$app.open_page('user/myaccount/order');">
                 <span>
                     <i style="background: url('/common/img/我的订单@2x.png') no-repeat center center;background-size: 50%; background-color: #F26D5F;"></i>
                     <a>我的订单</a>
                 </span>
                 <img src="/common/img/you.png" alt="">
             </li>
-            <!--<li onclick="window.location.href='/collection'">-->
-                <!--<span>-->
-                    <!--<i style="background: url('/common/img/我的订单@2x.png') no-repeat center center;background-size: 50%; background-color: #F26D5F;"></i>-->
-                    <!--<a>我的收藏</a>-->
-                <!--</span>-->
-                <!--<img src="/common/img/you.png" alt="">-->
-            <!--</li>-->
+            <li onclick="window.location.href='/collection'">
+                <span>
+                    <i style="background: url('/common/img/我的订单@2x.png') no-repeat center center;background-size: 50%; background-color: #F26D5F;"></i>
+                    <a>我的收藏</a>
+                </span>
+                <img src="/common/img/you.png" alt="">
+            </li>
         </ul>
         <ul>
-            <li>
+            <li @click="$app.open_page('user/myarticle/discover');">
                 <span>
                     <i style="background: url('/common/img/我的文章@2x.png') no-repeat center center;background-size: 50%; background-color: #5B99EE;"></i>
                     <a>我的文章</a>
                 </span>
                 <img src="/common/img/you.png" alt="">
             </li>
-            <li>
+<!--             <li>
                 <span>
                     <i style="background: url('/common/img/我的项目@2x.png') no-repeat center center;background-size: 50%; background-color: #5B99EE;"></i>
                     <a>我的项目</a>
                 </span>
                 <img src="/common/img/you.png" alt="">
-            </li>
+            </li> -->
             <li>
                 <span>
                     <i style="background: url('/common/img/我的活动@2x.png') no-repeat center center;background-size: 50%; background-color: #35B87F;"></i>
-                    <a>我的活动</a>
+                    <a href="/user/myactivity/support">我的活动</a>
                 </span>
                 <img src="/common/img/you.png" alt="">
             </li>
@@ -98,14 +98,14 @@
         </ul>
 
         <ul>
-            <li>
+            <li @click="$app.open_page('user/feedback');">
                 <span>
                     <i style="background: url('/common/img/意见反馈@2x.png') no-repeat center center;background-size: 50%; background-color: #FFA200;"></i>
                     <a>意见反馈</a>
                 </span>
                 <img src="/common/img/you.png" alt="">
             </li>
-            <li>
+            <li @click="$app.open_page('aboutus');">
                 <span>
                     <i style="background: url('/common/img/关于我们@2x.png') no-repeat center center;background-size: 50%; background-color: #FFA200;"></i>
                     <a>关于我们</a>

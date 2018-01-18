@@ -76,24 +76,32 @@
 	    }
 	}
 	// 写入本地容器
-	app.set_storage = function(val , params){
+	app.set_storage = function(val , params , type){
 		var dataJson = params;
 		if(typeof params == 'object')
 		{
 			var dataJson = JSON.stringify(params);
 		}
-		
-        localStorage.setItem(val , dataJson);
+
+		if(app.empty(type) != false) {
+			sessionStorage.setItem(val , dataJson);
+		} else {
+			localStorage.setItem(val , dataJson);
+		}
 	}
 	// 获取本地容器
-	app.get_storage = function(val){
-		var dataString = localStorage.getItem(val);
+	app.get_storage = function(val, type){
+		if(app.empty(type) != false) {
+			var dataString = sessionStorage.getItem(val);
+		} else {
+			var dataString = localStorage.getItem(val);
+		}
         if (dataString == null || dataString == 'undefined')
         {
             return false;
         }
-        // var dataJson = JSON.parse(dataString);
-        return dataString;
+        var dataJson = JSON.parse(dataString);
+        return dataJson;
 	}
 	// 登陆成功后需要添加的数据
 	app.set_login_data = function(data)
@@ -111,7 +119,12 @@
 	}
 	// 页面跳转
 	app.open_page = function(href){
-		window.location.href = href;
+		if(href.indexOf('http') !== -1){
+			window.location.href = href;
+			return false;
+		}
+		window.location.href = all_domian + href;
+		return true;
 	}
 	// 修改页面标题
 	app.set_title = function(title){
@@ -136,15 +149,16 @@
 		}		
 		//var pathname_obj = pathname.substr(1).split('/');
 		var pathname_string = pathname.substr(1).split('/').shift();
-		if(pathname_string == 'm')
+		
+		if(pathname_string == 'm' || sub_state == true)
 		{
-			if($app.empty(pathname.substr(1).split('/')[params]))
+			if($app.empty(pathname.substr(1).split('/')[params]) != false)
 			{
 				return pathname.substr(1).split('/')[params];
 			}
 			return '';
 		}
-		if($app.empty(pathname.substr(1).split('/')[params-1]))
+		if($app.empty(pathname.substr(1).split('/')[params-1]) != false)
 		{
 			return pathname.substr(1).split('/')[params-1]; 
 		}

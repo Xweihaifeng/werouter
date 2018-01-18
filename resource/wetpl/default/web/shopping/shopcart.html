@@ -9,8 +9,8 @@
         <link rel="stylesheet" type="text/css" href="/common/css/main.css">
         <link rel="stylesheet" type="text/css" href="/common/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="{{PATH_TML}}shopping/css/shopcart.css">
-        <script src="{{PATH_TML}}user/common/js/loading.js"></script>
         <script src="/common/js/jquery-3.2.1.min.js"></script>
+        <script src="{{PATH_TML}}user/common/js/loading.js"></script>
         <script src="/common/layer-v3.0.3/layer-v3.0.3/layer/layer.js"></script>
         <script src="{{PATH_CONFIG}}"></script>
         <script src="/common/js/vue/vue.min.js"></script>
@@ -21,7 +21,7 @@
         <div class="login">
             <div id="top"></div>
             <div id="middle"></div>
-            <div id="right">
+            <div id="right" style="display: none;">
                 <div class="container1" id="cart_shopping" v-cloak>
                     <div class="con-hd">
                         <nav class="navbar navbar-default display-head">
@@ -91,7 +91,7 @@
                     </div>
                     <div style="text-align: center">
 
-                        <ul class="pagination"><li id="prev"><a v-on:click="goInit(prevPageNum)">«</a></li>   <li  v-for="pageitem in page_list_Num" :class="pageitem.active"><a v-on:click="goInit(pageitem.num)">{{pageitem.num}}</a></li>  <li id="next"><a class="next" v-on:click="app.goInit(nextPageNum)" rel="next">»</a></li></ul>
+                        <ul class="pagination"><li id="prev"><a v-on:click="goInit(firstPageNum)">«</a></li><li><a v-on:click="goInit(prevPageNum)">‹</a></li>   <li  v-for="pageitem in page_list_Num" :class="pageitem.active"><a v-on:click="goInit(pageitem.num)">{{pageitem.num}}</a></li>  <li id="next"><a class="next" v-on:click="app.goInit(nextPageNum)" rel="next">›</a></li><li><a class="next" v-on:click="app.goInit(lastPageNum)" rel="next">»</a></li></ul>
 
 
 
@@ -116,6 +116,8 @@
                     cart_list: [],
                     prevPageNum:'',
                     nextPageNum:'',
+                    firstPageNum:'',
+                    lastPageNum:'',
                     page_list_Num:[],
                 },
                 mounted: function () {
@@ -227,7 +229,7 @@
                             title: false,
                             btn: ['确定','取消']
                         }, function(index){
-                            self.$http.post(apiUrl+'cart/destroy',{'weid' : good.cartweid}).then(function (res) {
+                            self.$http.post(apiUrl+'cart/destroy',{'weid' : [good.cartweid]}).then(function (res) {
                                 console.log(res);
                                 if(res.data.code === 200){
                                     self.init()
@@ -298,6 +300,8 @@
                         }
                         //分页 start
                         self.page_list='';
+                        self.firstPageNum=1;
+                        self.lastPageNum=pagenum;
                         self.prevPageNum=prevNum;
                         self.nextPageNum=nextNum;
                         self.page_list_Num=[];

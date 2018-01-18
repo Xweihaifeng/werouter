@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport"
+              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title></title>
+        <link rel="shortcut icon" id="favicon" href="" />
+        <link rel="stylesheet" href="{{PATH_TML}}css/header.css">
+        <link rel="stylesheet" href="{{PATH_TML}}css/footer.css">
+
+        <script src="{{PATH_CONFIG}}"></script>
+        <script src="/common/public/js/app.js"></script>
+        <script src="/common/iview/vue.min.js"></script>
+        <script src="/common/iview/axios.min.js"></script>
+        <script src="/common/iview/libs/util.js"></script>
+        <script src="/common/iview/libs/filter.js"></script>
+        <script src="/common/public/js/model/sub_ajax.js"></script>
+        <script src="{{PATH_TML}}js/jquery-3.2.1.js"></script>
+        <script src="{{PATH_TML}}js/nav.js"></script>
+        <style>
+            [v-cloak] {
+                display: none;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="header" v-cloak>
+            <header>
+                <main>
+                    <div class="head-left">
+                        <a href="">
+                            <img :src="logo | img_src" alt="" v-if="!plats_info.logo">
+                            <img :src="plats_info.logo | img_src" alt="" v-else>
+                        </a>
+                    </div>
+                    <div class="head-middle">
+                        <img src="{{PATH_TML}}image/logo_by.png" alt="">
+                    </div>
+                    <div class="head-right">
+                        <div class="hr-top">
+                            <aside v-for="(item, index) in qrcode" @mouseenter="hide(item)" @mouseleave="show(item)">
+                                <span>{{item.title}}</span>
+                                <div v-show="item.ok">
+                                    <img :src="item.image" v-if="index==0">
+                                    <img :src="item.image" v-else-if="item.image.indexOf('http') == 0">
+                                    <img :src="item.image | img_src" v-else>
+                                </div>
+                            </aside>
+                        </div>
+                        <div action="" class="search search-box">
+                            <input type="text" :placeholder="placeholder" name="s" v-model="searchText" @keyup.enter="goSearchOpen()">
+                            <input type="submit" value="搜索" name="submit" @click="goSearchOpen()">
+                        </div>
+                    </div>
+                </main>
+            </header>
+            <nav>
+                <main>
+                    <ul class="big-nav">
+                        <li><a :href="all_domian">首页</a></li>
+                        <li v-for="(item, index) in channel">
+                            <a :href="item.domain | href">{{item.title}}</a>
+                            <ul class="nav-list">
+                                <li v-for="(value, key) in item.children"><a :href="'/'+item.old_domain+'/'+value.domain | href">{{value.title}}</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </main>
+            </nav>
+        </div>
+
+        <div id="content_app" v-cloak>
+            {{extend-content}}
+        </div>    
+            
+        <footer id="footer" v-cloak>
+            <main>
+                <ul class="footer-nav">
+                    <li><a :href="all_domian">首页</a></li>
+                    <li v-for="(item, index) in foot_channel"><a :href="item.domain | href">{{item.title}}</a></li>
+                </ul>
+                <div class="fo-bo">
+                    <div class="fo-bl">
+                        <img :src="footer.copyright_logo | img_src" alt="">
+                    </div>
+                    <div class="fo-bm">
+                        <span class="fo-son" v-html="footer.copyright"></span>
+                        <a href="" class="fo-son" v-html="footer.icp"></a>
+                        <span class="fo-son" v-html="'Email：'+footer.email"></span>
+                        <div class="fo-son">
+                            <span v-html="'Tel：'+footer.tel"></span>
+                            <span v-html="'Fax：'+footer.fax"></span>
+                        </div>
+                        <span class="fo-son" v-html="'地址：'+footer.addre"></span>
+                    </div>
+                    <div class="fo-br">
+                        <img :src="footer.code_id" alt="">
+                    </div>
+                </div>
+            </main>
+        </footer>
+
+        <script>
+            var header = new Vue({
+                el: '#header',
+                data: {
+                    placeholder : '搜索...',
+                    sub_aside : [],   //侧导航接口
+                    sub_aside_info : {},
+                    sub_rcon : [],    //右侧展示接口
+                    channel_domain : $app.get_router(1), // 频道个性域名
+                    cate_domain : $app.get_router(2), // 分类个性域名
+                    cate_info : {}, // 分类详细信息
+                    limit : 10,
+                    page : ($app.get_query_string('page')) ? $app.get_query_string('page') : 1,
+                    total : 0,
+                    total_page : 0,
+                    page_show : [],
+                    searchText : '',
+                    channel: [],
+                    logo : 'plats/resource/1515564125368.png',
+                    qrcode: [
+                        {ok: false, title: "手机版", image: "/api/file/qrcode?margin=2&url="+window.location.href},
+                        {ok: false, title: "微信", image: plats_info.wx_qrcode? plats_info.wx_qrcode : window.location.origin+"/api/file/qrcode?margin=2&url="+window.location.href},
+                        {ok: false, title: "微博", image: plats_info.wb_qrcode? plats_info.wb_qrcode : window.location.origin+"/api/file/qrcode?margin=2&url="+window.location.href},
+                    ]
+                },
+                mounted: function() {
+                    this.$nextTick(()=>{
+                        ajax.get('scms/channelAndCate').then((res)=>{
+                            if(res.code == 200) {
+                                var result = res.data.list;
+                                result.forEach(function(value, key) {
+                                    value.old_domain = value.domain;
+                                    if(value.url_cate_id != null)
+                                    {
+                                        for(var item of value.children)
+                                        {
+                                            if(item.weid == value.url_cate_id)
+                                            {
+                                                value.domain = value.domain + '/' + item.domain;
+                                            }
+                                        }
+                                    }
+                                });
+
+                                this.channel = result;
+                                footer();
+                            }
+                        })
+
+                        !$app.get_query_string('q') ? this.placeholder = '搜索...' : this.searchText = $app.get_query_string('q');
+                    });
+                },
+                methods: {
+                    page_fun(index) {
+                        var url = this.channel_domain +'/'+this.cate_domain + '?page=' + index;
+                        $app.open_page(url);
+                    },
+                    hide(item) {
+                        item.ok = true;
+                    },
+                    show(item) {
+                        item.ok = false;
+                    },
+                    goSearchOpen: function() {
+                        window.location.href = all_domian +"sub_search?q="+ this.searchText;
+                    }
+                }
+            });
+            function footer()
+            {
+                var footer = new Vue({
+                    el: "#footer",
+                    data: {
+                        foot_channel: header.channel,
+                        footer      : {},
+                    },
+                    mounted: function() {
+                        ajax.get('scms/setting/show').then((res)=>{
+                            if(res.code == 200) {
+                                var result = res.data;
+
+                                result.code_id = window.location.origin +'/api/file/qrcode?margin=2&url='+ window.location.href;
+                                if(!result.copyright_logo) { result.copyright_logo = "plats/resource/1515752507217.png" }
+                                if(!result.copyright) {result.copyright = `上海市浙江商会(www.zccs.org)@2008-2012 All Rights Reserved` }
+                                if(!result.icp) {result.icp = `沪ICP备17020763号-1` }
+                                if(!result.email) {result.email = `shzjsh@yahoo.com.cn` }
+                                if(!result.tel) {result.tel = `021-50939588` }
+                                if(!result.fax) {result.fax = `021-50939388` }
+                                if(!result.addre) {result.addre = `上海市浦东大道900号华辰金融大厦25楼` }
+
+                                this.footer = result;
+                                $("#favicon").attr('href', ApiMaterPlatQiniuDomain + result.favicon);
+                            }
+                        })
+                    }
+                })
+            }
+
+        </script>
+    </body>
+</html>

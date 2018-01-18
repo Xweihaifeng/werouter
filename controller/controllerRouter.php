@@ -207,6 +207,11 @@ class controllerRouter extends controller
         }
         if(empty($_COOKIE['token']))
         {
+            if(is_weixin() == 'yes')
+            {
+                redirect('/');
+                return FALSE;
+            }
             return TRUE;
         }
         $user_info = $this->user_token();
@@ -224,6 +229,11 @@ class controllerRouter extends controller
         $this->_user_id = $user_info['weid'];
         if(empty($this->_user_id))
         {
+            if(is_weixin() == 'yes')
+            {
+                redirect('/');
+                return FALSE;
+            }
             redirect('/login');
         }
     }
@@ -244,16 +254,90 @@ class controllerRouter extends controller
         }
         redirect('/user/settings/realname');
     }
+
+    // 分站频道额外规则
+    public function sub_channel( $param, $match = array())
+    {
+
+        if(config::$plats['sub_state'] != FALSE)
+        {
+            if(is_mobile() == TRUE)
+            {
+                $this->config['template'] = '/views/channel.html';
+            }
+            return TRUE;
+        }
+        return FALSE;
+    }
     
+    // 分站栏目额外规则
+    public function sub_column( $param, $match = array())
+    {
+        if(config::$plats['sub_state'] == FALSE)
+        {
+            return FALSE;
+        }
+
+        $cate_sql = 'SELECT list_id , page_id , show_id , type FROM we_plat_site_cms_cate WHERE plat_id =? AND domain=?';
+        $cate_row = $this->db->queryOne($cate_sql , array($this->weid , $param));
+
+        if($cate_row == FALSE)
+        {
+            return FALSE;
+        }
+        $cate_tml = [
+            '0' => [
+                'weid' => $cate_row['list_id'],
+                'cate' => 'list'
+            ],
+            '1' => [
+                'weid' => $cate_row['page_id'],
+                'cate' => 'list'
+            ],
+        ];
+        $cate_row_type = (!empty($cate_row['type'])) ? $cate_row['type'] :  '0'; 
+        if($cate_row_type > 1) $cate_row_type = 0;
+        $cate_tml_weid = $cate_tml[$cate_row_type]['weid'];
+        
+        $tml_sql = 'SELECT template FROM we_plat_site_cms_template WHERE plat_id =? AND weid=?';
+        $tml_row = $this->db->queryOne($tml_sql , array($this->weid , $cate_tml_weid));
+
+        if(!empty($tml_row['template']))
+        {
+            if($match['current'] == $match['total'])
+            {
+                $this->config['template'] = '/views/'.$cate_tml[$cate_row_type]['cate'].'/'.$tml_row['template'].'.html';
+            }
+            return TRUE;
+        }
+        return FALSE;
+    }
+    
+    // 分站栏目额外规则
+    public function sub_channel_detailid( $param, $match = array())
+    {
+        if(config::$plats['sub_state'] == FALSE)
+        {
+            return FALSE;
+        }
+        
+        $this->config['template'] = '/views/show/detail.html';
+        return TRUE;
+    }
+
     // 频道额外规则
     public function channel( $param, $match = array())
     {
 
+        if(!empty(config::$plats['sub_state']) && config::$plats['sub_state'] != FALSE)
+        {
+            return FALSE;
+        }
         $sql = 'SELECT we_plat_cms_template.template AS tml FROM we_plat_cms_channel  
                 LEFT JOIN we_plat_cms_template ON we_plat_cms_channel.list_id = we_plat_cms_template.weid
                 WHERE we_plat_cms_channel.plat_id =? AND  we_plat_cms_channel.domain = ?';
         $row = $this->db->queryOne($sql , array($this->weid , $param));
-
+        
         if(!empty($row['tml']))
         {   
             if($match['current'] == $match['total'])
@@ -272,6 +356,10 @@ class controllerRouter extends controller
     // 频道额外规则
     public function channel_art( $param, $match = array())
     {
+        if(!empty(config::$plats['sub_state']) && config::$plats['sub_state'] != FALSE)
+        {
+            return FALSE;
+        }
         $sql = 'SELECT B.template AS tml FROM we_plat_cms_cate A LEFT JOIN we_plat_cms_template B on A.list_id=B.weid  WHERE A.plat_id =? AND A.domain=?';
         $row = $this->db->queryOne($sql , array($this->weid , $param));
 
@@ -289,6 +377,10 @@ class controllerRouter extends controller
     // 频道详情页
     public function channel_detailid($param , $match = array())
     {
+        if(!empty(config::$plats['sub_state']) && config::$plats['sub_state'] != FALSE)
+        {
+            return FALSE;
+        }
         $sql = 'SELECT C.template AS tml FROM we_plat_cms_content
              A LEFT JOIN we_plat_cms_cate B ON A.cate_id=B.weid
              LEFT JOIN we_plat_cms_template C ON B.show_id=C.weid

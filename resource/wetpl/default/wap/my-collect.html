@@ -17,7 +17,7 @@
     <div>
 
         <div class="coll-item" :class="{'has-join' : item.is_enrolled==1}" v-for="item in actList">
-            <div>
+            <div @click="detail(item)">
                 <div>
                     <span><b v-if="item.is_hot==1">HOT</b>{{item.title | limitLen(0,20)}}</span>
                     <p>
@@ -54,6 +54,9 @@
                         this.actList = res.data.list
                     }
                 })
+            },
+            detail : function (item) {
+                $app.open_page(all_domian + item.domain + '/activitydetail/' + item.activity_id);
             }
         }
     })

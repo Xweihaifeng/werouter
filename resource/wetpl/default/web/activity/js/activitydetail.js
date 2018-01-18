@@ -236,6 +236,7 @@ $(document).ready(function() {
                             console.log(urlall[0])
                             Ticket(data.data);
                             qrcodefun1(data.data.ticket_num);
+                            barcode('.bar-code svg', data.data.ticket_num);
                         }
 
                     },
@@ -257,6 +258,7 @@ $(document).ready(function() {
                         'Token': docCookies.getItem("token")
                     },
                     success: function(data) {
+                        //console.log(data)
                         if (data.code == 200) {
                             PaymentQR(data.data.qrcode_url, data.data.number, data.data.total_fee);
                         } else {
@@ -304,7 +306,7 @@ $(document).ready(function() {
                     var closeticket = layer.open({
                         skin: 'winning-class',
                         type: 1,
-                        area: ['500px', '650px'],
+                        area: ['530px'],
                         title: 0,
                         closeBtn: 0,
                         shadeClose: true,
@@ -313,12 +315,13 @@ $(document).ready(function() {
                             '<div class="ticket-box-top">' +
                             '<div class="t_blank"></div>' +
                             '<div class="ticket-qr"></div>' +
+                            '<div class="bar-code"><svg></svg></div>' +
 
-                            '<div style="width:92%;text-align:center;padding:10px 0;margin:0 auto;">票号：' + data.ticket_num + '</div>' +
-                            '<div style="width:92%;text-align:center;padding:10px 0;margin:0 auto;">活动时请向发起人展示，该码可在个人中心查看</div>' +
+                            '<div style="width:92%;text-align:center;margin:0 auto;">票号：' + data.ticket_num + '</div>' +
+                            '<div style="width:92%;text-align:center;margin:0 auto;">活动时请向发起人展示，该码可在个人中心查看</div>' +
                             '</div>' +
                             '<div class="ticket-box-bottom">' +
-                            '<div class="ticket-title">' + data.title + '</div>' +
+                            '<div class="ticket-title">' + data.title + '<span class="qun-chat">[群聊]</span></div>' +
                             '<div class="ticket-time">' + data.begain_time + '&nbsp;' + data.begain_week + '&nbsp;' + data.begain_hour + '~~' + data.end_time + '&nbsp;' + data.end_week + '&nbsp;' + data.end_hour + '</div>' +
                             '<div class="ticket-addr"><span><i class="fa fa-map-marker"></i></span>&nbsp;：' + data.area_name + data.address + '</div>' +
                             '<div class="ticket-detail">' +
@@ -335,6 +338,7 @@ $(document).ready(function() {
                             '<span class="sign-ticcom"></span>：' + data.company +
                             '</div>' +
                             '</div>' +
+                            '<div class="ticket"></div>' +
                             '</div>' +
                             '</div>',
                         end: function() {
@@ -342,6 +346,39 @@ $(document).ready(function() {
                         },
                         shade: 0.7
                     });
+
+                    if (data.type == 2) {
+                        for (var i = 0; i < data.tickets.length; i++) {
+                            var dom =
+                                '<div class="ticket-item">' +
+                                '<p>' + data.tickets[i].name + '</p>' +
+                                '<div class="tic-price">' +
+                                '<span>￥' + data.tickets[i].price + '</span>' +
+                                '</div>' +
+                                '<div class="num">' +
+                                '<span>×' + data.tickets[i].count + '</span>' +
+                                '</div>' +
+                                '</div>';
+                            $('.ticket').append(dom);
+                        }
+                    }
+
+                    if (data.is_open_qun == 2) {
+                        $('.qun-chat').css('display', 'inline-block');
+                    }
+                    var qrImg = imgSet(data.wx_qun_qrcode, 0, 0);
+                    $('.qun-chat').click(function() {
+                        layer.open({
+                            type: 1,
+                            area: ['320px', '320px'],
+                            title: 0,
+                            closeBtn: 0,
+                            shadeClose: true,
+                            scrollbar: false,
+                            content: '<div class="qun-qrcode"><img src="' + qrImg + '" alt=""></div>'
+                        });
+                    });
+
                 }
                 // 调起支付
             var PaymentQR = function(qr_url, number, fee) {
@@ -424,7 +461,7 @@ $(document).ready(function() {
                     GetActivity(id, function(rep) {
                                 closeindex = layer.open({
                                             type: 1,
-                                            area: ['600px', '740px'],
+                                            area: ['600px'],
                                             title: 0,
                                             closeBtn: 0,
                                             shadeClose: true,
@@ -565,12 +602,13 @@ $(document).ready(function() {
                                 $("#" + id + ' #p3 p').css({'color': 'white'});
                             }
                             var remove = (id) => {
-                                ids.filter(x => x[0] != id).map(x => $('#' + x[0]).css('border', '2px solid #dddddd'));
-                                ids.filter(x => x[0] != id).map(x => $('#' + x[0] + ' div').css({'background': 'white', 'color': '#555'}));
-                                ids.filter(x => x[0] != id).map(x => $('#' + x[0] + '  #p2 p').css({'color': '#555'}));
-                                ids.filter(x => x[0] != id).map(x => $('#' + x[0] + '  #p3 p').css({'color': '#555'}));
-                                ids.filter(x => x[0] != id).map(x => $('#' + x[0] + ' .price').css('color', '#555'));
-                                ids.filter(x => x[0] != id).map(x => $('#' + x[0] + ' img').attr('src', '/common/img/rmb.png'));
+                                var res = ids.filter(x => x[0] != id);
+                                res.map(x => $('#' + x[0]).css('border', '2px solid #dddddd'));
+                                res.map(x => $('#' + x[0] + ' div').css({'background': 'white', 'color': '#555'}));
+                                res.map(x => $('#' + x[0] + '  #p2 p').css({'color': '#555'}));
+                                res.map(x => $('#' + x[0] + '  #p3 p').css({'color': '#555'}));
+                                res.map(x => $('#' + x[0] + ' .price').css('color', '#555'));
+                                res.map(x => $('#' + x[0] + ' img').attr('src', '/common/img/rmb.png'));
                             }
                             add(ids[0][0], ids[0][1]);
                             var id = ids[0][0];
@@ -802,8 +840,7 @@ $(document).ready(function() {
                 var company = $("#gongsi").val();
                 var tid = []; //购票id
                 var number = []; //购票数
-                tickets = tickets.filter(x => x.num != 0);
-                tickets.map(x => (tid.push(x.id), number.push(x.num)));
+                tickets.filter(x => x.num != 0).map(x => (tid.push(x.id), number.push(x.num)));
                 if (tid == "") {
                     layer.msg('请选择门票', {
                         time: 1000
@@ -1013,12 +1050,12 @@ $(document).ready(function() {
                                     GetOrder(id, function(rep) {
                                         layer.closeAll('loading');
                                         if (rep.code == 401 || rep.data.status == 1) {
-                                            if (data.data.enroll_num < data.data.enroll_limit || data.data.enroll_limit == 0) {
+                                            if (data.data.enroll_num < data.data.enroll_limit || data.data.enroll_limit == 0 || data.data.type == 2) {
                                                 Support(id, nickname, imgUrl, $(this).data('id'));
                                                 $('#phone').val(localStorage.getItem('dataPhone'));
                                                 $('#username').val(localStorage.getItem('realName'));
                                             } else {
-                                                mess_tusi("来晚啦，该活动报名人数已满");
+                                                mess_tusi("来晚啦，该活动报名人数已满~");
                                             }
                                         } else if (rep.data.status == 2) {
                                             wechat_scan_pay(rep.data.number);
@@ -1092,7 +1129,7 @@ $(document).ready(function() {
 
     }
     var qrcodefun1 = function(ticket_num) {
-        var qrcode_val = ACTIVITY_ENROLL_CHECK + "?e_number=" + ticket_num;
+        var qrcode_val = ticket_num;
         // if ($.browser.msie && $.browser.version <= 8){
         if ($.support.msie && $.support.version <= 8) {
 
@@ -1111,6 +1148,20 @@ $(document).ready(function() {
         }
 
     }
+
+        // 条形码生成
+        var barcode = function(selector, ticket_num) {
+            JsBarcode(selector, ticket_num, {
+                format: "CODE128",
+                width: 2,
+                height: 50,
+                displayValue: false,
+                text: ticket_num,
+                background: "#fff",
+                lineColor: "#000",
+                margin: 5
+            });
+        }
 
 
     // 2.1嘉宾模板

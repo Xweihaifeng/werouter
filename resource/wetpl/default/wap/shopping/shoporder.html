@@ -150,38 +150,38 @@
                 <ul class="nctouch-cart-item">
                     <div class="ding hide">
                     </div>
-                    <li class="buy-item">
+                    <li class="buy-item" v-for="item in order_goods_detail">
                         <div class="goods-pic" >
                             <a>
-                                <img :src="order_goods_detail.cover | img_src(100,100)">
+                                <img :src="item.cover | img_src(100,100)">
                             </a>
                         </div>
                         <dl class="goods-info">
                             <dt class="goods-name">
                                 <a>
-                                    {{order_goods_detail.title}}
+                                    {{item.title}}
                                 </a>
                             </dt>
                            <!--  <dd class="goods-type">规格:2.5L</dd> -->
                         </dl>
                         <div class="goods-subtotal">
-                            <span class="goods-price" style="top:1.3rem">￥{{order_goods_detail.price}}</span>
+                            <span class="goods-price" style="top:1.3rem">￥{{item.price}}</span>
                         </div>
                         <div class="goods-num" style="top: 1.939393rem;">
-                            x {{order.num}}
+                            x {{item.goods_num}}
                         </div>
                     </li>
                 </ul>
                 <div class="nctouch-cart-subtotal">
                     <dl>
                         <dt>配送方式</dt>
-                        <dd>快递 <em id="storeFreight364">{{postage}}</em>元</dd>
+                        <dd>快递 <em id="storeFreight364">{{order.total_postage}}</em>元</dd>
                     </dl>
                     <div class="message">
-                        <input type="text" name="remarks" placeholder="买家备注" rel="364" id="storeMessage364">
+                        <input type="text" v-model="order_post.note" name="remarks" placeholder="买家备注" rel="364" id="storeMessage364">
                     </div>
                     <div class="store-total">
-                        共{{order.num}}件商品&nbsp;小计：<span style="font-size:0.6rem;">￥<em id="storeTotal364">{{total_price}}</em></span>
+                        共{{order.total_num}}件商品&nbsp;小计：<span style="font-size:0.6rem;">￥<em id="storeTotal364">{{order.price}}</em></span>
                     </div>
                 </div>
 
@@ -191,7 +191,7 @@
     </div>
     <!--商品列表End-->
 
-    <!--<div id="rptVessel" class="nctouch-cart-block mt5 getRed">
+<!--     <div id="rptVessel" class="nctouch-cart-block mt5 getRed">
         <div class="input-box">
             <label>
                 <input type="checkbox" class="checkbox" id="useRPT">
@@ -201,7 +201,7 @@
 
             <p id="rptInfo">无可用红包</p>
         </div>
-    </div>-->
+    </div> -->
     
     <!--底部总金额固定层Begin-->
     <div class="nctouch-cart-bottom" style="bottom: 0rem; z-index: 9">
@@ -210,8 +210,9 @@
                 <!--<dt>合计：</dt>
                 <dd>￥<em id="totalPrice"></em></dd>-->
                 <dt>合计:</dt>
-                <dd>￥<em id="totalPayPrice">{{total_price}}</em></dd>
+                <dd>￥<em id="totalPayPrice">{{order.total_price}}</em></dd>
             </dl>
+
         </div>
         <div class="check-out ok" @click="sub_order();"><a href="javascript:void(0);">提交订单</a></div>
     </div>
@@ -227,60 +228,74 @@ var order = new Vue({
         'order_sell_list' : [],
         'order_address_list' : [],
         'order_address_default' : {},
-        'order_goods_detail' : {},
+        'order_goods_detail' : [],
         'order_goods_id' : $app.get_router('pop'),
         'order' : {
             'price' : 0,
             'num' : ($app.get_query_string('num')) ? $app.get_query_string('num') : 1  , 
+            'total_num' : 0 ,
+            'total_postage' : 0 ,
+            'total_price' : 0,
         },
-        'postage' : 0,
-        'total_price' : 0
+        'cart_list' : [],
+        'order_post' : {
+            'goods_list' : [],
+            'address_id' : '',
+            'username' : '',
+            'phone' : '',
+            'address_detail' : '',
+            'note' : ''
+        },
+        'order_type' : ($app.get_query_string('type')) ? $app.get_query_string('type') : ''  , 
     },
     mounted: function(){
         $app.set_title('确认订单');
         this.$nextTick(()=>{
-
             // 获取收货地址列表
             this.get_address_list();
-
             // 获取产品信息
             this.get_goods();
         });
-    },
-    watch: {
-        order(val)
-        {
-            this.price();
-        }
     },
     methods:{
         // 获取产品信息
         get_goods()
         {
-            ajax.get('goods/detail/'+ this.order_goods_id).then((res)=>{
-                this.order_goods_detail = res.data;
+            if(this.order_type == 'cart')
+            {
+                this.order_goods_detail = $app.get_storage('cart_list').goodsList;
                 this.price();
-            });
+            }
+            else
+            {
+                ajax.get('goods/detail/'+ this.order_goods_id).then((res)=>{
+                    this.order_goods_detail = [res.data];
+                    this.price();
+                }); 
+            }
         },
         price()
         {
-            this.order.price = this.order_goods_detail.price * this.order.num;
-
-            if(this.order_goods_detail.postage_status == 2)
+            //http://m.cnew.wezchina.com/pay/shopping?store_num=cbfea660-f038-11e7-8913-2bc51cacd454
+            //console.log(this.order_goods_detail);
+            for(var item of this.order_goods_detail)
             {
-                if(this.order_goods_detail.postage_max_money > this.order.price)
+                this.order.num = (item.goods_num) ? item.goods_num : this.order.num ;
+                this.order.price = this.order.price + (item.price * this.order.num);
+                this.order.total_num += this.order.num;
+                // 邮费计算
+                if(item.postage_status == 2)
                 {
-                    this.postage = 0;
-                }
-                else
-                {
-                    this.postage = this.order_goods_detail.postage * this.order.num;
+                    if(item.postage_max_money > (this.order.num * item.price) || item.postage_max_money < 1)
+                    {
+                        this.order.total_postage = this.order.total_postage + (item.postage * this.order.num);
+                    }
                 }
             }
 
-            this.total_price = ( (this.order.price * this.order.num) + this.postage ).toFixed(2);
+            this.order.total_price = ( this.order.price + this.order.total_postage ).toFixed(2);
 
-            this.postage = this.postage.toFixed(2);
+            this.order.total_postage = this.order.total_postage.toFixed(2);
         },
         // 获取全部收货地址
         get_address_list(call)
@@ -320,7 +335,50 @@ var order = new Vue({
         },
         sub_order(item)
         {
+            if($app.empty(this.order_address_default) == false)
+            {
+                mb_message('收货地址为空');
+                return false;
+            }
 
+            this.order_post.address_id = this.order_address_default.weid;
+            this.order_post.username = this.order_address_default.name;
+            this.order_post.phone = this.order_address_default.telophone;
+            this.order_post.address_detail = this.order_address_default.province_name + this.order_address_default.area_name + this.order_address_default.detail;
+
+            for(var item of this.order_goods_detail)
+            {
+                var goods_num = (item.goods_num) ? item.goods_num : this.order.num ;
+                if($app.empty(item.cartweid) != false)
+                {
+                    this.cart_list.push(item.cartweid);
+                }
+                this.order_post.goods_list.push({'goods_id' : item.weid,'goods_num' : goods_num});
+            }
+            if(this.order_type == 'cart')
+            {
+                ajax.post('cart/destroy' , {'weid' : this.cart_list}).then((res)=>{
+                    this.order_store();
+                });
+            }
+            else
+            {
+                this.order_store();
+            }
+        },
+        // 提交订单参数
+        order_store()
+        {
+            ajax.post('order/store' , this.order_post).then((res)=>{
+                if(res.data != 0)
+                {
+                    $app.open_page(all_domian + 'pay/shopping?store_num='+ res.data); 
+                }
+                else
+                {
+                    mb_message(res.message);
+                }
+            }); 
         }
     }
 });

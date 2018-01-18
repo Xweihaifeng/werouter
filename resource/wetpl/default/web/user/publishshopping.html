@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link rel="shortcut icon" id="favicon" href="" />
-    <script src="{{PATH_TML}}user/common/js/loading.js"></script>
     <script src="/common/js/jquery-3.2.1.min.js"></script>
+    <script src="{{PATH_TML}}user/common/js/loading.js"></script>
     <script src="/common/js/browser.min.js"></script>
     <link rel="stylesheet" href="{{PATH_TML}}user/css/order.css">
     <link rel="stylesheet" href="{{PATH_TML}}user/common/css/main.css">
@@ -62,7 +62,7 @@
 
     </div>
 
-<div id="right">
+<div id="right" style="display: none;">
         <div class="we-release">
             <div class="we-art-nav">
                 <ol class="breadcrumb" style="height: 30px; line-height: 30px; font-size: 15px; cursor: pointer;">
@@ -161,7 +161,32 @@
                                 <input type="text" class="form-control" name="market_price" value="" placeholder="">
                             </div>
                         </div>
-
+                        <div class="form-group">
+                            <label for="" class="col-sm-2 control-label">等级会员折扣:</label>
+                            <div class="form-group-type" tabindex="1" style="display:inline-block;padding-top:8px;">
+                                <div class="radio-group" style="display: inline-block;">
+                                    <input type="radio" name="benefit_status" value="1" checked="checked" style="width:auto; height: auto; display: inherit;margin: 0;">
+                                    <label for="J_RadioFree" style="padding: 0 10px;font-weight: 700;">是</label>
+                                </div>
+                                <div class="radio-group" style="display: inline-block;">
+                                    <input type="radio" name="benefit_status" value="2" style="width:auto; height: auto; display: inherit;margin: 0;">
+                                    <label for="J_RadioFee" style="padding: 0 10px;font-weight: 700;" >否</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="" class="col-sm-2 control-label">使用代金券:</label>
+                            <div class="form-group-type" tabindex="1" style="display:inline-block;padding-top:8px;">
+                                <div class="radio-group" style="display: inline-block;">
+                                    <input type="radio" name="voucher_status" value="1" checked="checked" style="width:auto; height: auto; display: inherit;margin: 0;">
+                                    <label for="J_RadioFree" style="padding: 0 10px;font-weight: 700;">是</label>
+                                </div>
+                                <div class="radio-group" style="display: inline-block;">
+                                    <input type="radio" name="voucher_status" value="2" style="width:auto; height: auto; display: inherit;margin: 0;">
+                                    <label for="J_RadioFee" style="padding: 0 10px;font-weight: 700;" >否</label>
+                                </div>
+                            </div>
+                        </div>
                         <div class="form-group">
                             <div class="inline bfc">
                                 <label for="" class="col-sm-2 control-label">会员优惠:</label>

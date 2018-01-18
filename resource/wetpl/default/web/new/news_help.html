@@ -1,74 +1,91 @@
 <#include#>header_include.html</#include#>
 <script type="text/javascript">
-    header_scroll = 'no';
+    var main_index = false;
 </script>
+<link rel="stylesheet" href="/common/css/main_help.css" />
+<script src="/common/js/help.js"></script>
 <body>
-
-<link rel="stylesheet" href="{{PATH_TML}}new/css/new.css">
-<div class="news_top_img" style="background: url({{PATH_TML}}new/images/01.jpg) no-repeat center center;"></div>
-<div class="warp" id="app">
-    <div class="news_b_line"></div>
-    <div class="news_info_box">
-        <div class="nav_box" style="min-height:300px;">
-            <ul class="news_info_l">
-
-                <li :class="{'current': item.domain == currPage}" v-for="item in header_news">
-                    <a :href="'/news/'+ item.domain"><i class="iconfont icon-1"></i>{{item.title}}</a>
-                </li>
-            </ul>
+<div id="app">
+    <section class="bnaner">
+        <div class="nav1">
+            <div class="main" id="fff"></div>
         </div>
-        <div class="news_info_r">
-            <p class="news_top_tit">
-                <span class="title_ch">{{channel_name}}</span>
-                <em class="ch_line"></em>
-                <!-- <span class="title_en">IMPORTANT ANNOUNCEMENT</span> -->
-            </p>
-            <ul class="news_list">
-                <li v-for="item in list_data.list">
-                    <div class="news_cover">
-                        <a :href="item.href"  target="_blank">
-                            <img :src="item.img">
-                        </a>
-                    </div>
-                    <div class="news_det_info">
-                        <a class="news_det_tit" :href="item.href" :title="item.title" target="_blank">{{item.title}}</a>
-                        <a class="news_det_desc" :href="item.href" :title="item.summary" target="_blank">
-                           {{item.summary}}                       </a>
-                    </div>
-                    <div class="news_time_box">
-                       <span class="time_data">{{item.time_data}}</span> 
-                       <span class="time_year">{{item.time_year}}</span> 
-                       <span><a :href="item.href" title="item.title" class="detail_btn" target="_blank">详情</a></span> 
-                    </div>
-                </li>
-               
-            </ul>
-            <div class="page_box" style="margin-top:30px;">
-            <!--colorful pulse-->
-				
-            	<#include#>loader_include.html</#include#>
-				<div id="colorfulPulse"  v-show="empty_show">
-					<img src="/common/img/empty_100.png" />
-					<br/>
-					<li style="margin-left: -20px;">编辑呢！报告,编辑还睡觉！</li>
-				</div>
+    </section>
+
+    <section class="content">
+        <div class="toptop">
+            <main>
+                <ul class="content_left pps">
+                    <li :class="{'current': item.domain == currPage}" v-for="item in header_news">
+                        <a :href="'/helps/'+ item.domain"><span>{{item.title}}</span></a>
+                    </li>
+                </ul>
+            </main>
+        </div>
+        <main>
+            <div class="boxb">
+                <ul class="content_left diss">
+                    <li :class="{'current': item.domain == currPage}" v-for="item in header_news">
+                        <a :href="'/helps/'+ item.domain"><span>{{item.title}}</span></a>
+                    </li>
+                </ul>
             </div>
-        </div>
-    </div>
+            <div class="content_right">
+                <ul>
+                    <li>
+                        <ul class="content_right_top">
+                            <li>
+                                <div class="img">
+                                    <img class="pos" src="/common/img/help2.png" alt="">
+                                </div>
+                                <span>功能介绍{{channel_name}}</span>
+                            </li>
+                            <li>
+                                <div class="img">
+                                    <img class="pos" src="/common/img/help3.png" alt="">
+                                </div>
+                                <span>功能介绍</span>
+                            </li>
+                            <li>
+                                <div class="img">
+                                    <img class="pos" src="/common/img/help4.png" alt="">
+                                </div>
+                                <span>功能介绍</span>
+                            </li>
+                        </ul>
+
+                    </li>
+                    <li v-for="item in content">
+                        <div class="con_title">
+                            <p>#{{item.title}}#</p>
+                        </div>
+                        <div class="list_p">
+                            <ul class="list">
+                                <li v-for="v in item.children">
+                                    <div class="list_title">
+                                        <div class="line"></div>
+                                        <span>{{v.title}}</span>
+                                    </div>
+                                    <ul>
+                                        <li v-for="i in v.son">
+                                            <div class="line_cicle"></div>
+                                            <div class="text">
+                                                <a :href="'/news/'+i.weid"><span>{{i.title}}</span></a>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    <P><a :href="'/helps/'+ v.domain">查看全部{{v.count}}篇文档</a></P>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </li>
+                </ul>
+            </div>
+        </main>
+    </section>
 </div>
-<script type="text/javascript">
-    $(window).scroll(function(){
-        if($(document).scrollTop()>350){
-            $('.news_info_l').addClass('fix_nav')
-        }else{
-            $('.news_info_l').removeClass('fix_nav')
-        }
-    });
-    $('.icon-1').addClass('icon-weibiaoti-1');
-    $('.icon-2').addClass('icon-weibiaoti-2');
-    $('.icon-3').addClass('icon-chuangxin').css('font-size','30px');
-    $('.icon-4').addClass('icon-weibiaoti-');
-</script>
+
 
 <script>
     new Vue({
@@ -82,39 +99,47 @@
             'show':true,
             'empty_show':false,
             'page':1,
+            'content':'',
         },
         mounted() {
             this.$nextTick( function () {
-               this.header_news = win.getStorage('header_help');
-               for(val in this.header_news){
-               		if(this.header_news[val].domain == this.currPage){
-               			this.channel = this.header_news[val].domain;
-               			this.channel_name = this.header_news[val].title;
-               			this.get_data(this.channel , 1);
+                this.header_news = win.getStorage('header_help');
+                this.getdata()
+                for(val in this.header_news){
+                    if(this.header_news[val].domain == this.currPage){
+                        this.channel = this.header_news[val].domain;
+                        this.channel_name = this.header_news[val].title;
+                        this.get_data(this.channel , 1);
                         set_title(this.channel_name);
-               		}
+                    }
                 }
             });
         },
         methods:{
-        	get_data : function(cate_id){
-        		ajax.get(web_business.web_cms_channel_contents , {params:{cate_id:cate_id , limit : 10 , 'page' : this.page}}).then((res)=>{
-        				this.list_data = res.data;
-        				if(this.list_data.total == 0 && this.page == 1){
-        					this.empty_show = true;
-        				}
-        				var list = this.list_data.list;
-        				for(val in list){
-        					var time = (new Date(list[val].publish_time)).getTime();
-        					var time_list = new Date(time);
-        					list[val].time_year = time_list.getFullYear();
-        					list[val].time_data = time_list.getMonth()+'-'+time_list.getDate();
-        					list[val].href = '/news/'+list[val].weid;
-        					list[val].img = settings+list[val].thumb_image;
-        				}
-        				this.show = false;
-               });
-        	}
+            getdata:function () {
+                ajax.get(web_business.web_cms_channel_categories , {params:{channel:'help' , limit : 2}}).then((res)=>{
+                    this.content = res.data;
+                    console.log(this.content)
+                });
+            },
+            get_data : function(cate_id){
+                ajax.get(web_business.web_cms_channel_contents , {params:{cate_id:cate_id , limit : 10 , 'page' : this.page}}).then((res)=>{
+                    this.list_data = res.data;
+                    if(this.list_data.total == 0 && this.page == 1){
+                        this.empty_show = true;
+                    }
+                    var list = this.list_data.list;
+                    for(val in list){
+                        var time = (new Date(list[val].publish_time)).getTime();
+                        var time_list = new Date(time);
+                        list[val].time_year = time_list.getFullYear();
+                        list[val].time_data = time_list.getMonth()+'-'+time_list.getDate();
+                        list[val].href = '/news/'+list[val].weid;
+                        list[val].img = settings+list[val].thumb_image;
+                    }
+                    this.show = false;
+                });
+            }
         }
     })
 </script>

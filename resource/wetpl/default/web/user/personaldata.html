@@ -4,8 +4,8 @@
 <head lang="en">
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <script src="{{PATH_TML}}user/common/js/loading.js"></script>
     <script src="/common/js/jquery-3.2.1.min.js"></script>
+    <script src="{{PATH_TML}}user/common/js/loading.js"></script>
     <script src="/common/js/layer-v3.1.1/layer/layer.js"></script>
     <script src="/common/js/browser.min.js"></script>
     <script src="/common/js/jquery.imagecompress.js"></script>
@@ -20,7 +20,10 @@
     <link rel="stylesheet" href="/common/css/buttons.css">
     <link rel="stylesheet" href="/common/css/swiper.min.css">
     <link rel="stylesheet" href="/common/jquery-extend/tipso/tipso.min.css">
+    <link rel="stylesheet" href="/common/css/jquery.pagewalkthrough.css">
+
     <script src="/common/js/swiper-3.3.1.min.js"></script>
+    <script src="/common/js/jquery.pagewalkthrough.js"></script>
     <script src="/common/js/buttons.js"></script>
     <script src="/common/js/plupload/plupload.full.min.js"></script>
     <script src="/common/js/qiniu.js"></script>
@@ -61,7 +64,7 @@
     <div id="middle">
 
     </div>
-    <div class="right">
+    <div class="right" id="right_load_div" style="display: none;">
         <div class="right-cen">
             <div class="personaldata">
                 <nav class="navbar navbar-default" style="height: 30px;">
@@ -124,6 +127,12 @@
                 </style>
                 <div class="contact">
                     微信绑定：<i class="iconfont icon-weixin"></i><span></span>
+                </div>
+                <div class="company">
+                    所在单位：<input type="text">
+                </div>
+                <div class="position">
+                    所在职位：<input type="text">
                 </div>
                 <!--所在地区-->
                 <div class="area">
@@ -217,6 +226,65 @@
     </script>
 
     <script src="https://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js"></script>
+
+    <script>
+        $(function() {
+            // 设置参数
+
+            var guide_status = window.localStorage.getItem("guide_status");
+
+            $('body').pagewalkthrough({
+                name: 'introduction',
+                steps: [{
+                    popup: { //定义弹出提示引导层
+                        content: '开启引导流程，方便操作',
+                        type: 'modal'
+                    }
+                },{
+                    wrapper: '#settings_profile', //当前引导对应的元素位置
+                    popup: {
+                        content: '点击这里完善个人资料', //关联的内容元素
+                        type: 'tooltip', //弹出方式（tooltip和modal以及nohighlight）
+                        position: 'bottom' //弹出层位置（top,left, right or bottom）
+                    }
+                }, {
+                    wrapper: '#img',
+                    popup: {
+                        content: '上传你的专属照片',
+                        type: 'tooltip',
+                        position: 'bottom',
+                    }
+                }, {
+                    wrapper: '#settings_realname',
+                    popup: {
+                        content: '点击这里完成实名认证！',
+                        type: 'tooltip',
+                        position: 'bottom'
+                    }
+                }, {
+                    wrapper: '#settings_personal',
+                    popup: {
+                        content: '点击这里完成官方认证！',
+                        type: 'tooltip',
+                        position: 'top'
+                    }
+                }, {
+                    wrapper: '#avatar',
+                    popup: {
+                        content: '这里可以进入更多我的特权',
+                        type: 'tooltip',
+                        position: 'bottom'
+                    }
+                }]
+            });
+
+            // 一步一步显示引导页
+            if(!guide_status) {
+                $('body').pagewalkthrough('show');
+                window.localStorage.setItem("guide_status", true);
+            }
+        });
+    </script>
     <!-- <script type="text/javascript">
 			//原生城市-无联动
 			var select = $('.city-picker-select').cityPicker({

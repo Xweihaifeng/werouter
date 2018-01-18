@@ -13,13 +13,13 @@
         <!--</div>-->
         <!--<div class="swiper-pagination"></div>-->
     <!--</div>-->
-    <div class="banner" v-if="bannerList.length">
-        <a v-for="item in bannerList" v-if="item.src" :href="item.href"><img :src="item.src | img_src" alt=""></a>
-    </div>
+    <!--<div class="banner" v-if="bannerList.length">-->
+        <!--<a v-for="item in bannerList" v-if="item.src" :href="item.href"><img :src="item.src | img_src" alt=""></a>-->
+    <!--</div>-->
     <div id="box" class="section my_container" @touchstart="touchStart($event)" @touchmove="touchMove($event)"
-         @touchend="touchEnd($event)" style="transform:translate(0,-30px)">
+         @touchend="touchEnd($event)">
         <div class="fresh-tip">
-            <span>下拉加载更多...</span>
+            <span>{{freshTip}}</span>
         </div>
         <div v-for="(value,key) in artListObj">
             <!--多个模板-->
@@ -73,7 +73,9 @@
             bannerList: [],
             start: '',
             end: '',
+            freshTip: '松手加载更多...',
             offset: 30,
+            isScroll: false,
             endTime: '',
             artListObj: {},
             domain: pages_index
@@ -114,6 +116,7 @@
                     userId: pages_info.plats_user.weid,
                     endtime: this.endTime
                 };
+                this.freshTip = '加载中...';
                 ajax.post('articles/getListByDay', sendData).then((res) => {
                     console.log(res);
                     if (res.code == 200 && res.data.list && JSON.stringify(res.data.list) != '{}') {
@@ -123,8 +126,9 @@
                     if (res.data.lastdate) {
                         this.endTime = res.data.lastdate;
                     }
-                })
-                document.getElementById('box').style.transform = 'translate(0,' + (-this.offset) + 'px)';
+                    document.getElementById('box').style.transform = 'translate(0,' + (-this.offset) + 'px)';
+                    this.freshTip = '松手加载更多...';
+                });
             },
             getMin: function (arr) {
                 var min = arr[0];
@@ -197,17 +201,18 @@
             touchMove: function (ev) {
                 this.end = ev.touches[0].pageY;
                 if (document.body.scrollTop == 0) {
-                    if (this.start < this.end) {
-                        document.getElementById('box').style.transform = 'translate(0,' + parseInt(this.end - this.start) + 'px)'
+                    if(this.end > this.start){
+                        ev.preventDefault();
+                        document.getElementById('box').style.transform = 'translate(0,' + parseInt(this.end - this.start) + 'px)';
+                        this.isScroll = true;
                     }
                 }
             },
             touchEnd: function (ev) {
-                if (document.body.scrollTop == 0) {
-                    if (this.end - this.start >= this.offset) {
-                        document.getElementById('box').style.transform = 'translate(0,-30px)';
-                        this.getArtData();
-                    }
+                if (this.isScroll) {
+                    document.getElementById('box').style.transform = 'translate(0,0)';
+                    this.getArtData();
+                    this.isScroll = false;
                 }
             }
         }

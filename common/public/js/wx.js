@@ -1,70 +1,125 @@
 // 微众微信公共方法调用
 (function(window) {
 	var wx_init = {};
-	// 初始化微信SDK
-	wx_init.share = function(data_share)
+	var wx_init_call = false;
+	// 使用微信JSSDK 初始化
+	wx_init.init = function(data , call , inside_call)
 	{
 		if(is_wx == 'no') return false;
-		var pop = $app.get_router('pop');
-		
+		if(wx_init_call != false)
+		{
+			wx.ready(function() {
+				call(data , wx);
+	    	});
+			return false;
+		}
 		ajax.post('wxjssdk' , {currenturl: window.location.href}).then((res)=>{
 			if($app.empty(res.data) == false) return false;
-			wx.config({
+			wx_init_call = {
 				debug: false,
 				appId: res.data.appId,
 				timestamp: res.data.timestamp,
 				nonceStr: res.data.nonceStr,
 				signature: res.data.signature,
-				jsApiList: ['onMenuShareTimeline' , 'onMenuShareAppMessage']
-			});
+				jsApiList: ['onMenuShareTimeline' , 'onMenuShareAppMessage' , 'chooseWXPay']
+			};
+			wx.config(wx_init_call);
 			wx.ready(function() {
-		        wx.onMenuShareTimeline({
-		            title: data_share.title,
-		            // 分享标题
-		            link: data_share.link,
-		            // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-		            desc: data_share.desc,
-		            //分享描述
-		            imgUrl: data_share.imgUrl,
-		            //imgUrl: 'http://images.wezchina.com/pages/article/1512179569854.png',
-		            // 分享图标
-		            success: function() {
-		                mb_message('分享成功');
-		            },
-		            cancel: function() {
-		                mb_message('分享失败');
-		            }
-		        });
-		        wx.onMenuShareAppMessage({
-		            title: data_share.title,
-		            // 分享标题
-		            link: data_share.link,
-		            // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-		            desc: data_share.desc,
-		            //分享描述
-		            imgUrl: data_share.imgUrl,
-		            // 分享图标
-		            type: '',
-		            // 分享类型,music、video或link，不填默认为link
-		            dataUrl: '',
-		            // 如果type是music或video，则要提供数据链接，默认为空
-		            success: function() {
-		                mb_message('分享成功');
-		            },
-		            cancel: function() {
-		                mb_message('分享失败');
-		            }
-		        });
+				call(data , wx , inside_call);
 	    	});
 		});
 	}
+
+	//微信支付
+	wx_init.pay = function(data , inside_call)
+	{
+		wx_init.init(data , function(data , wx , inside_call){
+			wx.chooseWXPay({
+	            timestamp: data.timeStamp,
+	            nonceStr: data.nonceStr,
+	            package: data.package,
+	            signType: data.signType,
+	            paySign: data.paySign,
+	            success: function (res) {  
+			        inside_call(res); 
+			    }  
+	        });
+		} , inside_call);
+	}
+
+	// 微信分享
+	wx_init.share = function(data_share)
+	{
+		var pop = $app.get_router('pop');
+		wx_init.init(data_share , function(data_share , wx){
+			wx.onMenuShareTimeline({
+	            title: data_share.title,
+	            // 分享标题
+	            link: data_share.link,
+	            // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+	            desc: data_share.desc,
+	            //分享描述
+	            imgUrl: data_share.imgUrl,
+	            //imgUrl: 'http://images.wezchina.com/pages/article/1512179569854.png',
+	            // 分享图标
+	            success: function() {
+	                mb_message('分享成功');
+	            },
+	            cancel: function() {
+	                mb_message('分享失败');
+	            }
+	        });
+	        wx.onMenuShareAppMessage({
+	            title: data_share.title,
+	            // 分享标题
+	            link: data_share.link,
+	            // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+	            desc: data_share.desc,
+	            //分享描述
+	            imgUrl: data_share.imgUrl,
+	            // 分享图标
+	            type: '',
+	            // 分享类型,music、video或link，不填默认为link
+	            dataUrl: '',
+	            // 如果type是music或video，则要提供数据链接，默认为空
+	            success: function() {
+	                mb_message('分享成功');
+	            },
+	            cancel: function() {
+	                mb_message('分享失败');
+	            }
+	        });
+		});
+
+	}
+
+	// 获取商家关联的OPENID
+	wx_init.pages_openid = function(data , call)
+	{
+		if(is_wx == 'no') return false;
+
+		ajax.post('pages/page/isHaveMallOpenid' , {userId : data.userid , mallUserid : data.page_user_id}).then((res)=>
+        {
+            if(res.code == 200 && $app.empty(res.data.openid) != false)
+            {
+                call(res.data.openid);
+                return false;
+            }
+            else
+            {
+                $app.open_page(api_domain + 'mall/getMallOpenid?url=' + window.location.href + '&userid=' + data.userid + '&mall_userid='+data.page_user_id);
+            }
+        });
+	}
+
+	// 获取平台关联的OPENID
 	wx_init.get_openid = function(name){
 		if(is_wx == 'no') return false;
 
 		var openid = $app.get_query_string('openid');
 		var get_storage_openid = $app.get_cookie('openid');
 		// console.log(get_storage_openid);
-		if(get_storage_openid != false){
+		if(get_storage_openid != false && is_login == 'yes'){
 			return true;
 		}
 		// console.log(get_storage_openid);

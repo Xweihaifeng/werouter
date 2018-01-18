@@ -238,6 +238,82 @@ var loadTickets = function(weid, callback) {
     });
 }
 
+// 短信通知
+var smsNotify = function(weid, enroll_id, callback) {
+        layer.load();
+        $.ajax({
+            url: ACTIVITY_ENROLL_SMS_NOTIFY,
+            type: 'POST',
+            data: {
+                activity_id: weid,
+                enroll_id: enroll_id
+            },
+            headers: {
+                'Token': docCookies.getItem("token")
+            },
+            success: function(data) {
+                layer.closeAll('loading');
+                if (data.code == 200)
+                    callback(data.data);
+                else
+                    notice.alert(data.message);
+            },
+            error: function(xhr) {
+                layer.closeAll('loading');
+                console.log(xhr);
+            }
+        });
+    }
+    // 群发短信通知
+var allSmsNotify = function(weid, callback) {
+    layer.load();
+    $.ajax({
+        url: ACTIVITY_ENROLL_ALL_SMS_NOTIFY,
+        type: 'POST',
+        data: {
+            activity_id: weid
+        },
+        headers: {
+            'Token': docCookies.getItem("token")
+        },
+        success: function(data) {
+            layer.closeAll('loading');
+            if (data.code == 200)
+                callback(data.data);
+            else
+                notice.alert(data.message);
+        },
+        error: function(xhr) {
+            layer.closeAll('loading');
+            console.log(xhr);
+        }
+    });
+}
+
+$(document).on('click', '.all-sms-notify', function() {
+    confirmer = layer.confirm('群发短信可能消耗大量短信余额，确认要群发？', {
+        title: '群发短信通知',
+        btn: ['确认发送', '取消']
+    }, function() {
+        layer.close(confirmer);
+        allSmsNotify(id, function(data) {
+            layer.msg('已发送!');
+        });
+    }, function() {});
+});
+
+$(document).on('click', '.sms-notify', function() {
+    var enroll_id = $(this).closest('tr').data('id');
+    confirmer = layer.confirm('确认要发送？', {
+        title: '短信通知',
+        btn: ['确认发送', '取消']
+    }, function() {
+        layer.close(confirmer);
+        smsNotify(id, enroll_id, function(data) {
+            layer.msg('已发送!');
+        });
+    }, function() {});
+});
 
 
 $(document).ready(function() {
@@ -332,7 +408,7 @@ $(document).ready(function() {
             showLogin = false;
             window.location.href = domain + "/wemall";
         }
-      
+
         if (isMember(routerList, route) != ""){
             eval(route)();
         }
@@ -409,6 +485,14 @@ $(document).ready(function() {
 
 
             ' <span style="color:#34b0df;">报名成功</span>' +
+
+
+            '</td>' +
+
+            '<td class="operate">' +
+
+
+            ' <span style="color:#34b0df;"><button class="btn btn-primary sms-notify">短信通知</button></span>' +
 
 
             '</td>' +
@@ -498,7 +582,8 @@ $(document).ready(function() {
 
     // 加载报名数
     loadCount(id, function(data) {
-        $(".entry-num>span").text(data.enrollCount);
+        $(".entry-num span.ticket-count").text(data.enrollCount);
+        $(".entry-num span.peaple-count").text(data.peapleCount);
     });
 
     // 加载售票情况
@@ -1121,7 +1206,7 @@ $(document).ready(function() {
 
                                     }
                                 }
-        						if (x.module_id === 'a9d16bc0-ada0-11e7-8c59-993d3b1d7e06') {
+                                if (x.module_id === 'a9d16bc0-ada0-11e7-8c59-993d3b1d7e06') {
                                     if (x.status == 1) {
                                         //$(".we-shop").slideDown(500)
                                         $(".we-crm").show();

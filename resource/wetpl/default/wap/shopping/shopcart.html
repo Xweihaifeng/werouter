@@ -17,7 +17,7 @@
                         type="checkbox"></label>
                 <p>
                     <i></i>
-                    <span>{{store.mall.title}}</span>
+                    <a :href="store.mall.domain + '/wemall/goods/' | href('weplats')"><span>{{store.mall.title}}</span></a>
                 </p>
             </div>
             <ul>
@@ -25,9 +25,9 @@
                     <label class="circle" :class="{'checked-item-circle' : item.checked}" :for="pIndex+''+index">
                         <input @click="selectItem(store,item,index)" v-model="item.checked" class="circle"
                                :id="pIndex+''+index" type="checkbox"></label>
-                    <img :src="ApiMaterPlatQiniuDomain + item.cover" alt="">
+                    <a :href="store.mall.domain + '/wemall' + item.weid | href('weplats')"><img :src="ApiMaterPlatQiniuDomain + item.cover" alt=""></a>
                     <div class="product">
-                        <p class="des">{{item.title}}</p>
+                        <p class="des"><a :href="store.mall.domain + '/wemall/goods/' + item.weid | href('weplats')">{{item.title}}</a></p>
                         <p class="price">
                             <span>{{item.price * item.goods_num ? parseFloat(item.price * item.goods_num).toFixed(2) : parseFloat(item.price).toFixed(2)}}</span>
                             <span class="status-tip" v-if="item.status == 2">已下架</span>
@@ -69,6 +69,7 @@
             user_id: plats_user_info.weid
         },
         mounted: function () {
+            $app.set_title('购物车');
             this.init()
         },
         methods: {
@@ -77,9 +78,10 @@
                 var data = {
                     "user_id" : self.user_id,
                 };
-                ajax.post(apiUrl+'cart/lists', data).then(function (res) {
+                ajax.post('cart/lists', data).then(function (res) {
                     if(res.code == 200 && res.data.list.length){
                         var resList = res.data.list;
+                        //console.log(resList);
                         for(var i=0; i<resList.length; i++){
                             resList[i].mall["pCheck"] = false;
                             for(var a = 0; a < resList[i].goods.length; a++){
@@ -87,7 +89,7 @@
                             }
                         }
                         self.list = res.data.list;
-                        console.log(self.list)
+                        //console.log(self.list)
                     }
                 })
             },
@@ -157,6 +159,7 @@
                 this.getNumber(storeObj)
             },
             goOrder : function (storeObj) {
+
                 var orderObj = {
                     name : storeObj.mall.title,
                     goodsList : []
@@ -168,29 +171,26 @@
                         }
                     }
                 }
-
-                window.localStorage.setItem('orderObj',JSON.stringify(orderObj));
+                
+                $app.set_storage('cart_list' , orderObj);
 
                 if(storeObj.storeAllMoney > 0){
-                    var domain = window.sessionStorage.getItem("domain");
-                    var shopping_weid = window.localStorage.getItem("shopping_weid");
-                    if(!domain) {
-                        domain = 'index';
-                    }
-                    window.location.href = '/'+ domain +'/wemall/order/'+ shopping_weid;
+                    var domain = (storeObj.mall.domain) ? storeObj.mall.domain : 'tomlee' ;
+                    var shopping_weid = storeObj.mall.weid;
+                    $app.open_page(domain +'/wemall/order/'+ shopping_weid + '?type=cart');
                 }
-
             },
             deletePro : function (pro) {
-                console.log(pro);
                 var self = this;
                 layer.open({
                     content: '确认删除该条商品吗？'
                     ,btn: ['确定','取消']
+                    ,style: 'color: #818180; background-color: #fff ;'
                     ,yes: function(index){
-                        ajax.post(apiUrl+'cart/destroy',{'weid' : pro.cartweid}).then(function (res) {
+                        ajax.post('cart/destroy',{'weid' : [pro.cartweid]}).then(function (res) {
                             console.log(res);
                             if(res.code === 200){
+                                mb_message('删除成功');
                                 self.init()
                             }else{
                                 layer.open({

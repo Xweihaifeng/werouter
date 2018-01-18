@@ -61,14 +61,14 @@ $(function() {
             if(children.length != 0) {
                 template21 += '<div class="sub_tab">';
                 $.map(children, function(value, key) {
-                    template21 += `<a href="/`+ pathname[0] +"/"+ value.domain + `">`+ value.title +` </a>`
+                    template21 += `<a href="/`+ pathname[0] +"/"+ value.domain + `" id="`+ value.domain +`">`+ value.title +` </a>`
                 });
                 template21 += '</div>';
             }
             return template21;
         }
 
-        var template = `<span class="chan_li" id="` + result.domain + `"><a name="`+ result.weid +`" href="/`+ pathname[0] +"/"+ result.domain + `">
+        var template = `<span class="chan_li" id="` + result.domain + `"><a name="`+ result.weid +`" href="/`+ pathname[0] +"/"+ result.domain + `" id="`+ result.domain +`">
             `+ result.title.substr(0, 4) +`</a>`+ template2(result.children) +`</span>`
 
         return template;
@@ -268,7 +268,9 @@ $(function() {
             $("#" + li_name_1).addClass("csdf").siblings().removeClass("csdf");
             $("#" + li_name_1 + " a").addClass("fgvg");
 
-            document.title = $("#" + li_name_1).text();
+            var head_title = !$("#" + li_name_1).children("a").length ? $("#" + li_name_1).text() : $("#" + li_name_1).children("a").text();
+            document.title = head_title +' - '+ plats_info.title;
+
             if($("#newN").attr("class").indexOf("csdf") != -1) {
                 $('#news_loadingsImg1').show().siblings("#news_loadingsImg").hide();
                 column1(pageNum);

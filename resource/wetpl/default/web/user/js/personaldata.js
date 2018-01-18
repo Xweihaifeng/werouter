@@ -348,6 +348,8 @@ $(document).ready(function() {
 
         $(".username input").val(userInfo.real_name);
         $(".nickname input").val(userInfo.nickname);
+        $(".company input").val(userInfo.company);
+        $(".position input").val(userInfo.position);
         $(".phone input").val(userInfo.phone);
         switch (userInfo.sex) {
             case 1:
@@ -485,6 +487,8 @@ $(document).ready(function() {
         var name = $('.username input').val();
         var nickname = $('.nickname input').val();
         var phone = $('.phone  input').val();
+        var company = $('.company input').val();
+        var position = $('.position input').val();
         var gender = gend;
         var province_id = $("#we_province2 option:selected").attr("id");
         var area_id = $("#we_city3 option:selected").attr("id");
@@ -507,7 +511,9 @@ $(document).ready(function() {
             'sex': gender,
             'motto': summary,
             'province_id': province_id,
-            'area_id': area_id
+            'area_id': area_id,
+            'company': company,
+            'position': position
         }
 
         $.ajax({

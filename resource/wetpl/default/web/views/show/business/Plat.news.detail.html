@@ -1,0 +1,68 @@
+<#include#>header_include.html</#include#>
+<script type="text/javascript">
+    header_scroll = 'no';
+</script>
+<body>
+<!--business-->
+<link rel="stylesheet" href="{{PATH_TML}}new/css/index.css" />
+<link rel="stylesheet" href="{{PATH_TML}}new/css/new.info.css">
+<div class="blank20">
+
+</div>
+
+<div class="news_top_det_img">
+
+</div>
+
+<div class="info_news" >
+    <div id="colorfulPulse"  >
+        <span class="item-1"></span>
+        <span class="item-2"></span>
+        <span class="item-3"></span>
+        <span class="item-4"></span>
+        <span class="item-5"></span>
+        <span class="item-6"></span>
+        <span class="item-7"></span>
+    </div>
+    <div class="info_news_l" id="app">
+
+        <div class="info_l_tit">
+            <p class="title_new">{{content.title}}</p>
+            <div class="title_b">
+                <span class="news_sort">{{content.category.title}}</span>
+                <em class="title_line"></em>
+                <span class="news_pub_time">{{content.publish_time}}</span>
+                <em class="title_line"></em>                
+            </div>
+        </div>
+        <div style="height: 1px;width: 120%;background: #ededed;position: relative;left: -44px;"></div>
+        <div class="news_content" v-html="content.content">
+        </div>
+
+    </div>
+</div>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            'content' : {},
+            'show':true,
+            'page':1,
+        },
+        mounted() {
+            this.$nextTick( function () {
+                this.get_data(window.location.pathname.split('/').pop());
+            });
+        },
+        methods:{
+            get_data : function(weid){
+                ajax.get(web_business.web_cms_contents+weid).then((res)=>{
+                    this.content = res.data;
+                set_title(this.content.title);
+                $('#colorfulPulse').hide();
+            });
+            }
+        }
+    });
+</script>
+<#include#>footer_include.html</#include#>

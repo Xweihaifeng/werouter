@@ -202,19 +202,19 @@ const header = `
                 <aside>
                     <span>手机版</span>
                     <div>
-                        <img src="http://www.qqxqs.com/api//file/qrcode?margin=2&url=http://m.qqxqs.com" class="weixin img-responsive">
+                        <img src=${"/api/file/qrcode?margin=2&url=" + window.location.href} class="weixin img-responsive">
                     </div>
                 </aside>
                 <aside>
                     <span>微信</span>
                     <div>
-                        <img src="${ApiMaterPlatQiniuDomain + plats_info.wx_qrcode}" alt="">
+                        <img src=${imgSet(plats_info.wx_qrcode? plats_info.wx_qrcode: window.location.origin+"/api/file/qrcode?margin=2&url="+window.location.href, 90, 90)} alt="">
                     </div>
                 </aside>
                 <aside>
                     <span>微博</span>
                     <div>
-                        <img src="${ApiMaterPlatQiniuDomain + plats_info.wb_qrcode}" alt="">
+                        <img src=${imgSet(plats_info.wb_qrcode? plats_info.wb_qrcode: window.location.origin+"/api/file/qrcode?margin=2&url="+window.location.href, 90, 90)} alt="">
                     </div>
                 </aside>
                 <aside><a href="" target="_blank" id="old"><span style="border-right:none;padding-left:12px;">访问旧版</span></a></aside>
@@ -527,7 +527,6 @@ req().then((data) => {
         } else if (imgUrl == null) {
             imgUrl = '/common/img/avatar.png';
         }
-
         if (flag) {
             var templete =
             '<div class="rolling_img">' +
@@ -536,8 +535,8 @@ req().then((data) => {
                         '<div class="imgs-member">' +
                             '<img src=' + imgUrl + ' width="158" />' +
                         '</div><div class="img-title1" style="padding: 0 5px;">' +
-            '<div id=' + memberId + ' style="width: 100%; height: 35px; text-align: center; line-height: 35px; margin-top: 5px; font-size: 15px; font-weight: 600; padding-left: 2px;" class="imgs-name1">' + data.real_name + '</div>' +
-            '<div style="width: 100%; height: 63px; text-align: center; line-height: 2em;" class="imgs-occupation">' + data.position.split(/',|;|；|，|'/g)[0] + '</div>' +
+                    '<div id=' + memberId + ' style="width: 100%; height: 35px; text-align: center; line-height: 35px; margin-top: 5px; font-size: 15px; font-weight: 600; padding-left: 2px;" class="imgs-name1">' + (data.real_name ? data.real_name : '') + '</div>' +
+                    '<div style="width: 100%; height: 63px; text-align: center; line-height: 2em;" class="imgs-occupation">' + (data.position ? data.position.split(/',|;|；|，|'/g)[0] : '') + '</div>' +
                     '</div></div>' +
                 '</a>' + 
             '</div>'
@@ -549,8 +548,8 @@ req().then((data) => {
                         '<div class="imgs-member" style="padding: 0 5px;">' +
                             '<img src=' + imgUrl + ' width="158" />' +
                         '</div>' +
-                        '<div id=' + memberId + ' style="width: 100%; height: 33px; text-align: center; line-height: 33px; padding-left: 2px;">' + data.real_name + '</div>' +
-                        '<div style="width: 100%; height: 63px; text-align: center; line-height: 2em;" class="imgs-occupation">' + data.position.split(/',|;|；|，|'/g)[0] + '</div>' +
+                        '<div id=' + memberId + ' style="width: 100%; height: 33px; text-align: center; line-height: 33px; padding-left: 2px;">' + (data.real_name ? data.real_name : '') + '</div>' +
+                        '<div style="width: 100%; height: 63px; text-align: center; line-height: 2em;" class="imgs-occupation">' + (data.position ? data.position.split(/',|;|；|，|'/g)[0] : '') + '</div>' +
                     '</div>' +
                 '</a>' + 
             '</div>'
@@ -925,11 +924,11 @@ req().then((data) => {
                 }
 
                 if (data.data.header1 != null) {
-                    addBg(data.data.header1.image, '#hl', 196, 45);
+                    addBg(data.data.header1.image, '#hl', 382, 45);
                 }
                 if (data.data.header2 != null) {
-                    addBg(data.data.header2.image, '#big', 960, 235);
-                    $(".big a").attr('href', data.data.header2.url);
+                    addBg(data.data.header2.list[0].image, '#big', 960, 235);
+                    $(".big a").attr('href', data.data.header2.list[0].url);
                 }
 
                 /*var isEnter = true; // 鼠标在main中
@@ -1363,10 +1362,14 @@ req().then((data) => {
                     var vdsource = vdinfo.list[0].source_url;
                     var magazine = data.data.mag;
                     var report = data.data.ztbd;
+                    let cover = '/common/img/new/08.png'
+                    if (vdinfo.list[0].thumb_image != '') {
+                        cover = ApiMaterPlatQiniuDomain + vdinfo.list[0].thumb_image;
+                    }
                     if (vdinfo != null) {
                         $("#hbl div:eq(0) p:eq(0)").text(vdinfo.title);
                         $("#hbl div:eq(0) p:eq(1)").html(`<a href="${'/' + vdinfo.domain}">更多>></a>`);
-                        $("#hbl div:eq(1)").css({'background': 'url(' + ApiMaterPlatQiniuDomain + vdinfo.list[0].thumb_image + ') no-repeat center'});
+                        $("#hbl div:eq(1)").css({'background': 'url(' + cover + ') no-repeat center'});
                         var vdtpl = vdinfo.list.reduce((tpl, e, i) =>
                             i >= 1 && i < 3 ?
                                 tpl += `<div class="hbs"><p><a href="${vdinfo.domain + '/' + e.weid}">> ${e.title.substr(0, 14)}</p>
