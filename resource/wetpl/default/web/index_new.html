@@ -485,7 +485,7 @@
                 this.mag = resp.mag;
                 this.ztbd = resp.ztbd;
                 this.style.video = this.spzx.thumb_image != ""
-                                    ? {"background": "url(" + set_img(this.spzx.thumb_image, '/common/img/new/08.png', 350, 175) + ") no-repeat center"}
+                                    ? {"background": "url(" + this.set_img(this.spzx.thumb_image, '/common/img/new/08.png', 350, 175) + ") no-repeat center"}
                                     : {"background": "url(/common/img/new/08.png) no-repeat center"};
                 setTimeout(() => {
                     var mySwiper3 = new Swiper('#my-swiper-3', Object.assign({}, this.swiper, {slidesPerView: 4, spaceBetween: 20}))
