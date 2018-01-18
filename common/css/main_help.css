@@ -47,6 +47,7 @@ main{
     height: 100%;
     display: flex;
     justify-content: space-between;
+    margin-bottom: 30px;
 }
 
 .toptop{
@@ -113,7 +114,7 @@ main{
 }
 .content_right > ul{
     width: 100%;
-    height: 100%;
+    height: auto;
 }
 .content_right > ul > li{
     width: 100%;
@@ -199,12 +200,15 @@ main{
 }
 .list{
     width: 100%;
-    height:220px;
+    height:auto;
+    overflow: hidden;
+
 }
 .list > li{
     width: 465px;
     height:220px;
     float: left;
+    overflow: hidden;
 }
 .text > a{
     display: block;
@@ -217,13 +221,13 @@ main{
 }
 .list > li > ul {
     width: 100%;
-    height: 112px;
+    height: 118px;
     overflow: hidden;
 }
 .list > li > ul > li{
     width: 100%;
-    height: 28px;
-    line-height: 28px;
+    height: 30px;
+    line-height: 30px;
 }
 .line_cicle{
     width: 6px;
@@ -238,6 +242,12 @@ main{
     height: 100%;
     font-size: 14px;
     color: #666;
+}
+.text > a:hover span{
+    color: #D32720!important;
+}
+.list > li > ul > li .text > a:hover span{
+    color: #D32720!important;
 }
 .list > li > p > a{
     color: #666;

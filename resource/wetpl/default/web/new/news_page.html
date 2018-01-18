@@ -3,7 +3,8 @@
     header_scroll = 'no';
 </script>
 <body>
-<link rel="stylesheet" href="/common/css/faq.css">
+<link rel="stylesheet" href="/common/css/abouts.css">
+<script src="/common/js/news_pages.js"></script>
 <!--<div class="location_box wrap">
 	<div class="location f_l">
 		<i class="fl ico loc_ico mr5"></i>
@@ -12,34 +13,64 @@
 </div>-->
 <div class="about_top_img"></div>
 <style type="text/css">
-	.icon-wenzhang{
-		top: 1px !important;
-	}
+    .icon-wenzhang{
+        top: 1px !important;
+    }
 </style>
 <div id="app" class="article_main article_box" style="padding:0">
-	<div class="about_line_box">
-		<div class="about_img_bottom"></div>
-	</div>
-	<div class="article_l f_gray">
-		<ul>
-			<li :class="{'on': item.domain == currPage}" v-for="item in company">
-                <a :href="'/company/'+ item.domain"><i class="iconfont icon-1"></i>{{item.title}}</a>
-            </li>
-		</ul>
-	</div>
-	<div class="article_r">
-		<div class="article_r_main">
-			<div class="blank20"></div>
-			<div class="mod_title">{{content.title}}</div>
-			<div class="blank20"></div>
-			<div class="r_main" v-html="content.content">
-			</div>	
-		</div>
-	</div>
+    <section  class="ban">
+        <div class="bnaner_aubou">
+            <main>
+                <div class="bnbntitle"></div>
+                <img src="/common/img/iphone.png" alt="">
+            </main>
+        </div>
+    </section>
+    <section class="content">
+        <div class="toptop">
+            <main>
+                <ul class="content_left pps">
+                    <li :class="{'current': item.domain == currPage}" v-for="item in company">
+                        <a :class="{'about': item.domain == currPage}" :href="'/company/'+ item.domain"><span>{{item.title}}</span></a>
+                    </li>
+                </ul>
+            </main>
+        </div>
+        <main>
+            <div class="boxb">
+                <ul class="content_left diss">
+                    <li :class="{'current': item.domain == currPage}" v-for="item in company">
+                        <a :class="{'about': item.domain == currPage}" :href="'/company/'+ item.domain"><span>{{item.title}}</span></a>
+                    </li>
+                </ul>
+            </div>
+            <div class="content_rights">
+                <ul>
+                    <li>
+                        <div class="about_title">
+                            <div class="title_con">
+                                <div class="lineder"></div>
+                                <span>{{content.title}}</span>
+                                <img v-if="currPage == 'about'" src="/common/img/sugg.png" alt="">
+                                <img v-if="currPage == 'history'" src="/common/img/develope.png" alt="">
+                                <img v-if="currPage == 'honor'" src="/common/img/hoemer.png" alt="">
+                                <img v-if="currPage == 'cases'" src="/common/img/case.png" alt="">
+                                <img v-if="currPage == 'jobs'" src="/common/img/addus.png" alt="">
+                                <img v-if="currPage == 'contact'" src="/common/img/conect.png" alt="">
+                            </div>
+                        </div>
+                        <ul class="about_con" v-html="content.content">
+
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </main>
+    </section>
 </div>
-<div class="blank20"></div>
+
 <script>
-	$('.icon-0').addClass('icon-guanyuwomen0');
+    $('.icon-0').addClass('icon-guanyuwomen0');
     $('.icon-1').addClass('icon-lianxiwomen');
     $('.icon-2').addClass('icon-tubiaozhizuomoban');
     $('.icon-3').addClass('icon-wenzhang');
@@ -56,19 +87,19 @@
         },
         mounted() {
             this.$nextTick( function () {
-               this.get_data(this.currPage);
+                this.get_data(this.currPage);
             });
         },
         methods:{
-        	get_data : function(channel){
-        		this.company = win.getStorage('header_about');
-        		for(val in this.company){
-        			if(this.company[val].domain == channel){
-        				this.content = this.company[val];
+            get_data : function(channel){
+                this.company = win.getStorage('header_about');
+                for(val in this.company){
+                    if(this.company[val].domain == channel){
+                        this.content = this.company[val];
                         set_title(this.content.title);
-        			}
-        		}
-        	}
+                    }
+                }
+            }
         }
     });
 </script>

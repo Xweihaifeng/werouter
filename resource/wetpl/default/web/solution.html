@@ -3,8 +3,6 @@
 <script src="/common/js/solution.js"></script>
 <link rel="stylesheet" href="/common/iview/iview.css">
 <script src="/common/model/business.js"></script>
-<script src="/common/iview/iview.min.js"></script>
-<script src="/common/iview/libs/win.js"></script>
 <script type="text/javascript" src="/common/public/qrcode.min.js"></script>
 <body>
 <style type="text/css">
@@ -222,11 +220,7 @@
                     box-shadow: none !important;
                 }
 </style>
-<script>
-    function mb_login() {
 
-    }
-</script>
 <div class="page-pricing" id="app" v-cloak>
 
     <Modal
@@ -838,6 +832,7 @@
             },
             open_solution(val) {
                 var weid = docCookies.getItem("weid");
+
                 ajax.get('userinfo/' + weid).then((res) => {
                     if (res.code == 200) {
                         console.log(res.data);
