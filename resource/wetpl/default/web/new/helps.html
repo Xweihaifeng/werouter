@@ -2,6 +2,7 @@
 <script type="text/javascript">
     var main_index = false;
 </script>
+
 <link rel="stylesheet" href="/common/css/helps.css"/>
 <script src="/common/js/helps.js"></script>
 <div id="app">
@@ -13,7 +14,7 @@
                 <ul class="content_left pps">
                     <template v-for="(item,index) in header_news">
                         <li :class="{'current': item.domain == currPage}">
-                            <a :class="{'about': item.domain == currPage}"  :href="'/helps/'+ item.domain">
+                            <a :class="{'about': item.domain == currPage}" :href="'/helps/'+ item.domain">
                                 <span>{{item.title}}</span>
                             </a>
                         </li>
@@ -26,7 +27,7 @@
                 <ul class="content_left diss">
                     <template v-for="(item,index) in header_news">
                         <li :class="{'current': item.domain == currPage}">
-                            <a :class="{'about': item.domain == currPage}"  :href="'/helps/'+ item.domain">
+                            <a :class="{'about': item.domain == currPage}" :href="'/helps/'+ item.domain">
                                 <span>{{item.title}}</span>
                             </a>
                         </li>
@@ -42,15 +43,31 @@
                         </div>
                         <ul>
                             <li v-for="item in datas">
-                                <a :href="'/news/'+item.weid">{{item.title}}</a>
+                                <span><a :href="'/news/'+item.weid">{{item.title}}</a></span>
+                                <span><a :href="'/news/'+item.weid">{{item.publish_time}}</a></span>
                             </li>
                         </ul>
                     </li>
                 </ul>
-
+                <section class="tye">
+                    <main>
+                        <ul class="tye_b">
+                            <li ><a href="###"><</a></li>
+                            <li><a href="###">...</a></li>
+                            <li><a href="###">1</a></li>
+                            <li><a href="###">2</a></li>
+                            <li><a href="###">3</a></li>
+                            <li><a href="###">4</a></li>
+                            <li><a href="###">5</a></li>
+                            <li><a href="###">...</a></li>
+                            <li><a href="###">></a></li>
+                        </ul>
+                    </main>
+                </section>
             </div>
         </main>
     </section>
+
 </div>
 
 <script>
@@ -66,7 +83,7 @@
             'empty_show': false,
             'page': 1,
             'datas': '',
-            'cate_name':'',
+            'cate_name': '',
         },
         mounted() {
             this.$nextTick(function () {
@@ -77,7 +94,6 @@
                         this.channel_name = this.header_news[val].title;
                         set_title(this.channel_name);
                         this.get_data(this.channel, 1);
-
                     }
                 }
             });
@@ -93,6 +109,7 @@
                 }).then((res) => {
                     this.list_data = res.data;
                     this.datas = res.data.list;
+                    console.log(this.datas)
                     this.cate_name = res.data.list[0].cate_name;
                     if (this.list_data.total == 0 && this.page == 1) {
                         this.empty_show = true;
@@ -109,7 +126,7 @@
                     this.show = false;
                 });
             },
-            
+
         }
     })
 </script>
