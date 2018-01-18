@@ -3,10 +3,11 @@
     var main_index = false;
 </script>
 
-<link rel="stylesheet" href="/common/css/news.css"/>
+<link rel="stylesheet" href="/common/css/help_list.css"/>
 <script src="/common/js/helps.js"></script>
 <div id="app">
     <section class="bnaner"></section>
+
     <section class="content">
         <div class="toptop">
             <main>
@@ -27,18 +28,9 @@
                     <template v-for="(item,index) in header_news">
                         <li :class="{'current': item.domain == currPage}">
                             <a :class="{'about': item.domain == currPage}" :href="'/news/'+ item.domain">
-
                                 <span>{{item.title}}</span>
                             </a>
                         </li>
-                        <!--<li class="gonggao" :class="{'current': item.domain == currPage}">-->
-                        <!--<a :class="{'about': item.domain == currPage}" :href="'/news/'+ item.domain">-->
-                        <!--<div class="imgbox">-->
-                        <!--<img src="" alt="">-->
-                        <!--</div>-->
-                        <!--<span>{{item.title}}</span>-->
-                        <!--</a>-->
-                        <!--</li>-->
                     </template>
                 </ul>
             </div>
@@ -50,19 +42,9 @@
                             <span>{{cate_name}}</span>
                         </div>
                         <ul>
-                            <li id="gonggao" v-for="item in datas">
-                                <a  href="">
-
-                                    <div class="imgbox">
-                                        <img src="/common/img/news_list.png" alt="">
-                                    </div>
-                                    <div class="gonggao_r">
-                                        <span><a :href="'/news/'+item.weid">{{item.title}}</a></span>
-                                        <span><a :href="'/news/'+item.weid">{{item.publish_time}}</a></span>
-                                    </div>
-
-                                </a>
-
+                            <li v-for="item in datas">
+                                <span><a :href="'/news/'+item.weid">{{item.title}}</a></span>
+                                <span><a :href="'/news/'+item.weid">{{item.publish_time}}</a></span>
                             </li>
                         </ul>
                     </li>
@@ -70,7 +52,7 @@
                 <section class="tye">
                     <main>
                         <ul class="tye_b">
-                            <li><a href="###"><</a></li>
+                            <li ><a href="###"><</a></li>
                             <li><a href="###">...</a></li>
                             <li><a href="###">1</a></li>
                             <li><a href="###">2</a></li>
