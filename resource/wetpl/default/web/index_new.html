@@ -296,15 +296,15 @@
             </div>
         </div>
         <div id="link">
-            <p class="line"></p>
+            <!--<p class="line"></p>
             <ul id="link-title">
                 <li v-for="e in link" @click="change_link(e)" :style="e.selected">{{e.title}}</li>
             </ul>
             <ul id="link-page" v-for="e in link" v-show="e.show">
-                <a v-if="e.list" v-for="o in e.list" :href="o.url" target="_blank">
+                <a v-for="o in e.list" :href="o.url" target="_blank">
                     <li :title="o.title">{{o.title | fixed_len(7) }}</li>
                 </a>
-            </ul>
+            </ul>-->
         </div>
     </div>
     <div id="bottom1">
@@ -455,16 +455,16 @@
                 this.banners = resp.banners;
                 this.peoples_title = resp.peoples_title ? resp.peoples_title : {title: '企商风采', url: '#'};
                 this.leader = resp.leader ? resp.leader : {description: "全球秦商总会会长", image: "/common/img/new/m03.png", title: "刘阿津", url: "/u/71f96b93-da75-11e7-85d7-fa5985d0eaa1", weid: "d1fe0600-d181-11e7-9c10-49bfb1717a52"};
-                var list = [];
+                /*var list = [];
                 for (var key in resp.link) {
                     list.push(resp.link[key]);
                 };
                 this.link = list.map(
-                        (e, i) => (i == 0 ? (e.show = true, e.selected = this.style.selected, e) : (e.show = false, e.selected = {}, e)));
+                        (e, i) => (i == 0 ? (e.show = true, e.selected = this.style.selected, e) : (e.show = false, e.selected = {}, e)));*/
                 setTimeout(() => {
                     var mySwiper = new Swiper('#my-swiper', Object.assign({}, this.swiper, {pagination: '.swiper-pagination', paginationClickable :true}));
                     var mySwiper2 = new Swiper('#my-swiper-2', this.swiper);
-                }, 0);
+                }, 50);
                 if (resp.users != '' && resp.users != undefined) {
                     this.users = resp.users;
                 } else {
@@ -489,7 +489,7 @@
                                     : {"background": "url(/common/img/new/08.png) no-repeat center"};
                 setTimeout(() => {
                     var mySwiper3 = new Swiper('#my-swiper-3', Object.assign({}, this.swiper, {slidesPerView: 4, spaceBetween: 20}))
-                }, 0);
+                }, 50);
             });
 
             axios.get(ARTICLES + "?field=domain,weid,title,cate_id,created_at").then(data => {
