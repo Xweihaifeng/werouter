@@ -229,7 +229,7 @@
                 // 首页广告信息
                 $sub_ajax.ads((res)=>{
                     var result = res.data;
-
+                    console.log(res.data);
                     if(!result.header2 || result.header2 == '{}') {
                         result.header2 = { weid: "", type_id: "a56119c0-765b-11e7-a42e-770589f0tou2", title: "头部横图", image: "plats/resource/1515564231387.jpg", url: "#", description: "" }
                     }

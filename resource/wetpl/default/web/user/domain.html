@@ -63,11 +63,12 @@
         }
         
         .cont-hd {
-            width: 980px;
+            width:100%;
             height: auto;
-            margin: 25px auto 25px 25px;
             display: inline-block;
-            padding: 30px 0;
+            padding: 30px 25px;
+            /*position: relative;*/
+            box-sizing: border-box;
         }
         /*样式修改开始*/
         .we-art-nav{
@@ -95,8 +96,14 @@
         }
         .cont-L{
             width: 165px;
-            height: 114px;
+            height:141px;
             float: left;
+            position: absolute;
+            top: 50%;
+            margin-top: -70px;
+        }
+        .cont-L img{
+            display:block;
         }
         .cont-R{
             width: 670px;
@@ -109,7 +116,28 @@
             width: auto;
             height: auto;
             display: none;
-
+        }
+        .ewm{
+            width: 40px;
+            height: 40px;
+            position: relative;
+            float: right;
+            top: 50px;
+            right: -15px;
+            background-image: url(/resource/wetpl/default/web/user/img/qrcode.png);
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            cursor: pointer;
+        }
+        .ewm > img {
+            width: 90px;
+            height:0;
+            position: absolute;
+            right: 0;
+            top: 0;
+            display: block;
+            transition:all 1s;
         }
         .cont-update{
             width: auto;
@@ -121,6 +149,7 @@
             margin-bottom: 10px;
             color: #4F4F4F;
             display: inline-block;
+            box-sizing: border-box;
         }
         .cont-bj{
             display: inline-block;
@@ -223,7 +252,6 @@
             cursor: pointer;
             margin-top: 10px;
             font-size: 14px;
-            margin-right: 20px;
             background: #DDDDDD;
             float: left;
         }
@@ -277,7 +305,7 @@
             margin-bottom: 15px;
             font-size: 14px;
             line-height: 20px;
-            padding-left: 8px;
+            box-sizing: border-box;
         }
         /*样式修改结束*/
     </style>
@@ -300,6 +328,9 @@
                     <ul class="breadcrumb">
                         <li class="homepage"><a>系统设置</a></li>
                         <li class="active">个性域名</li>
+                        <div class="ewm" id="ewm">
+                            <img  alt="">
+                        </div>
                     </ul>
                 </div>
                 <div class="cont-hd">
@@ -321,24 +352,26 @@
                             </div>
                         </div>
                         <div class="cont-update">
-                            <h3 style="font-size: 1.17em;padding-left: 8px">
+                            <h3 style="font-size: 1.17em;padding-right:26px;width: 100%;text-align: right;margin-bottom: 20px;color:#333333;">
                                 请重新输入您的个性域名
                             </h3>
                             <div class="person">
-                                    <label id="host" style="margin-left: 10px; padding-top: 8px; padding-right: 5px;display: inline-block;font-weight: normal"></label>
-                                    <input id="user-domain" type="text" class="form-control" name="domain" value="" style="width:200px;display: inline-block" placeholder="请输入5~16位英文字符">
-                                    <button type="submit" class="jiance">检测</button>
+                                    <div class="person-top" style="width: 100%;height: auto;overflow: hidden">
+                                        <button type="submit" class="jiance" style="float: right">检测</button>
+                                        <input id="user-domain" type="text" class="form-control" name="domain" value="" style="width:200px;display: inline-block;float: right" placeholder="请输入5~16位英文字符">
+                                        <label id="host" style="margin-left: 10px; padding-top: 8px; padding-right: 5px;display: inline-block;font-weight: normal;float: right"></label>
+                                    </div>
                                     <!--验证码验证开始-->
-                                    <div class="phone">
-                                        <span>验证码</span>
-                                        <input type="text" class="form-control" value="" name="verifycode" placeholder="请输入验证码" id="phone">
-                                        <button class="phone-btn send-code">发送验证码<span style="padding-right: 5px;color: red;"></span></button>
+                                    <div class="phone" style="width: 100%;height: auto;overflow: hidden">
+                                        <button class="phone-btn send-code" style="float: right">发送验证码<span style="padding-right: 5px;color: red;"></span></button>
+                                        <input type="text" class="form-control" value="" name="verifycode" placeholder="请输入验证码" id="phone" style="float: right">
+                                        <span style="float: right;line-height: 37px;margin-right: 10px">验证码</span>
                                     </div>
                                     <!--验证码验证结束-->
-                                <p style="margin-left: 10px; padding-top: 8px; padding-right: 5px; float: right;color: #999;">修改说明：个性域名每个月允许修改<span class="modify-count">0</span>次</p>
+                                <p style="width:100%;height:auto;margin-left: 10px; padding-top: 8px; padding-right: 26px; text-align: right;color: #999;">修改说明：个性域名每个月允许修改<span class="modify-count">0</span>次</p>
                                 <div class="btn">
-                                    <div class="save">保存</div>
-                                    <div class="del">取消</div>
+                                    <div class="del" style="float: right">取消</div>
+                                    <div class="save" style="float: right">保存</div>
                                 </div>
                             </div>
 
