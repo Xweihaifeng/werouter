@@ -80,7 +80,7 @@
                     this.content = res.data;
                     console.log(this.content)
                     console.log(this.content.content)
-
+                    this.currPage = this.content.category.domain;
                     set_title(this.content.title);
                     $('#colorfulPulse').hide();
                 });

@@ -3,7 +3,7 @@
     var main_index = false;
 </script>
 
-<link rel="stylesheet" href="/common/css/plat.news.detail.css"/>
+<link rel="stylesheet" href="/common/css/plat.help.detail.css"/>
 <script src="/common/js/helps.js"></script>
 <div id="app">
     <section class="bnaner"></section>
@@ -12,7 +12,7 @@
             <main>
                 <ul class="content_left pps">
                     <li :class="{'current': item.domain == currPage}" v-for="item in header_news">
-                        <a  :href="'/helps/'+ item.domain"><span>{{item.title}}</span></a>
+                        <a :class="{'about': item.domain == currPage}"  :href="'/helps/'+ item.domain"><span>{{item.title}}</span></a>
                     </li>
                 </ul>
             </main>
@@ -21,12 +21,11 @@
             <div class="boxb">
                 <ul class="content_left diss">
                     <li :class="{'current': item.domain == currPage}" v-for="item in header_news">
-                        <a :href="'/helps/'+ item.domain"><span>{{item.title}}</span></a>
+                        <a :class="{'about': item.domain == currPage}" :href="'/helps/'+ item.domain"><span>{{item.title}}</span></a>
                     </li>
                 </ul>
             </div>
             <div class="content_right" >
-                <!--{{content.title}}{{content.category.title}}-->
                 <div class="detail_title">
                     <p><span>{{content.title}}</span></p>
                     <p>【{{content.category.title}}】&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<span>{{content.publish_time}}</span></p>
@@ -52,7 +51,7 @@
         el: '#app',
         data: {
             'header_news': [],
-            'currPage': window.location.pathname.split('/').pop(),
+            'currPage': '',
             'content': {},
             'show': true,
             'page': 1,
@@ -60,7 +59,9 @@
         mounted() {
             this.$nextTick(function () {
                 this.header_news = win.getStorage('header_help');
+                this.get_data(window.location.pathname.split('/').pop());
                 for(val in this.header_news){
+                    console.log(this.currPage)
                     if(this.header_news[val].domain == this.currPage){
                         this.channel = this.header_news[val].domain;
                         this.channel_name = this.header_news[val].title;
@@ -68,16 +69,13 @@
                         set_title(this.channel_name);
                     }
                 }
-                this.get_data(window.location.pathname.split('/').pop());
             });
         },
         methods: {
             get_data: function (weid) {
                 ajax.get(web_business.web_cms_contents + weid).then((res) => {
                     this.content = res.data;
-                console.log(this.content)
-                console.log(this.content.content)
-
+                    this.currPage = this.content.category.domain;
                 set_title(this.content.title);
                 $('#colorfulPulse').hide();
             });
