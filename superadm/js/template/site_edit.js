@@ -11,6 +11,16 @@ $(document).ready(function(){
                         $('input[name=domain]').val(result.data.domain);
                         $('input[name=real_name]').val(result.data.real_name);
                         $('input[name=phone]').val(result.data.phone);
+
+                        $('input[name=logo]').val(result.data.logo);
+                        $('textarea[name=description]').val(result.data.description);
+                        $('textarea[name=key_word]').val(result.data.key_word);
+                        $('input[name=email]').val(result.data.email);
+                        $('input[name=tel]').val(result.data.tel);
+                        $('input[name=fax]').val(result.data.fax);
+                        $('input[name=addre]').val(result.data.addre);
+
+                        if(result.data.logo!='' && result.data.logo!=null){$('#img_logo').attr('src',ApiMaterPlatQiniuDomain+result.data.logo);}
                         weid=result.data.weid;
                 }else {
                      alert(data.message);
@@ -114,6 +124,13 @@ $(document).ready(function(){
                 real_name:$('input[name=real_name]').val(),
                 phone:$('input[name=phone]').val(),
                 password:$('input[name=password]').val(),
+                logo:$('input[name=logo]').val(),
+                description:$('textarea[name=description]').val(),
+                key_word:$('textarea[name=key_word]').val(),
+                email:$('input[name=email]').val(),
+                tel:$('input[name=tel]').val(),
+                fax:$('input[name=fax]').val(),
+                addre:$('input[name=addre]').val()
             }; 
             console.log(data);
                 $.ajax({
@@ -132,6 +149,48 @@ $(document).ready(function(){
                          console.log(xhr);
                      }
                 });
+     });
+        var uploader = Qiniu.uploader({
+          runtimes: 'html5,flash,html4', 
+          browse_button: 'logofile', 
+          uptoken_url: ApiUrl + 'file/qiniu_token',
+          get_new_uptoken: false, 
+          domain: ApiMaterPlatQiniuDomain,     
+          container: 'look',        
+          max_file_size: '100mb',           
+          flash_swf_url: 'http://cdn.staticfile.org/plupload/2.1.8/Moxie.swf',  
+          max_retries: 3,  
+          dragdrop: true,  
+          drop_element: 'look',
+          chunk_size: '4mb', 
+          auto_start: true,
+          init: {
+              'FilesAdded': function(up, files) {
+                  plupload.each(files, function(file) {
+                  });
+              },
+              'BeforeUpload': function(up, file) {
+              },
+              'UploadProgress': function(up, file) {
+              },
+              'FileUploaded': function(up, file, info) {
+                     var domain = up.getOption('domain');
+                     res = JSON.parse(info.response);
+                     console.log(res);
+                     $("input[name=logo]").val(res.key);
+                     var sourceLink = domain + res.key;
+                     $("#img_logo").attr('src', sourceLink);
+              },
+              'Error': function(up, err, errTip) {
+              },
+              'UploadComplete': function() {
+              },
+              'Key': function(up, file) {
+                  var key = "plats/resource/";
+                  key += new Date().valueOf() + '.' + file.name.substring(file.name.indexOf('.') + 1); 
+                  return key;
+              }
+          }
      });
          var uploader = Qiniu.uploader({
           runtimes: 'html5,flash,html4', 

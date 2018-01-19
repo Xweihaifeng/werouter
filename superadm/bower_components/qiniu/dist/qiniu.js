@@ -61,6 +61,7 @@
             removeItem: function (key) {
                 createCookie(key, '', -1);
             }
+
         };
     }
 
@@ -1510,22 +1511,22 @@
                     }
 
                     // send statistics log
-                    if (!op.disable_statistics_report) {
-                        var req_id = info.responseHeaders.match(/(X-Reqid\:\ )([\w\.\%-]*)/)[2];
-                        var startAt = file._start_at ? file._start_at.getTime() : nowTime.getTime();
-                        statisticsLogger.log(
-                            info.status,
-                            req_id,
-                            getDomainFromUrl(up.settings.url),
-                            undefined,
-                            getPortFromUrl(up.settings.url),
-                            nowTime.getTime() - startAt,
-                            startAt,
-                            file.size,
-                            "jssdk-" + up.runtime,
-                            file.size
-                        );
-                    }
+                    // if (!op.disable_statistics_report) {
+                    //     var req_id = info.responseHeaders.match(/(X-Reqid\:\ )([\w\.\%-]*)/)[2];
+                    //     var startAt = file._start_at ? file._start_at.getTime() : nowTime.getTime();
+                    //     statisticsLogger.log(
+                    //         info.status,
+                    //         req_id,
+                    //         getDomainFromUrl(up.settings.url),
+                    //         undefined,
+                    //         getPortFromUrl(up.settings.url),
+                    //         nowTime.getTime() - startAt,
+                    //         startAt,
+                    //         file.size,
+                    //         "jssdk-" + up.runtime,
+                    //         file.size
+                    //     );
+                    // }
                 };
             })(_FileUploaded_Handler));
 

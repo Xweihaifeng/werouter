@@ -7,6 +7,7 @@ const httpType = window.location.protocol;
 
 const apiUrl = httpType + '//{{url}}/api/';
 
+
 const mApiUrl = httpType + '//m.{{url}}/api/';
 
 const siteUrl = httpType + '//{{url}}';

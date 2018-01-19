@@ -25,7 +25,7 @@
                                     <a :href="item.channel_domain+'/'+item.weid | href">【{{item.cate_name}}】{{item.title}}</a>
                                 </h2>
                                 <p>
-                                    <a :href="item.channel_domain+'/'+item.weid | href">{{item.summary| limitLen(0,50)}}</a>
+                                    <a :href="item.channel_domain+'/'+item.weid | href" v-html="item.summary.substr(0,50)"></a>
                                 </p>
                                 <div class="all">
                                     <span>时间：{{item.publish_time}}</span>
