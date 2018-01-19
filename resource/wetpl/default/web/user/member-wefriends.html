@@ -44,8 +44,8 @@
 				<!-- new html -->				
 			    <div class="list_conment agreementlf refereebox"> 
 				   <div class="setlist clearfix"> 
-				    <select name="province" id="cityid-1" class="ui-select field_select small"> <option value="" rel="0">所在的省</option> <option value="安徽" rel="3">安徽</option> <option value="澳门" rel="396">澳门</option> <option value="北京" rel="52">北京</option> <option value="福建" rel="4">福建</option> <option value="甘肃" rel="5">甘肃</option> <option value="广东" rel="6">广东</option> <option value="广西" rel="7">广西</option> <option value="贵州" rel="8">贵州</option> <option value="海南" rel="9">海南</option> <option value="河北" rel="10">河北</option> <option value="黑龙江" rel="12">黑龙江</option> <option value="河南" rel="11">河南</option> <option value="湖北" rel="13">湖北</option> <option value="湖南" rel="14">湖南</option> <option value="江苏" rel="16">江苏</option> <option value="江西" rel="17">江西</option> <option value="吉林" rel="15">吉林</option> <option value="辽宁" rel="18">辽宁</option> <option value="内蒙古" rel="19">内蒙古</option> <option value="宁夏" rel="20">宁夏</option> <option value="青海" rel="21">青海</option> <option value="陕西" rel="24">陕西</option> <option value="山东" rel="22">山东</option> <option value="上海" rel="321">上海</option> <option value="山西" rel="23">山西</option> <option value="四川" rel="26">四川</option> <option value="台湾" rel="397">台湾</option> <option value="天津" rel="343">天津</option> <option value="香港" rel="395">香港</option> <option value="西藏" rel="28">西藏</option> <option value="新疆" rel="29">新疆</option> <option value="云南" rel="30">云南</option> <option value="浙江" rel="31">浙江</option> <option value="重庆" rel="394">重庆</option> </select> 
-				    <select name="city" id="cityid-2" class="ui-select field_select small"> <option value="" rel="0">所在的市</option> </select> 
+				    <select name="province" id="cityid-1" class="ui-select field_select small"> <option value="" rel="0">所在的省</option> </select>
+				    <select name="city" id="cityid-2" class="ui-select field_select small"> <option value="" rel="0">所在的市</option> </select>
 				    <div class="ui-button theme_bgcolor search-btn">
 				     搜索
 				    </div> 
@@ -92,6 +92,115 @@
 			<!--模块引入-->
 		<script src="/common/js/control.js"></script>
 
+		<script>
+			var province = plats_user_info.province_id;
+			var area = plats_user_info.area_id;
+			var item_id;
+			var api = 'http://new.wezchina.com/api/';
+			$.ajax({
+				url: api + "province/list",
+				type: "GET",
+				headers: {
+					'Token': plats_token
+				},
+				success: function(data) {
+					console.log(data);
+					if (data.code === 200) {
+						//拿到省的id
+						/*var prov = data.data.list;
+						prov.map(function(item) {
+							item_id = item.id
+							// console.warn(item_id);
+						});*/
+						var we_province11 = "";
+						data.data.list.forEach(function(value, index) {
+							we_province11 += "<option id=" + data.data.list[index].id + ">" + data.data.list[index].name + "</option>"
+						})
+						$("#cityid-1").append(we_province11);
+
+						if (province == null || province == "") {
+							province = 27;
+							city(province, area);
+						} else {
+							city(province, area);
+						}
+					}
+				}
+			})
+
+			//触发省级变更市级
+			$("#cityid-1").on("change", function(e) {
+				$("#cityid-2").find("option").remove();
+				$.ajax({
+					type: "GET",
+					headers: {
+						'Token': plats_token
+					},
+					url: api + "area/list/" + $('#cityid-1 option:selected').attr('id'),
+					dataType: "json",
+					success: function(data) {
+						//console.log(data);
+						if (data.code === 200) {
+							var we_city_oo = "";
+							data.data.list.forEach(function(value, index) {
+								// console.warn(data.data.list[index])
+								we_city_oo += "<option id=" + data.data.list[index].id + ">" + data.data.list[index].name + "</option>";
+							})
+							$("#cityid-2").html(we_city_oo);
+						}
+					},
+					error: function() {
+						console.log("出错了");
+					}
+				});
+			});
+
+			var city = function(province, area) {
+				$.ajax({
+					url: api + "area/list/" + province,
+					dataType: "json",
+					type: "GET",
+					headers: {
+						'Token': plats_token
+					},
+					success: function(data) {
+						console.log(data);
+						if (data.code === 200) {
+							var we_city11 = "";
+							data.data.list.forEach(function(value, index) {
+								we_city11 += "<option id=" + data.data.list[index].id + ">" + data.data.list[index].name + "</option>";
+							})
+							$("#cityid-2").append(we_city11);
+							/*$("#cityid-1").val($("#cityid-1 #" + province).val());
+							// console.log('area:', $("#" + area).val())
+							if (area == null || area == "") {
+								$("#we_city3").val($("#294").val()); //默认值
+							} else {
+								$("#we_city3").val($("#we_city3 #" + area).val());
+							}*/
+						}
+					}
+				})
+			}
+
+			$(".search-btn").click(function() {
+				var province = $('#cityid-1 option:selected').attr('id');
+				var city = $('#cityid-2 option:selected').attr('id');
+				console.log(province + "/" + city);
+				var page = 1;
+				var limit = 10;
+				var area_id = 1181;
+				$.ajax({
+					url: api + 'circel/fellow?page=' + page + '&limit=' + limit, // + '&area_id=' + area_id,
+					headers: {
+						'Token': plats_token
+					},
+					success: function (data) {
+						console.log(data)
+					}
+				})
+			})
+		</script>
 	</body>
 
 </html>
