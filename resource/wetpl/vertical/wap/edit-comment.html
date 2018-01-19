@@ -1,0 +1,186 @@
+<#extend#>public/domain/domain_extend.html</#extend#>
+<link href="{{PATH_TML}}css/edit-comment.css" rel="stylesheet">
+
+<script type="text/javascript">
+    show.header = 'no';
+    show.footer = 'no';
+</script>
+
+<header>
+    <span> 发表评价 </span>
+    <a class="back" href="javascript:void(0)" onclick="javascript:history.back(-1)"></a>
+</header>
+<div class="comment-container">
+    <div class="commit-btn" @click="submitComment()" v-show="ok">提交</div>
+    <div v-for="(item, index) in orderObj">
+
+        <!-- 商品信息 -->
+        <div class="good">
+            <img :src="ApiMaterPlatQiniuDomain+item.goods_cover" alt="">
+            <span>商品评分</span>
+            <span v-for="star in item.goodscomment.starList" class="star" :class="{'not-red' : !star.check}" @click="goStar(item.goodscomment,star)"></span>
+        </div>
+        
+        <!-- 评价内容 -->
+        <textarea placeholder="在这里分享使用商品的体验吧~" v-model="item.goodscomment.content"></textarea>
+
+        <!-- 商品评价多图上传 -->
+        <form id="imglabel">
+            <li v-for="(value, key) in item.goodscomment.pictures" class="imgmore" :id="key" v-if="item.goodscomment.pictures[0] != ''">
+                <sup @click="remove(index,key,item.goodscomment)">×</sup>
+                <img :src="ApiMaterPlatQiniuDomain+value" alt="" >
+            </li>
+            <div :id="'look'+index" class="imgmore more" v-show="ok">
+                <input :id="'pickfiles'+index" :name="'front'+index" multiple="" accept="" type="file" class="img-val" @change="InitQiNiv(index,item.goodscomment,item.weid)"/>
+            </div>
+        </form> 
+    </div>
+</div>
+<script>
+    new Vue({
+        el : "#app",
+        data : {
+            orderObj : {},
+            orderid: $app.get_query_string('orderid'),
+            ok: true,
+        },
+        mounted() {
+            var self = this;
+            var data = new Object();
+            data.order_id = this.orderid;
+            ajax.post("order/getOrderComment", data).then((res)=>{
+                if(res.code == 200) {
+                    res.data.forEach(function(value, key) {
+                        value.goodscomment.pictures = value.goodscomment.pictures.split(',');
+                        var arr = [];
+                        for(var a=0;a<5;a++){
+                            var obj = {};
+                            obj.id = a;
+                            arr.push(obj)
+                            obj.check = true;
+                        }
+
+                        value.goodscomment.starList = arr;
+                        value.goodscomment.starList.forEach(function(val, index) {
+                            if(index >= value.goodscomment.grade) {
+                                val.check = false;
+                            }
+                        });
+
+                        self.goStar(value.goodscomment, value.goodscomment.grade);
+                        if(!value.goodscomment.weid) {
+                            value.goodscomment.content = '';
+                        } else {
+                            self.ok = false;
+                        }
+                    });
+                    this.orderObj = res.data;
+                    console.log(this.orderObj);
+                }
+            })
+        },
+        methods :{
+            goStar : function (item,star) {
+                star.check = !star.check;
+                if(star.check){
+                    //该位置的index值是几，红色星星选到几
+                    for(var i=0; i<=star.id;i++){
+                        item.starList[i].check = true;
+                    }
+                }else{
+                    //如果取消打星，则将从index+1开始到最后的星星置灰
+                    star.check = true;
+                    for(var i=star.id+1;i<=4;i++){
+                        item.starList[i].check = false;
+                    }
+                }
+            },
+            submitComment : function () {
+                var sendObj = {
+                    order_id : this.orderid,
+                    data : []
+                };
+                for(var a=0; a<this.orderObj.length; a++){
+                    var obj = {};
+                    obj.goods_id = this.orderObj[a].goods_id;
+                    obj.order_id = this.orderid;
+                    obj.title = '';
+                    obj.content = this.orderObj[a].goodscomment.content;
+                    if(obj.content==''){
+                        layer.open({
+                            content: '评论内容不能为空！'
+                            ,skin: 'msg'
+                            ,time: 2
+                        });
+                        return false;
+                    }
+                    var arr = this.orderObj[a].goodscomment.starList.filter(function (s) {
+                        return s.check === true;
+                    });
+                    obj.grade = arr.length;
+                    obj.pictures = this.orderObj[a].goodscomment.pictures;
+                    sendObj.data.push(obj);
+                }
+                this.sendRequest(sendObj)
+            },
+            sendRequest : function (data) {
+                ajax.post('goods/comment/store', data).then((res)=>{
+                    if(res.code==200){
+                        layer.open({
+                            content: '评价成功'
+                            ,skin: 'msg'
+                            ,time: 2
+                        });
+                        setTimeout("window.location.href = '/shopping/allOrder';",2000)
+                    }else{
+                        layer.open({
+                            content: res.message
+                            ,skin: 'msg'
+                            ,time: 2
+                        });
+                    }
+                });
+            },
+            InitQiNiv(index,item,weid) {
+                if(item.pictures.length >= 9) {
+                    layer.open({
+                        content: '上传图片不得超过9张！',
+                        skin: 'msg',
+                        time: 2,
+                    });
+                    return false;
+                }
+
+                var input = $("#pickfiles"+index);
+                var formData = new FormData();
+                formData.append("file", input[0].files[0]);
+
+                ajax.post('file/uploadfile', formData).then((res)=>{
+                    if(res.code == 200) {
+                        var result = res.data;
+                        if(item.pictures[0] === '' && item.pictures.length === 1) {
+                            item.pictures = [];
+                        }
+                        item.pictures.push(result.key);
+                    }
+                })
+            },
+            remove(index,key,item) {
+                var data = new Object();
+                data.imgurl = item.pictures[key];
+
+                ajax.post('file/deluploadfile', data).then((res)=>{
+                    if(res.code != 200) {
+                        layer.open({
+                            content: res.message,
+                            skin: 'msg',
+                            time: 2,
+                        });
+                    }
+                })
+
+                item.pictures.splice(key, 1);
+            }
+        }
+    })
+</script>

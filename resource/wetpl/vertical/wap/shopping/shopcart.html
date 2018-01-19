@@ -1,0 +1,209 @@
+<#extend#>public/domain/domain_extend.html</#extend#>
+<script>
+    show.header = 'no';
+    show.footer = 'no';
+</script>
+<link rel="stylesheet" href="{{PATH_TML}}css/shopping-cart.css">
+<div id="shopCart">
+    <header>
+        <span>购物车</span>
+        <a class="back" href="javascript:void(0)" onclick="javascript:history.back(-1)"></a>
+    </header>
+    <div class="main">
+        <div class="store" v-for="(store,pIndex) in list">
+            <div class="name">
+                <label class="circle" :class="{'checked-item-circle' : store.mall.pCheck}" :for="pIndex"><input
+                        @click="selectStore(store);" v-model="store.mall.pCheck" :id="pIndex"
+                        type="checkbox"></label>
+                <p>
+                    <i></i>
+                    <a :href="store.mall.domain + '/wemall/goods/' | href('weplats')"><span>{{store.mall.title}}</span></a>
+                </p>
+            </div>
+            <ul>
+                <li v-for="(item,index) in store.goods" :class="{'no-exit' : item.status != 1}">
+                    <label class="circle" :class="{'checked-item-circle' : item.checked}" :for="pIndex+''+index">
+                        <input @click="selectItem(store,item,index)" v-model="item.checked" class="circle"
+                               :id="pIndex+''+index" type="checkbox"></label>
+                    <a :href="store.mall.domain + '/wemall' + item.weid | href('weplats')"><img :src="ApiMaterPlatQiniuDomain + item.cover" alt=""></a>
+                    <div class="product">
+                        <p class="des"><a :href="store.mall.domain + '/wemall/goods/' + item.weid | href('weplats')">{{item.title}}</a></p>
+                        <p class="price">
+                            <span>{{item.price * item.goods_num ? parseFloat(item.price * item.goods_num).toFixed(2) : parseFloat(item.price).toFixed(2)}}</span>
+                            <span class="status-tip" v-if="item.status == 2">已下架</span>
+                            <span class="status-tip" v-if="item.status == 3">已删除</span>
+                            <label>
+                                <span @click="operNum(item,store,'reduce')">-</span>
+                                <span>{{item.goods_num ? (item.goods_num > item.stock ? item.stock : item.goods_num) : 1}}</span>
+                                <span @click="operNum(item,store,'add')">+</span>
+                            </label>
+                        </p>
+                        <p class="operation">
+                            <span @click="deletePro(item)">删除</span>
+                            <!--<span>移入关注</span>-->
+                        </p>
+                    </div>
+                </li>
+            </ul>
+            <div class="store-count">
+                <p>
+                    <span>
+                        总计：
+                        <strong>￥{{store.storeAllMoney ? parseFloat(store.storeAllMoney).toFixed(2) : "0.00"}}</strong>
+                    </span>
+                    <span>总额￥{{store.storeAllMoney ?  parseFloat(store.storeAllMoney).toFixed(2) : "0.00"}} 立减￥0.00</span>
+                </p>
+                <a disabled="disabled" :class="{'red-bg' : store.storeAllMoney>0 }" @click="goOrder(store)">去结算
+                    <small>({{store.num ? store.num : 0}})件</small>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var app = new Vue({
+        el: "#app",
+        data: {
+            list : [],
+            user_id: plats_user_info.weid
+        },
+        mounted: function () {
+            $app.set_title('购物车');
+            this.init()
+        },
+        methods: {
+            init : function () {
+                var self = this;
+                var data = {
+                    "user_id" : self.user_id,
+                };
+                ajax.post('cart/lists', data).then(function (res) {
+                    if(res.code == 200 && res.data.list.length){
+                        var resList = res.data.list;
+                        //console.log(resList);
+                        for(var i=0; i<resList.length; i++){
+                            resList[i].mall["pCheck"] = false;
+                            for(var a = 0; a < resList[i].goods.length; a++){
+                                resList[i].goods[a]["checked"] = false
+                            }
+                        }
+                        self.list = res.data.list;
+                        //console.log(self.list)
+                    }
+                })
+            },
+            getNumber : function (storeObj,flag) {
+                storeObj.storeAllMoney = 0.00;
+                storeObj.num = 0;
+                var len = storeObj.goods.length;
+                for (var i = 0; i < len; i++) {
+                    if(storeObj.goods[i].status == 1){
+                        if(flag){
+                            storeObj.goods[i].checked = storeObj.mall.pCheck;
+                        }
+                        if (storeObj.goods[i].checked) {
+                            storeObj.storeAllMoney += storeObj.goods[i].price * storeObj.goods[i].goods_num;
+                            storeObj.num++
+                        }
+                    }
+                }},
+            selectStore: function (storeObj) {
+                storeObj.mall.pCheck = !storeObj.mall.pCheck;
+                this.getNumber(storeObj,true)
+            },
+            selectItem: function (storeObj, itemObj, index) {
+                if(itemObj.status != 1){
+                    return
+                }
+                itemObj.checked = !itemObj.checked;
+                var isAllCheck = storeObj.goods.filter(function (item) {
+                    return item.checked === false;
+                });
+                storeObj.mall.pCheck = (isAllCheck.length === 0);
+                this.getNumber(storeObj)
+
+            },
+            operNum: function (item, storeObj,oper) {
+                if(item.status != 1){
+                    return
+                }
+                item.checked = true;
+                if(oper === "add"){
+                    item.goods_num++;
+                    if (item.goods_num > item.stock) {
+                        layer.open({
+                            content: '商品数量已经超过库存'
+                            ,skin: 'msg'
+                            ,time: 2 //2秒后自动关闭
+                        })
+                        item.goods_num = item.stock
+                    }
+                }
+                if(oper === "reduce"){
+                    item.goods_num--;
+                    if (item.goods_num <= 0) {
+                        layer.open({
+                            content: '商品数量不能小于1'
+                            ,skin: 'msg'
+                            ,time: 2 //2秒后自动关闭
+                        })
+                        item.goods_num = 1;
+                    }
+                }
+
+                var isAllCheck = storeObj.goods.filter(function (item) {
+                    return item.checked === false;
+                });
+                storeObj.mall.pCheck = (isAllCheck.length === 0);
+                this.getNumber(storeObj)
+            },
+            goOrder : function (storeObj) {
+
+                var orderObj = {
+                    name : storeObj.mall.title,
+                    goodsList : []
+                };
+                for(var i=0; i<storeObj.goods.length; i++){
+                    if(storeObj.goods[i].status == 1){
+                        if(storeObj.goods[i].checked){
+                            orderObj.goodsList.push(storeObj.goods[i])
+                        }
+                    }
+                }
+                
+                $app.set_storage('cart_list' , orderObj);
+
+                if(storeObj.storeAllMoney > 0){
+                    var domain = (storeObj.mall.domain) ? storeObj.mall.domain : 'tomlee' ;
+                    var shopping_weid = storeObj.mall.weid;
+                    $app.open_page(domain +'/wemall/order/'+ shopping_weid + '?type=cart');
+                }
+            },
+            deletePro : function (pro) {
+                var self = this;
+                layer.open({
+                    content: '确认删除该条商品吗？'
+                    ,btn: ['确定','取消']
+                    ,style: 'color: #818180; background-color: #fff ;'
+                    ,yes: function(index){
+                        ajax.post('cart/destroy',{'weid' : [pro.cartweid]}).then(function (res) {
+                            console.log(res);
+                            if(res.code === 200){
+                                mb_message('删除成功');
+                                self.init()
+                            }else{
+                                layer.open({
+                                    content: '删除失败'
+                                    ,skin: 'msg'
+                                    ,time: 2 //2秒后自动关闭
+                                })
+                            }
+                            layer.close(index);
+                        })
+                    }
+                });
+            }
+        }
+    })
+</script>

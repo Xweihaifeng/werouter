@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html>
+
+
+<head>
+
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" id="favicon" href="" />
+    <meta charset="utf-8">
+    <!-- <base href="http://g.wezchina.com/my/"> -->
+    <!-- <link rel="stylesheet" type="text/css" href="css/common.css">
+<link rel="stylesheet" type="text/css" href="css/font.min.css"> -->
+    <!--[if lte IE 8]>
+        <script src="js/excanvas.js"></script>
+    <![endif]-->
+    <!-- <link rel="stylesheet" type="text/css" href="css/entry.css"> -->
+
+    <link rel="stylesheet" type="text/css" href="/common/css/main.css">
+    <link rel="stylesheet" type="text/css" href="/common/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/common/css/buttons.css">
+    <link rel="stylesheet" type="text/css" href="/common/css/swiper.min.css">
+    <link rel="stylesheet" href="{{PATH_TML}}user/css/activitycommon.css">
+    <link rel="stylesheet" type="text/css" href="{{PATH_TML}}user/css/apply_rg.css">
+
+    <script charset="utf-8" type="text/javascript" src="/common/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="/common/layer-v3.0.3/layer-v3.0.3/layer/layer.js"></script>
+    <script charset="utf-8" type="text/javascript" src="/common/js/swiper-3.3.1.min.js"></script>
+    <script src="{{PATH_CONFIG}}"></script>
+
+    <script charset="utf-8" type="text/javascript" src="/common/js/control.js"></script>
+    <script charset="utf-8" type="text/javascript" src="{{PATH_TML}}user/js/common.js"></script>
+    <script charset="utf-8" type="text/javascript" src="/common/js/browser.min.js"></script>
+    <script charset="utf-8" type="text/javascript" src="/common/js/jquery.imagecompress.js"></script>
+    <script charset="utf-8" type="text/javascript" src="/common/js/buttons.js"></script>
+    <script type="text/javascript" src="/common/layer-v3.0.3/layer-v3.0.3/layer/layer.js"></script>
+    <script type="text/javascript" src="{{PATH_TML}}user/js/activity/jquery.noty.js"></script>
+
+    <script src="/common/js/bootstrap.min.js"></script>
+
+    <title>签到列表</title>
+    <style type="text/css">
+        #activity-list {
+            color: red;
+            background: #f7f7f7;
+        }
+        
+        .we-active {
+            display: block;
+        }
+        
+        .entry-list .operate-sign {
+            padding: 16px 0;
+            height: 44px;
+            text-align: center;
+        }
+        
+        .entry-list .operate-sign>span {
+            color: red;
+            display: inline-block;
+            min-height: 44px;
+            line-height: 44px;
+        }
+        
+        .operation .del {
+            display: block;
+            padding: 9px 24px;
+            border-radius: 5px;
+            position: relative;
+            float: left;
+            margin-right: 10px;
+            color: #b4bbc2;
+            border: 2px solid #b4bbc2;
+        }
+        
+        .blue {
+            color: #04A6E9;
+            border: 2px solid #04A6E9;
+        }
+        
+        .operate .pass {
+            display: block;
+            padding: 9px 24px;
+            border-radius: 5px;
+            position: relative;
+            float: left;
+            margin-right: 10px;
+            color: #04A6E9;
+            border: 2px solid #04A6E9;
+            margin-left: 33px;
+        }
+        
+        .operate .refuse {
+            display: block;
+            padding: 9px 24px;
+            border-radius: 5px;
+            position: relative;
+            float: left;
+            margin-right: 10px;
+            color: #E85349;
+            border: 2px solid #E85349;
+        }
+        
+        .operation .export {
+            color: #04A6E9;
+            border: 2px solid #04A6E9;
+        }
+        
+        .entry-list .th-chk {
+            width: 60px;
+            text-align: right;
+        }
+        
+        .chk {
+            text-align: right;
+        }
+        
+        .operation .export {
+            color: #04A6E9;
+            border: 2px solid #04A6E9;
+        }
+        
+        .user-avatar {
+            float: left;
+        }
+        
+        .user-desc {
+            float: left;
+            margin-left: 10px;
+        }
+        
+        .company {
+            color: #aaa;
+            font-size: 12px;
+        }
+        
+        .user-block {
+            padding: 30px;
+        }
+        
+        .user-block table {
+            width: 100%;
+        }
+        
+        .user-block table tr {}
+        
+        .user-block table tr td {
+            padding: 10px;
+        }
+        
+        #user-avatar {
+            max-width: 170px;
+            max-height: 170px;
+        }
+        
+        .user-title {
+            font-weight: bold;
+        }
+        
+        .user-ticket-title {
+            font-weight: bold;
+            color: #E85349;
+        }
+        
+        .ticket-enumber {
+            display: inline-block;
+            width: 100%;
+            text-align: center;
+            font-size: 25px;
+            font-weight: bold;
+            color: #bbb;
+            font-family: monospace;
+        }
+    </style>
+
+</head>
+
+<body style="width: 100%; background: #F7F6F2;">
+    <div class="login">
+        <div class="left-nav">
+
+        </div>
+        <div id="top">
+
+        </div>
+        <div id="middle">
+
+        </div>
+        <div id="right">
+            <div class="header_top">
+                <p>我的活动 &gt; 签到列表</p>
+            </div>
+            <div class="right-con">
+                <div class="wrap">
+                    <div class="container">
+                        <div class="manage">
+                            <!--<div class="data ">
+                                  <div class="chart doughnut">
+                                      <canvas id="J_ChartCity" width="120" height="120"></canvas>
+                                      <div class="intro">
+                                          <ul id="J_ListCity"></ul>
+                               </div>
+                                  </div>
+                                  <div class="chart doughnut">
+                                      <canvas id="J_ChartPosition" width="120" height="120"></canvas>
+                                      <div class="intro">
+                                          <ul id="J_ListPosition"></ul>
+                                      </div>
+                                  </div>
+                                  <div class="chart line">
+                                      <canvas id="J_ChartTimeLine" width="400" height="120"></canvas>
+                                  </div> -->
+                            <!-- <img src="/user/img/chart.png" alt=""> -->
+                        </div>
+
+
+                        <div class="title" id="J_ActivityTitle">Loading...</div>
+                        <div class="result">
+                            <div class="pull-left entry-num"><span class="word-blue">0</span>人已签到</div>
+                            <form class="form" action="#">
+                                <div class="form-group pull-left" style="width:700px;">
+                                    <!-- <a data-toggle="dialog" data-target="#J_DialogSign" class="btn btn-active">签到管理</a> -->
+                                    <input type="text" class="input-control" name="e_number" placeholder="活动开始时输入票号核验" maxlength="50" value="" style="width:300px;">
+                                    <button id="verify_ticket" type="button" class="btn btn-success">验票</button>
+                                </div>
+                                <div class="form-group pull-right" style="width:80px;">
+                                    <button type="button" class="btn btn-success" onclick="goEnroll()">报名数据</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="operation">
+                            <div class="pull-left">
+                                <!--有人报名-->
+                                <!--活动未结束-->
+                                <!--   <button onclick="exportCsv('NDIxNjM=')" class="export" style="background: transparent;">导出名单</button> -->
+                            </div>
+                            <div class="pull-right">
+                                <div class="search">
+                                    <div class="type" id="J_SearchType">
+                                        <div class="selected J_SearchSelectedType" data-type="name" name="search_type" value='username'><span>姓名</span><i class="fa fa-chevron-down"></i></div>
+                                        <div class="other J_SearchOtherType" data-type="mobile" name="search_type" value='mobile'>手机</div>
+                                    </div>
+                                    <input type="text" id="J_InputSearchCondition" placeholder="请输入用户姓名">
+                                    <div class="button" id="J_BtnSearchEntry">搜索</div>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="entry-list">
+                            <table cellpadding="0" cellspacing="0" id="J_EntryList">
+                                <thead>
+                                    <tr>
+                                        <th class="th-queue">序号</th>
+                                        <th class="th-user">活动成员</th>
+                                        <th class="th-mobile">手机号码</th>
+                                        <th class="th-operate">到场时间</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="J_EntryList">
+                                    <tr data-id="1462363">
+                                        <tr>
+                                            <td colspan="4" style="text-align:center;">loading...</td>
+                                        </tr>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <!-- <div class="loadlist J_LoadList"><img src="http://new.wezchina.com/loading.gif"></div> -->
+                            <div class="pagination" data-total="2" data-size="15">
+                                <ul></ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+    </div>
+
+
+    <script type="text/javascript" src="{{PATH_TML}}user/js/activity/jquery.zclip.min.js"></script>
+    <script type="text/javascript" src="{{PATH_TML}}user/js/activity/template.js"></script>
+    <script type="text/javascript" src="{{PATH_TML}}user/js/activity/Chart.min.js"></script>
+    <!-- 新增JS -->
+    <script type="text/javascript" src="{{PATH_TML}}user/js/activity/jqPaginator.min.js"></script>
+    <!-- end -->
+    <script type="text/javascript" src="{{PATH_TML}}user/js/activity/common-act.js"></script>
+    <script src="{{PATH_TML}}user/common/js/generate_manage.js"></script>
+
+    <script type="text/javascript" src="{{PATH_TML}}user/js/activity_attend.js"></script>
+
+
+</body>
+
+</html>

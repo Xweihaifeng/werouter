@@ -1,0 +1,86 @@
+<#include#>header_include.html</#include#>
+<script type="text/javascript">
+    var main_index = false;
+</script>
+
+<link rel="stylesheet" href="/common/css/plat.help.detail.css"/>
+<script src="/common/js/helps.js"></script>
+<div id="app">
+    <section class="bnaner"></section>
+    <section class="content">
+        <div class="toptop">
+            <main>
+                <ul class="content_left pps">
+                    <li :class="{'current': item.domain == currPage}" v-for="item in header_news">
+                        <a :class="{'about': item.domain == currPage}"  :href="'/helps/'+ item.domain"><span>{{item.title}}</span></a>
+                    </li>
+                </ul>
+            </main>
+        </div>
+        <main>
+            <div class="boxb">
+                <ul class="content_left diss">
+                    <li :class="{'current': item.domain == currPage}" v-for="item in header_news">
+                        <a :class="{'about': item.domain == currPage}" :href="'/helps/'+ item.domain"><span>{{item.title}}</span></a>
+                    </li>
+                </ul>
+            </div>
+            <div class="content_right" >
+                <div class="detail_title">
+                    <p><span>{{content.title}}</span></p>
+                    <p>【{{content.category.title}}】&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<span>{{content.publish_time}}</span></p>
+                </div>
+                <div class="next_title">
+                    <p style="text-indent:2em;">
+                        <span>导语：</span><span>{{content.summary}}</span>
+                    </p>
+
+                </div>
+                <div class="con_cons" v-html="content.content">
+
+                </div>
+
+            </div>
+        </main>
+    </section>
+
+</div>
+
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            'header_news': [],
+            'currPage': '',
+            'content': {},
+            'show': true,
+            'page': 1,
+        },
+        mounted() {
+            this.$nextTick(function () {
+                this.header_news = win.getStorage('header_help');
+                this.get_data(window.location.pathname.split('/').pop());
+                for(val in this.header_news){
+                    console.log(this.currPage)
+                    if(this.header_news[val].domain == this.currPage){
+                        this.channel = this.header_news[val].domain;
+                        this.channel_name = this.header_news[val].title;
+                        this.get_data(this.channel , 1);
+                        set_title(this.channel_name);
+                    }
+                }
+            });
+        },
+        methods: {
+            get_data: function (weid) {
+                ajax.get(web_business.web_cms_contents + weid).then((res) => {
+                    this.content = res.data;
+                    this.currPage = this.content.category.domain;
+                set_title(this.content.title);
+                $('#colorfulPulse').hide();
+            });
+            }
+        }
+    });
+</script>
+<#include#>footer_include.html</#include#>

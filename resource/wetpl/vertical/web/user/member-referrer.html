@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+	<meta charset="UTF-8">
+	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+	<script src="/common/js/jquery-3.2.1.min.js"></script>
+	<script src="/common/js/browser.min.js"></script>
+	<script src="/common/js/jquery.imagecompress.js"></script>
+	<link rel="shortcut icon" id="favicon" href="" />
+	<link rel="stylesheet" href="/common/css/main.css">
+	<link rel="stylesheet" href="{{PATH_TML}}user/css/myOrder.css">
+	<link rel="stylesheet" href="/common/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/common/css/buttons.css">
+	<link rel="stylesheet" href="/common/css/swiper.min.css">
+	<!-- <link rel="stylesheet" href="css/manage.css"> -->
+	<link rel="stylesheet" type="text/css" href="{{PATH_TML}}user/css/laydate.css">
+	<link rel="stylesheet" type="text/css" href="{{PATH_TML}}user/css/mall_manage.css">
+	<link rel="stylesheet" type="text/css" href="{{PATH_TML}}user/css/wz-referrer.css" />
+	<script src="{{PATH_TML}}user/common/js/loading.js"></script>
+	<script src="{{PATH_TML}}user/js/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.min.js"></script>
+	<script src="{{PATH_TML}}user/js/bootstrap-datetimepicker-master/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+	<script src="{{PATH_TML}}user/common/js/bootstrap.min.js"></script>
+	<script src="/common/js/swiper-3.3.1.min.js"></script>
+	<script src="/common/js/buttons.js"></script>
+	<script type="text/javascript" src="{{PATH_TML}}user/js/laydate.js"></script>
+
+	<title>我的恩人</title>
+</head>
+
+<body style="width: 100%; background: #F7F6F2;">
+<div class="left-nav">
+
+</div>
+<div id="app" class="login">
+	<div id="top">
+	</div>
+	<div id="middle">
+	</div>
+	<div id="right">
+		<div class="header">
+			<p>我的圈子 > 我的恩人</p>
+		</div>
+		<!-- new html -->
+		<div class="tuijie_con">
+			<div class="tuijie_con_top">
+				<img id="head" src="" />
+				<div class="tuijie_name">姓名:&nbsp;<span id="name"></span></div>
+			</div>
+			<ul class="tuijie_con_bottom">
+				<li><i class="sex"></i>性别:<span id="sex"></span></li>
+				<li><i class="tit"></i>头衔:<span id="tit"></span></li>
+				<li><i class="certified"></i>认证:<span id="cert"></span></li>
+				<!--<li><i class="birth"></i>出生日期:<span>{{info.birth}}</span></li>-->
+				<li><i class="place"></i>籍贯:<span id="place"></span></li>
+				<!--<li><i class="place_now"></i>现住址:<span>{{info.address}}</span></li>-->
+			</ul>
+		</div>
+		<!-- new html end -->
+	</div>
+</div>
+<script src="{{PATH_CONFIG}}"></script>
+<script src="{{PATH_TML}}user/common/js/generate.js"></script>
+<!--模块引入-->
+<script src="/common/js/control.js"></script>
+<script src="{{PATH_TML}}user/js/common.js"></script>
+<script>
+
+	var setImg = function(url, init, w, h, mode) {
+		if (url != '' && url != null && url != undefined) {
+			if (url.indexOf('http') === -1 && url.indexOf('common') === -1) {
+				return mode != undefined ? ApiMaterPlatQiniuDomain + url + '?imageView2/' + mode + '/w/' + w + '/h/' + h
+						: ApiMaterPlatQiniuDomain + url + '?imageView2/3/w/' + w + '/h/' + h;
+			} else {
+				return url;
+			}
+		} else {
+			return init;
+		}
+	}
+
+	var certType = function(val) {
+		if (val == 1) {
+			return '官方认证';
+		} else {
+			return '暂未认证';
+		}
+	}
+
+	$.ajax({
+		url: apiUrl + 'circel/beneficiary',
+		headers: {
+			'Token': plats_token
+		},
+		success: function (data) {
+			console.log(data)
+			var src= setImg(data.data.avatar, '/common/img/tuijieren_user.png', 131, 131);
+			var type = certType(data.data.is_cert);
+			$("#head").attr('src', src);
+			$("#name").text(data.data.real_name);
+			$("#sex").text(data.data.sex);
+			$("#tit").text(data.data.cert_info);
+			$("#cert").text(type);
+			$("#place").text(data.data.area_title);
+		}
+	})
+</script>
+</body>
+
+</html>

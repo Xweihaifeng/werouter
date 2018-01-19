@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <script src="/common/js/jquery-3.2.1.min.js"></script>
+    <script src="/common/js/browser.min.js"></script>
+    <script src="/common/js/bootstrap.min.js"></script>
+    <link rel="shortcut icon" id="favicon" href="" />
+    <link rel="stylesheet" href="{{PATH_TML}}user/common/css/main.css">
+    <!-- <link rel="stylesheet" href="{{PATH_TML}}user/css/projectPublish.css"> -->
+
+    <link rel="stylesheet" href="{{PATH_TML}}user/css/manage.css">
+    <link rel="stylesheet" href="{{PATH_TML}}user/common/css/font.min.css">
+    <link rel="stylesheet" href="/common/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/common/css/buttons.css">
+    <link rel="stylesheet" href="/common/css/swiper.min.css">
+    <link rel="stylesheet" href="{{PATH_TML}}user/css/order.css">
+     <link rel="stylesheet" href="{{PATH_TML}}user/css/projectPd.css">
+<link rel="stylesheet" href="{{PATH_TML}}user/css/laydate.css">
+    <!-- <link rel="stylesheet" type="text/css" href="css/magic-input.css"> -->
+    <!-- <link rel="stylesheet" type="text/css" href="css/magic-input.min.css"> -->
+    <script src="/common/js/jquery.imagecompress.js"></script>
+    <script src="{{PATH_CONFIG}}"></script>
+    <script src="/common/js/control.js"></script>
+    <script src="{{PATH_TML}}user/js/common.js"></script>
+    <!-- <script src="{{PATH_TML}}user/js/project/projectPublish.js"></script> -->
+ <script type="text/javascript" src="/common/layer-v3.0.3/layer-v3.0.3/layer/layer.js"></script>
+    <!-- <script src="{{PATH_TML}}user/js/project/pr-push.js"></script> -->
+    <!-- <script src="{{PATH_TML}}user/js/project/pointer.js"></script> -->
+
+    <script src="/common/js/swiper-3.3.1.min.js"></script>
+    <script src="/common/js/buttons.js"></script>
+    <script src="/common/js/ckeditor/ckeditor.js"></script>
+    <script src="/common/js/plupload/plupload.full.min.js"></script>
+    <script src="/common/js/qiniu.js"></script>
+    <script type="text/javascript" src="{{PATH_TML}}user/js/ui.js"></script>
+    <script type="text/javascript" src="{{PATH_TML}}user/js/qiniumain-pj.js"></script>
+    <script type="text/javascript" src="{{PATH_TML}}user/js/laydate.js"></script>
+      <!-- // -->
+     <!-- <script src="https://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js"></script> -->
+    <!-- // -->
+
+
+    <title>发布项目</title>
+
+</head>
+<body style="width: 100%; background: #F7F6F2;">
+<div class="login">
+    <div class="left-nav">
+       
+    </div>
+    <div id="top">
+        
+    </div>
+    <div id="middle">
+        
+    </div>
+
+    <div id="right">
+        <div class="we-art-nav">
+            <ol class="breadcrumb" >
+                <li class="homepage"><a>项目管理</a></li>
+                <li class="active">发布项目</li>
+            </ol>
+      </div>
+<div class="agreement_bd">
+            <div class="agreementlf f_l">
+                <h3 class="tc "></h3>
+                <p class="agree_mana">项目基本信息:</p>
+                <div class="btn_group tl mb15 pl30">
+<!--                     <span class="l_btn cur">
+                        <a href="javascript:void(0)">项目基本信息</a>
+                    </span>
+                    <span class="l_btn  ">
+                        <a href="javascript:void(0)">回报设置</a>
+                    </span> -->
+                </div>
+                <form id="project_form" action="/index.php?ctl=project&amp;act=save" method="post">
+                    <div class="blank5"></div>
+                    <div class="setlist">
+                        <label class="setmid">筹款金额  <em class="f_red">*</em></label>
+                        <input type="text" id="chou_pub" class="pro_lf textbox fx" name="limit_price"  style="width: 135px;">
+
+                        <span class="setmid"></span>
+                        <span class="holder_tip" style="width: 135px;">筹款目标金额</span>
+                        <div class="blank0"></div>
+                    </div>
+
+                    <div class="setlist project" style="*z-index:4;">
+                        <label class="setmid">项目封面<em class="f_red">*</em></label>
+                        <div class="wz-upload-leftbox">
+                            <div class="col-sm-10">
+                                <input name="thumb_image" type="hidden" value="" class="form-control" id="pj_cover">
+                                <input id="pickfiles" name="cover" type="file" class="form-control hide" style="position: relative; z-index: 1;">
+                                <div id="look" style="position: relative;">
+                                    <img onclick="$('#pickfiles').click()" id="img" width="100px;" src="/common/img/cover.png" alt="暂无预览图片" class="thumbnail">
+
+                                  </div>
+
+                            </div>
+
+                            <div class="blank0"></div>
+                            <span class="prompt f12 f_999" style="margin-top:27px; padding: 0;margin-left:32px;">请上传清晰的产品图片，建议图片尺寸为760px*353px</span>
+                        </div>
+                        <div class="blank0"></div>
+                    </div>
+                    <div class="setlist clearfix">
+                        <label class="setmid">众筹时间  <em class="f_red">*</em></label>
+                        <input placeholder="开始时间" value="" name="start_time" class="fx laydate-icon hasDatepicker pro_lf1 textbox" id="start_time" onclick="laydate();">
+                         <input placeholder="截止时间" value="" name="end_time" class="fx laydate-icon hasDatepicker pro_lf1 textbox" id="end_time" onclick="laydate();">
+                        <!-- <label class="setmid">截止日期  <em class="f_red">*</em></label> -->
+
+
+                    </div>
+                    <div class="setlist clearfix">
+
+
+                    </div>
+
+                <div class="setlist">
+                    <label class="setmid">项目标题  <em class="f_red">*</em></label>
+                    <input type="text" id="pj_title" class="fx pro_lf textbox" name="name">
+                    <span class="holder_tip">项目标题</span>
+                    <div class="blank0"></div>
+                </div>
+
+                    <div class="setlist">
+                        <label class="setmid">项目描述  <em class="f_red">*</em></label>
+                        <textarea name="brief" id="intro" class="textareabox textbox w350" style="line-height: 20px;padding: 10px;"></textarea>
+                        <span class="holder_tip">不超过75个字，简要描述一下你的项目</span>
+                        <div class="blank0"></div>
+                    </div>
+
+                <div class="setlist">
+                    <label class="setmid">项目内容<em class="f_red">*</em></label>
+                    <div class="ke_form f_l">
+
+                         <!-- 加载编辑器的容器 -->
+                            <div class="editor">
+                                <section class="content" style="width: 600px;">
+                                    <div class="box box-info">
+                                        <div class="box-body pad">
+                                                <textarea id="editor1" name="editor1" rows="10" cols="80"></textarea>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                            <script>
+                               /* //编辑器设置
+                                    $(function(){
+                                    CKEDITOR.replace('editor1',{"extraPlugins":"filebrowser,image,imagepaste,filetools"});
+
+                                    })*/
+                            </script>
+                    </div>
+                    <div class="blank0"></div>
+                </div>
+                <div class="setlist" style="*z-index:3;">
+                    <div class="xtsidy project">
+                        <label class="setmid "></label>
+                        <div class="form-group addimgmore wz-upload-leftbox">
+                            <div class="imgmore ">
+                                <div class="imgsdiv">
+                                    <div id="fsUploadProgress"></div>
+                                </div>
+                            </div>
+                            <div class="imglabel">
+                                <div id="container" style="position:static!important;">
+                                    <a class="btn btn-default btn-lg btn-file" id="pickfiles-more" href="#" >
+                                        <i class="glyphicon glyphicon-plus"></i>
+                                        <span class="cl-xc">上传图片</span>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div style="display:none" id="success" class="col-md-12">
+                                <div class="alert-success">
+                                    队列全部文件处理完毕
+                                </div>
+                            </div>
+
+                        </div>
+                                                     <span class="prompt f12 fx_img f_999 xtsady">请上传清晰的图片， 最多8张，大小不超过2.9MB。【推荐尺寸760px*530px】</span>
+                        </div>
+
+                        <!-- <div class="wz-upload-leftbox">
+                            <div class="image_box" id="image_box"></div>
+                            <div class="imgupload_box">
+                                <label class="imgupload" style="position: relative;">
+                                    <span>+</span>
+                                    <span class="imguploadinfo mt">上传图片</span>
+
+                                    <input type="button" class="filebox" name="deal_images_file" id="deal_images_file" style="z-index: 1;">
+                                    <div class="fileuploading"></div>
+                                <div id="html5_1br1ackjmscn14jdefauc218657_container" class="moxie-shim moxie-shim-html5" style="position: absolute; top: 0px; left: 0px; width: 78px; height: 78px; overflow: hidden; z-index: 0;"><input id="html5_1br1ackjmscn14jdefauc218657" type="file" style="font-size: 999px; opacity: 0; position: absolute; top: 0px; left: 0px; width: 100%; height: 100%;" accept="image/gif,image/jpeg,image/png,image/bmp"></div></label>
+                            </div>
+                            <div class="blank0"></div>
+                            <span class="prompt f12 f_999 xtsady">请上传清晰的图片， 最多8张，大小不超过2.9MB。【推荐尺寸760px*530px】</span>
+
+                            <div class="blank0"></div>
+                        </div>
+                    </div>
+                    <div class="blank0"></div>
+                </div>
+
+                <div class="blank5"></div>
+
+                </form>
+                <div class="blank0"></div>
+            </div>
+                                <div class="blank10"></div>
+                <div id="add_item_form" >
+                <!-- <h3 class="tc ">回报设置</h3> -->
+             <div class="huibao">
+
+
+                <p class="agree_mana">回报设置:</p>
+                <hr class="cla_hr">
+                <div class="agr_re">
+                        <!--  <a href="#">
+                <div class="reset-t clearfix">
+                   <img src="/common/img/p2240279889.jpg" alt="" class="pull-left" />
+                   <div class="pull-left">
+                       <div class="pull-p" >涂鸦墙写你的名字</div>
+                       <div class="pull-p" >支持<span class="pull-span"> 520</span>元</div>
+                       <div class="sib-f">无私奉献无私奉献无私奉献无私奉献无私奉献无私奉献无私奉献无私</div>
+                   </div>
+                   <div class="gt pull-right">x</div>
+                </div>
+                </a>
+                <hr> -->
+
+
+                 </div>
+                   <button type="button" class="btn-modal" data-toggle="modal" data-target="#myModal" id='unbtn'><span>+</span>继续添加</button>
+
+                 </div>
+                <!-- <button type="button" class="btn-modal" data-toggle="modal" data-target="#myModal" id='unbtn'><span>+</span>继续添加</button> -->
+                 <div class="agree_fl">
+                    <div style="display:flex;" class="agree_fw">
+                        <input type="checkbox" name="privacy_re" >
+                        <span>隐私发布 （开启后为隐私项目，不会被搜索到）</span>
+                    </div>
+
+                  <div class="agree-sub" data-id="1" id="pub_project">
+                      发布项目
+                  </div>
+                  </div>
+                </div>
+                <div class="blank20"></div>
+                </div>
+    </div>
+</div>
+
+
+<!-- 回报设置模态框 -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close1" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">添加回报</h4>
+            </div>
+            <div class="modal-body">
+             <form class="ajax_form" id="item_form" action="#">
+               <input type="hidden" name="" class="repay_i">
+               <input type="hidden" name="" class="repay_List">
+                    <div class="public_left" style="overflow:inherit;">
+<!--
+                        <div class="control-group" style="position: relative;">
+                            <label class="control-label">说明图片 <em class="f_red">*</em></label>
+                            <span class="prompt" style="margin-top:3px;">支持jpg、jpeg、png、gif格式，大小不超过2.9MB</span>
+                            <label class="fileupload" onclick='$('#filebox').click()' id="image_file" style="position: relative; z-index: 1;">选择图片
+                                <input type="button" class="filebox" name="image_file" id="filebox" style="cursor:pointer;padding:0;height:39px;width:97px;filter:alpha(opacity=0);-moz-opacity:0;-khtml-opacity:0;opacity:0" value="选择图片">
+                            </label>
+                            <label class="fileuploading hide"></label>
+                        <div id="html5_1br1ackjj1jba13a1la01b1uqoc3_container" class="moxie-shim moxie-shim-html5" style="position: absolute; top: 0px; left: 0px; width: 0px; height: 0px; overflow: hidden; z-index: 0;"><input id="html5_1br1ackjj1jba13a1la01b1uqoc3" type="file" style="font-size: 999px; opacity: 0; position: absolute; top: 0px; left: 0px; width: 100%; height: 100%;" accept="image/gif,image/jpeg,image/png,image/bmp"></div>
+                        </div> -->
+
+                        <div class="control-group">
+                            <label class="control-label">说明图片 <em class="f_red">*</em></label>
+                            <div class="form-group clearfix">
+                                 <!-- <div class="col-sm-offset-3"> -->
+                                    <input name="thumb_image_1" id="J_ActivityPoster" type="hidden" value="" class="form-control"/>
+                                    <input id="pickfiles_1" name="cover1" type="file" class="form-control hide filebox"/>
+                                    <div id="look_1" class="poster"   >
+                                      <img onclick="$('#pickfiles_1').click()" id="img_1" class="img_1" src="/common/img/select_p.jpg" alt="暂无预览图片" >
+
+                                  </div>
+
+
+                                   <span class="prompt" style="margin-top:3px;">支持jpg、jpeg、png、gif格式，大小不超过2.9MB</span>
+
+                            </div>
+                        </div>
+                        <div class="blank0"></div>
+                        <div class="control-group type_0 type_2">
+                            <label class="control-label">支持金额 <em class="f_red">*</em></label>
+                            <div class="control-text">
+                                <input type="text" value="" class="textbox" name="price" >元
+                                <span class="holder_tip">请输入支持金额</span>
+                            </div>
+                        </div>
+                        <div class="blank0"></div>
+                        <div class="control-group type_0 type_2">
+                            <label class="control-label">回报标题 <em class="f_red">*</em></label>
+                            <div class="control-text">
+                                <input type="text" value="" class="textbox" name="title" ">
+                                <span class="holder_tip">请输入回报标题</span>
+                            </div>
+                        </div>
+                        <div class="blank0"></div>
+
+                        <div class="control-group">
+                            <label class="control-label">回报内容 <em class="f_red">*</em></label>
+                            <textarea name="description" class="textareabox "></textarea>
+                            <span class="holder_tip">请输入回报内容</span>
+                        </div>
+
+                        <div class="blank0"></div>
+                  <!--         <div class="blank0"></div>
+                        <div class="control-group type_0 type_2" id="limit_user_l_box" style="display:none">
+                            <label class="control-label">限购人数 <em class="f_red">*</em></label>
+                            <div class="control-text">
+                                <input type="text" value="" class="textbox w100" name="limit_user">人
+                            </div>
+                        </div> -->
+<!--                         <div class="blank0"></div>
+                        <div class="control-group type_0" style="*z-index:1;">
+                            <label class="control-label">是否分红 <em class="f_red">*</em></label>
+                            <select name="is_share" id="is_share" class="ui-select field_select small"  style="">
+                                <option value="0">否</option>
+                                <option value="1">是</option>
+                            </select>
+
+                        </div>
+                        <div class="blank0"></div>
+                        <div class="control-group type_0" id="share_fee_l_box" style=" display:none">
+                            <label class="control-label">分红金额 <em class="f_red">*</em></label>
+                            <div class="control-text">
+                                <input type="text" value="" class="textbox w100" name="share_fee">元
+                            </div>
+                        </div> -->
+                         <div class="blank0"></div>
+                        <div class="control-group type_0">
+                            <label class="control-label">确认回报时间 <em class="f_red">*</em></label>
+                            <div class="control-text">
+                                <input type="text" value="" class="textbox w100" name="repaid_day">天内
+                                <p class="f_666 mr10">回报发放成功后</p>
+                            </div>
+                        </div>
+                        <div class="blank0"></div>
+                        <div class="control-group type_0 type_2" id="distribution" style="*z-index:3;">
+                            <label class="control-label">是否配送 <em class="f_red">*</em></label>
+                            <select name="is_delivery" id="is_delivery" class="ui-select field_select small"  style="">
+                                <option value="2" >否</option>
+                                <option value="1" >是</option>
+                            </select>
+
+                        </div>
+                         <div class="control-group type_0 type_2" id="delivery_fee_l_box" style="display:none">
+                            <label class="control-label">运费 <em class="f_red">*</em></label>
+                            <div class="control-text">
+                                <input type="text" value="" class="textbox w100" name="delivery_fee">元
+                            </div>
+
+                        </div>
+                        <div class="blank0"></div>
+
+                        <div class="blank0"></div>
+                      <div class="control-group type_0 type_2" id="lucky" style="*z-index:2;">
+                            <label class="control-label">是否抽奖<em class="f_red">*</em></label>
+                            <select name="is_limit_user" id="is_limit_user" class="ui-select field_select " style="">
+                                <option value="2">否</option>
+                                <option value="1">是</option>
+                            </select>
+
+                        </div>
+                        <div class="control-group  type_2" id="num-c" style="display:none">
+                            <label class="control-label">抽奖量数 <em class="f_red">*</em></label>
+                            <div class="control-text">
+                                <input type="text" value="" class="textbox" name="lottery_measure" >
+                                <span class="holder_tip">如：值为100，即每100人抽一人，不满100也抽</span>
+                            </div>
+                        </div>
+                        <div class="blank0"></div>
+                        <div class="control-group type_2" id="num-c1"   style="display:none">
+                            <label class="control-label" style="line-height:20px;">每个会员最大支持数量:</label>
+                            <div class="control-text">
+                                <input type="text" value="" class="textbox" name="maxbuy" >
+                                <span class="holder_tip">当为0或不填写时，不限制</span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="blank10"></div>
+<!--                     <div class="add_item_btn control-group" style="padding-left:10px;">
+                        <label class="control-label"></label>
+                        <div class="ui-button theme_bgcolor f_l mr20" rel="green">
+
+                            <div>
+                                <span >继续添加</span>
+                            </div>
+                        </div>
+                        <a href="javascript:void(0);" id="cancel_add" style="color:#999;line-height: 41px;">取消添加</a>
+                    </div> -->
+                    <div class="blank0"></div>
+
+                    </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default cb" data-dismiss="modal">返回</button>
+                <button type="button" class="btn btn-primary cr cb" id="crs">添加</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+	<script src="{{PATH_TML}}user/common/js/generate_manage.js"></script>
+
+    <script src="{{PATH_TML}}user/js/project_pub.js"></script>
+    <script src="{{PATH_TML}}user/js/project/projectPd.js"></script>
+
+
+<!--     <script src="https://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js"></script> -->
+    <!-- <script type="text/javascript" src="https://tanli.wezchina.com/public/runtime/statics/1a0331ae66168d11edb46f74fb437913.js?v=1.70"></script> -->
+<!-- <script type="text/javascript" src="https://tanli.wezchina.com/app/Tpl/wezchina/js/deal_publish.js"></script> -->
+<!-- <script type="text/javascript" src="https://tanli.wezchina.com/app/Tpl/wezchina/js/ajaxupload.js"></script> -->
+<!-- <script type="text/javascript" src="https://tanli.wezchina.com/app/Tpl/wezchina/js/switch_city.js"></script> -->
+
+<!-- <script src="{{PATH_TML}}user/js/myOrder.js"></script> -->
+<!-- <script type='text/javascript'  src='{{PATH_TML}}user/js/project/kindeditor.js'></script> -->
+<!-- <script type="text/javascript" src="{{PATH_TML}}user/js/project/zh_CN.js"></script> -->
+
+<script>
+
+	$('#link-box').click(function(){
+		if($(this).is(':checked')){
+			$('#art-link').fadeIn(400);
+		} else {
+			$('#art-link').fadeOut(400);
+		}
+	})
+    $('#savenow').click(function(){
+        window.location.href='/user/admin/project/manage'
+    })
+
+
+
+
+//执行一个laydate实例
+// laydate.render({
+//   elem: '#start_time' //指定元素
+// })
+// laydate.render({
+//   elem: '#end_time' //指定元素
+// });
+
+// $(function(){
+
+        $(function() {
+              $('#is_delivery').change(function(){
+                var a = $("#is_delivery option:selected").val();
+                if(a==1){
+                    $('#delivery_fee_l_box').css('display','block')
+                }else{
+                   $('#delivery_fee_l_box').css('display','none')
+                }
+
+               })
+              $('#is_limit_user').change(function(){
+                var a = $("#is_limit_user option:selected").val();
+                console.log(a)
+                if(a==1){
+                    $('#num-c1,#num-c').css('display','block')
+                }else{
+                   $('#num-c1,#num-c').css('display','none')
+                }
+                // $('#num-c1,#num-c').css('display','block')
+              })
+              $('.avatar').hide()
+             $('#avatar,#dropdown').hover(function(){
+                 $(this).find('.avatar').show()
+                },function(){
+                   $(this).find('.avatar').hide()
+                })
+        })
+
+
+
+</script>
+<!-- <script src="{{PATH_TML}}user/js/crs.js"></script> -->
+
+
+
+
+
+</body>
+</html>

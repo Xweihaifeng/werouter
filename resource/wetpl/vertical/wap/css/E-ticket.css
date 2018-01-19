@@ -1,0 +1,218 @@
+body,
+ul,
+li {
+    margin: 0;
+    padding: 0;
+    font-size: 0.14rem;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.ticket-content {
+    padding: 0.2rem;
+}
+
+.toolbar {
+    width: 100%;
+    height: 0.08rem;
+    background-color: rgba(4, 166, 233, .3);
+    -webkit-border-radius: 0.04rem;
+    -moz-border-radius: 0.04rem;
+    border-radius: 0.04rem;
+}
+
+.info {
+    margin: 0 0.05rem;
+    margin-top: -0.03rem;
+}
+
+.info>.qr,
+.info>.des,
+.info>ul {
+    background: url('/common/img/ticket-logo.png') no-repeat center center;
+    -webkit-background-size: cover;
+    background-size: cover;
+}
+
+.qr {
+    background-color: #fff;
+    padding: 0.25rem 0 0.15rem 0;
+    -webkit-border-radius: 0 0 0.16rem 0.16rem;
+    -moz-border-radius: 0 0 0.16rem 0.16rem;
+    border-radius: 0 0 0.16rem 0.16rem;
+    text-align: center;
+}
+
+.qr div {
+    display: inline-block;
+    margin: 0 auto;
+    margin-bottom: 0.05rem;
+}
+
+.qr p {
+    font-size: 0.13rem;
+    color: #555;
+}
+
+.des {
+    padding: 0 0.15rem;
+    background-color: #fff;
+    -webkit-border-radius: 0.16rem 0.16rem 0 0;
+    -moz-border-radius: 0.16rem 0.16rem 0 0;
+    border-radius: 0.16rem 0.16rem 0 0;
+}
+
+.des h3 {
+    font-size: 0.16rem;
+    padding-top: 0.15rem;
+    color: #494949;
+    border-top: 1px dashed #e5e5e5;
+}
+
+.des h3 span {
+    font-size: 0.14rem;
+    font-weight: normal;
+}
+
+.des p {
+    font-size: 0.12rem;
+    color: #7d7d7d;
+}
+
+.des>p.time {
+    margin: 0.05rem 0;
+}
+
+.des>p.time+p {
+    padding-bottom: 0.15rem;
+    border-bottom: 1px dashed #e5e5e5;
+}
+
+.info ul {
+    padding: 0.15rem;
+    background-color: #fff;
+}
+
+.info ul li span {
+    color: #555;
+    font-size: 0.14rem;
+}
+
+.info ul li i {
+    display: inline-block;
+    width: 0.13rem;
+    height: 0.13rem;
+    background-size: contain !important;
+    vertical-align: middle;
+    margin-right: 0.05rem;
+}
+
+.ticket {
+    padding: 0 0.15rem 0.15rem;
+    background: #fff;
+}
+
+.ticket-item {
+    position: relative;
+    min-height: 45px;
+    padding: 0.1rem;
+    border: 1px solid #04a6e9;
+    border-radius: 0.08rem;
+    background-color: #f9f9f9;
+    margin-bottom: 0.1rem;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.ticket-item:before {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 68%;
+    display: block;
+    width: 0.07rem;
+    height: 100%;
+    content: "";
+    background: url('/common/img/ticket_center.png') no-repeat;
+    background-size: 100% 100%;
+}
+
+.ticket-item>p {
+    float: left;
+    width: 68%;
+    height: 0.18rem;
+    font-size: 0.15rem;
+    font-weight: bold;
+    color: #555;
+}
+
+.ticket-item>.price {
+    float: right;
+    width: 30%;
+    text-align: center;
+    position: relative;
+}
+
+.ticket-item .price span {
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    display: block;
+    color: #04a6e9;
+    font-size: 0.18rem;
+    font-weight: bold;
+}
+
+.ticket-item .num {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 0;
+    height: 0;
+    border-right: 0.4rem solid transparent;
+    border-bottom: 0.4rem solid #f9f9f9;
+    border-top-right-radius: 0.07rem;
+    background-color: #04a6e9;
+}
+
+.ticket-item .num span {
+    font-size: 0.12rem;
+    position: relative;
+    top: 0.05rem;
+    left: 0.05rem;
+    display: block;
+    width: 0.4rem;
+    height: 0.2rem;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+    text-align: center;
+    color: #fff;
+}
+
+.chat-qr-bg {
+    background: rgba(0, 0, 0, .7);
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 999;
+}
+
+.chat-qr-bg img {
+    display: block;
+    width: 1.8rem;
+    height: 1.8rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -0.9rem;
+    margin-left: -0.9rem;
+}
+
+.bar-code {
+    text-align: center;
+}

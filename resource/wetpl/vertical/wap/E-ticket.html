@@ -1,0 +1,114 @@
+<#extend#>public/domain/domain_extend.html</#extend#>
+<script type="text/javascript">
+    $app.set_title('查看电子票');
+    show.header = 'no';
+    show.footer = 'no';
+</script>
+<link rel="stylesheet" href="{{PATH_TML}}css/E-ticket.css">
+<script src="/common/js/jquery.min.js"></script>
+<script src="/common/js/jquery.qrcode.min.js"></script>
+<script type="text/javascript" src="/common/js/JsBarcode.all.js"></script>
+<div class="ticket-content">
+    <div class="toolbar"></div>
+    <div class="info">
+        <div class="qr">
+            <div class="qr-content"></div>
+            <div class="bar-code"><svg></svg></div>
+            <p>票号：{{infoData.ticket_num}}</p>
+        </div>
+        <div class="des">
+            <h3>{{infoData.title}} <span v-if="infoData.is_open_qun == 2" @click="chat(infoData.wx_qun_qrcode)">[群聊]</span></h3>
+            <p class="time">{{infoData.begain_time}} {{infoData.begain_week}} {{infoData.begain_hour}} ~ {{infoData.end_time}} {{infoData.end_week}} {{infoData.end_hour}}</p>
+            <p>{{infoData.address}}</p>
+        </div>
+        <ul>
+            <li>
+                <i style="background:url('/common/img/sign2.png') no-repeat center center"></i>
+                <span>{{infoData.name}}</span>
+            </li>
+            <li>
+                <i style="background:url('/common/img/sign3.png') no-repeat center center"></i>
+                <span>{{infoData.telphone}}</span>
+            </li>
+            <li>
+                <i style="background:url('/common/img/sign4.png') no-repeat center center"></i>
+                <span>{{infoData.poistion}}</span>
+            </li>
+            <li>
+                <i style="background:url('/common/img/sign.png') no-repeat center center"></i>
+                <span>{{infoData.company}}</span>
+            </li>
+        </ul>
+        <div class="ticket" v-if="infoData.type == 2">
+            <div class="ticket-item" v-for="item in infoData.tickets">
+                <p>{{item.name}}</p>
+                <div class="price">
+                    <span>￥{{item.price}}</span>
+                </div>
+                <div class="num">
+                    <span>×{{item.count}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="chat-qr-bg" v-if="showChatQr" @click="showChatQr=false">
+        <img :src="chatQrUrl | img_src" alt="" @click="notCancel($event)">
+    </div>
+</div>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            infoData: {},
+            chatQrUrl: '',
+            showChatQr: false
+        },
+        mounted: function() {
+            var id = sessionStorage.getItem('enroll_id');
+            if (!id) {
+                alert(sessionStorage.getItem('enroll_id'))
+                    //window.location.href='/404'
+            }
+            ajax.get('activity/enroll/detail/' + id).then((res) => {
+                console.log(res);
+                if (res.code == 200 && res.data) {
+                    this.infoData = res.data;
+                    this.makeQr(res.data.ticket_num);
+                    this.barcode('.bar-code svg', res.data.ticket_num);
+                }
+            })
+        },
+        methods: {
+            makeQr: function(url) {
+                var qrcode_val = url;
+                var clientWidth = document.documentElement.clientWidth;
+                var canvasWidth = Math.floor(clientWidth * 120 / 375);
+                jQuery(".qr-content").qrcode({
+                    width: canvasWidth,
+                    height: canvasWidth,
+                    text: qrcode_val
+                });
+            },
+            // 条形码生成
+            barcode: function(selector, ticket_num) {
+                JsBarcode(selector, ticket_num, {
+                    format: "CODE128",
+                    width: 2,
+                    height: 50,
+                    displayValue: false,
+                    text: ticket_num,
+                    background: "#fff",
+                    lineColor: "#000",
+                    margin: 5
+                });
+            },
+            chat: function(url) {
+                this.chatQrUrl = url;
+                this.showChatQr = true
+            },
+            notCancel: function(ev) {
+                ev.stopPropagation()
+            }
+        }
+    })
+</script>

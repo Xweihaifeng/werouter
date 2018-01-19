@@ -1,0 +1,63 @@
+<#extend#>public/domain/domain_extend.html</#extend#>
+<link rel="stylesheet" href="{{PATH_TML}}css/home.css"/>
+<link rel="stylesheet" href="{{PATH_TML}}css/common.css"/>
+<link rel="stylesheet" href="{{PATH_TML}}css/article.css"/>
+<link rel="stylesheet" href="{{PATH_TML}}css/act.css"/>
+<div id="act-container">
+	<div class="art-temp1"  v-for="item in list_data">
+		<div class="art-left">
+			<span>
+				<a :href="'/' + item.domain + '/wecard' | href">
+					<img class="lazy" :src="item.avatar | img_src(36, 36)" style="width: 0.36rem; height: 0.36rem; border-radius: 0.36rem;" />
+				</a>
+			</span>
+		</div>
+		<div class="art-right">
+			<span class="art-title">{{item.nickname}}</span>
+			<p>{{item.motto}}</p>
+			<a :href="'/' + item.domain + '/article/' + JSON.parse(item.other).weid | href('weplats')">
+				<div class="art-content">
+					<span><img class="lazy" :src="JSON.parse(item.other).cover" width="88" /></span>
+					<span class="art-des-text">
+						<strong>{{JSON.parse(item.other).title | limitLen(0,10)}}</strong>
+						<pre>{{JSON.parse(item.other).summary | limitLen(0,40)}}</pre>
+					</span>
+				</div>
+			</a>
+			<div class="art-other">
+				<span>{{JSON.parse(item.other).updated_at | formateTime('HM')}}</span>
+				<span></span>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+    new Vue({
+        el : '#app',
+        data : {
+            list_data:[],
+            params : {
+                page : 1,
+                limit : 10,
+                page_count : 0,
+                type : 2,
+                dynamic_type : 1,
+            },
+            dom : '#app'
+        },
+        mounted() {
+            this.$nextTick(()=>{
+                this.data_list();
+            });
+        },
+        methods:{
+            // 使用common_page 方法必须定义data方法 以及对象 params
+            data(params , call){
+                return $mob_ajax.dynamic(params , call);
+            },
+            data_list() {
+                $mob_ajax.common_page(this , this.params);
+            }
+        }
+    })
+</script>

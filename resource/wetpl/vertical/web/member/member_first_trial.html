@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+    <head lang="en">
+        <title> 会员申请 </title>
+        <meta charset="UTF-8" />
+        <link rel="shortcut icon" id="favicon" href="" />
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport" />
+        <meta name="description" content="" />
+        <meta name="keywords" content="" />
+
+        <script src="/common/js/jquery-3.2.1.min.js"></script>
+        <script src="{{PATH_CONFIG}}"></script>
+        <script src="{{PATH_TML}}js/modal_login.js"></script>
+        <script src="/common/js/swiper-3.3.1.min.js"></script>
+
+        <link rel="stylesheet" href="{{PATH_TML}}font/iconfont.css" />
+        <link rel="stylesheet" href="{{PATH_TML}}css/news_base.css" />
+        <link rel="stylesheet" href="{{PATH_TML}}css/modal_login.css" />
+        <link rel="stylesheet" href="{{PATH_TML}}member/css/member_application.css" />
+        <link rel="stylesheet" href="{{PATH_TML}}member/css/member_process.css" />
+
+        <style>
+            ::-webkit-scrollbar { width: 0; height: 0; }
+            .dropdown-toggle, .get-check { height: 40px !important; }
+        </style>
+    </head>
+    <body>
+
+        <div class="modal_login" id="modal_login"></div>
+        <ul class="news_menu" id="public_main_news_menu"></ul>
+        <div class="member_application">
+            <div class="member_list_header"><img style="width: 25px;height: 25px;vertical-align: middle;margin-top: -5px" src="/common/img/huiyuanshengqing.png"> 会员 </div>
+            <div class="member_app_list">
+                <li class="member_active member_active0"> 初审 </li>
+                <li class="member_active"> 复审 <span class="span1"></span><span class="span2"></span></li>
+                <li> 申请成功 <span class="span1"></span><span class="span2"></span></li>
+            </div>
+
+            <div class="member_sel_type type_list">
+                <div class="member_type_title"> 选择类型: </div>
+                <ul class="member_sel_type_name"></ul>
+            </div>
+
+            <div class="member_cost">
+                <span class="member_warn"></span><span id="display_name">会员</span>费用为 <span class="member_count">￥<span id="member_price"></span>元</span> / 年 <span class="member_danger"> *在初审通过之前无需缴费 </span>
+            </div>
+
+            <div class="member_off_cert member_off_personal">
+                <div class="member_sel_type">
+                    <div class="member_type_title"> 申请资料: </div>
+                    <img id="member_info_img" src="{{PATH_TML}}member/img/default_img.png" width="120" height="120" style="border:1px solid #ccc;border-radius:5px;" alt="暂无预览图片" class="thumbnail col-md-2">
+                </div>
+
+                <div class="member_sel_type">
+                    <div class="member_type_title"> 申请人: </div>
+                    <input type="text" name="" class="member_app_input" id="member_first_name" placeholder="显示本人真实姓名" readonly>
+                </div>
+
+                <div class="member_sel_type">
+                    <div class="member_type_title"> 申请人电话: </div>
+                    <input type="text" name="" class="member_app_input" id="member_first_tel" placeholder="显示本人常用手机号码" readonly>
+                </div>
+
+                <div class="member_sel_type">
+                    <div class="member_type_title"> 申请地址: </div>
+                    <input type="text" name="" class="member_app_input" id="member_first_address" placeholder="显示详细的地址" readonly>
+                </div>
+            </div>
+
+            <div class="member_off_cert member_off_institutional">
+                <div class="member_sel_type">
+                    <div class="member_type_title"> 申请资料: </div>
+                    <img id="member_second_img" src="{{PATH_TML}}member/img/default_img.png" width="120" height="120" style="border:1px solid #ccc;border-radius:5px;" alt="暂无预览图片" class="thumbnail col-md-2">
+                </div>
+
+                <div class="member_sel_type">
+                    <div class="member_type_title"> 申请单位: </div>
+                    <input type="text" name="" class="member_app_input" id="member_second_company" placeholder="显示申请单位名称" readonly>
+                </div>
+
+                <div class="member_sel_type">
+                    <div class="member_type_title"> 申请人: </div>
+                    <input type="text" name="" class="member_app_input" id="member_second_name" placeholder="显示本人真实姓名" readonly>
+                </div>
+
+                <div class="member_sel_type">
+                    <div class="member_type_title"> 申请人电话: </div>
+                    <input type="text" name="" class="member_app_input" id="member_second_tel" placeholder="显示本人常用手机号码" readonly>
+                </div>
+
+                <div class="member_sel_type">
+                    <div class="member_type_title"> 申请地址: </div>
+                    <input type="text" name="" class="member_app_input" id="member_second_address" placeholder="显示详细的地址" readonly>
+                </div>
+            </div>
+
+            <div id="member_time_axis"></div>
+        </div>
+
+        <!-- 右侧大背景图 -->
+        <div id="public_main_right_bg" style="position:fixed;top:0;bottom:0;left:1190px;width:100%;"></div>
+        <script src="{{PATH_TML}}js/public_main_right_bg.js"></script>
+        <!-- <script src="/common/js/control.js"></script> -->
+        <!-- <script src="{{PATH_TML}}js/public_main.js"></script> -->
+        <script src="{{PATH_TML}}member/js/member_public_config.js"></script>
+        <script src="{{PATH_TML}}member/js/member_first_trial.js"></script>
+        <script src="{{PATH_TML}}member/js/member_time_axis.js"></script>
+
+    </body>
+</html>

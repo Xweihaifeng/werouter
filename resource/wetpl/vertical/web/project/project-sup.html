@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="shortcut icon" id="favicon" href="" />
+    <script src="/common/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="/common/layer-v3.0.3/layer-v3.0.3/layer/layer.js"></script>
+    <script src="/common/js/browser.min.js"></script>
+    <link rel="stylesheet" href="/common/AdminLTE-2.4.0-rc/bower_components/font-awesome/css/font-awesome.min.css">
+    <title>全球秦商总会</title>
+    <!-- <link rel="stylesheet" href="{{PATH_TML}}css/public_main.css"> -->
+        <link rel="stylesheet" href="{{PATH_TML}}font/iconfont.css" />
+        <link rel="stylesheet" href="{{PATH_TML}}css/news_base.css" />
+        <link rel="stylesheet" href="{{PATH_TML}}css/modal_login.css" />
+        <link rel="stylesheet" href="{{PATH_TML}}css/article.css">
+
+    <link rel="stylesheet" href="/common/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/common/css/buttons.css">
+    <link rel="stylesheet" href="/common/layer-v3.0.3/layer-v3.0.3/layer/skin/default/layer.css">
+    <!-- <link rel="stylesheet" type="text/css" href="css/shopcommon.css"> -->
+
+    <link rel="stylesheet" type="text/css" href="{{PATH_TML}}project/css/projectdetail.css">
+    <link rel="stylesheet" type="text/css" href="{{PATH_TML}}project/css/project-sup.css">
+    <!-- <link rel="stylesheet" type="text/css" href="{{PATH_TML}}project/css/project.css"> -->
+    <!-- <link rel="stylesheet" type="text/css" href="{{PATH_TML}}project/css/zc.css"> -->
+
+     <script src="{{PATH_CONFIG}}"></script>
+    <script src="{{PATH_TML}}js/modal_login.js"></script>
+    <script src="/common/js/swiper-3.3.1.min.js"></script>
+    <script src="/common/js/buttons.js"></script>
+    <!-- <script src="{{PATH_TML}}project/p-detail/js/4f35.js"></script> -->
+    <!-- <script src="{{PATH_TML}}project/p-detail/js/3522.js"></script>
+    <script src="{{PATH_TML}}project/p-detail/js/date.js"></script>
+    <script src="{{PATH_TML}}project/p-detail/js/dc.js"></script>
+    <script src="{{PATH_TML}}project/p-detail/js/lib.js"></script>
+    <script src="{{PATH_TML}}project/p-detail/js/zcpay.js"></script>
+    <script src="{{PATH_TML}}project/p-detail/js/zcpb.js"></script> -->
+    <style>::-webkit-scrollbar { width: 0; }
+    .page-content{
+    padding-top: 20px!important;
+}
+    </style>
+
+</head>
+<body>
+    <!-- 登录部分 -->
+    <div class="modal_login" id="modal_login"></div>
+    <!-- 导航部分开始 -->
+    <ul class="news_menu" id="public_main_news_menu"></ul>
+    <div class="index-content ">
+
+
+     <div class="grzxOuterBox ng-scope" ng-if="app==2" ng-element-ready="" style="display: block;">
+    <div class="zhifuOuterBox">
+        <div class="mainIn02Box">
+        <h3 class="main-h3" style="">我的爱好111333</h3>
+            <div class="zhifuInnerBox">
+                <!--<div class="zhifuTitle">
+                    <a target="_blank" href="/deal-show/id-{{deal_id}}" class="hoUdLink" >{{deal_name.substring(0,40)}}</a>
+                </div>-->
+                <div class="zhifuCBox">
+                    <div class="zhifuNavBox  hidden one">
+                        <div class="ftDiv">1.提交订单</div>
+                        <div class="scDiv">2.选择支付方式</div>
+                        <div class="thDiv">3.支持成功</div>
+                    </div>
+                    <div class="ui-view-container">
+                        <div data-ui-view="" class="animate-slide ng-scope" style="min-height: 400px; position: relative;">
+<div class="slide-container ng-scope" ng-if="!loading">
+
+    <div class="tjddCont ng-scope" >
+       <h3 class="tjdd_h3 ng-scope">请选择支持项</h3><!-- end ngIf: step==0 -->
+
+
+        <div class="tjdd_list">
+           <div class="tjdd_item animate-reward" style="display:none;" >
+                <!-- 无私支持 -->
+                <div ng-if="reward.itemType == 2" class="ng-scope">
+                    <div class="wyzz_h3">感谢您的支持</div>
+                    <p class="support_inforP">感谢您的支持，您将收到我们寄出的信件或贺卡，这份支持将助我们的梦想飞的更高更远。</p>
+                    <div class="wyzz_Cont" ng-show="reward.itemType == 2">
+                        <a href="javascript:;" class="wyzz_ItemA btn_ALink cur" >¥ 1</a>
+                        <a href="javascript:;" class="wyzz_ItemA btn_ALink " >¥ 5</a>
+                        <a href="javascript:;" class="wyzz_ItemA btn_ALink " >¥ 10</a>
+
+                        <div class="wyzz_inputBox sitePHBox" id="selfless-v-target">
+                            <label>其他&nbsp;¥</label>
+                            <input type="text" class="wyzz_input sitePHInput ng-pristine ng-valid" num-input1="" maxlength="8" target="selfless-v-target"  place-holder="">
+                        <span class="placeholder" style="line-height: 20px; padding-top: 6px; left: 55px; top: 1px;"></span></div>
+                        <a href="javascript:;" class="supportVal_A btn_ALink animate-fade"  style="display: block;">立即支持</a><!-- end ngIf: !pay.selectedItem -->
+                    </div>
+                </div><!-- end ngIf: reward.itemType == 2 -->
+
+                <!-- 普通支持项目 -->
+                <div ng-show="reward.itemType != 2" class="ng-hide">
+
+
+                    <div class="support_title ng-binding" ng-bind="reward.title"></div>
+
+                    <div class="supportFooter">
+                        <div class="supportFLeft">
+                            <p>
+                                配送费用：
+
+                            </p>
+
+                            <p style="display: none">预计回报发送时间：<b class="ng-binding"></b></p>
+                        </div>
+                        <div class="supportFRight" images="reward.imageUrls">
+                            <!-- ngRepeat: imgSrc in reward.imageUrls track by $index -->
+                        </div>
+                    </div>
+                </div>
+
+            </div><!-- end ngIf: reward.display==1 --><!-- end ngRepeat: (i, reward) in rewards --><!-- ngIf: reward.display==1 --><div class="tjdd_item animate-reward" data-selected="false" data-all="9" data-index="1" ng-repeat="(i, reward) in rewards" ng-if="reward.display==1" data-display="1" style="display:none;" >
+                <!-- 无私支持 -->
+                <!-- ngIf: reward.itemType == 2 -->
+
+                <!-- 普通支持项目 -->
+                <div ng-show="reward.itemType != 2" class="">
+                    <!-- ngIf: !pay.selectedItem --><div class="supportABox ng-scope" ng-if="!pay.selectedItem">
+                        <a href="javascript:;" class="supportVal_A btn_ALink animate-fade  " ng-click="iWantPay(reward)">支持￥20</a>
+                    </div><!-- end ngIf: !pay.selectedItem -->
+                    <h3 class="support_h3 ng-binding">¥20<b><span ng-bind="reward.supportCount" class="ng-binding">6</span>人支持<!-- ngIf: reward.limit --></b></h3>
+
+                    <div class="support_title ng-binding" ng-bind="reward.title">涂鸦墙写你的名字</div>
+                    <p class="support_inforP ng-binding" ng-bind-html="reward.repay | to_trusted">涂鸦墙上写上你的名字哦~</p>
+                    <div class="supportFooter">
+                        <div class="supportFLeft">
+                            <p>
+                                配送费用：<!-- ngIf: reward.deliveryFee>0 -->
+                                <!-- ngIf: reward.deliveryFee==0 --><b ng-if="reward.deliveryFee==0" class="ng-scope">免运费</b><!-- end ngIf: reward.deliveryFee==0 -->
+                            </p>
+
+                            <p style="display: none">预计回报发送时间：<b class="ng-binding">项目成功结束后立即发送</b></p>
+                        </div>
+                        <div class="supportFRight" images="reward.imageUrls">
+                            <!-- ngRepeat: imgSrc in reward.imageUrls track by $index -->
+                        </div>
+                    </div>
+                </div>
+
+            </div><!-- end ngIf: reward.display==1 --><!-- end ngRepeat: (i, reward) in rewards --><!-- ngIf: reward.display==1 --><div class="tjdd_item animate-reward" data-selected="false" data-all="9" data-index="2" ng-repeat="(i, reward) in rewards" ng-if="reward.display==1" data-display="1"  style="display:none;">
+                <!-- 无私支持 -->
+                <!-- ngIf: reward.itemType == 2 -->
+
+                <!-- 普通支持项目 -->
+                <div ng-show="reward.itemType != 2" class="">
+                    <!-- ngIf: !pay.selectedItem --><div class="supportABox ng-scope" ng-if="!pay.selectedItem">
+                        <a href="javascript:;" class="supportVal_A btn_ALink animate-fade  " ng-click="iWantPay(reward)">支持￥60</a>
+                    </div><!-- end ngIf: !pay.selectedItem -->
+                    <h3 class="support_h3 ng-binding">¥60<b><span  class="ng-binding">44</span>人支持<!-- ngIf: reward.limit --></b></h3>
+
+                    <div class="support_title ng-binding">童趣手绘感谢信</div>
+                    <p class="support_inforP ng-binding" >1、涂鸦墙上写你的名字；
+2、墨文和贫民窟小孩子一起画封童趣的感谢信，单独标注你的名字，发送电子版。
+3、了解项目和回报信息请联系 微信号：Mowen_li</p>
+                    <div class="supportFooter">
+                        <div class="supportFLeft">
+                            <p>
+                                配送费用：
+                                <b class="ng-scope">免运费</b>
+                            </p>
+
+                            <p style="display: none">预计回报发送时间：<b class="ng-binding">项目成功结束后立即发送</b></p>
+                        </div>
+                        <div class="supportFRight" images="reward.imageUrls">
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="tjdd_item animate-reward" data-selected="false" data-all="9" data-index="3" ng-repeat="(i, reward) in rewards" ng-if="reward.display==1" data-display="1" style="display:none;" >
+                <!-- 无私支持 -->
+                <!-- ngIf: reward.itemType == 2 -->
+
+                <!-- 普通支持项目 -->
+                <div ng-show="reward.itemType != 2" class="">
+                 <div class="supportABox ng-scope" ng-if="!pay.selectedItem">
+                        <a href="javascript:;" class="supportVal_A btn_ALink animate-fade  " ng-click="iWantPay(reward)">支持￥120</a>
+                    </div>
+                    <h3 class="support_h3 ng-binding">¥120<b><span ng-bind="reward.supportCount" class="ng-binding">22</span>人支持<!-- ngIf: reward.limit --></b></h3>
+
+                    <div class="support_title ng-binding" ng-bind="reward.title">特别感谢视频</div>
+                    <p class="support_inforP ng-binding" ng-bind-html="reward.repay | to_trusted">1、涂鸦墙上写你的名字；
+2、墨文和贫民窟小孩子一起画封童趣的感谢信，单独标注你的名字，发送电子版；
+3、墨文和当地人一起为你单独录制有趣的感谢视频。
+4、了解项目和回报信息请联系 微信号：Mowen_li</p>
+                    <div class="supportFooter">
+                        <div class="supportFLeft">
+                            <p>
+                                配送费用：
+                                <b ng-if="reward.deliveryFee==0" class="ng-scope">免运费</b>
+                            </p>
+
+                            <p style="display: none">预计回报发送时间：<b class="ng-binding">项目成功结束后立即发送</b></p>
+                        </div>
+                        <div class="supportFRight" images="reward.imageUrls">
+                            <!-- ngRepeat: imgSrc in reward.imageUrls track by $index -->
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="tjdd_item animate-reward"  style="display:none;">
+                <!-- 无私支持 -->
+                <!-- ngIf: reward.itemType == 2 -->
+
+                <!-- 普通支持项目 -->
+                <div ng-show="reward.itemType != 2" class="">
+                    <div class="supportABox ng-scope" ng-if="!pay.selectedItem">
+                        <a href="javascript:;" class="supportVal_A btn_ALink animate-fade  " >支持￥360</a>
+                    </div>
+                    <h3 class="support_h3 ng-binding">¥360<b><span  class="ng-binding">8</span>人支持</b></h3>
+
+                    <div class="support_title ng-binding">艺术项目绘画摄影集</div>
+                    <p class="support_inforP ng-binding" >1、涂鸦墙上写你的名字；
+2、墨文和贫民窟小孩子一起画封童趣的感谢信，单独标注你的名字，发送电子版；
+3、墨文和当地人一起为你单独录制有趣的感谢视频；
+4、艺术项目绘画摄影集一本。
+5、了解项目和回报信息请联系 微信号：Mowen_li</p>
+                    <div class="supportFooter">
+                        <div class="supportFLeft">
+                            <p>
+                                配送费用：
+                                <b ng-if="reward.deliveryFee==0" class="ng-scope">免运费</b>
+                            </p>
+
+                            <p style="display: none">预计回报发送时间：<b class="ng-binding">项目成功结束后30天内</b></p>
+                        </div>
+                        <div class="supportFRight" images="reward.imageUrls">
+                            <!-- ngRepeat: imgSrc in reward.imageUrls track by $index -->
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="tjdd_item animate-reward" style="display:none;" >
+                <!-- 无私支持 -->
+                <!-- ngIf: reward.itemType == 2 -->
+
+                <!-- 普通支持项目 -->
+                <div ng-show="reward.itemType != 2" class="">
+                    <!-- ngIf: !pay.selectedItem --><div class="supportABox ng-scope" ng-if="!pay.selectedItem">
+                        <a href="javascript:;" class="supportVal_A btn_ALink animate-fade  ">支持￥660</a>
+                    </div><!-- end ngIf: !pay.selectedItem -->
+                    <h3 class="support_h3 ng-binding">¥660<b><span  class="ng-binding">1</span>人支持<!-- ngIf: reward.limit --></b></h3>
+
+                    <div class="support_title ng-binding" >涂鸦师为你设计名字／主题涂鸦</div>
+                    <p class="support_inforP ng-binding" >1、涂鸦墙上写你的名字；
+2、墨文和贫民窟小孩子一起画封童趣的感谢信，单独标注你的名字，发送电子版；
+3、墨文和当地人一起为你单独录制有趣的感谢视频；
+4、艺术项目绘画摄影集一本；
+5、菲律宾涂鸦师为你设计字母涂鸦（可选名字或主题），发送电子版。
+6、了解项目和回报信息请联系 微信号：Mowen_li</p>
+                    <div class="supportFooter">
+                        <div class="supportFLeft">
+                            <p>
+                                配送费用：<!-- ngIf: reward.deliveryFee>0 -->
+                                <!-- ngIf: reward.deliveryFee==0 --><b ng-if="reward.deliveryFee==0" class="ng-scope">免运费</b><!-- end ngIf: reward.deliveryFee==0 -->
+                            </p>
+
+                            <p style="display: none">预计回报发送时间：<b class="ng-binding">项目成功结束后30天内</b></p>
+                        </div>
+                        <div class="supportFRight" images="reward.imageUrls">
+                            <!-- ngRepeat: imgSrc in reward.imageUrls track by $index -->
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="tjdd_item animate-reward"   style="display:none;">
+                <!-- 无私支持 -->
+                <!-- ngIf: reward.itemType == 2 -->
+
+                <!-- 普通支持项目 -->
+                <div ng-show="reward.itemType != 2" class="">
+                    <!-- ngIf: !pay.selectedItem --><div class="supportABox ng-scope" >
+                        <a href="javascript:;" class="supportVal_A btn_ALink animate-fade  " ">支持￥880</a>
+                    </div><!-- end ngIf: !pay.selectedItem -->
+                    <h3 class="support_h3 ng-binding">¥880<b><span class="ng-binding">1</span>人支持<!-- ngIf: reward.limit --></b></h3>
+
+                    <div class="support_title ng-binding" ng-bind="reward.title">手工绘制波斯公主收藏玩偶</div>
+                    <p class="support_inforP ng-binding" ng-bind-html="reward.repay | to_trusted">1、涂鸦墙上写你的名字；
+2、墨文和贫民窟小孩子一起画封童趣的感谢信，单独标注你的名字，发送电子版；
+3、墨文和当地人一起为你单独录制有趣的感谢视频；
+4、艺术项目绘画摄影集一本；
+5、墨文设计的手工绘制波斯公主收藏玩偶一个（约8寸，画廊售价1500元）
+6、了解项目和回报信息请联系 微信号：Mowen_li</p>
+                    <div class="supportFooter">
+                        <div class="supportFLeft">
+                            <p>
+                                配送费用：
+                                <b ng-if="reward.deliveryFee==0" class="ng-scope">免运费</b>
+                            </p>
+
+                            <p style="display: none">预计回报发送时间：<b class="ng-binding">项目成功结束后50天内</b></p>
+                        </div>
+                        <div class="supportFRight" images="reward.imageUrls">
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="tjdd_item animate-reward"  style="display:none;">
+                <!-- 无私支持 -->
+                <!-- ngIf: reward.itemType == 2 -->
+
+                <!-- 普通支持项目 -->
+                <div ng-show="reward.itemType != 2" class="">
+                    <!-- ngIf: !pay.selectedItem --><div class="supportABox ng-scope" ng-if="!pay.selectedItem">
+                        <a href="javascript:;" class="supportVal_A btn_ALink animate-fade  " >支持￥2000</a>
+                    </div><!-- end ngIf: !pay.selectedItem -->
+                    <h3 class="support_h3 ng-binding">¥2000<b><span class="ng-binding">3</span>人支持<!-- ngIf: reward.limit --></b></h3>
+
+                    <div class="support_title ng-binding" >波斯公主自画像</div>
+                    <p class="support_inforP ng-binding" >1、涂鸦墙上写你的名字；
+2、墨文和贫民窟小孩子一起画封童趣的感谢信，单独标注你的名字，发送电子版；
+3、墨文和当地人一起为你单独录制有趣的感谢视频；
+4、艺术项目绘画摄影集一本（签名）。
+5、墨文创作的波斯公主自画像，只画一幅原作(约40cmX50cm, 画廊售价3500元）
+6、了解项目和回报信息请联系 微信号：Mowen_li</p>
+                    <div class="supportFooter">
+                        <div class="supportFLeft">
+                            <p>
+                                配送费用：
+                                <b  class="ng-scope">免运费</b>
+                            </p>
+
+                            <p style="display: none">预计回报发送时间：<b class="ng-binding">项目成功结束后60天内</b></p>
+                        </div>
+                        <div class="supportFRight" images="reward.imageUrls">
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="tjdd_item animate-reward" style="">
+                <!-- 无私支持 -->
+                <!-- ngIf: reward.itemType == 2 -->
+
+                <!-- 普通支持项目 -->
+                <div class="">
+                    <!-- ngIf: !pay.selectedItem --><div class="supportABox ng-scope" ng-if="!pay.selectedItem">
+                        <a href="javascript:;" class="supportVal_A btn_ALink animate-fade  " ng-click="iWantPay(reward)">支持￥5000</a>
+                    </div><!-- end ngIf: !pay.selectedItem -->
+                    <h3 class="support_h3 ng-binding">¥5000<b><span ng-bind="reward.supportCount" class="ng-binding">1</span>人支持<!-- ngIf: reward.limit --></b></h3>
+
+                    <div class="support_title ng-binding" ng-bind="reward.title">波斯公主自画像</div>
+                    <p class="support_inforP ng-binding" ng-bind-html="reward.repay | to_trusted">1、涂鸦墙上写你的名字； 2、墨文和贫民窟小孩子一起画封童趣的感谢信，单独标注你的名字，发送电子版； 3、墨文和当地人一起为你单独录制有趣的感谢视频； 4、艺术项目绘画摄影集一本（签名）； 5、墨文创作的波斯公主自画像原作一幅(约一平米, 可商定主题，画作不重复，画廊价约12000元）
+6、了解项目和回报信息请联系 微信号：Mowen_li</p>
+                    <div class="supportFooter">
+                        <div class="supportFLeft">
+                            <p>
+                                配送费用：<!-- ngIf: reward.deliveryFee>0 -->
+                                <!-- ngIf: reward.deliveryFee==0 --><b ng-if="reward.deliveryFee==0" class="ng-scope">免运费</b><!-- end ngIf: reward.deliveryFee==0 -->
+                            </p>
+
+                            <p style="display: none">预计回报发送时间：<b class="ng-binding">项目成功结束后60天内</b></p>
+                        </div>
+                        <div class="supportFRight" images="reward.imageUrls">
+                            <!-- ngRepeat: imgSrc in reward.imageUrls track by $index -->
+                        </div>
+                    </div>
+                </div>
+
+            </div><!-- end ngIf: reward.display==1 --><!-- end ngRepeat: (i, reward) in rewards -->
+        </div>
+    </div><!-- end ngIf: !loading -->
+    <!-- step 1结束 -->
+    <!-- step 2开始 -->
+    <!-- ngIf: step==1&&!loading -->
+    <!-- step 2结束 -->
+    <div style="clear:both"></div>
+</div><!-- end ngIf: !loading -->
+</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+    </div>
+        <!-- 右侧大背景图 -->
+        <div id="public_main_right_bg" style="position:fixed;top:0;bottom:0;left:1190px;width:100%;"></div>
+        <script src="{{PATH_TML}}js/public_main_right_bg.js"></script>
+    <script src="/common/js/control.js"></script>
+
+<!-- 列表详情 -->
+    <!-- <script src="/project/js/projectdetail.js"></script> -->
+    <script src="">
+
+                $(document).ready(function () {
+            var hint = new InputHinter({container: 'search-box', id: "searchInput"});
+            $('#searchBtn').click(function () {
+                var $input = $('#searchInput');
+                window.location.href = "/search/kw-" + hint.encodeKw($.trim($input.val()) || $input.attr('placeholder'));
+            });
+            $('#searchInput').focus(function(){
+                setTimeout(function() {
+                    $('#search-box').addClass("siteMSearch-focus")},1)
+            })
+            $('#searchInput').blur(function(){
+                setTimeout(function() {
+                    $('#search-box').removeClass("siteMSearch-focus")},1)
+            });
+            if (!$(".other-login").html())
+            {
+                $('.siteMSearch').css('right','80px');
+            }
+        });
+        var showCode = '';
+    </script>
+
+<!-- <script src="/project/p-detail/js/03c.js"></script> -->
+</body>
+</html>
+<script src="https://cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.js"></script>
+<!--
+<script src="{{PATH_TML}}activity/js/activity.js"></script>
+-->
+<script src="{{PATH_TML}}project/js/project-sup.js"></script>
+<script>
+
+$(function(){
+
+
+
+$(".fancybox").fancybox({
+    'width': '500px',
+     'height': 'auto',
+
+    'zoomSpeedIn': 300,
+    'zoomSpeedOut': 300,
+    'overlayShow': true
+});
+    $(".menuItem").click(function(){
+            $(this).addClass("active").siblings().removeClass("active");
+    });
+
+
+//  滚动置顶
+    var offsetTop = 115;
+
+
+    $('.index-content').scroll(function() {
+        if ($('.index-content').scrollTop() > offsetTop) {
+
+            $(".project_t").eq(0).css({
+                "position": "fixed",
+                "top": 0,
+                "width":"735px"
+            })
+        } else {
+            $(".project_t").css({
+                "position": "relative"
+            });
+
+        }
+    })
+
+
+
+
+
+})
+</script>

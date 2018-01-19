@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html style='font-size: 100px'>
+<head>
+    <meta charset="utf-8">
+    <title>detail</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0"/>
+    <link rel="stylesheet" href="../../common/css/base.css">
+    <link rel="stylesheet" href="../../common/iconfont/iconfont.css">
+    <link rel="stylesheet" href="less/detail.css">
+
+    <script src='../../common/js/jquery.min.js'></script>
+    <script src='../../common/js/common.js'></script>
+    <script src='../../common/js/vue.min.js'></script>
+
+</head>
+<body>
+<div id="detail-app">
+<div class="hidden_wechat" :value="only_wechat" style="display:none;"></div>
+<!--头部 begin-->
+<div class="top">
+    <img v-bind:src="cover" :alt="title">
+</div>
+<!--votetitle begin-->
+<div class="votetitle">
+    <p>{{title}}</p>
+    <ul class='clearfix bigul'>
+        <li>
+            <span>累计投票</span><br>
+            <span>{{detail.nums}}</span>
+
+        </li>
+        <li>
+            <span>访问次数</span><br>
+            <span>{{detail.views}}</span>
+        </li>
+    </ul>
+    <div class="attention">
+        <div class="one">
+            <i class="iconfont icon-shijian"></i>开始时间：{{begin_time}} 
+        </div>
+        <div class="second">
+            <i class="iconfont icon-shijian"></i>截止时间：{{end_time}}
+        </div>
+        <div class="three">
+            <i class="iconfont icon-gaojing"></i>投票规则：{{rule}}
+        </div>
+        <div class="four">
+            <i class="iconfont icon-toupiao"></i>投票简介：<i class="twoi iconfont icon-xiajiantous "></i>
+        </div>
+        <div class="five" id='fiv'>
+            <span>
+                {{summary}}
+            </span>
+            <a href="check.html" class='checka'>查看全文</a>
+        </div>
+    </div>
+
+</div>
+<!--detail begin-->
+<div class="detail">
+    <div class="bg">
+        <img :src="detail.cover" :alt="detail.title">
+        <div class="title">
+            <span></span>.<span></span>
+        </div>
+        <div class="btn">
+            <div class="button" onclick="taopiao(this)" :value="detail.weid">
+                <i class="iconfont icon-dianzan"></i>投票
+            </div>
+        </div>
+        <div class="num">
+            <span>{{detail.nums}} 票</span>
+        </div>
+    </div>
+    <div class="introduce">
+        <h3>项目介绍 :</h3>
+        {{detail.content}}
+        
+    </div>
+</div>
+
+
+<!--ad begin-->
+<div class="ad">
+    <template v-for="item in adv">
+            <a :href="item.url"><img :src="item.image" :alt="item.title"></a>
+    </template>
+</div>
+<!--foot begin-->
+<div class="foot">
+    <span>全球秦商联合会</span>&nbsp; 提供技术支持
+</div>
+<!--操作栏-->
+<div class="control">
+    <div class="home">
+        <a href="index.html">
+            <span>返回</span>
+            <span>首页</span>
+        </a>
+    </div>
+    <div class="paiming">
+        <a href="rank.html">
+            <span>当前</span>
+            <span>排名</span>
+        </a>
+    </div>
+    <div class="guize">
+        <a href="check.html">
+            <span>投票</span>
+            <span>规则</span>
+        </a>
+    </div>
+</div>
+</div>
+
+<!--请扫描二维码在微信中投票-->
+<div class="way" style="display: none;">
+    请扫描二维码在微信中投票
+</div>
+
+<!--登录弹框-->
+<div class="modal modall" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display:none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+            </div>
+            <div class="input-w">
+                <input type="number" id="mobile" placeholder="请输入您的手机号码" name="mobile" class="input1" value="" />
+                <input type="number" name="old_auth_code" placeholder="请输入验证码" class="input2" value="" />
+                <input id="btnSendCode" type="button" value="获取验证码" class="input3" onclick="sendcode()"/>
+                <button type="button" class="btn2 save-code"onclick="logintoupiao()">立即投票</button>
+                <!--存放登录前选择投票的该项目-->
+                <input type="text" value="" class="openid" style="display: none;" />
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+
+<!--弹出提示-->
+<div class="notify" style="display: none;">
+</div>
+
+</body>
+<script src='js/detail.js'></script>
+</html>
+
+<input type="hidden" name="only_wechat" :value="only_wechat" />
+
+

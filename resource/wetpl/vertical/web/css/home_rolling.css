@@ -1,0 +1,80 @@
+@charset "utf-8"
+
+body{ width: 1920px; overflow-y: hidden }
+::-webkit-scrollbar { width: 0; height: 0; }
+.dropdown-toggle, .get-check { height: 40px !important; }
+
+.clearfix:after { content: ""; display: block; clear: both; height: 0; }
+.clearfix { zoom: 1; }
+#my-swiper1 { height: 154px; }
+#my-swiper1 .rowup { -webkit-animation: 60s rowup linear infinite normal; animation: 60s rowup linear infinite normal; position: relative; }
+#my-swiper1 .rowups { animation-play-state: paused; }
+.swiper_rolling { position: relative; top: -15px; height: 154px; display: inline-flex; }
+.rolling_html { display: inline-flex; }
+.rolling_img { height: 154px; }
+.swiper-slide { width: auto !important; }
+
+
+.swiper-button-prev {
+    width: 40px;
+    height: 74px;
+    background: url(/common/img/back.png) no-repeat center;
+    background-size: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 10;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    margin-top: -35px;
+    opacity: 0;
+}
+
+.swiper-button-next {
+    width: 40px;
+    height: 74px;
+    background: url(/common/img/more.png) no-repeat center;
+    background-size: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 10;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    margin-top: -35px;
+    opacity: 0;
+}
+
+.swiper-button-prev:hover,.swiper-button-next:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.swiper-pagination {
+    height: 30px;
+    bottom: 0!important;
+    padding-right: 10px;
+    text-align: right;
+    /*line-height: 35;*/
+}
+
+.swiper-pagination-bullet {
+    width: 10px;
+    height: 10px;
+    background-color: white!important;
+}
+
+.sw-bg {
+    position: relative;
+    top: 210px;
+    height: 40px;
+    background: black;
+    opacity: 0.5;
+}
+
+.sw-wd {
+    position: relative;
+    top: 165px;
+    padding-left: 12px;
+    line-height: 50px;
+    z-index: 15;
+    color: white;
+    font-size: small;
+}

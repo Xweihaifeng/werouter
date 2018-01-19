@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+
+    <head lang="en">
+        <meta charset="UTF-8">
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+        <link rel="shortcut icon" id="favicon" href="" />
+        <script src="/common/js/jquery-3.2.1.min.js"></script>
+        <script src="{{PATH_TML}}user/common/js/loading.js"></script>
+        <script src="/common/js/browser.min.js"></script>
+        <script src="/common/js/jquery.imagecompress.js"></script>
+        <link rel="stylesheet" href="/common/css/main.css">
+        <link rel="stylesheet" href="{{PATH_TML}}user/css/manage.css">
+        <title> 商标设置 </title>
+        <link rel="stylesheet" href="/common/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/common/css/buttons.css">
+        <link rel="stylesheet" href="/common/css/swiper.min.css">
+        <script src="/common/js/swiper-3.3.1.min.js"></script>
+        <script src="/common/js/buttons.js"></script>
+        <script src="/common/js/plupload/plupload.full.min.js"></script>
+        <script src="/common/js/qiniu.js"></script>
+        <script src="/common/js/layer/layer.js"></script>
+        <style>
+            /*个性域名模块*/
+            #right {
+                background-color: #fff;
+                font-size: 14px;
+                /*top: 120px;*/
+            }
+
+            #brand {
+                color: red;
+                background: #f7f7f7;
+            }
+
+            #look {
+                margin-left: 15px;
+            }
+
+            .con-hd {
+                width: 945px;
+                margin: 20px 0 0 30px;
+            }
+
+            .con-hd .panel {
+                height: auto;
+                border-radius: 5px;
+                border: none;
+                box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+            }
+
+            .con-hd .panel-footer {
+                display: flex;
+                height: 40px;
+                background-color: #fff;
+                border: none;
+                padding-bottom: 0;
+                border-bottom: 1px solid #ddd;
+                justify-content: flex-start;
+                padding: 0;
+                margin-left: -10px;
+                margin-bottom: 20px;
+            }
+
+            .con-hd .panel-footer a {
+                font-size: 15px;
+            }
+
+            .con-hd .panel-footer  li {
+                width: 100px;
+                text-align: center;
+                padding: 10px 5px;
+                cursor: pointer;
+                font-size: 15px;
+            }
+
+            .con-hd .panel-footer > li:nth-child(1) {
+                margin-right: 15px;
+            }
+
+            .panel li.active {
+                border-bottom: 1px solid #e60000;
+                margin: 0 0 -1px;
+                color: #e60000;
+            }
+
+            .jumbotron {
+                width: 936px;
+                display: flex;
+                background-color: #fff;
+                border: 1px solid #ddd;
+            }
+
+
+            .form-group {
+                position: relative;
+                display: flex;
+                align-items: baseline;
+            }
+
+            .form-group .control-label {
+                font-weight: 100;
+            }
+
+            .brandlogo {
+                display: flex;
+                align-items: flex-start;
+            }
+        </style>
+    </head>
+
+    <body style="width: 100%; background: #F7F6F2;">
+    <div class="login">
+        <div class="left-nav">
+            
+        </div>
+        <div id="top">
+           
+        </div>
+        <div id="middle">
+        
+		</div>
+        <div id="right" style="display: none;">
+            <div class="container1">
+                <div class="we-art-nav">
+                    <ol class="breadcrumb" style="margin-bottom:0;">
+                        <li class="homepage"><a>系统设置</a></li>
+                        <li class="active">商标设置</li>
+                    </ol>
+                </div>
+                <div class="con-hd">
+                    <div class="panel panel-default">
+                        <div class="panel-body" style="display: none;">
+                            <span class="name">183****9939</span>
+                            <span class="lv">普通会员</span>
+                            <span class="auth"></span>
+                        </div>
+                        <div class="panel-footer" id="panel-tab">
+                            <a href="brand"><li> 品牌设置 </li></a>
+                            <li class="active" style="width:100px;"> 商标设置 </li>
+                        </div>
+                    </div>
+                    <div class="jumbotron">
+                        <div class="col-md-10">
+                            <div class="form-group row">
+                                <label for="name" class="col-sm-2 control-label" style="width:130px;"> 商标名称：</label>
+                                <div class="col-sm-5">
+                                    <input type="text" class="form-control" id="name" placeholder="商标名称">
+                                </div>
+                                <p style="font-size:12px;"><span style="color:#f00;margin-right:5px;">*</span>商标名称必须等同于或包含于品牌名称,且不得发生任何争议.</p>
+                            </div>
+                            <div class="form-group row">
+                                <label for="type" class="col-sm-2 control-label" style="width:130px;">类型：</label>
+                                <div class="col-sm-5">
+                                    <input type="text" class="form-control" id="type" placeholder="商标类型">
+                                </div>
+                                <span style="color:#f00;">*</span>
+                            </div>
+                            <div class="form-group row">
+                                <label for="period" class="col-sm-2 control-label" style="width:130px;">有效期：</label>
+                                <div class="col-sm-5">
+                                    <input type="text" class="form-control" id="period" placeholder="商标有效期">
+                                </div>
+                                <span style="color:#f00;">*</span>
+                            </div>
+                            <div class="form-group row">
+                                <label for="hold-information" class="col-sm-2 control-label" style="width:130px;"> 持有权信息：</label>
+                                <div class="col-sm-5">
+                                    <input type="text" class="form-control" id="hold-information" placeholder="持有权信息">
+                                </div>
+                                <span style="color:#f00;">*</span>
+                            </div>
+                            <div class="form-group row">
+                                <label for="authorize-information" class="col-sm-2 control-label" style="width:130px;"> 授权信息：</label>
+                                <div class="col-sm-5">
+                                    <input type="text" class="form-control" id="authorize-information" placeholder="授权信息">
+                                </div>
+                                <span style="color:#f00;">*</span>
+                            </div>
+                            <div class="form-group row brandlogo">
+                                <label for="thumb_image" class="col-sm-2 control-label" style="width:130px;"> 商标证书：</label>
+                                <div class="form-group">
+                                    <input name="thumb_image" type="hidden" value="" class="form-control"/>
+                                    <input id="pickfiles" name="front" type="file" class="form-control hide"/>
+                                    <div id="look">
+                                        <img onclick="$('#pickfiles').click()" id="img" src="http://oty3r3tmi.bkt.clouddn.com/common/1502085164249.jpg" width="100" alt="暂无预览图片" class="thumbnail">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-4">
+                                    <button id="save" type="button" class="btn btn-warning col-md-12"> 保存设置 </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var setHeight = function(ch){
+            $(".left-nav").css("height", ch);
+        }
+        var currWidth = $(window).height() - 90;
+        var currHeight = $(window).height() - 90;
+        setHeight(currHeight + 90);
+        $("#middle, #right").height(currHeight);
+
+        $(window).resize(function () {
+            currWidth = $(window).height() - 90;
+            currHeight = $(window).height() - 90;
+            setHeight(currHeight + 90);
+            $("#middle, #right").height(currHeight);
+        })
+
+        $("#add").hover(function () {
+            $(".add").show();
+        }, function () {
+            $(".add").hide();
+        })
+
+        $("#avatar, #dropdown").hover(function () {
+            $(".avatar").show();
+        }, function () {
+            $(".avatar").hide();
+        })
+
+        $("#avatar-logout span").click(function () {
+            localStorage.removeItem('token');
+            localStorage.removeItem('weid');
+        })
+    </script>
+
+    <script src="{{PATH_CONFIG}}"></script>
+    <script src="/common/js/control.js"></script>
+    <script src="{{PATH_TML}}user/js/common.js"></script>
+	<script src="{{PATH_TML}}user/common/js/generate_manage.js"></script>
+    <script src="{{PATH_TML}}user/js/trademark.js"></script>
+</body>
+</html>

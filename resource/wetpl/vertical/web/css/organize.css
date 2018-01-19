@@ -1,0 +1,216 @@
+@charset "utf-8";
+* {
+    margin: 0;
+    padding: 0;
+    font-size: 14px;
+    /*font-family: "微软雅黑","PingFang SC","Helvetica Neue","Hiragino Sans GB","Segoe UI","Microsoft YaHei",sans-serif;*/
+}
+
+a {
+    text-decoration: none;
+}
+
+li {
+    list-style: none;
+}
+
+.flex {
+    display: flex;
+}
+
+.center-disperse {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.index-nav {
+    position: fixed;
+    left: 0;
+    width: 90px;
+    height: 100%;
+    background: #ececec;
+    z-index: 999;
+}
+
+.organize-content {
+    width: 1100px;
+    position: fixed;
+    left: 90px;
+    top: 0;
+    bottom: 0;
+    overflow-y: auto;
+    background-color: #fff;
+}
+
+.organize-content .weizhuye-gerenfencai .top-nav {
+    /*position: relative;*/
+}
+
+.organize-content .weizhuye-gerenfencai .top-nav ul {
+    position: relative;
+    margin-top: -50px;
+    min-height: 45px;
+    background: rgba(255,255,255,0.75);
+}
+
+.organize-content .weizhuye-gerenfencai .top-nav ul a {
+    display: inline-block;
+    color: #333;
+    flex: 1;
+    height: 45px;
+    line-height: 45px;
+    border-right: 1px solid #959595;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.organize-content .weizhuye-gerenfencai .top-nav ul li a {
+    color: #333;
+}
+
+.organize-content .weizhuye-gerenfencai .top-nav>img {
+    width: 100%;
+}
+
+.organize-content .weizhuye-gerenfencai .top-nav ul .cate-active-on {
+    background: rgba(0, 124, 211, 0.7);
+    color: #fff;
+}
+
+.organize-content .weizhuye-gerenfencai .top-nav ul .cate-active-on a {
+    color: #fff;
+}
+
+.organize-content .weizhuye-gerenfencai .fengcai {
+    display: none;
+}
+
+.organize-content .weizhuye-gerenfencai .fengcai-main {
+    padding: 30px 15px;
+    display: block;
+}
+
+.organize-content .weizhuye-gerenfencai .main-top {
+    width: 100%;
+    height: 45px;
+    background: #f1f1f1;
+}
+
+.organize-content .weizhuye-gerenfencai .main-top #menuY {
+    color: #428bca;
+}
+
+.organize-content .weizhuye-gerenfencai .fengcai-main .main-top .z {
+    background: #f1f1f1;
+    width: 90px;
+    height: 45px;
+    line-height: 45px;
+    background: #007cd3;
+    color: #fff;
+    text-align: center;
+    cursor: pointer;
+}
+
+.organize-content .weizhuye-gerenfencai .fengcai-main .main-top .y {
+    background: #f1f1f1;
+    padding-right: 15px;
+}
+
+.organize-content .weizhuye-gerenfencai .list-article-ul {
+    margin: 30px 0 15px;
+    padding: 15px;
+    border: 1px solid #ccc;
+    min-height: 440px;
+}
+
+.organize-content .weizhuye-gerenfencai .list-article-ul li {
+    padding: 12px 0;
+    font-size: xx-small;
+    list-style-type: initial;
+    list-style-position: inside;
+}
+
+.organize-content .weizhuye-gerenfencai .list-article-ul li a{
+    display: inline-block;
+    padding: 0 20px 0 0;
+    font-size: 15px;
+    color: #666;
+}
+
+.organize-content .weizhuye-gerenfencai .list-article-ul li:hover,
+.organize-content .weizhuye-gerenfencai .list-article-ul li:hover a {
+    color: #46baef;
+    cursor: pointer;
+}
+
+.organize-content .weizhuye-gerenfencai .list-article-ul li small{
+    font-size: 12px;
+}
+
+.organize-content .paging {
+    display: flex;
+    justify-content: center;
+    height: 30px;
+}
+
+.organize-content .paging .prev-page,
+.organize-content .paging .next-page {
+    cursor: pointer;
+    margin: 0px 20px;
+    width: 5rem;
+}
+
+.organize-content .prompt-info {
+    width: 10rem;
+    height: 2.5rem;
+    position: fixed;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 50%;
+    background-color: rgba(0, 0, 0, .8);
+    color: rgb(255, 255, 255);
+    text-align: center;
+    line-height: 2.5rem;
+    border-radius: 5px;
+    padding: 0 3rem;
+    display: none;
+}
+
+.organize-content #plat-two-back-top {
+    position: fixed;
+    width: 50px;
+    height: 50px;
+    right: 50px;
+    bottom: 50px;
+    z-index: 1000;
+    display: none;
+    cursor: pointer;
+}
+
+/*.organize-content .org_content {
+    display: none;
+}*/
+
+.organize-content .org_content h3 {
+    font-size: 16px;
+    font-weight: bold;
+    color: #000000;
+    font-family: '微软雅黑';
+    text-align: center;
+    padding: 1.5rem 0;
+}
+
+.organize-content .org_content>div {
+    font-size: 14px;
+    color: #333;
+    line-height: 24px;
+    text-align: justify;
+}
+
+.organize-content .org_content>div img {
+    margin: 1rem auto;
+    display: block;
+}

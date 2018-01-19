@@ -1,0 +1,112 @@
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="shortcut icon" id="favicon" href="" />
+    <script src="/common/js/jquery-3.2.1.min.js"></script>
+    <script src="/common/js/browser.min.js"></script>
+    <script src="/common/js/jquery.imagecompress.js"></script>
+    <link rel="shortcut icon" id="favicon" href="" />
+    <link rel="stylesheet" href="{{PATH_TML}}user/common/css/main.css">
+    <link rel="stylesheet" href="{{PATH_TML}}user/css/base.css">
+    <link rel="stylesheet" href="/common/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/common/css/buttons.css">
+    <link rel="stylesheet" href="/common/css/swiper.min.css">
+    <script src="{{PATH_TML}}user/common/js/loading.js"></script>
+    <script src="/common/js/swiper-3.3.1.min.js"></script>
+    <script src="/common/js/buttons.js"></script>
+    <script src="/common/js/plupload/plupload.full.min.js"></script>
+    <script src="/common/js/qiniu.js"></script>
+    <script src="/common/js/layer/layer.js"></script>
+    <title>管理中心</title>
+</head>
+<body style="width: 100%; background: #F7F6F2;">
+<div class="login">
+    <div class="left-nav">
+    </div>
+    <div id="top">
+    </div>
+    <div id="middle">
+    </div>
+
+    <div id="right" style="display: none;">
+        <div class="manage" style="height: auto;padding-bottom: 30px;">
+            <div class="we-art-nav">
+                <ol class="breadcrumb" style="height: 30px; line-height: 30px; font-size: 15px; cursor: pointer;">
+                    <li class="homepage"><a>系统设置</a></li>
+                    <li class="active">广告设置</li>
+                </ol>
+            </div>
+            <div class="baseSet">
+                <a href="/user/admin/settings/base"><span>基本设置</span></a>
+                <a href="/user/admin/settings/about"><span class="about">关于我们</span></a>
+                <span class="base">广告设置</span>
+            </div>
+            <div class="baseCont" style="height: auto;">
+                <input name="bannerweid" type="hidden" value="">
+                <div class="brandBanner" style="height: auto;">
+                    <span>分类：</span>
+                    <div class="form-group" style="height: 20px;margin-top: -20px;">
+                       <div class="col-sm-3 shopcates" style="margin-left: 120px;">
+                            <select class="form-control" name="style">
+                            </select>
+                       </div>
+                    </div>
+                </div>
+                <div class="brandBanner" id="slideList" style="height: auto;padding-bottom: 15px;">
+
+                </div>
+                <div class="brandBanner mb" id="bannerList" style="height: auto;">
+
+                </div>
+                <div class="form-group" style="display: -webkit-box;">
+                    <div class="col-sm-offset-2 col-sm-4">
+                        <button id="save" type="button" class="btn btn-warning col-md-10"> 保存设置 </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var setHeight = function(ch){
+        $(".left-nav").css("height", ch);
+    }
+    var currWidth = $(window).height() - 90;
+    var currHeight = $(window).height() - 90;
+    setHeight(currHeight + 90);
+    $("#middle, #right").height(currHeight);
+
+    $(window).resize(function () {
+        currWidth = $(window).height() - 90;
+        currHeight = $(window).height() - 90;
+        setHeight(currHeight + 90);
+        $("#middle, #right").height(currHeight);
+    })
+
+    $("#add").hover(function () {
+        $(".add").show();
+    }, function () {
+        $(".add").hide();
+    })
+
+    $("#avatar, #dropdown").hover(function () {
+        $(".avatar").show();
+    }, function () {
+        $(".avatar").hide();
+    })
+
+    $("#avatar-logout span").click(function () {
+        localStorage.removeItem('token');
+        localStorage.removeItem('weid');
+    })
+</script>
+
+<script src="{{PATH_CONFIG}}"></script>
+<script src="/common/js/control.js"></script>
+<script src="{{PATH_TML}}user/js/common.js"></script>
+<script src="{{PATH_TML}}user/common/js/generate_manage.js"></script>
+<script src="{{PATH_TML}}user/js/pagebanner.js"></script>
+</body>
+</html>

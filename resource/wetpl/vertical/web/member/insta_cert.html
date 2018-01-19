@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <title> 会员证书</title>
+    <meta charset="UTF-8" />
+    <link rel="shortcut icon" id="favicon" href="" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+
+    <script src="/common/js/jquery-3.2.1.min.js"></script>
+    <script src="{{PATH_CONFIG}}"></script>
+    <script type="text/javascript" src="/common/js/dom-to-image.js"> </script>
+    <style>
+        * { margin: 0; padding: 0; }
+        html, body { position: absolute; left: 0; top: 0; right: 0; bottom: 0; background-color: #fff; }
+        .insta_cert { position: absolute; left: 0; top: 0; right: 0; bottom: 0; background-color: #fff; }
+        .member_certificate_big_image { width: 800px; height: 600px; position: absolute; transform: translate(-50%, -50%); left: 50%; top: 50%; }
+        .cert_member_personal { position: relative; width: 100%; height: 100%; background-size: 100% 100%; overflow: hidden; }
+        .plat_logo { width: 100px; height: 100px; margin: 100px auto 20px; background-size: 100% 100%; }
+        .member_level { width: 640px; height: 55px; font-size: 48px; font-family: '黑体'; font-weight: 600; text-align: center; padding: 10px 80px; }
+        .plat_name { width: 640px; height: 34px; padding: 5px 80px; font-size: 30px; font-family: '宋体'; }
+        .plat_cert_words { line-height: 1.5em; font-size: 28px; font-family: '宋体'; padding: 5px 80px 15px; text-indent: 2em; text-align: unset!important; word-wrap:break-word !important; word-break:break-all!important; white-space: unset!important; }
+        .begin_time, .end_time, .end_number { width: 640px; height: 21px; padding: 5px 80px; text-align: left; text-indent: 445px; }
+        .cert_seal { position: absolute; width: 170px; height: 150px; right: 80px; bottom: 80px;background-size: 100% 100%; float: right; }
+        canvas { width: 800px; height: 600px; position: absolute; transform: translate(-50%, -50%); left: 50%; top: 50%; }
+    </style>
+</head>
+<body>
+<div class="insta_cert">
+    <div class="member_certificate_big_image">
+        <div class="cert_member_personal"></div>
+    </div>
+
+</div>
+<img id="cert_img">
+<script type="text/javascript" src="/common/js/canvas.js"></script>
+<script type="text/javascript" src="/common/js/canvas2image.js"></script>
+<script>
+    // 显示证书
+    var member_time_axis_result  = ''
+    function member_issue(result2) {
+        var member_time_axis = `
+                <div class="plat_logo"></div>
+                <div class="member_level">`+ result2.member_level +`</div>
+                <div class="plat_cert_words">`+ result2.cert_words +`</div>
+                <div class="end_number">证书编号：`+ result2.cert_number +`</div>
+                <div class="begin_time">发证日期：`+ result2.begin_time +`</div>
+                <div class="end_time">截止日期：`+ result2.end_time +`</div>
+                <div class="cert_seal"></div>`
+        return member_time_axis;
+    }
+
+    var host = window.location.pathname.split("/").pop();
+    var options20 = $.get(MEMBER_CERT + host +"/cert");
+    options20.done(function(body) {
+        if(body.code == 200) {
+            var result2 = body.data;
+            console.log("result2：", result2)
+            if(result2.cert_template.indexOf('http') != 0 && result2.cert_template != "") {
+                result2.cert_template = ApiMaterPlatQiniuDomain + result2.cert_template;
+            }
+            if(result2.plat_logo.indexOf('http') != 0 && result2.plat_logo != "") {
+                result2.plat_logo = ApiMaterPlatQiniuDomain + result2.plat_logo;
+            }
+            if(result2.cert_seal.indexOf('http') != 0 && result2.cert_seal != "") {
+                result2.cert_seal = ApiMaterPlatQiniuDomain + result2.cert_seal;
+            }
+            $(".cert_member_personal").html(member_issue(result2));
+            $(".cert_member_personal").css("background-image", "url("+ result2.cert_template +")");
+            $(".plat_logo").css("background-image", "url("+ result2.plat_logo +")");
+            $(".cert_seal").css("background-image", "url("+ result2.cert_seal +")");
+
+            //证书生成图片
+            // $(".insta_cert").click(function() {
+            // html2canvas($(".member_certificate_big_image"), {
+            //     useCORS:true,
+            //     onrendered: function(canvas) {
+            //         //生成base64图片数据
+            //         $(".member_certificate_big_image").hide();
+            //         canvas.setAttribute('id','thecanvas');
+            //         var dataUrl = canvas.toDataURL();
+            //         $("#cert_img").attr("src", dataUrl).show();
+            //     }
+            // });
+            // alert(0);
+            // var node = document.getElementById('member_certificate_big_image');
+            // domtoimage.toPng(node).then(function (dataUrl) {
+            //     $("#cert_img").attr("src", dataUrl).show();
+            // });
+            html2canvas($(".cert_member_personal"), {
+                useCORS: true,
+                onrendered: function(canvas) {
+                    $(".member_certificate_big_image").remove();
+                    canvas.setAttribute('id','thecanvas');
+                    $('.insta_cert').append(canvas);
+                },
+                width: 800,
+                height: 600
+            });
+        }
+    });
+    options20.fail(function(error) {
+        console.error(error);
+    });
+</script>
+</body>
+</html>

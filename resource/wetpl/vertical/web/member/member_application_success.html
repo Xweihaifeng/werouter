@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <title> 会员申请 </title>
+    <meta charset="UTF-8" />
+    <link rel="shortcut icon" id="favicon" href="" />
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+
+    <script src="/common/js/jquery-3.2.1.min.js"></script>
+    <script src="/common/layer-v3.0.3/layer-v3.0.3/layer/layer.js"></script>
+    <script src="{{PATH_CONFIG}}"></script>
+    <script src="{{PATH_TML}}js/modal_login.js"></script>
+    <!-- <script src="/common/js/swiper-3.3.1.min.js"></script> -->
+    <script src="/common/js/plupload/plupload.full.min.js"></script>
+    <script src="/common/js/qiniu.js"></script>
+    <script charset="utf-8" type="text/javascript" src="/common/js/buttons.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="/common/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="{{PATH_TML}}font/iconfont.css" />
+    <link rel="stylesheet" href="{{PATH_TML}}css/news_base.css" />
+    <link rel="stylesheet" href="{{PATH_TML}}css/modal_login.css" />
+    <link rel="stylesheet" href="{{PATH_TML}}member/css/member_application_success.css" />
+    <link rel="stylesheet" href="{{PATH_TML}}member/css/member_process.css" />
+    <link rel="stylesheet" type="text/css" href="/common/css/buttons.css">
+
+    <style>
+         ::-webkit-scrollbar {
+            width: 0;
+            height: 0;
+        }
+        
+        .dropdown-toggle,
+        .get-check {
+            height: 40px !important;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="modal_login" id="modal_login"></div>
+    <ul class="news_menu" id="public_main_news_menu"></ul>
+    <div class="member_application_success">
+        <div class="member_list_header"><img style="width: 25px;height: 25px;vertical-align: middle;margin-top: -5px" src="/common/img/huiyuanshengqing.png"> 会员 </div>
+        <ul class="member_app_list">
+            <li class="member_active member_active0"> 初审 </li>
+            <li class="member_active"> 复审 <span class="span1"></span><span class="span2"></span></li>
+            <li class="member_active"> 申请成功 <span class="span1"></span><span class="span2"></span></li>
+        </ul>
+        <p class="member_prompt_info"> </p>
+        <div class="member_certificate_block">
+            <div class="member_sel_type" style="justify-content: center">
+                <div class="member_certificate_big_image"></div>
+            </div>
+
+            <div class="member_sel_type">
+                <div class="member_left_icon">
+                    <span class="member_success"></span>
+                </div>
+                <div class="member_con_title"> 恭喜您成功入会，会员证书已颁发。<a id="dw" href="javascript:void;">一键下载</a> <a id="btn-open-wepage" href="javascript:void;">开通微主页</a></div>
+            </div>
+
+            <div class="member_sel_type">
+                <div class="member_right_con_link">
+                    <span> 您的证书链接为： </span>
+                    <input type="text" name="" id="coping_link" class="member_app_input" placeholder="http://www.xxx.com" readonly>
+                    <button class="member_link" onClick="copyLink()"> 复制链接 </button>
+                    <a class="member_link member_view_cert" target="_black"> 查看证书 </a>
+                </div>
+            </div>
+
+            <div class="member_sel_type" style="display: none">
+                <div class="member_right_con_link">
+                    <a href="" class="member_rights_interests"> 查看会员相关权益 </a>
+                </div>
+            </div>
+
+            <div class="member_sel_type">
+                <div class="member_left_icon">
+                    <span class="member_money"></span>
+                </div>
+                <div class="member_con_title"> 下一年度您的会费缴纳截止时间为： </div>
+                <div class="member_count" id="memner_end_time"> 2020-10-09 </div>
+                <!-- <button class="member_link member_next_money"> 我要续费 </button> -->
+            </div>
+
+            <div class="member_sel_type" style="display: none">
+                <div class="member_per_domain">
+                    <div class="member_per_domain_title">
+                        <div class=""> 设置个性域名 </div>
+                        <div class="member_domain_edit"> 编辑 <span>></span></div>
+                    </div>
+                    <div class="member_domain_content">
+                        <div class="member_right_con_link">
+                            <div class="member_danger"> <span class="member_warn"> </span> 个性域名请使用长度为4～20个字符的数字或者字母 </div>
+                        </div>
+                        <div class="member_right_con_link">
+                            <span> https://www.wezchina.com/ </span>
+                            <input type="text" name="" id="coping_link" value="" class="member_app_input" placeholder="http://www.xxx.com">
+                            <button class="member_link member_testing"> 检测 </button>
+                            <button class="member_link member_adopt"> 通过 </button>
+
+                        </div>
+                        <div class="member_right_con_link">
+                            <input type="button" name="" class="member_con_left member_app_submit" value="保存">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="member_time_axis"></div>
+    </div>
+    <!-- 右侧大背景图 -->
+    <div id="public_main_right_bg" style="position:fixed;top:0;bottom:0;left:1190px;width:100%;"></div>
+    <script src="{{PATH_TML}}js/public_main_right_bg.js"></script>
+    <script type="text/javascript" src="/common/js/canvas.js"></script>
+    <script type="text/javascript" src="/common/js/canvas2image.js"></script>
+    <!-- <script src="/common/js/control.js"></script> -->
+    <!-- <script src="{{PATH_TML}}js/public_main.js"></script> -->
+    <script src="{{PATH_TML}}member/js/member_public_config.js"></script>
+    <script src="{{PATH_TML}}member/js/member_time_axis.js"></script>
+    <script src="{{PATH_TML}}member/js/member_application_success.js"></script>
+
+</body>
+
+</html>

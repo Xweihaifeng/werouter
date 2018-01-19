@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <script src="../common/js/jquery-3.2.1.min.js"></script>
+    <script src="../common/js/browser.min.js"></script>
+    <link rel="stylesheet" href="../common/css/main.css">
+    <title>全球秦商总会</title>
+    <!-- Bootstrap 3.3.7 -->
+    <link rel="stylesheet" href="../common/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../common/css/buttons.css">
+    <link rel="stylesheet" href="../common/css/swiper.min.css">
+
+    <script src="../common/js/swiper-3.3.1.min.js"></script>
+    <script src="../common/js/buttons.js"></script>
+
+</head>
+<body style="width: 1366px;">
+    <div id="modal"></div>
+    <div class="show-login">
+        <div class="close"></div>
+        <div class="login-cont">
+            <div class="login-heading">快速登陆</div>
+            <div class="login-body">
+                <div class="input-group" style="margin-top: 30px;">
+                    <div class="input-group-btn">
+                        <button type="button" class="btn btn-default dropdown-toggle" style="height: 44px;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">+86 中国 </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="active">+86 中国</a></li>
+                            <li><a >美国</a></li>
+                        </ul>
+                    </div><!-- /btn-group -->
+                    <input type="text" class="form-control phone-num" maxlength="11" style="height: 44px; line-height: 44px; font-size: medium;" placeholder="请输入手机号码">
+                </div><!-- /input-group -->
+
+                <div class="input-group" style="margin-top: 30px;">
+                    <input type="text" class="form-control check-num" maxlength="5" placeholder="请输入短信验证码" style="height: 44px; line-height: 44px; font-size: medium;">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default get-check" style="height: 44px;" type="button">获取验证码</button>
+                        </span>
+                </div><!-- /input-group -->
+                <div class="check" style="margin-top: 30px;">
+                    <input type="checkbox" id="check" checked>
+                    <span><a>已阅读并同意《微众中国服务条款》</a></span>
+                </div>
+                <div id="log-in">
+                    <a class="button button-lowercase button-primary login-bt">登陆</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="left-nav">
+        <div id="home">
+            <img src="/common/img/home.png" width='90' alt="HOME" />
+        </div>
+        <div id="login">
+            <div></div>
+        </div>
+        <div id="article">
+            <div><img src="../common/img/wz.png" width='29' alt="article" /></div>
+            <div class="word">文章</div>
+        </div>
+        <div id="project">
+            <div><img src="../common/img/pj.png" width='29' alt="project" /></div>
+            <div class="word">项目</div>
+        </div>
+        <div id="active">
+            <div><img src="../common/img/at.png" width='29' alt="active" /></div>
+            <div class="word">活动</div>
+        </div>
+        <div id="shopping">
+            <div><img src="../common/img/sp.png" width='29' alt="shopping" /></div>
+            <div class="word">商城</div>
+        </div>
+        <div id="zone">
+            <div><img src="../common/img/qz.png" width='29' alt="zone" /></div>
+            <div class="word">圈子</div>
+        </div>
+    </div>
+
+    <div class="read"></div>
+    <!-- 右侧大背景图 -->
+    <div id="public_main_right_bg" style="position:fixed;top:0;bottom:0;left:1190px;width:100%;overflow-y:auto;"></div>
+    <script src="{{PATH_TML}}js/public_main_right_bg.js"></script>
+    <script src="..{{PATH_CONFIG}}"></script>
+    <script src="../common/js/control.js"></script>
+    <script src="js/read.js"></script>
+
+</body>
+</html>
