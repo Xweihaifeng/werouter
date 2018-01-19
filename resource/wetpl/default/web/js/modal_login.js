@@ -213,10 +213,11 @@ $(function() {
         }
     }
 
-    var saveUserInfo = function(token, weid, imgUrl, identity) {
+    var saveUserInfo = function(token, weid, imgUrl, identity, phone) {
         //localStorage.setItem('token', token);
         //localStorage.setItem('weid', weid);
         localStorage.setItem('identity', identity);
+        localStorage.setItem('phone', phone);
         //setCookie(token, weid, 7);
         docCookies.setItem("token", token, new Date().getTime() + 7 * 24*60*60*1000, "/", '.' + root_domain);
         docCookies.setItem("weid", weid, new Date().getTime() + 7 * 24*60*60*1000, "/", '.' + root_domain);
@@ -450,7 +451,7 @@ $(function() {
             success: function(data){
                 console.log(data)
                 if (data.code != -200) {
-                    saveUserInfo(data.token, data.data.weid, data.data.avatar, data.data.identity);
+                    saveUserInfo(data.token, data.data.weid, data.data.avatar, data.data.identity, data.data.phone);
                     showLogin = false;
                     isLogin = true;
                     isCheckNum = false;
