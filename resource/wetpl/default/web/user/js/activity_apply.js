@@ -240,46 +240,46 @@ var allSmsNotify = function(weid, callback) {
     }
     // 群发短信通知 - 选择性发行
 var multiSmsNotify = function(weid, userIds, callback) {
-        layer.load();
-        $.ajax({
-            url: ACTIVITY_ENROLL_MULTI_SMS_NOTIFY,
-            type: 'POST',
-            data: {
-                activity_id: weid,
-                user_ids: userIds
-            },
-            headers: {
-                'Token': docCookies.getItem("token")
-            },
-            success: function(data) {
-                layer.closeAll('loading');
-                if (data.code == 200)
-                    callback(data.data);
-                else
-                    notice.alert(data.message);
-            },
-            error: function(xhr) {
-                layer.closeAll('loading');
-                console.log(xhr);
-            }
-        });
-    }
-    // $(document).on('click', '.all-sms-notify', function() {
-    //     confirmer = layer.confirm('群发短信可能消耗大量短信余额，确认要群发？', {
-    //         title: '群发短信通知',
-    //         btn: ['确认发送', '取消']
-    //     }, function() {
-    //         layer.close(confirmer);
-    //         allSmsNotify(id, function(data) {
-    //             layer.msg('已发送!');
-    //         });
-    //     }, function() {});
-    // });
+    layer.load();
+    $.ajax({
+        url: ACTIVITY_ENROLL_MULTI_SMS_NOTIFY,
+        type: 'POST',
+        data: {
+            activity_id: weid,
+            user_ids: userIds
+        },
+        headers: {
+            'Token': docCookies.getItem("token")
+        },
+        success: function(data) {
+            layer.closeAll('loading');
+            if (data.code == 200)
+                callback(data.data);
+            else
+                notice.alert(data.message);
+        },
+        error: function(xhr) {
+            layer.closeAll('loading');
+            console.log(xhr);
+        }
+    });
+}
 $(document).on('click', '.all-sms-notify', function() {
+    confirmer = layer.confirm('快捷发送方式将通知该活动所有报名者，若要指定接收人，请使用"短信管理"中的高级群发功能。<br>您确认要快捷发送通知吗？', {
+        title: '快捷发送通知',
+        btn: ['确认发送', '取消']
+    }, function() {
+        layer.close(confirmer);
+        allSmsNotify(id, function(data) {
+            layer.msg('已发送!');
+        });
+    }, function() {});
+});
+$(document).on('click', '.multi-sms-notify', function() {
     var smsAlert = layer.open({
         skin: 'layui-layer-rim',
         type: 1,
-        area: ['520px', '500px'],
+        area: ['530px', '500px'],
         title: 0,
         closeBtn: true,
         shadeClose: true,
@@ -296,7 +296,32 @@ $(document).on('click', '.all-sms-notify', function() {
                 });
             }
         },
-        content: $('#ui-fs'),
+        content: `    <div id="ui-fs" class="ui-fs">
+        <div class="ui-fs-result clearfix">
+        </div>
+        <div class="ui-fs-input">
+            <input type="text" value="输入报名者手机号码进行筛选" maxlength="30" />
+            <a class="ui-fs-icon" href="javascript:void(0)" title="查看所有">查看所有</a>
+        </div>
+        <div class="ui-fs-list">
+            数据加载中....
+        </div>
+        <div class="ui-fs-all">
+            <div class="top">
+                <select id="ui-fs-friendtype"><option value="-1">所有报名者</option></select>
+                <div class="close" title="关闭">关闭</div>
+            </div>
+            <div class="ui-fs-allinner">
+                <div class="page clearfix">
+                    <div class="llight1">还有<b>30</b>人可选</div>
+                    <div class="page-link"><span class="prev">上一页</span><span class="next">下一页</span></div>
+                </div>
+                <div class="list clearfix">
+                    数据加载中...
+                </div>
+            </div>
+        </div>
+    </div>`,
         end: function() {},
         shade: 0.2
     });

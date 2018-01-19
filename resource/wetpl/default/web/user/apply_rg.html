@@ -141,6 +141,7 @@
         
         .ui-fs {
             margin-top: 10px;
+            padding: 20px;
             width: 486px;
         }
         
@@ -163,7 +164,7 @@
         
         .ui-fs .ui-fs-result A {
             height: 32px;
-            width: 110px;
+            width: 105px;
         }
         
         .ui-fs A IMG {
@@ -176,6 +177,14 @@
         
         .ui-fs .ui-fs-input INPUT {
             width: 470px;
+        }
+        
+        .page-link {
+            margin-left: 30px
+        }
+        
+        .page-link span {
+            margin-left: 10px;
         }
     </style>
 
@@ -264,7 +273,7 @@
                                     <!--活动未结束-->
                                     <!-- <button class="del J_BtnDelAllRecord" style="background: transparent;">删除</button> -->
                                     <!--   <button onclick="exportCsv('NDIxNjM=')" class="export" style="background: transparent;">导出名单</button> -->
-                                    <button class="btn btn-primary all-sms-notify">群发短信通知</button> <button class="btn btn-primary self-sms">自定义短信</button>
+                                    <button class="btn btn-primary all-sms-notify">快捷通知所有人</button> <button class="btn btn-primary self-sms">短信管理</button>
                                 </div>
                                 <div class="pull-right">
                                     <div class="search">
@@ -426,33 +435,6 @@
            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
            <button type="button" class="btn btn-primary save">确定</button>
        </div> -->
-            </div>
-        </div>
-    </div>
-
-    <div id="ui-fs" class="ui-fs" style="display:none">
-        <div class="ui-fs-result clearfix">
-        </div>
-        <div class="ui-fs-input">
-            <input type="text" value="输入报名者手机号码进行筛选" maxlength="30" />
-            <a class="ui-fs-icon" href="javascript:void(0)" title="查看所有">查看所有</a>
-        </div>
-        <div class="ui-fs-list">
-            数据加载中....
-        </div>
-        <div class="ui-fs-all">
-            <div class="top">
-                <select id="ui-fs-friendtype"><option value="-1">所有报名者</option></select>
-                <div class="close" title="关闭">关闭</div>
-            </div>
-            <div class="ui-fs-allinner">
-                <div class="page clearfix">
-                    <div class="llight1">还有<b>30</b>人可选</div>
-                    <div class="page-link"><span class="prev">上一页</span><span class="next">下一页</span></div>
-                </div>
-                <div class="list clearfix">
-                    数据加载中...
-                </div>
             </div>
         </div>
     </div>
