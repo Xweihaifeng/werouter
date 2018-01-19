@@ -5,8 +5,8 @@
 //接口配置
 const httpType = window.location.protocol;
 
-// const apiUrl = httpType + '//{{url}}/api/';
-const apiUrl = httpType + '//ysl.co/';
+const apiUrl = httpType + '//{{url}}/api/';
+
 
 const mApiUrl = httpType + '//m.{{url}}/api/';
 
