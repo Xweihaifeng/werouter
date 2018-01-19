@@ -280,7 +280,8 @@ const ACTIVITY_ENROLL_COUNT = apiUrl + 'activity/enroll/count'; // 活动 - 报�
 const ACTIVITY_ENROLL_TICKETS = apiUrl + 'activity/enroll/tickets'; // 活动 - 报名 - 售票状况
 const ACTIVITY_ENROLL_STATISTICS = apiUrl + 'activity/enroll/statistics'; // 活动 - 报名 - 图标统计
 const ACTIVITY_ENROLL_SMS_NOTIFY = apiUrl + 'activity/enroll/sms_notify'; // 活动 - 报名 - 短信通知
-const ACTIVITY_ENROLL_ALL_SMS_NOTIFY = apiUrl + 'activity/enroll/all_sms_notify'; // 活动 - 报名 - 群发短信通知
+const ACTIVITY_ENROLL_ALL_SMS_NOTIFY = apiUrl + 'activity/enroll/all_sms_notify'; // 活动 - 报名 - 群发短信通知 - 全部发送
+const ACTIVITY_ENROLL_MULTI_SMS_NOTIFY = apiUrl + 'activity/enroll/multi_sms_notify'; // 活动 - 报名 - 群发短信通知 - 选择性多发
 
 const ACTIVITY_ENROLL_ATTENDCOUNT = apiUrl + 'activity/enroll/attend_count'; // 活动 - 签到 - 人数
 
