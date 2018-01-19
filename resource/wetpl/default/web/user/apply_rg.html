@@ -45,6 +45,18 @@
 
     <title>报名列表</title>
     <style type="text/css">
+        ul {
+            margin: 0;
+        }
+        
+        h3 {
+            margin-bottom: 0;
+        }
+        
+        .loading>p {
+            line-height: 0px;
+        }
+        
         #activity-list {
             color: red;
             background: #f7f7f7;
@@ -265,7 +277,7 @@
                                 <div class="chart line">
                                     <canvas id="J_ChartTimeLine" width="400" height="120"></canvas>
                                 </div>
-                                <img src="/user/img/chart.png" alt="">
+                                <!-- <img src="/user/img/chart.png" alt=""> -->
                             </div>
                             <div class="operation">
                                 <div class="pull-left">
@@ -273,7 +285,7 @@
                                     <!--活动未结束-->
                                     <!-- <button class="del J_BtnDelAllRecord" style="background: transparent;">删除</button> -->
                                     <!--   <button onclick="exportCsv('NDIxNjM=')" class="export" style="background: transparent;">导出名单</button> -->
-                                    <button class="btn btn-primary all-sms-notify">快捷通知所有人</button> <button class="btn btn-primary self-sms">短信管理</button>
+                                    <button class="btn btn-primary all-sms-notify">快捷通知所有人</button> <button class="btn btn-success self-sms">短信管理</button>
                                 </div>
                                 <div class="pull-right">
                                     <div class="search">

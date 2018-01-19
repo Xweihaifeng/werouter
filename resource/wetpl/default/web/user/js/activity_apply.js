@@ -215,53 +215,55 @@ var smsNotify = function(weid, enroll_id, callback) {
     }
     // 群发短信通知 - 全部发送
 var allSmsNotify = function(weid, callback) {
-        layer.load();
+        common.loading('正在发送...', function(hideLoading) {
+            $.ajax({
+                url: ACTIVITY_ENROLL_ALL_SMS_NOTIFY,
+                type: 'POST',
+                data: {
+                    activity_id: weid
+                },
+                headers: {
+                    'Token': docCookies.getItem("token")
+                },
+                success: function(data) {
+                    hideLoading();
+                    if (data.code == 200)
+                        callback(data.data);
+                    else
+                        notice.alert(data.message);
+                },
+                error: function(xhr) {
+                    hideLoading();
+                    console.log(xhr);
+                }
+            });
+        });
+    }
+    // 群发短信通知 - 选择性发行
+var multiSmsNotify = function(weid, userIds, callback) {
+    common.loading('正在发送...', function(hideLoading) {
         $.ajax({
-            url: ACTIVITY_ENROLL_ALL_SMS_NOTIFY,
+            url: ACTIVITY_ENROLL_MULTI_SMS_NOTIFY,
             type: 'POST',
             data: {
-                activity_id: weid
+                activity_id: weid,
+                user_ids: userIds
             },
             headers: {
                 'Token': docCookies.getItem("token")
             },
             success: function(data) {
-                layer.closeAll('loading');
+                hideLoading();
                 if (data.code == 200)
                     callback(data.data);
                 else
                     notice.alert(data.message);
             },
             error: function(xhr) {
-                layer.closeAll('loading');
+                hideLoading();
                 console.log(xhr);
             }
         });
-    }
-    // 群发短信通知 - 选择性发行
-var multiSmsNotify = function(weid, userIds, callback) {
-    layer.load();
-    $.ajax({
-        url: ACTIVITY_ENROLL_MULTI_SMS_NOTIFY,
-        type: 'POST',
-        data: {
-            activity_id: weid,
-            user_ids: userIds
-        },
-        headers: {
-            'Token': docCookies.getItem("token")
-        },
-        success: function(data) {
-            layer.closeAll('loading');
-            if (data.code == 200)
-                callback(data.data);
-            else
-                notice.alert(data.message);
-        },
-        error: function(xhr) {
-            layer.closeAll('loading');
-            console.log(xhr);
-        }
     });
 }
 $(document).on('click', '.all-sms-notify', function() {

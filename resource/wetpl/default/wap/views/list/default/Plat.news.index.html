@@ -1,0 +1,136 @@
+<#extend#>public/coc/coc_extend.html</#extend#>
+<link rel="stylesheet" href="{{PATH_TML}}css/coc/component.css">
+<style type="text/css">
+    
+</style>
+<div id="viewport" class="viewport" style="width:100%">
+
+    <div class="xinxi_mar" id="viewport_list">
+        <div class="xinxi">
+            <ul>
+                <li :class="{'selectd' : item.domain == cate_name}" v-for="(item, index) in two_name" >
+                    <a @click="channel(item.domain);" >{{item.title}}</a>
+                </li>
+            </ul>
+        </div>
+        <div class="clear"></div>
+        <div class="xinxlt_lb" v-if="show_content == false">
+            <ul id="con_list">
+                <li v-for="(item, index) in list_data">
+                    <a :href="params.channel_id+ '/' + item.weid | href('weplats')">
+                        <h2><b style="font-weight:normal" v-html="item.title"></b></h2>
+                        <span class="dwgklb_sj">{{item.publish_time.substr(0, 10)}}</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="xinxlt_lb" v-if="show_content == true">
+            <br/>
+            <ul id="con_list" v-html = "content">
+            </ul>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    new Vue({
+        el: '#app',
+        data : {
+            plats : plats_info,
+            title : '',
+            two_name : [],
+            cate_list: [],
+            list_data: [],
+            params : {
+                page : 1,
+                limit : 20,
+                cate_id : '',
+                channel_id : $app.get_router(),
+            },
+            show_content : false,
+            content : '',
+            cate_name : $app.get_router(2),
+            dom : '#viewport_list'
+        },
+        mounted() {
+            //底部对话框
+            if(this.params.channel_id != $app.get_router('pop'))
+            {
+                this.params.cate_id = $app.get_router('pop');
+            }
+            this.init();
+        },
+        methods:{
+            channel(domain)
+            {
+                $app.open_page(all_domian + this.params.channel_id + '/' + domain);
+            },
+            //获取分类
+            init()
+            {
+                ajax.get('cms/channels/domain_query/'+this.params.channel_id).then((res) => {
+                    //$app.set_title(res.data.title);
+                    plats.title = res.data.title;
+                    plats.url = all_domian + res.data.domain;
+
+                    ajax.get('cms/cate_tree_by_channel' , {params:{channel:res.data.weid}}).then((res) => {
+                        if (res.code === 200) {
+                            this.two_name = res.data;   
+                            for(var item of this.two_name)
+                            {
+                                if(item.domain == this.params.cate_id)
+                                {
+                                    plats.show_title = item.title;
+                                    $app.set_title(plats.show_title +' - '+ plats_info.title);
+
+                                    if($app.empty(item.children) == true)
+                                    {
+                                        this.two_name = item.children;
+                                    }
+                                    if(item.type == 1)
+                                    {
+                                        this.show_content = true;
+                                        this.content = item.content;
+                                    }
+                                    break;
+                                }
+                                else
+                                {
+                                    for(var item_tree of item.children)
+                                    {
+                                        if(item_tree.domain == this.params.cate_id)
+                                        {
+                                            plats.title = item.title;
+                                            plats.url = all_domian  + this.params.channel_id + '/' + item.domain;
+                                            plats.show_title = item_tree.title;
+                                            $app.set_title(plats.show_title +' - '+ plats.title +'_'+ plats_info.title);
+
+                                            this.two_name = item.children;
+                                            if(item_tree.type == 1)
+                                            {
+                                                this.show_content = true;
+                                                this.content = item_tree.content;
+                                            }
+                                            break;
+                                        }
+                                    }
+                                }
+                            }      
+                            this.data_list();
+                        }
+                    });
+                });
+            },
+            // 使用common_page 方法必须定义data方法 以及对象 params
+            data(params , call){
+                return $mob_ajax.cms_lists(params , call);
+            },
+            data_list() {
+                if(this.show_content == true)
+                {
+                    return false;
+                }
+                $mob_ajax.common_page(this , this.params);
+            }
+        }
+    });
+</script>
