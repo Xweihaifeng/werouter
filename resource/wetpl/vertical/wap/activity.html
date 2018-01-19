@@ -1,0 +1,77 @@
+<#extend#>public/domain/domain_extend.html</#extend#>
+<link rel="stylesheet" href="{{PATH_TML}}css/home.css"/>
+<link rel="stylesheet" href="{{PATH_TML}}css/common.css"/>
+<link rel="stylesheet" href="{{PATH_TML}}css/act.css"/>
+<div id="act-container">
+    <div v-for="item in list_data">
+        <div class="act">
+            <div class="act-avatar">
+                <a :href="'/' + item.domain + '/wecard' | href">
+                    <img class="lazy" :src="item.avatar | img_src(60,60)" width="60" height="60" />
+                </a>
+            </div>
+            <div class="all">
+                <div class="act-info">
+                    <ul>
+                        <li class="act-title">{{item.nickname}}</li>
+                        <li class="act-intro">{{item.motto}}</li>
+                    </ul>
+                    <div class="act-hot"><span>热门</span></div>
+                </div>
+                <a :href="'/' + item.domain + '/activitydetail/' + JSON.parse(item.other).weid | href">
+                    <div class="act-content">
+                        <div class="act-cover"><img class="lazy" :src="JSON.parse(item.other).cover | img_src(110, 69, 1)" width="110" height="69" /></div>
+                        <div class="act-cont">
+                            <ul>
+                                <li class="act-cont-title">
+                                    <p>{{JSON.parse(item.other).title}}</p>
+                                    <p>免费</p>
+                                </li>
+                                <li class="act-cont-summary">{{JSON.parse(item.other).Sponsor}}</li>
+                                <li class="act-cont-time">
+                                    <p>{{JSON.parse(item.other).updated_at | formateTime('MDHM') }} 开讲</p>
+                                    <p>{{JSON.parse(item.other).area_name}}</p>
+                                </li>
+                                <li class="act-cont-info"></li>
+                            </ul>
+                        </div>
+                    </div>
+                </a>
+                <div class="act-other">
+                    <p>{{JSON.parse(item.other).updated_at | formateTime('HM') }}</p>
+                    <img src="/common/img/review.svg" alt=""/>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    new Vue({
+        el : '#app',
+        data : {
+            list_data:[],
+            params : {
+                page : 1,
+                limit : 10,
+                page_count : 0,
+                type : 2,
+                dynamic_type : 3,
+            },
+            dom : '#app'
+        },
+        mounted() {
+            this.$nextTick(()=>{
+                this.data_list();
+            });
+        },
+        methods:{
+            // 使用common_page 方法必须定义data方法 以及对象 params
+            data(params , call){
+                $mob_ajax.dynamic(params , call);
+            },
+            data_list() {
+                $mob_ajax.common_page(this , this.params);
+            }
+        }
+    })
+</script>

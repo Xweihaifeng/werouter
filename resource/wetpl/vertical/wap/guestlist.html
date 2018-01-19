@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <title>嘉宾列表</title>
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="stylesheet" href="{{PATH_TML}}css/users.css"/>
+    <script src="{{PATH_TML}}lib/jquery.min.js"></script>
+    <script src="{{PATH_TML}}js/vue.min.js"></script>
+    <script src="{{PATH_CONFIG}}"></script>
+    <style type="text/css">
+        .wrap>ul>li.tips {
+            padding: 0;
+            text-align: center;
+            font-size: 12px;
+            color: #adadad;
+            line-height: 24px;
+        }
+
+        .join-list {
+            padding: 0 1rem;
+        }
+
+        .wl-user {
+            padding-right: 8rem;
+        }
+
+        .wl-user-avatar {
+            left: 2rem;
+        }
+    </style>
+</head>
+
+<body>
+<div id="app" class="wrap">
+    <input type="hidden" id="J_Limit" value="15">
+    <input type="hidden" id="J_AjaxListLoadUrl" value="http://h5.welian.com/event/join_list/43155?page=2">
+    <ul class="join-list J_List" v-for="user in users">
+        <li class="wl-user">
+            <figure><a :href="user.wecard"><img class="wl-user-avatar" :src="user.avatar" onerror="javascript:this.src='http://fed.welian.com/3_welian/zhangyu.png';"></a></figure>
+            <div class="wl-user-name">{{user.name}}</div>
+            <div class="wl-user-company">
+                <span>{{user.position}}</span><!--<span>风险投资</span>-->
+            </div>
+            <a :href="user.wecard" class="wl-btn wl-btn-white">+关注</a>
+        </li>
+    </ul>
+</div>
+
+<script>
+    const reqGuest = (url, data, ref) => {
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: data,
+            success: function(data) {
+                console.log(data);
+                if (data.code == 200) {
+                    data.data.list.map(x => ref.users.push(
+                            {
+                                avatar: x.avatar != null ? ApiMaterPlatQiniuDomain + x.avatar : '/common/img/vote_front_cover.png',
+                                name: x.name,
+                                position: x.position,
+//                                wecard: '/' + x.domain + '/wecard/'
+                                wecard: '#'
+                            }));
+                    if (ref.users == '') {
+                        $(".actd-users").text('暂无');
+                    }
+                }
+            }
+        })
+    }
+
+    new Vue({
+        el: '#app',
+        data: {
+            weid: window.location.pathname.split('/').pop(),
+            users: []
+        },
+        created: function () {
+            let _self = this;
+            const url_guests = apiUrl + 'activity/guest/lists';
+            reqGuest(url_guests, {activity_id: _self.weid}, _self);
+        }
+    })
+</script>
+</body>
+</html>

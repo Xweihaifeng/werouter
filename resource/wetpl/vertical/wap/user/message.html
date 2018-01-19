@@ -1,0 +1,47 @@
+<#extend#>public/domain/domain_extend.html</#extend#>
+<script type="text/javascript">
+    show.header = 'no';
+</script>
+<link rel="stylesheet" href="{{PATH_TML}}css/message.css"/>
+<div class="mes" >
+    <ul>
+        <li>
+            <span>
+                <i style="background-image: url('/common/img/我的私信@2x.png');background-color: #FFAA00;"></i>
+                <a>我的私信</a>
+            </span>
+            <!--<img class="me-right" src="img/you.png" alt="">-->
+        </li>
+        <li>
+        <li>
+            <span>
+                <i style="background-image: url('/common/img/站内通知@2x.png');background-color: #35B87F;"></i>
+                <a>站内通知</a>
+            </span>
+            <!--<img class="me-right" src="img/you.png" alt="">-->
+        </li>
+        <li>
+            <span>
+                <i style="background-image: url('/common/img/支付信息@2x.png');background-color: #5B99EE;"></i>
+                <a>支付信息</a>
+            </span>
+            <!--<img class="me-right" src="img/you.png" alt="">-->
+        </li>
+        <li>
+            <span>
+                <i style="background-image: url('/common/img/系统消息@2x.png');background-color: #F26D5F;"></i>
+                <a>系统消息</a>
+            </span>
+            <!--<img class="me-right" src="img/you.png" alt="">-->
+        </li>
+    </ul>
+</div>
+<script>
+$app.set_title('消息');
+new Vue({
+    el: '#app',
+    data: {
+    },
+    mounted: function(){}
+});
+</script>

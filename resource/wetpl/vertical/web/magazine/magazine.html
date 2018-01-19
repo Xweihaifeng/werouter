@@ -1,0 +1,188 @@
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="shortcut icon" id="favicon" href="" />
+    <link rel="stylesheet" href="{{PATH_TML}}font/iconfont.css" />
+    <link rel="stylesheet" href="{{PATH_TML}}css/public_main.css">
+    <link rel="stylesheet" href="{{PATH_TML}}css/news_base.css" />
+    <link rel="stylesheet" href="{{PATH_TML}}css/modal_login.css" />
+    <link rel="stylesheet" href="/common/magazine/css/magazine.css">
+    <link rel="stylesheet" href="/common/magazine/css/iview.css">
+    <script src="/common/magazine/js/jquery-3.2.1.min.js"></script>
+    <script src="{{PATH_CONFIG}}"></script>
+    <script src="/common/magazine/js/vue.js"></script>
+    <script src="/common/magazine/js/iview.min.js"></script>
+    <script src="/common/magazine/js/browser.min.js"></script>
+    <script src="/common/magazine/js/layui/layui.js"></script>
+    <script type="text/javascript" src="{{PATH_TML}}js/modal_login.js"></script>
+    <title></title>
+    <style>
+        ::-webkit-scrollbar { width: 0; height: 0; }
+        .dropdown-toggle, .get-check { height: 40px !important; }
+    </style>
+</head>
+<body style="width: 1190px;">
+<div id="app" style="height: 100%;overflow-y:auto;">
+    <div class="modal_login" id="modal_login"></div>
+    <ul class="news_menu" id="public_main_news_menu"></ul>
+    <div id="head"><img :src="top" alt="" width="1100"></div>
+    <div id="body">
+        <div id="nav">
+            <div class="nav">
+                <div class="zs">{{name}}</div>
+                <span class="content" @click="load('content')" style="color: #e60000">目录导航</span>
+                <span class="simple" @click="load('simple')">杂志简介</span>
+                <span class="adv" @click="load('adv')">广告刊例</span>
+                <span class="bread">您当前的位置：首页 > {{name}} > <a @click="load('content')">{{ position }}</a></span>
+            </div>
+        </div>
+        <div id="title">
+            <div class="top">本期导读</div>
+            <div class="intro">
+                <a :href="main_url" target="_blank"><img :src="main_cover" alt="" width="368" height="499"/></a>
+                <p style="padding-top: 10px;"> {{main_title}} </p>
+            </div>
+        </div>
+        <div id="content">
+            <div class="magazine" :id="data.weid" v-for="data in list">
+                <a :href="'/magazine/' + ename + '/' + data.weid" target="_blank"><img @click="read(data.weid, data.title)" :src="data.cover" alt="" width="110" height="139"/></a>
+                <p style="padding-top: 10px;"> {{data.title}} </p>
+            </div>
+        </div>
+
+        <Page :total="parseInt(total)" :current="page" :page-size="limit" @on-change="change" show-elevator style="margin-top: 10px; margin-right: 50px; float: right;"></Page>
+
+    </div>
+    <!--<div id="footer"></div>-->
+</div>
+<!-- 右侧大背景图 -->
+<div id="public_main_right_bg" style="position:fixed;top:0;bottom:0;left:1190px;width:100%;"></div>
+<script src="{{PATH_TML}}js/public_main_right_bg.js"></script>
+<script >
+
+    //init data
+    $.ajax({
+        url: apiUrl + "cms/setting/show",
+        type: "GET",
+        success: function(data){
+            $("#favicon").attr('href', ApiMaterPlatQiniuDomain + data.data.favicon);
+            $("title").text('杂志中心-' + data.data.title);
+        }
+    })
+
+    // $("#favicon").attr('href', ApiMaterPlatQiniuDomain + localStorage.getItem('fav'))
+    var ename = window.location.href.split('/').pop();
+
+    var height = $(window).height()
+    $("#body").css('min-height', height);
+    //console.log(ename)
+
+    var memPage = [''];
+    var memLargePage = [''];
+
+    localStorage.setItem("pages", '');
+    localStorage.setItem("normal", '');
+    localStorage.setItem("large", '');
+    localStorage.setItem("ename", ename);
+
+    var reqPage = function(_self, ename, flag) {
+        $.ajax({
+            url: MAGAZINE_INDEX + "?ename=" + ename + "&limit=" + _self.limit + "&page=" + _self.page,
+            type: "GET",
+            success: function(data) {
+                console.log(data.data)
+                if (data.data.magazine.background_image != null && data.data.magazine.background_image != '') {
+                    _self.top = data.data.magazine.background_image.indexOf('http://') != -1 ? data.data.magazine.background_image : ApiMaterPlatQiniuDomain + data.data.magazine.background_image;    
+                }
+                _self.name = data.data.magazine.name;
+                _self.ename = ename;
+                if (flag) {
+                    _self.main_cover = data.data.list[0].cover.indexOf('http://') != -1 ? data.data.list[0].cover : ApiMaterPlatQiniuDomain + data.data.list[0].cover;
+                    _self.main_title = data.data.list[0].title;
+                    _self.main_url = "/magazine/" + ename + "/" + data.data.list[0].weid;                    
+                }
+                if (data.data != null) {
+                    var list = data.data.list;
+                    list.map(x => {
+                        if (x.cover.indexOf('//images') != -1) {
+                            return x;
+                        } else {
+                            x.cover = ApiMaterPlatQiniuDomain + x.cover;
+                            return x;
+                        }
+                    })
+                    _self.list = list;
+                    _self.total = data.data.total;
+                }
+            },
+            error: function(xhr) {
+                console.log(xhr);
+            }
+        })
+    }
+
+    new Vue({
+        el: '#app',
+        data: {
+            main_cover: '/common/img/zuzhi-log.png',
+            main_title: '',
+            main_url: '',
+            name: '',
+            list: '',
+            total: '',
+            ename: '',
+            top: '/common/img/1506618834113.png',
+            position: '目录导航',
+            limit: 12,
+            page: 1
+        },
+        created: function () {
+            var _self = this;
+            reqPage(_self, ename, true);
+        },
+        methods: {
+            load: function(part){
+                if (part == 'content') {
+                    window.location.href = '/magazine/' + ename
+                }
+
+                if (part == 'simple') {
+                    window.location.href = '/magazine/' + ename + '/intro'
+                }
+
+                if (part == 'adv') {
+                    window.location.href = '/magazine/' + ename + '/adv'
+                }
+            },
+            read: function(weid, title) {
+                // console.log(weid)
+                $.ajax({
+                    url: MAGEZINE_IMAGES + '?weid=' + weid,
+                    type: "GET",
+                    success: function(data) {
+                        console.log(data.data);
+                        data.data.list.map(x => {
+                            x.image.indexOf('http://') != -1 ? memPage.push(x.image) : memPage.push(ApiMaterPlatQiniuDomain + x.image);
+                            x.big_image.indexOf('http://') != -1 ? memLargePage.push(x.big_image) : memLargePage.push(ApiMaterPlatQiniuDomain + x.big_image);
+                        })
+                        localStorage.setItem("mg-title", title);
+                        localStorage.setItem("pages", data.data.list.length);
+                        localStorage.setItem("normal", memPage);
+                        localStorage.setItem("large", memLargePage);
+                        // window.location.href = '/magazine/' + ename + '/' + weid;
+                    }
+                })
+            },
+            change: function(page) {
+                console.log(page)
+                _self = this;
+                _self.page = page;
+                reqPage(_self, ename, false);
+            }
+        }
+    })
+
+</script>
+</body>
+</html>

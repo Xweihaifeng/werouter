@@ -1,0 +1,302 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="apple-touch-fullscreen" content="yes">
+  <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+  <title>我的活动-微众中国</title>
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Cache-Control" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="format-detection" content="telephone=no" />
+  <link href="{{PATH_TML}}activity/css/acsharecommon.css" rel="stylesheet">
+  <link href="{{PATH_TML}}activity/css/acsharedetail.css" rel="stylesheet">
+  
+    <link rel="stylesheet" href="{{PATH_TML}}css/modal_login.css" />
+    <link rel="stylesheet" href="{{PATH_TML}}css/modal_login_m.css" />
+<script>
+  document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+    // 通过下面这个API显示右上角按钮
+    WeixinJSBridge.call('showOptionMenu');
+  });
+  </script>
+  <style type="text/css">
+  .tips {
+    font-size: 12px;
+    line-height: 12px;
+  }
+  </style>
+</head>
+
+<body>
+<!-- 登录部分 -->
+  <div class="modal_login" id="modal_login"></div>
+  <div class="wrap">
+    <!-- 通用头部 -->
+  
+     <!-- 埋点区域 -->
+    <input type="hidden" name="actId" id="actId" value="42163">
+    <input type="hidden" name="unionid" id="unionid" value="">
+    <input type="hidden" name="openid" value="">
+    <input type="hidden" name="ticket_type" value="0">
+    <input type="hidden" name="uid" value="0">
+    <input type="hidden" id="cancelJoinUrl" value="http://h5.welian.com/event/cancelJoin">
+    <!-- 活动海报及标题 -->
+    <figure class="wl-poster">
+      <div class="poster_cover">
+      <img src="">
+      </div>
+      <div class="wl-poster-title">我的活动微众中国</div>
+    </figure>
+    <!-- 活动信息 -->
+    <section class="info">
+      <!-- 活动开始时间及结束时间 -->
+      <div class="inline">
+        <i class="icon icon-time"></i>
+        <div class="control activity_time">
+
+        </div>
+       
+      </div>
+      <!-- 活动地址 -->
+      <div class="inline J_ShowMap">
+        <i class="icon icon-marker"></i>
+        <div class="control city">西安丈八一路</div>
+        <div class="arraw arraw-right"></div>
+      </div>
+      <!-- 活动报名信息 -->
+      <!-- <a class="inline" href="http://h5.welian.com/event/join_list/42163">
+                <i class="icon icon-group"></i>
+                <div class="control">
+                                        <span>已报名<label class="word-blue">2</label>人<span> / </span>限额
+                    <label class="word-blue">100</label>人</span>
+                                    </div>
+                <div class="arraw arraw-right"></div>
+            </a> -->
+            <!-- 活动主办方信息 -->
+      <div class="inline">
+        <i class="icon icon-sponor"></i>
+        <div class="control sponsor_p">
+          <label>主办方：</label>
+           
+        </div>
+      </div>
+          </section>
+    <!-- 报名列表 -->
+    <a class="record" >
+      <div class="split"></div>
+      <h4>已报名<strong class="word-blue">2</strong>人/限额 <span class="enroll_limit">100</span> 人</h4>       <div class="record-list">
+        <ul>
+          <div style="padding:8px;">暂无报名</div>          
+        </ul>
+      </div>
+          </a>
+        <!--活动嘉宾-->
+    <section class="guest">
+      <div class="split"></div>
+      <h4>嘉宾</h4>
+      <ul>
+          <div style="padding:10px;">暂无嘉宾</div>
+        
+      </ul>
+    </section>
+        <!-- 活动详情 -->
+    <section class="introduce">
+      <div class="split"></div>
+      <h4>活动详情</h4>
+      <article class="detail js-detail">
+        <p>活动详情</p>
+      </article>
+    </section>
+    <!--广告插入-->
+                   <!--广告插入-->
+       <!-- <a onclick="javascript:(void)" id="ad" class="wl-ad" data-href="http://www.welian.com/jump/index/flyer_ad9" data-id="11215165">
+          <img src="http://image.welian.com/kgmc1496835568232_690_240_136.png">
+       </a> -->
+       
+         <!-- 主办方相关活动 -->
+        <section class="sponor-another-activity">
+      <div class="split"></div>
+      
+    </section>
+        <!-- 创建活动提示 -->
+    <!-- <section class="copyright">创建活动，请登录.com</section> -->
+  </div>
+  <!-- 分辨率大于1024px，显示二维码 -->
+  <section class="qrcode">
+  <img src="" width="200" height="200">
+    <div class="text">微信扫一扫报名</div>
+  </section>
+  <!-- 活动报名按钮 -->
+  <aside class="wl-fixed-button J_BtnActivity">
+        <button class="wl-btn wl-btn-blue J_BtnSureBuyTicket">立即报名</button>
+      </aside>
+  <!-- 活动门票列表 -->
+    <!-- 通用背景蒙层 -->
+  <form class="hide" name="entry" method="post" action="http://h5.welian.com/event/order">
+    <input id="J_FormData" name="json">
+    <input name="active_id" value="NDIxNjM=">
+  </form>
+  <aside class="backdrop fade"></aside>
+</body>
+<script src="//res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script charset="utf-8" type="text/javascript" src="/common/js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="/common/layer-v3.0.3/layer-v3.0.3/layer/layer.js"></script>
+
+
+<!-- <script src="http://g.welian.com/common/plugins/jquery.lazyload.js?v=2.9.14.12"></script> -->
+<!-- <script src="http://g.welian.com/h5/common/sea.js?v=2.9.14.12"></script>
+<script src="http://g.welian.com/h5/common/config.js?v=2.9.14.12"></script> -->
+
+<!-- <script src="/activity/js/sea.js"></script>
+<script src="/activity/js/seacon.js"></script> -->
+<script>
+//详情页初始化
+/*seajs.use(['common', 'detail'], function(common, detail) {
+  //初始化
+  detail.init();
+});*/
+/*$('.J_ShowMap').on('click', function() {
+  var address = $('.J_ShowMap').find('.control').text();
+  location.href = 'http://api.map.baidu.com/geocoder?address=' + address + '&output=html&src=welian';
+});*/
+
+</script>
+<script type="text/javascript">
+/*$(function(){
+  $('#ad').click(function(){
+      var id = $(this).data('id');
+      var href = $(this).data('href');
+      $.post('http://h5.welian.com/base/setAdContentClick',{
+        ad_user_log_id:id
+      },function(data){
+          if(data.state==1000){
+              window.location.href=href;
+          }else{
+             window.location.href=href;
+          }
+      });
+  });
+});*/
+
+/*var city = '西安',
+  lat = '34.261167', // 纬度
+  lng = '109.000913'; // 经度
+//微信分享配置
+wx.config({
+  debug: false,
+  appId: 'wx6ee8329b57360da1',
+  timestamp: '1506057220',
+  nonceStr: 'Vp0RrYN0hdocDRs5',
+  signature: '5183e672c8ea5e3223caf2f3dbeabfa0e6998d7f',
+  jsApiList: [
+    'onMenuShareAppMessage',
+    'onMenuShareTimeline',
+    'closeWindow',
+    'openLocation'
+  ]
+});
+
+//调用jssdk
+wx.ready(function() {
+  wx.checkJsApi({
+    jsApiList: [
+      'onMenuShareAppMessage'
+    ]
+  });
+
+    //监听“分享给朋友”，按钮点击、自定义分享内容及分享结果接口
+    wx.onMenuShareAppMessage({
+      title: '我的活动微众中国',
+      desc: '西安·09月21日 (周四)\n敬业路',
+      link: location.href,
+      imgUrl: 'http://image.welian.com/eafq1442457836575_750_558_282.jpg@200w_200h_1e_1c',
+      trigger: function(res) {},
+      success: function(res) {},
+      cancel: function(res) {},
+      fail: function(res) {}
+    });
+    //监听“分享到朋友圈”按钮点击、自定义分享内容及分享结果接口
+    wx.onMenuShareTimeline({
+      title: '我的活动微众中国',
+      link: location.href,
+      imgUrl: 'http://image.welian.com/eafq1442457836575_750_558_282.jpg@200w_200h_1e_1c',
+      trigger: function(res) {},
+      success: function(res) {},
+      cancel: function(res) {},
+      fail: function(res) {}
+    });
+
+
+    //百度转腾讯
+    // $('.J_ShowMap').on('click', function() {
+    //     var address = $('.J_ShowMap').find('.control').text();
+    //     if (!qq.maps) {
+    //       alert('腾讯地图API加载失败');
+    //       return false;
+    //     }
+    //     if (!lng || !lat) {
+    //       alert('无法解析定位地址。');
+    //       return false;
+    //     }
+    //     qq.maps.convertor.translate(new qq.maps.LatLng(lat, lng), 3, function(data) {
+    //       // callback && callback(result);
+    //         latlng = data[0];
+    //         wx.openLocation({
+    //           latitude: latlng.lat, // 纬度，浮点数，范围为90 ~ -90
+    //           longitude: latlng.lng, // 经度，浮点数，范围为180 ~ -180。
+    //           name: address, // 位置名
+    //           address: address, // 地址详情说明
+    //           scale: 18, // 地图缩放级别,整形值,范围从1~28。默认为最大
+    //           infoUrl: '' // 在查看位置界面底部显示的超链接,可点击跳转
+    //         });
+    //     });
+    // });
+
+  //关闭网页
+  var aid = 'NDIxNjM=';
+  if (!aid) {
+    wx.closeWindow();
+  }
+});*/
+
+
+//取消报名
+function cancelJoin(aid) {
+  if (confirm("确定取消报名吗？")) {
+    var url = $('#cancelJoinUrl').val();
+    var unionid = $('#unionid').val();
+    $.ajax({
+      type: 'post',
+      url: url,
+      data: ({
+        'aid': aid,
+        'unionid': unionid
+      }),
+      success: function(data) {
+        if (data) {
+          window.location.href = window.location.href;
+        } else {
+          alert('取消失败');
+        }
+      }
+    });
+  }
+}
+</script>
+     <script src="{{PATH_CONFIG}}"></script>
+    <script src="/common/js/swiper-3.3.1.min.js"></script>
+    <!-- <script src="{{PATH_TML}}js/modal_login.js"></script> -->
+    <script src="{{PATH_TML}}js/modal_login_m.js"></script>
+
+    
+    <script src="/common/js/buttons.js"></script>
+
+    <script src="/common/js/control.js"></script>
+    
+    <script src="{{PATH_TML}}activity/js/activitydetail_share.js"></script>
+
+</html>

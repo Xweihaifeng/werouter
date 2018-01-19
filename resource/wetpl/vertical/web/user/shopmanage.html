@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+
+	<head lang="en">
+		<meta charset="UTF-8">
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+		<link rel="shortcut icon" id="favicon" href="" />
+		<link rel="stylesheet" href="/common/css/bootstrap.min.css">
+		<!-- <link rel="stylesheet" type="text/css" href="/common/css/bootstrap-datetimepicker.min.css"> -->
+		<link rel="stylesheet" href="/common/css/main.css">
+		<link rel="stylesheet" href="/common/css/buttons.css">
+		<script src="/common/js/jquery-3.2.1.min.js"></script>
+		<script src="{{PATH_TML}}user/common/js/loading.js"></script>
+		<script type="text/javascript" src="/common/js/bootstrap.min.js"></script>
+		<script src="/common/js/browser.min.js"></script>
+		<link rel="stylesheet" href="{{PATH_TML}}user/css/manage.css">
+		<!-- <link rel="stylesheet" type="text/css" href="css/order.css"> -->
+		<link rel="stylesheet" type="text/css" href="{{PATH_TML}}user/css/mall_manage.css">
+		<script src="/common/js/plupload/plupload.full.min.js"></script>
+		<script src="{{PATH_CONFIG}}"></script>
+		<script src="/common/js/control.js"></script>
+		<script src="{{PATH_TML}}user/js/common.js"></script>
+		<script src="/common/js/swiper-3.3.1.min.js"></script>
+		<script src="/common/js/buttons.js"></script>
+		<!-- <script src="/common/js/ckeditor/ckeditor.js"></script> -->
+		<script src="/common/js/qiniu.js"></script>
+		<script src="{{PATH_TML}}user/common/js/generate_manage.js"></script>
+		<script type="text/javascript" src="{{PATH_TML}}user/js/shopmanage.js"></script>
+		<title>商品管理</title>
+		<style type="text/css">
+			#pub-shopping-manage {
+				color: red;
+				background: #f7f7f7;
+			}
+
+			.we-cont .active>div {
+				color: red;
+				background: #f7f7f7;
+			}
+		</style>
+		<script>
+			window.csrf = {
+				"csrfToken": "Dj5Ez1yA4Dfow8SiFuMpYl2xDURwMjBMHWpHm4Kt"
+			}
+		</script>
+		<script>
+			window.Laravel = {
+				"csrfToken": "Dj5Ez1yA4Dfow8SiFuMpYl2xDURwMjBMHWpHm4Kt"
+			}
+		</script>
+	</head>
+
+	<body style="width: 100%; background: #F7F6F2;">
+		<div class="login">
+			<div class="left-nav">
+	            
+	        </div>
+			<div id="top">
+		        
+		    </div>
+		    <div id="middle">
+        
+			</div>
+
+			<div id="right" style="display: none;">
+				<div class="we-release">
+					<!-- <div class="we-art-nav">
+						<ol class="breadcrumb" style="height: 44px; line-height: 30px; font-size: 15px; cursor: pointer;">
+							<li class="homepage">
+								<a>我的商城</a>
+							</li>
+							<li class="back">
+								<a>编辑</a>
+							</li>
+							<li class="active">订单管理</li>
+						</ol>
+					</div> -->
+					<div class="order-table">
+
+						<div class="use-right">
+							<div class="list_title clearfix">
+					            <div class="cur">
+					                <span>商品管理</span>
+					            </div>
+					        </div>
+					        <div class="product_manage_box">
+					            <div class="manage_tit">
+					                <ul class="clearfloat nav-filter clearfix">
+				                        <li class="current" data-id="0">
+				                            <a href="javascript:;" title="" data-nav="1" class="filter-btn">全部</a>
+				                        </li>
+				                        <li data-id="1">
+				                            <a href="javascript:;" title="" data-nav="2" class="filter-btn">出售中</a>
+				                        </li>
+
+				                        <li data-id="3">
+				                            <a href="javascript:;" title="" data-nav="3" class="filter-btn">已售完</a>
+				                        </li>
+
+				                        <li data-id="2">
+				                            <a href="javascript:;" title="" data-nav="4" class="filter-btn">已下架</a>
+				                        </li>
+				                    </ul>
+					                <a href="/user/admin/wemall/goods/add" title="" class="new_pro">添加商品</a>
+					                <div class="list_screen">
+					                    <select class="filter-category">
+					                        <option value="0">全部</option>
+					                    </select>
+					                </div>
+					            </div>
+					            <div class="pro_operate clearfloat">
+					                <label>
+					                    <input type="checkbox" name="" value="" id="choose_all">全选</label>
+					                <ul>
+					                    <li>
+					                        <a class="cmd-btn offline" data-id="1" data-mutil="1" href="javascript:;" title="" data-key="online">批量上架</a>
+					                    </li>
+					                    <li>
+					                        <a class="cmd-btn offline" data-id="2" data-mutil="1" href="javascript:;" title="" data-key="offline">批量下架</a>
+					                    </li>
+					                    <li>
+					                        <a class="cmd-btn del" data-mutil="1" href="javascript:;" title="" data-key="del">批量删除</a>
+					                    </li>
+					                </ul>
+					            </div>
+					            <ul class="pro_tit clearfloat">
+					                <li class="tit_pro">商品</li>
+					                <li class="tit_pri">价格(元)</li>
+					                <li class="tit_sell">销量</li>
+					                <li class="tit_inventory">库存</li>
+					                <li class="tit_sort">分类</li>
+					                <li class="tit_order">排序</li>
+					                <li class="tit_operate">操作</li>
+					            </ul>
+					            <ul class="pro_list">
+                                    <!-- <li class="clearfloat" style="text-align: center;line-height: 136px;">
+				                        暂时没有符合条件的商品
+				                    </li> -->
+	                            </ul>
+
+	                            <ul class="pagination">
+									<!-- <li  id="prev"><a href="javascript:void(0);">&laquo;</a></li>
+									<li class="active"><span>1</span></li> -->
+
+								</ul>
+					        </div>
+						</div>
+
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</body>
+
+</html>
+<!-- 加载编辑器的容器 -->
+<!-- 实例化编辑器 -->
+<script type="text/javascript">
+	$(function() {
+		/*$(".form_datetime").datetimepicker({
+			format: 'yyyy-mm-dd hh:ii'
+		});*/
+	})
+
+	var currWidth = $(window).height() - 90;
+	var currHeight = $(window).height() - 90;
+	setHeight(currHeight + 90);
+	$("#middle, #right").height(currHeight);
+
+	$(window).resize(function() {
+		currWidth = $(window).height() - 90;
+		currHeight = $(window).height() - 90;
+		setHeight(currHeight + 90);
+		$("#middle, #right").height(currHeight);
+	})
+
+	$("#add").hover(function() {
+		$(".add").show();
+	}, function() {
+		$(".add").hide();
+	})
+
+	$("#avatar, #dropdown").hover(function() {
+		$(".avatar").show();
+	}, function() {
+		$(".avatar").hide();
+	})
+
+	$("#avatar-logout span").click(function() {
+		localStorage.removeItem('token');
+		localStorage.removeItem('weid');
+	})
+
+</script>

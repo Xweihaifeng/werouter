@@ -1,0 +1,553 @@
+<html><head>
+    <meta charset="utf-8">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <title></title>
+    <link rel="shortcut icon" id="favicon" href="" />
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta name="format-detection" content="telephone=no">
+    <link href="{{PATH_TML}}activity/css/common.css" rel="stylesheet">
+    <link href="{{PATH_TML}}activity/css/detail.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{PATH_TML}}css/activity-detail.css"/>
+    <!--<link rel="stylesheet" href="/common/layui/css/layui.css"/>
+    <script src="/common/layui/layui.js"></script>-->
+    <style>
+        [v-cloak] {
+            display: none !important;
+        }
+        .layui-layer-msg {
+            width: auto!important;
+        }
+    </style>
+</head>
+
+<body class="animsition">
+<div id="app" v-cloak>
+    <div class="wrap">
+        <!-- 活动海报及标题 -->
+        <figure class="wl-poster">
+            <img :src="cover" style="opacity: 1;">
+            <div class="wl-poster-title">
+                <span :style="{'background': 'url(' + img + ') no-repeat center'}" @click="like(collect)"></span>
+                <span>{{title}}</span>
+            </div>
+        </figure>
+        <!-- 活动信息 -->
+        <section class="info">
+            <!-- 活动开始时间及结束时间 -->
+            <div class="inline">
+                <i class="icon icon-time"></i>
+                <div class="control">
+                    <span>{{date.start}}</span> <span>{{date.sday}}</span> <span>{{date.stime}} ~ {{date.end}}</span> <span>{{date.eday}}</span> <span>{{date.etime}}</span>
+                </div>
+            </div>
+            <!-- 活动地址 -->
+            <div class="inline J_ShowMap" style="cursor: pointer;">
+                <i class="icon icon-marker"></i>
+                <div class="control"><a :href="map+'?'+address">{{address}}</a></div>
+                <div class="arraw arraw-right"></div>
+            </div>
+            <!-- 活动主办方信息 -->
+            <div class="inline">
+                <i class="icon icon-sponor"></i>
+                <div class="control">
+                    <label>主办方：</label>
+                    <a href="javascript:void(0);" class="sponor" v-for="i in sponsor">{{i}}</a>
+                </div>
+            </div>
+        </section>
+        <!-- 报名列表 -->
+        <a class="record" href="javascript:void(0);">
+            <div class="split"></div>
+            <h4>已报名<strong class="word-blue">{{users.length}}</strong>人{{limit}}</h4>
+            <div class="record-list" v-if="hasUser">
+                <ul>
+                    <li v-for="i in users"><img :src="i.avatar" @click="detail('users')" width="25" height="25"></li>
+                </ul>
+            </div>
+        </a>
+        <!-- 活动嘉宾 -->
+        <a class="record" href="javascript:void(0);">
+            <div class="split"></div>
+            <h4>活动嘉宾</h4>
+            <div class="record-list" v-if="hasGuest">
+                <ul>
+                    <li v-for="i in guests"><img :src="i.avatar" @click="detail('guests')" width="25" height="25"></li>
+                </ul>
+            </div>
+        </a>
+        <!-- 活动详情 -->
+        <section class="introduce">
+            <div class="split"></div>
+            <h4>活动详情</h4>
+            <article class="detail js-detail" v-html="content"></article>
+        </section>
+    </div>
+    <!-- 活动报名按钮 -->
+    <aside class="wl-fixed-button J_BtnActivity">
+        <button class="wl-btn J_BtnBuyTicket" style="background: transparent; border: none;" @click="apply(type)">{{state}}</button>
+    </aside>
+    <!-- 活动门票列表 -->
+    <aside class="wl-layout J_LayoutTicket">
+        <div class="tk-list-title">请选择门票</div>
+        <div class="tk-list-content">
+            <ul>
+                <li class="ticket" v-for="i in tickets" :id="i.weid">
+                    <div class="ticket-card">
+                        <div class="info">
+                            <div class="tk-name">{{i.name}}</div>
+                            <div class="tk-intro">{{i.description}}</div>
+                        </div>
+                        <div class="tk-all-price"><span class="tk-price">¥{{i.price}}</span></div>
+                    </div>
+                    <div class="price">
+                        <div class="tk-remind">剩余<span class="word-blue">{{i.total_num - i.sold_num}}</span>张</div>
+                    </div>
+                    <!--可购买-->
+                    <div class="operate" :data-remind="i.total_num - i.sold_num">
+                        <div class="J_NumMinus"><span class="minus" @click="minus(i)"></span></div>
+                        <div class="J_Num">{{i.num}}</div>
+                        <div class="J_NumPlus"><span class="plus" @click="plus(i)"></span></div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="wl-fixed-button">
+            <button class="wl-btn wl-btn-blue J_BtnSureBuyTicket">我要购票</button>
+        </div>
+    </aside>
+    <!-- 通用背景蒙层 -->
+    <form class="hide" name="entry" method="post" :action="order">
+        <input id="J_FormData" name="json">
+        <!--<input name="active_id" value="eyJhaWQiOjQ2MzczfQ==">-->
+    </form>
+    <aside class="backdrop fade"></aside>
+</div>
+<#include#>public/common/public.html</#include#>
+<#include#>public/common/mobile_login.html</#include#>
+<!--<script src="//res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>-->
+<script src="{{PATH_TML}}activity/js/vue.min.js"></script>
+<script src="{{PATH_TML}}activity/js/jquery.min.js"></script>
+<script src="{{PATH_TML}}activity/js/jquery.lazyload.js"></script>
+<script type="text/javascript" src="{{PATH_CONFIG}}"></script>
+<script src="{{PATH_TML}}activity/js/sea.js"></script>
+<script src="{{PATH_TML}}activity/js/config.js"></script>
+<link rel="stylesheet" href="/common/jquery.animsition/css/animsition.min.css">
+<script src="/common/jquery.animsition/js/jquery.animsition.min.js"></script>
+<style>
+    #login_vue {
+        width: 320px!important;
+        height: 206px!important;
+        border-radius: 6px!important;
+        background-color: #ecf0f3!important;
+        padding-top: 1px!important;
+    }
+    #login-info {
+        margin: 15px 27.5px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    #login-info ul {
+        width: 100%;
+    }
+    #phonenum, #checknum, #forget {
+        position: relative;
+        width: 100%;
+        height: 49px;
+        border-bottom: 1px solid #eeeeee;
+        color: #25c3fe;
+        display: flex;
+        align-items: center;
+    }
+    #phonenum input {
+        width: 100%;
+        height: 40px;
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
+        border-radius: 4px;
+        padding-left: 8px;
+        border: none;
+        outline: none;
+        color: #999999;
+        margin-top: 30px;
+        font-size: 16px;
+    }
+    #checknum input {
+        width: 52%;
+        height: 40px;
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
+        border-radius: 4px;
+        border: none;
+        outline: none;
+        color: #999999;
+        padding-left: 8px;
+        font-size: 16px;
+    }
+    #checknum span {
+        display: inline-block;
+        height: 39px;
+        line-height: 39.6px;
+        background-color: #ff605d;
+        color: #fff;
+        font-size: 14px;
+        width: 44%;
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
+        border-radius: 4px;
+        text-align: center;
+    }
+    #checknum {
+        justify-content: space-between;
+        margin-top: 20px;
+    }
+    .layui-layer-btn0 {
+        width: 83% !important;
+        height: 40px !important;
+        line-height: 40px !important;
+        background: #24c3fb !important;
+        color: #fff !important;
+        -webkit-border-radius: 4px !important;
+        -moz-border-radius: 4px !important;
+        border-radius: 4px !important;
+        font-size: 14px !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        box-sizing: border-box !important;
+        display: block;
+        margin-left: 27px !important;
+    }
+    .layui-m-layermain .layui-m-layersection {
+        text-align: none;
+    }
+    .layui-m-layer0 .layui-m-layerchild {
+        width: auto!important;
+    }
+</style>
+<script>
+    //详情页初始化
+    seajs.use(['common', 'detail'], function(common, detail) {
+        //初始化
+        detail.init();
+    });
+
+    $(".animsition").animsition({
+        inClass               :   'fade-in',
+        outClass              :   'fade-out',
+        inDuration            :    300,
+        outDuration           :    300,
+        linkElement           :   '.animsition-link',
+        // e.g. linkElement   :   'a:not([target="_blank"]):not([href^=#])'
+        loading               :    true,
+        loadingParentElement  :   'body', //animsition wrapper element
+        loadingClass          :   'animsition-loading',
+        unSupportCss          : [ 'animation-duration',
+            '-webkit-animation-duration',
+            '-o-animation-duration'
+        ],
+        //"unSupportCss" option allows you to disable the "animsition" in case the css property in the array is not supported by your browser.
+        //The default setting is to disable the "animsition" in a browser that does not support "animation-duration".
+        overlay               :   false,
+        overlayClass          :   'animsition-overlay-slide',
+        overlayParentElement  :   'body'
+    });
+
+    const userDetail = (weid, ref) => {
+        $.ajax({
+            url:  apiUrl + 'activity/enroll_my_order',
+            type: 'POST',
+            headers: {
+                'Token': docCookies.getItem("token")
+            },
+            data: {
+                activity_id: weid
+            },
+            success: function(data) {
+                //console.log(data);
+                if (data.code == 200) {
+                    switch (data.data.status) {
+                        case 1: ref.state = '立即报名';
+                            $(".J_BtnBuyTicket").css({'background': '#04a6e9', 'box-shadow': '5px 5px 15px 0 #04a6e9', 'border': '1px solid #04a6e9'});
+                            break;
+                        case 2: ref.state = '立即支付';
+                            $(".J_BtnBuyTicket").css({'background': '#ff7105', 'box-shadow': '5px 5px 15px 0 #ff7105', 'border': '1px solid #ff7105'});
+                            break;
+                        case 3: ref.state = '查看门票';
+                            $(".J_BtnBuyTicket").css({'background': '#FEC52B', 'box-shadow': '5px 5px 15px 0 #FEC52B', 'border': '1px solid #FEC52B'});
+                            break;
+                        default: break;
+                    }
+                    if (data.data.status == 2) {
+                        sessionStorage.setItem('activity_orderId', data.data.number);
+                        sessionStorage.setItem('activity_total', data.data.money);
+                        sessionStorage.setItem('enroll_id', data.data.enroll_id);
+                    }
+                    if (data.data.status == 3) {
+                        sessionStorage.setItem('enroll_id', data.data.enroll_id);
+                    }
+                } else {
+                    ref.state = '立即登录';
+                    $(".J_BtnBuyTicket").css({'background': '#04a6e9', 'box-shadow': '5px 5px 15px 0 #04a6e9', 'border': '1px solid #04a6e9'});
+                }
+            }
+
+        })
+    }
+
+    const reqData = (url, ref) => {
+        $.ajax({
+            url: url,
+            type: 'GET',
+            success: function(data) {
+                //console.log(data)
+                sessionStorage.setItem('activity_info', JSON.stringify(data));
+                if (data.code == 200) {
+                    let p = data.data;
+                    if (p.type == 1) { //免费
+                        $(".J_LayoutTicket, .backdrop").addClass('hide');
+                        ref.limit = '/限额 ' + p.enroll_limit + ' 人';
+                    }
+                    ref.type = p.type;
+                    ref.title = p.title;
+                    ref.cover = ApiMaterPlatQiniuDomain + p.cover;
+                    ref.sponsor = p.Sponsor.split(',');
+                    ref.content = p.content;
+                    ref.address = p.area_name + p.address;
+                    ref.date.start = p.begain_time.split(' ')[0].replace(/-/g, '/');
+                    ref.date.end = p.enroll_deadline.split(' ')[0].replace(/-/g, '/');
+                    ref.date.sday = p.begain_week;
+                    ref.date.eday = p.end_week;
+                    ref.date.stime = p.begain_time.split(' ')[1];
+                    ref.date.etime = p.enroll_deadline.split(' ')[1];
+                    ref.order += ref.weid;
+                    $("title").text(ref.title);
+                    $("#favicon").attr('href', ApiMaterPlatQiniuDomain + plats_info.logo);
+                    if (is_wx == 'yes') {
+                        $wx.share({title: ref.title, imgUrl: ref.cover, link: window.location.href, desc: ''})
+                    }
+                }
+            }
+        })
+    }
+
+    const reqUsers = (url, data, ref) => {
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: data,
+            success: function(data) {
+                //console.log(data);
+                if (data.code == 200) {
+                    data.data.list.map(x => ref.users.push(
+                            {
+                                avatar: x.avatar != null ? ApiMaterPlatQiniuDomain + x.avatar : '/common/img/vote_front_cover.png',
+                            }));
+                    if (ref.users != '') {
+                        ref.hasUser = true;
+                    }
+                }
+            }
+        })
+    }
+
+    const reqGuest = (url, data, ref) => {
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: data,
+            success: function(data) {
+                //console.log(data);
+                if (data.code == 200) {
+                    data.data.list.map(x => ref.guests.push(
+                            {
+                                avatar: x.avatar != null ? ApiMaterPlatQiniuDomain + x.avatar : '/common/img/vote_front_cover.png',
+                                name: x.name,
+                                position: x.position,
+                            }));
+                    if (ref.guests != '') {
+                        ref.hasGuest = true;
+                        //ref.guests.push({avatar: '', name: '', position: ''})
+                    }
+                }
+            }
+        })
+    }
+
+    //门票信息
+    const reqTickets = (weid, ref) => {
+        $.ajax({
+            url: apiUrl + 'activity/tickets?activity_id=' + weid,
+            type: 'GET',
+            success: function(data) {
+                //console.log(data);
+                if (data.code == 200) {
+                    if (data.data[0].type == 1) { //免费
+                        sessionStorage.setItem('tickets', JSON.stringify(data.data.map(x => (x.num = 1, x.type = 1, x))));
+                    } else {
+                        ref.tickets = data.data.map(x => (x.num = 0, x.type = 2, x));
+                    }
+                }
+            }
+        })
+    }
+
+    new Vue({
+        el: "#app",
+        data: {
+            title: "",
+            cover: "",
+            weid: window.location.pathname.split('/').pop(),
+            state: '立即报名',
+            date: {
+                start: "",
+                end: "",
+                sday: "",
+                eday: "",
+                stime: "",
+                etime: ""
+            },
+            address: "",
+            map: "/activity/map/",
+            sponsor: [],
+            token: docCookies.getItem('token'),
+            phone: docCookies.getItem('phone'),
+            users: [],
+            guests: [],
+            hasUser: false,
+            hasGuest: false,
+            content: '',
+            tickets: [],
+            limit: '',
+            order: "/activity/order/",
+            type: '', //1:免费 2:收费,
+            collect: false,
+            img: '/common/img/star-off-big.png'
+        },
+        created: function(){
+            let removeItems = ['activity_info', 'tickets', 'enroll_id', 'activity_orderId', 'activity_total'];
+            removeItems.map(e => sessionStorage.removeItem(e))
+            let _self = this;
+            const url_info = apiUrl + 'activity/detail/' + _self.weid;
+            const url_users = apiUrl + 'activity/enroll/lists';
+            const url_guests = apiUrl + 'activity/guest/lists';
+            _self.map += _self.weid;
+            reqData(url_info, _self);
+            reqUsers(url_users, {activity_id: _self.weid}, _self);
+            reqGuest(url_guests, {activity_id: _self.weid}, _self);
+            userDetail(_self.weid, _self);
+            reqTickets(_self.weid, _self);
+            new Promise(resolve => {
+                $.ajax({
+                    url: ACTIVITY_COLLECTION_ISCOLLECTION, //关注状态
+                    type: 'POST',
+                    data: { user_id: plats_user_info.weid, activity_id: this.weid },
+                    headers: {
+                        'Token': docCookies.getItem("token")
+                    },
+                    success: function(data) {
+                        //console.log(data);
+                        if (data.code == 200) {
+                            resolve(1);
+                        }
+                    },
+                    error: function(xhr) {
+                        console.log(xhr);
+                    }
+                })
+            }).then(data => {
+                this.collect = true;
+                this.img = '/common/img/star-on-big.png';
+            })
+        },
+        methods: {
+            apply: function(){
+                switch(this.state) {
+                    case '立即报名': if (this.type == 1) {
+                        window.location.href = '/activity/order/' + this.weid;
+                    }; break;
+                    case '立即支付': $(".J_LayoutTicket, .backdrop").addClass('hide');
+                        window.location.href = '/pay/shopping?order_type=activity&store_num=' + sessionStorage.getItem('activity_orderId');
+                        break;
+                    case '查看门票': $(".J_LayoutTicket, .backdrop").addClass('hide');
+                        window.location.href = '/user/myactivity/support/ticket/';
+                        break;
+                    case '立即登录': $(".J_LayoutTicket, .backdrop").addClass('hide');
+                        mb_login(window.location.href);
+                        break;
+                }
+            },
+            detail: function(type){
+                switch(type) {
+                    case 'users': window.location.href = '/activity/users/' + this.weid; break;
+                    case 'guests': window.location.href = '/activity/guests/' + this.weid; break;
+                    default: break;
+                }
+            },
+            minus: function(ref){
+                if (ref.num <= 0) {
+                    layer.msg('票数不能少于0张', {
+                        time: 1000
+                    })
+                } else {
+                    ref.num--;
+                    sessionStorage.setItem('tickets', JSON.stringify(this.tickets));
+                }
+            },
+            plus: function(ref){
+                if (ref.num >= ref.total_num - ref.sold_num) {
+                    layer.msg('没有余票了', {
+                        time: 1000
+                    })
+                } else {
+                    ref.num++;
+                    sessionStorage.setItem('tickets', JSON.stringify(this.tickets));
+                }
+            },
+            coll: function(){
+                return new Promise(resolve => {
+                    $.ajax({
+                        url: apiUrl + "activity/collection/collection_or_cancel",
+                        type: "POST",
+                        headers: {
+                            'Token': docCookies.getItem("token")
+                        },
+                        data: {activity_id: this.weid},
+                        success: function (data) {
+                            resolve(data)
+                        }
+                    })
+                })
+            },
+            like: function(collect){
+                var self = this;
+                if (collect) {
+                    this.coll().then(data => {
+                        //console.log(data);
+                        self.collect = false;
+                        self.img = '/common/img/star-off-big.png';
+                        /*layui.use('layer', function() {
+                            var $ = layui.jquery, layer = layui.layer;
+                            layer.msg("取消收藏", { time: 100000 })
+                        })*/
+                    })
+                } else {
+                    this.coll().then(data => {
+                        //console.log(data)
+                        self.collect = true;
+                        self.img = '/common/img/star-on-big.png';
+                        /*layui.use('layer', function() {
+                            var $ = layui.jquery, layer = layui.layer;
+                            layer.msg("收藏成功", { time: 100000 })
+                        })*/
+                    })
+                }
+            }
+        }
+    })
+</script>
+</body>
+</html>

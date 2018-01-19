@@ -1,0 +1,41 @@
+<#extend#>public/domain/domain_extend.html</#extend#>
+<link rel="stylesheet" href="{{PATH_TML}}css/myBag.css">
+<script type="text/javascript">
+    show.header = 'no';
+</script>
+<div class="page">
+    <div class="header">
+        <div class="back" @click="window.location.href='/user'"></div>
+        <h3>我的钱包</h3>
+    </div>
+    <div class="page-con">
+        <div class="photo">
+            <div class="img">
+                <div class="yu">
+                    <div class="balance">
+                        余额（元）¥<span>232.95</span>
+                    </div>
+                    <div class="chengyi">
+                        诚意金（元）¥<span>0.00</span>
+                    </div>
+                    <div class="tixian"><a href="">提现</a></div>
+                </div>
+            </div>
+        </div>
+        <div class="caozuo">
+            <div class="c-bottom">
+                <div class="chongzhi"><a href="">充值</a></div>
+                <div class="jiaoyi"><a href="">交易记录</a></div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $app.set_title('我的钱包');
+    new Vue({
+        el: '#app',
+        data: {
+        },
+        mounted: function(){}
+    });
+</script>

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+    <head lang="en">
+        <meta charset="UTF-8">
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+	<!-- <link rel="shortcut icon" id="favicon" href="" /> -->
+<!-- <base href="http://g.welian.com/my/"> -->
+<link rel="stylesheet" type="text/css" href="{{PATH_TML}}user/css/active - common.css">
+<link rel="stylesheet" type="text/css" href="{{PATH_TML}}user/css/active - font-min.css">
+<!-- <link rel="shortcut icon" href="http://my.welian.com/welian.png"> -->
+<!-- <script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/jquery.noty.min.js"></script>
+ -->
+
+
+	<script charset="utf-8" type="text/javascript" src="/common/js/jquery-3.2.1.min.js"></script>
+		<script charset="utf-8" type="text/javascript" src="/common/js/swiper-3.3.1.min.js"></script>
+        <script charset="utf-8" type="text/javascript" src="/common/layer-v3.0.3/layer-v3.0.3/layer/layer.js"></script>
+        <script charset="utf-8" type="text/javascript" src="{{PATH_CONFIG}}"></script>
+
+        <script charset="utf-8" type="text/javascript" src="/common/js/control.js"></script>
+
+        <script charset="utf-8" type="text/javascript"  src="{{PATH_TML}}user/js/common.js"></script>
+
+
+		<script charset="utf-8" type="text/javascript" src="/common/js/browser.min.js"></script>
+		<script charset="utf-8" type="text/javascript" src="/common/js/jquery.imagecompress.js"></script>
+		<script charset="utf-8" type="text/javascript" src="/common/js/buttons.js"></script>
+		<script src="{{PATH_TML}}user/common/js/generate_manage.js"></script>
+
+		<!-- <link rel="stylesheet" type="text/css" href="/common/css/main.css"> -->
+    <link rel="stylesheet" href="/common/css/main.css">
+
+		<link rel="stylesheet" type="text/css" href="/common/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="/common/css/buttons.css">
+		<link rel="stylesheet" type="text/css" href="/common/css/swiper.min.css">
+        <link rel="stylesheet" type="text/css" href="{{PATH_TML}}user/css/active.css">
+		<link rel="stylesheet" type="text/css" href="{{PATH_TML}}user/css/projectOrder.css">
+     <title>订单管理详情</title>
+       <style type="text/css">
+
+
+            #activity-list {
+                color: red;
+                background: #f7f7f7;
+            }
+            .we-active{display:block;}
+
+            .we-cont .active>div {
+                color: red;
+                background: #f7f7f7;
+            }
+            .star{    color: #ff0000;    margin-right: 3px;    position: relative;    top: 3px;}
+            .info{height:auto;}
+            .cancel{float:none;}
+
+        </style>
+
+
+
+</head>
+
+<body style="width: 100%; background: #F7F6F2;">
+   	<div class="login">
+        <div class="left-nav">
+            
+        </div>
+        <div id="top">
+            
+        </div>
+        <div id="middle">
+            
+        </div>
+        <div id="right">
+
+
+			   <div class="header_top">
+			   <p>项目管理 &gt; 订单管理详情</p>
+
+              </div>
+              <input type="hidden" value="http://my.welian.com/event/publish" id="J_PublishActivity">
+              <input type="hidden" value="http://my.welian.com/event/del" id="J_DeleteActivity">
+
+                  <div class="wrap">
+                     <div class="backstage-wrap wrap1120 clearfix">
+    <div class="personal-center-right">
+        <div class="m-ulitem">
+
+            <div class="m-location">
+                <table class="loca-table" id="project_table">
+                    <thead>
+                    <tr class="bg-tr">
+                       <td class="wp10">项目详情</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="bg-tr">
+                        <td class="wp10">
+                           <div>
+                               <p>项目分类：互助众筹</p>
+                               <p>已筹金额：500</p>
+                               <p>截止日期：2017.10.1</p>
+                               <p>支付方式：余额支付</p>
+                               <p></p>
+                           </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <table class="loca-table" id="repay_table">
+                    <thead>
+                    <tr class="bg-tr">
+                       <td class="wp10">回报详情</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="bg-tr">
+                        <td class="wp10">
+                            <p>支持类型：无私奉献</p>
+                            <p>支持金额：500</p>
+                            <p>支持数量：5</p>
+                            <p>配送地址：美丽的院子美丽的院子美丽的院子美丽的院子</p>
+                            <p>回报时间：1月</p>
+                            <p>回报内容：奖励一套房子</p>
+                            <p>发货时间：2017.10.1</p>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <table class="loca-table" id="suport_table">
+                    <thead>
+                    <tr class="bg-tr">
+                       <td class="wp10">抽奖详情</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="bg-tr">
+                        <td class="wp10">
+                            <p>是否中奖：是</p>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <table class="loca-table" id="complaint_table">
+                    <thead>
+                    <tr class="bg-tr">
+                       <td class="wp10">投诉详情</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="bg-tr">
+                        <td class="wp10">
+                            <p>态度不好</p>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+
+
+                <div class="pager">
+                                    </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+                </div>
+        </div>
+    </div>
+
+
+    <!-- 埋点区域 -->
+    <!-- 发布和取消发布活动的接口 -->
+
+    <!-- 删除活动借口 -->
+		<!-- <script charset="utf-8" type="text/javascript" src="{{PATH_TML}}user/js/activitymanage.js"></script> -->
+        <script charset="utf-8" type="text/javascript" src="{{PATH_TML}}user/js/project/projectOrderdetail.js"></script>
+
+<!--     <script type="text/javascript" src="js/jqPaginator.min.js"></script>
+    <script type="text/javascript" src="js/index.js"></script> -->
+    <style>
+    .title a {
+        color: #000;
+    }
+
+    .title a:hover {
+        color: #3474ba;
+        text-decoration: underline;
+    }
+    </style>
+
+</body>
+
+</html>
+<script>
+    var currWidth = $(window).height() - 90;
+    var currHeight = $(window).height() - 90;
+    setHeight(currHeight + 90);
+    $("#middle, #right").height(currHeight);
+
+    $(window).resize(function() {
+        currWidth = $(window).height() - 90;
+        currHeight = $(window).height() - 90;
+        setHeight(currHeight + 90);
+        $("#middle, #right").height(currHeight);
+    })
+
+    $("#add").hover(function() {
+        $(".add").show();
+    }, function() {
+        $(".add").hide();
+    })
+
+    $("#avatar, #dropdown").hover(function() {
+        $(".avatar").show();
+    }, function() {
+        $(".avatar").hide();
+    })
+
+    $("#avatar-logout span").click(function() {
+        localStorage.removeItem('token');
+        localStorage.removeItem('weid');
+    })
+</script>

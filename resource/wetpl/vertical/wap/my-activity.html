@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="shortcut icon" id="favicon" href="" />
+    <link rel="stylesheet" href="{{PATH_TML}}wepage/css/act.css"/>
+    <!--<link rel="stylesheet" href="css/wepage.css"/>-->
+    <link rel="stylesheet" href="{{PATH_TML}}wepage/css/home.css"/>
+    <link rel="stylesheet" href="{{PATH_TML}}wepage/css/common.css"/>
+    <link rel="stylesheet" href="{{PATH_TML}}wepage/css/swiper.min.css"/>
+    <link rel="stylesheet" href="/common/jquery.animsition/css/animsition.min.css">
+    <!--<script src="{{PATH_TML}}wepage/js/zepto.min.js"></script>-->
+    <script src="{{PATH_TML}}wepage/js/jquery-3.2.1.min.js"></script>
+    <script src="{{PATH_TML}}js/vue.min.js"></script>
+    <script type="text/javascript" src="{{PATH_CONFIG}}"></script>
+    <!--<script src="{{PATH_TML}}wepage/interface/activity.js"></script>-->
+    <script src="{{PATH_TML}}wepage/interface/my-activity.js"></script>
+    <!--<script src="js/my-activity.js"></script>-->
+    <script src="{{PATH_TML}}wepage/js/home.js"></script>
+    <script src="{{PATH_TML}}wepage/js/swiper-3.3.1.min.js"></script>
+    <script src="/common/jquery.animsition/js/jquery.animsition.min.js"></script>
+    <title>活动</title>
+</head>
+<body class="animsition">
+    <div id="carousel">
+        <div class="swiper-container" id="my-swiper">
+            <div class="swiper-wrapper carousel">
+                <div class="swiper-slide">
+                    <img src="/common/img/banner.png" alt=""/>
+                </div>
+                <div class="swiper-slide">
+                    <img src="/common/img/banner.png" alt=""/>
+                </div>
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+    </div>
+    <nav></nav>
+
+    <div id="art-type">
+        <ul>
+            <a href="/my-article"><li><img src="/common/img/art.png" alt=""/><p>文章</p></li></a>
+            <a href="/my-activity"><li><img src="/common/img/act.png" alt=""/><p>活动</p></li></a>
+            <li><img src="/common/img/proj.png" alt=""/><p>项目</p></li>
+            <a href="/my-shopping"><li><img src="/common/img/shop.png" alt=""/><p>商品</p></li></a>
+        </ul>
+    </div>
+    <script>
+        $(".activity").click(function() {
+            window.location.href = "activity-detail.html";
+        })
+    </script>
+    <div id="art-rcmd">
+        <ul>
+            <li>
+                <!--<p>双十一特惠</p>-->
+                <img src="/common/img/adv_left.png" alt="" style="margin-left: 0.06rem;"/>
+            </li>
+            <li>
+                <!--<p>天降大红包</p>-->
+                <img src="/common/img/adv_right.png" alt="" style="margin-left: -0.04rem;"/>
+            </li>
+        </ul>
+    </div>
+
+    <div id="container"></div>
+    <footer></footer>
+
+    <script>
+        var mySwiper = new Swiper ('#my-swiper', {
+            direction: 'horizontal',
+            loop: true,
+            speed: 1000,
+            autoplay : 3000,
+            autoplayDisableOnInteraction : false,
+            pagination: '.swiper-pagination',
+            paginationClickable :true,
+            nextButton: '.swiper-button-next',
+            prevButton: '.swiper-button-prev',
+            grabCursor : true
+        })
+
+        /*$("#my-swiper").hover(function(){
+            $(".swiper-button-prev, .swiper-button-next").css("opacity", "0.6");
+        }, function(){
+            $(".swiper-button-prev, .swiper-button-next").css("opacity", "0");
+        });*/
+    </script>
+</body>
+</html>

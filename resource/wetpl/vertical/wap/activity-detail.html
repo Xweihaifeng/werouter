@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="shortcut icon" id="favicon" href="" />
+    <link rel="stylesheet" href="{{PATH_TML}}css/home.css"/>
+    <link rel="stylesheet" href="{{PATH_TML}}css/common.css"/>
+    <link rel="stylesheet" href="{{PATH_TML}}css/activity-detail.css"/>
+    <!--<link rel="stylesheet" href="{{PATH_TML}}activity/css/detail.css"/>-->
+    <!--<link rel="stylesheet" href="{{PATH_TML}}activity/css/common.css"/>-->
+    <script src="{{PATH_TML}}js/zepto.min.js"></script>
+    <script src="{{PATH_TML}}js/vue.min.js"></script>
+    <script type="text/javascript" src="{{PATH_CONFIG}}"></script>
+    <link rel="stylesheet" href="{{PATH_TML}}js/layui/css/layui.css"/>
+    <script src="{{PATH_TML}}js/layui/layui.js"></script>
+    <title></title>
+</head>
+<body>
+<div id="app">
+    <!--<div id="title">
+        <a :href="backurl"><img id="goback" src="/common/img/return.png" /></a>
+        <p>活动详情</p>
+        <img id="user" src="/common/img/user.svg" width="20" />
+    </div>-->
+
+    <div id="carousel">
+        <img :src="cover" alt=""/>
+    </div>
+
+    <div id="container">
+        <div class="actd-title">{{title}}</div>
+        <ul>
+            <!--<li class="actd-theme"><img src="/common/img/theme.png" alt=""/><p>{{title}}</p></li>-->
+            <li class="actd-time"><img src="/common/img/icon_time.png" alt=""/><p>{{start}} 至 {{end}} 报名截止</p></li>
+            <li class="actd-map" style="">
+                <img src="/common/img/icon_map.png" alt=""/>
+            	<p style="display: flex; border-bottom: 1px solid #eee; justify-content: space-between; align-items: center;">
+                    <a :href="map+'?'+address">{{address}}</a>
+                    <img class="arrow" src="/common/img/arrow-right.png" alt=""/>
+                </p>
+            </li>
+            <li class="actd-zb" style="box-shadow: 5px 5px 5px #eee;"><img src="/common/img/icon_host.png"/><p>{{sponsor}}</p></li>
+            <li class="actd-bm" style="margin-top: 0.12rem;border-bottom: 1px solid #eee;height: 0.38rem;">已报名用户</li>
+            <li class="actd-users" @click="detail('users')">
+                <img :src="user.avatar" v-for="user in users" alt=""/>
+            </li>
+            <li style="margin-top: 0.12rem;border-bottom: 1px solid #eee;height: 0.38rem;">活动嘉宾</li>
+            <li class="actd-guest" @click="detail('guests')" style="padding-bottom: 0.1rem;">
+                <div v-for="guest in guests" style="display: inline-flex;">
+                <img :src="guest.avatar" style="margin-top: 0.1rem!important;display: block;"/>
+                <div>
+                    <p style="padding-top: 0.1rem!important;">{{guest.name}}</p>
+                    <p style="font-size: 0.12rem; color: #a6a6a6">{{guest.position}}</p>
+                </div>
+                </div>
+            </li>
+            <li style="margin-top: 0.12rem;border-bottom: 1px solid rgb(238, 238, 238);height: 0.38rem;">活动详情</li>
+            <li class="actd-detail" style="padding-right: 0.15rem;margin-bottom: 0.56rem;" v-html="content"></li>
+        </ul>
+
+        <div class="actd-apply" @click="apply">
+            <p>{{ state }}</p>
+            <!--<button data-method="notice" @click="apply" class="layui-btn" style="background: transparent; width: 100%; position: absolute; bottom: 0; left: 0;"></button>-->
+        </div>
+    </div>
+</div>
+
+    <script>
+        const userDetail = (weid, token, ref) => {
+            $.ajax({
+                url:  apiUrl + 'activity/enroll_my_order',
+                type: 'POST',
+                headers: {
+                    'Token': token
+                },
+                data: {
+                    activity_id: weid
+                },
+                success: function(data) {
+                    console.log(data);
+                    if (data.code == 200) {
+                        switch (data.data.status) {
+                            case 1: ref.state = '立即报名'; break;
+                            case 2: ref.state = '立即支付';
+                                $(".actd-apply").css({'background': '#FEC52B', 'box-shadow': '5px 5px 15px 0 #FEC52B'})
+                                break;
+                            case 3: ref.state = '已报名';
+                                $(".layui-btn").hide();
+                                $(".actd-apply").css({'background': '#ff7105', 'box-shadow': '5px 5px 15px 0 #ff7105'})
+                                break;
+                            default: break;
+                        }
+                        if (data.data.status == 2) {
+                            sessionStorage.setItem('act-orderId', data.data.number);
+                        }
+                    }
+                }
+            })
+        }
+
+        const userStore = (weid, token, phone, name, position, company, ref) => {
+            $.ajax({
+                url: apiUrl + 'activity/enroll/store',
+                type: 'POST',
+                headers: {
+                    'Token': token
+                },
+                data: {
+                    activity_id: weid,
+                    name: name,
+                    telphone: phone,
+                    poistion: position,
+                    company: company
+                },
+                success: function (data) {
+                    console.log(data);
+                    if (data.code == 200) {
+                        if (data.data.status == 2) {
+                            localStorage.setItem('act-weid', weid);
+                            localStorage.setItem('act-enrollid', data.data.enroll_id);
+                            layer.msg('报名成功', {
+                                time: 1500
+                            })
+                        } else if (data.data.status == 1) {
+                            ref.state = '立即支付';
+                            sessionStorage.setItem('act-orderId', data.data.number);
+                        }
+                    } else {
+                        layer.msg(data.message, {
+                            time: 1500
+                        })
+                    }
+                }
+            })
+        }
+
+        const reqData = (url, ref) => {
+            $.ajax({
+                url: url,
+                type: 'GET',
+                success: function(data) {
+                    console.log(data)
+                    if (data.code == 200) {
+                        let p = data.data;
+                        ref.title = p.title;
+                        ref.cover = ApiMaterPlatQiniuDomain + p.cover;
+                        ref.sponsor = p.Sponsor;
+                        ref.content = p.content;
+                        ref.address = p.area_name + p.address;
+                        ref.start = p.created_at;
+                        ref.end = p.enroll_deadline;
+                    }
+                }
+            })
+        }
+
+        const reqUsers = (url, data, ref) => {
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: data,
+                success: function(data) {
+                    console.log(data);
+                    if (data.code == 200) {
+                        data.data.list.map(x => ref.users.push(
+                            {
+                                avatar: x.avatar != null ? ApiMaterPlatQiniuDomain + x.avatar : '/common/img/vote_front_cover.png',
+                            }));
+                        if (ref.users == '') {
+                            $(".actd-users").text('暂无');
+                        }
+                    }
+                }
+            })
+        }
+
+        const reqGuest = (url, data, ref) => {
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: data,
+                success: function(data) {
+                    console.log(data);
+                    if (data.code == 200) {
+                        data.data.list.map(x => ref.guests.push(
+                            {
+                                avatar: x.avatar != null ? ApiMaterPlatQiniuDomain + x.avatar : '/common/img/vote_front_cover.png',
+                                name: x.name,
+                                position: x.position,
+                            }));
+                        if (ref.guests == '') {
+                            ref.guests.push({avatar: '', name: '', position: ''})
+                        }
+                    }
+                }
+            })
+        }
+
+        new Vue({
+            el: '#app',
+            data: {
+                title: '',
+                cover: '',
+                sponsor: '',
+                content: '',
+                start: '',
+                end: '',
+                address: '',
+                users: [],
+                guests: [],
+                name: '',
+                position: '',
+                company: '',
+                backurl: '',
+                map: '/activity/map/',
+                state: '立即报名',
+                weid: window.location.pathname.split('/').pop(),
+                token: localStorage.getItem('token'),
+                phone: localStorage.getItem('phone')
+            },
+            created: function () {
+                let _self = this;
+                const url_info = apiUrl + 'activity/detail/' + _self.weid;
+                const url_users = apiUrl + 'activity/enroll/lists';
+                const url_guests = apiUrl + 'activity/guest/lists';
+                _self.backurl = sessionStorage.getItem('history');
+                _self.map += _self.weid;
+                reqData(url_info, _self);
+                reqUsers(url_users, {activity_id: _self.weid}, _self);
+                reqGuest(url_guests, {activity_id: _self.weid}, _self);
+                userDetail(_self.weid, _self.token, _self)
+            },
+            mounted: function(){
+                this.$nextTick(function () {
+                    let _self = this;
+                })
+            },
+            methods: {
+                apply: function(){
+                    //获取token 如不存在则跳转登录页 如存在则显示活动申请框
+                    if (true) {
+                        window.location.href = '/activity/apply/' + this.weid;
+                    } else {
+                        //login
+                    }
+
+                    if (false) {
+                        layer.msg('活动暂未开始', {
+                            time: 1500
+                        })
+                    }
+                },
+                detail: function(type){
+                    switch(type) {
+                        case 'users': window.location.href = '/activity/users/' + this.weid; break;
+                        case 'guests': window.location.href = '/activity/guests/' + this.weid; break;
+                        default: break;
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+</html>

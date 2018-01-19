@@ -1,0 +1,77 @@
+<#extend#>public/domain/domain_extend.html</#extend#>
+<script type="text/javascript">
+    $app.set_title('支持活动');
+    show.header = 'no';
+    show.footer = 'no';
+</script>
+<link rel="stylesheet" href="{{PATH_TML}}css/home.css"/>
+<link rel="stylesheet" href="{{PATH_TML}}css/common.css"/>
+<link rel="stylesheet" href="{{PATH_TML}}css/my-collect.css">
+<div class="coll-content">
+    <div>
+
+        <div class="coll-item" :class="{'has-join' : item.is_enrolled==1}" v-for="item in actList">
+            <div @click="detail(item)">
+                <div>
+                    <span><b v-if="item.is_hot==1">HOT</b>{{item.title | limitLen(0,23)}}</span>
+                    <p>
+                        <span>{{item.address}}&nbsp;&nbsp;&nbsp;{{item.begain_week}}&nbsp;&nbsp;&nbsp;&nbsp;{{item.enroll_num}}人报名</span>
+                    </p>
+                </div>
+                <img :src="item.cover | img_src" alt="">
+            </div>
+            <p>主办方：{{item.Sponsor}}</p>
+        </div>
+        <div class="tip-msg">{{tipMsg}}</div>
+    </div>
+</div>
+<script>
+    new Vue({
+        el : '#app',
+        data : {
+            actList : [],
+            limit : 4,
+            page : 1,
+            totalPage : 1,
+            tipMsg : '没有活动了，快去发布吧~',
+            isBottom : false
+        },
+        mounted : function () {
+            this.getList();
+            window.addEventListener('scroll',this.handleScroll)
+        },
+        methods : {
+            getList : function () {
+                var sendData = {
+                    user_id : plats_user_info.weid,
+                    limit : this.limit,
+                    page : this.page
+                };
+                ajax.post('activity/enroll/lists',sendData).then((res)=>{
+                    console.log(res);
+                    this.isBottom = true;
+                    this.tipMsg = '';
+                    if(res.code == 200 && res.data.list.length){
+                        this.actList.push.apply(this.actList,res.data.list);
+                        this.totalPage = Math.ceil(res.data.total/this.limit);
+                    }
+                })
+            },
+            handleScroll : function () {
+                if(window.pageYOffset + window.innerHeight === document.documentElement.scrollHeight && this.isBottom){
+                    if(this.page >= this.totalPage){
+                        this.tipMsg = '没有活动了，快去发布吧~';
+                        return
+                    }
+                    this.isBottom = false;
+                    this.tipMsg = '加载中，请稍候...';
+                    this.page +=1;
+                    this.getList();
+                }
+            },
+            detail : function (item) {
+                $app.open_page(all_domian + item.domain + '/activitydetail/' + item.activity_id);
+            }
+        }
+    })
+</script>

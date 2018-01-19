@@ -1,0 +1,134 @@
+<#include#>header_include.html</#include#>
+<script type="text/javascript">
+    var main_index = false;
+</script>
+
+<link rel="stylesheet" href="/common/css/helps.css"/>
+<script src="/common/js/helps.js"></script>
+<div id="app">
+    <section class="bnaner"></section>
+    <section class="content">
+        <div class="toptop">
+            <main>
+                <ul class="content_left pps">
+                    <template v-for="(item,index) in header_news">
+                        <li :class="{'current': item.domain == currPage}">
+                            <a :class="{'about': item.domain == currPage}" :href="'/helps/'+ item.domain">
+                                <span>{{item.title}}</span>
+                            </a>
+                        </li>
+                    </template>
+                </ul>
+            </main>
+        </div>
+        <main>
+            <div class="boxb">
+                <ul class="content_left diss">
+                    <template v-for="(item,index) in header_news">
+                        <li :class="{'current': item.domain == currPage}">
+                            <a :class="{'about': item.domain == currPage}" :href="'/helps/'+ item.domain">
+                                <span>{{item.title}}</span>
+                            </a>
+                        </li>
+                    </template>
+                </ul>
+            </div>
+
+            <div class="content_right">
+                <ul>
+                    <li>
+                        <div class="about_title">
+                            <span>{{cate_name}}</span>
+                        </div>
+                        <ul>
+                            <li v-for="item in datas">
+                                <span><a :href="'/news/'+item.weid">{{item.title}}</a></span>
+                                <span><a :href="'/news/'+item.weid">{{item.publish_time}}</a></span>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <div class="paging" style="width: auto;"><div class="box" id="box"></div></div>
+            </div>
+        </main>
+    </section>
+
+</div>
+
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            'header_news': [],
+            'currPage': window.location.pathname.split('/').pop(),
+            'channel': '',
+            'channel_name': '',
+            'list_data': [],
+            'show': true,
+            'empty_show': false,
+            'page': 1,
+            'datas': '',
+            'cate_name': '',
+        },
+        mounted() {
+            this.$nextTick(function () {
+                this.header_news = win.getStorage('header_help');
+                for (val in this.header_news) {
+                    if (this.header_news[val].domain == this.currPage) {
+                        this.channel = this.header_news[val].domain;
+                        this.channel_name = this.header_news[val].title;
+                        set_title(this.channel_name);
+                        this.get_data(this.channel, 1);
+                    }
+                }
+                this.paging(5);
+            });
+        },
+        methods: {
+            get_data: function (cate_id) {
+                ajax.get(web_business.web_cms_channel_contents, {
+                    params: {
+                        cate_id: cate_id,
+                        limit: 10,
+                        'page': this.page
+                    }
+                }).then((res) => {
+                    this.list_data = res.data;
+                    this.datas = res.data.list;
+                    console.log(this.datas)
+                    this.cate_name = res.data.list[0].cate_name;
+                    if (this.list_data.total == 0 && this.page == 1) {
+                        this.empty_show = true;
+                    }
+                    var list = this.list_data.list;
+                    for (val in list) {
+                        var time = (new Date(list[val].publish_time)).getTime();
+                        var time_list = new Date(time);
+                        list[val].time_year = time_list.getFullYear();
+                        list[val].time_data = time_list.getMonth() + '-' + time_list.getDate();
+                        list[val].href = '/news/' + list[val].weid;
+                        list[val].img = settings + list[val].thumb_image;
+                    }
+                    this.show = false;
+                });
+            },
+            // 分页显示
+            paging: function(total, limit) {
+                var setTotalCount = total;
+                $('#box').paging({
+                    initPageNo: 1,                                 // 初始页码
+                    totalPages: Math.ceil(setTotalCount/limit),    //总页数
+                    // totalCount: '合计' + setTotalCount + '条数据', // 条目总数
+                    slideSpeed: 600,                               // 缓动速度。单位毫秒
+                    jump: true,                                    //是否支持跳转
+                    callback: function(page) {                     // 回调函数
+                        page_tab(page);
+                    }
+                })
+            }
+        },
+
+    })
+</script>
+
+<#include#>footer_include.html</#include#>

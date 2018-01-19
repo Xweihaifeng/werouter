@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="shortcut icon" id="favicon" href="" />
+    <script src="/common/js/jquery-3.2.1.min.js"></script>
+    <script src="{{PATH_TML}}user/common/js/loading.js"></script>
+  <script type="text/javascript" src="/common/layer-v3.0.3/layer-v3.0.3/layer/layer.js"></script>
+    <script src="/common/js/browser.min.js"></script>
+    <link rel="stylesheet" href="{{PATH_TML}}user/css/order.css">
+    <link rel="stylesheet" href="/common/css/main.css">
+    <link rel="stylesheet" href="{{PATH_TML}}user/css/manage.css">
+    <link rel="stylesheet" href="/common/css/fontawesome.min.css">
+    <link rel="stylesheet" href="/common/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{PATH_TML}}user/css/mall_manage.css">
+
+
+    <script type="text/javascript" src="/common/js/bootstrap.min.js"></script>
+    <script src="{{PATH_CONFIG}}"></script>
+    <script src="/common/js/control.js"></script>
+    <script src="{{PATH_TML}}user/js/common.js"></script>
+    <script src="/common/js/swiper-3.3.1.min.js"></script>
+    <script src="/common/js/ckeditor/ckeditor.js"></script>
+    <script src="/common/js/plupload/plupload.full.min.js"></script>
+    <script src="/common/js/qiniu.js"></script>
+    <!-- <script type="text/javascript" src="/user/js/ship_addressmode.js"></script> -->
+	<script src="{{PATH_TML}}user/common/js/generate_manage.js"></script>
+
+    <script src="{{PATH_TML}}user/js/distributions.js"></script>
+
+    <title>区域管理</title>
+    <style type="text/css">
+       /*  #right {
+           top: 120px;
+           width: 980px;
+       } */
+
+        #distributions {
+            color: red;
+            background: #f7f7f7;
+        }
+                    .art-img{
+              line-height:29px;
+                }
+        .we-cont .active>div {
+            color: red;
+            background: #f7f7f7;
+        }
+        .cancle{float:none;}
+    </style>
+</head>
+<body style="width: 100%; background: #F7F6F2;">
+<div class="login">
+    <div class="left-nav">
+
+    </div>
+    <div id="top">
+
+    </div>
+    <div id="middle">
+
+    </div>
+
+<div id="right" style="display: none;">
+    <div class="list_title clearfix">
+        <div class="cur">
+            <span>区域管理</span>
+        </div>
+    </div>
+    <div class="sa_list">
+        <div class="add_mode_btn_warp"><a href="javascript:;" class="add_mode_btn">+新增可配送区域模版</a></div>
+            <div class="adressall">
+
+            </div>
+           <!--  <dl data-id="64">
+                <dt>
+                    <h4>121212</h4>
+                    <p>江西(南昌,抚州,赣州,吉安,景德镇,九江,萍乡,上饶,新余,宜春,鹰潭)</p>
+                </dt>
+                <dd style="display: none;">
+                    <a href="javascript:;" class="eidt">编辑</a>
+                    <a href="javascript:;" class="del">删除</a>
+                </dd>
+            </dl> -->
+
+    </div>
+
+    </div>
+</div>
+    <div id="masker"></div>
+
+<div class="ship_address_box modeset" style="display: none; width: 500px; height: 390px; top: 46px; left: 467.5px;">
+    <h3>可配送区域设置<a href="javascript:;" class="close">x</a></h3>
+    <div class="mode_name">
+        <span>模版名称</span>
+        <input value="" placeholder="请输入模版名称" id="modeName" type="text">
+    </div>
+    <h5>选择支持配送地区</h5>
+    <div class="sel_address">
+        <div class="sa_b province ">
+            <h6><span>省份</span></h6>
+            <div>
+                <ul class="provlist">
+                   <!--
+                    <li><span>重庆</span><input class="province_check" data-id="394" data-text="重庆" type="checkbox"></li> -->
+                </ul>
+            </div>
+        </div>
+        <div class="sa_b city">
+            <h6><span>城市</span><i>全选<input class="ci_check" type="checkbox"></i></h6>
+            <div>
+            <ul class="cityul"></ul>
+            </div>
+        </div>
+    </div>
+    <div class="sa_footer">
+        <a href="javascript:;" class="close cancle">取消</a>
+        <a href="javascript:;" data-id="0" class="ok setmode_btn" data-page="manage">确定</a>
+    </div>
+</div>
+
+
+
+<script>
+
+    var currWidth = $(window).height() - 90;
+    var currHeight = $(window).height() - 90;
+    setHeight(currHeight + 90);
+    $("#middle").height(currHeight);
+
+    $(window).resize(function () {
+    currWidth = $(window).height() - 90;
+    currHeight = $(window).height() - 90;
+    setHeight(currHeight + 90);
+    $("#middle").height(currHeight);
+    })
+
+    $("#add").hover(function () {
+    $(".add").show();
+    }, function () {
+    $(".add").hide();
+    })
+
+    $("#avatar, #dropdown").hover(function () {
+    $(".avatar").show();
+    }, function () {
+    $(".avatar").hide();
+    })
+
+    $("#avatar-logout span").click(function () {
+    localStorage.removeItem('token');
+    localStorage.removeItem('weid');
+    })
+</script>
+</body>
+</html>
+<!-- <script type="text/javascript" src="/user/js/ui.js"></script>
+<script type="text/javascript" src="/user/js/qiniumain.js"></script> -->

@@ -1,0 +1,54 @@
+<!--
+ * Created by weifeng on 2017/11/12.
+-->
+
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <title></title>
+        <meta charset="utf-8" />
+        <link rel="icon" href="" id="public_icon" />
+
+        <script src="/common/js/jquery-3.2.1.min.js"></script> 
+        <script src="/common/layer-v3.0.3/layer-v3.0.3/layer/layer.js"></script>
+        <script src="{{PATH_CONFIG}}"></script>
+        <script src="{{PATH_TML}}js/modal_login.js"></script>
+        <script src="{{PATH_TML}}assets/list/default/js/news_center.js"></script>
+        <script src="{{PATH_TML}}assets/list/default/js/back_top.js"></script>
+
+        <link rel="stylesheet" type="text/css" href="{{PATH_TML}}font/iconfont.css" />
+        <link rel="stylesheet" type="text/css" href="{{PATH_TML}}css/news_base.css" />
+        <link rel="stylesheet" type="text/css" href="{{PATH_TML}}assets/list/default/css/news_center.css" />
+        <link rel="stylesheet" type="text/css" href="{{PATH_TML}}css/modal_login.css" />
+    </head>
+
+    <body>
+        <!-- 登录部分 -->
+        <div class="modal_login" id="modal_login"></div>
+        <!-- 导航部分开始 -->
+        <ul class="news_menu" id="public_main_news_menu"></ul>
+        <!-- 导航部分结束 -->
+        <!-- 新问中心开始 -->
+        <div class="details-content">
+            <div class="new-top-images">
+                <p class="center_center">新闻中心</p>
+            </div>
+            <div class="news-center-top">
+                <div class="hotspot">热点新闻</div>
+            </div>
+            <ul class="news-center-main-title">
+                <a class="chan_li" id="newN"> 最新发布 </a>
+            </ul>
+            <ul class="news-center-main"></ul>
+            <div align="center" id="news_loadingsImg" class="news-loadingsImg"> 查看更多 </div>
+            <div align="center" id="news_loadingsImg1" class="news-loadingsImg1"> 查看更多 </div>
+            <div id="plat-two-back-top"><img src="{{PATH_TML}}images/gotop.png"></div>
+        </div>
+        <!-- 新闻中心结束 -->
+        <!-- 右侧大背景图 -->
+        <div id="public_main_right_bg" style="position:fixed;top:0;bottom:0;left:1190px;width:100%;z-index:-10;"></div>
+        <script src="{{PATH_TML}}js/public_main_right_bg.js"></script>
+    </body>
+
+</html>

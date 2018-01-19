@@ -1,0 +1,58 @@
+@charset "utf-8"
+
+
+/* 全局样式 */
+* { margin: 0; padding: 0; list-style: none; }
+html, body { margin: 0; padding: 0; width: 100%; height: 100%; }
+a { text-decoration: none; display: inline-block; }
+ul, li { list-style: none; }
+img { border: none; }
+menu, p, button { padding: 0; margin: 0; border: none; }
+
+
+/* 全局盒子 */
+.main { width: 100%; height: auto; font-size: 14px; color: #333; position: relative; }
+
+
+/* 头部模块样式 */
+header.header { background-color: #fff; width: 100%; height: 105px; display: flex; justify-content: space-between; align-items: center; position: fixed; transform: translateX(-50%); left: 50%; border-bottom: 1px solid #e2e2e2; z-index: 99; }
+.header .menu { width: 1200px; height: 100%; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; font-size: 13px; }
+.header .menu .search { width: 380px; height: 100%; display: inline-flex; justify-content: flex-end; align-items: flex-end; flex-direction: column; }
+.header .menu .search .old-login { position: relative; width: 257px; height: 17px; margin: 12px 0 14px 0; display: flex; justify-content: flex-end; align-items: center; }
+.header .menu .search .old-login > aside { position: relative; text-align: center; color: #666; }
+.header .menu .search .old-login .old-login-info { padding: 0 12px; border-right: 1px solid #d9d9d9; }
+.header .menu .search .old-login > aside:last-child .old-login-info { border-right: none; }
+.header .menu .search .old-login .card-img { position: absolute; display: none; }
+.header .menu .search .old-login .card-img img { width: 80px; height: 80px; }
+.header .menu .search .search-info { width: 100%; height: 62px; display: flex; justify-content: flex-start; align-items: flex-start; }
+.header .menu .search .search-info .search-input { width: 212px; height: 18px; padding: 6px 12px; color: #555; box-shadow: inset 0 0 10px #eef3fa; border: 1px solid #ccc; outline: none; border-radius: 16px; transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s; }
+.header .menu .search .search-info .search-btn { width: 18px; height: 18px; padding: 7px; margin: 0 10px 0 8px; background-color: #46b2ee; background-image: url(/common/img/find.png); background-size: 18px; background-repeat: no-repeat; background-position: center; border-radius: 16px; }
+.header .menu .search .search-info .search-high { width: 80px; height: 18px; line-height: 18px; text-align: center; padding: 7px 0; background-color: #46b2ee; color: #fff; border-radius: 16px; }
+
+
+/* 内容部分样式 */
+section.section { background-color: #f7f7f7; width: 1200px; height: auto; padding-top: 105px; margin: 0 auto; box-shadow: inset 0px 0px 5px 0px #ccc; }
+.section .menu { width: 100%; height: 55px; background-color: #0880da; display: flex; justify-content: center; align-items: center; }
+.section .menu > li { width: 192px; height: 30px; line-height: 30px; text-align: center; color: #fff; background: url(/common/img/shutiao.png) no-repeat right; }
+.section .menu > li:last-child { border: none; }
+.section .carousel { background-color: #46b2ee; width: 100%; height: 475px; margin-top: 10px; }
+.section .news-show { background-color: #46b2ee; width: 100%; height: 490px; margin-top: 15px; }
+.section .graceful { background-color: #46b2ee; width: 100%; height: 400px; margin-top: 15px; }
+.section .middle { background-color: #46b2ee; width: 100%; height: 380px; margin-top: 15px; }
+.section .product { background-color: #46b2ee; width: 100%; height: 265px; margin-top: 15px; }
+.section .we-link { background-color: #46b2ee; width: 100%; height: 245px; margin-top: 15px; }
+
+
+/* 底部模块样式 */
+/*footer.footer { background-color: #000; width: 100%; height: 275px; }*/
+.special-footer { background-color: #000; width: 100%; height: 236px; padding: 21px 0; position: absolute; }
+.special-footer a { color: #9c9c9c; }
+.special-footer a:hover { text-decoration: underline; }
+.special-footer * { font-size: 14px; color: #9c9c9c; }
+.special-footer footer { width: 1080px; height: 194px; margin: 0 auto; padding: 21px 0; text-align: center; }
+.special-footer footer .footer-nav { margin-bottom: 7px; display: inline-flex; }
+.special-footer footer .footer-nav a { padding: 0 1em; color: #aeaeae; border-left: 1px solid #aeaeae; }
+.special-footer footer .footer-nav a:first-child { border: none; }
+.special-footer footer .copyright p { margin: .5em 0; }
+.special-footer footer ._ideConac { height: 60px; }
+.special-footer footer ._ideConac img { width: 60px; height: 60px; }

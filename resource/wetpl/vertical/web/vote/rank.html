@@ -1,0 +1,534 @@
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>投票排名 - 森弗杯 · 第二届全球秦商好项目大赛62进10</title>
+		<link rel="shortcut icon" id="fav" href=""/>
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+		<meta name="format-detection" content="telephone=no">
+		<meta content="email=no" name="format-detection">
+		<!-- <link href="https://cdn.bootcss.com/Swiper/3.4.2/css/swiper.min.css" rel="stylesheet"> -->
+		<link rel="stylesheet" href="{{PATH_TML}}vote/css/swiper.min.css">
+		<link rel="stylesheet" href="{{PATH_TML}}vote/static/icon/iconfont_1.css">
+		<link rel="stylesheet" type="text/css" href="{{PATH_TML}}vote/css/modal.css">
+		<style>.alert{text-align: center;z-index: 20000;color: #fff;background: rgba(0, 0, 0, 0.5);height: 46px;line-height: 46px;border: none;position: fixed;top: 0;width: 35%;border-radius: 5px;} /*.alert-success{text-align: center; z-index: 20000;color:#fff;background: #4cd964;height: 46px;border-radius: inherit;line-height: 46px;border: none;position: fixed;top: 0;width: 100%;}*/ /*.alert-danger{text-align: center;z-index: 999999;color:#fff;background: #f6383a;height: 46px;border-radius: inherit;border:none;line-height: 46px;width: 100%;position: fixed;top: 0;}*/ .modal-title{font-size: 14px;display: block;margin-top: -2px;}
+		</style>
+		<!-- <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"> -->
+		<link rel="stylesheet" href="{{PATH_TML}}vote/css/bootstrap.min.css">
+		<style></style>
+		<script src="https://hm.baidu.com/hm.js?2aebf58b53526800fad58107aeb1c56e"></script>
+		<link id="layuicss-skinlayercss" rel="stylesheet" href="{{PATH_TML}}vote/layui/css/modules/layer/default/layer.css?v=3.0.11110" media="all">
+		<link rel="stylesheet" href="{{PATH_TML}}vote/css/mui.min.css">
+		<link rel="stylesheet" href="{{PATH_TML}}vote/layui/css/layui.css">
+		<link rel="stylesheet" href="{{PATH_TML}}vote/iconfont/iconfont.css">
+		<link rel="stylesheet" href="{{PATH_TML}}vote/css/vote/vote_public.css">
+		<!--投票公共样式-->
+		<link rel="stylesheet" href="{{PATH_TML}}vote/css/vote/vote_report.css">
+		<link rel="stylesheet" href="/common/jquery.animsition/css/animsition.min.css">
+		</head>
+	<body>
+		<div class="wxalert alert-danger" role="alert" id="message-top" style="display: none;"></div>
+		<div class="animsition">
+		<div id="check-app">
+		<!--头部大图-->
+		<div>
+			<img v-bind:src="cover" :alt="title">
+		</div>
+		<!--标题-->
+		<div class="vote-title">{{title}}</div>
+		<div class="mui-row vote-statistics">
+			<div class="mui-col-sm-4 mui-col-xs-4">
+				<span class="vote-statistics-1">参与{{appellation}}</span>
+				<span class="vote-statistics-2">{{countitem}}</span>
+			</div>
+			<div class="mui-col-sm-4 mui-col-xs-4 vote-statistics-border">
+				<span class="vote-statistics-1">累计投票</span>
+				<span class="vote-statistics-2">{{num}}</span>
+			</div>
+			<div class="mui-col-sm-4 mui-col-xs-4">
+				<span class="vote-statistics-1">访问次数</span>
+				<span class="vote-statistics-2">{{views}}</span>
+			</div>
+		</div>
+		<div class="mui-row condition-1">
+			<div class="mui-col-sm-12 mui-col-xs-12">
+				<i class="iconfont icon-shizhong1"></i>开始时间：{{begin_time}}
+			</div>
+			<div class="mui-col-sm-12 mui-col-xs-12 condition-2">
+				<i class="iconfont icon-shizhong1"></i>截止时间：{{end_time}}
+			</div>
+			<div class="mui-col-sm-12 mui-col-xs-12 condition-2">
+				<i class="iconfont icon-jinggao1"></i>投票规则：{{rule}} 
+			</div>
+			<div class="mui-col-sm-12 mui-col-xs-12 condition-2">
+				<i class="iconfont icon-huodong1"></i>投票简介：
+				<i class="iconfont icon-downarrow" style="margin-left: -4px;"></i>
+			</div>
+			<div class="mui-col-sm-12 mui-col-xs-12 condition-3" style="display: none;">
+				{{summary}}
+				<a :href="checkurl" id="click">查看全文</a>
+			</div>
+		</div>
+		<div class="mui-row search-1">
+			<div class="mui-col-sm-8 mui-col-xs-8 search-2">
+				<input type="text" name="key" id="search_key" value="" placeholder="请输入项目编号或名称">
+			</div>
+			<div class="mui-col-sm-4 mui-col-xs-4">
+				<button class="mui-btn mui-btn-danger search-3">
+					<i class="iconfont icon-sousuo"></i>搜索
+				</button>
+			</div>
+		</div>
+		<!--投票列表-->
+      	<!-- <div class="mui-row vote-box" id="vote_list"></div> -->
+		<!--排名列表-->
+		<div class="mui-row vote-box">
+			<table class="layui-table" lay-even="" lay-skin="row">
+				<colgroup>
+					<col width="33%">
+					<col width="33%">
+					<col width="33%">
+				</colgroup>
+				<thead>
+					<tr>
+						<th>排名</th>
+						<th>项目名称</th>
+						<th>票数</th></tr>
+				</thead>
+				<tbody>
+
+				<template v-for="item in rank">
+		            <tr>
+		                <td>{{item.rank}}</td>
+		                <td>{{item.title}}</td>
+		                <td>{{item.nums}}</td>
+		            </tr>       
+		        </template>
+
+				</tbody>
+			</table>
+		</div>
+		<!--广告位-->
+		<div class="mui-row ad-box">
+		</div>
+		<!--底部信息-->
+		<div class="mui-row vote-footer-box">
+			<div class="mui-col-sm-12 mui-col-xs-12 vote-footer-link">
+				<a v-bind:href="support_link" target="_blank">{{support_text}}</a>&nbsp;提供技术支持
+			</div>
+		</div>
+		<!--操作栏-->
+		<div class="home">
+			<a :href="indexurl" onclick=" return false; " @click="goto()">
+				<span>返回</span>
+				<span>首页</span>
+			</a>
+		</div>
+		<div class="paiming">
+			<a :href="rankurl">
+				<span>当前</span>
+				<span>排名</span></a>
+		</div>
+		<div class="guize">
+			<a :href="checkurl">
+				<span>投票</span>
+				<span>规则</span>
+			</a>
+		</div>
+		</div>
+		</div>
+	</body>
+</html>	
+		<script src='{{PATH_TML}}vote/js/vue.min.js'></script>
+		<script src='{{PATH_TML}}vote/js/jquery1.4.3.min.js'></script>
+		<script src='{{PATH_TML}}vote/js/swiper-3.3.1.min.js'></script>
+		<script src='{{PATH_TML}}vote/js/bootstrap.min.js'></script>
+		<script src='{{PATH_TML}}vote/js/config.js'></script>
+		<!-- <script src="https://cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
+		<script src="https://cdn.bootcss.com/Swiper/3.4.2/js/swiper.jquery.js"></script>
+		<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
+		<script>
+			$(function() {
+				// 计算操作显示框的位置
+				var window_height = $(window).height();
+				var window_width = $(window).width();
+				var alert_top = (window_height - $('.alert').height()) / 2;
+				var alert_left = (window_width - $('.alert').width()) / 2;
+				$('.alert').css('top', alert_top + 'px');
+				$('.alert').css('left', alert_left + 'px');
+
+
+				$(".animsition").animsition({
+
+					inClass               :   'fade-in',
+					outClass              :   'fade-out',
+					inDuration            :    1500,
+					outDuration           :    800,
+					linkElement           :   '.animsition-link',
+					// e.g. linkElement   :   'a:not([target="_blank"]):not([href^=#])'
+					loading               :    true,
+					loadingParentElement  :   'body', //animsition wrapper element
+					loadingClass          :   'animsition-loading',
+					unSupportCss          : [ 'animation-duration',
+						'-webkit-animation-duration',
+						'-o-animation-duration'
+					],
+					//"unSupportCss" option allows you to disable the "animsition" in case the css property in the array is not supported by your browser.
+					//The default setting is to disable the "animsition" in a browser that does not support "animation-duration".
+
+					overlay               :   false,
+
+					overlayClass          :   'animsition-overlay-slide',
+					overlayParentElement  :   'body'
+				});
+
+				$(function() {
+					setTimeout(function() {
+								$('.alert').hide();
+							},
+							2000);
+					$('.btn-close').click(function() {
+						$('.alert').hide();
+					});
+				});
+			});
+		</script>
+		<script src="{{PATH_TML}}vote/js/mui.min.js"></script>
+		<script src="{{PATH_TML}}vote/layui/layui.js"></script>
+		<script src="/common/jquery.animsition/js/jquery.animsition.min.js"></script>
+		<script>
+			function getUrlParam(name) {
+		        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+		        var r = window.location.search.substr(1).match(reg); //匹配目标参数
+		        if (r != null) return unescape(r[2]);
+		        return null; //返回参数值
+		      }
+		      //判断为空
+		      function isNull(data) {
+		        return (data == "" || data == undefined || data == null || data == 'null') ? true: false;
+		      }
+			var globalWeid = localStorage.getItem('vote-id');
+			// var host = 'http://api.' + window.location.host;
+			// var globalHost = host;
+			// var ApiMaterPlatQiniuDomain = 'http://images.new.wezchina.com/';
+			// alert(globalHost)
+			// var globalHost = "http://api.new.wezchina.com";
+			// var globalHost = "http://api.wezchina.loc";
+	      	// var ApiMaterPlatQiniuDomain = 'http://oty3r3tmi.bkt.clouddn.com/';
+			var vm=new Vue({
+			  el: '#check-app',
+			  data: {
+			    title: '',
+			    summary:'',
+			    cover:'',
+			    num:'',
+			    views:'',
+			    begin_time:'',
+			    end_time:'',
+			    only_wechat:'',
+			    status:'',
+			    remark:'',
+			    statistic:'',
+			    countitem:'',
+			    rule:'',
+			    adv:'',
+			    content:'',
+			    rank:'',
+			    checkurl:'',
+			    rankurl:'',
+					indexurl:'',
+					 appellation:'',
+					support_text: '',
+     			 support_link: ''
+			  },
+			  created: function () {
+			    var _self=this;
+			    /*$.ajax({
+		          url: globalHost + '/cms/setting/show',
+		          type: 'GET',
+		          success: function(data){
+		            var imgHost = ApiMaterPlatQiniuDomain;
+		            var fav = data.data.favicon;
+		            if (fav.indexOf('http') === -1) {
+		              fav = imgHost + fav;
+		            }
+		            $("#fav").attr("href", fav);
+		          },
+		          error: function(xhr){
+		            console.log(xhr)
+		          }
+		        })*/
+			    $.ajax({
+			        url: globalHost+'/vote/detail/'+globalWeid,
+			        type:'GET',
+			        success:function (data){
+			            if(data.code==200){
+			                _self.title=data.data.title;
+			                _self.countitem=data.data.countitem;
+			                _self.num=data.data.num;
+			                _self.views=data.data.views;
+			                _self.cover=data.data.cover;
+			                _self.cover=ApiMaterPlatQiniuDomain+data.data.cover;
+			                _self.summary=data.data.summary;
+			                _self.begin_time=data.data.begin_time;
+			                _self.end_time=data.data.end_time;
+			                _self.rule=data.data.rule;
+							_self.adv=data.data.adv;
+							_self.appellation = data.data.appellation;
+							_self.support_text = data.data.support_text;
+       					    _self.support_link = data.data.support_link;
+			                var $add = '';
+			                for (var i = 0,
+			                ien = data.data.adv.length; i < ien; i++) {
+			                  $add = $add + '<div class="mui-col-sm-12 mui-col-xs-12 ad-img">' + '<a href="' + data.data.adv[i].url + '"><img src="' + ApiMaterPlatQiniuDomain + data.data.adv[i].image + '" ></a>' + '</div>';
+			                }
+			                setTimeout(function() {
+			                  jQuery('.ad-box').html($add);
+			                },
+			                10000);
+
+			                var imgHost = ApiMaterPlatQiniuDomain;
+				            var fav = data.data.favicon;
+				            if (fav.indexOf('http') === -1) {
+				              fav = imgHost + fav;
+				            }
+				            $("#fav").attr("href", fav);
+
+			                _self.only_wechat=data.data.only_wechat;
+//			                _self.checkurl="check.html?id="+globalWeid;
+//			                _self.rankurl="rank.html?id="+globalWeid;
+//			                _self.indexurl="view.html?id="+globalWeid;
+							_self.checkurl= "/vote/rule/" + globalWeid;
+			              	_self.rankurl= "/vote/report/" + globalWeid;
+			              	_self.indexurl= "/vote/" + globalWeid;
+			                $("title").text("投票排名 - "+_self.title);
+			                // isopeninwechat(_self.only_wechat);
+			                
+			                
+			            } else {
+							window.location.href = '/404'
+						}
+			        }
+			    })
+				$.ajax({
+			        url: globalHost+'/vote/rank/'+globalWeid,
+			        type:'GET',
+			        success:function (data){
+			            
+			            _self.rank=data.data;
+			            console.log(_self.rank);
+			        }
+			    })
+  			},
+  			methods: {
+			    goto: function(){
+			      window.location.href = '/vote/preview/' + globalWeid;
+			    }
+   			}	
+})
+
+	$(function(){
+
+		// 活动介绍的显示与隐藏
+			jQuery(document).on('click', '.icon-downarrow',
+			function() {
+				jQuery('.condition-3').css('display', 'block');
+				jQuery(this).removeClass('icon-downarrow').addClass('icon-toparrow');
+			});
+
+			jQuery(document).on('click', '.icon-toparrow',
+			function() {
+				jQuery('.condition-3').css('display', 'none');
+				jQuery(this).removeClass('icon-toparrow').addClass('icon-downarrow');
+			});
+	})		
+
+
+	  //判断是否在微信中打开
+      function is_weixn() {
+        var ua = navigator.userAgent.toLowerCase();
+        if (ua.match(/MicroMessenger/i) == "micromessenger") {
+          return true;
+        } else {
+          return false;
+        }
+      }
+      //判断是否在微信中打开
+      function isopeninwechat(flag) {
+        var hidden_wechat = flag;
+        var pc = getUrlParam('pc');
+        if (!is_weixn()) {
+          if (hidden_wechat == 1) {
+            if (isNull(pc)) {
+              window.location.href = "/vote/warn";
+            }
+          }
+        }
+      }
+      $(function(){
+        layui.use(['layer', 'laypage', 'element'],
+          function() {
+            var layer = layui.layer
+          });
+      });
+
+			//下拉折叠
+			jQuery(document).on('click', '.icon-downarrow',
+					function() {
+						jQuery('.condition-3').css('display', 'block');
+						jQuery(this).removeClass('icon-downarrow').addClass('icon-toparrow');
+					});
+			jQuery(document).on('click', '.icon-toparrow',
+					function() {
+						jQuery('.condition-3').css('display', 'none');
+						jQuery(this).removeClass('icon-toparrow').addClass('icon-downarrow');
+					});
+			// 异步加载投票列表数据
+			layui.use('flow',
+				function() {
+					var flow = layui.flow;
+					// 信息流
+					flow.load({
+						elem: '#vote_list' // 指定列表容器
+						// ,iaAuto: false
+						// ,isLazyimg: true
+						,
+						done: function (page, next) { // 到达临界点（默认滚动触发），触发下一页
+							var lis = [];
+							// 以jQuery的Ajax请求为例，请求下一页数据（注意：page是从2开始返回）
+							var voteid = globalWeid;
+							var key = sessionStorage.getItem('key')
+
+							$.ajax({
+								url: globalHost + '/vote/list',
+								type: 'POST',
+								data: {
+									vote_id: voteid,
+									limit: 4,
+									page: page,
+									keywords: key
+								},
+								success: function (data) {
+									if (data.code == 200) {
+										pages_total = Math.ceil(data.data.total / 4);
+										layui.each(data.data.list,
+												function (index, item) {
+													lis.push('<div class="mui-col-xs-6 mui-col-sm-6 vote-list">' + '<div class="vote-list-bgc">' + '<a href="detail.html?detailid=' + item.weid + "&id=" + globalWeid + '">' + '<img class="lazy-' + page + '" data-original=" ' + ApiMaterPlatQiniuDomain + item.cover + '" alt="" />' + '</a>' + '<div class="vote-list-title">' + item.sort + '.' + item.title + '</div>' + '<div class="vote-list-btn">' + '<button data-sort="' + item.sort + '" data-title="' + item.title + '" data-id="' + item.weid + '">' + '<i class="iconfont icon-zan"></i>投票' + '</button>' + '</div>' + '<div class="vote-list-num"><font>' + item.nums + '</font>票</div>' + '</div>' + '</div>');
+												});
+										next(lis.join(''), page < pages_total);
+										// 图片懒加载
+										jQuery(".lazy-" + page).lazyload({
+											// 图片淡入效果
+											effect: "fadeIn",
+											// 加载前的默认图片
+											placeholder: lazy_cover
+										});
+										sessionStorage.removeItem('key');
+									}
+								}
+							})
+						}
+					});
+				});
+
+      //第三方统计
+      setTimeout(function() {
+        var statistic = vm.statistic;
+        if (statistic) {
+          eval(statistic);
+        }
+      },
+      10000);
+      		
+		</script>
+		<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+		<script>
+		/*$.ajax({
+			url: globalHost + '/vote/view/' + globalWeid,
+			type: 'GET',
+			success: function(obj) {
+				console.log(obj);
+			}
+		});*/
+    $.ajax({
+      url: globalHost + '/wxjssdk',
+      type: 'POST',
+      data: {
+        currenturl: window.location.href
+      },
+      success: function(data) {
+        if (data.code == 200) {
+          wx.config({
+            debug: false,
+            appId: data.data.appId,
+            timestamp: data.data.timestamp,
+            nonceStr: data.data.nonceStr,
+            signature: data.data.signature,
+            jsApiList: ["onMenuShareTimeline", "onMenuShareAppMessage"]
+          });
+          // $.ajax({
+          //   url: globalHost + '/vote/detail/' + globalWeid,
+          //   type: 'GET',
+            // success: function(obj) {
+              wx.ready(function() {
+                // obj.data.title="投票排名 - "+obj.data.title;
+                initWx(obj.data);
+              });
+            // }
+          // })
+        }
+      }
+    })
+  //微信分享
+  function initWx(data) {
+    wx.onMenuShareTimeline({
+      title: data.title,
+      // 分享标题
+      link: window.location.href,
+      // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+      imgUrl: ApiMaterPlatQiniuDomain + data.cover,
+      // 分享图标
+      success: function() {
+        // 用户确认分享后执行的回调函数
+      },
+      cancel: function() {
+        // 用户取消分享后执行的回调函数
+      }
+    });
+    wx.onMenuShareAppMessage({
+      title: data.title,
+      // 分享标题
+      desc: data.summary,
+      // 分享描述
+      link: window.location.href,
+      // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+      imgUrl: ApiMaterPlatQiniuDomain + data.cover,
+      // 分享图标
+      type: '',
+      // 分享类型,music、video或link，不填默认为link
+      dataUrl: '',
+      // 如果type是music或video，则要提供数据链接，默认为空
+      success: function() {
+        // 用户确认分享后执行的回调函数
+      },
+      cancel: function() {
+        // 用户取消分享后执行的回调函数
+      }
+    });
+  }
+
+  var search = function(){
+  	var key = $("#search_key").val();
+    sessionStorage.setItem('key', key);
+  	window.location.href = "/vote/preview/" + globalWeid;
+  }
+
+  $(".search-3").click(function(){
+    search();
+  })
+
+  $("#search_key").keydown(function(evt){
+    switch (evt.keyCode){
+      case 13: search();
+    }
+  });
+  </script>

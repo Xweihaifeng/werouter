@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="shortcut icon" id="favicon" href="" />
+    <script src="/common/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="/common/layer-v3.0.3/layer-v3.0.3/layer/layer.js"></script>
+    <script src="/common/js/browser.min.js"></script>
+    <link rel="stylesheet" href="/common/AdminLTE-2.4.0-rc/bower_components/font-awesome/css/font-awesome.min.css">
+    <title>全球秦商总会</title>
+    <!-- <link rel="stylesheet" href="{{PATH_TML}}css/public_main.css"> -->
+        <link rel="stylesheet" href="{{PATH_TML}}font/iconfont.css" />
+        <link rel="stylesheet" href="{{PATH_TML}}css/news_base.css" />
+        <link rel="stylesheet" href="{{PATH_TML}}css/modal_login.css" />
+        <link rel="stylesheet" href="{{PATH_TML}}css/article.css">
+
+    <link rel="stylesheet" href="/common/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/common/css/buttons.css">
+    <link rel="stylesheet" href="/common/layer-v3.0.3/layer-v3.0.3/layer/skin/default/layer.css">
+    <!-- <link rel="stylesheet" type="text/css" href="css/shopcommon.css"> -->
+
+    <link rel="stylesheet" type="text/css" href="{{PATH_TML}}project/css/projectdetail.css">
+    <link rel="stylesheet" type="text/css" href="{{PATH_TML}}project/css/project-sup.css">
+    <!-- <link rel="stylesheet" type="text/css" href="{{PATH_TML}}project/css/project.css"> -->
+    <!-- <link rel="stylesheet" type="text/css" href="{{PATH_TML}}project/css/zc.css"> -->
+
+     <script src="{{PATH_CONFIG}}"></script>
+    <script src="{{PATH_TML}}js/modal_login.js"></script>
+    <script src="/common/js/swiper-3.3.1.min.js"></script>
+    <script src="/common/js/buttons.js"></script>
+    <!-- <script src="{{PATH_TML}}project/p-detail/js/4f35.js"></script> -->
+    <!-- <script src="{{PATH_TML}}project/p-detail/js/3522.js"></script>
+    <script src="{{PATH_TML}}project/p-detail/js/date.js"></script>
+    <script src="{{PATH_TML}}project/p-detail/js/dc.js"></script>
+    <script src="{{PATH_TML}}project/p-detail/js/lib.js"></script>
+    <script src="{{PATH_TML}}project/p-detail/js/zcpay.js"></script>
+    <script src="{{PATH_TML}}project/p-detail/js/zcpb.js"></script> -->
+    <style>::-webkit-scrollbar { width: 0; }
+    .page-content{
+    padding-top: 20px!important;
+}
+    </style>
+</head>
+<body>
+    <!-- 登录部分 -->
+    <div class="modal_login" id="modal_login"></div>
+    <!-- 导航部分开始 -->
+    <ul class="news_menu" id="public_main_news_menu"></ul>
+    <div class="index-content">
+
+
+
+   <div class="grzxOuterBox ng-scope" ng-if="app==2" ng-element-ready="" style="display: block;">
+    <div class="zhifuOuterBox">
+        <div class="mainIn02Box">
+        <h3 class="main-h3" style="">我的爱好111333</h3>
+            <div class="zhifuInnerBox">
+                <!--<div class="zhifuTitle">
+                    <a target="_blank" href="/deal-show/id-{{deal_id}}" class="hoUdLink" >{{deal_name.substring(0,40)}}</a>
+                </div>-->
+                <div class="zhifuCBox">
+                    <div class="zhifuNavBox  hidden two">
+                        <div class="ftDiv">1.提交订单</div>
+                        <div class="scDiv">2.选择支付方式</div>
+                        <div class="thDiv">3.支持成功</div>
+                    </div>
+                    <div class="ui-view-container">
+                        <!-- uiView:  --><div data-ui-view="" class="animate-slide ng-scope" style="min-height: 400px; position: relative; left: 0%;"><div class="zffsCont ng-scope">
+    <div class="yfje_h3"><b style="width:200px;display:inline;float:left">应付金额</b><span class="ng-binding">1</span><span>¥</span></div>
+   <!-- <div class="zfMethodBox">
+        <div class="zfMethodItem" ng-if="pay.payview.item_info.return_type!=3">
+            <div class="tjddSelectBox">
+                <select selector value="pay.coupon" change-handler="selectCoupon" list='pay.couponList' value-path="coupon_id" text-path="text" >
+                </select>
+            </div>
+            <span class="jeSpan" ng-if="pay.coupon.amount">-￥<span>{{pay.coupon.amount || 0}}</span></span>
+        </div>
+        <div class="zfMethodItem" ng-if="pay.payview.residue > 0">
+            <div class="yeLeftBox" ng-click="toggleBalance()"><i class="zfItemIcon {{pay.useBalance ? 'checked' : ''}}"></i>余额￥<span >{{pay.payview.residue | currency : ""}}</span></div>
+            <span class="jeSpan" ng-if="pay.balance">-￥<span>{{pay.balance}}</span></span>
+        </div>
+    </div>-->
+    <div class="zfPlatBox">
+        <h2 class="title">请选择支付方式</h2>
+        <div class="platform-box">
+            <ul class="zfPlat_ul siteIlB_box" id="zfPlat_ul">
+                <li class="cur" id="wechatpay">
+                    <a>平台支付</a>
+                    <div class="zfPlatCont ng-scope" id="zfPlatCont">
+                        <div class="zfPlatContItem" ng-show="pay.tab==1">
+                            <div class="zfPlatItemWrap clearfix">
+                               <div class="zfPlatItem zfPlatItemBank weixin checked" ng-click="checkPlatform(platform)" ng-if="!platform.hide" ng-repeat="platform in pay.payview.payway_list"><span></span></div>
+                            </div>
+                        </div>
+                   </div>
+                </li>
+                <li class="last " id="balancepay">
+                        <a>余额支付</a>
+                        <div class="zfPlatCont ng-scope opa-pay " id="zfPlatCont" >
+                             <div class="zfPlatContItem" ng-show="pay.tab==1">
+                                <div class="zfPlatItemWrap clearfix opa">
+                                  <span class="opa-sp">请输入密令:</span>
+                                  <div class="opr">
+                                      <input type="text" maxlength="6" class="secret" placeholder="请输入密令"/>
+                                  </div>
+                                </div>
+                            </div>
+                       </div>
+                </li>
+            </ul>
+
+
+        </div>
+    </div>
+    <p class="zj_valP">支付<span><b>¥</b><span class="ng-binding">1</span></span></p>
+
+    <!-- ngIf: !canPayJump() -->
+    <!-- ngIf: canPayJump() --><input type="button" ng-if="canPayJump()" ng-click="pay_jump()" value="去付款" class="tjdd_submitBtn ng-scope"><!-- end ngIf: canPayJump() -->
+</div>
+<!-- ngIf: qrcode_url -->
+<div id="form-container" style="display:none" class="ng-scope"></div>
+</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+ </div>
+        <!-- 右侧大背景图 -->
+        <div id="public_main_right_bg" style="position:fixed;top:0;bottom:0;left:1190px;width:100%;"></div>
+        <script src="{{PATH_TML}}js/public_main_right_bg.js"></script>
+    <script src="/common/js/control.js"></script>
+
+<!-- 列表详情 -->
+    <!-- <script src="/project/js/projectdetail.js"></script> -->
+    <script src="">
+
+                $(document).ready(function () {
+            var hint = new InputHinter({container: 'search-box', id: "searchInput"});
+            $('#searchBtn').click(function () {
+                var $input = $('#searchInput');
+                window.location.href = "/search/kw-" + hint.encodeKw($.trim($input.val()) || $input.attr('placeholder'));
+            });
+            $('#searchInput').focus(function(){
+                setTimeout(function() {
+                    $('#search-box').addClass("siteMSearch-focus")},1)
+            })
+            $('#searchInput').blur(function(){
+                setTimeout(function() {
+                    $('#search-box').removeClass("siteMSearch-focus")},1)
+            });
+            if (!$(".other-login").html())
+            {
+                $('.siteMSearch').css('right','80px');
+            }
+        });
+        var showCode = '';
+    </script>
+
+<!-- <script src="/project/p-detail/js/03c.js"></script> -->
+</body>
+</html>
+<script src="https://cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.js"></script>
+<!--<script src="{{PATH_TML}}activity/js/activity.js"></script>-->
+<!--<script src="{{PATH_TML}}project/js/project-sup.js"></script>-->
+<script src="{{PATH_TML}}project/js/project-pay.js"></script>
+<script>
+$(function(){
+$(".fancybox").fancybox({
+    'width': '500px',
+     'height': 'auto',
+
+    'zoomSpeedIn': 300,
+    'zoomSpeedOut': 300,
+    'overlayShow': true
+});
+    $(".menuItem").click(function(){
+            $(this).addClass("active").siblings().removeClass("active");
+    });
+
+
+//  滚动置顶
+    var offsetTop = 115;
+
+
+    $('.index-content').scroll(function() {
+        if ($('.index-content').scrollTop() > offsetTop) {
+
+            $(".project_t").eq(0).css({
+                "position": "fixed",
+                "top": 0,
+                "width":"735px"
+            })
+        } else {
+            $(".project_t").css({
+                "position": "relative"
+            });
+
+        }
+    })
+
+
+})
+</script>
