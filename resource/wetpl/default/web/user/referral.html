@@ -27,7 +27,44 @@
 
 		<title>我的感恩金</title>
 	</head>
-
+	<style>
+		.red {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+		.red > li {
+			/*position: absolute;*/
+			/*top: 60px;*/
+			/*left: 585px;*/
+			color: #fff;
+			font-size: 40px;
+			font-weight: 500;
+			width: 50px;
+			height: 70px;
+			line-height: 70px;
+			text-align: center;
+			background: #ff9882;
+			margin-right: 10px;
+			list-style: none;
+			border-radius: 2px;
+		}
+		.grateful .grateful-money {
+			width: 100%;
+			height: 265px;
+			background-size: 480px;
+			font-size: 30px;
+			color: #E6CC91;
+			text-align: center;
+			padding: 200px 0 0 0px;
+			font-weight: bold;
+			background: url(/common/img/wz-gf-moneybg.jpg) 0 0px no-repeat;
+		}
+		.mt20 {
+			margin: 20px 0;
+			padding: 0 20px;
+		}
+	</style>
 	<body style="width: 100%; background: #F7F6F2;">
 		<div class="left-nav">
 			
@@ -44,16 +81,11 @@
 				<!-- new html -->				
 			    <div class="list_conment mt20 setting_security">
 		            <div class="grateful mb20">
-		                <div class="grateful-money f_l"></div>
-		                <div class="grateful_bottom">
-		                    <div class="grateful_mon">0&nbsp;<i>元</i></div>
-		                    <div class="grateful_btn">
-		                       <a href="/member-gnking_setting.html"><img src="https://tanli.wezchina.com/app/Tpl/wezchina/images/wz_ui/gratefu_btn.png"></a>
-		                    </div>
-		                </div>
+		                <div class="grateful-money f_l">我的感恩金</div>
+						<ul class="red"></ul>
 		                <div class="blank"></div>                
 		            </div>
-                    <div class="empty_tip">
+                    <div class="empty_tip" style="display: none">
 	                     您目前还没有收到任何感恩金，加油哦！
 	                </div>
                 </div>
@@ -68,4 +100,25 @@
 		
 	</body>
 
+	<script>
+		var api = 'http://new.wezchina.com/api/';
+		$.ajax({
+			url: api + 'circel/ownmoney',
+			headers: {
+				'Token': plats_token
+			},
+			success: function (data) {
+				console.log(data)
+				var money = data.data.ownmoney + '';
+				if (money == 0) {
+					$(".grateful-money").hide();
+					$(".empty_tip").show();
+				} else {
+					money.split('').map(n => $(".red").append('<li>' + n + '</li>'));
+					$(".red").append('<li>元</li>');
+				}
+
+			}
+		})
+	</script>
 </html>

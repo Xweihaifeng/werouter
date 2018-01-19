@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html>
+
+	<head lang="en">
+		<meta charset="UTF-8">
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+		<link rel="shortcut icon" id="favicon" href="" />
+		<link rel="stylesheet" href="/common/css/bootstrap.min.css">
+		<!-- <link rel="stylesheet" type="text/css" href="/common/css/bootstrap-datetimepicker.min.css"> -->
+		<link rel="stylesheet" href="/common/css/main.css">
+		<link rel="stylesheet" href="/common/css/buttons.css">
+		<script src="/common/js/jquery-3.2.1.min.js"></script>
+		<script type="text/javascript" src="/common/js/bootstrap.min.js"></script>
+		<script src="/common/js/browser.min.js"></script>
+		<link rel="stylesheet" href="{{PATH_TML}}user/css/manage.css">
+		<!-- <link rel="stylesheet" type="text/css" href="css/order.css"> -->
+		<link rel="stylesheet" type="text/css" href="{{PATH_TML}}user/css/mall_manage.css">
+		<link rel="stylesheet" type="text/css" href="{{PATH_TML}}user/css/intend_user.css">
+		<script src="/common/js/plupload/plupload.full.min.js"></script>
+		<script src="{{PATH_CONFIG}}"></script>
+		<script src="/common/js/control.js"></script>
+		<script src="{{PATH_TML}}user/js/common.js"></script>
+		<script src="/common/js/swiper-3.3.1.min.js"></script>
+		<script src="/common/js/buttons.js"></script>
+		<!-- <script src="/common/js/ckeditor/ckeditor.js"></script> -->
+		<script src="/common/js/qiniu.js"></script>
+    	<script type="text/javascript" src="/common/layer-v3.0.3/layer-v3.0.3/layer/layer.js"></script>
+		<script src="{{PATH_TML}}user/common/js/generate_manage.js"></script>
+
+		<script type="text/javascript" src="{{PATH_TML}}user/js/associator_list.js"></script>
+		<title>会员列表</title>
+		<style type="text/css">
+
+			#zone-associator-list {
+				color: red;
+				background: #f7f7f7;
+			}
+
+			.we-cont .active>div {
+				color: red;
+				background: #f7f7f7;
+			}
+		</style>
+		<script>
+			window.csrf = {
+				"csrfToken": "Dj5Ez1yA4Dfow8SiFuMpYl2xDURwMjBMHWpHm4Kt"
+			}
+		</script>
+		<script>
+			window.Laravel = {
+				"csrfToken": "Dj5Ez1yA4Dfow8SiFuMpYl2xDURwMjBMHWpHm4Kt"
+			}
+		</script>
+	</head>
+
+	<body style="width: 100%; background: #F7F6F2;">
+		<div class="login">
+			<div class="left-nav">
+	           
+	        </div>
+			<div id="top">
+		        
+		    </div>
+		    <div id="middle">
+        
+			</div>
+
+			<div id="right">
+				<div class="we-release">
+					<!-- <div class="we-art-nav">
+						<ol class="breadcrumb" style="height: 44px; line-height: 30px; font-size: 15px; cursor: pointer;">
+							<li class="homepage">
+								<a>我的商城</a>
+							</li>
+							<li class="back">
+								<a>编辑</a>
+							</li>
+							<li class="active">订单管理</li>
+						</ol>
+					</div> -->
+					<div class="order-table">
+
+						<div class="use-right">
+							<div class="list_title clearfix">
+					            <div class="cur">
+					                <span>会员列表</span>
+					            </div>
+					        </div>
+					        <!-- 会员列表start -->					        
+							 <div class="user_box"> 
+							   <!-- <div class="setlist clearfix"> 
+							    <form action="/associator-associator_list.html" method="get" id="filter-form"> 
+							     <select name="province" class="ui-select field_select small"> <option value="" rel="0">TA所在的省</option> <option value="安徽" rel="3">安徽</option> <option value="澳门" rel="396">澳门</option> <option value="北京" rel="52">北京</option> <option value="福建" rel="4">福建</option> <option value="甘肃" rel="5">甘肃</option> <option value="广东" rel="6">广东</option> <option value="广西" rel="7">广西</option> <option value="贵州" rel="8">贵州</option> <option value="海南" rel="9">海南</option> <option value="河北" rel="10">河北</option> <option value="黑龙江" rel="12">黑龙江</option> <option value="河南" rel="11">河南</option> <option value="湖北" rel="13">湖北</option> <option value="湖南" rel="14">湖南</option> <option value="江苏" rel="16">江苏</option> <option value="江西" rel="17">江西</option> <option value="吉林" rel="15">吉林</option> <option value="辽宁" rel="18">辽宁</option> <option value="内蒙古" rel="19">内蒙古</option> <option value="宁夏" rel="20">宁夏</option> <option value="青海" rel="21">青海</option> <option value="陕西" rel="24">陕西</option> <option value="山东" rel="22">山东</option> <option value="上海" rel="321">上海</option> <option value="山西" rel="23">山西</option> <option value="四川" rel="26">四川</option> <option value="台湾" rel="397">台湾</option> <option value="天津" rel="343">天津</option> <option value="香港" rel="395">香港</option> <option value="西藏" rel="28">西藏</option> <option value="新疆" rel="29">新疆</option> <option value="云南" rel="30">云南</option> <option value="浙江" rel="31">浙江</option> <option value="重庆" rel="394">重庆</option> </select> 
+							     <select name="city" class="ui-select field_select small"> <option value="" rel="0">TA所在的市</option> </select> 
+							     <select name="level_id" class="field_select ui-select" id="sel_vip"> <option value="">全部用户</option> <option value="0">普通会员</option> </select> 
+							     <div class="ui-button theme_bgcolor search-btn" style="margin-left: 32px;">
+							      搜索
+							     </div> 
+							    </form> 
+							    <div class="blank0"></div> 
+							   </div>  -->
+							   
+							   <table class="user_info_tab"> 
+							    <thead> 
+							     <tr>
+							      <th width="7%">序号</th> 
+							      <th width="13%">用户名</th> 
+							      <th width="10%">手机</th> 
+							      <!-- <th width="10%">实名认证</th>  -->
+							      <!-- <th width="10%">V认证</th>  -->
+							      <th width="10%">折扣</th> 
+							      <th width="10%">会员级别</th> 
+							      <!-- <th width="10%">地区</th>  -->
+							      <th class="intended_users_money" width="10%">消费金额</th> 
+							      <!-- <th width="12%">操作</th>  -->
+							      <!-- <th width="8%">详情</th>  -->
+							     </tr>
+							    </thead> 
+							    <tbody>  
+							     	<div style="width: 100%;text-align: center;">
+								     <!--   -->
+								   </div>
+								   <tr align="center">
+										<td colspan="6">暂时没有会员</td>
+								   </tr>
+							    </tbody> 
+							   </table> 
+							   	<script>
+									$(".user_info_tab").css({"margin-top":"0px"})
+								</script> 
+							   <!-- <div class="product_buy_site address_pop"> 
+							    <div class="product_buy_frame"> 
+							     <div class="product_buy_title"> 
+							      <span>好友详情</span> 
+							      <span class="products_buy_exit"> <img src="https://tanli.wezchina.com/app/Tpl/wezchina/wemall/images/quxiao.png" alt="" /></span> 
+							     </div> 
+							     <div class="product_buy_con"> 
+							      <div class="product_buy_form"> 
+							       <div class="product_buy_item"> 
+							        <span>用户名</span> 
+							        <div class="product_buy_input product_buy_name" id="user_detail_name"> 
+							        </div> 
+							       </div> 
+							       <div class="product_buy_item product_buy_tel"> 
+							        <span>手机号码</span> 
+							        <div class="product_buy_input " id="user_detail_mobile"></div> 
+							       </div> 
+							       <div class="product_buy_item"> 
+							        <span>会员级别</span> 
+							        <div class="product_buy_input">
+							         普通会员
+							        </div> 
+							       </div> 
+							       <div class="product_buy_item"> 
+							        <span>地区</span> 
+							        <div class="product_buy_input" id="user_detail_area"></div> 
+							       </div> 
+							      </div> 
+							     </div> 
+							    </div> 
+							   </div>  -->
+							   <!-- 发短息 --> 
+							   <!-- <div class="product_msg"> 
+							    <div class="product_det"> 
+							     <div class="product-header"> 
+							      <div class="product-title">
+							       发送短信
+							      </div> 
+							      <div class="product_right">
+							       <img src="https://tanli.wezchina.com/app/Tpl/wezchina/wemall/images/quxiao.png" alt="" />
+							      </div> 
+							     </div> 
+							     <div class="product-content"> 
+							      <textarea name="msg" class="product_text" maxlength="70"></textarea> 
+							      <span class="product-content-msg"> 短信签名：程序猿 </span> 
+							      <button type="button" class="product_msg_btn send-sms-btn">发送</button> 
+							      <span class="product-content-con">70字/条</span> 
+							     </div> 
+							    </div> 
+							   </div>  -->
+							   <script>
+								/*function change(){
+									var offset1 = $(".product_buy_frame").offset().top;
+									var height = $(".product_buy_frame").height()/2;
+									var Height = $(window).height()/2;
+									var h = Height-height;
+									$(".product_buy_frame").css({"margin-top":h});
+								}
+								$(window).bind("scroll",function(){
+									change();
+								});
+								$(".products_buy_exit").click(function(){
+									$(".product_buy_site ").hide();
+								});
+								function changes(){
+									var offset1 = $(".product_det").offset().top;
+									var height = $(".product_det").height()/2;
+									var Height = $(window).height()/2;
+									var h = Height-height;
+									$(".product_det").css({"margin-top":h});
+								}
+								$(window).bind("scroll",function(){
+									changes();
+								});
+								// 发短息
+								$(document).on("click",".intended_users_mail",function(event){
+							    	var id = $(this).closest('tr').data("id");
+							    	$(".send-sms-btn").data("id",id);
+									$(".product_msg").fadeIn();
+									changes();
+									console.log("like");
+								});
+								$(".product_right").click(function(){
+							    	$(".send-sms-btn").data("id","");
+									$(".product_msg ").hide();
+								});
+
+								$(".intended_users_add").click(function(event){
+									event.preventDefault();
+							    	var id = $(this).closest('tr').data("id");
+							    	if(!id){
+							    		$.showErr("该用户尚未激活");
+							    		return;
+							    	}
+							    	$.showConfirm("确定向对方发送会员邀请吗？",function(){
+							    		var params = {id:id,ajax:1};
+										var callback = function(msg){
+								  			close_pop();
+										  	if(msg.result == 0){
+										    	$.showSuccess(msg.description);
+										  	}else{
+											    $.showErr(msg.description,function(){
+											      	if(msg.data){
+											        	window.location.href = msg.data;
+											      	}
+											    });
+										  	}
+										}        
+										requestAjax(params, 'post', '/index.php?ctl=associator&act=do_send_associator_invitation', callback, true);
+							    	});
+							    });
+
+							    $(".send-sms-btn").click(function(event){
+							    	var _msgdom = $(this).closest("div").find("textarea[name=msg]");
+							    	var msg = $(this).closest("div").find("textarea[name=msg]").val();
+							    	if(!msg){
+							    		$.showErr("请输入短信内容");
+							    		return;
+							    	}
+							    	var id = $(this).data("id");
+							    	if(!id){
+							    		$.showErr("该用户尚未激活");
+							    		return;
+							    	}
+									var params = {id:id,msg:msg,ajax:1};
+									var callback = function(msg){
+									  	if(msg.result == 0){
+									    	$.showSuccess(msg.description,function(){
+									  			_msgdom.val("");
+							    				$(".send-sms-btn").data("id","");
+									    	});
+									  	}else{
+										    $.showErr(msg.description,function(){
+										      	if(msg.data){
+										        	window.location.href = msg.data;
+										      	}
+										    });
+									  	}
+							    		$(".product_msg ").fadeOut();
+									}        
+									requestAjax(params, 'post', '/index.php?ctl=associator&act=do_send_user_sms', callback, true);
+							    });
+							    $(document).on("click",".user-detail-btn",function(event){
+							    	var id = $(this).data("id");
+							    	if(!id){
+							    		$.showErr("该用户尚未激活");
+							    		return;
+							    	}
+									var params = {id:id,ajax:1};
+									var callback = function(msg){
+									  	if(msg.result == 0){
+									    	var nav = "";
+									    	if(nav == 1){
+									    		$("#user_detail_name").html(msg.data.show_name);
+									    		$("#user_detail_mobile").html(msg.data.show_mobile);
+									    	}else{
+									    		$("#user_detail_name").html(msg.data.user_name);
+									    		$("#user_detail_mobile").html(msg.data.mobile);
+									    	}
+								    		$("#user_detail_area").html(msg.data.province+" "+msg.data.city);
+								    		$(".product_buy_site").show();
+									  	}else{
+										    $.showErr(msg.description,function(){
+										      	if(msg.data){
+										        	window.location.href = msg.data;
+										      	}
+										    });
+									  	}
+									}        
+									requestAjax(params, 'post', '/index.php?ctl=associator&act=do_get_user_detail', callback, true);
+							    });*/
+							</script> 
+							   <div class="pages" style="margin-top:20px"></div> 
+							  </div> 
+							
+					        <!-- 会员列表end -->
+						</div>
+
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</body>
+
+</html>

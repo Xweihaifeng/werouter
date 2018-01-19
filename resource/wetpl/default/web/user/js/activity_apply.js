@@ -1,59 +1,8 @@
-/*
-
-    // 3.删除
-    var activitydel=function(obj){
-        console.log($(obj).closest('li').data('id'));
-         $.ajax({
-            url:ACTIVITY_DESTROY+'/'+$(obj).closest('li').data('id'),
-            type:'get',
-            headers: {
-                    'Token': docCookies.getItem("token")
-                },
-            success:function(data){
-                console.log(data);
-                if(data.code == 200){
-                    mess_tusi("删除成功");
-                    location.reload();
-
-                }else{
-                    mess_tusi(data.message);
-                }
-            },
-            error: function(xhr){
-                console.log(xhr);
-            }
-        })
-    }
-    // 4.编辑
-    var activityedit=function(obj){
-        window.location="/user/admin/activity/detail/"+$(obj).closest("li").data("id");
-    }
-    // 5.取消发布
-    var activitycancel=function(obj){
-        console.log($(obj));
-        var actiid=$(obj).closest("li").data("id");
-        $.ajax({
-            url:ACTIVITY_UPDATE,
-            type:'post',
-            data:{weid:actiid,status:1},
-            headers: {
-                    'Token': docCookies.getItem("token")
-                },
-            success:function(data){
-                console.log(data);
-                if(data.code == 200){
-                    mess_tusi("取消发布成功");
-                    location.reload();
-
-                }else{
-                    mess_tusi(data.message);
-                }
-            },
-            error: function(xhr){
-                console.log(xhr);
-            }
-        })
-    }*/
+jq164.ajaxSetup({
+    headers: {
+        'Token': docCookies.getItem("token")
+    },
+});
 var id = window.location.href.split('/').pop();
 var goAttend = function() {
     window.location.href = '/user/admin/activity/attend/' + id;
@@ -264,35 +213,62 @@ var smsNotify = function(weid, enroll_id, callback) {
             }
         });
     }
-    // 群发短信通知
+    // 群发短信通知 - 全部发送
 var allSmsNotify = function(weid, callback) {
-    layer.load();
-    $.ajax({
-        url: ACTIVITY_ENROLL_ALL_SMS_NOTIFY,
-        type: 'POST',
-        data: {
-            activity_id: weid
-        },
-        headers: {
-            'Token': docCookies.getItem("token")
-        },
-        success: function(data) {
-            layer.closeAll('loading');
-            if (data.code == 200)
-                callback(data.data);
-            else
-                notice.alert(data.message);
-        },
-        error: function(xhr) {
-            layer.closeAll('loading');
-            console.log(xhr);
-        }
+        common.loading('正在发送...', function(hideLoading) {
+            $.ajax({
+                url: ACTIVITY_ENROLL_ALL_SMS_NOTIFY,
+                type: 'POST',
+                data: {
+                    activity_id: weid
+                },
+                headers: {
+                    'Token': docCookies.getItem("token")
+                },
+                success: function(data) {
+                    hideLoading();
+                    if (data.code == 200)
+                        callback(data.data);
+                    else
+                        notice.alert(data.message);
+                },
+                error: function(xhr) {
+                    hideLoading();
+                    console.log(xhr);
+                }
+            });
+        });
+    }
+    // 群发短信通知 - 选择性发行
+var multiSmsNotify = function(weid, userIds, callback) {
+    common.loading('正在发送...', function(hideLoading) {
+        $.ajax({
+            url: ACTIVITY_ENROLL_MULTI_SMS_NOTIFY,
+            type: 'POST',
+            data: {
+                activity_id: weid,
+                user_ids: userIds
+            },
+            headers: {
+                'Token': docCookies.getItem("token")
+            },
+            success: function(data) {
+                hideLoading();
+                if (data.code == 200)
+                    callback(data.data);
+                else
+                    notice.alert(data.message);
+            },
+            error: function(xhr) {
+                hideLoading();
+                console.log(xhr);
+            }
+        });
     });
 }
-
 $(document).on('click', '.all-sms-notify', function() {
-    confirmer = layer.confirm('群发短信可能消耗大量短信余额，确认要群发？', {
-        title: '群发短信通知',
+    confirmer = layer.confirm('快捷发送方式将通知该活动所有报名者，若要指定接收人，请使用"短信管理"中的高级群发功能。<br>您确认要快捷发送通知吗？', {
+        title: '快捷发送通知',
         btn: ['确认发送', '取消']
     }, function() {
         layer.close(confirmer);
@@ -301,6 +277,71 @@ $(document).on('click', '.all-sms-notify', function() {
         });
     }, function() {});
 });
+$(document).on('click', '.multi-sms-notify', function() {
+    var smsAlert = layer.open({
+        skin: 'layui-layer-rim',
+        type: 1,
+        area: ['530px', '500px'],
+        title: 0,
+        closeBtn: true,
+        shadeClose: true,
+        scrollbar: false,
+        btn: ['确认发送', '取消'],
+        yes: function() {
+            var result = selector.getResult();
+            if (result.length === 0) {
+                layer.msg('请选择接收人');
+                return;
+            } else {
+                multiSmsNotify(id, result, function(data) {
+                    layer.msg('已发送!');
+                });
+            }
+        },
+        content: `    <div id="ui-fs" class="ui-fs">
+        <div class="ui-fs-result clearfix">
+        </div>
+        <div class="ui-fs-input">
+            <input type="text" value="输入报名者手机号码进行筛选" maxlength="30" />
+            <a class="ui-fs-icon" href="javascript:void(0)" title="查看所有">查看所有</a>
+        </div>
+        <div class="ui-fs-list">
+            数据加载中....
+        </div>
+        <div class="ui-fs-all">
+            <div class="top">
+                <select id="ui-fs-friendtype"><option value="-1">所有报名者</option></select>
+                <div class="close" title="关闭">关闭</div>
+            </div>
+            <div class="ui-fs-allinner">
+                <div class="page clearfix">
+                    <div class="llight1">还有<b>30</b>人可选</div>
+                    <div class="page-link"><span class="prev">上一页</span><span class="next">下一页</span></div>
+                </div>
+                <div class="list clearfix">
+                    数据加载中...
+                </div>
+            </div>
+        </div>
+    </div>`,
+        end: function() {},
+        shade: 0.2
+    });
+
+
+    var selector;
+    $.getScript("/common/friendsuggest/ui.friendsuggest.js?sss", function() {
+        selector = new giant.ui.friendsuggest({
+            ajaxUrl: "/api/activity/enroll/fetcher?activity_id=" + id,
+            ajaxLoadAllUrl: "/api/activity/enroll/fetcher?activity_id=" + id,
+            ajaxGetCountUrl: "/api/activity/enroll/fetcher_count?activity_id=" + id,
+            ajaxGetFriendTypeUrl: "/api/activity/enroll/fetcher_type?activity_id=" + id,
+            totalSelectNum: 200,
+        });
+    });
+});
+
+
 
 $(document).on('click', '.self-sms', function() {
     location.href = "/user/admin/activity/sms/" + id;
@@ -1084,164 +1125,28 @@ $(document).ready(function() {
 
     //left-navbar show words
     $("#login, #article, #project, #active, #shopping, #zone").hover(function(e) {
-            var id = $(this).attr("id");
-            if (id != 'login') {
-                $(this).find(".word").show();
+        var id = $(this).attr("id");
+        if (id != 'login') {
+            $(this).find(".word").show();
+            $(this).css({
+                "line-height": "65px",
+                "padding-top": "10px"
+            });
+            $("#" + id + " .word").css("margin-top", "-35px");
+        } else {
+            if (!isLogin) {
                 $(this).css({
                     "line-height": "65px",
-                    "padding-top": "10px"
                 });
-                $("#" + id + " .word").css("margin-top", "-35px");
-            } else {
-                if (!isLogin) {
-                    $(this).css({
-                        "line-height": "65px",
-                    });
-                    // $("#" + id + " .word").css("margin-top", "-20px");
-                }
+                // $("#" + id + " .word").css("margin-top", "-20px");
             }
-        }, function() {
-            var id = $(this).attr("id");
-            $(this).find(".word").hide();
-            $(this).css("line-height", "65px");
-            $("#" + id + " .word").css("margin-top", "-55px");
-        })
-        /*
-            var modeleName = [];
-            var moduleState = function() {
-                $.ajax({
-                    url: PAGES_MODULERUN_LIST,
-                    type: 'GET',
-                    headers: {
-                        'Token': docCookies.getItem("token")
-                    },
-                    success: function(data){
-                        if (data.code == 200){
-                            console.log('module:', data.data.list);
-                            var state = data.data.list;
-                            state.map(x => {
-                                modeleName.push(x.module_id);
-                                if (x.module_id === '4009ea20-8ede-11e7-83a8-156d1da77933') {
-                                    if (x.status == 1) {
-                                        //$(".we-art").slideDown(500)
-                                        $(".we-art").show();
-                                        $('#toggle-button').prop("checked", true);
-                                    }
-                                }
-                                if (x.module_id === '44fd5620-8d7f-11e7-9e08-e356d0b019f1') {
-                                    if (x.status == 1) {
-                                        //$(".we-shop").slideDown(500)
-                                        $(".we-shop").show();
-                                        $('#toggle-button-4').prop("checked", true);
-                                    }
-                                }
-                                if (x.module_id === 'b3c00b00-a4e2-11e7-b542-2d038cc12c12') {
-                                    if (x.status == 1) {
-                                        //$(".we-shop").slideDown(500)
-                                        $(".we-active").show();
-                                        $('#toggle-button-2').prop("checked", true);
+        }
+    }, function() {
+        var id = $(this).attr("id");
+        $(this).find(".word").hide();
+        $(this).css("line-height", "65px");
+        $("#" + id + " .word").css("margin-top", "-55px");
+    })
 
-                                    }
-                                }
-                                if (x.module_id === 'c30c2160-a4e2-11e7-a2ad-35371a8cf051') {
-                                    if (x.status == 1) {
-                                        //$(".we-shop").slideDown(500)
-                                        $(".we-project").show();
-                                        $('#toggle-button-1').prop("checked", true);
-
-                                    }
-                                }
-                                if (x.module_id === 'a9d16bc0-ada0-11e7-8c59-993d3b1d7e06') {
-                                    if (x.status == 1) {
-                                        //$(".we-shop").slideDown(500)
-                                        $(".we-crm").show();
-                                        $('#toggle-button-3').prop("checked", true);
-
-                                    }
-                                }
-                            })
-                        } else {
-                            layer.msg(data.message, {
-                                time: 1500
-                            });
-                        }
-
-                        //列表折叠
-                        var curr = 'we-active';
-                        var status = true;
-                        var list = ['we-set', 'we-art', 'we-shop','we-active','we-project', 'we-app','we-crm', 'we-log'];
-
-                        var remove = function(id, list) {
-                            return list.filter(x => x != id);
-                        }
-
-                        $("." + curr + ":eq(0)").css("border-bottom", "1px solid #eeeeee");
-                        remove(curr, list).map(x => $("." + x + ":eq(1)").hide());
-
-                        var showList = function(state, id) {
-                            var id = "." + id;
-                            if (state) {
-                                $(id + ":eq(1)").hide(500);
-                                if (id != ".we-log") {
-                                    $(id + ":eq(0)").css("border-bottom", "0");
-                                }
-                                $(id + " span img").attr('src', '/common/img/more1.png');
-                                status = false;
-                            } else {
-                                $(id + ":eq(1)").show(500);
-                                $(id + " span img").attr('src', '/common/img/more_unfold.png');
-                                $(id + ":eq(0)").css("border-bottom", "1px solid #eeeeee");
-                                status = true;
-                            }
-                        }
-
-                        list.map(x => {
-                            $("." + x).click(function() {
-                                if (curr == x) {
-                                    remove(x, list).map(x => {
-                                        $("." + x + ":eq(1)").hide(500)
-                                        $("." + x + " span img").attr('src', '/common/img/more1.png');
-                                    });
-                                    showList(status, x);
-                                } else {
-                                    status = false;
-                                    $("." + curr + ":eq(0)").css("border-bottom", "0");
-                                    curr = x;
-                                    remove(x, list).map(x => {
-                                        $("." + x + ":eq(1)").hide(500)
-                                        $("." + x + " span img").attr('src', '/common/img/more1.png');
-                                    });
-                                    showList(status, x);
-                                }
-                            })
-                        })
-                    },
-                    error: function(xhr){
-                        console.log(xhr);
-                    }
-                })
-            }*/
-
-    //主页初始化
-    /*var init__ = function(token){
-        // moduleState();
-      if (token != 'null' && token != undefined) {
-        showLogin = false;
-        isLogin = true;
-        //加载用户头像
-        $("#login div img").hide();
-        $(".log-head").css({
-          'background': 'url(' + localStorage.getItem('avatar') + ') no-repeat center',
-          'background-size': '100% 100%'
-        })
-        $("#avatar .avatar-icon").css({
-          'background': 'url(' + localStorage.getItem('avatar') + ') no-repeat center',
-          'background-size': '100% 100%'
-        })
-        $(".log-head").show();
-      }
-    }
-
-    init__(docCookies.getItem("token"));*/
 
 })

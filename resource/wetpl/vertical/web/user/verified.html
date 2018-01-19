@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+
+    <head lang="en">
+        <title> 实名认证 </title>
+        <meta charset="UTF-8">
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+        <link rel="shortcut icon" id="favicon" href="" />
+
+        <script charset="utf-8" type="text/javascript" src="/common/js/jquery-3.2.1.min.js"></script>
+        <script charset="utf-8" type="text/javascript" src="/common/layer-v3.0.3/layer-v3.0.3/layer/layer.js"></script>
+        <script charset="utf-8" type="text/javascript" src="/common/js/swiper-3.3.1.min.js"></script>
+        <script charset="utf-8" type="text/javascript" src="{{PATH_CONFIG}}"></script>
+        <script charset="utf-8" type="text/javascript" src="/common/js/browser.min.js"></script>
+        <script charset="utf-8" type="text/javascript" src="/common/js/jquery.imagecompress.js"></script>
+        <script charset="utf-8" type="text/javascript" src="/common/js/buttons.js"></script>
+
+        <link rel="stylesheet" type="text/css" href="/common/css/main.css">
+        <link rel="stylesheet" type="text/css" href="/common/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="/common/css/buttons.css">
+        <link rel="stylesheet" type="text/css" href="/common/css/swiper.min.css">
+        <link rel="stylesheet" type="text/css" href="{{PATH_TML}}user/css/verified.css">
+    </head>
+
+    <body style="width: 100%; background: #F7F6F2;">
+        <div class="left-nav"></div>
+        <div class="login">
+            <div id="top"></div>
+            <div id="middle"></div>
+            <div id="right">
+                <div class="container1">
+                    <div class="con-hd">
+                        <nav class="navbar navbar-default display-head">
+                            <div class="container-fluid">
+                                <div class="navbar-header">
+                                    <ol class="breadcrumb">
+                                        <li>
+                                            <a href="verified"> 实名认证 </a>
+                                        </li>
+                                        <li>
+                                            <a href="verified"> 在线认证 </a>
+                                        </li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </nav>
+                        <div class="cert-to-pass">
+                            <div class="media bg-success success-info">
+                                <div class="media-left media-middle">
+                                    <img class="media-object warn-img" src="{{PATH_TML}}user/img/warn.png" alt="警示！">
+                                </div>
+                                <div class="media-body">
+                                    <h4 class="media-heading"> 您还没有通过实名认证！ </h4>
+                                    <p> 通过实名认证的用户能更快速的申请成为正式会员，正式会员才能根据平台设置可享有更多特权！ </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cert-success-info">
+                            <div class="success-to-pass">
+                                <div class="media-left-success">
+                                    <img class="media-object-success" src="{{PATH_TML}}user/img/icon_name.png" alt="成功！">
+                                </div>
+                                <div class="media-body-success">
+                                    <div class="medal-body-body">
+                                        <div class="media-heading-success"> <span class="real-cert"> 实名认证 </span> 恭喜，您已经通过实名认证！</div>
+                                        <div class="media-footing-success"> 认证状态：<span class="success-status"> 已认证 </span> </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <form class="form-horizontal row" id="form_list">
+                            <div class="col-sm-6">
+                                <div class="form-group ">
+                                    <label class="error-info"> 姓名有误！ </label>
+                                    <label for="inputPassword3" class="col-sm-3 control-label"> 真实姓名: </label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control input-lg" id="id_name" placeholder="请填写本人真实姓名">
+                                    </div>
+                                </div>
+                                <div class="form-group ">
+                                    <label class="error-info input-info"> 身份证号不合法！ </label>
+                                    <label for="inputPassword3" class="col-sm-3 control-label"> 身份证号: </label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control input-lg" id="id_card" size="15" maxlength="18" placeholder="请填写本人身份证号码">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-3 col-sm-9">
+                                        <button type="button" id="submit" class="btn btn-danger col-md-12"> 提交申请 </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <img src="{{PATH_TML}}user/img/20170829171720.png" style="width: 100%">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="prompt-info"></div>
+        </div>
+        <!--模块引入-->
+        <script charset="utf-8" type="text/javascript" src="{{PATH_TML}}user/common/js/generate.js"></script>
+        <script>
+            $("#favicon").attr("href", ApiMaterPlatQiniuDomain + localStorage.getItem("fav"));
+        </script>
+        <script charset="utf-8" type="text/javascript" src="/common/js/control.js"></script>
+        <script charset="utf-8" type="text/javascript" src="{{PATH_TML}}user/js/common.js"></script>
+        <script charset="utf-8" type="text/javascript" src="{{PATH_TML}}user/js/verified.js"></script>
+    </body>
+
+</html>

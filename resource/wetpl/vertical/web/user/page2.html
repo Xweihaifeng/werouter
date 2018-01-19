@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+
+	<head lang="en">
+		<meta charset="UTF-8">
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+		<link rel="shortcut icon" id="favicon" href="" />
+		<script src="/common/js/jquery-3.2.1.min.js"></script>
+		<script src="/common/js/browser.min.js"></script>
+		<script src="/common/js/jquery.imagecompress.js"></script>
+		<link rel="stylesheet" href="/common/css/main.css">
+		<link rel="stylesheet" href="/common/css/bootstrap.min.css">
+		<link rel="stylesheet" href="/common/css/buttons.css">
+		<link rel="stylesheet" href="/common/css/swiper.min.css">
+		<!-- <link rel="stylesheet" type="text/css" href="icon/font_hhs1pgs3hfbc5wmi/iconfont1.css" /> -->
+		<link rel="stylesheet" type="text/css" href="{{PATH_TML}}user/css/page1.css" />
+		<!-- DataTables -->
+	  	<link rel="stylesheet" href="/common/AdminLTE-2.4.0-rc/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+	  	<!-- Theme style -->
+	  	<link rel="stylesheet" href="/common/AdminLTE-2.4.0-rc/dist/css/AdminLTE.min.css">
+		<script src="/common/js/swiper-3.3.1.min.js"></script>
+		<script src="/common/js/buttons.js"></script>
+		<script src="/common/js/layer/layer.js"></script>
+		<title>我的钱包-提现</title>
+		<!--<style>
+			.pagination li a {
+				color:#000000!important;
+			}
+		</style>-->
+	</head>
+
+	<body style="width: 100%; background: #F7F6F2;">
+		<div class="left-nav">
+		</div>
+		<div class="login">
+			<div id="top">
+			</div>
+			<div id="middle">
+			</div>
+
+			<style>
+				a {
+					color: #000!important;
+				}
+
+				a:hover {
+					color: #ec0000!important;
+				}
+
+				#accept {
+					color: white!important;
+				}
+
+				.balance-title {
+					width: 100%;
+					height: 35px;
+					line-height: 35px;
+					padding-left: 15px;
+					font-size: 15px;
+					background-color: #eeeeee;
+				}
+
+				.nav-tabs {
+					width: 100%;
+					margin-top: 30px;
+					padding-left: 30px;
+				}
+
+				.content {
+					width: 100%;
+					height: 80px;
+					border-bottom: 1px solid #dcdcdc;
+				}
+
+				/* .c-title {
+					width: 100px;
+					height: 30px;
+					margin-top: 32px;
+					padding-left: 30px;
+					float: left;
+				} */
+
+				.c-explain {
+					border-bottom: 1px dashed #f0f0f0;
+					background: #fcf8e3;
+					margin-top: 15px;
+					padding-top: 18px;
+				}
+
+				.c-explain ul li {
+					list-style-type: disc;
+					list-style-position:inside;
+					padding-left: 30px;
+					color: #666;
+					line-height: 32px;
+				}
+
+				.c-info .info-list {
+					height: 34px;
+					display: flex;
+					margin-top: 20px;
+					color: #666;
+					line-height: 34px;
+				}
+
+				.c-info .info-list > span {
+					margin-right: 15px;
+				}
+
+				.c-info .info-list input {
+					border: none;
+					border: 1px solid #ccc;
+					border-radius: 4px;
+				}
+
+				.c-info .info-list input {
+					margin-right: 10px;
+				}
+
+				.cash-btn {
+					margin-left: 80px;
+					margin-top: 24px;
+				}
+
+				.cash-btn a {
+					width: 100px;
+					height: 35px;
+					font-size: 14px;
+					color: #fff!important;
+					padding: 0;
+					line-height: 35px;
+				}
+
+				div.dataTables_wrapper div.dataTables_info {
+					display: none;
+				}
+
+				/* #money {
+					width: 200px;
+					margin-top: 25px;
+					float: left;
+				}
+				
+				.cert {
+					padding-top: 24px;
+				} */
+			</style>
+
+			<div id="right">
+				<div class="container1">
+					<div class="balance-title">余额提现</div>
+					<div class="recharge">
+						<ul class="nav nav-tabs">
+							<li role="presentation" class="charge active"><a href="#">我要提现</a></li>
+							<li role="presentation" class="log"><a href="#">提现日志</a></li>
+						</ul>
+					</div>
+
+					<div id="charge">
+						<!-- <div class="c-title">提现金额:</div>
+						<div class="money"><input type="text" class="form-control" placeholder="0" id="money"></div>
+						<div class="c-info">人民币（元）</div>
+						<div class="cert">
+							<a id="accept" class="button button-highlight button-rounded" style="width: 150px; height: 36px; line-height: 36px;">确定提现</a>
+						</div> -->
+						<div class="c-explain">
+							<ul>
+								<li>请输入您要提现的金额，以及正确无误的银行账号信息。</li>
+								<li>我们将在3个工作日(双休日和法定节假日除外)之内，将钱转入您绑定的微信账号。</li>
+								<li>在双休日和法定节假日期间，用户可申请取现，但暂不处理，需要等回复正常上班之后才进行处理。不便之处，请多多谅解！</li>
+							</ul>
+						</div>
+						<div class="c-info">
+							<div class="info-list ">
+								<span>账户总资金:</span><p id="amount"></p>
+							</div>
+							<div class="info-list">
+								<span>待审核金额:</span><p id="approve"></p>
+							</div>
+							<div class="info-list">
+								<span class="c-title"><b style="font-weight: noen; color: #faaa00; line-height: 34px; margin-left: 7px;">*</b>提取金额:</span><input class="money" id="money" type="text" name="" style="width: 217px; padding-left: 5px;"><p class="c-info" style="line-height: 34px;">元(提现金额要大于1元)</p>
+							</div>
+							<div class="info-list" style="padding-left: 7px;">
+								<span style="margin-left: 7px;">可用余额:</span><p id="useable"></p>
+							</div>
+							<div class="info-list" style="padding-left: 7px;">
+								<span style="line-height: 34px; margin-left: 7px;">操作密令:</span><input type="password" id="secret" name="" style="padding: 5px;"><p style="line-height: 34px;">忘记了?<a href="/user/myaccount/paypassword" style="color: #00b0f5!important;margin-left: 5px;">点这里</a></p>
+							</div>
+						</div>
+						<div class="cash-btn cert">
+							<a href="#" id="accept" class="button button-highlight button-rounded button-large">申请提现</a>
+							<p style="color: #ff634d; margin-top: 20px;font-size: 12px;">警告：禁止信用卡套现、虚假交易等行为，一经确认，将终止该账户的使用。</p>
+						</div>
+					</div>
+
+					<div id="log" style="margin-top: 30px; display: none;">
+						<section class="content" style="height: auto; min-height: 422px;">
+						  	<div class="row">
+						    	<div class="col-xs-12">
+									<div class="box">
+						            <div class="box-body">
+						              <table id="example" class="table table-bordered table-hover">
+						                <thead>
+											<th>申请金额</th>
+											<th>手续费</th>
+											<th>实际金额</th>
+											<th>申请日期</th>
+											<th>状态</th>
+							              </thead>
+						                <tbody id="money_tab">
+
+						                </tbody>
+						              </table>
+						            </div>
+						            <!-- /.box-body -->
+						          </div>
+						          <!-- /.box -->
+							    </div>
+						    </div>
+						</section>
+						<!-- <div class="page" id="page"></div> -->
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="{{PATH_CONFIG}}"></script>
+		<script src="{{PATH_TML}}user/common/js/generate.js"></script>
+		<!--模块引入位置不可移动-->
+		<script src="/common/js/control.js"></script>
+		<script src="{{PATH_TML}}user/js/common.js"></script>
+		<!-- DataTables -->
+		<script src="/common/AdminLTE-2.4.0-rc/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+		<script src="/common/AdminLTE-2.4.0-rc/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+		<script src="{{PATH_TML}}user/js/page2.js"></script>
+	</body>
+
+</html>

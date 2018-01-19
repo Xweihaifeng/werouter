@@ -1,0 +1,68 @@
+/**
+ * Created by weifeng on 2017/8/29.
+ */
+
+@charset "utf-8"
+
+html { position: relative!important; }
+html, body { position: relative; margin: 0; padding: 0; font-family: arial, helvetica, "微软雅黑", "microsoft yahei", sans-serif; }
+* { margin: 0; padding: 0; list-style: none; color: #555; }
+a { text-decoration: none; display: inline-block; }
+
+.special-content { width: 100%; height: 100%; overflow-y: auto; overflow-x: hidden; background-attachment: local; background-repeat: no-repeat; background-size: 100%; background-position: 50% 0; background-repeat: no-repeat; background-color: #f7f0e0; }
+.clearfix:after  { visibility: hidden; display: block; font-size: 0; content: " "; clear: both; height: 0; }
+.clearfix { *zoom: 1; }
+
+.special-header { width: 100%; height: 60px; line-height: 60px; background: #1c1c1c; display: flex; justify-content: center; }
+.special-top { position: relative; width: 1080px; height: 60px; line-height: 60px; margin: 0 auto; display: inline-flex; align-items: center; }
+.special-top .soso { position: absolute; right: 0; display: inline-flex; }
+.special-top .soso .soso-input { width: 187px; height: 30px; border: none; border-bottom-left-radius: 4px; border-top-left-radius: 4px; text-indent: 6px; background-color: #666; color: #ccc; outline: none; }
+.special-top .soso .soso-submit { width: 41px; height: 30px; border: 1px solid #33a0e1; border-bottom-right-radius: 2px; border-top-right-radius: 2px; position: relative; background-image: url("/common/img/default_soso.png"); background-size: 20px 20px; background-position: center center; background-repeat: no-repeat; vertical-align: middle; outline: none; background-color: #33a0e1; cursor: pointer; }
+.header-logo, .header-logo > a { width: 70px; height: 60px; }
+.special-title-list { display: flex; justify-content: center; }
+.special-title-list > li, .special-title-list > li > a { min-width: 80px; color: #aaa; }
+.special-title-list > li > a { padding: 0 20px 0 20px; }
+.special-title-list > li:hover a { background-color: #333; color: #aaa; }
+
+.special-main-page { position: relative; margin: 30px auto 0; width: 1080px; height: 400px; }
+.special-main-page .special-left, .special-main-page .special-right{ float: left; }
+.special-main-page .special-nav-info { position: relative; text-align: center; font-size: 14px; font-family: "微软雅黑"; color: #fff; width: 310px; height: 400px; padding: 0 10px; background-color: rgba(0, 0, 0, .75); filter: alpha(opacity=30); display: flex; justify-content: center; align-items: center; flex-direction: column; }
+.special-main-page .special-nav-info > div { width: 100%; height: 32px; line-height: 28px; padding: 0 10px; flex: 1; background-color: #333; display: inline-flex; justify-content: center; align-items: center; border-top: 1px solid #eee; border-left: 1px solid #eee; font-size: 18px; }
+.special-main-page .special-nav-info > div:first-child { border-top: none; }
+.special-main-page .special-nav-info > div.on { background-color: #c22; }
+.special-main-page .special-nav-info > div > a { width: 100%; height: 100%; padding: 0 17.5px; color: #fff; display: inline-flex; align-items: center; text-align: left; }
+.special-main-page .special-right { width: 750px; height: 400px; overflow: hidden; }
+.special-main-page .special-content-info { position: relative; width: 750px; min-height: 400px; background-color: rgba(255, 255, 255, .3); }
+.special-main-page .special-content-info > div { position: relative; width: 750px; height: 400px; background: #fff; }
+.special-main-page .special-content-info > div:first-child { margin-top: 0; }
+.special-main-page .special-content-info a, .special-main-page .special-content-info img { width: 100%; height: 100%; }
+.special-main-page .special-content-info .hot-info { position: absolute; bottom: 20px; left: 20px; width: 710px; color: #fff; }
+.special-main-page .special-content-info .hot-title { display: inline-block; padding: 12px 16px; font-size: 16px; background: #c22; font-size: 16px; color: #fff; }
+.special-main-page .special-content-info .hot-summary { padding: 12px 16px; line-height: 1.5em; background: rgba(0, 0, 0, 0.75); font-size: 14px; color: #fff; }
+
+.special-focus { width: 1080px; height: auto; margin: 0 auto 50px; }
+.special-box { display: flex; margin-top: 1.25em; }
+.special-box .special-box-right { width: 1080px; min-height: 250px; font-size: 14px; padding-bottom: 20px; border-bottom: 1px dotted #ccc; }
+.special-box .special-box-right > .info span:nth-child(2) { margin-left: 10px; }
+.special-box .special-box-right > * { color: #555; }
+.special-box .special-box-right > h1 { color: #c22; font-size: 2em; margin: 0 0 .67em; }
+.special-box .special-box-right > div.info { padding: .5em 0; color: #999; }
+.special-box .special-box-right > div.info > span { color: #999; }
+.special-box .special-box-right > div.sp_content * { width: 100%; }
+.special-box .special-box-right > div.sp_content { width: 100%; color: #555; line-height: 1.75em; display: inline-grid; margin-top: 1em; text-indent: 2em; }
+.special-box .special-box-right > div.sp_content img { width: 90%; margin: 0 auto; }
+.special-box .special-box-right > div.sp_content a { color: #555; }
+.special-box .special-box-right > div.sp_content > p { margin-bottom: 1em; text-indent: 2em; display: inline-grid; }
+.special-box .special-box-right > div.sp_content > img { margin-bottom: 1em; }
+
+.special-footer { width: 100%; height: 236px; padding: 21px 0; background-color: #000; position: absolute; }
+.special-footer a { color: #777; }
+.special-footer a:hover { text-decoration: underline; }
+.special-footer * { font-size: 14px; }
+.special-footer footer { width: 1080px; height: 194px; margin: 0 auto; padding: 21px 0; text-align: center; }
+.special-footer footer .footer-nav { margin-bottom: 7px; display: inline-flex; }
+.special-footer footer .footer-nav a { padding: 0 1em; color: #777; border-left: 1px solid #333; }
+.special-footer footer .footer-nav a:first-child { border: none; }
+.special-footer footer .copyright p { margin: .5em 0; }
+.special-footer footer ._ideConac { height: 80px; }
+.special-footer footer ._ideConac img { width: 80px; height: 80px; }

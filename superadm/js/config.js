@@ -117,8 +117,9 @@ var start = function() {
     // genSideBarMenu(menu, len - 2);
     //console.log(localStorage.getItem('cms_menulist'));
     var list = JSON.parse(localStorage.getItem('cms_menulist'));
-    var len = list.length - 1;
-    genSideBarMenu(list, len)
+    // var len = list.length - 1;
+    var len = list.length;
+    genSideBarMenu(list, len);
 
     /*$("#root").append(
         `<li class="header" id=` + menu[len - 2].key + `>` + menu[len - 2].parents + `</li>

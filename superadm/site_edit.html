@@ -33,7 +33,11 @@
     <script src="js/config.js"></script>
     <script src="js/template/site_edit.js"></script>
     <!-- Google Font -->
-    <style>::-webkit-scrollbar { width: 0; }</style>
+    <style>
+        ::-webkit-scrollbar { width: 0; }
+        form#form { margin: 10px; }
+        .panel-default>.panel-heading { background-color: #fff; color: #32c5d2; font-size: 18px; padding: 12px 15px; }
+    </style>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
@@ -73,55 +77,128 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="box box-info">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">基本信息</h3>
-                        </div>
-
                         <div class="box-body">
                             <form id="form" class="form-horizontal" enctype="multipart/form-data">  
-                              <div class="form-group">
-                                    <label class="control-label col-sm-2">分站名称*</label>
-                                    <div class="col-sm-5">
-                                        <input type="text"  class="form-control" name="site_name" placeholder="分站名称">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">基本信息</h3>
+                                    </div>
+
+                                    <div class="panel-body">
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">LOGO</label>
+                                            <div class="col-sm-5">
+                                                <p style="padding-top:7px" class="info"> 上传格式： jpg、gif、png 建议尺寸：350像素 * 52像素</p>
+                                                <input name="logo" type="hidden" value="" class="form-control"/>
+                                                <input id="logofile" name="cover" type="file" class="form-control hide"/>
+                                                <div id="look">
+                                                    <img onclick="$('#logofile').click()" id="img_logo" width="100px;" src="/common/img/upload.png" alt="暂无预览图片" class="thumbnail">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-2">分站名称*</label>
+                                            <div class="col-sm-5">
+                                                <input type="text"  class="form-control" name="site_name" placeholder="分站名称">
+                                            </div>
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-2">个性别名*</label>
+                                            <div class="col-sm-5">
+                                                 <input type="text" class="form-control" name="domain" placeholder="个性别名">
+                                            </div>
+                                        </div>
+
+                                         <div class="form-group">
+                                            <label class="control-label col-sm-2">用户昵称*</label>
+                                            <div class="col-sm-5">
+                                                 <input type="text" class="form-control" name="real_name" placeholder="用户昵称">
+                                            </div>
+                                        </div>
+
+                                         <div class="form-group">
+                                            <label class="control-label col-sm-2">管理账号*</label>
+                                            <div class="col-sm-5">
+                                                 <input type="text" class="form-control" name="phone" placeholder="手机号码">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-2">管理密码*</label>
+                                            <div class="col-sm-5">
+                                                 <input type="password" class="form-control" name="password" placeholder="密码">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">SEO设置</h3>
+                                    </div>
+
+                                    <div class="panel-body">
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-2">网站描述</label>
+                                            <div class="col-sm-5">
+                                                <textarea maxlength="200" placeholder="" name="description" class="form-control"></textarea>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-2">关键词</label>
+                                            <div class="col-sm-5">
+                                                <textarea maxlength="200" placeholder="" name="key_word" class="form-control"></textarea>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">联系方式</h3>
+                                    </div>
 
-                                <div class="form-group">
-                                    <label class="control-label col-sm-2">个性别名*</label>
-                                    <div class="col-sm-5">
-                                         <input type="text" class="form-control" name="domain" placeholder="个性别名">
+                                    <div class="panel-body">
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-2">email</label>
+                                            <div class="col-sm-5">
+                                                <input type="text"  class="form-control" name="email" placeholder="">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-2">tel</label>
+                                            <div class="col-sm-5">
+                                                <input type="text"  class="form-control" name="tel" placeholder="">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-2">fax</label>
+                                            <div class="col-sm-5">
+                                                <input type="text"  class="form-control" name="fax" placeholder="">
+                                            </div>
+                                        </div>
+
+                                         <div class="form-group">
+                                            <label class="control-label col-sm-2">addre</label>
+                                            <div class="col-sm-5">
+                                                <input type="text"  class="form-control" name="addre" placeholder="">
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
-                                 <div class="form-group">
-                                    <label class="control-label col-sm-2">用户昵称*</label>
-                                    <div class="col-sm-5">
-                                         <input type="text" class="form-control" name="real_name" placeholder="用户昵称">
-                                    </div>
-                                </div>
-                                 <div class="form-group">
-                                    <label class="control-label col-sm-2">手机号码*</label>
-                                    <div class="col-sm-5">
-                                         <input type="text" class="form-control" name="phone" placeholder="手机号码">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-sm-2">密码*</label>
-                                    <div class="col-sm-5">
-                                         <input type="password" class="form-control" name="password" placeholder="密码">
-                                    </div>
-                                </div>
-                            
                                 <div class="col-sm-7" style="margin-bottom: 35px;">
                                     <button type="button" class="btn btn-info pull-right" id="editSite">保存发布</button>
                                 </div>
                             </form>
-
                         </div>
-
                     </div>
-
                 </div>
             </div>
         </section>

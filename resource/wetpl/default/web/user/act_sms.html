@@ -15,11 +15,16 @@
     <link rel="stylesheet" type="text/css" href="/common/css/buttons.css">
     <link rel="stylesheet" type="text/css" href="/common/css/switch.css">
     <link rel="stylesheet" type="text/css" href="/common/css/swiper.min.css">
+    <link href="/common/friendsuggest/ui.friendsuggest.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="{{PATH_TML}}user/css/activitycommon.css">
     <link rel="stylesheet" type="text/css" href="{{PATH_TML}}user/css/apply_rg.css">
     <link rel="stylesheet" href="{{PATH_TML}}activity/css/message.css">
     <script charset="utf-8" type="text/javascript" src="/common/js/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="/common/layer-v3.0.3/layer-v3.0.3/layer/layer.js"></script>
+    <script src="http://libs.baidu.com/jquery/1.6.4/jquery.min.js"></script>
+    <script type="text/javascript">
+        var jq164 = $.noConflict(true);
+    </script>
     <script charset="utf-8" type="text/javascript" src="/common/js/swiper-3.3.1.min.js"></script>
     <script src="{{PATH_CONFIG}}"></script>
 
@@ -41,6 +46,58 @@
         
         h3 {
             margin-bottom: 0;
+        }
+        
+        #J_Loading {
+            z-index: 99999999;
+        }
+        
+        .ui-fs {
+            margin-top: 10px;
+            padding: 20px;
+            width: 486px;
+        }
+        
+        .ui-fs .ui-fs-all {
+            width: 480px;
+        }
+        
+        .ui-fs .ui-fs-input {
+            width: 480px;
+        }
+        
+        .ui-fs .ui-fs-all .ui-fs-allinner .list {
+            width: 470px;
+        }
+        
+        .ui-fs .ui-fs-all A {
+            width: 100px;
+            height: 30px;
+        }
+        
+        .ui-fs .ui-fs-result A {
+            height: 32px;
+            width: 105px;
+        }
+        
+        .ui-fs A IMG {
+            width: 30px;
+        }
+        
+        .ui-fs .ui-fs-result A {
+            height: 32px;
+        }
+        
+        .ui-fs .ui-fs-input INPUT {
+            width: 470px;
+        }
+        
+        .page-link {
+            margin-left: 30px
+        }
+        
+        .page-link span {
+            margin-left: 10px;
         }
     </style>
 
@@ -104,7 +161,8 @@
                                         </div>
                                     </div>
                                     <div class="btn-groups">
-                                        <button class="btn btn-info pull-right return-enroll" style="margin-left:20px;" onclick="goEnroll()">返回</button> <button class="btn btn-success pull-right J_BtnSendMessage">保存自定义短信</button>
+                                        <button class="btn btn-info pull-right return-enroll" style="margin-left:20px;" onclick="goEnroll()">返回</button> <button class="btn btn-primary pull-right multi-sms-notify" style="margin-left:20px;">高级群发</button>
+                                        <button class="btn btn-success pull-right J_BtnSendMessage">保存自定义短信</button>
                                     </div>
                                 </div>
                             </div>

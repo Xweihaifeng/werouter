@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <title>支持活动</title>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" id="favicon" href="" />
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <script charset="utf-8" type="text/javascript" src="/common/js/jquery-3.2.1.min.js"></script>
+    <script src="{{PATH_TML}}user/common/js/loading.js"></script>
+    <script charset="utf-8" type="text/javascript" src="/common/js/swiper-3.3.1.min.js"></script>
+    <script charset="utf-8" type="text/javascript" src="{{PATH_CONFIG}}"></script>
+    <script charset="utf-8" type="text/javascript" src="/common/js/browser.min.js"></script>
+    <script charset="utf-8" type="text/javascript" src="/common/js/jquery.imagecompress.js"></script>
+    <script charset="utf-8" type="text/javascript" src="/common/js/buttons.js"></script>
+    <script src="/common/js/bootstrap.min.js"></script>
+
+
+    <link rel="stylesheet" type="text/css" href="/common/css/main.css">
+    <link rel="stylesheet" type="text/css" href="/common/css/fontawesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/common/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/common/css/buttons.css">
+    <link rel="stylesheet" type="text/css" href="/common/css/swiper.min.css">
+    <link rel="stylesheet" type="text/css" href="{{PATH_TML}}user/css/discovery.css">
+    <link rel="stylesheet" href="/common/layer-v3.0.3/layer-v3.0.3/layer/skin/default/layer.css">
+    <link rel="stylesheet" type="text/css" href="{{PATH_TML}}user/css/support_act.css">
+    <link rel="stylesheet" type="text/css" href="{{PATH_TML}}activity/css/activitydetail.css">
+    <script type="text/javascript" src="{{PATH_TML}}shopping/js/jquery.qrcode.min.js"></script>
+    <script type="text/javascript" src="/common/js/JsBarcode.all.js"></script>
+    <script type="text/javascript" src="/common/layer-v3.0.3/layer-v3.0.3/layer/layer.js"></script>
+    <style>
+        .payment-block {
+            width: 300px;
+            margin: 0 auto;
+        }
+        
+        .payment-desc {
+            text-align: center;
+            margin-top: 10px;
+        }
+        
+        .payment-desc p {
+            font-size: 16px;
+        }
+        
+        .payment-desc p b {
+            color: #FF0036;
+            font-size: 18px;
+        }
+        
+        .payment-mark {
+            text-align: center
+        }
+        
+        .bar-code {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body style="width: 100%; background: #F7F6F2;">
+    <div class="left-nav"></div>
+    <div id="top"></div>
+    <div id="middle"></div>
+    <div id="right" style="display: none;">
+        <div class="we-art-nav" style="height: 30px; border-radius: none;margin-bottom: 20px;">
+            <ol class="breadcrumb" style="height: 30px;border-radius: 0; background-color: #ccc; color: #fff;line-height: 30px;">
+                <li class="homepage"><a style="color: #fff!important;">我的活动</a></li>
+                <li class="active" style="color: #fff!important;">支持活动</li>
+            </ol>
+        </div>
+    </div>
+    <!-- 模态框（Modal） -->
+    <div class="modal fade bs-example-modal-sm" id="myModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+        <div class="modal-dialog ticket-modal" role="document">
+            <div class="modal-content">
+
+                <div class="modal-body">
+                    <input type="hidden" value="" id="myModal_input">
+
+                    <div class="ticket_apply text-center">
+                        <img src="/common/img/ticket-apply.png" alt="">
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!--模块引入-->
+    <script charset="utf-8" type="text/javascript" src="{{PATH_TML}}user/common/js/generate.js"></script>
+    <script charset="utf-8" type="text/javascript" src="/common/js/control.js"></script>
+    <script charset="utf-8" type="text/javascript" src="{{PATH_TML}}user/js/common.js"></script>
+    <script charset="utf-8" type="text/javascript" src="{{PATH_TML}}user/js/support_act_pay.js"></script>
+    <script charset="utf-8" type="text/javascript" src="{{PATH_TML}}user/js/support_act.js"></script>
+</body>
+
+</html>

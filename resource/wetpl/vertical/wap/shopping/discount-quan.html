@@ -1,0 +1,70 @@
+<#extend#>public/domain/domain_extend.html</#extend#>
+<script type="text/javascript">
+    $app.set_title('优惠券列表');
+    show.header = 'no';
+</script>
+<link rel="stylesheet" href="{{PATH_TML}}shopping/css/discount-list.css">
+<div class="discount-list">
+    <img src="/common/img/discount-quan-img.jpg" alt="">
+    <div>
+        <div class="column" @click="window.location.href='/'+pages_index+'/shopping/get-ticket'">
+            <div class="left">
+                <span class="title">小小良粉</span>
+                <div>
+                    <h2>5</h2>
+                    <p>
+                        <span>元优惠券</span>
+                        <span>满48元使用</span>
+                    </p>
+                </div>
+                <span class="last">每人限送1张</span>
+            </div>
+            <div class="right">
+                <span>立即领取</span>
+            </div>
+        </div>
+        <div class="column">
+            <div class="left">
+                <span class="title">小小良粉</span>
+                <div>
+                    <h2>10</h2>
+                    <p>
+                        <span>元优惠券</span>
+                        <span>满48元使用</span>
+                    </p>
+                </div>
+                <span class="last">每人限送1张</span>
+            </div>
+            <div class="right">
+                <span>立即领取</span>
+            </div>
+        </div>
+        <div class="column">
+            <div class="left">
+                <span class="title">小小良粉</span>
+                <div>
+                    <h2>12</h2>
+                    <p>
+                        <span>元优惠券</span>
+                        <span>满48元使用</span>
+                    </p>
+                </div>
+                <span class="last">每人限送1张</span>
+            </div>
+            <div class="right">
+                <span>立即领取</span>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    new Vue({
+        el : '#app',
+        data : {
+
+        },
+        mounted : function () {
+
+        }
+    })
+</script>
