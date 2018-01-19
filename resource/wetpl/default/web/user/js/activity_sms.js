@@ -131,7 +131,7 @@ $(document).on('click', '.multi-sms-notify', function() {
         <div class="ui-fs-result clearfix">
         </div>
         <div class="ui-fs-input">
-            <input type="text" value="输入报名者手机号码进行筛选" maxlength="30" />
+            <input type="text" value="输入报名者手机号码进行筛选" placehoder="输入报名者手机号码进行筛选" maxlength="30" />
             <a class="ui-fs-icon" href="javascript:void(0)" title="查看所有">查看所有</a>
         </div>
         <div class="ui-fs-list">
