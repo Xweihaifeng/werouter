@@ -1,4 +1,5 @@
-var hosts = window.location.protocol + '//' + window.location.host + '/api/';
+// var hosts = window.location.protocol + '//' + window.location.host + '/api/';
+var hosts='http://ysl.co/';
 var ApiUrl = hosts + 'backend/';
 
 var init = function() {
@@ -20,6 +21,7 @@ var init = function() {
                         var menuList = '';
                         var info = data.data.info;
                         var setting = JSON.stringify(data.data.setting);
+                        console.log(info);
                         var menu = JSON.stringify(JSON.parse(info.config).list);
                         sessionStorage.setItem('weId', info.weid);
                         sessionStorage.setItem('username', info.username);

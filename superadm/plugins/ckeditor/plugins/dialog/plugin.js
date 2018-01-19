@@ -1290,14 +1290,17 @@ CKEDITOR.DIALOG_STATE_BUSY = 2;
 						label: editor.lang.common.ok,
 						'class': 'cke_dialog_ui_button_ok',
 						onClick: function( evt ) {
+							alert(4);
 							var dialog = evt.data.dialog;
 							if ( dialog.fire( 'ok', { hide: true } ).hide !== false )
+								alert(5);
 								dialog.hide();
 						}
 					}, override, true );
 				};
 			retval.type = 'button';
 			retval.override = function( override ) {
+				alert(6);
 				return CKEDITOR.tools.extend( function( editor ) {
 					return retval( editor, override );
 				}, { type: 'button' }, true );

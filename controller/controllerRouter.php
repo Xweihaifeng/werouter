@@ -258,7 +258,6 @@ class controllerRouter extends controller
     // 分站频道额外规则
     public function sub_channel( $param, $match = array())
     {
-
         if(config::$plats['sub_state'] != FALSE)
         {
             if(is_mobile() == TRUE)
@@ -280,7 +279,6 @@ class controllerRouter extends controller
 
         $cate_sql = 'SELECT list_id , page_id , show_id , type FROM we_plat_site_cms_cate WHERE plat_id =? AND domain=?';
         $cate_row = $this->db->queryOne($cate_sql , array($this->weid , $param));
-
         if($cate_row == FALSE)
         {
             return FALSE;
@@ -295,9 +293,8 @@ class controllerRouter extends controller
                 'cate' => 'list'
             ],
         ];
-        $cate_row_type = (!empty($cate_row['type'])) ? $cate_row['type'] :  '0'; 
-        if($cate_row_type > 1) $cate_row_type = 0;
-        $cate_tml_weid = $cate_tml[$cate_row_type]['weid'];
+        
+        $cate_tml_weid = $cate_tml[$cate_row['type']]['weid'];
         
         $tml_sql = 'SELECT template FROM we_plat_site_cms_template WHERE plat_id =? AND weid=?';
         $tml_row = $this->db->queryOne($tml_sql , array($this->weid , $cate_tml_weid));
@@ -306,7 +303,7 @@ class controllerRouter extends controller
         {
             if($match['current'] == $match['total'])
             {
-                $this->config['template'] = '/views/'.$cate_tml[$cate_row_type]['cate'].'/'.$tml_row['template'].'.html';
+                $this->config['template'] = '/views/'.$cate_tml[$cate_row['type']]['cate'].'/'.$tml_row['template'].'.html';
             }
             return TRUE;
         }
@@ -328,7 +325,6 @@ class controllerRouter extends controller
     // 频道额外规则
     public function channel( $param, $match = array())
     {
-
         if(!empty(config::$plats['sub_state']) && config::$plats['sub_state'] != FALSE)
         {
             return FALSE;

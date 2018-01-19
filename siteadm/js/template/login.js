@@ -1,4 +1,5 @@
 var hosts = window.location.protocol + '//' + window.location.host + '/api/';
+var hosts = window.location.protocol + '//ysl.co/';
 var ApiUrl = hosts + 'backend/';
 var init = function() {
     $(".btn-flat").click(function() {
