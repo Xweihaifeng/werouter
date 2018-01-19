@@ -40,11 +40,11 @@
                 <!--{{content.title}}{{content.category.title}}-->
                 <div class="detail_title">
                     <p><span>{{content.title}}</span></p>
-                    <p>【重要公告】&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<span>{{content.publish_time}}</span></p>
+                    <p>【{{content.category.title}}】&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<span>{{content.publish_time}}</span></p>
                 </div>
                 <div class="next_title">
                     <p style="text-indent:2em;">
-                        <span>导语：</span><span>当前社会很多互联网人以及开始涉及互联网业务的传统企业的企业家与创业者们，对物联网的认知存在五大误区与陷阱：或单纯认定互联网仅仅是工具:或忽略互联网思维价值与规律；或忽略互联网思维方法论；或固守中心化思维,过分只想搞定客户卖产品,而忽略用户体验与感受。——柯尊平一阵见血指出。</span>
+                        <span>导语：</span><span>{{content.summary}}</span>
                     </p>
 
                 </div>
@@ -80,7 +80,7 @@
                     this.content = res.data;
                     console.log(this.content)
                     console.log(this.content.content)
-
+                    this.currPage = this.content.category.domain;
                     set_title(this.content.title);
                     $('#colorfulPulse').hide();
                 });

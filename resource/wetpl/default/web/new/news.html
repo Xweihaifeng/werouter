@@ -43,49 +43,37 @@
                             <span>{{cate_name}}</span>
                         </div>
                         <ul>
-                            <li id="gonggao" v-for="item in datas">
-                                <a :href="item.href">
-                                    <div class="imgbox">
-                                        <img :src="item.img" alt="">
-                                    </div>
-                                    <div class="img_text">
-                                        <div class="img_con">
-                                            <p>{{item.title}}</p>
-                                            <div class="con_con">
-                                                <p>
-                                                    {{item.summary}}
-                                                </p>
+                            <template v-for="(item,index) in datas">
+                                <li id="gonggao">
+                                    <a :href="item.href">
+                                        <div class="imgbox">
+                                            <img :src="item.img" alt="">
+                                        </div>
+                                        <div class="img_text">
+                                            <div class="img_con">
+                                                <p>{{item.title}}</p>
+                                                <div class="con_con">
+                                                    <p>
+                                                        {{item.summary}}
+                                                    </p>
 
+                                                </div>
+                                            </div>
+                                            <div class="img_time">
+                                                <P>{{item.time_data}}</P>
+                                                <P>{{item.time_year}}</P>
+                                                <div class="xiang">
+                                                    详情>>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="img_time">
-                                            <P>{{item.time_data}}</P>
-                                            <P>{{item.time_year}}</P>
-                                            <div class="xiang">
-                                                详情>>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
+                                    </a>
+                                </li>
+                            </template>
+
                         </ul>
                     </li>
                 </ul>
-                <section class="tye">
-                    <main>
-                        <ul class="tye_b">
-                            <li><a href="###"><</a></li>
-                            <li><a href="###">...</a></li>
-                            <li><a href="###">1</a></li>
-                            <li><a href="###">2</a></li>
-                            <li><a href="###">3</a></li>
-                            <li><a href="###">4</a></li>
-                            <li><a href="###">5</a></li>
-                            <li><a href="###">...</a></li>
-                            <li><a href="###">></a></li>
-                        </ul>
-                    </main>
-                </section>
             </div>
         </main>
     </section>
@@ -131,6 +119,7 @@
                 }).then((res) => {
                     this.list_data = res.data;
                     this.datas = res.data.list;
+                    console.log(this.datas)
                     this.cate_name = res.data.list[0].cate_name;
                     if (this.list_data.total == 0 && this.page == 1) {
                         this.empty_show = true;
@@ -148,7 +137,7 @@
                 });
             },
 
-        }
+        },
     })
 </script>
 
