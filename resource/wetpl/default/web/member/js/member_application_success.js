@@ -153,7 +153,7 @@
                         url: CODES,
                         type: 'POST',
                         data: {
-                            phone: localStorage.getItem('phone')
+                            phone: plats_user_info.phone
                         },
                         headers: {
                             'Token': docCookies.getItem("token")
