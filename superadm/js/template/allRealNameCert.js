@@ -50,7 +50,9 @@ var cloneObj = function (obj) {
                     }else{
                         list[i].avatar ='';
                     }
-           
+            if(json.data.list[i].phone==null){
+                 list[i].phone='';
+             }
             list[i].ctype = json.data.list[i].type == 1 ? '在线认证' : '人工认证';
             list[i].is_authenticated = json.data.list[i].is_authenticated == 1 ? '<span class="label label-success">已认证</span>' : '<span class="label label-primary">未认证</span>';
             if (json.data.list[i].operation_status == 1)
@@ -66,6 +68,9 @@ var cloneObj = function (obj) {
                            list[i].operation_time = new Date(json.data.list[i].operation_time * 1000).format('yyyy-MM-dd');
                 }else{list[i].operation_time = '';}
                         candle=json.data.list[i].type == 1?'详情':'更改';
+                        if(json.data.list[i].operation_status == 1 && json.data.list[i].type == 2){
+                             candle='审批';
+                        }
             list[i].operation=`<div class="btn-group" role="group"><button class="btn btn-primary pop-modal" data-type="` + json.data.list[i].type +  `" data-id="` + json.data.list[i].weid + `">`+candle+`</button>`;
           }
           params=json.data.params;
@@ -273,7 +278,7 @@ var cloneObj = function (obj) {
       success: function(data){
                 if (data.code == 200) {
                   swal({
-                    text: '更改成功！',
+                    text: '操作成功！',
                     type: 'success',
                     timer:20000
                   }).then(
