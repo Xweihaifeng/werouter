@@ -92,17 +92,27 @@
                         <div class="box">
                             <div class="box-header with-border" style="line-height: 35px;">
                                 <h3 class="box-title">待认证列表</h3>
+                                <div class="btn-group pull-right">
+                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    切换到 <span class="caret"></span>
+                                </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="personCert.html">个人官方认证</a></li>
+                                        <li><a href="orgCert.html">机构官方认证</a></li>
+                                        <li><a href="allCert.html">所有官方认证</a></li>
+                                    </ul>
+                                </div>
                                 <div class="panel panel-info">
                                     <div class="panel-body">
                                         <form action="" method="get" class="form-horizontal" role="form">
                                             <div class="form-group">
-                                                <label class="col-xs-12 col-sm-3 col-md-1 control-label">实名认证姓名</label>
+                                                <label class="col-xs-3 col-sm-3 col-md-1 control-label">实名认证姓名</label>
                                                 <div class="col-sm-2 col-xs-2 col-lg-2">
                                                     <div class="row row-fix tpl-category-container">
                                                         <input type="text" class="form-control" name="real_name">
                                                     </div>
                                                 </div>
-                                                <label class="col-xs-12 col-sm-3 col-md-1 control-label">手机</label>
+                                                <label class="col-xs-3 col-sm-3 col-md-1 control-label">手机</label>
                                                 <div class="col-sm-2 col-xs-2 col-lg-2">
                                                     <div class="row row-fix tpl-category-container">
                                                         <input type="text" class="form-control" name="phone">
