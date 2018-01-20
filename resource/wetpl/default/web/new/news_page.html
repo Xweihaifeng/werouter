@@ -66,456 +66,490 @@
                 </ul>
             </div>-->
             <div class="content_rights">
+                <div v-if="currPage == 'honor'" class="horr">
+                    <div class="about_titless">
+                        <span>荣誉资质</span>
+                    </div>
+                    <ul>
+                        <li><img src="/common/img/horr_03.jpg" alt=""></li>
+                        <li><img src="/common/img/horr_03.jpg" alt=""></li>
+                        <li><img src="/common/img/horr_03.jpg" alt=""></li>
 
-                <!--&lt;!&ndash;荣誉&ndash;&gt;-->
-                <!--<div class="horr">-->
-                    <!--<ul>-->
-                        <!--<li><img src="/common/img/horr_03.jpg" alt=""></li>-->
-                        <!--<li><img src="/common/img/horr_03.jpg" alt=""></li>-->
-                        <!--<li><img src="/common/img/horr_03.jpg" alt=""></li>-->
+                        <li><img src="/common/img/horr_03.jpg" alt=""></li>
+                        <li><img src="/common/img/horr_03.jpg" alt=""></li>
+                        <li><img src="/common/img/horr_03.jpg" alt=""></li>
 
-                        <!--<li><img src="/common/img/horr_03.jpg" alt=""></li>-->
-                        <!--<li><img src="/common/img/horr_03.jpg" alt=""></li>-->
-                        <!--<li><img src="/common/img/horr_03.jpg" alt=""></li>-->
+                        <li><img src="/common/img/horr_03.jpg" alt=""></li>
+                        <li><img src="/common/img/horr_03.jpg" alt=""></li>
+                        <li><img src="/common/img/horr_03.jpg" alt=""></li>
+                    </ul>
+                </div>
 
-                        <!--<li><img src="/common/img/horr_03.jpg" alt=""></li>-->
-                        <!--<li><img src="/common/img/horr_03.jpg" alt=""></li>-->
-                        <!--<li><img src="/common/img/horr_03.jpg" alt=""></li>-->
-                    <!--</ul>-->
-                <!--</div>-->
+                <!--案例-->
+                <template else v-if="currPage == 'cases'">
+                    <div class="about_titless">
+                        <span>成功案例</span>
+                    </div>
+                    <ul  class="caseq">
+                        <ul>
+                            <li>
+                                <img src="/common/img/cas_03.jpg" alt="">
+                                <p><span>阿里云</span></p>
+                                <p>全球领先的人工只能科技公司</p>
+                            </li>
+                            <li>
+                                <img src="/common/img/cas_05.jpg" alt="">
+                                <p><span>腾讯云</span></p>
+                                <p>全球领先的人工只能科技公司</p>
+                            </li>
+                            <li>
+                                <img src="/common/img/cas_07.jpg" alt="">
+                                <p><span>友盟</span></p>
+                                <p>全球领先的人工只能科技公司</p>
+                            </li>
+                            <li>
+                                <img src="/common/img/cas_09.jpg" alt="">
+                                <p><span>网易七鱼</span></p>
+                                <p>全球领先的人工只能科技公司</p>
+                            </li>
 
-                <!--&lt;!&ndash;案例&ndash;&gt;-->
-                <!--<ul class="caseq">-->
-                    <!--<ul>-->
-                        <!--<li>-->
-                            <!--<img src="/common/img/cas_03.jpg" alt="">-->
-                            <!--<p><span>阿里云</span></p>-->
-                            <!--<p>全球领先的人工只能科技公司</p>-->
-                        <!--</li>-->
-                        <!--<li>-->
-                            <!--<img src="/common/img/cas_05.jpg" alt="">-->
-                            <!--<p><span>腾讯云</span></p>-->
-                            <!--<p>全球领先的人工只能科技公司</p>-->
-                        <!--</li>-->
-                        <!--<li>-->
-                            <!--<img src="/common/img/cas_07.jpg" alt="">-->
-                            <!--<p><span>友盟</span></p>-->
-                            <!--<p>全球领先的人工只能科技公司</p>-->
-                        <!--</li>-->
-                        <!--<li>-->
-                            <!--<img src="/common/img/cas_09.jpg" alt="">-->
-                            <!--<p><span>网易七鱼</span></p>-->
-                            <!--<p>全球领先的人工只能科技公司</p>-->
-                        <!--</li>-->
+                            <li>
+                                <img src="/common/img/cas_05.jpg" alt="">
+                                <p><span>腾讯云</span></p>
+                                <p>全球领先的人工只能科技公司</p>
+                            </li>
+                            <li>
+                                <img src="/common/img/cas_07.jpg" alt="">
+                                <p><span>友盟</span></p>
+                                <p>全球领先的人工只能科技公司</p>
+                            </li>
+                            <li>
+                                <img src="/common/img/cas_09.jpg" alt="">
+                                <p><span>网易七鱼</span></p>
+                                <p>全球领先的人工只能科技公司</p>
+                            </li>
+                            <li>
+                                <img src="/common/img/cas_03.jpg" alt="">
+                                <p><span>阿里云</span></p>
+                                <p>全球领先的人工只能科技公司</p>
+                            </li>
 
-                        <!--<li>-->
-                            <!--<img src="/common/img/cas_05.jpg" alt="">-->
-                            <!--<p><span>腾讯云</span></p>-->
-                            <!--<p>全球领先的人工只能科技公司</p>-->
-                        <!--</li>-->
-                        <!--<li>-->
-                            <!--<img src="/common/img/cas_07.jpg" alt="">-->
-                            <!--<p><span>友盟</span></p>-->
-                            <!--<p>全球领先的人工只能科技公司</p>-->
-                        <!--</li>-->
-                        <!--<li>-->
-                            <!--<img src="/common/img/cas_09.jpg" alt="">-->
-                            <!--<p><span>网易七鱼</span></p>-->
-                            <!--<p>全球领先的人工只能科技公司</p>-->
-                        <!--</li>-->
-                        <!--<li>-->
-                            <!--<img src="/common/img/cas_03.jpg" alt="">-->
-                            <!--<p><span>阿里云</span></p>-->
-                            <!--<p>全球领先的人工只能科技公司</p>-->
-                        <!--</li>-->
+                            <li>
+                                <img src="/common/img/cas_07.jpg" alt="">
+                                <p><span>友盟</span></p>
+                                <p>全球领先的人工只能科技公司</p>
+                            </li>
+                            <li>
+                                <img src="/common/img/cas_09.jpg" alt="">
+                                <p><span>网易七鱼</span></p>
+                                <p>全球领先的人工只能科技公司</p>
+                            </li>
+                            <li>
+                                <img src="/common/img/cas_03.jpg" alt="">
+                                <p><span>阿里云</span></p>
+                                <p>全球领先的人工只能科技公司</p>
+                            </li>
+                            <li>
+                                <img src="/common/img/cas_05.jpg" alt="">
+                                <p><span>腾讯云</span></p>
+                                <p>全球领先的人工只能科技公司</p>
+                            </li>
 
-                        <!--<li>-->
-                            <!--<img src="/common/img/cas_07.jpg" alt="">-->
-                            <!--<p><span>友盟</span></p>-->
-                            <!--<p>全球领先的人工只能科技公司</p>-->
-                        <!--</li>-->
-                        <!--<li>-->
-                            <!--<img src="/common/img/cas_09.jpg" alt="">-->
-                            <!--<p><span>网易七鱼</span></p>-->
-                            <!--<p>全球领先的人工只能科技公司</p>-->
-                        <!--</li>-->
-                        <!--<li>-->
-                            <!--<img src="/common/img/cas_03.jpg" alt="">-->
-                            <!--<p><span>阿里云</span></p>-->
-                            <!--<p>全球领先的人工只能科技公司</p>-->
-                        <!--</li>-->
-                        <!--<li>-->
-                            <!--<img src="/common/img/cas_05.jpg" alt="">-->
-                            <!--<p><span>腾讯云</span></p>-->
-                            <!--<p>全球领先的人工只能科技公司</p>-->
-                        <!--</li>-->
-
-                        <!--<li>-->
-                            <!--<img src="/common/img/cas_09.jpg" alt="">-->
-                            <!--<p><span>网易七鱼</span></p>-->
-                            <!--<p>全球领先的人工只能科技公司</p>-->
-                        <!--</li>-->
-                        <!--<li>-->
-                            <!--<img src="/common/img/cas_03.jpg" alt="">-->
-                            <!--<p><span>阿里云</span></p>-->
-                            <!--<p>全球领先的人工只能科技公司</p>-->
-                        <!--</li>-->
-                        <!--<li>-->
-                            <!--<img src="/common/img/cas_05.jpg" alt="">-->
-                            <!--<p><span>腾讯云</span></p>-->
-                            <!--<p>全球领先的人工只能科技公司</p>-->
-                        <!--</li>-->
-                        <!--<li>-->
-                            <!--<img src="/common/img/cas_07.jpg" alt="">-->
-                            <!--<p><span>友盟</span></p>-->
-                            <!--<p>全球领先的人工只能科技公司</p>-->
-                        <!--</li>-->
+                            <li>
+                                <img src="/common/img/cas_09.jpg" alt="">
+                                <p><span>网易七鱼</span></p>
+                                <p>全球领先的人工只能科技公司</p>
+                            </li>
+                            <li>
+                                <img src="/common/img/cas_03.jpg" alt="">
+                                <p><span>阿里云</span></p>
+                                <p>全球领先的人工只能科技公司</p>
+                            </li>
+                            <li>
+                                <img src="/common/img/cas_05.jpg" alt="">
+                                <p><span>腾讯云</span></p>
+                                <p>全球领先的人工只能科技公司</p>
+                            </li>
+                            <li>
+                                <img src="/common/img/cas_07.jpg" alt="">
+                                <p><span>友盟</span></p>
+                                <p>全球领先的人工只能科技公司</p>
+                            </li>
 
 
-                    <!--</ul>-->
+                        </ul>
 
-                <!--</ul>-->
+                    </ul>
+                </template>
 
-                <!--&lt;!&ndash;公司简介&ndash;&gt;-->
-                <!--<ul class="product">-->
-                    <!--<li>-->
-                        <!--<div class="text">-->
-                            <!--<p style="text-indent:2em;">-->
-                                <!--微众中国（www.wezchina.com），中国领先的众筹创业融资平台！创立于2014年3月，专注于丝路互联网+创业的众筹融资，为创业者提供私募股权、回报众筹、一元云筹、项目投融资一体化综合互联网金融服务，帮助创业者实现众筹融资，并以众筹的模式快速将项目推向市场。</p>-->
-                            <!--<p style="text-indent:2em;">-->
-                                <!--创始人兼CEO柯尊平，陕西省互联网协会副秘书长，中国青少年新媒体协会副秘书长，陕西省青年企业家协会常务理事，陕西省青年创业导师协会副会长，2014年陕西省优秀青年创业导师。-->
-                                <!--2005年创立四博互联。-->
-                                <!--2008年被IT世界网称为“西北IDC行业的拓荒者”。-->
-                                <!--2012年获评“2012陕西省互联网行业发展推动人物”荣誉称号，所创立四博互联公司荣获2012年度中国互联网行业自律贡献奖，是20多年来陕西首家且唯一的一家荣获此殊荣的互联网企业。-->
-                                <!--2010年发起并于2011年、2012年、2014年连续承办首届、第二、三届、及第五届陕西省互联网大会。-->
-                                <!--2014年3月创立微众中国（www.wezchina.com），专注于丝路互联网+创业的众筹融资服务，为创业者提供私募股权融资、回报众筹、一元云筹、项目投融资一体化综合互联网金融服务。</p>-->
-                            <!--<p>-->
-                                <!--2010年发起并于2011年、2012年、2014年连续承办首届、第二、三届、及第五届陕西省互联网大会。2014年3月创立微众中国（www.wezchina.com）,专注于丝路互联网+创业的众筹融资服务，为创业者提供私募股权融资、回报众筹、一元云筹、项目投资一体化综合互联网金融服务。-->
-                            <!--<p/>-->
-                        <!--</div>-->
-                        <!--<img src="/common/img/07sss.png" alt="" class="img01">-->
-                    <!--</li>-->
-                    <!--<li>-->
-                        <!--<img src="/common/img/06sss.png" alt="" class="img02">-->
-                        <!--<div class="text-2">-->
-                            <!--<span>雄厚的自主产品研发实力</span>-->
-                            <!--<p>有一只从业软件开发10余年、反应迅速、讲求团队合作的专业技术团队，奠定开发实力的高起点多年互联网行业经验，拥有30余款互联网与移动互联网相关产品的自主知识产权</p>-->
-                            <!--<span>雄厚的自主产品研发实力</span>-->
-                            <!--<p>有一只从业软件开发10余年、反应迅速、讲求团队合作的专业技术团队，奠定开发实力的高起点多年互联网行业经验，拥有30余款互联网与移动互联网相关产品的自主知识产权</p>-->
-                            <!--<span>雄厚的自主产品研发实力</span>-->
-                            <!--<p>有一只从业软件开发10余年、反应迅速、讲求团队合作的专业技术团队，奠定开发实力的高起点多年互联网行业经验，拥有30余款互联网与移动互联网相关产品的自主知识产权</p>-->
-                            <!--<span>雄厚的自主产品研发实力</span>-->
-                            <!--<p>有一只从业软件开发10余年、反应迅速、讲求团队合作的专业技术团队，奠定开发实力的高起点多年互联网行业经验，拥有30余款互联网与移动互联网相关产品的自主知识产权</p>-->
-                        <!--</div>-->
-                    <!--</li>-->
-                    <!--<li>-->
-                        <!--<div>-->
-                            <!--<p class="title_prod">-->
-                                <!--企业文化-->
-                            <!--</p>-->
-                            <!--<ul class="content_right_top">-->
-                                <!--<li>-->
-                                    <!--<div class="img">-->
-                                        <!--<img class="pos" src="/common/img/speed.png" alt="">-->
-                                    <!--</div>-->
-                                    <!--<span>快速稳定</span>-->
-                                    <!--<p class="img_con">天下武功唯快不破，打造互联网速度</p>-->
 
-                                <!--</li>-->
-                                <!--<li>-->
-                                    <!--<div class="img">-->
-                                        <!--<img class="pos" src="/common/img/speed.png" alt="">-->
+                <!--公司简介-->
+                <template else v-if=" currPage == 'about'" >
+                    <div class="about_titless">
+                        <span>公司简介</span>
+                    </div>
+                    <ul v-if="currPage == 'honor'" class="product">
+                        <li>
+                            <div class="text">
+                                <p style="text-indent:2em;">
+                                    微众中国（www.wezchina.com），中国领先的众筹创业融资平台！创立于2014年3月，专注于丝路互联网+创业的众筹融资，为创业者提供私募股权、回报众筹、一元云筹、项目投融资一体化综合互联网金融服务，帮助创业者实现众筹融资，并以众筹的模式快速将项目推向市场。</p>
+                                <p style="text-indent:2em;">
+                                    创始人兼CEO柯尊平，陕西省互联网协会副秘书长，中国青少年新媒体协会副秘书长，陕西省青年企业家协会常务理事，陕西省青年创业导师协会副会长，2014年陕西省优秀青年创业导师。
+                                    2005年创立四博互联。
+                                    2008年被IT世界网称为“西北IDC行业的拓荒者”。
+                                    2012年获评“2012陕西省互联网行业发展推动人物”荣誉称号，所创立四博互联公司荣获2012年度中国互联网行业自律贡献奖，是20多年来陕西首家且唯一的一家荣获此殊荣的互联网企业。
+                                    2010年发起并于2011年、2012年、2014年连续承办首届、第二、三届、及第五届陕西省互联网大会。
+                                    2014年3月创立微众中国（www.wezchina.com），专注于丝路互联网+创业的众筹融资服务，为创业者提供私募股权融资、回报众筹、一元云筹、项目投融资一体化综合互联网金融服务。</p>
+                                <p>
+                                    2010年发起并于2011年、2012年、2014年连续承办首届、第二、三届、及第五届陕西省互联网大会。2014年3月创立微众中国（www.wezchina.com）,专注于丝路互联网+创业的众筹融资服务，为创业者提供私募股权融资、回报众筹、一元云筹、项目投资一体化综合互联网金融服务。
+                                <p/>
+                            </div>
+                            <img src="/common/img/07sss.png" alt="" class="img01">
+                        </li>
+                        <li>
+                            <img src="/common/img/06sss.png" alt="" class="img02">
+                            <div class="text-2">
+                                <span>雄厚的自主产品研发实力</span>
+                                <p>有一只从业软件开发10余年、反应迅速、讲求团队合作的专业技术团队，奠定开发实力的高起点多年互联网行业经验，拥有30余款互联网与移动互联网相关产品的自主知识产权</p>
+                                <span>雄厚的自主产品研发实力</span>
+                                <p>有一只从业软件开发10余年、反应迅速、讲求团队合作的专业技术团队，奠定开发实力的高起点多年互联网行业经验，拥有30余款互联网与移动互联网相关产品的自主知识产权</p>
+                                <span>雄厚的自主产品研发实力</span>
+                                <p>有一只从业软件开发10余年、反应迅速、讲求团队合作的专业技术团队，奠定开发实力的高起点多年互联网行业经验，拥有30余款互联网与移动互联网相关产品的自主知识产权</p>
+                                <span>雄厚的自主产品研发实力</span>
+                                <p>有一只从业软件开发10余年、反应迅速、讲求团队合作的专业技术团队，奠定开发实力的高起点多年互联网行业经验，拥有30余款互联网与移动互联网相关产品的自主知识产权</p>
+                            </div>
+                        </li>
+                        <li>
+                            <div>
+                                <p class="title_prod">
+                                    企业文化
+                                </p>
+                                <ul class="content_right_top">
+                                    <li>
+                                        <div class="img">
+                                            <img class="pos" src="/common/img/speed.png" alt="">
+                                        </div>
+                                        <span>快速稳定</span>
+                                        <p class="img_con">天下武功唯快不破，打造互联网速度</p>
 
-                                    <!--</div>-->
-                                    <!--<span>快速稳定</span>-->
-                                    <!--<p class="img_con">天下武功唯快不破，打造互联网速度</p>-->
-                                <!--</li>-->
-                                <!--<li>-->
-                                    <!--<div class="img">-->
-                                        <!--<img class="pos" src="/common/img/speed.png" alt="">-->
-                                    <!--</div>-->
-                                    <!--<span>快速稳定</span>-->
-                                    <!--<p class="img_con">天下武功唯快不破，打造互联网速度</p>-->
-                                <!--</li>-->
-                            <!--</ul>-->
-                        <!--</div>-->
+                                    </li>
+                                    <li>
+                                        <div class="img">
+                                            <img class="pos" src="/common/img/speed.png" alt="">
 
-                    <!--</li>-->
-                    <!--<li>-->
-                        <!--<div>-->
-                            <!--<p class="title_prod2 ">-->
-                                <!--活力团队-->
-                            <!--</p>-->
-                            <!--<p class="center">我们是一群对互联网狂热的人。我们的成员由用户调研、交互设计、视觉设计、软件工程师、营销策划、投融资服务专家组成。</p>-->
-                            <!--<p class="center">博学，深知，敏锐，创新，信任，积极，责任感，对细节的尊重，挑战权威...是我们的关键词。</p>-->
-                            <!--<p class="center">深度挖掘客户需求，让我们的创新产品与极致服务帮助每个领域互联网化！</p>-->
-                            <!--<ul class="people-img">-->
-                                <!--<li><img src="/common/img/08sss.png" alt=""></li>-->
-                                <!--<li><img src="/common/img/08sss.png" alt=""></li>-->
-                                <!--<li><img src="/common/img/08sss.png" alt=""></li>-->
-                                <!--<li><img src="/common/img/08sss.png" alt=""></li>-->
-                                <!--<li><img src="/common/img/08sss.png" alt=""></li>-->
-                                <!--<li><img src="/common/img/08sss.png" alt=""></li>-->
-                                <!--<li><img src="/common/img/08sss.png" alt=""></li>-->
-                                <!--<li><img src="/common/img/08sss.png" alt=""></li>-->
-                                <!--<li><img src="/common/img/08sss.png" alt=""></li>-->
-                                <!--<li><img src="/common/img/08sss.png" alt=""></li>-->
-                                <!--<li><img src="/common/img/08sss.png" alt=""></li>-->
-                                <!--<li><img src="/common/img/08sss.png" alt=""></li>-->
-                                <!--<li><img src="/common/img/08sss.png" alt=""></li>-->
-                                <!--<li><img src="/common/img/08sss.png" alt=""></li>-->
-                                <!--<li><img src="/common/img/08sss.png" alt=""></li>-->
-                                <!--<li><img src="/common/img/08sss.png" alt=""></li>-->
-                                <!--<li><img src="/common/img/08sss.png" alt=""></li>-->
-                                <!--<li><img src="/common/img/08sss.png" alt=""></li>-->
-                                <!--<li><img src="/common/img/08sss.png" alt=""></li>-->
-                                <!--<li><img src="/common/img/08sss.png" alt=""></li>-->
-                                <!--<li><img src="/common/img/08sss.png" alt=""></li>-->
-                                <!--<li><img src="/common/img/08sss.png" alt=""></li>-->
-                                <!--<li><img src="/common/img/08sss.png" alt=""></li>-->
-                                <!--<li><img src="/common/img/08sss.png" alt=""></li>-->
-                                <!--<li><img src="/common/img/08sss.png" alt=""></li>-->
-                                <!--<li><img src="/common/img/08sss.png" alt=""></li>-->
-                                <!--<li><img src="/common/img/08sss.png" alt=""></li>-->
-                            <!--</ul>-->
-                        <!--</div>-->
-                    <!--</li>-->
-                    <!--<li>-->
-                        <!--<div>-->
-                            <!--<p class="title_prod2 ">-->
-                                <!--灵感空间-->
-                            <!--</p>-->
-                            <!--<ul class="soul">-->
-                                <!--<li><img src="/common/img/room1.png" alt=""></li>-->
-                                <!--<li><img src="/common/img/room2.png" alt=""></li>-->
-                                <!--<li><img src="/common/img/room3.png" alt=""></li>-->
-                                <!--<li><img src="/common/img/room4.png" alt=""></li>-->
-                                <!--<li><img src="/common/img/room5.png" alt=""></li>-->
+                                        </div>
+                                        <span>快速稳定</span>
+                                        <p class="img_con">天下武功唯快不破，打造互联网速度</p>
+                                    </li>
+                                    <li>
+                                        <div class="img">
+                                            <img class="pos" src="/common/img/speed.png" alt="">
+                                        </div>
+                                        <span>快速稳定</span>
+                                        <p class="img_con">天下武功唯快不破，打造互联网速度</p>
+                                    </li>
+                                </ul>
+                            </div>
 
-                            <!--</ul>-->
-                        <!--</div>-->
+                        </li>
+                        <li>
+                            <div>
+                                <p class="title_prod2 ">
+                                    活力团队
+                                </p>
+                                <p class="center">我们是一群对互联网狂热的人。我们的成员由用户调研、交互设计、视觉设计、软件工程师、营销策划、投融资服务专家组成。</p>
+                                <p class="center">博学，深知，敏锐，创新，信任，积极，责任感，对细节的尊重，挑战权威...是我们的关键词。</p>
+                                <p class="center">深度挖掘客户需求，让我们的创新产品与极致服务帮助每个领域互联网化！</p>
+                                <ul class="people-img">
+                                    <li><img src="/common/img/08sss.png" alt=""></li>
+                                    <li><img src="/common/img/08sss.png" alt=""></li>
+                                    <li><img src="/common/img/08sss.png" alt=""></li>
+                                    <li><img src="/common/img/08sss.png" alt=""></li>
+                                    <li><img src="/common/img/08sss.png" alt=""></li>
+                                    <li><img src="/common/img/08sss.png" alt=""></li>
+                                    <li><img src="/common/img/08sss.png" alt=""></li>
+                                    <li><img src="/common/img/08sss.png" alt=""></li>
+                                    <li><img src="/common/img/08sss.png" alt=""></li>
+                                    <li><img src="/common/img/08sss.png" alt=""></li>
+                                    <li><img src="/common/img/08sss.png" alt=""></li>
+                                    <li><img src="/common/img/08sss.png" alt=""></li>
+                                    <li><img src="/common/img/08sss.png" alt=""></li>
+                                    <li><img src="/common/img/08sss.png" alt=""></li>
+                                    <li><img src="/common/img/08sss.png" alt=""></li>
+                                    <li><img src="/common/img/08sss.png" alt=""></li>
+                                    <li><img src="/common/img/08sss.png" alt=""></li>
+                                    <li><img src="/common/img/08sss.png" alt=""></li>
+                                    <li><img src="/common/img/08sss.png" alt=""></li>
+                                    <li><img src="/common/img/08sss.png" alt=""></li>
+                                    <li><img src="/common/img/08sss.png" alt=""></li>
+                                    <li><img src="/common/img/08sss.png" alt=""></li>
+                                    <li><img src="/common/img/08sss.png" alt=""></li>
+                                    <li><img src="/common/img/08sss.png" alt=""></li>
+                                    <li><img src="/common/img/08sss.png" alt=""></li>
+                                    <li><img src="/common/img/08sss.png" alt=""></li>
+                                    <li><img src="/common/img/08sss.png" alt=""></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <div>
+                                <p class="title_prod2 ">
+                                    灵感空间
+                                </p>
+                                <ul class="soul">
+                                    <li><img src="/common/img/room1.png" alt=""></li>
+                                    <li><img src="/common/img/room2.png" alt=""></li>
+                                    <li><img src="/common/img/room3.png" alt=""></li>
+                                    <li><img src="/common/img/room4.png" alt=""></li>
+                                    <li><img src="/common/img/room5.png" alt=""></li>
 
-                    <!--</li>-->
-                <!--</ul>-->
+                                </ul>
+                            </div>
+
+                        </li>
+                    </ul>
+                </template>
+
 
                 <!--发展-->
-                <!--<ul class="developes">-->
-                    <!--<li><img src="/common/img/develope_03.jpg" alt=""><span>2017</span></li>-->
-                    <!--<li>-->
-                        <!--<div class="c"></div>-->
-                        <!--<p>11月 微众中国打破CloudSort世界记录，将100TB数据排序的计算成本降低到1/3。</p></li>-->
-                    <!--<li>-->
-                        <!--<div class="c"></div>-->
-                        <!--<p>11月 微众中国欧洲、中东、日本和澳洲区相继开服，实现全球互联网市场覆盖</p></li>-->
-                    <!--<li>-->
-                        <!--<div class="c"></div>-->
-                        <!--<p>10月 微众中国与国家天文台合作，共同开展天体物理研究。</p></li>-->
-                    <!--<li>-->
-                        <!--<div class="c"></div>-->
-                        <!--<p>08月 微众中国品牌形象升级，启用全新动态logo。</p></li>-->
-                    <!--<li>-->
-                        <!--<div class="c"></div>-->
-                        <!--<p>05月 微众中国和日本软银公司宣布合作，携手拓展日本云计算市场。</p></li>-->
-                    <!--<li>-->
-                        <!--<div class="c"></div>-->
-                        <!--<p>04月 韩国第三大跨国企业SK集团和微众中国合作，携手拓展韩国云计算市场。</p></li>-->
-                    <!--<li>-->
-                        <!--<div class="c"></div>-->
-                        <!--<p>04月 微众中国发布专有云（Apsara Stack），支持企业客户在自己的数据中心部署飞天操作系统。</p></li>-->
-                    <!--<li>-->
-                        <!--<div class="c"></div>-->
-                        <!--<p>01月 微众中国发布一站式大数据平台“数加”，开放微众中国十年的大数据处理能力，首批亮相20款产品。</p></li>-->
-                    <!--<li>-->
-                        <!--<div class="circle"></div>-->
-                        <!--<span class="year">2016</span></li>-->
-                    <!--<li>-->
-                        <!--<div class="c"></div>-->
-                        <!--<p>11月 微众中国打破CloudSort世界记录，将100TB数据排序的计算成本降低到1/3。</p></li>-->
-                    <!--<li>-->
-                        <!--<div class="c"></div>-->
-                        <!--<p>11月 微众中国欧洲、中东、日本和澳洲区相继开服，实现全球互联网市场覆盖。</p></li>-->
-                    <!--<li>-->
-                        <!--<div class="c"></div>-->
-                        <!--<p>10月 微众中国与国家天文台合作，共同开展天体物理研究。</p></li>-->
-                    <!--<li>-->
-                        <!--<div class="c"></div>-->
-                        <!--<p>08月 微众中国获得了以“真实技术能力和社会影响力”为评判标准的2016世界电信展卓越企业奖，成为唯一获奖的中国企业。</p></li>-->
-                    <!--<li>-->
-                        <!--<div class="c"></div>-->
-                        <!--<p>05月 微众中国和日本软银公司宣布合作，携手拓展日本云计算市场。</p></li>-->
-                    <!--<li>-->
-                        <!--<div class="c"></div>-->
-                        <!--<p>04月 韩国第三大跨国企业SK集团和微众中国合作，携手拓展韩国云计算市场。</p></li>-->
-                    <!--<li>-->
-                        <!--<div class="c"></div>-->
-                        <!--<p>04月 微众中国发布专有云（Apsara Stack），支持企业客户在自己的数据中心部署飞天操作系统。</p></li>-->
-                    <!--<li>-->
-                        <!--<div class="c"></div>-->
-                        <!--<p>01月 微众中国发布一站式大数据平台“数加”，开放微众中国十年的大数据处理能力，首批亮相20款产品。</p></li>-->
-                    <!--<li>-->
-                        <!--<div class="circle"></div>-->
-                        <!--<span class="year">2015</span></li>-->
-                    <!--<li>-->
-                        <!--<div class="c"></div>-->
-                        <!--<p>11月 微众中国打破CloudSort世界记录，将100TB数据排序的计算成本降低到1/3。</p></li>-->
-                    <!--<li>-->
-                        <!--<div class="c"></div>-->
-                        <!--<p>11月 微众中国欧洲、中东、日本和澳洲区相继开服，实现全球互联网市场覆盖。</p></li>-->
-                    <!--<li>-->
-                        <!--<div class="c"></div>-->
-                        <!--<p>10月 微众中国与国家天文台合作，共同开展天体物理研究。</p></li>-->
-                    <!--<li>-->
-                        <!--<div class="c"></div>-->
-                        <!--<p>08月 微众中国获得了以“真实技术能力和社会影响力”为评判标准的2016世界电信展卓越企业奖，成为唯一获奖的中国企业。</p></li>-->
-                    <!--<li>-->
-                        <!--<div class="c"></div>-->
-                        <!--<p>05月 微众中国和日本软银公司宣布合作，携手拓展日本云计算市场。</p></li>-->
-                    <!--<li>-->
-                        <!--<div class="c"></div>-->
-                        <!--<p>04月 韩国第三大跨国企业SK集团和微众中国合作，携手拓展韩国云计算市场。</p></li>-->
-                    <!--<li>-->
-                        <!--<div class="c"></div>-->
-                        <!--<p>04月 微众中国发布专有云（Apsara Stack），支持企业客户在自己的数据中心部署飞天操作系统。</p></li>-->
-                    <!--<li>-->
-                        <!--<div class="c"></div>-->
-                        <!--<p>01月 微众中国发布一站式大数据平台“数加”，开放微众中国十年的大数据处理能力，首批亮相20款产品。</p></li>-->
-                <!--</ul>-->
+                <template else v-if=" currPage == 'history'" >
+                    <div class="about_titless">
+                        <span>发展历程</span>
+                    </div>
+                    <ul class="developes">
+                        <li><img src="/common/img/develope_03.jpg" alt=""><span>2017</span></li>
+                        <li>
+                            <div class="c"></div>
+                            <p>11月 微众中国打破CloudSort世界记录，将100TB数据排序的计算成本降低到1/3。</p></li>
+                        <li>
+                            <div class="c"></div>
+                            <p>11月 微众中国欧洲、中东、日本和澳洲区相继开服，实现全球互联网市场覆盖</p></li>
+                        <li>
+                            <div class="c"></div>
+                            <p>10月 微众中国与国家天文台合作，共同开展天体物理研究。</p></li>
+                        <li>
+                            <div class="c"></div>
+                            <p>08月 微众中国品牌形象升级，启用全新动态logo。</p></li>
+                        <li>
+                            <div class="c"></div>
+                            <p>05月 微众中国和日本软银公司宣布合作，携手拓展日本云计算市场。</p></li>
+                        <li>
+                            <div class="c"></div>
+                            <p>04月 韩国第三大跨国企业SK集团和微众中国合作，携手拓展韩国云计算市场。</p></li>
+                        <li>
+                            <div class="c"></div>
+                            <p>04月 微众中国发布专有云（Apsara Stack），支持企业客户在自己的数据中心部署飞天操作系统。</p></li>
+                        <li>
+                            <div class="c"></div>
+                            <p>01月 微众中国发布一站式大数据平台“数加”，开放微众中国十年的大数据处理能力，首批亮相20款产品。</p></li>
+                        <li>
+                            <div class="circle"></div>
+                            <span class="year">2016</span></li>
+                        <li>
+                            <div class="c"></div>
+                            <p>11月 微众中国打破CloudSort世界记录，将100TB数据排序的计算成本降低到1/3。</p></li>
+                        <li>
+                            <div class="c"></div>
+                            <p>11月 微众中国欧洲、中东、日本和澳洲区相继开服，实现全球互联网市场覆盖。</p></li>
+                        <li>
+                            <div class="c"></div>
+                            <p>10月 微众中国与国家天文台合作，共同开展天体物理研究。</p></li>
+                        <li>
+                            <div class="c"></div>
+                            <p>08月 微众中国获得了以“真实技术能力和社会影响力”为评判标准的2016世界电信展卓越企业奖，成为唯一获奖的中国企业。</p></li>
+                        <li>
+                            <div class="c"></div>
+                            <p>05月 微众中国和日本软银公司宣布合作，携手拓展日本云计算市场。</p></li>
+                        <li>
+                            <div class="c"></div>
+                            <p>04月 韩国第三大跨国企业SK集团和微众中国合作，携手拓展韩国云计算市场。</p></li>
+                        <li>
+                            <div class="c"></div>
+                            <p>04月 微众中国发布专有云（Apsara Stack），支持企业客户在自己的数据中心部署飞天操作系统。</p></li>
+                        <li>
+                            <div class="c"></div>
+                            <p>01月 微众中国发布一站式大数据平台“数加”，开放微众中国十年的大数据处理能力，首批亮相20款产品。</p></li>
+                        <li>
+                            <div class="circle"></div>
+                            <span class="year">2015</span></li>
+                        <li>
+                            <div class="c"></div>
+                            <p>11月 微众中国打破CloudSort世界记录，将100TB数据排序的计算成本降低到1/3。</p></li>
+                        <li>
+                            <div class="c"></div>
+                            <p>11月 微众中国欧洲、中东、日本和澳洲区相继开服，实现全球互联网市场覆盖。</p></li>
+                        <li>
+                            <div class="c"></div>
+                            <p>10月 微众中国与国家天文台合作，共同开展天体物理研究。</p></li>
+                        <li>
+                            <div class="c"></div>
+                            <p>08月 微众中国获得了以“真实技术能力和社会影响力”为评判标准的2016世界电信展卓越企业奖，成为唯一获奖的中国企业。</p></li>
+                        <li>
+                            <div class="c"></div>
+                            <p>05月 微众中国和日本软银公司宣布合作，携手拓展日本云计算市场。</p></li>
+                        <li>
+                            <div class="c"></div>
+                            <p>04月 韩国第三大跨国企业SK集团和微众中国合作，携手拓展韩国云计算市场。</p></li>
+                        <li>
+                            <div class="c"></div>
+                            <p>04月 微众中国发布专有云（Apsara Stack），支持企业客户在自己的数据中心部署飞天操作系统。</p></li>
+                        <li>
+                            <div class="c"></div>
+                            <p>01月 微众中国发布一站式大数据平台“数加”，开放微众中国十年的大数据处理能力，首批亮相20款产品。</p></li>
+                    </ul>
+                </template>
 
-                <!--&lt;!&ndash;加入我们&ndash;&gt;-->
-                <!--<div class="addwe">-->
-                    <!--<p>欢迎投递简历至：<span>job@weichina.com,</span>邮件主题为：<span>“地点+职位+姓名”</span></p>-->
-                    <!--<ul class="adduss">-->
-                        <!--<li><span>职位列表</span>-->
-                            <!--<span><select name="" id="0">-->
-                            <!--<option value="">全部职能</option></select>-->
-                        <!--</span>-->
-                        <!--</li>-->
-                        <!--<li>-->
-                            <!--<span>职位</span>-->
-                            <!--<span>-->
-                            <!--<span>工作智能</span>-->
-                            <!--<span>工作地点</span>-->
-                            <!--<span>招聘时效</span>-->
-                            <!--</span>-->
-                        <!--</li>-->
-                        <!--<li>-->
-                            <!--<span>文案策划 <div class="new">NEW</div></span>-->
-                            <!--<span>-->
-                            <!--<span>市场</span>-->
-                        <!--<span>西安-绿地</span>-->
-                        <!--<span>长期有效</span>-->
-                        <!--</span>-->
-                        <!--</li>-->
-                        <!--<li>-->
-                            <!--<span>文案策划<div class="new">NEW</div></span>-->
-                            <!--<span>-->
-                            <!--<span>市场</span>-->
-                        <!--<span>西安-绿地</span>-->
-                        <!--<span>长期有效</span>-->
-                        <!--</span>-->
-                        <!--</li>-->
-                        <!--<li>-->
-                            <!--<span>文案策划<div class="new">NEW</div></span>-->
-                            <!--<span>-->
-                            <!--<span>市场</span>-->
-                        <!--<span>西安-绿地</span>-->
-                        <!--<span>长期有效</span>-->
-                        <!--</span>-->
-                        <!--</li>-->
-                        <!--<li>-->
-                            <!--<span>文案策划</span>-->
-                            <!--<span>-->
-                            <!--<span>市场</span>-->
-                        <!--<span>西安-绿地</span>-->
-                        <!--<span>长期有效</span>-->
-                        <!--</span>-->
-                        <!--</li>-->
-                        <!--<li>-->
-                            <!--<span>文案策划</span>-->
-                            <!--<span>-->
-                            <!--<span>市场</span>-->
-                        <!--<span>西安-绿地</span>-->
-                        <!--<span>长期有效</span>-->
-                        <!--</span>-->
-                        <!--</li>-->
-                        <!--<li>-->
-                            <!--<span>文案策划</span>-->
-                            <!--<span>-->
-                            <!--<span>市场</span>-->
-                        <!--<span>西安-绿地</span>-->
-                        <!--<span>长期有效</span>-->
-                        <!--</span>-->
-                        <!--</li>-->
-                        <!--<li>-->
-                            <!--<span>文案策划</span>-->
-                            <!--<span>-->
-                            <!--<span>市场</span>-->
-                        <!--<span>西安-绿地</span>-->
-                        <!--<span>长期有效</span>-->
-                        <!--</span>-->
-                        <!--</li>-->
-                        <!--<li>-->
-                            <!--<span>文案策划</span>-->
-                            <!--<span>-->
-                            <!--<span>市场</span>-->
-                        <!--<span>西安-绿地</span>-->
-                        <!--<span>长期有效</span>-->
-                        <!--</span>-->
-                        <!--</li>-->
-                        <!--<li>-->
-                            <!--<span>文案策划</span>-->
-                            <!--<span>-->
-                            <!--<span>市场</span>-->
-                        <!--<span>西安-绿地</span>-->
-                        <!--<span>长期有效</span>-->
-                        <!--</span>-->
-                        <!--</li>-->
-                        <!--<li>-->
-                            <!--<span>文案策划</span>-->
-                            <!--<span>-->
-                            <!--<span>市场</span>-->
-                        <!--<span>西安-绿地</span>-->
-                        <!--<span>长期有效</span>-->
-                        <!--</span>-->
-                        <!--</li>-->
-                    <!--</ul>-->
-                <!--</div>-->
 
-                <!--&lt;!&ndash;联系我们&ndash;&gt;-->
-                <!--<ul class="contectus">-->
-                    <!--<li>-->
-                        <!--<div class="contecttype">-->
-                            <!--<p><span>联系方式</span></p>-->
-                            <!--<p>全国统一服务热线：4008-006-029</p>-->
-                            <!--<p>工作时间：周一至周五 9：00 - 18：00</p>-->
-                            <!--<p>客服邮箱：service@westzc.com</p>-->
-                            <!--<p>总部电话（Tel）:029-68538898</p>-->
-                        <!--</div>-->
-                        <!--<div class="media">-->
-                            <!--<p><span>媒体合作</span></p>-->
-                            <!--<p>电话（Tel）:029-68538660</p>-->
-                            <!--<p>E-mail:bd@westzc.com</p>-->
-                        <!--</div>-->
-                    <!--</li>-->
-                    <!--<li>-->
-                        <!--<div class="contecttype">-->
-                            <!--<p><span>融资咨询</span></p>-->
-                            <!--<p>负责人：胡嘉靖</p>-->
-                            <!--<p>电话（Tel）:029-68538802</p>-->
-                            <!--<p>E-mail:hjj@westzc.com</p>-->
-                            <!--<p>Mob:13028413353</p>-->
-                        <!--</div>-->
-                        <!--<div class="media">-->
-                            <!--<p><span>媒体合作</span></p>-->
-                            <!--<p>电话（Tel）:029-68538680</p>-->
-                            <!--<p>E-mail:pay@westzc.com</p>-->
-                        <!--</div>-->
-                    <!--</li>-->
-                    <!--<li>-->
-                        <!--<iframe src="public/map.html" width="697" height="300" frameborder="0" scrolling="no"></iframe>-->
-                        <!--<div class="position">西安市高新区锦业路1号绿地领海大厦A座15层</div>-->
-                    <!--</li>-->
-                <!--</ul>-->
+
+                <!--加入我们-->
+                <template else v-if=" currPage == 'jobs'">
+                    <div class="about_titless">
+                        <span>加入我们</span>
+                    </div>
+                    <div  class="addwe">
+                        <p>欢迎投递简历至：<span>job@weichina.com,</span>邮件主题为：<span>“地点+职位+姓名”</span></p>
+                        <ul class="adduss">
+                            <li><span>职位列表</span>
+                                <span><select name="" id="0">
+                            <option value="">全部职能</option></select>
+                        </span>
+                            </li>
+                            <li>
+                                <span>职位</span>
+                                <span>
+                            <span>工作智能</span>
+                            <span>工作地点</span>
+                            <span>招聘时效</span>
+                            </span>
+                            </li>
+                            <li>
+                                <span>文案策划 <div class="new">NEW</div></span>
+                                <span>
+                            <span>市场</span>
+                        <span>西安-绿地</span>
+                        <span>长期有效</span>
+                        </span>
+                            </li>
+                            <li>
+                                <span>文案策划<div class="new">NEW</div></span>
+                                <span>
+                            <span>市场</span>
+                        <span>西安-绿地</span>
+                        <span>长期有效</span>
+                        </span>
+                            </li>
+                            <li>
+                                <span>文案策划<div class="new">NEW</div></span>
+                                <span>
+                            <span>市场</span>
+                        <span>西安-绿地</span>
+                        <span>长期有效</span>
+                        </span>
+                            </li>
+                            <li>
+                                <span>文案策划</span>
+                                <span>
+                            <span>市场</span>
+                        <span>西安-绿地</span>
+                        <span>长期有效</span>
+                        </span>
+                            </li>
+                            <li>
+                                <span>文案策划</span>
+                                <span>
+                            <span>市场</span>
+                        <span>西安-绿地</span>
+                        <span>长期有效</span>
+                        </span>
+                            </li>
+                            <li>
+                                <span>文案策划</span>
+                                <span>
+                            <span>市场</span>
+                        <span>西安-绿地</span>
+                        <span>长期有效</span>
+                        </span>
+                            </li>
+                            <li>
+                                <span>文案策划</span>
+                                <span>
+                            <span>市场</span>
+                        <span>西安-绿地</span>
+                        <span>长期有效</span>
+                        </span>
+                            </li>
+                            <li>
+                                <span>文案策划</span>
+                                <span>
+                            <span>市场</span>
+                        <span>西安-绿地</span>
+                        <span>长期有效</span>
+                        </span>
+                            </li>
+                            <li>
+                                <span>文案策划</span>
+                                <span>
+                            <span>市场</span>
+                        <span>西安-绿地</span>
+                        <span>长期有效</span>
+                        </span>
+                            </li>
+                            <li>
+                                <span>文案策划</span>
+                                <span>
+                            <span>市场</span>
+                        <span>西安-绿地</span>
+                        <span>长期有效</span>
+                        </span>
+                            </li>
+                        </ul>
+                    </div>
+                </template>
+
+
+
+                <!--联系我们-->
+                <template else v-if=" currPage == 'contact'" >
+                    <div class="about_titless">
+                        <span>联系我们</span>
+                    </div>
+                    <ul class="contectus">
+                        <li>
+                            <div class="contecttype">
+                                <p><span>联系方式</span></p>
+                                <p>全国统一服务热线：4008-006-029</p>
+                                <p>工作时间：周一至周五 9：00 - 18：00</p>
+                                <p>客服邮箱：service@westzc.com</p>
+                                <p>总部电话（Tel）:029-68538898</p>
+                            </div>
+                            <div class="media">
+                                <p><span>媒体合作</span></p>
+                                <p>电话（Tel）:029-68538660</p>
+                                <p>E-mail:bd@westzc.com</p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="contecttype">
+                                <p><span>融资咨询</span></p>
+                                <p>负责人：胡嘉靖</p>
+                                <p>电话（Tel）:029-68538802</p>
+                                <p>E-mail:hjj@westzc.com</p>
+                                <p>Mob:13028413353</p>
+                            </div>
+                            <div class="media">
+                                <p><span>媒体合作</span></p>
+                                <p>电话（Tel）:029-68538680</p>
+                                <p>E-mail:pay@westzc.com</p>
+                            </div>
+                        </li>
+                        <li>
+                            <iframe src="/common/css/map.html" width="697" height="300" frameborder="0" scrolling="no"></iframe>
+                            <div class="positionss">西安市高新区锦业路1号绿地领海大厦A座15层</div>
+                        </li>
+                    </ul>
+                </template>
+
+
             </div>
         </main>
     </section>
@@ -535,7 +569,8 @@
             'show': true,
             'page': 1,
             'company': [],
-            'currPage': window.location.pathname.split('/').pop()
+            'currPage': window.location.pathname.split('/').pop(),
+            'title':'',
         },
         mounted() {
             this.$nextTick(function () {
@@ -545,6 +580,8 @@
         methods: {
             get_data: function (channel) {
                 this.company = win.getStorage('header_about');
+                this.title = this.company.title;
+                console.log(this.company,this.title)
                 for (val in this.company) {
                     if (this.company[val].domain == channel) {
                         this.content = this.company[val];
