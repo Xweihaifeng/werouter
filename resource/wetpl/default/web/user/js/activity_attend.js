@@ -1,60 +1,3 @@
-/*
-
-    // 3.删除
-    var activitydel=function(obj){
-        console.log($(obj).closest('li').data('id'));
-         $.ajax({
-            url:ACTIVITY_DESTROY+'/'+$(obj).closest('li').data('id'),
-            type:'get',
-            headers: {
-                    'Token': docCookies.getItem("token")
-                },
-            success:function(data){
-                console.log(data);
-                if(data.code == 200){
-                    mess_tusi("删除成功");
-                    location.reload();
-
-                }else{
-                    mess_tusi(data.message);
-                }
-            },
-            error: function(xhr){
-                console.log(xhr);
-            }
-        })
-    }
-    // 4.编辑
-    var activityedit=function(obj){
-        window.location="/user/admin/activity/detail/"+$(obj).closest("li").data("id");
-    }
-    // 5.取消发布
-    var activitycancel=function(obj){
-        console.log($(obj));
-        var actiid=$(obj).closest("li").data("id");
-        $.ajax({
-            url:ACTIVITY_UPDATE,
-            type:'post',
-            data:{weid:actiid,status:1},
-            headers: {
-                    'Token': docCookies.getItem("token")
-                },
-            success:function(data){
-                console.log(data);
-                if(data.code == 200){
-                    mess_tusi("取消发布成功");
-                    location.reload();
-
-                }else{
-                    mess_tusi(data.message);
-                }
-            },
-            error: function(xhr){
-                console.log(xhr);
-            }
-        })
-    }*/
-
 var id = window.location.href.split('/').pop();
 
 var goEnroll = function() {
@@ -134,7 +77,7 @@ $("#verify_ticket").bind('click', function() {
     var e_number = $('input[name=e_number]').val();
     var activity_id = id;
     if (e_number.length <= 0) {
-        layer.msg('请输入票号');
+        $('input[name=e_number]').focus();
         return;
     }
     getTicketUser(e_number, activity_id, function(data) {
@@ -164,6 +107,7 @@ $("#verify_ticket").bind('click', function() {
                         if (data.code == 200) {
                             layer.msg('已验票！');
                             layer.close(userAlert);
+                            $('input[name=e_number]').val('').focus();
                             $(".entry-num>span").text(parseInt($(".entry-num>span").text()) + 1);
                         } else {
                             layer.msg(data.message);
@@ -207,6 +151,16 @@ $("#verify_ticket").bind('click', function() {
             }
         }
     });
+});
+
+$('input[name=e_number]').keydown(function(e) {
+    if (e.keyCode == 13) {
+        $("#verify_ticket").click();
+    }
+});
+
+$("#clear_ticket").bind('click', function() {
+    $('input[name=e_number]').val('').focus();
 });
 
 $(document).ready(function() {
@@ -312,6 +266,7 @@ $(document).ready(function() {
         router(id);
     })*/
 
+    $('input[name=e_number]').val('').focus();
     // 加载活动详情
     loadActivity(id, function(data) {
         $("#J_ActivityTitle").text(data.title);

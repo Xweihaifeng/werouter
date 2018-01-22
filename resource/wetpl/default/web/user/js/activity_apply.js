@@ -187,6 +187,29 @@ var loadTickets = function(weid, callback) {
     });
 }
 
+// 导出列表
+var exportCsv = function(weid, callback) {
+    $.ajax({
+        url: ACTIVITY_ENROLL_EXPORT_CSV,
+        type: 'GET',
+        data: {
+            activity_id: weid
+        },
+        headers: {
+            'Token': docCookies.getItem("token")
+        },
+        success: function(data) {
+            if (data.code == 200)
+                callback(data.data);
+            else
+                notice.alert(data.message);
+        },
+        error: function(xhr) {
+            console.log(xhr);
+        }
+    });
+}
+
 // 短信通知
 var smsNotify = function(weid, enroll_id, callback) {
         layer.load();
@@ -358,6 +381,14 @@ $(document).on('click', '.sms-notify', function() {
             layer.msg('已发送!');
         });
     }, function() {});
+});
+
+$(document).on('click', '.export-csv', function() {
+    exportCsv(id, function(data) {
+        if (data && data.code == -200) {
+            layer.msg(data.message);
+        }
+    });
 });
 
 
