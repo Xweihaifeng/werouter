@@ -479,7 +479,7 @@ class router_index extends controller
             $plats_row = $this->db->queryOne($plats_sql , array($weid));
             if(empty($plats_row)) error(404);
 
-            $plats_cms_sql = 'SELECT title , description , key_word
+            $plats_cms_sql = 'SELECT weid,title , description , key_word
                              , icp , favicon , logo , background , weibo_show 
                              , background_up , block , bar1 , bar2 , bar3 , background_right
                              ,bar4 , block ,wap_logo , copyright , old_link , wx_qrcode , wb_qrcode FROM we_plat_cms WHERE plat_id=?';
