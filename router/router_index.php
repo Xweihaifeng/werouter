@@ -302,7 +302,8 @@ class router_index extends controller
         {
             $additional_config = $controller_router_config['config'];
         }
-
+        //$this->data['template'] = 'vertical';
+        
         $this->file = '/resource/' . ($this->data['is_custom'] === 1 && $sub_data === false
                 ? 'diytpl/'.$this->data['custom_file'].'/' : 'wetpl/'.$this->data['template'].'/');
         
@@ -339,7 +340,12 @@ class router_index extends controller
 
         if(!file_exists('.'.$this->file.$directory.$router_map))
         {
-            error(404);
+            $this->file = '/resource/wetpl/default/';
+            if(!file_exists('.'.$this->file.$directory.$router_map))
+            {
+                error(404);
+            }
+            
         }
 
         $this->router_name = $router_verify->router['router_name'];
