@@ -24,6 +24,9 @@
 		<script src="/common/js/swiper-3.3.1.min.js"></script>
 		<script src="/common/js/buttons.js"></script>
 		<script type="text/javascript" src="{{PATH_TML}}user/js/laydate.js"></script>
+		<link rel="stylesheet" href="/common/magazine/css/iview.css">
+		<script src="/common/js/vue.min.js"></script>
+		<script src="/common/magazine/js/iview.min.js"></script>
 
 		<title>我的微友</title>
 	</head>
@@ -32,7 +35,7 @@
 		<div class="left-nav">
 			
 		</div>
-		<div class="login">
+		<div id="app" class="login">
 			<div id="top">
 			</div>
 			<div id="middle">
@@ -46,12 +49,10 @@
 				   <div class="setlist clearfix"> 
 				    <select name="province" id="cityid-1" class="ui-select field_select small"> <option value="" rel="0">所在的省</option> </select>
 				    <!--<select name="city" id="cityid-2" class="ui-select field_select small"> <option value="" rel="0">所在的市</option> </select>-->
-				    <div class="ui-button theme_bgcolor search-btn">
-				     搜索
-				    </div> 
+				    <div class="ui-button theme_bgcolor search-btn" @click="search">搜索</div>
 				    <div class="blank0"></div> 
 				   </div> 
-				   <ul class="security-ul clearfix"> 
+				   <ul class="security-ul clearfix">
 				    <li class="security-head"> 
 					    <span>头像</span> 
 					    <span>用户名</span> 
@@ -60,26 +61,25 @@
 					    <span>V认证</span> 
 					    <span>地区</span> 
 					    <span>感恩金比例</span> 
-					    <span>登陆时间</span> 
+					    <!--<span>登陆时间</span>-->
 					    <span>来源</span> 
 				    </li> 
-				    <li> 
-					    <span> 
-					    	<img src="/common/img/member-friend-unknow.png" /> 
-					    </span> 
-					    <span>p120****728</span> 
-					    <span> <img style="width: 32px;height: 26px;border-radius: 0;" src="/common/img/shouji.png" /> </span> 
-					    <span> <img style="width: 28px;height: 23px;border-radius: 0;" src="/common/img/shiming_2.png" /> </span> 
-					    <span> <img style="width: 34px;height: 26px;border-radius: 0;" src="/common/img/we_identify_2.png" /> </span> 
-					    <span>.</span> 
-					    <span>1%</span> 
-					    <span>2017-09-26</span> 
-					    <span> <a href="https://tanli.wezchina.com/index.php?ctl=project&amp;act=issue" target="_blank"> <img style="width: 32px;height: 26px;border-radius: 0;" src="/common/img/laiyuan_open.png" /></a> </span> 
+				    <li v-for="e in list">
+					    <span><img :src="setImg(e.avatar, '/common/img/member-friend-unknow.png', 55, 55)" /></span>
+					    <span>{{e.nickname | setStr}}</span>
+					    <span><img style="width: 32px;height: 26px;border-radius: 0;" src="/common/img/shouji.png" /></span>
+					    <span><img style="width: 28px;height: 23px;border-radius: 0;" :src="id(e.auth, 'S')" /></span>
+					    <span><img style="width: 34px;height: 26px;border-radius: 0;" :src="id(e.cert, 'V')" /></span>
+					    <span>{{e.area_title | setStr}}</span>
+					    <span>{{e.bene_rate}}</span>
+					    <!--<span>2017-09-26</span> -->
+					    <span><a :href="setUrl(e.ref_url)" target="_blank"><img style="width: 32px;height: 26px;border-radius: 0;" src="/common/img/laiyuan_open.png" /></a></span>
 				    </li> 
 				   </ul> 
 				   <!-- <div class="blank0"></div>  -->
 				   <!-- <div class="blank20"></div>  -->
-				   <div class="pages"> 
+				   <div class="pages">
+					   <Page :total="parseInt(total)" :current="page" :page-size="limit" @on-change="change" show-elevator style="margin-top: 10px; margin-right: 50px; float: right;"></Page>
 				   </div> 
 				   <!-- <div class="blank20"></div>  -->
 				  </div> 
@@ -119,26 +119,117 @@
 				}
 			})
 
-			var info = function(page, limit, area_title){
-				$.ajax({
-					url: apiUrl + 'circel/fellow?page=' + page + '&limit=' + limit,// + '&area_title=' + area_title,
-					headers: {
-						'Token': plats_token
+			var data = {
+				"code": 200,
+				"message": "Success",
+				"data": {
+					"list": [
+						{
+							"sex": "未知",
+							"area_title": "西安市",
+							"is_auth": "2",
+							"is_cert": "2",
+							"avatar": null,
+							"nickname": null,
+							"ref_url": null,
+							"created_at": 1516000823,
+							"from_type": 2,
+							"ref_type": 2,
+							"bene_rate": "10%"
+						},
+						{
+							"sex": "未知",
+							"area_title": "西安市",
+							"is_auth": "2",
+							"is_cert": "2",
+							"avatar": null,
+							"nickname": null,
+							"ref_url": null,
+							"created_at": 1516000776,
+							"from_type": 2,
+							"ref_type": 2,
+							"bene_rate": "10%"
+						}
+					],
+					"params": {
+						"limit": 10,
+						"page": 1
 					},
-					success: function (data) {
-						console.log(data)
-					}
-				})
+					"total": 2
+				},
+				"token": "eyJpdiI6Ik54dlEzTGhjOEVla2JkdndVR2V0K2c9PSIsInZhbHVlIjoibVlhSnZMckJINVQrK0E5Mml3UjNrODRVYkxDV1J6Z3l1UVlvQjdFN3Z1ZFkwb0sweVNtV2I1XC9oU0tzczJjTEFYUUJJTkx1RCtEUmNkRlpvUWJPdzJVOXBWRDZ3QVpOWkFjb1dYV1N2cngwPSIsIm1hYyI6IjBhOTQ2MDA2YWRiZGYzYjA5YzNlZDc0ZDZiMWI3OGEwYzEwMTc5NGMyYjA4YzdhN2U1ZGZhYTJlM2I5YjI2N2QifQ=="
 			}
 
-			info(1, 10);
-
-			$(".search-btn").click(function() {
-				var area_title = $('#cityid-1 option:selected').val().replace(/省/, '');
-				console.log(area_title);
-				var page = 1;
-				var limit = 10;
-				info(page, limit, area_title);
+			var vm = new Vue({
+				el: "#app",
+				data: {
+					list: data.data.list,
+					limit: 5,
+					page: 1,
+					total: 5,
+					s: '', //实名认证
+					v: '', //V认证
+					key: ''
+				},
+				created: function(){
+					$.ajax({
+						url: apiUrl + 'circel/fellow?page=' + this.page + '&limit=' + this.limit,
+						headers: {
+							'Token': plats_token
+						},
+						success: function (data) {
+							console.log(data)
+							this.total = data.data.total;
+							this.list = data.data.list;
+						}
+					})
+				},
+				methods: {
+					setImg: function(url, init, w, h, mode) {
+						if (url != '' && url != null && url != undefined) {
+							if (url.indexOf('http') === -1 && url.indexOf('common') === -1) {
+								return mode != undefined ? ApiMaterPlatQiniuDomain + url + '?imageView2/' + mode + '/w/' + w + '/h/' + h
+										: ApiMaterPlatQiniuDomain + url + '?imageView2/3/w/' + w + '/h/' + h;
+							} else {
+								return url;
+							}
+						} else {
+							return init;
+						}
+					},
+					change: function(page){
+						//console.log(page)
+						this.page = page;
+					},
+					id: function(state, type) {
+						switch(type) {
+							case 'S': return state == 1 ? this.s = '/common/img/shiming.png' : '/common/img/shiming_2.png'; break;
+							case 'V': return state == 1 ? this.v = '/common/img/vrenzheng.png' : '/common/img/we_identify_2.png'; break;
+							default: break;
+						}
+					},
+					search: function() {
+						var area_title = $('#cityid-1 option:selected').val().replace(/省/, '');
+						$.ajax({
+							url: apiUrl + 'circel/fellow?page=' + this.page + '&limit=' + this.limit + '&area_title=' + area_title,
+							headers: {
+								'Token': plats_token
+							},
+							success: function (data) {
+								//console.log(data)
+								this.list = data.data.list;
+							}
+						})
+					},
+					setUrl: function(val) {
+						return val == null ? '#' : '/' + val;
+					}
+				},
+				filters: {
+					setStr: function(val) {
+						return val == null ? '未知' : val;
+					}
+				}
 			})
 		</script>
 	</body>
