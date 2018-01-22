@@ -474,12 +474,13 @@ class router_index extends controller
         if($this->sub_state == FALSE)
         {
             //平台信息相关
-            $plats_sql = 'SELECT plat_name FROM we_plats
+            $plats_sql = 'SELECT weid,plat_name FROM we_plats
                     WHERE weid=? ';
             $plats_row = $this->db->queryOne($plats_sql , array($weid));
+            $plats['plats'] = $plats_row;
             if(empty($plats_row)) error(404);
 
-            $plats_cms_sql = 'SELECT weid,title , description , key_word
+            $plats_cms_sql = 'SELECT title , description , key_word
                              , icp , favicon , logo , background , weibo_show 
                              , background_up , block , bar1 , bar2 , bar3 , background_right
                              ,bar4 , block ,wap_logo , copyright , old_link , wx_qrcode , wb_qrcode FROM we_plat_cms WHERE plat_id=?';
