@@ -64,11 +64,12 @@
         
         .cont-hd {
             width:100%;
-            height: auto;
+            min-height:222px;
             display: inline-block;
             padding: 30px 25px;
             /*position: relative;*/
             box-sizing: border-box;
+            overflow: hidden;
         }
         /*样式修改开始*/
         .we-art-nav{
@@ -129,15 +130,18 @@
             background-repeat: no-repeat;
             background-position: center;
             cursor: pointer;
+            border: none;
         }
         .ewm > img {
-            width: 90px;
-            height:0;
+            width:40px;
+            height:40px;
             position: absolute;
             right: 0;
             top: 0;
-            display: block;
-            transition:all 1s;
+            display:block;
+            /*opacity: 0;*/
+            transition:all ease 1s;
+            border: none;
         }
         .cont-update{
             width: auto;
@@ -181,7 +185,7 @@
             border: 1px solid #E0E0E0;
             border-radius: 3px;
             background: #fff;
-            color: #000;
+            color: #afacac;
             font-size: 16px;
         }
         .submit{
@@ -329,7 +333,7 @@
                         <li class="homepage"><a>系统设置</a></li>
                         <li class="active">个性域名</li>
                         <div class="ewm" id="ewm">
-                            <img  alt="">
+                            <img  alt="" src="{{PATH_TML}}user/img/qrcode.png">
                         </div>
                     </ul>
                 </div>
@@ -339,11 +343,10 @@
                      </div>
                     <div class="cont-R">
                         <div class="cont-sel">
-                            <h3>
+                            <h3 style="margin-bottom: 23px">
                                 恭喜您已成功开通个性域名
                                 <span class="cont-bj">编辑</span>
                             </h3>
-                            <p style="margin-left: 10px; padding-top: 8px; padding-right: 5px; float: right;color: #999;">修改说明：个性域名每个月允许修改<span class="modify-count">0</span>次</p>
                             <div class="person">
                                 <span>您的个性域名为：</span>
                                 <input type="text" value="" id="user-doma" readonly>
