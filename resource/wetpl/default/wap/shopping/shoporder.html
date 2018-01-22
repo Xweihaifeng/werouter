@@ -370,7 +370,7 @@ var order = new Vue({
         order_store()
         {
             ajax.post('order/store' , this.order_post).then((res)=>{
-                if(res.data != 0)
+                if(res.code == 200)
                 {
                     $app.open_page(all_domian + 'pay/shopping?store_num='+ res.data); 
                 }

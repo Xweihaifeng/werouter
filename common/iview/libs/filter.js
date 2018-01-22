@@ -117,6 +117,7 @@ Vue.filter('formateString',function (value , state) {
     
     var update =  (new Date(value)).getTime();//时间戳要乘1000
     update = new Date(update);
+    
     year   = update.getFullYear();
     month  = (update.getMonth()+1<10)?('0'+(update.getMonth()+1)):(update.getMonth()+1);
     day    = (update.getDate()<10)?('0'+update.getDate()):(update.getDate());
