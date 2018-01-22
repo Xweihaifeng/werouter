@@ -188,26 +188,8 @@ var loadTickets = function(weid, callback) {
 }
 
 // 导出列表
-var exportCsv = function(weid, callback) {
-    $.ajax({
-        url: ACTIVITY_ENROLL_EXPORT_CSV,
-        type: 'GET',
-        data: {
-            activity_id: weid
-        },
-        headers: {
-            'Token': docCookies.getItem("token")
-        },
-        success: function(data) {
-            if (data.code == 200)
-                callback(data.data);
-            else
-                notice.alert(data.message);
-        },
-        error: function(xhr) {
-            console.log(xhr);
-        }
-    });
+var exportCsv = function(weid) {
+    location.href = '/export?type=activity_enroll_list&activity_id=' + weid;
 }
 
 // 短信通知
@@ -353,7 +335,7 @@ $(document).on('click', '.multi-sms-notify', function() {
 
 
     var selector;
-    $.getScript("/common/friendsuggest/ui.friendsuggest.js?sss", function() {
+    $.getScript("/common/friendsuggest/ui.friendsuggest.js", function() {
         selector = new giant.ui.friendsuggest({
             ajaxUrl: "/api/activity/enroll/fetcher?activity_id=" + id,
             ajaxLoadAllUrl: "/api/activity/enroll/fetcher?activity_id=" + id,
@@ -384,11 +366,7 @@ $(document).on('click', '.sms-notify', function() {
 });
 
 $(document).on('click', '.export-csv', function() {
-    exportCsv(id, function(data) {
-        if (data && data.code == -200) {
-            layer.msg(data.message);
-        }
-    });
+    exportCsv(id);
 });
 
 
