@@ -210,13 +210,16 @@
 					},
 					search: function() {
 						var area_title = $('#cityid-1 option:selected').val().replace(/省/, '');
+						if (area_title == '') {
+							return;
+						}
 						$.ajax({
 							url: apiUrl + 'circel/fellow?page=' + this.page + '&limit=' + this.limit + '&area_title=' + area_title,
 							headers: {
 								'Token': plats_token
 							},
 							success: function (data) {
-								//console.log(data)
+								console.log(data)
 								this.list = data.data.list;
 							}
 						})
