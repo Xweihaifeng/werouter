@@ -10,6 +10,12 @@ class export extends controller
 			$this->$type();
 	}
 
+	/**
+	 * ------------------------------------------------
+	 *  以下为各个模块的导出方法
+	 * ------------------------------------------------
+	 */
+
 	// 导出活动报名人
 	private function activity_enroll_list() {
 		$activity_id = !empty($_GET['activity_id']) ? $_GET['activity_id'] : null;
@@ -36,7 +42,7 @@ class export extends controller
 		and e.plat_id = ?';
 		$results = $this->db->queryAll($enroll_sql , array($this->user_token()['weid'], $activity_id, config::$plats['plats']['weid']));
 
-		// todo ...
+		// 票务数据
 		$counts_sql = 'SELECT e.weid as enroll_id, count(h.id) as num, t.price, t.name 
 		FROM we_page_activity_ticket_hold h
 		left join we_page_activity_ticket t on h.ticket_id = t.weid 
