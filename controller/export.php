@@ -13,7 +13,7 @@ class export extends controller
 	// 导出活动报名人
 	private function activity_enroll_list() {
 		$activity_id = !empty($_GET['activity_id']) ? $_GET['activity_id'] : null;
-		print_r(config::plats);die;
+		print_r(config::$plats);die;
 		if (empty($activity_id)) 
 			exit('请求错误');
         $sql = 'SELECT is_authenticated,origo,residential,name,type FROM we_plats_user_auth WHERE plat_id=? AND plat_user_id=? ';

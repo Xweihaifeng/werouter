@@ -1,3 +1,7 @@
+/**
+ * 附件上传
+ * zhushuha<zhushuha@gmail.com>
+ */
 CKEDITOR.plugins.add("fileaddon", {
     requires: ["dialog"],
     init: function(a) {
