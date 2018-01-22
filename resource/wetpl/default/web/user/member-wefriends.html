@@ -45,7 +45,7 @@
 			    <div class="list_conment agreementlf refereebox"> 
 				   <div class="setlist clearfix"> 
 				    <select name="province" id="cityid-1" class="ui-select field_select small"> <option value="" rel="0">所在的省</option> </select>
-				    <select name="city" id="cityid-2" class="ui-select field_select small"> <option value="" rel="0">所在的市</option> </select>
+				    <!--<select name="city" id="cityid-2" class="ui-select field_select small"> <option value="" rel="0">所在的市</option> </select>-->
 				    <div class="ui-button theme_bgcolor search-btn">
 				     搜索
 				    </div> 
@@ -89,16 +89,15 @@
 		</div>
 		<script src="{{PATH_CONFIG}}"></script>
 		<script src="{{PATH_TML}}user/common/js/generate.js"></script>
-			<!--模块引入-->
+		<!--模块引入-->
 		<script src="/common/js/control.js"></script>
 
 		<script>
 			var province = plats_user_info.province_id;
 			var area = plats_user_info.area_id;
 			var item_id;
-			var api = 'http://new.wezchina.com/api/';
 			$.ajax({
-				url: api + "province/list",
+				url: apiUrl + "province/list",
 				type: "GET",
 				headers: {
 					'Token': plats_token
@@ -106,12 +105,6 @@
 				success: function(data) {
 					console.log(data);
 					if (data.code === 200) {
-						//拿到省的id
-						/*var prov = data.data.list;
-						prov.map(function(item) {
-							item_id = item.id
-							// console.warn(item_id);
-						});*/
 						var we_province11 = "";
 						data.data.list.forEach(function(value, index) {
 							we_province11 += "<option id=" + data.data.list[index].id + ">" + data.data.list[index].name + "</option>"
@@ -120,78 +113,15 @@
 
 						if (province == null || province == "") {
 							province = 27;
-							city(province, area);
 						} else {
-							city(province, area);
 						}
 					}
 				}
 			})
 
-			//触发省级变更市级
-			$("#cityid-1").on("change", function(e) {
-				$("#cityid-2").find("option").remove();
+			var info = function(page, limit, area_title){
 				$.ajax({
-					type: "GET",
-					headers: {
-						'Token': plats_token
-					},
-					url: api + "area/list/" + $('#cityid-1 option:selected').attr('id'),
-					dataType: "json",
-					success: function(data) {
-						//console.log(data);
-						if (data.code === 200) {
-							var we_city_oo = "";
-							data.data.list.forEach(function(value, index) {
-								// console.warn(data.data.list[index])
-								we_city_oo += "<option id=" + data.data.list[index].id + ">" + data.data.list[index].name + "</option>";
-							})
-							$("#cityid-2").html(we_city_oo);
-						}
-					},
-					error: function() {
-						console.log("出错了");
-					}
-				});
-			});
-
-			var city = function(province, area) {
-				$.ajax({
-					url: api + "area/list/" + province,
-					dataType: "json",
-					type: "GET",
-					headers: {
-						'Token': plats_token
-					},
-					success: function(data) {
-						console.log(data);
-						if (data.code === 200) {
-							var we_city11 = "";
-							data.data.list.forEach(function(value, index) {
-								we_city11 += "<option id=" + data.data.list[index].id + ">" + data.data.list[index].name + "</option>";
-							})
-							$("#cityid-2").append(we_city11);
-							/*$("#cityid-1").val($("#cityid-1 #" + province).val());
-							// console.log('area:', $("#" + area).val())
-							if (area == null || area == "") {
-								$("#we_city3").val($("#294").val()); //默认值
-							} else {
-								$("#we_city3").val($("#we_city3 #" + area).val());
-							}*/
-						}
-					}
-				})
-			}
-
-			$(".search-btn").click(function() {
-				var province = $('#cityid-1 option:selected').attr('id');
-				var city = $('#cityid-2 option:selected').attr('id');
-				console.log(province + "/" + city);
-				var page = 1;
-				var limit = 10;
-				var area_id = 1181;
-				$.ajax({
-					url: api + 'circel/fellow?page=' + page + '&limit=' + limit, // + '&area_id=' + area_id,
+					url: apiUrl + 'circel/fellow?page=' + page + '&limit=' + limit,// + '&area_title=' + area_title,
 					headers: {
 						'Token': plats_token
 					},
@@ -199,6 +129,16 @@
 						console.log(data)
 					}
 				})
+			}
+
+			info(1, 10);
+
+			$(".search-btn").click(function() {
+				var area_title = $('#cityid-1 option:selected').val().replace(/省/, '');
+				console.log(area_title);
+				var page = 1;
+				var limit = 10;
+				info(page, limit, area_title);
 			})
 		</script>
 	</body>

@@ -101,9 +101,8 @@
 	</body>
 
 	<script>
-		var api = 'http://new.wezchina.com/api/';
 		$.ajax({
-			url: api + 'circel/ownmoney',
+			url: apiUrl + 'circel/ownmoney',
 			headers: {
 				'Token': plats_token
 			},
@@ -117,7 +116,6 @@
 					money.split('').map(n => $(".red").append('<li>' + n + '</li>'));
 					$(".red").append('<li>元</li>');
 				}
-
 			}
 		})
 	</script>
