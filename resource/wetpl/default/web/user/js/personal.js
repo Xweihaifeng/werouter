@@ -139,11 +139,11 @@ $(document).ready(function() {
         if (data.code == 200) {
             var result = data.data;
             if (!result) {
-                $(".institutional").attr({ "disabled": false, "href": "institutional" });
+                $(".institutional").attr({ "disabled": false, "href": "/user/settings/institutional" });
                 return false;
             }
             if (result.type == 2) {
-                window.location.href = "institutional"
+                window.location.href = "/user/settings/institutional"
             } else if (result.type == 1) {
                 $(".institutional").attr("disabled", true);
                 $(".institutional").click(function() {
@@ -151,12 +151,12 @@ $(document).ready(function() {
                     return false;
                 });
 
-                if (result.is_done == 1) {
-                    $("#v_form_list").hide();
-                    $(".media-heading").text("个人认证中...").css("color", "#ffcc00");
-                    $(".warn-img").attr("src", "/common/img/carry.png");
-                } else if (result.is_done == 2) {
-                    if (result.is_authenticated == 2) {
+                if (result.is_authenticated == 2) {
+                    if (result.is_done == 1) {
+                        $("#v_form_list").hide();
+                        $(".media-heading").text("个人认证中...").css("color", "#ffcc00");
+                        $(".warn-img").attr("src", "/common/img/carry.png");
+                    } else if (result.is_done == 2) {
                         $(".submit2").show().siblings(".submit1").hide();
                         $("#cert_info").val(result.cert_info);
                         $("#per_cert_imgs").val(result.per_cert_imgs);
@@ -174,11 +174,11 @@ $(document).ready(function() {
                             $(".media-heading").text("个人认证已被拒绝，重新提交...").css("color", "#ec2d2d");
                             $(".warn-img").attr("src", "/common/img/refuse.png");
                         }
-                    } else if (result.is_authenticated == 1) {
-                        $("#v_form_list").hide();
-                        $(".media-heading").text("恭喜，您已经通过个人认证！").css("color", "#05a957");
-                        $(".warn-img").attr("src", "/common/img/pass.png");
                     }
+                } else if (result.is_authenticated == 1) {
+                    $("#v_form_list").hide();
+                    $(".media-heading").text("恭喜，您已经通过个人认证！").css("color", "#05a957");
+                    $(".warn-img").attr("src", "/common/img/pass.png");
                 }
             }
         }

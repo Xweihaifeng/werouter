@@ -1,0 +1,38 @@
+    <div class="modal_login" id="modal_login"></div>
+    <header>
+        <div>
+            <ul>
+                <li><img :src="logo" alt="" style="width: 209px; height: 50px; display: block;" /></li>
+                <li><img :src="header1" alt="" style="width: 382px; height: 45px; display: block;" /></li>
+                <li>
+                    <div id="ht">
+                        <aside v-for="e in qrcode" @mouseleave="e.ok=false">
+                            <span @mouseenter="e.ok=true">{{e.title}}</span>
+                            <div v-show="e.ok" style="z-index: 15;">
+                                <img :src="set_img(e.image, e.image, 90, 90)" class="weixin img-responsive">
+                            </div>
+                        </aside>
+                        <aside><a :href="plats_info.old_link" target="_blank" id="old"><span style="border-right:none;padding-left:12px;">·ÃÎÊ¾É°æ</span></a></aside>
+                    </div>
+                    <div id="hs">
+                        <span><input type="text" id="search" class="form-control" placeholder="ÇëÊäÈë¹Ø¼ü×Ö" v-model="key"></span>
+                        <span @click="search(key)"><img src="/common/img/find.png" style="padding: 7px"></span>
+                        <span>¸ß¼¶ËÑË÷</span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div id="menu">
+            <ol>
+                <li><a :href="window.location.protocol + '//' + window.location.host">Ê×Ò³</a></li>
+                <li v-for="c in channel">
+                    <a :href="check(c.domain, c.url)">{{c.title}}</a>
+                    <div class="nav-list">
+                        <p v-for="e in c.children">
+                            <a :href="check(c.domain, c.url) + '/' + e.domain">{{e.title}}</a>
+                        </p>
+                    </div>
+                </li>
+            </ol>
+        </div>
+    </header>

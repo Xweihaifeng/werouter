@@ -119,7 +119,6 @@
                 }).then((res) => {
                     this.list_data = res.data;
                     this.datas = res.data.list;
-                    console.log(this.datas)
                     this.cate_name = res.data.list[0].cate_name;
                     if (this.list_data.total == 0 && this.page == 1) {
                         this.empty_show = true;

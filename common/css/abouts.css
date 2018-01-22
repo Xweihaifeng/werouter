@@ -214,6 +214,9 @@ main {
     float: left;
     margin-right: 30px;
     margin-bottom: 30px; }
+.caseq ul li:hover{
+    border: 1px solid #D32720;
+}
 .caseq ul li img {
     width: 100%;
     display: block;
@@ -246,7 +249,7 @@ main {
     position: absolute;
     line-height: 22px;
     top: 18px;
-    left: 120px;
+    left: 150px;
     border-radius: 11px;
 }
 .horr {
@@ -502,18 +505,87 @@ main {
 .addwe .adduss {
     width: 930px;
     height: auto;
+    overflow: hidden;
+    padding-right: 2px;
+    box-sizing: border-box;
     margin-bottom: 60px; }
-.addwe .adduss li {
+.addwe .adduss > li {
     width: 100%;
-    height: 60px;
+    height: auto;
     border-bottom: 1px solid #d9d9d9;
     border-left: 1px solid #d9d9d9;
     border-right: 1px solid #d9d9d9;
+    overflow: hidden;
+}
+.addwe .adduss li > div.li-con{
+    width: 100%;
+    height: 100%;
     display: flex;
-    position: relative;
     justify-content: space-between;
-    align-items: center; }
-.addwe .adduss li span {
+    align-items: center;
+}
+.addwe .adduss li > ul{
+    width: 100%;
+    height:auto;
+    display: none;
+    background: #f5f5f5;
+}
+.addwe .adduss li > ul > li{
+    padding:0 59px;
+    box-sizing: border-box;
+}
+.addwe .adduss li > ul > li > div{
+    width: 100%;
+    border-bottom: 1px solid #e0e0e0;
+}
+.addwe .adduss li > ul > li:nth-of-type(1){
+    width: 100%;
+    height: 149px;
+    padding-top: 59px;
+}
+.addwe .adduss li > ul > li:nth-of-type(1) > div{
+    /*height: 149px;*/
+    box-sizing: border-box;
+    padding-bottom: 14px;
+}
+.addwe .adduss li > ul > li:nth-of-type(2) > div{
+    /*height: 274px;*/
+}
+.addwe .adduss li > ul > li:nth-of-type(1) > div > p{
+    font-size: 14px;
+    line-height: 31px;
+    color: #808080;
+}
+.addwe .adduss li > ul > li:nth-of-type(1) > div > p > span{
+    font-size: 16px;
+    color: #333;
+    line-height: 16px;
+}
+
+.addwe .adduss li > ul > li:nth-of-type(2){
+    width: 100%;
+    height: auto;
+}
+.addwe .adduss li > ul > li:nth-of-type(3){
+    width: 100%;
+    height: auto;
+}
+.addwe .adduss li > ul > li:nth-of-type(3) > div{
+    border-bottom: 0 solid #fff;
+    height: auto;
+}
+.addwe .adduss li > ul > li:nth-last-child(1){
+    border-bottom: 0 solid #fff;
+    border-right: 0 solid #fff;
+    border-left: 0 solid #fff;
+}
+.addwe .adduss li > div.li-con{
+    width: 100%;
+    position: relative;
+
+    height: 60px;
+}
+.addwe .adduss li > div.li-con span {
     display: block;
     width: auto;
     height: 60px;
@@ -521,19 +593,23 @@ main {
     color: #666;
     line-height: 60px;
     display: flex; }
-.addwe .adduss li span:nth-of-type(1) {
+.addwe .adduss li:nth-of-type(2) > div.li-con span{
+    line-height: 40px;
+}
+.addwe .adduss li > div.li-con span:nth-of-type(1) {
     padding: 0 37px; }
-.addwe .adduss li span:nth-of-type(2) span {
+.addwe .adduss li > div.li-con span:nth-of-type(2) span {
     padding: 0 40px; }
 .addwe .adduss li:nth-of-type(2) {
+    line-height: 40px;
     overflow: hidden; }
-.addwe .adduss li:nth-of-type(2) span:nth-of-type(2) span {
+.addwe .adduss li:nth-of-type(2) > div.li-con span:nth-of-type(2) span {
     border-left: 1px solid #d9d9d9; }
 .addwe .adduss li:nth-of-type(1) {
     border-top: 1px solid #d9d9d9; }
-.addwe .adduss li:nth-of-type(1) span {
+.addwe .adduss li:nth-of-type(1) div.li-con span {
     color: #333; }
-.addwe .adduss li:nth-of-type(1) span:nth-of-type(2) {
+.addwe .adduss li:nth-of-type(1) div.li-con span:nth-of-type(2) {
     width: 80px;
     height: 32px;
     border-radius: 5px;
@@ -553,6 +629,69 @@ main {
 .addwe .adduss li:nth-of-type(2) {
     height: 39px;
     background: #f5f5f5; }
+
+.addwe .adduss li > ul > li:nth-of-type(2) > div > p{
+    font-size: 14px;
+    line-height: 31px;
+    color: #808080;
+}
+.addwe .adduss > li:hover{
+    background: #fafafa!important;
+}
+.addwe .adduss li > ul > li:nth-of-type(2) > div{
+    padding-top: 29px;
+    box-sizing: border-box;
+    padding-bottom: 15px;
+}
+.addwe .adduss li > ul > li:nth-of-type(3) > div{
+    padding-top: 29px;
+    box-sizing: border-box;
+}
+.addwe .adduss li > ul > li:nth-of-type(3) > div > a{
+    width: 100px;
+    height: 36px;
+    display: block;
+    background: #cf2822;
+    color: #fff;
+    text-align: center;
+    line-height: 36px;
+    border-radius: 5px;
+}
+.addwe .adduss li > ul > li:nth-of-type(3) > div > p > span{
+    font-size: 16px;
+    color: #333;
+    line-height: 16px;
+}
+.addwe .adduss li > ul > li:nth-of-type(2) > div > p > span{
+    font-size: 16px;
+    color: #333;
+    line-height: 16px;
+}
+.addwe .adduss li > ul > li:nth-of-type(2) > div > p:nth-of-type(2){
+    color: #333;
+}
+.contentss{
+    width: 100%;
+    height: auto;
+    /*padding-bottom: 50px;*/
+    box-sizing: border-box;
+    display: none;
+    padding-left: 30px;
+    overflow: hidden;
+    padding-bottom: 30px;
+}
+.contentss > h6{
+    margin-top: 10px;
+    font-size: 16px;
+    color: #333;
+}
+.contentss > p{
+    line-height: 34px;
+    color: #666;
+    display: block;
+    height: auto;
+}
+
 
 .contectus {
     width: 930px;

@@ -39,17 +39,17 @@
                 <div class="chart-list" v-show="currentState == 0">
                     <div class="chart-dom" v-for="item in 3" :id="'show-chart'+item" :option="'option'+item"></div>
                 </div>
-                <div v-show="currentState != 0">
+                <div v-show="currentState == 1">
                     <div class="form-list">
                         <i-form :model="formItem" :label-width="80">
-                            <form-item label="Input">
+                            <form-item label="会员卡名称">
                                 <i-input v-model="formItem.input" placeholder="Enter something..."></i-input>
                             </form-item>
-                            <form-item label="Select">
+                            <form-item label="会员卡类型">
                                 <i-select v-model="formItem.select">
-                                    <i-option value="beijing">New York</i-option>
-                                    <i-option value="shanghai">London</i-option>
-                                    <i-option value="shenzhen">Sydney</i-option>
+                                    <i-option value="1">New York</i-option>
+                                    <i-option value="2">London</i-option>
+                                    <i-option value="3">Sydney</i-option>
                                 </i-select>
                             </form-item>
                             <form-item label="DatePicker">
@@ -97,6 +97,25 @@
                     </div>
                     <div class="table-list">
                         <i-table :columns="columns1" :data="data1"></i-table>
+                    </div>
+                </div>
+                <div v-show="currentState == 2">
+                    <div class="form-list">
+                        <div class="table-list">
+                            <i-table :columns="columns1" :data="data1"></i-table>
+                        </div>
+                    </div>
+                </div>
+                <div v-show="currentState == 3">
+                    <div class="form-list">
+                    发布优惠卷
+                    </div>
+                </div>
+                <div v-show="currentState == 4">
+                    <div class="form-list">
+                        <div class="table-list">
+                            <i-table :columns="columns1" :data="data1"></i-table>
+                        </div>
                     </div>
                 </div>
             </div>

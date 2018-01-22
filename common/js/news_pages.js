@@ -9,4 +9,7 @@ $(function () {
             $(".diss").css({"display":"block"})
         }
     })
+    $(".adduss > li ").click(function () {
+        $(this).children("ul").slideToggle()
+    })
 })

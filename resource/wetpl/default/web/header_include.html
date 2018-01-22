@@ -136,15 +136,15 @@
                     this.logo = settings + config.logo;
                 }
 
-                this.header('header_about', 'page', (res) => {
+                this.header('header_about', 'page', '', (res) => {
                     this.header_about = res;
                 });
 
-                this.header('header_news', 'news', (res) => {
+                this.header('header_news', 'news', '', (res) => {
                     this.header_news = res;
                 });
 
-                this.header('header_help', 'help', (res) => {
+                this.header('header_help', 'help', 'true', (res) => {
                     this.header_help = res;
                     console.log(res)
                 });
@@ -157,10 +157,10 @@
             config() {
                 return ajax.get('/cms/setting/show');
             },
-            header(key, channel, val) {
+            header(key, channel, cate, val) {
                 var header = win.getStorage(key);
                 if (header == false) {
-                    ajax.get(web_business.web_cms_channel_categories, {params: {channel: channel}}).then((res) => {
+                    ajax.get(web_business.web_cms_channel_categories, {params: {channel: channel, cate: cate}}).then((res) => {
                         win.setStorage(key, res.data);
                         val(res.data);
                         console.log(red.data)
