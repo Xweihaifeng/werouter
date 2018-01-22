@@ -508,6 +508,11 @@
         mounted() {
             this.$nextTick(() => {
                 marqueeStart(1, "left");
+                $("#search").keydown(function(evt){
+                    switch (evt.keyCode){
+                        case 13: window.location.href = window.location.href = window.location.protocol + "//" + window.location.host + '/so?q=' + $("#search").val();
+                    }
+                });
             })
         },
         methods: {
