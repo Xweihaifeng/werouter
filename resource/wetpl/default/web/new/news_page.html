@@ -44,27 +44,6 @@
                     </li>
                 </ul>
             </div>
-            <!--<div class="content_rights">
-                <ul>
-                    <li>
-                        <div class="about_title">
-                            <div class="title_con">
-                                <div class="lineder"></div>
-                                <span>{{content.title}}</span>
-                                <img v-if="currPage == 'about'" src="/common/img/sugg.png" alt="">
-                                <img v-if="currPage == 'history'" src="/common/img/develope.png" alt="">
-                                <img v-if="currPage == 'honor'" src="/common/img/hoemer.png" alt="">
-                                <img v-if="currPage == 'cases'" src="/common/img/case.png" alt="">
-                                <img v-if="currPage == 'jobs'" src="/common/img/addus.png" alt="">
-                                <img v-if="currPage == 'contact'" src="/common/img/conect.png" alt="">
-                            </div>
-                        </div>
-                        <ul class="about_con" v-html="content.content">
-
-                        </ul>
-                    </li>
-                </ul>
-            </div>-->
             <div class="content_rights">
                 <div v-if="currPage == 'honor'" class="horr">
                     <div class="about_titless">
@@ -261,33 +240,9 @@
                                 <p class="center">博学，深知，敏锐，创新，信任，积极，责任感，对细节的尊重，挑战权威...是我们的关键词。</p>
                                 <p class="center">深度挖掘客户需求，让我们的创新产品与极致服务帮助每个领域互联网化！</p>
                                 <ul class="people-img">
-                                    <li><img src="/common/img/08sss.png" alt=""></li>
-                                    <li><img src="/common/img/08sss.png" alt=""></li>
-                                    <li><img src="/common/img/08sss.png" alt=""></li>
-                                    <li><img src="/common/img/08sss.png" alt=""></li>
-                                    <li><img src="/common/img/08sss.png" alt=""></li>
-                                    <li><img src="/common/img/08sss.png" alt=""></li>
-                                    <li><img src="/common/img/08sss.png" alt=""></li>
-                                    <li><img src="/common/img/08sss.png" alt=""></li>
-                                    <li><img src="/common/img/08sss.png" alt=""></li>
-                                    <li><img src="/common/img/08sss.png" alt=""></li>
-                                    <li><img src="/common/img/08sss.png" alt=""></li>
-                                    <li><img src="/common/img/08sss.png" alt=""></li>
-                                    <li><img src="/common/img/08sss.png" alt=""></li>
-                                    <li><img src="/common/img/08sss.png" alt=""></li>
-                                    <li><img src="/common/img/08sss.png" alt=""></li>
-                                    <li><img src="/common/img/08sss.png" alt=""></li>
-                                    <li><img src="/common/img/08sss.png" alt=""></li>
-                                    <li><img src="/common/img/08sss.png" alt=""></li>
-                                    <li><img src="/common/img/08sss.png" alt=""></li>
-                                    <li><img src="/common/img/08sss.png" alt=""></li>
-                                    <li><img src="/common/img/08sss.png" alt=""></li>
-                                    <li><img src="/common/img/08sss.png" alt=""></li>
-                                    <li><img src="/common/img/08sss.png" alt=""></li>
-                                    <li><img src="/common/img/08sss.png" alt=""></li>
-                                    <li><img src="/common/img/08sss.png" alt=""></li>
-                                    <li><img src="/common/img/08sss.png" alt=""></li>
-                                    <li><img src="/common/img/08sss.png" alt=""></li>
+                                    <template v-for="item in teems">
+                                        <li><img :src="item.img" alt="图片走丢了"></li>
+                                    </template>
                                 </ul>
                             </div>
                         </li>
@@ -406,107 +361,44 @@
                     <div class="about_titless">
                         <span>加入我们</span>
                     </div>
-                    <div  class="addwe">
+                    <div  class="addwe" id="join">
                         <p>欢迎投递简历至：<span>job@weichina.com,</span>邮件主题为：<span>“地点+职位+姓名”</span></p>
                         <ul class="adduss">
-                            <li><span>职位列表</span>
-                                <span><select name="" id="0">
-                            <option value="">全部职能</option></select>
-                        </span>
+                            <li>
+                                <div class="li-con">
+                                    <span>职位列表</span>
+                                    <span>
+                                    <select name="" id="0">
+                                        <option value="">全部职能</option>
+                                    </select>
+                                </span>
+                                </div>
                             </li>
                             <li>
-                                <span>职位</span>
-                                <span>
-                            <span>工作智能</span>
-                            <span>工作地点</span>
-                            <span>招聘时效</span>
-                            </span>
+                                <div class="li-con">
+                                    <span>职位</span>
+                                    <span>
+                                        <span>工作职能</span>
+                                        <span>工作地点</span>
+                                        <span>招聘时效</span>
+                                    </span>
+                                </div>
+
                             </li>
-                            <li>
-                                <span>文案策划 <div class="new">NEW</div></span>
-                                <span>
-                            <span>市场</span>
-                        <span>西安-绿地</span>
-                        <span>长期有效</span>
-                        </span>
-                            </li>
-                            <li>
-                                <span>文案策划<div class="new">NEW</div></span>
-                                <span>
-                            <span>市场</span>
-                        <span>西安-绿地</span>
-                        <span>长期有效</span>
-                        </span>
-                            </li>
-                            <li>
-                                <span>文案策划<div class="new">NEW</div></span>
-                                <span>
-                            <span>市场</span>
-                        <span>西安-绿地</span>
-                        <span>长期有效</span>
-                        </span>
-                            </li>
-                            <li>
-                                <span>文案策划</span>
-                                <span>
-                            <span>市场</span>
-                        <span>西安-绿地</span>
-                        <span>长期有效</span>
-                        </span>
-                            </li>
-                            <li>
-                                <span>文案策划</span>
-                                <span>
-                            <span>市场</span>
-                        <span>西安-绿地</span>
-                        <span>长期有效</span>
-                        </span>
-                            </li>
-                            <li>
-                                <span>文案策划</span>
-                                <span>
-                            <span>市场</span>
-                        <span>西安-绿地</span>
-                        <span>长期有效</span>
-                        </span>
-                            </li>
-                            <li>
-                                <span>文案策划</span>
-                                <span>
-                            <span>市场</span>
-                        <span>西安-绿地</span>
-                        <span>长期有效</span>
-                        </span>
-                            </li>
-                            <li>
-                                <span>文案策划</span>
-                                <span>
-                            <span>市场</span>
-                        <span>西安-绿地</span>
-                        <span>长期有效</span>
-                        </span>
-                            </li>
-                            <li>
-                                <span>文案策划</span>
-                                <span>
-                            <span>市场</span>
-                        <span>西安-绿地</span>
-                        <span>长期有效</span>
-                        </span>
-                            </li>
-                            <li>
-                                <span>文案策划</span>
-                                <span>
-                            <span>市场</span>
-                        <span>西安-绿地</span>
-                        <span>长期有效</span>
-                        </span>
+                            <li  v-for="item in join" @click="slide(item.weid,$event)">
+                                <div class="li-con">
+                                    <span>{{item.title}}<div class="new">NEW</div></span>
+                                    <span>
+                                    <span>市场</span>
+                                    <span>西安-绿地</span>
+                                    <span>长期有效</span>
+                                    </span>
+                                </div>
+                                <div class="contentss" v-html="joincon"></div>
                             </li>
                         </ul>
                     </div>
                 </template>
-
-
 
                 <!--联系我们-->
                 <template else v-if=" currPage == 'contact'" >
@@ -548,8 +440,6 @@
                         </li>
                     </ul>
                 </template>
-
-
             </div>
         </main>
     </section>
@@ -571,23 +461,63 @@
             'company': [],
             'currPage': window.location.pathname.split('/').pop(),
             'title':'',
+            'join':'',
+            'joincon':'',
+            'teems':'',
         },
         mounted() {
             this.$nextTick(function () {
                 this.get_data(this.currPage);
+                this.people();
             });
         },
+
         methods: {
+            people:function () {
+                if(this.currPage === 'about'){
+                ajax.get(web_business.web_cms_channel_contents, {
+                    params: {
+                        cate_id: 'team',
+                        limit: 10,
+                        'page': 1
+                    }
+                }).then((res)=>{
+                    this.teems = res.data.list;
+                    $(this.teems).each((v,i)=>{
+                        i.img=settings+i.thumb_image;
+                    })
+
+                })
+
+                }else if(this.currPage === 'jobs'){
+                    ajax.get(web_business.web_cms_channel_contents, {
+                        params: {
+                            cate_id: 'join',
+                            limit: 10,
+                            'page': 1
+                        }
+                    }).then((res)=>{
+                        this.join=res.data.list;
+                    })
+
+                }
+            },
             get_data: function (channel) {
                 this.company = win.getStorage('header_about');
                 this.title = this.company.title;
-                console.log(this.company,this.title)
                 for (val in this.company) {
                     if (this.company[val].domain == channel) {
                         this.content = this.company[val];
                         set_title(this.content.title);
                     }
                 }
+            },
+            slide:function (id,event){
+                ajax.get(web_business.web_cms_contents + id).then((res) => {
+                    this.joincon = res.data.content;
+                });
+                $(event.currentTarget).children("div").eq(1).slideToggle()
+
             }
         }
     });
