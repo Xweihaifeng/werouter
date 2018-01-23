@@ -4,63 +4,390 @@
 
 <!DOCTYPE html>
 <html>
+<head lang="en">
+    <title></title>
+    <meta charset="UTF-8" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <link rel="shortcut icon" id="favicon" href="" />
+    <link rel="stylesheet" href="/common/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="{{PATH_TML}}css/modal_login.css" />
+    <link rel="stylesheet" href="{{PATH_TML}}css/normalize.css" />
+    <link rel="stylesheet" href="{{PATH_TML}}css/index_new.css" />
+     <!--分页样式-->
+    <link rel="stylesheet" type="text/css" href="{{PATH_TML}}css/paging.css">
+    <!--分页样式结束-->
+    <!--中间样式开始-->
+    <link rel="stylesheet" href="/resource/wetpl/substation/default/web/css/list.css">
+    <link rel="stylesheet" href="/resource/wetpl/substation/default/web/css/newsert.css">
+    <!--中间样式结束-->
 
-    <head>
-        <title></title>
-        <meta charset="utf-8" />
-        <link rel="icon" href="" id="public_icon" />
+    <!-- <script src="/common/public/zepto.min.js"></script> -->
+    <script src="/common/js/vue.min.js"></script>
+    <script src="/common/js/axios.min.js"></script>
+    <script src="/common/js/jquery-3.2.1.min.js"></script>
+    <script src="/common/layer-v3.0.3/layer-v3.0.3/layer/layer.js"></script>
+    <script src="{{PATH_CONFIG}}"></script>
+    <script src="{{PATH_TML}}js/modal_login.js"></script>
+    <script src="{{PATH_TML}}assets/list/organize/js/organize.js"></script>
+    <script src="{{PATH_TML}}js/paging.js"></script>
+    <style>
+        * { margin: 0; padding: 0; }
+        html, body, p { margin: 0; padding: 0; }
+        ul, li { list-style: none; }
+        .news-main { position: relative; width: 1200px; height: 800px; background-color: #e2e2e2; display: flex; justify-content: space-between; }
+        .news-left { width: 850px; height: 600px; box-shadow: inset 0 0 0 1px #f00; }
+        .news-right { width: 330px; height: 600px; box-shadow: inset 0 0 0 1px #f00; }
+       #container{
+           background: #fff;
+           padding-bottom: 30px;
+       }
+        .seat{
+            width: 1200px;
+            margin-top: 15px;
+        }
+        .news-main{
+            height: auto;
+            overflow: hidden;
+            background: #fff;
+            display: block;
+        }
+        .yuan{
+            margin-bottom: 0;
+        }
+        .wz{
+            color: #666666;
+            font-size: 14px;
+            font-family: "微软雅黑";
+            line-height: 19px;
+            padding-left: 3px;
+        }
+        /*二级分类样式开始*/
+        .er-nav{
+            width:auto;
+            height: 50px;
+            float: right;
+            display: flex;
+            justify-content: right;
+            padding: 0 10px;
+        }
+        .er-nav>a{
+            font-size: 14px;
+            color: #666666;
+            display: block;
+            width: auto;
+            height: 100%;
+            margin-right: 10px;
+            line-height: 40px;
+            padding: 0 15px;
+        }
+        .er-nav>.er-cur{
+            background: #0a8ddf;
+            color: #fff!important;
+        }
 
-        <link rel="stylesheet" type="text/css" href="{{PATH_TML}}font/iconfont.css" />
-        <link rel="stylesheet" type="text/css" href="{{PATH_TML}}css/news_base.css" />
-        <link rel="stylesheet" type="text/css" href="{{PATH_TML}}assets/list/organize/css/organize.css" />
-        <link rel="stylesheet" type="text/css" href="{{PATH_TML}}css/modal_login.css" />
-        <link rel="stylesheet" type="text/css" href="{{PATH_TML}}css/paging.css" />
-
-        <script src="/common/js/jquery-3.2.1.min.js"></script> 
-        <script src="/common/layer-v3.0.3/layer-v3.0.3/layer/layer.js"></script>
-        <script src="{{PATH_CONFIG}}"></script>
-        <script src="{{PATH_TML}}js/modal_login.js"></script>
-        <script src="{{PATH_TML}}assets/list/organize/js/organize.js"></script>
-        <script src="{{PATH_TML}}js/paging.js"></script>
-    </head>
-
-    <body>
-        <!-- 登录部分 -->
-        <div class="modal_login" id="modal_login"></div>
-        <!-- 导航部分开始 -->
-        <ul class="news_menu" id="public_main_news_menu"></ul>
-        <!-- 导航部分结束 -->
-        <!-- 组织部分开始 -->
-        <div class="organize-content">
-            <div class="weizhuye-gerenfencai">
-                <div class="top-nav">
-                    <div id="thumb_image"></div>
-                    <ul class="center-disperse" id="menuX">
-                        <a class="chan_li" id="oooo"> 商会首页 </a>
-                    </ul>
-                </div>
-            </div>
-            <div class="weizhuye-gerenfencai" id="firstStage">
-                <div class="fengcai fengcai-main">
-                    <div class="main-top center-disperse">
-                        <div class="article_list clearfix">
-                            <!-- <input type="button" id="prev_btn"> -->
-                            <div id="menuTwo"></div>
-                            <!-- <input type="button" id="next_btn"> -->
-                        </div>
-                        <div class="y">当前位置：首页&gt; 组织 &gt; <a id="menuY"> 最新发布 </a></div>
+        /*单页模板*/
+         .org_content{
+             width: 100%;
+             height: auto;
+         }
+         .org_content>h3{
+             font-size: 16px;
+             font-weight: bold;
+             color: #000000;
+             font-family: '微软雅黑';
+             text-align: center;
+             padding: 1.5rem 0;
+         }
+        .org_content>div{
+            font-size: 14px;
+            color: #333!important;
+            line-height: 24px;
+            text-align: justify;
+        }
+        .org_content>div p{
+            width: 100%;
+            height: auto;
+        }
+        .org_content>div img{
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        /*二级分类样式结束*/
+    </style>
+</head>
+<body>
+<main id="app" v-cloak>
+    <div class="modal_login" id="modal_login"></div>
+    <header>
+        <div>
+            <ul>
+                <li><img :src="logo" alt="" style="width: 209px; height: 50px; display: block;" /></li>
+                <li><img :src="header1" alt="" style="width: 382px; height: 45px; display: block;" /></li>
+                <li>
+                    <div id="ht">
+                        <aside v-for="e in qrcode" @mouseleave="e.ok=false">
+                            <span @mouseenter="e.ok=true">{{e.title}}</span>
+                            <div v-show="e.ok" style="z-index: 15;">
+                                <img :src="set_img(e.image, e.image, 90, 90)" class="weixin img-responsive">
+                            </div>
+                        </aside>
+                        <aside><a :href="plats_info.old_link" target="_blank" id="old"><span style="border-right:none;padding-left:12px;">访问旧版</span></a></aside>
                     </div>
-                    <ul class="list-article-ul"></ul>
+                    <div id="hs">
+                        <span><input type="text" id="search" class="form-control" placeholder="请输入关键字" v-model="key"></span>
+                        <span @click="search(key)"><img src="/common/img/find.png" style="padding: 7px"></span>
+                        <span>高级搜索</span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div id="menu">
+            <ol>
+                <li><a :href="window.location.protocol + '//' + window.location.host">首页</a></li>
+                <li v-for="c in channel">
+                    <a :href="check(c.domain, c.url)">{{c.title}}</a>
+                    <div class="nav-list">
+                        <p v-for="e in c.children">
+                            <a :href="check(c.domain, c.url) + '/' + e.domain">{{e.title}}</a>
+                        </p>
+                    </div>
+                </li>
+            </ol>
+        </div>
+    </header>
+
+    <!-- 新问中心开始 -->
+    <div id="container">
+        <!--位置显示开始-->
+        <div class="seat">
+            <img src="/resource/wetpl/substation/default/web/image/fanhui.png" alt="" style="margin-top: -3px">
+            当前位置在：
+            <a href="">首页</a>
+            > 组织 <span class="wz"></span>
+            <div class="er-nav" id="menuTwo"></div>
+        </div>
+        <!--位置显示结束-->
+
+        <article class="news-main">
+            <!--左侧内容开始-->
+            <article class="main">
+                <h2 style="margin-top: 0px">
+                    <strong>组织</strong>
+                    <span>Chamber of Commerce</span>
+                </h2>
+                <ul class="aside" id="menuX">
+                    <li>
+                        <a class="chan_li" id="oooo"> 商会首页 </a>
+                    </li>
+                </ul>
+                <div class="company">
+                    <p>电话：021-50939588</p>
+                    <p>传真：021-50939388</p>
+                    <p>地址：上海市浦东大道900号华辰金融大厦25楼</p>
+                </div>
+            </article>
+            <!--左侧内容结束-->
+            <!--右侧内容开始-->
+            <article class="list-big">
+                <div class="title">
+                    <span></span>
+                </div>
+                <div class="newsert">
+                    <!--<div class="new1">-->
+                        <!--<div class="s1-lbleft">-->
+                            <!--<ul class="banner">-->
+                                <!--<li>-->
+                                    <!--<a href="">-->
+                                        <!--<img src="image/20171201101148-0.png" alt="">-->
+                                    <!--</a>-->
+                                    <!--<a href="" class="banner-jie" title="【关注】马云对话全球浙商：今天的中国是最佳经商时代">【关注】马云对话全球浙商：今天的中...</a>-->
+                                <!--</li>-->
+                                <!--<li>-->
+                                    <!--<a href="">-->
+                                        <!--<img src="image/20171130132043-0.png" alt="">-->
+                                    <!--</a>-->
+                                    <!--<a href="" class="banner-jie" title="【关注】第四届世界浙商大会开幕 在沪浙商整体表现抢眼">【关注】第四届世界浙商大会开幕 在...</a>-->
+                                <!--</li>-->
+                                <!--<li>-->
+                                    <!--<a href="">-->
+                                        <!--<img src="image/20171128110726-0.png" alt="">-->
+                                    <!--</a>-->
+                                    <!--<a href="" class="banner-jie" title="金融新起点  浙商新作为 第五届外滩国际金融峰会举办">金融新起点  浙商新作为 第五届外滩国...</a>-->
+                                <!--</li>-->
+                                <!--<li>-->
+                                    <!--<a href="">-->
+                                        <!--<img src="image/20171107095010-0.png" alt="">-->
+                                    <!--</a>-->
+                                    <!--<a href="" class="banner-jie" title="【商会】浙商闵行战略签约，携手打造创新创业新高地">【商会】浙商闵行战略签约，携手打造...</a>-->
+                                <!--</li>-->
+                                <!--<li>-->
+                                    <!--<a href="">-->
+                                        <!--<img src="image/20171107094908-0.png" alt="">-->
+                                    <!--</a>-->
+                                    <!--<a href="" class="banner-jie" title="【商会】在沪浙商要做新时代中国特色社会主义思想的践行者和美好生活的创造者">【商会】在沪浙商要做新时代中国特色...</a>-->
+                                <!--</li>-->
+                                <!--<li>-->
+                                    <!--<a href="">-->
+                                        <!--<img src="image/20171024133110-0.png" alt="">-->
+                                    <!--</a>-->
+                                    <!--<a href="" class="banner-jie" title="【商会】陈希副区长：让浙商在浦东新区和自贸区茁壮成长">【商会】陈希副区长：让浙商在浦东新...</a>-->
+                                <!--</li>-->
+                            <!--</ul>-->
+                            <!--<div class="btn">-->
+                                <!--<div class="btn-bL"></div>-->
+                                <!--<div class="btn-bR"></div>-->
+                            <!--</div>-->
+                            <!--<ul class="yuan">-->
+                                <!--<li class="yson"></li>-->
+                                <!--<li class="yson"></li>-->
+                                <!--<li class="yson"></li>-->
+                                <!--<li class="yson"></li>-->
+                                <!--<li class="yson"></li>-->
+                                <!--<li class="yson"></li>-->
+                            <!--</ul>-->
+                        <!--</div>-->
+                        <!--<div class="s1-lbright">-->
+                            <!--<ul class="s1-lbr">-->
+                                <!--<li>-->
+                                    <!--<a href="">【商会】筚路蓝缕 曙光在前 闻道儒商陈萍</a>-->
+                                <!--</li>-->
+                                <!--<li>-->
+                                    <!--<a href="">【商会】沪闽互通服务浙商 福建浙江商会来访</a>-->
+                                <!--</li>-->
+                                <!--<li>-->
+                                    <!--<a href="">【企业】连成集团荣获2017年“百年匠星”...</a>-->
+                                <!--</li>-->
+                                <!--<li>-->
+                                    <!--<a href="">【企业】万丰集团：营造国际品牌，构筑百年企...</a>-->
+                                <!--</li>-->
+                                <!--<li>-->
+                                    <!--<a href="">【商会】大融合大发展大创造 闵行与浙商合作...</a>-->
+                                <!--</li>-->
+                                <!--<li>-->
+                                    <!--<a href="">【商会】卢秉恒院士：用3D技术打印“全民创...</a>-->
+                                <!--</li>-->
+                                <!--<li>-->
+                                    <!--<a href="">【商会】凝聚、创新、提升 商会团委一次...</a>-->
+                                <!--</li>-->
+                                <!--<li>-->
+                                    <!--<a href="">【商会】天通控股：占领电子材料研发领域至高...</a>-->
+                                <!--</li>-->
+                            <!--</ul>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <ul class="new2">
+                    </ul>
+                    <!--<div class="fenye">-->
+                        <!--<a href="">首页</a>-->
+                        <!--<a href="">上一页</a>-->
+                        <!--<a href="">1</a>-->
+                        <!--<a href="">2</a>-->
+                        <!--<a href="">3</a>-->
+                        <!--<a href="">4</a>-->
+                        <!--<a href="">5</a>-->
+                        <!--<a href="">6</a>-->
+                        <!--<a href="">7</a>-->
+                        <!--<a href="">8</a>-->
+                        <!--<a href="">9</a>-->
+                        <!--<a href="">10</a>-->
+                        <!--<a href="">...</a>-->
+                        <!--<a href="">下一页</a>-->
+                        <!--<a href="">尾页</a>-->
+                    <!--</div>-->
                     <div class="paging"><div class="box" id="box"></div></div>
                 </div>
-            </div>
-            <div class="prompt-info"></div>
-            <div id="plat-two-back-top"><img src="{{PATH_TML}}images/gotop.png"></div>
-        </div>
-        <!-- 组织部分结束 -->
-        <!-- 右侧大背景图 -->
-        <div id="public_main_right_bg" style="position:fixed;top:0;bottom:0;left:1190px;width:100%;"></div>
-        <script src="{{PATH_TML}}js/public_main_right_bg.js"></script>
-    </body>
+            </article>
+            <!--右侧内容结束-->
 
+        </article>
+    </div>
+    <!-- 新闻中心结束 -->
+
+    <div id="bottom1">
+        <footer>
+            <div class="footer-nav">
+                <a href="javascript:void(0)">咨询与建议</a>
+                <a href="javascript:void(0)">站点地图</a>
+                <a id="contact" href="/org/lxwm">联系我们</a>
+            </div>
+            <div class="copyright" v-html="plats_info.copyright"></div>
+            <div class="_ideConac">
+                <img src="/common/img/gabeian.png" width="60" height="60">
+            </div>
+        </footer>
+    </div>
+</main>
+
+<script>
+
+    var app = new Vue({
+        el: '#app',
+        data: {
+            avatar: '',
+            domain: plats_user_info.domian == undefined ? 'index' : plats_user_info.domian,
+            logo: '',
+            header1: '',
+            header2: [], //头图
+            channel: [], //频道
+            key: '', //搜索关键字
+            qrcode: [
+                {ok: false, title: "手机版", image: "/api/file/qrcode?margin=2&url="+window.location.href},
+                {ok: false, title: "微信", image: plats_info.wx_qrcode? plats_info.wx_qrcode: window.location.origin+"/api/file/qrcode?margin=2&url="+window.location.href},
+                {ok: false, title: "微博", image: plats_info.wb_qrcode? plats_info.wb_qrcode: window.location.origin+"/api/file/qrcode?margin=2&url="+window.location.href},
+            ],
+        },
+        created() {
+            axios.get(CMS_ADVS).then(data => {
+                var resp = data.data.data;
+                this.channel = resp.channel.list.map(e => (e.drop = false, e));
+                this.logo = this.set_img(resp.setting.s_logo, "/common/img/logo-so.png", 209, 50);
+                this.header1 = this.set_img(resp.header1.image, "/common/img/logo-title-info.png", 382, 45);
+                this.header2 = resp.header2;
+            });
+            $("title").text(plats_info.title);
+            $("#favicon").attr('href', ApiMaterPlatQiniuDomain + plats_info.favicon);
+        },
+        mounted() {
+            this.$nextTick(() => {
+
+            })
+        },
+        methods: {
+            login: () => {
+                if(!docCookies.getItem("token")) {
+                    $("#modal_login").fadeIn(300);
+                } else {
+                    window.location.href = '/user';
+                }
+            },
+            set_img: (url, init, w, h, mode) => {
+                if (url != '' && url != null && url != undefined) {
+                    if (url.indexOf('http') === -1 && url.indexOf('common') === -1) {
+                        return mode != undefined ? ApiMaterPlatQiniuDomain + url + '?imageView2/' + mode + '/w/' + w + '/h/' + h
+                            : ApiMaterPlatQiniuDomain + url + '?imageView2/3/w/' + w + '/h/' + h;
+                    } else {
+                        return url;
+                    }
+                } else {
+                    return init;
+                }
+            },
+            search: (key) => window.location.href = window.location.protocol + '//' + window.location.host + '/so?q=' + key,
+            simple_null: (data) => data != null && data != '' && data != undefined ? false : true,
+            check: (domain, url) => url != null && url != '' ? url : '/' + domain,
+        },
+        filters: {
+            fixed_len: (value, len) => value.length > len ? value.substr(0, len) : value,
+            cut: (value, len) => value.length > len ? value.substr(0, len) + '...' : value,
+            show_date: (value) => value.getFullYear() + '-' + (value.getMonth() + 1) + '-' + value.getDate(),
+            format_date: (value) => {
+                var res = value.split('-').reduce((res, e, i) => res += e.length === 1? '0' + e + '-' : e + '-', '');
+                return res.substr(0, res.length - 1);
+            }
+        }
+    })
+</script>
+</body>
 </html>

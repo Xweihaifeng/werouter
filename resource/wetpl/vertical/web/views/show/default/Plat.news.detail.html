@@ -1,59 +1,32 @@
-<!--
- * Created by weifeng on 2017/11/12.
--->
+<#extend#>public/extend/index_extend.html</#extend#>
+<script src="/common/js/jquery-3.2.1.min.js"></script>
+<script src="/common/layer-v3.0.3/layer-v3.0.3/layer/layer.js"></script>
+<script src="{{PATH_CONFIG}}"></script>
+<script src="{{PATH_TML}}js/modal_login.js"></script>
+<script src="{{PATH_TML}}assets/show/default/js/news_detail.js" ></script>
+<script src="{{PATH_TML}}assets/show/default/js/back_top.js"></script>
 
-<!DOCTYPE html>
-<html>
+<link rel="stylesheet" type="text/css" href="{{PATH_TML}}font/iconfont.css" />
+<link rel="stylesheet" type="text/css" href="{{PATH_TML}}css/news_base.css" />
+<link rel="stylesheet" type="text/css" href="{{PATH_TML}}assets/show/default/css/news_detail01.css" />
+<link rel="stylesheet" type="text/css" href="{{PATH_TML}}css/modal_login.css" />
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+<![endif]-->
 
-    <head>
-        <title></title>
-        <meta charset="UTF-8">
-        <link rel="icon" href="" id="public_icon" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
-        <script src="/common/js/jquery-3.2.1.min.js"></script> 
-        <script src="/common/layer-v3.0.3/layer-v3.0.3/layer/layer.js"></script>
-        <script src="{{PATH_CONFIG}}"></script>
-        <script src="{{PATH_TML}}js/modal_login.js"></script>
-        <script src="{{PATH_TML}}assets/show/default/js/news_detail.js" ></script>
-        <script src="{{PATH_TML}}assets/show/default/js/back_top.js"></script>
-
-        <link rel="stylesheet" type="text/css" href="{{PATH_TML}}font/iconfont.css" />
-        <link rel="stylesheet" type="text/css" href="{{PATH_TML}}css/news_base.css" />
-        <link rel="stylesheet" type="text/css" href="{{PATH_TML}}assets/show/default/css/news_detail.css" />
-        <link rel="stylesheet" type="text/css" href="{{PATH_TML}}css/modal_login.css" />
-
-        <!--[if lt IE 9]>
-          <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-          <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-        <![endif]-->
-
-    </head>
-
-    <body>
-        <!-- 登录部分 -->
-        <div class="modal_login" id="modal_login"></div>
-        <!-- 导航部分开始 -->
-        <ul class="news_menu" id="public_main_news_menu"></ul>
-        <!-- 导航部分结束 -->
-        <!-- 新闻详情开始 -->
-        <div class="page-content flex">
-            <div id="default404"><img src="/common/img/default404.png" width="100%" alt=""></div>
-            <div class="page-left">
-                <div class="prompt-info"> 关注成功！ </div>
-                <div id="plat-two-back-top"><img src="/common/img/gotop.png"></div>
-            </div>
-            <div class="page-right">
-                <div class="qr_code_pc_outer">
-                    <p>微信扫一扫</p>
-                    <p>查看或分享给好友</p>
-                </div>
-            </div>
+<div id="container" style="width: 1200px;margin: 0 auto;height: 800px;overflow: hidden">
+    <div class="page-content flex">
+    <div id="default404"><img src="/common/img/default404.png" width="100%" alt=""></div>
+    <div class="page-left">
+        <div class="prompt-info"> 关注成功！ </div>
+        <div id="plat-two-back-top"><img src="/common/img/gotop.png"></div>
+    </div>
+    <div class="page-right">
+        <div class="qr_code_pc_outer">
+            <p>微信扫一扫</p>
+            <p>查看或分享给好友</p>
         </div>
-        <!-- 新闻详情结束 -->
-        <!-- 右侧大背景图 -->
-        <div id="public_main_right_bg" style="position:fixed;top:0;bottom:0;left:1190px;width:100%;"></div>
-        <script src="{{PATH_TML}}js/public_main_right_bg.js"></script>
-    </body>
-
-</html>
+    </div>
+    </div>
+</div>
