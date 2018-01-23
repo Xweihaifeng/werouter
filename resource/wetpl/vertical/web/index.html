@@ -1,67 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <title></title>
-    <meta charset="UTF-8" />
-    <meta name="description" content="" />
-    <meta name="keywords" content="" />
-    <link rel="shortcut icon" id="favicon" href="" />
-    <link rel="stylesheet" href="/common/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="{{PATH_TML}}css/swiper.min.css" />
-    <link rel="stylesheet" href="/common/layui/css/layui.css" />
-    <link rel="stylesheet" href="{{PATH_TML}}css/modal_login.css" />
-    <link rel="stylesheet" href="{{PATH_TML}}css/normalize.css" />
-    <link rel="stylesheet" href="{{PATH_TML}}css/index.css" />
-    <link rel="stylesheet" href="{{PATH_TML}}css/index_new.css" />
-    <script src="/common/js/vue.min.js"></script>
-    <script src="/common/js/axios.min.js"></script>
-    <script src="/common/js/jquery-3.2.1.min.js"></script>
-    <script src="/common/js/swiper-3.3.1.min.js"></script>
-    <script src="/common/js/layer-v3.1.1/layer/layer.js"></script>
-    <script src="/common/layui/layui.js"></script>
-    <script src="{{PATH_CONFIG}}"></script>
-    <script src="{{PATH_TML}}js/modal_login.js"></script>
-</head>
-<body>
-<main id="app" v-cloak>
-    <div class="modal_login" id="modal_login"></div>
-    <header>
-        <div>
-            <ul>
-                <li><img :src="logo" alt="" style="width: 209px; height: 50px; display: block;" /></li>
-                <li><img :src="header1" alt="" style="width: 382px; height: 45px; display: block;" /></li>
-                <li>
-                    <div id="ht">
-                        <aside v-for="e in qrcode" @mouseleave="e.ok=false">
-                            <span @mouseenter="e.ok=true">{{e.title}}</span>
-                            <div v-show="e.ok" style="z-index: 15;">
-                                <img :src="set_img(e.image, e.image, 90, 90)" class="weixin img-responsive">
-                            </div>
-                        </aside>
-                        <aside><a :href="plats_info.old_link" target="_blank" id="old"><span style="border-right:none;padding-left:12px;">访问旧版</span></a></aside>
-                    </div>
-                    <div id="hs">
-                        <span><input type="text" id="search" class="form-control" placeholder="请输入关键字" v-model="key"></span>
-                        <span @click="search(key)"><img src="/common/img/find.png" style="padding: 7px"></span>
-                        <span>高级搜索</span>
-                    </div>
-                </li>
-            </ul>
-        </div>
-        <div id="menu">
-            <ol>
-                <li><a :href="window.location.protocol + '//' + window.location.host">首页</a></li>
-                <li v-for="c in channel">
-                    <a :href="check(c.domain, c.url)">{{c.title}}</a>
-                    <div class="nav-list">
-                        <p v-for="e in c.children">
-                            <a :href="check(c.domain, c.url) + '/' + e.domain">{{e.title}}</a>
-                        </p>
-                    </div>
-                </li>
-            </ol>
-        </div>
-    </header>
+<#extend#>public/extend/index_extend.html</#extend#>
     <div id="container">
         <div id="carousel">
             <ul id="nav">
@@ -307,21 +244,6 @@
             </ul>
         </div>
     </div>
-    <div id="bottom1">
-        <footer>
-            <div class="footer-nav">
-                <a href="javascript:void(0)">咨询与建议</a>
-                <a href="javascript:void(0)">站点地图</a>
-                <a id="contact" href="/org/lxwm">联系我们</a>
-            </div>
-            <div class="copyright" v-html="plats_info.copyright"></div>
-            <div class="_ideConac">
-                <img src="/common/img/gabeian.png" width="60" height="60">
-            </div>
-        </footer>
-    </div>
-</main>
-
 <script>
     function marquee(i, direction){
         var obj = document.getElementById("marquee" + i);
@@ -565,5 +487,3 @@
         }
     })
 </script>
-</body>
-</html>
