@@ -10,7 +10,6 @@ function token_data() {
         });
     }
 }
-
 // 身份证号码验证信息
 function isCardNo(card) {
     var objCard = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
