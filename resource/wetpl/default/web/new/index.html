@@ -20,9 +20,8 @@ div.ct_warp .p4_arrow_l:hover{
                 <h2 style="font-size: 40px;">再大的品牌 </h2>
                 <h3 style="font-size: 53px;font-weight: bold;padding: 0;margin-top: -10px;letter-spacing: 3px;">也必须有自己的圈子</h3>
                 <div class="p1Btn p1Btn_new">
-
-                                            <a v-if="ul !== 'index' " :href="'/'+index" class="b2">我的微主页</a>
-                                            <a v-else href="/login" class="b2">我的微主页</a>
+                     <a class="ahref" href="" class="b2">我的微主页</a>
+                    <!--:href="'#/newsDetail/' + item.id "-->
                                     </div>
             </div>
         </div>
@@ -31,9 +30,8 @@ div.ct_warp .p4_arrow_l:hover{
                 <h2 style="font-size: 40px;">微主页</h2>
                 <h3 style="font-size: 53px;font-weight: bold;padding: 0;margin-top: -10px;letter-spacing: 3px;">重新定义圈子</h3>
                 <div class="p1Btn p1Btn_new">
-                    <a v-if="ul !== 'index' " :href="'/'+index" class="b2">我的微主页</a>
-                    <a v-else  :href="/login" class="b2">我的微主页</a>
-                                    </div>
+                    <a class="ahref" href="" class="b2">我的微主页</a>
+                </div>
             </div>
         </div>
         <div class="slide slide1">
@@ -41,11 +39,9 @@ div.ct_warp .p4_arrow_l:hover{
                 <h2>微力量 众行远</h2>
                 <!--<h3>微众中国 领先的众创投融资平台</h3>-->
                 <div class="p1Btn">
-                    <a href="" class="b1">了解详情</a>
-                    <a v-if="ul !== 'index' " href="'/'+index" class="b2">我的微主页</a>
+                    <a class="ahref" href="" class="b2">我的微主页</a>
 
-                    <a v-else href="/login" class="b2">我的微主页</a>
-                                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -126,7 +122,7 @@ div.ct_warp .p4_arrow_l:hover{
     <div style="clear: both"></div>
 </div>
 </div>
-<div class="section" id="app">           
+<div class="section" id="app">
     <div class="tit">
         <span>最新动态</span>
         <h2 class="en">NEW CONSULTAION</h2>
@@ -150,6 +146,7 @@ div.ct_warp .p4_arrow_l:hover{
         </div>
     </div>
 </div>
+
 <script>
     var dongtai_count = 0;
     new Vue({
@@ -162,13 +159,13 @@ div.ct_warp .p4_arrow_l:hover{
             'empty_show':false,
             'page':1,
             'hover_show' : false,
-            'ul':'',
+            'login':'',
         },
         mounted() {
             this.$nextTick( function () {
                this.get_data(this.channel , 1);
                set_title(config.title , false);
-               this.ul == pages_index;
+               // this.ul = pages_index;
             });
         },
         methods:{
@@ -195,7 +192,13 @@ div.ct_warp .p4_arrow_l:hover{
 </script>
 <script>
     $(function () {
-
+        var hf ='';
+        if(pages_index === 'index'){
+            hf = '/login';
+        }else{
+            hf =pages_index
+        }
+        $(".ahref").attr("href",hf);
     })
 </script>
 <div class="section page5"> 
