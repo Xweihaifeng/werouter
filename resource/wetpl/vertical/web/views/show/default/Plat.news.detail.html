@@ -1,32 +1,68 @@
+<link rel="stylesheet" href="../../../css/list.css">
 <#extend#>public/extend/index_extend.html</#extend#>
-<script src="/common/js/jquery-3.2.1.min.js"></script>
-<script src="/common/layer-v3.0.3/layer-v3.0.3/layer/layer.js"></script>
-<script src="{{PATH_CONFIG}}"></script>
-<script src="{{PATH_TML}}js/modal_login.js"></script>
-<script src="{{PATH_TML}}assets/show/default/js/news_detail.js" ></script>
-<script src="{{PATH_TML}}assets/show/default/js/back_top.js"></script>
 
-<link rel="stylesheet" type="text/css" href="{{PATH_TML}}font/iconfont.css" />
-<link rel="stylesheet" type="text/css" href="{{PATH_TML}}css/news_base.css" />
-<link rel="stylesheet" type="text/css" href="{{PATH_TML}}assets/show/default/css/news_detail01.css" />
-<link rel="stylesheet" type="text/css" href="{{PATH_TML}}css/modal_login.css" />
-<!--[if lt IE 9]>
-<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-<script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-<![endif]-->
+<!-- 新问中心开始 -->
+<div id="container" style="width: 1200px;margin: 0 auto">
+    <link rel="stylesheet" href="{{PATH_TML}}css/list.css">
+    <link rel="stylesheet" href="{{PATH_TML}}css/detail.css">
+    <script src="/common/iview/iview.min.js"></script>
 
-<div id="container" style="width: 1200px;margin: 0 auto;height: 800px;overflow: hidden">
-    <div class="page-content flex">
-    <div id="default404"><img src="/common/img/default404.png" width="100%" alt=""></div>
-    <div class="page-left">
-        <div class="prompt-info"> 关注成功！ </div>
-        <div id="plat-two-back-top"><img src="/common/img/gotop.png"></div>
+    <div class="list1" v-html="datas">
+
     </div>
-    <div class="page-right">
-        <div class="qr_code_pc_outer">
-            <p>微信扫一扫</p>
-            <p>查看或分享给好友</p>
-        </div>
-    </div>
-    </div>
+
+    <script>
+        var apps = new Vue({
+            el: '#app',
+            data: {
+                datas:[],
+            },
+            mounted: function() {
+                //$app.set_title('风采页面');
+                this.$nextTick(()=>{
+                    // 右侧详情展示
+                    var get_param = window.location.pathname.split('/').pop();
+                    ajax.get(CMS_DETAIL + get_param).then((res)=>{
+                        if(res.code === 200) {
+                            this.datas = res.data.content;
+                            console.log(this.datas)
+                        }
+                    });
+
+
+                    // ajax.get('cms/setting/show').then((res)=>{
+                    //     if(res.code == 200) {
+                    //         var result = res.data;
+                    //         this.left = result;
+                    //         console.log(this.left);
+                    //     }
+                    // })
+
+                });
+            },
+            methods: {
+                zan(){
+                    if(is_login == 'no') {
+                        mb_login();
+                        return false;
+                    }
+                    ajax.post('cms/contents/praise', {"content_id": this.cate_domain}).then((res) => {
+                        if (res.data && res.code === 200) {
+                            this.zan_true = res.data.praise;
+                            if(!this.zan_true) {
+                                this.news_detail.praise_num -= 1;
+                                mb_message('取消点赞');
+                                return false;
+                            }
+                            this.news_detail.praise_num += 1;
+                            mb_message('成功点赞');
+                            $(this).css({"background":"url(/common/img/zan.png) no-repeat 13px 0px"})
+                        }
+                    });
+                }
+
+            }
+        });
+    </script>
 </div>
+<!-- 新闻中心结束 -->
