@@ -1,6 +1,12 @@
 <#include#>public/extend/ref_include.html</#include#>
-<#include#>public/extend/header_include.html</#include#>
+<script>
+	function mb_login(url) {
+		$app.open_page('login?url='+url);
+	}
+</script>
 <main id="app" v-cloak>
+	<#include#>public/extend/header_include.html</#include#>
 	{{extend-content}}
 </main>
-<#include#>public/extend/footer_include.html</#include#>
+</body>
+</html>
