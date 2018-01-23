@@ -353,7 +353,7 @@ function avatar_admin() {
         id: 'layerDemo' + type //防止重复弹出
             ,
         content: `
-             <div class="cont-hd">
+             <div class="cont-hd" style="overflow: hidden">
                  <div class="cont-L" style=" width: 165px;height:141px;float: left;margin-top:50px;margin-left: 30px">
                      <img src="/resource/wetpl/default/web/user/img/domain_res.png" alt="">
                  </div>
