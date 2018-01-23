@@ -1,18 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <title>商城CRM</title>
     <script src="/common/js/jquery-3.2.1.min.js"></script>
     <script src="{{PATH_CONFIG}}"></script>
     <link rel="stylesheet" href="{{PATH_TML}}user/css/wemall-crm.css">
     <link rel="stylesheet" type="text/css" href="/common/iview/iview.css">
+    <script src="/common/public/js/app.js"></script>
     <script src="/common/iview/vue.min.js"></script>
     <!-- 引入组件库 -->
     <script src="/common/iview/iview.min.js"></script>
     <script src="/common/iview/axios.min.js"></script>
     <script src="/common/iview/libs/util.js"></script>
+    <script src="/common/iview/libs/filter.js"></script>
     <script src="/common/js/echart/echarts.js"></script>
     <style type="text/css">
         [v-cloak] {
@@ -21,344 +24,386 @@
     </style>
 </head>
 <body style="width: 100%; background: #F7F6F2;">
-    <div id="app">
-        <div class="crm-header">
-            <ul>
-                <li class="logo">微众中国</li>
-                <li>首页</li>
-                <li>应用</li>
-                <li>帮助</li>
-                <li class="back">返回</li>
-            </ul>
-        </div>
-        <div class="wemall-crm" v-cloak>
-            <ul class="menu">
-                <li v-for="(item,key) in menuList" :class="{'active' : currentState == key}" @click="currentState=key">{{item}}</li>
-            </ul>
-            <div class="crm-content">
-                <div class="chart-list" v-show="currentState == 0">
-                    <div class="chart-dom" v-for="item in 3" :id="'show-chart'+item" :option="'option'+item"></div>
-                </div>
-                <div v-show="currentState == 1">
-                    <div class="form-list">
-                        <i-form :model="formItem" :label-width="80">
-                            <form-item label="会员卡名称">
-                                <i-input v-model="formItem.input" placeholder="Enter something..."></i-input>
-                            </form-item>
-                            <form-item label="会员卡类型">
-                                <i-select v-model="formItem.select">
-                                    <i-option value="1">New York</i-option>
-                                    <i-option value="2">London</i-option>
-                                    <i-option value="3">Sydney</i-option>
-                                </i-select>
-                            </form-item>
-                            <form-item label="DatePicker">
-                                <row>
-                                    <i-col span="11">
-                                        <date-picker type="date" placeholder="Select date" v-model="formItem.date"></date-picker>
-                                    </i-col>
-                                    <i-col span="2" style="text-align: center">-</i-col>
-                                    <i-col span="11">
-                                        <time-picker type="time" placeholder="Select time" v-model="formItem.time"></time-picker>
-                                    </i-col>
-                                </row>
-                            </form-item>
-                            <form-item label="Radio">
-                                <radio-group v-model="formItem.radio">
-                                    <radio label="male">Male</radio>
-                                    <radio label="female">Female</radio>
-                                </radio-group>
-                            </form-item>
-                            <form-item label="Checkbox">
-                                <checkbox-group v-model="formItem.checkbox">
-                                    <checkbox label="Eat"></checkbox>
-                                    <checkbox label="Sleep"></checkbox>
-                                    <checkbox label="Run"></checkbox>
-                                    <checkbox label="Movie"></checkbox>
-                                </checkbox-group>
-                            </form-item>
-                            <form-item label="Switch">
-                                <i-switch v-model="formItem.switch" size="large">
-                                    <span slot="open">On</span>
-                                    <span slot="close">Off</span>
-                                </i-switch>
-                            </form-item>
-                            <form-item label="Slider">
-                                <slider v-model="formItem.slider" range></slider>
-                            </form-item>
-                            <form-item label="Text">
-                                <i-input v-model="formItem.textarea" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="Enter something..."></i-input>
-                            </form-item>
-                            <form-item>
-                                <i-button type="primary">Submit</i-button>
-                                <i-button type="ghost" style="margin-left: 8px">Cancel</i-button>
-                            </form-item>
-                        </i-form>
-                    </div>
-                    <div class="table-list">
-                        <i-table :columns="columns1" :data="data1"></i-table>
-                    </div>
-                </div>
-                <div v-show="currentState == 2">
-                    <div class="form-list">
-                        <div class="table-list">
-                            <i-table :columns="columns1" :data="data1"></i-table>
-                        </div>
-                    </div>
-                </div>
-                <div v-show="currentState == 3">
-                    <div class="form-list">
-                    发布优惠卷
-                    </div>
-                </div>
-                <div v-show="currentState == 4">
-                    <div class="form-list">
-                        <div class="table-list">
-                            <i-table :columns="columns1" :data="data1"></i-table>
-                        </div>
-                    </div>
+<div id="app">
+    <div class="crm-header">
+        <ul>
+            <li class="logo">微众中国</li>
+            <li>首页</li>
+            <li>应用</li>
+            <li>帮助</li>
+            <li class="back">返回</li>
+        </ul>
+    </div>
+    <div class="wemall-crm" v-cloak>
+        <ul class="menu">
+            <li v-for="(item,key) in menuList" :class="{'active' : currentState == key}" @click="currentState=key">
+                {{item}}
+            </li>
+        </ul>
+        <div class="crm-content">
+            <div class="chart-list" v-show="currentState == 0">
+                <div class="chart-dom" v-for="item in 3" :id="'show-chart'+item" :option="'option'+item"></div>
+            </div>
+            <div v-show="currentState == 1">
+                <div class="form-list">
+                    <i-form ref="formItemMember" :model="formItemMember" :rules="formItemMemberValidate" :label-width="100">
+                        <form-item label="会员卡名称" prop="levels_name">
+                            <i-input v-model="formItemMember.levels_name" placeholder="请输入会员卡名称"></i-input>
+                        </form-item>
+                        <form-item label="会员卡类型" prop="conditions">
+                            <i-select v-model="formItemMember.conditions">
+                                <i-option value="1">进店自动获取</i-option>
+                                <i-option value="2">单笔消费满额</i-option>
+                                <i-option value="3">累计消费满额</i-option>
+                            </i-select>
+                        </form-item>
+                        <form-item label="会员卡折扣" prop="discount">
+                            <i-input v-model="formItemMember.discount" placeholder="请输入会员卡折扣1-10折"></i-input>
+                        </form-item>
+                        <form-item label="限制条件" prop="money" v-show="formItemMember.conditions == 2 || formItemMember.conditions == 3">
+                            <i-input v-model="formItemMember.money" placeholder="请输入升级金额"></i-input>
+                        </form-item>
+                        <form-item>
+                            <i-button type="primary" @click="handleLevelsmit('formItemMember')">保存</i-button>
+                            <i-button type="ghost" style="margin-left: 8px">取消</i-button>
+                        </form-item>
+                    </i-form>
                 </div>
             </div>
+            <div v-show="currentState == 2">
+                <div class="table-list">
+                    <i-table :columns="columnsMemberLevel" :data="MemberLeveldata"></i-table>
+                </div>
+            </div>
+            <div v-show="currentState == 3">
+                <div class="form-list">
+                    发布优惠卷
+                </div>
+            </div>
+            <!--<div v-show="currentState == 4">-->
+                <!--<div class="form-list">-->
+                    <!--<div class="table-list">-->
+                        <!--<i-table :columns="columnsMemberLevel" :data="MemberLeveldata"></i-table>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
         </div>
     </div>
+</div>
 
-    <script>
-        new Vue({
-            el : '#app',
-            data : {
-                currentState : 0,
-                menuList : ["概览","发布会员卡","会员卡管理","发布代金券","管理代金券"],
-                formItem: {
-                    input: '',
-                    select: '',
-                    radio: 'male',
-                    checkbox: [],
-                    switch: true,
-                    date: '',
-                    time: '',
-                    slider: [20, 50],
-                    textarea: ''
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            mall_id:'',
+            currentState: 0,
+            menuList: ["概览", "发布会员卡", "会员卡管理", "发布代金券", "管理代金券"],
+            formItemMember: {
+                levels_name: '',
+                conditions: '',
+                discount:'',
+                money: '0.00',
+            },
+            formItemMemberValidate: {
+                levels_name: [
+                    {required: true, message: '会员卡名称不能为空', trigger: 'blur'}
+                ],
+                conditions:[
+                    {required: true, message: '会员卡类型不能为空', trigger: 'blur'}
+                ],
+                discount:[
+                    {required: true, message: '会员卡折扣不能为空', trigger: 'blur'}
+                ]
+            },
+            columnsMemberLevel: [
+
+                {
+                    title: '会员卡名称',
+                    key: 'levels_name'
                 },
-                columns1: [
-                    {
-                        title: 'Name',
-                        key: 'name'
-                    },
-                    {
-                        title: 'Age',
-                        key: 'age'
-                    },
-                    {
-                        title: 'Address',
-                        key: 'address'
-                    },
-                    {
-                        title: 'Date',
-                        key: 'date'
-                    }
-                ],
-                data1: [
-                    {
-                        name: 'John Brown',
-                        age: 18,
-                        address: 'New York No. 1 Lake Park',
-                        date: '2016-10-03'
-                    },
-                    {
-                        name: 'Jim Green',
-                        age: 24,
-                        address: 'London No. 1 Lake Park',
-                        date: '2016-10-01'
-                    },
-                    {
-                        name: 'Joe Black',
-                        age: 30,
-                        address: 'Sydney No. 1 Lake Park',
-                        date: '2016-10-02'
-                    },
-                    {
-                        name: 'Jon Snow',
-                        age: 26,
-                        address: 'Ottawa No. 2 Lake Park',
-                        date: '2016-10-04'
-                    }
-                ],
-                option : {
-                    option1 : {
-                        title: {
-                            text: 'ECharts 入门示例'
-                        },
-                        tooltip: {},
-                        legend: {
-                            data:['销量'],
-                            left : 'right'
-                        },
-                        xAxis: {
-                            data: ["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"]
-                        },
-                        yAxis: {},
-                        series: [{
-                            name: '销量',
-                            type: 'bar',
-                            data: [5, 20, 36, 10, 10, 20]
-                        }]
-                    },
-                    option2 : {
-                        title: {
-                            text: 'ECharts 入门示例'
-                        },
-                        tooltip: {
-                            trigger: 'item',
-                            formatter: "{a} <br/>{b}: {c} ({d}%)"
-                        },
-                        legend: {
-                            orient: 'vertical',
-                            x: 'right',
-                            data:['直接访问','邮件营销','联盟广告','视频广告','搜索引擎']
-                        },
-                        series: [
-                            {
-                                name:'访问来源',
-                                type:'pie',
-                                radius: ['50%', '70%'],
-                                avoidLabelOverlap: false,
-                                label: {
-                                    normal: {
-                                        show: false,
-                                        position: 'center'
-                                    },
-                                    emphasis: {
-                                        show: true,
-                                        textStyle: {
-                                            fontSize: '30',
-                                            fontWeight: 'bold'
-                                        }
-                                    }
+                {
+                    title: '会员卡等级',
+                    key: 'levels'
+                },
+                {
+                    title: '会员卡类型',
+                    key: 'conditions'
+                },
+                {
+                    title: '折扣率',
+                    key: 'discount'
+                },
+                {
+                    title: '限制条件',
+                    key: 'money'
+                },
+                {
+                    title: '添加日期',
+                    key: 'created_at'
+                },
+                {
+                    title: '操作',
+                    key: 'action',
+                    align: 'center',
+                    render: (h, params) => {
+                        return h('div', [
+                            h('Button', {
+                                props: {
+                                    type: 'primary',
+                                    size: 'small'
                                 },
-                                labelLine: {
-                                    normal: {
-                                        show: false
-                                    }
+                                style: {
+                                    marginRight: '5px'
                                 },
-                                data:[
-                                    {value:335, name:'直接访问'},
-                                    {value:310, name:'邮件营销'},
-                                    {value:234, name:'联盟广告'},
-                                    {value:135, name:'视频广告'},
-                                    {value:1548, name:'搜索引擎'}
-                                ]
-                            }
-                        ]
+                                on: {
+                                    click: () => {
+                                        
+                                       // this.editMemberLevel(params.row.weid);
+                                    }
+                                }
+                            }, '编辑'),
+                        ]);
+                    }
+                }
+            ],
+            MemberLeveldata: [
+            ],
+            option: {
+                option1: {
+                    title: {
+                        text: 'ECharts 入门示例'
                     },
-                    option3 : {
-                        title: {
-                            text: 'ECharts 入门示例'
-                        },
-                        color: ['#5793f3', '#d14a61', '#675bba'],
+                    tooltip: {},
+                    legend: {
+                        data: ['销量'],
+                        left: 'right'
+                    },
+                    xAxis: {
+                        data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"]
+                    },
+                    yAxis: {},
+                    series: [{
+                        name: '销量',
+                        type: 'bar',
+                        data: [5, 20, 36, 10, 10, 20]
+                    }]
+                },
+                option2: {
+                    title: {
+                        text: 'ECharts 入门示例'
+                    },
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: "{a} <br/>{b}: {c} ({d}%)"
+                    },
+                    legend: {
+                        orient: 'vertical',
+                        x: 'right',
+                        data: ['直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎']
+                    },
+                    series: [
+                        {
+                            name: '访问来源',
+                            type: 'pie',
+                            radius: ['50%', '70%'],
+                            avoidLabelOverlap: false,
+                            label: {
+                                normal: {
+                                    show: false,
+                                    position: 'center'
+                                },
+                                emphasis: {
+                                    show: true,
+                                    textStyle: {
+                                        fontSize: '30',
+                                        fontWeight: 'bold'
+                                    }
+                                }
+                            },
+                            labelLine: {
+                                normal: {
+                                    show: false
+                                }
+                            },
+                            data: [
+                                {value: 335, name: '直接访问'},
+                                {value: 310, name: '邮件营销'},
+                                {value: 234, name: '联盟广告'},
+                                {value: 135, name: '视频广告'},
+                                {value: 1548, name: '搜索引擎'}
+                            ]
+                        }
+                    ]
+                },
+                option3: {
+                    title: {
+                        text: 'ECharts 入门示例'
+                    },
+                    color: ['#5793f3', '#d14a61', '#675bba'],
 
-                        tooltip: {
-                            trigger: 'none',
+                    tooltip: {
+                        trigger: 'none',
+                        axisPointer: {
+                            type: 'cross'
+                        }
+                    },
+                    legend: {
+                        data: ['2015 降水量', '2016 降水量'],
+                        left: 'right'
+                    },
+                    grid: {
+                        top: 70,
+                        bottom: 50
+                    },
+                    xAxis: [
+                        {
+                            type: 'category',
+                            axisTick: {
+                                alignWithLabel: true
+                            },
+                            axisLine: {
+                                onZero: false,
+                                lineStyle: {
+                                    color: '#d14a61'
+                                }
+                            },
                             axisPointer: {
-                                type: 'cross'
-                            }
-                        },
-                        legend: {
-                            data:['2015 降水量', '2016 降水量'],
-                            left : 'right'
-                        },
-                        grid: {
-                            top: 70,
-                            bottom: 50
-                        },
-                        xAxis: [
-                            {
-                                type: 'category',
-                                axisTick: {
-                                    alignWithLabel: true
-                                },
-                                axisLine: {
-                                    onZero: false,
-                                    lineStyle: {
-                                        color: '#d14a61'
+                                label: {
+                                    formatter: function (params) {
+                                        return '降水量  ' + params.value
+                                            + (params.seriesData.length ? '：' + params.seriesData[0].data : '');
                                     }
-                                },
-                                axisPointer: {
-                                    label: {
-                                        formatter: function (params) {
-                                            return '降水量  ' + params.value
-                                                + (params.seriesData.length ? '：' + params.seriesData[0].data : '');
-                                        }
-                                    }
-                                },
-                                data: ["2016-1", "2016-2", "2016-3", "2016-4", "2016-5", "2016-6", "2016-7", "2016-8", "2016-9", "2016-10", "2016-11", "2016-12"]
+                                }
                             },
-                            {
-                                type: 'category',
-                                axisTick: {
-                                    alignWithLabel: true
-                                },
-                                axisLine: {
-                                    onZero: false,
-                                    lineStyle: {
-                                        color: '#5793f3'
-                                    }
-                                },
-                                axisPointer: {
-                                    label: {
-                                        formatter: function (params) {
-                                            return '降水量  ' + params.value
-                                                + (params.seriesData.length ? '：' + params.seriesData[0].data : '');
-                                        }
-                                    }
-                                },
-                                data: ["2015-1", "2015-2", "2015-3", "2015-4", "2015-5", "2015-6", "2015-7", "2015-8", "2015-9", "2015-10", "2015-11", "2015-12"]
-                            }
-                        ],
-                        yAxis: [
-                            {
-                                type: 'value'
-                            }
-                        ],
-                        series: [
-                            {
-                                name:'2015 降水量',
-                                type:'line',
-                                xAxisIndex: 1,
-                                smooth: true,
-                                data: [2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3]
+                            data: ["2016-1", "2016-2", "2016-3", "2016-4", "2016-5", "2016-6", "2016-7", "2016-8", "2016-9", "2016-10", "2016-11", "2016-12"]
+                        },
+                        {
+                            type: 'category',
+                            axisTick: {
+                                alignWithLabel: true
                             },
-                            {
-                                name:'2016 降水量',
-                                type:'line',
-                                smooth: true,
-                                data: [3.9, 5.9, 11.1, 18.7, 48.3, 69.2, 231.6, 46.6, 55.4, 18.4, 10.3, 0.7]
-                            }
-                        ]
-                    }
-                }
-
-            },
-            mounted: function () {
-                var self = this;
-                var domList = $('.chart-dom');
-                if(domList.length){
-                    domList.each(function (key,ele) {
-                        var id = $(ele).attr('id');
-                        var option = $(ele).attr('option');
-                        self.getChart(id,option)
-                    })
-                }
-            },
-            methods : {
-                getChart : function (id,option) {
-                    var op = this.option[option];
-                    if(op){
-                        echarts.init(document.getElementById(id)).setOption(op);
-                    }
-
+                            axisLine: {
+                                onZero: false,
+                                lineStyle: {
+                                    color: '#5793f3'
+                                }
+                            },
+                            axisPointer: {
+                                label: {
+                                    formatter: function (params) {
+                                        return '降水量  ' + params.value
+                                            + (params.seriesData.length ? '：' + params.seriesData[0].data : '');
+                                    }
+                                }
+                            },
+                            data: ["2015-1", "2015-2", "2015-3", "2015-4", "2015-5", "2015-6", "2015-7", "2015-8", "2015-9", "2015-10", "2015-11", "2015-12"]
+                        }
+                    ],
+                    yAxis: [
+                        {
+                            type: 'value'
+                        }
+                    ],
+                    series: [
+                        {
+                            name: '2015 降水量',
+                            type: 'line',
+                            xAxisIndex: 1,
+                            smooth: true,
+                            data: [2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3]
+                        },
+                        {
+                            name: '2016 降水量',
+                            type: 'line',
+                            smooth: true,
+                            data: [3.9, 5.9, 11.1, 18.7, 48.3, 69.2, 231.6, 46.6, 55.4, 18.4, 10.3, 0.7]
+                        }
+                    ]
                 }
             }
-        })
-    </script>
+
+        },
+        mounted: function () {
+            var self = this;
+            var domList = $('.chart-dom');
+            if (domList.length) {
+                domList.each( (key, ele)=> {
+                    var id = $(ele).attr('id');
+                    var option = $(ele).attr('option');
+                    this.getChart(id, option)
+                })
+            }
+            //获取商城主键id
+            console.log(this);
+            ajax.get('mall/userdetail').then((res)=>{
+                if(res.code==200){
+                    this.mall_id=res.data.weid;
+                }
+            });
+        },
+        watch:{
+            currentState:function (val,oldVal) {
+                if(val==2){
+                    //获取会员等级列表
+                    var self=this;
+                    ajax.post('member/level/lists', {mall_id:self.mall_id}).then((res)=>{
+                        if(res.code==200){
+                            if(res.data.total>0){
+                                self.MemberLeveldata=[];
+                                for(var i=0;i<res.data.list.length;i++){
+                                    var conditions='';
+                                    if(res.data.list[i].conditions==1)
+                                    {
+                                        conditions='进店自动获取';
+                                    }
+                                    if(res.data.list[i].conditions==2)
+                                    {
+                                        conditions='单笔消费满额';
+                                    }
+                                    if(res.data.list[i].conditions==3)
+                                    {
+                                        conditions='累计消费满额';
+                                    }
+                                    self.MemberLeveldata.push({weid:res.data.list[i].weid,levels_name:res.data.list[i].levels_name,levels:res.data.list[i].levels,conditions:conditions,discount:res.data.list[i].discount,money:res.data.list[i].money,created_at:res.data.list[i].created_at})
+                                }
+                            }
+                        }else{
+                            self.$Message.error(res.message);
+                        }
+                    });
+                }
+
+            }
+        },
+        methods: {
+            getChart: function (id, option) {
+                var op = this.option[option];
+                if (op) {
+                    echarts.init(document.getElementById(id)).setOption(op);
+                }
+
+            },
+            handleLevelsmit(name) {
+                this.$refs[name].validate((valid) => {
+                    if (valid) {
+                        ajax.post('member/level/store', this.formItemMember).then((res)=>{
+                            if(res.code==200){
+                                this.$Message.success('添加成!');
+                            }else{
+                                this.$Message.error(res.message);
+                            }
+                        });
+                    }else{
+                        this.$Message.error('Fail!');
+                    }
+                })
+            },
+            editMemberLevel (index) {
+                console.log(222);
+            }
+
+        }
+    })
+</script>
 </body>
 </html>
