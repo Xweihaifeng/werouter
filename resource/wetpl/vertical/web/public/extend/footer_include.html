@@ -14,13 +14,121 @@
 </div>
 
 <script>
-    new Vue({
-        el: '#bottom1',
-        data: {
+
+
+    function footer()
+    {
+        new Vue({
+            el: '#bottom1',
+            data: {
+            },
+            created: function() {
+            }
+        });
+    }
+
+    function header(params)
+    {
+        if(adsAdsSate == true && $app.empty(params) == false)
+        {
+            return false;
+        }
+        new Vue({
+            el: '#header',
+            data: {
+                advs: {},
+                logo: '',
+                header1: '',
+                header2: [], //头图
+                channel: [], //频道
+                key: '', //搜索关键字
+                qrcode: [
+                    {ok: false, title: "手机版", image: "/api/file/qrcode?margin=2&url="+window.location.href},
+                    {ok: false, title: "微信", image: plats_info.wx_qrcode? plats_info.wx_qrcode: window.location.origin+"/api/file/qrcode?margin=2&url="+window.location.href},
+                    {ok: false, title: "微博", image: plats_info.wb_qrcode? plats_info.wb_qrcode: window.location.origin+"/api/file/qrcode?margin=2&url="+window.location.href},
+                ]
+            },
+            created() {
+                if($app.empty(params) !== false)
+                {
+                    this.channel = params;
+                }
+                else
+                {
+                    axios.get(CMS_ADVS).then(data => {
+                        this.advs = data.data.data;
+                        this.channel = this.advs.channel.list.map(e => (e.drop = false, e));
+                        this.logo = this.set_img(this.advs.setting.s_logo, "/common/img/logo-so.png", 209, 50);
+                        this.header1 = this.set_img(this.advs.header1.image, "/common/img/logo-title-info.png", 382, 45);
+                        this.header2 = this.advs.header2;
+                    });
+                }
+            $("title").text(plats_info.title);
+            $("#favicon").attr('href', ApiMaterPlatQiniuDomain + plats_info.favicon);
+    },
+        mounted() {
+        this.$nextTick(() => {
+        })
+    },
+        methods: {
+            login: () => {
+                if(!docCookies.getItem("token")) {
+                    $("#modal_login").fadeIn(300);
+                } else {
+                    window.location.href = '/user';
+                }
+            },
+            set_img: (url, init, w, h, mode) => {
+                if (url != '' && url != null && url != undefined) {
+                    if (url.indexOf('http') === -1 && url.indexOf('common') === -1) {
+                        return mode != undefined ? ApiMaterPlatQiniuDomain + url + '?imageView2/' + mode + '/w/' + w + '/h/' + h
+                                : ApiMaterPlatQiniuDomain + url + '?imageView2/3/w/' + w + '/h/' + h;
+                    } else {
+                        return url;
+                    }
+                } else {
+                    return init;
+                }
+            },
+            play: (url) =>
+            layui.use('layer', function() {
+                var $ = layui.jquery, layer = layui.layer;
+                layer.open({
+                    type: 2,
+                    title: false,
+                    area: ['855px', '480px'],
+                    shade: 0.8,
+                    closeBtn: 1,
+                    shadeClose: true,
+                    content: url
+                });
+            }),
+                    search: (key) => window.location.href = window.location.protocol + '//' + window.location.host + '/so?q=' + key,
+                    simple_null: (data) => data != null && data != '' && data != undefined ? false : true,
+                    check: (domain, url) => url != null && url != '' ? url : '/' + domain,
+                    read: (name) => ['up', 'down'].map(x => x !== name ?
+                    (app.is_bg[x].on = false, app.is_bg[x].bg = app.style.recmd.off.bg, app.is_bg[x].tri = app.style.recmd.off.tri,
+                            app.is_bg[x].cir = app.style.recmd.off.cir, app.is_bg[x].sub = app.style.recmd.off.sub) :
+                    (app.is_bg[name].on = true, app.is_bg[name].bg = app.style.recmd.on.bg, app.is_bg[name].tri = app.style.recmd.on.tri,
+                            app.is_bg[name].cir = app.style.recmd.on.cir, app.is_bg[name].sub = app.style.recmd.on.sub)),
+            show: (name) => ['news', 'notice', 'weibo'].map(x => x !== name ? (app.is_show[x] = false) : (app.is_show[name] = true)),
+            change_link: (name) => app.link.map(x => x !== name ? (x.show = false, x.selected = {}) : (x.show = true, x.selected = app.style.selected))
         },
-        created: function() {
+        filters: {
+            fixed_len: (value, len) => value.length > len ? value.substr(0, len) : value,
+                    cut: (value, len) => value.length > len ? value.substr(0, len) + '...' : value,
+                    show_date: (value) => value.getFullYear() + '-' + (value.getMonth() + 1) + '-' + value.getDate(),
+                    format_date: (value) => {
+                var res = value.split('-').reduce((res, e, i) => res += e.length === 1? '0' + e + '-' : e + '-', '');
+                return res.substr(0, res.length - 1);
+            }
         }
     })
+    }
+
+    header();
+    footer();
+
 </script>
 </main>
 </body>
