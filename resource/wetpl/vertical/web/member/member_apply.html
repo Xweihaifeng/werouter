@@ -1,401 +1,423 @@
 <!DOCTYPE html>
 <html>
-    <head lang="en">
-        <title></title>
-        <meta charset="UTF-8" />
-        <link rel="shortcut icon" id="favicon" href="" />
-        <!-- <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport" /> -->
-        <!-- <meta name="description" content="" /> -->
-        <!-- <meta name="keywords" content="" /> -->
+<head lang="en">
+    <title></title>
+    <meta charset="UTF-8" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <link rel="shortcut icon" id="favicon" href="" />
+    <link rel="stylesheet" href="/common/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="{{PATH_TML}}css/modal_login.css" />
+    <link rel="stylesheet" href="{{PATH_TML}}css/normalize.css" />
+    <link rel="stylesheet" href="{{PATH_TML}}css/index_new.css" />
+    <!--分页样式-->
+    <!--<link rel="stylesheet" type="text/css" href="{{PATH_TML}}css/paging.css">-->
+    <!--分页样式结束-->
+    <!--中间样式开始-->
+    <link rel="stylesheet" href="/resource/wetpl/substation/default/web/css/list.css">
+    <link rel="stylesheet" href="/resource/wetpl/substation/default/web/css/newsert.css">
+    <link rel="stylesheet" href="{{PATH_TML}}member/css/member_apply.css" />
+    <link rel="stylesheet" href="{{PATH_TML}}member/css/member_process.css" />
+    <!--中间样式结束-->
+    <script src="/common/js/vue.min.js"></script>
+    <script src="/common/js/axios.min.js"></script>
+    <script src="/common/js/jquery-3.2.1.min.js"></script>
+    <script src="/common/layer-v3.0.3/layer-v3.0.3/layer/layer.js"></script>
+    <script src="{{PATH_CONFIG}}"></script>
+    <script src="{{PATH_TML}}js/modal_login.js"></script>
+    <!--<script src="{{PATH_TML}}assets/list/organize/js/organize.js"></script>-->
+    <!--<script src="{{PATH_TML}}js/paging.js"></script>-->
+    <script src="/common/js/plupload/plupload.full.min.js"></script>
+    <script src="/common/js/qiniu.js"></script>
+    <!--<script src="{{PATH_TML}}member/js/member_public_config.js"></script>-->
+    <!--<script src="{{PATH_TML}}member/js/member_picture_base_logic.js"></script>-->
+    <style>
+        * { margin: 0; padding: 0; }
+        html, body, p { margin: 0; padding: 0; }
+        ul, li { list-style: none; }
+        .news-main { position: relative; width: 1200px; height: 800px; background-color: #e2e2e2; display: flex; justify-content: space-between; }
+        .news-left { width: 850px; height: 600px; box-shadow: inset 0 0 0 1px #f00; }
+        .news-right { width: 330px; height: 600px; box-shadow: inset 0 0 0 1px #f00; }
+        #container{
+            background: #fff;
+            padding-bottom: 30px;
+        }
+        .seat{
+            width: 1200px;
+            margin-top: 15px;
+        }
+        .news-main{
+            height: auto;
+            overflow: hidden;
+            background: #fff;
+            display: block;
+        }
+        .yuan{
+            margin-bottom: 0;
+        }
+        .wz{
+            color: #666666;
+            font-size: 14px;
+            font-family: "微软雅黑";
+            line-height: 19px;
+            padding-left: 3px;
+        }
+        /*二级分类样式开始*/
+        .er-nav{
+            width:auto;
+            height: 50px;
+            float: right;
+            display: flex;
+            justify-content: right;
+            padding: 0 10px;
+        }
+        .er-nav>a{
+            font-size: 14px;
+            color: #666666;
+            display: block;
+            width: auto;
+            height: 100%;
+            margin-right: 10px;
+            line-height: 40px;
+            padding: 0 15px;
+        }
+        .er-nav>.er-cur{
+            background: #0a8ddf;
+            color: #fff!important;
+        }
 
-        <link rel="stylesheet" href="{{PATH_TML}}font/iconfont.css" />
-        <link rel="stylesheet" href="{{PATH_TML}}css/news_base.css" />
-        <link rel="stylesheet" href="{{PATH_TML}}css/modal_login.css" />
-        <link rel="stylesheet" href="{{PATH_TML}}member/css/member_apply.css" />
-        <link rel="stylesheet" href="{{PATH_TML}}member/css/member_process.css" />
+        /*单页模板*/
+        .org_content{
+            width: 100%;
+            height: auto;
+        }
+        .org_content>h3{
+            font-size: 16px;
+            font-weight: bold;
+            color: #000000;
+            font-family: '微软雅黑';
+            text-align: center;
+            padding: 1.5rem 0;
+        }
+        .org_content>div{
+            font-size: 14px;
+            color: #333!important;
+            line-height: 24px;
+            text-align: justify;
+        }
+        .org_content>div p{
+            width: 100%;
+            height: auto;
+        }
+        .org_content>div img{
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        /*二级分类样式结束*/
 
-        <script src="/common/js/jquery-3.2.1.min.js"></script>
-        <script src="{{PATH_CONFIG}}"></script>
-        <script src="/common/layer-v3.0.3/layer-v3.0.3/layer/layer.js"></script>
-        <!-- <script src="/common/js/swiper-3.3.1.min.js"></script> -->
-        <script src="/common/js/plupload/plupload.full.min.js"></script>
-        <script src="/common/js/qiniu.js"></script>
-
-        <script src="{{PATH_TML}}js/modal_login.js"></script>
-        <!-- <script src="/common/js/control.js"></script> -->
-        <!-- <script src="{{PATH_TML}}js/public_main.js"></script> -->
-        <script src="{{PATH_TML}}member/js/member_public_config.js"></script>
-        <script src="{{PATH_TML}}member/js/member_picture_base_logic.js"></script>
-
-        <style>
-            ::-webkit-scrollbar { width: 0; height: 0; }
-            #modal_activation { display: none; }
-            /*.dropdown-toggle, .get-check { height: 40px !important; }*/
-        </style>
-    </head>
-    <body>
-
-        <!-- 快速登录模态 -->
-        <div class="modal_login" id="modal_activation"></div>
-        <div class="modal_login" id="modal_login"></div>
-        <ul class="news_menu" id="public_main_news_menu"></ul>
-
-        <!-- 会员申请开始 -->
-        <div class="member_apply">
-            <div class="member_apply_main_org">
-
-                <!-- 组织分类 -->
-                <div class="member_top_nav">
-                    <ul class="member_top_disperse" id="menuX">
-                        <a class="chan_li" href="/zz"> 商会首页 </a>
-                    </ul>
-                </div>
-
-                <div class="member_center_disperse">
-                    <div class="z">入会申请</div>
-                    <div class="y"> 当前位置：首页&gt; <a id="menuY"> 会员专栏 </a> &gt; <a id="menuY"> 入会申请 </a></div>
-                </div>
-
-                <div class="member_apply_list">
-                    <div class="member_list_header"><img style="width: 25px;height: 25px;vertical-align: middle;margin-top: -5px" src="{{PATH_TML}}member/img/huiyuanshengqing.png"> 会员申请 </div>
-
-                    <!-- 会员类型 -->
-                    <div class="member_sel_type">
-                        <div class="member_type_title"> 选择类型： </div>
-                        <ul class="member_sel_type_name"></ul>
-                    </div>
-
-                    <!-- 会员缴费 -->
-                    <div class="member_cost">
-                        <span class="member_warn"></span><span id="display_name">会员</span> 费用为 <span class="member_count">￥<span id="member_price"></span>元</span> / 年 <span class="member_danger"> *在初审通过之前无需缴费 </span>
-                    </div>
-
-                    <!-- 申请tab切换 -->
-                    <div class="member_sel_type member_tab_bottom">
-                        <div class="member_type_title"> 申请类型： </div>
-                        <div class="member_type_tab member_type_tab_selected" id="personal_apply"> <img class="member_tab_per" src="{{PATH_TML}}member/img/men_1.png"> 个人申请 </div>
-                        <div class="member_type_tab" id="institution_apply"> <img class="member_tab_int already" src="{{PATH_TML}}member/img/lou_1.png"> 机构申请 </div>
-                    </div>
-
-                    <!-- 个人申请 -->
-                    <div class="member_type_tab_content display_block member_authentication_process" id="personal_apply_content">
-                        <div class="member_sel_type">
-                            <div class="member_type_title"> 入会须知： </div>
-                            <div class="display_flex"> 
-                                <a class="member_a_style term_servcice_rule"> 《 会员服务管理规范 》 </a>、
-                                <a class="member_a_style constitution"> 《 协会章程 》 </a>、
-                                <a class="member_a_style apply_template"> <img src="{{PATH_TML}}member/img/dowload.png"> 会员申请书模板下载 </a>
+        #bottom1 {
+            /*display: none;*/
+        }
+    </style>
+</head>
+<body>
+<main id="app" v-cloak>
+    <div class="modal_login" id="modal_login"></div>
+    <header>
+        <div>
+            <ul>
+                <li><img :src="logo" alt="" style="width: 209px; height: 50px; display: block;" /></li>
+                <li><img :src="header1" alt="" style="width: 382px; height: 45px; display: block;" /></li>
+                <li>
+                    <div id="ht">
+                        <aside v-for="e in qrcode" @mouseleave="e.ok=false">
+                            <span @mouseenter="e.ok=true">{{e.title}}</span>
+                            <div v-show="e.ok" style="z-index: 15;">
+                                <img :src="set_img(e.image, e.image, 90, 90)" class="weixin img-responsive">
                             </div>
-                        </div>
-
-                        <div class="member_sel_type">
-                            <div class="member_type_title"> 申请书： </div>
-                            <input name="member_upload_1" id="member_upload_1" type="hidden" value="" class="form-control"/>
-                            <input id="member_pickfiles_1" type="file" name="" class="member_app_input" style="display: none" placeholder="请上传申请资料">
-                            <div id="member_exhibition_1">
-                                <img onclick="$('#member_pickfiles_1').click()" id="member_pic_1" src="/common/img/default_img.png" width="120" height="120" alt="暂无预览图片" class="thumbnail col-md-2">
-                            </div><div class="member_danger"> <span class="member_warn"></span> *请下载、填写、签章、扫描、并上传 </div>
-                        </div>
-
-                        <div class="member_sel_type">
-                            <div class="member_type_title"> 申请人： </div>
-                            <input type="text" name="" class="member_app_input" id="member_per_applicant" placeholder="填写本人真实姓名" disabled>
-                        </div>
-
-                        <div class="member_sel_type">
-                            <div class="member_type_title"> 申请人电话： </div>
-                            <input type="text" name="" class="member_app_input" id="member_per_tel" size="11" maxlength="11" wrap="hard" cols="100" placeholder="填写本人常用手机号码">
-                        </div>
-
-                        <div class="member_sel_type member_link_login"></div>
-
-                        <div class="member_sel_type">
-                            <div class="member_type_title"> 申请地址： </div>
-                            <input type="text" name="" class="member_app_input" id="member_per_address" placeholder="填写详细的地址">
-                        </div>
-
-                        <div class="member_sel_type member_agree">
-                            <input type="checkbox" name="" class="member_con_left" id="is_agree_terms1">
-                            <div> 
-                                <span> &ensp;已阅读，并自愿遵守 </span>
-                                <a class="member_a_style term_servcice_rule">《会员服务管理规范》</a>
-                                <a class="member_a_style constitution">《协会章程》</a>
-                            </div>
-                        </div>
-
-                        <div class="member_sel_type">
-                            <input type="button" name="" class="member_con_left member_app_submit" id="member_individual_application_submit" value="提交申请">
-                            <input type="button" name="" class="member_con_left member_app_submit" id="member_individual_application_modify" value="修改申请">
-                        </div>
+                        </aside>
+                        <aside><a :href="plats_info.old_link" target="_blank" id="old"><span style="border-right:none;padding-left:12px;">访问旧版</span></a></aside>
                     </div>
-
-                    <!-- 机构申请 -->
-                    <div class="member_type_tab_content member_authentication_process" id="institution_apply_content">
-                        <div class="member_sel_type">
-                            <div class="member_type_title"> 入会须知： </div>
-                            <div  class="display_flex"> 
-                                <a class="member_a_style term_servcice_rule"> 《 会员服务管理规范 》 </a>、
-                                <a class="member_a_style constitution"> 《 协会章程 》 </a>、
-                                <a class="member_a_style apply_template"> <img src="{{PATH_TML}}member/img/dowload.png"> 会员申请书模板下载 </a>
-                            </div>
-                        </div>
-
-                        <div class="member_sel_type">
-                            <div class="member_type_title"> 申请书： </div>
-                            <input name="member_upload_2" id="member_upload_2" type="hidden" value="" class="form-control"/>
-                            <input id="member_pickfiles_2" type="file" name="" class="member_app_input" style="display: none" placeholder="请上传申请资料">
-                            <div id="member_exhibition_2">
-                                <img onclick="$('#member_pickfiles_2').click()" id="member_pic_2" src="/common/img/default_img.png" width="120" height="120" alt="暂无预览图片" class="thumbnail col-md-2">
-                            </div>
-                            <div class="member_danger"> <span class="member_warn"></span> *请下载、填写、签章、扫描、并上传 </div>
-                        </div>
-
-                        <div class="member_sel_type">
-                            <div class="member_type_title"> 申请人： </div>
-                            <input type="text" name="" class="member_app_input" id="member_int_applicant" placeholder="填写本人真实姓名" disabled>
-                        </div>
-
-                        <div class="member_sel_type">
-                            <div class="member_type_title"> 申请单位： </div>
-                            <input type="text" name="" class="member_app_input" id="member_int_name" placeholder="公司名称" disabled>
-                        </div>
-
-                        <div class="member_sel_type">
-                            <div class="member_type_title"> 申请人电话： </div>
-                            <input type="text" name="" class="member_app_input" id="member_int_tel" size="11" maxlength="11" wrap="hard" cols="100" placeholder="填写本人常用手机号码">
-                        </div>
-
-                        <div class="member_sel_type member_link_login"></div>
-
-                        <div class="member_sel_type">
-                            <div class="member_type_title"> 申请地址： </div>
-                            <input type="text" name="" class="member_app_input" id="member_int_address" placeholder="填写详细的地址">
-                        </div>
-
-                        <div class="member_sel_type member_agree">
-                            <input type="checkbox" name="" class="member_con_left" id="is_agree_terms2">
-                            <div>
-                                <span> &ensp;已阅读，并自愿遵守 </span>
-                                <a class="member_a_style term_servcice_rule">《会员服务管理规范》</a>
-                                <a class="member_a_style constitution">《协会章程》</a>
-                            </div>
-                        </div>
-
-                        <div class="member_sel_type">
-                            <input type="button" name="" class="member_con_left member_app_submit" id="member_agency_application_submit" value="提交申请">
-                            <input type="button" name="" class="member_con_left member_app_submit" id="member_agency_application_modify" value="修改申请">
-                        </div>
+                    <div id="hs">
+                        <span><input type="text" id="search" class="form-control" placeholder="请输入关键字" v-model="key"></span>
+                        <span @click="search(key)"><img src="/common/img/find.png" style="padding: 7px"></span>
+                        <span>高级搜索</span>
                     </div>
-                </div>
-            </div>
+                </li>
+            </ul>
         </div>
-
-        <!-- 认证 -->
-        <div class="member_certification_mask">
-            <div class="member_certification">
-                <div class="member_certification_header">
-                    <div style="flex: 1" class="member_certification_title select"> 官方认证 </div>
-                    <div class="member_certification_close select"> &times; </div>
-                </div>
-                <div class="member_certification_content">
-
-                    <!-- 提示信息 -->
-                    <div class="member_success_media clearfix">
-                        <div class="member_media_middle">
-                            <img class="member_media_object" src="{{PATH_TML}}user/img/carry.png" alt="警示！">
-                        </div>
-                        <div class="member_media_body">
-                            <h4 class="member_media_heading">  </h4>
-                            <p class="member_media_content">  </p>
-                        </div>
+        <div id="menu">
+            <ol>
+                <li><a :href="window.location.protocol + '//' + window.location.host">首页</a></li>
+                <li v-for="c in channel">
+                    <a :href="check(c.domain, c.url)">{{c.title}}</a>
+                    <div class="nav-list">
+                        <p v-for="e in c.children">
+                            <a :href="check(c.domain, c.url) + '/' + e.domain">{{e.title}}</a>
+                        </p>
                     </div>
-
-                    <!-- 人工认证 -->
-                    <div class="member_auth">
-                        <div class="member_auth_list">
-                            <div class="member_auth_title"> 身份证姓名： </div>
-                            <input class="member_auth_input" id="id_auth_name" size="15" maxlength="20" wrap="hard" cols="100" placeholder="请填写本人身份证姓名" title="请填写本人身份证姓名">
-                        </div>
-
-                        <div class="member_auth_list">
-                            <div class="member_auth_title"> 身份证号码： </div>
-                            <input class="member_auth_input" id="id_auth_card" size="15" maxlength="18" wrap="hard" cols="100" placeholder="请填写本人身份证号码" title="身份证号码为 15 或 18 位">
-                        </div>
-
-                        <div class="member_auth_list">
-                            <div class="member_auth_title"> 身份证正面： </div>
-                            <input name="member_upload_3" id="member_upload_3" type="hidden" value="" class="form-control"/>
-                            <input id="member_pickfiles_3" type="file" name="" class="member_app_input" style="display: none" placeholder="身份证正面上传">
-                            <div id="member_exhibition_3">
-                                <img onclick="$('#member_pickfiles_3').click()" id="member_pic_3" src="{{PATH_TML}}member/img/negative.png" alt="暂无预览图片" class="thumbnail">
-                            </div>
-                        </div>
-
-                        <div class="member_auth_list">
-                            <div class="member_auth_title"> 身份证背面： </div>
-                            <input name="member_upload_4" id="member_upload_4" type="hidden" value="" class="form-control"/>
-                            <input id="member_pickfiles_4" type="file" name="" class="member_app_input" style="display: none" placeholder="身份证背面上传">
-                            <div id="member_exhibition_4">
-                                <img onclick="$('#member_pickfiles_4').click()" id="member_pic_4" src="{{PATH_TML}}member/img/positive.png" alt="暂无预览图片" class="thumbnail">
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 在线认证 -->
-                    <div class="member_verified">
-                        <div class="member_verified_left">
-                            <div class="member_verified_list">
-                                <div class="member_verified_title"> 身份证姓名： </div>
-                                <input class="member_verified_input" id="member_verify_name" size="15" maxlength="20" wrap="hard" cols="100" placeholder="请填写本人身份证姓名" title="请填写本人身份证姓名">
-                            </div>
-                            <div class="member_verified_list">
-                                <div class="member_verified_title"> 身份证号码： </div>
-                                <input class="member_verified_input" id="member_verify_card" size="15" maxlength="18" wrap="hard" cols="100" placeholder="请填写本人身份证号码" title="身份证号码为 15 或 18 位">
-                            </div>
-                        </div>
-
-                        <div class="member_verified_right">
-                            <div class="member_verified_list">
-                                <img class="member_verified_tequan" src="{{PATH_TML}}member/img/tequan.png">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="member_official">
-                        <div class="member_official_list">
-                            <div class="member_official_title"> 认证信息： </div>
-                            <button class="member_official_button member_personal_button bottom_selected" id="member_personal_button"> 个人认证 </button>
-                            <button class="member_official_button member_institutional_button" id="member_institutional_button"> 机构认证 </button>
-                        </div>
-
-                        <!-- 个人认证 -->
-                        <div class="member_official_module member_personal display_block">
-                            <div class="member_personal_list">
-                                <div class="member_personal_title"> 身份证姓名： </div>
-                                <input class="member_personal_input" id="id_per_name" size="15" maxlength="20" wrap="hard" cols="100" placeholder="请填写本人身份证姓名" title="请填写本人身份证姓名">
-                            </div>
-
-                            <div class="member_personal_list">
-                                <div class="member_personal_title"> 身份证号码： </div>
-                                <input class="member_personal_input" id="id_per_card" size="15" maxlength="18" wrap="hard" cols="100" placeholder="请填写本人身份证号码" title="身份证号码为 15 或 18 位">
-                            </div>
-
-                            <div class="member_personal_list">
-                                <div class="member_personal_title"> 加V认证： </div>
-                                <textarea class="member_personal_textarea" rows="3" id="per_info" placeholder="请如实填写你的加V认证资料，填写后可更好的彰显你的身份"></textarea>
-                            </div>
-
-                            <div class="member_personal_list">
-                                <div class="member_personal_title"> 证明资料： </div>
-                                <input name="member_upload_5" id="member_upload_5" type="hidden" value="" class="form-control"/>
-                                <input id="member_pickfiles_5" type="file" name="" class="member_app_input" style="display: none" placeholder="证明资料上传">
-                                <div id="member_exhibition_5">
-                                    <img onclick="$('#member_pickfiles_5').click()" id="member_pic_5" src="{{PATH_TML}}member/img/default_img.png" alt="暂无预览图片" class="thumbnail">
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- 机构认证 -->
-                        <div class="member_official_module member_institutional">
-                            <div class="member_institutional_list">
-                                <div class="member_institutional_title"> 机构名称： </div>
-                                <input class="member_institutional_input" id="org_name" placeholder="请输入你所在的机构名称" title="请输入你所在的机构名称">
-                            </div>
-
-                            <div class="member_institutional_list">
-                                <div class="member_institutional_title"> 营业执照： </div>
-                                <input name="member_upload_6" id="member_upload_6" type="hidden" value="" class="form-control"/>
-                                <input id="member_pickfiles_6" type="file" name="" class="member_app_input" style="display: none" placeholder="营业执照上传">
-                                <div id="member_exhibition_6">
-                                    <img onclick="$('#member_pickfiles_6').click()" id="member_pic_6" src="{{PATH_TML}}member/img/default_img.png" alt="暂无预览图片" class="thumbnail">
-                                </div>
-                            </div>
-
-                            <div class="member_institutional_list">
-                                <div class="member_institutional_title"> 工商执照： </div>
-                                <input class="member_institutional_input" id="org_cert_number" placeholder="请参照营业执照人输入" title="请参照营业执照人输入">
-                            </div>
-
-                            <div class="member_institutional_list">
-                                <div class="member_institutional_title"> 一般经营范围： </div>
-                                <input class="member_institutional_input" id="org_scope_common" placeholder="请参照营业执照人输入" title="请参照营业执照人输入">
-                            </div>
-
-                            <div class="member_institutional_list">
-                                <div class="member_institutional_title"> 前置经营范围： </div>
-                                <input class="member_institutional_input" id="org_scope_front" placeholder="请参照营业执照人输入" title="请参照营业执照人输入">
-                            </div>
-
-                            <div class="member_institutional_list">
-                                <div class="member_institutional_title"> 企业类型： </div>
-                                <input class="member_institutional_input" id="org_type" placeholder="请参照营业执照人输入" title="请参照营业执照人输入">
-                            </div>
-
-                            <div class="member_institutional_list">
-                                <div class="member_institutional_title"> 企业成立日期： </div>
-                                <input type="date" class="member_institutional_input" id="org_setup_date" placeholder="企业成立日期" title="企业成立日期">
-                            </div>
-
-                            <div class="member_institutional_list">
-                                <div class="member_institutional_title"> 授权资料： </div>
-                                <input name="member_upload_7" id="member_upload_7" type="hidden" value="" class="form-control"/>
-                                <input id="member_pickfiles_7" type="file" name="" class="member_app_input" style="display: none" placeholder="授权资料上传">
-                                <div id="member_exhibition_7">
-                                    <img onclick="$('#member_pickfiles_7').click()" id="member_pic_7" src="{{PATH_TML}}member/img/default_img.png" alt="暂无预览图片" class="thumbnail">
-                                </div>
-                            </div>
-
-                            <div class="member_institutional_list">
-                                <div class="member_institutional_title"> 联系人姓名： </div>
-                                <input class="member_institutional_input" id="org_contact_people" placeholder="联系人真实姓名" title="联系人真实姓名">
-                            </div>
-
-                            <div class="member_institutional_list">
-                                <div class="member_institutional_title"> 联系人电话： </div>
-                                <input class="member_institutional_input" id="org_contact_phone" size="11" maxlength="11" wrap="hard" cols="100" placeholder="请输入联系人电话" title="请输入联系人电话">
-                            </div>
-
-                            <div class="member_institutional_list">
-                                <div class="member_institutional_title"> 联系人地址： </div>
-                                <input class="member_institutional_input" id="org_address" placeholder="请输入联系人地址" title="联系人地址">
-                            </div>
-
-                            <div class="member_institutional_list">
-                                <div class="member_institutional_title"> 加V认证： </div>
-                                <textarea class="member_institutional_textarea" id="cert_info" rows="3" id="int_info" placeholder="请如实填写你的加V认证资料，填写后可更好的彰显你的身份"></textarea>
-                            </div>
-
-                            <div class="member_institutional_list">
-                                <div class="member_institutional_title"> 证明资料： </div>
-                                <input name="member_upload_8" id="member_upload_8" type="hidden" value="" class="form-control"/>
-                                <input id="member_pickfiles_8" type="file" name="" class="member_app_input" style="display: none" placeholder="证明资料上传">
-                                <div id="member_exhibition_8">
-                                    <img onclick="$('#member_pickfiles_8').click()" id="member_pic_8" src="{{PATH_TML}}member/img/default_img.png" alt="暂无预览图片" class="thumbnail">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 模态认证部分按钮 -->
-                <div class="member_certification_footer"></div>
-            </div>
+                </li>
+            </ol>
         </div>
-        <!-- 右侧大背景图 -->
-        <div id="public_main_right_bg" style="position:fixed;top:0;bottom:0;left:1190px;width:100%;"></div>
-        <script src="{{PATH_TML}}js/public_main_right_bg.js"></script>
+    </header>
 
-        <script src="{{PATH_TML}}member/js/member_process.js"></script>
-        <script src="{{PATH_TML}}member/js/member_public.js"></script>
-        <script src="{{PATH_TML}}member/js/member_apply.js"></script>
+    <!-- 新问中心开始 -->
+    <div id="container">
+        <!--位置显示开始-->
+        <div class="seat">
+            <img src="/resource/wetpl/substation/default/web/image/fanhui.png" alt="" style="margin-top: -3px">
+            当前位置在：
+            <a href="">首页</a>
+            > 加入商会 > 入会申请 <span class="wz"></span>
+            <div class="er-nav" id="menuTwo"></div>
+        </div>
+        <!--位置显示结束-->
 
-        <script>
-            var title = localStorage.getItem("title");
-            if(!title) {
-                document.title = "入会申请";
+        <article class="news-main">
+            <!--左侧内容开始-->
+            <article class="main">
+                <h2 style="margin-top: 0px">
+                    <strong>加入商会</strong>
+                    <span>Chamber of Commerce</span>
+                </h2>
+                <ul class="aside" id="menuX">
+                    <li>
+                        <a class="chan_li" id="oooo"> 商会首页 </a>
+                    </li>
+                </ul>
+                <div class="company">
+                    <p>电话：021-50939588</p>
+                    <p>传真：021-50939388</p>
+                    <p>地址：上海市浦东大道900号华辰金融大厦25楼</p>
+                </div>
+            </article>
+            <!--左侧内容结束-->
+            <!--右侧内容开始-->
+            <article class="list-big">
+                <div class="newsert">
+                    <div class="member_apply_list">
+                        <div class="member_list_header"><img style="width: 25px;height: 25px;vertical-align: middle;margin-top: -5px" src="{{PATH_TML}}member/img/huiyuanshengqing.png"> 会员申请 </div>
+
+                        <!-- 会员类型 -->
+                        <div class="member_sel_type">
+                            <div class="member_type_title"> 选择类型： </div>
+                            <ul class="member_sel_type_name"></ul>
+                        </div>
+
+                        <!-- 会员缴费 -->
+                        <div class="member_cost">
+                            <span class="member_warn"></span><span id="display_name">会员</span> 费用为 <span class="member_count">￥<span id="member_price"></span>元</span> / 年 <span class="member_danger"> *在初审通过之前无需缴费 </span>
+                        </div>
+
+                        <!-- 申请tab切换 -->
+                        <div class="member_sel_type member_tab_bottom">
+                            <div class="member_type_title"> 申请类型： </div>
+                            <div class="member_type_tab member_type_tab_selected" id="personal_apply"> <img class="member_tab_per" src="{{PATH_TML}}member/img/men_1.png"> 个人申请 </div>
+                            <div class="member_type_tab" id="institution_apply"> <img class="member_tab_int already" src="{{PATH_TML}}member/img/lou_1.png"> 机构申请 </div>
+                        </div>
+
+                        <!-- 个人申请 -->
+                        <div class="member_type_tab_content display_block member_authentication_process" id="personal_apply_content">
+                            <div class="member_sel_type">
+                                <div class="member_type_title"> 入会须知： </div>
+                                <div class="display_flex">
+                                    <a class="member_a_style term_servcice_rule"> 《 会员服务管理规范 》 </a>、
+                                    <a class="member_a_style constitution"> 《 协会章程 》 </a>、
+                                    <a class="member_a_style apply_template"> <img src="{{PATH_TML}}member/img/dowload.png"> 会员申请书模板下载 </a>
+                                </div>
+                            </div>
+
+                            <div class="member_sel_type">
+                                <div class="member_type_title"> 申请书： </div>
+                                <input name="member_upload_1" id="member_upload_1" type="hidden" value="" class="form-control"/>
+                                <input id="member_pickfiles_1" type="file" name="" class="member_app_input" style="display: none" placeholder="请上传申请资料">
+                                <div id="member_exhibition_1">
+                                    <img onclick="$('#member_pickfiles_1').click()" id="member_pic_1" src="/common/img/default_img.png" width="120" height="120" alt="暂无预览图片" class="thumbnail col-md-2">
+                                </div><div class="member_danger"> <span class="member_warn"></span> *请下载、填写、签章、扫描、并上传 </div>
+                            </div>
+
+                            <div class="member_sel_type">
+                                <div class="member_type_title"> 申请人： </div>
+                                <input type="text" name="" class="member_app_input" id="member_per_applicant" placeholder="填写本人真实姓名" disabled>
+                            </div>
+
+                            <div class="member_sel_type">
+                                <div class="member_type_title"> 申请人电话： </div>
+                                <input type="text" name="" class="member_app_input" id="member_per_tel" size="11" maxlength="11" wrap="hard" cols="100" placeholder="填写本人常用手机号码">
+                            </div>
+
+                            <div class="member_sel_type member_link_login"></div>
+
+                            <div class="member_sel_type">
+                                <div class="member_type_title"> 申请地址： </div>
+                                <input type="text" name="" class="member_app_input" id="member_per_address" placeholder="填写详细的地址">
+                            </div>
+
+                            <div class="member_sel_type member_agree">
+                                <input type="checkbox" name="" class="member_con_left" id="is_agree_terms1">
+                                <div>
+                                    <span> &ensp;已阅读，并自愿遵守 </span>
+                                    <a class="member_a_style term_servcice_rule">《会员服务管理规范》</a>
+                                    <a class="member_a_style constitution">《协会章程》</a>
+                                </div>
+                            </div>
+
+                            <div class="member_sel_type">
+                                <input type="button" name="" class="member_con_left member_app_submit" id="member_individual_application_submit" value="提交申请">
+                                <input type="button" name="" class="member_con_left member_app_submit" id="member_individual_application_modify" value="修改申请">
+                            </div>
+                        </div>
+
+                        <!-- 机构申请 -->
+                        <div class="member_type_tab_content member_authentication_process" id="institution_apply_content">
+                            <div class="member_sel_type">
+                                <div class="member_type_title"> 入会须知： </div>
+                                <div  class="display_flex">
+                                    <a class="member_a_style term_servcice_rule"> 《 会员服务管理规范 》 </a>、
+                                    <a class="member_a_style constitution"> 《 协会章程 》 </a>、
+                                    <a class="member_a_style apply_template"> <img src="{{PATH_TML}}member/img/dowload.png"> 会员申请书模板下载 </a>
+                                </div>
+                            </div>
+
+                            <div class="member_sel_type">
+                                <div class="member_type_title"> 申请书： </div>
+                                <input name="member_upload_2" id="member_upload_2" type="hidden" value="" class="form-control"/>
+                                <input id="member_pickfiles_2" type="file" name="" class="member_app_input" style="display: none" placeholder="请上传申请资料">
+                                <div id="member_exhibition_2">
+                                    <img onclick="$('#member_pickfiles_2').click()" id="member_pic_2" src="/common/img/default_img.png" width="120" height="120" alt="暂无预览图片" class="thumbnail col-md-2">
+                                </div>
+                                <div class="member_danger"> <span class="member_warn"></span> *请下载、填写、签章、扫描、并上传 </div>
+                            </div>
+
+                            <div class="member_sel_type">
+                                <div class="member_type_title"> 申请人： </div>
+                                <input type="text" name="" class="member_app_input" id="member_int_applicant" placeholder="填写本人真实姓名" disabled>
+                            </div>
+
+                            <div class="member_sel_type">
+                                <div class="member_type_title"> 申请单位： </div>
+                                <input type="text" name="" class="member_app_input" id="member_int_name" placeholder="公司名称" disabled>
+                            </div>
+
+                            <div class="member_sel_type">
+                                <div class="member_type_title"> 申请人电话： </div>
+                                <input type="text" name="" class="member_app_input" id="member_int_tel" size="11" maxlength="11" wrap="hard" cols="100" placeholder="填写本人常用手机号码">
+                            </div>
+
+                            <div class="member_sel_type member_link_login"></div>
+
+                            <div class="member_sel_type">
+                                <div class="member_type_title"> 申请地址： </div>
+                                <input type="text" name="" class="member_app_input" id="member_int_address" placeholder="填写详细的地址">
+                            </div>
+
+                            <div class="member_sel_type member_agree">
+                                <input type="checkbox" name="" class="member_con_left" id="is_agree_terms2">
+                                <div>
+                                    <span> &ensp;已阅读，并自愿遵守 </span>
+                                    <a class="member_a_style term_servcice_rule">《会员服务管理规范》</a>
+                                    <a class="member_a_style constitution">《协会章程》</a>
+                                </div>
+                            </div>
+
+                            <div class="member_sel_type">
+                                <input type="button" name="" class="member_con_left member_app_submit" id="member_agency_application_submit" value="提交申请">
+                                <input type="button" name="" class="member_con_left member_app_submit" id="member_agency_application_modify" value="修改申请">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+            <!--右侧内容结束-->
+
+        </article>
+    </div>
+    <!-- 新闻中心结束 -->
+
+    <div id="bottom1">
+        <footer>
+            <div class="footer-nav">
+                <a href="javascript:void(0)">咨询与建议</a>
+                <a href="javascript:void(0)">站点地图</a>
+                <a id="contact" href="/org/lxwm">联系我们</a>
+            </div>
+            <div class="copyright" v-html="plats_info.copyright"></div>
+            <div class="_ideConac">
+                <img src="/common/img/gabeian.png" width="60" height="60">
+            </div>
+        </footer>
+    </div>
+</main>
+
+<script>
+
+    var app = new Vue({
+        el: '#app',
+        data: {
+            avatar: '',
+            domain: plats_user_info.domian == undefined ? 'index' : plats_user_info.domian,
+            logo: '',
+            header1: '',
+            header2: [], //头图
+            channel: [], //频道
+            key: '', //搜索关键字
+            qrcode: [
+                {ok: false, title: "手机版", image: "/api/file/qrcode?margin=2&url="+window.location.href},
+                {ok: false, title: "微信", image: plats_info.wx_qrcode? plats_info.wx_qrcode: window.location.origin+"/api/file/qrcode?margin=2&url="+window.location.href},
+                {ok: false, title: "微博", image: plats_info.wb_qrcode? plats_info.wb_qrcode: window.location.origin+"/api/file/qrcode?margin=2&url="+window.location.href},
+            ],
+        },
+        created() {
+        axios.get(CMS_ADVS).then(data => {
+            var resp = data.data.data;
+            this.channel = resp.channel.list.map(e => (e.drop = false, e));
+            this.logo = this.set_img(resp.setting.s_logo, "/common/img/logo-so.png", 209, 50);
+            this.header1 = this.set_img(resp.header1.image, "/common/img/logo-title-info.png", 382, 45);
+            this.header2 = resp.header2;
+        });
+        $("title").text(plats_info.title);
+        $("#favicon").attr('href', ApiMaterPlatQiniuDomain + plats_info.favicon);
+    },
+    mounted() {
+        this.$nextTick(() => {
+
+        })
+    },
+    methods: {
+        login: () => {
+            if(!docCookies.getItem("token")) {
+                $("#modal_login").fadeIn(300);
             } else {
-                document.title = "入会申请 — " + localStorage.getItem("title");
+                window.location.href = '/user';
             }
-        </script>
-    </body>
+        },
+                set_img: (url, init, w, h, mode) => {
+            if (url != '' && url != null && url != undefined) {
+                if (url.indexOf('http') === -1 && url.indexOf('common') === -1) {
+                    return mode != undefined ? ApiMaterPlatQiniuDomain + url + '?imageView2/' + mode + '/w/' + w + '/h/' + h
+                            : ApiMaterPlatQiniuDomain + url + '?imageView2/3/w/' + w + '/h/' + h;
+                } else {
+                    return url;
+                }
+            } else {
+                return init;
+            }
+        },
+                search: (key) => window.location.href = window.location.protocol + '//' + window.location.host + '/so?q=' + key,
+                simple_null: (data) => data != null && data != '' && data != undefined ? false : true,
+                check: (domain, url) => url != null && url != '' ? url : '/' + domain,
+    },
+    filters: {
+        fixed_len: (value, len) => value.length > len ? value.substr(0, len) : value,
+                cut: (value, len) => value.length > len ? value.substr(0, len) + '...' : value,
+                show_date: (value) => value.getFullYear() + '-' + (value.getMonth() + 1) + '-' + value.getDate(),
+                format_date: (value) => {
+            var res = value.split('-').reduce((res, e, i) => res += e.length === 1? '0' + e + '-' : e + '-', '');
+            return res.substr(0, res.length - 1);
+        }
+    }
+    })
+</script>
+</body>
 </html>
