@@ -1,59 +1,131 @@
-<!--
- * Created by weifeng on 2017/11/12.
--->
+<#extend#>public/extend/index_extend.html</#extend#>
 
-<!DOCTYPE html>
-<html>
+    <!-- 新问中心开始 -->
+    <div id="container">
+        <link rel="stylesheet" href="{{PATH_TML}}css/list.css">
+        <link rel="stylesheet" href="{{PATH_TML}}css/detail.css">
+        <script src="/common/iview/iview.min.js"></script>
 
-    <head>
-        <title></title>
-        <meta charset="UTF-8">
-        <link rel="icon" href="" id="public_icon" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
-        <script src="/common/js/jquery-3.2.1.min.js"></script> 
-        <script src="/common/layer-v3.0.3/layer-v3.0.3/layer/layer.js"></script>
-        <script src="{{PATH_CONFIG}}"></script>
-        <script src="{{PATH_TML}}js/modal_login.js"></script>
-        <script src="{{PATH_TML}}assets/show/default/js/news_detail.js" ></script>
-        <script src="{{PATH_TML}}assets/show/default/js/back_top.js"></script>
-
-        <link rel="stylesheet" type="text/css" href="{{PATH_TML}}font/iconfont.css" />
-        <link rel="stylesheet" type="text/css" href="{{PATH_TML}}css/news_base.css" />
-        <link rel="stylesheet" type="text/css" href="{{PATH_TML}}assets/show/default/css/news_detail.css" />
-        <link rel="stylesheet" type="text/css" href="{{PATH_TML}}css/modal_login.css" />
-
-        <!--[if lt IE 9]>
-          <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-          <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-        <![endif]-->
-
-    </head>
-
-    <body>
-        <!-- 登录部分 -->
-        <div class="modal_login" id="modal_login"></div>
-        <!-- 导航部分开始 -->
-        <ul class="news_menu" id="public_main_news_menu"></ul>
-        <!-- 导航部分结束 -->
-        <!-- 新闻详情开始 -->
-        <div class="page-content flex">
-            <div id="default404"><img src="/common/img/default404.png" width="100%" alt=""></div>
-            <div class="page-left">
-                <div class="prompt-info"> 关注成功！ </div>
-                <div id="plat-two-back-top"><img src="/common/img/gotop.png"></div>
-            </div>
-            <div class="page-right">
-                <div class="qr_code_pc_outer">
-                    <p>微信扫一扫</p>
-                    <p>查看或分享给好友</p>
+        <div class="list1">
+            <main>
+                <div class="seat">
+                    <img src="{{PATH_TML}}image/fanhui.png" alt="">
+                    当前位置在：
+                    <a :href="all_domian">首页</a>
+                    > {{sub_aside_info.title}} > {{cate_info.title}}
                 </div>
-            </div>
+                <div class="main-big">
+                    <div class="main">
+                        <h2>
+                            <strong>{{sub_aside_info.title}}</strong>
+                            <span>{{sub_aside_info.ename}}</span>
+                        </h2>
+                        <ul class="aside">
+                            <li :class="{cenav_cur : item.domain==cat_par}" v-for="item in sub_aside"><a :href="channel_domain+'/'+item.domain | href">{{item.title}}</a></li>
+                        </ul>
+                        <div class="company">
+                            <p>电话：{{left.tel}}</p>
+                            <p>传真：{{left.fax}}</p>
+                            <p>地址：{{left.addre}}</p>
+                        </div>
+                    </div>
+                    <div class="list-big">
+                        <div class="detail-list">
+                            <h2>{{detail.title}}</h2>
+                            <div class="det_btn">
+                                <span>来源：</span>
+                                <span>作者：{{detail.publisher}}</span>
+                                <span>时间：{{detail.publish_time}}</span>
+                            </div>
+                            <div class="det_con" v-html="detail.content"></div>
+                            <div class="del_hot">
+                                <span>阅读 {{detail.views}}</span>
+                                <span class="del_zan" @click="zan()">{{detail.praise_num}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
         </div>
-        <!-- 新闻详情结束 -->
-        <!-- 右侧大背景图 -->
-        <div id="public_main_right_bg" style="position:fixed;top:0;bottom:0;left:1190px;width:100%;"></div>
-        <script src="{{PATH_TML}}js/public_main_right_bg.js"></script>
-    </body>
 
-</html>
+        <script>
+            var apps = new Vue({
+                el: '#app',
+                data: {
+                    sub_aside : [],   //侧导航接口
+                    sub_aside_info : {},
+                    channel_domain : $app.get_router(1), // 频道个性域名
+                    cate_domain : $app.get_router(2), // 分类个性域名
+                    detail : {},
+                    cate_info:{},
+                    cat_par : {},  //父集分类
+                    left : {},
+                },
+                mounted: function() {
+                    //$app.set_title('风采页面');
+                    this.$nextTick(()=>{
+                        // 右侧详情展示
+                        ajax.get('/cms/detail/'+this.cate_domain).then((res)=>{
+                            if(res.code === 200) {
+                                this.cat_par=res.data.category.domain;
+                                var result = res.data;
+                                this.cate_info=result.category.title
+                                this.detail = result;
+                                $app.set_title(this.detail.title + ' - ' + plats_info.title);
+                            }
+                        });
+
+                        //左侧频道相关
+                        $sub_ajax.cate(this.channel_domain,(res)=>{
+                            console.log('res:', res)
+                            this.sub_aside_info = res.data;
+                            $sub_ajax.cate_tree({channel : this.sub_aside_info.weid} , (res)=>{
+                                this.sub_aside = res.data;
+                                for(var item of this.sub_aside)
+                                {
+                                    if(item.title == this.cate_info)
+                                    {
+                                        this.cate_info = item;
+                                        break;
+                                    }
+                                }
+                            });
+                        });
+
+
+                        ajax.get('cms/setting/show').then((res)=>{
+                            if(res.code == 200) {
+                                var result = res.data;
+                                this.left = result;
+                                console.log(this.left);
+                            }
+                        })
+
+                    });
+                },
+                methods: {
+                    zan(){
+                        if(is_login == 'no') {
+                            mb_login();
+                            return false;
+                        }
+                        ajax.post('cms/contents/praise', {"content_id": this.cate_domain}).then((res) => {
+                            if (res.data && res.code === 200) {
+                                this.zan_true = res.data.praise;
+                                if(!this.zan_true) {
+                                    this.news_detail.praise_num -= 1;
+                                    mb_message('取消点赞');
+                                    return false;
+                                }
+                                this.news_detail.praise_num += 1;
+                                mb_message('成功点赞');
+                                $(this).css({"background":"url(/common/img/zan.png) no-repeat 13px 0px"})
+                            }
+                        });
+                    }
+
+                }
+            });
+        </script>
+    </div>
+    <!-- 新闻中心结束 -->
