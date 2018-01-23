@@ -380,7 +380,7 @@
                 this.banners = resp.banners;
                 this.peoples_title = resp.peoples_title ? resp.peoples_title : {title: '企商风采', url: '#'};
                 this.leader = resp.leader ? resp.leader : {description: "全球秦商总会会长", image: "/common/img/new/m03.png", title: "刘阿津", url: "/u/71f96b93-da75-11e7-85d7-fa5985d0eaa1", weid: "d1fe0600-d181-11e7-9c10-49bfb1717a52"};
-                header(this.channel);
+                header({channel: this.channel, logo: this.logo, header1: this.header1, header2: this.header2});
                 var list = [];
                 for (var key in resp.link) {
                     if (resp.link[key].list != null) {

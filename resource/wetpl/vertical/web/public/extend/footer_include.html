@@ -51,7 +51,10 @@
             created() {
                 if($app.empty(params) !== false)
                 {
-                    this.channel = params;
+                    this.channel = params.channel;
+                    this.logo = params.logo;
+                    this.header1 = params.header1;
+                    this.header2 = params.header2;
                 }
                 else
                 {
