@@ -456,6 +456,13 @@ $(document).ready(function() {
 
     // 列表模板
     var num = 0;
+    var ticketInfo = function(ticketInfo) {
+        var html = '';
+        for (key in ticketInfo) {
+            html += '<p><label>' + ticketInfo[key].name + '</label><span>' + ticketInfo[key].price + '元 x ' + ticketInfo[key].num + '</span></p>';
+        }
+        return html;
+    }
     var listtemplate = function(data) {
         console.log(num);
         num++;
@@ -465,14 +472,14 @@ $(document).ready(function() {
             `<td class="user">
             <div class="user-avatar"><img src="` + ApiMaterPlatQiniuDomain + data.avatar + `" width="45"></div>` +
             `<div class="user-desc">
-                <div class="username">` + data.name + `</div>` +
-            `<div class="company"><span>` + data.company + `</span><span>` + data.poistion + `</span></div>
+                <div class="username">` + data.real_name + `</div>` +
+            `<div class="company"><span>` + data.company + `</span><span>` + data.position + `</span></div>
             </div>` +
             '</td>' +
-            '<td class="mobile">' + data.telphone + '</td>' +
+            '<td class="mobile">' + data.phone + '</td>' +
             '<td class="ticket">' +
 
-            (data.type == 1 ? ' <img data-toggle="modal" data-target="#myModal" src="/common/img/ticket-apply.png">' : '<b>￥' + data.price + '<b>') +
+            (data.type == 1 ? ' <img data-toggle="modal" data-target="#myModal" src="/common/img/ticket-apply.png">' : ticketInfo(data.ticketInfo)) +
 
             '</td>' +
 
@@ -521,10 +528,10 @@ $(document).ready(function() {
             name: name,
             telphone: telphone
         }
-        console.log(sendData);
+
         $.ajax({
-            url: ACTIVITY_ENROLL_LISTS + '?status=1',
-            type: 'post',
+            url: ACTIVITY_ENROLL_LISTS_WITH_TICKETINFO + '?status=1',
+            type: 'GET',
             data: sendData,
             headers: {
                 'Token': docCookies.getItem("token")
@@ -684,7 +691,7 @@ $(document).ready(function() {
         $(this).text(typeObj[other]);
 
         if (selected == 'mobile') {
-            $('#J_InputSearchCondition').attr('placeholder', '请输入手机号后4位');
+            $('#J_InputSearchCondition').attr('placeholder', '请输入手机号');
             $('#J_InputSearchCondition').val('');
         } else {
             $('#J_InputSearchCondition').attr('placeholder', '请输入用户姓名');
