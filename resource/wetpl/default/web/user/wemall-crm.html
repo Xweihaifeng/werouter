@@ -52,9 +52,9 @@
                         </form-item>
                         <form-item label="会员卡类型" prop="conditions">
                             <i-select v-model="formItemMember.conditions">
-                                <i-option value="1">进店自动获取</i-option>
-                                <i-option value="2">单笔消费满额</i-option>
-                                <i-option value="3">累计消费满额</i-option>
+                                <i-option value='1'>进店自动获取</i-option>
+                                <i-option value='2'>单笔消费满额</i-option>
+                                <i-option value='3'>累计消费满额</i-option>
                             </i-select>
                         </form-item>
                         <form-item label="会员卡折扣" prop="discount">
@@ -81,24 +81,26 @@
                 </div>
             </div>
             <!--<div v-show="currentState == 4">-->
-                <!--<div class="form-list">-->
-                    <!--<div class="table-list">-->
-                        <!--<i-table :columns="columnsMemberLevel" :data="MemberLeveldata"></i-table>-->
-                    <!--</div>-->
-                <!--</div>-->
+            <!--<div class="form-list">-->
+            <!--<div class="table-list">-->
+            <!--<i-table :columns="columnsMemberLevel" :data="MemberLeveldata"></i-table>-->
+            <!--</div>-->
+            <!--</div>-->
             <!--</div>-->
         </div>
     </div>
 </div>
 
 <script>
-    var app = new Vue({
+    var crmapp=new Vue({
         el: '#app',
         data: {
             mall_id:'',
             currentState: 0,
+            MemberLevelEdit:false,
             menuList: ["概览", "发布会员卡", "会员卡管理", "发布代金券", "管理代金券"],
             formItemMember: {
+                weid:'',
                 levels_name: '',
                 conditions: '',
                 discount:'',
@@ -116,7 +118,6 @@
                 ]
             },
             columnsMemberLevel: [
-
                 {
                     title: '会员卡名称',
                     key: 'levels_name'
@@ -157,8 +158,10 @@
                                 },
                                 on: {
                                     click: () => {
-                                        app.editMemberLevel();
-                                       // this.editMemberLevel(params.row.weid);
+                                        console.log(crmapp);
+                                        crmapp.editMemberLevel(params.row.weid);
+                                        //this.editMemberLevel(params.row.weid);
+                                        // this.editMemberLevel(params.row.weid);
                                     }
                                 }
                             }, '编辑'),
@@ -167,6 +170,15 @@
                 }
             ],
             MemberLeveldata: [
+                {
+                    levels_name: '',
+                    levels: '',
+                    conditions:'',
+                    discount: '',
+                    money: '',
+                    created_at: ''
+
+                }
             ],
             option: {
                 option1: {
@@ -364,13 +376,28 @@
                                     {
                                         conditions='累计消费满额';
                                     }
-                                    self.MemberLeveldata.push({weid:res.data.list[i].weid,levels_name:res.data.list[i].levels_name,levels:res.data.list[i].levels,conditions:conditions,discount:res.data.list[i].discount,money:res.data.list[i].money,created_at:res.data.list[i].created_at})
+                                    self.MemberLeveldata.push({weid:res.data.list[i].weid,levels_name:res.data.list[i].levels_name,levels:res.data.list[i].levels,conditions:conditions,discount:res.data.list[i].discount,money:res.data.list[i].money,created_at:res.data.list[i].created_at});
                                 }
                             }
                         }else{
                             self.$Message.error(res.message);
                         }
                     });
+                }
+                if(val==1){
+                    //判断是否编辑
+                    if(this.MemberLevelEdit==true){
+                        this.MemberLevelEdit=false;
+                    }else{
+                        //清空数据信息为重新进入页面
+                        this.formItemMember={
+                            weid:'',
+                            levels_name: '',
+                            conditions: '',
+                            discount:'',
+                            money: '0.00',
+                        };
+                    }
                 }
 
             }
@@ -384,22 +411,55 @@
 
             },
             handleLevelsmit(name) {
+                console.log(this.formItemMember);
                 this.$refs[name].validate((valid) => {
                     if (valid) {
-                        ajax.post('member/level/store', this.formItemMember).then((res)=>{
-                            if(res.code==200){
-                                this.$Message.success('添加成!');
-                            }else{
-                                this.$Message.error(res.message);
-                            }
-                        });
+                        //判断是否为编辑
+                        if(this.formItemMember.weid.length>0){
+                            //编辑
+                            ajax.post('member/level/update', this.formItemMember).then((res)=>{
+                                if(res.code==200){
+                                    this.$Message.success('修改成功!');
+                                    this.currentState=2;
+                                }else{
+                                    this.$Message.error(res.message);
+                                }
+                            });
+                        }else{
+                            ajax.post('member/level/store', this.formItemMember).then((res)=>{
+                                if(res.code==200){
+                                    this.$Message.success('添加成!');
+                                    this.currentState=2;
+                                }else{
+                                    this.$Message.error(res.message);
+                                }
+                            });
+                        }
                     }else{
                         this.$Message.error('Fail!');
                     }
                 })
             },
             editMemberLevel (index) {
-                console.log(222);
+                //请求等级详情
+                if(index.length>0){
+                    this.formItemMember='';
+                    var self=this;
+                    ajax.post('member/level/detail', {id:index}).then((res)=>{
+                        if(res.code==200){
+                            var data={weid:res.data.weid,levels_name:res.data.levels_name,conditions:res.data.conditions,discount:res.data.discount,money:res.data.money};
+                            this.formItemMember=data;
+                            //类型转换为字符型
+                            this.formItemMember.conditions=this.formItemMember.conditions.toString();
+                            this.formItemMember.discount=this.formItemMember.discount.toString();
+                            this.currentState=1;
+                            //设置编辑标志位
+                            this.MemberLevelEdit=true;
+                        }
+                    });
+                }
+
+
             }
 
         }
