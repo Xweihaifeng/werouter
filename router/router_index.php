@@ -409,7 +409,7 @@ class router_index extends controller
 
         return $cache_config_file;
     }
-
+    
     // 获取网站基本信息
     private function _domain_data($weid)
     {

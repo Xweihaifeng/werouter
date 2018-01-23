@@ -92,7 +92,7 @@
 </div>
 
 <script>
-    new Vue({
+    var app = new Vue({
         el: '#app',
         data: {
             mall_id:'',
@@ -157,7 +157,7 @@
                                 },
                                 on: {
                                     click: () => {
-                                        
+                                        app.editMemberLevel();
                                        // this.editMemberLevel(params.row.weid);
                                     }
                                 }
