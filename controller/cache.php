@@ -16,7 +16,7 @@ class cache extends controller
 		{
 			unlink($file);
 		}
-		echo 'ok1';
+		echo 'ok-ok';
 	}
 }	
 
