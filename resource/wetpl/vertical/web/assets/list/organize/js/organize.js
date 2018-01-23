@@ -76,7 +76,6 @@ $(function() {
             if(data.code === 200) {
                 $.map(data.data, function(item, index) {
                     if(item.domain == pathname[1]) {
-                        // alert("erjifenlei")
                         $(".article_list").addClass("z").html(item.title);
                         console.log(item.domain)
                         li_name = item.domain;
@@ -301,8 +300,8 @@ $(function() {
                                 $("#menuTwo").append(menuTwo(value));
                             }
                         });
-
                         show_two = $("#menuTwo").children().first().attr("id");
+                        $("#menuTwo").children().first().addClass("er-cur").siblings().removeClass("er-cur");
                         $('#' + show_two).parent("li").addClass("cenav_cur").siblings().removeClass("cenav_cur");
                         document.title = $('#' + show_two).text() + " — " + localStorage.getItem("title");
                         
