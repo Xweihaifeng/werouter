@@ -146,6 +146,7 @@ $(function() {
                     return false;
                 }
                 $(".page-left").append(news_detail(data.data));
+                // console.log($(".page-left").html())
 
                 if(!data.data.source_url) {
                     $(".read_original").hide();
