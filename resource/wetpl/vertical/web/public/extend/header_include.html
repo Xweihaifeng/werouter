@@ -1,5 +1,6 @@
+<main>
 <div class="modal_login" id="modal_login"></div>
-<header>
+<header id="header">
     <div>
         <ul>
             <li><img :src="logo" alt="" style="width: 209px; height: 50px; display: block;" /></li>
@@ -36,3 +37,9 @@
         </ol>
     </div>
 </header>
+<script>
+    function mb_login(url) {
+        $app.open_page('login?url='+url);
+    }
+</script>
+<div  id="app" v-cloak>
