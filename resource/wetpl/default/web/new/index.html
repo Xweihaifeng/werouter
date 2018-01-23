@@ -20,7 +20,9 @@ div.ct_warp .p4_arrow_l:hover{
                 <h2 style="font-size: 40px;">再大的品牌 </h2>
                 <h3 style="font-size: 53px;font-weight: bold;padding: 0;margin-top: -10px;letter-spacing: 3px;">也必须有自己的圈子</h3>
                 <div class="p1Btn p1Btn_new">
-                                            <a href="/login" class="b2">我的微主页</a>
+
+                                            <a v-if="ul !== 'index' " :href="'/'+index" class="b2">我的微主页</a>
+                                            <a v-else href="/login" class="b2">我的微主页</a>
                                     </div>
             </div>
         </div>
@@ -29,7 +31,8 @@ div.ct_warp .p4_arrow_l:hover{
                 <h2 style="font-size: 40px;">微主页</h2>
                 <h3 style="font-size: 53px;font-weight: bold;padding: 0;margin-top: -10px;letter-spacing: 3px;">重新定义圈子</h3>
                 <div class="p1Btn p1Btn_new">
-                                            <a href="/login" class="b2">我的微主页</a>
+                    <a v-if="ul !== 'index' " :href="'/'+index" class="b2">我的微主页</a>
+                    <a v-else  :href="/login" class="b2">我的微主页</a>
                                     </div>
             </div>
         </div>
@@ -39,7 +42,9 @@ div.ct_warp .p4_arrow_l:hover{
                 <!--<h3>微众中国 领先的众创投融资平台</h3>-->
                 <div class="p1Btn">
                     <a href="" class="b1">了解详情</a>
-                                            <a href="/login" class="b2">我的微主页</a>
+                    <a v-if="ul !== 'index' " href="'/'+index" class="b2">我的微主页</a>
+
+                    <a v-else href="/login" class="b2">我的微主页</a>
                                     </div>
             </div>
         </div>
@@ -156,12 +161,14 @@ div.ct_warp .p4_arrow_l:hover{
             'show':true,
             'empty_show':false,
             'page':1,
-            'hover_show' : false
+            'hover_show' : false,
+            'ul':'',
         },
         mounted() {
             this.$nextTick( function () {
                this.get_data(this.channel , 1);
                set_title(config.title , false);
+               this.ul == pages_index;
             });
         },
         methods:{
@@ -172,6 +179,7 @@ div.ct_warp .p4_arrow_l:hover{
                 ajax.get(web_business.web_cms_channel_contents , {params:{cate_id:'trends' , limit : 10 , 'page' : this.page}}).then((res)=>{
                         this.list_data = res.data;
                         var list = this.list_data.list;
+
                         $.getScript("/common/js/main_index.js");
                         for(val in list){
                             var time = (new Date(list[val].publish_time)).getTime();
@@ -183,6 +191,11 @@ div.ct_warp .p4_arrow_l:hover{
                     });
             }
         }
+    })
+</script>
+<script>
+    $(function () {
+
     })
 </script>
 <div class="section page5"> 
