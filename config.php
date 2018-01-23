@@ -9,8 +9,6 @@ class config{
         'dbname' => 'dev_wezchina',
         'charset' => 'utf8'
     );
-
     public static $config_api_url = 'http://mptest.wezchina.com/api/plats/domain?site=';
-
     public static $plats;
 }
