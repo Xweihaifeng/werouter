@@ -28,7 +28,7 @@
         <script src="/common/magazine/js/iview.min.js"></script>
         <style>
             * { margin: 0; padding: 0; }
-            html, body, p, output { margin: 0; padding: 0; }
+            html, body, p, output { margin: 0; padding: 0; background: none; }
             ul, li { list-style: none; margin: 0; }
             .news-main { position: relative; width: 1200px; min-height: 800px; margin-top: 30px; background-color: #fff; display: flex; justify-content: space-between; color: #666; }
             .news-left { width: 850px; min-height: 600px; }
@@ -139,7 +139,7 @@
                                         <output>{{ item.views }}</output>
                                         <output>{{ item.publish_time }}</output>
                                     </aside>
-                                    <p>{{ item.summary | limitLen(0,82) }}</p>
+                                    <p v-html="item.summary.substr(0, 82)"><!-- {{ item.summary | limitLen(0,82) }} --></p>
                                 </hgroup>
                             </figure>
                         </article>
@@ -187,6 +187,7 @@
                         {ok: false, title: "微博", image: plats_info.wb_qrcode? plats_info.wb_qrcode: window.location.origin+"/api/file/qrcode?margin=2&url="+window.location.href},
                     ],
                     channel_domain : $app.get_router(1), // 频道个性域名
+                    // column_domain : $app.get_router(2),  // 栏目个性域名
                     sub_rcon: {},                        // 热点新闻
                     column: {},                          // 新闻栏目
                     con_list: {},                        // 内容列表
@@ -196,6 +197,7 @@
                     limit: 10,                           // 显示条数
                 },
                 created() {
+                    var self = this;
                     axios.get(CMS_ADVS).then(data => {
                         var resp = data.data.data;
                         this.channel = resp.channel.list.map(e => (e.drop = false, e));
@@ -218,14 +220,13 @@
                                 this.column.forEach(function(body, index) {
                                     if(index == 0) {
                                         this.first_domain = body.domain;
+                                        self.cate(this.first_domain);
                                     }
                                 })
                             })
                         }
                     })
 
-                    // 新闻内容部分
-                    this.cate(this.first_domain, this.limit, this.page);
                 },
                 mounted() {
                     this.$nextTick(() => {
@@ -233,22 +234,32 @@
                     })
                 },
                 methods: {
-                    cate: function(first_domain, limit, page) {
-                        $sub_ajax.cms_content({cate_id: first_domain, limit: limit, page: page}, (res) => {
+                    cate: function(first_domain) {
+                        var pathname = window.location.pathname.split('/').slice(1,4);
+                        var column_domain = pathname[1];
+
+                        if(first_domain) {
+                            this.first_domain = first_domain;
+                        }
+
+                        if(column_domain) {
+                            this.first_domain = column_domain;
+                        }
+
+                        $sub_ajax.cms_content({cate_id: this.first_domain, limit: this.limit, page: this.page}, (res) => {
                             this.con_list = res.data.list;
                             this.total = res.data.total;
                         });
                     },
                     change: function(page) {
-                        var self = this;
-                        self.page = page;
-                        self.cate(self.first_domain, self.limit, self.page);
+                        this.page = page;
+                        this.cate();
                     },
                     column_list: function(domain) {
-                        console.log(0);
-                        var self = this;
-                        self.first_domain = domain;
-                        self.cate(self.first_domain, self.limit, 1);
+                        this.first_domain = domain;
+                        this.page = 1;
+                        window.history.pushState('json', '', '/'+ this.channel_domain +'/'+ this.first_domain);
+                        this.cate();
                     },
                     login: () => {
                         if(!docCookies.getItem("token")) {
