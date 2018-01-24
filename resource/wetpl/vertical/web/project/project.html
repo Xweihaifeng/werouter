@@ -1,149 +1,8 @@
 <#extend#>public/extend/index_extend.html</#extend#>
 <link rel="stylesheet" href="/common/magazine/css/iview.css">
+<link rel="stylesheet" href="{{PATH_TML}}project/css/project.css">
+<link rel="stylesheet" href="{{PATH_TML}}activity/css/cate_list.css" />
 <script src="/common/magazine/js/iview.min.js"></script>
-<style>
-    #container{
-        background: white;
-    }
-    #find li {
-        font-size: 15px;
-        cursor: pointer;
-    }
-    #type li:hover, #time li:hover {
-        color: #4caaed;
-    }
-    #proj{
-        width: 1200px;
-        height: auto;
-        background: white;
-    }
-    #type, #type ul, #time, #time ul, #type2 ul, #projects ul{
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-        color: #333;
-    }
-    #type, #time{
-        padding: 32px 0;
-        border-bottom: 1px solid #d9d9d9;
-    }
-    #type2{
-        padding: 30px 0;
-    }
-    #type ul li, #time ul li{
-        padding: 0 23px;
-    }
-    #type2 ul li {
-        justify-content: center;
-        align-items: center;
-        padding: 7px 20px;
-        border-top: 1px solid #d9d9d9;
-        border-bottom: 1px solid #d9d9d9;
-        border-left: 1px solid #d9d9d9;
-    }
-    #type2 ul li:first-child {
-        color: white;
-        background: rgb(76,170,237);
-    }
-    #type2 ul li:hover {
-        color: white;
-        background: rgb(76,170,237);
-    }
-    #type2 ul li:last-child {
-        border-right: 1px solid #d9d9d9;
-    }
-    #projects ul {
-        flex-wrap: wrap;
-    }
-    #projects ul li {
-        width: 285px;
-        height: 310px;
-        background: rgb(248,248,248);
-        border-radius: 2px;
-        margin: 0 20px 20px 0;
-    }
-    #projects ul li:nth-child(4n) {
-        margin: 0 0 20px 0;
-    }
-    #projects ul li img {
-        display: block;
-    }
-    #projects ul li div:nth-child(1) {
-        position: absolute;
-        width: 285px;
-        height: 160px;
-        /*background: url(/common/img/prepare.png) no-repeat -25px -25px;*/
-        background: url(/common/img/doing.png) no-repeat -25px -25px;
-        /*background: url(/common/img/end.png) no-repeat -25px -25px;*/
-    }
-    .act {
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        flex-wrap: wrap;
-        padding: 15px 17px;
-    }
-    .act p:nth-child(1) {
-        /*letter-spacing: 1px;*/
-    }
-    .act p:nth-child(2) {
-        /*padding:23px 0 20px 0;*/
-        padding: 15px 0;
-        font-size:14px;
-        color: #999;
-    }
-    .act p:nth-child(3) {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        font-size: 14px;
-    }
-    .act p:nth-child(3) span {
-        display: flex;
-        align-items: center;
-        color: #999;
-    }
-    .act p:nth-child(3) img {
-        width: 28px;
-        height: 28px;
-        margin-right: 15px;
-    }
-    .free {
-        width: 80px;
-        height: 26px;
-        text-align: center;
-        line-height: 26px;
-        color: white!important;
-        background: #e31f32;
-        display: block!important;
-    }
-    .price {
-        width: 80px;
-        height: 26px;
-        text-align: center;
-        line-height: 26px;
-        color: #e31f32!important;
-        background: white;
-        border: 1px solid #e31f32;
-        display: block!important;
-    }
-    #pages {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin: 60px 0;
-    }
-    #old {
-        color: #666;
-    }
-    /*分页*/
-    .ivu-page{
-        margin-bottom: 20px;
-    }
-    .ivu-page-item-active{
-        background-color: #46b2ee;
-    }
-</style>
 
 <div id="container">
     <div id="proj">
@@ -151,6 +10,7 @@
             <div id="type">
                 <p>分类：</p>
                 <ul>
+                    <li>全部</li>
                     <li style="color: #4caaed;">户外出游</li>
                     <li>运动健身</li>
                     <li>职场培训</li>
@@ -180,9 +40,13 @@
                     <li>最新</li>
                     <li>最热</li>
                 </ul>
+                <ul>
+                    <li @click="show('proj')" :class="{'style-active': showType.proj}">方格</li>
+                    <li @click="show('act')" :class="{'style-active': showType.act}">条目</li>
+                </ul>
             </div>
         </div>
-        <div id="projects">
+        <div id="projects" v-show="showType.proj">
             <ul>
                 <li>
                     <div></div>
@@ -246,6 +110,157 @@
                 </li>
             </ul>
         </div>
+
+        <div class="cat-con" v-show="showType.act">
+            <ul class="cont-list">
+                <li>
+                    <a href="">
+                        <img src="{{PATH_TML}}activity/img/01.png" alt="">
+                    </a>
+                    <div class="abstract">
+                        <a href="">
+                            <h3>互联网运营50堂必修课，如何玩转产品、用户、渠道、数据？</h3>
+                            <p>50节系统化实战课程、是面向0到3年得互联网从业者和爱好者学习的内容，从零基础打造运营思维体系，深度学习互联网运营、产品、用户、渠道、营销的实操，具体怎么做，通过运营模型及实例让你快速进阶...</p>
+                        </a>
+                        <div class="abst-info">
+                            <div class="info-son">
+                                <img src="{{PATH_TML}}activity/img/时间.png" alt="">
+                                本周五<span>12:30</span>开始
+                            </div>
+                            <div class="info-son">
+                                <img src="{{PATH_TML}}activity/img/地点.png" alt="">
+                                <span>高新区</span>
+                            </div>
+                            <div class="info-son">
+                                <img src="{{PATH_TML}}activity/img/人员.png" alt="">
+                                <span>145</span>人已报名
+                            </div>
+                        </div>
+                    </div>
+                    <div class="attend">
+                        <span>免费</span>
+                        <button>立即报名</button>
+                    </div>
+                </li>
+                <li>
+                    <a href="">
+                        <img src="{{PATH_TML}}activity/img/02.png" alt="">
+                    </a>
+                    <div class="abstract">
+                        <a href="">
+                            <h3>互联网运营50堂必修课，如何玩转产品、用户、渠道、数据？</h3>
+                            <p>50节系统化实战课程、是面向0到3年得互联网从业者和爱好者学习的内容，从零基础打造运营思维体系，深度学习互联网运营、产品、用户、渠道、营销的实操，具体怎么做，通过运营模型及实例让你快速进阶...</p>
+                        </a>
+                        <div class="abst-info">
+                            <div class="info-son">
+                                <img src="{{PATH_TML}}activity/img/时间.png" alt="">
+                                本周五<span>12:30</span>开始
+                            </div>
+                            <div class="info-son">
+                                <img src="{{PATH_TML}}activity/img/地点.png" alt="">
+                                <span>高新区</span>
+                            </div>
+                            <div class="info-son">
+                                <img src="{{PATH_TML}}activity/img/人员.png" alt="">
+                                <span>145</span>人已报名
+                            </div>
+                        </div>
+                    </div>
+                    <div class="attend">
+                        <span class="attebd_cur">￥199</span>
+                        <button class="button_cur">立即报名</button>
+                    </div>
+                </li>
+                <li>
+                    <a href="">
+                        <img src="{{PATH_TML}}activity/img/03.png" alt="">
+                    </a>
+                    <div class="abstract">
+                        <a href="">
+                            <h3>互联网运营50堂必修课，如何玩转产品、用户、渠道、数据？</h3>
+                            <p>50节系统化实战课程、是面向0到3年得互联网从业者和爱好者学习的内容，从零基础打造运营思维体系，深度学习互联网运营、产品、用户、渠道、营销的实操，具体怎么做，通过运营模型及实例让你快速进阶...</p>
+                        </a>
+                        <div class="abst-info">
+                            <div class="info-son">
+                                <img src="{{PATH_TML}}activity/img/时间.png" alt="">
+                                本周五<span>12:30</span>开始
+                            </div>
+                            <div class="info-son">
+                                <img src="{{PATH_TML}}activity/img/地点.png" alt="">
+                                <span>高新区</span>
+                            </div>
+                            <div class="info-son">
+                                <img src="{{PATH_TML}}activity/img/人员.png" alt="">
+                                <span>145</span>人已报名
+                            </div>
+                        </div>
+                    </div>
+                    <div class="attend">
+                        <span>免费</span>
+                        <button>立即报名</button>
+                    </div>
+                </li>
+                <li>
+                    <a href="">
+                        <img src="{{PATH_TML}}activity/img/01.png" alt="">
+                    </a>
+                    <div class="abstract">
+                        <a href="">
+                            <h3>互联网运营50堂必修课，如何玩转产品、用户、渠道、数据？</h3>
+                            <p>50节系统化实战课程、是面向0到3年得互联网从业者和爱好者学习的内容，从零基础打造运营思维体系，深度学习互联网运营、产品、用户、渠道、营销的实操，具体怎么做，通过运营模型及实例让你快速进阶...</p>
+                        </a>
+                        <div class="abst-info">
+                            <div class="info-son">
+                                <img src="{{PATH_TML}}activity/img/时间.png" alt="">
+                                本周五<span>12:30</span>开始
+                            </div>
+                            <div class="info-son">
+                                <img src="{{PATH_TML}}activity/img/地点.png" alt="">
+                                <span>高新区</span>
+                            </div>
+                            <div class="info-son">
+                                <img src="{{PATH_TML}}activity/img/人员.png" alt="">
+                                <span>145</span>人已报名
+                            </div>
+                        </div>
+                    </div>
+                    <div class="attend">
+                        <span>免费</span>
+                        <button>立即报名</button>
+                    </div>
+                </li>
+                <li>
+                    <a href="">
+                        <img src="{{PATH_TML}}activity/img/02.png" alt="">
+                    </a>
+                    <div class="abstract">
+                        <a href="">
+                            <h3>互联网运营50堂必修课，如何玩转产品、用户、渠道、数据？</h3>
+                            <p>50节系统化实战课程、是面向0到3年得互联网从业者和爱好者学习的内容，从零基础打造运营思维体系，深度学习互联网运营、产品、用户、渠道、营销的实操，具体怎么做，通过运营模型及实例让你快速进阶...</p>
+                        </a>
+                        <div class="abst-info">
+                            <div class="info-son">
+                                <img src="{{PATH_TML}}activity/img/时间.png" alt="">
+                                本周五<span>12:30</span>开始
+                            </div>
+                            <div class="info-son">
+                                <img src="{{PATH_TML}}activity/img/地点.png" alt="">
+                                <span>高新区</span>
+                            </div>
+                            <div class="info-son">
+                                <img src="{{PATH_TML}}activity/img/人员.png" alt="">
+                                <span>145</span>人已报名
+                            </div>
+                        </div>
+                    </div>
+                    <div class="attend">
+                        <span class="attebd_cur">￥199</span>
+                        <button class="button_cur">立即报名</button>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
         <div id="pages">
             <Page :total="parseInt(total)" :current="page" :page-size="limit" @on-change="change"></Page>
         </div>
@@ -256,9 +271,13 @@
     new Vue({
         el: '#container',
         data: {
+            showType: {act: false, proj: true},
             total: 10,
             page: 1,
             limit: 5,
+            style: {
+                active: {color: "white", background: "#e31f32"}
+            }
         },
         created: function(){
 
@@ -266,6 +285,9 @@
         methods: {
             change: function(page){
                 this.page = page;
+            },
+            show: function(name){
+                ['act', 'proj'].map(e => name === e ? this.showType[e] = true : this.showType[e] = false);
             }
         }
     })

@@ -789,9 +789,9 @@ function pro_login_member() {
 }
 
 // 保存本地缓存token、weid、用户头像
-/*function saveUserInfo(token, weid, imgUrl) {
-    localStorage.setItem('token', token);
-    localStorage.setItem('weid', weid);
+function saveUserInfo(token, weid, imgUrl) {
+    docCookies.setItem('token', token);
+    docCookies.setItem('weid', weid);
     if(!imgUrl) {
 
         imgUrl = "/common/img/my.png";
@@ -809,7 +809,7 @@ function pro_login_member() {
 
         $("#login a").css({"background": "url(" + imgUrl + ") center center / 100% 100% no-repeat"});
     }
-    window.localStorage.setItem("avatar", imgUrl);
+    window.docCookies.setItem("avatar", imgUrl);
 }
 
 //用户登录接口调用
@@ -842,10 +842,9 @@ function login(phoneNum, checkNum){
             console.info(err);
         }
     })
-}*/
+}
 
 //点击登录按钮
-/*
 function logBt(){
     phoneNum = ($("#member_per_tel").val() || $("#member_int_tel").val());
     checkNum = $("#member_per_tel_card").val();
@@ -863,7 +862,6 @@ function logBt(){
         }
     }
 }
-*/
 
 //获取验证码
 var lock = false,
