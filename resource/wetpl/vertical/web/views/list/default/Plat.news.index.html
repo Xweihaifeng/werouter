@@ -30,9 +30,10 @@
             * { margin: 0; padding: 0; }
             html, body, p, output { margin: 0; padding: 0; background: none; }
             ul, li { list-style: none; margin: 0; }
-            .news-main { position: relative; width: 1200px; min-height: 800px; margin-top: 30px; background-color: #fff; display: flex; justify-content: space-between; color: #666; }
+            a { text-decoration: none; display: inline-block; }
+            .news-main { position: relative; width: 1200px; min-height: 800px; margin: 30px auto; background-color: #fff; display: flex; justify-content: space-between; color: #666; }
             .news-left { width: 850px; min-height: 600px; }
-            .news-right { width: 330px; min-height: 600px; /* box-shadow: inset 0 0 0 1px #f00; */ }
+            .news-right { width: 330px; min-height: 600px; }
 
             .news-left .news-pre1 { width: 100%; height: 300px; display: flex; justify-content: space-between; }
             .news-left .news-pre1 > .news-hot { flex: 1; }
@@ -43,29 +44,47 @@
             .news-left .news-pre1 .news-hot img { width: 100%; height: 100%; }
 
             .news-left .news-pre2 { width: 100%; height: 44px; margin: 14px 0; }
-            .news-left .news-pre2 > .news-col-nav { width: 100%; height: 100%; display: flex; justify-content: flex-start; align-items: center; margin: 0; border-bottom: 1px solid #e2e2e2; }
-            .news-left .news-pre2 > .news-col-nav > figcaption { flex: 1; max-width: 90px; height: 44px; display: inline-flex; align-items: center; flex-direction: column; cursor: pointer; }
+            .news-left .news-pre2 > .news-col-nav { width: 100%; height: 100%; display: flex; justify-content: flex-start; align-items: center; margin: 0; border-bottom: 1px solid #e6e6e6; }
+            .news-left .news-pre2 > .news-col-nav > figcaption { flex: 1; max-width: 106px; height: 44px; display: inline-flex; align-items: center; flex-direction: column; margin-right: 3px; cursor: pointer; }
+            .news-left .news-pre2 > .news-col-nav > figcaption:last-child { margin-right: 0; }
             .news-left .news-pre2 > .news-col-nav > figcaption:hover > ul { display: block; }
-            .news-left .news-pre2 > .news-col-nav > figcaption > span { position: relative; line-height: 44px; }
+            .news-left .news-pre2 > .news-col-nav > figcaption > span { position: relative; width: 100%; text-align: center; line-height: 44px; font-weight: bold; }
+            .news-left .news-pre2 > .news-col-nav > figcaption > span:hover, .news-left .news-pre2 > .news-col-nav > figcaption > ul > li:hover { box-shadow: inset 0 0 100px 0 #eee; }
             .news-left .news-pre2 > .news-col-nav > figcaption > ul { position: relative; top: -1px; width: 100%; text-align: center; background-color: #fff; z-index: 99; display: none; }
-            .news-left .news-pre2 > .news-col-nav > figcaption > ul > li { width: 100%; line-height: 35px; border: 1px solid #e2e2e2; border-top: none; cursor: pointer; }
+            .news-left .news-pre2 > .news-col-nav > figcaption > ul > li { width: 100%; line-height: 35px; font-size: 14px; border: 1px solid #e6e6e6; border-top: none; cursor: pointer; }
             .news-left .news-pre2 > .news-col-nav .news-nav-active > span { color: #4caaed; }
-            .news-left .news-pre2 > .news-col-nav .news-nav-active > span::before { position: absolute; content: ""; transform: translateY(-50%); top: 50%; left: -8px; width: 6px; height: 6px; margin-right: 4px; border-radius: 50%; background-color: #4caaed; }
+            .news-left .news-pre2 > .news-col-nav .news-nav-active > span::before { position: absolute; content: ""; transform: translateY(-50%); top: 50%; margin-left: -12px; width: 5px; height: 5px; border-radius: 50%; background-color: #4caaed; }
 
-            .news-left .news-con-list { width: 100%; display: flex; justify-content: space-between; margin: 0; padding: 20px 0; border-bottom: 1px solid #e2e2e2; font-size: 14px; }
+            .news-left .news-con-list { width: 100%; display: flex; justify-content: space-between; margin: 0; padding: 20px 0; border-bottom: 1px solid #e6e6e6; font-size: 14px; }
             .news-left .news-con-list .news-con-list-img { width: 236px; min-width: 236px; height: 135px; margin-right: 20px; }
-            .news-left .news-con-list .news-con-list-img > img { width: 100%; height: 100%; }
-            .news-left .news-con-list h2 { font-size: 18px; color: #333; margin: 10px 0; }
+            .news-left .news-con-list .news-con-list-img > a, .news-left .news-con-list .news-con-list-img > a > img { width: 100%; height: 100%; }
+            .news-left .news-con-list h2 { font-size: 18px; color: #333; margin: 10px 0 0; }
             .news-left .news-con-list hgroup { color: #999; flex: 1; }
-            .news-left .news-con-list .news-con-list-time { height: 45px; display: flex; justify-content: flex-start; align-items: center; }
+            .news-left .news-con-list .news-con-list-time { height: 50px; display: flex; justify-content: flex-start; align-items: center; }
             .news-left .news-con-list .news-con-list-time output { position: relative; min-width: 20px; height: 20px; margin-right: 28px; text-indent: 30px; color: #999; }
-            .news-left .news-con-list .news-con-list-time output:nth-child(1)::before { position: absolute; width: 22px; height: 20px; left: 3px; content: ""; background: url(/common/img/news-auth.png) no-repeat center; }
-            .news-left .news-con-list .news-con-list-time output:nth-child(2)::before { position: absolute; width: 22px; height: 20px; left: 3px; content: ""; background: url(/common/img/news-read.png) no-repeat center; }
-            .news-left .news-con-list .news-con-list-time output:nth-child(3)::before { position: absolute; width: 22px; height: 20px; left: 3px; content: ""; background: url(/common/img/news-time.png) no-repeat center; }
+            .news-left .news-con-list .news-con-list-time output.publisher::before { position: absolute; width: 20px; height: 20px; left: 3px; content: ""; background: url(/common/img/news-auth.png) no-repeat center; background-size: 16px; }
+            .news-left .news-con-list .news-con-list-time output.views::before { position: absolute; width: 22px; height: 20px; left: 3px; content: ""; background: url(/common/img/news-read.png) no-repeat center; }
+            .news-left .news-con-list .news-con-list-time output.publish_time::before { position: absolute; width: 20px; height: 20px; left: 3px; content: ""; background: url(/common/img/news-time.png) no-repeat center; background-size: 16px; }
 
             .news-left .news-pre4 { padding: 60px 0; margin: 0 auto; }
             .news-left .news-pre4 .ivu-page > li { width: 35px; height: 35px; line-height: 35px; text-align: center; border-radius: 0; }
             .news-left .news-pre4 .ivu-page-item-active { background-color: #46b2ee; border: 1px solid #46b2ee; color: #fff; }
+
+            .news-right .news-aside1 { width: 330px; min-height: 166px; background-color: #fafafa; margin-bottom: 20px; padding: 20px 0 0 0; font-size: 16px; }
+            .news-right figure { padding: 0 20px 0 24px; border-bottom: 1px solid #f3f3f3; }
+            .news-right figure:last-child { border: none; }
+            .news-right figure.news-aside1-title { height:20px; line-height: 20px; padding-left: 20px; vertical-align: middle; color: #333; border-bottom: none; border-left: 4px solid #f00; font-size: 20px; }
+            .news-right figure.news-aside1-list { padding: 20px 20px 20px 24px; font-size: 16px; }
+            .news-right figure.news-aside1-list .news-aside1-list-con h2 { line-height: 25px; margin-bottom: 12px; font-size: 16px; }
+            .news-right figure.news-aside1-list .news-aside1-list-con p { color: #999; }
+
+            .news-right .news-aside2 { width: 330px; min-height: 272px; background-color: #fafafa; padding: 20px 0 0 0; font-size: 16px; }
+            .news-right figure { padding: 0 20px 0 24px; border-bottom: 1px solid #f3f3f3; }
+            .news-right figure:last-child { border: none; }
+            .news-right figure.news-aside2-title { height:20px; line-height: 20px; padding-left: 20px; vertical-align: middle; color: #333; border-bottom: none; border-left: 4px solid #f00; font-size: 20px; }
+            .news-right figure.news-aside2-list { padding: 20px 20px 20px 24px; font-size: 16px; }
+            .news-right figure.news-aside2-list .news-aside2-list-con p img { width: 280px; height: 155px; }
+            .news-right figure.news-aside2-list .news-aside2-list-con h2 { line-height: 25px; margin-top: 12px; font-size: 16px; }
         </style>
     </head>
     <body>
@@ -114,15 +133,23 @@
                 <article class="news-main">
                     <article class="news-left">
                         <article class="news-pre1">
-                            <aside class="news-hot" v-for="(e, i) in sub_rcon" v-if="i == 0"><img :src="set_img(e.thumb_image, '/common/img/bg1.jpg', 540, 300)" :alt="e.title" :title="e.title"></aside>
+                            <aside class="news-hot" v-for="(e, i) in sub_rcon" v-if="i == 0">
+                                <a :href="'/'+ channel_domain +'/'+ e.weid" target="_black">
+                                    <img :src="set_img(e.thumb_image, '/common/img/bg1.jpg', 540, 300)" :alt="e.title" :title="e.title" />
+                                </a>
+                            </aside>
                             <aside class="news-hot-box">
-                                <aside class="news-hot" v-for="(e, i) in sub_rcon" v-if="i > 0"><img :src="set_img(e.thumb_image, '/common/img/bg2.jpg', 540, 300)" :alt="e.title" :title="e.title"></aside>
+                                <aside class="news-hot" v-for="(e, i) in sub_rcon" v-if="i > 0">
+                                    <a :href="'/'+ channel_domain +'/'+ e.weid" target="_black">
+                                        <img :src="set_img(e.thumb_image, '/common/img/bg2.jpg', 300, 145)" :alt="e.title" :title="e.title" />
+                                    </a>
+                                </aside>
                             </aside>
                         </article>
                         <article class="news-pre2">
                             <figure class="news-col-nav">
-                                <figcaption :class="{'news-nav-active' : index==0}" v-for="(item, index) in column" v-if="index < 8">
-                                    <span :name="item.domain" @click="column_list(item.domain)">{{ item.title }}</span>
+                                <figcaption :class="{'news-nav-active' : item.domain == window.location.pathname.split('/').slice(1,4)[1]}" v-for="(item, index) in column" v-if="index < 8">
+                                    <span :id="item.domain" @click="column_list(item.domain)">{{ item.title }}</span>
                                     <ul>
                                         <li v-for="(value, key) in item.children" @click="column_list(value.domain)">{{ value.title }}</li>
                                     </ul>
@@ -131,13 +158,19 @@
                         </article>
                         <article class="news-pre3">
                             <figure class="news-con-list" v-for="(item, index) in con_list">
-                                <figcaption class="news-con-list-img"><img :src="set_img(item.thumb_image, '/common/img/bg2.jpg', 236, 135)" alt=""></figcaption>
+                                <figcaption class="news-con-list-img">
+                                    <a :href="'/'+ channel_domain +'/' + item.weid" target="_black">
+                                        <img :src="set_img(item.thumb_image, '/common/img/bg2.jpg', 236, 135)" :alt="item.title" :title="item.title" />
+                                    </a>
+                                </figcaption>
                                 <hgroup>
-                                    <h2>{{ item.title | limitLen(0,33) }}</h2>
+                                    <h2>
+                                        <a :href="'/'+ channel_domain +'/' + item.weid" target="_black">{{ item.title | limitLen(0,33) }}</a>
+                                    </h2>
                                     <aside class="news-con-list-time">
-                                        <output>{{ item.source_url }}</output>
-                                        <output>{{ item.views }}</output>
-                                        <output>{{ item.publish_time }}</output>
+                                        <output class="publisher" v-if="item.publisher">{{ item.publisher }}</output>
+                                        <output class="views">{{ item.views }}</output>
+                                        <output class="publish_time">{{ item.publish_time }}</output>
                                     </aside>
                                     <p v-html="item.summary.substr(0, 82)"><!-- {{ item.summary | limitLen(0,82) }} --></p>
                                 </hgroup>
@@ -148,7 +181,28 @@
                         </article>
                     </article>
                     <article class="news-right">
-
+                        <article class="news-aside1">
+                            <figure class="news-aside1-title">推荐新闻</figure>
+                            <figure class="news-aside1-list" v-for="(item, index) in aside1_list">
+                                <a :href="'/'+ channel_domain +'/'+ item.weid" target="_black">
+                                    <hgroup class="news-aside1-list-con">
+                                        <h2>{{ item.title | limitLen(0,33) }}</h2>
+                                        <p>{{ item.publish_time }}</p>
+                                    </hgroup>
+                                </a>
+                            </figure>
+                        </article>
+                        <article class="news-aside2">
+                            <figure class="news-aside2-title">精选内容</figure>
+                            <figure class="news-aside2-list" v-for="(item, index) in aside2_list">
+                                <a :href="'/'+ channel_domain +'/'+ item.weid" target="_black">
+                                    <hgroup class="news-aside2-list-con">
+                                        <p><img :src="set_img(item.thumb_image, '/common/img/bg2.jpg', 280, 155)" alt=""></p>
+                                        <h2>{{ item.title | limitLen(0,33) }}</h2>
+                                    </hgroup>
+                                </a>
+                            </figure>
+                        </article>
                     </article>
                 </article>
             </div>
@@ -187,17 +241,20 @@
                         {ok: false, title: "微博", image: plats_info.wb_qrcode? plats_info.wb_qrcode: window.location.origin+"/api/file/qrcode?margin=2&url="+window.location.href},
                     ],
                     channel_domain : $app.get_router(1), // 频道个性域名
-                    // column_domain : $app.get_router(2),  // 栏目个性域名
                     sub_rcon: {},                        // 热点新闻
+                    aside1_list: {},                     // 推荐新闻
+                    aside2_list: {},                     // 特荐新闻
                     column: {},                          // 新闻栏目
                     con_list: {},                        // 内容列表
-                    first_domain: '',                    // 第一个栏目
+                    first_domain: '',                    // 第一个栏目 \ 栏目域名
                     page: 1,                             // 默认页码
                     total: 0,                            // 默认页码总数
                     limit: 10,                           // 显示条数
                 },
                 created() {
                     var self = this;
+
+                    // 共用头部分
                     axios.get(CMS_ADVS).then(data => {
                         var resp = data.data.data;
                         this.channel = resp.channel.list.map(e => (e.drop = false, e));
@@ -208,11 +265,22 @@
                     $("title").text(plats_info.title);
                     $("#favicon").attr('href', ApiMaterPlatQiniuDomain + plats_info.favicon);
 
-                    // 新闻内容部分
+                    // 新闻热门部分
                     $sub_ajax.cms_content({channel_id: this.channel_domain, limit: 3, is_hot: 1}, (res) => {
                         this.sub_rcon = res.data.list;
                     });
 
+                    // 新闻推荐部分
+                    $sub_ajax.cms_content({channel_id: this.channel_domain, limit: 3, index_show: 1}, (res) => {
+                        this.aside1_list = res.data.list;
+                    });
+
+                    // 新闻特荐部分
+                    $sub_ajax.cms_content({channel_id: this.channel_domain, limit: 3, is_pose: 1}, (res) => {
+                        this.aside2_list = res.data.list;
+                    });
+
+                    // 新闻列表显示
                     ajax.get(CMS_CHANNELS_DOMAIN_QUERY + this.channel_domain).then((res) => {
                         if(res.code == 200) {
                             ajax.get("cms/cate_tree_by_channel?channel=" + res.data.weid).then((data) => {
@@ -230,7 +298,12 @@
                 },
                 mounted() {
                     this.$nextTick(() => {
-                        
+                        window.onpopstate = () => {
+                            var pathname = window.location.pathname.split('/').slice(1,4);
+                            var column_domain = pathname[1];
+                            this.first_domain = first_domain;
+                            this.cate();
+                        }
                     })
                 },
                 methods: {
