@@ -15,7 +15,6 @@ function isCardNo(card) {
     var objCard = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
     return objCard.test(card);
 }
-
 // 认证逻辑判断显示信息
 const success_media = function(number) {
     var array = [
@@ -790,7 +789,7 @@ function pro_login_member() {
 }
 
 // 保存本地缓存token、weid、用户头像
-function saveUserInfo(token, weid, imgUrl) {
+/*function saveUserInfo(token, weid, imgUrl) {
     localStorage.setItem('token', token);
     localStorage.setItem('weid', weid);
     if(!imgUrl) {
@@ -843,9 +842,10 @@ function login(phoneNum, checkNum){
             console.info(err);
         }
     })
-}
+}*/
 
 //点击登录按钮
+/*
 function logBt(){
     phoneNum = ($("#member_per_tel").val() || $("#member_int_tel").val());
     checkNum = $("#member_per_tel_card").val();
@@ -863,6 +863,7 @@ function logBt(){
         }
     }
 }
+*/
 
 //获取验证码
 var lock = false,

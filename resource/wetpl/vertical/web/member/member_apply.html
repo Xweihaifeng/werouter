@@ -1,30 +1,16 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <title></title>
-    <meta charset="UTF-8" />
-    <meta name="description" content="" />
-    <meta name="keywords" content="" />
-    <link rel="shortcut icon" id="favicon" href="" />
-    <link rel="stylesheet" href="/common/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="{{PATH_TML}}css/modal_login.css" />
-    <link rel="stylesheet" href="{{PATH_TML}}css/normalize.css" />
-    <link rel="stylesheet" href="{{PATH_TML}}css/index_new.css" />
-    <!--分页样式-->
-    <!--<link rel="stylesheet" type="text/css" href="{{PATH_TML}}css/paging.css">-->
-    <!--分页样式结束-->
+<#extend#>public/extend/index_extend.html</#extend#>
     <!--中间样式开始-->
     <link rel="stylesheet" href="/resource/wetpl/substation/default/web/css/list.css">
     <link rel="stylesheet" href="/resource/wetpl/substation/default/web/css/newsert.css">
     <link rel="stylesheet" href="{{PATH_TML}}member/css/member_apply.css" />
     <link rel="stylesheet" href="{{PATH_TML}}member/css/member_process.css" />
     <!--中间样式结束-->
-    <script src="/common/js/vue.min.js"></script>
-    <script src="/common/js/axios.min.js"></script>
-    <script src="/common/js/jquery-3.2.1.min.js"></script>
-    <script src="/common/layer-v3.0.3/layer-v3.0.3/layer/layer.js"></script>
-    <script src="{{PATH_CONFIG}}"></script>
-    <script src="{{PATH_TML}}js/modal_login.js"></script>
+    <!--<script src="/common/js/vue.min.js"></script>-->
+    <!--<script src="/common/js/axios.min.js"></script>-->
+    <!--<script src="/common/js/jquery-3.2.1.min.js"></script>-->
+    <!--<script src="/common/layer-v3.0.3/layer-v3.0.3/layer/layer.js"></script>-->
+    <!--<script src="{{PATH_CONFIG}}"></script>-->
+    <!--<script src="{{PATH_TML}}js/modal_login.js"></script>-->
     <!--<script src="{{PATH_TML}}assets/list/organize/js/organize.js"></script>-->
     <!--<script src="{{PATH_TML}}js/paging.js"></script>-->
     <script src="/common/js/plupload/plupload.full.min.js"></script>
@@ -117,7 +103,7 @@
         /*二级分类样式结束*/
         .member_sel_type .member_sel_type_name > li {
             width: 99px;
-            font-size: 14px;
+            font-size: 13px;
         }
         .member_sel_type .member_type_title {
             width: 105px;
@@ -132,48 +118,6 @@
             margin: 0;
         }
     </style>
-</head>
-<body>
-<main id="app" v-cloak>
-    <div class="modal_login" id="modal_login"></div>
-    <header>
-        <div>
-            <ul>
-                <li><img :src="logo" alt="" style="width: 209px; height: 50px; display: block;" /></li>
-                <li><img :src="header1" alt="" style="width: 382px; height: 45px; display: block;" /></li>
-                <li>
-                    <div id="ht">
-                        <aside v-for="e in qrcode" @mouseleave="e.ok=false">
-                            <span @mouseenter="e.ok=true">{{e.title}}</span>
-                            <div v-show="e.ok" style="z-index: 15;">
-                                <img :src="set_img(e.image, e.image, 90, 90)" class="weixin img-responsive">
-                            </div>
-                        </aside>
-                        <aside><a :href="plats_info.old_link" target="_blank" id="old"><span style="border-right:none;padding-left:12px;">访问旧版</span></a></aside>
-                    </div>
-                    <div id="hs">
-                        <span><input type="text" id="search" class="form-control" placeholder="请输入关键字" v-model="key"></span>
-                        <span @click="search(key)"><img src="/common/img/find.png" style="padding: 7px"></span>
-                        <span>高级搜索</span>
-                    </div>
-                </li>
-            </ul>
-        </div>
-        <div id="menu">
-            <ol>
-                <li><a :href="window.location.protocol + '//' + window.location.host">首页</a></li>
-                <li v-for="c in channel">
-                    <a :href="check(c.domain, c.url)">{{c.title}}</a>
-                    <div class="nav-list">
-                        <p v-for="e in c.children">
-                            <a :href="check(c.domain, c.url) + '/' + e.domain">{{e.title}}</a>
-                        </p>
-                    </div>
-                </li>
-            </ol>
-        </div>
-    </header>
-
     <!-- 新问中心开始 -->
     <div id="container">
         <!--位置显示开始-->
@@ -298,7 +242,7 @@
                             <input name="member_upload_2" id="member_upload_2" type="hidden" value="" class="form-control"/>
                             <input id="member_pickfiles_2" type="file" name="" class="member_app_input" style="display: none" placeholder="请上传申请资料">
                             <div id="member_exhibition_2">
-                                <img onclick="$('#member_pickfiles_2').click()" id="member_pic_2" src="/common/img/default_img.png" width="120" height="120" alt="暂无预览图片" class="thumbnail col-md-2">
+                                <img onclick="$('#member_pickfiles_2').click()" id="member_pic_2" src="/common/img/default_img.png" width="120" height="120" alt="暂无预览图片" class="thumbnail">
                             </div>
                             <div class="member_danger"> <span class="member_warn"></span> *请下载、填写、签章、扫描、并上传 </div>
                         </div>
@@ -537,28 +481,26 @@
         </article>
     </div>
     <!-- 新闻中心结束 -->
-
-    <div id="bottom1">
-        <footer>
-            <div class="footer-nav">
-                <a href="javascript:void(0)">咨询与建议</a>
-                <a href="javascript:void(0)">站点地图</a>
-                <a id="contact" href="/org/lxwm">联系我们</a>
-            </div>
-            <div class="copyright" v-html="plats_info.copyright"></div>
-            <div class="_ideConac">
-                <img src="/common/img/gabeian.png" width="60" height="60">
-            </div>
-        </footer>
-    </div>
-</main>
+    <!--<div id="bottom1">-->
+        <!--<footer>-->
+            <!--<div class="footer-nav">-->
+                <!--<a href="javascript:void(0)">咨询与建议</a>-->
+                <!--<a href="javascript:void(0)">站点地图</a>-->
+                <!--<a id="contact" href="/org/lxwm">联系我们</a>-->
+            <!--</div>-->
+            <!--<div class="copyright" v-html="plats_info.copyright"></div>-->
+            <!--<div class="_ideConac">-->
+                <!--<img src="/common/img/gabeian.png" width="60" height="60">-->
+            <!--</div>-->
+        <!--</footer>-->
+    <!--</div>-->
+<!--</main>-->
 
 <script src="{{PATH_TML}}member/js/member_process.js"></script>
 <script src="{{PATH_TML}}member/js/member_public.js"></script>
 <script src="{{PATH_TML}}member/js/member_apply.js"></script>
 
-<script>
-
+<!--<script>
     var app = new Vue({
         el: '#app',
         data: {
@@ -625,6 +567,6 @@
         }
     }
     })
-</script>
-</body>
-</html>
+</script>-->
+<!--</body>-->
+<!--</html>-->
