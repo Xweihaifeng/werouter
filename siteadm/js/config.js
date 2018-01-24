@@ -88,7 +88,7 @@ $.ajaxSetup({
     dataType: 'json',
     headers: {
         'Token': token,
-        'channel':domain
+        'channel': domain
     },
     error: function() {
         location.href = 'login.html';

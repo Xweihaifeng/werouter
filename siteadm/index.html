@@ -97,13 +97,13 @@
                                             </div>
                                         </div>
                                         <div class="form-group" style="margin-left: 40px">
-                                            <label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label">平台域名</label>
+                                            <label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label">站点地址</label>
                                             <div class="col-sm-8 col-lg-8 col-xs-8">
                                                 <span class="info-value Wez_domain"></span>
                                             </div>
                                         </div>
                                         <div class="form-group" style="margin-left: 40px">
-                                            <label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label">手机域名</label>
+                                            <label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label">手机版地址</label>
                                             <div class="col-sm-8 col-lg-8 col-xs-8">
                                                 <span class="info-value Wez_mobile_domain"></span>
                                             </div>
@@ -234,7 +234,7 @@
         // 统计信息初始化
         var loadInfo = function(callback) {
             $.ajax({
-                url: ApiUrl + 'admins/info',
+                url: ApiUrl + 'admins/sub_info',
                 type: 'GET',
                 success: function(data) {
                     if (data.code == 200)
