@@ -77,16 +77,80 @@
             </div>
             <div v-show="currentState == 3">
                 <div class="form-list">
-                    发布优惠卷
+                    <i-form ref="formItemMemberCoupon" :model="formItemMemberCoupon" :rules="formItemMemberCouponValidate" :label-width="150">
+                        <form-item label="优惠卷名称" prop="name">
+                            <i-input v-model="formItemMemberCoupon.name" placeholder="请输入优惠卷名称"></i-input>
+                        </form-item>
+                        <form-item label="优惠卷描述">
+                            <i-input v-model="formItemMemberCoupon.description" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="请输入优惠卷描述"></i-input>
+                        </form-item>
+                        <form-item label="背景色" prop="colour">
+                            <color-picker v-model="formItemMemberCoupon.colour" />
+                        </form-item>
+                        <form-item label="领取限制" prop="get_condition">
+                            <i-select v-model="formItemMemberCoupon.get_condition">
+                                <i-option value='1'>用户注册</i-option>
+                                <i-option value='2'>满足等级</i-option>
+                                <i-option value='3'>无限制</i-option>
+                            </i-select>
+                        </form-item>
+                        <form-item label="每次领取张数" prop="get_restrict">
+                            <i-input v-model="formItemMemberCoupon.get_restrict" placeholder="请输入每次领取的张数"></i-input>
+                        </form-item>
+                        <form-item label="会员等级" prop="levels" v-show="formItemMemberCoupon.get_condition == 2" >
+                            <i-input v-model="formItemMemberCoupon.levels" placeholder="请输入会员等级"></i-input>
+                        </form-item>
+                        <form-item label="优惠卷类型" prop="coupon_type">
+                            <i-select v-model="formItemMemberCoupon.coupon_type">
+                                <i-option value='1'>现金优惠券</i-option>
+                                <i-option value='2'>折扣优惠券</i-option>
+                                <i-option value='3'>抵用优惠券</i-option>
+                            </i-select>
+                        </form-item>
+                        <form-item label="每张优惠金额" prop="amount">
+                            <i-input v-model="formItemMemberCoupon.amount" placeholder="请输入每张优惠卷的优惠金额"></i-input>
+                        </form-item>
+                        <form-item label="是否和其他优惠一起使用" prop="is_reuse">
+                            <radio-group v-model="formItemMemberCoupon.is_reuse">
+                                <radio label="1">是</radio>
+                                <radio label="2">否</radio>
+                            </radio-group>
+                        </form-item>
+                        <form-item label="使用限制" prop="use_restrictions">
+                            <i-input v-model="formItemMemberCoupon.use_restrictions" placeholder="请输入使用限制（满多少元可用）"></i-input>
+                        </form-item>
+                        <form-item label="领取时间" prop="receive_time">
+                            <date-picker v-model="formItemMemberCoupon.receive_time" format="yyyy/MM/dd" type="daterange" :options="receive_time_options" placement="bottom-end" placeholder="请输入领取时间段" style="width: 200px"></date-picker>
+                        </form-item>
+                        <form-item label="使用期限"  prop="activity_time">
+                            <i-input v-model="formItemMemberCoupon.activity_time" placeholder="请输入使用期限（安天算）"></i-input>
+                        </form-item>
+                        <form-item label="推广图片">
+                            <upload action="//jsonplaceholder.typicode.com/posts/">
+                                <i-button type="ghost" icon="ios-cloud-upload-outline">上传</i-button>
+                            </upload>
+                        </form-item>
+                        <form-item label="推广标题" prop="title">
+                            <i-input v-model="formItemMemberCoupon.title" placeholder="请输入推广标题"></i-input>
+                        </form-item>
+                        <form-item label="推广内容" prop="content">
+                            <i-input v-model="formItemMemberCoupon.content" type="textarea" :autosize="{minRows: 2,maxRows: 5}"  placeholder="请输入推广内容"></i-input>
+                        </form-item>
+                        <form-item>
+                            <i-button type="primary" @click="handleCouponmit('formItemMemberCoupon')">保存</i-button>
+                            <i-button type="ghost" style="margin-left: 8px">取消</i-button>
+                        </form-item>
+                    </i-form>
                 </div>
             </div>
-            <!--<div v-show="currentState == 4">-->
-            <!--<div class="form-list">-->
-            <!--<div class="table-list">-->
-            <!--<i-table :columns="columnsMemberLevel" :data="MemberLeveldata"></i-table>-->
-            <!--</div>-->
-            <!--</div>-->
-            <!--</div>-->
+            <div v-show="currentState == 4">
+                <div class="form-list">
+                    <div class="table-list">
+                        <i-table width="1000" size="large" :columns="columnsMemberCoupon" :data="MemberCoupondata"></i-table>
+                        <Page :total="columnsMemberCouponTotal" :current="Couponcurrent" @on-change="CouponPage" :page-size="Couponpagesize"></Page>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -179,6 +243,159 @@
                     created_at: ''
 
                 }
+            ],
+            formItemMemberCoupon:{
+                weid:'',
+                name:'',
+                description:'',
+                colour:'',
+                get_condition:'',
+                get_restrict:'1',
+                levels:'',
+                coupon_type:'',
+                amount:'',
+                is_reuse:'1',
+                use_restrictions:'',
+                receive_time:'',
+                activity_time:'',
+                picture:'',
+                title:'',
+                content:'',
+            },
+            formItemMemberCouponValidate:{
+                name:[
+                    {required: true, message: '优惠卷名称不能为空', trigger: 'blur'},
+                    { min: 1,max: 10,message: '优惠卷名称为1-32位中文字符'},
+                ],
+                colour:[
+                    {required: true, message: '优惠卷名称不能为空', trigger: 'blur'},
+                ],
+                get_condition:[
+                    {required: true, message: '优惠卷领取条件不能为空', trigger: 'blur'}
+                ],
+                get_restrict:[
+                    {required: true, message: '领取限制不能为空', trigger: 'blur'},
+                    {pattern:/^[1-9]\d*$/, message: '领取限制必须我数值类型'},
+                ],
+                levels:[
+                    {pattern:/^[1-9]\d*$/, message: '会员等级必须为数值类型'},
+                ],
+                coupon_type:[
+                    {required: true, message: '优惠卷类型不能为空', trigger: 'blur'}
+                ],
+                amount:[
+                    {required: true, message: '优惠卷优惠金额不能为空', trigger: 'blur'},
+                    {pattern:/^[0-9]+(.[0-9]{1,2})?$/, message: '优惠卷优惠金额格式有误', trigger: 'blur'}
+                ],
+                is_reuse:[
+                    {required: true, message: '其他优惠共同不能为空', trigger: 'blur'}
+                ],
+                use_restrictions:[
+                    {required: true, message: '其他优惠共同不能为空', trigger: 'blur'},
+                ],
+                receive_time:[
+                    { type: 'array', max: 2, message: '优惠卷领取时间段还未选择', trigger: 'change' }
+                ],
+                activity_time:[
+                    {required: true, message: '优惠卷使用期限不能为空', trigger: 'blur'}
+                ],
+                picture:[
+
+                ],
+                title:[
+                    {required: true, message: '推广标题不能为空', trigger: 'blur'}
+                ],
+                content:[
+                    {required: true, message: '推广内容不能为空', trigger: 'blur'}
+                ],
+
+            },
+            columnsMemberCouponTotal:1,
+            Couponpagesize:1,
+            Couponcurrent:1,
+            receive_time_options:{
+                disabledDate (date) {
+                    return date && date.valueOf() < Date.now() - 86400000;
+                }
+            },
+            columnsMemberCoupon: [
+                {
+                    title: '优惠卷名称',
+                    key: 'name'
+                },
+                {
+                    title: '领取条件',
+                    key: 'get_condition'
+                },
+                {
+                    title: '优惠类型',
+                    key: 'coupon_type',
+                },
+                {
+                    title: '优惠金额',
+                    key: 'amount',
+                },
+                {
+                    title: '使用限制',
+                    key: 'use_restrictions',
+                },
+                {
+                    title: '优惠共同使用',
+                    key: 'is_reuse',
+                },
+                {
+                    title: '开始领取',
+                    key: 'publish_time',
+                },
+                {
+                    title: '结束领取',
+                    key: 'expire_time',
+                },
+                {
+                    title: '可用时间',
+                    key: 'activity_time',
+                },
+                {
+                    title: '领取量',
+                    key: 'receive_num',
+                },
+                {
+                    title: '使用量',
+                    key: 'use_num',
+                },
+                {
+                    title: '添加日期',
+                    key: 'created_at'
+                },
+                {
+                    title: '操作',
+                    key: 'action',
+                    align: 'center',
+                    render: (h, params) => {
+                        return h('div', [
+                            h('Button', {
+                                props: {
+                                    type: 'primary',
+                                    size: 'small'
+                                },
+                                style: {
+                                    marginRight: '5px'
+                                },
+                                on: {
+                                    click: () => {
+                                        //console.log(crmapp);
+                                        //crmapp.editMemberLevel(params.row.weid);
+                                        //this.editMemberLevel(params.row.weid);
+                                        // this.editMemberLevel(params.row.weid);
+                                    }
+                                }
+                            }, '编辑'),
+                        ]);
+                    }
+                }
+            ],
+            MemberCoupondata: [
+
             ],
             option: {
                 option1: {
@@ -400,6 +617,12 @@
                     }
                 }
 
+                if(val==4){
+
+                    //获取优惠卷列表
+                    this.InitCouponList(this.Couponpagesize,this.Couponcurrent);
+                }
+
             }
         },
         methods: {
@@ -440,6 +663,52 @@
                     }
                 })
             },
+            handleCouponmit(name){
+                console.log(this.formItemMemberCoupon);
+                this.$refs[name].validate((valid) => {
+                    if (valid) {
+                        //判断是否为编辑
+                        if(this.formItemMemberCoupon.weid.length>0){
+
+
+                        }else{
+                            var data={};
+                            data.name=this.formItemMemberCoupon.name;
+                            data.description=this.formItemMemberCoupon.description;
+                            data.colour=this.formItemMemberCoupon.colour;
+                            data.get_condition=this.formItemMemberCoupon.get_condition;
+                            data.get_restrict=this.formItemMemberCoupon.get_restrict;
+                            data.levels=this.formItemMemberCoupon.levels;
+                            data.coupon_type=this.formItemMemberCoupon.coupon_type;
+                            data.amount=this.formItemMemberCoupon.amount;
+                            data.is_reuse=this.formItemMemberCoupon.is_reuse;
+                            data.use_restrictions=this.formItemMemberCoupon.use_restrictions;
+                            data.publish_time=this.formItemMemberCoupon.receive_time[0];
+                            data.expire_time=this.formItemMemberCoupon.receive_time[1];
+                            data.activity_time=this.formItemMemberCoupon.activity_time;
+                            //data.content_info.picture=this.formItemMemberCoupon.picture;
+                            data.content_info={};
+                            data.content_info.picture='aa.jpg';
+                            data.content_info.title=this.formItemMemberCoupon.title;
+                            data.content_info.content=this.formItemMemberCoupon.content;
+                            var time = new Date(data.publish_time);
+                            data.publish_time=time.getFullYear() + '-' + (time.getMonth() + 1) + '-' + time.getDate();
+                            var time = new Date(data.expire_time);
+                            data.expire_time=time.getFullYear() + '-' + (time.getMonth() + 1) + '-' + time.getDate();
+                            ajax.post('coupon/store', data).then((res)=>{
+                                if(res.code==200){
+                                    this.$Message.success('添加成!');
+                                    this.currentState=4;
+                                }else{
+                                    this.$Message.error(res.message);
+                                }
+                            });
+                        }
+                    }else{
+                        alert("失败");
+                    }
+                })
+            },
             editMemberLevel (index) {
                 //请求等级详情
                 if(index.length>0){
@@ -458,10 +727,55 @@
                         }
                     });
                 }
-
-
-            }
-
+            },
+            CouponPage(index){
+                this.InitCouponList(this.Couponpagesize,index);
+            },
+            InitCouponList(limit,page){
+                var self=this;
+                ajax.post('coupon/lists', {plat_user_id:plats_user_info.weid,limit:limit,page:page}).then((res)=>{
+                    if(res.code==200){
+                        if(res.data.total>0){
+                            self.MemberCoupondata=[];
+                            self.columnsMemberCouponTotal=res.data.total;
+                            var conditionlist=new Array();
+                            conditionlist[1]="用户注册";
+                            conditionlist[2]="满足等级";
+                            conditionlist[3]="无限制";
+                            conditionlist[4]="分享送";
+                            var coupon_typelist=new Array();
+                            coupon_typelist[1]='现金券';
+                            coupon_typelist[2]='折扣券';
+                            coupon_typelist[3]='抵用券';
+                            //组合列表
+                            for(var i=0;i<res.data.list.length;i++){
+                                var list=res.data.list[i];
+                                var data={};
+                                data.weid=list.weid;
+                                data.name=list.name;
+                                data.get_condition=conditionlist[list.get_condition];
+                                data.coupon_type=coupon_typelist[list.coupon_type];
+                                data.amount=list.amount;
+                                data.use_restrictions=list.use_restrictions;
+                                if(list.is_reuse==1){
+                                    data.is_reuse='是';
+                                }else{
+                                    data.is_reuse='否';
+                                }
+                                data.publish_time=list.publish_time;
+                                data.expire_time=list.expire_time;
+                                data.activity_time=list.activity_time;
+                                data.receive_num=list.receive_num;
+                                data.use_num=list.use_num;
+                                data.created_at=list.created_at;
+                                self.MemberCoupondata.push(data);
+                            }
+                        }
+                    }else{
+                        self.$Message.error(res.message);
+                    }
+                })
+            },
         }
     })
 </script>
