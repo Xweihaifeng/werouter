@@ -22,9 +22,9 @@ var hearderTpl = `<header class="main-header">
 <!-- Logo -->
 <a href="#" class="logo">
     <!-- mini logo for sidebar mini 50x50 pixels -->
-    <span class="logo-mini"><b>后台</b></span>
+    <span class="logo-mini"><b onclick="location.href='index.html'">后台</b></span>
     <!-- logo for regular state and mobile devices -->
-    <span class="logo-lg">后台管理</span>
+    <span class="logo-lg" onclick="location.href='index.html'">后台管理</span>
 </a>
 <!-- Header Navbar: style can be found in header.less -->
 <nav class="navbar navbar-static-top">
@@ -108,8 +108,8 @@ var start = function() {
     //if (avatar) $(".user-image,.img-circle").attr('src', ApiMaterPlatQiniuDomain + avatar);
     if (avatar == 'avatar.jpg') $(".user-image,.img-circle").attr('src', 'image/' + avatar);
     $("#username").text(username);
-    if(memo=='null'){
-       memo='';
+    if (memo == 'null') {
+        memo = '';
     }
     $("#memo").text(memo ? memo : "");
     // var menu = JSON.parse(sessionStorage.getItem('menu'));
