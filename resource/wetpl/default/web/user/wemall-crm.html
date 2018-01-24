@@ -144,12 +144,14 @@
                 </div>
             </div>
             <div v-show="currentState == 4">
-                <div class="form-list">
+
                     <div class="table-list">
-                        <i-table width="1000" size="large" :columns="columnsMemberCoupon" :data="MemberCoupondata"></i-table>
-                        <Page :total="columnsMemberCouponTotal" :current="Couponcurrent" @on-change="CouponPage" :page-size="Couponpagesize"></Page>
+                        <i-table size="default" border stripe  :columns="columnsMemberCoupon" :data="MemberCoupondata"></i-table>
+                        <div style="margin: 10px;overflow: hidden">
+                            <Page :total="columnsMemberCouponTotal" :current="Couponcurrent" @on-change="CouponPage" :page-size="Couponpagesize"></Page>
+                        </div>
                     </div>
-                </div>
+
             </div>
         </div>
     </div>
@@ -321,51 +323,63 @@
             columnsMemberCoupon: [
                 {
                     title: '优惠卷名称',
-                    key: 'name'
+                    key: 'name',
+                    width: 100,
                 },
                 {
                     title: '领取条件',
-                    key: 'get_condition'
+                    key: 'get_condition',
+                    width: 100,
                 },
                 {
                     title: '优惠类型',
                     key: 'coupon_type',
+                    width: 100,
                 },
                 {
                     title: '优惠金额',
                     key: 'amount',
+                    width: 100,
                 },
                 {
                     title: '使用限制',
                     key: 'use_restrictions',
+                    width: 100,
                 },
                 {
                     title: '优惠共同使用',
                     key: 'is_reuse',
+                    width: 100,
                 },
                 {
                     title: '开始领取',
                     key: 'publish_time',
+                    width: 100,
                 },
                 {
                     title: '结束领取',
                     key: 'expire_time',
+                    width: 100,
                 },
                 {
                     title: '可用时间',
                     key: 'activity_time',
+                    width: 100,
                 },
                 {
                     title: '领取量',
                     key: 'receive_num',
+                    width: 100,
                 },
                 {
                     title: '使用量',
                     key: 'use_num',
+                    width: 100,
                 },
                 {
                     title: '添加日期',
-                    key: 'created_at'
+                    key: 'created_at',
+                    width: 100,
                 },
                 {
                     title: '操作',
@@ -391,7 +405,8 @@
                                 }
                             }, '编辑'),
                         ]);
-                    }
+                    },
+                    width: 100,
                 }
             ],
             MemberCoupondata: [
