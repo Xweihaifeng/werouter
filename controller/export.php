@@ -9,6 +9,7 @@ class export extends controller
 		else
 			$this->$type();
 	}
+	
 
 	/**
 	 * ------------------------------------------------
@@ -30,6 +31,7 @@ class export extends controller
 		$activity = $this->db->queryOne($activity_sql , array($this->user_token()['weid'], $activity_id, config::$plats['plats']['weid']));
 		if (empty($activity)) 
 			exit('请求错误');
+		// 报名
         $enroll_sql = 'SELECT 
 			e.weid, u.real_name, u.phone, u.company, u.position, e.created_at
 		FROM we_page_activity_enroll e
@@ -42,8 +44,8 @@ class export extends controller
 		and e.plat_id = ?';
 		$results = $this->db->queryAll($enroll_sql , array($this->user_token()['weid'], $activity_id, config::$plats['plats']['weid']));
 
-		// 票务数据
-		$counts_sql = 'SELECT e.weid as enroll_id, count(h.id) as num, t.price, t.name 
+		// 票务
+		$counts_sql = 'SELECT e.weid as enroll_id, t.weid as ticket_id, t.price, t.name 
 		FROM we_page_activity_ticket_hold h
 		left join we_page_activity_ticket t on h.ticket_id = t.weid 
 		left join we_page_activity_enroll e on e.weid = h.enroll_id 
@@ -53,14 +55,28 @@ class export extends controller
 			a.plat_user_id = ?
 		and e.activity_id = ?
 		and e.status = 1
-		and e.plat_id = ? 
-		group by e.weid ';
+		and e.plat_id = ?';
 		$results_counts = $this->db->queryAll($counts_sql , array($this->user_token()['weid'], $activity_id, config::$plats['plats']['weid']));
+
+        $enrollTickets = [];
+        foreach ($results_counts as $key => $value) {
+            if (!array_key_exists($value['enroll_id'], $enrollTickets)) {
+                $enrollTickets[$value['enroll_id']] = [];
+            }
+            if (array_key_exists($value['ticket_id'], $enrollTickets[$value['enroll_id']])) {
+                $enrollTickets[$value['enroll_id']][$value['ticket_id']]['num'] = $enrollTickets[$value['enroll_id']][$value['ticket_id']]['num'] + 1;
+            } else {
+                $enrollTickets[$value['enroll_id']][$value['ticket_id']] = [];
+                $enrollTickets[$value['enroll_id']][$value['ticket_id']]['name'] = $value['name'];
+                $enrollTickets[$value['enroll_id']][$value['ticket_id']]['num'] = 1;
+                $enrollTickets[$value['enroll_id']][$value['ticket_id']]['price'] = $value['price'];
+            }
+		}
 
         $file_name = $activity['title'] . '-' . date('m月d') . '.csv';
         header('Content-Type: application/octet-stream');
         header('Content-Disposition: attachment; filename=' . $file_name);
-        $header_data = ['姓名', '手机', '公司', '职位', '报名时间', '票务信息(元)'];
+        $header_data = ['姓名', '手机', '公司', '职位', '报名时间', '票务信息'];
         if (!empty($header_data)) {
             echo iconv('utf-8','gbk//TRANSLIT' , '"' . implode('","',$header_data) . '"' . "\n");
         }
@@ -71,14 +87,25 @@ class export extends controller
             $output[] = $value['company'];
             $output[] = $value['position'];
 			$output[] = date('Y-m-d H:i:s', $value['created_at']);
-			foreach($results_counts as $k => $v) {
-				if ($v['enroll_id'] === $value['weid']) {
-					$output['ticketInfo'] = $v['name'] . '(' . $v['price'] . 'x' . $v['num'] . ')';
+			foreach($enrollTickets as $k => $v) {
+				if ($k === $value['weid']) {
+					$__tmp = [];
+					$__info = '';
+					$__enroll_id = $value['weid'];
+					$__theEnroll = $enrollTickets[$__enroll_id];
+					foreach ($__theEnroll as $key => $val) {
+						$__info .= $val['name'] . '(' . $val['price'] . '元x' . $val['num'] . ') ';
+					}
+					$output['ticketInfo'] = $__info;
 				}
 			}
 			echo iconv('utf-8','gbk//TRANSLIT' , '"' . implode('","', $output) . "\"\n");
         }
-
 	}
+
+
+
+
+
 }	
 

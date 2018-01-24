@@ -274,8 +274,9 @@ const ACTIVITY_COLLECTION_STORE = apiUrl + 'activity/collection/store'; // 活�
 const ACTIVITY_COLLECTION_ISCOLLECTION = apiUrl + 'activity/collection/iscollection'; // 活动 - 收藏 - 用户是否收藏
 
 const ACTIVITY_ENROLL_STORE = apiUrl + 'activity/enroll/store'; // 活动 -报名 - 保存
-const ACTIVITY_ENROLL_DETAIL = apiUrl + 'activity/enroll/detail'; // 活动 -报名 - 详情
+const ACTIVITY_ENROLL_DETAIL = apiUrl + 'activity/enroll/detail'; // 活动 -报名 - 详情LISTS_WITH_TICKETINFO
 const ACTIVITY_ENROLL_LISTS = apiUrl + 'activity/enroll/lists'; // 活动 -报名 - 列表
+const ACTIVITY_ENROLL_LISTS_WITH_TICKETINFO = apiUrl + 'activity/enroll/enroll_lists'; // 活动 -报名 - 列表
 const ACTIVITY_ENROLL_DESTROY = apiUrl + 'activity/enroll/destroy'; // 活动 - 报名 - 删除
 const ACTIVITY_ENROLL_COUNT = apiUrl + 'activity/enroll/count'; // 活动 - 报名 - 人数
 const ACTIVITY_ENROLL_EXPORT_CSV = apiUrl + 'activity/enroll/export_csv'; // 活动 - 报名 - 导出

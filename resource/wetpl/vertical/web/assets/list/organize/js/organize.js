@@ -441,5 +441,7 @@ $(function() {
     if(pathname[1] == null || pathname[1] == undefined) {
         document.title = "最新发布 — " + localStorage.getItem("title");
         $("#oooo").parent("li").addClass("cenav_cur");
+        $(".wz").text('>'+ $("#oooo").text())
+        $(".title>span").text( $("#oooo").text())
     }
 });
