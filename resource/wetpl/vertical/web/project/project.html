@@ -1,0 +1,264 @@
+<#extend#>public/extend/index_extend.html</#extend#>
+<link rel="stylesheet" href="/common/magazine/css/iview.css">
+<script src="/common/magazine/js/iview.min.js"></script>
+<style>
+    #container{
+        background: white;
+    }
+    #find li {
+        cursor: pointer;
+    }
+    #type li:hover, #time li:hover {
+        color: #4caaed;
+    }
+    #proj{
+        width: 1200px;
+        height: auto;
+        background: white;
+    }
+    #type, #type ul, #time, #time ul, #type2 ul, #projects ul{
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        color: #333;
+    }
+    #type, #time{
+        padding: 32px 0;
+        border-bottom: 1px solid #d9d9d9;
+    }
+    #type2{
+        padding: 30px 0;
+    }
+    #type ul li, #time ul li{
+        padding: 0 23px;
+    }
+    #type2 ul li {
+        justify-content: center;
+        align-items: center;
+        padding: 7px 20px;
+        border-top: 1px solid #d9d9d9;
+        border-bottom: 1px solid #d9d9d9;
+        border-left: 1px solid #d9d9d9;
+    }
+    #type2 ul li:first-child {
+        color: white;
+        background: rgb(76,170,237);
+    }
+    #type2 ul li:hover {
+        color: white;
+        background: rgb(76,170,237);
+    }
+    #type2 ul li:last-child {
+        border-right: 1px solid #d9d9d9;
+    }
+    #projects ul {
+        flex-wrap: wrap;
+    }
+    #projects ul li {
+        width: 285px;
+        height: 310px;
+        background: rgb(248,248,248);
+        border-radius: 2px;
+        margin: 0 20px 20px 0;
+    }
+    #projects ul li:nth-child(4n) {
+        margin: 0 0 20px 0;
+    }
+    #projects ul li img {
+        display: block;
+    }
+    #projects ul li div:nth-child(1) {
+        position: absolute;
+        width: 285px;
+        height: 160px;
+        /*background: url(/common/img/prepare.png) no-repeat -25px -25px;*/
+        background: url(/common/img/doing.png) no-repeat -25px -25px;
+        /*background: url(/common/img/end.png) no-repeat -25px -25px;*/
+    }
+    .act {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        padding: 15px 17px;
+    }
+    .act p:nth-child(1) {
+        /*letter-spacing: 1px;*/
+    }
+    .act p:nth-child(2) {
+        /*padding:23px 0 20px 0;*/
+        padding: 16px 0;
+        font-size:14px;
+        color: #999;
+    }
+    .act p:nth-child(3) {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 14px;
+    }
+    .act p:nth-child(3) span {
+        display: flex;
+        align-items: center;
+        color: #999;
+    }
+    .act p:nth-child(3) img {
+        width: 28px;
+        height: 28px;
+        margin-right: 15px;
+    }
+    .free {
+        width: 80px;
+        height: 26px;
+        text-align: center;
+        line-height: 26px;
+        color: white!important;
+        background: #e31f32;
+        display: block!important;
+    }
+    .price {
+        width: 80px;
+        height: 26px;
+        text-align: center;
+        line-height: 26px;
+        color: #e31f32!important;
+        background: white;
+        border: 1px solid #e31f32;
+        display: block!important;
+    }
+    #pages {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 60px 0 80px 0;
+    }
+    #old {
+        color: #666;
+    }
+</style>
+
+<div id="container">
+    <div id="proj">
+        <div id="find">
+            <div id="type">
+                <p>分类：</p>
+                <ul>
+                    <li style="color: #4caaed;">户外出游</li>
+                    <li>运动健身</li>
+                    <li>职场培训</li>
+                    <li>演出娱乐</li>
+                    <li>公益文化</li>
+                    <li>周边游</li>
+                    <li>创投</li>
+                    <li>跑步</li>
+                    <li>交友</li>
+                    <li>文艺</li>
+                    <li>Live</li>
+                </ul>
+            </div>
+            <div id="time">
+                <p>时间：</p>
+                <ul>
+                    <li style="color: #4caaed;">不限</li>
+                    <li>今天</li>
+                    <li>近一天</li>
+                    <li>近一周</li>
+                    <li>周末</li>
+                </ul>
+            </div>
+            <div id="type2">
+                <ul>
+                    <li>综合</li>
+                    <li>最新</li>
+                    <li>最热</li>
+                </ul>
+            </div>
+        </div>
+        <div id="projects">
+            <ul>
+                <li>
+                    <div></div>
+                    <img src="/common/img/p01.png" alt=""/>
+                    <div class="act">
+                        <p>互联网运营50堂必修课，如何玩转产品、用户、渠道、数据？</p>
+                        <p>本周五 12:30 开始</p>
+                        <p>
+                           <span>
+                                <img src="/common/img/p05.png" alt=""/>
+                                <span>145人已报名</span>
+                           </span>
+                           <span class="free">免费</span>
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <div></div>
+                    <img src="/common/img/p02.png" alt=""/>
+                    <div class="act">
+                        <p>互联网运营50堂必修课，如何玩转产品、用户、渠道、数据？</p>
+                        <p>本周五 12:30 开始</p>
+                        <p>
+                           <span>
+                                <img src="/common/img/p05.png" alt=""/>
+                                <span>145人已报名</span>
+                           </span>
+                            <span class="price">¥99</span>
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <div></div>
+                    <img src="/common/img/p03.png" alt=""/>
+                    <div class="act">
+                        <p>互联网运营50堂必修课，如何玩转产品、用户、渠道、数据？</p>
+                        <p>本周五 12:30 开始</p>
+                        <p>
+                           <span>
+                                <img src="/common/img/p05.png" alt=""/>
+                                <span>145人已报名</span>
+                           </span>
+                            <span class="free">免费</span>
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <div></div>
+                    <img src="/common/img/p04.png" alt=""/>
+                    <div class="act">
+                        <p>互联网运营50堂必修课，如何玩转产品、用户、渠道、数据？</p>
+                        <p>本周五 12:30 开始</p>
+                        <p>
+                           <span>
+                                <img src="/common/img/p05.png" alt=""/>
+                                <span>145人已报名</span>
+                           </span>
+                            <span class="price">¥99</span>
+                        </p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div id="pages">
+            <Page :total="parseInt(total)" :current="page" :page-size="limit" @on-change="change"></Page>
+        </div>
+    </div>
+</div>
+
+<script>
+    new Vue({
+        el: '#container',
+        data: {
+            total: 10,
+            page: 1,
+            limit: 5,
+        },
+        created: function(){
+
+        },
+        methods: {
+            change: function(page){
+                this.page = page;
+            }
+        }
+    })
+</script>
