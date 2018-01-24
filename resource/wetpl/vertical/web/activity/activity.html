@@ -1,0 +1,238 @@
+<!--
+ * Created by weifeng on 2017/11/12.
+-->
+<#extend#>public/extend/index_extend.html</#extend#>
+    <link rel="stylesheet" href="/common/magazine/css/iview.css">
+    <link rel="stylesheet" href="{{PATH_TML}}activity/css/cate_list.css" />
+    <script src="/common/magazine/js/iview.min.js"></script>
+    <script src="{{PATH_TML}}activity/js/activity.js"></script>
+
+    <style>
+        * { margin: 0; padding: 0; }
+        html, body, p { margin: 0; padding: 0; }
+        ul, li { list-style: none; }
+        .news-main { position: relative; width: 1200px; height: 800px; background-color: #e2e2e2; display: flex; justify-content: space-between; }
+        .news-left { width: 850px; height: 600px; box-shadow: inset 0 0 0 1px #f00; }
+        .news-right { width: 330px; height: 600px; box-shadow: inset 0 0 0 1px #f00; }
+        #container{
+            background: #fff;
+            padding-bottom: 30px;
+        }
+    </style>
+
+    <!-- 新问中心开始 -->
+    <div id="container">
+        <div class="category">
+            <!--分类列表-->
+            <ul class="cate-list">
+                <span>分类:</span>
+                <li>户外出游</li>
+                <li>运动健身</li>
+                <li class="list">职场培训</li>
+                <li>演出娱乐</li>
+                <li>公益文化</li>
+                <li>周边游</li>
+                <li>创投</li>
+                <li>跑步</li>
+                <li>交友</li>
+                <li>文艺</li>
+                <li>Live</li>
+            </ul>
+            <!--时间列表-->
+            <ul class="time-list">
+                <span>时间：</span>
+                <li class="list">不限</li>
+                <li>今天</li>
+                <li>近一周</li>
+                <li>近一月</li>
+                <li>周末</li>
+            </ul>
+            <!--热门列表-->
+            <ul class="hot-list">
+                <li class="hot">综合</li>
+                <li>最新</li>
+                <li>最热</li>
+            </ul>
+            <!--内容列表-->
+            <div class="cat-con">
+                <ul class="cont-list">
+                    <li>
+                        <a href="">
+                            <img src="{{PATH_TML}}activity/img/01.png" alt="">
+                        </a>
+                        <div class="abstract">
+                            <a href="">
+                                <h3>互联网运营50堂必修课，如何玩转产品、用户、渠道、数据？</h3>
+                                <p>50节系统化实战课程、是面向0到3年得互联网从业者和爱好者学习的内容，从零基础打造运营思维体系，深度学习互联网运营、产品、用户、渠道、营销的实操，具体怎么做，通过运营模型及实例让你快速进阶...</p>
+                            </a>
+                            <div class="abst-info">
+                                 <div class="info-son">
+                                     <img src="{{PATH_TML}}activity/img/时间.png" alt="">
+                                     本周五<span>12:30</span>开始
+                                 </div>
+                                <div class="info-son">
+                                    <img src="{{PATH_TML}}activity/img/地点.png" alt="">
+                                    <span>高新区</span>
+                                </div>
+                                <div class="info-son">
+                                    <img src="{{PATH_TML}}activity/img/人员.png" alt="">
+                                    <span>145</span>人已报名
+                                </div>
+                            </div>
+                        </div>
+                        <div class="attend">
+                              <span>免费</span>
+                              <button>立即报名</button>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="">
+                            <img src="{{PATH_TML}}activity/img/02.png" alt="">
+                        </a>
+                        <div class="abstract">
+                            <a href="">
+                                <h3>互联网运营50堂必修课，如何玩转产品、用户、渠道、数据？</h3>
+                                <p>50节系统化实战课程、是面向0到3年得互联网从业者和爱好者学习的内容，从零基础打造运营思维体系，深度学习互联网运营、产品、用户、渠道、营销的实操，具体怎么做，通过运营模型及实例让你快速进阶...</p>
+                            </a>
+                            <div class="abst-info">
+                                <div class="info-son">
+                                    <img src="{{PATH_TML}}activity/img/时间.png" alt="">
+                                    本周五<span>12:30</span>开始
+                                </div>
+                                <div class="info-son">
+                                    <img src="{{PATH_TML}}activity/img/地点.png" alt="">
+                                    <span>高新区</span>
+                                </div>
+                                <div class="info-son">
+                                    <img src="{{PATH_TML}}activity/img/人员.png" alt="">
+                                    <span>145</span>人已报名
+                                </div>
+                            </div>
+                        </div>
+                        <div class="attend">
+                            <span class="attebd_cur">￥199</span>
+                            <button class="button_cur">立即报名</button>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="">
+                            <img src="{{PATH_TML}}activity/img/03.png" alt="">
+                        </a>
+                        <div class="abstract">
+                            <a href="">
+                                <h3>互联网运营50堂必修课，如何玩转产品、用户、渠道、数据？</h3>
+                                <p>50节系统化实战课程、是面向0到3年得互联网从业者和爱好者学习的内容，从零基础打造运营思维体系，深度学习互联网运营、产品、用户、渠道、营销的实操，具体怎么做，通过运营模型及实例让你快速进阶...</p>
+                            </a>
+                            <div class="abst-info">
+                                <div class="info-son">
+                                    <img src="{{PATH_TML}}activity/img/时间.png" alt="">
+                                    本周五<span>12:30</span>开始
+                                </div>
+                                <div class="info-son">
+                                    <img src="{{PATH_TML}}activity/img/地点.png" alt="">
+                                    <span>高新区</span>
+                                </div>
+                                <div class="info-son">
+                                    <img src="{{PATH_TML}}activity/img/人员.png" alt="">
+                                    <span>145</span>人已报名
+                                </div>
+                            </div>
+                        </div>
+                        <div class="attend">
+                            <span>免费</span>
+                            <button>立即报名</button>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="">
+                            <img src="{{PATH_TML}}activity/img/01.png" alt="">
+                        </a>
+                        <div class="abstract">
+                            <a href="">
+                                <h3>互联网运营50堂必修课，如何玩转产品、用户、渠道、数据？</h3>
+                                <p>50节系统化实战课程、是面向0到3年得互联网从业者和爱好者学习的内容，从零基础打造运营思维体系，深度学习互联网运营、产品、用户、渠道、营销的实操，具体怎么做，通过运营模型及实例让你快速进阶...</p>
+                            </a>
+                            <div class="abst-info">
+                                <div class="info-son">
+                                    <img src="{{PATH_TML}}activity/img/时间.png" alt="">
+                                    本周五<span>12:30</span>开始
+                                </div>
+                                <div class="info-son">
+                                    <img src="{{PATH_TML}}activity/img/地点.png" alt="">
+                                    <span>高新区</span>
+                                </div>
+                                <div class="info-son">
+                                    <img src="{{PATH_TML}}activity/img/人员.png" alt="">
+                                    <span>145</span>人已报名
+                                </div>
+                            </div>
+                        </div>
+                        <div class="attend">
+                            <span>免费</span>
+                            <button>立即报名</button>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="">
+                            <img src="{{PATH_TML}}activity/img/02.png" alt="">
+                        </a>
+                        <div class="abstract">
+                            <a href="">
+                                <h3>互联网运营50堂必修课，如何玩转产品、用户、渠道、数据？</h3>
+                                <p>50节系统化实战课程、是面向0到3年得互联网从业者和爱好者学习的内容，从零基础打造运营思维体系，深度学习互联网运营、产品、用户、渠道、营销的实操，具体怎么做，通过运营模型及实例让你快速进阶...</p>
+                            </a>
+                            <div class="abst-info">
+                                <div class="info-son">
+                                    <img src="{{PATH_TML}}activity/img/时间.png" alt="">
+                                    本周五<span>12:30</span>开始
+                                </div>
+                                <div class="info-son">
+                                    <img src="{{PATH_TML}}activity/img/地点.png" alt="">
+                                    <span>高新区</span>
+                                </div>
+                                <div class="info-son">
+                                    <img src="{{PATH_TML}}activity/img/人员.png" alt="">
+                                    <span>145</span>人已报名
+                                </div>
+                            </div>
+                        </div>
+                        <div class="attend">
+                            <span class="attebd_cur">￥199</span>
+                            <button class="button_cur">立即报名</button>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!--分页-->
+        <Page :total="parseInt(total)" :current="page" :page-size="limit" @on-change="change"></Page>
+    </div>
+
+<script>
+    new Vue({
+        el: '#container',
+        data: {
+            total: 10,
+            page: 1,
+            limit: 5,
+        },
+        created: function(){
+
+        },
+        methods: {
+            change: function(page){
+                this.page = page;
+            }
+        }
+    })
+</script>
+    <!-- 新闻中心结束 -->
+
+
+
+
+
+
+
+
