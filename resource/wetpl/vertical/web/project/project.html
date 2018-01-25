@@ -4,6 +4,22 @@
 <link rel="stylesheet" href="{{PATH_TML}}project/css/project.css">
 <script src="/common/magazine/js/iview.min.js"></script>
 
+<style>
+    .demo-spin-icon-load{
+        animation: ani-demo-spin 1s linear infinite;
+    }
+    @keyframes ani-demo-spin {
+        from { transform: rotate(0deg);}
+        50%  { transform: rotate(180deg);}
+        to   { transform: rotate(360deg);}
+    }
+    .demo-spin-col{
+        height: 100px;
+        position: relative;
+        border: 1px solid #eee;
+    }
+</style>
+
 <div id="container">
     <div id="proj">
         <div id="find">
@@ -91,20 +107,24 @@
             </ul>
         </div>
 
+        <!--<Spin fix>
+            <Icon type="load-a" size=30 class="demo-spin-icon-load"></Icon>
+            <div>加载中</div>
+        </Spin>-->
+
         <div id="pages">
-            <Page :total="parseInt(total)" :current="page" :page-size="limit" @on-change="change"></Page>
+            <Page :total="parseInt(pages.total)" :current="pages.page" :page-size="pages.limit" @on-change="change"></Page>
         </div>
     </div>
 </div>
 
 <script>
-    new Vue({
+    var activity = new Vue({
         el: '#container',
         data: {
             showType: {act: false, proj: true, total: true, latest: false, hotest: false},
-            total: 10,
-            page: 1,
-            limit: 5,
+            pageStore: [{id: 'proj', total: 10, page: 1, limit: 5}, {id: 'act', total: 10, page: 1, limit: 5}],
+            pages: {id: 'proj', total: 10, page: 1, limit: 5},
             type: [],
             time: [],
             proj: [],
@@ -153,21 +173,21 @@
                 {"image":"/resource/wetpl/vertical/web/activity/img/01.png","title":"互联网运营50堂必修课，如何玩转产品、用户、渠道、数据？","info":"50节系统化实战课程、是面向0到3年得互联网从业者和爱好者学习的内容，从零基础打造运营思维体系，深度学习互联网运营、产品、用户、渠道、营销的实操，具体怎么做，通过运营模型及实例让你快速进阶...","price":"免费","active":"196","time":"本周五 12:30 开始","add":"高新区"},
                 {"image":"/resource/wetpl/vertical/web/activity/img/02.png","title":"互联网运营50堂必修课，如何玩转产品、用户、渠道、数据？","info":"50节系统化实战课程、是面向0到3年得互联网从业者和爱好者学习的内容，从零基础打造运营思维体系，深度学习互联网运营、产品、用户、渠道、营销的实操，具体怎么做，通过运营模型及实例让你快速进阶...","price":578,"active":"196","time":"下周三 15:30 开始","add":"雁塔区"},
                 {"image":"/resource/wetpl/vertical/web/activity/img/03.png","title":"互联网运营50堂必修课，如何玩转产品、用户、渠道、数据？","info":"50节系统化实战课程、是面向0到3年得互联网从业者和爱好者学习的内容，从零基础打造运营思维体系，深度学习互联网运营、产品、用户、渠道、营销的实操，具体怎么做，通过运营模型及实例让你快速进阶...","price":20,"active":"196","time":"2018-01-24 14:29 开始","add":"未央区"},
-                {"image":"/resource/wetpl/vertical/web/activity/img/04.png","title":"互联网运营50堂必修课，如何玩转产品、用户、渠道、数据？","info":"50节系统化实战课程、是面向0到3年得互联网从业者和爱好者学习的内容，从零基础打造运营思维体系，深度学习互联网运营、产品、用户、渠道、营销的实操，具体怎么做，通过运营模型及实例让你快速进阶...","price":666,"active":"196","time":"下周日 12:30 开始","add":"世纪广场"},
-                {"image":"/resource/wetpl/vertical/web/activity/img/01.png","title":"互联网运营50堂必修课，如何玩转产品、用户、渠道、数据？","info":"50节系统化实战课程、是面向0到3年得互联网从业者和爱好者学习的内容，从零基础打造运营思维体系，深度学习互联网运营、产品、用户、渠道、营销的实操，具体怎么做，通过运营模型及实例让你快速进阶...","price":999,"active":"196","time":"2018-01-15 08:30 开始","add":"高新区"},
-                {"image":"/resource/wetpl/vertical/web/activity/img/02.png","title":"互联网运营50堂必修课，如何玩转产品、用户、渠道、数据？","info":"50节系统化实战课程、是面向0到3年得互联网从业者和爱好者学习的内容，从零基础打造运营思维体系，深度学习互联网运营、产品、用户、渠道、营销的实操，具体怎么做，通过运营模型及实例让你快速进阶...","price":199,"active":"196","time":"2018-01-14 10:00 开始","add":"高新区"}
+                {"image":"/resource/wetpl/vertical/web/activity/img/04.png","title":"互联网运营50堂必修课，如何玩转产品、用户、渠道、数据？","info":"50节系统化实战课程、是面向0到3年得互联网从业者和爱好者学习的内容，从零基础打造运营思维体系，深度学习互联网运营、产品、用户、渠道、营销的实操，具体怎么做，通过运营模型及实例让你快速进阶...","price":666,"active":"196","time":"下周日 12:30 开始","add":"世纪广场"}
             ]
         },
         methods: {
             change: function(page){
-                this.page = page;
+                this.pages.page = page;
             },
             show: function(name, type){
                 switch(type){
                     case 'type0' : this.type.map(e => e.name === name ? e.style = {'color': '#4caaed'} : e.style = {}); break;
                     case 'type1' : this.time.map(e => e.name === name ? e.style = {'color': '#4caaed'} : e.style = {}); break;
                     case 'type2' : ['total', 'latest', 'hotest'].map(e => name === e ? this.showType[e] = true : this.showType[e] = false); break;
-                    case 'type3' : ['act', 'proj'].map(e => name === e ? this.showType[e] = true : this.showType[e] = false); break;
+                    case 'type3' : ['act', 'proj'].map(e => name === e ? (this.showType[e] = true) : (this.showType[e] = false));
+                        //map1保存并更新pageStore状态，map2更新pages状态，只限两个类别有效
+                        this.pageStore = this.pageStore.map(e => name === e.id ? e : this.pages).map(e => name === e.id ? this.pages = e : e); break;
                     default: break;
                 }
             }
