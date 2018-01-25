@@ -152,6 +152,10 @@
                         </div>
                     </div>
 
+                    <div class="form-list">
+
+                    </div>
+
             </div>
         </div>
     </div>
@@ -163,7 +167,8 @@
         data: {
             mall_id:'',
             currentState: 0,
-            MemberLevelEdit:false,
+            MemberLevelEdit:false, //会员等级编辑标志位
+            MemberCouponEditflag:false, //优惠卷编辑标志位
             menuList: ["概览", "发布会员卡", "会员卡管理", "发布代金券", "管理代金券"],
             formItemMember: {
                 weid:'',
@@ -397,16 +402,26 @@
                                 },
                                 on: {
                                     click: () => {
-                                        //console.log(crmapp);
-                                        //crmapp.editMemberLevel(params.row.weid);
-                                        //this.editMemberLevel(params.row.weid);
-                                        // this.editMemberLevel(params.row.weid);
+                                        //编辑详情
+                                        crmapp.editMemberCoupon(params.row.weid);
                                     }
                                 }
                             }, '编辑'),
+                            h('Button', {
+                                props: {
+                                    type: 'primary',
+                                    size: 'small'
+                                },
+                                on: {
+                                    click: () => {
+                                        //查看
+                                        crmapp.viewMemberCoupon(params.row.weid);
+                                    }
+                                }
+                            }, '查看'),
                         ]);
                     },
-                    width: 100,
+                    width: 150,
                 }
             ],
             MemberCoupondata: [
@@ -415,26 +430,26 @@
             option: {
                 option1: {
                     title: {
-                        text: 'ECharts 入门示例'
+                        text: '年统计'
                     },
                     tooltip: {},
                     legend: {
-                        data: ['销量'],
+                        data: ['金额'],
                         left: 'right'
                     },
                     xAxis: {
-                        data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"]
+                        data: []
                     },
                     yAxis: {},
                     series: [{
-                        name: '销量',
+                        name: '金额',
                         type: 'bar',
-                        data: [5, 20, 36, 10, 10, 20]
+                        data: []
                     }]
                 },
                 option2: {
                     title: {
-                        text: 'ECharts 入门示例'
+                        text: '月统计'
                     },
                     tooltip: {
                         trigger: 'item',
@@ -447,7 +462,7 @@
                     },
                     series: [
                         {
-                            name: '访问来源',
+                            name: '金额',
                             type: 'pie',
                             radius: ['50%', '70%'],
                             avoidLabelOverlap: false,
@@ -481,7 +496,7 @@
                 },
                 option3: {
                     title: {
-                        text: 'ECharts 入门示例'
+                        text: '日统计'
                     },
                     color: ['#5793f3', '#d14a61', '#675bba'],
 
@@ -492,7 +507,7 @@
                         }
                     },
                     legend: {
-                        data: ['2015 降水量', '2016 降水量'],
+                        data: ['2015 金额'],
                         left: 'right'
                     },
                     grid: {
@@ -514,33 +529,12 @@
                             axisPointer: {
                                 label: {
                                     formatter: function (params) {
-                                        return '降水量  ' + params.value
+                                        return '金额  ' + params.value
                                             + (params.seriesData.length ? '：' + params.seriesData[0].data : '');
                                     }
                                 }
                             },
                             data: ["2016-1", "2016-2", "2016-3", "2016-4", "2016-5", "2016-6", "2016-7", "2016-8", "2016-9", "2016-10", "2016-11", "2016-12"]
-                        },
-                        {
-                            type: 'category',
-                            axisTick: {
-                                alignWithLabel: true
-                            },
-                            axisLine: {
-                                onZero: false,
-                                lineStyle: {
-                                    color: '#5793f3'
-                                }
-                            },
-                            axisPointer: {
-                                label: {
-                                    formatter: function (params) {
-                                        return '降水量  ' + params.value
-                                            + (params.seriesData.length ? '：' + params.seriesData[0].data : '');
-                                    }
-                                }
-                            },
-                            data: ["2015-1", "2015-2", "2015-3", "2015-4", "2015-5", "2015-6", "2015-7", "2015-8", "2015-9", "2015-10", "2015-11", "2015-12"]
                         }
                     ],
                     yAxis: [
@@ -550,17 +544,11 @@
                     ],
                     series: [
                         {
-                            name: '2015 降水量',
+                            name: '2015 金额',
                             type: 'line',
-                            xAxisIndex: 1,
+                            xAxisIndex: 0,
                             smooth: true,
                             data: [2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3]
-                        },
-                        {
-                            name: '2016 降水量',
-                            type: 'line',
-                            smooth: true,
-                            data: [3.9, 5.9, 11.1, 18.7, 48.3, 69.2, 231.6, 46.6, 55.4, 18.4, 10.3, 0.7]
                         }
                     ]
                 }
@@ -569,19 +557,20 @@
         },
         mounted: function () {
             var self = this;
-            var domList = $('.chart-dom');
-            if (domList.length) {
-                domList.each( (key, ele)=> {
-                    var id = $(ele).attr('id');
-                    var option = $(ele).attr('option');
-                    this.getChart(id, option)
-                })
-            }
             //获取商城主键id
-            console.log(this);
             ajax.get('mall/userdetail').then((res)=>{
                 if(res.code==200){
+                    var date=new Date;
+                    var year=date.getFullYear();
+                    var month=date.getMonth()+1;
+                    month =(month<10 ? "0"+month:month);
                     this.mall_id=res.data.weid;
+                    this.InitYear(this.mall_id);
+                    //获取当年所有月
+                    this.InitMonth(this.mall_id,year);
+                    //获取当月所有天
+                    this.InitDay(this.mall_id,year+'-'+month);
+
                 }
             });
         },
@@ -631,7 +620,32 @@
                         };
                     }
                 }
-
+                if(val==3){
+                    //判断编辑和发布
+                    if(this.MemberCouponEditflag==true){
+                        this.MemberCouponEditflag=false;
+                    }else{
+                        //发布清空数据
+                        this.formItemMemberCoupon={
+                                weid:'',
+                                name:'',
+                                description:'',
+                                colour:'',
+                                get_condition:'',
+                                get_restrict:'1',
+                                levels:'',
+                                coupon_type:'',
+                                amount:'',
+                                is_reuse:'1',
+                                use_restrictions:'',
+                                receive_time:'',
+                                activity_time:'',
+                                picture:'',
+                                title:'',
+                                content:'',
+                        };
+                    }
+                }
                 if(val==4){
 
                     //获取优惠卷列表
@@ -644,7 +658,7 @@
             getChart: function (id, option) {
                 var op = this.option[option];
                 if (op) {
-                    echarts.init(document.getElementById(id)).setOption(op);
+                    var year=echarts.init(document.getElementById(id)).setOption(op);
                 }
 
             },
@@ -683,33 +697,43 @@
                 this.$refs[name].validate((valid) => {
                     if (valid) {
                         //判断是否为编辑
+                        var data={};
+                        data.name=this.formItemMemberCoupon.name;
+                        data.description=this.formItemMemberCoupon.description;
+                        data.colour=this.formItemMemberCoupon.colour;
+                        data.get_condition=this.formItemMemberCoupon.get_condition;
+                        data.get_restrict=this.formItemMemberCoupon.get_restrict;
+                        data.levels=this.formItemMemberCoupon.levels;
+                        data.coupon_type=this.formItemMemberCoupon.coupon_type;
+                        data.amount=this.formItemMemberCoupon.amount;
+                        data.is_reuse=this.formItemMemberCoupon.is_reuse;
+                        data.use_restrictions=this.formItemMemberCoupon.use_restrictions;
+                        data.publish_time=this.formItemMemberCoupon.receive_time[0];
+                        data.expire_time=this.formItemMemberCoupon.receive_time[1];
+                        data.activity_time=this.formItemMemberCoupon.activity_time;
+                        //data.content_info.picture=this.formItemMemberCoupon.picture;
+                        data.content_info={};
+                        data.content_info.picture='aa.jpg';
+                        data.content_info.title=this.formItemMemberCoupon.title;
+                        data.content_info.content=this.formItemMemberCoupon.content;
+                        var time = new Date(data.publish_time);
+                        data.publish_time=time.getFullYear() + '-' + (time.getMonth() + 1) + '-' + time.getDate();
+                        var time = new Date(data.expire_time);
+                        data.expire_time=time.getFullYear() + '-' + (time.getMonth() + 1) + '-' + time.getDate();
                         if(this.formItemMemberCoupon.weid.length>0){
-
-
+                            //编辑
+                            data.weid=this.formItemMemberCoupon.weid;
+                            alert(data.weid);
+                            ajax.post('coupon/update', data).then((res)=>{
+                                if(res.code==200){
+                                    this.$Message.success('编辑成功!');
+                                    this.currentState=4;
+                                }else{
+                                    this.$Message.error(res.message);
+                                }
+                            });
                         }else{
-                            var data={};
-                            data.name=this.formItemMemberCoupon.name;
-                            data.description=this.formItemMemberCoupon.description;
-                            data.colour=this.formItemMemberCoupon.colour;
-                            data.get_condition=this.formItemMemberCoupon.get_condition;
-                            data.get_restrict=this.formItemMemberCoupon.get_restrict;
-                            data.levels=this.formItemMemberCoupon.levels;
-                            data.coupon_type=this.formItemMemberCoupon.coupon_type;
-                            data.amount=this.formItemMemberCoupon.amount;
-                            data.is_reuse=this.formItemMemberCoupon.is_reuse;
-                            data.use_restrictions=this.formItemMemberCoupon.use_restrictions;
-                            data.publish_time=this.formItemMemberCoupon.receive_time[0];
-                            data.expire_time=this.formItemMemberCoupon.receive_time[1];
-                            data.activity_time=this.formItemMemberCoupon.activity_time;
-                            //data.content_info.picture=this.formItemMemberCoupon.picture;
-                            data.content_info={};
-                            data.content_info.picture='aa.jpg';
-                            data.content_info.title=this.formItemMemberCoupon.title;
-                            data.content_info.content=this.formItemMemberCoupon.content;
-                            var time = new Date(data.publish_time);
-                            data.publish_time=time.getFullYear() + '-' + (time.getMonth() + 1) + '-' + time.getDate();
-                            var time = new Date(data.expire_time);
-                            data.expire_time=time.getFullYear() + '-' + (time.getMonth() + 1) + '-' + time.getDate();
+                            //保存
                             ajax.post('coupon/store', data).then((res)=>{
                                 if(res.code==200){
                                     this.$Message.success('添加成!');
@@ -741,6 +765,46 @@
                             this.MemberLevelEdit=true;
                         }
                     });
+                }
+            },
+            editMemberCoupon (index){
+                if(index.length>0){
+                    //跳转编辑页
+                    this.formItemMemberCoupon='';
+                    var self=this;
+                    ajax.post('coupon/detail', {id:index}).then((res)=>{
+                        if(res.code==200){
+                            var data={};
+                            data.weid=res.data.weid;
+                            data.name=res.data.name;
+                            data.description=res.data.description;
+                            data.colour=res.data.colour;
+                            res.data.get_condition?data.get_condition=res.data.get_condition.toString():data.get_condition='';
+                            res.data.get_restrict?data.get_restrict=res.data.get_restrict.toString():data.get_restrict='';
+                            res.data.levels?data.levels=res.data.levels.toString():data.levels='';
+                            res.data.coupon_type?data.coupon_type=res.data.coupon_type.toString():data.coupon_type='';
+                            res.data.amount?data.amount=res.data.amount.toString():data.amount='';
+                            res.data.is_reuse?data.is_reuse=res.data.is_reuse.toString():data.is_reuse='';
+                            res.data.use_restrictions?data.use_restrictions=res.data.use_restrictions.toString():data.use_restrictions='';
+                            data.receive_time=[res.data.publish_time,res.data.expire_time];
+                            res.data.activity_time?data.activity_time=res.data.activity_time.toString():data.activity_time='';
+                            data.picture=res.data.content_info.picture;
+                            data.title=res.data.content_info.title;
+                            data.content=res.data.content_info.content;
+                            this.formItemMemberCoupon=data;
+                            this.currentState=3;
+                            //设置编辑标志位
+                            this.MemberCouponEditflag=true;
+                        }
+                    });
+                }
+            },
+            viewMemberCoupon (index){
+                if(index.length>0){
+                    //本页渲染
+                    alert(index);
+                    //显示详情
+
                 }
             },
             CouponPage(index){
@@ -791,6 +855,91 @@
                     }
                 })
             },
+            //统计图加载
+            InitYear(mall_id){
+                //获取年增长量
+                ajax.post('mall/member/statistic/lists', {mall_id:this.mall_id,style:1,limit:100}).then((res)=>{
+                    if(res.code==200){
+                        if(res.data.total>0){
+                            this.option.option1.xAxis.data=[];
+                            this.option.option1.series[0].data=[];
+                            for(var i=0;i<res.data.list.length;i++){
+                                this.option.option1.xAxis.data.push(res.data.list[i].time);
+                                this.option.option1.series[0].data.push(res.data.list[i].amount);
+
+                            }
+                            var domList = $('.chart-dom');
+                            if (domList.length) {
+                                domList.each( (key, ele)=> {
+                                    if(key==0){
+                                        var id = $(ele).attr('id');
+                                        var option = $(ele).attr('option');
+                                        var op = this.option[option];
+                                        if (op) {
+                                            var year = echarts.init(document.getElementById(id));
+                                            year.setOption(op);
+                                            year.on('click', function (params) {});
+                                        }
+                                    }
+                                })
+                            }
+                        }
+                    }
+                })
+            },
+            InitMonth(mall_id,year){
+                //月统计
+                ajax.post('mall/member/statistic/lists', {mall_id:mall_id,style:2,limit:12,time:year}).then((res)=>{
+                    if(res.code==200){
+                        if(res.data.total>0){
+                            this.option.option2.legend.data=[];
+                            this.option.option2.series[0].data=[];
+                            for(var i=0;i<res.data.list.length;i++){
+                                this.option.option2.legend.data.push(res.data.list[i].time);
+                                this.option.option2.series[0].data.push({value: res.data.list[i].amount, name: res.data.list[i].time});
+                            }
+                            var domList = $('.chart-dom');
+                            if (domList.length) {
+                                domList.each( (key, ele)=> {
+                                    if(key==1){
+                                        var id = $(ele).attr('id');
+                                        var option = $(ele).attr('option');
+                                        this.getChart(id, option);
+                                    }
+                                })
+                            }
+                        }
+                    }
+                })
+            },
+            InitDay(mall_id,month){
+                //日统计
+                ajax.post('mall/member/statistic/lists', {mall_id:mall_id,style:3,limit:32,time:month}).then((res)=>{
+                    if(res.code==200){
+                        if(res.data.total>0){
+                            //组合数据
+                            this.option.option3.legend.data=[month+' 金额'];
+                            this.option.option3.series[0].name=month+' 金额';
+                            this.option.option3.series[0].data=[];
+                            this.option.option3.xAxis[0].data=[];
+                            for(var i=0;i<res.data.list.length;i++){
+                                this.option.option3.series[0].data.push(res.data.list[i].amount);
+                                this.option.option3.xAxis[0].data.push(res.data.list[i].time);
+                            }
+                            var domList = $('.chart-dom');
+                            if (domList.length) {
+                                domList.each( (key, ele)=> {
+                                    if(key==2){
+                                        var id = $(ele).attr('id');
+                                        var option = $(ele).attr('option');
+                                        this.getChart(id, option);
+                                    }
+                                })
+                            }
+                        }
+                    }
+                })
+            }
         }
     })
 </script>
