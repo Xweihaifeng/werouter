@@ -93,13 +93,13 @@
             </article>
             <article class="news-pre3">
                 <figure class="news-con-list" v-for="(item, index) in con_list">
-                    <figcaption class="news-con-list-img" v-if="item.thumb_image">
+                    <figcaption class="news-con-list-img"><!--  v-if="item.thumb_image" -->
                         <a :href="'/'+ channel_domain +'/' + item.weid" target="_black">
                             <img :src="set_img(item.thumb_image, '/common/img/news_default.jpg', 236, 135)" :alt="item.title" :title="item.title" />
                         </a>
                     </figcaption>
                     <hgroup>
-                        <h2 :class="{'news-title' : item.thumb_image == ''}">
+                        <h2><!--  :class="{'news-title' : item.thumb_image == ''}" -->
                             <a :href="'/'+ channel_domain +'/' + item.weid" target="_black">{{ item.title | limitLen(0,33) }}</a>
                         </h2>
                         <aside class="news-con-list-time">
