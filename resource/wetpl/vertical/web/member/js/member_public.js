@@ -631,16 +631,16 @@ function auth_certification() {
                                         layer.msg("您已经有个人认证记录，请勿重复认证！", { time: 2500 });
                                         return false;
                                     });
-                                    if(results.is_done == 1){
-                                        $(".member_certification_mask").show();
-                                        success_media(3);
-                                        submit_btn(8);
+                                    if(results.is_authenticated == 1 && results.operation_status == 2) {
+                                        $("#member_per_applicant").val(result.name);
+                                        return;
+                                    } else if(results.is_authenticated == 2){
+                                        if(results.is_done == 1){
+                                            $(".member_certification_mask").show();
+                                            success_media(3);
+                                            submit_btn(8);
 
-                                    } else if(results.is_done == 2) {
-                                        if(results.is_authenticated == 1 && results.operation_status == 2) {
-                                            $("#member_per_applicant").val(result.name);
-                                            return;
-                                        } else if(results.is_authenticated == 2){
+                                        } else if(results.is_done == 2) {
                                             if(results.operation_status == 3) {
                                                 $(".member_certification_mask").show();
                                                 success_media(4);
@@ -677,24 +677,26 @@ function auth_certification() {
                                         layer.msg("您已经有个人认证记录，请勿重复认证！", { time: 2500 });
                                         return false;
                                     });
-                                    if(results.is_done == 1){
-                                        $(".member_certification_mask").show();
-                                        success_media(5);
-                                        submit_btn(8);
-                                        $(".member_media_heading").addClass("member_orange");
 
-                                    } else if(results.is_done == 2) {
-                                        if(results.is_authenticated == 1 && results.operation_status == 2) {
-                                            $("#member_per_applicant").val(result.name);
-                                            $("#member_per_tel")      .val(results.org_contact_phone);
-                                            $("#member_per_address")  .val(results.org_address);
-                                            $("#member_int_name")     .val(results.org_name);
-                                            $("#member_int_applicant").val(results.org_contact_people);
-                                            $("#member_int_tel")      .val(results.org_contact_phone);
-                                            $("#member_int_address")  .val(results.org_address);
+                                    if(results.is_authenticated == 1 && results.operation_status == 2) {
+                                        $("#member_per_applicant").val(result.name);
+                                        $("#member_per_tel")      .val(results.org_contact_phone);
+                                        $("#member_per_address")  .val(results.org_address);
+                                        $("#member_int_name")     .val(results.org_name);
+                                        $("#member_int_applicant").val(results.org_contact_people);
+                                        $("#member_int_tel")      .val(results.org_contact_phone);
+                                        $("#member_int_address")  .val(results.org_address);
 
-                                            return;
-                                        } else if(results.is_authenticated == 2){
+                                        return;
+                                    } else if(results.is_authenticated == 2){
+
+                                        if(results.is_done == 1){
+                                            $(".member_certification_mask").show();
+                                            success_media(5);
+                                            submit_btn(8);
+                                            $(".member_media_heading").addClass("member_orange");
+
+                                        } else if(results.is_done == 2) {
                                             if(results.operation_status == 3) {
                                                 $(".member_certification_mask").show();
                                                 success_media(6);
