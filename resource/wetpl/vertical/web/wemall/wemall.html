@@ -1,0 +1,81 @@
+
+<#extend#>public/extend/index_extend.html</#extend#>
+<link rel="stylesheet" href="/common/magazine/css/iview.css">
+<link rel="stylesheet" href="{{PATH_TML}}wemall/css/wemall.css" />
+<script src="/common/magazine/js/iview.min.js"></script>
+<script src="{{PATH_TML}}wemall/js/wemall.js"></script>
+
+<!--商城开始-->
+<div id="container">
+    <div class="wemall">
+       <div class="banner"></div>
+        <div class="wemall-cat">
+            <li class="check_cur">全部</li>
+            <li>官方配件</li>
+            <li>企业团购</li>
+            <li>品牌周边</li>
+            <li>演出娱乐</li>
+            <li>公益文化</li>
+            <li>游戏手机</li>
+            <li>配件选购</li>
+            <li>手机好店</li>
+            <li>人工智能</li>
+        </div>
+        <div class="wemall-con">
+            <ul class="wemall-clist">
+                <li v-for="item in wemall_con">
+                    <div class="give">
+                        <img src="{{PATH_TML}}wemall/img/买赠.png" alt="" v-if="item.give==1">
+                    </div>
+                    <!--<div class="give" v-if="item.give==0"></div>-->
+                    <div class="photo">
+                        <img :src="item.image" alt="">
+                    </div>
+                    <h3>{{item.title}}</h3>
+                    <p>{{item.summary}}</p>
+                    <div class="price">￥{{item.price}}</div>
+                    <a href="">立即购买</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!--分页-->
+    <Page :total="parseInt(total)" :current="page" :page-size="limit" @on-change="change" v-if="total>limit"></Page>
+</div>
+<!--商城结束-->
+
+<script>
+    new Vue({
+        el: '#container',
+        data: {
+            total: 10,
+            page: 1,
+            limit: 5,
+            wemall_con:[
+                {title:"除霾除甲醛高效复合滤芯",image:"/resource/wetpl/vertical/web/wemall/img/02.png",summary:"精选双层防护材质、过滤更精细、去味更有效",price:"799.90",give:0},
+                {title:"除霾除甲醛高效复合滤芯",image:"/resource/wetpl/vertical/web/wemall/img/03.png",summary:"精选双层防护材质、过滤更精细、去味更有效",price:"799.90",give:1},
+                {title:"除霾除甲醛高效复合滤芯",image:"/resource/wetpl/vertical/web/wemall/img/04.png",summary:"精选双层防护材质、过滤更精细、去味更有效",price:"799.90",give:1},
+                {title:"除霾除甲醛高效复合滤芯",image:"/resource/wetpl/vertical/web/wemall/img/05.png",summary:"精选双层防护材质、过滤更精细、去味更有效",price:"799.90",give:0},
+                {title:"除霾除甲醛高效复合滤芯",image:"/resource/wetpl/vertical/web/wemall/img/04.png",summary:"精选双层防护材质、过滤更精细、去味更有效",price:"799.90",give:1},
+                {title:"除霾除甲醛高效复合滤芯",image:"/resource/wetpl/vertical/web/wemall/img/03.png",summary:"精选双层防护材质、过滤更精细、去味更有效",price:"799.90",give:0},
+                {title:"除霾除甲醛高效复合滤芯",image:"/resource/wetpl/vertical/web/wemall/img/02.png",summary:"精选双层防护材质、过滤更精细、去味更有效",price:"799.90",give:0},
+                {title:"除霾除甲醛高效复合滤芯",image:"/resource/wetpl/vertical/web/wemall/img/04.png",summary:"精选双层防护材质、过滤更精细、去味更有效",price:"799.90",give:1},
+                {title:"除霾除甲醛高效复合滤芯",image:"/resource/wetpl/vertical/web/wemall/img/02.png",summary:"精选双层防护材质、过滤更精细、去味更有效",price:"799.90",give:0},
+                {title:"除霾除甲醛高效复合滤芯",image:"/resource/wetpl/vertical/web/wemall/img/02.png",summary:"精选双层防护材质、过滤更精细、去味更有效",price:"799.90",give:1},
+                {title:"除霾除甲醛高效复合滤芯",image:"/resource/wetpl/vertical/web/wemall/img/02.png",summary:"精选双层防护材质、过滤更精细、去味更有效",price:"799.90",give:1},
+                {title:"除霾除甲醛高效复合滤芯",image:"/resource/wetpl/vertical/web/wemall/img/04.png",summary:"精选双层防护材质、过滤更精细、去味更有效",price:"799.90",give:0},
+                {title:"除霾除甲醛高效复合滤芯",image:"/resource/wetpl/vertical/web/wemall/img/04.png",summary:"精选双层防护材质、过滤更精细、去味更有效",price:"799.90",give:0},
+                {title:"除霾除甲醛高效复合滤芯",image:"/resource/wetpl/vertical/web/wemall/img/03.png",summary:"精选双层防护材质、过滤更精细、去味更有效",price:"799.90",give:0},
+                {title:"除霾除甲醛高效复合滤芯",image:"/resource/wetpl/vertical/web/wemall/img/03.png",summary:"精选双层防护材质、过滤更精细、去味更有效",price:"799.90",give:0}
+            ]
+        },
+        created: function(){
+
+        },
+        methods: {
+            change: function(page){
+                this.page = page;
+            },
+        }
+    })
+</script>
