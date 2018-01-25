@@ -866,7 +866,6 @@
                             for(var i=0;i<res.data.list.length;i++){
                                 this.option.option1.xAxis.data.push(res.data.list[i].time);
                                 this.option.option1.series[0].data.push(res.data.list[i].amount);
-
                             }
                             var domList = $('.chart-dom');
                             if (domList.length) {
@@ -878,7 +877,9 @@
                                         if (op) {
                                             var year = echarts.init(document.getElementById(id));
                                             year.setOption(op);
-                                            year.on('click', function (params) {});
+                                            year.on('click', function (params) {
+                                                crmapp.InitMonth(mall_id,params.name);
+                                            });
                                         }
                                     }
                                 })
@@ -904,7 +905,14 @@
                                     if(key==1){
                                         var id = $(ele).attr('id');
                                         var option = $(ele).attr('option');
-                                        this.getChart(id, option);
+                                        var op = this.option[option];
+                                        if (op) {
+                                            var month = echarts.init(document.getElementById(id));
+                                            month.setOption(op);
+                                            month.on('click', function (params) {
+                                                crmapp.InitDay(mall_id,params.name);
+                                            });
+                                        }
                                     }
                                 })
                             }
