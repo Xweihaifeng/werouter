@@ -33,139 +33,19 @@
         </div>
         <div id="projects" v-show="showType.proj">
             <ul>
-                <a href="javascript:void(0);">
+                <a v-for="e in proj" href="javascript:void(0);">
                     <li>
                         <div></div>
-                        <img src="/common/img/p01.png" alt=""/>
+                        <img :src="e.cover" alt=""/>
                         <div class="act">
-                            <p>互联网运营50堂必修课，如何玩转产品、用户、渠道、数据？</p>
-                            <p>本周五 12:30 开始</p>
+                            <p>{{e.title}}</p>
+                            <p>{{e.time}}</p>
                             <p>
                                <span>
-                                    <img src="/common/img/p05.png" alt=""/>
-                                    <span>145人已报名</span>
+                                    <img :src="e.avatar" alt=""/>
+                                    <span>{{e.numbers}}人已报名</span>
                                </span>
-                               <span class="free">免费</span>
-                            </p>
-                        </div>
-                    </li>
-                </a>
-                <a href="javascript:void(0);">
-                    <li>
-                        <div></div>
-                        <img src="/common/img/p02.png" alt=""/>
-                        <div class="act">
-                            <p>互联网运营50堂必修课，如何玩转产品、用户、渠道、数据？</p>
-                            <p>本周五 12:30 开始</p>
-                            <p>
-                               <span>
-                                    <img src="/common/img/p05.png" alt=""/>
-                                    <span>145人已报名</span>
-                               </span>
-                                <span class="price">¥99</span>
-                            </p>
-                        </div>
-                    </li>
-                </a>
-                <a href="javascript:void(0);">
-                    <li>
-                        <div></div>
-                        <img src="/common/img/p03.png" alt=""/>
-                        <div class="act">
-                            <p>互联网运营50堂必修课，如何玩转产品、用户、渠道、数据？</p>
-                            <p>本周五 12:30 开始</p>
-                            <p>
-                               <span>
-                                    <img src="/common/img/p05.png" alt=""/>
-                                    <span>145人已报名</span>
-                               </span>
-                                <span class="free">免费</span>
-                            </p>
-                        </div>
-                    </li>
-                </a>
-                <a href="javascript:void(0);">
-                    <li>
-                        <div></div>
-                        <img src="/common/img/p04.png" alt=""/>
-                        <div class="act">
-                            <p>互联网运营50堂必修课，如何玩转产品、用户、渠道、数据？</p>
-                            <p>本周五 12:30 开始</p>
-                            <p>
-                               <span>
-                                    <img src="/common/img/p05.png" alt=""/>
-                                    <span>145人已报名</span>
-                               </span>
-                                <span class="price">¥99</span>
-                            </p>
-                        </div>
-                    </li>
-                </a>
-
-                <a href="javascript:void(0);">
-                    <li>
-                        <div></div>
-                        <img src="/common/img/p01.png" alt=""/>
-                        <div class="act">
-                            <p>互联网运营50堂必修课，如何玩转产品、用户、渠道、数据？</p>
-                            <p>本周五 12:30 开始</p>
-                            <p>
-                               <span>
-                                    <img src="/common/img/p05.png" alt=""/>
-                                    <span>145人已报名</span>
-                               </span>
-                                <span class="free">免费</span>
-                            </p>
-                        </div>
-                    </li>
-                </a>
-                <a href="javascript:void(0);">
-                    <li>
-                        <div></div>
-                        <img src="/common/img/p02.png" alt=""/>
-                        <div class="act">
-                            <p>互联网运营50堂必修课，如何玩转产品、用户、渠道、数据？</p>
-                            <p>本周五 12:30 开始</p>
-                            <p>
-                               <span>
-                                    <img src="/common/img/p05.png" alt=""/>
-                                    <span>145人已报名</span>
-                               </span>
-                                <span class="price">¥99</span>
-                            </p>
-                        </div>
-                    </li>
-                </a>
-                <a href="javascript:void(0);">
-                    <li>
-                        <div></div>
-                        <img src="/common/img/p03.png" alt=""/>
-                        <div class="act">
-                            <p>互联网运营50堂必修课，如何玩转产品、用户、渠道、数据？</p>
-                            <p>本周五 12:30 开始</p>
-                            <p>
-                               <span>
-                                    <img src="/common/img/p05.png" alt=""/>
-                                    <span>145人已报名</span>
-                               </span>
-                                <span class="free">免费</span>
-                            </p>
-                        </div>
-                    </li>
-                </a>
-                <a href="javascript:void(0);">
-                    <li>
-                        <div></div>
-                        <img src="/common/img/p04.png" alt=""/>
-                        <div class="act">
-                            <p>互联网运营50堂必修课，如何玩转产品、用户、渠道、数据？</p>
-                            <p>本周五 12:30 开始</p>
-                            <p>
-                               <span>
-                                    <img src="/common/img/p05.png" alt=""/>
-                                    <span>145人已报名</span>
-                               </span>
-                                <span class="price">¥99</span>
+                               <span :class="{free: e.isFree, price: !e.isFree}">{{e.price}}</span>
                             </p>
                         </div>
                     </li>
@@ -175,148 +55,36 @@
 
         <div class="cat-con" v-show="showType.act">
             <ul class="cont-list">
-                <li>
-                    <a href="">
-                        <img src="{{PATH_TML}}activity/img/01.png" alt="">
+                <li v-for="item in act">
+                    <a href="javascript:void(0);">
+                        <img :src="item.image" alt="">
                     </a>
                     <div class="abstract">
-                        <a href="">
-                            <h3>互联网运营50堂必修课，如何玩转产品、用户、渠道、数据？</h3>
-                            <p>50节系统化实战课程、是面向0到3年得互联网从业者和爱好者学习的内容，从零基础打造运营思维体系，深度学习互联网运营、产品、用户、渠道、营销的实操，具体怎么做，通过运营模型及实例让你快速进阶...</p>
+                        <a href="javascript:void(0);">
+                            <h3>{{item.title}}</h3>
+                            <p>{{item.info}}</p>
                         </a>
                         <div class="abst-info">
                             <div class="info-son">
                                 <img src="{{PATH_TML}}activity/img/时间.png" alt="">
-                                本周五<span>12:30</span>开始
+                                <span>{{item.time}}</span>
                             </div>
                             <div class="info-son">
                                 <img src="{{PATH_TML}}activity/img/地点.png" alt="">
-                                <span>高新区</span>
+                                <span>{{item.add}}</span>
                             </div>
                             <div class="info-son">
                                 <img src="{{PATH_TML}}activity/img/人员.png" alt="">
-                                <span>145</span>人已报名
+                                <span>{{item.active}}</span>人已报名
                             </div>
                         </div>
                     </div>
-                    <div class="attend">
-                        <span>免费</span>
+                    <div class="attend" v-if="item.price == '免费'">
+                        <span>{{item.price}}</span>
                         <button>立即报名</button>
                     </div>
-                </li>
-                <li>
-                    <a href="">
-                        <img src="{{PATH_TML}}activity/img/02.png" alt="">
-                    </a>
-                    <div class="abstract">
-                        <a href="">
-                            <h3>互联网运营50堂必修课，如何玩转产品、用户、渠道、数据？</h3>
-                            <p>50节系统化实战课程、是面向0到3年得互联网从业者和爱好者学习的内容，从零基础打造运营思维体系，深度学习互联网运营、产品、用户、渠道、营销的实操，具体怎么做，通过运营模型及实例让你快速进阶...</p>
-                        </a>
-                        <div class="abst-info">
-                            <div class="info-son">
-                                <img src="{{PATH_TML}}activity/img/时间.png" alt="">
-                                本周五<span>12:30</span>开始
-                            </div>
-                            <div class="info-son">
-                                <img src="{{PATH_TML}}activity/img/地点.png" alt="">
-                                <span>高新区</span>
-                            </div>
-                            <div class="info-son">
-                                <img src="{{PATH_TML}}activity/img/人员.png" alt="">
-                                <span>145</span>人已报名
-                            </div>
-                        </div>
-                    </div>
-                    <div class="attend">
-                        <span class="attebd_cur">￥199</span>
-                        <button class="button_cur">立即报名</button>
-                    </div>
-                </li>
-                <li>
-                    <a href="">
-                        <img src="{{PATH_TML}}activity/img/03.png" alt="">
-                    </a>
-                    <div class="abstract">
-                        <a href="">
-                            <h3>互联网运营50堂必修课，如何玩转产品、用户、渠道、数据？</h3>
-                            <p>50节系统化实战课程、是面向0到3年得互联网从业者和爱好者学习的内容，从零基础打造运营思维体系，深度学习互联网运营、产品、用户、渠道、营销的实操，具体怎么做，通过运营模型及实例让你快速进阶...</p>
-                        </a>
-                        <div class="abst-info">
-                            <div class="info-son">
-                                <img src="{{PATH_TML}}activity/img/时间.png" alt="">
-                                本周五<span>12:30</span>开始
-                            </div>
-                            <div class="info-son">
-                                <img src="{{PATH_TML}}activity/img/地点.png" alt="">
-                                <span>高新区</span>
-                            </div>
-                            <div class="info-son">
-                                <img src="{{PATH_TML}}activity/img/人员.png" alt="">
-                                <span>145</span>人已报名
-                            </div>
-                        </div>
-                    </div>
-                    <div class="attend">
-                        <span>免费</span>
-                        <button>立即报名</button>
-                    </div>
-                </li>
-                <li>
-                    <a href="">
-                        <img src="{{PATH_TML}}activity/img/01.png" alt="">
-                    </a>
-                    <div class="abstract">
-                        <a href="">
-                            <h3>互联网运营50堂必修课，如何玩转产品、用户、渠道、数据？</h3>
-                            <p>50节系统化实战课程、是面向0到3年得互联网从业者和爱好者学习的内容，从零基础打造运营思维体系，深度学习互联网运营、产品、用户、渠道、营销的实操，具体怎么做，通过运营模型及实例让你快速进阶...</p>
-                        </a>
-                        <div class="abst-info">
-                            <div class="info-son">
-                                <img src="{{PATH_TML}}activity/img/时间.png" alt="">
-                                本周五<span>12:30</span>开始
-                            </div>
-                            <div class="info-son">
-                                <img src="{{PATH_TML}}activity/img/地点.png" alt="">
-                                <span>高新区</span>
-                            </div>
-                            <div class="info-son">
-                                <img src="{{PATH_TML}}activity/img/人员.png" alt="">
-                                <span>145</span>人已报名
-                            </div>
-                        </div>
-                    </div>
-                    <div class="attend">
-                        <span>免费</span>
-                        <button>立即报名</button>
-                    </div>
-                </li>
-                <li>
-                    <a href="">
-                        <img src="{{PATH_TML}}activity/img/02.png" alt="">
-                    </a>
-                    <div class="abstract">
-                        <a href="">
-                            <h3>互联网运营50堂必修课，如何玩转产品、用户、渠道、数据？</h3>
-                            <p>50节系统化实战课程、是面向0到3年得互联网从业者和爱好者学习的内容，从零基础打造运营思维体系，深度学习互联网运营、产品、用户、渠道、营销的实操，具体怎么做，通过运营模型及实例让你快速进阶...</p>
-                        </a>
-                        <div class="abst-info">
-                            <div class="info-son">
-                                <img src="{{PATH_TML}}activity/img/时间.png" alt="">
-                                本周五<span>12:30</span>开始
-                            </div>
-                            <div class="info-son">
-                                <img src="{{PATH_TML}}activity/img/地点.png" alt="">
-                                <span>高新区</span>
-                            </div>
-                            <div class="info-son">
-                                <img src="{{PATH_TML}}activity/img/人员.png" alt="">
-                                <span>145</span>人已报名
-                            </div>
-                        </div>
-                    </div>
-                    <div class="attend">
-                        <span class="attebd_cur">￥199</span>
+                    <div class="attend" v-else="item.price != '免费'">
+                        <span class="attebd_cur">￥{{item.price}}</span>
                         <button class="button_cur">立即报名</button>
                     </div>
                 </li>
@@ -347,6 +115,48 @@
             var dataTime = ['不限', '今天', '近一天', '近一周', '周末'];
             this.type = dataType.map((x, i) => i === 0 ? ({name: x, style: {'color': '#4caaed'}}) : ({name: x, style: {}}));
             this.time = dataTime.map((x, i) => i === 0 ? ({name: x, style: {'color': '#4caaed'}}) : ({name: x, style: {}}));
+            this.proj = [
+                {
+                    title: '互联网运营50堂必修课，如何玩转产品、用户、渠道、数据？',
+                    time: '本周五 12:30 开始',
+                    cover: '/common/img/p01.png',
+                    avatar: '/common/img/p05.png',
+                    numbers: '145',
+                    price: '免费'
+                },
+                {
+                    title: '互联网运营50堂必修课，如何玩转产品、用户、渠道、数据？',
+                    time: '本周五 12:30 开始',
+                    cover: '/common/img/p02.png',
+                    avatar: '/common/img/p05.png',
+                    numbers: '145',
+                    price: '99'
+                },
+                {
+                    title: '互联网运营50堂必修课，如何玩转产品、用户、渠道、数据？',
+                    time: '本周五 12:30 开始',
+                    cover: '/common/img/p03.png',
+                    avatar: '/common/img/p05.png',
+                    numbers: '145',
+                    price: '免费'
+                },
+                {
+                    title: '互联网运营50堂必修课，如何玩转产品、用户、渠道、数据？',
+                    time: '本周五 12:30 开始',
+                    cover: '/common/img/p04.png',
+                    avatar: '/common/img/p05.png',
+                    numbers: '145',
+                    price: '99'
+                }
+            ].map(e =>e.price != '免费' ? (e.isFree = false, e.price = '¥' + e.price, e) : (e.isFree = true, e));
+            this.act = [
+                {"image":"/resource/wetpl/vertical/web/activity/img/01.png","title":"互联网运营50堂必修课，如何玩转产品、用户、渠道、数据？","info":"50节系统化实战课程、是面向0到3年得互联网从业者和爱好者学习的内容，从零基础打造运营思维体系，深度学习互联网运营、产品、用户、渠道、营销的实操，具体怎么做，通过运营模型及实例让你快速进阶...","price":"免费","active":"196","time":"本周五 12:30 开始","add":"高新区"},
+                {"image":"/resource/wetpl/vertical/web/activity/img/02.png","title":"互联网运营50堂必修课，如何玩转产品、用户、渠道、数据？","info":"50节系统化实战课程、是面向0到3年得互联网从业者和爱好者学习的内容，从零基础打造运营思维体系，深度学习互联网运营、产品、用户、渠道、营销的实操，具体怎么做，通过运营模型及实例让你快速进阶...","price":578,"active":"196","time":"下周三 15:30 开始","add":"雁塔区"},
+                {"image":"/resource/wetpl/vertical/web/activity/img/03.png","title":"互联网运营50堂必修课，如何玩转产品、用户、渠道、数据？","info":"50节系统化实战课程、是面向0到3年得互联网从业者和爱好者学习的内容，从零基础打造运营思维体系，深度学习互联网运营、产品、用户、渠道、营销的实操，具体怎么做，通过运营模型及实例让你快速进阶...","price":20,"active":"196","time":"2018-01-24 14:29 开始","add":"未央区"},
+                {"image":"/resource/wetpl/vertical/web/activity/img/04.png","title":"互联网运营50堂必修课，如何玩转产品、用户、渠道、数据？","info":"50节系统化实战课程、是面向0到3年得互联网从业者和爱好者学习的内容，从零基础打造运营思维体系，深度学习互联网运营、产品、用户、渠道、营销的实操，具体怎么做，通过运营模型及实例让你快速进阶...","price":666,"active":"196","time":"下周日 12:30 开始","add":"世纪广场"},
+                {"image":"/resource/wetpl/vertical/web/activity/img/01.png","title":"互联网运营50堂必修课，如何玩转产品、用户、渠道、数据？","info":"50节系统化实战课程、是面向0到3年得互联网从业者和爱好者学习的内容，从零基础打造运营思维体系，深度学习互联网运营、产品、用户、渠道、营销的实操，具体怎么做，通过运营模型及实例让你快速进阶...","price":999,"active":"196","time":"2018-01-15 08:30 开始","add":"高新区"},
+                {"image":"/resource/wetpl/vertical/web/activity/img/02.png","title":"互联网运营50堂必修课，如何玩转产品、用户、渠道、数据？","info":"50节系统化实战课程、是面向0到3年得互联网从业者和爱好者学习的内容，从零基础打造运营思维体系，深度学习互联网运营、产品、用户、渠道、营销的实操，具体怎么做，通过运营模型及实例让你快速进阶...","price":199,"active":"196","time":"2018-01-14 10:00 开始","add":"高新区"}
+            ]
         },
         methods: {
             change: function(page){
