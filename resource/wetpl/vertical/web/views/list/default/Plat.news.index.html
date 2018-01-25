@@ -7,6 +7,7 @@
     html, body, p, output { margin: 0; padding: 0; background: none; }
     ul, li { list-style: none; margin: 0; }
     a { text-decoration: none; display: inline-block; }
+    .block { display: block!important; }
     .news-main { position: relative; width: 1200px; min-height: 800px; margin: 30px auto; background-color: #fff; display: flex; justify-content: space-between; color: #666; }
     .news-left { width: 850px; min-height: 600px; }
     .news-right { width: 330px; min-height: 600px; }
@@ -34,6 +35,7 @@
     .news-left .news-con-list .news-con-list-img { width: 236px; min-width: 236px; height: 135px; margin-right: 20px; }
     .news-left .news-con-list .news-con-list-img > a, .news-left .news-con-list .news-con-list-img > a > img { width: 100%; height: 100%; }
     .news-left .news-con-list h2 { height: 18px; font-size: 18px;  margin: 10px 0 0; }
+    .news-left .news-con-list .news-title { margin-top: 0!important; }
     .news-left .news-con-list h2 a { height: 18px; color: #333; }
     .news-left .news-con-list hgroup { color: #999; flex: 1; }
     .news-left .news-con-list hgroup > p { line-height: 24px; }
@@ -43,7 +45,9 @@
     .news-left .news-con-list .news-con-list-time output.views::before { position: absolute; width: 22px; height: 20px; left: -2px; content: ""; background: url(/common/img/news-read.png) no-repeat center; }
     .news-left .news-con-list .news-con-list-time output.publish_time::before { position: absolute; width: 20px; height: 20px; left: -2px; content: ""; background: url(/common/img/news-time.png) no-repeat center; background-size: 16px; }
 
-    .news-left .news-pre4 { padding: 60px 0; margin: 0 auto; display: flex; justify-content: center; }
+    .news-left .news-pre4 { padding: 60px 0; margin: 0 auto; display: flex; justify-content: center; align-items: center; flex-direction: column; }
+    .news-left .news-pre4 pre { background-color: transparent; border: none; }
+    .news-left .news-pre4 .ivu-page { display: none; }
     .news-left .news-pre4 .ivu-page > li { width: 35px; height: 35px; line-height: 35px; text-align: center; border-radius: 0; }
     .news-left .news-pre4 .ivu-page-item-active { background-color: #46b2ee; border: 1px solid #46b2ee; color: #fff; }
 
@@ -79,7 +83,7 @@
             </article>
             <article class="news-pre2">
                 <figure class="news-col-nav">
-                    <figcaption :class="{'news-nav-active' : item.domain == window.location.pathname.split('/').slice(1,4)[1]}" v-for="(item, index) in column" v-if="index < 8">
+                    <figcaption :class="{'news-nav-active' : item.domain == window.location.pathname.split('/').slice(1,4)[1] | (window.location.pathname.split('/').slice(1,4)[1] == undefined & index == 0)}" v-for="(item, index) in column" v-if="index < 8">
                         <span :id="item.domain" @click="column_list(item.domain)">{{ item.title }}</span>
                         <ul>
                             <li :class="{'news-nav-active' : item.domain == window.location.pathname.split('/').slice(1,4)[1]}" v-for="(value, key) in item.children" @click="column_list(value.domain)">{{ value.title }}</li>
@@ -95,7 +99,7 @@
                         </a>
                     </figcaption>
                     <hgroup>
-                        <h2>
+                        <h2 :class="{'news-title' : item.thumb_image == ''}">
                             <a :href="'/'+ channel_domain +'/' + item.weid" target="_black">{{ item.title | limitLen(0,33) }}</a>
                         </h2>
                         <aside class="news-con-list-time">
@@ -107,8 +111,9 @@
                     </hgroup>
                 </figure>
             </article>
-            <article class="news-pre4" v-if="con_list.length != 0">
-                <Page :total="parseInt(total)" :current="page" :page-size="limit" @on-change="change" ></Page>
+            <article class="news-pre4">
+                <img src="/common/img/no_con_default.png" v-if="con_list.length == 0">
+                <Page :total="parseInt(total)" :current="page" :page-size="limit" @on-change="change" :class="{'block': con_list.length != 0}" v-if="con_list.length != 0"></Page>
             </article>
         </article>
         <article class="news-right">
