@@ -72,8 +72,8 @@
             <article class="news-pre1">
                 <aside class="news-hot" v-for="(e, i) in sub_rcon" v-if="e.thumb_image">
                     <a :href="'/'+ channel_domain +'/'+ e.weid" target="_black">
-                        <img :src="set_img(e.thumb_image, '/common/img/bg1.jpg', 540, 300)" v-if="i == 0" :alt="e.title" :title="e.title" />
-                        <img :src="set_img(e.thumb_image, '/common/img/bg2.jpg', 300, 145)" v-else :alt="e.title" :title="e.title" />
+                        <img :src="set_img(e.thumb_image, '/common/img/news_default.jpg', 540, 300)" v-if="i == 0" :alt="e.title" :title="e.title" />
+                        <img :src="set_img(e.thumb_image, '/common/img/news_default.jpg', 300, 145)" v-else :alt="e.title" :title="e.title" />
                     </a>
                 </aside>
             </article>
@@ -91,7 +91,7 @@
                 <figure class="news-con-list" v-for="(item, index) in con_list">
                     <figcaption class="news-con-list-img" v-if="item.thumb_image">
                         <a :href="'/'+ channel_domain +'/' + item.weid" target="_black">
-                            <img :src="set_img(item.thumb_image, '/common/img/bg2.jpg', 236, 135)" :alt="item.title" :title="item.title" />
+                            <img :src="set_img(item.thumb_image, '/common/img/news_default.jpg', 236, 135)" :alt="item.title" :title="item.title" />
                         </a>
                     </figcaption>
                     <hgroup>
@@ -128,7 +128,7 @@
                 <figure class="news-aside2-list" v-for="(item, index) in aside2_list">
                     <a :href="'/'+ channel_domain +'/'+ item.weid" target="_black">
                         <hgroup class="news-aside2-list-con">
-                            <p><img :src="set_img(item.thumb_image, '/common/img/bg2.jpg', 280, 155)" :alt="item.title" :title="item.title"></p>
+                            <p><img :src="set_img(item.thumb_image, '/common/img/news_default.jpg', 280, 155)" :alt="item.title" :title="item.title"></p>
                             <h2>{{ item.title | limitLen(0,33) }}</h2>
                         </hgroup>
                     </a>
