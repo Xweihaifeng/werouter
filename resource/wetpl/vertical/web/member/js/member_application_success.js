@@ -24,29 +24,28 @@
             title: '开通微主页',
             offset: type //具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
                 ,
-            area: ['600px', '350px'],
+            area: ['900px', '369px'],
             id: 'layerDemo' + type //防止重复弹出
                 ,
             content: `
-            <div class="cont-hd">
-                <div class="panel panel-default panel-title">
-                    <div class="panel-body">
-                        请输入您专属的个性域名
+            <div class="cont-hd" style="overflow: hidden;width: 100%;box-sizing: border-box;margin: 0">
+                 <div class="cont-L" style=" width: 165px;height:141px;float: left;margin-top:50px;margin-left: 30px">
+                     <img src="/resource/wetpl/default/web/user/img/domain_res.png" alt="">
+                 </div>
+                <div class="cont-R" style="width: 670px;height: auto;float: right;margin-right: 30px;font-weight: normal;">
+                    <div class="form-group" style="margin-top: 60px;margin-right: 30px;margin-bottom: 16px;overflow: hidden">
+                        <button class="btn btn-success check-domain" style="width: 98px;height: 42px;line-height: 31px;text-align: center;background: #ffcc5f;color: #fff;margin-left: 20px;border-radius: 3px;margin-right: 18px;border: none;outline:none;float: right;" >检测</button>
+                        <input id="user-domain" type="text" class="form-control" name="domain" value="" style="width:200px;display: inline-block;float: right;outline: none;height:42px" placeholder="请输入5~16位英文字符">
+                        <label id="host" style="margin-left: 10px; padding-top: 8px; padding-right: 5px;display: inline-block;font-weight: normal;float: right;height:42px"></label>       
                     </div>
-                </div>
-                <div class="form-group" style="margin-top: 15px;margin-right: 30px;">
-                    <button class="btn btn-default send-code" style="margin-left: 10px; border-color: #ccc;float: right;width:100px;" >发送验证码</button>
-                    <input type="text" class="form-control" name="verifycode" value="" style="width: 200px; float: right;" placeholder="请输入验证码">
-                    <label style="margin-left: 10px; padding-top: 8px; padding-right: 5px; float: right;">验证码</label>
-                    
-                    
-                </div>
-                <div class="form-group" style="margin-top: 60px;margin-right: 30px;">
-                    <button class="btn btn-success check-domain" style="margin-left: 10px; border-color: #ccc; float: right;width:100px;" >检测</button>
-                    <button id="submit_domain" type="submit" class="btn btn-danger" style="margin-left: 10px; border-color: #ccc; float: right;width:100px; display:none" >立即申请</button>
-                    <input id="user-domain" type="text" class="form-control" name="domain" value="" style="width:  200px; float: right;" placeholder="请输入5~16位英文字符">
-                    <label id="host" style="margin-left: 10px; padding-top: 8px; padding-right: 5px; float: right;"></label>
-                    
+                    <div class="form-group" style="margin-top:15px;margin-right: 30px;overflow: hidden">
+                        <button class="btn btn-default send-code" style="width: 98px;height: 42px;line-height: 31px;text-align: center;background: #ffcc5f;color: #fff;margin-left: 20px;border-radius: 3px;margin-right: 18px;border: none;outline:none;float: right" >发送验证码</button>
+                        <input type="text" class="form-control" name="verifycode" value="" style="width:200px;display: inline-block;float: right;outline: none;height:42px" placeholder="请输入验证码">
+                        <label style=" display: inline-block;font-size:14px;color:#333333;float: right;line-height: 37px;margin-right: 10px">验证码</label>           
+                    </div>
+                  
+                        <div class="save" style="float: right;width: 60px; height: 36px;text-align: center;line-height: 36px; border-radius: 3px;color: #fff;cursor: pointer;margin-top: 10px;font-size: 14px;margin-right: 47px;background: #ffbf33;display: none;">保存</div>
+                 
                 </div>
 
             </div>`
@@ -112,7 +111,7 @@
                     })
                 }
 
-                $("#submit_domain").click(function() {
+                $(".save").click(function() {
                     var domain = $("#user-domain").val();
                     var code = $('input[name=verifycode]').val();
                     var sendData = { weid: weid, domain: domain, code: code };
@@ -141,10 +140,10 @@
                         layer.msg('请输入个性域名');
                         return;
                     }
+                    $('.save').hide();
                     checkDomain(domain, function(data) {
                         layer.msg('该个性别名可以使用');
-                        $('.check-domain').hide();
-                        $('#submit_domain').show();
+                        $('.save').show();
                     });
                 });
                 var $codeTimer;
