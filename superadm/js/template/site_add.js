@@ -1,6 +1,24 @@
 $(document).ready(function(){
     start();
      //非空验证
+    $.ajax({
+        url: ApiUrl + "cms/site/get_edition",
+        type: 'get',
+        dataType: 'JSON',
+        success: function (result) {
+            if (result.code === 200) {
+                var html = '';
+                $.each(result.data, function (key, val) {
+                    html += '<option name="options" value='+val.id+'>' + val.name + '</option>';
+                });
+                $("#editionId").html(html);
+            } else {
+                parent.layer.msg(result.message);
+
+                return false;
+            }
+        }
+    });
     $('#form').bootstrapValidator({
      message: 'This value is not valid',
      feedbackIcons: {
@@ -89,6 +107,7 @@ $(document).ready(function(){
                 return ;  
             } 
           var data = {
+                edition_id:$("#editionId").find("option:selected").val(),
                 site_name:$('input[name=site_name]').val(),
                 domain:$('input[name=domain]').val(),
                 real_name:$('input[name=real_name]').val(),

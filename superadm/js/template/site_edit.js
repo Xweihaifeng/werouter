@@ -3,30 +3,48 @@ $(document).ready(function(){
     var weid='';
      var init = function(){
          var type_id='';
-        //数据初始化
-        $.getJSON(ApiUrl+"cms/site/show?weid="+getUrlParam('weid'),function(result){
-            if (result.code === 200){
-                       //console.log(result);
-                        $('input[name=site_name]').val(result.data.site_name);
-                        $('input[name=domain]').val(result.data.domain);
-                        $('input[name=real_name]').val(result.data.real_name);
-                        $('input[name=phone]').val(result.data.phone);
+         $.ajax({
+             url: ApiUrl + "cms/site/get_edition",
+             type: 'get',
+             dataType: 'JSON',
+             success: function (result) {
+                 if (result.code === 200) {
+                     var html = '';
+                     $.each(result.data, function (key, val) {
+                         html += '<option name="options" value='+val.id+'>' + val.name + '</option>';
+                     });
+                     $("#editionId").html(html);
+                     //数据初始化
+                     $.getJSON(ApiUrl+"cms/site/show?weid="+getUrlParam('weid'),function(result){
+                         if (result.code === 200){
+                             //console.log(result);
+                             $("#editionId").find("option[value=" + result.data.edition_id + "]").attr("selected", true);
+                             $('input[name=site_name]').val(result.data.site_name);
+                             $('input[name=domain]').val(result.data.domain);
+                             $('input[name=real_name]').val(result.data.real_name);
+                             $('input[name=phone]').val(result.data.phone);
+                             $('input[name=logo]').val(result.data.logo);
+                             $('textarea[name=description]').val(result.data.description);
+                             $('textarea[name=key_word]').val(result.data.key_word);
+                             $('input[name=email]').val(result.data.email);
+                             $('input[name=tel]').val(result.data.tel);
+                             $('input[name=fax]').val(result.data.fax);
+                             $('input[name=addre]').val(result.data.addre);
 
-                        $('input[name=logo]').val(result.data.logo);
-                        $('textarea[name=description]').val(result.data.description);
-                        $('textarea[name=key_word]').val(result.data.key_word);
-                        $('input[name=email]').val(result.data.email);
-                        $('input[name=tel]').val(result.data.tel);
-                        $('input[name=fax]').val(result.data.fax);
-                        $('input[name=addre]').val(result.data.addre);
+                             if(result.data.logo!='' && result.data.logo!=null){$('#img_logo').attr('src',ApiMaterPlatQiniuDomain+result.data.logo);}
+                             weid=result.data.weid;
+                         }else {
+                             alert(data.message);
+                             //console.log(data);
+                         }
+                     });
+                 } else {
+                     parent.layer.msg(result.message);
 
-                        if(result.data.logo!='' && result.data.logo!=null){$('#img_logo').attr('src',ApiMaterPlatQiniuDomain+result.data.logo);}
-                        weid=result.data.weid;
-                }else {
-                     alert(data.message);
-                     //console.log(data);
-                }
-        });
+                     return false;
+                 }
+             }
+         });
     };
      init();
      //非空验证
@@ -119,6 +137,7 @@ $(document).ready(function(){
             } 
           var data = {
                 weid:weid,
+                edition_id:$("#editionId").find("option:selected").val(),
                 site_name:$('input[name=site_name]').val(),
                 domain:$('input[name=domain]').val(),
                 real_name:$('input[name=real_name]').val(),
