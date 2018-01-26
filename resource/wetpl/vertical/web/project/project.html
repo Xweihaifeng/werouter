@@ -36,6 +36,7 @@
             </div>
         </div>
         <div id="projects" v-show="showType.proj">
+            <img src="/common/img/no_con_default.png" alt="" v-if="none"/>
             <ul>
                 <a v-for="e in proj" :href="'/' + e.domain + '/activitydetail/' + e.weid">
                     <li>
@@ -58,37 +59,38 @@
         </div>
 
         <div class="cat-con" v-show="showType.act">
+            <img src="/common/img/no_con_default.png" alt="" v-if="inai"/>
             <ul class="cont-list">
-                <li v-for="item in act">
-                    <a href="javascript:void(0);">
-                        <img :src="item.image" alt="">
+                <li v-for="e in act">
+                    <a :href="'/' + e.domain + '/activitydetail/' + e.weid">
+                        <img :src="setImg(e.cover, '/common/img/p04.png', 260, 160)" alt="" width="285" height="160"/>
                     </a>
                     <div class="abstract">
-                        <a href="javascript:void(0);">
-                            <h3>{{item.title}}</h3>
-                            <p>{{item.info}}</p>
+                        <a :href="'/' + e.domain + '/activitydetail/' + e.weid">
+                            <h3>{{e.title | cut(30)}}</h3>
+                            <p>{{e.Sponsor}}</p>
                         </a>
                         <div class="abst-info">
                             <div class="info-son">
                                 <img src="{{PATH_TML}}activity/img/时间.png" alt="">
-                                <span>{{item.time}}</span>
+                                <span>{{e.begain_time + ' ' + e.begain_week + ' 开始'}}</span>
                             </div>
                             <div class="info-son">
                                 <img src="{{PATH_TML}}activity/img/地点.png" alt="">
-                                <span>{{item.add}}</span>
+                                <span>{{e.area_name + ' ' + e.address}}</span>
                             </div>
                             <div class="info-son">
                                 <img src="{{PATH_TML}}activity/img/人员.png" alt="">
-                                <span>{{item.active}}</span>人已报名
+                                <span>{{e.enroll_num + '/' + e.enroll_limit}}</span> 人已报名
                             </div>
                         </div>
                     </div>
-                    <div class="attend" v-if="item.price == '免费'">
-                        <span>{{item.price}}</span>
+                    <div class="attend" v-if="e.price == '免费'">
+                        <span>{{e.price}}</span>
                         <button>立即报名</button>
                     </div>
-                    <div class="attend" v-else="item.price != '免费'">
-                        <span class="attebd_cur">￥{{item.price}}</span>
+                    <div class="attend" v-else="e.price != '免费'">
+                        <span class="attebd_cur">{{e.price}}</span>
                         <button class="button_cur">立即报名</button>
                     </div>
                 </li>
@@ -105,7 +107,7 @@
         el: '#container',
         data: {
             showType: {act: false, proj: true, total: false, latest: true, hotest: false},
-            pageStore: [{id: 'proj', total: 12, page: 1, limit: 12}, {id: 'act', total: 5, page: 1, limit: 5}],
+            pageStore: [{id: 'proj', total: 8, page: 1, limit: 8}, {id: 'act', total: 5, page: 1, limit: 5}],
             pages: {},
             type: [],
             time: [],
@@ -114,7 +116,9 @@
             status: {'已发布': 'prepare', '进行中': 'doing', '已结束': 'end'},
             url: apiUrl + 'activity/lists',
             args: {cate_id: '', time_scope: '', order: ''},
-            isLoading: false
+            isLoading: false,
+            none: false,
+            inai: false
         },
         beforeCreate: function(){
             this.isLoading = true;
@@ -123,18 +127,17 @@
             this.$Loading.start();
             var dataTime = ['不限', '今天', '近三天', '近一周', '近一月'];
             this.time = dataTime.map((x, i) => i === 0 ? ({id: i, name: x, style: {'color': '#4caaed'}}) : ({id: i, name: x, style: {}}));
-            this.act = [
+            /*this.act = [
                 {"image":"/resource/wetpl/vertical/web/activity/img/01.png","title":"互联网运营50堂必修课，如何玩转产品、用户、渠道、数据？","info":"50节系统化实战课程、是面向0到3年得互联网从业者和爱好者学习的内容，从零基础打造运营思维体系，深度学习互联网运营、产品、用户、渠道、营销的实操，具体怎么做，通过运营模型及实例让你快速进阶...","price":"免费","active":"196","time":"本周五 12:30 开始","add":"高新区"},
                 {"image":"/resource/wetpl/vertical/web/activity/img/02.png","title":"互联网运营50堂必修课，如何玩转产品、用户、渠道、数据？","info":"50节系统化实战课程、是面向0到3年得互联网从业者和爱好者学习的内容，从零基础打造运营思维体系，深度学习互联网运营、产品、用户、渠道、营销的实操，具体怎么做，通过运营模型及实例让你快速进阶...","price":578,"active":"196","time":"下周三 15:30 开始","add":"雁塔区"},
                 {"image":"/resource/wetpl/vertical/web/activity/img/03.png","title":"互联网运营50堂必修课，如何玩转产品、用户、渠道、数据？","info":"50节系统化实战课程、是面向0到3年得互联网从业者和爱好者学习的内容，从零基础打造运营思维体系，深度学习互联网运营、产品、用户、渠道、营销的实操，具体怎么做，通过运营模型及实例让你快速进阶...","price":20,"active":"196","time":"2018-01-24 14:29 开始","add":"未央区"},
                 {"image":"/resource/wetpl/vertical/web/activity/img/04.png","title":"互联网运营50堂必修课，如何玩转产品、用户、渠道、数据？","info":"50节系统化实战课程、是面向0到3年得互联网从业者和爱好者学习的内容，从零基础打造运营思维体系，深度学习互联网运营、产品、用户、渠道、营销的实操，具体怎么做，通过运营模型及实例让你快速进阶...","price":666,"active":"196","time":"下周日 12:30 开始","add":"世纪广场"}
-            ]
-
+            ]*/
             axios.get(apiUrl + 'activity/cate/lists').then(data => {
                 this.type = data.data.data.list.map((e, i) => i === 0 ? ({title: '全部', weid: '', style: {'color': '#4caaed'}}) : (e.style = {}, e));
             })
 
-            this.getList(this.url, '', '', '', 1, 12);
+            this.getList(this.url, '', '', '', 1, 8);
         },
         methods: {
             change: function(page){
@@ -182,10 +185,16 @@
                 axios.get(url + '?cate_id=' + cate_id + '&time_scope=' + time_scope + '&order=' + order + '&page=' + page + '&limit=' + limit).then(data => {
                     this.isLoading = false;
                     this.$Loading.finish();
-                        var info = data.data.data;
-                        this.showType.proj ? (this.pageStore[0].total = info.total, this.pages = this.pageStore[0],
+                    var info = data.data.data;
+//                    if (info.list != '') {
+                        this.showType.proj ? (this.none = false, this.pageStore[0].total = info.total, this.pages = this.pageStore[0],
                                 this.proj = info.list.map(e => e.type != 1 ? (e.isFree = false, /*e.price = '¥' + e.price*/e.price = '收费', e) : (e.isFree = true, e.price = '免费', e)))
-                        : ''//(this.pageStore[1].total = info.total, this.pages = this.pageStore[1], this.act = info.list);
+                                : (this.inai = false)//(this.pageStore[1].total = info.total, this.pages = this.pageStore[1], this.act = info.list);
+                        this.act = this.proj;
+//                    } else {
+//                        this.showType.proj ? (this.proj = [], this.none = true) : (this.act = [], this.inai = true);
+//                        this.pages = {};
+//                    }
                 })
             }
         },
