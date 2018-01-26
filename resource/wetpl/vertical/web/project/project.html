@@ -127,7 +127,6 @@
         },
         created: function(){
             this.$Loading.start();
-            this.isLoading = true;
             this.time = this.dataTime.map((x, i) => i === 0 ? ({id: i, name: x}) : ({id: i, name: x}));
             this.time.flag = 0;
             axios.get(apiUrl + 'activity/cate/lists').then(data => {
