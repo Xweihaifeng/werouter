@@ -257,6 +257,8 @@ const SMS_USERSMS_TOGGLE = apiUrl + 'sms/usersms/toggle';
 
 // 活动管理
 const ACTIVITY_LIST = apiUrl + 'activity/listbyuser'; //活动 - 列表（根据用户id�?
+const ACTIVITY_PLAT_LIST = apiUrl + 'activity/lists'; //活动 - 列表 - 平台
+const ACTIVITY_CATE_PLAT_LIST = apiUrl + 'activity/cate/lists'; //活动 - 分类 - 列表
 const ACTIVITY_ACTIVITYINFO = apiUrl + 'activity/activityinfo'; //活动 -  个人活动统计详情
 const ACTIVITY_DESTROY = apiUrl + 'activity/destroy'; //活动 - 删除
 const ACTIVITY_STORE = apiUrl + 'activity/store'; //活动-保存

@@ -43,6 +43,23 @@
 
  // 吐丝层end////////////////////////////////////
 
+ // 活动分类数据
+ var loadActivityCate = function(callback) {
+     $.ajax({
+         url: ACTIVITY_CATE_PLAT_LIST,
+         type: 'GET',
+         async: false,
+         success: function(data) {
+             if (data.code == 200)
+                 callback(data.data);
+             else
+                 notice.alert(data.message);
+         },
+         error: function(xhr) {
+             console.log(xhr);
+         }
+     });
+ }
 
  var deletedGuests = [];
  var deletedTickets = [];
@@ -433,6 +450,7 @@
 
          var cover = $("#J_ActivityPoster").val();
          var title = $("#J_ActivityTitle").val();
+         var cate = $("#J_ActivityCate").val();
          var area_id = $("#J_ActivityCityId").val();
          var area_name = $("#J_ActivityCity").val();
          var address = $("#J_ActivityAddr").val();
@@ -468,7 +486,10 @@
              mess_tusi('标题字数不可小于5个');
              return;
          }
-
+         if (!cate) {
+             mess_tusi('请选择活动分类');
+             return;
+         }
          if (!content) {
              mess_tusi('请输入详情');
              return;
@@ -509,6 +530,7 @@
          }
          var sendData = {
                  title: title,
+                 cate_id: cate,
                  cover: cover,
                  area_id: area_id,
                  area_name: area_name,
@@ -971,6 +993,14 @@
      $(".add_ticket").bind("click", function() {
          $("#J_BtnSaveTicket").data("id", '1');
      });
+     // 加载分类
+     loadActivityCate(function(data) {
+         var html = '';
+         $(data.list).each(function(k, v) {
+             html += '<option value="' + v.weid + '">' + v.title + '</option>';
+         });
+         $('select[name=cate]').append(html);
+     });
      // 4.活动详情
      var activitydetail = function(id) {
              $.ajax({
@@ -985,6 +1015,7 @@
                          $("#img").attr("src", qiniu_bucket_domain + data.data.cover);
                          $("#J_ActivityPoster").val(data.data.cover);
                          $("#J_ActivityTitle").val(data.data.title);
+                         $("#J_ActivityCate option[value='" + data.data.cate_id + "']").attr('selected', true);
                          $("#J_ActivityCity").val(data.data.area_name);
                          $("#J_ActivityCityId").val(data.data.area_id);
                          $("#J_ActivityAddr").val(data.data.address);

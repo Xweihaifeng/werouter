@@ -271,6 +271,7 @@ var multiSmsNotify = function(weid, userIds, callback) {
         });
     });
 }
+
 $(document).on('click', '.all-sms-notify', function() {
     confirmer = layer.confirm('快捷发送方式将通知该活动所有报名者，若要指定接收人，请使用"短信管理"中的高级群发功能。<br>您确认要快捷发送通知吗？', {
         title: '快捷发送通知',
