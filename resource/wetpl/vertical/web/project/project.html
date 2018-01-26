@@ -36,7 +36,9 @@
             </div>
         </div>
         <div id="projects" v-show="showType.proj">
-            <img src="/common/img/no_con_default.png" alt="" v-if="none"/>
+            <div class="none">
+                <img src="/common/img/no_con_default.png" alt="" v-if="none"/>
+            </div>
             <ul>
                 <a v-for="e in proj" :href="'/' + e.domain + '/activitydetail/' + e.weid">
                     <li>
@@ -59,7 +61,9 @@
         </div>
 
         <div class="cat-con" v-show="showType.act">
-            <img src="/common/img/no_con_default.png" alt="" v-if="inai"/>
+            <div class="none">
+                <img src="/common/img/no_con_default.png" alt="" v-if="inai"/>
+            </div>
             <ul class="cont-list">
                 <li v-for="e in act">
                     <a :href="'/' + e.domain + '/activitydetail/' + e.weid">
@@ -115,7 +119,7 @@
             act: [],
             status: {'已发布': 'prepare', '进行中': 'doing', '已结束': 'end'},
             url: apiUrl + 'activity/lists',
-            args: {cate_id: '', time_scope: '', order: ''},
+            args: {cate_id: '', time_scope: '', order: '', page: 1, limit: 8},
             isLoading: false,
             none: false,
             inai: false
@@ -143,22 +147,22 @@
             change: function(page){
                 this.isLoading = true;
                 this.pages.page = page;
-                this.getList(this.url, '', '', '', page, this.pages.limit);
+                this.getList(this.url, this.args.cate_id, this.args.time_scope, this.args.order, page, this.pages.limit);
             },
             show: function(o, type){
                 switch(type){
                     case 'type0' : this.type.map(e => e.title === o.title ? e.style = {'color': '#4caaed'} : e.style = {});
-                        this.args.cate_id = o.weid;
+                        this.args.cate_id = o.weid;this.pages.page = 1;
                         this.getList(apiUrl + 'activity/lists', this.args.cate_id, this.args.time_scope, this.args.order, 1, this.pages.limit);
                         this.isLoading = true;
                         break;
                     case 'type1' : this.time.map(e => e.name === o.name ? e.style = {'color': '#4caaed'} : e.style = {});
-                        this.args.time_scope = o.id;
+                        this.args.time_scope = o.id;this.pages.page = 1;
                         this.getList(apiUrl + 'activity/lists', this.args.cate_id, this.args.time_scope, this.args.order, 1, this.pages.limit);
                         this.isLoading = true;
                         break;
                     case 'type2' : var id = ['latest', 'hotest'].map((e, i) => o === e ? (this.showType[e] = true, i) : (this.showType[e] = false, null)).filter(x => x != null)[0];
-                        this.args.order = id;
+                        this.args.order = id;this.pages.page = 1;
                         this.getList(apiUrl + 'activity/lists', this.args.cate_id, this.args.time_scope, this.args.order, 1, this.pages.limit);
                         this.isLoading = true;
                         break;
@@ -186,15 +190,15 @@
                     this.isLoading = false;
                     this.$Loading.finish();
                     var info = data.data.data;
-//                    if (info.list != '') {
+                    console.log(info)
+                    if (info.list != '') {
                         this.showType.proj ? (this.none = false, this.pageStore[0].total = info.total, this.pages = this.pageStore[0],
                                 this.proj = info.list.map(e => e.type != 1 ? (e.isFree = false, /*e.price = '¥' + e.price*/e.price = '收费', e) : (e.isFree = true, e.price = '免费', e)))
                                 : (this.inai = false)//(this.pageStore[1].total = info.total, this.pages = this.pageStore[1], this.act = info.list);
                         this.act = this.proj;
-//                    } else {
-//                        this.showType.proj ? (this.proj = [], this.none = true) : (this.act = [], this.inai = true);
-//                        this.pages = {};
-//                    }
+                    } else {
+                        this.showType.proj ? (this.proj = [], this.none = true, this.pages.total = 8, this.pages.limit = 8) : (this.act = [], this.inai = true);
+                    }
                 })
             }
         },
