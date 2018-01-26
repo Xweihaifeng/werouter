@@ -70,8 +70,8 @@
             <input type="hidden" name="config-url" value="index.html">
             <section class="content-header" style="height:60px;">
                 <h1>
-                    控制台首页
-                    <small>平台概况</small>
+                    后台管理首页
+                    <small>网站概况</small>
                 </h1>
                 <ol class="breadcrumb">
                     <li><a href="#"><i class="fa fa-dashboard"></i> 首页</a></li>
@@ -95,25 +95,25 @@
                                 <ul class="panel-body list-group">
                                     <form role="form" class="form-horizontal">
                                         <div class="form-group" style="margin-left: 40px">
-                                            <label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label">系统版本</label>
+                                            <label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label" style="text-align:left">系统版本</label>
                                             <div class="col-sm-8 col-lg-8 col-xs-8">
                                                 <span class="info-value Wez_version"></span>
                                             </div>
                                         </div>
                                         <div class="form-group" style="margin-left: 40px">
-                                            <label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label">站点地址</label>
+                                            <label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label" style="text-align:left">站点地址</label>
                                             <div class="col-sm-8 col-lg-8 col-xs-8">
                                                 <span class="info-value Wez_domain"></span>
                                             </div>
                                         </div>
                                         <div class="form-group" style="margin-left: 40px">
-                                            <label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label">手机版地址</label>
+                                            <label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label" style="text-align:left">手机地址</label>
                                             <div class="col-sm-8 col-lg-8 col-xs-8">
                                                 <span class="info-value Wez_mobile_domain"></span>
                                             </div>
                                         </div>
                                         <div class="form-group" style="margin-left: 40px">
-                                            <label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label">是否启用SSL</label>
+                                            <label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label" style="text-align:left">SSL状态</label>
                                             <div class="col-sm-8 col-lg-8 col-xs-8">
                                                 <span class="info-value Wez_ssl"></span>
                                             </div>
@@ -257,7 +257,7 @@
                 $('.Wez_version').text(data.system.version);
                 $('.Wez_domain').text(data.system.domain);
                 $('.Wez_mobile_domain').text(data.system.mobile_domain);
-                $('.Wez_ssl').text(data.system.ssl == 2 ? '是' : '否');
+                $('.Wez_ssl').text(data.system.ssl == 2 ? '已启用' : '未启用');
 
                 $('.statistics tbody tr').each(function(key, value) {
                     var tag = $(value).data('tag');
