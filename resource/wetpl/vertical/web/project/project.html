@@ -131,7 +131,7 @@
             this.time = this.dataTime.map((x, i) => i === 0 ? ({id: i, name: x}) : ({id: i, name: x}));
             this.time.flag = 0;
             axios.get(apiUrl + 'activity/cate/lists').then(data => {
-                this.type = data.data.data.list;
+                this.type = [{weid: '', title: '全部'}, ...data.data.data.list];
                 this.type.flag = 0;
             });
             this.getList(this.url, '', '', '', 1, 8); //初始化页面数据
