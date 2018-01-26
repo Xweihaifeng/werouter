@@ -150,21 +150,16 @@
                 this.getList(this.url, this.args.cate_id, this.args.time_scope, this.args.order, page, this.pages.limit);
             },
             show: function(o, type){
+                this.pages.page = 1;
                 switch(type){
                     case 'type0' : this.type.map(e => e.title === o.title ? e.style = {'color': '#4caaed'} : e.style = {});
-                        this.args.cate_id = o.weid;this.pages.page = 1;
-                        this.getList(apiUrl + 'activity/lists', this.args.cate_id, this.args.time_scope, this.args.order, 1, this.pages.limit);
-                        this.isLoading = true;
+                        this.args.cate_id = o.weid;
                         break;
                     case 'type1' : this.time.map(e => e.name === o.name ? e.style = {'color': '#4caaed'} : e.style = {});
-                        this.args.time_scope = o.id;this.pages.page = 1;
-                        this.getList(apiUrl + 'activity/lists', this.args.cate_id, this.args.time_scope, this.args.order, 1, this.pages.limit);
-                        this.isLoading = true;
+                        this.args.time_scope = o.id;
                         break;
                     case 'type2' : var id = ['latest', 'hotest'].map((e, i) => o === e ? (this.showType[e] = true, i) : (this.showType[e] = false, null)).filter(x => x != null)[0];
-                        this.args.order = id;this.pages.page = 1;
-                        this.getList(apiUrl + 'activity/lists', this.args.cate_id, this.args.time_scope, this.args.order, 1, this.pages.limit);
-                        this.isLoading = true;
+                        this.args.order = id;
                         break;
                     case 'type3' : ['act', 'proj'].map(e => o === e ? (this.showType[e] = true) : (this.showType[e] = false));
                         //map1保存并更新pageStore状态，map2更新pages状态，只限两个类别有效
@@ -172,6 +167,8 @@
                         break;
                     default: break;
                 }
+                this.getList(apiUrl + 'activity/lists', this.args.cate_id, this.args.time_scope, this.args.order, 1, this.pages.limit);
+                this.isLoading = true;
             },
             setImg: function(url, init, w, h, mode){
                 if (url != '' && url != null && url != undefined) {
