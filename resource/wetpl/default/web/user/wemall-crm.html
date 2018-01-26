@@ -17,24 +17,31 @@
     <script src="/common/iview/libs/util.js"></script>
     <script src="/common/iview/libs/filter.js"></script>
     <script src="/common/js/echart/echarts.js"></script>
+    <script src="/common/js/plupload/plupload.full.min.js"></script>
+    <script src="/common/js/qiniu.js"></script>
     <script src="/common/js/ckeditor/ckeditor.js"></script>
 
-    <style type="text/css">
-        [v-cloak] {
-            display: none;
+
+    <script>
+        var qiniu_uptoken = '';
+        var saveto ='qiniu';
+        var qiniu_bucket_domain = ApiMaterPlatQiniuDomain;
+        var __init = function(){
+            $.ajax({
+                url:  QINIU_UPTOKEN_URL,
+                type: 'get',
+                dataType: 'json',
+                success: function(data){
+                    qiniu_uptoken = data.uptoken;
+                },
+                error: function(xhr){
+                    console.log(xhr);
+                }
+            });
         }
-        #showss input, #showss textarea, #showss input {
-            outline: none;
-            border: none;
-            background: #fff;
-        }
-        #tg > img{
-            width: 200px;
-            height: 100px;
-            display: block;
-            margin: 0 auto;
-        }
-    </style>
+        __init();
+
+    </script>
 </head>
 <body style="width: 100%; background: #F7F6F2;">
 
@@ -197,10 +204,11 @@
                             <upload
                                     ref="upload"
                                     :show-upload-list="false"
-                                    :default-file-list="uploadList"
                                     :on-success="handleSuccess"
                                     :format="['jpg','jpeg','png']"
                                     :max-size="2048"
+                                    :on-format-error="handleFormatError"
+                                    :on-exceeded-size="handleMaxSize"
                                     :before-upload="handleBeforeUpload"
                                     :data="uploadData"
                                     multiple
@@ -211,8 +219,7 @@
                                     <icon type="camera" size="20"></icon>
                                 </div>
                             </upload>
-
-                            <!--
+                             <!--
                             <Upload :action="uploadUrl" :format="['jpg','jpeg','png']" :data="uploadData" :name="uploadName" :before-upload="handleBeforeUpload">
                                 <i-button type="ghost" icon="ios-cloud-upload-outline">上 传</i-button>
                             </upload>
@@ -226,7 +233,8 @@
 
                         <form-item label="推广内容" prop="content">
 
-                            <textarea  id="Couponcontent" ></textarea>
+                            <textarea  id="Couponcontent" >{{formItemMemberCoupon.content}}</textarea>
+
                             <!--<i-input v-model="formItemMemberCoupon.content" type="textarea"  :autosize="{minRows: 2,maxRows: 5}"  placeholder="请输入推广内容"></i-input>-->
                         </form-item>
                         <form-item>
@@ -316,6 +324,9 @@
 </div>
 
 <script>
+    $(function () {
+        CKEDITOR.replace('Couponcontent');
+    })
     var crmapp=new Vue({
         el: '#app',
         data: {
@@ -329,7 +340,6 @@
             uploadName:'',
             uploadUrl:'http://up-z1.qiniu.com/', //七牛上传地址
             uploadList: [], //上传列表
-            defaultList: [],
             menuList: ["概览", "发布会员卡", "会员卡管理", "发布代金券", "管理代金券"], //控制导航
             formItemMember: {
                 weid:'',
@@ -464,16 +474,9 @@
                 activity_time:[
                     {required: true, message: '优惠卷使用期限不能为空', trigger: 'blur'}
                 ],
-                picture:[
-
-                ],
                 title:[
                     {required: true, message: '推广标题不能为空', trigger: 'blur'}
                 ],
-                content:[
-                    {required: true, message: '推广内容不能为空', trigger: 'blur'}
-                ],
-
             },
             columnsMemberCouponTotal:1,
             Couponpagesize:1,
@@ -713,21 +716,12 @@
             }
 
         },
-//        created : function () {
-//            crmapp.$nextTick(()=>{
-//                CKEDITOR.replace('Couponcontent');
-//                //CKEDITOR.replace('Couponcontent',{"extraPlugins":"filebrowser,image,imagepaste,filetools"});
-//            });
-//        },
         mounted: function () {
             var self = this;
-
-            this.$nextTick(()=>{
-                CKEDITOR.replace('Couponcontent');
-                //CKEDITOR.replace('Couponcontent',{"extraPlugins":"filebrowser,image,imagepaste,filetools"});
-            });
-
             this.uploadList = this.$refs.upload.fileList;
+            this.$nextTick(()=>{
+
+            });
             ajax.get('getQiniuToken').then((res)=>{
                 if(res.code==200){
                     this.uploadData.token=res.data;
@@ -800,7 +794,12 @@
                     //判断编辑和发布
                     if(this.MemberCouponEditflag==true){
                         this.MemberCouponEditflag=false;
+                        this.uploadList = this.$refs.upload.fileList;
+                        CKEDITOR.instances.Couponcontent.setData(this.formItemMemberCoupon.content);
                     }else{
+                        this.uploadList=[];
+                        this.uploadList = this.$refs.upload.fileList;
+
                         //发布清空数据
                         this.formItemMemberCoupon={
                                 weid:'',
@@ -869,10 +868,16 @@
                 })
             },
             handleCouponmit(name){
-                console.log(this.uploadList);
+                console.log(this.formItemMemberCoupon);
                 if(this.uploadList.length<1){
                     this.$Message.error('还未上传推广图片!');
                 }
+                //判断编辑内容
+                if(CKEDITOR.instances.Couponcontent.getData()==""){
+                    this.$Message.error('推广内容不能为空!');
+                    return false;
+                }
+                this.formItemMemberCoupon.content=CKEDITOR.instances.Couponcontent.getData();
                 this.$refs[name].validate((valid) => {
                     if (valid) {
                         //判断是否为编辑
@@ -967,7 +972,7 @@
                             res.data.use_restrictions?data.use_restrictions=res.data.use_restrictions.toString():data.use_restrictions='';
                             data.receive_time=[res.data.publish_time,res.data.expire_time];
                             res.data.activity_time?data.activity_time=res.data.activity_time.toString():data.activity_time='';
-                            this.uploadList[0]={name:res.data.content_info.picture,url:'http://images.wezchina.com/'+res.data.content_info.picture};
+                            this.uploadList[0]={name:res.data.content_info.picture,url:'http://images.wezchina.com/'+res.data.content_info.picture,status:'finished'};
                             data.picture=res.data.content_info.picture;
                             data.title=res.data.content_info.title;
                             data.content=res.data.content_info.content;
