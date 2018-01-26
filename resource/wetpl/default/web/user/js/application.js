@@ -58,7 +58,6 @@ $(document).ready(function() {
         localStorage.removeItem('weid');
     })
 
-    $("#title").text('【' + localStorage.getItem('title') + '】');
 
     var domain;
     var isBrand;

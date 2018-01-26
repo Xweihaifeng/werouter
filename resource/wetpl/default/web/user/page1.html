@@ -1,170 +1,180 @@
 <!DOCTYPE html>
 <html>
 
-	<head lang="en">
-		<meta charset="UTF-8">
-		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-		<link rel="shortcut icon" id="favicon" href="" />
-		<script src="/common/js/jquery-3.2.1.min.js"></script>
-		<script src="/common/js/browser.min.js"></script>
-		<script src="/common/js/jquery.imagecompress.js"></script>
-		<link rel="stylesheet" href="/common/css/main.css">
-		<link rel="stylesheet" href="/common/css/bootstrap.min.css">
-		<link rel="stylesheet" href="/common/css/buttons.css">
-		<link rel="stylesheet" href="/common/css/swiper.min.css">
-		<!-- <link rel="stylesheet" type="text/css" href="icon/font_hhs1pgs3hfbc5wmi/iconfont1.css" /> -->
-		<link rel="stylesheet" type="text/css" href="{{PATH_TML}}user/css/page.css" />
-		<link rel="stylesheet" type="text/css" href="{{PATH_TML}}user/css/page1.css" />
-		<!-- DataTables -->
-	  	<link rel="stylesheet" href="/common/AdminLTE-2.4.0-rc/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
-	  	<!-- Theme style -->
-	  	<link rel="stylesheet" href="/common/AdminLTE-2.4.0-rc/dist/css/AdminLTE.min.css">
-		<script src="/common/js/swiper-3.3.1.min.js"></script>
-		<script src="/common/js/buttons.js"></script>
-		<script src="/common/js/layer/layer.js"></script>
-		<title>我的钱包-充值</title>
-	</head>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="shortcut icon" id="favicon" href="" />
+    <script src="/common/js/jquery-3.2.1.min.js"></script>
+    <script src="/common/js/browser.min.js"></script>
+    <script src="/common/js/jquery.imagecompress.js"></script>
+    <link rel="stylesheet" href="/common/css/main.css">
+    <link rel="stylesheet" href="/common/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/common/css/buttons.css">
+    <link rel="stylesheet" href="/common/css/swiper.min.css">
+    <!-- <link rel="stylesheet" type="text/css" href="icon/font_hhs1pgs3hfbc5wmi/iconfont1.css" /> -->
+    <link rel="stylesheet" type="text/css" href="{{PATH_TML}}user/css/page.css" />
+    <link rel="stylesheet" type="text/css" href="{{PATH_TML}}user/css/page1.css" />
+    <!-- DataTables -->
+    <link rel="stylesheet" href="/common/AdminLTE-2.4.0-rc/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="/common/AdminLTE-2.4.0-rc/dist/css/AdminLTE.min.css">
+    <script src="/common/js/swiper-3.3.1.min.js"></script>
+    <script src="/common/js/buttons.js"></script>
+    <script src="/common/js/layer/layer.js"></script>
+    <title>我的钱包-充值</title>
+</head>
 
-	<style>
-		a {
-			color: #000!important;
-		}
+<style>
+    a {
+        color: #000!important;
+    }
+    
+    a:hover {
+        color: #ec0000!important;
+    }
+    
+    #accept {
+        color: white!important;
+    }
+    
+    .balance-title {
+        width: 100%;
+        height: 35px;
+        line-height: 35px;
+        padding-left: 15px;
+        font-size: 15px;
+        background-color: #eeeeee;
+    }
+    
+    .nav-tabs {
+        width: 100%;
+        margin-top: 30px;
+        padding-left: 30px;
+    }
+    
+    .content {
+        width: 100%;
+        height: 80px;
+        border-bottom: 1px solid #dcdcdc;
+    }
+    
+    .c-title {
+        width: 100px;
+        height: 30px;
+        margin-top: 32px;
+        padding-left: 30px;
+        float: left;
+    }
+    
+    .c-info {
+        width: 150px;
+        height: 30px;
+        margin-top: 32px;
+        padding-left: 10px;
+        float: left;
+    }
+    
+    #money {
+        width: 200px;
+        margin-top: 25px;
+        float: left;
+    }
+    
+    .cert {
+        padding-top: 24px;
+    }
+    
+    .art-img {
+        line-height: 29px;
+    }
+    
+    .qr-window table {
+        width: 220px;
+    }
+    
+    .td-title {
+        text-align: right;
+    }
+</style>
 
-		a:hover {
-			color: #ec0000!important;
-		}
+<body style="width: 100%; background: #F7F6F2;">
+    <div class="left-nav"></div>
+    <div class="login">
+        <div id="top"></div>
+        <div id="middle"></div>
+        <div id="right">
+            <div class="container1">
+                <div class="balance-title">余额充值</div>
+                <div class="recharge">
+                    <ul class="nav nav-tabs">
+                        <li role="presentation" class="charge active"><a href="#">我要充值</a></li>
+                        <li role="presentation" class="log"><a href="#">充值日志</a></li>
+                    </ul>
+                </div>
 
-		#accept {
-			color: white!important;
-		}
+                <div id="charge">
+                    <div class="c-title">充值金额:</div>
+                    <div class="money"><input type="text" class="form-control" placeholder="0" id="money"></div>
+                    <div class="c-info">人民币（元）</div>
+                    <div class="cert"><a id="accept" class="button button-highlight button-rounded" style="width: 150px; height: 36px; line-height: 36px;">确定付款</a></div>
+                </div>
 
-		.balance-title {
-			width: 100%;
-			height: 35px;
-			line-height: 35px;
-			padding-left: 15px;
-			font-size: 15px;
-			background-color: #eeeeee;
-		}
+                <div id="log" style="margin-top: 30px; display: none;">
+                    <section class="content" style="height: auto; min-height: 422px;">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="box">
+                                    <div class="box-body">
+                                        <table id="example" class="table table-bordered table-hover">
+                                            <thead>
+                                                <th>充值金额</th>
+                                                <th>充值日期</th>
+                                                <th>状态</th>
+                                            </thead>
+                                            <tbody id="money_tab">
 
-		.nav-tabs {
-			width: 100%;
-			margin-top: 30px;
-			padding-left: 30px;
-		}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- /.box-body -->
+                                </div>
+                                <!-- /.box -->
+                            </div>
+                        </div>
+                    </section>
+                    <!-- <div class="page" id="page"></div> -->
+                </div>
 
-		.content {
-			width: 100%;
-			height: 80px;
-			border-bottom: 1px solid #dcdcdc;
-		}
+                <script>
+                    $(".charge").click(function() {
+                        $(".log").removeClass("active");
+                        $("#log").hide();
+                        $(this).addClass("active");
+                        $("#charge").show();
+                    })
 
-		.c-title {
-			width: 100px;
-			height: 30px;
-			margin-top: 32px;
-			padding-left: 30px;
-			float: left;
-		}
+                    $(".log").click(function() {
+                        $(".charge").removeClass("active");
+                        $("#charge").hide();
+                        $(this).addClass("active");
+                        $("#log").show();
+                    })
+                </script>
+            </div>
+        </div>
+    </div>
+    <script src="{{PATH_CONFIG}}"></script>
+    <script src="{{PATH_TML}}user/common/js/generate.js"></script>
+    <!--模块引入位置不可移动-->
+    <script src="/common/js/control.js"></script>
+    <script src="{{PATH_TML}}user/js/common.js"></script>
+    <script src="/common/layer-v3.0.3/layer-v3.0.3/layer/layer.js"></script>
+    <!-- DataTables -->
+    <script src="/common/AdminLTE-2.4.0-rc/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="/common/AdminLTE-2.4.0-rc/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script src="{{PATH_TML}}user/js/page1.js"></script>
 
-		.c-info {
-			width: 150px;
-			height: 30px;
-			margin-top: 32px;
-			padding-left: 10px;
-			float: left;
-		}
-
-		#money {
-			width: 200px;
-			margin-top: 25px;
-			float: left;
-		}
-
-		.cert {
-			padding-top: 24px;
-		}
-
-
-	</style>
-
-	<body style="width: 100%; background: #F7F6F2;">
-		<div class="left-nav"></div>
-		<div class="login">
-			<div id="top"></div>
-			<div id="middle"></div>
-			<div id="right">
-				<div class="container1">
-					<div class="balance-title">余额充值</div>
-					<div class="recharge">
-						<ul class="nav nav-tabs">
-							<li role="presentation" class="charge active"><a href="#">我要充值</a></li>
-							<li role="presentation" class="log"><a href="#">充值日志</a></li>
-						</ul>
-					</div>
-
-					<div id="charge">
-						<div class="c-title">充值金额:</div>
-						<div class="money"><input type="text" class="form-control" placeholder="0" id="money"></div>
-						<div class="c-info">人民币（元）</div>
-						<div class="cert"><a id="accept" class="button button-highlight button-rounded" style="width: 150px; height: 36px; line-height: 36px;">确定付款</a></div>
-					</div>
-
-					<div id="log" style="margin-top: 30px; display: none;">
-						<section class="content" style="height: auto; min-height: 422px;">
-						  	<div class="row">
-						    	<div class="col-xs-12">
-									<div class="box">
-						            <div class="box-body">
-						              <table id="example" class="table table-bordered table-hover">
-						                <thead>
-											<th>充值金额</th>
-											<th>充值日期</th>
-											<th>状态</th>
-							              </thead>
-						                <tbody id="money_tab">
-
-						                </tbody>
-						              </table>
-						            </div>
-						            <!-- /.box-body -->
-						          </div>
-						          <!-- /.box -->
-							    </div>
-						    </div>
-						</section>
-						<!-- <div class="page" id="page"></div> -->
-					</div>
-
-					<script>
-						$(".charge").click(function() {
-							$(".log").removeClass("active");
-							$("#log").hide();
-							$(this).addClass("active");
-							$("#charge").show();
-						})
-
-						$(".log").click(function() {
-							$(".charge").removeClass("active");
-							$("#charge").hide();
-							$(this).addClass("active");
-							$("#log").show();
-						})
-					</script>
-				</div>
-			</div>
-		</div>
-		<script src="{{PATH_CONFIG}}"></script>
-		<script src="{{PATH_TML}}user/common/js/generate.js"></script>
-		<!--模块引入位置不可移动-->
-		<script src="/common/js/control.js"></script>
-		<script src="{{PATH_TML}}user/js/common.js"></script>
-		<script src="/common/layer-v3.0.3/layer-v3.0.3/layer/layer.js"></script>
-		<!-- DataTables -->
-		<script src="/common/AdminLTE-2.4.0-rc/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
-		<script src="/common/AdminLTE-2.4.0-rc/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-		<script src="{{PATH_TML}}user/js/page1.js"></script>
-
-	</body>
+</body>
 
 </html>
