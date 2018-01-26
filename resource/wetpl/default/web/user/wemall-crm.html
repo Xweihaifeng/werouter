@@ -17,6 +17,8 @@
     <script src="/common/iview/libs/util.js"></script>
     <script src="/common/iview/libs/filter.js"></script>
     <script src="/common/js/echart/echarts.js"></script>
+    <script src="/common/js/ckeditor/ckeditor.js"></script>
+
     <style type="text/css">
         [v-cloak] {
             display: none;
@@ -35,6 +37,7 @@
     </style>
 </head>
 <body style="width: 100%; background: #F7F6F2;">
+
 <div id="app">
     <div class="crm-header">
         <ul>
@@ -121,7 +124,7 @@
                         <form-item label="每张优惠金额" prop="amount">
                             <i-input v-model="formItemMemberCoupon.amount" placeholder="请输入每张优惠卷的优惠金额"></i-input>
                         </form-item>
-                        <form-item label="是否和其他优惠一起使用" prop="is_reuse">
+                        <form-item label="其他优惠一起使用" prop="is_reuse">
                             <radio-group v-model="formItemMemberCoupon.is_reuse">
                                 <radio label="1">是</radio>
                                 <radio label="2">否</radio>
@@ -136,16 +139,95 @@
                         <form-item label="使用期限"  prop="activity_time">
                             <i-input v-model="formItemMemberCoupon.activity_time" placeholder="请输入使用期限（安天算）"></i-input>
                         </form-item>
+                        <!--上传成功显示图片隐藏上传域-->
                         <form-item label="推广图片">
-                            <upload action="//jsonplaceholder.typicode.com/posts/">
-                                <i-button type="ghost" icon="ios-cloud-upload-outline">上传</i-button>
+
+
+                            <style>
+                            .demo-upload-list{
+                                display: inline-block;
+                                width: 60px;
+                                height: 60px;
+                                text-align: center;
+                                line-height: 60px;
+                                border: 1px solid transparent;
+                                border-radius: 4px;
+                                overflow: hidden;
+                                background: #fff;
+                                position: relative;
+                                box-shadow: 0 1px 1px rgba(0,0,0,.2);
+                                margin-right: 4px;
+                            }
+                            .demo-upload-list img{
+                                width: 100%;
+                                height: 100%;
+                            }
+                            .demo-upload-list-cover{
+                                display: none;
+                                position: absolute;
+                                top: 0;
+                                bottom: 0;
+                                left: 0;
+                                right: 0;
+                                background: rgba(0,0,0,.6);
+                            }
+                            .demo-upload-list:hover .demo-upload-list-cover{
+                                display: block;
+                            }
+                            .demo-upload-list-cover i{
+                                color: #fff;
+                                font-size: 20px;
+                                cursor: pointer;
+                                margin: 0 2px;
+                            }
+
+                            </style>
+                            <div class="demo-upload-list" v-for="item in uploadList">
+                                <template v-if="item.status === 'finished'">
+                                    <img :src="item.url">
+                                    <div class="demo-upload-list-cover">
+                                        <icon type="ios-eye-outline"></icon>
+                                        <icon type="ios-trash-outline" @click.native="handleRemove(item)"></icon>
+                                    </div>
+                                </template>
+                                <template v-else>
+                                    <i-progress v-if="item.showProgress" :percent="item.percentage" hide-info></i-progress>
+                                </template>
+                            </div>
+                            <upload
+                                    ref="upload"
+                                    :show-upload-list="false"
+                                    :default-file-list="uploadList"
+                                    :on-success="handleSuccess"
+                                    :format="['jpg','jpeg','png']"
+                                    :max-size="2048"
+                                    :before-upload="handleBeforeUpload"
+                                    :data="uploadData"
+                                    multiple
+                                    type="drag"
+                                    :action="uploadUrl"
+                                    style="display: inline-block;width:58px;">
+                                <div style="width: 58px;height:58px;line-height: 58px;">
+                                    <icon type="camera" size="20"></icon>
+                                </div>
                             </upload>
+
+                            <!--
+                            <Upload :action="uploadUrl" :format="['jpg','jpeg','png']" :data="uploadData" :name="uploadName" :before-upload="handleBeforeUpload">
+                                <i-button type="ghost" icon="ios-cloud-upload-outline">上 传</i-button>
+                            </upload>
+                            -->
+
+
                         </form-item>
                         <form-item label="推广标题" prop="title">
                             <i-input v-model="formItemMemberCoupon.title" placeholder="请输入推广标题"></i-input>
                         </form-item>
+
                         <form-item label="推广内容" prop="content">
-                            <i-input v-model="formItemMemberCoupon.content" type="textarea" :autosize="{minRows: 2,maxRows: 5}"  placeholder="请输入推广内容"></i-input>
+
+                            <textarea  id="Couponcontent" ></textarea>
+                            <!--<i-input v-model="formItemMemberCoupon.content" type="textarea"  :autosize="{minRows: 2,maxRows: 5}"  placeholder="请输入推广内容"></i-input>-->
                         </form-item>
                         <form-item>
                             <i-button type="primary" @click="handleCouponmit('formItemMemberCoupon')">保存</i-button>
@@ -163,114 +245,71 @@
                         </div>
                     </div>
 
-                    <div class="form-list">
+                <modal v-model="modalCouponDetail" title="优惠卷详情" width="800">
+                    <card>
+                        <Row style="margin-bottom: 10px;">
+                            <i-col span="8">优惠卷名称:</i-col>
+                            <i-col span="16">{{modalCouponDetailData.name}}</i-col>
+                        </Row>
+                        <Row style="margin-bottom: 10px;">
+                            <i-col span="8">优惠卷描述:</i-col>
+                            <i-col span="16">{{modalCouponDetailData.description}}</i-col>
+                        </Row>
+                        <Row style="margin-bottom: 10px;">
+                            <i-col span="8">背景色:</i-col>
+                            <i-col span="16"> <div :style="'background-color:'+modalCouponDetailData.colour+'; width: 15px; height: 15px; margin-top: 8px;'"></div></i-col>
+                        </Row>
+                        <Row style="margin-bottom: 10px;">
+                            <i-col span="8">领取限制:</i-col>
+                            <i-col span="16">{{modalCouponDetailData.get_condition}}</i-col>
+                        </Row>
+                        <Row style="margin-bottom: 10px;">
+                            <i-col span="8">每次领取张数:</i-col>
+                            <i-col span="16">{{modalCouponDetailData.get_restrict}}</i-col>
+                        </Row>
+                        <Row style="margin-bottom: 10px;">
+                            <i-col span="8">会员等级:</i-col>
+                            <i-col span="16">{{modalCouponDetailData.levels}}</i-col>
+                        </Row>
+                        <Row style="margin-bottom: 10px;">
+                            <i-col span="8">优惠卷类型:</i-col>
+                            <i-col span="16">{{modalCouponDetailData.coupon_type}}</i-col>
+                        </Row>
+                        <Row style="margin-bottom: 10px;">
+                            <i-col span="8">每张优惠金额:</i-col>
+                            <i-col span="16">{{modalCouponDetailData.amount}}</i-col>
+                        </Row>
+                        <Row style="margin-bottom: 10px;">
+                            <i-col span="8">其他优惠一起使用:</i-col>
+                            <i-col span="16">{{modalCouponDetailData.is_reuse}}</i-col>
+                        </Row>
+                        <Row style="margin-bottom: 10px;">
+                            <i-col span="8">使用限制:</i-col>
+                            <i-col span="16">{{modalCouponDetailData.use_restrictions}}</i-col>
+                        </Row>
+                        <Row style="margin-bottom: 10px;">
+                            <i-col span="8">领取时间:</i-col>
+                            <i-col span="16">{{modalCouponDetailData.receive_time}}</i-col>
+                        </Row>
+                        <Row style="margin-bottom: 10px;">
+                            <i-col span="8">使用期限:</i-col>
+                            <i-col span="16">{{modalCouponDetailData.activity_time}}</i-col>
+                        </Row>
+                        <Row style="margin-bottom: 10px;">
+                            <i-col span="8">推广标题:</i-col>
+                            <i-col span="16">{{modalCouponDetailData.title}}</i-col>
+                        </Row>
+                        <Row style="margin-bottom: 10px;">
+                            <i-col span="8">推广图片:</i-col>
+                            <i-col span="16"><img :src="modalCouponDetailData.picture" alt="" style="display: block; width: 200px; height: 100px;"></i-col>
+                        </Row>
+                        <Row>
+                            <i-col span="8">推广内容:</i-col>
+                            <i-col span="16">{{modalCouponDetailData.content}}</i-col>
+                        </Row>
 
-                    </div>
-
-                <!--查看-->
-                <div class="form-list" id="showss" >
-                    <form class="ivu-form ivu-form-label-right" style="width: 700px;">
-                        <div class="ivu-form-item">
-                            <label class="ivu-form-item-label" style="width: 150px;">优惠卷名称</label>
-                            <div class="ivu-form-item-content" style="margin-left: 150px;">
-                                <div style="width: 160px;height: 100%;text-align: left;">用户注册</div>
-                            </div>
-                        </div>
-                        <div class="ivu-form-item">
-                            <label class="ivu-form-item-label" style="width: 150px;">优惠卷描述</label>
-                            <div class="ivu-form-item-content" style="margin-left: 150px;">
-                                <div class="ivu-input-wrapper ivu-input-type">
-                                    <div style="width: 700px;height: auto;text-align: left;">
-                                        <p>这是发生嘀咕嘀咕十多个是个是个是个东方红这是发生嘀咕嘀咕十多个是个是个是个东方红这是发生嘀咕嘀咕十多个是个是个是个东方红这是发生嘀咕嘀咕十多个是个是个是个东方红这是发生嘀咕嘀咕十多个是个是个是个东方红这是发生嘀咕嘀咕十多个是个是个是个东方红     </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="ivu-form-item ">
-                            <label class="ivu-form-item-label"
-                                                                                 style="width: 150px;">背景色</label>
-                            <div class="ivu-form-item-content" style="margin-left: 150px;">
-                                <div style="background-color: rgb(50, 80, 110);width: 15px;height: 15px;margin-top: 8px;"></div>
-                            </div>
-                        </div>
-                        <div class="ivu-form-item ">
-                            <label class="ivu-form-item-label" style="width: 150px;">领取限制</label>
-                            <div class="ivu-form-item-content" style="margin-left: 150px;">
-                                <div style="width: 160px;height: 100%;text-align: left;">用户注册</div>
-                            </div>
-                        </div>
-                        <div class="ivu-form-item ">
-                            <label class="ivu-form-item-label" style="width: 150px;">每次领取张数</label>
-                            <div class="ivu-form-item-content" style="margin-left: 150px;">
-                                <div style="width: 160px;height: 100%;text-align: left;">10</div>
-                            </div>
-                        </div>
-                        <div class="ivu-form-item" style="display: none;">
-                            <label class="ivu-form-item-label" style="width: 150px;">会员等级</label>
-                            <div class="ivu-form-item-content" style="margin-left: 150px;">
-                                <div style="width: 160px;height: 100%;text-align: left;">10</div>
-                            </div>
-                        </div>
-                        <div class="ivu-form-item">
-                            <label class="ivu-form-item-label" style="width: 150px;">优惠卷类型</label>
-                            <div class="ivu-form-item-content" style="margin-left: 150px;">
-                                <div style="width: 160px;height: 100%;text-align: left;">优惠卷类型</div>
-                            </div>
-                        </div>
-                        <div class="ivu-form-item">
-                            <label class="ivu-form-item-label" style="width: 150px;">每张优惠金额</label>
-                            <div class="ivu-form-item-content" style="margin-left: 150px;">
-                                <div style="width: 160px;height: 100%;text-align: left;">100</div>
-                            </div>
-                        </div>
-                        <div class="ivu-form-item">
-                            <label class="ivu-form-item-label" style="width: 150px;">是否和其他优惠一起使用</label>
-                            <div class="ivu-form-item-content" style="margin-left: 150px;">
-                                <div style="width: 160px;height: 100%;text-align: left;">是</div>
-                            </div>
-                        </div>
-                        <div class="ivu-form-item">
-                            <label class="ivu-form-item-label" style="width: 150px;">使用限制</label>
-                            <div class="ivu-form-item-content" style="margin-left: 150px;">
-                                <div style="width: 160px;height: 100%;text-align: left;">满100减50</div>
-                            </div>
-                        </div>
-                        <div class="ivu-form-item">
-                            <label class="ivu-form-item-label" style="width: 150px;">领取时间</label>
-                            <div class="ivu-form-item-content" style="margin-left: 150px;">
-                                <div style="width: 160px;height: 100%;text-align: left;"><p>2017-12-21，2018-10-20</p></div>
-                            </div>
-                        </div>
-                        <div class="ivu-form-item">
-                            <label class="ivu-form-item-label" style="width: 150px;">使用期限</label>
-                            <div class="ivu-form-item-content" style="margin-left: 150px;">
-                                <div style="width: 160px;height: 100%;text-align: left;"><p>2017-12-21，2018-10-20</p></div>
-                            </div>
-                        </div>
-                        <div class="ivu-form-item">
-                            <label class="ivu-form-item-label" style="width: 150px;">推广图片</label>
-                            <div class="ivu-form-item-content" style="margin-left: 150px;">
-                                <img style="display: block;width: 200px;height: 100px;" src="" alt="">
-                            </div>
-                        </div>
-                        <div class="ivu-form-item">
-                            <label class="ivu-form-item-label" style="width: 150px;">推广标题</label>
-                            <div class="ivu-form-item-content" style="margin-left: 150px;">
-                                <div style="width: 160px;height: 100%;text-align: left;"><p>标题</p></div>
-                            </div>
-                        </div>
-                        <div class="ivu-form-item">
-                            <label class="ivu-form-item-label" style="width: 150px;">推广内容</label>
-                            <div class="ivu-form-item-content" style="margin-left: 150px;">
-                                <div style="width: 700px;height: auto;text-align: left;" id="tg">
-                                    <p>这是发生嘀咕嘀咕十多个是个是个是个东方红这是发生嘀咕嘀咕十多个是个是个是个东方红这是发生嘀咕嘀咕十多个是个是个是个东方红这是发生嘀咕嘀咕十多个是个是个是个东方红这是发生嘀咕嘀咕十多个是个是个是个东方红这是发生嘀咕嘀咕十多个是个是个是个东方红     </p>
-                                    <img src="" alt="">
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <!--查看结束-->
+                    </card>
+                </modal>
             </div>
         </div>
     </div>
@@ -284,7 +323,14 @@
             currentState: 0,
             MemberLevelEdit:false, //会员等级编辑标志位
             MemberCouponEditflag:false, //优惠卷编辑标志位
-            menuList: ["概览", "发布会员卡", "会员卡管理", "发布代金券", "管理代金券"],
+            modalCouponDetail:false, //优惠卷详情
+            modalCouponDetailData:{},//优惠卷详情数据
+            uploadData:{}, //七牛上传附件参数
+            uploadName:'',
+            uploadUrl:'http://up-z1.qiniu.com/', //七牛上传地址
+            uploadList: [], //上传列表
+            defaultList: [],
+            menuList: ["概览", "发布会员卡", "会员卡管理", "发布代金券", "管理代金券"], //控制导航
             formItemMember: {
                 weid:'',
                 levels_name: '',
@@ -344,10 +390,7 @@
                                 },
                                 on: {
                                     click: () => {
-                                        console.log(crmapp);
                                         crmapp.editMemberLevel(params.row.weid);
-                                        //this.editMemberLevel(params.row.weid);
-                                        // this.editMemberLevel(params.row.weid);
                                     }
                                 }
                             }, '编辑'),
@@ -670,8 +713,26 @@
             }
 
         },
+//        created : function () {
+//            crmapp.$nextTick(()=>{
+//                CKEDITOR.replace('Couponcontent');
+//                //CKEDITOR.replace('Couponcontent',{"extraPlugins":"filebrowser,image,imagepaste,filetools"});
+//            });
+//        },
         mounted: function () {
             var self = this;
+
+            this.$nextTick(()=>{
+                CKEDITOR.replace('Couponcontent');
+                //CKEDITOR.replace('Couponcontent',{"extraPlugins":"filebrowser,image,imagepaste,filetools"});
+            });
+
+            this.uploadList = this.$refs.upload.fileList;
+            ajax.get('getQiniuToken').then((res)=>{
+                if(res.code==200){
+                    this.uploadData.token=res.data;
+                }
+            });
             //获取商城主键id
             ajax.get('mall/userdetail').then((res)=>{
                 if(res.code==200){
@@ -808,7 +869,10 @@
                 })
             },
             handleCouponmit(name){
-                console.log(this.formItemMemberCoupon);
+                console.log(this.uploadList);
+                if(this.uploadList.length<1){
+                    this.$Message.error('还未上传推广图片!');
+                }
                 this.$refs[name].validate((valid) => {
                     if (valid) {
                         //判断是否为编辑
@@ -828,7 +892,7 @@
                         data.activity_time=this.formItemMemberCoupon.activity_time;
                         //data.content_info.picture=this.formItemMemberCoupon.picture;
                         data.content_info={};
-                        data.content_info.picture='aa.jpg';
+                        data.content_info.picture=this.uploadList[0].name;
                         data.content_info.title=this.formItemMemberCoupon.title;
                         data.content_info.content=this.formItemMemberCoupon.content;
                         var time = new Date(data.publish_time);
@@ -903,6 +967,7 @@
                             res.data.use_restrictions?data.use_restrictions=res.data.use_restrictions.toString():data.use_restrictions='';
                             data.receive_time=[res.data.publish_time,res.data.expire_time];
                             res.data.activity_time?data.activity_time=res.data.activity_time.toString():data.activity_time='';
+                            this.uploadList[0]={name:res.data.content_info.picture,url:'http://images.wezchina.com/'+res.data.content_info.picture};
                             data.picture=res.data.content_info.picture;
                             data.title=res.data.content_info.title;
                             data.content=res.data.content_info.content;
@@ -917,8 +982,42 @@
             viewMemberCoupon (index){
                 if(index.length>0){
                     //本页渲染
-                    alert(index);
+                    this.modalCouponDetailData='';
+                    var self=this;
                     //显示详情
+                    ajax.post('coupon/detail', {id:index}).then((res)=>{
+                        if(res.code==200){
+                            var conditionlist=new Array();
+                            conditionlist[1]="用户注册";
+                            conditionlist[2]="满足等级";
+                            conditionlist[3]="无限制";
+                            conditionlist[4]="分享送";
+                            var coupon_typelist=new Array();
+                            coupon_typelist[1]='现金券';
+                            coupon_typelist[2]='折扣券';
+                            coupon_typelist[3]='抵用券';
+                            var data={};
+                            data.name=res.data.name;
+                            data.description=res.data.description;
+                            data.colour=res.data.colour;
+                            data.get_condition=conditionlist[res.data.get_condition];
+                            data.coupon_type=coupon_typelist[res.data.coupon_type];
+                            data.get_restrict=res.data.get_restrict+'张';
+                            data.levels=res.data.levels+'级';
+                            data.amount='¥'+res.data.amount+'元';
+                            data.use_restrictions='满'+res.data.use_restrictions+'元';
+                            res.data.is_reuse==1?data.is_reuse='是':data.is_reuse='否';
+                            data.activity_time=res.data.activity_time+'天';
+                            data.receive_time=res.data.publish_time + ' ,' + res.data.expire_time;
+                            data.title=res.data.content_info.title;
+                            data.picture=res.data.content_info.picture;
+                            data.content=res.data.content_info.content;
+                            this.modalCouponDetailData=data;
+                            this.modalCouponDetail=true;
+                            console.log(this.modalCouponDetailData);
+                        }
+                    });
+
 
                 }
             },
@@ -1062,6 +1161,35 @@
                         }
                     }
                 })
+            },
+            handleRemove (file) {
+                const fileList = this.$refs.upload.fileList;
+                this.$refs.upload.fileList.splice(fileList.indexOf(file), 1);
+            },
+            handleSuccess (res, file) {
+                file.url = 'http://images.wezchina.com/'+res.key;
+                file.name = res.key;
+            },
+            handleFormatError (file) {
+                this.$Notice.warning({
+                    title: '文件类型错误',
+                    desc: '文件类型 ' + file.name + ' 不是图片类型'
+                });
+            },
+            handleMaxSize (file) {
+                this.$Notice.warning({
+                    title: '文件大小',
+                    desc: '文件  ' + file.name + ' 文件大小超出2M.'
+                });
+            },
+            handleBeforeUpload () {
+                const check = this.uploadList.length < 1;
+                if (!check) {
+                    this.$Notice.warning({
+                        title: '文件超出个数.'
+                    });
+                }
+                return check;
             }
         }
     })
