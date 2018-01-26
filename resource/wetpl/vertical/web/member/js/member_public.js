@@ -8,8 +8,12 @@ function token_data() {
                 'Token': token,
             }
         });
+    } else {
+        $(".member_login").addClass("please_login").text("请登录");
     }
 }
+token_data();
+
 // 身份证号码验证信息
 function isCardNo(card) {
     var objCard = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
