@@ -14,13 +14,13 @@
             <div id="type">
                 <p>分类：</p>
                 <ul>
-                    <li v-for="(e, i) in type" @click="show(e, 'type0')" :style="e.style">{{e.title}}</li>
+                    <li v-for="(e, i) in type" @click="show(e, 'type0', i)" :class="{'selected': i === type.flag}">{{e.title}}</li>
                 </ul>
             </div>
             <div id="time">
                 <p>时间：</p>
                 <ul>
-                    <li v-for="(e, i) in time" @click="show(e, 'type1')" :style="e.style">{{e.name}}</li>
+                    <li v-for="(e, i) in time" @click="show(e, 'type1', i)" :class="{'selected': i === time.flag}">{{e.name}}</li>
                 </ul>
             </div>
             <div id="type2">
@@ -128,10 +128,12 @@
         created: function(){
             this.$Loading.start();
             this.isLoading = true;
-            this.time = this.dataTime.map((x, i) => i === 0 ? ({id: i, name: x, style: {'color': '#4caaed'}}) : ({id: i, name: x, style: {}}));
+            this.time = this.dataTime.map((x, i) => i === 0 ? ({id: i, name: x}) : ({id: i, name: x}));
+            this.time.flag = 0;
             axios.get(apiUrl + 'activity/cate/lists').then(data => {
-                this.type = data.data.data.list.map((e, i) => i === 0 ? ({title: '全部', weid: '', style: {'color': '#4caaed'}}) : (e.style = {}, e));
-            })
+                this.type = data.data.data.list;
+                this.type.flag = 0;
+            });
             this.getList(this.url, '', '', '', 1, 8); //初始化页面数据
         },
         methods: {
@@ -140,15 +142,13 @@
                 this.pages.page = page;
                 this.getList(this.url, this.args.cate_id, this.args.time_scope, this.args.order, page, this.pages.limit);
             },
-            show: function(o, type){
+            show: function(o, type, i){
                 if (type != 'type2') {
                     this.pages.page = 1;
                 }
                 switch(type){
-                    case 'type0' : this.type.map(e => e.title === o.title ? e.style = {'color': '#4caaed'} : e.style = {});
-                        this.args.cate_id = o.weid; break;
-                    case 'type1' : this.time.map(e => e.name === o.name ? e.style = {'color': '#4caaed'} : e.style = {});
-                        this.args.time_scope = o.id; break;
+                    case 'type0' : this.type.flag = i; this.args.cate_id = o.weid; break;
+                    case 'type1' : this.time.flag = i; this.args.time_scope = o.id; break;
                     case 'type2' : var id = ['latest', 'hotest'].map((e, i) => o === e ? (this.showType[e] = true, i)
                             : (this.showType[e] = false, null)).filter(x => x != null)[0];
                         this.args.order = id; break;
