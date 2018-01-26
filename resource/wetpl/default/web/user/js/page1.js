@@ -56,6 +56,7 @@ var qrWindow = function(id, qrUrl, amount) {
                                 //弹出支付成功窗口
                                 layer.msg("您已成功支付" + amount + "元");
                                 $("#money").val(0);
+                                window.location.reload();
                                 /*layer.open({
                                 	type: 1
                                 	,title: '支付成功'
