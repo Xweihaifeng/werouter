@@ -1,1 +1,212 @@
-1123
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <title></title>
+    <meta charset="UTF-8" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <link rel="shortcut icon" id="favicon" href="" />
+    <link rel="stylesheet" href="/common/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/common/layui/css/layui.css" />
+    <link rel="stylesheet" href="{{PATH_TML}}css/modal_login.css" />
+    <link rel="stylesheet" href="{{PATH_TML}}css/normalize.css" />
+    <link rel="stylesheet" href="/common/magazine/css/iview.css">
+    <link rel="stylesheet" href="{{PATH_TML}}css/wepage.css" />
+    <script src="/common/js/jquery-3.2.1.min.js"></script>
+    <script src="/common/public/js/app.js"></script>
+    <script src="/common/iview/vue.min.js"></script>
+    <script src="/common/iview/axios.min.js"></script>
+    <script src="/common/iview/libs/util.js"></script>
+    <script src="/common/iview/libs/filter.js"></script>
+    <script src="/common/public/js/model/ver_ajax.js"></script>
+    <script src="/common/layui/layui.js"></script>
+    <script src="{{PATH_CONFIG}}"></script>
+    <script src="{{PATH_TML}}js/modal_login.js"></script>
+    <script src="/common/magazine/js/iview.min.js"></script>
+    <link rel="stylesheet" href="/common/jquery.animsition/css/animsition.min.css">
+    <script src="/common/jquery.animsition/js/jquery.animsition.min.js"></script>
+</head>
+<body>
+    <div class="modal_login" id="modal_login"></div>
+    <div id="wepage">
+        <div id="header">
+            <div id="topline">
+                <img src="/common/img/new/logo-wepage.png" alt=""/>
+                <p><img src="/common/img/new/small-avatar.png" alt=""/>用户中心</p>
+            </div>
+            <div id="userinfo">
+                <div>
+                    <img class="avatar" src="/common/img/new/avatar.png" alt=""/>
+                    <p>
+                        <span>
+                            火炉先生的微主页
+                            <img src="/common/img/new/member.png" alt=""/>
+                            <img src="/common/img/new/care.png" alt=""/>
+                        </span>
+                        <span>高山仰止，景行行止。虽不能至，然心乡往之。</span>
+                    </p>
+                </div>
+            </div>
+            <div id="menu">
+                <ul>
+                    <li>我的主页</li>
+                    <li>我的文章</li>
+                    <li>我的活动</li>
+                    <li>我的商城</li>
+                    <li>我的圈子</li>
+                </ul>
+            </div>
+        </div>
+        <div id="container">
+            <div id="content">
+                <ul id="type">
+                    <li style="color: #333;">全部</li>
+                    <li>一月内</li>
+                    <li>三月内</li>
+                    <li>半年内</li>
+                    <li>一年内</li>
+                </ul>
+                <div id="main">
+                <ul id="list">
+                <li>
+                    <img class="i0" src="/common/img/new/01.png" alt=""/>
+                    <p>
+                        <span>墨尔本飞跃亚拉河谷60分钟热气球</span>
+                        <span>在太阳升起前1小时我们将会到市区酒店来接您，前往Balgownie Estate博尔基尼酒庄集合。我们的飞行师将向您简要介绍情况。而后您将乘车赶到升空地点，您可以为热气球升空助一臂之力，也可以退后摄影留念... </span>
+                            <span>
+                                <img class="i1" src="/common/img/new/date.png" alt=""/><span style="padding-right:34px;">2017-12-15 15:45:15</span>
+                                <img class="i2" src="/common/img/new/read.png" alt=""/><span>642</span>
+                            </span>
+                    </p>
+                </li>
+                <li>
+                    <img class="i0" src="/common/img/new/02.png" alt=""/>
+                    <p>
+                        <span>墨尔本飞跃亚拉河谷60分钟热气球</span>
+                        <span>在太阳升起前1小时我们将会到市区酒店来接您，前往Balgownie Estate博尔基尼酒庄集合。我们的飞行师将向您简要介绍情况。而后您将乘车赶到升空地点，您可以为热气球升空助一臂之力，也可以退后摄影留念... </span>
+                            <span>
+                                <img class="i1" src="/common/img/new/date.png" alt=""/><span style="padding-right:34px;">2017-12-15 15:45:15</span>
+                                <img class="i2" src="/common/img/new/read.png" alt=""/><span>642</span>
+                            </span>
+                    </p>
+                </li>
+                <li>
+                    <img class="i0" src="/common/img/new/03.png" alt=""/>
+                    <p>
+                        <span>墨尔本飞跃亚拉河谷60分钟热气球</span>
+                        <span>在太阳升起前1小时我们将会到市区酒店来接您，前往Balgownie Estate博尔基尼酒庄集合。我们的飞行师将向您简要介绍情况。而后您将乘车赶到升空地点，您可以为热气球升空助一臂之力，也可以退后摄影留念... </span>
+                            <span>
+                                <img class="i1" src="/common/img/new/date.png" alt=""/><span style="padding-right:34px;">2017-12-15 15:45:15</span>
+                                <img class="i2" src="/common/img/new/read.png" alt=""/><span>642</span>
+                            </span>
+                    </p>
+                </li>
+                <li>
+                    <img class="i0" src="/common/img/new/04.png" alt=""/>
+                    <p>
+                        <span>墨尔本飞跃亚拉河谷60分钟热气球</span>
+                        <span>在太阳升起前1小时我们将会到市区酒店来接您，前往Balgownie Estate博尔基尼酒庄集合。我们的飞行师将向您简要介绍情况。而后您将乘车赶到升空地点，您可以为热气球升空助一臂之力，也可以退后摄影留念... </span>
+                            <span>
+                                <img class="i1" src="/common/img/new/date.png" alt=""/><span style="padding-right:34px;">2017-12-15 15:45:15</span>
+                                <img class="i2" src="/common/img/new/read.png" alt=""/><span>642</span>
+                            </span>
+                    </p>
+                </li>
+                <li>
+                    <img class="i0" src="/common/img/new/05.png" alt=""/>
+                    <p>
+                        <span>墨尔本飞跃亚拉河谷60分钟热气球</span>
+                        <span>在太阳升起前1小时我们将会到市区酒店来接您，前往Balgownie Estate博尔基尼酒庄集合。我们的飞行师将向您简要介绍情况。而后您将乘车赶到升空地点，您可以为热气球升空助一臂之力，也可以退后摄影留念... </span>
+                            <span>
+                                <img class="i1" src="/common/img/new/date.png" alt=""/><span style="padding-right:34px;">2017-12-15 15:45:15</span>
+                                <img class="i2" src="/common/img/new/read.png" alt=""/><span>642</span>
+                            </span>
+                    </p>
+                </li>
+                <li>
+                    <img class="i0" src="/common/img/new/06.png" alt=""/>
+                    <p>
+                        <span>墨尔本飞跃亚拉河谷60分钟热气球</span>
+                        <span>在太阳升起前1小时我们将会到市区酒店来接您，前往Balgownie Estate博尔基尼酒庄集合。我们的飞行师将向您简要介绍情况。而后您将乘车赶到升空地点，您可以为热气球升空助一臂之力，也可以退后摄影留念... </span>
+                            <span>
+                                <img class="i1" src="/common/img/new/date.png" alt=""/><span style="padding-right:34px;">2017-12-15 15:45:15</span>
+                                <img class="i2" src="/common/img/new/read.png" alt=""/><span>642</span>
+                            </span>
+                    </p>
+                </li>
+                <li>
+                    <img class="i0" src="/common/img/new/07.png" alt=""/>
+                    <p>
+                        <span>墨尔本飞跃亚拉河谷60分钟热气球</span>
+                        <span>在太阳升起前1小时我们将会到市区酒店来接您，前往Balgownie Estate博尔基尼酒庄集合。我们的飞行师将向您简要介绍情况。而后您将乘车赶到升空地点，您可以为热气球升空助一臂之力，也可以退后摄影留念... </span>
+                            <span>
+                                <img class="i1" src="/common/img/new/date.png" alt=""/><span style="padding-right:34px;">2017-12-15 15:45:15</span>
+                                <img class="i2" src="/common/img/new/read.png" alt=""/><span>642</span>
+                            </span>
+                    </p>
+                </li>
+                <li>
+                    <img class="i0" src="/common/img/new/08.png" alt=""/>
+                    <p>
+                        <span>墨尔本飞跃亚拉河谷60分钟热气球</span>
+                        <span>在太阳升起前1小时我们将会到市区酒店来接您，前往Balgownie Estate博尔基尼酒庄集合。我们的飞行师将向您简要介绍情况。而后您将乘车赶到升空地点，您可以为热气球升空助一臂之力，也可以退后摄影留念... </span>
+                            <span>
+                                <img class="i1" src="/common/img/new/date.png" alt=""/><span style="padding-right:34px;">2017-12-15 15:45:15</span>
+                                <img class="i2" src="/common/img/new/read.png" alt=""/><span>642</span>
+                            </span>
+                    </p>
+                </li>
+                </ul>
+                <ul id="info">
+                    <li id="maininfo">
+                        <span id="userhead"></span>
+                        <img src="/common/img/new/avatar.png" alt=""/>
+                        <span id="username">火炉先生</span>
+                        <ul>
+                            <li>
+                                <span>123</span>
+                                <span>文章</span>
+                            </li>
+                            <li>
+                                <span>46</span>
+                                <span>项目</span>
+                            </li>
+                            <li>
+                                <span>12</span>
+                                <span>活动</span>
+                            </li>
+                        </ul>
+                    </li>
+                    <li id="address"></li>
+                    <li id="friends"></li>
+                </ul>
+                </div>
+                <div id="pages">
+                    <Page :total="parseInt(pages.total)" :current="pages.page" :page-size="pages.limit" @on-change="change" v-if="pages.total > pages.limit"></Page>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        new Vue({
+            el: '#wepage',
+            data: {
+                pages: {total: 10, page: 1, limit: 10}
+            },
+            created: function(){
+
+            },
+            methods: {
+                change: function(page){
+                    this.isLoading = true;
+                    this.pages.page = page;
+                }
+            },
+            filters: {
+
+            }
+        })
+    </script>
+</body>
+</html>
