@@ -40,7 +40,7 @@
                 <img src="/common/img/no_con_default.png" alt=""/>
             </div>
             <ul>
-                <a v-for="e in proj" :href="'/' + e.domain + '/activity/' + e.weid" target="_blank">
+                <a v-for="e in proj" :href="e.domain + '/activity/' + e.weid | href" target="_blank">
                     <li>
                         <div :class="status[e.onStatus]"></div>
                         <img :src="e.cover | setImg('/common/img/p04.png', 285, 160)" alt="" width="285" height="160"/>
@@ -66,11 +66,11 @@
             </div>
             <ul class="cont-list">
                 <li v-for="e in act">
-                    <a :href="'/' + e.domain + '/activity/' + e.weid" target="_blank">
+                    <a :href="e.domain + '/activity/' + e.weid | href" target="_blank">
                         <img :src="e.cover | setImg('/common/img/p04.png', 260, 160)" alt="" width="285" height="160"/>
                     </a>
                     <div class="abstract">
-                        <a :href="'/' + e.domain + '/activity/' + e.weid" target="_blank">
+                        <a :href="e.domain + '/activity/' + e.weid | href" target="_blank">
                             <h3>{{e.title | cut(30)}}</h3>
                             <p>{{e.Sponsor}}</p>
                         </a>
@@ -91,11 +91,11 @@
                     </div>
                     <div class="attend" v-if="e.price == '免费'">
                         <span>{{e.price}}</span>
-                        <button><a class="white" :href="'/' + e.domain + '/activity/' + e.weid" target="_blank">立即报名</a></button>
+                        <button><a class="white" :href="e.domain + '/activity/' + e.weid | href" target="_blank">立即报名</a></button>
                     </div>
                     <div class="attend" v-else="e.price != '免费'">
                         <span class="attebd_cur">{{e.price}}</span>
-                        <button class="button_cur"><a class="white" :href="'/' + e.domain + '/activity/' + e.weid" target="_blank">立即报名</a></button>
+                        <button class="button_cur"><a class="white" :href="e.domain + '/activity/' + e.weid | href" target="_blank">立即报名</a></button>
                     </div>
                 </li>
             </ul>
