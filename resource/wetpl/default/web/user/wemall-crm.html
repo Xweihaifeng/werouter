@@ -20,7 +20,44 @@
     <script src="/common/js/plupload/plupload.full.min.js"></script>
     <script src="/common/js/qiniu.js"></script>
     <script src="/common/js/ckeditor/ckeditor.js"></script>
-
+    <style>
+        .demo-upload-list{
+            display: inline-block;
+            width: 60px;
+            height: 60px;
+            text-align: center;
+            line-height: 60px;
+            border: 1px solid transparent;
+            border-radius: 4px;
+            overflow: hidden;
+            background: #fff;
+            position: relative;
+            box-shadow: 0 1px 1px rgba(0,0,0,.2);
+            margin-right: 4px;
+        }
+        .demo-upload-list img{
+            width: 100%;
+            height: 100%;
+        }
+        .demo-upload-list-cover{
+            display: none;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,.6);
+        }
+        .demo-upload-list:hover .demo-upload-list-cover{
+            display: block;
+        }
+        .demo-upload-list-cover i{
+            color: #fff;
+            font-size: 20px;
+            cursor: pointer;
+            margin: 0 2px;
+        }
+    </style>
 
     <script>
         var qiniu_uptoken = '';
@@ -98,7 +135,7 @@
             </div>
             <div v-show="currentState == 3">
                 <div class="form-list">
-                    <i-form ref="formItemMemberCoupon" :model="formItemMemberCoupon" :rules="formItemMemberCouponValidate" :label-width="150">
+                    <i-form ref="formItemMemberCoupon" style="width: 100%;" :model="formItemMemberCoupon" :rules="formItemMemberCouponValidate" :label-width="150">
                         <form-item label="优惠卷名称" prop="name">
                             <i-input v-model="formItemMemberCoupon.name" placeholder="请输入优惠卷名称"></i-input>
                         </form-item>
@@ -150,50 +187,11 @@
                         <form-item label="推广图片">
 
 
-                            <style>
-                            .demo-upload-list{
-                                display: inline-block;
-                                width: 60px;
-                                height: 60px;
-                                text-align: center;
-                                line-height: 60px;
-                                border: 1px solid transparent;
-                                border-radius: 4px;
-                                overflow: hidden;
-                                background: #fff;
-                                position: relative;
-                                box-shadow: 0 1px 1px rgba(0,0,0,.2);
-                                margin-right: 4px;
-                            }
-                            .demo-upload-list img{
-                                width: 100%;
-                                height: 100%;
-                            }
-                            .demo-upload-list-cover{
-                                display: none;
-                                position: absolute;
-                                top: 0;
-                                bottom: 0;
-                                left: 0;
-                                right: 0;
-                                background: rgba(0,0,0,.6);
-                            }
-                            .demo-upload-list:hover .demo-upload-list-cover{
-                                display: block;
-                            }
-                            .demo-upload-list-cover i{
-                                color: #fff;
-                                font-size: 20px;
-                                cursor: pointer;
-                                margin: 0 2px;
-                            }
-
-                            </style>
+                            <template>
                             <div class="demo-upload-list" v-for="item in uploadList">
                                 <template v-if="item.status === 'finished'">
                                     <img :src="item.url">
                                     <div class="demo-upload-list-cover">
-                                        <icon type="ios-eye-outline"></icon>
                                         <icon type="ios-trash-outline" @click.native="handleRemove(item)"></icon>
                                     </div>
                                 </template>
@@ -219,11 +217,7 @@
                                     <icon type="camera" size="20"></icon>
                                 </div>
                             </upload>
-                             <!--
-                            <Upload :action="uploadUrl" :format="['jpg','jpeg','png']" :data="uploadData" :name="uploadName" :before-upload="handleBeforeUpload">
-                                <i-button type="ghost" icon="ios-cloud-upload-outline">上 传</i-button>
-                            </upload>
-                            -->
+                            </template>
 
 
                         </form-item>
@@ -799,7 +793,7 @@
                     }else{
                         this.uploadList=[];
                         this.uploadList = this.$refs.upload.fileList;
-
+                        CKEDITOR.instances.Couponcontent.setData('');
                         //发布清空数据
                         this.formItemMemberCoupon={
                                 weid:'',
@@ -907,7 +901,7 @@
                         if(this.formItemMemberCoupon.weid.length>0){
                             //编辑
                             data.weid=this.formItemMemberCoupon.weid;
-                            alert(data.weid);
+
                             ajax.post('coupon/update', data).then((res)=>{
                                 if(res.code==200){
                                     this.$Message.success('编辑成功!');
@@ -928,7 +922,7 @@
                             });
                         }
                     }else{
-                        alert("失败");
+                        this.$Message.error("验证失败");
                     }
                 })
             },
