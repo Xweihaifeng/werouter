@@ -43,13 +43,13 @@
                 <a v-for="e in proj" :href="e.domain + '/activity/' + e.weid | href" target="_blank">
                     <li>
                         <div :class="status[e.onStatus]"></div>
-                        <img :src="e.cover | setImg('/common/img/p04.png', 285, 160)" alt="" width="285" height="160"/>
+                        <img :src="setImg(e.cover, '/common/img/p04.png', 285, 160)" alt="" width="285" height="160"/>
                         <div class="act">
                             <p>{{e.title | cut(30)}}</p>
                             <p>{{e.begain_time + ' ' + e.begain_week + ' 开始'}}</p>
                             <p>
                                <span>
-                                    <img :src="e.avatar | setImg('/common/img/p05.png', 28, 28)" alt="" style="width:28px;height:28px;border-radius:28px;"/>
+                                    <img :src="setImg(e.avatar, '/common/img/p05.png', 28, 28)" alt="" style="width:28px;height:28px;border-radius:28px;"/>
                                     <span>{{e.enroll_num + '/' + e.enroll_limit}} 人已报名</span>
                                </span>
                                <span :class="{free: e.isFree, price: !e.isFree}">{{e.price}}</span>
@@ -67,7 +67,7 @@
             <ul class="cont-list">
                 <li v-for="e in act">
                     <a :href="e.domain + '/activity/' + e.weid | href" target="_blank">
-                        <img :src="e.cover | setImg('/common/img/p04.png', 260, 160)" alt="" width="285" height="160"/>
+                        <img :src="setImg(e.cover, '/common/img/p04.png', 260, 160)" alt="" width="285" height="160"/>
                     </a>
                     <div class="abstract">
                         <a :href="e.domain + '/activity/' + e.weid | href" target="_blank">
@@ -157,6 +157,18 @@
                 }
                 this.getList(apiUrl + 'activity/lists', this.args.cate_id, this.args.time_scope, this.args.order, this.pages.page, this.pages.limit);
                 this.isLoading = true;
+            },
+            setImg: function(url, init, w, h, mode){
+                if (url != '' && url != null && url != undefined) {
+                    if (url.indexOf('http') === -1 && url.indexOf('common') === -1) {
+                        return mode != undefined ? ApiMaterPlatQiniuDomain + url + '?imageView2/' + mode + '/w/' + w + '/h/' + h
+                                : ApiMaterPlatQiniuDomain + url + '?imageView2/3/w/' + w + '/h/' + h;
+                    } else {
+                        return url;
+                    }
+                } else {
+                    return init;
+                }
             },
             getList: function(url, cate_id, time_scope, order, page, limit){
                 axios.get(url + '?cate_id=' + cate_id + '&time_scope=' + time_scope + '&order=' + order + '&page=' + page + '&limit=' + limit).then(data => {
