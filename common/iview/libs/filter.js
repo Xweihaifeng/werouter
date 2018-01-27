@@ -24,6 +24,19 @@ Vue.filter('img_src', function (value , width , height, mode) {
     }
 });
 
+Vue.filter('setImg', function (url, init, w, h, mode) {
+    if (url != '' && url != null && url != undefined) {
+        if (url.indexOf('http') === -1 && url.indexOf('common') === -1) {
+            return mode != undefined ? ApiMaterPlatQiniuDomain + url + '?imageView2/' + mode + '/w/' + w + '/h/' + h
+                : ApiMaterPlatQiniuDomain + url + '?imageView2/3/w/' + w + '/h/' + h;
+        } else {
+            return url;
+        }
+    } else {
+        return init;
+    }
+});
+
 Vue.filter('href', function (value , from) {
     if (!value) return '';
 
