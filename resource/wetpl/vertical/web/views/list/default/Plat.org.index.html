@@ -1,36 +1,14 @@
 <!--
  * Created by weifeng on 2017/11/12.
 -->
+<#extend#>public/extend/index_extend.html</#extend#>
 
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <title></title>
-    <meta charset="UTF-8" />
-    <meta name="description" content="" />
-    <meta name="keywords" content="" />
-    <link rel="shortcut icon" id="favicon" href="" />
-    <link rel="stylesheet" href="/common/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="{{PATH_TML}}css/modal_login.css" />
-    <link rel="stylesheet" href="{{PATH_TML}}css/normalize.css" />
-    <link rel="stylesheet" href="{{PATH_TML}}css/index_new.css" />
-     <!--分页样式-->
-    <link rel="stylesheet" type="text/css" href="{{PATH_TML}}css/paging.css">
-    <!--分页样式结束-->
-    <!--中间样式开始-->
+    <link rel="stylesheet" href="/common/magazine/css/iview.css">
+    <script src="/common/magazine/js/iview.min.js"></script>
     <link rel="stylesheet" href="/resource/wetpl/substation/default/web/css/list.css">
     <link rel="stylesheet" href="/resource/wetpl/substation/default/web/css/newsert.css">
-    <!--中间样式结束-->
+    <script src="/resource/wetpl/substation/default/web/js/banner.js"></script>
 
-    <!-- <script src="/common/public/zepto.min.js"></script> -->
-    <script src="/common/js/vue.min.js"></script>
-    <script src="/common/js/axios.min.js"></script>
-    <script src="/common/js/jquery-3.2.1.min.js"></script>
-    <script src="/common/layer-v3.0.3/layer-v3.0.3/layer/layer.js"></script>
-    <script src="{{PATH_CONFIG}}"></script>
-    <script src="{{PATH_TML}}js/modal_login.js"></script>
-    <script src="{{PATH_TML}}assets/list/organize/js/organize.js"></script>
-    <script src="{{PATH_TML}}js/paging.js"></script>
     <style>
         * { margin: 0; padding: 0; }
         html, body, p { margin: 0; padding: 0; }
@@ -81,9 +59,14 @@
             line-height: 40px;
             padding: 0 15px;
         }
-        .er-nav>.er-cur{
+        .er-nav>.er_cur{
             background: #0a8ddf;
             color: #fff!important;
+        }
+        .new-list{
+            width: 100%;
+            height: auto;
+            overflow: hidden;
         }
 
         /*单页模板*/
@@ -114,59 +97,32 @@
             height: auto;
             display: block;
         }
+        .new2-left>h2{
+            margin-top: 0;
+        }
         /*二级分类样式结束*/
+
+        /*分页*/
+        .ivu-page{
+            margin-top: 60px;
+            margin-bottom: 66px;
+        }
+        .ivu-page-item-active{
+            background-color: #2D8CF0;
+        }
     </style>
-</head>
-<body>
-<main id="app" v-cloak>
-    <div class="modal_login" id="modal_login"></div>
-    <header>
-        <div>
-            <ul>
-                <li><img :src="logo" alt="" style="width: 209px; height: 50px; display: block;" /></li>
-                <li><img :src="header1" alt="" style="width: 382px; height: 45px; display: block;" /></li>
-                <li>
-                    <div id="ht">
-                        <aside v-for="e in qrcode" @mouseleave="e.ok=false">
-                            <span @mouseenter="e.ok=true">{{e.title}}</span>
-                            <div v-show="e.ok" style="z-index: 15;">
-                                <img :src="set_img(e.image, e.image, 90, 90)" class="weixin img-responsive">
-                            </div>
-                        </aside>
-                        <aside><a :href="plats_info.old_link" target="_blank" id="old"><span style="border-right:none;padding-left:12px;">访问旧版</span></a></aside>
-                    </div>
-                    <div id="hs">
-                        <span><input type="text" id="search" class="form-control" placeholder="请输入关键字" v-model="key"></span>
-                        <span @click="search(key)"><img src="/common/img/find.png" style="padding: 7px"></span>
-                        <span>高级搜索</span>
-                    </div>
-                </li>
-            </ul>
-        </div>
-        <div id="menu">
-            <ol>
-                <li><a :href="window.location.protocol + '//' + window.location.host">首页</a></li>
-                <li v-for="c in channel">
-                    <a :href="check(c.domain, c.url)">{{c.title}}</a>
-                    <div class="nav-list">
-                        <p v-for="e in c.children">
-                            <a :href="check(c.domain, c.url) + '/' + e.domain">{{e.title}}</a>
-                        </p>
-                    </div>
-                </li>
-            </ol>
-        </div>
-    </header>
 
     <!-- 新问中心开始 -->
     <div id="container">
         <!--位置显示开始-->
         <div class="seat">
-            <img src="/resource/wetpl/substation/default/web/image/fanhui.png" alt="" style="margin-top: -3px">
+            <img src="/resource/wetpl/substation/default/web/image/fanhui.png" alt="">
             当前位置在：
             <a href="">首页</a>
-            > 组织 <span class="wz"></span>
-            <div class="er-nav" id="menuTwo"></div>
+            > 组织 > {{cate_info.title || '商会首页'}}
+            <div class="er-nav" id="menuTwo">
+                <a class="chan_li" :class="{er_cur : item.domain==cate_domain || item.domain==yuming_domain}" v-for="(item, index) in col_child" :id="item.domain"  :name="item.weid" :type="item.type" @click="list_list(item.domain,item.type)">{{ item.title }}</a>
+            </div>
         </div>
         <!--位置显示结束-->
 
@@ -178,211 +134,310 @@
                     <span>Chamber of Commerce</span>
                 </h2>
                 <ul class="aside" id="menuX">
-                    <li>
-                        <a class="chan_li" id="oooo"> 商会首页 </a>
+                    <li :class="{cenav_cur : cate_domain == '' && yuming_domain == '' }">
+                        <a class="chan_li" id="oooo" href="/zz"> 商会首页 </a>
                     </li>
+                    <li :id="item.weid" :class="{cenav_cur : item.domain==cate_domain || item.domain==yuming_domain}" v-for="item in sub_aside" ><a :id="item.domain" :type="item.type" @click="column_list(item.domain,item.type)">{{item.title}}</a></li>
                 </ul>
             </article>
             <!--左侧内容结束-->
             <!--右侧内容开始-->
             <article class="list-big">
                 <div class="title">
-                    <span></span>
+                    <span>{{cate_info.title || '商会首页'}}</span>
                 </div>
                 <div class="newsert">
-                    <!--<div class="new1">-->
-                        <!--<div class="s1-lbleft">-->
-                            <!--<ul class="banner">-->
-                                <!--<li>-->
-                                    <!--<a href="">-->
-                                        <!--<img src="image/20171201101148-0.png" alt="">-->
-                                    <!--</a>-->
-                                    <!--<a href="" class="banner-jie" title="【关注】马云对话全球浙商：今天的中国是最佳经商时代">【关注】马云对话全球浙商：今天的中...</a>-->
-                                <!--</li>-->
-                                <!--<li>-->
-                                    <!--<a href="">-->
-                                        <!--<img src="image/20171130132043-0.png" alt="">-->
-                                    <!--</a>-->
-                                    <!--<a href="" class="banner-jie" title="【关注】第四届世界浙商大会开幕 在沪浙商整体表现抢眼">【关注】第四届世界浙商大会开幕 在...</a>-->
-                                <!--</li>-->
-                                <!--<li>-->
-                                    <!--<a href="">-->
-                                        <!--<img src="image/20171128110726-0.png" alt="">-->
-                                    <!--</a>-->
-                                    <!--<a href="" class="banner-jie" title="金融新起点  浙商新作为 第五届外滩国际金融峰会举办">金融新起点  浙商新作为 第五届外滩国...</a>-->
-                                <!--</li>-->
-                                <!--<li>-->
-                                    <!--<a href="">-->
-                                        <!--<img src="image/20171107095010-0.png" alt="">-->
-                                    <!--</a>-->
-                                    <!--<a href="" class="banner-jie" title="【商会】浙商闵行战略签约，携手打造创新创业新高地">【商会】浙商闵行战略签约，携手打造...</a>-->
-                                <!--</li>-->
-                                <!--<li>-->
-                                    <!--<a href="">-->
-                                        <!--<img src="image/20171107094908-0.png" alt="">-->
-                                    <!--</a>-->
-                                    <!--<a href="" class="banner-jie" title="【商会】在沪浙商要做新时代中国特色社会主义思想的践行者和美好生活的创造者">【商会】在沪浙商要做新时代中国特色...</a>-->
-                                <!--</li>-->
-                                <!--<li>-->
-                                    <!--<a href="">-->
-                                        <!--<img src="image/20171024133110-0.png" alt="">-->
-                                    <!--</a>-->
-                                    <!--<a href="" class="banner-jie" title="【商会】陈希副区长：让浙商在浦东新区和自贸区茁壮成长">【商会】陈希副区长：让浙商在浦东新...</a>-->
-                                <!--</li>-->
-                            <!--</ul>-->
-                            <!--<div class="btn">-->
-                                <!--<div class="btn-bL"></div>-->
-                                <!--<div class="btn-bR"></div>-->
-                            <!--</div>-->
-                            <!--<ul class="yuan">-->
-                                <!--<li class="yson"></li>-->
-                                <!--<li class="yson"></li>-->
-                                <!--<li class="yson"></li>-->
-                                <!--<li class="yson"></li>-->
-                                <!--<li class="yson"></li>-->
-                                <!--<li class="yson"></li>-->
-                            <!--</ul>-->
-                        <!--</div>-->
-                        <!--<div class="s1-lbright">-->
-                            <!--<ul class="s1-lbr">-->
-                                <!--<li>-->
-                                    <!--<a href="">【商会】筚路蓝缕 曙光在前 闻道儒商陈萍</a>-->
-                                <!--</li>-->
-                                <!--<li>-->
-                                    <!--<a href="">【商会】沪闽互通服务浙商 福建浙江商会来访</a>-->
-                                <!--</li>-->
-                                <!--<li>-->
-                                    <!--<a href="">【企业】连成集团荣获2017年“百年匠星”...</a>-->
-                                <!--</li>-->
-                                <!--<li>-->
-                                    <!--<a href="">【企业】万丰集团：营造国际品牌，构筑百年企...</a>-->
-                                <!--</li>-->
-                                <!--<li>-->
-                                    <!--<a href="">【商会】大融合大发展大创造 闵行与浙商合作...</a>-->
-                                <!--</li>-->
-                                <!--<li>-->
-                                    <!--<a href="">【商会】卢秉恒院士：用3D技术打印“全民创...</a>-->
-                                <!--</li>-->
-                                <!--<li>-->
-                                    <!--<a href="">【商会】凝聚、创新、提升 商会团委一次...</a>-->
-                                <!--</li>-->
-                                <!--<li>-->
-                                    <!--<a href="">【商会】天通控股：占领电子材料研发领域至高...</a>-->
-                                <!--</li>-->
-                            <!--</ul>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                    <ul class="new2">
-                    </ul>
-                    <!--<div class="fenye">-->
-                        <!--<a href="">首页</a>-->
-                        <!--<a href="">上一页</a>-->
-                        <!--<a href="">1</a>-->
-                        <!--<a href="">2</a>-->
-                        <!--<a href="">3</a>-->
-                        <!--<a href="">4</a>-->
-                        <!--<a href="">5</a>-->
-                        <!--<a href="">6</a>-->
-                        <!--<a href="">7</a>-->
-                        <!--<a href="">8</a>-->
-                        <!--<a href="">9</a>-->
-                        <!--<a href="">10</a>-->
-                        <!--<a href="">...</a>-->
-                        <!--<a href="">下一页</a>-->
-                        <!--<a href="">尾页</a>-->
-                    <!--</div>-->
-                    <div class="paging"><div class="box" id="box"></div></div>
+                    <div class="new-list" v-if="cate_info.type==0 || cate_domain == '' && yuming_domain == '' ">
+                        <div class="new1">
+                            <div class="s1-lbleft">
+                                <ul class="banner">
+                                    <li v-for="(item, index) in hot_cont">
+                                        <a :href="'/org/'+item.weid">
+                                            <img :src="item.thumb_image" alt="">
+                                        </a>
+                                        <a :href="'/org/'+item.weid" class="banner-jie" title="item.title">{{item.title | limitLen(0,18)}}</a>
+                                    </li>
+                                </ul>
+                                <div class="btn">
+                                    <div class="Ibtn-bL"></div>
+                                    <div class="Ibtn-bR"></div>
+                                </div>
+                                <ul class="yuan">
+                                    <li class="yson" v-for="(item, index) in hot_cont"></li>
+                                </ul>
+                            </div>
+                            <div class="s1-lbright">
+                                <ul class="s1-lbr">
+                                    <li v-for="(item, index) in recom_cont">
+                                        <a :href="'/org/' + item.weid">{{item.title}}</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <ul class="new2">
+                            <li v-for="item in new2_cont">
+                                <a :href="'/org/' + item.weid" target="_blank" v-if="item.thumb_image != '' ">
+                                    <img :src="item.thumb_image" alt="">
+                                </a>
+                                <div class="new2-left" v-if="item.thumb_image != '' " style="width:660px">
+                                    <h2>
+                                        <a :href="'/org/' + item.weid" target="_blank">{{item.title}}</a>
+                                    </h2>
+                                    <p>
+                                        <a :href="'/org/' + item.weid" target="_blank">{{item.summary}}</a>
+                                    </p>
+                                    <div class="all">
+                                        <span>时间：{{item.publish_time}}</span>
+                                        <a :href="'/org/' + item.weid" target="_blank">查看更多 +</a>
+                                    </div>
+                                </div>
+                                <div class="new2-left" v-if="item.thumb_image == '' " style="width: 100%">
+                                    <h2>
+                                        <a :href="'/org/' + item.weid" target="_blank">{{item.title}}</a>
+                                    </h2>
+                                    <p>
+                                        <a :href="'/org/' + item.weid" target="_blank">{{item.summary}}</a>
+                                    </p>
+                                    <div class="all">
+                                        <span>时间：{{item.publish_time}}</span>
+                                        <a :href="'/org/' + item.weid" target="_blank">查看更多 +</a>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class='org_content' v-if="cate_info.type==1">
+                        <div v-html="cate_info.content"></div>
+                    </div>
                 </div>
             </article>
             <!--右侧内容结束-->
 
         </article>
+        <!--分页-->
+        <Page :total="total" :current="page" :page-size="limit" @on-change="change"></Page>
     </div>
     <!-- 新闻中心结束 -->
 
-    <div id="bottom1">
-        <footer>
-            <div class="footer-nav">
-                <a href="javascript:void(0)">咨询与建议</a>
-                <a href="javascript:void(0)">站点地图</a>
-                <a id="contact" href="/org/lxwm">联系我们</a>
-            </div>
-            <div class="copyright" v-html="plats_info.copyright"></div>
-            <div class="_ideConac">
-                <img src="/common/img/gabeian.png" width="60" height="60">
-            </div>
-        </footer>
-    </div>
-</main>
-
 <script>
-
-    var app = new Vue({
-        el: '#app',
+    new Vue({
+        el: '#container',
         data: {
-            avatar: '',
-            domain: plats_user_info.domian == undefined ? 'index' : plats_user_info.domian,
-            logo: '',
-            header1: '',
-            header2: [], //头图
-            channel: [], //频道
-            key: '', //搜索关键字
-            qrcode: [
-                {ok: false, title: "手机版", image: "/api/file/qrcode?margin=2&url="+window.location.href},
-                {ok: false, title: "微信", image: plats_info.wx_qrcode? plats_info.wx_qrcode: window.location.origin+"/api/file/qrcode?margin=2&url="+window.location.href},
-                {ok: false, title: "微博", image: plats_info.wb_qrcode? plats_info.wb_qrcode: window.location.origin+"/api/file/qrcode?margin=2&url="+window.location.href},
-            ],
+            total:'',
+            page: 1,
+            limit: 5,
+            total_page:0,
+            channel_domain : $app.get_router(1),    //频道域名
+            cate_domain : $app.get_router(2), // 分类个性域名
+            sub_aside:[],
+            cate_info:{},
+            col_child : [],
+            new2_cont:{},        //下方新闻列表
+            hot_cont:{},          //幻灯片热门
+            recom_cont:{},        //幻灯片推荐
+            yuming_domain:'',
+            domain_weid:"",
+            parent_domain:""
         },
-        created() {
-            axios.get(CMS_ADVS).then(data => {
-                var resp = data.data.data;
-                this.channel = resp.channel.list.map(e => (e.drop = false, e));
-                this.logo = this.set_img(resp.setting.s_logo, "/common/img/logo-so.png", 209, 50);
-                this.header1 = this.set_img(resp.header1.image, "/common/img/logo-title-info.png", 382, 45);
-                this.header2 = resp.header2;
-            });
-            $("title").text(plats_info.title);
-            $("#favicon").attr('href', ApiMaterPlatQiniuDomain + plats_info.favicon);
-        },
-        mounted() {
-            this.$nextTick(() => {
+        mounted: function() {
+            this.$nextTick(()=>{
+               // 左侧频道
+                this.channel_domain_query();
+                // 右侧推荐中心
+                // 热门
+                ajax.get(CMS_CONTENTS + "org&limit=5&is_hot=1").then((res)=>{
+                      if(res.code == 200){
+                          this.hot_cont=res.data.list;
+                      }
+                })
+                // 推荐
+                ajax.get(CMS_CONTENTS  + "org&limit=8&index_show=1").then((res)=>{
+                    if(res.code == 200){
+                        this.recom_cont=res.data.list;
+                    }
+                })
+               // 右侧下方新闻中心
+                if(this.cate_domain == '' && this.yuming_domain == ''){
+                        ajax.get("cms/contents?channel_id=org&limit="+this.limit+"&page="+this.page).then((res)=>{
+                            if(res.code == 200) {
+                                this.new2_cont=res.data.list;
+                                console.log("首页",this.new2_cont)
+                                this.total=res.data.total;
+                                this.total_page = Math.ceil(this.total / this.limit);
+                            }
+                        })
+                }else{
+                    ajax.get("cms/contents?cate_id="+this.cate_domain+"&limit="+this.limit+"&page="+this.page).then((res)=>{
+                        if(res.code == 200) {
+                            this.new2_cont=res.data.list;
+                            this.total=res.data.total;
+                            this.total_page = Math.ceil(this.total / this.limit);
+                        }
+                    })
+                }
 
-            })
+
+
+
+            });
+            // $app.get_query_string('page') ? console.log($app.get_query_string('page')) : console.log(1)
+        },
+        created: function(){
+
         },
         methods: {
-            login: () => {
-                if(!docCookies.getItem("token")) {
-                    $("#modal_login").fadeIn(300);
-                } else {
-                    window.location.href = '/user';
-                }
-            },
-            set_img: (url, init, w, h, mode) => {
-                if (url != '' && url != null && url != undefined) {
-                    if (url.indexOf('http') === -1 && url.indexOf('common') === -1) {
-                        return mode != undefined ? ApiMaterPlatQiniuDomain + url + '?imageView2/' + mode + '/w/' + w + '/h/' + h
-                            : ApiMaterPlatQiniuDomain + url + '?imageView2/3/w/' + w + '/h/' + h;
-                    } else {
-                        return url;
+            channel_domain_query() {
+                ajax.get(CMS_CHANNELS_DOMAIN_QUERY + this.channel_domain).then((res)=>{
+                    if(res.code == 200) {
+                        this.domain_weid = res.data.weid;
+                        ajax.get("cms/cate_tree_by_channel?channel=" + this.domain_weid).then((res)=>{
+                            if(res.code == 200) {
+                                var result = res.data;
+                                this.sub_aside = result;
+                                var flag=true;
+                                for(var item of this.sub_aside) {
+                                    if(item.domain == this.cate_domain) {
+                                        flag=true;
+                                        // 二级分类
+                                        if(item.children.length != 0){
+                                            this.col_child = item.children;
+                                            this.cate_info = item.children[0];
+
+                                        }else{
+                                            this.cate_info = item;
+                                        }
+
+                                        // $app.set_title(item.title +' - '+ this.sub_aside_info.title + '_' + plats_info.title);
+                                        break;
+                                    }else{
+                                        flag=false;
+                                    }
+                                }
+                                if(flag==false && this.cate_domain != '' ){
+                                    ajax.get("cms/categories/domain_query/"+this.cate_domain).then((res)=>{
+                                        if(res.code == 200) {
+                                            this.cate_info=res.data;
+                                            // 查找父集
+                                            var parend_id=res.data.parent_id
+                                            var that=this;
+                                            $.ajax({
+                                                url:apiUrl + "cms/cate_categories?cate=" + parend_id,
+                                                dataType: 'json',
+                                                async:  false,
+                                                success: function(res){
+                                                    if(res.code === 200) {
+                                                        that.col_child = res.data;
+                                                    }
+                                                }
+                                            });
+                                            $("#" + parend_id).addClass("cenav_cur").siblings().removeClass("cenav_cur");
+                                        }
+                                    })
+
+                                }
+                            }
+                        })
                     }
-                } else {
-                    return init;
-                }
+                })
             },
-            search: (key) => window.location.href = window.location.protocol + '//' + window.location.host + '/so?q=' + key,
-            simple_null: (data) => data != null && data != '' && data != undefined ? false : true,
-            check: (domain, url) => url != null && url != '' ? url : '/' + domain,
-        },
-        filters: {
-            fixed_len: (value, len) => value.length > len ? value.substr(0, len) : value,
-            cut: (value, len) => value.length > len ? value.substr(0, len) + '...' : value,
-            show_date: (value) => value.getFullYear() + '-' + (value.getMonth() + 1) + '-' + value.getDate(),
-            format_date: (value) => {
-                var res = value.split('-').reduce((res, e, i) => res += e.length === 1? '0' + e + '-' : e + '-', '');
-                return res.substr(0, res.length - 1);
-            }
+            cate: function(domain,type){
+
+                for(var item of this.sub_aside) {
+                    if(item.domain == domain) {
+                        // 二级分类
+                        if(item.children.length != 0){
+                            this.col_child = item.children;
+                            if(item.children[0].type==0){
+                                this.cate_info = item.children[0];
+                                ajax.get("cms/contents?cate_id="+item.children[0].domain+"&limit="+this.limit+"&page="+this.page).then((res)=>{
+                                    if(res.code == 200) {
+                                        this.new2_cont=res.data.list;
+                                        this.total=res.data.total;
+                                        this.total_page = Math.ceil(this.total / this.limit);
+                                    }
+                                })
+                            }else{
+                                this.cate_info = item.children[0];
+                            }
+
+                        }else{
+                            this.col_child=[];
+                            this.cate_info = item;
+                        }
+
+                        // $app.set_title(item.title +' - '+ this.sub_aside_info.title + '_' + plats_info.title);
+                        break;
+                    }
+                }
+                if(type==0){
+                    ajax.get("cms/contents?cate_id="+domain+"&limit="+this.limit+"&page="+this.page).then((res)=>{
+                        if(res.code == 200) {
+                            this.new2_cont=res.data.list;
+                            this.total=res.data.total;
+                            this.total_page = Math.ceil(this.total / this.limit);
+                        }
+                    })
+
+                }
+
+            },
+
+            change: function(page){
+                this.page = page;
+            },
+
+            column_list: function(domain,type) {
+                this.yuming_domain=domain;
+                this.cate_domain='';
+                this.page = 1;
+                $(".aside>li").removeClass("cenav_cur")
+                window.history.pushState('json', '', '/'+ this.channel_domain +'/'+ domain);
+                this.cate(this.yuming_domain,type);
+            },
+
+            list_list: function(domain,type) {
+                this.yuming_domain=domain;
+                this.cate_domain='';
+                this.page = 1;
+                window.history.pushState('json', '', '/'+ this.channel_domain +'/'+ domain);
+                this.cate_son(this.yuming_domain,type)
+            },
+
+            cate_son: function(domain,type){
+                if(type==0){
+                    ajax.get("cms/categories/domain_query/"+domain).then((res)=>{
+                        if(res.code == 200) {
+                            this.cate_info=res.data;
+                            // 查找父集
+                            var parend_id=res.data.parent_id
+
+                            $("#" + parend_id).addClass("cenav_cur").siblings().removeClass("cenav_cur");
+                            ajax.get("cms/contents?cate_id="+domain+"&limit="+this.limit+"&page="+this.page).then((res)=>{
+                                if(res.code == 200) {
+                                    this.new2_cont=res.data.list;
+                                    this.total=res.data.total;
+                                    this.total_page = Math.ceil(this.total / this.limit);
+                                }
+                            })
+                        }
+                    })
+
+
+                }else{
+                    ajax.get("cms/categories/domain_query/"+domain).then((res)=>{
+                        if(res.code == 200) {
+                            this.cate_info=res.data;
+                            // 查找父集
+                            var parend_id=res.data.parent_id
+                            $("#" + parend_id).addClass("cenav_cur").siblings().removeClass("cenav_cur");
+                        }
+                    })
+                }
+
+            },
+
         }
     })
 </script>
-</body>
-</html>
+<!--</body>-->
+<!--</html>-->
