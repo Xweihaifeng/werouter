@@ -84,9 +84,9 @@
             <article class="news-pre2">
                 <figure class="news-col-nav">
                     <figcaption :class="{'news-nav-active' : item.domain == window.location.pathname.split('/').slice(1,4)[1] | (window.location.pathname.split('/').slice(1,4)[1] == undefined & index == 0)}" v-for="(item, index) in column" v-if="index < 8">
-                        <span :id="item.domain" @click="column_list(item.domain)">{{ item.title }}</span>
+                        <span :id="item.domain" @click="column_list(item.domain , item.title)">{{ item.title }}</span>
                         <ul>
-                            <li :class="{'news-nav-active' : item.domain == window.location.pathname.split('/').slice(1,4)[1]}" v-for="(value, key) in item.children" @click="column_list(value.domain)">{{ value.title }}</li>
+                            <li :class="{'news-nav-active' : item.domain == window.location.pathname.split('/').slice(1,4)[1]}" v-for="(value, key) in item.children" @click="column_list(value.domain , item.title)">{{ value.title }}</li>
                         </ul>
                     </figcaption>
                 </figure>
@@ -149,6 +149,7 @@
     var app = new Vue({
         el: '#container',
         data: {
+            title : '',
             avatar: '',
             domain: plats_user_info.domian == undefined ? 'index' : plats_user_info.domian,
             logo: '',
@@ -183,7 +184,7 @@
                 this.header1 = this.set_img(resp.header1.image, "/common/img/logo-title-info.png", 382, 45);
                 this.header2 = resp.header2;
             });
-            $("title").text(plats_info.title);
+
             $("#favicon").attr('href', ApiMaterPlatQiniuDomain + plats_info.favicon);
 
             // 新闻热门部分
@@ -203,13 +204,17 @@
 
             // 新闻列表显示
             ajax.get(CMS_CHANNELS_DOMAIN_QUERY + this.channel_domain).then((res) => {
+
                 if(res.code == 200) {
+                    this.title = res.data.title;
                     ajax.get("cms/cate_tree_by_channel?channel=" + res.data.weid).then((data) => {
                         this.column = data.data;
-                        this.column.forEach(function(body, index) {
+                        this.column.forEach((body, index) =>{
                             if(index == 0) {
+      
+                                $app.set_title(this.title + '-' + body.title + '-' + plats_info.title);
                                 this.first_domain = body.domain;
-                                self.cate(this.first_domain);
+                                this.cate(this.first_domain);
                             }
                         })
                     })
@@ -248,10 +253,12 @@
                 this.page = page;
                 this.cate();
             },
-            column_list: function(domain) {
+            column_list: function(domain , title) {
+                
                 this.first_domain = domain;
                 this.page = 1;
                 window.history.pushState('json', '', '/'+ this.channel_domain +'/'+ this.first_domain);
+                $app.set_title(this.title + '-' + title + '-' + plats_info.title);
                 this.cate();
             },
             login: () => {

@@ -119,7 +119,7 @@
             <img src="/resource/wetpl/substation/default/web/image/fanhui.png" alt="">
             当前位置在：
             <a href="">首页</a>
-            > 组织 > {{cate_info.title || '商会首页'}}
+            > 组织 > {{cate_info.title}}
             <div class="er-nav" id="menuTwo">
                 <a class="chan_li" :class="{er_cur : item.domain==cate_domain || item.domain==yuming_domain}" v-for="(item, index) in col_child" :id="item.domain"  :name="item.weid" :type="item.type" @click="column_list(item)">{{ item.title }}</a>
             </div>
@@ -134,18 +134,16 @@
                     <span>Chamber of Commerce</span>
                 </h2>
                 <ul class="aside" id="menuX">
-                    <li :class="{cenav_cur : cate_domain == '' && yuming_domain == '' }">
-                        <a class="chan_li" id="oooo" href="/org"> 商会首页 </a>
-                    </li>
+      
                     <li :id="item.weid" :class="{cenav_cur : item.domain==cate_domain || item.domain==yuming_domain}" v-for="item in sub_aside" ><a :id="item.domain" :type="item.type" @click="column_list(item)">{{item.title}}</a></li>
                 </ul>
             </article>
             <!--左侧内容结束-->
             <!--右侧内容开始-->
             <article class="list-big">
-                <div class="title">
+<!--                 <div class="title">
                     <span>{{cate_info.title || '商会首页'}}</span>
-                </div>
+                </div> -->
                 <div class="newsert">
                     <div class="new-list" v-if="cate_info.type==0 || cate_domain == '' && yuming_domain == '' ">
                         <div class="new1" v-if="cate_domain == '' && yuming_domain == ''">
@@ -153,7 +151,7 @@
                                 <ul class="banner">
                                     <li v-for="(item, index) in hot_cont">
                                         <a :href="'/org/'+item.weid">
-                                            <img :src="item.thumb_image" alt="">
+                                            <img :src="item.thumb_image | img_src"  alt="">
                                         </a>
                                         <a :href="'/org/'+item.weid" class="banner-jie" title="item.title">{{item.title | limitLen(0,18)}}</a>
                                     </li>
@@ -252,13 +250,13 @@
                 }else{
                     var pathname = window.location.pathname.split("/").slice(1,4);
                     var cate_domain = pathname[1];
-                    console.log(cate_domain);
+
                     ajax.get(CMS_CHANNELS_DOMAIN_QUERY + this.channel_domain).then((res)=>{
                         if(res.code == 200) {
                             this.domain_weid = res.data.weid;
                             ajax.get("cms/cate_tree_by_channel?channel=" + this.domain_weid).then((res) => {
                                 if (res.code == 200) {
-                                    console.log(res.data);
+
                                     res.data.forEach(function (item, index) {
                                         if (item.domain == cate_domain) {
                                             self.cate(item);
@@ -292,7 +290,7 @@
                 ajax.get("cms/contents?channel_id=org&limit="+this.limit+"&page="+this.page).then((res)=>{
                     if(res.code == 200) {
                         this.new2_cont=res.data.list;
-                        console.log("首页",this.new2_cont)
+                        
                         this.total=res.data.total;
                         this.total_page = Math.ceil(this.total / this.limit);
                     }
@@ -301,6 +299,7 @@
             channel_domain_query() {
                 ajax.get(CMS_CHANNELS_DOMAIN_QUERY + this.channel_domain).then((res)=>{
                     if(res.code == 200) {
+                        this.cate_info = res.data;
                         this.domain_weid = res.data.weid;
                         ajax.get("cms/cate_tree_by_channel?channel=" + this.domain_weid).then((res)=>{
                             if(res.code == 200) {
@@ -345,7 +344,7 @@
                                     })
 
                                 }
-                                $app.set_title(this.cate_info.title);
+                                $app.set_title(this.cate_info.title + '-' + plats_info.title);
                             }
                         })
 
@@ -366,7 +365,7 @@
                 var self = this;
                 self.page = 1;
                 if(body.level == 1){
-                    console.log(body);
+      
                     if(body.children.length != 0){
                         this.col_child = body.children;
                         if(body.children[0].type == 0){
@@ -422,10 +421,10 @@
                 var cate_domain = pathname[1];
                 if(!cate_domain) {
                     var domain = self.channel_domain;
-                    console.log(domain);
+
                     self.channel_list(domain)
                 } else {
-                    console.log(cate_domain);
+ 
                     self.column(cate_domain)
                 }
 
