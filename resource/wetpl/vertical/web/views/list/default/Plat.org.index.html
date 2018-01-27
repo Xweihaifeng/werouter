@@ -121,7 +121,7 @@
             <a href="">首页</a>
             > 组织 > {{cate_info.title || '商会首页'}}
             <div class="er-nav" id="menuTwo">
-                <a class="chan_li" :class="{er_cur : item.domain==cate_domain || item.domain==yuming_domain}" v-for="(item, index) in col_child" :id="item.domain"  :name="item.weid" :type="item.type" @click="list_list(item.domain,item.type)">{{ item.title }}</a>
+                <a class="chan_li" :class="{er_cur : item.domain==cate_domain || item.domain==yuming_domain}" v-for="(item, index) in col_child" :id="item.domain"  :name="item.weid" :type="item.type" @click="column_list(item)">{{ item.title }}</a>
             </div>
         </div>
         <!--位置显示结束-->
@@ -135,9 +135,9 @@
                 </h2>
                 <ul class="aside" id="menuX">
                     <li :class="{cenav_cur : cate_domain == '' && yuming_domain == '' }">
-                        <a class="chan_li" id="oooo" href="/zz"> 商会首页 </a>
+                        <a class="chan_li" id="oooo" href="/org"> 商会首页 </a>
                     </li>
-                    <li :id="item.weid" :class="{cenav_cur : item.domain==cate_domain || item.domain==yuming_domain}" v-for="item in sub_aside" ><a :id="item.domain" :type="item.type" @click="column_list(item.domain,item.type)">{{item.title}}</a></li>
+                    <li :id="item.weid" :class="{cenav_cur : item.domain==cate_domain || item.domain==yuming_domain}" v-for="item in sub_aside" ><a :id="item.domain" :type="item.type" @click="column_list(item)">{{item.title}}</a></li>
                 </ul>
             </article>
             <!--左侧内容结束-->
@@ -148,7 +148,7 @@
                 </div>
                 <div class="newsert">
                     <div class="new-list" v-if="cate_info.type==0 || cate_domain == '' && yuming_domain == '' ">
-                        <div class="new1">
+                        <div class="new1" v-if="cate_domain == '' && yuming_domain == ''">
                             <div class="s1-lbleft">
                                 <ul class="banner">
                                     <li v-for="(item, index) in hot_cont">
@@ -215,7 +215,7 @@
 
         </article>
         <!--分页-->
-        <Page :total="total" :current="page" :page-size="limit" @on-change="change"></Page>
+        <Page :total="total" :current="page" :page-size="limit" @on-change="change" v-if="total > limit"></Page>
     </div>
     <!-- 新闻中心结束 -->
 
@@ -240,45 +240,35 @@
             parent_domain:""
         },
         mounted: function() {
+            var self = this;
             this.$nextTick(()=>{
                // 左侧频道
                 this.channel_domain_query();
                 // 右侧推荐中心
-                // 热门
-                ajax.get(CMS_CONTENTS + "org&limit=5&is_hot=1").then((res)=>{
-                      if(res.code == 200){
-                          this.hot_cont=res.data.list;
-                      }
-                })
-                // 推荐
-                ajax.get(CMS_CONTENTS  + "org&limit=8&index_show=1").then((res)=>{
-                    if(res.code == 200){
-                        this.recom_cont=res.data.list;
-                    }
-                })
+
                // 右侧下方新闻中心
                 if(this.cate_domain == '' && this.yuming_domain == ''){
-                        ajax.get("cms/contents?channel_id=org&limit="+this.limit+"&page="+this.page).then((res)=>{
-                            if(res.code == 200) {
-                                this.new2_cont=res.data.list;
-                                console.log("首页",this.new2_cont)
-                                this.total=res.data.total;
-                                this.total_page = Math.ceil(this.total / this.limit);
-                            }
-                        })
+                    this.channel_list();
                 }else{
-                    ajax.get("cms/contents?cate_id="+this.cate_domain+"&limit="+this.limit+"&page="+this.page).then((res)=>{
+                    var pathname = window.location.pathname.split("/").slice(1,4);
+                    var cate_domain = pathname[1];
+                    console.log(cate_domain);
+                    ajax.get(CMS_CHANNELS_DOMAIN_QUERY + this.channel_domain).then((res)=>{
                         if(res.code == 200) {
-                            this.new2_cont=res.data.list;
-                            this.total=res.data.total;
-                            this.total_page = Math.ceil(this.total / this.limit);
+                            this.domain_weid = res.data.weid;
+                            ajax.get("cms/cate_tree_by_channel?channel=" + this.domain_weid).then((res) => {
+                                if (res.code == 200) {
+                                    console.log(res.data);
+                                    res.data.forEach(function (item, index) {
+                                        if (item.domain == cate_domain) {
+                                            self.cate(item);
+                                        }
+                                    });
+                                }
+                            })
                         }
                     })
                 }
-
-
-
-
             });
             // $app.get_query_string('page') ? console.log($app.get_query_string('page')) : console.log(1)
         },
@@ -286,6 +276,28 @@
 
         },
         methods: {
+            channel_list() {
+                // 热门
+                ajax.get(CMS_CONTENTS + "org&limit=5&is_hot=1").then((res)=>{
+                    if(res.code == 200){
+                        this.hot_cont=res.data.list;
+                    }
+                })
+                // 推荐
+                ajax.get(CMS_CONTENTS  + "org&limit=8&index_show=1").then((res)=>{
+                    if(res.code == 200){
+                        this.recom_cont=res.data.list;
+                    }
+                })
+                ajax.get("cms/contents?channel_id=org&limit="+this.limit+"&page="+this.page).then((res)=>{
+                    if(res.code == 200) {
+                        this.new2_cont=res.data.list;
+                        console.log("首页",this.new2_cont)
+                        this.total=res.data.total;
+                        this.total_page = Math.ceil(this.total / this.limit);
+                    }
+                })
+            },
             channel_domain_query() {
                 ajax.get(CMS_CHANNELS_DOMAIN_QUERY + this.channel_domain).then((res)=>{
                     if(res.code == 200) {
@@ -302,11 +314,9 @@
                                         if(item.children.length != 0){
                                             this.col_child = item.children;
                                             this.cate_info = item.children[0];
-
                                         }else{
                                             this.cate_info = item;
                                         }
-
                                         // $app.set_title(item.title +' - '+ this.sub_aside_info.title + '_' + plats_info.title);
                                         break;
                                     }else{
@@ -335,105 +345,97 @@
                                     })
 
                                 }
+                                $app.set_title(this.cate_info.title);
                             }
                         })
+
+
                     }
                 })
             },
-            cate: function(domain,type){
-
-                for(var item of this.sub_aside) {
-                    if(item.domain == domain) {
-                        // 二级分类
-                        if(item.children.length != 0){
-                            this.col_child = item.children;
-                            if(item.children[0].type==0){
-                                this.cate_info = item.children[0];
-                                ajax.get("cms/contents?cate_id="+item.children[0].domain+"&limit="+this.limit+"&page="+this.page).then((res)=>{
-                                    if(res.code == 200) {
-                                        this.new2_cont=res.data.list;
-                                        this.total=res.data.total;
-                                        this.total_page = Math.ceil(this.total / this.limit);
-                                    }
-                                })
-                            }else{
-                                this.cate_info = item.children[0];
-                            }
-
+            column(domain) {
+                ajax.get("cms/contents?cate_id="+domain+"&limit="+this.limit+"&page="+this.page).then((res)=>{
+                    if(res.code == 200) {
+                        this.new2_cont=res.data.list;
+                        this.total=res.data.total;
+                        this.total_page = Math.ceil(this.total / this.limit);
+                    }
+                })
+            },
+            cate(body){
+                var self = this;
+                self.page = 1;
+                if(body.level == 1){
+                    console.log(body);
+                    if(body.children.length != 0){
+                        this.col_child = body.children;
+                        if(body.children[0].type == 0){
+                            self.column(body.children[0].domain);
+                            this.cate_info = body.children[0];
+                            $app.set_title(this.cate_info.title);
                         }else{
-                            this.col_child=[];
-                            this.cate_info = item;
+                            this.cate_info = body.children[0];
+                            $app.set_title(this.cate_info.title);
                         }
+                    }else{
+                        if(body.type == 0){
+                            self.column(body.domain);
+                            this.cate_info = body;
+                        } else {
+                            this.cate_info = body;
+                        }
+                        this.col_child=[];
+                        $app.set_title(this.cate_info.title);
+                    }
+                }else{
+                    if(body.type==0){
 
-                        // $app.set_title(item.title +' - '+ this.sub_aside_info.title + '_' + plats_info.title);
-                        break;
+                        ajax.get("cms/categories/domain_query/"+body.domain).then((res)=>{
+                            if(res.code == 200) {
+                                self.cate_info=res.data;
+                                $app.set_title(self.cate_info.title);
+                                // 查找父集
+                                var parend_id=res.data.parent_id
+                                $("#" + parend_id).addClass("cenav_cur").siblings().removeClass("cenav_cur");
+                                self.column(body.domain);
+                            }
+                        })
+
+                    }else{
+                        ajax.get("cms/categories/domain_query/"+body.domain).then((res)=>{
+                            if(res.code == 200) {
+                                self.cate_info=res.data;
+                                $app.set_title(self.cate_info.title);
+                                // 查找父集
+                                var parend_id=res.data.parent_id
+                                $("#" + parend_id).addClass("cenav_cur").siblings().removeClass("cenav_cur");
+                            }
+                        })
                     }
                 }
-                if(type==0){
-                    ajax.get("cms/contents?cate_id="+domain+"&limit="+this.limit+"&page="+this.page).then((res)=>{
-                        if(res.code == 200) {
-                            this.new2_cont=res.data.list;
-                            this.total=res.data.total;
-                            this.total_page = Math.ceil(this.total / this.limit);
-                        }
-                    })
+            },
 
+            change(page){
+                var self = this;
+                self.page = page;
+                var pathname = window.location.pathname.split("/").slice(1,4);
+                var cate_domain = pathname[1];
+                if(!cate_domain) {
+                    var domain = self.channel_domain;
+                    console.log(domain);
+                    self.channel_list(domain)
+                } else {
+                    console.log(cate_domain);
+                    self.column(cate_domain)
                 }
 
             },
-
-            change: function(page){
-                this.page = page;
-            },
-
-            column_list: function(domain,type) {
-                this.yuming_domain=domain;
+            column_list(item) {
+                this.yuming_domain=item.domain;
                 this.cate_domain='';
-                this.page = 1;
                 $(".aside>li").removeClass("cenav_cur")
-                window.history.pushState('json', '', '/'+ this.channel_domain +'/'+ domain);
-                this.cate(this.yuming_domain,type);
-            },
-
-            list_list: function(domain,type) {
-                this.yuming_domain=domain;
-                this.cate_domain='';
-                this.page = 1;
-                window.history.pushState('json', '', '/'+ this.channel_domain +'/'+ domain);
-                this.cate_son(this.yuming_domain,type)
-            },
-
-            cate_son: function(domain,type){
-                if(type==0){
-                    ajax.get("cms/categories/domain_query/"+domain).then((res)=>{
-                        if(res.code == 200) {
-                            this.cate_info=res.data;
-                            // 查找父集
-                            var parend_id=res.data.parent_id
-
-                            $("#" + parend_id).addClass("cenav_cur").siblings().removeClass("cenav_cur");
-                            ajax.get("cms/contents?cate_id="+domain+"&limit="+this.limit+"&page="+this.page).then((res)=>{
-                                if(res.code == 200) {
-                                    this.new2_cont=res.data.list;
-                                    this.total=res.data.total;
-                                    this.total_page = Math.ceil(this.total / this.limit);
-                                }
-                            })
-                        }
-                    })
-
-
-                }else{
-                    ajax.get("cms/categories/domain_query/"+domain).then((res)=>{
-                        if(res.code == 200) {
-                            this.cate_info=res.data;
-                            // 查找父集
-                            var parend_id=res.data.parent_id
-                            $("#" + parend_id).addClass("cenav_cur").siblings().removeClass("cenav_cur");
-                        }
-                    })
-                }
-
+                window.history.pushState('json', '', '/'+ this.channel_domain +'/'+ item.domain);
+                this.cate(item);
             },
 
         }

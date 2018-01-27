@@ -29,22 +29,26 @@
                </div>
                <ul class="wemall-clist">
                    <div class="clist-advert">
-                       <a href="">
-                           <img :src="item.image" alt="">
-                       </a>
+                       <div class="adv-list">
+                           <a href="" v-for="item in advert_cont">
+                               <img :src="item.image" alt="">
+                           </a>
+                       </div>
+                       <div class="btnL"></div>
+                       <div class="btnR"></div>
                    </div>
                    <li v-for="item in wemall_con">
-                       <div class="give">
-                           <img src="{{PATH_TML}}wemall/img/买赠.png" alt="" v-if="item.give==1">
-                       </div>
-                       <!--<div class="give" v-if="item.give==0"></div>-->
-                       <div class="photo">
-                           <img :src="item.image" alt="">
-                       </div>
-                       <h3>{{item.title}}</h3>
-                       <p>{{item.summary}}</p>
-                       <div class="price">￥{{item.price}}</div>
-                       <a href="">立即购买</a>
+                       <a href="">
+                           <div class="give">
+                               <img src="{{PATH_TML}}wemall/img/买赠.png" alt="" v-if="item.give==1">
+                           </div>
+                           <!--<div class="give" v-if="item.give==0"></div>-->
+                           <div class="photo">
+                               <img :src="item.image" alt="">
+                           </div>
+                           <h3>{{item.title}}</h3>
+                           <div class="price">￥{{item.price}}</div>
+                       </a>
                    </li>
                </ul>
            </div>
@@ -61,12 +65,12 @@
             page: 1,
             limit: 5,
             wemall_con:[
-                {title:"除霾除甲醛高效复合滤芯",image:"/resource/wetpl/vertical/web/wemall/img/02.png",summary:"精选双层防护材质、过滤更精细、去味更有效",price:"799.90",give:0},
-                {title:"除霾除甲醛高效复合滤芯",image:"/resource/wetpl/vertical/web/wemall/img/03.png",summary:"精选双层防护材质、过滤更精细、去味更有效",price:"799.90",give:1},
-                {title:"除霾除甲醛高效复合滤芯",image:"/resource/wetpl/vertical/web/wemall/img/04.png",summary:"精选双层防护材质、过滤更精细、去味更有效",price:"799.90",give:1},
-                {title:"除霾除甲醛高效复合滤芯",image:"/resource/wetpl/vertical/web/wemall/img/05.png",summary:"精选双层防护材质、过滤更精细、去味更有效",price:"799.90",give:0},
-                {title:"除霾除甲醛高效复合滤芯",image:"/resource/wetpl/vertical/web/wemall/img/03.png",summary:"精选双层防护材质、过滤更精细、去味更有效",price:"799.90",give:0},
-                {title:"除霾除甲醛高效复合滤芯",image:"/resource/wetpl/vertical/web/wemall/img/02.png",summary:"精选双层防护材质、过滤更精细、去味更有效",price:"799.90",give:0},
+                {title:"除霾除甲醛高效复合滤芯",image:"/resource/wetpl/vertical/web/wemall/img/2.png",summary:"精选双层防护材质、过滤更精细、去味更有效",price:"799.90",give:0},
+                {title:"除霾除甲醛高效复合滤芯",image:"/resource/wetpl/vertical/web/wemall/img/3.png",summary:"精选双层防护材质、过滤更精细、去味更有效",price:"799.90",give:1},
+                {title:"除霾除甲醛高效复合滤芯",image:"/resource/wetpl/vertical/web/wemall/img/4.png",summary:"精选双层防护材质、过滤更精细、去味更有效",price:"799.90",give:1},
+                {title:"除霾除甲醛高效复合滤芯",image:"/resource/wetpl/vertical/web/wemall/img/1.png",summary:"精选双层防护材质、过滤更精细、去味更有效",price:"799.90",give:0},
+                {title:"除霾除甲醛高效复合滤芯",image:"/resource/wetpl/vertical/web/wemall/img/3.png",summary:"精选双层防护材质、过滤更精细、去味更有效",price:"799.90",give:0},
+                {title:"除霾除甲醛高效复合滤芯",image:"/resource/wetpl/vertical/web/wemall/img/2.png",summary:"精选双层防护材质、过滤更精细、去味更有效",price:"799.90",give:0},
             ],
             advert_cont:[
                 {image:"/resource/wetpl/vertical/web/wemall/img/sixiaobanner1.jpg"},

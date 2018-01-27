@@ -14,4 +14,5 @@ $(function(){
             $(".cat-nav").css({border:"1px solid #D9D9D9"})
         }
     })
+
 })
