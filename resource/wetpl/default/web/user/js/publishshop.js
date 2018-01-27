@@ -141,7 +141,7 @@ $(function(){
      var initServiceHtml=function (data) {
          if (isNull(data)) {
              var html= '<li class="service_list" style="border:1px solid #dddee1;width: 480px;margin-left: 95px;margin-bottom:20px;height: auto;overflow: hidden ;background:#fafafa;box-sizing:border-box;float:left;weid="'+data.weid+'">'+
-                 '<div  class="Service_Delete" style="border-bottom:1px solid #dddee1;width: 100%;box-sizing:border-box;padding:0 20px;display:flex;justify-content:space-between;align-items:center;height: 40px;"><h5 style="display: block;width: 70px;height: auto;line-height: 40px;float: left">添加服务</h5><span  style="display: block;width: 54px;height: 30px;border: 1px solid #dddee1;float: right;line-height: 30px;text-align: center;color: #666;">删除</span></div>'+
+                 '<div  class="Service_Delete" style="border-bottom:1px solid #dddee1;width: 100%;box-sizing:border-box;padding:0 20px;display:flex;justify-content:space-between;align-items:center;height: 40px;"><h5 style="display: block;width: 70px;height: auto;line-height: 40px;float: left">添加服务</h5><span  style="cursor:pointer;display: block;width: 54px;height: 30px;border: 1px solid #dddee1;float: right;line-height: 30px;text-align: center;color: #666;">删除</span></div>'+
                  '<label class="" style=" box-sizing:border-box;padding-left:10px;line-height: 40px;width: 100%;">服务标题:</label>'+
                  '<input type="text" class="form-control" style="background:#fff;width: 95%;position:relative;z-index100;height: 40px;margin: 0 auto"  name="service_title" value="">'+
                  '<label class="" style=" box-sizing:border-box;padding-left:10px;line-height: 40px;width: 100%;">服务内容:</label>'+
@@ -153,7 +153,7 @@ $(function(){
              var html='';
              for (var i=0;i<data.length;i++){
                  html+='<li class="service_list" style="border:1px solid #dddee1;width: 480px;margin-left: 95px;margin-bottom:20px;height: auto;overflow: hidden ;background:#fafafa;box-sizing:border-box;float:left;weid="'+data.weid+'">'+
-                 '<div  class="Service_Delete" style="border-bottom:1px solid #dddee1;width: 100%;box-sizing:border-box;padding:0 20px;display:flex;justify-content:space-between;align-items:center;height: 40px;"><h5 style="display: block;width: 70px;height: auto;line-height: 40px;float: left">添加服务</h5><span  style="display: block;width: 54px;height: 30px;border: 1px solid #dddee1;float: right;line-height: 30px;text-align: center;color: #666;">删除</span></div>'+
+                 '<div  class="Service_Delete" style="border-bottom:1px solid #dddee1;width: 100%;box-sizing:border-box;padding:0 20px;display:flex;justify-content:space-between;align-items:center;height: 40px;"><h5 style="display: block;width: 70px;height: auto;line-height: 40px;float: left">添加服务</h5><span  style="cursor:pointer;display: block;width: 54px;height: 30px;border: 1px solid #dddee1;float: right;line-height: 30px;text-align: center;color: #666;">删除</span></div>'+
                  '<label class="" style=" box-sizing:border-box;padding-left:10px;line-height: 40px;width: 100%;">服务标题:</label>'+
                  '<input type="text" class="form-control" style="background:#fff;width: 95%;position:relative;z-index100;height: 40px;margin: 0 auto"  name="service_title" value="'+data[i].service_title+'">'+
                  '<label class="" style=" box-sizing:border-box;padding-left:10px;line-height: 40px;width: 100%;">服务内容:</label>'+
