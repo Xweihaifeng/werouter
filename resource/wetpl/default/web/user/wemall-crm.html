@@ -1009,7 +1009,7 @@
                             data.activity_time=res.data.activity_time+'天';
                             data.receive_time=res.data.publish_time + ' ,' + res.data.expire_time;
                             data.title=res.data.content_info.title;
-                            data.picture=res.data.content_info.picture;
+                            data.picture= 'http://images.wezchina.com/'+res.data.content_info.picture;
                             data.content=res.data.content_info.content;
                             this.modalCouponDetailData=data;
                             this.modalCouponDetail=true;
