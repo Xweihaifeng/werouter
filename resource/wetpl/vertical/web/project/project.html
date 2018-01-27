@@ -111,7 +111,7 @@
         el: '#container',
         data: {
             showType: {act: false, proj: true, total: false, latest: true, hotest: false},
-            pageStore: [{id: 'proj', total: 8, page: 1, limit: 8}, {id: 'act', total: 5, page: 1, limit: 5}], //初始化分页数据
+            pageStore: [{id: 'proj', total: 8, page: 1, limit: 8}, {id: 'act', total: 8, page: 1, limit: 8}], //初始化分页数据
             pages: {}, //当前分页
             type: [],
             time: [],
@@ -142,7 +142,7 @@
                 this.getList(this.url, this.args.cate_id, this.args.time_scope, this.args.order, page, this.pages.limit);
             },
             show: function(o, type, i){
-                if (type != 'type2') {
+                if (type != 'type3') {
                     this.pages.page = 1;
                 }
                 switch(type){
@@ -152,7 +152,6 @@
                             : (this.showType[e] = false, null)).filter(x => x != null)[0];
                         this.args.order = id; break;
                     case 'type3' : ['act', 'proj'].map(e => o === e ? (this.showType[e] = true) : (this.showType[e] = false));
-                        //map1保存并更新pageStore状态，map2更新pages状态，只限两个类别时有效
                         this.pageStore = this.pageStore.map(e => o === e.id ? e : this.pages).map(e => o === e.id ? this.pages = e : e); break;
                     default: break;
                 }
@@ -182,7 +181,7 @@
                                 : (this.inai = false, this.pageStore[1].total = info.total, this.pages = this.pageStore[1], this.act = data);
                     } else {
                         this.showType.proj ? (this.proj = [], this.none = true, this.pages.total = 8, this.pages.limit = 8)
-                                : (this.act = [], this.inai = true, this.pages.total = 5, this.pages.limit = 5);
+                                : (this.act = [], this.inai = true, this.pages.total = 8, this.pages.limit = 8);
                     }
                 })
             }
