@@ -31,41 +31,37 @@
     <div id="wepage">
         <div id="header">
             <div id="topline">
-                <img src="/common/img/new/logo-wepage.png" alt=""/>
-                <p><img src="/common/img/new/small-avatar.png" alt=""/>用户中心</p>
+                <a href="/"><img src="/common/img/new/logo-wepage.png" alt=""/></a>
+                <a href="/user"><p><img :src="setImg(pages_info.plats_user.avatar ,'/common/img/new/avatar.png', 100, 100)" alt=""/>用户中心</p></a>
             </div>
-            <div id="userinfo">
+            <div id="userinfo" :style="{'background': 'url(' + setBg(pages_info.plats_domian.background, '/common/img/new/wepage.png') + ') no-repeat center'}">
                 <div>
-                    <img class="avatar" src="/common/img/new/avatar.png" alt=""/>
+                    <a :href="'/' + pages_info.plats_domian.domain"><img class="avatar" :src="setImg(pages_info.plats_user.avatar ,'/common/img/new/avatar.png', 100, 100)" alt=""/></a>
                     <p>
                         <span>
-                            火炉先生的微主页
+                            {{pages_info.plats_user.real_name}}
                             <img src="/common/img/new/member.png" alt=""/>
-                            <img src="/common/img/new/care.png" alt=""/>
+                            <img src="/common/img/new/care.png" alt="" @click="login"/>
                         </span>
-                        <span>高山仰止，景行行止。虽不能至，然心乡往之。</span>
+                        <span>{{pages_info.plats_user.motto}}</span>
                     </p>
                 </div>
             </div>
             <div id="menu">
                 <ul>
-                    <li>我的主页</li>
-                    <li>我的文章</li>
-                    <li>我的活动</li>
-                    <li>我的商城</li>
-                    <li>我的圈子</li>
+                    <li v-for="(e, i) in menu.list" @mouseenter="style(menu, i)" :class="{'underline': i === menu.flag}">{{e.name}}</li>
                 </ul>
             </div>
         </div>
         <div id="container">
             <div id="content">
-                <ul id="type">
+                <!--<ul id="type">
                     <li style="color: #333;">全部</li>
                     <li>一月内</li>
                     <li>三月内</li>
                     <li>半年内</li>
                     <li>一年内</li>
-                </ul>
+                </ul>-->
                 <div id="main">
                 <ul id="list">
                 <li>
@@ -159,9 +155,9 @@
                 </ul>
                 <ul id="info">
                     <li id="maininfo">
-                        <span id="userhead"></span>
-                        <img src="/common/img/new/avatar.png" alt=""/>
-                        <span id="username">火炉先生</span>
+                        <span id="userhead" :style="{'background': 'url(' + setBg(pages_info.plats_domian.background_user, '/common/img/new/bg.png') + ') no-repeat center'}"></span>
+                        <a :href="'/' + pages_info.plats_domian.domain"><img :src="setImg(pages_info.plats_user.avatar ,'/common/img/new/avatar.png', 90, 90)" alt=""/></a>
+                        <span id="username">{{pages_info.plats_user.real_name}}</span>
                         <ul>
                             <li>
                                 <span>123</span>
@@ -180,20 +176,23 @@
                     <li id="address">
                         <ul>
                             <li>
-                                <img src="/common/img/new/offical.png" alt="" width="76" height="26"/>
-                                <img src="/common/img/new/cert.png" alt="" width="32" height="28"/>
-                                <img src="/common/img/new/message.png" alt="" width="60" height="24"/>
+                                <span>
+                                    <img :src="imgState('/common/img/new/offical.png', '/common/img/new/officaloff.png', pages_info.plats_user_cert.is_authenticated == 1)" alt="" width="76" height="26"/>
+                                    <img :src="imgState('/common/img/new/cert.png', '/common/img/new/certoff.png', pages_info.plats_user_auth.is_authenticated == 1)" alt="" width="32" height="28"/>
+                                    <img src="/common/img/new/message.png" alt="" width="60" height="24"/>
+                                </span>
+                                <span>{{pages_info.plats_user_cert.cert_info}}</span>
                             </li>
                             <li>
                                 <img src="/common/img/new/address.png" alt="" width="17" height="22"/>
-                                <span>陕西省西安市高新区锦业路404号</span>
+                                <span>{{area(pages_info.plats_user.province.name, pages_info.plats_user.area.name)}}</span>
                             </li>
                             <li>
                                 <img src="/common/img/new/sign.png" alt="" width="17" height="18"/>
-                                <span>高山仰止，景行行止</span>
+                                <span>{{pages_info.plats_user.motto}}</span>
                             </li>
                             <li>
-                                <img src="/common/img/new/qrcode.png" alt="" width="140" height="140"/>
+                                <img :src="setImg(pages_info.plats_user_qrcode, '/common/img/new/qrcode.png', 140, 140)" alt="" width="140" height="140"/>
                                 <p>
                                     <span>微信扫描二维码</span>
                                     <span>分享给好友</span>
@@ -204,8 +203,8 @@
                     <li id="friends">
                         <ul>
                             <li>
-                                <p>我的粉丝(10)</p>
-                                <p>我的关注(12)</p>
+                                <p @mouseenter="select('fans')" :class="{'friends': active == 'fans'}">我的粉丝(10)</p>
+                                <p @mouseenter="select('friends')" :class="{'friends': active == 'friends'}">我的关注(12)</p>
                             </li>
                             <li>
                                 <img src="/common/img/new/1.png" alt="" width="54" height="54"/>
@@ -239,15 +238,68 @@
         new Vue({
             el: '#wepage',
             data: {
-                pages: {total: 25, page: 1, limit: 10}
+                menu: {},
+                dataMenu: ['我的主页', '我的文章', '我的活动', '我的商城', '我的圈子'],
+                pages: {total: 25, page: 1, limit: 10},
+                active: 'fans',
             },
             created: function(){
+                //menu
+                this.menu = {list: this.dataMenu.map(e => ({name: e})), flag: 0};
 
+                $('#favicon').attr('href', ApiMaterPlatQiniuDomain + plats_info.favicon);
+                $("title").text(pages_info.plats_show.head_title)
             },
             methods: {
+                login: function(){
+                    if (!docCookies.getItem("token")) {
+                        $("#modal_login").fadeIn(300);
+                    } else {
+                        console.log('care')
+                    }
+                },
                 change: function(page){
                     this.isLoading = true;
                     this.pages.page = page;
+                },
+                style: function(list, i){
+                    list.flag = i;
+                },
+                select: function(type){
+                    this.active = type;
+                },
+                setImg: function(url, init, w, h, mode){
+                    if (url != '' && url != null && url != undefined) {
+                        if (url.indexOf('http') === -1 && url.indexOf('common') === -1) {
+                            return mode != undefined ? ApiMaterPlatQiniuDomain + url + '?imageView2/' + mode + '/w/' + w + '/h/' + h
+                                    : ApiMaterPlatQiniuDomain + url + '?imageView2/3/w/' + w + '/h/' + h;
+                        } else {
+                            return url;
+                        }
+                    } else {
+                        return init;
+                    }
+                },
+                setBg: function(url, init){
+                    if (url != null) {
+                        return ApiMaterPlatQiniuDomain + url;
+                    } else {
+                        return init;
+                    }
+                },
+                imgState: function(on, off, state) {
+                    if (state) {
+                        return on;
+                    } else {
+                        return off;
+                    }
+                },
+                area: function(province, area) {
+                    if (province != null) {
+                        return province + ' ' + area;
+                    } else {
+                        return '来自火星';
+                    }
                 }
             },
             filters: {

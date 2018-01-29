@@ -127,8 +127,8 @@
         },
         created: function(){
             this.$Loading.start();
-            this.time = this.dataTime.map((x, i) => i === 0 ? ({id: i, name: x}) : ({id: i, name: x}));
-            this.time.flag = 0;
+            this.time = this.dataTime.map((x, i) => ({id: i, name: x}));
+            console.log(this.time);
             axios.get(apiUrl + 'activity/cate/lists').then(data => {
                 this.type = [{weid: '', title: '全部'}, ...data.data.data.list];
                 this.type.flag = 0;
