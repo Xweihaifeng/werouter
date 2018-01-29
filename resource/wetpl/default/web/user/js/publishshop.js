@@ -407,8 +407,38 @@ $(function(){
         var r = window.location.search.substr(1).match(reg); //匹配目标参数
         if (r != null) return unescape(r[2]); return null; //返回参数值
     }
+    // 获取商品分类
+    var systemType = [];
+    var system = function(systemid){
+        console.log()
+        $.ajax({
+            // url: "http://apitest.wezchina.com/goods/cates/list",
+            url: apiUrl + '/plats/goods/category',
+            type: 'get',
+            headers: {
+                'Token': docCookies.getItem("token")
+            },
+            success: function(data){
+                if (data.code == 200){
+                    let cates = data.data.list;
+                    if(cates.length>0){
+                        cates.map(x => {
+                            $(".systemtypes select").append(
+                                '<option id=' + x.weid + '>' + x.name + '</option>'
+                            )
+                            systemType.push({id: x.weid, name: x.name});
+                        })
+                    }
+                }
+            },
+            error: function(xhr){
+                console.log(xhr);
+            }
+        })
+    }
+    system();
      // 获取商品分类
-    var weid = getUrlParam('id');
+    // var weid = getUrlParam('id');
     var cateType = [];
     var userid=docCookies.getItem("weid");
     var catesfun = function(userid){
@@ -678,6 +708,9 @@ malldetail();
 
             })
 
+            var typenames = $("[name='type_id']").val();
+            var  system_cate_id = systemType.filter(y => y.name == typenames)[0].id;
+
             var option = $("[name='cate_id']").val();
             var  cate_id = cateType.filter(x => x.name == option)[0].id;
 
@@ -781,6 +814,7 @@ malldetail();
                 stock:stock,
                 sort:sort,
                 note:note,
+                system_cate_id:system_cate_id,
                 cate_id: cate_id,
                 page_id:page_id,
                 mall_id:mall_id,
@@ -797,8 +831,8 @@ malldetail();
             // console.log(sendData);
 
             if ($(this).data("id") !== 1) {
-                //sendData.weId = weid;
-                // console.log(JSON.stringify(sendData));
+                sendData.weId = weid;
+                console.log(JSON.stringify(sendData));
                 $.ajax({
                     //url: ARTICLE_EDIT,
                     url: GOODS_STORE,
@@ -823,7 +857,7 @@ malldetail();
                 })
             } else {
                 sendData.weid=id;
-                // console.log(sendData);
+                console.log(sendData);
                 $.ajax({
                     url: GOODS_UPDATE,
                     type: 'post',

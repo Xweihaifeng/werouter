@@ -139,6 +139,13 @@
                         <form class="form-horizontal setting-form form" role="form" method="post" action="#"
                               style="background-color: #fff">
                             <input type="hidden" name="_token" value="Dj5Ez1yA4Dfow8SiFuMpYl2xDURwMjBMHWpHm4Kt">
+                            <div class="inline"  style="position: relative;z-index: 300;margin-bottom: 30px;">
+                                <label for="" class="col-sm-2 control-label">系统分类<span class="star">*</span></label>
+                                <div style="" class="col-sm-4 systemtypes" >
+                                    <select style=" height: 46px;" class="form-control" name="type_id">
+                                    </select>
+                                </div>
+                            </div>
                             <div class="inline">
                                 <label for="" class="col-sm-2 control-label">商品分类<span class="star">*</span></label>
                                 <div style="" class="col-sm-4 shopcates">
@@ -158,7 +165,7 @@
                                     <input name="thumb_image" type="hidden" value="" class="form-control"/>
                                     <input id="pickfiles" name="cover" type="file" class="form-control hide"/>
                                     <div id="look" class="poster">
-                                        <img onclick="$('#pickfiles').click()" id="img"
+                                        <img style="width: 258px;height: 198px;" onclick="$('#pickfiles').click()" id="img"
                                              src="/common/img/cover.png" alt="暂无预览图片"
                                              class="thumbnail">
                                     </div>
