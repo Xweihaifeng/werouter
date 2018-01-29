@@ -60,6 +60,7 @@
     </style>
 
     <script>
+        var qiniu_upload_url='http://up-z1.qiniu.com';
         var qiniu_uptoken = '';
         var saveto ='qiniu';
         var qiniu_bucket_domain = ApiMaterPlatQiniuDomain;
@@ -165,7 +166,9 @@
                             <i-input v-model="formItemMemberCoupon.get_restrict" placeholder="请输入每次领取的张数"></i-input>
                         </form-item>
                         <form-item label="会员等级" prop="levels" v-show="formItemMemberCoupon.get_condition == 2" >
-                            <i-input v-model="formItemMemberCoupon.levels" placeholder="请输入会员等级"></i-input>
+                            <i-select v-model="formItemMemberCoupon.levels">
+                                <i-option v-for="(item,index) in formItemMemberCouponlevels"  :value="item.levels">{{ item.levels }}</i-option>
+                            </i-select>
                         </form-item>
                         <form-item label="优惠卷类型" prop="coupon_type">
                             <i-select v-model="formItemMemberCoupon.coupon_type">
@@ -324,6 +327,26 @@
 
                     </card>
                 </modal>
+                <modal v-model="CouponRecordList.modalCouponUserRecordDetail" title="优惠卷领取详情" width="800">
+                    <card>
+                        <Row style="margin-bottom: 10px;">
+                            <i-col span="4">序号:</i-col>
+                            <i-col span="4">优惠卷名称:</i-col>
+                            <i-col span="4">优惠卷类型:</i-col>
+                            <i-col span="4">过期时间:</i-col>
+                            <i-col span="4">是否过期:</i-col>
+                            <i-col span="4">状态:</i-col>
+                        </Row>
+                        <Row style="margin-bottom: 10px;" v-for="(item,key) in CouponRecordList.modalCouponUserRecordDetailData">
+                            <i-col span="4">{{item.id}}</i-col>
+                            <i-col span="4">{{item.name}}</i-col>
+                            <i-col span="4">{{item.coupon_type}}</i-col>
+                            <i-col span="4">{{item.coupon_expiry_time}}</i-col>
+                            <i-col span="4">{{item.expiry_statu}}</i-col>
+                            <i-col span="4">{{item.status}}</i-col>
+                        </Row>
+                    </card>
+                </modal>
             </div>
         </div>
     </div>
@@ -346,7 +369,7 @@
             modalCouponDetailData:{},//优惠卷详情数据
             uploadData:{}, //七牛上传附件参数
             uploadName:'',
-            uploadUrl:'http://up-z1.qiniu.com/', //七牛上传地址
+            uploadUrl:qiniu_upload_url, //七牛上传地址
             uploadList: [], //上传列表
             menuList: ["概览", "发布会员卡", "会员卡管理", "发布代金券", "管理代金券"], //控制导航
             formItemMember: {
@@ -445,6 +468,11 @@
                 title:'',
                 content:'',
             },
+            formItemMemberCouponlevels: [
+                {
+                    levels: '',
+                }
+            ],
             formItemMemberCouponValidate:{
                 name:[
                     {required: true, message: '优惠卷名称不能为空', trigger: 'blur'},
@@ -576,10 +604,32 @@
                         title: '领取日期',
                         key: 'created_at'
                     },
+                    {
+                        title: '操作',
+                        key: 'action',
+                        align: 'center',
+                        render: (h, params) => {
+                            return h('div', [
+                                h('Button', {
+                                    props: {
+                                        type: 'primary',
+                                        size: 'small'
+                                    },
+                                    on: {
+                                        click: () => {
+                                            //查看
+                                            crmapp.viewCouponUserRecord(params.row.weid);
+                                        }
+                                    }
+                                }, '查看'),
+                            ]);
+                        }
+                    },
                 ],
                 CouponRecordflag:false, //显示标志位
                 CouponRecordListData:[
                     {
+                        weid:'',
                         name:'',
                         coupon_type:'',
                         amount:'',
@@ -591,6 +641,8 @@
                         created_at:'',
                     }
                 ],
+                modalCouponUserRecordDetail:false, //用户领取优惠卷详情标志位
+                modalCouponUserRecordDetailData:[], //用户领取优惠卷详情数据
             },
             receive_time_options:{
                 disabledDate (date) {
@@ -904,12 +956,14 @@
                     }
                 }
                 if(val==3){
+                    //获取商城下等级
                     //判断编辑和发布
                     if(this.MemberCouponEditflag==true){
                         this.MemberCouponEditflag=false;
                         this.uploadList = this.$refs.upload.fileList;
                         CKEDITOR.instances.Couponcontent.setData(this.formItemMemberCoupon.content);
                     }else{
+                        this.Initlevels();
                         this.uploadList=[];
                         this.uploadList = this.$refs.upload.fileList;
                         CKEDITOR.instances.Couponcontent.setData('');
@@ -944,6 +998,18 @@
             }
         },
         methods: {
+            Initlevels(){
+                this.formItemMemberCouponlevels=[];
+                ajax.post('member/level/lists', {mall_id:this.mall_id}).then((res)=>{
+                    if(res.code==200){
+                        if(res.data.total>0){
+                            for(var i=0;i<res.data.list.length;i++){
+                                this.formItemMemberCouponlevels.push({levels:res.data.list[i].levels});
+                            }
+                        }
+                    }
+                });
+            },
             getChart: function (id, option) {
                 var op = this.option[option];
                 if (op) {
@@ -1070,8 +1136,13 @@
                     //跳转编辑页
                     this.formItemMemberCoupon='';
                     var self=this;
+                    //先获取等级下拉
+                    this.Initlevels();
                     ajax.post('coupon/detail', {id:index}).then((res)=>{
                         if(res.code==200){
+                            this.currentState=3;
+                            this.MemberCouponEditflag=true;
+                            //设置编辑标志位
                             var data={};
                             data.weid=res.data.weid;
                             data.name=res.data.name;
@@ -1079,7 +1150,7 @@
                             data.colour=res.data.colour;
                             res.data.get_condition?data.get_condition=res.data.get_condition.toString():data.get_condition='';
                             res.data.get_restrict?data.get_restrict=res.data.get_restrict.toString():data.get_restrict='';
-                            res.data.levels?data.levels=res.data.levels.toString():data.levels='';
+                            res.data.levels?data.levels=res.data.levels:data.levels='';
                             res.data.coupon_type?data.coupon_type=res.data.coupon_type.toString():data.coupon_type='';
                             res.data.amount?data.amount=res.data.amount.toString():data.amount='';
                             res.data.is_reuse?data.is_reuse=res.data.is_reuse.toString():data.is_reuse='';
@@ -1091,9 +1162,6 @@
                             data.title=res.data.content_info.title;
                             data.content=res.data.content_info.content;
                             this.formItemMemberCoupon=data;
-                            this.currentState=3;
-                            //设置编辑标志位
-                            this.MemberCouponEditflag=true;
                         }
                     });
                 }
@@ -1133,11 +1201,46 @@
                             data.content=res.data.content_info.content;
                             this.modalCouponDetailData=data;
                             this.modalCouponDetail=true;
-                            console.log(this.modalCouponDetailData);
                         }
                     });
 
 
+                }
+            },
+            viewCouponUserRecord(index){
+                if(index.length>0){
+                    this.CouponRecordList.modalCouponUserRecordDetail=true;
+                    this.CouponRecordList.modalCouponUserRecordDetailData=[];
+                    ajax.post('coupon/user/record/mallUserCouponRecordLists', {mall_id:this.mall_id,record_id:index}).then((res)=>{
+                        if(res.code==200){
+                            for(var i=0;i<res.data.list.length;i++){
+                                var list=res.data.list[i];
+                                var data={};
+                                var coupon_typelist=new Array();
+                                coupon_typelist[1]='现金券';
+                                coupon_typelist[2]='折扣券';
+                                coupon_typelist[3]='抵用券';
+                                data.id=i+1;
+                                data.name=list.coupon.name;
+                                data.coupon_type=coupon_typelist[list.coupon.coupon_type];
+                                //过期时间
+                                data.coupon_expiry_time=list.coupon_expiry_time;
+                                //优惠卷状态
+                                var status=new Array();
+                                status[1]= '未使用';
+                                status[2]= '已使用'
+                                status[3]= '已锁定';
+                                data.status=status[list.status];
+                                //是否过期
+                                if(list.expiry_statu==1){
+                                    data.expiry_statu='未过期';
+                                }else{
+                                    data.expiry_statu='已过期';
+                                }
+                                this.CouponRecordList.modalCouponUserRecordDetailData.push(data);
+                            }
+                        }
+                    })
                 }
             },
             CouponPage(index){
@@ -1283,10 +1386,12 @@
             },
             handleRemove (file) {
                 const fileList = this.$refs.upload.fileList;
+                //同时删除图片
+                ajax.post('file/deluploadfile', {imgurl:this.$refs.upload.fileList[0].name}).then((res)=>{});
                 this.$refs.upload.fileList.splice(fileList.indexOf(file), 1);
             },
             handleSuccess (res, file) {
-                file.url = 'http://images.wezchina.com/'+res.key;
+                file.url = ApiMaterPlatQiniuDomain +res.key;
                 file.name = res.key;
             },
             handleFormatError (file) {
@@ -1360,6 +1465,7 @@
                                 coupon_typelist[1]='现金券';
                                 coupon_typelist[2]='折扣券';
                                 coupon_typelist[3]='抵用券';
+                                data['weid']=list.weid;
                                 data['name']=list.coupon.name;
                                 data['coupon_type']=coupon_typelist[list.coupon.coupon_type];
                                 data['amount']=list.coupon.amount;
