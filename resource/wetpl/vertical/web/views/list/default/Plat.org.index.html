@@ -121,7 +121,7 @@
             <a href="">首页</a>
             > 组织 > {{cate_info.title}}
             <div class="er-nav" id="menuTwo">
-                <a class="chan_li" :class="{er_cur : item.domain==cate_domain || item.domain==yuming_domain}" v-for="(item, index) in col_child" :id="item.domain"  :name="item.weid" :type="item.type" @click="column_list(item)">{{ item.title }}</a>
+                <a class="chan_li" :class="{er_cur : item.domain==cate_domain || item.domain==yuming_domain}"  v-for="(item, index) in col_child" :id="item.domain"  :name="item.weid" :type="item.type" @click="column_list(item)">{{ item.title }}</a>
             </div>
         </div>
         <!--位置显示结束-->
@@ -145,7 +145,7 @@
                     <span>{{cate_info.title || '商会首页'}}</span>
                 </div> -->
                 <div class="newsert">
-                    <div class="new-list" v-if="cate_info.type==0 || cate_domain == '' && yuming_domain == '' ">
+                    <div class="new-list" v-if="con_cont.type == 1 || cate_info.type==0 || cate_domain == '' && yuming_domain == '' ">
                         <div class="new1" v-if="cate_domain == '' && yuming_domain == ''">
                             <div class="s1-lbleft">
                                 <ul class="banner">
@@ -204,8 +204,8 @@
                             </li>
                         </ul>
                     </div>
-                    <div class='org_content' v-if="cate_info.type==1">
-                        <div v-html="cate_info.content"></div>
+                    <div class='org_content' v-if="cate_info.type == 1 || con_cont.type == 1">
+                        <div v-html="con_cont.content"></div>
                     </div>
                 </div>
             </article>
@@ -235,7 +235,9 @@
             recom_cont:{},        //幻灯片推荐
             yuming_domain:'',
             domain_weid:"",
-            parent_domain:""
+            parent_domain:"",
+            con_cont:"" ,          //单页显示内容
+            title:""
         },
         mounted: function() {
             var self = this;
@@ -248,17 +250,13 @@
                 if(this.cate_domain == '' && this.yuming_domain == ''){
                     this.channel_list();
                 }else{
-                    var pathname = window.location.pathname.split("/").slice(1,4);
-                    var cate_domain = pathname[1];
-
                     ajax.get(CMS_CHANNELS_DOMAIN_QUERY + this.channel_domain).then((res)=>{
                         if(res.code == 200) {
                             this.domain_weid = res.data.weid;
                             ajax.get("cms/cate_tree_by_channel?channel=" + this.domain_weid).then((res) => {
                                 if (res.code == 200) {
-
                                     res.data.forEach(function (item, index) {
-                                        if (item.domain == cate_domain) {
+                                        if (item.domain == self.cate_domain) {
                                             self.cate(item);
                                         }
                                     });
@@ -296,10 +294,12 @@
                     }
                 })
             },
+            // 左侧导航查询方法
             channel_domain_query() {
                 ajax.get(CMS_CHANNELS_DOMAIN_QUERY + this.channel_domain).then((res)=>{
                     if(res.code == 200) {
                         this.cate_info = res.data;
+                        this.title=res.data.title;
                         this.domain_weid = res.data.weid;
                         ajax.get("cms/cate_tree_by_channel?channel=" + this.domain_weid).then((res)=>{
                             if(res.code == 200) {
@@ -309,40 +309,13 @@
                                 for(var item of this.sub_aside) {
                                     if(item.domain == this.cate_domain) {
                                         flag=true;
-                                        // 二级分类
-                                        if(item.children.length != 0){
-                                            this.col_child = item.children;
-                                            this.cate_info = item.children[0];
-                                        }else{
-                                            this.cate_info = item;
-                                        }
-                                        // $app.set_title(item.title +' - '+ this.sub_aside_info.title + '_' + plats_info.title);
                                         break;
                                     }else{
                                         flag=false;
                                     }
                                 }
                                 if(flag==false && this.cate_domain != '' ){
-                                    ajax.get("cms/categories/domain_query/"+this.cate_domain).then((res)=>{
-                                        if(res.code == 200) {
-                                            this.cate_info=res.data;
-                                            // 查找父集
-                                            var parend_id=res.data.parent_id
-                                            var that=this;
-                                            $.ajax({
-                                                url:apiUrl + "cms/cate_categories?cate=" + parend_id,
-                                                dataType: 'json',
-                                                async:  false,
-                                                success: function(res){
-                                                    if(res.code === 200) {
-                                                        that.col_child = res.data;
-                                                    }
-                                                }
-                                            });
-                                            $("#" + parend_id).addClass("cenav_cur").siblings().removeClass("cenav_cur");
-                                        }
-                                    })
-
+                                    this.cut_column(this.cate_domain);
                                 }
                                 $app.set_title(this.cate_info.title + '-' + plats_info.title);
                             }
@@ -361,73 +334,70 @@
                     }
                 })
             },
+            cut_column(domain) {
+                ajax.get("cms/categories/domain_query/"+domain).then((res)=>{
+                    if(res.code == 200) {
+                        this.cate_info=res.data;
+                        this.con_cont=res.data;
+                        // 查找父集
+                        var parend_id=res.data.parent_id;
+                        var that=this;
+                            $.ajax({
+                                url:apiUrl + "cms/cate_categories?cate=" + parend_id,
+                                dataType: 'json',
+                                async:  false,
+                                success: function(res){
+                                    if(res.code === 200) {
+                                        that.col_child = res.data;
+                                    }
+                                }
+                            });
+                        console.log("父",$("#" + parend_id));
+                        $("#" + parend_id).addClass("cenav_cur").siblings().removeClass("cenav_cur");
+                    }
+                })
+            },
             cate(body){
                 var self = this;
                 self.page = 1;
+                self.cate_info = body;
+                self.con_cont = '';
+                self.new2_cont = {};
                 if(body.level == 1){
-      
                     if(body.children.length != 0){
-                        this.col_child = body.children;
-                        if(body.children[0].type == 0){
-                            self.column(body.children[0].domain);
-                            this.cate_info = body.children[0];
-                            $app.set_title(this.cate_info.title);
-                        }else{
-                            this.cate_info = body.children[0];
-                            $app.set_title(this.cate_info.title);
-                        }
+                        self.col_child = body.children;
+                            if(body.children[0].type == 0){
+                                self.column(body.children[0].domain);
+                            }else{
+                                self.con_cont = body.children[0];
+                            }
                     }else{
+                        self.col_child=[];
                         if(body.type == 0){
                             self.column(body.domain);
-                            this.cate_info = body;
                         } else {
-                            this.cate_info = body;
+                            self.con_cont = body;
                         }
-                        this.col_child=[];
-                        $app.set_title(this.cate_info.title);
                     }
                 }else{
                     if(body.type==0){
-
-                        ajax.get("cms/categories/domain_query/"+body.domain).then((res)=>{
-                            if(res.code == 200) {
-                                self.cate_info=res.data;
-                                $app.set_title(self.cate_info.title);
-                                // 查找父集
-                                var parend_id=res.data.parent_id
-                                $("#" + parend_id).addClass("cenav_cur").siblings().removeClass("cenav_cur");
-                                self.column(body.domain);
-                            }
-                        })
-
-                    }else{
-                        ajax.get("cms/categories/domain_query/"+body.domain).then((res)=>{
-                            if(res.code == 200) {
-                                self.cate_info=res.data;
-                                $app.set_title(self.cate_info.title);
-                                // 查找父集
-                                var parend_id=res.data.parent_id
-                                $("#" + parend_id).addClass("cenav_cur").siblings().removeClass("cenav_cur");
-                            }
-                        })
+                        self.cut_column(body.domain);
                     }
+                    self.cut_column(body.domain)
+
                 }
+                $app.set_title( this.title + '-' + this.cate_info.title + '-' + plats_info.title);
             },
 
             change(page){
                 var self = this;
                 self.page = page;
-                var pathname = window.location.pathname.split("/").slice(1,4);
-                var cate_domain = pathname[1];
-                if(!cate_domain) {
+                if(self.yuming_domain == '' && self.cate_domain == '') {
                     var domain = self.channel_domain;
-
                     self.channel_list(domain)
                 } else {
- 
-                    self.column(cate_domain)
+                    self.column(self.yuming_domain || self.cate_domain)
                 }
-
             },
             column_list(item) {
                 this.yuming_domain=item.domain;
