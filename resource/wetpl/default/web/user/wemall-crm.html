@@ -515,10 +515,10 @@
                 ],
             },
             columnsMemberCouponTotal:1,
-            Couponpagesize:1,
+            Couponpagesize:10,
             Couponcurrent:1,
             MallMemberList:{
-                MallMemberListPageSize:1,
+                MallMemberListPageSize:10,
                 MallMemberListPageCurrent:1,
                 MallMemberListTotal:1,
                 MallMemberListflag:false, //显示标志位
@@ -565,7 +565,7 @@
                 ]
             },
             CouponRecordList:{
-                CouponRecordListPageSize:1,
+                CouponRecordListPageSize:10,
                 CouponRecordListTotal:1,
                 columnsCouponRecordList:[
                     {
@@ -715,35 +715,53 @@
                     key: 'action',
                     align: 'center',
                     render: (h, params) => {
-                        return h('div', [
-                            h('Button', {
-                                props: {
-                                    type: 'primary',
-                                    size: 'small'
-                                },
-                                style: {
-                                    marginRight: '5px'
-                                },
-                                on: {
-                                    click: () => {
-                                        //编辑详情
-                                        crmapp.editMemberCoupon(params.row.weid);
+                        //判断是否可以编辑优惠卷开始领取后不可以编辑
+                        if(new Date(params.row.publish_time.replace(/-/g,"\/")) < new Date()){
+                            return h('div', [
+                                h('Button', {
+                                    props: {
+                                        type: 'primary',
+                                        size: 'small'
+                                    },
+                                    on: {
+                                        click: () => {
+                                            //查看
+                                            crmapp.viewMemberCoupon(params.row.weid);
+                                        }
                                     }
-                                }
-                            }, '编辑'),
-                            h('Button', {
-                                props: {
-                                    type: 'primary',
-                                    size: 'small'
-                                },
-                                on: {
-                                    click: () => {
-                                        //查看
-                                        crmapp.viewMemberCoupon(params.row.weid);
+                                }, '查看'),
+                            ]);
+                        }else{
+                            return h('div', [
+                                h('Button', {
+                                    props: {
+                                        type: 'primary',
+                                        size: 'small'
+                                    },
+                                    style: {
+                                        marginRight: '5px'
+                                    },
+                                    on: {
+                                        click: () => {
+                                            //编辑详情
+                                            crmapp.editMemberCoupon(params.row.weid);
+                                        }
                                     }
-                                }
-                            }, '查看'),
-                        ]);
+                                }, '编辑'),
+                                h('Button', {
+                                    props: {
+                                        type: 'primary',
+                                        size: 'small'
+                                    },
+                                    on: {
+                                        click: () => {
+                                            //查看
+                                            crmapp.viewMemberCoupon(params.row.weid);
+                                        }
+                                    }
+                                }, '查看'),
+                            ]);
+                        }
                     },
                     width: 150,
                 }
