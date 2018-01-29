@@ -143,10 +143,21 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                    <label class="control-label col-sm-4 col-md-4 col-lg-2">申请模板填写演示</label>
+                                    <div class="col-sm-8 col-md-8 col-lg-10">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" name="demo_template" placeholder="">
+                                            <span class="input-group-btn">
+                                          <button class="btn btn-warning" id="pickfiles6" type="button">上传文件</button>
+                                        </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
                                     <label class="control-label col-sm-4 col-md-4 col-lg-2">证书颁发词</label>
                                     <div class="col-sm-8 col-md-8 col-lg-10">
                                         <input type="text" class="form-control" name="cert_words" placeholder="展示在证书中间位置的颁发文字">
-                                        <p style="font-size:10px;color:#333; margin-top:5px;">文本替换说明：会员名 -> {{name}} 会员级别 -> {{level}}</p>
+                                        <p style="display: block;clear:both;padding-top: 7px;color: #999;min-width: 220px;font-size: 12px;    line-height: 25px;">文本替换说明：会员名 -> {{name}} 会员级别 -> {{level}}</p>
                                     </div>
 
                                 </div>
@@ -192,6 +203,25 @@
                                         <option value="2">仅限个人申请</option>
                                         <option value="3">仅限机构申请</option>
                                     </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-4 col-md-4 col-lg-2">申请条件</label>
+                                    <div class="col-sm-8 col-md-8 col-lg-10">
+                                        <div class="col-sm-2 col-md-2 col-lg-2" style="padding-left: 0;">
+                                            <div class="checkbox">
+                                                <label><input type="checkbox" name="condition" value="UA">实名认证</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4 col-md-4 col-lg-4">
+
+                                            <div class="checkbox">
+                                                <label><input type="checkbox" name="condition" value="UG">官方认证</label>
+                                            </div>
+                                        </div>
+                                        <p style="display: block;clear:both;padding-top: 7px;color: #999;min-width: 220px;font-size: 12px;    line-height: 25px;">
+                                            选中的条件全部通过后，用户才能申请会员，若全不选，则任何用户都可以申请会员<br>
+                                        </p>
                                     </div>
                                 </div>
                                 <div class="pull-right">
@@ -242,6 +272,7 @@
                         $('input[name=term_servcice_rule]').val(data.data.term_servcice_rule);
                         $('input[name=constitution]').val(data.data.constitution);
                         $('input[name=apply_template]').val(data.data.apply_template);
+                        $('input[name=demo_template]').val(data.data.demo_template);
                         $('input[name=cert_words]').val(data.data.cert_words);
                         $('input[name=cert_template]').val(data.data.cert_template);
                         $('input[name=cert_seal]').val(data.data.cert_seal);
@@ -254,6 +285,9 @@
                         $('input[name=cert_prefix_num]').val(data.data.cert_prefix_num);
                         $('input[name=apply_wait_days]').val(data.data.apply_wait_days);
                         $('select[name=member_open_type]').val(data.data.member_open_type);
+                        $(data.data.condition).each(function(k, v) {
+                            $('input[name=condition][value=' + v + ']').attr('checked', true);
+                        });
                     } else {
                         swal('提示', data.message, 'error');
                     }
@@ -264,18 +298,25 @@
             });
         }
         $('.act-save').click(function() {
+            var condition = [];
+            $('input[name=condition]').each(function(k, v) {
+                if ($(v).prop('checked'))
+                    condition.push($(v).val());
+            });
             var formList = {
                 'year_per_grade': $('select[name=year_per_grade]').val(),
                 'pay_type': $('select[name=pay_type]').val(),
                 'term_servcice_rule': $('input[name=term_servcice_rule]').val(),
                 'constitution': $('input[name=constitution]').val(),
                 'apply_template': $('input[name=apply_template]').val(),
+                'demo_template': $('input[name=demo_template]').val(),
                 'cert_words': $('input[name=cert_words]').val(),
                 'cert_template': $('input[name=cert_template]').val(),
                 'cert_seal': $('input[name=cert_seal]').val(),
                 'cert_prefix_num': $('input[name=cert_prefix_num]').val(),
                 'apply_wait_days': $('input[name=apply_wait_days]').val(),
                 'member_open_type': $('select[name=member_open_type]').val(),
+                'condition': condition,
             };
             $.ajax({
                 url: ApiUrl + 'member/setting',
@@ -324,6 +365,41 @@
                         var domain = up.getOption('domain');
                         res = JSON.parse(info.response);
                         $("input[name=apply_template]").val(res.key);
+                        var sourceLink = domain + res.key;
+                    },
+                    'Key': function(up, file) {
+                        var key = "member/resource/";
+                        key += new Date().valueOf() + '.' + file.name.substring(file.name.indexOf('.') + 1);
+                        return key;
+                    }
+                }
+            });
+            // 申请模板
+            var uploader6 = Qiniu.uploader({
+                runtimes: 'html5,flash,html4',
+                browse_button: 'pickfiles6',
+                uptoken_url: ApiUrl + 'file/qiniu_token',
+                get_new_uptoken: false,
+                domain: ApiMaterPlatQiniuDomain,
+                max_file_size: '100mb',
+                flash_swf_url: 'http://cdn.staticfile.org/plupload/2.1.8/Moxie.swf',
+                max_retries: 3,
+                chunk_size: '4mb',
+                auto_start: true,
+                filters: {
+                    max_file_size: '5mb',
+                    prevent_duplicates: true,
+                    // Specify what files to browse for
+                    mime_types: [{
+                        title: "Word File",
+                        extensions: "docx,doc"
+                    }, ]
+                },
+                init: {
+                    'FileUploaded': function(up, file, info) {
+                        var domain = up.getOption('domain');
+                        res = JSON.parse(info.response);
+                        $("input[name=demo_template]").val(res.key);
                         var sourceLink = domain + res.key;
                     },
                     'Key': function(up, file) {
