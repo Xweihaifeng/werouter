@@ -127,39 +127,59 @@
     position: relative;
     float: left;
     background: #ffffff;
+    overflow: hidden;
 }
 .adv-list{
-    width: 100%;
+    width:598px;
     height: 100%;
     position: absolute;
     top: 0;
     left: 0;
 }
-.adv-list>a{
-    width: 100%;
+.adv-list>li{
+    width:598px;
     height: 100%;
     display: block;
     position: absolute;
     top: 0;
     left: 100%;
+
+
 }
-.adv-list>a:first-of-type{
+.adv-list>li:first-of-type{
     left: 0;
 }
-.adv-list>a>img{
-    width: 100%;
+.adv-list>li>a{
+    width: 598px;
     height: 100%;
     display: block;
+}
+
+.adv-list>li>a>img{
+    width: 598px;
+    height: 100%;
+    display: block;
+}
+.btn{
+    width: 100%;
+    height: 38px;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    margin-top: -19px;
+    display: none;
 }
 .btnL{
     width: 24px;
     height: 38px;
     position: absolute;
     left: 0;
-    top: 50%;
-    margin-top: -19px;
+    top: 0;
     z-index: 999;
-    background: #cccccc;
+    background-image: url("/resource/wetpl/vertical/web/wemall/img/L.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: #cccccc;
     cursor: pointer;
 }
 .btnR{
@@ -167,10 +187,12 @@
     height: 38px;
     position: absolute;
     right: 0;
-    top: 50%;
-    margin-top: -19px;
+    top: 0;
     z-index: 999;
-    background: #cccccc;
+    background-image: url("/resource/wetpl/vertical/web/wemall/img/R.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: #cccccc;
     cursor: pointer;
 }
 
@@ -232,4 +254,24 @@
     margin-bottom:20px;
     text-align: center;
     overflow: hidden;
+}
+
+
+
+.indicator{
+    width: 100%;
+    position: absolute;
+    text-align: center;
+    bottom: 15px;
+    z-index: 2;
+}
+.indicator a{
+    display: inline-block;
+    width: 20px;
+    height: 5px;
+    margin:0 3px;
+    background: #fff;
+}
+.indicator-active{
+    background: #FF8C00!important;
 }

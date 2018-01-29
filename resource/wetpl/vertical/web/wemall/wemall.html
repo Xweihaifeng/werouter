@@ -1,7 +1,10 @@
 
 <#extend#>public/extend/index_extend.html</#extend#>
 <link rel="stylesheet" href="{{PATH_TML}}wemall/css/wemall.css" />
+<script src="{{PATH_TML}}wemall/js/banner.js"></script>
 <script src="{{PATH_TML}}wemall/js/wemall.js"></script>
+
+
 
 <!--商城开始-->
 <div id="container">
@@ -22,20 +25,25 @@
             </ul>
         </div>
         <div class="wemall-con">
-           <div class="wemall-son" v-for="item in cat_list">
+           <div class="wemall-son" v-for="(item,index) in cat_list">
                <div class="title">
                    <h3>{{item.title}}</h3>
                    <a href="">查看更多</a>
                </div>
-               <ul class="wemall-clist">
+               <ul class="wemall-clist" :id=" 'wemall-clist' + index">
                    <div class="clist-advert">
-                       <div class="adv-list">
-                           <a href="" v-for="item in advert_cont">
-                               <img :src="item.image" alt="">
-                           </a>
+                       <ul class="adv-list">
+                           <li v-for="item in cat_adv">
+                               <a href="" >
+                                   <img :src="item.image" alt="">
+                               </a>
+                           </li>
+                       </ul>
+
+                       <div class="btn" :id=" 'btn' + index">
+                           <div class="btnL"></div>
+                           <div class="btnR"></div>
                        </div>
-                       <div class="btnL"></div>
-                       <div class="btnR"></div>
                    </div>
                    <li v-for="item in wemall_con">
                        <a href="">
@@ -88,6 +96,11 @@
                 {title:"手机好店",image:"/resource/wetpl/vertical/web/wemall/img/labajieloucengpc.jpg"},
                 {title:"人工智能",image:"/resource/wetpl/vertical/web/wemall/img/labajieloucengpc.jpg"},
                 ],
+            cat_adv:[
+                {image:"/resource/wetpl/vertical/web/wemall/img/693828550_1177909488_001.png"},
+                {image:"/resource/wetpl/vertical/web/wemall/img/693828550_1177908848_002.png"},
+                {image:"/resource/wetpl/vertical/web/wemall/img/693828550_1177912543_003.png"},
+            ]
         },
         created: function(){
 
@@ -97,7 +110,8 @@
             move: function(index){
                var Top = $(".wemall-son").eq(index).offset().top;
                 $("html,body").animate({scrollTop:Top-100}, 500);
-            }
+            },
+
         }
     })
 </script>
