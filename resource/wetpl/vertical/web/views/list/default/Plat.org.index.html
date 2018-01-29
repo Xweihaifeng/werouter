@@ -121,7 +121,7 @@
             <a href="">首页</a>
             > 组织 > {{cate_info.title}}
             <div class="er-nav" id="menuTwo">
-                <a class="chan_li" :class="{er_cur : item.domain==cate_domain || item.domain==yuming_domain}"  v-for="(item, index) in col_child" :id="item.domain"  :name="item.weid" :type="item.type" @click="column_list(item)">{{ item.title }}</a>
+                <a class="chan_li" :class="{er_cur : item.domain == third_domain}"  v-for="(item, index) in col_child" :id="item.domain"  :name="item.weid" :type="item.type" @click="column_list(item)">{{ item.title }}</a>
             </div>
         </div>
         <!--位置显示结束-->
@@ -135,7 +135,7 @@
                 </h2>
                 <ul class="aside" id="menuX">
       
-                    <li :id="item.weid" :class="{cenav_cur : item.domain==cate_domain || item.domain==yuming_domain}" v-for="item in sub_aside" ><a :id="item.domain" :type="item.type" @click="column_list(item)">{{item.title}}</a></li>
+                    <li :id="item.weid" :class="{cenav_cur : item.domain==second_domain}" v-for="item in sub_aside" ><a :id="item.domain" :type="item.type" @click="column_list(item)">{{item.title}}</a></li>
                 </ul>
             </article>
             <!--左侧内容结束-->
@@ -237,7 +237,9 @@
             domain_weid:"",
             parent_domain:"",
             con_cont:"" ,          //单页显示内容
-            title:""
+            title:"",
+            second_domain:"",       //二级选中
+            third_domain:""         //三级选中
         },
         mounted: function() {
             var self = this;
@@ -266,7 +268,6 @@
                     })
                 }
             });
-            // $app.get_query_string('page') ? console.log($app.get_query_string('page')) : console.log(1)
         },
         created: function(){
 
@@ -308,6 +309,7 @@
                                 var flag=true;
                                 for(var item of this.sub_aside) {
                                     if(item.domain == this.cate_domain) {
+                                        this.second_domain = item.domain;
                                         flag=true;
                                         break;
                                     }else{
@@ -315,6 +317,7 @@
                                     }
                                 }
                                 if(flag==false && this.cate_domain != '' ){
+                                    this.third_domain = this.cate_domain
                                     this.cut_column(this.cate_domain);
                                 }
                                 $app.set_title(this.cate_info.title + '-' + plats_info.title);
@@ -352,8 +355,7 @@
                                     }
                                 }
                             });
-                        console.log("父",$("#" + parend_id));
-                        $("#" + parend_id).addClass("cenav_cur").siblings().removeClass("cenav_cur");
+                        this.second_domain=$("#" + parend_id).children("a").attr("id");
                     }
                 })
             },
@@ -364,8 +366,10 @@
                 self.con_cont = '';
                 self.new2_cont = {};
                 if(body.level == 1){
+                    self.second_domain=body.domain;
                     if(body.children.length != 0){
                         self.col_child = body.children;
+                        self.third_domain = body.children[0].domain;
                             if(body.children[0].type == 0){
                                 self.column(body.children[0].domain);
                             }else{
@@ -380,6 +384,7 @@
                         }
                     }
                 }else{
+                    self.third_domain = body.domain;
                     if(body.type==0){
                         self.cut_column(body.domain);
                     }
@@ -402,7 +407,6 @@
             column_list(item) {
                 this.yuming_domain=item.domain;
                 this.cate_domain='';
-                $(".aside>li").removeClass("cenav_cur")
                 window.history.pushState('json', '', '/'+ this.channel_domain +'/'+ item.domain);
                 this.cate(item);
             },
