@@ -34,7 +34,7 @@
                 <a href="/"><img src="/common/img/new/logo-wepage.png" alt=""/></a>
                 <a href="/user"><p><img :src="setImg(plats_user_info.avatar ,'/common/img/new/avatar.png', 100, 100)" alt=""/>用户中心</p></a>
             </div>
-            <div id="userinfo" :style="{'background': 'url(' + setBg(pages_info.plats_domian.background, '/common/img/new/wepage.png') + ') no-repeat center'}">
+            <div id="userinfo" :style="{'background': 'url(' + setBg(pages_info.plats_domian.background, '/common/img/new/wepage.png') + ') no-repeat center','background-size': '100%'}">
                 <div>
                     <a :href="'/' + pages_info.plats_domian.domain"><img class="avatar" :src="setImg(brand(pages_info.plats_user.avatar) ,'/common/img/new/avatar.png', 100, 100)" alt=""/></a>
                     <p>
@@ -157,7 +157,7 @@
                     <li id="maininfo">
                         <span id="userhead" :style="{'background': 'url(' + setBg(pages_info.plats_domian.background_user, '/common/img/new/bg.png') + ') no-repeat center'}"></span>
                         <a :href="'/' + pages_info.plats_domian.domain"><img :src="setImg(pages_info.plats_user.avatar ,'/common/img/new/avatar.png', 90, 90)" alt=""/></a>
-                        <span id="username">{{pages_info.plats_user_cert.name}}</span>
+                        <span id="username">{{pages_info.plats_user_cert.name || pages_info.plats_user.real_name}}</span>
                         <ul>
                             <a :href="'/' + pages_info.plats_domian.domain + '/article'">
                                 <li>
@@ -209,22 +209,18 @@
                     <li id="friends">
                         <ul>
                             <li>
-                                <p @mouseenter="select('fans')" :class="{'friends': active == 'fans'}">我的粉丝(10)</p>
-                                <p @mouseenter="select('friends')" :class="{'friends': active == 'friends'}">我的关注(12)</p>
+                                <p @mouseenter="select('fans')" :class="{'friends': active == 'fans'}">我的粉丝({{info.fnums}})</p>
+                                <p @mouseenter="select('friends')" :class="{'friends': active == 'friends'}">我的关注({{info.gnums}})</p>
                             </li>
-                            <li>
-                                <img src="/common/img/new/1.png" alt="" width="54" height="54"/>
-                                <img src="/common/img/new/2.png" alt="" width="54" height="54"/>
-                                <img src="/common/img/new/3.png" alt="" width="54" height="54"/>
-                                <img src="/common/img/new/4.png" alt="" width="54" height="54"/>
-                                <img src="/common/img/new/1.png" alt="" width="54" height="54"/>
-                                <img src="/common/img/new/2.png" alt="" width="54" height="54"/>
-                                <img src="/common/img/new/3.png" alt="" width="54" height="54"/>
-                                <img src="/common/img/new/4.png" alt="" width="54" height="54"/>
-                                <img src="/common/img/new/1.png" alt="" width="54" height="54"/>
-                                <img src="/common/img/new/2.png" alt="" width="54" height="54"/>
-                                <img src="/common/img/new/3.png" alt="" width="54" height="54"/>
-                                <img src="/common/img/new/4.png" alt="" width="54" height="54"/>
+                            <li v-show="active == 'fans'">
+                                <a v-for="e in info.flist" :href="'/' + e.domain" :title="e.nickname">
+                                    <img class="care" :src="setImg(e.avatar, '/common/img/new/1.png', 54, 54)" alt="" width="54" height="54"/>
+                                </a>
+                            </li>
+                            <li v-show="active == 'friends'">
+                                <a v-for="e in info.glist" :href="'/' + e.domain" :title="e.nickname">
+                                    <img class="care" :src="setImg(e.avatar, '/common/img/new/1.png', 54, 54)" alt="" width="54" height="54"/>
+                                </a>
                             </li>
                             <li>
                                 查看更多>>
@@ -269,7 +265,8 @@
                     if (!docCookies.getItem("token")) {
                         $("#modal_login").fadeIn(300);
                     } else {
-                        console.log('care')
+                        //接口调用
+                        info.if_follow == 1 ? console.log('取消关注') : console.log('已关注');
                     }
                 },
                 change: function(page){
@@ -328,11 +325,14 @@
                 }
             },
             filters: {
+                isName: function(val, type) {
+
+                },
                 isBrand: function(val, type) {
                     if (pages_info.plats_brand) {
                         switch(type) {
-                            case 'user': pages_info.plats_brand.title; break;
-                            case 'motto': pages_info.plats_brand.slogan; break;
+                            case 'user': return pages_info.plats_brand.title; break;
+                            case 'motto': return pages_info.plats_brand.slogan; break;
                             default: break;
                         }
                     } else {
