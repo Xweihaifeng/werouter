@@ -192,7 +192,7 @@ a {
 }
 
 #list li {
-    width: 790px;
+    /*width: 790px;*/
     height: 200px;
     padding: 20px 0;
     border-bottom: 1px solid #e6e6e6;
@@ -205,9 +205,10 @@ a {
 }
 
 .i0 {
-    display: block;
-    /*width: 240px;*/
-    /*height: 160px;*/
+    display: inline-block;
+    width: 240px;
+    min-width: 240px;
+    min-height: 160px;
     margin-right: 20px;
 }
 
@@ -252,6 +253,11 @@ a {
     display: block;
     width: 21px;
     height: 13px;
+    margin-right: 5px;
+}
+
+.i3 {
+    display: block;
     margin-right: 5px;
 }
 
@@ -517,4 +523,15 @@ a {
 }
 .ivu-page-item-active{
     background-color: #46b2ee;
+}
+.ivu-spin-fix .ivu-spin-main {
+    top: 450px!important;
+}
+.demo-spin-icon-load{
+    animation: ani-demo-spin 1s linear infinite;
+}
+@keyframes ani-demo-spin {
+    from { transform: rotate(0deg);}
+    50%  { transform: rotate(180deg);}
+    to   { transform: rotate(360deg);}
 }

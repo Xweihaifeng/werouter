@@ -29,6 +29,10 @@
 <body>
     <div class="modal_login" id="modal_login"></div>
     <div id="wepage">
+        <Spin fix v-if="isLoading">
+            <Icon type="load-c" size=45 class="demo-spin-icon-load"></Icon>
+            <div>加载中</div>
+        </Spin>
         <div id="header">
             <div id="topline">
                 <a href="/"><img src="/common/img/new/logo-wepage.png" alt=""/></a>
@@ -49,7 +53,7 @@
             </div>
             <div id="menu">
                 <ul>
-                    <li v-for="(e, i) in menu.list" @mouseenter="style(menu, i)" :class="{'underline': i === menu.flag}">{{e.name}}</li>
+                    <li v-for="(e, i) in menu.list" @click="style(menu, i)" :class="{'underline': i === menu.flag}">{{e.name}}</li>
                 </ul>
             </div>
         </div>
@@ -64,94 +68,32 @@
                 </ul>-->
                 <div id="main">
                 <ul id="list">
-                <li>
-                    <img class="i0" src="/common/img/new/01.png" alt=""/>
-                    <p>
-                        <span>墨尔本飞跃亚拉河谷60分钟热气球</span>
-                        <span>在太阳升起前1小时我们将会到市区酒店来接您，前往Balgownie Estate博尔基尼酒庄集合。我们的飞行师将向您简要介绍情况。而后您将乘车赶到升空地点，您可以为热气球升空助一臂之力，也可以退后摄影留念... </span>
-                            <span>
-                                <img class="i1" src="/common/img/new/date.png" alt=""/><span style="padding-right:34px;">2017-12-15 15:45:15</span>
-                                <img class="i2" src="/common/img/new/read.png" alt=""/><span>642</span>
-                            </span>
-                    </p>
-                </li>
-                <li>
-                    <img class="i0" src="/common/img/new/02.png" alt=""/>
-                    <p>
-                        <span>墨尔本飞跃亚拉河谷60分钟热气球</span>
-                        <span>在太阳升起前1小时我们将会到市区酒店来接您，前往Balgownie Estate博尔基尼酒庄集合。我们的飞行师将向您简要介绍情况。而后您将乘车赶到升空地点，您可以为热气球升空助一臂之力，也可以退后摄影留念... </span>
-                            <span>
-                                <img class="i1" src="/common/img/new/date.png" alt=""/><span style="padding-right:34px;">2017-12-15 15:45:15</span>
-                                <img class="i2" src="/common/img/new/read.png" alt=""/><span>642</span>
-                            </span>
-                    </p>
-                </li>
-                <li>
-                    <img class="i0" src="/common/img/new/03.png" alt=""/>
-                    <p>
-                        <span>墨尔本飞跃亚拉河谷60分钟热气球</span>
-                        <span>在太阳升起前1小时我们将会到市区酒店来接您，前往Balgownie Estate博尔基尼酒庄集合。我们的飞行师将向您简要介绍情况。而后您将乘车赶到升空地点，您可以为热气球升空助一臂之力，也可以退后摄影留念... </span>
-                            <span>
-                                <img class="i1" src="/common/img/new/date.png" alt=""/><span style="padding-right:34px;">2017-12-15 15:45:15</span>
-                                <img class="i2" src="/common/img/new/read.png" alt=""/><span>642</span>
-                            </span>
-                    </p>
-                </li>
-                <li>
-                    <img class="i0" src="/common/img/new/04.png" alt=""/>
-                    <p>
-                        <span>墨尔本飞跃亚拉河谷60分钟热气球</span>
-                        <span>在太阳升起前1小时我们将会到市区酒店来接您，前往Balgownie Estate博尔基尼酒庄集合。我们的飞行师将向您简要介绍情况。而后您将乘车赶到升空地点，您可以为热气球升空助一臂之力，也可以退后摄影留念... </span>
-                            <span>
-                                <img class="i1" src="/common/img/new/date.png" alt=""/><span style="padding-right:34px;">2017-12-15 15:45:15</span>
-                                <img class="i2" src="/common/img/new/read.png" alt=""/><span>642</span>
-                            </span>
-                    </p>
-                </li>
-                <li>
-                    <img class="i0" src="/common/img/new/05.png" alt=""/>
-                    <p>
-                        <span>墨尔本飞跃亚拉河谷60分钟热气球</span>
-                        <span>在太阳升起前1小时我们将会到市区酒店来接您，前往Balgownie Estate博尔基尼酒庄集合。我们的飞行师将向您简要介绍情况。而后您将乘车赶到升空地点，您可以为热气球升空助一臂之力，也可以退后摄影留念... </span>
-                            <span>
-                                <img class="i1" src="/common/img/new/date.png" alt=""/><span style="padding-right:34px;">2017-12-15 15:45:15</span>
-                                <img class="i2" src="/common/img/new/read.png" alt=""/><span>642</span>
-                            </span>
-                    </p>
-                </li>
-                <li>
-                    <img class="i0" src="/common/img/new/06.png" alt=""/>
-                    <p>
-                        <span>墨尔本飞跃亚拉河谷60分钟热气球</span>
-                        <span>在太阳升起前1小时我们将会到市区酒店来接您，前往Balgownie Estate博尔基尼酒庄集合。我们的飞行师将向您简要介绍情况。而后您将乘车赶到升空地点，您可以为热气球升空助一臂之力，也可以退后摄影留念... </span>
-                            <span>
-                                <img class="i1" src="/common/img/new/date.png" alt=""/><span style="padding-right:34px;">2017-12-15 15:45:15</span>
-                                <img class="i2" src="/common/img/new/read.png" alt=""/><span>642</span>
-                            </span>
-                    </p>
-                </li>
-                <li>
-                    <img class="i0" src="/common/img/new/07.png" alt=""/>
-                    <p>
-                        <span>墨尔本飞跃亚拉河谷60分钟热气球</span>
-                        <span>在太阳升起前1小时我们将会到市区酒店来接您，前往Balgownie Estate博尔基尼酒庄集合。我们的飞行师将向您简要介绍情况。而后您将乘车赶到升空地点，您可以为热气球升空助一臂之力，也可以退后摄影留念... </span>
-                            <span>
-                                <img class="i1" src="/common/img/new/date.png" alt=""/><span style="padding-right:34px;">2017-12-15 15:45:15</span>
-                                <img class="i2" src="/common/img/new/read.png" alt=""/><span>642</span>
-                            </span>
-                    </p>
-                </li>
-                <li>
-                    <img class="i0" src="/common/img/new/08.png" alt=""/>
-                    <p>
-                        <span>墨尔本飞跃亚拉河谷60分钟热气球</span>
-                        <span>在太阳升起前1小时我们将会到市区酒店来接您，前往Balgownie Estate博尔基尼酒庄集合。我们的飞行师将向您简要介绍情况。而后您将乘车赶到升空地点，您可以为热气球升空助一臂之力，也可以退后摄影留念... </span>
-                            <span>
-                                <img class="i1" src="/common/img/new/date.png" alt=""/><span style="padding-right:34px;">2017-12-15 15:45:15</span>
-                                <img class="i2" src="/common/img/new/read.png" alt=""/><span>642</span>
-                            </span>
-                    </p>
-                </li>
+                    <a v-for="e in articles" :href="'/' + pages_info.plats_domian.domain + '/article/' + e.weid" v-show="type == 'articles'">
+                        <li>
+                            <img class="i0" :src="setImg(e.cover, '/common/img/new/products_load.jpg', 240, 160)" />
+                            <p>
+                                <span>{{e.title | cut(25)}}</span>
+                                <span>{{e.summary | cut(100)}} </span>
+                                <span>
+                                    <img class="i1" src="/common/img/new/date.png" alt=""/><span style="padding-right:34px;">{{e.updated_at}}</span>
+                                    <img class="i2" src="/common/img/new/read.png" alt=""/><span>{{e.views}}</span>
+                                </span>
+                            </p>
+                        </li>
+                    </a>
+                    <a v-for="e in activity" :href="'/' + e.domain + '/activity/' + e.weid" v-show="type == 'activity'">
+                        <li>
+                            <img class="i0" :src="setImg(e.cover, '/common/img/new/products_load.jpg', 240, 160)" />
+                            <p>
+                                <span style="height: 70px;">{{e.title}}</span>
+                                <span>举办方：{{e.Sponsor}} </span>
+                                <span style="padding-top: 40px;">
+                                    <img class="i1" src="/common/img/new/date.png" alt=""/><span style="padding-right:34px;">{{e.begain_time + ' ' + e.begain_week + ' 开始'}}</span>
+                                    <img class="i3" src="/common/img/new/local.png" alt=""/><span>{{e.area_name + ' ' + e.address}}</span>
+                                </span>
+                            </p>
+                        </li>
+                    </a>
                 </ul>
                 <ul id="info">
                     <li id="maininfo">
@@ -230,51 +172,204 @@
                 </ul>
                 </div>
                 <div id="pages">
-                    <Page :total="parseInt(pages.total)" :current="pages.page" :page-size="pages.limit" @on-change="change" v-if="pages.total > pages.limit"></Page>
+                    <Page :total="parseInt(pages[type].total)" :current="pages[type].page" :page-size="pages[type].limit" @on-change="change" v-if="pages[type].total > pages[type].limit"></Page>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        new Vue({
+        var wepage = new Vue({
             el: '#wepage',
             data: {
                 menu: {},
                 dataMenu: ['我的主页', '我的文章', '我的活动', '我的商城', '我的圈子'],
-                pages: {total: 25, page: 1, limit: 10},
                 active: 'fans',
                 info: {},
+                articles: [],
+                activity: [],
+                shopping: [],
+                shopCate: [],
+                pages: {
+                    articles: {total: 10, page: 1, limit: 10},
+                    activity: {total: 10, page: 1, limit: 10},
+                    shopping: {total: 10, page: 1, limit: 10}
+                },
+                page: {},
+                type: 'articles',
+                isLoading: false
             },
             created: function(){
                 //menu
                 this.menu = {list: this.dataMenu.map(e => ({name: e})), flag: 0};
-
-                axios.get(apiUrl + 'circel/index?domain=' + pages_info.plats_domian.domain, {
-                    headers: {Token: plats_token}
-                }).then(data => {
-                    this.info = data.data.data;
-                    console.log(this.info)
+                this.wefriends();
+                this.getArtList(1, 10);
+                this.getShopCate();
+                layui.use('layer', function() {
+                    this.layer = layui.layer;
                 })
 
                 $('#favicon').attr('href', ApiMaterPlatQiniuDomain + plats_info.favicon);
-                $("title").text(pages_info.plats_show.head_title)
+                $("title").text(pages_info.plats_show.head_title);
+            },
+            mounted: function(){
+                this.$nextTick(function(){
+                    window.onpopstate = function(e) {
+                        var curr = window.location.pathname.split('/').pop();
+                        var list = ['', 'article', 'activity', 'wemall', 'zone'];
+                        var id = list.indexOf(curr);
+                        if (id != -1) {
+                            wepage.menu.flag = id;
+                            switch (id) {
+                                case 0, 1: wepage.type = 'articles'; break;
+                                case 2: wepage.type = 'activity'; break;
+                                case 3: wepage.type = 'shopping'; break;
+                            }
+                        } else {
+                            wepage.menu.flag = 0;
+                            wepage.type = 'articles'
+                        }
+                    }
+                })
             },
             methods: {
+                wefriends: function(){
+                    axios.get(apiUrl + 'circel/index?domain=' + pages_info.plats_domian.domain, {
+                        headers: {'Token': plats_token}
+                    }).then(data => {
+                        this.info = data.data.data;
+                    })
+                },
+                follow: function(){
+                    $.ajax({
+                        url: apiUrl + 'circel/relationship',
+                        type: 'POST',
+                        headers: {
+                            'Token': plats_token
+                        },
+                        data: {
+                            'domain': pages_info.plats_domian.domain,
+                            'type': 2
+                        },
+                        success: function(data){
+                            if (data.code == 200) {
+                                wepage.info.if_follow = 1;
+                                layui.use('layer', function() {
+                                    var layer = layui.layer;
+                                    layer.msg("关注成功", {time: 1500});
+                                })
+                            } else {
+                                layui.use('layer', function() {
+                                    var layer = layui.layer;
+                                    layer.msg(data.message, {time: 1500});
+                                })
+                            }
+                        }
+                    })
+                },
+                cancelFollow: function(){
+                    $.ajax({
+                        url: apiUrl + 'circel/quxiao',
+                        type: 'POST',
+                        data: {
+                            'domain': pages_info.plats_domian.domain,
+                            'type': 2
+                        },
+                        headers: {
+                            'Token': plats_token
+                        },
+                        success: function(data){
+                            if (data.code == 200) {
+                                layui.use('layer', function() {
+                                    wepage.info.if_follow = 0;
+                                    var layer = layui.layer;
+                                    layer.msg("取消关注成功", {time: 1500});
+                                })
+                            } else {
+                                layui.use('layer', function() {
+                                    var layer = layui.layer;
+                                    layer.msg(data.message, {time: 1500});
+                                })
+                            }
+                        }
+                    })
+                },
+                getArtList: function(page, limit) {
+                    $.ajax({
+                        url: ARTICLE_LIST + '?userId=' + pages_info.plats_domian.plat_user_id + '&page=' + page + '&limit=' + limit,
+                        success: function(data){
+                            wepage.isLoading = false;
+                            if (data.code == 200){
+                                wepage.type = 'articles';
+                                wepage.articles = data.data.list;
+                                wepage.pages.articles.total = data.data.total;
+                                wepage.pages.articles.page = page;
+                                wepage.page = wepage.pages.articles;
+                            }
+                        }
+                    })
+                },
+                getActList: function(page, limit) {
+                    $.ajax({
+                        url: apiUrl + 'activity/listbyuser',
+                        type: 'POST',
+                        data: {
+                            user_id: pages_info.plats_domian.plat_user_id,
+                            status: 2,
+                            is_private: 1,
+                            page: page,
+                            limit: limit
+                        },
+                        success: function(data){
+                            wepage.isLoading = false;
+                            if (data.code == 200){
+                                wepage.type = 'activity';
+                                wepage.activity = data.data.list;
+                                wepage.pages.activity.total = data.data.total;
+                                wepage.pages.activity.page = page;
+                                wepage.page = wepage.pages.activity;
+                            }
+                        }
+                    })
+
+                },
+                getShopCate: function() {
+                    axios.get(GOODS_CATES_LIST_USERID + "/" + pages_info.plats_domian.plat_user_id).then(data => {
+                        this.shopCate = data.data.data;
+                        console.log(this.shopCate);
+                    })
+                },
+                getShopList: function(page, limit) {
+                    /*axios.post(GOODS_LISTS_USERANDCATE, {
+
+                    }).then(data => {
+
+                    })*/
+                    wepage.type = 'shopping';
+                },
                 login: function(){
                     if (!docCookies.getItem("token")) {
                         $("#modal_login").fadeIn(300);
                     } else {
-                        //接口调用
-                        info.if_follow == 1 ? console.log('取消关注') : console.log('已关注');
+                        //1:已关注 0：未关注
+                        this.info.if_follow == 1 ? this.cancelFollow() : this.follow();
                     }
                 },
                 change: function(page){
-                    this.isLoading = true;
-                    this.pages.page = page;
+                    //this.isLoading = true;
+                    switch (this.type) {
+                        case 'articles': this.getArtList(page, 10); break;
+                        case 'activity': this.getActList(page, 10); break;
+                    }
                 },
                 style: function(list, i) {
                     list.flag = i;
+                    switch (i) {
+                        case 0: this.getArtList(1, 10); this.pages['articles'].page = 1; window.history.pushState(null, null, '/' + pages_info.plats_domian.domain + '/'); break;
+                        case 1: this.getArtList(1, 10); this.pages['articles'].page = 1; window.history.pushState(null, null, '/' + pages_info.plats_domian.domain + '/article'); break;
+                        case 2: this.getActList(1, 10); this.pages['activity'].page = 1; window.history.pushState(null, null, '/' + pages_info.plats_domian.domain + '/activity'); break;
+                        case 3: this.getShopList(1, 10);this.pages['shopping'].page = 1; window.history.pushState(null, null, '/' + pages_info.plats_domian.domain + '/wemall'); break;
+                    }
                 },
                 select: function(type) {
                     this.active = type;
@@ -285,7 +380,7 @@
                                 return mode != undefined ? ApiMaterPlatQiniuDomain + url + '?imageView2/' + mode + '/w/' + w + '/h/' + h
                                         : ApiMaterPlatQiniuDomain + url + '?imageView2/3/w/' + w + '/h/' + h;
                             } else {
-                                return url;
+                                return url + '?imageView2/3/w/' + w + '/h/' + h;
                             }
                         } else {
                         return init;
@@ -325,9 +420,6 @@
                 }
             },
             filters: {
-                isName: function(val, type) {
-
-                },
                 isBrand: function(val, type) {
                     if (pages_info.plats_brand) {
                         switch(type) {
@@ -342,6 +434,9 @@
                             return val;
                         }
                     }
+                },
+                cut: function(value, len) {
+                    return value.length > len ? value.substr(0, len) + '...' : value;
                 }
             }
         })
