@@ -215,7 +215,7 @@
 
                 var height = $("#menu").offset().top;
                 $(window).scroll(function(){
-                    if($(document).scrollTop() >= height + 30){
+                    if($(document).scrollTop() >= height - 30){
                         $("#menu").css({position:"fixed",top:0,left:0,zIndex:99});
                         $("#content").css({"padding-top":"90px"});
                     }else{
