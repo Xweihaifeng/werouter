@@ -72,8 +72,10 @@
                         <li>
                             <img class="i0" :src="setImg(e.cover, '/common/img/new/products_load.jpg', 240, 160)" />
                             <p>
-                                <span>{{e.title | cut(25)}}</span>
-                                <span>{{e.summary | cut(100)}} </span>
+                                <span style="padding: 0;">
+                                    <span>{{e.title | cut(25)}}</span>
+                                    <span>{{e.summary | cut(100)}} </span>
+                                </span>
                                 <span>
                                     <img class="i1" src="/common/img/new/date.png" alt=""/><span style="padding-right:34px;">{{e.updated_at}}</span>
                                     <img class="i2" src="/common/img/new/read.png" alt=""/><span>{{e.views}}</span>
@@ -85,9 +87,11 @@
                         <li>
                             <img class="i0" :src="setImg(e.cover, '/common/img/new/products_load.jpg', 240, 160)" />
                             <p>
-                                <span style="height: 70px;">{{e.title}}</span>
-                                <span>举办方：{{e.Sponsor}} </span>
-                                <span style="padding-top: 40px;">
+                                <span style="padding: 0;">
+                                    <span>{{e.title}}</span>
+                                    <span>举办方：{{e.Sponsor}} </span>
+                                </span>
+                                <span>
                                     <img class="i1" src="/common/img/new/date.png" alt=""/><span style="padding-right:34px;">{{e.begain_time + ' ' + e.begain_week + ' 开始'}}</span>
                                     <img class="i3" src="/common/img/new/local.png" alt=""/><span>{{e.area_name + ' ' + e.address}}</span>
                                 </span>
