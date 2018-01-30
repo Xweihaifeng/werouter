@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.7 -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="bower_components/Ionicons/css/ionicons.min.css">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
+    <!-- Select2 -->
+    <link rel="stylesheet" href="bower_components/select2/dist/css/select2.min.css">
+
+    <link rel="stylesheet" href="/common/sweetalert2/dist/sweetalert2.min.css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.min.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+    <!-- Google Font -->
+    <style>
+         ::-webkit-scrollbar {
+            width: 0;
+        }
+        
+        .control-word {
+            text-align: 35px;
+            text-align: right;
+        }
+        
+        .control-title {
+            text-align: right;
+        }
+        
+        .label-self-1 {
+            background-color: #f4f4f4;
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 15px;
+            border: 1px dashed #ccc;
+            l
+        }
+        
+        .on-error {
+            border-color: #a94442;
+        }
+        
+        .on-error:focus {
+            border-color: #ac2b29;
+        }
+    </style>
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+    <div class="wrapper">
+        <aside class="main-sidebar">
+            <!-- sidebar: style can be found in sidebar.less -->
+            <section class="sidebar">
+                <!-- search form -->
+                <form action="#" method="get" class="sidebar-form">
+                    <div class="input-group">
+                        <input type="text" name="q" class="form-control" placeholder="Search...">
+                        <span class="input-group-btn">
+                    <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+                    </button>
+                  </span>
+                    </div>
+                </form>
+                <!-- /.search form -->
+                <ul id="root" class="sidebar-menu" data-widget="tree"></ul>
+            </section>
+            <!-- /.sidebar -->
+        </aside>
+        <!-- content-wrapper -->
+        <div class="content-wrapper">
+            <input type="hidden" name="config-url" value="member_levels.html">
+            <section class="content-header">
+                <h1> 新增会员届 </h1>
+                <!--
+            <ol class="breadcrumb"> 
+                <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li> 
+                <li><a href="#">Tables</a></li> 
+                <li class="active">Data tables</li> 
+            </ol>
+           -->
+            </section>
+            <!-- Main content -->
+            <section class="content">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="box box-info">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">基本信息</h3>
+                            </div>
+
+                            <div class="box-body">
+                                <form id="form" action="" method="post" class="form-horizontal" enctype="multipart/form-data">
+                                    <input type="hidden" name="_token" value="pKw8le5hYJQSNk4EKWUGEs23SQPbqdGlZeQF94fZ">
+                                    <div class="form-group">
+                                        <div class="col-sm-2" style="line-height:35px;text-align:right">第</div>
+                                        <div class="col-sm-1">
+                                            <input type="text" value="" class="form-control" name="number">
+                                        </div>
+                                        <div class="col-sm-1 control-word" style="line-height:35px; text-align:left">届</div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-2" style="line-height:35px;text-align:right">开始于</div>
+                                        <div class="col-sm-2">
+                                            <input type="text" value="" class="form-control" name="start" onfocus="WdatePicker({maxDate:'\'2099-11-20\'',dateFmt:'yyyy-MM-dd'});">
+                                        </div>
+                                        <div class="col-sm-1 control-word" style="line-height:35px; text-align:left">结束于</div>
+                                        <div class="col-sm-2">
+                                            <input type="text" value="" class="form-control" name="till" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-2" style="line-height:35px;text-align:right">共</div>
+                                        <div class="col-sm-1">
+                                            <input type="text" value="" class="form-control" name="years">
+                                        </div>
+                                        <div class="col-sm-1 control-word" style="line-height:35px; text-align:left">年</div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-2" style="line-height:35px;text-align:right">设置</div>
+                                        <div class="col-sm-10">
+                                            <table id="list-table" class="table table-hover">
+                                                <thead>
+                                                    <th>级别</th>
+                                                    <th>缴费方式</th>
+                                                    <th>申请方式</th>
+                                                    <th>费用(元/CNY)</th>
+                                                    <th>数量限制</th>
+                                                    <th>商城折扣</th>
+                                                </thead>
+                                                <tbody>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </form>
+                                <div class="col-sm-7" style="margin-bottom: 35px;">
+                                    <button type="button" class="btn btn-info submit">提交</button>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Create the tabs -->
+            <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
+                <li><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
+                <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
+            </ul>
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <!-- Home tab content -->
+                <div class="tab-pane" id="control-sidebar-home-tab">
+                    <h3 class="control-sidebar-heading">Recent Activity</h3>
+                    <ul class="control-sidebar-menu">
+                        <li>
+                            <a href="javascript:void(0)">
+                                <i class="menu-icon fa fa-birthday-cake bg-red"></i>
+
+                                <div class="menu-info">
+                                    <h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
+
+                                    <p>Will be 23 on April 24th</p>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)">
+                                <i class="menu-icon fa fa-user bg-yellow"></i>
+
+                                <div class="menu-info">
+                                    <h4 class="control-sidebar-subheading">Frodo Updated His Profile</h4>
+
+                                    <p>New phone +1(800)555-1234</p>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)">
+                                <i class="menu-icon fa fa-envelope-o bg-light-blue"></i>
+
+                                <div class="menu-info">
+                                    <h4 class="control-sidebar-subheading">Nora Joined Mailing List</h4>
+
+                                    <p>nora@type.com</p>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)">
+                                <i class="menu-icon fa fa-file-code-o bg-green"></i>
+
+                                <div class="menu-info">
+                                    <h4 class="control-sidebar-subheading">Cron Job 254 Executed</h4>
+
+                                    <p>Execution time 5 seconds</p>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- /.control-sidebar-menu -->
+
+                    <h3 class="control-sidebar-heading">Tasks Progress</h3>
+                    <ul class="control-sidebar-menu">
+                        <li>
+                            <a href="javascript:void(0)">
+                                <h4 class="control-sidebar-subheading">
+                                    Custom Template Design
+                                    <span class="label label-danger pull-right">70%</span>
+                                </h4>
+
+                                <div class="progress progress-xxs">
+                                    <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)">
+                                <h4 class="control-sidebar-subheading">
+                                    Update Resume
+                                    <span class="label label-success pull-right">95%</span>
+                                </h4>
+
+                                <div class="progress progress-xxs">
+                                    <div class="progress-bar progress-bar-success" style="width: 95%"></div>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)">
+                                <h4 class="control-sidebar-subheading">
+                                    Laravel Integration
+                                    <span class="label label-warning pull-right">50%</span>
+                                </h4>
+
+                                <div class="progress progress-xxs">
+                                    <div class="progress-bar progress-bar-warning" style="width: 50%"></div>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)">
+                                <h4 class="control-sidebar-subheading">
+                                    Back End Framework
+                                    <span class="label label-primary pull-right">68%</span>
+                                </h4>
+
+                                <div class="progress progress-xxs">
+                                    <div class="progress-bar progress-bar-primary" style="width: 68%"></div>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- /.control-sidebar-menu -->
+
+                </div>
+                <!-- /.tab-pane -->
+                <!-- Stats tab content -->
+                <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div>
+                <!-- /.tab-pane -->
+                <!-- Settings tab content -->
+                <div class="tab-pane" id="control-sidebar-settings-tab">
+                    <form method="post">
+                        <h3 class="control-sidebar-heading">General Settings</h3>
+
+                        <div class="form-group">
+                            <label class="control-sidebar-subheading">
+                            Report panel usage
+                            <input type="checkbox" class="pull-right" checked>
+                        </label>
+
+                            <p>
+                                Some information about this general settings option
+                            </p>
+                        </div>
+                        <!-- /.form-group -->
+
+                        <div class="form-group">
+                            <label class="control-sidebar-subheading">
+                            Allow mail redirect
+                            <input type="checkbox" class="pull-right" checked>
+                        </label>
+
+                            <p>
+                                Other sets of options are available
+                            </p>
+                        </div>
+                        <!-- /.form-group -->
+
+                        <div class="form-group">
+                            <label class="control-sidebar-subheading">
+                            Expose author name in posts
+                            <input type="checkbox" class="pull-right" checked>
+                        </label>
+
+                            <p>
+                                Allow the user to show his name in blog posts
+                            </p>
+                        </div>
+                        <!-- /.form-group -->
+
+                        <h3 class="control-sidebar-heading">Chat Settings</h3>
+
+                        <div class="form-group">
+                            <label class="control-sidebar-subheading">
+                            Show me as online
+                            <input type="checkbox" class="pull-right" checked>
+                        </label>
+                        </div>
+                        <!-- /.form-group -->
+
+                        <div class="form-group">
+                            <label class="control-sidebar-subheading">
+                            Turn off notifications
+                            <input type="checkbox" class="pull-right">
+                        </label>
+                        </div>
+                        <!-- /.form-group -->
+
+                        <div class="form-group">
+                            <label class="control-sidebar-subheading">
+                            Delete chat history
+                            <a href="javascript:void(0)" class="text-red pull-right"><i class="fa fa-trash-o"></i></a>
+                        </label>
+                        </div>
+                        <!-- /.form-group -->
+                    </form>
+                </div>
+                <!-- /.tab-pane -->
+            </div>
+        </aside>
+        <!-- /.control-sidebar -->
+        <!-- Add the sidebar's background. This div must be placed
+         immediately after the control sidebar -->
+        <div class="control-sidebar-bg"></div>
+    </div>
+    <!-- ./wrapper -->
+
+    <!-- jQuery 3 -->
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <!-- Bootstrap 3.3.7 -->
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="//cdn.staticfile.org/jquery.bootstrapvalidator/0.5.3/js/bootstrapValidator.min.js"></script>
+    <!-- DataTables -->
+    <script src="bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <!-- SlimScroll -->
+    <script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+    <!-- FastClick -->
+    <script src="bower_components/fastclick/lib/fastclick.js"></script>
+    <!-- AdminLTE App -->
+    <script src="dist/js/adminlte.min.js"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src="dist/js/demo.js"></script>
+
+    <script src="/common/sweetalert2/dist/sweetalert2.min.js"></script>
+    <script src="js/My97DatePicker/WdatePicker.js"></script>
+
+
+
+    <script src="js/react.js"></script>
+    <script src="js/react-dom.js"></script>
+    <script src="js/browser.min.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/template/index.js"></script>
+
+    <!-- page script -->
+    <script src="//cdn.staticfile.org/plupload/2.1.8/moxie.js"></script>
+    <script src="//cdn.staticfile.org/plupload/2.1.8/plupload.dev.js"></script>
+    <script src="//cdn.staticfile.org/plupload/2.1.8/i18n/zh_CN.js"></script>
+
+    <script src="bower_components/qiniu/dist/qiniu.min.js"></script>
+    <script>
+        var _init = function() {
+            loadLevels();
+            $('input[name=years]').change(function() {
+                var start = $('input[name=start]').val();
+                var years = $('input[name=years]').val();
+                if (start === '') {
+                    alert('请先选取任期开始时间');
+                    $('input[name=start]').val('');
+                    $('input[name=start]').focus();
+                    return;
+                }
+                if (years === '' || !/^\+?[1-9][0-9]*$/.test(years)) {
+                    alert('任期年数填写错误');
+                    $('input[name=years]').val('');
+                    setError('input[name=years]');
+                    return;
+                }
+                var timestamp = Date.parse(new Date(start));
+                timestamp2 = timestamp + 3600 * 24 * 365 * years * 1000;
+                var _date = new Date();
+                _date.setTime(timestamp2);
+                $('input[name=till]').val(_date.format('yyyy-MM-dd'));
+            });
+        }
+        var setError = function(selector) {
+            $(selector).addClass('on-error');
+            $(selector).focus();
+        }
+        var clearError = function(selector) {
+            $(selector).removeClass('on-error');
+        }
+        var validateField = function() {
+            var fields = ['#form input', '#form .label-self-1'];
+            $(fields).each(function(k, v) {
+                $(v).bind('keyup', function(e) {
+                    clearError(v);
+                });
+                $(v).bind('change', function(e) {
+                    clearError(v);
+                });
+            });
+            if ($('input[name=number]').val() === "") {
+                alert('届号必须填写');
+                setError('input[name=number]');
+                return false;
+            }
+            if (!/^\+?[1-9][0-9]*$/.test($('input[name=number]').val())) {
+                alert('届号必须为正整数');
+                setError('input[name=number]');
+                return false;
+            }
+            if ($('input[name=years]').val() === "") {
+                alert('任期年数必须填写');
+                setError('input[name=years]');
+                return false;
+            }
+            if (!/^\+?[1-9][0-9]*$/.test($('input[name=years]').val())) {
+                alert('任期年数必须为正整数');
+                setError('input[name=years]');
+                return false;
+            }
+            if ($('input[name=start]').val() === "") {
+                alert('任期开始时间必须填写');
+                setError('input[name=start]');
+                return false;
+            }
+            if (!/^(\d{4})\-(\d{2})\-(\d{2})$/.test($('input[name=start]').val())) {
+                alert('任期开始时间必须为日期');
+                setError('input[name=start]');
+                return false;
+            }
+            var _flag = true;
+            $("#list-table tbody tr").each(function(k, v) {
+                var _member = {};
+                _member.mid = $(v).data('id');
+                _member.pay_type = $(v).find('.pay_type').filter(':checked').val();
+                _member.open_type = $(v).find('.open_type').filter(':checked').val();
+                _member.price = $(v).find('.price').val();
+                _member.limit = $(v).find('.limit').val();
+                _member.mall_count = $(v).find('.mall_count').filter(':checked').val();
+                if (_member.pay_type === undefined || _member.pay_type === '' || _member.pay_type === null) {
+                    _member = {};
+                    alert($(v).data('name') + '的缴费方式选项不能为空');
+                    setError('#list-table > tbody > tr:nth-child(' + (k + 1) + ') > td:nth-child(2) > span');
+                    _flag = false;
+                    return false;
+                }
+                if (_member.open_type === undefined || _member.open_type === '' || _member.open_type === null) {
+                    _member = {};
+                    alert($(v).data('name') + '的申请方式选项不能为空');
+                    setError('#list-table > tbody > tr:nth-child(' + (k + 1) + ') > td:nth-child(3) > span');
+                    _flag = false;
+                    return false;
+                }
+                if (_member.price === '') {
+                    _member = {};
+                    alert($(v).data('name') + '的价格选项不能为空');
+                    setError('#list-table > tbody > tr:nth-child(' + (k + 1) + ') > td:nth-child(4) > input');
+                    _flag = false;
+                    return false;
+                }
+                if (isNaN(_member.price) || parseFloat(_member.price) <= 0) {
+                    _member = {};
+                    alert($(v).data('name') + '的价格选项只能为大于0的数字');
+                    setError('#list-table > tbody > tr:nth-child(' + (k + 1) + ') > td:nth-child(4) > input');
+                    _flag = false;
+                    return false;
+                }
+                if (_member.limit === '') {
+                    _member = {};
+                    alert($(v).data('name') + '的数量限制选项不能为空');
+                    setError('#list-table > tbody > tr:nth-child(' + (k + 1) + ') > td:nth-child(5) > input');
+                    _flag = false;
+                    return false;
+                }
+                if (isNaN(_member.limit) || parseFloat(_member.limit) < 0) {
+                    _member = {};
+                    alert($(v).data('name') + '的数量限制选项只能为非负整数');
+                    setError('#list-table > tbody > tr:nth-child(' + (k + 1) + ') > td:nth-child(5) > input');
+                    _flag = false;
+                    return false;
+                }
+                if (_member.mall_count === undefined || _member.mall_count === '' || _member.mall_count === null) {
+                    _member = {};
+                    alert($(v).data('name') + '的商城折扣选项不能为空');
+                    setError('#list-table > tbody > tr:nth-child(' + (k + 1) + ') > td:nth-child(6) > span');
+                    _flag = false;
+                    return false;
+                }
+            });
+            return _flag;
+        }
+        var loadLevels = function() {
+            $.ajax({
+                url: ApiUrl + 'member/all_levels',
+                type: 'get',
+                dataType: 'json',
+                success: function(data) {
+                    var html = '';
+                    $(data.data.list).each(function(k, v) {
+                        html += `<tr data-id="` + v.weid + `" data-name="` + v.name + `">
+                                    <td>` + v.name + `</td>
+                                    <td>
+                                        <span class="label-self-1">
+                                            <input type="radio" value="2" class="pay_type" name="pay_type_` + v.weid + `">按届 &nbsp;&nbsp;&nbsp;&nbsp;
+                                            <input type="radio" value="1" class="pay_type" name="pay_type_` + v.weid + `">按年 
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span class="label-self-1">
+                                            <input type="radio" value="1" class="open_type" name="open_type_` + v.weid + `">可申请 &nbsp;&nbsp;&nbsp;&nbsp;
+                                            <input type="radio" value="2" class="open_type" name="open_type_` + v.weid + `">仅展示 &nbsp;&nbsp;&nbsp;&nbsp;
+                                            <input type="radio" value="3" class="open_type" name="open_type_` + v.weid + `">隐藏
+                                        </span>
+                                    </td>
+                                    <td><input type="text" value="" class="form-control price" style="width:80px"></td>
+                                    <td><input type="text" value="" class="form-control limit" style="width:80px"></td>
+                                    <td>
+                                        <span class="label-self-1">
+                                            <input type="radio" value="1" class="mall_count" name="mall_count_` + v.weid + `">正常 &nbsp;&nbsp;&nbsp;&nbsp;
+                                            <input type="radio" value="2" class="mall_count" name="mall_count_` + v.weid + `">不使用
+                                        </span>
+                                    </td>
+                                </tr>`;
+                    });
+                    $('#list-table tbody').append(html);
+                },
+                error: function(xhr) {
+                    console.log(xhr);
+                }
+            });
+        }
+        $(function() {
+            _init();
+
+            $('.submit').click(function() {
+                console.log(config);
+                if (!validateField()) {
+                    return false;
+                }
+                var config = {};
+                $("#list-table tbody tr").each(function(k, v) {
+                    var _member = {};
+                    _member.mid = $(v).data('id');
+                    _member.pay_type = $(v).find('.pay_type').filter(':checked').val();
+                    _member.open_type = $(v).find('.open_type').filter(':checked').val();
+                    _member.price = $(v).find('.price').val();
+                    _member.limit = $(v).find('.limit').val();
+                    _member.mall_count = $(v).find('.mall_count').filter(':checked').val();
+                    config.push(_member);
+                });
+                console.log(config);
+                var data = {
+                    'number': $('input[name=number]').val(),
+                    'start': $('input[name=start]').val(),
+                    'till': $('input[name=till]').val(),
+                    'years': $('input[name=years]').val(),
+                    'config': config
+                };
+                $.post(ApiUrl + 'member/session', data, function(ret) {
+                    if (ret.code == 200) {
+                        location.href = 'member_session.html';
+                    } else {
+                        swal('提示', ret.message, 'error');
+                    }
+                }, 'JSON');
+            });
+        });
+    </script>
+</body>
+
+</html>
