@@ -119,7 +119,7 @@
             <img src="/resource/wetpl/substation/default/web/image/fanhui.png" alt="">
             当前位置在：
             <a href="">首页</a>
-            > 组织 > {{cate_info.title}}
+            > {{first_domain}} > {{cate_info.title}}
             <div class="er-nav" id="menuTwo">
                 <a class="chan_li" :class="{er_cur : item.domain == third_domain}"  v-for="(item, index) in col_child" :id="item.domain"  :name="item.weid" :type="item.type" @click="column_list(item)">{{ item.title }}</a>
             </div>
@@ -130,7 +130,7 @@
             <!--左侧内容开始-->
             <article class="main">
                 <h2 style="margin-top: 0px">
-                    <strong>组织</strong>
+                    <strong>{{first_domain}}</strong>
                     <span>Chamber of Commerce</span>
                 </h2>
                 <ul class="aside" id="menuX">
@@ -141,9 +141,9 @@
             <!--左侧内容结束-->
             <!--右侧内容开始-->
             <article class="list-big">
-<!--                 <div class="title">
-                    <span>{{cate_info.title || '商会首页'}}</span>
-                </div> -->
+                <div class="title">
+                    <span>{{cate_info.title}}</span>
+                </div>
                 <div class="newsert">
                     <div class="new-list" v-if="con_cont.type == 1 || cate_info.type==0 || cate_domain == '' && yuming_domain == '' ">
                         <div class="new1" v-if="cate_domain == '' && yuming_domain == ''">
@@ -239,7 +239,8 @@
             con_cont:"" ,          //单页显示内容
             title:"",
             second_domain:"",       //二级选中
-            third_domain:""         //三级选中
+            third_domain:"" ,        //三级选中
+            first_domain:''         //一级名称
         },
         mounted: function() {
             var self = this;
@@ -302,6 +303,7 @@
                         this.cate_info = res.data;
                         this.title=res.data.title;
                         this.domain_weid = res.data.weid;
+                        this.first_domain=res.data.search_name;
                         ajax.get("cms/cate_tree_by_channel?channel=" + this.domain_weid).then((res)=>{
                             if(res.code == 200) {
                                 var result = res.data;
