@@ -1,7 +1,12 @@
 
-Vue.filter('img_src', function (value , width , height, mode) {
+Vue.filter('img_src', function (value , width , height, mode , default_img) {
 
-    if (!value) return '/common/img/news_default.jpg';
+    if (!value ){
+        if($app.empty(default_img) == false) return '/common/img/news_default.jpg';
+        if(default_img == 'node') return '';
+        return default_img;
+    } 
+    
 
     if(value.indexOf('http') !== -1){
 
