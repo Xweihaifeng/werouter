@@ -258,11 +258,26 @@
                             this.domain_weid = res.data.weid;
                             ajax.get("cms/cate_tree_by_channel?channel=" + this.domain_weid).then((res) => {
                                 if (res.code == 200) {
+                                    var flag=true;
                                     res.data.forEach(function (item, index) {
                                         if (item.domain == self.cate_domain) {
                                             self.cate(item);
+                                        }else{
+                                           flag1=false
                                         }
                                     });
+                                    if(flag1==false && self.cate_domain != ''){
+                                        ajax.get("cms/categories/domain_query/"+self.cate_domain).then((res)=>{
+                                            if(res.code == 200) {
+                                                self.cate_info=res.data;
+                                                if(self.cate_info.type==0){
+                                                    self.column(self.cate_domain);
+                                                }
+
+                                            }
+                                        })
+
+                                    }
                                 }
                             })
                         }
@@ -387,10 +402,11 @@
                     }
                 }else{
                     self.third_domain = body.domain;
-                    if(body.type==0){
-                        self.cut_column(body.domain);
-                    }
                     self.cut_column(body.domain)
+                    if(body.type==0){
+                        self.column(body.domain);
+                    }
+
 
                 }
                 $app.set_title( this.title + '-' + this.cate_info.title + '-' + plats_info.title);
