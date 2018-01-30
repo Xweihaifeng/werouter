@@ -992,7 +992,7 @@ $(document).ready(function() {
                                 // console.log('res:', newCount)
                                 var newSign = $("#sign").val();
                                 $("#surplus").val(newCount);
-                                update(weid, newSign, newCount, false);
+                                //update(weid, newSign, newCount, false);
                                 //弹出支付成功窗口
                                 layer.msg("您已成功购买" + count + "条短信");
                                 // $("#operate-1").val('');
