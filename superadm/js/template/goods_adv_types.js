@@ -8,6 +8,7 @@ var initAdvList = function (data) {
             "dataSrc": function (json) {
                 for (var i = 0, ien = json.data.list.length; i < ien; i++) {
                     json.data.list[i].id = i + 1;
+                    json.data.list[i].type = json.data.list[i].type == 1 ? '<span class="label label-success">系统</span>' : '<span class="label label-success">分类</span>';
                     json.data.list[i].operation = "<a href=goods_adv_type_add.html?weid=" + json.data.list[i].weid + " class=\"btn btn-info\">编辑</a>";
                 }
                 params = json.data.params;
@@ -18,6 +19,7 @@ var initAdvList = function (data) {
         "columns": [
             {"data": "id"},
             {"data": "title"},
+            {"data": "type"},
             {"data": "description"},
             {"data": "operation"},
         ],

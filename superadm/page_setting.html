@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.7 -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="bower_components/Ionicons/css/ionicons.min.css">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
+    <!-- Select2 -->
+    <link rel="stylesheet" href="bower_components/select2/dist/css/select2.min.css">
+
+    <link rel="stylesheet" href="/common/sweetalert2/dist/sweetalert2.min.css">
+
+    <link rel="stylesheet" href="/common/zoom/zoom.css">
+
+    <link rel="stylesheet" href="css/apps.css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.min.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+    <!-- jQuery 3 -->
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/browser.min.js"></script>
+    <script src="js/config.js"></script>
+    <!-- Google Font -->
+    <style>
+        ::-webkit-scrollbar {
+            width: 0;
+        }
+
+        .message_buy_tit {
+            /* border-bottom: 1px solid #f0f0f0; */
+            /* height: 48px; */
+            line-height: 48px;
+            padding-left: 11px;
+            background-color: #fffdf9;
+            color: #ff7979;
+            font-size: 16px;
+        }
+
+        .tab-content li {
+            margin: 0;
+            margin-bottom: -5px;
+        }
+
+        .tab-content .active {
+            border-bottom: #fff 3px solid
+        }
+
+        .control-label {
+            text-align: right;
+        }
+
+        .data {
+            padding: 35px;
+            overflow: hidden;
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        .data > div {
+            float: left;
+            position: relative;
+        }
+
+        .data .doughnut {
+            width: 230px;
+        }
+
+        .data .intro {
+            position: absolute;
+            top: 5px;
+            left: 130px;
+            font-size: 12px;
+            color: #383737;
+        }
+
+        .data .intro > ul > li {
+            margin-bottom: 10px;
+        }
+
+        .data .intro > ul > li > label {
+            font-size: 12px;
+            color: #7d7d7d;
+        }
+
+        .mark {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        #listPie li {
+            border: none;
+        }
+    </style>
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+    <aside class="main-sidebar">
+        <!-- sidebar: style can be found in sidebar.less -->
+        <section class="sidebar">
+            <!-- search form -->
+            <form action="#" method="get" class="sidebar-form">
+                <div class="input-group">
+                    <input type="text" name="q" class="form-control" placeholder="Search...">
+                    <span class="input-group-btn">
+                    <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i
+                            class="fa fa-search"></i>
+                    </button>
+                  </span>
+                </div>
+            </form>
+            <!-- /.search form -->
+            <ul id="root" class="sidebar-menu" data-widget="tree"></ul>
+        </section>
+        <!-- /.sidebar -->
+    </aside>
+    <!-- content-wrapper -->
+    <div class="content-wrapper">
+        <input type="hidden" name="config-url" value="apps.html">
+        <section class="content-header">
+            <h1> 基础应用 </h1>
+        </section>
+        <!-- Main content -->
+        <section class="content">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box">
+                        <div class="box-header with-border" style="line-height: 35px;">
+                            <h3 class="box-title">基础应用</h3>
+                            <!-- /.box-header -->
+                            <div class="box-body">
+                                <div class="per_bottom apply_bottom">
+                                    <ul>
+                                        <li class="message_box online_cert">
+                                            <div class="per_bottom_tit">
+                                                <span class="scad_setting">微商城系统</span>
+                                                <span class="switch brand_set turn_on_off switch-close"
+                                                      data-key="is_sms_open">
+                                                    <div id="op1" class="open">
+                                                        <div id="op2" class="close"></div>
+                                                        <span class="brand_on_off on">ON</span>
+                                                    <span class="brand_on_off off">OFF</span>
+                                                </div>
+                                                </span>
+                                                <span style="float: right;">
+                                                    <a style="width: 80px; text-align: center; display: block; float: left;" href="goods_category.html">分类管理</a>
+                                                    <a style="width: 80px; text-align: center; display: block; float: left;" href="goods_adv.html">广告管理</a>
+                                                </span>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- /.box-body -->
+                        </div>
+                        <!-- /.box -->
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+        </section>
+    </div>
+    <!-- Control Sidebar -->
+    <!-- /.control-sidebar -->
+    <!-- Add the sidebar's background. This div must be placed
+           immediately after the control sidebar -->
+    <div class="control-sidebar-bg"></div>
+</div>
+<!-- ./wrapper -->
+
+<!-- Bootstrap 3.3.7 -->
+<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- DataTables -->
+<script src="bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<script src="/common/sweetalert2/dist/sweetalert2.min.js"></script>
+<script src="/common/zoom/zoom.js"></script>
+<script src="/common/js/Chart.min.js"></script>
+<!-- Include a polyfill for ES6 Promises (optional) for IE11 and Android browser -->
+
+<!-- SlimScroll -->
+<script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+<!-- FastClick -->
+<script src="bower_components/fastclick/lib/fastclick.js"></script>
+<!-- AdminLTE App -->
+<script src="dist/js/adminlte.min.js"></script>
+
+<script src="//cdn.staticfile.org/plupload/2.1.8/moxie.js"></script>
+<script src="//cdn.staticfile.org/plupload/2.1.8/plupload.dev.js"></script>
+<script src="//cdn.staticfile.org/plupload/2.1.8/i18n/zh_CN.js"></script>
+<script src="bower_components/qiniu/dist/qiniu.min.js"></script>
+
+<!-- AdminLTE for demo purposes -->
+<script src="dist/js/demo.js"></script>
+<script src="js/react.js"></script>
+<script src="js/react-dom.js"></script>
+<script src="js/template/index.js"></script>
+
+<!-- page script -->
+<script src="js/template/page_setting.js">
+</script>
+</body>
+
+</html>
