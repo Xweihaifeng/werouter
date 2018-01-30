@@ -82,7 +82,7 @@
                 </aside>
             </article>
             <article class="news-pre2">
-                <figure class="news-col-nav">
+                <figure class="news-col-nav" v-if="column.length > 0">
                     <figcaption :class="{'news-nav-active' : item.domain == window.location.pathname.split('/').slice(1,4)[1] | (window.location.pathname.split('/').slice(1,4)[1] == undefined & index == 0)}" v-for="(item, index) in column" v-if="index < 8">
                         <span :id="item.domain" @click="column_list(item.domain , item.title)">{{ item.title }}</span>
                         <ul>
@@ -91,7 +91,7 @@
                     </figcaption>
                 </figure>
             </article>
-            <article class="news-pre3">
+            <article class="news-pre3" v-if="con_list.length > 0">
                 <figure class="news-con-list" v-for="(item, index) in con_list">
                     <figcaption class="news-con-list-img"><!--  v-if="item.thumb_image" -->
                         <a :href="'/'+ channel_domain +'/' + item.weid" target="_black">
@@ -111,13 +111,17 @@
                     </hgroup>
                 </figure>
             </article>
-            <article class="news-pre4">
+            <article class="news-pre4" v-else>
+                <img src="/common/img/no_con_default.png" />
+            </article>
+            
+            <article class="news-pre4" v-if="con_list.length > 0">
                 <img src="/common/img/no_con_default.png" v-if="con_list.length == 0">
                 <Page :total="parseInt(total)" :current="page" :page-size="limit" @on-change="change" :class="{'block': con_list.length != 0}" v-if="con_list.length != 0"></Page>
             </article>
         </article>
         <article class="news-right">
-            <article class="news-aside1">
+            <article class="news-aside1" v-if="aside1_list.length > 0">
                 <figure class="news-aside1-title">推荐新闻</figure>
                 <figure class="news-aside1-list" v-for="(item, index) in aside1_list">
                     <a :href="'/'+ channel_domain +'/'+ item.weid" target="_black">
@@ -128,7 +132,7 @@
                     </a>
                 </figure>
             </article>
-            <article class="news-aside2">
+            <article class="news-aside2" v-if="aside2_list.length > 0">
                 <figure class="news-aside2-title">精选内容</figure>
                 <figure class="news-aside2-list" v-for="(item, index) in aside2_list">
                     <a :href="'/'+ channel_domain +'/'+ item.weid" target="_black">
@@ -207,8 +211,11 @@
 
                 if(res.code == 200) {
                     this.title = res.data.title;
+
                     ajax.get("cms/cate_tree_by_channel?channel=" + res.data.weid).then((data) => {
                         this.column = data.data;
+
+                        if($app.empty(this.column.length) == false) return false;
                         this.column.forEach((body, index) =>{
                             if(index == 0) {
       
