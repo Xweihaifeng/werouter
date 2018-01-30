@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <title></title>
+    <meta charset="UTF-8" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <link rel="shortcut icon" id="favicon" href="" />
+    <link rel="stylesheet" href="/common/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/common/layui/css/layui.css" />
+    <link rel="stylesheet" href="{{PATH_TML}}css/modal_login.css" />
+    <link rel="stylesheet" href="{{PATH_TML}}css/normalize.css" />
+    <link rel="stylesheet" href="/common/magazine/css/iview.css">
+    <link rel="stylesheet" href="{{PATH_TML}}css/wepage.css" />
+    <script src="/common/js/jquery-3.2.1.min.js"></script>
+    <script src="/common/public/js/app.js"></script>
+    <script src="/common/iview/vue.min.js"></script>
+    <script src="/common/iview/axios.min.js"></script>
+    <script src="/common/iview/libs/util.js"></script>
+    <script src="/common/iview/libs/filter.js"></script>
+    <script src="/common/public/js/model/ver_ajax.js"></script>
+    <script src="/common/layui/layui.js"></script>
+    <script src="{{PATH_CONFIG}}"></script>
+    <script src="{{PATH_TML}}js/modal_login.js"></script>
+    <script src="/common/magazine/js/iview.min.js"></script>
+    <link rel="stylesheet" href="/common/jquery.animsition/css/animsition.min.css">
+    <script src="/common/jquery.animsition/js/jquery.animsition.min.js"></script>
+</head>
+<body>
+<div class="modal_login" id="modal_login"></div>
+<div id="wepage">
+    <div id="header">
+        <div id="topline">
+            <a href="/"><img src="/common/img/new/logo-wepage.png" alt=""/></a>
+            <a href="/user"><p><img :src="setImg(plats_user_info.avatar ,'/common/img/new/avatar.png', 100, 100)" alt=""/>用户中心</p></a>
+        </div>
+        <div id="userinfo" :style="{'background': 'url(' + setBg(pages_info.plats_domian.background, '/common/img/new/wepage.png') + ') no-repeat center','background-size': '100%'}">
+            <div>
+                <a :href="'/' + pages_info.plats_domian.domain"><img class="avatar" :src="setImg(brand(pages_info.plats_user.avatar) ,'/common/img/new/avatar.png', 100, 100)" alt=""/></a>
+                <p>
+                        <span>
+                            {{pages_info.plats_user.real_name + '的微主页' | isBrand('user')}}
+                            <img :src="imgState('/common/img/new/member.png', '/common/img/new/memberoff.png', pages_info.plats_user_cert.is_authenticated == 1)" alt=""/>
+                            <img :src="imgState('/common/img/new/care.png', '/common/img/new/careoff.png', info.if_follow == 1 ? true : false)" alt="" @click="login"/>
+                        </span>
+                    <span>{{pages_info.plats_user.motto | isBrand('motto')}}</span>
+                </p>
+            </div>
+        </div>
+        <div id="menu">
+            <ul>
+                <li v-for="(e, i) in menu.list" @mouseenter="style(menu, i)" :class="{'underline': i === menu.flag}">{{e.name}}</li>
+            </ul>
+        </div>
+    </div>
+    <div id="container">
+        <div id="main">
+            <ul id="list">
+
+            </ul>
+            <ul id="info">
+                <li id="maininfo">
+                    <span id="userhead" :style="{'background': 'url(' + setBg(pages_info.plats_domian.background_user, '/common/img/new/bg.png') + ') no-repeat center'}"></span>
+                    <a :href="'/' + pages_info.plats_domian.domain"><img :src="setImg(pages_info.plats_user.avatar ,'/common/img/new/avatar.png', 90, 90)" alt=""/></a>
+                    <span id="username">{{pages_info.plats_user_cert.name || pages_info.plats_user.real_name}}</span>
+                    <ul>
+                        <a :href="'/' + pages_info.plats_domian.domain + '/article'">
+                            <li>
+                                <span>{{info.article_count}}</span>
+                                <span>文章</span>
+                            </li>
+                        </a>
+                        <a :href="'/' + pages_info.plats_domian.domain + '/project'">
+                            <li>
+                                <span>{{info.project_count}}</span>
+                                <span>项目</span>
+                            </li>
+                        </a>
+                        <a :href="'/' + pages_info.plats_domian.domain + '/activity'">
+                            <li>
+                                <span>{{info.activity_count}}</span>
+                                <span>活动</span>
+                            </li>
+                        </a>
+                    </ul>
+                </li>
+                <li id="address">
+                    <ul>
+                        <li>
+                                <span>
+                                    <img :src="imgState('/common/img/new/offical.png', '/common/img/new/officaloff.png', pages_info.plats_user_cert.is_authenticated == 1)" alt="" width="76" height="26"/>
+                                    <img :src="imgState('/common/img/new/cert.png', '/common/img/new/certoff.png', pages_info.plats_user_auth.is_authenticated == 1)" alt="" width="32" height="28"/>
+                                    <img src="/common/img/new/message.png" alt="" width="60" height="24"/>
+                                </span>
+                            <span>{{pages_info.plats_user_cert.cert_info}}</span>
+                        </li>
+                        <li>
+                            <img src="/common/img/new/address.png" alt="" width="17" height="22"/>
+                            <span>{{area(pages_info.plats_user.province.name, pages_info.plats_user.area.name)}}</span>
+                        </li>
+                        <li>
+                            <img src="/common/img/new/sign.png" alt="" width="17" height="18"/>
+                            <span>{{pages_info.plats_user.motto}}</span>
+                        </li>
+                        <li>
+                            <img :src="setImg(pages_info.plats_user_qrcode, '/common/img/new/qrcode.png', 140, 140)" alt="" width="140" height="140"/>
+                            <p>
+                                <span>微信扫描二维码</span>
+                                <span>分享给好友</span>
+                            </p>
+                        </li>
+                    </ul>
+                </li>
+                <li id="friends">
+                    <ul>
+                        <li>
+                            <p @mouseenter="select('fans')" :class="{'friends': active == 'fans'}">我的粉丝({{info.fnums}})</p>
+                            <p @mouseenter="select('friends')" :class="{'friends': active == 'friends'}">我的关注({{info.gnums}})</p>
+                        </li>
+                        <li v-show="active == 'fans'">
+                            <a v-for="e in info.flist" :href="'/' + e.domain" :title="e.nickname">
+                                <img class="care" :src="setImg(e.avatar, '/common/img/new/1.png', 54, 54)" alt="" width="54" height="54"/>
+                            </a>
+                        </li>
+                        <li v-show="active == 'friends'">
+                            <a v-for="e in info.glist" :href="'/' + e.domain" :title="e.nickname">
+                                <img class="care" :src="setImg(e.avatar, '/common/img/new/1.png', 54, 54)" alt="" width="54" height="54"/>
+                            </a>
+                        </li>
+                        <li>
+                            查看更多>>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<script>
+    new Vue({
+        el: '#wepage',
+        data: {
+            menu: {},
+            dataMenu: ['我的主页', '我的文章', '我的活动', '我的商城', '我的圈子'],
+            pages: {total: 25, page: 1, limit: 10},
+            active: 'fans',
+            info: {},
+        },
+        created: function(){
+            //menu
+            this.menu = {list: this.dataMenu.map(e => ({name: e})), flag: 0};
+
+            axios.get(apiUrl + 'circel/index?domain=' + pages_info.plats_domian.domain, {
+                headers: {Token: plats_token}
+            }).then(data => {
+                this.info = data.data.data;
+                console.log(this.info)
+            })
+
+            $('#favicon').attr('href', ApiMaterPlatQiniuDomain + plats_info.favicon);
+            $("title").text(pages_info.plats_show.head_title)
+        },
+        methods: {
+            login: function(){
+                if (!docCookies.getItem("token")) {
+                    $("#modal_login").fadeIn(300);
+                } else {
+                    //接口调用
+                    info.if_follow == 1 ? console.log('取消关注') : console.log('已关注');
+                }
+            },
+            change: function(page){
+                this.isLoading = true;
+                this.pages.page = page;
+            },
+            style: function(list, i) {
+                list.flag = i;
+            },
+            select: function(type) {
+                this.active = type;
+            },
+            setImg: function(url, init, w, h, mode) {
+                if (url != '' && url != null && url != undefined) {
+                    if (url.indexOf('http') === -1 && url.indexOf('common') === -1) {
+                        return mode != undefined ? ApiMaterPlatQiniuDomain + url + '?imageView2/' + mode + '/w/' + w + '/h/' + h
+                                : ApiMaterPlatQiniuDomain + url + '?imageView2/3/w/' + w + '/h/' + h;
+                    } else {
+                        return url;
+                    }
+                } else {
+                    return init;
+                }
+            },
+            setBg: function(url, init) {
+                if (url != null) {
+                    return ApiMaterPlatQiniuDomain + url;
+                } else {
+                    return init;
+                }
+            },
+            imgState: function(on, off, state) {
+                if (state) {
+                    return on;
+                } else {
+                    return off;
+                }
+            },
+            area: function(province, area) {
+                if (province != null) {
+                    return province + ' ' + area;
+                } else {
+                    return '来自火星';
+                }
+            },
+            brand: function(avatar) {
+                if (pages_info.plats_brand) {
+                    if (pages_info.plats_brand.logo != '') {
+                        return pages_info.plats_brand.logo;
+                    } else {
+                        return avatar;
+                    }
+                } else {
+                    return avatar;
+                }
+            }
+        },
+        filters: {
+            isName: function(val, type) {
+
+            },
+            isBrand: function(val, type) {
+                if (pages_info.plats_brand) {
+                    switch(type) {
+                        case 'user': return pages_info.plats_brand.title; break;
+                        case 'motto': return pages_info.plats_brand.slogan; break;
+                        default: break;
+                    }
+                } else {
+                    if (pages_info.plats_domian.domain == 'index' && type == 'user') {
+                        return plats_info.plat_name
+                    } else {
+                        return val;
+                    }
+                }
+            }
+        }
+    })
+</script>
+</body>
+</html>
