@@ -35,6 +35,7 @@ var initAdvList = function (data) {
                     list[i].cover = json.data.list[i].cover ? json.data.list[i].cover.indexOf('http') !== 0 ? '<img class="thumb-image" data-action="zoom" src="' + ApiMaterPlatQiniuDomain + json.data.list[i].cover + '" width="40" height="40">' : '<img class="thumb-image" data-action="zoom" src="' + json.data.list[i].cover + '" width="40" height="40">' : '';
                     list[i].recommend = json.data.list[i].recommend == 1 ? '<span class="label label-success">是</span>' : json.data.list[i].recommend == 2 ? '<span class="label label-default">否</span>' : '<span class="label label-danger">删除</span>';
                     list[i].created_at = getLocalTime(json.data.list[i].created_at);
+                    list[i].system_name = json.data.list[i].system_name ? json.data.list[i].system_name : '无系统分类';
                     list[i].operation = `<div class="btn-group" role="group"><div class="btn-group">
                     <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 设置 <span class="caret"></span></button>
                     <ul class="dropdown-menu">`
