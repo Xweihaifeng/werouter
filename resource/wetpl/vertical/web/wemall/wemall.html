@@ -1,69 +1,73 @@
-
 <#extend#>public/extend/index_extend.html</#extend#>
-<link rel="stylesheet" href="{{PATH_TML}}wemall/css/wemall.css" />
+<link rel="stylesheet" href="{{PATH_TML}}wemall/css/wemall.css"/>
 <script src="{{PATH_TML}}wemall/js/banner.js"></script>
 <script src="{{PATH_TML}}wemall/js/wemall.js"></script>
-
 
 
 <!--商城开始-->
 <div id="container">
     <div class="wemall">
-
-        <div class="banner"></div>
+        <div class="banner">
+            <ul style="width: 100%;height: 100%;">
+                <template v-for="t in ban">
+                    <li :style="{background: 'url(' + httpType + '//' + plats_qiniu.domain_custom + '/' + t.image +')' + ' no-repeat ' + ' center/cover '}" ></li>
+                </template>
+            </ul>
+        </div>
         <ul class="advert">
             <li v-for="item in advert_cont">
                 <a href="">
-                    <img :src="item.image" alt="">
+                    <img :src="httpType + '//' + plats_qiniu.domain_custom + '/' + item.image" alt="">
                 </a>
             </li>
         </ul>
         <div class="wemall-cat">
             <ul class="cat-nav">
                 <li class="check_cur" v-on:click="move(0)">全部</li>
-                <li v-for="(item,index) in cat_list" v-on:click="move(index)">{{item.title}}</li>
+                <li v-for="(item,kes,i) in cat_list" @click="move(i)">{{item.type}}</li>
             </ul>
         </div>
         <div class="wemall-con">
-           <div class="wemall-son" v-for="(item,index) in cat_list">
-               <div class="title">
-                   <h3>{{item.title}}</h3>
-                   <a href="">查看更多</a>
-               </div>
-               <ul class="wemall-clist" :id=" 'wemall-clist' + index">
-                   <div class="clist-advert">
-                       <ul class="adv-list">
-                           <li v-for="item in cat_adv">
-                               <a href="" >
-                                   <img :src="item.image" alt="">
-                               </a>
-                           </li>
-                       </ul>
+            <div class="wemall-son" v-for="(item,key,index) in cat_list">
+                <div class="title">
+                    <h3>{{item.type}}</h3>
+                    <a href="">查看更多</a>
+                </div>
+                <ul class="wemall-clist" :id=" 'wemall-clist' + index">
+                    <div class="clist-advert">
+                        <ul class="adv-list">
+                            <li v-for="x in item.adv">
+                                <a href="">
+                                    <img :src="httpType + '//' + plats_qiniu.domain_custom + '/' + x.image" alt="">
+                                </a>
+                            </li>
+                        </ul>
 
-                       <div class="btn" :id=" 'btn' + index">
-                           <div class="btnL"></div>
-                           <div class="btnR"></div>
-                       </div>
-                   </div>
-                   <li v-for="item in wemall_con">
-                       <a href="">
-                           <div class="give">
-                               <img src="{{PATH_TML}}wemall/img/买赠.png" alt="" v-if="item.give==1">
-                           </div>
-                           <!--<div class="give" v-if="item.give==0"></div>-->
-                           <div class="photo">
-                               <img :src="item.image" alt="">
-                           </div>
-                           <h3>{{item.title}}</h3>
-                           <div class="price">￥{{item.price}}</div>
-                       </a>
-                   </li>
-               </ul>
-           </div>
+                        <div class="btn" :id=" 'btn' + index">
+                            <div class="btnL"></div>
+                            <div class="btnR"></div>
+                        </div>
+                    </div>
+                    <li v-for="y in item.goods">
+                        <a href="">
+                            <div class="give">
+                                <img src="{{PATH_TML}}wemall/img/买赠.png" alt="" v-if="y.give==1">
+                            </div>
+                            <!--<div class="give" v-if="item.give==0"></div>-->
+                            <div class="photo">
+                                <img :src="httpType + '//' + plats_qiniu.domain_custom + '/' + y.cover" alt="">
+                            </div>
+                            <h3>{{y.title}}</h3>
+                            <div class="price">￥{{y.price}}</div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 </div>
 <!--商城结束-->
+
 
 <script>
     new Vue({
@@ -72,46 +76,30 @@
             total: 10,
             page: 1,
             limit: 5,
-            wemall_con:[
-                {title:"除霾除甲醛高效复合滤芯",image:"/resource/wetpl/vertical/web/wemall/img/2.png",summary:"精选双层防护材质、过滤更精细、去味更有效",price:"799.90",give:0},
-                {title:"除霾除甲醛高效复合滤芯",image:"/resource/wetpl/vertical/web/wemall/img/3.png",summary:"精选双层防护材质、过滤更精细、去味更有效",price:"799.90",give:1},
-                {title:"除霾除甲醛高效复合滤芯",image:"/resource/wetpl/vertical/web/wemall/img/4.png",summary:"精选双层防护材质、过滤更精细、去味更有效",price:"799.90",give:1},
-                {title:"除霾除甲醛高效复合滤芯",image:"/resource/wetpl/vertical/web/wemall/img/1.png",summary:"精选双层防护材质、过滤更精细、去味更有效",price:"799.90",give:0},
-                {title:"除霾除甲醛高效复合滤芯",image:"/resource/wetpl/vertical/web/wemall/img/3.png",summary:"精选双层防护材质、过滤更精细、去味更有效",price:"799.90",give:0},
-                {title:"除霾除甲醛高效复合滤芯",image:"/resource/wetpl/vertical/web/wemall/img/2.png",summary:"精选双层防护材质、过滤更精细、去味更有效",price:"799.90",give:0},
-            ],
-            advert_cont:[
-                {image:"/resource/wetpl/vertical/web/wemall/img/sixiaobanner1.jpg"},
-                {image:"/resource/wetpl/vertical/web/wemall/img/ce8b06c16e9f6f14d048de1e60d7f658.png"},
-                {image:"/resource/wetpl/vertical/web/wemall/img/9ae4d799a478d1a629966f84b56a1277.jpg"},
-                {image:"/resource/wetpl/vertical/web/wemall/img/3f78b9032249cbffbe813dfe1c0f03b7.jpg"},
-            ],        //广告
-            cat_list:[
-                {title:"官方配件",image:"/resource/wetpl/vertical/web/wemall/img/labajieloucengpc.jpg"},
-                {title:"企业团购",image:"/resource/wetpl/vertical/web/wemall/img/eb4f03eb8d1abfd4c7014e83f4377a9c.jpg"},
-                {title:"品牌周边",image:"/resource/wetpl/vertical/web/wemall/img/3.jpg"},
-                {title:"演出娱乐",image:"/resource/wetpl/vertical/web/wemall/img/labajieloucengpc.jpg"},
-                {title:"游戏手机",image:"/resource/wetpl/vertical/web/wemall/img/labajieloucengpc.jpg"},
-                {title:"配件选购",image:"/resource/wetpl/vertical/web/wemall/img/labajieloucengpc.jpg"},
-                {title:"手机好店",image:"/resource/wetpl/vertical/web/wemall/img/labajieloucengpc.jpg"},
-                {title:"人工智能",image:"/resource/wetpl/vertical/web/wemall/img/labajieloucengpc.jpg"},
-                ],
-            cat_adv:[
-                {image:"/resource/wetpl/vertical/web/wemall/img/693828550_1177909488_001.png"},
-                {image:"/resource/wetpl/vertical/web/wemall/img/693828550_1177908848_002.png"},
-                {image:"/resource/wetpl/vertical/web/wemall/img/693828550_1177912543_003.png"},
-            ]
+            wemall_con: [],
+            advert_cont: [],        //广告
+            cat_list: [],
+            cat_adv: [],
+            ban:[],
         },
-        created: function(){
-
+        mounted() {
+            $.ajax({
+                url:'http://dev.wezchina.com/api/plats/goods/defaults',
+                success:(res)=>{
+                    this.advert_cont = res.data.HomeAdv;
+                    this.cat_list = res.data.category;
+                    this.ban = res.data.HomeBanner;
+                }
+            })
         },
         methods: {
             // 导航点击
-            move: function(index){
-               var Top = $(".wemall-son").eq(index).offset().top;
-                $("html,body").animate({scrollTop:Top-100}, 500);
+            move: function (index) {
+                var Top = $(".wemall-son").eq(index).offset().top;
+                $("html,body").animate({scrollTop: Top - 100}, 500);
             },
+        },
 
-        }
+
     })
 </script>

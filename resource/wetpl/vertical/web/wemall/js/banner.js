@@ -64,9 +64,12 @@ $.carousel = {
 };
 
 $(function(){
-    $(".wemall-son").each((index,value) => {
-        var banner='#wemall-clist' + index;
-        var btn="#btn" + index
-        $.extend(true,{},$.carousel).startPlay(banner,btn);
+    setTimeout(function(){
+        $(".wemall-son").each((index,value) => {
+            var banner='#wemall-clist' + index;
+            var btn="#btn" + index
+            $.extend(true,{},$.carousel).startPlay(banner,btn);
         })
+    },200)
+
 })
