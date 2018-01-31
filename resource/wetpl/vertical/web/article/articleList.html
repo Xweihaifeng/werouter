@@ -537,6 +537,8 @@
                     })
                 },
                 getShopList: function(cate, page, limit) {
+                    this.type = 'shopping';
+                    this.shopCate == '' ? this.none = true : this.none = false;
                     this.shopCate.map(e => {
                         $.ajax({
                             url: GOODS_LISTS_USERANDCATE,
@@ -549,13 +551,7 @@
                                 e.shopping = data.data.list;
                             }                                                            
                         })
-                    })
-
-                    console.log(this.shopCate)
-                    
-                    this.type = 'shopping';
-                    this.none = false;
-                    // this.shopping == '' ? this.none = true : this.none = false;
+                    }) 
                 },
                 login: function(){
                     if (!docCookies.getItem("token")) {
@@ -579,7 +575,7 @@
                         case 0: this.getArtList(1, 10); this.pages['articles'].page = 1; window.history.pushState(null, null, '/' + pages_info.plats_domian.domain + '/'); break;
                         case 1: this.getArtList(1, 10); this.pages['articles'].page = 1; window.history.pushState(null, null, '/' + pages_info.plats_domian.domain + '/article'); break;
                         case 2: this.getActList(1, 10); this.pages['activity'].page = 1; window.history.pushState(null, null, '/' + pages_info.plats_domian.domain + '/activity'); break;
-                        case 3: this.getShopList(1, 10);this.pages['shopping'].page = 1; window.history.pushState(null, null, '/' + pages_info.plats_domian.domain + '/wemall'); break;
+                        case 3: this.getShopCate(this.shopCate, 1, 10);this.pages['shopping'].page = 1; window.history.pushState(null, null, '/' + pages_info.plats_domian.domain + '/wemall'); break;
                         case 4: wepage.type = 'zone'; wepage.none = false; this.pages['zone'].page = 1; window.history.pushState(null, null, '/' + pages_info.plats_domian.domain + '/quan'); break;
                     }
                 },
