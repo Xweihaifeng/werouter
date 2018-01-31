@@ -75,7 +75,7 @@
                         <div class="none" v-if="none">
                             <img src="/common/img/no_con_default.png" alt=""/>
                         </div>
-                        <a v-for="e in articles" :href="'/' + pages_info.plats_domian.domain + '/article/' + e.weid" v-show="type == 'articles'">
+                        <a v-for="e in articles" :href="'/' + pages_info.plats_domian.domain + '/article/' + e.weid" v-show="type == 'articles'" target="_blank">
                             <li>
                                 <img class="i0" :src="setImg(e.cover, '/common/img/new/products_load.jpg', 240, 160)" />
                                 <p>
@@ -90,7 +90,7 @@
                                 </p>
                             </li>
                         </a>
-                        <a v-for="e in activity" :href="'/' + e.domain + '/activity/' + e.weid" v-show="type == 'activity'">
+                        <a v-for="e in activity" :href="'/' + e.domain + '/activity/' + e.weid" v-show="type == 'activity'" target="_blank">
                             <li>
                                 <img class="i0" :src="setImg(e.cover, '/common/img/new/products_load.jpg', 240, 160)" />
                                 <p>
@@ -105,13 +105,24 @@
                                 </p>
                             </li>
                         </a>
-                        <ul id="shopping" v-show="type == 'shopping'">
+                        <ul id="shop" v-show="type == 'shopping'">
                             <li>
-                                <p></p>
-                                <p>1F 家电用品</p>
-                            </li>                        
+                                <div>
+                                    <p></p>
+                                    <p>1F 家电用品</p>
+                                </div>
+                                <div>
+                                   <p>
+                                       <img src="http://images.wezchina.com/plats/resource/1512123359910.png" alt="" width="241" height="160" />
+                                       <span class="sp-title">小米Max2 旗舰版</span>
+                                       <span class="sp-intro">32GB 现货在售。64GB赠贴膜+支架式自拍杆+米粉卡...</span>
+                                       <span class="sp-price"><em style="font-style:normal;font-size:16px;">￥</em>0.01<b>市场价 ￥<i>10000.00</i></b></span>
+                                       <span class="sp-info"><i>已售 <em>8</em></i><i>收藏 <em>12</em></i></span>
+                                   </p>                                   
+                                </div>
+                            </li>
                         </ul>
-                        <ul id="zone" v-show="type == 'zone'">
+                        <ul id="ozone" v-show="type == 'zone'">
                             <li>
                                 <p></p>
                                 <p>Ta的圈子</p>
@@ -386,7 +397,7 @@
                         case '': this.type='articles'; this.getArtList(1, 10); this.menu.flag = 0; break;
                         case 'article': this.type='articles'; this.getArtList(1, 10); this.menu.flag = 1; break;
                         case 'activity': this.type='activity'; this.getActList(1, 10); this.menu.flag = 2; break;
-                        case 'wemall': this.type='shopping'; this.getShopList(1, 10); this.menu.flag = 3; break;
+                        case 'wemall': this.type='shopping'; this.getShopCate(); this.menu.flag = 3; break;
                         case 'quan': this.type='zone';this.menu.flag = 4; break;
                         default: this.type='articles'; this.getArtList(1, 10); this.menu.flag = 0; break;
                     }
@@ -522,17 +533,27 @@
                 getShopCate: function() {
                     axios.get(GOODS_CATES_LIST_USERID + "/" + pages_info.plats_domian.plat_user_id).then(data => {
                         this.shopCate = data.data.data;
-                        console.log(this.shopCate);
+                        console.log(this.getShopList(this.shopCate, 1, 10));
                     })
                 },
-                getShopList: function(page, limit) {
-                    /*axios.post(GOODS_LISTS_USERANDCATE, {
-
-                    }).then(data => {
-
-                    })*/
+                getShopList: function(cate, page, limit) {                   
+                    cate.map(e => {
+                        $.ajax({
+                            url: GOODS_LISTS_USERANDCATE,
+                            type: "POST",
+                            data: {
+                                userId: e.plat_user_id,
+                                cateId: e.weid
+                            },
+                            success: function(data){
+                                console.log(data);
+                            }
+                        })
+                    })
+                
                     this.type = 'shopping';
-                    this.shopping == '' ? this.none = true : this.none = false;
+                    this.none = false;
+                    // this.shopping == '' ? this.none = true : this.none = false;
                 },
                 login: function(){
                     if (!docCookies.getItem("token")) {
