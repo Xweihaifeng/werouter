@@ -201,7 +201,7 @@ a {
 }
 
 #list li:hover {
-    cursor: pointer;
+    /*cursor: pointer;*/
 }
 
 .i0 {
@@ -216,13 +216,6 @@ a {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-}
-
-#list li p div {
-    height: 115px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
 }
 
 #list li p span {
@@ -551,4 +544,170 @@ a {
     margin-left: 15px;
     display: flex;
     justify-content: center;
+}
+
+#shopping {
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+#zone {
+    display: flex;
+    flex-direction: column;
+}
+
+#zone > li:first-child,
+#zone > li:nth-child(3),
+#zone > li:nth-child(5) {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 40px;
+    margin-top: 10px;
+}
+
+#zone > li > p:first-child,
+#zone > li:nth-child(3) > p:first-child,
+#zone > li:nth-child(5) > p:first-child {
+    width: 4px;
+    height: 20px;
+    background: #46b2ee;
+    margin-right: 10px;
+}
+
+#zone > li > p:nth-child(2) {
+    font-size: 18px;
+}
+
+#zone > li:nth-child(2) {
+    height: 208px;
+}
+
+#zone > li:nth-child(4) {
+    display: flex;
+    flex-direction: column;
+    height: 540px;
+}
+
+#zone > li:nth-child(4) > ul {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+#zone > li:nth-child(6) {
+    display: flex;
+    flex-direction: column;
+    height: 650px;
+}
+
+#zone > li:nth-child(6) > div {
+    display: flex;
+    justify-content: space-between;
+    height: 520px;
+}
+
+#zone > li:nth-child(6) > p:nth-child(2) > span {
+    font-size: 15px;
+    color: #999;
+}
+
+#zone > li:nth-child(6) > div > ul {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    margin-top: -25px;
+    margin-left: -80px;
+    height: 520px;
+}
+
+#zone > li:nth-child(6) > div > ul > li {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 110px;
+    height: 25px;
+    padding: 0;
+    border: none;
+}
+
+#zone > li:nth-child(6) > div > ul > li > span:first-child {
+    width: 32px;
+    height: 18px;
+    margin-right: 10px;
+}
+
+#zone > li:nth-child(6) > div > ul > li > span:last-child {
+    font-size: 14px;
+}
+
+#zone > li:nth-child(6) > p {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+#zone > li:nth-child(6) > p > span {
+    display: block;
+}
+
+#red {
+    margin-top: 25px;
+}
+
+#zone > li:nth-child(6) > .y {
+    justify-content: flex-end;
+    margin-top: 10px;
+    font-size: 14px;
+    color: #999;
+}
+
+#zone > li:nth-child(2) > div {
+    width: 100%;
+    height: 188px;
+    background: url("/common/img/group_top.jpg") no-repeat center;
+    background-size: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#zone > li > div > ul {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+#zone > li:nth-child(2) > div > ul > li {
+    width: 39px;
+    height: 55px;
+    background: #FF3434;
+    font-size: 46px;
+    color: #fff;
+    margin-right: 10px;
+    border-radius: 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#zone > li:nth-child(2) > div > span {
+    font-size: 32px;
+    font-weight: bold;
+    color: #FF3434;
+    margin-left: 6px;
+    margin-top: 15px;
+}
+
+.rcmd {
+    width: 32px;
+    height: 18px;
+    background: #ff0000;
+    display: block;
+    float: left;
+    margin-right: 10px;
 }

@@ -73,6 +73,11 @@ var __init_onlione_cert = function() {
                 $('.online_cert .switch').removeClass('switch-open').addClass('switch-close');
             $('.online_cert input[name=rest_count]').val(data.data.auth_num);
             $(".online_cert input[name='pay_type'][value=" + data.data.pay_type + "]").attr("checked", true);
+
+             if (data.data.auth_open == 1)
+                $('.auth_cert .switch').removeClass('switch-close').addClass('switch-open');
+            else
+                $('.auth_cert .switch').removeClass('switch-open').addClass('switch-close');
         },
         error: function(xhr) {
             console.log(xhr);
@@ -106,6 +111,27 @@ $(document).on('click', '.online_cert .switch', function() {
         type: 'post',
         dataType: 'json',
         data: { status: status },
+        success: function(data) {
+            if ($(that).hasClass('switch-open')) {
+                $(that).removeClass('switch-open').addClass('switch-close');
+            } else {
+                $(that).removeClass('switch-close').addClass('switch-open');
+            }
+        },
+        error: function(xhr) {
+            console.log(xhr);
+        }
+    });
+
+});
+$(document).on('click', '.auth_cert .switch', function() {
+    var that = this;
+    var auth_open = $(that).hasClass('switch-open') ? 2 : 1;
+    $.ajax({
+        url: ApiUrl + 'cert/realname/auth_open',
+        type: 'post',
+        dataType: 'json',
+        data: { auth_open: auth_open },
         success: function(data) {
             if ($(that).hasClass('switch-open')) {
                 $(that).removeClass('switch-open').addClass('switch-close');
