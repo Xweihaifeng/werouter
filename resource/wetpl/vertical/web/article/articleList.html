@@ -106,18 +106,18 @@
                             </li>
                         </a>
                         <ul id="shop" v-show="type == 'shopping'">
-                            <li>
+                            <li v-for="(e, i) in shopCate">
                                 <div>
                                     <p></p>
-                                    <p>1F 家电用品</p>
+                                    <p>{{i + 1}}F {{e.name}}</p>
                                 </div>
                                 <div>
-                                   <p>
-                                       <img src="http://images.wezchina.com/plats/resource/1512123359910.png" alt="" width="241" height="160" />
-                                       <span class="sp-title">小米Max2 旗舰版</span>
-                                       <span class="sp-intro">32GB 现货在售。64GB赠贴膜+支架式自拍杆+米粉卡...</span>
-                                       <span class="sp-price"><em style="font-style:normal;font-size:16px;">￥</em>0.01<b>市场价 ￥<i>10000.00</i></b></span>
-                                       <span class="sp-info"><i>已售 <em>8</em></i><i>收藏 <em>12</em></i></span>
+                                   <p v-for="o in e.shopping">
+                                       <img :src="setImg(o.cover, '/common/img/new/products_load.jpg', 243, 160)" alt="" width="243" height="160" />
+                                       <span class="sp-title">{{o.title | cut(15)}}</span>
+                                       <span class="sp-intro">{{o.summary | cut(30)}}</span>
+                                       <span class="sp-price"><em style="font-style:normal;font-size:16px;">￥</em>{{o.price}}<b>市场价 ￥<i>{{o.marketprice}}</i></b></span>
+                                       <span class="sp-info"><i>已售 <em>{{o.sales_num}}</em></i><i>收藏 <em>{{o.stock}}</em></i></span>
                                    </p>                                   
                                 </div>
                             </li>
@@ -333,7 +333,7 @@
                 info: {},
                 articles: [],
                 activity: [],
-                shopping: [],
+                shopping: {},
                 shopCate: [],
                 pages: {
                     articles: {total: 10, page: 1, limit: 10},
@@ -532,12 +532,12 @@
                 },
                 getShopCate: function() {
                     axios.get(GOODS_CATES_LIST_USERID + "/" + pages_info.plats_domian.plat_user_id).then(data => {
-                        this.shopCate = data.data.data;
-                        console.log(this.getShopList(this.shopCate, 1, 10));
+                        this.shopCate = data.data.data.map(e => (e.shopping = [], e));
+                        this.getShopList(this.shopCate, 1, 10);
                     })
                 },
-                getShopList: function(cate, page, limit) {                   
-                    cate.map(e => {
+                getShopList: function(cate, page, limit) {
+                    this.shopCate.map(e => {
                         $.ajax({
                             url: GOODS_LISTS_USERANDCATE,
                             type: "POST",
@@ -546,11 +546,13 @@
                                 cateId: e.weid
                             },
                             success: function(data){
-                                console.log(data);
-                            }
+                                e.shopping = data.data.list;
+                            }                                                            
                         })
                     })
-                
+
+                    console.log(this.shopCate)
+                    
                     this.type = 'shopping';
                     this.none = false;
                     // this.shopping == '' ? this.none = true : this.none = false;
