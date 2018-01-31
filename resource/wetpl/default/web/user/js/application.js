@@ -65,6 +65,7 @@ $(document).ready(function() {
     var chatState;
     var chatState1;
     var chatState2;
+    var chatState3;
     var pageId;
     var hasDomain = function(weid) {
         $.ajax({
@@ -323,6 +324,18 @@ $(document).ready(function() {
 
     })
 
+    $("#we_toggle-button-app3").click(function() {
+        if (!chatState3) {
+            $("#we_toggle-button-app3").attr("checked", 'checked');
+            chatState3 = true;
+        } else {
+            $("#we_toggle-button-app3").removeAttr("checked");
+            chatState3 = false;
+        }
+
+    })
+
+
     function pages_wechat_detail() {
         var options106 = $.post(apiUrl + "pages/wechat/detail");
         options106.done(function(data) {
@@ -354,6 +367,33 @@ $(document).ready(function() {
         }
     });
     options105.fail(function(fail) {
+        console.error(error);
+    });
+
+    //获取微信小程序配置
+    function page_mini_wechat_detail(){
+        var options107 = $.post(apiUrl + "pages/wechatMini/detail");
+        options107.done(function(data) {
+            if (data.code == 200 && data.data) {
+                //给微信小程序配置赋值
+                var result = data.data;
+                $("#uploadForm3").find("input[name=weid]").val(result.weid);
+                $("#mini_app_id").val(result.app_id);
+                $("#mini_app_cert").val(result.app_cert);
+            }
+        });
+        options107.fail(function(fail) {
+            console.error(error);
+        });
+    }
+    //初始化微信小程序配置
+    var options108 = $.post(apiUrl + "pages/wechatMini/initWechatMini");
+    options108.done(function(data) {
+        if (data.code == 200 && data.data) {
+            page_mini_wechat_detail();
+        }
+    });
+    options108.fail(function(fail) {
         console.error(error);
     });
 
@@ -463,6 +503,17 @@ $(document).ready(function() {
             $(this).text("收起");
         } else {
             $('.open_content2').stop().slideUp(400);
+            $(this).text("展开");
+
+        }
+    });
+    $('#open3').click(function() {
+        var text = $(this).text();
+        if (text === "展开") {
+            $('.open_content3').stop().slideDown(400);
+            $(this).text("收起");
+        } else {
+            $('.open_content3').stop().slideUp(400);
             $(this).text("展开");
 
         }
@@ -582,6 +633,103 @@ $(document).ready(function() {
         });
     }
 
+    //微信小程序数据提交
+    $("#wechat_mini_save").click(function() {
+        //判断微信公众号支付是否已经配置
+        $.ajax({
+            url:apiUrl + "pages/wechat/wechatIsOk",
+            type: 'POST',
+            headers: {
+                'Token': docCookies.getItem("token")
+            },
+            data: {userid:mall_user_id},
+            success: function(data) {
+                if (data.code == 200) {
+                    var data = new Object();
+                    data.weid = $("#uploadForm3").find("input[name=weid]").val();
+                    data.mini_app_id = $("#mini_app_id").val();
+                    data.mini_app_cert = $("#mini_app_cert").val();
+                    if (!data.mini_app_id) {
+                        layer.msg("小程序app_id为空！", { time: 5000 });
+                        return false;
+                    }
+                    if (!data.mini_app_cert) {
+                        layer.msg("小程序密钥app_cert为空！", { time: 5000 });
+                        return false;
+                    }
+                    layer.confirm('小程序配置必须和公众号支付为同一账户？', {
+                        btn: ['是','否']
+                    }, function(){
+                        addWechatMiniPost(new FormData($("#uploadForm3")[0]));
+                    }, function(){
+                        layer.msg("必须为同一账户！", { time: 5000 });
+                    });
+                } else {
+                    layer.msg("还未配置微信支付！", { time: 5000 });
+                }
+            }
+
+        });
+    });
+    //提交微信小程序配置数据
+    function addWechatMiniPost(data) {
+        $.ajax({
+            type: "POST",
+            async: false,
+            cache: false,
+            contentType: false,
+            processData: false,
+            url: apiUrl + "pages/wechatMini/update",
+            data: data, // 要提交表单的ID
+            success: function(data) {
+                if (data.code == 200) {
+                    layer.msg("修改成功！", { time: 1500 });
+                } else {
+                    layer.msg(data.message, { time: 1500 });
+                }
+            }
+        });
+    }
+    //微信小程序测试
+    $("#wechat_mini_test").click(function() {
+        //判断小程序是否配置完整
+        var obj = new Object();
+        obj.weid = $("#uploadForm3").find("input[name=weid]").val();
+        if (!obj.weid) {
+            layer.msg("微信小程序配置信息不存在！", { time: 5000 });
+            return false;
+        }
+        addWechatMiniTestPost();
+    });
+
+    //微信小程序测试支付数据提交
+    function addWechatMiniTestPost () {
+        //layer.msg("微信小程序配置信息不存在！", { time: 5000 });
+        $.ajax({
+            type: "POST",
+            url: apiUrl + "pages/wechatPay/wechatMiniPayTest",
+            data: { mall_user_id: mall_user_id }, // 要提交表单的ID
+            success: function(data) {
+                if (data.code == 200) {
+                    $('#myModal').find(".modal-title").text('小程序配置成功');
+                    $('#myModal').find(".modal-body").css("text-align", "center");
+                    $('#myModal').find(".modal-body").children().remove();
+                    $('#myModal').find(".modal-body").append("<img src='" + QRCODE + "?url=" + data.data.url + "' />");
+                    $('#myModal').modal('show');
+                } else {
+                    if (data.message) {
+                        layer.msg(data.message, { time: 1500 });
+                    } else {
+                        layer.msg("小程序配置有误请仔细检查", { time: 1500 });
+                    }
+                }
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                layer.msg("小程序配置有误请仔细检查", { time: 1500 });
+            },
+        });
+    }
+    
     /*    var modeleName = [];
         var moduleState = function() {
             $.ajax({

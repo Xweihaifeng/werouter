@@ -437,12 +437,43 @@
                 </div>
                 <!--weChat end -->
 
-
+                <!--weChatMini start -->
+                <div class="list">
+                    <div class="sign">
+                        <div class="sign_set">
+                            <p>微信小程序支付接口配置</p>
+                            <div class="toggle-button-wrapper switch">
+                                <input type="checkbox" id="we_toggle-button-app3" name="switch">
+                                <label for="we_toggle-button-app3" class="button-label">
+                                    <span class="circle"></span>
+                                    <span class="text on">ON</span>
+                                    <span class="text off">OFF</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="open" id="open3">展开</div>
+                    </div>
+                    <div class="open_content open_content3" style="display: none;padding-top: 8px;">
+                        <form id="uploadForm3" class="form-horizontal" method="post" enctype="multipart/form-data">
+                            <input type="hidden" name="weid" value="">
+                            <div class="input-group signset">
+                                <span style="width: 100px;">小程序ID: </span>
+                                <input type="text" class="form-control" id="mini_app_id" name="app_id" style="width: 500px;" placeholder="微信小程序appID">
+                                <p></p>
+                            </div>
+                            <div class="input-group surplus">
+                                <span style="width: 100px;">小程序密钥:</span>
+                                <input type="text" class="form-control" id="mini_app_cert" name="app_cert" style="width: 500px;" placeholder="微信小程序密钥appCert">
+                            </div>
+                            <div class="input-group surplus ">
+                                <button type="button" class="button button-rounded button-highlight" id="wechat_mini_save"> 确认保存</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                                <button type="button" class="button button-rounded button-highlight" id="wechat_mini_test"> 支付测试</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!--weChatMini end -->
             </div>
-
-
-
-
         </div>
     </div>
     <div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
