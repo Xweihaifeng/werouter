@@ -291,7 +291,7 @@
                 cert: false,  cert_cont: false,  cert_tit: '官方认证中……',   // 已经官方
                 apply: false, apply_cont: false, apply_tit: '会员申请中……'  // 已经申请
             },
-            pickeds: 0,                                                    // 官方认证类型选择
+            pickeds: 0,   // 官方认证类型选择
             member: {
                 login: {
                     phone: '',
@@ -356,11 +356,10 @@
             ajax.get('/member/session/current').then((res) => {
                 self.member.apply.session_id = res.data.weid;
                 var result = res.data.config.reverse();
-                console.log(result);
-                // console.log(result.filter((e, i) => e.member_type != 2)[0]);
-                result.filter(function(value) {
-                    return value.member_type != 2
-                })[0]
+                var member_config = result.filter((e,i) => e.open_type != 2)[0];
+                console.log(member_config);
+                this.member_position = member_config;
+                this.member.apply.plat_member_level_id = member_config.mid;
                 this.member_levels.list = result;
             })
 
@@ -463,22 +462,22 @@
                     ajax.get(MEMBER_APPLY).then((res) => {
                         if(res.code === 200 && res.data) {
                             self.already.apply_cont = true;
-                            if(res.data.first_audit_is_done == 1) {
+                            if(res.data.state == 1) {
                                 this.process_filters('first');
                                 console.log("会员初审", res.data)
                                 self.already.apply_tit = self.cont_state[6];
                                 self.already.apply = false;
                             } else
 
-                            if(res.data.first_audit_is_done == 2) {
+                            if(res.data.state == 2) {
                                 this.process_filters('money');
                             } else
 
-                            if(res.data.first_audit_is_done == 3) {
+                            if(res.data.state == 3) {
                                 this.process_filters('second');
                             } else
 
-                            if(res.data.first_audit_is_done == 4) {
+                            if(res.data.state == 4) {
                                 this.process_filters('member');
 
                             }
