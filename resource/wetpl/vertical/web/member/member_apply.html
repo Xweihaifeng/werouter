@@ -543,7 +543,7 @@
                 console.log(name);
                 var self = this;
                 if(name === 'auth') {
-                    if(!this.isCardNo(this.member.cert.card_id)) {
+                    if(!this.isCardNo(this.member.auth.card_id)) {
                         layer.msg("身份证号码不合法，请重新输入...", { time: 2500 });
                         return false;
                     }
@@ -554,7 +554,7 @@
                         }
                     });
                 } else if(name === 'Uauth') {                    
-                    if(!this.isCardNo(this.member.cert.card_id)) {
+                    if(!this.isCardNo(this.member.auth.card_id)) {
                         layer.msg("身份证号码不合法，请重新输入...", { time: 2500 });
                         return false;
                     }
