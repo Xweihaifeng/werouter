@@ -693,18 +693,30 @@ $(document).ready(function() {
     //微信小程序测试
     $("#wechat_mini_test").click(function() {
         //判断小程序是否配置完整
-        var obj = new Object();
-        obj.weid = $("#uploadForm3").find("input[name=weid]").val();
-        if (!obj.weid) {
-            layer.msg("微信小程序配置信息不存在！", { time: 5000 });
-            return false;
-        }
-        addWechatMiniTestPost();
+        $.ajax({
+            url: apiUrl + "pages/wechatMini/wechatMiniIsOk",
+            type: 'POST',
+            headers: {
+                'Token': docCookies.getItem("token")
+            },
+            data: {userid: mall_user_id},
+            success: function(data) {
+                if (data.code == 200) {
+                    var obj = new Object();
+                    obj.weid = $("#uploadForm3").find("input[name=weid]").val();
+                    if (!obj.weid) {
+                        layer.msg("微信小程序配置信息不存在！", { time: 5000 });
+                        return false;
+                    }
+                    addWechatMiniTestPost();
+                }else{
+                    layer.msg("微信小程序配置信息不存在或未配完！", { time: 5000 });
+                }
+            }
+        });
     });
-
     //微信小程序测试支付数据提交
     function addWechatMiniTestPost () {
-        //layer.msg("微信小程序配置信息不存在！", { time: 5000 });
         $.ajax({
             type: "POST",
             url: apiUrl + "pages/wechatPay/wechatMiniPayTest",
