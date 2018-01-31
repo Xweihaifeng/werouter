@@ -3,9 +3,9 @@ $(document).ready(function () {
     //分类select初始化
     var initSelect = function () {
         var advTypes = '';
-        $.getJSON(ApiUrl + "plats/goods/adv_type?limit=30", function (result) {
-            $.each(result.data.list, function (i, item) {
-                advTypes = advTypes + '<option value="' + item.weid + '" description="' + item.description + '">' + item.title + '</option>';
+        $.getJSON(ApiUrl + "plats/goods/adv_type_list", function (result) {
+            $.each(result.data, function (i, item) {
+                advTypes = advTypes + '<option value="' + item.weid + '">' + item.title + '</option>';
             });
             $("#type-select").append(advTypes);
         });

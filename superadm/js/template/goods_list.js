@@ -43,7 +43,7 @@ var initAdvList = function (data) {
                     </div></div>`;
                 }
                 params = json.data.params;
-                keywords=json.data.params.title;
+                keywords = json.data.params.title;
 
                 return list;
             }
@@ -60,10 +60,6 @@ var initAdvList = function (data) {
             {"data": "recommend"},
             {"data": "operation"}
         ],
-        "aoColumnDefs": [
-            {"bSearchable": false, "aTargets": [2, 7]}
-        ],
-        "aaSorting": [[0, "asc"]],
         "destroy": true,
         "oLanguage": {
             "sLengthMenu": "显示 _MENU_ 记录",
@@ -85,60 +81,62 @@ var initAdvList = function (data) {
         }
     });
     $('.dataTables_length').hide();
-
-    var myPagination = function (params) {
-        var pageHtml = '';
-        //首页
-        if (parseInt(params.currPage) == 1) {
-            pageHtml = pageHtml + '<li class=\"paginate_button previous disabled\" id=\"advListTable_previous\"><a href=\"#\"  data-dt-idx="' + (parseInt(params.currPage) - 1) + '" tabindex=\"0\"> 上一页 </a></li>';
-        } else {
-            pageHtml = pageHtml + '<li class=\"paginate_button previous\" id=\"advListTable_previous\"><a href=\"#\"  data-dt-idx="' + (parseInt(params.currPage) - 1) + '" tabindex=\"0\"> 上一页 </a></li>';
-        }
-
-        for (var i = 0, ien = parseInt(params.pageCount); i < ien; i++) {
-            //当前页
-            if (parseInt(params.currPage) == (i + 1)) {
-                pageHtml = pageHtml + '<li class=\"paginate_button active\"><a href=\"#\"  data-dt-idx="' + (i + 1) + '" tabindex=\"0\">' + (i + 1) + '</a></li>';
-            } else {
-                pageHtml = pageHtml + '<li class=\"paginate_button\"><a href=\"#\"  data-dt-idx="' + (i + 1) + '" tabindex=\"0\">' + (i + 1) + '</a></li>';
-            }
-        }
-
-        //尾页
-        if (parseInt(params.currPage) == parseInt(params.pageCount)) {
-            pageHtml = pageHtml + '<li class=\"paginate_button next disabled\" id=\"advListTable_next\"><a href=\"#\"  data-dt-idx="' + (parseInt(params.currPage) + 1) + '" tabindex=\"0\"> 下一页 </a></li>';
-        } else {
-            pageHtml = pageHtml + '<li class=\"paginate_button next\" id=\"advListTable_next\"><a href=\"#\"  data-dt-idx="' + (parseInt(params.currPage) + 1) + '" tabindex=\"0\"> 下一页 </a></li>';
-        }
-        $('.dataTables_info').html("本页显示" + ($('table tr').length - 1) + " 条，共 " + params.total + " 条记录。");
-        $('.pagination').append(pageHtml);
-        //分页点击事件
-        $('.pagination a').each(function (i) {
-            $(this).click(function () {
-                var page    = $(this).attr('data-dt-idx');
-                var data = {
-                    keywords:params.title,
-                    page    : page,
-                    limit   : 10
-                };
-                initAdvList(data);
-            })
-        });
-    }
 };
+
+//分页重写total总条数 pageNumber每页条数 pageCount总页数 currPage当前页数
+var myPagination = function (params) {
+    var pageHtml = '';
+    //首页
+    if (parseInt(params.currPage) == 1) {
+        pageHtml = pageHtml + '<li class=\"paginate_button previous disabled\" id=\"advListTable_previous\"><a href=\"#\"  data-dt-idx="' + (parseInt(params.currPage) - 1) + '" tabindex=\"0\"> 上一页 </a></li>';
+    } else {
+        pageHtml = pageHtml + '<li class=\"paginate_button previous\" id=\"advListTable_previous\"><a href=\"#\"  data-dt-idx="' + (parseInt(params.currPage) - 1) + '" tabindex=\"0\"> 上一页 </a></li>';
+    }
+
+    for (var i = 0, ien = parseInt(params.pageCount); i < ien; i++) {
+        //当前页
+        if (parseInt(params.currPage) == (i + 1)) {
+            pageHtml = pageHtml + '<li class=\"paginate_button active\"><a href=\"#\"  data-dt-idx="' + (i + 1) + '" tabindex=\"0\">' + (i + 1) + '</a></li>';
+        } else {
+            pageHtml = pageHtml + '<li class=\"paginate_button\"><a href=\"#\"  data-dt-idx="' + (i + 1) + '" tabindex=\"0\">' + (i + 1) + '</a></li>';
+        }
+    }
+
+    //尾页
+    if (parseInt(params.currPage) == parseInt(params.pageCount)) {
+        pageHtml = pageHtml + '<li class=\"paginate_button next disabled\" id=\"advListTable_next\"><a href=\"#\"  data-dt-idx="' + (parseInt(params.currPage) + 1) + '" tabindex=\"0\"> 下一页 </a></li>';
+    } else {
+        pageHtml = pageHtml + '<li class=\"paginate_button next\" id=\"advListTable_next\"><a href=\"#\"  data-dt-idx="' + (parseInt(params.currPage) + 1) + '" tabindex=\"0\"> 下一页 </a></li>';
+    }
+    $('.dataTables_info').html("当前显示 1 到 " + ($('table tr').length - 1) + " 条，共 " + params.total + " 条记录。");
+    $('.pagination').append(pageHtml);
+    //分页点击事件
+    $('.pagination a').each(function (i) {
+        $(this).click(function () {
+            var page = $(this).attr('data-dt-idx');
+            var type_id = $("#type-select").children('option:selected').val();
+            var data = {
+                type_id: type_id,
+                page: page,
+                limit: 10,
+            };
+            initAdvList(data);
+        })
+    });
+}
 
 $(document).ready(function () {
     var data = {
-        keywords:keywords
+        keywords: keywords
     };
     initAdvList(data);
     $(document).on('click', '.set-status', function () {
         var id = $(this).data('id');
         var type = $(this).data('type');
         $.ajax({
-            url: ApiUrl + 'plats/goods/goods_recommend/',
+            url: ApiUrl + 'plats/goods/goods_recommend',
             type: 'post',
-            data: {weid : id, recommend: type},
+            data: {weid: id, recommend: type},
             dataType: 'json',
             success: function (data) {
                 swal({

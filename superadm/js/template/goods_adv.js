@@ -10,10 +10,11 @@ var initAdvList = function (data) {
                     json.data.list[i].id = i + 1;
                     if (json.data.list[i].image != '#') {
                         if (json.data.list[i].image.indexOf('http://') != -1) {
-                            json.data.list[i].image = '<img src="' + json.data.list[i].image + '" height="80px" width="200px" alt="" data-action="zoom">';
+                            json.data.list[i].image = '<img src="' + json.data.list[i].image + '" height="80px" alt="" data-action="zoom">';
                         } else {
-                            json.data.list[i].image = '<img src="' + ApiMaterPlatQiniuDomain + json.data.list[i].image + '" height="80px" width="200px" alt="" data-action="zoom">';
+                            json.data.list[i].image = '<img src="' + ApiMaterPlatQiniuDomain + json.data.list[i].image + '" height="80px" alt="" data-action="zoom">';
                         }
+                        json.data.list[i].type = json.data.list[i].type_name ? json.data.list[i].type_name : json.data.list[i].system_name;
                     }
                     json.data.list[i].operation = "<a href=goods_adv_edit.html?weid=" + json.data.list[i].weid + " class=\"btn btn-info\">编辑</a>&nbsp;&nbsp;<button class=\"btn btn-danger btn-delete\"  data-id=" + json.data.list[i].weid + " data-toggle=\"popover\" data-placement=\"left\" data-trigger=\"focus\" data-html=\"true\" title=\"确定要删除？\" data-content=\"<button class='btn btn-danger btn-delete-confirm'  data-id=" + json.data.list[i].weid + ">确认</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class='btn btn-default'>取消</button>\" >删除</button>";
                 }
@@ -27,7 +28,7 @@ var initAdvList = function (data) {
             {"data": "title"},
             {"data": "image"},
             {"data": "url"},
-            {"data": "type_name"},
+            {"data": "type"},
             {"data": "operation"}
         ],
         "destroy": true,//允许表格重新加载
@@ -38,7 +39,6 @@ var initAdvList = function (data) {
             "sLoadingRecords": "正在加载数据-请等待...",
             "sInfo": "当前显示 _START_ 到 _END_ 条，共 _TOTAL_ 条记录。",
             "sSearch": "搜索:",
-            '_TOTAL_': 100,
             "oPaginate": {
                 "sFirst": "首页",
                 "sPrevious": " 上一页 ",
@@ -102,9 +102,9 @@ $(document).ready(function () {
     //分类select初始化
     var initSelect = function () {
         var advTypes = '';
-        $.getJSON(ApiUrl + "plats/goods/adv_type?limit=30", function (result) {
-            $.each(result.data.list, function (i, item) {
-                advTypes = advTypes + '<option value="' + item.weid + '" description="' + item.description + '">' + item.title + '</option>';
+        $.getJSON(ApiUrl + "plats/goods/adv_type_list", function (result) {
+            $.each(result.data, function (i, item) {
+                advTypes = advTypes + '<option value="' + item.weid + '">' + item.title + '</option>';
             });
             $("#type-select").append(advTypes);
         });

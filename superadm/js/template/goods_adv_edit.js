@@ -22,13 +22,13 @@ $(document).ready(function () {
                 }
                 //分类select初始化
                 var advTypes = '';
-                $.getJSON(ApiUrl + "plats/goods/adv_type?limit=30", function (result) {
+                $.getJSON(ApiUrl + "plats/goods/adv_type_list", function (result) {
                     //console.log(result);
-                    $.each(result.data.list, function (i, item) {
+                    $.each(result.data, function (i, item) {
                         if (type_id == item.weid) {
-                            advTypes = advTypes + '<option value="' + item.weid + '" description="' + item.description + '" selected=\"selected\">' + item.title + '</option>';
+                            advTypes = advTypes + '<option value="' + item.weid + '" selected=\"selected\">' + item.title + '</option>';
                         } else {
-                            advTypes = advTypes + '<option value="' + item.weid + '" description="' + item.description + '">' + item.title + '</option>';
+                            advTypes = advTypes + '<option value="' + item.weid + '">' + item.title + '</option>';
                         }
                     });
                     $("#type-select").append(advTypes);
