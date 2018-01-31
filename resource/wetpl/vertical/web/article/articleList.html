@@ -113,13 +113,13 @@
                                 </div>
                                 <div>
                                    <p v-for="o in e.shopping">
-                                       <a :href="'/' + pages_info.plats_domian.domain + '/wemall/goods/' + o.weid">
+                                       <!-- <a :href="'/' + pages_info.plats_domian.domain + '/wemall/goods/' + o.weid"> -->
                                            <img :src="setImg(o.cover, '/common/img/new/products_load.jpg', 243, 160)" alt="" width="243" height="160" />
                                            <span class="sp-title">{{o.title | cut(15)}}</span>
                                            <span class="sp-intro">{{o.summary | cut(30)}}</span>
                                            <span class="sp-price"><em style="font-style:normal;font-size:16px;">￥</em>{{o.price}}<b>市场价 ￥<i>{{o.marketprice}}</i></b></span>
                                            <span class="sp-info"><i>已售 <em>{{o.sales_num}}</em></i><i>收藏 <em>{{o.stock}}</em></i></span>
-                                       </a>
+                                       <!-- </a> -->
                                    </p>
                                 </div>
                             </li>
