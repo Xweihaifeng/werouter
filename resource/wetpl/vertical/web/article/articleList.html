@@ -112,7 +112,7 @@
                                     <p>{{i + 1}}F {{e.name}}</p>
                                 </div>
                                 <div>
-                                    <a v-for="o in e.shopping" :href="'/' + pages_info.plats_domian.domain + '/wemall/' + o.weid">
+                                    <a v-for="o in e.shopping" :href="'/' + pages_info.plats_domian.domain + '/wemall/' + o.weid" style="display:blcok;">
                                        <p >
                                            <img :src="setImg(o.cover, '/common/img/new/products_load.jpg', 243, 160)" alt="" width="243" height="160" />
                                            <span class="sp-title">{{o.title | cut(15)}}</span>
@@ -550,10 +550,11 @@
                                 cateId: e.weid
                             },
                             success: function(data){
-                                e.shopping = data.data.list;
+                                e.shopping = data.data.list;                                
                             }                                                            
                         })
-                    }) 
+                    })
+                    console.log(this.shopCate)
                 },
                 login: function(){
                     if (!docCookies.getItem("token")) {
