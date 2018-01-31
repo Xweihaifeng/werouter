@@ -583,7 +583,7 @@
                 $("#list-table tbody tr").each(function(k, v) {
                     var _member = {};
                     _member.mid = $(v).data('id');
-                    _member.level_name = $("#list-table > tbody > tr:nth-child(1) > td:nth-child(1)").text();
+                    _member.level_name = $("#list-table > tbody > tr:nth-child(" + (k + 1) + ") > td:nth-child(1)").text();
                     _member.pay_type = $(v).find('.pay_type').filter(':checked').val();
                     _member.open_type = $(v).find('.open_type').filter(':checked').val();
                     _member.price = $(v).find('.price').val();
