@@ -33,7 +33,7 @@
                     <h3>{{item.type}}</h3>
                     <a href="">查看更多</a>
                 </div>
-                <ul class="wemall-clist" :id=" 'wemall-clist' + index">
+                <ul style="background: #fff;" class="wemall-clist" :id=" 'wemall-clist' + index">
                     <div class="clist-advert">
                         <ul class="adv-list">
                             <li v-for="x in item.adv">
@@ -97,6 +97,7 @@
             move: function (index) {
                 var Top = $(".wemall-son").eq(index).offset().top;
                 $("html,body").animate({scrollTop: Top - 100}, 500);
+                $(".cat-nav > li").eq(index + 1).addClass("check_cur").siblings().removeClass("check_cur")
             },
         },
 
