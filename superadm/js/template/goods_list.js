@@ -26,6 +26,7 @@ var initAdvList = function (data) {
         "ajax": {
             url: ApiUrl + "plats/goods/goods_list",
             type: "GET",
+            data:data,
             "dataSrc": function (json) {
                 var list = cloneObj(json.data.list);
                 for (var i = 0, ien = json.data.list.length; i < ien; i++) {
@@ -43,7 +44,7 @@ var initAdvList = function (data) {
                     </div></div>`;
                 }
                 params = json.data.params;
-                keywords = json.data.params.title;
+                // keywords = json.data.params.title;
 
                 return list;
             }
