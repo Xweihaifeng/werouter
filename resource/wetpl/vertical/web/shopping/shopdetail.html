@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="{{PATH_TML}}css/normalize.css" />
     <link rel="stylesheet" href="/common/magazine/css/iview.css">
     <link rel="stylesheet" href="{{PATH_TML}}css/wepage.css" />
+
     <script src="/common/js/jquery-3.2.1.min.js"></script>
     <script src="/common/public/js/app.js"></script>
     <script src="/common/iview/vue.min.js"></script>
@@ -25,8 +26,39 @@
     <script src="/common/magazine/js/iview.min.js"></script>
     <link rel="stylesheet" href="/common/jquery.animsition/css/animsition.min.css">
     <script src="/common/jquery.animsition/js/jquery.animsition.min.js"></script>
+
+    <!--<script type="text/javascript" src="/common/layer-v3.0.3/layer-v3.0.3/layer/layer.js"></script>-->
+    <!--放大镜开始-->
+    <script type="text/javascript" src="/resource/wetpl/vertical/web/shopping/js/jquery.jqzoom.min.js"></script>
+    <!--放大镜结束-->
+
+    <!--详情页样式开始-->
+    <link rel="stylesheet" href="/common/magazine/css/iview.css">
+    <script src="/common/magazine/js/iview.min.js"></script>
+    <link rel="stylesheet" href="/resource/wetpl/default/web/css/shopping.css">
+    <link rel="stylesheet" href="{{PATH_TML}}shopping/css/shopdetail.css" />
+    <script type="text/javascript" src="/resource/wetpl/vertical/web/shopping/js/shopdetail.js"></script>
+    <script type="text/javascript">
+        var APP_ROOT = '';
+        var LOADER_IMG = 'https://kezunping.wezchina.com/app/Tpl/wezchina/images/lazy_loading.gif';
+        var ERROR_IMG = 'https://kezunping.wezchina.com/app/Tpl/wezchina/images/image_err.gif';
+        var send_span = 2000;
+        var __HASH_KEY__ = "ATLQFaCNiLUdZRWiSAHphrdhfNiWlobYEyehjcxqbyZvJXKOQe";
+    </script>
+    <!--详情页样式结束-->
 </head>
 <body>
+
+<style>
+    #main{
+        width: 1200px;
+        height: auto;
+        margin: 0 auto;
+        background: #fff;
+    }
+</style>
+
+
 <div class="modal_login" id="modal_login"></div>
 <div id="wepage">
     <div id="header">
@@ -56,6 +88,136 @@
     <div id="container">
         <div id="main">
             <ul id="list">
+
+                <!--商品详情页开始-->
+                <div class="user_info_left">
+                    <span></span>
+                    <div class = "qr_code_icon">
+                        <div class="boxcode">
+                            <div class="price_icon tc" id="product_qrcode" rel=""></div>
+                        </div>
+                    </div>
+                    <div class="westoreWarp">
+                        <div class="pro_deta_top clearfix">
+                            <div class="pro_deta_imgs">
+                                <div id="preview" class="spec-preview">
+                                    <span class="jqzoom" >
+                                        <img :jqimg="'http://images.wezchina.com/' + shop_info.cover" :src="'http://images.wezchina.com/' + shop_info.cover" alt="">
+                                    </span>
+                                </div>
+                                <!--缩图开始-->
+                                <div class="spec-scroll">
+                                    <a class="prev" @click="image_click('L')">&lt;</a>
+                                    <a class="next"  @click="image_click('R')">&gt;</a>
+                                    <div class="items">
+                                        <ul id="items_son">
+                                            <li>
+                                                <img :jqimg="'http://images.wezchina.com/' + shop_info.cover" :src="'http://images.wezchina.com/' + shop_info.cover" alt="">
+                                            </li>
+                                            <li v-for="item in shop_image_list">
+                                                <img :src=" 'http://images.wezchina.com/' + item" alt="">
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <!--缩图结束-->
+                            </div>
+                            <div class="pro_deta_info">
+                                <form  method="get">
+                                    <h2 class="tit" title="shop_info.title" v-html="shop_info.title"></h2>
+                                    <p class="brief" title="shop_info.summary" v-html="shop_info.summary"></p>
+                                    <div class="price">
+                                        <b>价格</b>
+                                        <span><em>￥</em> {{shop_info.price}} </span>
+                                        <b>市场价 ￥<i v-html="shop_info.marketprice"></i></b>
+                                    </div>
+                                    <div class="state">
+                                        <span class="l"><i>已售 </i><em v-html="shop_info.sales_num"></em></span>
+                                        <span class="r"><i>收藏 </i><em id="collectnum" v-html="shop_info.collections"></em></span>
+                                    </div>
+                                    <div class="control-group small-control-group clearfix" style="margin-top:10px;display:none">
+                                        <label class="control-label" style="text-align: left;font-size: 14px;width: 38px;color: #999;    overflow: hidden;">配送至：</label>
+                                        <div class="control-text">
+                                            <select name="province" id="province" class="ui-select field_select small">
+                                                <option value="" rel="0">请选择省份</option>
+                                            </select>
+                                            <select name="city" id="city" class="ui-select field_select small">
+                                                <option value="" rel="0">请选择城市</option>
+                                            </select>
+                                        </div>
+                                        <div class="blank0"></div>
+                                    </div>
+                                    <div class="key">
+                                        <div class="amount">
+                                            <span class="tb-l">数量</span>
+                                            <span class="tb-amount-widget">
+                                                <span class="mui-amount-increase" @click="num_click('minus')">-</span>
+                                                <input type="text" class="tb-text mui-amount-input" id="add_number" value="1" maxlength="100" title="请输入购买量" name="num" @blur="num_click('num')">
+                                                <span class="mui-amount-decrease" @click="num_click('add')">+</span>
+                                                </span>
+                                            <em class="tb-hidden" style="display: inline;">库存<span class = "num_kc" v-html="shop_info.stock"></span>件</em>
+                                        </div>
+                                        <p>
+                                            <button class="buy_btn" type="button" id="" @click="buy">立即购买</button>
+                                            <!--<a href="javascript:void(0);" class="collect_btn collect-btn-click" data-tag="on" >立即收藏</a>''+-->
+                                            <a href="javascript:void(0);" class="add_to_cart" data-tag="on" @click="add_buycar">加入购物车</a>
+                                        </p>
+                                    </div>
+
+                                </form>
+                            </div>
+
+                        </div>
+                        <div class="pro_deta_com" id = "goods_detail">
+                            <div class="pro_deta_tab" >
+                                <a class="active pro_date_tit2" @click="shop_click(0)" href="javascript:void(0)">商品详情</a>
+                                <a class="pro_date_tit" @click="shop_click(1)" href="javascript:void(0)">购买须知</a>
+                            </div>
+                            <div class="pro_det">
+                                <p>
+                                    <p>
+                                       <span style="color:#666666;font-family:Arial, &quot;font-size:16px;font-weight:bold;background-color:#FFFFFF;" v-html="shop_info.content"></span>
+                                    </p>
+                                </p>
+                            </div>
+
+                            <div class="pro_need_kown">
+                                <h2 class="pro_det_tit" id="goods_rule">购买须知</h2>
+                                <div class="info">
+                                    <p>
+                                        <span style="color:#666666;font-size:16px;font-weight:bold;background-color:#FFFFFF;" v-html="shop_info.note"></span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="shangpingpingjia">
+                                <h2 class="pro_det_tit" id="pro_mess">精选评价</h2>
+
+                                <ul class="pingjianeirong" id="commont">
+                                    <li class="supporter" v-for="item in commont">
+                                        <div class="supporter_img ">
+                                            <img class="img-circle" :src="'http://images.wezchina.com/' + item.avatar">
+                                        </div>
+                                        <div class="supporter_user">
+                                            <span class="supporter_user_log"></span>
+                                            <p class="supporter_user_mid m0"> </p>
+                                            <span class="supporter_user_sm"></span>
+                                            <div class="supporter_user_color" v-html="item.created_at"></div>
+                                            <div style="display: inline-block;"></div>
+                                            <div class="supporter_user_liuyan" style="width: 743px;min-height: 44px;line-height: 44px" v-html="item.content"></div>
+                                        </div>
+                                    </li>
+                                    <!--分页-->
+                                    <!--<div class="commentpage" style="text-align: center;">-->
+                                        <Page :total="total" :current="page" :page-size="limit" @on-change="change" v-if="total > limit" id="ivu-page"></Page>
+                                    <!--</div>-->
+                                </ul>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!--商品详情页结束-->
 
             </ul>
             <ul id="info">
@@ -137,114 +299,352 @@
     </div>
 </div>
 <script>
+    // new Vue({
+    //     el: '#wepage',
+    //     data: {
+    //         menu: {},
+    //         dataMenu: ['我的主页', '我的文章', '我的活动', '我的商城', '我的圈子'],
+    //         pages: {total: 25, page: 1, limit: 10},
+    //         active: 'fans',
+    //         info: {},
+    //     },
+    //     created: function(){
+    //         //menu
+    //         this.menu = {list: this.dataMenu.map(e => ({name: e})), flag: 0};
+    //
+    //         axios.get(apiUrl + 'circel/index?domain=' + pages_info.plats_domian.domain, {
+    //             headers: {Token: plats_token}
+    //         }).then(data => {
+    //             this.info = data.data.data;
+    //             console.log(this.info)
+    //         })
+    //
+    //         $('#favicon').attr('href', ApiMaterPlatQiniuDomain + plats_info.favicon);
+    //         $("title").text(pages_info.plats_show.head_title)
+    //     },
+    //     methods: {
+    //         login: function(){
+    //             if (!docCookies.getItem("token")) {
+    //                 $("#modal_login").fadeIn(300);
+    //             } else {
+    //                 //接口调用
+    //                 info.if_follow == 1 ? console.log('取消关注') : console.log('已关注');
+    //             }
+    //         },
+    //         change: function(page){
+    //             this.isLoading = true;
+    //             this.pages.page = page;
+    //         },
+    //         style: function(list, i) {
+    //             list.flag = i;
+    //         },
+    //         select: function(type) {
+    //             this.active = type;
+    //         },
+    //         setImg: function(url, init, w, h, mode) {
+    //             if (url != '' && url != null && url != undefined) {
+    //                 if (url.indexOf('http') === -1 && url.indexOf('common') === -1) {
+    //                     return mode != undefined ? ApiMaterPlatQiniuDomain + url + '?imageView2/' + mode + '/w/' + w + '/h/' + h
+    //                             : ApiMaterPlatQiniuDomain + url + '?imageView2/3/w/' + w + '/h/' + h;
+    //                 } else {
+    //                     return url;
+    //                 }
+    //             } else {
+    //                 return init;
+    //             }
+    //         },
+    //         setBg: function(url, init) {
+    //             if (url != null) {
+    //                 return ApiMaterPlatQiniuDomain + url;
+    //             } else {
+    //                 return init;
+    //             }
+    //         },
+    //         imgState: function(on, off, state) {
+    //             if (state) {
+    //                 return on;
+    //             } else {
+    //                 return off;
+    //             }
+    //         },
+    //         area: function(province, area) {
+    //             if (province != null) {
+    //                 return province + ' ' + area;
+    //             } else {
+    //                 return '来自火星';
+    //             }
+    //         },
+    //         brand: function(avatar) {
+    //             if (pages_info.plats_brand) {
+    //                 if (pages_info.plats_brand.logo != '') {
+    //                     return pages_info.plats_brand.logo;
+    //                 } else {
+    //                     return avatar;
+    //                 }
+    //             } else {
+    //                 return avatar;
+    //             }
+    //         }
+    //     },
+    //     filters: {
+    //         isName: function(val, type) {
+    //
+    //         },
+    //         isBrand: function(val, type) {
+    //             if (pages_info.plats_brand) {
+    //                 switch(type) {
+    //                     case 'user': return pages_info.plats_brand.title; break;
+    //                     case 'motto': return pages_info.plats_brand.slogan; break;
+    //                     default: break;
+    //                 }
+    //             } else {
+    //                 if (pages_info.plats_domian.domain == 'index' && type == 'user') {
+    //                     return plats_info.plat_name
+    //                 } else {
+    //                     return val;
+    //                 }
+    //             }
+    //         }
+    //     }
+    // })
+
+
     new Vue({
-        el: '#wepage',
+        el: '#list',
         data: {
-            menu: {},
-            dataMenu: ['我的主页', '我的文章', '我的活动', '我的商城', '我的圈子'],
-            pages: {total: 25, page: 1, limit: 10},
-            active: 'fans',
-            info: {},
+           cate_domain : $app.get_router(1), // 分类个性域名
+           id_domain:$app.get_router(4),   //商品id
+           shop_info:{},                   //商品信息
+           shop_image_list:[]  ,             //图片信息
+            page:1 ,                          //当前页数
+            commont:[],                        //评论内容
+            total:0,                            //评论总条数
+            limit:3,                             //显示评论数
+        },
+        mounted: function() {
+            var self = this;
+            this.$nextTick(()=>{
+               // 商品展示
+                 this.shop(this.id_domain);
+                 // 商品评论
+                self.comment();
+                self.focusimgfun()
+                self.zoomfun();
+
+            });
         },
         created: function(){
             //menu
-            this.menu = {list: this.dataMenu.map(e => ({name: e})), flag: 0};
 
-            axios.get(apiUrl + 'circel/index?domain=' + pages_info.plats_domian.domain, {
-                headers: {Token: plats_token}
-            }).then(data => {
-                this.info = data.data.data;
-                console.log(this.info)
-            })
-
-            $('#favicon').attr('href', ApiMaterPlatQiniuDomain + plats_info.favicon);
-            $("title").text(pages_info.plats_show.head_title)
         },
         methods: {
-            login: function(){
-                if (!docCookies.getItem("token")) {
-                    $("#modal_login").fadeIn(300);
-                } else {
-                    //接口调用
-                    info.if_follow == 1 ? console.log('取消关注') : console.log('已关注');
-                }
-            },
-            change: function(page){
-                this.isLoading = true;
-                this.pages.page = page;
-            },
-            style: function(list, i) {
-                list.flag = i;
-            },
-            select: function(type) {
-                this.active = type;
-            },
-            setImg: function(url, init, w, h, mode) {
-                if (url != '' && url != null && url != undefined) {
-                    if (url.indexOf('http') === -1 && url.indexOf('common') === -1) {
-                        return mode != undefined ? ApiMaterPlatQiniuDomain + url + '?imageView2/' + mode + '/w/' + w + '/h/' + h
-                                : ApiMaterPlatQiniuDomain + url + '?imageView2/3/w/' + w + '/h/' + h;
-                    } else {
-                        return url;
+           // 商品详情
+            shop(id) {
+                ajax.get(GOODS_DETAIL + '/' + id).then((res)=>{
+                    if(res.code == 200) {
+                        this.shop_info = res.data;
+                        var str = this.shop_info.picture;
+                        this.shop_image_list = str.split(',');
                     }
-                } else {
-                    return init;
-                }
+                })
             },
-            setBg: function(url, init) {
-                if (url != null) {
-                    return ApiMaterPlatQiniuDomain + url;
-                } else {
-                    return init;
+            // 详情点击效果
+            shop_click(cate) {
+                console.log($(this))
+                // $(this).addClass("active").siblings().removeClass("active");
+                // $(".pro_deta_tab a").click(function() {
+                //     console.log(1)
+                //
+                // })
+                var top;
+                $(".pro_deta_tab").children("a").eq(cate).addClass("active").siblings().removeClass("active");
+                if(cate == 0){
+                    top=$(".pro_deta_com").position().top-50
+                }else if(cate == 1){
+                    top=$(".pro_need_kown").position().top-50
                 }
+                $("html,body").animate({scrollTop:top}, 500);
             },
-            imgState: function(on, off, state) {
-                if (state) {
-                    return on;
-                } else {
-                    return off;
-                }
-            },
-            area: function(province, area) {
-                if (province != null) {
-                    return province + ' ' + area;
-                } else {
-                    return '来自火星';
-                }
-            },
-            brand: function(avatar) {
-                if (pages_info.plats_brand) {
-                    if (pages_info.plats_brand.logo != '') {
-                        return pages_info.plats_brand.logo;
-                    } else {
-                        return avatar;
+            // 图片浏览效果
+            image_click(dire) {
+                var length
+                var Left=$("#items_son").position().left;
+                if(dire == "L" ){
+                    length=$("#items_son>li").width();
+                    if(Left==0){
+                        length=0;
                     }
-                } else {
-                    return avatar;
+                }else if(dire == "R"){
+                    length=-$("#items_son>li").width();
+                    if(Left<=length*($("#items_son>li").length-4)){
+                        length=0;
+                    }
                 }
-            }
-        },
-        filters: {
-            isName: function(val, type) {
+                var left=Left+length;
+                console.log(left)
+                 $("#items_son").animate({left:left},"slow");
 
             },
-            isBrand: function(val, type) {
-                if (pages_info.plats_brand) {
-                    switch(type) {
-                        case 'user': return pages_info.plats_brand.title; break;
-                        case 'motto': return pages_info.plats_brand.slogan; break;
-                        default: break;
+            //商品选择个数
+            num_click(dire) {
+                var num = $('.mui-amount-input').val();
+                if(dire == "minus"){
+                    if(num > 1) {
+                        num--;
                     }
-                } else {
-                    if (pages_info.plats_domian.domain == 'index' && type == 'user') {
-                        return plats_info.plat_name
+                    $('.mui-amount-input').val(num);
+                }else if(dire == "add"){
+
+                    var kc = parseInt($('.num_kc').text());
+                    if(num < kc) {
+                        num++;
+                    }
+                    $('.mui-amount-input').val(num);
+                }else if(dire == "num"){
+                    var num_input = $(".tb-text").val();
+                    var kc = parseInt($('.num_kc').text());
+                    if(num_input < kc) {
+                        $('.mui-amount-input').val(num_input);
                     } else {
-                        return val;
+                        $('.mui-amount-input').val(kc);
                     }
                 }
-            }
-        }
+
+
+            },
+            // 立即购买
+            buy() {
+                var self=this;
+                // if(isLogin) {
+                    localStorage.setItem("num", $("input[name='num']").val());
+                    // window.location.href = "/shoporder/" + id;
+                    var obj = {
+                        goods_list : [
+                            {
+                                "goods_id" : self.id_domain,
+                                "goods_num": $("input[name='num']").val()
+                            }
+                        ]
+                    };
+
+                    $.ajax({
+                        url : apiUrl + 'users/imagecodeid',
+                        type : 'get',
+                        headers : {
+                            'Token': docCookies.getItem("token")
+                        },
+                        dataType : 'json',
+                        success : function (res) {
+                            console.log(res);
+                            if(res.code === 200){
+                                window.localStorage.setItem(res.data,JSON.stringify(obj));
+                                window.location.href = "http://cnew.wezchina.com/" + self.cate_domain + "/wemall/order/" + res.data;
+                            }
+                        }
+                    })
+                // } else {
+                //     router('login');
+                // }
+            },
+            // 加入购物车
+            add_buycar() {
+                // if(isLogin) {
+                    // if(!likeState) {
+                console.log(1)
+                        var weid = window.location.pathname.split("/").pop();
+                        var add_number = $("#add_number").val();
+                        $.ajax({
+                            url: apiUrl + 'cart/store',
+                            type: 'post',
+                            dataType: 'json',
+                            data: {
+                                goods_id: weid,
+                                goods_num: add_number
+                            },
+                            headers: {
+                                'Token': docCookies.getItem("token"),
+                            },
+                            success: function(data) {
+                                // console.log(data);
+                                if(data.code == 200) {
+                                    console.log(data);
+
+                                    $(".add_to_cart").css({
+                                        "background": '#d4d4d4',
+                                        "cursor": 'default'
+                                    });
+                                    $(".add_to_cart").unbind("click");
+                                    layer.msg("成功加入购物车", { time: 2500 });
+                                } else {
+                                    layer.msg("该商品已经加入购物车,请勿重复添加", { time: 2500 });
+                                }
+                            },
+                            error: function(xhr) {
+                                console.log(xhr);
+                            }
+                        })
+                    // }
+                // } else {
+                //     router('login');
+                // }
+            },
+            // 商品评论
+            comment() {
+                var self=this;
+                $.ajax({
+                    url: GOODS_COMMENT_LIST + "?limit=" + self.limit + "&page=" + self.page,
+                    type: 'post',
+                    data: {
+                        goods_id: self.id_domain,
+                        limit:2,
+                        page:self.page
+                    },
+                    dataType: 'json',
+                    headers: {
+                        'Token': docCookies.getItem("token")
+                    },
+                    success: function(data) {
+
+                        if(data.code == 200) {
+                            self.total=data.data.total;
+                            self.commont=data.data.list;
+                        }
+                    },
+                    error: function(xhr) {
+                        console.log(xhr);
+                    }
+                })
+            },
+            // 分页
+            change(page) {
+                var self = this;
+                self.page = page;
+                comment();
+            },
+            // 创建focusimg.js元素
+            focusimgfun() {
+                   console.log(1)
+                   var scriptEle = $("<script >< /script>");
+                    scriptEle.attr("src", "/common/js/focusimg.js");
+                    $("head").append(scriptEle);
+               },
+
+            // 放大镜
+            zoomfun()  {
+                  console.log($(".jqzoom"))
+                  $(".jqzoom").jqueryzoom({
+                      xzoom: 200, //放大图的宽度(默认是 200)
+                      yzoom: 200, //放大图的高度(默认是 200)
+                      offset: 10, //离原图的距离(默认是 10)
+                      position: "right", //放大图的定位(默认是 "right")
+                      preload: 1,
+                      magnify: 0.5
+                  });
+              }
+        },
+
     })
 </script>
+
 </body>
 </html>
