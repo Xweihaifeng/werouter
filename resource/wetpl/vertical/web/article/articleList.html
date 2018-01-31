@@ -171,81 +171,81 @@
                             </li>
                         </ul>
                     </ul>
-                <ul id="info">
-                    <li id="maininfo">
-                        <span id="userhead" :style="{'background': 'url(' + setBg(pages_info.plats_domian.background_user, '/common/img/new/bg.png') + ') no-repeat center', 'background-size': '100% 100%'}"></span>
-                        <a :href="'/' + pages_info.plats_domian.domain"><img :src="setImg(pages_info.plats_user.avatar ,'/common/img/new/avatar.png', 90, 90)" alt=""/></a>
-                        <span id="username">{{pages_info.plats_user_cert.name || pages_info.plats_user.real_name}}</span>
-                        <ul>
-                            <a :href="'/' + pages_info.plats_domian.domain + '/article'">
-                                <li>
-                                    <span>{{info.article_count}}</span>
-                                    <span>文章</span>
-                                </li>
-                            </a>
-                            <a :href="'/' + pages_info.plats_domian.domain + '/project'">
-                                <li>
-                                    <span>{{info.project_count}}</span>
-                                    <span>项目</span>
-                                </li>
-                            </a>
-                            <a :href="'/' + pages_info.plats_domian.domain + '/activity'">
-                                <li>
-                                    <span>{{info.activity_count}}</span>
-                                    <span>活动</span>
-                                </li>
-                            </a>
-                        </ul>
-                    </li>
-                    <li id="address">
-                        <ul>
-                            <li>
-                                <span>
-                                    <img :src="imgState('/common/img/new/offical.png', '/common/img/new/officaloff.png', pages_info.plats_user_cert.is_authenticated == 1)" alt="" width="76" height="26"/>
-                                    <img :src="imgState('/common/img/new/cert.png', '/common/img/new/certoff.png', pages_info.plats_user_auth.is_authenticated == 1)" alt="" width="32" height="28"/>
-                                    <img src="/common/img/new/message.png" alt="" width="60" height="24"/>
-                                </span>
-                                <span>{{pages_info.plats_user_cert.cert_info}}</span>
-                            </li>
-                            <li>
-                                <img src="/common/img/new/address.png" alt="" width="17" height="22"/>
-                                <span>{{area(pages_info.plats_user.province.name, pages_info.plats_user.area.name)}}</span>
-                            </li>
-                            <li>
-                                <img src="/common/img/new/sign.png" alt="" width="17" height="18"/>
-                                <span>{{pages_info.plats_user.motto}}</span>
-                            </li>
-                            <li>
-                                <img :src="setImg(pages_info.plats_user_qrcode, '/common/img/new/qrcode.png', 140, 140)" alt="" width="140" height="140"/>
-                                <p>
-                                    <span>微信扫描二维码</span>
-                                    <span>分享给好友</span>
-                                </p>
-                            </li>
-                        </ul>
-                    </li>
-                    <li id="friends">
-                        <ul>
-                            <li>
-                                <p @mouseenter="select('fans')" :class="{'friends': active == 'fans'}">我的粉丝({{info.fnums}})</p>
-                                <p @mouseenter="select('friends')" :class="{'friends': active == 'friends'}">我的关注({{info.gnums}})</p>
-                            </li>
-                            <li v-show="active == 'fans'">
-                                <a v-for="e in info.flist" :href="'/' + e.domain" :title="e.nickname">
-                                    <img class="care" :src="setImg(e.avatar, '/common/img/new/1.png', 54, 54)" alt="" width="54" height="54"/>
+                    <ul id="info">
+                        <li id="maininfo">
+                            <span id="userhead" :style="{'background': 'url(' + setBg(pages_info.plats_domian.background_user, '/common/img/new/bg.png') + ') no-repeat center', 'background-size': '100% 100%'}"></span>
+                            <a :href="'/' + pages_info.plats_domian.domain"><img :src="setImg(pages_info.plats_user.avatar ,'/common/img/new/avatar.png', 90, 90)" alt=""/></a>
+                            <span id="username">{{pages_info.plats_user_cert.name || pages_info.plats_user.real_name}}</span>
+                            <ul>
+                                <a :href="'/' + pages_info.plats_domian.domain + '/article'">
+                                    <li>
+                                        <span>{{info.article_count}}</span>
+                                        <span>文章</span>
+                                    </li>
                                 </a>
-                            </li>
-                            <li v-show="active == 'friends'">
-                                <a v-for="e in info.glist" :href="'/' + e.domain" :title="e.nickname">
-                                    <img class="care" :src="setImg(e.avatar, '/common/img/new/1.png', 54, 54)" alt="" width="54" height="54"/>
+                                <a :href="'/' + pages_info.plats_domian.domain + '/project'">
+                                    <li>
+                                        <span>{{info.project_count}}</span>
+                                        <span>项目</span>
+                                    </li>
                                 </a>
-                            </li>
-                            <li>
-                                查看更多>>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
+                                <a :href="'/' + pages_info.plats_domian.domain + '/activity'">
+                                    <li>
+                                        <span>{{info.activity_count}}</span>
+                                        <span>活动</span>
+                                    </li>
+                                </a>
+                            </ul>
+                        </li>
+                        <li id="address">
+                            <ul>
+                                <li>
+                                    <span>
+                                        <img :src="imgState('/common/img/new/offical.png', '/common/img/new/officaloff.png', pages_info.plats_user_cert.is_authenticated == 1)" alt="" width="76" height="26"/>
+                                        <img :src="imgState('/common/img/new/cert.png', '/common/img/new/certoff.png', pages_info.plats_user_auth.is_authenticated == 1)" alt="" width="32" height="28"/>
+                                        <img src="/common/img/new/message.png" alt="" width="60" height="24"/>
+                                    </span>
+                                    <span>{{pages_info.plats_user_cert.cert_info}}</span>
+                                </li>
+                                <li>
+                                    <img src="/common/img/new/address.png" alt="" width="17" height="22"/>
+                                    <span>{{area(pages_info.plats_user.province.name, pages_info.plats_user.area.name)}}</span>
+                                </li>
+                                <li>
+                                    <img src="/common/img/new/sign.png" alt="" width="17" height="18"/>
+                                    <span>{{pages_info.plats_user.motto}}</span>
+                                </li>
+                                <li>
+                                    <img :src="setImg(pages_info.plats_user_qrcode, '/common/img/new/qrcode.png', 140, 140)" alt="" width="140" height="140"/>
+                                    <p>
+                                        <span>微信扫描二维码</span>
+                                        <span>分享给好友</span>
+                                    </p>
+                                </li>
+                            </ul>
+                        </li>
+                        <li id="friends">
+                            <ul>
+                                <li>
+                                    <p @mouseenter="select('fans')" :class="{'friends': active == 'fans'}">我的粉丝({{info.fnums}})</p>
+                                    <p @mouseenter="select('friends')" :class="{'friends': active == 'friends'}">我的关注({{info.gnums}})</p>
+                                </li>
+                                <li v-show="active == 'fans'">
+                                    <a v-for="e in info.flist" :href="'/' + e.domain" :title="e.nickname">
+                                        <img class="care" :src="setImg(e.avatar, '/common/img/new/1.png', 54, 54)" alt="" width="54" height="54"/>
+                                    </a>
+                                </li>
+                                <li v-show="active == 'friends'">
+                                    <a v-for="e in info.glist" :href="'/' + e.domain" :title="e.nickname">
+                                        <img class="care" :src="setImg(e.avatar, '/common/img/new/1.png', 54, 54)" alt="" width="54" height="54"/>
+                                    </a>
+                                </li>
+                                <li>
+                                    查看更多>>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
                 </div>
                 <div id="pages">
                     <Page :total="parseInt(pages[type].total)" :current="pages[type].page" :page-size="pages[type].limit" @on-change="change" v-if="pages[type].total > pages[type].limit"></Page>
@@ -324,7 +324,6 @@
                 activity: [],
                 shopping: [],
                 shopCate: [],
-                zone: [],
                 pages: {
                     articles: {total: 10, page: 1, limit: 10},
                     activity: {total: 10, page: 1, limit: 10},
@@ -389,7 +388,7 @@
                         case 'activity': this.type='activity'; this.getActList(1, 10); this.menu.flag = 2; break;
                         case 'wemall': this.type='shopping'; this.getShopList(1, 10); this.menu.flag = 3; break;
                         case 'quan': this.type='zone';this.menu.flag = 4; break;
-                        defalut: this.type='articles'; this.getArtList(1, 10); this.menu.flag = 0; break;
+                        default: this.type='articles'; this.getArtList(1, 10); this.menu.flag = 0; break;
                     }
                 },
                 wefriends: function(){
