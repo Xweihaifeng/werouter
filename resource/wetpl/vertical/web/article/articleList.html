@@ -112,8 +112,8 @@
                                     <p>{{i + 1}}F {{e.name}}</p>
                                 </div>
                                 <div>
-                                    <a v-for="o in e.shopping" :href="'/' + pages_info.plats_domian.domain + '/wemall/' + o.weid" style="display:blcok;">
-                                       <p >
+                                    <a v-for="o in e.shopping" :href="'/' + pages_info.plats_domian.domain + '/wemall/goods/' + o.weid">
+                                       <p>
                                            <img :src="setImg(o.cover, '/common/img/new/products_load.jpg', 243, 160)" alt="" width="243" height="160" />
                                            <span class="sp-title">{{o.title | cut(15)}}</span>
                                            <span class="sp-intro">{{o.summary | cut(30)}}</span>
@@ -554,7 +554,7 @@
                             }                                                            
                         })
                     })
-                    console.log(this.shopCate)
+                    // console.log(this.shopCate)
                 },
                 login: function(){
                     if (!docCookies.getItem("token")) {
