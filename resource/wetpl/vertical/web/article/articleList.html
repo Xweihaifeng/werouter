@@ -105,6 +105,12 @@
                                 </p>
                             </li>
                         </a>
+                        <ul id="shopping" v-show="type == 'shopping'">
+                            <li>
+                                <p></p>
+                                <p>1F 家电用品</p>
+                            </li>                        
+                        </ul>
                         <ul id="zone" v-show="type == 'zone'">
                             <li>
                                 <p></p>
@@ -281,7 +287,7 @@
                     clearInterval(numbers);
                 }
             }, n);
-            
+
             computeTime(nums, 4);
 
             var curve = data.wcurve;
@@ -329,7 +335,6 @@
                 type: '',
                 isLoading: false,
                 none: false,
-                echarts: echarts
             },
             created: function(){
                 //menu
@@ -359,15 +364,15 @@
                 this.$nextTick(function(){
                     window.onpopstate = function(e) {
                         var curr = window.location.pathname.split('/').pop();
-                        var list = ['', 'article', 'activity', 'wemall', 'zone'];
-                        var id = list.indexOf(curr);
+                        var list = ['', 'article', 'activity', 'wemall', 'quan'];
+                        var id = list.indexOf(curr);                    
                         if (id != -1) {
                             wepage.menu.flag = id;
                             switch (id) {
                                 case 0, 1: wepage.type = 'articles'; wepage.articles == '' ? wepage.none = true : wepage.none = false; break;
                                 case 2: wepage.type = 'activity'; wepage.activity == '' ? wepage.none = true : wepage.none = false; break;
                                 case 3: wepage.type = 'shopping'; wepage.shopping == '' ? wepage.none = true : wepage.none = false; break;
-                                case 3: wepage.type = 'zone'; wepage.zone == '' ? wepage.none = true : wepage.none = false; break;
+                                case 4: wepage.type = 'zone'; wepage.none = false; break;
                             }
                         } else {
                             wepage.menu.flag = 0;
@@ -392,7 +397,6 @@
                         headers: {'Token': plats_token}
                     }).then(data => {
                         this.info = data.data.data;
-                        console.log(this.info)
                         getLine(this.info);
                     })
                 },
@@ -554,7 +558,7 @@
                         case 1: this.getArtList(1, 10); this.pages['articles'].page = 1; window.history.pushState(null, null, '/' + pages_info.plats_domian.domain + '/article'); break;
                         case 2: this.getActList(1, 10); this.pages['activity'].page = 1; window.history.pushState(null, null, '/' + pages_info.plats_domian.domain + '/activity'); break;
                         case 3: this.getShopList(1, 10);this.pages['shopping'].page = 1; window.history.pushState(null, null, '/' + pages_info.plats_domian.domain + '/wemall'); break;
-                        case 4: this.pages['zone'].page = 1; window.history.pushState(null, null, '/' + pages_info.plats_domian.domain + '/quan'); break;
+                        case 4: wepage.type = 'zone'; wepage.none = false; this.pages['zone'].page = 1; window.history.pushState(null, null, '/' + pages_info.plats_domian.domain + '/quan'); break;
                     }
                 },
                 select: function(type) {
