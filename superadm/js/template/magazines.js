@@ -126,6 +126,7 @@ var ename = getUrlParam('ename') ? getUrlParam('ename') : '';
         //分页点击事件
         $('.pagination a').each(function (i) {
             $(this).click(function () {
+               if($(this).attr('data-dt-idx')>0 && $(this).attr('data-dt-idx')<=params.pageCount){
                 var page    = $(this).attr('data-dt-idx');
                 var data = {
                    ename:params.ename,
@@ -133,6 +134,7 @@ var ename = getUrlParam('ename') ? getUrlParam('ename') : '';
                     limit   : 10,
                 };
                 initAdvList(data);
+              }
             })
         });
     }

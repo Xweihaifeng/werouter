@@ -87,6 +87,7 @@
           //分页点击事件
           $('.pagination a').each(function(i){
                 $(this).click(function(){
+                  if($(this).attr('data-dt-idx')>0 && $(this).attr('data-dt-idx')<=params.pageCount){
                     var page=$(this).attr('data-dt-idx');
                     var type_id= $("#type-select").children('option:selected').val(); 
                     var data = {
@@ -95,6 +96,7 @@
                         limit:10,
                     };
                     initAdvList(data);
+                  }
                              })
             });
  }

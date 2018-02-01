@@ -142,6 +142,7 @@
         //分页点击事件
         $('.pagination a').each(function (i) {
             $(this).click(function () {
+                if($(this).attr('data-dt-idx')>0 && $(this).attr('data-dt-idx')<=params.pageCount){
                 var page        = $(this).attr('data-dt-idx');
                 var real_name   = $('input[name=real_name]').val();
                 var phone       = $('input[name=phone]').val();
@@ -153,6 +154,7 @@
                     limit       : 10,
                 };
                 initAdvList(data);
+             }
             })
         });
     }
