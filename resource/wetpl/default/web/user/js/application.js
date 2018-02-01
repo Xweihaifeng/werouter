@@ -352,7 +352,13 @@ $(document).ready(function() {
                 $("#apiclient_key").val(result105.apiclient_key);
                 $("#filename").val(result105.verify_file_name);
                 $("input[name=verify_file_name]").val(result105.verify_file_name);
-
+                //判断滑块是否选中
+                if(result105.app_id&&result105.app_cert&&result105.verify_file_name){
+                    $("#we_toggle-button-app").attr("checked", 'checked');
+                }
+                if(result105.merchant_id&&result105.merchant_key&&result105.apiclient_cert&&result105.apiclient_key){
+                    $("#we_toggle-button-app1").attr("checked", 'checked');
+                }
             }
         });
         options106.fail(function(fail) {
@@ -380,6 +386,11 @@ $(document).ready(function() {
                 $("#uploadForm3").find("input[name=weid]").val(result.weid);
                 $("#mini_app_id").val(result.app_id);
                 $("#mini_app_cert").val(result.app_cert);
+                //设置滑块是否先中
+                if(result.app_id&&result.app_cert){
+                    //选中
+                    $("#we_toggle-button-app3").attr("checked", 'checked');
+                }
             }
         });
         options107.fail(function(fail) {
