@@ -32,11 +32,11 @@
 </head>
 <body>
     <div class="modal_login" id="modal_login"></div>    
-    <div id="wepage">
+    <div id="wepage" class="animsition">
         <div id="header">
             <div id="topline">
                 <a href="/"><img src="/common/img/new/logo-wepage.png" alt=""/></a>
-                <a href="/user"><p><img :src="setImg(plats_user_info.avatar ,'/common/img/new/my.png', 100, 100)" alt=""/>用户中心</p></a>
+                <a href="/user"><p><img :src="setImg(plats_user_info.avatar ,'/common/img/new/my.png', 100, 100)" alt=""/>{{userCenter}}</p></a>
             </div>
             <div id="userinfo" :style="{'background': 'url(' + setBg(pages_info.plats_domian.background, '/common/img/new/wepage.png') + ') no-repeat center','background-size': 'cover'}">
                 <div>
@@ -315,6 +315,28 @@
     </div>
 
     <script>
+        $(function() {
+            $(".animsition").animsition({
+                inClass               :   'fade-in',
+                outClass              :   'fade-out',
+                inDuration            :    300,
+                outDuration           :    300,
+                linkElement           :   '.animsition-link',
+                // e.g. linkElement   :   'a:not([target="_blank"]):not([href^=#])'
+                loading               :    true,
+                loadingParentElement  :   'body', //animsition wrapper element
+                loadingClass          :   'animsition-loading',
+                unSupportCss          : [ 'animation-duration',
+                    '-webkit-animation-duration',
+                    '-o-animation-duration'
+                ],
+                //"unSupportCss" option allows you to disable the "animsition" in case the css property in the array is not supported by your browser.
+                //The default setting is to disable the "animsition" in a browser that does not support "animation-duration".
+                overlay               :   false,
+                overlayClass          :   'animsition-overlay-slide',
+                overlayParentElement  :   'body'
+            });
+        });
         var lineChart,lineTheme,xTitle,newlyAdded,Active,mapChart,mapData,requestUrl = apiUrl + 'circel/wcurve?domain=' + pages_info.plats_domian.domain;
         $(".y").text('数据来源：' + plats_info.title);
         var wefriends = function(nums, res) {
@@ -377,7 +399,7 @@
             el: '#wepage',
             data: {
                 menu: {},
-                dataMenu: ['我的主页', '我的文章', '我的活动', '我的商城', '我的圈子'],
+                dataMenu: ['首页', '我的文章', '我的活动', '我的商城', '我的圈子'],
                 dynamic: [{id: 1, val: '/article/'}, {id: 3, val: '/activity/'}, {id: 4, val: '/wemall/goods/'}],
                 active: 'fans',
                 info: {},
@@ -396,11 +418,18 @@
                 page: {},
                 type: '',
                 none: false,
+                userCenter: ''
             },
             created: function(){
                 this.menu = {list: this.dataMenu.map(e => ({name: e})), flag: 0};
                 this.wefriends();                
                 this.init(window.location.pathname.split('/').pop());
+
+                if (is_login == 'no') {
+                    this.userCenter = '快速登录';
+                } else {
+                    this.userCenter = '用户中心';
+                }
 
                 layui.use('layer', function() {
                     this.layer = layui.layer;
