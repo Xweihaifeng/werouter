@@ -101,7 +101,12 @@
         </ul>
         <div class="crm-content">
             <div class="chart-list" v-show="currentState == 0">
-                <div class="chart-dom" v-for="item in 3" :id="'show-chart'+item" :option="'option'+item"></div>
+                <template v-if="StatisticsFlag">
+                    <div class="chart-dom" v-for="item in 3" :id="'show-chart'+item" :option="'option'+item"></div>
+                </template>
+                <template v-else>
+                    <div class="form-list" style="text-align: center;">商城还没有统计数据</div>
+                </template>
             </div>
             <div v-show="currentState == 1">
                 <div class="form-list">
@@ -366,6 +371,7 @@
             modalCouponDetail:false, //优惠卷详情
             Couponflag:true, //优惠卷标志位
             Memberflag:true, //会员标志位
+            StatisticsFlag:true, //统计显示标志位
             modalCouponDetailData:{},//优惠卷详情数据
             uploadData:{}, //七牛上传附件参数
             uploadName:'',
@@ -1338,6 +1344,9 @@
                                     }
                                 })
                             }
+                        }else{
+                            //没有统计数据
+                            this.StatisticsFlag=false;
                         }
                     }
                 })
