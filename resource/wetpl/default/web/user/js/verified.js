@@ -130,7 +130,6 @@ $(document).ready(function(){
                     var options24 = $.post(apiUrl +"cert/realName/apply_order_detect", { order: res.data.order_id });
                     options24.done(function(body) {
                         if(body.code == 200) {
-                            console.log(body.data);
                             if(body.data.state == 1) {
 
                                 $(".pay_qr").hide();
@@ -190,12 +189,18 @@ $(document).ready(function(){
             }
 
             if(data.code === 200) {
+
                 if(data.data.type === 1) {
-                    $(".cert-to-pass")   .show();
-                    $(".media-heading")  .text("在线认证失败，重新提交...").css("color", "#ec2d2d");
-                    $(".warn-img")       .attr("src", "/common/img/refuse.png");
-                    $(this).attr("disabled", false);
-                    return false;
+                    if(data.data.code != 0) {
+                        $(".cert-to-pass")   .show();
+                        $(".media-heading")  .text("在线认证失败，重新提交...").css("color", "#ec2d2d");
+                        $(".warn-img")       .attr("src", "/common/img/refuse.png");
+                        $("#submit").attr("disabled", false);
+                        return false;
+                    }
+
+                    $(".cert-to-pass, .form-horizontal") .slideUp();
+                    $(".cert-success-info, #v_v_cert")   .slideDown();
                 } else if(data.data.type === 2) {
                     online_auth_pay(data.data);
                 }
