@@ -442,6 +442,15 @@ class router_index extends controller
         {
             $plats['var all_domian'] = $protocol.$_SERVER['HTTP_HOST'].'/m/';  //测试环境使用
         }
+
+        if($this->data['wap_domain'] == 2)
+        {
+            $plats['var mob_domian'] = $protocol.$_SERVER['HTTP_HOST'].'/m/';
+        }
+        else
+        {
+            $plats['var mob_domian'] = $protocol.'m.'.$_SERVER['HTTP_HOST'].'/';
+        }
         
         $plats['var root_domain'] = $this->_get_root_domain($_SERVER['HTTP_HOST']);
         $plats['var is_domain'] = 'no';
