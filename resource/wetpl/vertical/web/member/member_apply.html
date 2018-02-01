@@ -356,10 +356,11 @@
             ajax.get('/member/session/current').then((res) => {
                 self.member.apply.session_id = res.data.weid;
                 var result = res.data.config.reverse();
-                var member_config = result.filter((e,i) => e.open_type != 2)[0];
-                console.log(member_config);
+                var member_config = result.map((x,y) => {x.number = y; return x}).filter(e => e.open_type != 2)[0];
+               /* var member_config = result.map((x,y) => x.number = y).filter(e => e.open_type != 2)[0];*/
                 this.member_position = member_config;
                 this.member.apply.plat_member_level_id = member_config.mid;
+                this.member_levels.type_active = member_config.number;
                 this.member_levels.list = result;
             })
 
