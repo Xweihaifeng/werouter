@@ -31,7 +31,7 @@ var initAdvList = function (data) {
                 var list = cloneObj(json.data.list);
                 for (var i = 0, ien = json.data.list.length; i < ien; i++) {
                     list[i].id = i + 1;
-                    list[i].title = `<a title="` + json.data.list[i].title + `" href="/` + json.data.list[i].domain + `/goods/` + json.data.list[i].weid + `" target="_blank">` + shorten_str(json.data.list[i].title, 15) + `</a>`;
+                    list[i].title = `<a title="` + json.data.list[i].title + `" href="/` + json.data.list[i].domain + `/wemall/goods/` + json.data.list[i].weid + `" target="_blank">` + shorten_str(json.data.list[i].title, 15) + `</a>`;
                     list[i].cover = json.data.list[i].cover ? json.data.list[i].cover.indexOf('http') !== 0 ? '<img class="thumb-image" data-action="zoom" src="' + ApiMaterPlatQiniuDomain + json.data.list[i].cover + '" width="40" height="40">' : '<img class="thumb-image" data-action="zoom" src="' + json.data.list[i].cover + '" width="40" height="40">' : '';
                     list[i].recommend = json.data.list[i].recommend == 1 ? '<span class="label label-success">是</span>' : json.data.list[i].recommend == 2 ? '<span class="label label-default">否</span>' : '<span class="label label-danger">删除</span>';
                     list[i].created_at = getLocalTime(json.data.list[i].created_at);
