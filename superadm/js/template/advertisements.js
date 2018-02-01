@@ -87,14 +87,16 @@
           //分页点击事件
           $('.pagination a').each(function(i){
                 $(this).click(function(){
-                    var page=$(this).attr('data-dt-idx');
-                    var type_id= $("#type-select").children('option:selected').val(); 
-                    var data = {
-                        type_id:type_id,
-                        page:page,
-                        limit:10,
-                    };
-                    initAdvList(data);
+                     if($(this).attr('data-dt-idx')>0 && $(this).attr('data-dt-idx')<=params.pageCount){
+                          var page=$(this).attr('data-dt-idx');
+                          var type_id= $("#type-select").children('option:selected').val(); 
+                          var data = {
+                              type_id:type_id,
+                              page:page,
+                              limit:10,
+                          };
+                          initAdvList(data);
+                                   }
                              })
             });
  }
