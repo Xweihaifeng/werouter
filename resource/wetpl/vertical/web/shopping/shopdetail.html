@@ -27,7 +27,9 @@
     <link rel="stylesheet" href="/common/jquery.animsition/css/animsition.min.css">
     <script src="/common/jquery.animsition/js/jquery.animsition.min.js"></script>
 
-    <!--<script type="text/javascript" src="/common/layer-v3.0.3/layer-v3.0.3/layer/layer.js"></script>-->
+    <link rel="stylesheet" href="/common/layer-v3.0.3/layer-v3.0.3/layer/skin/default/layer.css">
+    <script type="text/javascript" src="/common/layer-v3.0.3/layer-v3.0.3/layer/mobile/layer.js"></script>
+
     <!--放大镜开始-->
     <script type="text/javascript" src="/resource/wetpl/vertical/web/shopping/js/jquery.jqzoom.min.js"></script>
     <!--放大镜结束-->
@@ -170,13 +172,13 @@
                         </div>
                         <div class="pro_deta_com" id = "goods_detail">
                             <div class="pro_deta_tab" >
-                                <a class="active pro_date_tit2" @click="shop_click(0)" href="javascript:void(0)">商品详情</a>
-                                <a class="pro_date_tit" @click="shop_click(1)" href="javascript:void(0)">购买须知</a>
+                                <a href="#goods_detail" class="active pro_date_tit2" @click="shop_click(0)" href="javascript:void(0)">商品详情</a>
+                                <a href="#goods_rule" class="pro_date_tit" @click="shop_click(1)" href="javascript:void(0)">购买须知</a>
                             </div>
                             <div class="pro_det">
                                 <p>
                                     <p>
-                                       <span style="color:#666666;font-family:Arial, &quot;font-size:16px;font-weight:bold;background-color:#FFFFFF;" v-html="shop_info.content"></span>
+                                       <span style="color:#666666;font-family:Arial, &quot;font-size:16px;background-color:#FFFFFF;" v-html="shop_info.content"></span>
                                     </p>
                                 </p>
                             </div>
@@ -185,7 +187,7 @@
                                 <h2 class="pro_det_tit" id="goods_rule">购买须知</h2>
                                 <div class="info">
                                     <p>
-                                        <span style="color:#666666;font-size:16px;font-weight:bold;background-color:#FFFFFF;" v-html="shop_info.note"></span>
+                                        <span style="color:#666666;font-size:16px;background-color:#FFFFFF;" v-html="shop_info.note"></span>
                                     </p>
                                 </div>
                             </div>
@@ -450,20 +452,7 @@
             },
             // 详情点击效果
             shop_click(cate) {
-                console.log($(this))
-                // $(this).addClass("active").siblings().removeClass("active");
-                // $(".pro_deta_tab a").click(function() {
-                //     console.log(1)
-                //
-                // })
-                var top;
                 $(".pro_deta_tab").children("a").eq(cate).addClass("active").siblings().removeClass("active");
-                if(cate == 0){
-                    top=$(".pro_deta_com").position().top-50
-                }else if(cate == 1){
-                    top=$(".pro_need_kown").position().top-50
-                }
-                $("html,body").animate({scrollTop:top}, 500);
             },
             // 图片浏览效果
             image_click(dire) {
@@ -574,8 +563,10 @@
                                         "cursor": 'default'
                                     });
                                     $(".add_to_cart").unbind("click");
+                                    // alert("成功加入购物车")
                                     layer.msg("成功加入购物车", { time: 2500 });
                                 } else {
+                                    // alert("该商品已经加入购物车,请勿重复添加")
                                     layer.msg("该商品已经加入购物车,请勿重复添加", { time: 2500 });
                                 }
                             },

@@ -26,9 +26,10 @@
     <link rel="stylesheet" href="/common/jquery.animsition/css/animsition.min.css">
     <script src="/common/jquery.animsition/js/jquery.animsition.min.js"></script>
 
+    <script type="text/javascript" src="/resource/wetpl/vertical/web/shopping/js/jquery.qrcode.min.js"></script>
 
     <link rel="stylesheet" href="/resource/wetpl/vertical/web/css/public_main.css">
-    <link rel="stylesheet" href="/resource/wetpl/vertical/web/font/iconfont.css" />
+
     <!--<link rel="stylesheet" href="/resource/wetpl/vertical/web/css/news_base.css" />-->
     <!--<link rel="stylesheet" href="/resource/wetpl/vertical/web/css/modal_login.css" />-->
     <!--<link rel="stylesheet" href="/resource/wetpl/vertical/web/css/article.css">-->
@@ -37,11 +38,8 @@
     <!--<link rel="stylesheet" href="/common/css/buttons.css">-->
     <!--<link rel="stylesheet" href="/common/layer-v3.0.3/layer-v3.0.3/layer/skin/default/layer.css">-->
 
+    <link rel="stylesheet" href="{{PATH_TML}}activity/css/activeSign.css" />
     <link rel="stylesheet" type="text/css" href="/resource/wetpl/vertical/web/activity/css/activity.css">
-
-
-
-
     <link rel="stylesheet" href="{{PATH_TML}}activity/css/activitydetail.css" />
 </head>
 
@@ -126,8 +124,15 @@
                                     <div class="z main-msg">
                                         <p class="title activity_title_x" :title="active_detail.title" v-html="active_detail.title"></p>
                                         <p class="shi-jian">
-                                            <span class="username"></span>
-                                            <span><i class="fa fa-clock-o "></i><span class="end_time" v-html="active_detail.end_time"></span></span> <span><i class="fa fa-eye"></i><span class="view_num">12</span></span>
+                                            <span class="username" v-if="active_user_info.nickname != '' " v-html="active_user_info.nickname"></span>
+                                            <span class="end_time">
+                                                <i class="fa fa-clock-o "></i>
+                                                <span class="end_time" v-html="active_detail.end_time"></span>
+                                            </span>
+                                            <span class="liulan">
+                                                <i class="fa fa-eye"></i>
+                                                <span class="view_num" v-html="active_detail.view_num"></span>
+                                            </span>
                                         </p>
                                         <div class="line"></div>
                                         <div class="time"><span><i class="fa fa-clock-o"></i>时间 :</span><span class="activity_time" style="color: #111">{{cate_time}} -- {{end_time}}</span><span></span><span style="margin-left: 10px"><span class="deadline">{{active_detail.enroll_deadline}}</span> 报名截止</span>
@@ -162,7 +167,7 @@
                                                     <a class="a-none" href="#acitivty-detail" @click="shop_click(0)">活动详情</a>
                                                 </li>
                                                 <li role="presentation" class="menuItem">
-                                                    <a class="a-none" href="#acitivty-honored" @click="shop_click(1)">活动嘉宾(<span class="guest_num" v-html="guest_num" style="width:20px"></span>)</a>
+                                                    <a class="a-none" href="#acitivty-honored" @click="shop_click(1)">活动嘉宾(<span class="guest_num" v-html="guest_num"></span>)</a>
                                                 </li>
                                                 <li role="presentation" class="menuItem ">
                                                     <a class="a-none" href="#acitivty-guests" @click="shop_click(2)">活动成员(<span class="enroll_num">{{active_num}}</span>)</a>
@@ -218,10 +223,12 @@
                             <div class="right p0 col-sm-3">
                                 <div class="right-box right-intro activity-detail" style="margin-top: 0">
                                     <div class="top top_avatar">
-                                        <img src="http://images.wezchina.com/pages/article/1513578681761.jpg" alt="">
+                                        <img :src=" 'http://images.wezchina.com/' + active_user_info.avatar" alt="">
                                         <div class="jubanfang">
-                                            <a class="linkto " href="/index"><img src="/common/img/vrenzheng.png" alt=""></a>
-
+                                            <a class="linkto " href="/index">
+                                                {{active_user_info.nickname}}
+                                                <img src="/common/img/vrenzheng.png" alt="">
+                                            </a>
                                         </div>
 
                                         <div class="row">
@@ -235,14 +242,14 @@
                                             </div>
                                         </div>
                                         <p class="activity-msg"></p>
-                                        <p class="guanzhu"><span class="collect-btn-click" data-id="1" id="">+收藏</span></p>
+                                        <p class="guanzhu"><span class="collect-btn-click" data-id="1" id="" @click="Lstate">+收藏</span></p>
                                         <p class="lianxi"><span>联系Ta</span></p>
                                     </div>
                                     <div class="erweima">
                                         <div class="row m0">
                                             <div class="oline-detail">
                                                 <!-- <div><img src="/common/img/wecard_qrcode.png" alt="" width="100"/></div> -->
-                                                <div id="activity_code" rel=""><canvas width="110" height="110"></canvas></div>
+                                                <div id="activity_code" rel=""></div>
                                                 <div>
                                                     <p>微信扫描二维码</p>
                                                     <p>支持Ta</p>
@@ -257,6 +264,134 @@
                         </div>
                     </div>
                 </div>
+
+                <!--报名模板开始-->
+                <div class="layui-layer-move"></div>
+                <div class="layui-layer-shade" id="layui-layer-shade15" times="15" style="z-index:19891028; background-color:#000; opacity:0.7; filter:alpha(opacity=70);"></div>
+                <div class="layui-layer layui-layer-page layer-anim" id="layui-layer11" type="page" times="11" showtime="0" contype="string" style="z-index: 198910299; width: 600px; top: 50%; left: 660px;">
+                    <div id="" class="layui-layer-content" style="height: 685px;">
+                        <div id="signBg">
+                            <div class="signBox">
+                                <div class="sign_head">
+                                    <div class="sign_head_title">确认报名</div>
+                                    <div class="clon1"></div>
+                                    <div class="sign_head_contain">
+                                        <p class="act_title activity_title_apply"></p>
+                                        <p class="act_ttt">
+                                            <span class="act_time">
+                                                时间：
+                                                <span class=" act_time_all">
+                                                    2018-02-28 14:30 ~ 2018-02-28 19:30
+                                                </span>
+                                            </span>
+                                            <span class="act_time">
+                                                <span class="act_time_deadline">2018-02-28 12:00</span>
+                                                报名截止
+                                            </span>
+                                        </p>
+                                        <p class="act_dress">地点：西安碑林区东大街538号</p>
+                                    </div>
+                                </div>
+                                <div class="sign_head">
+                                    <div class="sign_head_title">门票信息</div>
+                                    <div class="clon1"></div>
+                                    <div class="sign_head_contain">
+                                        <div class="act_title">
+                                            <div class="mp">
+                                                <ul>
+                                                    <li id="2ae34910-dafe-11e7-a19e-e7f327eb1dd6" style="border: 2px solid rgb(0, 124, 211);">
+                                                        <div id="p1">
+                                                            <img src="/common/img/rmbo.png">
+                                                            <p class="price" style="color: rgb(0, 124, 211);">0.02</p>
+                                                        </div>
+                                                        <div id="p2" style="background: rgb(0, 124, 211);">
+                                                            <p class="tkname" style="color: white;">预售票</p>
+                                                            <p class="tkdscp" style="color: white;">通用票</p>
+                                                        </div>
+                                                        <div id="p3" style="background: rgb(0, 124, 211);">
+                                                            <p class="tkbuy" style="color: white;">已订票</p>
+                                                            <p class="tknum" style="color: white;">
+                                                                <span class="2ae34910-dafe-11e7-a19e-e7f327eb1dd6">0</span>张
+                                                            </p>
+                                                        </div>
+                                                    </li>
+                                                    <li id="2af62890-dafe-11e7-a4f2-d926d7da81d6">
+                                                        <div id="p1"><img src="/common/img/rmb.png">
+                                                            <p class="price">0.02</p></div>
+                                                        <div id="p2">
+                                                            <p class="tkname">儿童票</p>
+                                                            <p class="tkdscp">仅限儿童使用</p>
+                                                        </div>
+                                                        <div id="p3">
+                                                            <p class="tkbuy">已订票</p>
+                                                            <p class="tknum"><span class="2af62890-dafe-11e7-a4f2-d926d7da81d6">0</span>张</p>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                                <div id="tickets">
+                                                    <span>购买数量： </span>
+                                                    <span id="mins">-</span>
+                                                    <span>
+                                                        <input type="text" class="form-control" id="num" pattern="[0-9]*" maxlength="3" value="0">
+                                                    </span>
+                                                    <span id="adds">+</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="sign_section">
+                                    <div class="">
+                                        <div class="sign_section_title">确认信息</div>
+                                        <div class="clon2"></div>
+                                        <div class="sign_section_contain">
+                                            <div class="sign_name sign_input">
+                                                <div class="text">
+                                                    <input id="username" type="text" disabled="disabled" placeholder="雷媛" style="margin-top: 0">
+                                                </div>
+                                            </div>
+                                            <div class="sign_phone sign_input" style="width: 540px;height: 38px;">
+                                                <div class="text">
+                                                    <input id="phone" type="text" disabled="disabled" placeholder="18710560497">
+                                                </div>
+                                                <button class="sign_code" style="display: none">获取验证码</button>
+                                            </div>
+                                            <div class="sign_yz sign_input" style="display: none;">
+                                                <div class="text">
+                                                    <input type="text" class="check-num-apply" placeholder="请输入验证码">
+                                                </div>
+                                                <button class="sign_yz_on">在线验证</button>
+                                            </div>
+                                            <div class="sign_zw sign_input">
+                                                <div class="text">
+                                                    <input id="zhiw" type="text" placeholder="请填写您的所在职位">
+                                                </div>
+                                            </div>
+                                            <div class="sign_com sign_input">
+                                                <div class="text">
+                                                    <input id="gongsi" type="text" placeholder="请填写您的所在公司">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="sign_foot">
+                                    <div class="sign_foot_contn">
+                                        <span class="apply_submit">确认</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <span class="layui-layer-setwin"></span>
+                    <span class="layui-layer-resize"></span>
+                </div>
+
+
+                <!--报名模板结束-->
+
+
+
                 <!-- 活动列表部分start -->
                 <!-- <div id="art-main">
                     <div class="user_info_left clearfix">
@@ -394,6 +529,7 @@
         el: '#main',
         data: {
             id_domain:$app.get_router(3),   //活动id
+            user_domain:$app.get_router(1),   //个性域名
             active_detail:{},               //活动信息
             cate_time:"",                   //开始时间
             end_time:"",                    //结束时间
@@ -401,18 +537,22 @@
             guest_num:0,                      //邀请嘉宾人数
             active_guest:[],                   //活动成员
             active_num:0,                      //参加活动人数
+            active_user_info:{},               //发表活动者信息
+            like_state:false,                  //是否收藏状态
         },
         mounted: function() {
 
             this.$nextTick(()=>{
                 // 活动信息
-                console.log(this.id_domain)
-
                 this.active_detail_show(this.id_domain);
                 this.guest_show(this.id_domain);
                 this.active_guest_show(this.id_domain);
-
-
+                this.qrcodefun(this.id_domain);
+                console.log(88888888,docCookies.getItem("weid"));
+                // 判断是否收藏
+                if(docCookies.getItem("weid")){
+                    this.iscollection(docCookies.getItem("weid"), this.id_domain)
+                }
             });
 
         },
@@ -428,6 +568,9 @@
                        this.active_detail=res.data;
                        this.cate_time=res.data.created_at.substr(0,10)
                         this.end_time=res.data.end_time.substr(0,10)
+                        // console.log(pages_info)
+                        this.active_user_info=pages_info.plats_user;
+
                     }
                 })
                 // $.ajax({
@@ -538,25 +681,132 @@
 
                 })
             },
-            //用户信息
             //  点击事件
             shop_click(cate) {
                 var top;
                 $(".project_t").children("li").children("a").css({color:"#333",fontWeight:500});
-                $(".project_t").children("li").eq(cate).children("a").css({color:"#007cd3",fontWeight:600,});
+                $(".project_t").children("li").eq(cate).addClass("active").siblings().removeClass("active");
 
-                if(cate == 0){
-                    console.log(1)
-                    top=$(".project_t").position().top-50
-                }else if(cate == 1){
-                    console.log(2)
-                    top=$(".main-title").eq(0).position().top-50
-                }else if(cate == 2){
-                    console.log(3)
-                    top=$(".main-title").eq(1).position().top-50
-                }
-                $("html,body").animate({scrollTop:top}, 500);
             },
+            // 二维码插件
+            qrcodefun(id) {
+                var localhostPath=window.location.protocol + '//' + window.location.host + '/'
+                var qrcode_val = localhostPath + this.user_domain + "/activity/" + id;
+                if ($.support.msie && $.support.version <= 8) {
+                    $("#activity_code").qrcode({
+                        render: "table",
+                        width: 110,
+                        height: 110,
+                        text: qrcode_val
+                    });
+                } else {
+                    jQuery("#activity_code").qrcode({
+                        width: 110,
+                        height: 110,
+                        text: qrcode_val
+                    });
+                }
+
+            },
+            // 收藏
+           iscollection(uid, id) {
+                var self=this;
+                $.ajax({
+                    url: ACTIVITY_COLLECTION_ISCOLLECTION,
+                    type: 'post',
+                    data: { user_id: uid, activity_id: id },
+                    headers: {
+                        'Token': docCookies.getItem("token")
+                    },
+                    success: function(data) {
+                        console.log(data);
+                        if (data.code == 200) {
+                            $(".collect-btn-click").css({
+                                "background": '#d4d4d4',
+                                "cursor": 'default'
+                            });
+                            $(".collect-btn-click").text("已收藏");
+                            $(".collect-btn-click").data("id", 2);
+                            $(".collect-btn-click").attr("id", data.data);
+                            self.like_state=true;
+                            console.log(self.like_state)
+                        }
+                    },
+                    error: function(xhr) {
+                        console.log(xhr);
+                    }
+                })
+            },
+            // 喜欢收藏
+           like(id) {
+                var self=this;
+                $.ajax({
+                    url: ACTIVITY_COLLECTION_STORE,
+                    type: 'post',
+                    data: { activity_id: id },
+                    dataType: 'json',
+                    headers: {
+                        'Token': docCookies.getItem("token")
+                    },
+                    success: function(data) {
+                        console.log(data);
+                        if (data.code == 200) {
+                            self.like_state=true;
+                            $(".collect-btn-click").css({
+                                "background": '#d4d4d4',
+                                "cursor": 'default'
+                            });
+                            $(".collect-btn-click").text("已收藏");
+                            $(".collect-btn-click").attr("id", data.data);
+                        }
+                    },
+                    error: function(xhr) {
+                        console.log(xhr);
+                    }
+                })
+            },
+            // 取消收藏
+            canclecollect(id) {
+                var self=this;
+                console.log(77777,id)
+                $.ajax({
+                    // url: ACTIVITY_LIST,
+                    url: ACTIVITY_COLLECTION_DESTROY + "/" + id,
+                    type: 'get',
+                    success: function(data) {
+                        self.like_state=false;
+                        if (data.code == 200) {
+                            $(".collect-btn-click").css({
+                                "background": '#80ccf4',
+                                "cursor": 'pointer'
+                            });
+                            $(".collect-btn-click").text("+收藏");
+                            $(".collect-btn-click").attr("id", '');
+                        }
+                    },
+                    error: function(xhr) {
+                        console.log(xhr);
+                    }
+                })
+            },
+            // 收藏状态
+            Lstate(){
+                var self=this;
+                console.log(self.like_state)
+                if(docCookies.getItem("weid")){
+                    if(self.like_state){
+                        var id=$(".collect-btn-click").attr("id");
+                        console.log(id)
+                        self.canclecollect(id)
+
+                    }else{
+                        self.like(self.id_domain)
+                    }
+                }else{
+                    alert("请登录")
+                }
+
+            }
         },
 
     })
