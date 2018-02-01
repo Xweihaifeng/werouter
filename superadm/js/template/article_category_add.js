@@ -4,7 +4,7 @@ $(document).ready(function () {
     if (isNull(weid) == false) {
         //编辑
         $.ajax({
-            url: ApiUrl + 'plats/article/category_detail',
+            url: ApiUrl + 'plats/articles/category_detail',
             type: 'POST',
             data: {
                 weid: weid
@@ -51,7 +51,7 @@ $(document).ready(function () {
         if (isNull(weid)) {
             //保存提交
             $.ajax({
-                url: ApiUrl + 'plats/article/category_add',
+                url: ApiUrl + 'plats/articles/category_add',
                 type: 'POST',
                 data: {
                     name: name,
@@ -68,7 +68,7 @@ $(document).ready(function () {
         } else {
             //修改提交
             $.ajax({
-                url: ApiUrl + 'plats/article/category_edit',
+                url: ApiUrl + 'plats/articles/category_edit',
                 type: 'POST',
                 data: {
                     weid: weid,
