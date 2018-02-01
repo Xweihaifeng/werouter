@@ -25,6 +25,7 @@ a {
 }
 
 #wepage {
+    position: relative;
     width: 100%;
     min-width: 1200px;
     height: auto;
@@ -184,6 +185,7 @@ a {
 }
 
 #list {
+    position: relative;
     display: flex;
     flex-direction: column;
     width: 790px;
@@ -198,10 +200,7 @@ a {
     border-bottom: 1px solid #e6e6e6;
     display: flex;
     justify-content: flex-start;
-}
-
-#list li:hover {
-    /*cursor: pointer;*/
+    align-items: unset;
 }
 
 .i0 {
@@ -528,8 +527,17 @@ a {
     background-color: #46b2ee;
 }
 .ivu-spin-fix .ivu-spin-main {
-    top: 450px!important;
+    /*top: 50%!important;*/
 }
+/*.ivu-spin-fix {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    z-index: 300;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255,255,255,.9);
+}*/
 .demo-spin-icon-load{
     animation: ani-demo-spin 1s linear infinite;
 }
@@ -673,6 +681,44 @@ a {
 
 .sp-price b i {
     text-decoration: line-through;
+}
+
+.sp-btn, .act-btn {
+    width: 135px;
+    padding-left:55px;
+    display: flex;
+    justify-content: center!important;
+    align-items: center!important;
+}
+
+.sp-btn span, .act-btn span:nth-child(2) {
+    width: 80px!important;
+    /*height: 32px!important;*/
+    text-align: center;
+    font-size: 14px!important;
+    color: #fff!important;
+    background: #46b2ee;
+    display: block!important;
+    border-radius: 2px;
+    padding: 6px 0!important;
+}
+
+.act-title-free {
+    color: #eead3c!important;
+}
+
+.act-title-price {
+    color: #ed4c4c!important;
+}
+
+.act-price {
+    line-height: 18px!important;
+    background: #ed4c4c!important;
+}
+
+.act-free {
+    line-height: 18px!important;
+    background: #eead3c!important;
 }
 
 #ozone {
