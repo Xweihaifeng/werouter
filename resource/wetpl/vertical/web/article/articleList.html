@@ -33,10 +33,6 @@
 <body>
     <div class="modal_login" id="modal_login"></div>    
     <div id="wepage">
-        <Spin fix v-if="isLoading">
-            <Icon type="load-c" size=45 class="demo-spin-icon-load"></Icon>
-            <div>加载中</div>
-        </Spin>
         <div id="header">
             <div id="topline">
                 <a href="/"><img src="/common/img/new/logo-wepage.png" alt=""/></a>
@@ -398,11 +394,9 @@
                 },
                 page: {},
                 type: '',
-                isLoading: false,
                 none: false,
             },
             created: function(){
-                this.isLoading = true;
                 this.menu = {list: this.dataMenu.map(e => ({name: e})), flag: 0};
                 this.wefriends();                
                 this.init(window.location.pathname.split('/').pop());
@@ -454,7 +448,7 @@
                         case 'article': this.type='articles'; this.getArtList(1, 10); this.menu.flag = 1; break;
                         case 'activity': this.type='activity'; this.getActList(1, 10); this.menu.flag = 2; break;
                         case 'wemall': this.type='shopping'; this.getShopCate(); this.menu.flag = 3; break;
-                        case 'quan': this.type='zone';this.menu.flag = 4; this.isLoading = false; break;
+                        case 'quan': this.type='zone';this.menu.flag = 4; break;
                         default: this.type='latest'; this.getLatest(1, 10); this.menu.flag = 0; break;
                     }
                 },
@@ -462,7 +456,6 @@
                     axios.get(apiUrl + 'circel/index?domain=' + pages_info.plats_domian.domain, {
                         headers: {'Token': plats_token}
                     }).then(data => {
-                        this.isLoading = false;
                         this.info = data.data.data;
                         getLine(this.info);
                     })
@@ -551,7 +544,6 @@
                         this.type = 'latest';
                         this.latest = data.data.data.list;
                         console.log(this.latest);
-                        this.isLoading = false;
                         this.latest == '' ? wepage.none = true : wepage.none = false;
                     })
                 },
@@ -559,8 +551,7 @@
                     $.ajax({
                         url: ARTICLE_LIST + '?userId=' + pages_info.plats_domian.plat_user_id + '&page=' + page + '&limit=' + limit,
                         success: function(data){
-                            wepage.isLoading = false;
-                            if (data.code == 200){                            
+                            if (data.code == 200){
                                 wepage.type = 'articles';
                                 wepage.articles = data.data.list;
                                 wepage.pages.articles.total = data.data.total;
@@ -583,7 +574,6 @@
                             limit: limit
                         },
                         success: function(data){
-                            wepage.isLoading = false;
                             if (data.code == 200){
                                 wepage.type = 'activity';
                                 wepage.activity = data.data.list;
@@ -618,8 +608,7 @@
                                 cateId: e.weid
                             },
                             success: function(data){
-                                wepage.isLoading = false;
-                                e.shopping = data.data.list;                                
+                                e.shopping = data.data.list;
                             }                                                            
                         })
                     })
@@ -634,7 +623,6 @@
                     }
                 },
                 change: function(page){
-                    this.isLoading = true;
                     $(document).scrollTop(340);
                     switch (this.type) {
                         case 'latest': this.getLatest(page, 10); break;
@@ -643,14 +631,13 @@
                     }
                 },
                 style: function(list, i) {
-                    this.isLoading = true;                    
                     list.flag = i;
                     switch (i) {
                         case 0: this.getLatest(1, 10); this.pages['latest'].page = 1; window.history.pushState(null, null, '/' + pages_info.plats_domian.domain + '/'); break;
                         case 1: this.getArtList(1, 10); this.pages['articles'].page = 1; window.history.pushState(null, null, '/' + pages_info.plats_domian.domain + '/article'); break;
                         case 2: this.getActList(1, 10); this.pages['activity'].page = 1; window.history.pushState(null, null, '/' + pages_info.plats_domian.domain + '/activity'); break;
                         case 3: this.getShopCate(this.shopCate, 1, 10);this.pages['shopping'].page = 1; window.history.pushState(null, null, '/' + pages_info.plats_domian.domain + '/wemall'); break;
-                        case 4: wepage.type = 'zone'; wepage.none = false; this.isLoading = false; this.pages['zone'].page = 1; window.history.pushState(null, null, '/' + pages_info.plats_domian.domain + '/quan'); break;
+                        case 4: wepage.type = 'zone'; wepage.none = false; this.pages['zone'].page = 1; window.history.pushState(null, null, '/' + pages_info.plats_domian.domain + '/quan'); break;
                     }
                 },
                 select: function(type) {
