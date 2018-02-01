@@ -37,7 +37,7 @@
                     <div class="clist-advert">
                         <ul class="adv-list">
                             <li v-for="x in item.adv">
-                                <a href="">
+                                <a href="#">
                                     <img :src="httpType + '//' + plats_qiniu.domain_custom + '/' + x.image" alt="">
                                 </a>
                             </li>
@@ -49,7 +49,7 @@
                         </div>
                     </div>
                     <li v-for="y in item.goods">
-                        <a href="">
+                        <a :href="'/' + y.domain + '/wemall/goods/' + y.weid">
                             <div class="give">
                                 <img src="{{PATH_TML}}wemall/img/买赠.png" alt="" v-if="y.give==1">
                             </div>
@@ -89,6 +89,7 @@
                     this.advert_cont = res.data.HomeAdv;
                     this.cat_list = res.data.category;
                     this.ban = res.data.HomeBanner;
+                    console.log(res.data)
                 }
             })
         },
