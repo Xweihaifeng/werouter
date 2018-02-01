@@ -302,7 +302,7 @@ $(document).ready(function(){
                 }
                 categories.push(item);
             })
-            console.log(newCIV);q
+            console.log(newCIV);
             console.log(categoryItemValue);
             console.log(categories);
             if(categories.length == 0){
