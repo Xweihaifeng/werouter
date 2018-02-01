@@ -135,6 +135,9 @@ $(document).ready(function(){
         var options = $.post(CERT_ONLINEREALNAME, body);
         options.done(function(data) {
 
+            console.log(data);
+            debugger;
+            return false;
             if(data.code == -200) {
                 $(this).attr("disabled", false);
                 return false;
