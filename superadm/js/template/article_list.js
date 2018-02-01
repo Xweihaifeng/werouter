@@ -145,17 +145,8 @@ $(document).ready(function () {
                     text: '设置成功！',
                     type: 'success',
                     timer: 2000
-                }).then(
-                    function () {
-                        location.reload();
-                    },
-                    // handling the promise rejection
-                    function (dismiss) {
-                        if (dismiss === 'timer') {
-                            location.reload();
-                        }
-                    }
-                )
+                });
+                location.reload();
             },
             error: function (xhr) {
                 console.log(xhr);
