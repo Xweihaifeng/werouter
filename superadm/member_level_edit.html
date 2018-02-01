@@ -63,7 +63,7 @@
         <div class="content-wrapper">
             <input type="hidden" name="config-url" value="member_levels.html">
             <section class="content-header">
-                <h1> 新增会员级别 </h1>
+                <h1> 编辑会员级别 </h1>
                 <!--
             <ol class="breadcrumb"> 
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li> 
@@ -107,32 +107,6 @@
                                         <label class="control-label col-sm-2">级别编号*</label>
                                         <div class="col-sm-5">
                                             <input class="form-control" name="level_number" placeholder="请输入级别编号，如：01">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label col-sm-2">价格*</label>
-                                        <div class="col-sm-5">
-                                            <input class="form-control" name="member_price" placeholder="请输入价格">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label col-sm-2">申请方式*</label>
-                                        <div class="col-sm-5">
-                                            <select class="form-control" name="member_type">
-                                            <option value="">请选择</option>
-                                            <option value="1">可申请</option>
-                                            <option value="2">仅展示不可申请</option>
-                                        </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label col-sm-2">启用状态*</label>
-                                        <div class="col-sm-5">
-                                            <select class="form-control" name="status">
-                                            <option value="">请选择</option>
-                                            <option value="1">启用</option>
-                                            <option value="2">不启用</option>
-                                        </select>
                                         </div>
                                     </div>
                                 </form>
@@ -416,10 +390,7 @@
                     $('input[name=name]').val(data.data.name);
                     $('input[name=display_name]').val(data.data.display_name);
                     $('textarea[name=summary]').val(data.data.summary);
-                    $('input[name=member_price]').val(data.data.member_price);
                     $('input[name=level_number]').val(data.data.level_number);
-                    $('select[name=member_type]').val(data.data.member_type);
-                    $('select[name=status]').val(data.data.status);
                 },
                 error: function(xhr) {
                     console.log(xhr);
@@ -439,10 +410,7 @@
                 'name': $('input[name=name]').val(),
                 'display_name': $('input[name=display_name]').val(),
                 'summary': $('textarea[name=summary]').val(),
-                'member_price': $('input[name=member_price]').val(),
                 'level_number': $('input[name=level_number]').val(),
-                'member_type': $('select[name=member_type]').val(),
-                'status': $('select[name=status]').val(),
             };
             $.post(ApiUrl + 'member/levels/' + id, data, function(ret) {
                 if (ret.code == 200) {
@@ -487,17 +455,6 @@
                         }
                     }
                 },
-                member_price: {
-                    message: '价格无效',
-                    validators: {
-                        notEmpty: {
-                            message: '别名不能为空'
-                        },
-                        numeric: {
-                            message: '价格必须为数字'
-                        }
-                    }
-                },
                 level_number: {
                     message: '级别编号无效',
                     validators: {
@@ -508,22 +465,6 @@
                             min: 1,
                             max: 24,
                             message: '级别编号长度为1-24位'
-                        }
-                    }
-                },
-                member_type: {
-                    message: '申请方式',
-                    validators: {
-                        notEmpty: {
-                            message: '级别申请方式不能为空'
-                        }
-                    }
-                },
-                status: {
-                    message: '级别概述',
-                    validators: {
-                        notEmpty: {
-                            message: '级别启用状态不能为空'
                         }
                     }
                 },
