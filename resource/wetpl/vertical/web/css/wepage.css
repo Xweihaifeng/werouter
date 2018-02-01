@@ -620,6 +620,7 @@ a {
 }
 
 #shop > li > div:last-child > a:hover {
+    border: 1px solid #ff9c00;
     /*box-shadow: 0 5px 25px #e6e6e6;*/
 }
 
@@ -645,7 +646,7 @@ a {
     line-height: 16px;
 }
 
-.sp-info {
+.sp-info, .sp-pinfo {
     display: flex!important;
     justify-content: space-between!important;
     align-items: center!important;
@@ -661,6 +662,20 @@ a {
     position: absolute;
     bottom: 0;
     width: 243px;
+}
+
+.sp-pinfo {
+    display: unset;
+    position: absolute;
+    bottom: 0;
+    width: 243px;
+    justify-content: center!important;
+    background: #ff9c00;
+}
+
+.sp-pinfo i {
+    color: white!important;
+    font-style: normal;
 }
 
 .sp-info i {
