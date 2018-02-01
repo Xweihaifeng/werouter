@@ -386,8 +386,8 @@ $(document).ready(function(){
                     weid:data.id
                 }
                  $.ajax({
-                    url:apiUrl + 'articles/cates/',
-                    type:'get',
+                    url:apiUrl + 'articles/cates',
+                    type:'put',
                     data:sendData,
                     headers: {
                             'Token': docCookies.getItem("token")
@@ -416,7 +416,7 @@ $(document).ready(function(){
                     sort:data.floor
                 }
                 $.ajax({
-                    url: apiUrl + 'articles/cates/',
+                    url: apiUrl + 'articles/cates',
                     type:'post',
                     data:sendData,
                     headers: {
@@ -432,9 +432,6 @@ $(document).ready(function(){
                                 mess_tusi("添加成功");
                                 location.reload();
                             }
-
-
-
                         }else {
                             mess_tusi(data.message);
                         }
