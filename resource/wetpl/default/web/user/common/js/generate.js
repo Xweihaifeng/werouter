@@ -223,6 +223,10 @@ cert_realname_setting.done(function(data) {
             $(".on_line_cert").html('<a id="online">在线认证</a>');
             $("#online").bind("click", online_cert);
         }
+
+        if(result.auth_open === 2) {
+            $("#settings_realname").parent("a").attr("href", '/user/settings/verified');
+        }
     }
 });
 cert_realname_setting.fail(function(error) {

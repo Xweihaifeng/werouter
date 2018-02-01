@@ -110,13 +110,13 @@ $(document).ready(function(){
     var catesfun = function(weid){
         $.ajax({
             // url: "http://apitest.wezchina.com/goods/cates/list",
-            url: apiUrl + 'goods/cates/listsAllByUser/'+weid,
+            url: apiUrl + 'articles/cates/',
             type: 'get',
             headers: {
                     'Token': docCookies.getItem("token")
                 },
             success: function(data){
-                console.log(data);
+                console.log(data,12121);
                 if (data.code == 200) {
                     var cate = data.data;
                     cate.map(x => {
@@ -242,6 +242,7 @@ $(document).ready(function(){
         //删除分类
         $('.operate_box').on('click','.delete_sort',function(){
             var _lidom = $(this).closest('li');
+            console.log(_lidom[0].dataset.id,"??????????")
             newCIV.splice(_lidom.index(),1);
             categoryItemValue.splice(_lidom.index(),1);
             if(_lidom.data("id")){
@@ -253,10 +254,12 @@ $(document).ready(function(){
                         mess_tusi(msg.description);
                     }
                 }*/
-                console.log(_lidom.data("id"));
+                console.log(_lidom.data("id"),1111111111111111);
+                let id = _lidom.data("id");
                 $.ajax({
-                    url: GOODS_CATES_DESTORY+'/'+_lidom.data("id"),
-                    type:'get',
+                    url: apiUrl + 'articles/cates',
+                    type:'delete',
+                    data:{weid:id},
                     headers: {
                             'Token': docCookies.getItem("token")
                         },
@@ -277,7 +280,7 @@ $(document).ready(function(){
                 })
                 // requestAjax(params, 'post', '/index.php?ctl=mywemall&act=del_category', callback, true);
             }else{
-                _lidom.remove();
+                // _lidom.remove();
             }
         })
         //保存分类
@@ -364,36 +367,7 @@ $(document).ready(function(){
                 //requestAjax(params, 'post', '/index.php?ctl=mywemall&act=do_categories', callback, true);
             }
         });
-        //保存商城 add by lisheng 2018.01.02
-        $(document).on("click","#save_mall",function () {
-            //获取商城名称
-            var mall_weid=$("input[name=mall_weid]").val();
-            var mall_title=$("input[name=mall_name]").val();
-            if(isNull(mall_weid)){
-                mess_tusi("还未开通商城！");
-                return false;
-            }
-            if(isNull(mall_title)){
-                mess_tusi("商城名称不能为空！");
-                return false;
-            }
-            $.ajax({
-                url: apiUrl + 'mall/update',
-                type:'post',
-                data:{'weid':mall_weid,'title':mall_title},
-                headers: {
-                    'Token': docCookies.getItem("token")
-                },
-                dataType: 'json',
-                success: function(data){
-                    if (data.code == 200) {
-                        mess_tusi("修改商城信息成功！");
-                    }else {
-                        mess_tusi(data.message);
-                    }
-                }
-            })
-        })
+
 
     }
     // 添加/编辑分类
@@ -412,8 +386,8 @@ $(document).ready(function(){
                     weid:data.id
                 }
                  $.ajax({
-                    url: GOODS_CATES_UPDATE,
-                    type:'post',
+                    url:apiUrl + 'articles/cates',
+                    type:'put',
                     data:sendData,
                     headers: {
                             'Token': docCookies.getItem("token")
@@ -427,11 +401,9 @@ $(document).ready(function(){
                             // $('#myModal').modal('hide');
                             // location.reload();
                             if(flag==len){
-                                mess_tusi("修改成功");
+                                mess_tusi("操作成功");
                                 location.reload();
                             }
-
-
                         }else {
                             mess_tusi(data.message);
                         }
@@ -443,9 +415,8 @@ $(document).ready(function(){
                     name:data.name,
                     sort:data.floor
                 }
-                console.log(sendData);
                 $.ajax({
-                    url: GOODS_CATES_STORE,
+                    url: apiUrl + 'articles/cates',
                     type:'post',
                     data:sendData,
                     headers: {
@@ -453,7 +424,6 @@ $(document).ready(function(){
                         },
                     dataType: 'json',
                     success: function(data){
-                        console.log(data);
                         if (data.code == 200) {
                             flag++;
                             // mess_tusi("添加成功");
@@ -462,9 +432,6 @@ $(document).ready(function(){
                                 mess_tusi("添加成功");
                                 location.reload();
                             }
-
-
-
                         }else {
                             mess_tusi(data.message);
                         }

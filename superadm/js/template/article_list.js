@@ -24,14 +24,14 @@ var initAdvList = function (data) {
     var params = null;
     $('#listTable').DataTable({
         "ajax": {
-            url: ApiUrl + "plats/goods/goods_list",
+            url: ApiUrl + "plats/articles/article_list",
             type: "GET",
-            data:data,
+            data: data,
             "dataSrc": function (json) {
                 var list = cloneObj(json.data.list);
                 for (var i = 0, ien = json.data.list.length; i < ien; i++) {
                     list[i].id = i + 1;
-                    list[i].title = `<a title="` + json.data.list[i].title + `" href="/` + json.data.list[i].domain + `/wemall/goods/` + json.data.list[i].weid + `" target="_blank">` + shorten_str(json.data.list[i].title, 15) + `</a>`;
+                    list[i].title = `<a title="` + json.data.list[i].title + `" href="/` + json.data.list[i].domain + `/article/` + json.data.list[i].weid + `" target="_blank">` + shorten_str(json.data.list[i].title, 15) + `</a>`;
                     list[i].cover = json.data.list[i].cover ? json.data.list[i].cover.indexOf('http') !== 0 ? '<img class="thumb-image" data-action="zoom" src="' + ApiMaterPlatQiniuDomain + json.data.list[i].cover + '" width="40" height="40">' : '<img class="thumb-image" data-action="zoom" src="' + json.data.list[i].cover + '" width="40" height="40">' : '';
                     list[i].recommend = json.data.list[i].recommend == 1 ? '<span class="label label-success">是</span>' : json.data.list[i].recommend == 2 ? '<span class="label label-default">否</span>' : '<span class="label label-danger">删除</span>';
                     list[i].created_at = getLocalTime(json.data.list[i].created_at);
@@ -56,7 +56,7 @@ var initAdvList = function (data) {
             {"data": "cover"},
             {"data": "cate_name"},
             {"data": "system_name"},
-            {"data": "stock"},
+            {"data": "praise_num"},
             {"data": "views"},
             {"data": "created_at"},
             {"data": "recommend"},
@@ -136,7 +136,7 @@ $(document).ready(function () {
         var id = $(this).data('id');
         var type = $(this).data('type');
         $.ajax({
-            url: ApiUrl + 'plats/goods/goods_recommend',
+            url: ApiUrl + 'plats/articles/article_recommend',
             type: 'post',
             data: {weid: id, recommend: type},
             dataType: 'json',
@@ -145,17 +145,8 @@ $(document).ready(function () {
                     text: '设置成功！',
                     type: 'success',
                     timer: 2000
-                }).then(
-                    function () {
-                        location.reload();
-                    },
-                    // handling the promise rejection
-                    function (dismiss) {
-                        if (dismiss === 'timer') {
-                            location.reload();
-                        }
-                    }
-                )
+                });
+                location.reload();
             },
             error: function (xhr) {
                 console.log(xhr);

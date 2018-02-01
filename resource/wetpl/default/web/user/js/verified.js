@@ -115,6 +115,55 @@ $(document).ready(function(){
         return objCard.test(card);
     }
 
+    $(".pay_qr_clear").click(function() {
+        $(".pay_qr").hide();
+    })
+
+    function online_auth_pay(e) {
+        $.get(apiUrl + 'wechatpay/online_auth_pay/' + e.weid).done(function(res) {
+            if(res.code === 200) {
+                $("#price").text(res.data.auth_money);
+                $(".pay_qr_img").attr("src", CMS_DETAIL_QRCODE + res.data.qr_url);
+                $(".pay_qr").show();
+
+                var timer = setInterval(function() {
+                    var options24 = $.post(apiUrl +"cert/realName/apply_order_detect", { order: res.data.order_id });
+                    options24.done(function(body) {
+                        if(body.code == 200) {
+                            if(body.data.state == 1) {
+
+                                $(".pay_qr").hide();
+                                clearInterval(timer);
+                                layer.msg("付款成功！", { time: 2500 });
+                                
+                                if(body.data.code != 0) {
+                                    $(".cert-to-pass")   .show();
+                                    $(".media-heading")  .text("在线认证失败，重新提交...").css("color", "#ec2d2d");
+                                    $(".warn-img")       .attr("src", "/common/img/refuse.png");
+                                    $("#submit").attr("disabled", false);
+                                    return false;
+                                }
+
+                                $(".cert-to-pass, .form-horizontal") .slideUp();
+                                $(".cert-success-info, #v_v_cert")   .slideDown();
+                                return false;
+                            }
+                        }
+                    });
+                    options24.fail(function(error) {
+                        console.error(error);
+                    });
+                }, 1000);
+
+                $(".pay_qr_clear").click(function() {
+                    clearInterval(timer);
+                    $("#submit").attr("disabled", false);
+                    $(".pay_qr").hide();
+                });
+            }
+        })
+    }
+
     // 实名认证 > 在线认证信息提交
     $("#submit").click(function(){
         var body = {};
@@ -134,25 +183,27 @@ $(document).ready(function(){
         $(this).attr("disabled", true);
         var options = $.post(CERT_ONLINEREALNAME, body);
         options.done(function(data) {
-
-            console.log(data);
-            debugger;
-            return false;
             if(data.code == -200) {
                 $(this).attr("disabled", false);
                 return false;
             }
-            if(data.code === 200) {
-                if(data.data.code != 0) {
-                    $(".cert-to-pass")   .show();
-                    $(".media-heading")  .text("在线认证失败，重新提交...").css("color", "#ec2d2d");
-                    $(".warn-img")       .attr("src", "/common/img/refuse.png");
-                    $(this).attr("disabled", false);
-                    return false;
-                }
 
-                $(".cert-to-pass, .form-horizontal") .slideUp();
-                $(".cert-success-info, #v_v_cert")   .slideDown();
+            if(data.code === 200) {
+
+                if(data.data.type === 1) {
+                    if(data.data.code != 0) {
+                        $(".cert-to-pass")   .show();
+                        $(".media-heading")  .text("在线认证失败，重新提交...").css("color", "#ec2d2d");
+                        $(".warn-img")       .attr("src", "/common/img/refuse.png");
+                        $("#submit").attr("disabled", false);
+                        return false;
+                    }
+
+                    $(".cert-to-pass, .form-horizontal") .slideUp();
+                    $(".cert-success-info, #v_v_cert")   .slideDown();
+                } else if(data.data.type === 2) {
+                    online_auth_pay(data.data);
+                }
             }
         })
         options.fail(function(error) {

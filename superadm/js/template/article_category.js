@@ -4,7 +4,7 @@ $(document).ready(function () {
     $('#voteListTable').DataTable({
         "ordering": false,
         "ajax": {
-            url: ApiUrl + "plats/article/category",
+            url: ApiUrl + "plats/articles/category",
             type: "GET",
             "dataSrc": function (json) {
                 for (var i = 0, ien = json.data.list.length; i < ien; i++) {
@@ -45,7 +45,7 @@ $(document).ready(function () {
         var weid = $(this).data('id');
         if (isNull(weid) == false) {
             $.ajax({
-                url: ApiUrl + 'plats/article/category_detail',
+                url: ApiUrl + 'plats/articles/category_detail',
                 type: 'POST',
                 data: {
                     weid: weid

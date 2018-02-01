@@ -5,20 +5,28 @@ $(document).ready(function () {
             success: function (data) {
                 if (data.code === 200) {
                     for (let i = 0; i < data.data.length; i++) {
-                        if (data.data[i].title === 'pageMall') {
-                            $("#os1").val('pageMall')
+                        if (data.data[i].title === 'pageArticle') {
+                            $("#os1").val('pageArticle')
                             if (data.data[i].status == 1) {
-                                $(".shop").removeClass('switch-close').addClass('switch-open')
+                                $(".article").removeClass('switch-close').addClass('switch-open')
                             } else {
-                                $(".shop").removeClass('switch-open').addClass('switch-close')
+                                $(".article").removeClass('switch-close').addClass('switch-close')
                             }
                         }
-                        if (data.data[i].title === 'pageArticle') {
-                            $("#os2").val('pageArticle')
+                        if (data.data[i].title === 'pageActivity') {
+                            $("#os2").val('pageActivity')
                             if (data.data[i].status == 1) {
-                                $(".test").removeClass('switch-close').addClass('switch-open')
+                                $(".activity").removeClass('switch-close').addClass('switch-open')
                             } else {
-                                $(".test").removeClass('switch-close').addClass('switch-close')
+                                $(".activity").removeClass('switch-close').addClass('switch-close')
+                            }
+                        }
+                        if (data.data[i].title === 'pageMall') {
+                            $("#os3").val('pageMall')
+                            if (data.data[i].status == 1) {
+                                $(".mall").removeClass('switch-close').addClass('switch-open')
+                            } else {
+                                $(".mall").removeClass('switch-open').addClass('switch-close')
                             }
                         }
                     }
@@ -47,5 +55,4 @@ $(document).ready(function () {
             }
         })
     })
-
 });

@@ -112,6 +112,7 @@ var magazine_id = getUrlParam('magazine_id') ? getUrlParam('magazine_id') : '';
         //分页点击事件
         $('.pagination a').each(function (i) {
             $(this).click(function () {
+                if($(this).attr('data-dt-idx')>0 && $(this).attr('data-dt-idx')<=params.pageCount){
                 var page    = $(this).attr('data-dt-idx');
                 var data = {
                    magazine_id:params.magazine_id,
@@ -119,6 +120,7 @@ var magazine_id = getUrlParam('magazine_id') ? getUrlParam('magazine_id') : '';
                     limit   : 10,
                 };
                 initAdvList(data);
+              }
             })
         });
     }
