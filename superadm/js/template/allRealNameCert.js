@@ -147,10 +147,11 @@ var cloneObj = function (obj) {
         //分页点击事件
         $('.pagination a').each(function (i) {
             $(this).click(function () {
+               if($(this).attr('data-dt-idx')>0 && $(this).attr('data-dt-idx')<=params.pageCount){
                 var page            = $(this).attr('data-dt-idx');
                 var real_name           = $('input[name=real_name]').val();
-              var phone               = $('input[name=phone]').val();
-              var is_authenticated    = $('select[name=is_authenticated]').val();
+                var phone               = $('input[name=phone]').val();
+                var is_authenticated    = $('select[name=is_authenticated]').val();
   
                 var data = {
                   real_name       : real_name,
@@ -160,6 +161,7 @@ var cloneObj = function (obj) {
                     limit       : 15,
                 };
                 initAdvList(data);
+                }
             })
         });
     }
@@ -227,6 +229,7 @@ var cloneObj = function (obj) {
       });
         } else if ($(this).data('type') == 1) {
       $('#bootstrapModalX').modal('show');
+      $('.zfxx').hide();
       $.ajax({
         url: ApiUrl + 'cert/realname/show/' + $(this).data('id'),
         type: 'get',
@@ -252,6 +255,16 @@ var cloneObj = function (obj) {
                         $('#bootstrapModalX .refuse_words').text(data.data.refuse_words);
                     }
                     $('#bootstrapModalX .created_at').text(new Date(data.data.created_at * 1000).format('yyyy-MM-dd hh:mm:ss'));
+
+                    //支付信息
+                    if(data.data.order!=null){
+                        $('.zfxx').show();
+                        $('#bootstrapModalX .total_fee').text(data.data.order.total_fee+'￥');
+                        $('#bootstrapModalX .out_trade_no').text(data.data.order.out_trade_no);
+                        $('#bootstrapModalX .pay_at').text(new Date(data.data.order.pay_at * 1000).format('yyyy-MM-dd hh:mm:ss')); 
+                    }else{
+                      $('.zfxx').hide();
+                    }
         },
         error: function(xhr){
           console.log(xhr);
