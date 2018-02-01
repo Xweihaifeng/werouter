@@ -75,7 +75,6 @@
                       pageHtml=pageHtml+'<li class=\"paginate_button\"><a href=\"#\"  data-dt-idx="'+(i+1)+'" tabindex=\"0\">'+(i+1)+'</a></li>';
               }
            }
-
            //尾页
           if(parseInt(params.currPage)==parseInt(params.pageCount)){
                  pageHtml=pageHtml+'<li class=\"paginate_button next disabled\" id=\"advListTable_next\"><a href=\"#\"  data-dt-idx="'+(parseInt(params.currPage)+1)+'" tabindex=\"0\"> 下一页 </a></li>';
