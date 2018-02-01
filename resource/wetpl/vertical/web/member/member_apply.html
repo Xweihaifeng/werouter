@@ -91,7 +91,7 @@
                         <article>
                             <div v-for="(item, index) in cert_tabs">
                                 <!-- 个人认证 -->
-                                <div class="member_personal" v-if="index == 0" v-show="index == cert_num">
+                                <div class="member_personal" v-if="index == 0" v-show="index == pickeds">
                                     <div class="member_sel_type">
                                         <div class="member_type_title"> 身份证姓名： </div>
                                         <input class="member_personal_input" size="15" maxlength="20" wrap="hard" cols="100" placeholder="请填写本人身份证姓名" v-model="member.cert.name">
@@ -117,15 +117,15 @@
                                 </div>
 
                                 <!-- 机构认证 -->
-                                <div class="member_institutional" v-if="index == 1" v-show="index == cert_num">
+                                <div class="member_institutional" v-if="index == 1" v-show="index == pickeds">
                                     <div class="member_sel_type">
                                         <div class="member_type_title"> 机构名称： </div>
                                         <input class="member_institutional_input" placeholder="请输入你所在的机构名称" v-model="member.inst.org_name">
                                     </div>
                                     <div class="member_sel_type">
                                         <div class="member_type_title"> 营业执照： </div>
-                                        <div class="member_file1" id="org_license_image" :style="{backgroundImage: 'url('+ setBg(member.inst.org_license_image, '/common/img/default_img.png') +')'}">
-                                            <input type="file" @change="InitQiNiv('inst', 'org_license_image')" placeholder="营业执照上传" v-model="member.inst.org_license_image">
+                                        <div class="member_file1" id="org_license_image" :style="{backgroundImage: 'url('+ setBg(member.inst.org_license_image, '/common/img/default_img.png') +')'}" v-model="member.inst.org_license_image">
+                                            <input type="file" @change="InitQiNiv('inst', 'org_license_image')" placeholder="请上传营业执照" :name="member.inst.org_license_image">
                                         </div>
                                     </div>
                                     <div class="member_sel_type">
@@ -150,8 +150,8 @@
                                     </div>
                                     <div class="member_sel_type">
                                         <div class="member_type_title"> 授权资料： </div>
-                                        <div id="org_auth_imgs" class="member_file1" :style="{backgroundImage: 'url('+ setBg(member.inst.org_auth_imgs, '/common/img/default_img.png') +')'}">
-                                            <input type="file" @change="InitQiNiv('inst', 'org_auth_imgs')" placeholder="请上传授权资料" v-model="member.inst.org_auth_imgs">
+                                        <div class="member_file1" id="org_auth_imgs" :style="{backgroundImage: 'url('+ setBg(member.inst.org_auth_imgs, '/common/img/default_img.png') +')'}" v-model="member.inst.org_auth_imgs">
+                                            <input type="file" @change="InitQiNiv('inst', 'org_auth_imgs')" placeholder="请上传授权资料" :name="member.inst.org_auth_imgs">
                                         </div>
                                     </div>
                                     <div class="member_sel_type">
@@ -172,8 +172,8 @@
                                     </div>
                                     <div class="member_sel_type">
                                         <div class="member_type_title"> 证明资料： </div>
-                                        <div id="org_cert_imgs" class="member_file1" :style="{backgroundImage: 'url('+ setBg(member.inst.org_cert_imgs, '/common/img/default_img.png') +')'}">
-                                            <input type="file" @change="InitQiNiv('inst', 'org_cert_imgs')" placeholder="请上传证明资料" id="org_cert_imgs">
+                                        <div class="member_file1" id="org_cert_imgs" :style="{backgroundImage: 'url('+ setBg(member.inst.org_cert_imgs, '/common/img/default_img.png') +')'}" v-model="member.inst.org_cert_imgs">
+                                            <input type="file" @change="InitQiNiv('inst', 'org_cert_imgs')" placeholder="请上传证明资料" :name="member.inst.org_cert_imgs">
                                         </div>
                                     </div>
                                     <div class="member_btn_box">
@@ -218,8 +218,8 @@
                         </div>
                         <div class="member_sel_type">
                             <div class="member_type_title"> 申请书： </div>
-                            <div id="plat_member_application" class="member_file1" :style="{backgroundImage: 'url('+ setBg(member.apply.plat_member_application, '/common/img/default_img.png') +')'}">
-                                <input type="file" @change="InitQiNiv('apply', 'plat_member_application')" placeholder="请上传申请资料" v-model="member.apply.plat_member_application">
+                            <div id="plat_member_application" class="member_file1" :style="{backgroundImage: 'url('+ setBg(member.apply.plat_member_application, '/common/img/default_img.png') +')'}" v-model="member.apply.plat_member_application">
+                                <input type="file" @change="InitQiNiv('apply', 'plat_member_application')" placeholder="请上传申请资料">
                             </div>
                             <div class="member_danger"> <span class="member_warn"></span> *请下载、填写、签章、扫描、并上传 </div>
                         </div>
@@ -320,8 +320,8 @@
                     org_type: '',
                     org_setup_date: '',
                     org_auth_imgs: null,
-                    org_contact_people: '',
-                    org_contact_phone: '',
+                    org_contact_people: plats_user_info.real_name,
+                    org_contact_phone: plats_user_info.phone,
                     org_address: '',
                     cert_info: '',
                     org_cert_imgs: null
@@ -378,7 +378,21 @@
             })
         },
         methods: {
-            certification(name, index) {
+            cert() {
+                var self = this;
+                ajax.get(CERT_OFCCERTS).then((res) => {
+                    if(res.code == 200 && res.data) {
+                        if(res.data.type === 1) {
+                            self.pickeds = 0;
+                            self.certification('cert', res.data);
+                        } else if(res.data.type === 2) {
+                            self.pickeds = 1;
+                            self.certification('inst', res.data);
+                        }
+                    }
+                })
+            },
+            certification(name, item) {
                 var self = this;
                 if(name == 'auth') {
                     // 实名认证 -> 人工认证详情
@@ -394,7 +408,8 @@
 
                                     if(self.member_set_type.indexOf('UG') >= 0) {
                                         self.already.cert = true;
-                                        self.certification('cert', '');
+                                        
+                                        self.cert();
                                     } else {
                                         self.already.cert = false;
                                         self.already.apply = true;
@@ -424,62 +439,90 @@
 
                 } else if(name == 'cert') {
                     // 官方认证 -> 个人认证详情
-                    ajax.get(CERT_OFCCERTS).then((res) => {
-                        if(res.code == 200 && res.data) {
-                            if(res.data.is_authenticated == 2) {
-                                self.already.cert_cont = true;
-                                if(res.data.operation_status == 3 && res.data.is_done == 2) {
-                                    self.already.cert_tit = self.cont_state[3];
-                                    $("#cert_sub").hide().siblings().show();
-                                    self.member.cert._method = 'put';
-                                    self.member.cert.cert_info = res.data.cert_info;
-                                    self.member.cert.per_cert_imgs = res.data.per_cert_imgs;
+                    if(item.is_authenticated == 2) {
+                        self.already.cert_cont = true;
+                        if(item.operation_status == 3 && item.is_done == 2) {
+                            self.already.cert_tit = self.cont_state[3];
+                            $("#cert_sub").hide().siblings().show();
+                            self.member.cert._method = 'put';
+                            self.member.cert.cert_info = item.cert_info;
+                            self.member.cert.per_cert_imgs = item.per_cert_imgs;
 
 
-                                } else if(res.data.is_done == 1) {
-                                    self.already.cert_tit = self.cont_state[2];
-                                    self.already.cert = false;
-                                    self.already.apply = true;
+                        } else if(item.is_done == 1) {
+                            self.already.cert_tit = self.cont_state[2];
+                            self.already.cert = false;
+                            self.already.apply = true;
 
-                                    self.certification('apply', '');
+                            self.certification('apply', '');
 
-                                }
-
-                            } else {
-                                self.already.cert_cont = false;
-
-                            }
- 
                         }
 
-                    });
+                    } else {
+                        self.already.cert_cont = false;
+
+                    }
 
                 } else if(name == 'inst') {
                     // 官方认证 -> 机构认证详情
+                    console.log(this.pickeds);
+                    if(item.is_authenticated == 2) {
+                        self.already.cert_cont = true;
+                        if(item.operation_status == 3 && item.is_done == 2) {
+                            self.already.cert_tit = self.cont_state[5];
+                            $("#inst_sub").hide().siblings().show();
+                            self.member.inst._method = 'put';
+                            self.member.inst.org_name = item.org_name;
+                            self.member.inst.org_license_image = item.org_license_image;
+                            self.member.inst.org_cert_number = item.org_cert_number;
+                            self.member.inst.org_scope_common = item.org_scope_common;
+                            self.member.inst.org_scope_front = item.org_scope_front;
+                            self.member.inst.org_type = item.org_type;
+                            self.member.inst.org_setup_date = item.org_setup_date;
+                            self.member.inst.org_auth_imgs = item.org_auth_imgs;
+                            self.member.inst.org_contact_people = item.org_contact_people;
+                            self.member.inst.org_contact_phone = item.org_contact_phone;
+                            self.member.inst.org_address = item.org_address;
+                            self.member.inst.cert_info = item.cert_info;
+                            self.member.inst.org_cert_imgs = item.org_cert_imgs;
+
+                        } else if(item.is_done == 1) {
+                            self.already.cert_tit = self.cont_state[4];
+                            self.already.cert = false;
+                            self.already.apply = true;
+
+                            self.certification('apply', '');
+
+                        }
+
+                    } else {
+                        self.already.cert_cont = false;
+
+                    }
 
                 } else if(name == 'apply') {
-                    this.process_filters('apply');
+                    self.process_filters('apply');
                     // 会员申请 -> 会员详情
                     ajax.get(MEMBER_APPLY).then((res) => {
                         if(res.code === 200 && res.data) {
                             self.already.apply_cont = true;
                             if(res.data.state == 1) {
-                                this.process_filters('first');
-                                console.log("会员初审", res.data)
+                                self.process_filters('first');
                                 self.already.apply_tit = self.cont_state[6];
                                 self.already.apply = false;
+                                console.log("会员初审", res.data)
                             } else
 
                             if(res.data.state == 2) {
-                                this.process_filters('money');
+                                self.process_filters('money');
                             } else
 
                             if(res.data.state == 3) {
-                                this.process_filters('second');
+                                self.process_filters('second');
                             } else
 
                             if(res.data.state == 4) {
-                                this.process_filters('member');
+                                self.process_filters('member');
 
                             }
                         }
@@ -527,8 +570,7 @@
                     if(result.isUG == false && self.member_set_type.indexOf('UG') >= 0) {
                         console.log("开始官方认证");
                         self.already.cert = true;
-                        console.log(self.pickeds);
-                        self.certification('cert', '');
+                        self.cert();
                     } else
                     
                     if(result.isUM == false) {
@@ -549,6 +591,14 @@
                         return false;
                     }
 
+                    if(    !this.member.auth.name
+                        || !this.member.auth.card_id
+                        || !this.member.auth.card_front
+                        || !this.member.auth.card_back) {
+                        layer.msg("请完善信息后重新提交！", { time: 2500 });
+                        return false;
+                    }
+
                     ajax.post(CERT_REALNAME, this.member[name]).then((res) => {
                         if(res.code === 200) {
                             this.certification(name, '');
@@ -557,6 +607,14 @@
                 } else if(name === 'Uauth') {                    
                     if(!this.isCardNo(this.member.auth.card_id)) {
                         layer.msg("身份证号码不合法，请重新输入...", { time: 2500 });
+                        return false;
+                    }
+
+                    if(    !this.member.auth.name
+                        || !this.member.auth.card_id
+                        || !this.member.auth.card_front
+                        || !this.member.auth.card_back) {
+                        layer.msg("请完善信息后重新提交！", { time: 2500 });
                         return false;
                     }
 
@@ -571,9 +629,17 @@
                         return false;
                     }
 
+                    if(    !this.member.cert.name
+                        || !this.member.cert.card_id
+                        || !this.member.cert.cert_info
+                        || !this.member.cert.per_cert_imgs){
+                        layer.msg("请完善信息后重新提交！", { time: 2500 });
+                        return false;
+                    }
+
                     ajax.post(CERT_OFCCERTS, this.member[name]).then((res) => {
                         if(res.code === 200) {
-                            this.certification(name, 1);
+                            this.cert();
                         }
                     });
                 }  else if(name === 'Ucert') {
@@ -582,16 +648,78 @@
                         return false;
                     }
 
+                    if(    !this.member.cert.name
+                        || !this.member.cert.card_id
+                        || !this.member.cert.cert_info
+                        || !this.member.cert.per_cert_imgs){
+                        layer.msg("请完善信息后重新提交！", { time: 2500 });
+                        return false;
+                    }
+
                     ajax.post(CERT_OFCCERTS, this.member.cert).then((res) => {
                         if(res.code === 200) {
-                            this.certification("cert", 1);
+                            this.cert();
                         }
                     });
                 } else if(name === 'inst') {
                     console.log(this.member[name]);
+                    if(    !this.member.inst.org_name
+                        || !this.member.inst.org_license_image
+                        || !this.member.inst.org_cert_number
+                        || !this.member.inst.org_scope_common
+                        || !this.member.inst.org_scope_front
+                        || !this.member.inst.org_type
+                        || !this.member.inst.org_setup_date
+                        || !this.member.inst.org_auth_imgs
+                        || !this.member.inst.org_contact_people
+                        || !this.member.inst.org_contact_phone
+                        || !this.member.inst.org_address
+                        || !this.member.inst.cert_info
+                        || !this.member.inst.org_cert_imgs) {
+                        layer.msg("请完善信息后重新提交！", { time: 2500 });
+                        return false;
+                    }
+
+                    if(!self.phone(this.member.inst.org_contact_phone)) {
+                        layer.msg("请输入正确的手机号码后重新提交！", { time: 2500 });
+                        return false;
+                    }
+
+                    ajax.post(CERT_OFCCERTS, this.member.inst).then((res) => {
+                        if(res.code === 200) {
+                            this.cert();
+                        }
+                    });
 
                 }  else if(name === 'Uinst') {
                     console.log(this.member[name]);
+                    if(    !this.member.inst.org_name
+                        || !this.member.inst.org_license_image
+                        || !this.member.inst.org_cert_number
+                        || !this.member.inst.org_scope_common
+                        || !this.member.inst.org_scope_front
+                        || !this.member.inst.org_type
+                        || !this.member.inst.org_setup_date
+                        || !this.member.inst.org_auth_imgs
+                        || !this.member.inst.org_contact_people
+                        || !this.member.inst.org_contact_phone
+                        || !this.member.inst.org_address
+                        || !this.member.inst.cert_info
+                        || !this.member.inst.org_cert_imgs) {
+                        layer.msg("请完善信息后重新提交！", { time: 2500 });
+                        return false;
+                    }
+
+                    if(!self.phone(this.member.inst.org_contact_phone)) {
+                        layer.msg("请输入正确的手机号码后重新提交！", { time: 2500 });
+                        return false;
+                    }
+
+                    ajax.post(CERT_OFCCERTS, this.member.inst).then((res) => {
+                        if(res.code === 200) {
+                            this.cert();
+                        }
+                    });
 
                 } else if(name === 'apply') {
                     console.log(this.member[name]);
@@ -720,9 +848,7 @@
                 }
             },
             setBg(url, init) {
-                if (!url) {
-                    return init;
-                } else {
+                if (url) {
                     var filename = url;  
                     var index1 = filename.lastIndexOf(".");
                     var index2 = filename.length;
@@ -732,6 +858,8 @@
                     } else {
                         return ApiMaterPlatQiniuDomain + url;
                     }
+                } else {
+                    return init;
                 }
             },
             isCardNo(card) {
@@ -746,6 +874,8 @@
         watch:{
             pickeds(curVal,oldVal){
                 console.log(curVal,oldVal);
+                this.pickeds = curVal;
+
             }
         },
         filters: {
