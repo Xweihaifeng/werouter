@@ -163,7 +163,7 @@
                             <i-input v-model="formItemMemberCoupon.description" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="请输入优惠卷描述"></i-input>
                         </form-item>
                         <form-item label="背景色" prop="colour">
-                            <color-picker v-model="formItemMemberCoupon.colour" />
+                            <color-picker v-model="formItemMemberCoupon.colour" recommend />
                         </form-item>
                         <form-item label="领取限制" prop="get_condition">
                             <i-select v-model="formItemMemberCoupon.get_condition">
@@ -532,6 +532,7 @@
                     {required: true, message: '其他优惠共同不能为空', trigger: 'blur'},
                 ],
                 receive_time:[
+                    {required: true, message: '优惠卷领取时间不能为空', trigger: 'change'},
                     { type: 'array', max: 2, message: '优惠卷领取时间段还未选择', trigger: 'change' }
                 ],
                 activity_time:[
