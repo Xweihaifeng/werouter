@@ -184,6 +184,19 @@
                                                 </div>
                                             </div>
                                         </div>
+
+                                        <div class="panel-body" style="display: none;" id="rzjf">
+                                            <div class="form-group">
+                                                <label class="col-xs-4 col-sm-4 col-md-4 control-label">认证缴费设置</label>
+                                                <div class="col-sm-8 col-xs-8 col-lg-8">
+                                                    <div class="row row-fix tpl-category-container">
+                                                        <input class="messarg_sign" type="text" name="auth_money" value="5" onkeyup="value=value.replace(/[^\d]/g,'')">&nbsp;元/次 &nbsp;
+                                                        <button type="button" class="btn btn-warning" id="update_auth_money">保存</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                         <div class="panel-body">
                                             <div class="form-group">
                                                 <label class="col-xs-4 col-sm-4 col-md-4 control-label">剩余认证次数</label>
@@ -573,6 +586,36 @@
                         </div>
                         </li> -->
                             <!-- 会员配置结束 -->
+                            <!-- 官方认证名称配置开始 -->
+                                        <li class="message_box online_cert">
+                                            <div class="per_bottom_tit">
+                                                <span class="scad_setting">官方认证名称</span>
+                                                <span class="switch brand_set turn_on_off switch-close" data-key="is_sms_open">
+                                                    <!-- <div id="op1" class="open">
+                                                        <div id="op2" class="close"></div>
+                                                        <span class="brand_on_off on">ON</span>
+                                                <span class="brand_on_off off">OFF</span>
+                                            </div> -->
+                                            </span>
+                                            <a class="edit_domain">展开</a>
+                                    </div>
+                                    <div class="edit_domain_area" style="display: none;">
+                                        <div class="panel-body">
+                                            <form id="fromManager" class="form-horizontal" style="padding: 30px;">
+                                                <div class="form-group">
+                                                    <label class="control-label col-sm-4 col-md-4 col-lg-4">官方认证名称</label>
+                                                    <div class="col-sm-8 col-md-8 col-lg-8">
+                                                        <input type="text" class="form-control" id="cert_name" name="cert_name" placeholder="官方认证名称">
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <button type="button" class="btn btn-info pull-right" id="certnameSet">保存</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    </li>
+                                    <!-- 官方认证名称配置结束 -->
 
                             </ul>
                         </div>
