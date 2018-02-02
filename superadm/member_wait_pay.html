@@ -440,7 +440,7 @@
                                     </tr>
                                     <tr>
                                         <td>申请资料</td>
-                                        <td><img id="plat_member_application" src="#" data-action="zoom" width="100"></td>
+                                        <td><a id="plat_member_application" class="btn btn-warning" href="" target="_blank">点击下载</a></td>
                                     </tr>
                                     <tr>
                                         <td>是否同意条款</td>
@@ -588,7 +588,7 @@
                 }, {
                     "mData": 'level_name',
                     'render': function(data, type, full) {
-                        return '<span class="label label-info">' + data + '</span>';
+                        return '<span class="label label-info">第' + full.number + '届 - ' + data + '</span>';
                     }
                 }, {
                     "mData": 'plat_member_price',
@@ -740,7 +740,7 @@
                 dataType: 'json',
                 success: function(data) {
                     $('#bootstrapModal input[name=weid]').val(data.data.weid);
-                    $('#level_name').text(data.data.level_name);
+                    $('#level_name').html('<span class="label label-info">第' + data.data.number + '届 - ' + data.data.level_name + '</span>');
                     $('#avatar').attr('src', ApiMaterPlatQiniuDomain + data.data.avatar);
                     $('#name').text(data.data.name);
                     $('#phone').text(data.data.phone);
@@ -749,7 +749,7 @@
                     $('#plat_member_contacts').text(data.data.plat_member_contacts);
                     $('#plat_member_tel').text(data.data.plat_member_tel);
                     $('#plat_member_address').text(data.data.plat_member_address);
-                    $('#plat_member_application').attr('src', ApiMaterPlatQiniuDomain + data.data.plat_member_application);
+                    $('#plat_member_application').attr('href', ApiMaterPlatQiniuDomain + data.data.plat_member_application);
                     $('#is_agree_terms').html(data.data.is_agree_terms == 1 ? '<span class="label label-success">已同意</span>' : '<span class="label label-danger">未同意</span>');
                     $("#bootstrapModal input[name='pay_type'][value=" + data.data.pay_type + "]").attr("checked", true);
                     $('#ap_time').text(data.data.ap_time);

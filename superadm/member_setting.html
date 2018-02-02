@@ -80,7 +80,7 @@
                             </div>
                             <!-- /.box-header -->
                             <form class="box-body form-horizontal" style="padding: 30px;">
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                     <label class="control-label col-sm-4 col-md-4 col-lg-2">每届年数</label>
                                     <div class="col-sm-8 col-md-8 col-lg-10">
                                         <select name="year_per_grade" class="form-control"> 
@@ -108,7 +108,7 @@
                                     <option value="2">按届缴费</option>
                                 </select>
                                     </div>
-                                </div>
+                                </div> -->
                                 <!-- <div class="form-group">
                                 <label class="control-label col-sm-4 col-md-4 col-lg-2">服务条款</label>
                                 <div class="col-sm-8 col-md-8 col-lg-10">
@@ -267,8 +267,6 @@
                 dataType: 'json',
                 success: function(data) {
                     if (data.code === 200) {
-                        $('select[name=year_per_grade]').val(data.data.year_per_grade);
-                        $('select[name=pay_type]').val(data.data.pay_type);
                         $('input[name=term_servcice_rule]').val(data.data.term_servcice_rule);
                         $('input[name=constitution]').val(data.data.constitution);
                         $('input[name=apply_template]').val(data.data.apply_template);
@@ -304,8 +302,6 @@
                     condition.push($(v).val());
             });
             var formList = {
-                'year_per_grade': $('select[name=year_per_grade]').val(),
-                'pay_type': $('select[name=pay_type]').val(),
                 'term_servcice_rule': $('input[name=term_servcice_rule]').val(),
                 'constitution': $('input[name=constitution]').val(),
                 'apply_template': $('input[name=apply_template]').val(),
