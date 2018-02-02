@@ -1,5 +1,15 @@
 
 // 会员时间进度轴
+const token = docCookies.getItem("token");
+if(token) {
+    $.ajaxSetup({
+        global: true,
+        async: false,
+        headers: {
+            'Token': token,
+        }
+    });
+}
 var member_time_axis_result = '', member_apply_op_time = '';
 
 Date.prototype.format = function(format) {
@@ -264,7 +274,7 @@ function time_axis_last_instance(result1) {
         <h2> 会员终审 </h2>
         <p class="time_axis_menu">
             <span class="time_axis">`+result1.final_audit_time+`</span>
-            <span class="title_axis submit_detail">`+result1.name+` 的入会申请，终审通过，中审意见（`+ result1.final_audit_words +`）</span>
+            <span class="title_axis submit_detail">`+result1.name+` 的入会申请，终审通过，终审意见（`+ result1.final_audit_words +`）</span>
         </p>
         <p class="time_axis_menu">
             <span class="time_axis">`+result1.final_audit_time+`</span>

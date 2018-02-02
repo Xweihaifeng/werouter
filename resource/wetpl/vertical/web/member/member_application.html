@@ -1,109 +1,152 @@
-<!DOCTYPE html>
-<html>
-    <head lang="en">
-        <title></title>
-        <meta charset="UTF-8" />
-        <link rel="shortcut icon" id="favicon" href="" />
-        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport" />
-        <meta name="description" content="" />
-        <meta name="keywords" content="" />
+<#extend#>public/extend/index_extend.html</#extend#>
+    <!--中间样式开始-->
+    <link rel="stylesheet" href="/resource/wetpl/substation/default/web/css/list.css">
+    <!-- <link rel="stylesheet" href="/resource/wetpl/substation/default/web/css/newsert.css">     -->
+    <link rel="stylesheet" href="{{PATH_TML}}member/css/member_application.css" />
+    <link rel="stylesheet" href="{{PATH_TML}}member/css/member_process.css" />
 
-        <script src="/common/js/jquery-3.2.1.min.js"></script>
-        <script src="/common/layer-v3.0.3/layer-v3.0.3/layer/layer.js"></script>
-        <script src="{{PATH_CONFIG}}"></script>
-        <script src="{{PATH_TML}}js/modal_login.js"></script>
-        <!-- <script src="/common/js/swiper-3.3.1.min.js"></script> -->
-
-        <link rel="stylesheet" href="{{PATH_TML}}font/iconfont.css" />
-        <link rel="stylesheet" href="{{PATH_TML}}css/news_base.css" />
-        <link rel="stylesheet" href="{{PATH_TML}}css/modal_login.css" />
-        <link rel="stylesheet" href="{{PATH_TML}}member/css/member_application.css" />
-        <link rel="stylesheet" href="{{PATH_TML}}member/css/member_process.css" />
-
-        <style>
-            ::-webkit-scrollbar { width: 0; height: 0; }
-            .dropdown-toggle, .get-check { height: 40px !important; }
-        </style>
-    </head>
-    <body>
-
-        <div class="modal_login" id="modal_login"></div>
-        <ul class="news_menu" id="public_main_news_menu"></ul>
-        <div class="member_application">
-            <div class="member_list_header"><img style="width: 25px;height: 25px;vertical-align: middle;margin-top: -5px" src="/common/img/huiyuanshengqing.png"> 会员 </div>
-            <div class="member_app_list">
-                <li class="member_active member_active0"> 初审 </li>
-                <li> 复审<span class="span1"></span><span class="span2"></span></li>
-                <li> 申请成功 <span class="span1"></span><span class="span2"></span></li>
-            </div>
-
-            <div class="qr_code_pc_outer"></div>
-            <div class="member_app_list member_app_pay">
-                恭喜您！初次审核通过！根据您的等级特质，您需要缴纳<span class="app_pay_count"></span>元，即可享受该服务!
-                <button class="member_go_pay"> 前往缴费 </button>
-            </div>
-
-            <div class="member_sel_type type_list">
-                <div class="member_type_title"> 选择类型: </div>
-                <ul class="member_sel_type_name"></ul>
-            </div>
-
-            <div class="member_cost">
-                <span class="member_warn"></span><span id="display_name">会员</span>费用为 <span class="member_count">￥<span id="member_price"></span>元</span> / 年 <span class="member_danger"> *在初审通过之前无需缴费 </span>
-            </div>
-
-            <div class="member_off_cert member_off_personal">
-
-                <div class="member_sel_type">
-                    <div class="member_type_title"> 申请人: </div>
-                    <input type="text" name="" class="member_app_input" id="member_first_name" placeholder="显示本人真实姓名" readonly>
-                </div>
-
-                <div class="member_sel_type">
-                    <div class="member_type_title"> 申请人电话: </div>
-                    <input type="text" name="" class="member_app_input" id="member_first_tel" placeholder="显示本人常用手机号码" readonly>
-                </div>
-
-                <div class="member_sel_type">
-                    <div class="member_type_title"> 申请地址: </div>
-                    <input type="text" name="" class="member_app_input" id="member_first_address" placeholder="显示详细的地址" readonly>
-                </div>
-            </div>
-
-            <div class="member_off_cert member_off_institutional">
-
-                <div class="member_sel_type">
-                    <div class="member_type_title"> 申请单位: </div>
-                    <input type="text" name="" class="member_app_input" id="member_second_company" placeholder="显示申请单位名称" readonly>
-                </div>
-
-                <div class="member_sel_type">
-                    <div class="member_type_title"> 申请人: </div>
-                    <input type="text" name="" class="member_app_input" id="member_second_name" placeholder="显示本人真实姓名" readonly>
-                </div>
-
-                <div class="member_sel_type">
-                    <div class="member_type_title"> 申请人电话: </div>
-                    <input type="text" name="" class="member_app_input" id="member_second_tel" placeholder="显示本人常用手机号码" readonly>
-                </div>
-
-                <div class="member_sel_type">
-                    <div class="member_type_title"> 申请地址: </div>
-                    <input type="text" name="" class="member_app_input" id="member_second_address" placeholder="显示详细的地址" readonly>
-                </div>
-            </div>
-
-            <div id="member_time_axis"></div>
+    <div id="container">
+        <!--位置显示-->
+        <div class="seat">
+            <img src="/resource/wetpl/substation/default/web/image/fanhui.png" alt="" style="margin-top: -3px" /> 当前位置在：<a href="">首页</a> > 加入商会 > 入会申请 <span class="wz"></span>
+            <div class="er-nav" id="menuTwo"></div>
         </div>
-        <!-- 右侧大背景图 -->
-        <div id="public_main_right_bg" style="position:fixed;top:0;bottom:0;left:1190px;width:100%;"></div>
-        <script src="{{PATH_TML}}js/public_main_right_bg.js"></script>
 
-        <!-- <script src="/common/js/control.js"></script> -->
-        <!-- <script src="{{PATH_TML}}js/public_main.js"></script> -->
-        <script src="{{PATH_TML}}member/js/member_public_config.js"></script>
-        <script src="{{PATH_TML}}member/js/member_application.js"></script>
-        <script src="{{PATH_TML}}member/js/member_time_axis.js"></script>
+        <article class="news-main">
+            <!--左侧内容-->
+            <article class="main">
+                <h2 style="margin-top: 0px">
+                    <strong>加入商会</strong>
+                    <span style="margin-top: 10px;">Chamber Application</span>
+                </h2>
+                <ul class="aside" id="menuX">
+                    <li> <a class="chan_li" id="oooo"> 商会首页 </a> </li>
+                    <li :class="{cenav_cur: item.domain == 'rhsq'}" v-for="(item,index) in column_list"><a :id="item.domain" :href="item.domain == 'rhsq' ? '/apply' : '/org/'+ item.domain">{{ item.title }}</a></li>
+                </ul>
+            </article>
 
-    </body>
-</html>
+            <!--右侧内容-->
+            <article class="list-big">
+                <div class="member_application">
+                    <p class="member_prompt_info"> </p>
+                    <div class="member_list_header"><img style="width: 25px;height: 25px;vertical-align: middle;margin-top: -5px" src="/common/img/huiyuanshengqing.png"> 会员 </div>
+                    <div class="member_app_list">
+                        <li class="member_active member_active0"> 初审 </li>
+                        <li> 复审<span class="span1"></span><span class="span2"></span></li>
+                        <li> 申请成功 <span class="span1"></span><span class="span2"></span></li>
+                    </div>
+                    <div class="qr_code_pc_outer"></div>
+                    <div class="member_app_list member_app_pay">
+                        恭喜您！初次审核通过！根据您的等级特质，您需要缴纳<span class="app_pay_count"></span>元，即可享受该服务!
+                        <button class="member_go_pay"> 前往缴费 </button>
+                    </div>
+                    <div class="member_sel_type type_list">
+                        <div class="member_type_title"> 选择类型: </div>
+                        <ul class="member_sel_type_name">
+                            <li v-for="(item,index) in member_levels.list" :class="{'member_active1': index == member_levels.type_active}">{{ item.level_name }}</li>
+                        </ul>
+                    </div>
+
+                    <!-- 会员缴费 -->
+                    <div class="member_cost">
+                        <span class="member_warn"></span><span id="display_name">{{JSON.stringify(member_position) == '{}'? '普通会员' : member_position.level_name}}</span> 费用为 <span class="member_count">￥<span id="member_price">{{JSON.stringify(member_position) == '{}'? '0.01' : member_position.price}}</span>元</span> / 年 <span class="member_danger"> *在初审通过之前无需缴费 </span>
+                    </div>
+
+                    <div class="member_off_cert">
+                        <div class="member_sel_type" v-if='member_primary.plat_member_organization'>
+                            <div class="member_type_title"> 申请单位: </div>
+                            <input type="text" name="" class="member_app_input" placeholder="显示申请单位名称" v-model="member_primary.plat_member_organization" readonly>
+                        </div>
+                        <div class="member_sel_type">
+                            <div class="member_type_title"> 申请人: </div>
+                            <input type="text" name="" class="member_app_input" placeholder="显示本人真实姓名" v-model="member_primary.plat_member_contacts" readonly>
+                        </div>
+                        <div class="member_sel_type">
+                            <div class="member_type_title"> 申请人电话: </div>
+                            <input type="text" name="" class="member_app_input" placeholder="显示本人常用手机号码" v-model="member_primary.plat_member_tel" readonly>
+                        </div>
+                        <div class="member_sel_type">
+                            <div class="member_type_title"> 申请地址: </div>
+                            <input type="text" name="" class="member_app_input" placeholder="显示详细的地址" v-model="member_primary.plat_member_address" readonly>
+                        </div>
+                    </div>
+                    <div id="member_time_axis"></div>
+                </div>
+            </article>
+        </article>
+    </div>
+
+    <!-- <script src="{{PATH_TML}}member/js/member_public_config.js"></script> -->
+    <!-- <script src="{{PATH_TML}}member/js/member_application.js"></script> -->
+    <!-- <script src="{{PATH_TML}}member/js/member_time_axis.js"></script> -->
+
+
+    <script>
+        var app = new Vue({
+            el: '#container',
+            data: {
+                column_list: [],        // 频道栏目列表
+                member_levels: {list: [], type_active: 0},      // 会员等级
+                member_position: {},
+                member_primary: {},    // 初审信息
+            },
+            http: {
+                headers: {
+                    token: plats_token,
+                }
+            },
+            created() {
+                var self = this;
+                // 频道栏目列表
+                ajax.get(CMS_CHANNEL_CATEGORIES + "org").then(res => {
+                    this.column_list = res.data;
+                });
+
+                // 会员等级
+                ajax.get('/member/session/current').then((res) => {
+                    var result = res.data.config.reverse();
+                    var member_config = result.map((x,y) => {x.number = y; return x}).filter(e => e.open_type != 2)[0];
+                    this.member_position = member_config;
+                    this.member_levels.type_active = member_config.number;
+                    this.member_levels.list = result;
+                })
+
+                // 会员资料
+                this.member_setting();
+            },        
+            mounted() {
+                this.$nextTick(() => {
+
+                })
+            },
+            methods: {
+                member_setting() {
+                    ajax.get(MEMBER_APPLY).then((res) => {
+                        if(res.code === 200 && res.data) {
+                            // console.log(res.data);
+                            this.member_primary = res.data;
+                            // if(res.data.state == 1) {
+
+                            // } else
+
+                            // if(res.data.state == 2) {
+                                
+                            // } else
+
+                            // if(res.data.state == 3) {
+                                
+                            // } else
+
+                            // if(res.data.state == 4) {
+                            //     // window.location.href = '/applicationsuccess';
+                            //     // debugger
+                            // }
+                        }
+                    })
+                },
+            }
+        });
+    </script>
+    <script type="text/javascript" src="/common/js/canvas.js"></script>
+    <script type="text/javascript" src="/common/js/canvas2image.js"></script>
+    <script src="{{PATH_TML}}member/js/member_time_axis.js"></script>
