@@ -36,16 +36,16 @@
         <div id="header">
             <div id="topline">
                 <a href="/"><img src="/common/img/new/logo-wepage.png" alt=""/></a>
-                <a href="/user"><p><img :src="setImg(plats_user_info.avatar ,'/common/img/new/my.png', 100, 100)" alt=""/>{{userCenter}}</p></a>
+                <a :href="user" @click="login(1)"><p><img id="avatar" :src="setImg(avatar ,'/common/img/new/my.png', 100, 100)" alt=""/>{{userCenter}}</p></a>
             </div>
             <div id="userinfo" :style="{'background': 'url(' + setBg(pages_info.plats_domian.background, '/common/img/new/wepage.png') + ') no-repeat center','background-size': 'cover'}">
                 <div>
-                    <a :href="'/' + pages_info.plats_domian.domain"><img class="avatar" :src="setImg(brand(pages_info.plats_user.avatar) ,'/common/img/new/avatar.png', 100, 100)" alt=""/></a>
+                    <a :href="'/' + pages_info.plats_domian.domain"><img class="avatar1" :src="setImg(brand(pages_info.plats_user.avatar) ,'/common/img/new/avatar.png', 100, 100)" alt=""/></a>
                     <p>
                         <span>
                             {{pages_info.plats_user.real_name + '的微主页' | isBrand('user')}}
                             <img :src="imgState('/common/img/new/member.png', '/common/img/new/memberoff.png', pages_info.plats_user_cert.is_authenticated == 1)" alt=""/>
-                            <img :src="imgState('/common/img/new/care.png', '/common/img/new/careoff.png', info.if_follow == 1 ? true : false)" alt="" @click="login"/>
+                            <img :src="imgState('/common/img/new/care.png', '/common/img/new/careoff.png', info.if_follow == 1 ? true : false)" alt="" @click="login(0)"/>
                         </span>
                         <span>{{pages_info.plats_user.motto | isBrand('motto')}}</span>
                     </p>
@@ -53,7 +53,9 @@
             </div>
             <div id="menu">
                 <ul>
+                    <li><img id="plats-user" :src="setImg(brand(pages_info.plats_user.avatar) ,'/common/img/new/avatar.png', 25, 25)" alt=""></li>
                     <li v-for="(e, i) in menu.list" @click="style(menu, i)" :class="{'underline': i === menu.flag}">{{e.name}}</li>
+                    <li id="center"><a href="/user"><p><img :src="setImg(avatar ,'/common/img/new/my.png', 25, 25)" alt=""/>用户中心</p></a></li>
                 </ul>
             </div>
         </div>
@@ -261,6 +263,7 @@
                             <ul>
                                 <li>
                                     <span>
+                                        <i :style="fontColor">官方认证</i>
                                         <img :src="imgState('/common/img/new/offical.png', '/common/img/new/officaloff.png', pages_info.plats_user_cert.is_authenticated == 1)" alt="" width="76" height="26"/>
                                         <img :src="imgState('/common/img/new/cert.png', '/common/img/new/certoff.png', pages_info.plats_user_auth.is_authenticated == 1)" alt="" width="32" height="28"/>
                                         <img src="/common/img/new/message.png" alt="" width="60" height="24"/>
@@ -418,14 +421,18 @@
                 page: {},
                 type: '',
                 none: false,
-                userCenter: ''
+                avatar: '',
+                userCenter: '',
+                user: 'javascript:void(0)',
+                fontColor: pages_info.plats_user_cert.is_authenticated == 1 ? {color: '#ff9900'} : {color: '#999'}
             },
             created: function(){
                 this.menu = {list: this.dataMenu.map(e => ({name: e})), flag: 0};
-                this.wefriends();                
-                this.init(window.location.pathname.split('/').pop());
-
-                if (is_login == 'no') {
+                this.wefriends();
+                this.init(window.location.pathname.split('/').pop());                
+                this.avatar = docCookies.getItem('token') ? (plats_user_info.avatar ? plats_user_info.avatar : localStorage.getItem('avatar')) : '';
+                
+                if (!docCookies.getItem('token')) {
                     this.userCenter = '快速登录';
                 } else {
                     this.userCenter = '用户中心';
@@ -435,14 +442,22 @@
                     this.layer = layui.layer;
                 })
 
+                $("#plats-user").hide();
+                $("#center").hide();
                 var height = $("#menu").offset().top;
                 $(window).scroll(function(){
                     if($(document).scrollTop() >= height){
                         $("#menu").css({position:"fixed",top:0,left:0,zIndex:99});
                         $("#content").css({"padding-top":"55px"});
+                        $("#center").show();
+                        $("#plats-user").show();                        
+                        $("#menu ul li:nth-child(2)").hide();
                     }else{
                         $("#menu").css({position:"relative",zIndex:0});
                         $("#content").css({"padding-top":0});
+                        $("#center").hide();
+                        $("#plats-user").hide();
+                        $("#menu ul li:nth-child(2)").show();
                     }
                 })
 
@@ -573,7 +588,6 @@
                     axios.get(apiUrl + 'circel/dynamic?page=' + page + '&limit=10' + '&type=1&dynamic_type=0&domain=' + pages_info.plats_domian.domain).then(data => {                        
                         this.type = 'latest';
                         this.latest = data.data.data.list;
-                        console.log(this.latest);
                         this.latest == '' ? wepage.none = true : wepage.none = false;
                     })
                 },
@@ -644,12 +658,16 @@
                     })
                     // console.log(this.shopCate)
                 },
-                login: function(){
+                login: function(type){
                     if (!docCookies.getItem("token")) {
-                        $("#modal_login").fadeIn(300);
+                        $("#modal_login").show();                        
                     } else {
-                        //1:已关注 0：未关注
-                        this.info.if_follow == 1 ? this.cancelFollow() : this.follow();
+                        if (type == 0) {
+                            //1:已关注 0：未关注
+                            this.info.if_follow == 1 ? this.cancelFollow() : this.follow();    
+                        } else {
+                            this.user = '/user';                            
+                        }                        
                     }
                 },
                 change: function(page){

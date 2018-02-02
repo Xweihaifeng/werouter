@@ -449,17 +449,35 @@ $(function() {
                 'domain': domain
             /* , 'imagecode': imageCode, 'imagecode_id': imageCodeID*/ },
             success: function(data){
-                console.log(data)
+                // console.log(data)
                 if (data.code != -200) {
                     saveUserInfo(data.token, data.data.weid, data.data.avatar, data.data.identity, data.data.phone);
                     showLogin = false;
                     isLogin = true;
                     isCheckNum = false;
-                    $("#modal_login").fadeOut(300);
+                    $("#modal_login").hide();
                     setTimeout(function(){
                         layer.msg('您已成功登录', {time: 1500});
                         $("#avatar").attr('src', set_img(data.data.avatar, '/common/img/new/icon01.png', 29, 27));
                     }, 300);
+                    if (wepage) {
+                        plats_token = docCookies.getItem('token');
+                        localStorage.setItem('avatar', data.data.avatar);
+                        wepage.avatar = data.data.avatar;
+                        wepage.userCenter = '用户中心';
+                        //wepage.info
+                        $.ajax({
+                            url: apiUrl + 'circel/index?domain=' + pages_info.plats_domian.domain,
+                            headers: {
+                                Token: data.token
+                            },
+                            success: function(data) {
+                                // console.log(data);
+                                wepage.info = data.data;
+                                //sessionStorage.setItem('info', JSON.stringify(wepage.info));
+                            }
+                        })
+                    }                    
                     //window.location.href = window.location.href;
                 } else {
                     lock = false;
