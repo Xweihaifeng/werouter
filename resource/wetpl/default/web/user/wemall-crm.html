@@ -375,7 +375,8 @@
             modalCouponDetailData:{},//优惠卷详情数据
             uploadData:{}, //七牛上传附件参数
             uploadName:'',
-            uploadUrl:qiniu_upload_url, //七牛上传地址
+            /*uploadUrl:qiniu_upload_url, *///七牛上传地址
+            uploadUrl:apiUrl+'file/uploadfile', //七牛上传地址
             uploadList: [], //上传列表
             menuList: ["概览", "发布会员卡", "会员卡管理", "发布代金券", "管理代金券"], //控制导航
             formItemMember: {
@@ -912,6 +913,7 @@
             ajax.get('getQiniuToken').then((res)=>{
                 if(res.code==200){
                     this.uploadData.token=res.data;
+                    this.uploadData.prefix='pages/crm/';
                 }
             });
             //获取商城主键id
@@ -1418,8 +1420,10 @@
                 this.$refs.upload.fileList.splice(fileList.indexOf(file), 1);
             },
             handleSuccess (res, file) {
-                file.url = ApiMaterPlatQiniuDomain +res.key;
-                file.name = res.key;
+                if(res.code==200){
+                    file.url = ApiMaterPlatQiniuDomain+res.data.key;
+                    file.name = res.data.key;
+                }
             },
             handleFormatError (file) {
                 this.$Notice.warning({
