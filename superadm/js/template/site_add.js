@@ -19,6 +19,24 @@ $(document).ready(function(){
             }
         }
     });
+    $.ajax({
+        url: ApiUrl + "cms/site/get_template",
+        type: 'get',
+        dataType: 'JSON',
+        success: function (result) {
+            if (result.code === 200) {
+                var html = '';
+                $.each(result.data, function (key, val) {
+                    html += '<option name="options" value='+val.id+'>' + val.name + '</option>';
+                });
+                $("#editionId").html(html);
+            } else {
+                parent.layer.msg(result.message);
+
+                return false;
+            }
+        }
+    });
     $('#form').bootstrapValidator({
      message: 'This value is not valid',
      feedbackIcons: {
