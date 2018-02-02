@@ -335,8 +335,10 @@
                             <i-col span="16"><img :src="modalCouponDetailData.picture" alt="" style="display: block; width: 200px; height: 100px;"></i-col>
                         </Row>
                         <Row>
-                            <i-col span="8">推广内容:</i-col>
-                            <i-col span="16" class="ivu-coupon-content"  v-html='modalCouponDetailData.content'></i-col>
+                            <i-col style="text-align: center;">推广内容</i-col>
+                        </Row>
+                        <Row>
+                            <i-col class="ivu-coupon-content" v-html='modalCouponDetailData.content'></i-col>
                         </Row>
 
                     </card>
