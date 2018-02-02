@@ -19,7 +19,27 @@ var getUrlParam = function (name) {
     if (r != null) return unescape(r[2]);
     return null; //返回参数值
 }
-var keywords = getUrlParam('keywords') ? getUrlParam('keywords') : '';
+var keywords = '';
+var systemId = '';
+$.ajax({
+    url: ApiUrl + "plats/articles/category",
+    type: 'get',
+    dataType: 'JSON',
+    success: function (result) {
+        if (result.code === 200) {
+            var html = '<option name="options" value="" selected>--请选择--</option>';
+            $.each(result.data.list, function (key, val) {
+                html += '<option name="options" value=' + val.weid + '>' + val.name + '</option>';
+            });
+            $("#systemId").html(html);
+        } else {
+            parent.layer.msg(result.message);
+
+            return false;
+        }
+    }
+});
+
 var initAdvList = function (data) {
     var params = null;
     $('#listTable').DataTable({
@@ -33,7 +53,7 @@ var initAdvList = function (data) {
                     list[i].id = i + 1;
                     list[i].title = `<a title="` + json.data.list[i].title + `" href="/` + json.data.list[i].domain + `/article/` + json.data.list[i].weid + `" target="_blank">` + shorten_str(json.data.list[i].title, 15) + `</a>`;
                     list[i].cover = json.data.list[i].cover ? json.data.list[i].cover.indexOf('http') !== 0 ? '<img class="thumb-image" data-action="zoom" src="' + ApiMaterPlatQiniuDomain + json.data.list[i].cover + '" width="40">' : '<img class="thumb-image" data-action="zoom" src="' + json.data.list[i].cover + '" width="40">' : '';
-                    list[i].recommend = json.data.list[i].recommend == 1 ? '<span class="label label-success">是</span>' : json.data.list[i].recommend == 2 ? '<span class="label label-default">否</span>' : '<span class="label label-danger">删除</span>';
+                    list[i].recommend = json.data.list[i].status == 3 ? '<span class="label label-default">删除</span>' : (json.data.list[i].recommend == 1 ? '<span class="label label-success">推荐</span>' : '常规');
                     list[i].created_at = getLocalTime(json.data.list[i].created_at);
                     list[i].system_name = json.data.list[i].system_name ? json.data.list[i].system_name : '无系统分类';
                     list[i].operation = `<div class="btn-group" role="group"><div class="btn-group">
@@ -41,11 +61,12 @@ var initAdvList = function (data) {
                     <ul class="dropdown-menu">`
                         + (json.data.list[i].recommend != 1 ? `<li><a href="#" class="set-status" data-type="1" data-id="` + json.data.list[i].weid + `" >推荐</a></li>` : ``)
                         + (json.data.list[i].recommend != 2 ? `<li><a href="#" class="set-status" data-type="2" data-id="` + json.data.list[i].weid + `" >取消推荐</a></li>` : ``)
-                        + `</ul>
-                    </div></div>`;
+                        + `</ul></div></div>`;
+                    if (json.data.list[i].status != 3) {
+                        list[i].operation += '<button class="btn btn-danger pull-right btn-delete"  data-id="' + json.data.list[i].weid + '" data-toggle="popover" data-placement="left" data-trigger="focus" data-html="true" title="确定要删除？" data-content="<button class=' + "'btn btn-danger btn-delete-confirm set-del'" + '  data-id=' + "'" + json.data.list[i].weid + "'" + '>确认</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class=' + "'btn btn-default'" + '>取消</button>" >删除</button>';
+                    }
                 }
                 params = json.data.params;
-                // keywords = json.data.params.title;
 
                 return list;
             }
@@ -63,6 +84,7 @@ var initAdvList = function (data) {
             {"data": "operation"}
         ],
         "destroy": true,
+        "searching": false,
         "oLanguage": {
             "sLengthMenu": "显示 _MENU_ 记录",
             "sZeroRecords": "对不起，查询不到任何相关数据",
@@ -116,22 +138,34 @@ var myPagination = function (params) {
     $('.pagination a').each(function (i) {
         $(this).click(function () {
             var page = $(this).attr('data-dt-idx');
-            var type_id = $("#type-select").children('option:selected').val();
             var data = {
-                type_id: type_id,
+                keywords: $('#keywords').val(),
+                systemId: $('#systemId').val(),
                 page: page,
-                limit: 10,
+                limit: 10
             };
             initAdvList(data);
-        })
+        });
     });
 }
 
 $(document).ready(function () {
+    // 选择
+    $('#systemId').change(function () {
+        var systemId = $(this).children('option:selected').val();
+        var data = {
+            keywords: keywords,
+            systemId: systemId
+        };
+        initAdvList(data);
+    });
+    // 默认
     var data = {
-        keywords: keywords
+        keywords: keywords,
+        systemId: systemId
     };
     initAdvList(data);
+    // 推荐
     $(document).on('click', '.set-status', function () {
         var id = $(this).data('id');
         var type = $(this).data('type');
@@ -140,11 +174,36 @@ $(document).ready(function () {
             type: 'post',
             data: {weid: id, recommend: type},
             dataType: 'json',
+            success: function (result) {
+                if (result.code === 200) {
+                    swal({
+                        text: '设置成功！',
+                        type: 'success'
+                    });
+                } else {
+                    swal({
+                        text: result.message,
+                        type: 'error'
+                    });
+
+                    return false;
+                }
+            }
+        });
+    });
+
+    // 删除
+    $(document).on('click', '.set-del', function () {
+        var id = $(this).data('id');
+        $.ajax({
+            url: ApiUrl + 'plats/articles/article_del',
+            type: 'post',
+            data: {weid: id},
+            dataType: 'json',
             success: function (data) {
                 swal({
-                    text: '设置成功！',
-                    type: 'success',
-                    timer: 2000
+                    text: '删除成功！',
+                    type: 'success'
                 });
                 location.reload();
             },
@@ -153,4 +212,13 @@ $(document).ready(function () {
             }
         });
     });
-})
+    // 搜索
+    $(document).on('click', '.search', function () {
+        var data = {
+            keywords: $('#keywords').val(),
+            systemId: $('#systemId').val()
+        };
+
+        initAdvList(data);
+    });
+});
