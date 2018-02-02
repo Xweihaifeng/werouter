@@ -229,7 +229,7 @@ var cloneObj = function (obj) {
       });
         } else if ($(this).data('type') == 1) {
       $('#bootstrapModalX').modal('show');
-      $('.zfxx').hide();
+      $('.order').hide();
       $.ajax({
         url: ApiUrl + 'cert/realname/show/' + $(this).data('id'),
         type: 'get',
@@ -255,15 +255,25 @@ var cloneObj = function (obj) {
                         $('#bootstrapModalX .refuse_words').text(data.data.refuse_words);
                     }
                     $('#bootstrapModalX .created_at').text(new Date(data.data.created_at * 1000).format('yyyy-MM-dd hh:mm:ss'));
-
+                    //付费方式
+                     var pay_type='平台代付'
+                     if(data.data.authLog!=null){
+                         if(data.data.authLog.pay_type==2){
+                            pay_type='自费';
+                         }else if(data.data.authLog.pay_type==3){
+                            pay_type='首次代付';
+                         }
+                     }
+                     $('#bootstrapModalX .pay_type').text(pay_type);
                     //支付信息
                     if(data.data.order!=null){
-                        $('.zfxx').show();
+                        $('.order').show();
                         $('#bootstrapModalX .total_fee').text(data.data.order.total_fee+'￥');
                         $('#bootstrapModalX .out_trade_no').text(data.data.order.out_trade_no);
                         $('#bootstrapModalX .pay_at').text(new Date(data.data.order.pay_at * 1000).format('yyyy-MM-dd hh:mm:ss')); 
                     }else{
-                      $('.zfxx').hide();
+                      $('.order').hide();
+                      $('#bootstrapModalX .total_fee').text('0￥');
                     }
         },
         error: function(xhr){
