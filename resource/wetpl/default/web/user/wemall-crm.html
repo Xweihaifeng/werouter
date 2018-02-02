@@ -199,14 +199,14 @@
                         <form-item label="使用限制" prop="use_restrictions">
                             <i-input v-model="formItemMemberCoupon.use_restrictions" placeholder="请输入使用限制（满多少元可用）"></i-input>
                         </form-item>
-                        <form-item label="领取时间" prop="receive_time">
+                        <form-item label="领取时间" prop="receive_time" class="ivu-form-item-required">
                             <date-picker v-model="formItemMemberCoupon.receive_time" format="yyyy/MM/dd" type="daterange" :options="receive_time_options" placement="bottom-end" placeholder="请输入领取时间段" style="width: 200px"></date-picker>
                         </form-item>
                         <form-item label="使用期限"  prop="activity_time">
                             <i-input v-model="formItemMemberCoupon.activity_time" placeholder="请输入使用期限（安天算）"></i-input>
                         </form-item>
                         <!--上传成功显示图片隐藏上传域-->
-                        <form-item label="推广图片">
+                        <form-item label="推广图片" class="ivu-form-item-required" >
                             <template>
                             <div class="demo-upload-list" v-for="item in uploadList">
                                 <template v-if="item.status === 'finished'">
