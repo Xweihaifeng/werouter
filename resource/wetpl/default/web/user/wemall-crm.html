@@ -87,10 +87,8 @@
     <div class="crm-header">
         <ul>
             <li class="logo">微众中国</li>
-            <li>首页</li>
-            <li>应用</li>
-            <li>帮助</li>
-            <li class="back">返回</li>
+            <li><a :href="'/'+domain">首页</a></li>
+            <li class="back"><a :href="'/'+domain+'/wemall'">返回</a></li>
         </ul>
     </div>
     <div class="wemall-crm" v-cloak>
@@ -138,7 +136,7 @@
                 <div class="form-list">
                     <i-button type="primary" style="float:left;margin-left:40px;" @click="MallMemberListClick()" >会员列表</i-button>
                     <div class="table-list" v-show="Memberflag">
-                        <i-table :columns="columnsMemberLevel" :data="MemberLeveldata"></i-table>
+                        <i-table size="default" border stripe :columns="columnsMemberLevel" :data="MemberLeveldata"></i-table>
                     </div>
                     <div class="table-list" v-show="this.MallMemberList.MallMemberListflag">
                         <i-table :columns="MallMemberList.columnsMallMemberList" :data="MallMemberList.MallMemberListData"></i-table>
@@ -365,6 +363,7 @@
         el: '#app',
         data: {
             mall_id:'',
+            domain:pages_index,
             currentState: 0,
             MemberLevelEdit:false, //会员等级编辑标志位
             MemberCouponEditflag:false, //优惠卷编辑标志位
@@ -400,27 +399,33 @@
             columnsMemberLevel: [
                 {
                     title: '会员卡名称',
-                    key: 'levels_name'
+                    key: 'levels_name',
+                    width: 150,
                 },
                 {
                     title: '会员卡等级',
-                    key: 'levels'
+                    key: 'levels',
+                    width: 100,
                 },
                 {
                     title: '会员卡类型',
-                    key: 'conditions'
+                    key: 'conditions',
+                    width: 150,
                 },
                 {
                     title: '折扣率',
-                    key: 'discount'
+                    key: 'discount',
+                    width: 100,
                 },
                 {
                     title: '限制条件',
-                    key: 'money'
+                    key: 'money',
+                    width: 100,
                 },
                 {
                     title: '添加日期',
-                    key: 'created_at'
+                    key: 'created_at',
+                    width:180,
                 },
                 {
                     title: '操作',
@@ -443,7 +448,8 @@
                                 }
                             }, '编辑'),
                         ]);
-                    }
+                    },
+                    width:100,
                 }
             ],
             MemberLeveldata: [
@@ -532,11 +538,13 @@
                 columnsMallMemberList:[
                     {
                         title: '会员姓名',
-                        key: 'real_name'
+                        key: 'real_name',
+                        width: 100,
                     },
                     {
-                        title: '会员等级',
-                        key: 'levels'
+                        title: '等级',
+                        key: 'levels',
+                        width: 80,
                     },
                     {
                         title: '等级名称',
@@ -544,7 +552,8 @@
                     },
                     {
                         title: '折扣率',
-                        key: 'discount'
+                        key: 'discount',
+                        width: 80,
                     },
                     {
                         title: '会员电话',
@@ -556,7 +565,8 @@
                     },
                     {
                         title: '添加日期',
-                        key: 'created_at'
+                        key: 'created_at',
+                        width: 180,
                     },
                 ],
                 MallMemberListData:[
@@ -577,39 +587,48 @@
                 columnsCouponRecordList:[
                     {
                         title: '优惠卷名称',
-                        key: 'name'
+                        key: 'name',
+                        width: 100,
                     },
                     {
                         title: '优惠卷类型',
-                        key: 'coupon_type'
+                        key: 'coupon_type',
+                        width: 100,
                     },
                     {
                         title: '优惠金额',
-                        key: 'amount'
+                        key: 'amount',
+                        width: 100,
                     },
                     {
                         title: '领取人',
-                        key: 'real_name'
+                        key: 'real_name',
+                        width: 100,
                     },
                     {
                         title: '电话',
-                        key: 'phone'
+                        key: 'phone',
+                        width: 150,
                     },
                     {
                         title: '领取数量',
-                        key: 'counts'
+                        key: 'counts',
+                        width: 100,
                     },
                     {
                         title: '过期时间',
-                        key: 'coupon_expiry_time'
+                        key: 'coupon_expiry_time',
+                        width: 100,
                     },
                     {
                         title: '是否过期',
-                        key: 'expiry_statu'
+                        key: 'expiry_statu',
+                        width: 100,
                     },
                     {
                         title: '领取日期',
-                        key: 'created_at'
+                        key: 'created_at',
+                        width: 200,
                     },
                     {
                         title: '操作',
@@ -630,7 +649,8 @@
                                     }
                                 }, '查看'),
                             ]);
-                        }
+                        },
+                        width: 70,
                     },
                 ],
                 CouponRecordflag:false, //显示标志位
@@ -685,17 +705,17 @@
                 {
                     title: '优惠共同使用',
                     key: 'is_reuse',
-                    width: 100,
+                    width: 120,
                 },
                 {
                     title: '开始领取',
                     key: 'publish_time',
-                    width: 100,
+                    width: 120,
                 },
                 {
                     title: '结束领取',
                     key: 'expire_time',
-                    width: 100,
+                    width: 120,
                 },
                 {
                     title: '可用时间',
@@ -715,7 +735,7 @@
                 {
                     title: '添加日期',
                     key: 'created_at',
-                    width: 100,
+                    width: 200,
                 },
                 {
                     title: '操作',
@@ -1183,7 +1203,7 @@
                             res.data.use_restrictions?data.use_restrictions=res.data.use_restrictions.toString():data.use_restrictions='';
                             data.receive_time=[res.data.publish_time,res.data.expire_time];
                             res.data.activity_time?data.activity_time=res.data.activity_time.toString():data.activity_time='';
-                            this.uploadList[0]={name:res.data.content_info.picture,url:'http://images.wezchina.com/'+res.data.content_info.picture,status:'finished'};
+                            this.uploadList[0]={name:res.data.content_info.picture,url:ApiMaterPlatQiniuDomain+res.data.content_info.picture,status:'finished'};
                             data.picture=res.data.content_info.picture;
                             data.title=res.data.content_info.title;
                             data.content=res.data.content_info.content;
