@@ -146,7 +146,7 @@
                         <i-table size="default" border stripe :columns="columnsMemberLevel" :data="MemberLeveldata"></i-table>
                     </div>
                     <div class="table-list" v-show="this.MallMemberList.MallMemberListflag">
-                        <i-table :columns="MallMemberList.columnsMallMemberList" :data="MallMemberList.MallMemberListData"></i-table>
+                        <i-table size="default" border stripe :columns="MallMemberList.columnsMallMemberList" :data="MallMemberList.MallMemberListData"></i-table>
                         <div style="margin: 10px;overflow: hidden">
                             <Page :total="MallMemberList.MallMemberListTotal" @on-change="MallMemberListPage" :page-size="MallMemberList.MallMemberListPageSize"></Page>
                         </div>
@@ -270,7 +270,7 @@
                         </div>
                     </div>
                     <div class="table-list" v-show="CouponRecordList.CouponRecordflag">
-                        <i-table :columns="CouponRecordList.columnsCouponRecordList" :data="CouponRecordList.CouponRecordListData"></i-table>
+                        <i-table size="default" border stripe :columns="CouponRecordList.columnsCouponRecordList" :data="CouponRecordList.CouponRecordListData"></i-table>
                         <div style="margin: 10px;overflow: hidden">
                             <Page :total="CouponRecordList.CouponRecordListTotal" @on-change="CouponRecordListPage" :page-size="CouponRecordList.CouponRecordListPageSize"></Page>
                         </div>
