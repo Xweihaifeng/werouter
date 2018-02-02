@@ -67,6 +67,11 @@ var __init_onlione_cert = function() {
         type: 'get',
         dataType: 'json',
         success: function(data) {
+             $('input[name=cert_name]').val(data.data.cert_name);
+             $('input[name=auth_money]').val(data.data.auth_money);
+             if(data.data.pay_type>1){
+                $('#rzjf').show();
+             }
             if (data.data.status == 1)
                 $('.online_cert .switch').removeClass('switch-close').addClass('switch-open');
             else
@@ -149,6 +154,11 @@ $(document).on('click', '.auth_cert .switch', function() {
 $(document).on('click', '.online_cert input[name=pay_type]', function() {
     var that = this;
     var pay_type = $("input[name='pay_type']:checked").val();
+    if(pay_type>1){
+        $('#rzjf').show();
+     }else{
+       $('#rzjf').hide();
+     }
     $.ajax({
         url: ApiUrl + 'cert/realname/set_pay_type',
         type: 'post',
@@ -572,7 +582,8 @@ $('#updateSet').click(function() {
         success: function(data) {
             console.log(data);
             if (data.code === 200) {
-                swal('提示', '保存成功', 'success');
+                swal({text: '保存成功',type: 'success', timer: 20000});
+                //swal('提示', '保存成功', 'success');
             } else {
                 console.log('error: -200');
             }
@@ -737,7 +748,8 @@ $('.weChatSet').click(function() {
         success: function(data) {
             console.log(data);
             if (data.code === 200) {
-                swal('提示', '保存成功', 'success');
+                swal({text: '保存成功',type: 'success', timer: 20000});
+                //swal('提示', '保存成功', 'success');
             } else {
                 console.log('error: -200');
             }
@@ -765,7 +777,8 @@ $('.weChatPaySet').click(function() {
         success: function(data) {
             console.log(data);
             if (data.code === 200) {
-                swal('提示', '保存成功', 'success');
+                swal({text: '保存成功',type: 'success', timer: 20000});
+                //swal('提示', '保存成功', 'success');
             } else {
                 console.log('error: -200');
             }
@@ -791,7 +804,8 @@ $('.weChatOpenSet').click(function() {
         success: function(data) {
             console.log(data);
             if (data.code === 200) {
-                swal('提示', '保存成功', 'success');
+                swal({text: '保存成功',type: 'success', timer: 20000});
+                //swal('提示', '保存成功', 'success');
             } else {
                 console.log('error: -200');
             }
@@ -866,7 +880,58 @@ $('#wepagesSet').click(function() {
         success: function(data) {
             console.log(data);
             if (data.code === 200) {
-                swal('提示', '保存成功', 'success');
+                swal({text: '保存成功',type: 'success', timer: 20000});
+                //swal('提示', '保存成功', 'success');
+            } else {
+                console.log('error: -200');
+            }
+        },
+        error: function(xhr) {
+            console.log(xhr);
+        }
+    });
+});
+$('#certnameSet').click(function() {
+    var cert_name =  $.trim($('input[name=cert_name]').val());
+    if(cert_name==''){
+        return false;
+    }
+    var formList = {
+        'cert_name': cert_name,
+    };
+    $.ajax({
+        url: ApiUrl + 'cert/realname/setting_update',
+        type: 'post',
+        dataType: 'json',
+        data:formList,
+        success: function(data) {
+            if (data.code === 200) {
+                swal({text: '保存成功',type: 'success', timer: 20000});
+            } else {
+                console.log('error: -200');
+            }
+        },
+        error: function(xhr) {
+            console.log(xhr);
+        }
+    });
+});
+$('#update_auth_money').click(function() {
+    var auth_money =  $.trim($('input[name=auth_money]').val());
+    if(auth_money==''){
+        return false;
+    }
+    var formList = {
+        'auth_money': auth_money,
+    };
+    $.ajax({
+        url: ApiUrl + 'cert/realname/setting_update',
+        type: 'post',
+        dataType: 'json',
+        data:formList,
+        success: function(data) {
+            if (data.code === 200) {
+                swal({text: '保存成功',type: 'success', timer: 20000});
             } else {
                 console.log('error: -200');
             }

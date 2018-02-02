@@ -32,6 +32,7 @@
 
     <!--放大镜开始-->
     <script type="text/javascript" src="/resource/wetpl/vertical/web/shopping/js/jquery.jqzoom.min.js"></script>
+    <script type="text/javascript" src="/resource/wetpl/vertical/web/shopping/js/focusimg.js"></script>
     <!--放大镜结束-->
 
     <!--详情页样式开始-->
@@ -114,10 +115,10 @@
                                     <div class="items">
                                         <ul id="items_son">
                                             <li>
-                                                <img :jqimg="'http://images.wezchina.com/' + shop_info.cover" :src="'http://images.wezchina.com/' + shop_info.cover" alt="">
+                                                <img onmousemove="preview(this);" :bimg="'http://images.wezchina.com/' + shop_info.cover" :src="'http://images.wezchina.com/' + shop_info.cover" alt="">
                                             </li>
                                             <li v-for="item in shop_image_list">
-                                                <img :src=" 'http://images.wezchina.com/' + item" alt="">
+                                                <img onmousemove="preview(this);" :bimg="'http://images.wezchina.com/' + item" :src=" 'http://images.wezchina.com/' + item" alt="">
                                             </li>
                                         </ul>
                                     </div>
