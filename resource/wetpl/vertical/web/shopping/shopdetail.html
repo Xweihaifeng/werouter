@@ -20,15 +20,15 @@
     <script src="/common/iview/libs/util.js"></script>
     <script src="/common/iview/libs/filter.js"></script>
     <script src="/common/public/js/model/ver_ajax.js"></script>
-    <script src="/common/layui/layui.js"></script>
+    <!--<script src="/common/layui/layui.js"></script>-->
     <script src="{{PATH_CONFIG}}"></script>
     <script src="{{PATH_TML}}js/modal_login.js"></script>
     <script src="/common/magazine/js/iview.min.js"></script>
     <link rel="stylesheet" href="/common/jquery.animsition/css/animsition.min.css">
     <script src="/common/jquery.animsition/js/jquery.animsition.min.js"></script>
 
+    <script type="text/javascript" src="/common/layer-v3.0.3/layer-v3.0.3/layer/layer.js"></script>
     <link rel="stylesheet" href="/common/layer-v3.0.3/layer-v3.0.3/layer/skin/default/layer.css">
-    <script type="text/javascript" src="/common/layer-v3.0.3/layer-v3.0.3/layer/mobile/layer.js"></script>
 
     <!--放大镜开始-->
     <script type="text/javascript" src="/resource/wetpl/vertical/web/shopping/js/jquery.jqzoom.min.js"></script>
@@ -301,115 +301,6 @@
     </div>
 </div>
 <script>
-    // new Vue({
-    //     el: '#wepage',
-    //     data: {
-    //         menu: {},
-    //         dataMenu: ['我的主页', '我的文章', '我的活动', '我的商城', '我的圈子'],
-    //         pages: {total: 25, page: 1, limit: 10},
-    //         active: 'fans',
-    //         info: {},
-    //     },
-    //     created: function(){
-    //         //menu
-    //         this.menu = {list: this.dataMenu.map(e => ({name: e})), flag: 0};
-    //
-    //         axios.get(apiUrl + 'circel/index?domain=' + pages_info.plats_domian.domain, {
-    //             headers: {Token: plats_token}
-    //         }).then(data => {
-    //             this.info = data.data.data;
-    //             console.log(this.info)
-    //         })
-    //
-    //         $('#favicon').attr('href', ApiMaterPlatQiniuDomain + plats_info.favicon);
-    //         $("title").text(pages_info.plats_show.head_title)
-    //     },
-    //     methods: {
-    //         login: function(){
-    //             if (!docCookies.getItem("token")) {
-    //                 $("#modal_login").fadeIn(300);
-    //             } else {
-    //                 //接口调用
-    //                 info.if_follow == 1 ? console.log('取消关注') : console.log('已关注');
-    //             }
-    //         },
-    //         change: function(page){
-    //             this.isLoading = true;
-    //             this.pages.page = page;
-    //         },
-    //         style: function(list, i) {
-    //             list.flag = i;
-    //         },
-    //         select: function(type) {
-    //             this.active = type;
-    //         },
-    //         setImg: function(url, init, w, h, mode) {
-    //             if (url != '' && url != null && url != undefined) {
-    //                 if (url.indexOf('http') === -1 && url.indexOf('common') === -1) {
-    //                     return mode != undefined ? ApiMaterPlatQiniuDomain + url + '?imageView2/' + mode + '/w/' + w + '/h/' + h
-    //                             : ApiMaterPlatQiniuDomain + url + '?imageView2/3/w/' + w + '/h/' + h;
-    //                 } else {
-    //                     return url;
-    //                 }
-    //             } else {
-    //                 return init;
-    //             }
-    //         },
-    //         setBg: function(url, init) {
-    //             if (url != null) {
-    //                 return ApiMaterPlatQiniuDomain + url;
-    //             } else {
-    //                 return init;
-    //             }
-    //         },
-    //         imgState: function(on, off, state) {
-    //             if (state) {
-    //                 return on;
-    //             } else {
-    //                 return off;
-    //             }
-    //         },
-    //         area: function(province, area) {
-    //             if (province != null) {
-    //                 return province + ' ' + area;
-    //             } else {
-    //                 return '来自火星';
-    //             }
-    //         },
-    //         brand: function(avatar) {
-    //             if (pages_info.plats_brand) {
-    //                 if (pages_info.plats_brand.logo != '') {
-    //                     return pages_info.plats_brand.logo;
-    //                 } else {
-    //                     return avatar;
-    //                 }
-    //             } else {
-    //                 return avatar;
-    //             }
-    //         }
-    //     },
-    //     filters: {
-    //         isName: function(val, type) {
-    //
-    //         },
-    //         isBrand: function(val, type) {
-    //             if (pages_info.plats_brand) {
-    //                 switch(type) {
-    //                     case 'user': return pages_info.plats_brand.title; break;
-    //                     case 'motto': return pages_info.plats_brand.slogan; break;
-    //                     default: break;
-    //                 }
-    //             } else {
-    //                 if (pages_info.plats_domian.domain == 'index' && type == 'user') {
-    //                     return plats_info.plat_name
-    //                 } else {
-    //                     return val;
-    //                 }
-    //             }
-    //         }
-    //     }
-    // })
-
 
     new Vue({
         el: '#list',
@@ -504,9 +395,8 @@
             // 立即购买
             buy() {
                 var self=this;
-                // if(isLogin) {
+                if(docCookies.getItem("token")) {
                     localStorage.setItem("num", $("input[name='num']").val());
-                    // window.location.href = "/shoporder/" + id;
                     var obj = {
                         goods_list : [
                             {
@@ -531,53 +421,50 @@
                             }
                         }
                     })
-                // } else {
-                //     router('login');
-                // }
+                } else {
+                    $("#modal_login").show();
+                }
             },
             // 加入购物车
             add_buycar() {
-                // if(isLogin) {
-                    // if(!likeState) {
-                console.log(1)
-                        var weid = window.location.pathname.split("/").pop();
-                        var add_number = $("#add_number").val();
-                        $.ajax({
-                            url: apiUrl + 'cart/store',
-                            type: 'post',
-                            dataType: 'json',
-                            data: {
-                                goods_id: weid,
-                                goods_num: add_number
-                            },
-                            headers: {
-                                'Token': docCookies.getItem("token"),
-                            },
-                            success: function(data) {
-                                // console.log(data);
-                                if(data.code == 200) {
-                                    console.log(data);
+                if(!docCookies.getItem("token")) {
+                    $("#modal_login").show();
+                } else {
+                    var weid = window.location.pathname.split("/").pop();
+                    var add_number = $("#add_number").val();
+                    $.ajax({
+                        url: apiUrl + 'cart/store',
+                        type: 'post',
+                        dataType: 'json',
+                        data: {
+                            goods_id: weid,
+                            goods_num: add_number
+                        },
+                        headers: {
+                            'Token': docCookies.getItem("token"),
+                        },
+                        success: function(data) {
+                            // console.log(data);
+                            if(data.code == 200) {
+                                console.log(data);
 
-                                    $(".add_to_cart").css({
-                                        "background": '#d4d4d4',
-                                        "cursor": 'default'
-                                    });
-                                    $(".add_to_cart").unbind("click");
-                                    // alert("成功加入购物车")
-                                    layer.msg("成功加入购物车", { time: 2500 });
-                                } else {
-                                    // alert("该商品已经加入购物车,请勿重复添加")
-                                    layer.msg("该商品已经加入购物车,请勿重复添加", { time: 2500 });
-                                }
-                            },
-                            error: function(xhr) {
-                                console.log(xhr);
+                                $(".add_to_cart").css({
+                                    "background": '#d4d4d4',
+                                    "cursor": 'default'
+                                });
+                                $(".add_to_cart").unbind("click");
+                                // alert("成功加入购物车")
+                                layer.msg("成功加入购物车", { time: 2500 });
+                            } else {
+                                // alert("该商品已经加入购物车,请勿重复添加")
+                                layer.msg("该商品已经加入购物车,请勿重复添加", { time: 2500 });
                             }
-                        })
-                    // }
-                // } else {
-                //     router('login');
-                // }
+                        },
+                        error: function(xhr) {
+                            console.log(xhr);
+                        }
+                    })
+                }
             },
             // 商品评论
             comment() {
