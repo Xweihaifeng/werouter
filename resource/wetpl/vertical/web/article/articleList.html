@@ -9,8 +9,9 @@
     <link rel="stylesheet" href="/common/css/bootstrap.min.css" />
     <link rel="stylesheet" href="/common/layui/css/layui.css" />
     <link rel="stylesheet" href="{{PATH_TML}}css/modal_login.css" />
-    <link rel="stylesheet" href="{{PATH_TML}}css/normalize.css" />
+    <link rel="stylesheet" href="{{PATH_TML}}css/normalize.css" />    
     <link rel="stylesheet" href="/common/magazine/css/iview.css">
+    <link rel="stylesheet" href="{{PATH_TML}}css/index_new.css" />
     <link rel="stylesheet" href="{{PATH_TML}}zone/css/zone.css">
     <link rel="stylesheet" href="{{PATH_TML}}css/wepage.css" />
     <script src="/common/js/jquery-3.2.1.min.js"></script>
@@ -314,6 +315,19 @@
                     <Page :total="parseInt(pages[type].total)" :current="pages[type].page" :page-size="pages[type].limit" @on-change="change" v-if="pages[type].total > pages[type].limit"></Page>
                 </div>
             </div>
+        </div>
+        <div id="bottom1">
+            <footer>
+                <div class="footer-nav">
+                    <a href="javascript:void(0)">咨询与建议</a>
+                    <a href="javascript:void(0)">站点地图</a>
+                    <a id="contact" href="/org/lxwm">联系我们</a>
+                </div>
+                <div class="copyright" v-html="plats_info.copyright"></div>
+                <div class="_ideConac">
+                    <img src="/common/img/gabeian.png" width="60" height="60">
+                </div>
+            </footer>
         </div>
     </div>
 
