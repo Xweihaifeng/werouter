@@ -55,7 +55,7 @@
             </div>
             <div id="menu">
                 <ul>
-                    <li><img id="plats-user" :src="setImg(brand(pages_info.plats_user.avatar) ,'/common/img/new/avatar.png', 25, 25)" alt=""></li>
+                    <li><a :href="'/' + pages_info.plats_domian.domain"><img id="plats-user" :src="setImg(brand(pages_info.plats_user.avatar) ,'/common/img/new/avatar.png', 25, 25)" alt=""></a></li>
                     <li v-for="(e, i) in menu.list" @click="style(menu, i)" :class="{'underline': i === menu.flag}">{{e.name}}</li>
                     <li id="center"><a href="/user"><p><img :src="setImg(avatar ,'/common/img/new/my.png', 25, 25)" alt=""/>用户中心</p></a></li>
                 </ul>
