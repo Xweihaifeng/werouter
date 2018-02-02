@@ -34,9 +34,11 @@
     <div class="modal_login" id="modal_login"></div>
     <div id="wepage" class="animsition">
         <div id="header">
-            <div id="topline">
-                <a href="/"><img src="/common/img/new/logo-wepage.png" alt=""/></a>
-                <a :href="user" @click="login(1)"><p><img id="avatar" :src="setImg(avatar ,'/common/img/new/my.png', 100, 100)" alt=""/>{{userCenter}}</p></a>
+            <div>
+                <div id="topline">
+                    <a href="/"><img src="/common/img/new/logo-wepage.png" alt=""/></a>
+                    <a :href="user" @click="login(1)"><p><img id="avatar" :src="setImg(avatar ,'/common/img/new/my.png', 100, 100)" alt=""/>{{userCenter}}</p></a>
+                </div>
             </div>
             <div id="userinfo" :style="{'background': 'url(' + setBg(pages_info.plats_domian.background, '/common/img/new/wepage.png') + ') no-repeat center','background-size': 'cover'}">
                 <div>
