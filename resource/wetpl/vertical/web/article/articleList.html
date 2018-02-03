@@ -1,784 +1,258 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <title></title>
-    <meta charset="UTF-8" />
-    <meta name="description" content="" />
-    <meta name="keywords" content="" />
-    <link rel="shortcut icon" id="favicon" href="" />
-    <link rel="stylesheet" href="/common/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="/common/layui/css/layui.css" />
-    <link rel="stylesheet" href="{{PATH_TML}}css/modal_login.css" />
-    <link rel="stylesheet" href="{{PATH_TML}}css/normalize.css" />    
-    <link rel="stylesheet" href="/common/magazine/css/iview.css">
-    <link rel="stylesheet" href="{{PATH_TML}}zone/css/zone.css">
-    <link rel="stylesheet" href="{{PATH_TML}}css/wepage.css" />
-    <script src="/common/js/jquery-3.2.1.min.js"></script>
-    <script src="/common/public/js/app.js"></script>
-    <script src="/common/iview/vue.min.js"></script>
-    <script src="/common/iview/axios.min.js"></script>
-    <script src="/common/iview/libs/util.js"></script>
-    <script src="/common/iview/libs/filter.js"></script>
-    <script src="/common/public/js/model/ver_ajax.js"></script>
-    <script src="/common/layui/layui.js"></script>
-    <script src="{{PATH_CONFIG}}"></script>
-    <script src="{{PATH_TML}}js/modal_login.js"></script>
-    <script src="/common/js/echart/echarts.js"></script>
-    <script src="/common/js/echart/china.js"></script>
-    <script src="{{PATH_TML}}zone/js/circle.js"></script>
-    <script src="/common/magazine/js/iview.min.js"></script>
-    <link rel="stylesheet" href="/common/jquery.animsition/css/animsition.min.css">
-    <script src="/common/jquery.animsition/js/jquery.animsition.min.js"></script>
-</head>
-<body>
-    <div class="modal_login" id="modal_login"></div>
-    <div id="wepage" class="animsition">
-        <div id="header">
-            <div>
-                <div id="topline">
-                    <a href="/"><img src="/common/img/new/logo-wepage.png" alt=""/></a>
-                    <a :href="user" @click="login(1)"><p><img id="avatar" :src="setImg(avatar ,'/common/img/new/my.png', 100, 100)" alt=""/>{{userCenter}}</p></a>
+<#extend#>public/extend/wepage_extend.html</#extend#>
+<div id="container">
+    <div id="content">
+        <!--<ul id="type">
+            <li style="color: #333;">全部</li>
+            <li>一月内</li>
+            <li>三月内</li>
+            <li>半年内</li>
+            <li>一年内</li>
+        </ul>-->                
+        <div id="main">
+            <ul id="list">
+                <div class="none" v-if="none">
+                    <img src="/common/img/no_con_default.png" alt=""/>
                 </div>
-            </div>
-            <div id="userinfo" :style="{'background': 'url(' + setBg(pages_info.plats_domian.background, '/common/img/new/wepage.png') + ') no-repeat center','background-size': 'cover'}">
-                <div>
-                    <a :href="'/' + pages_info.plats_domian.domain"><img class="avatar1" :src="setImg(brand(pages_info.plats_user.avatar) ,'/common/img/new/avatar.png', 100, 100)" alt=""/></a>
-                    <p>
-                        <span>
-                            {{pages_info.plats_user.real_name + '的微主页' | isBrand('user')}}
-                            <img :src="imgState('/common/img/new/member.png', '/common/img/new/memberoff.png', pages_info.plats_user_cert.is_authenticated == 1)" alt=""/>
-                            <img :src="imgState('/common/img/new/care.png', '/common/img/new/careoff.png', info.if_follow == 1 ? true : false)" alt="" @click="login(0)"/>
-                        </span>
-                        <span>{{pages_info.plats_user.motto | isBrand('motto')}}</span>
-                    </p>
-                </div>
-            </div>
-            <div id="menu">
-                <ul>
-                    <li><a :href="'/' + pages_info.plats_domian.domain"><img id="plats-user" :src="setImg(brand(pages_info.plats_user.avatar) ,'/common/img/new/avatar.png', 45, 45)" alt=""></a></li>
-                    <li v-for="(e, i) in menu.list" @click="style(menu, i)" :class="{'underline': i === menu.flag}">{{e.name}}</li>
-                    <li id="center"><a :href="user" @click="login(1)"><p><img :src="setImg(avatar ,'/common/img/new/my.png', 25, 25)" alt=""/>{{userCenter}}</p></a></li>
-                </ul>
-            </div>
-        </div>
-        <div id="container">
-            <div id="content">
-                <!--<ul id="type">
-                    <li style="color: #333;">全部</li>
-                    <li>一月内</li>
-                    <li>三月内</li>
-                    <li>半年内</li>
-                    <li>一年内</li>
-                </ul>-->                
-                <div id="main">
-                    <ul id="list">
-                        <div class="none" v-if="none">
-                            <img src="/common/img/no_con_default.png" alt=""/>
+                <a v-for="e in latest" :href='"/" + e.domain + dynamic.filter(x => x.id == e.dynamic_type)[0].val + JSON.parse(e.other).weid' v-show="type == 'latest'" target="_blank">
+                    <li v-if="e.dynamic_type == 1">
+                        <img class="i0" :src="setImg(JSON.parse(e.other).cover, '/common/img/new/products_load.jpg', 240, 160)" />
+                        <p>
+                            <span style="padding: 0;">
+                                <span>{{JSON.parse(e.other).title | cut(25)}}</span>
+                                <span>{{JSON.parse(e.other).summary | cut(100)}} </span>
+                            </span>
+                            <span>
+                                <img class="i1" src="/common/img/new/date.png" alt=""/><span style="padding-right:34px;">{{JSON.parse(e.other).updated_at}}</span>
+                                <img class="i2" src="/common/img/new/read.png" alt=""/><span>{{JSON.parse(e.other).views}}</span>
+                            </span>
+                        </p>
+                    </li>
+                    <li v-if="e.dynamic_type == 3">
+                        <img class="i0" :src="setImg(e.cover, '/common/img/new/products_load.jpg', 240, 160)" />
+                        <p style="width:395px;">
+                            <span style="padding: 0;">
+                                <span>{{JSON.parse(e.other).title}}</span>
+                                <span>举办方：{{JSON.parse(e.other).Sponsor}} </span>
+                            </span>
+                            <span>
+                                <img class="i1" src="/common/img/new/date.png" alt=""/><span style="padding-right:34px;">{{JSON.parse(e.other).begain_time + ' ' + JSON.parse(e.other).begain_week + ' 开始'}}</span>
+                                <img class="i3" src="/common/img/new/local.png" alt=""/><span>{{JSON.parse(e.other).area_name + ' ' + JSON.parse(e.other).address}}</span>
+                            </span>
+                            <p class="act-btn">
+                                <span :class="{'act-title-free': JSON.parse(e.other).type == 1, 'act-title-price': JSON.parse(e.other).type != 1}">{{JSON.parse(e.other).type == 1 ? "免费" : "收费"}}</span>
+                                <span :class="{'act-free': JSON.parse(e.other).type == 1, 'act-price': JSON.parse(e.other).type != 1}">立即报名</span>
+                            </p>
+                        </p>
+                    </li>
+                    <li v-if="e.dynamic_type == 4">
+                        <img class="i0" :src="setImg(JSON.parse(e.other).cover, '/common/img/new/products_load.jpg', 240, 160)" />
+                        <p style="width:395px;">
+                            <span style="padding: 0;">
+                                <span>{{JSON.parse(e.other).title | cut(25)}}</span>
+                                <span>{{JSON.parse(e.other).summary | cut(100)}} </span>
+                            </span>
+                            <span>
+                                <span style="font-size:14px;color:#777;">价格</span><span style="width:100px;padding-right:34px;color:#ed4c4c;">￥{{JSON.parse(e.other).price}}</span>
+                                <span style="padding-top:0;color:#777;">市场价</span><span style="text-decoration: line-through;">￥{{JSON.parse(e.other).marketprice}}</span>
+                            </span>
+                        </p>
+                        <p class="sp-btn">
+                           <span>查看详情</span>
+                        </p>
+                    </li>
+                </a>
+                <a v-for="e in articles" :href="'/' + pages_info.plats_domian.domain + '/article/' + e.weid" v-show="type == 'articles'" target="_blank">
+                    <li>
+                        <img class="i0" :src="setImg(e.cover, '/common/img/new/products_load.jpg', 240, 160)" />
+                        <p>
+                            <span style="padding: 0;">
+                                <span>{{e.title | cut(25)}}</span>
+                                <span>{{e.summary | cut(100)}} </span>
+                            </span>
+                            <span>
+                                <img class="i1" src="/common/img/new/date.png" alt=""/><span style="padding-right:34px;">{{e.updated_at}}</span>
+                                <img class="i2" src="/common/img/new/read.png" alt=""/><span>{{e.views}}</span>
+                            </span>
+                        </p>
+                    </li>
+                </a>
+                <a v-for="e in activity" :href="'/' + e.domain + '/activity/' + e.weid" v-show="type == 'activity'" target="_blank">
+                    <li>
+                        <img class="i0" :src="setImg(e.cover, '/common/img/new/products_load.jpg', 240, 160)" />
+                        <p style="width:395px;">
+                            <span style="padding: 0;">
+                                <span>{{e.title}}</span>
+                                <span>举办方：{{e.Sponsor}} </span>
+                            </span>
+                            <span>
+                                <img class="i1" src="/common/img/new/date.png" alt=""/><span style="padding-right:34px;">{{e.begain_time + ' ' + e.begain_week + ' 开始'}}</span>
+                                <img class="i3" src="/common/img/new/local.png" alt=""/><span>{{e.area_name + ' ' + e.address}}</span>
+                            </span>
+                            <p class="act-btn">
+                                <span :class="{'act-title-free': e.type == 1, 'act-title-price': e.type != 1}">{{e.type == 1 ? "免费" : "收费"}}</span>
+                                <span :class="{'act-free': e.type == 1, 'act-price': e.type != 1}">立即报名</span>
+                            </p>
+                        </p>
+                    </li>
+                </a>
+                <ul id="shop" v-show="type == 'shopping'">
+                    <li v-for="(e, i) in shopCate">
+                        <div>
+                            <p></p>
+                            <p>{{i + 1}}F {{e.name}}</p>
                         </div>
-                        <a v-for="e in latest" :href='"/" + e.domain + dynamic.filter(x => x.id == e.dynamic_type)[0].val + JSON.parse(e.other).weid' v-show="type == 'latest'" target="_blank">
-                            <li v-if="e.dynamic_type == 1">
-                                <img class="i0" :src="setImg(JSON.parse(e.other).cover, '/common/img/new/products_load.jpg', 240, 160)" />
-                                <p>
-                                    <span style="padding: 0;">
-                                        <span>{{JSON.parse(e.other).title | cut(25)}}</span>
-                                        <span>{{JSON.parse(e.other).summary | cut(100)}} </span>
-                                    </span>
-                                    <span>
-                                        <img class="i1" src="/common/img/new/date.png" alt=""/><span style="padding-right:34px;">{{JSON.parse(e.other).updated_at}}</span>
-                                        <img class="i2" src="/common/img/new/read.png" alt=""/><span>{{JSON.parse(e.other).views}}</span>
-                                    </span>
-                                </p>
-                            </li>
-                            <li v-if="e.dynamic_type == 3">
-                                <img class="i0" :src="setImg(e.cover, '/common/img/new/products_load.jpg', 240, 160)" />
-                                <p style="width:395px;">
-                                    <span style="padding: 0;">
-                                        <span>{{JSON.parse(e.other).title}}</span>
-                                        <span>举办方：{{JSON.parse(e.other).Sponsor}} </span>
-                                    </span>
-                                    <span>
-                                        <img class="i1" src="/common/img/new/date.png" alt=""/><span style="padding-right:34px;">{{JSON.parse(e.other).begain_time + ' ' + JSON.parse(e.other).begain_week + ' 开始'}}</span>
-                                        <img class="i3" src="/common/img/new/local.png" alt=""/><span>{{JSON.parse(e.other).area_name + ' ' + JSON.parse(e.other).address}}</span>
-                                    </span>
-                                    <p class="act-btn">
-                                        <span :class="{'act-title-free': JSON.parse(e.other).type == 1, 'act-title-price': JSON.parse(e.other).type != 1}">{{JSON.parse(e.other).type == 1 ? "免费" : "收费"}}</span>
-                                        <span :class="{'act-free': JSON.parse(e.other).type == 1, 'act-price': JSON.parse(e.other).type != 1}">立即报名</span>
-                                    </p>
-                                </p>
-                            </li>
-                            <li v-if="e.dynamic_type == 4">
-                                <img class="i0" :src="setImg(JSON.parse(e.other).cover, '/common/img/new/products_load.jpg', 240, 160)" />
-                                <p style="width:395px;">
-                                    <span style="padding: 0;">
-                                        <span>{{JSON.parse(e.other).title | cut(25)}}</span>
-                                        <span>{{JSON.parse(e.other).summary | cut(100)}} </span>
-                                    </span>
-                                    <span>
-                                        <span style="font-size:14px;color:#777;">价格</span><span style="width:100px;padding-right:34px;color:#ed4c4c;">￥{{JSON.parse(e.other).price}}</span>
-                                        <span style="padding-top:0;color:#777;">市场价</span><span style="text-decoration: line-through;">￥{{JSON.parse(e.other).marketprice}}</span>
-                                    </span>
-                                </p>
-                                <p class="sp-btn">
-                                   <span>查看详情</span>
-                                </p>
-                            </li>
-                        </a>
-                        <a v-for="e in articles" :href="'/' + pages_info.plats_domian.domain + '/article/' + e.weid" v-show="type == 'articles'" target="_blank">
-                            <li>
-                                <img class="i0" :src="setImg(e.cover, '/common/img/new/products_load.jpg', 240, 160)" />
-                                <p>
-                                    <span style="padding: 0;">
-                                        <span>{{e.title | cut(25)}}</span>
-                                        <span>{{e.summary | cut(100)}} </span>
-                                    </span>
-                                    <span>
-                                        <img class="i1" src="/common/img/new/date.png" alt=""/><span style="padding-right:34px;">{{e.updated_at}}</span>
-                                        <img class="i2" src="/common/img/new/read.png" alt=""/><span>{{e.views}}</span>
-                                    </span>
-                                </p>
-                            </li>
-                        </a>
-                        <a v-for="e in activity" :href="'/' + e.domain + '/activity/' + e.weid" v-show="type == 'activity'" target="_blank">
-                            <li>
-                                <img class="i0" :src="setImg(e.cover, '/common/img/new/products_load.jpg', 240, 160)" />
-                                <p style="width:395px;">
-                                    <span style="padding: 0;">
-                                        <span>{{e.title}}</span>
-                                        <span>举办方：{{e.Sponsor}} </span>
-                                    </span>
-                                    <span>
-                                        <img class="i1" src="/common/img/new/date.png" alt=""/><span style="padding-right:34px;">{{e.begain_time + ' ' + e.begain_week + ' 开始'}}</span>
-                                        <img class="i3" src="/common/img/new/local.png" alt=""/><span>{{e.area_name + ' ' + e.address}}</span>
-                                    </span>
-                                    <p class="act-btn">
-                                        <span :class="{'act-title-free': e.type == 1, 'act-title-price': e.type != 1}">{{e.type == 1 ? "免费" : "收费"}}</span>
-                                        <span :class="{'act-free': e.type == 1, 'act-price': e.type != 1}">立即报名</span>
-                                    </p>
-                                </p>
-                            </li>
-                        </a>
-                        <ul id="shop" v-show="type == 'shopping'">
-                            <li v-for="(e, i) in shopCate">
-                                <div>
-                                    <p></p>
-                                    <p>{{i + 1}}F {{e.name}}</p>
-                                </div>
-                                <div>
-                                   <a v-for="(o, i) in e.shopping.slice(0, 3)" :href="'/' + pages_info.plats_domian.domain + '/wemall/goods/' + o.weid" target="_blank" @mouseenter="buy(o, i)" @mouseleave="buy(o, i, 'leave')">
-                                       <img :src="setImg(o.cover, '/common/img/new/products_load.jpg', 243, 160)" alt="" width="243" height="160" />
-                                       <span class="sp-title">{{o.title | cut(15)}}</span>
-                                       <span class="sp-intro">{{o.summary | cut(30)}}</span>
-                                       <span class="sp-price"><em style="font-style:normal;font-size:16px;">￥</em>{{o.price}}<b>市场价 ￥<i>{{o.marketprice}}</i></b></span>
-                                       <span class="sp-info" v-if="!o.stateBuy"><i>已售 <em>{{o.sales_num}}</em></i><i>收藏 <em>{{o.stock}}</em></i></span>
-                                       <span class="sp-pinfo" v-else><i>立即购买</i></span>
-                                   </a>
-                                </div>
-                            </li>
-                        </ul>
-                        <ul id="ozone" v-show="type == 'zone'">
-                            <li>
-                                <p></p>
-                                <p>Ta的圈子</p>
-                            </li>
-                            <li>
-                                <div>
-                                    <ul class="red"></ul>
-                                    <span>位微友</span>
-                                </div>
-                            </li>
-                            <li>
-                                <p></p>
-                                <p>Ta的微友曲线</p>
-                            </li>
-                            <li>
-                                <div style="display: flex; justify-content: flex-end;">
-                                    <button class="btn btn-default" onclick="changeTime(2,'#')" style="position: relative; height: 34px;">去年</button>
-                                    <a class="button-down-box-parent button-down-box-parent-p">
-                                        <button class="btn btn-default" onclick="changeTime(1,'#');$('.button-down-box').hide()" onmouseenter="$('.button-down-box').show()">今年</button>
-                                        <div class="button-down-box-parent" style="display: inline-block; width: auto;height: auto">
-                                            <ul class="button-down-box" onmouseleave="$('.button-down-box').hide()" style="display:none;margin-top:10px;">
-                                                <li onclick="changeTime(3,'#')" style="height:34px;padding-top:7px;text-align:center;cursor:pointer;display:block;font-size:14px;">当月</li>
-                                                <li onclick="changeTime(4,'#')" style="height:34px;padding-top:7px;text-align:center;cursor:pointer;display:block;font-size:14px;">上月</li>
-                                            </ul>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div id="curve_count" style="width:790px;height:400px;"></div>
-                                <ul>
-                                    <li style="width:32px;height:18px;margin-right:10px;background:#FF8C8E;padding:0;"></li>
-                                    <li style="width:80px;height:18px;margin-right:10px;border:none;padding:0;font-size:14px;">新增微友</li>
-                                    <li style="width:32px;height:18px;margin-right:10px;background:#17c295;padding:0;"></li>
-                                    <li style="width:80px;height:18px;margin-right:10px;border:none;padding:0;font-size:14px;">活跃微友</li>
-                                </ul>
-                                <p class="y" style="align-items:flex-end;margin-top:10px;font-size:14px;color:#999;"></p>
-                                <p><img src="/common/img/group_bottom.png" width="100%" /></p>
-                            </li>
-                            <li>
-                                <p></p>
-                                <p>Ta的微友分布</p>
-                            </li>
-                            <li>
-                                <div>
-                                    <div id="lanuch_main" style="width:790px;height:520px;"></div>
-                                    <ul>
-                                        <li><span style="background: #ff0000"></span><span><10000人</span></li>
-                                        <li><span style="background: #ffac37"></span><span><5000人</span></li>
-                                        <li><span style="background: #c1e461"></span><span><1000人</span></li>
-                                        <li><span style="background: #f4f77d"></span><span><100人</span></li>
-                                        <li><span style="background: #cccccc"></span><span><1人</span></li>
-                                        <li><span style="background: #eeeeee"></span><span><0人</span></li>
+                        <div>
+                           <a v-for="(o, i) in e.shopping.slice(0, 3)" :href="'/' + pages_info.plats_domian.domain + '/wemall/goods/' + o.weid" target="_blank" @mouseenter="buy(o, i)" @mouseleave="buy(o, i, 'leave')">
+                               <img :src="setImg(o.cover, '/common/img/new/products_load.jpg', 243, 160)" alt="" width="243" height="160" />
+                               <span class="sp-title">{{o.title | cut(15)}}</span>
+                               <span class="sp-intro">{{o.summary | cut(30)}}</span>
+                               <span class="sp-price"><em style="font-style:normal;font-size:16px;">￥</em>{{o.price}}<b>市场价 ￥<i>{{o.marketprice}}</i></b></span>
+                               <span class="sp-info" v-if="!o.stateBuy"><i>已售 <em>{{o.sales_num}}</em></i><i>收藏 <em>{{o.stock}}</em></i></span>
+                               <span class="sp-pinfo" v-else><i>立即购买</i></span>
+                           </a>
+                        </div>
+                    </li>
+                </ul>
+                <ul id="ozone" v-show="type == 'zone'">
+                    <li>
+                        <p></p>
+                        <p>Ta的圈子</p>
+                    </li>
+                    <li>
+                        <div>
+                            <ul class="red"></ul>
+                            <span>位微友</span>
+                        </div>
+                    </li>
+                    <li>
+                        <p></p>
+                        <p>Ta的微友曲线</p>
+                    </li>
+                    <li>
+                        <div style="display: flex; justify-content: flex-end;">
+                            <button class="btn btn-default" onclick="changeTime(2,'#')" style="position: relative; height: 34px;">去年</button>
+                            <a class="button-down-box-parent button-down-box-parent-p">
+                                <button class="btn btn-default" onclick="changeTime(1,'#');$('.button-down-box').hide()" onmouseenter="$('.button-down-box').show()">今年</button>
+                                <div class="button-down-box-parent" style="display: inline-block; width: auto;height: auto">
+                                    <ul class="button-down-box" onmouseleave="$('.button-down-box').hide()" style="display:none;margin-top:10px;">
+                                        <li onclick="changeTime(3,'#')" style="height:34px;padding-top:7px;text-align:center;cursor:pointer;display:block;font-size:14px;">当月</li>
+                                        <li onclick="changeTime(4,'#')" style="height:34px;padding-top:7px;text-align:center;cursor:pointer;display:block;font-size:14px;">上月</li>
                                     </ul>
                                 </div>
-                                <p id="red"></p>
-                                <p class="y"></p>
-                                <p><img src="/common/img/group_bottom.png" width="100%" /></p>
-                            </li>
+                            </a>
+                        </div>
+                        <div id="curve_count" style="width:790px;height:400px;"></div>
+                        <ul>
+                            <li style="width:32px;height:18px;margin-right:10px;background:#FF8C8E;padding:0;"></li>
+                            <li style="width:80px;height:18px;margin-right:10px;border:none;padding:0;font-size:14px;">新增微友</li>
+                            <li style="width:32px;height:18px;margin-right:10px;background:#17c295;padding:0;"></li>
+                            <li style="width:80px;height:18px;margin-right:10px;border:none;padding:0;font-size:14px;">活跃微友</li>
                         </ul>
+                        <p class="y" style="align-items:flex-end;margin-top:10px;font-size:14px;color:#999;"></p>
+                        <p><img src="/common/img/group_bottom.png" width="100%" /></p>
+                    </li>
+                    <li>
+                        <p></p>
+                        <p>Ta的微友分布</p>
+                    </li>
+                    <li>
+                        <div>
+                            <div id="lanuch_main" style="width:790px;height:520px;"></div>
+                            <ul>
+                                <li><span style="background: #ff0000"></span><span><10000人</span></li>
+                                <li><span style="background: #ffac37"></span><span><5000人</span></li>
+                                <li><span style="background: #c1e461"></span><span><1000人</span></li>
+                                <li><span style="background: #f4f77d"></span><span><100人</span></li>
+                                <li><span style="background: #cccccc"></span><span><1人</span></li>
+                                <li><span style="background: #eeeeee"></span><span><0人</span></li>
+                            </ul>
+                        </div>
+                        <p id="red"></p>
+                        <p class="y"></p>
+                        <p><img src="/common/img/group_bottom.png" width="100%" /></p>
+                    </li>
+                </ul>
+            </ul>
+            <ul id="info">
+                <li id="maininfo">
+                    <span id="userhead" :style="{'background': 'url(' + setBg(pages_info.plats_domian.background_user, '/common/img/new/bg.png') + ') no-repeat center', 'background-size': '100% 100%'}"></span>
+                    <a :href="'/' + pages_info.plats_domian.domain"><img :src="setImg(pages_info.plats_user.avatar ,'/common/img/new/avatar.png', 90, 90)" alt=""/></a>
+                    <span id="username">{{pages_info.plats_user_cert.name || pages_info.plats_user.real_name}}</span>
+                    <ul>
+                        <a :href="'/' + pages_info.plats_domian.domain + '/article'">
+                            <li>
+                                <span>{{info.article_count}}</span>
+                                <span>文章</span>
+                            </li>
+                        </a>
+                        <a :href="'/' + pages_info.plats_domian.domain + '/project'">
+                            <li>
+                                <span>{{info.project_count}}</span>
+                                <span>项目</span>
+                            </li>
+                        </a>
+                        <a :href="'/' + pages_info.plats_domian.domain + '/activity'">
+                            <li>
+                                <span>{{info.activity_count}}</span>
+                                <span>活动</span>
+                            </li>
+                        </a>
                     </ul>
-                    <ul id="info">
-                        <li id="maininfo">
-                            <span id="userhead" :style="{'background': 'url(' + setBg(pages_info.plats_domian.background_user, '/common/img/new/bg.png') + ') no-repeat center', 'background-size': '100% 100%'}"></span>
-                            <a :href="'/' + pages_info.plats_domian.domain"><img :src="setImg(pages_info.plats_user.avatar ,'/common/img/new/avatar.png', 90, 90)" alt=""/></a>
-                            <span id="username">{{pages_info.plats_user_cert.name || pages_info.plats_user.real_name}}</span>
-                            <ul>
-                                <a :href="'/' + pages_info.plats_domian.domain + '/article'">
-                                    <li>
-                                        <span>{{info.article_count}}</span>
-                                        <span>文章</span>
-                                    </li>
-                                </a>
-                                <a :href="'/' + pages_info.plats_domian.domain + '/project'">
-                                    <li>
-                                        <span>{{info.project_count}}</span>
-                                        <span>项目</span>
-                                    </li>
-                                </a>
-                                <a :href="'/' + pages_info.plats_domian.domain + '/activity'">
-                                    <li>
-                                        <span>{{info.activity_count}}</span>
-                                        <span>活动</span>
-                                    </li>
-                                </a>
-                            </ul>
+                </li>
+                <li id="address">
+                    <ul>
+                        <li>
+                            <span>
+                                <i :style="fontColor">官方认证</i>
+                                <img :src="imgState('/common/img/new/offical.png', '/common/img/new/officaloff.png', pages_info.plats_user_cert.is_authenticated == 1)" alt="" width="76" height="26"/>
+                                <img :src="imgState('/common/img/new/cert.png', '/common/img/new/certoff.png', pages_info.plats_user_auth.is_authenticated == 1)" alt="" width="32" height="28"/>
+                                <img src="/common/img/new/message.png" alt="" width="60" height="24"/>
+                            </span>
+                            <span>{{pages_info.plats_user_cert.cert_info}}</span>
                         </li>
-                        <li id="address">
-                            <ul>
-                                <li>
-                                    <span>
-                                        <i :style="fontColor">官方认证</i>
-                                        <img :src="imgState('/common/img/new/offical.png', '/common/img/new/officaloff.png', pages_info.plats_user_cert.is_authenticated == 1)" alt="" width="76" height="26"/>
-                                        <img :src="imgState('/common/img/new/cert.png', '/common/img/new/certoff.png', pages_info.plats_user_auth.is_authenticated == 1)" alt="" width="32" height="28"/>
-                                        <img src="/common/img/new/message.png" alt="" width="60" height="24"/>
-                                    </span>
-                                    <span>{{pages_info.plats_user_cert.cert_info}}</span>
-                                </li>
-                                <li>
-                                    <img src="/common/img/new/address.png" alt="" width="17" height="22"/>
-                                    <span>{{area(pages_info.plats_user.province.name, pages_info.plats_user.area.name)}}</span>
-                                </li>
-                                <li>
-                                    <img src="/common/img/new/sign.png" alt="" width="17" height="18"/>
-                                    <span>{{pages_info.plats_user.motto}}</span>
-                                </li>
-                                <li>
-                                    <img :src="setImg(pages_info.plats_user_qrcode, '/common/img/new/qrcode.png', 140, 140)" alt="" width="140" height="140"/>
-                                    <p>
-                                        <span>微信扫描二维码</span>
-                                        <span>分享给好友</span>
-                                    </p>
-                                </li>
-                            </ul>
+                        <li>
+                            <img src="/common/img/new/address.png" alt="" width="17" height="22"/>
+                            <span>{{area(pages_info.plats_user.province.name, pages_info.plats_user.area.name)}}</span>
                         </li>
-                        <li id="friends">
-                            <ul>
-                                <li>
-                                    <p @mouseenter="select('fans')" :class="{'friends': active == 'fans'}">我的粉丝({{info.fnums}})</p>
-                                    <p @mouseenter="select('friends')" :class="{'friends': active == 'friends'}">我的关注({{info.gnums}})</p>
-                                </li>
-                                <li v-show="active == 'fans'">
-                                    <a v-for="e in info.flist" :href="'/' + e.domain" :title="e.nickname">
-                                        <img class="care" :src="setImg(e.avatar, '/common/img/new/1.png', 54, 54)" alt="" width="54" height="54"/>
-                                    </a>
-                                </li>
-                                <li v-show="active == 'friends'">
-                                    <a v-for="e in info.glist" :href="'/' + e.domain" :title="e.nickname">
-                                        <img class="care" :src="setImg(e.avatar, '/common/img/new/1.png', 54, 54)" alt="" width="54" height="54"/>
-                                    </a>
-                                </li>
-                                <li>
-                                    查看更多>>
-                                </li>
-                            </ul>
+                        <li>
+                            <img src="/common/img/new/sign.png" alt="" width="17" height="18"/>
+                            <span>{{pages_info.plats_user.motto}}</span>
+                        </li>
+                        <li>
+                            <img :src="setImg(pages_info.plats_user_qrcode, '/common/img/new/qrcode.png', 140, 140)" alt="" width="140" height="140"/>
+                            <p>
+                                <span>微信扫描二维码</span>
+                                <span>分享给好友</span>
+                            </p>
                         </li>
                     </ul>
-                </div>
-                <div id="pages">
-                    <Page :total="parseInt(pages[type].total)" :current="pages[type].page" :page-size="pages[type].limit" @on-change="change" v-if="pages[type].total > pages[type].limit"></Page>
-                </div>
-            </div>
+                </li>
+                <li id="friends">
+                    <ul>
+                        <li>
+                            <p @mouseenter="select('fans')" :class="{'friends': active == 'fans'}">我的粉丝({{info.fnums}})</p>
+                            <p @mouseenter="select('friends')" :class="{'friends': active == 'friends'}">我的关注({{info.gnums}})</p>
+                        </li>
+                        <li v-show="active == 'fans'">
+                            <a v-for="e in info.flist" :href="'/' + e.domain" :title="e.nickname">
+                                <img class="care" :src="setImg(e.avatar, '/common/img/new/1.png', 54, 54)" alt="" width="54" height="54"/>
+                            </a>
+                        </li>
+                        <li v-show="active == 'friends'">
+                            <a v-for="e in info.glist" :href="'/' + e.domain" :title="e.nickname">
+                                <img class="care" :src="setImg(e.avatar, '/common/img/new/1.png', 54, 54)" alt="" width="54" height="54"/>
+                            </a>
+                        </li>
+                        <li>
+                            查看更多>>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
         </div>
-        <div id="bottom1">
-            <footer>
-                <div class="footer-nav">
-                    <a href="javascript:void(0)">咨询与建议</a>
-                    <a href="javascript:void(0)">站点地图</a>
-                    <a id="contact" href="/org/lxwm">联系我们</a>
-                </div>
-                <div class="copyright" v-html="plats_info.copyright"></div>
-                <div class="_ideConac">
-                    <img src="/common/img/gabeian.png" width="60" height="60">
-                </div>
-            </footer>
+        <div id="pages">
+            <Page :total="parseInt(pages[type].total)" :current="pages[type].page" :page-size="pages[type].limit" @on-change="change" v-if="pages[type].total > pages[type].limit"></Page>
         </div>
     </div>
-
-    <script>
-        $(function() {
-            $(".animsition").animsition({
-                inClass               :   'fade-in',
-                outClass              :   'fade-out',
-                inDuration            :    300,
-                outDuration           :    300,
-                linkElement           :   '.animsition-link',
-                // e.g. linkElement   :   'a:not([target="_blank"]):not([href^=#])'
-                loading               :    true,
-                loadingParentElement  :   'body', //animsition wrapper element
-                loadingClass          :   'animsition-loading',
-                unSupportCss          : [ 'animation-duration',
-                    '-webkit-animation-duration',
-                    '-o-animation-duration'
-                ],
-                //"unSupportCss" option allows you to disable the "animsition" in case the css property in the array is not supported by your browser.
-                //The default setting is to disable the "animsition" in a browser that does not support "animation-duration".
-                overlay               :   false,
-                overlayClass          :   'animsition-overlay-slide',
-                overlayParentElement  :   'body'
-            });
-        });
-        var lineChart,lineTheme,xTitle,newlyAdded,Active,mapChart,mapData,requestUrl = apiUrl + 'circel/wcurve?domain=' + pages_info.plats_domian.domain;
-        $(".y").text('数据来源：' + plats_info.title);
-        var wefriends = function(nums, res) {
-            var n = parseInt(nums);
-            nums = nums + '';
-            var len = nums.length;
-            if (len == 0) {
-                $(".red").html(res.reverse().join(''));
-            } else {
-                res.push(`<li>${n % 10}</li>`);
-                wefriends(nums.substr(0, len - 1), res);
-            }
-        }
-        var getLine = function(data) {
-            var m = 1; //倍率
-            var n = 10; //时间
-            var i = 0;
-            var nums = data.wnums;
-            var computeTime = function(sum, time) {
-                if (sum > (time * 1000 / n)) {
-                    m = parseInt(sum / (time * 1000 / n));
-                }
-            }
-            var numbers = setInterval(function(){
-                if (i < nums) {
-                    wefriends(i, []);
-                    i += m;
-                } else {
-                    wefriends(nums, []);
-                    clearInterval(numbers);
-                }
-            }, n);
-
-            computeTime(nums, 4);
-
-            var curve = data.wcurve;
-            var spread = data.wspread;
-            var slen = wepage.checkRed(spread).length;
-            var arr = [0,0,0,0,0,0,0,0,0,0,0,0];
-            // 折线图
-            lineTheme = {color:['#C23531','#17C295']};
-            lineChart = echarts.init(document.getElementById('curve_count'), lineTheme);
-            xTitle = eval('["1\u6708","2\u6708","3\u6708","4\u6708","5\u6708","6\u6708","7\u6708","8\u6708","9\u6708","10\u6708","11\u6708","12\u6708"]');
-            newlyAdded = wepage.genArr(curve, arr);
-            Active = wepage.genArr(curve, arr);
-            // 地图
-            mapChart = echarts.init(document.getElementById('lanuch_main'));
-            mapData = wepage.genMap(spread);
-            if (slen == 0) {
-                $("#red").html("<span class='rcmd'></span><span style='color: #333;'>看哈，Ta成为网红潜力很大，大家帮Ta加加油！</span>")
-            } else if (slen < 34 && slen > 0) {
-                $("#red").html("<span class='rcmd'></span><span style='color: #333;'>Ta已经红遍中国" + slen + "省，是名副其实的小网红！</span>")
-            } else if (slen >= 34) {
-                $("#red").html("<span class='rcmd'></span><span style='color: #333;'>Ta已经红遍中国，是名副其实的网红！</span>")
-            }
-            makeChart();
-        }
-
-        var wepage = new Vue({
-            el: '#wepage',
-            data: {
-                menu: {},
-                dataMenu: ['首页', '我的文章', '我的活动', '我的商城', '我的圈子'],
-                dynamic: [{id: 1, val: '/article/'}, {id: 3, val: '/activity/'}, {id: 4, val: '/wemall/goods/'}],
-                active: 'fans',
-                info: {},
-                latest: [],
-                articles: [],
-                activity: [],
-                shopping: {},
-                shopCate: [],
-                pages: {
-                    latest: {total: 10, page: 1, limit: 10},
-                    articles: {total: 10, page: 1, limit: 10},
-                    activity: {total: 10, page: 1, limit: 10},
-                    shopping: {total: 1, page: 1, limit: 1},
-                    zone: {total: 1, page: 1, limit: 1}
-                },
-                page: {},
-                type: '',
-                none: false,
-                avatar: '',
-                userCenter: '',
-                user: 'javascript:void(0)',
-                fontColor: pages_info.plats_user_cert.is_authenticated == 1 ? {color: '#ff9900'} : {color: '#999'}
-            },
-            created: function(){
-                this.menu = {list: this.dataMenu.map(e => ({name: e})), flag: 0};
-                this.wefriends();
-                this.init(window.location.pathname.split('/').pop());                
-                this.avatar = docCookies.getItem('token') ? (plats_user_info.avatar ? plats_user_info.avatar : localStorage.getItem('avatar')) : '';
-                
-                if (!docCookies.getItem('token')) {
-                    this.userCenter = '快速登录';
-                } else {
-                    this.userCenter = '用户中心';
-                }
-
-                layui.use('layer', function() {
-                    this.layer = layui.layer;
-                })
-
-                $("#plats-user").hide();
-                $("#center").hide();
-                var height = $("#menu").offset().top;
-                $(window).scroll(function(){
-                    if($(document).scrollTop() >= height){
-                        $("#menu").css({position:"fixed",top:0,left:0,zIndex:99});
-                        $("#content").css({"padding-top":"55px"});
-                        $("#center").show();
-                        $("#plats-user").show();                        
-                        $("#menu ul li:nth-child(2)").hide();
-                    }else{
-                        $("#menu").css({position:"relative",zIndex:0});
-                        $("#content").css({"padding-top":0});
-                        $("#center").hide();
-                        $("#plats-user").hide();
-                        $("#menu ul li:nth-child(2)").show();
-                    }
-                })
-
-                $('#favicon').attr('href', ApiMaterPlatQiniuDomain + plats_info.favicon);
-                $("title").text(pages_info.plats_show.head_title);
-            },
-            mounted: function(){
-                this.$nextTick(function(){
-                    window.onpopstate = function(e) {
-                        var curr = window.location.pathname.split('/').pop();
-                        var list = ['', 'article', 'activity', 'wemall', 'quan'];
-                        var id = list.indexOf(curr);                    
-                        if (id != -1) {
-                            wepage.menu.flag = id;
-                            switch (id) {
-                                case 0: wepage.type = 'latest'; wepage.latest == '' ? wepage.none = true : wepage.none = false; break;
-                                case 1: wepage.type = 'articles'; wepage.articles == '' ? wepage.none = true : wepage.none = false; break;
-                                case 2: wepage.type = 'activity'; wepage.activity == '' ? wepage.none = true : wepage.none = false; break;
-                                case 3: wepage.type = 'shopping'; wepage.shopping == '' ? wepage.none = true : wepage.none = false; break;
-                                case 4: wepage.type = 'zone'; wepage.none = false; break;
-                            }
-                        } else {
-                            wepage.menu.flag = 0;
-                            wepage.type = 'articles'
-                        }                        
-                    }
-                })
-            },
-            methods: {
-                init: function(type){
-                    switch (type) {
-                        case '': this.type='latest'; this.getLatest(1, 10); this.menu.flag = 0; break;
-                        case 'article': this.type='articles'; this.getArtList(1, 10); this.menu.flag = 1; break;
-                        case 'activity': this.type='activity'; this.getActList(1, 10); this.menu.flag = 2; break;
-                        case 'wemall': this.type='shopping'; this.getShopCate(); this.menu.flag = 3; break;
-                        case 'quan': this.type='zone';this.menu.flag = 4; break;
-                        default: this.type='latest'; this.getLatest(1, 10); this.menu.flag = 0; break;
-                    }
-                },
-                wefriends: function(){
-                    axios.get(apiUrl + 'circel/index?domain=' + pages_info.plats_domian.domain, {
-                        headers: {'Token': plats_token}
-                    }).then(data => {
-                        this.info = data.data.data;
-                        getLine(this.info);
-                    })
-                },
-                changeArr: function(arr, id, val) {
-                    var cnt = 1;
-                    return arr.map(x => {
-                        if (id == cnt) {
-                            cnt++;
-                            return parseInt(val);
-                        } else {
-                            cnt++;
-                            return x;
-                        }
-                    })
-                },
-                genArr: function(curve, arr) {
-                    var res = arr;
-                    curve.map(x => res = this.changeArr(res, x.grow_m, x.nums));
-                    return res;
-                },
-                genMap: function(spread) {
-                    var res = [];
-                    spread.map(x => res.push({"name": x.area_title, "value": x.nums}));
-                    return res;
-                },
-                checkRed: function(spread) {
-                    return spread.filter(x => parseInt(x.nums) > 10000);
-                },
-                follow: function(){
-                    $.ajax({
-                        url: apiUrl + 'circel/relationship',
-                        type: 'POST',
-                        headers: {
-                            'Token': plats_token
-                        },
-                        data: {
-                            'domain': pages_info.plats_domian.domain,
-                            'type': 2
-                        },
-                        success: function(data){
-                            if (data.code == 200) {
-                                wepage.info.if_follow = 1;
-                                layui.use('layer', function() {
-                                    var layer = layui.layer;
-                                    layer.msg("关注成功", {time: 1500});
-                                })
-                            } else {
-                                layui.use('layer', function() {
-                                    var layer = layui.layer;
-                                    layer.msg(data.message, {time: 1500});
-                                })
-                            }
-                        }
-                    })
-                },
-                cancelFollow: function(){
-                    $.ajax({
-                        url: apiUrl + 'circel/quxiao',
-                        type: 'POST',
-                        data: {
-                            'domain': pages_info.plats_domian.domain,
-                            'type': 2
-                        },
-                        headers: {
-                            'Token': plats_token
-                        },
-                        success: function(data){
-                            if (data.code == 200) {
-                                layui.use('layer', function() {
-                                    wepage.info.if_follow = 0;
-                                    var layer = layui.layer;
-                                    layer.msg("取消关注成功", {time: 1500});
-                                })
-                            } else {
-                                layui.use('layer', function() {
-                                    var layer = layui.layer;
-                                    layer.msg(data.message, {time: 1500});
-                                })
-                            }
-                        }
-                    })
-                },
-                getLatest: function(page, limit) {
-                    axios.get(apiUrl + 'circel/dynamic?page=' + page + '&limit=10' + '&type=1&dynamic_type=0&domain=' + pages_info.plats_domian.domain).then(data => {                        
-                        this.type = 'latest';
-                        this.latest = data.data.data.list;
-                        this.latest == '' ? wepage.none = true : wepage.none = false;
-                    })
-                },
-                getArtList: function(page, limit) {
-                    $.ajax({
-                        url: ARTICLE_LIST + '?userId=' + pages_info.plats_domian.plat_user_id + '&page=' + page + '&limit=' + limit,
-                        success: function(data){
-                            if (data.code == 200){
-                                wepage.type = 'articles';
-                                wepage.articles = data.data.list;
-                                wepage.pages.articles.total = data.data.total;
-                                wepage.pages.articles.page = page;
-                                wepage.page = wepage.pages.articles;
-                                wepage.articles == '' ? wepage.none = true : wepage.none = false;
-                            }
-                        }
-                    })
-                },
-                getActList: function(page, limit) {
-                    $.ajax({
-                        url: apiUrl + 'activity/listbyuser',
-                        type: 'POST',
-                        data: {
-                            user_id: pages_info.plats_domian.plat_user_id,
-                            status: 2,
-                            is_private: 1,
-                            page: page,
-                            limit: limit
-                        },
-                        success: function(data){
-                            if (data.code == 200){
-                                wepage.type = 'activity';
-                                wepage.activity = data.data.list;
-                                wepage.pages.activity.total = data.data.total;
-                                wepage.pages.activity.page = page;
-                                wepage.page = wepage.pages.activity;
-                                wepage.activity == '' ? wepage.none = true : wepage.none = false;
-                            }
-                        }
-                    })
-                },
-                getShopCate: function() {
-                    axios.get(GOODS_CATES_LIST_USERID + "/" + pages_info.plats_domian.plat_user_id).then(data => {
-                        if (Object.keys(data.data.data) != '') {
-                            this.shopCate = data.data.data.map(e => (e.shopping = [], e));
-                            this.getShopList(this.shopCate, 1, 10);
-                        } else {
-                            this.type = 'shopping';
-                            this.none = true;
-                        }
-                    })
-                },
-                getShopList: function(cate, page, limit) {
-                    this.type = 'shopping';
-                    this.shopCate == '' ? this.none = true : this.none = false;
-                    this.shopCate.map(e => {
-                        $.ajax({
-                            url: GOODS_LISTS_USERANDCATE,
-                            type: "POST",
-                            data: {
-                                userId: e.plat_user_id,
-                                cateId: e.weid
-                            },
-                            success: function(data){
-                                e.shopping = data.data.list.map(e => (e.stateBuy = false, e));
-                            }                                                            
-                        })
-                    })
-                    // console.log(this.shopCate)
-                },
-                login: function(type){
-                    if (!docCookies.getItem("token")) {
-                        $("#modal_login").show();                        
-                    } else {
-                        if (type == 0) {
-                            //1:已关注 0：未关注
-                            this.info.if_follow == 1 ? this.cancelFollow() : this.follow();    
-                        } else {
-                            this.user = '/user';                            
-                        }                        
-                    }
-                },
-                change: function(page){
-                    $(document).scrollTop(340);
-                    switch (this.type) {
-                        case 'latest': this.getLatest(page, 10); break;
-                        case 'articles': this.getArtList(page, 10); break;
-                        case 'activity': this.getActList(page, 10); break;
-                    }
-                },
-                style: function(list, i) {
-                    list.flag = i;
-                    switch (i) {
-                        case 0: this.getLatest(1, 10); this.pages['latest'].page = 1; window.history.pushState(null, null, '/' + pages_info.plats_domian.domain + '/'); break;
-                        case 1: this.getArtList(1, 10); this.pages['articles'].page = 1; window.history.pushState(null, null, '/' + pages_info.plats_domian.domain + '/article'); break;
-                        case 2: this.getActList(1, 10); this.pages['activity'].page = 1; window.history.pushState(null, null, '/' + pages_info.plats_domian.domain + '/activity'); break;
-                        case 3: this.getShopCate(this.shopCate, 1, 10);this.pages['shopping'].page = 1; window.history.pushState(null, null, '/' + pages_info.plats_domian.domain + '/wemall'); break;
-                        case 4: wepage.type = 'zone'; wepage.none = false; this.pages['zone'].page = 1; window.history.pushState(null, null, '/' + pages_info.plats_domian.domain + '/quan'); break;
-                    }
-                },
-                select: function(type) {
-                    this.active = type;
-                },
-                setImg: function(url, init, w, h, mode) {
-                        if (url != '' && url != null && url != undefined) {
-                            if (url.indexOf('http') === -1 && url.indexOf('common') === -1) {
-                                return mode != undefined ? ApiMaterPlatQiniuDomain + url + '?imageView2/' + mode + '/w/' + w + '/h/' + h
-                                        : ApiMaterPlatQiniuDomain + url + '?imageView2/3/w/' + w + '/h/' + h;
-                            } else {
-                                return url + '?imageView2/3/w/' + w + '/h/' + h;
-                            }
-                        } else {
-                        return init;
-                    }
-                },
-                setBg: function(url, init) {
-                    if (url != null) {
-                        return ApiMaterPlatQiniuDomain + url;
-                    } else {
-                        return init;
-                    }
-                },
-                imgState: function(on, off, state) {
-                    if (state) {
-                        return on;
-                    } else {
-                        return off;
-                    }
-                },
-                area: function(province, area) {
-                    if (province != null) {
-                        return province + ' ' + area;
-                    } else {
-                        return '来自火星';
-                    }
-                },
-                brand: function(avatar) {
-                    if (pages_info.plats_brand) {
-                        if (pages_info.plats_brand.logo != '') {
-                            return pages_info.plats_brand.logo;
-                        } else {
-                            return avatar;
-                        }
-                    } else {
-                        return avatar;
-                    }
-                },
-                buy: function(o, i, state) {                    
-                    if (state != 'leave') {
-                        o.stateBuy = true;
-                    } else {
-                        o.stateBuy = false;
-                    }                    
-                }
-            },
-            filters: {
-                isBrand: function(val, type) {
-                    if (pages_info.plats_brand) {
-                        switch(type) {
-                            case 'user': return pages_info.plats_brand.title; break;
-                            case 'motto': return pages_info.plats_brand.slogan; break;
-                            default: break;
-                        }
-                    } else {
-                        if (pages_info.plats_domian.domain == 'index' && type == 'user') {
-                            return plats_info.plat_name
-                        } else {
-                            return val;
-                        }
-                    }
-                },
-                cut: function(value, len) {
-                    return value.length > len ? value.substr(0, len) + '...' : value;
-                }
-            }
-        })
-    </script>
-</body>
-</html>
+</div>
+        
