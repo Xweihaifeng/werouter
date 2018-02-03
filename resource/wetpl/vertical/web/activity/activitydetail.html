@@ -14,7 +14,11 @@
     <link rel="stylesheet" href="{{PATH_TML}}css/wepage.css" />
     <script src="/common/js/jquery-3.2.1.min.js"></script>
     <script src="/common/public/js/app.js"></script>
+
+    <!--<script type="text/javascript" src="/common/layer-v3.0.3/layer-v3.0.3/layer/layer.js"></script>-->
+    <!--<link rel="stylesheet" href="/common/layer-v3.0.3/layer-v3.0.3/layer/skin/default/layer.css">-->
     <script src="/common/iview/vue.min.js"></script>
+
     <script src="/common/iview/axios.min.js"></script>
     <script src="/common/iview/libs/util.js"></script>
     <script src="/common/iview/libs/filter.js"></script>
@@ -36,11 +40,13 @@
 
 
     <!--<link rel="stylesheet" href="/common/css/buttons.css">-->
-    <!--<link rel="stylesheet" href="/common/layer-v3.0.3/layer-v3.0.3/layer/skin/default/layer.css">-->
+
 
     <link rel="stylesheet" href="{{PATH_TML}}activity/css/activeSign.css" />
     <link rel="stylesheet" type="text/css" href="/resource/wetpl/vertical/web/activity/css/activity.css">
     <link rel="stylesheet" href="{{PATH_TML}}activity/css/activitydetail.css" />
+
+    <script src="{{PATH_TML}}activity/js/activity.js"></script>
 </head>
 
 <style>
@@ -150,8 +156,10 @@
 
                                         <div class="bbbao">
                                             <span>
-                                                <a href="javascript:" data-id="1" class="support" style="width: 245px; height: 35px;border-radius: 5px;background: #00A0E9;" v-if="active_detail.onStatus != '已结束' ">我要报名</a>
-                                                <a href="javascript:" data-id="1" class="support" style="width: 245px; height: 35px;border-radius: 5px;background: rgb(204, 204, 204);" v-if="active_detail.onStatus == '已结束' ">我要报名</a>
+                                                <a href="javascript:" data-id="1" class="support" style="width: 245px; height: 35px;border-radius: 5px;background: #00A0E9;" v-if="active_detail.onStatus != '已结束' && pay_ment != 3 " @click="sign_up">我要报名</a>
+                                                <a href="javascript:" data-id="1" class="support" style="width: 245px; height: 35px;border-radius: 5px;background: rgb(204, 204, 204);" v-if="active_detail.onStatus == '已结束' && pay_ment != 3" @click="sign_up">我要报名</a>
+                                                <!--<a href="" v-if="pay_ment==2">立即支付</a>-->
+                                                <a href="javascript:" data-id="1" class="support" style="width: 245px; height: 35px;border-radius: 5px;background: rgb(204, 204, 204);" v-if="pay_ment==3" @click="sign_up">已报名</a>
                                             </span>
                                         </div>
 
@@ -265,131 +273,6 @@
                     </div>
                 </div>
 
-                <!--报名模板开始-->
-                <div class="layui-layer-move"></div>
-                <div class="layui-layer-shade" id="layui-layer-shade15" times="15" style="z-index:19891028; background-color:#000; opacity:0.7; filter:alpha(opacity=70);"></div>
-                <div class="layui-layer layui-layer-page layer-anim" id="layui-layer11" type="page" times="11" showtime="0" contype="string" style="z-index: 198910299; width: 600px; top: 50%; left: 660px;">
-                    <div id="" class="layui-layer-content" style="height: 685px;">
-                        <div id="signBg">
-                            <div class="signBox">
-                                <div class="sign_head">
-                                    <div class="sign_head_title">确认报名</div>
-                                    <div class="clon1"></div>
-                                    <div class="sign_head_contain">
-                                        <p class="act_title activity_title_apply"></p>
-                                        <p class="act_ttt">
-                                            <span class="act_time">
-                                                时间：
-                                                <span class=" act_time_all">
-                                                    2018-02-28 14:30 ~ 2018-02-28 19:30
-                                                </span>
-                                            </span>
-                                            <span class="act_time">
-                                                <span class="act_time_deadline">2018-02-28 12:00</span>
-                                                报名截止
-                                            </span>
-                                        </p>
-                                        <p class="act_dress">地点：西安碑林区东大街538号</p>
-                                    </div>
-                                </div>
-                                <div class="sign_head">
-                                    <div class="sign_head_title">门票信息</div>
-                                    <div class="clon1"></div>
-                                    <div class="sign_head_contain">
-                                        <div class="act_title">
-                                            <div class="mp">
-                                                <ul>
-                                                    <li id="2ae34910-dafe-11e7-a19e-e7f327eb1dd6" style="border: 2px solid rgb(0, 124, 211);">
-                                                        <div id="p1">
-                                                            <img src="/common/img/rmbo.png">
-                                                            <p class="price" style="color: rgb(0, 124, 211);">0.02</p>
-                                                        </div>
-                                                        <div id="p2" style="background: rgb(0, 124, 211);">
-                                                            <p class="tkname" style="color: white;">预售票</p>
-                                                            <p class="tkdscp" style="color: white;">通用票</p>
-                                                        </div>
-                                                        <div id="p3" style="background: rgb(0, 124, 211);">
-                                                            <p class="tkbuy" style="color: white;">已订票</p>
-                                                            <p class="tknum" style="color: white;">
-                                                                <span class="2ae34910-dafe-11e7-a19e-e7f327eb1dd6">0</span>张
-                                                            </p>
-                                                        </div>
-                                                    </li>
-                                                    <li id="2af62890-dafe-11e7-a4f2-d926d7da81d6">
-                                                        <div id="p1"><img src="/common/img/rmb.png">
-                                                            <p class="price">0.02</p></div>
-                                                        <div id="p2">
-                                                            <p class="tkname">儿童票</p>
-                                                            <p class="tkdscp">仅限儿童使用</p>
-                                                        </div>
-                                                        <div id="p3">
-                                                            <p class="tkbuy">已订票</p>
-                                                            <p class="tknum"><span class="2af62890-dafe-11e7-a4f2-d926d7da81d6">0</span>张</p>
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                                <div id="tickets">
-                                                    <span>购买数量： </span>
-                                                    <span id="mins">-</span>
-                                                    <span>
-                                                        <input type="text" class="form-control" id="num" pattern="[0-9]*" maxlength="3" value="0">
-                                                    </span>
-                                                    <span id="adds">+</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="sign_section">
-                                    <div class="">
-                                        <div class="sign_section_title">确认信息</div>
-                                        <div class="clon2"></div>
-                                        <div class="sign_section_contain">
-                                            <div class="sign_name sign_input">
-                                                <div class="text">
-                                                    <input id="username" type="text" disabled="disabled" placeholder="雷媛" style="margin-top: 0">
-                                                </div>
-                                            </div>
-                                            <div class="sign_phone sign_input" style="width: 540px;height: 38px;">
-                                                <div class="text">
-                                                    <input id="phone" type="text" disabled="disabled" placeholder="18710560497">
-                                                </div>
-                                                <button class="sign_code" style="display: none">获取验证码</button>
-                                            </div>
-                                            <div class="sign_yz sign_input" style="display: none;">
-                                                <div class="text">
-                                                    <input type="text" class="check-num-apply" placeholder="请输入验证码">
-                                                </div>
-                                                <button class="sign_yz_on">在线验证</button>
-                                            </div>
-                                            <div class="sign_zw sign_input">
-                                                <div class="text">
-                                                    <input id="zhiw" type="text" placeholder="请填写您的所在职位">
-                                                </div>
-                                            </div>
-                                            <div class="sign_com sign_input">
-                                                <div class="text">
-                                                    <input id="gongsi" type="text" placeholder="请填写您的所在公司">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="sign_foot">
-                                    <div class="sign_foot_contn">
-                                        <span class="apply_submit">确认</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <span class="layui-layer-setwin"></span>
-                    <span class="layui-layer-resize"></span>
-                </div>
-
-
-                <!--报名模板结束-->
-
 
 
                 <!-- 活动列表部分start -->
@@ -416,115 +299,6 @@
     </div>
 </div>
 <script>
-    // new Vue({
-    //     el: '#wepage',
-    //     data: {
-    //         menu: {},
-    //         dataMenu: ['我的主页', '我的文章', '我的活动', '我的商城', '我的圈子'],
-    //         pages: {total: 25, page: 1, limit: 10},
-    //         active: 'fans',
-    //         info: {},
-    //     },
-    //     created: function(){
-    //         //menu
-    //         this.menu = {list: this.dataMenu.map(e => ({name: e})), flag: 0};
-    //
-    //         axios.get(apiUrl + 'circel/index?domain=' + pages_info.plats_domian.domain, {
-    //             headers: {Token: plats_token}
-    //         }).then(data => {
-    //             this.info = data.data.data;
-    //             console.log(this.info)
-    //         })
-    //
-    //         $('#favicon').attr('href', ApiMaterPlatQiniuDomain + plats_info.favicon);
-    //         $("title").text(pages_info.plats_show.head_title)
-    //     },
-    //     methods: {
-    //         login: function(){
-    //             if (!docCookies.getItem("token")) {
-    //                 $("#modal_login").fadeIn(300);
-    //             } else {
-    //                 //接口调用
-    //                 info.if_follow == 1 ? console.log('取消关注') : console.log('已关注');
-    //             }
-    //         },
-    //         change: function(page){
-    //             this.isLoading = true;
-    //             this.pages.page = page;
-    //         },
-    //         style: function(list, i) {
-    //             list.flag = i;
-    //         },
-    //         select: function(type) {
-    //             this.active = type;
-    //         },
-    //         setImg: function(url, init, w, h, mode) {
-    //             if (url != '' && url != null && url != undefined) {
-    //                 if (url.indexOf('http') === -1 && url.indexOf('common') === -1) {
-    //                     return mode != undefined ? ApiMaterPlatQiniuDomain + url + '?imageView2/' + mode + '/w/' + w + '/h/' + h
-    //                             : ApiMaterPlatQiniuDomain + url + '?imageView2/3/w/' + w + '/h/' + h;
-    //                 } else {
-    //                     return url;
-    //                 }
-    //             } else {
-    //                 return init;
-    //             }
-    //         },
-    //         setBg: function(url, init) {
-    //             if (url != null) {
-    //                 return ApiMaterPlatQiniuDomain + url;
-    //             } else {
-    //                 return init;
-    //             }
-    //         },
-    //         imgState: function(on, off, state) {
-    //             if (state) {
-    //                 return on;
-    //             } else {
-    //                 return off;
-    //             }
-    //         },
-    //         area: function(province, area) {
-    //             if (province != null) {
-    //                 return province + ' ' + area;
-    //             } else {
-    //                 return '来自火星';
-    //             }
-    //         },
-    //         brand: function(avatar) {
-    //             if (pages_info.plats_brand) {
-    //                 if (pages_info.plats_brand.logo != '') {
-    //                     return pages_info.plats_brand.logo;
-    //                 } else {
-    //                     return avatar;
-    //                 }
-    //             } else {
-    //                 return avatar;
-    //             }
-    //         }
-    //     },
-    //     filters: {
-    //         isName: function(val, type) {
-    //
-    //         },
-    //         isBrand: function(val, type) {
-    //             if (pages_info.plats_brand) {
-    //                 switch(type) {
-    //                     case 'user': return pages_info.plats_brand.title; break;
-    //                     case 'motto': return pages_info.plats_brand.slogan; break;
-    //                     default: break;
-    //                 }
-    //             } else {
-    //                 if (pages_info.plats_domian.domain == 'index' && type == 'user') {
-    //                     return plats_info.plat_name
-    //                 } else {
-    //                     return val;
-    //                 }
-    //             }
-    //         }
-    //     }
-    // })
-
     new Vue({
         el: '#main',
         data: {
@@ -539,25 +313,25 @@
             active_num:0,                      //参加活动人数
             active_user_info:{},               //发表活动者信息
             like_state:false,                  //是否收藏状态
+            tickets:[],
+            page_info:false,                      //订单信息
+            pay_ment:0,                           //按钮状态（支付的状态）
         },
         mounted: function() {
 
             this.$nextTick(()=>{
                 // 活动信息
                 this.active_detail_show(this.id_domain);
-                this.guest_show(this.id_domain);
-                this.active_guest_show(this.id_domain);
-                this.qrcodefun(this.id_domain);
+
                 console.log(88888888,docCookies.getItem("weid"));
-                // 判断是否收藏
-                if(docCookies.getItem("weid")){
-                    this.iscollection(docCookies.getItem("weid"), this.id_domain)
-                }
+                console.log("dddddd",ACTIVITY_ENROLL_STORE)
             });
 
         },
         created: function(){
-
+            layui.use('layer', function() {
+                this.layer = layui.layer;
+            })
         },
         methods: {
 
@@ -566,70 +340,23 @@
                 ajax.get(ACTIVITY_DETAIL + '/' + id).then((res)=>{
                     if(res.code == 200) {
                        this.active_detail=res.data;
-                       this.cate_time=res.data.created_at.substr(0,10)
-                        this.end_time=res.data.end_time.substr(0,10)
+                       this.cate_time=res.data.created_at.substr(0,10);
+                        this.end_time=res.data.end_time.substr(0,10);
+                        this.guest_show(this.id_domain);
+                        this.active_guest_show(this.id_domain);
+                        this.qrcodefun(this.id_domain);
                         // console.log(pages_info)
                         this.active_user_info=pages_info.plats_user;
-
+                        if(plats_user_info){
+                            // alert(1)
+                            this. isEnroll(docCookies.getItem("weid"), this.id_domain)
+                            this.iscollection(docCookies.getItem("weid"), this.id_domain)
+                        }else{
+                            console.log("未登录")
+                        }
                     }
                 })
-                // $.ajax({
-                //     url: ACTIVITY_DETAIL+"/"+id,
-                //     type: 'get',
-                //     headers: {
-                //         'Token': localStorage.getItem('token')
-                //     },
-                //     success: function(data){
-                //         console.log(data);
-                //         if (data.code == 200){
-                //
-                //             $(".wl-poster-title").text(data.data.title);
-                //             $(".wl-poster img").attr("src",qiniu_bucket_domain+data.data.cover);
-                //             $(".activity_time").text(data.data.begain_time+" "+data.data.begain_week+" ~ "+data.data.end_time +" "+data.data.end_week);
-                //             $(".city").text(data.data.area_name+data.data.address);
-                //             data.data.Sponsor.split(",").map(x => {
-                //                 $(".sponsor_p").append('<a href="javascript:void(0);" class="sponor">'+x+'</a>')
-                //             })
-                //             $(".word-blue").text(data.data.enroll_num);
-                //             if(data.data.enroll_limit>0){
-                //                 $(".enroll_limit").text(data.data.enroll_limit);
-                //
-                //             }else{
-                //                 $(".enroll_limit").text("多");
-                //             }
-                //             $(".js-detail").html(data.data.content);
-                //             if(data.data.onStatus=="已结束"){
-                //                 $(".J_BtnSureBuyTicket").text("截止报名");
-                //                 $(".qrcode img").attr("src",QRCODE+'?url=已截止');
-                //             }else{
-                //                 if(data.data.enroll_num<data.data.enroll_limit || data.data.enroll_limit==0){
-                //                     $(".J_BtnSureBuyTicket").on("click",function(){
-                //                         if(isLogin){
-                //                             isapply(activityid,weid);
-                //
-                //                             // window.location='/m/activity/apply/'+id;
-                //
-                //                         }else{
-                //                             router("login");
-                //                         }
-                //                     });
-                //                     // 生成报名二维码
-                //                     $(".qrcode img").attr("src",QRCODE+'?url='+localStorage.getItem("localhostPath")+'/m/activity/apply/'+id+'&margin=5&size=200');
-                //                     console.log(localStorage.getItem("localhostPath"));
-                //                     // creatcode(localStorage.getItem("localhostPath")+'/activity/apply/'+id);
-                //                 }
-                //             }
-                //
-                //
-                //
-                //         } else {
-                //             mess_tusi(data.message);
-                //         }
-                //     },
-                //     error: function(xhr){
-                //         console.log(xhr);
-                //     }
-                // })
+
             },
             // 活动嘉宾
             guest_show(id){
@@ -806,6 +533,774 @@
                     alert("请登录")
                 }
 
+            },
+            // 判断是否报名
+            isEnroll(uid,id) {
+                var sendData = { 'user_id': uid, 'activity_id': id };
+                var self=this;
+                $.ajax({
+                    url: ACTIVITY_ENROLL_ISENROLL,
+                    dataType: 'json',
+                    type: 'post',
+                    data: sendData,
+                    success: function(data) {
+                        console.log(data)
+                        if (data.code == 200) {
+                            // alert("已报名");
+                            self.page_info = true;
+                            self.pay_ment=3;
+                        }
+                    },
+                    error: function(err) {
+                        console.log(err);
+                    }
+                })
+            },
+            // 报名
+            supper(id) {
+                var self=this;
+                id=self.id_domain;
+                $(".layui-layer-shade").show();
+                $(".layui-layer").show();
+
+                var datauser = '';
+                var realname = '';
+                var disa = '';
+                if (docCookies.getItem("weid") != null && docCookies.getItem("token") != null) {
+                    datauser = plats_user_info.phone;
+                    realname = plats_user_info.real_name;
+                    console.log(datauser)
+                    console.log(realname)
+                    disa = 'readonly="readonly"';
+                } else {
+                    datauser = '请输入手机号码';
+                    realname = '请输入姓名';
+                    disa = '';
+                }
+
+                self.GetActivity(id, function(rep) {
+                    closeindex = layer.open({
+                        type: 1,
+                        area: ['600px'],
+                        title: 0,
+                        closeBtn: 0,
+                        shadeClose: true,
+                        scrollbar: false,
+                        content: '<div id="signBg">' +
+                        '<div class="signBox">' +
+                        '<div class="sign_head">' +
+                        '<div class="sign_head_title">' +
+                        '确认报名' +
+                        '</div>' +
+                        '<div class="clon1"></div>' +
+                        '<div class="sign_head_contain">' +
+                        '<p class="act_title activity_title_apply"></p>' +
+                        '<p class="act_ttt">' +
+                        '<span class="act_time">' +
+                        '时间： <span class=" act_time_all" >' + rep.data.begain_time + ' ~ ' + rep.data.end_time + '</span>' +
+                        '</span>' +
+                        '<span class="act_time">' +
+                        '<span class="act_time_deadline">' + rep.data.enroll_deadline + '</span> 报名截止' +
+                        '</span>' +
+                        '</p>' +
+                        '<p class="act_dress">地点：' + rep.data.area_name + rep.data.address + '</p>' +
+                        '</div>' +
+                        '</div>' +
+
+
+                        '<div class="sign_head">' +
+                        '<div class="sign_head_title">门票信息</div>' +
+                        '<div class="clon1"></div>' +
+                        '<div class="sign_head_contain">' +
+                        '<div class="act_title">' +
+                        '<div class="mp">' +
+
+                        '<ul></ul>' +
+                        '<div id="tickets"><span>购买数量： </span>' +
+                        '<span id="mins">-</span>' +
+                        '<span><input type="text" class="form-control" id="num" pattern="[0-9]*" maxlength="3" value="0"></span>' +
+                        '<span id="adds">+</span>' +
+                        '</div>' +
+                        '</div>' +
+
+                        '</div></div>' +
+                        '</div>' +
+
+
+
+                        '<div class="sign_section">' +
+                        '<div class="">' +
+                        '<div class="sign_section_title">' +
+                        '确认信息' +
+                        '</div>' +
+                        '<div class="clon2"></div>' +
+                        '<div class="sign_section_contain">' +
+                        '<div class="sign_name sign_input">' +
+                        '<div class="text">' +
+                        '<input id="username" type="text" ' + disa + ' placeholder="' + realname + '" style="margin-top: 0;font-size: inherit;">' +
+                        '</div>' +
+                        '</div>' +
+
+                        '<div class="sign_phone sign_input" style="width: 540px;height: 38px;">' +
+                        '<div class="text">' +
+                        '<input id="phone" type="text"  ' + disa + '  placeholder="' + datauser + '">' +
+                        '</div>' +
+                        '<button class="sign_code" style="display: none" ">获取验证码</button>' +
+                        '</div>' +
+                        '<div class="sign_yz sign_input" style="display: none;">' +
+                        '<div class="text">' +
+                        '<input type="text" class="check-num-apply" placeholder="请输入验证码">' +
+                        '</div>' +
+                        '<button class="sign_yz_on">在线验证</button>' +
+                        '</div>' +
+                        '<div class="sign_zw sign_input" >' +
+                        '<div class="text">' +
+                        '<input id="zhiw" type="text" placeholder="请填写您的所在职位">' +
+                        '</div>' +
+                        '</div>' +
+                        '<div class="sign_com sign_input">' +
+                        '<div class="text">' +
+                        '<input id="gongsi" type="text" placeholder="请填写您的所在公司">' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+
+                        '<div class="sign_foot">' +
+                        '<div class="sign_foot_contn">' +
+                        '<span class="apply_submit" style="cursor:pointer;">确认</span>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>',
+
+
+                        success: function() {
+                            console.log(9999999,apiUrl + 'activity/tickets?activity_id=' + window.location.pathname.split('/').pop());
+                            CurrentActivity = rep.data;
+                            $.ajax({
+                                url: apiUrl + 'activity/tickets?activity_id=' + window.location.pathname.split('/').pop(),
+                                type: 'GET',
+                                success: function(data) {
+                                    console.log(data);
+                                    var ids = [];
+                                    $(".mp ul").append(
+                                        data.data.reduce((res, e, i) =>
+                                                (ids.push([e.weid, e.type, e.total_num - e.sold_num]), self.tickets.push({ id: e.weid, num: 0 }),
+                                                    res += `<li id="${e.weid}">
+                                                                                ${e.type == 1 ?
+                                                        `<div id="p1"><p class="free" style="padding-right: 15px;">免费</p></div>`
+                                                        :
+                                                        `<div id="p1"><img src="/common/img/rmb.png">
+                                                                                    <p class="price">${e.price}</p></div>`
+                                                        }
+                                                                                <div id="p2">
+                                                                                <p class="tkname">${e.name}</p>
+                                                                                <p class="tkdscp">${e.description}</p>
+                                                                                </div>
+                                                                                <div id="p3">
+                                                                                <p class="tkbuy">已订票</p>
+                                                                                <p class="tknum"><span class="${e.weid}">0</span>张</p>
+                                                                                </div>
+                                                                                </li>`)
+                                            , '')
+                                    );
+                                    var add = (id, type) => {
+                                        if (type == 1) {
+                                            console.log(1)
+                                            $("#" + id).css('border', '2px solid #ffb03f');
+                                            $("#" + id + ' #p2').css({'background': '#ffb03f'});
+                                            $("#" + id + ' #p3').css({'background': '#ffb03f'});
+                                            $("#tickets").hide();
+                                            $(".tknum span").text(1);
+                                            self.tickets.filter(x => x.id == id)[0].num = 1;
+                                        } else {
+                                            console.log(2)
+                                            $("#" + id).css('border', '2px solid #007cd3');
+                                            $("#" + id + ' #p2').css({'background': '#007cd3'});
+                                            $("#" + id + ' #p3').css({'background': '#007cd3'});
+                                            $("#" + id + ' .price').css('color', '#007cd3');
+                                            $("#" + id + ' img').attr('src', '/common/img/rmbo.png');
+                                        }
+                                        $("#" + id + ' #p2 p').css({'color': 'white'});
+                                        $("#" + id + ' #p3 p').css({'color': 'white'});
+                                    }
+                                    var remove = (id) => {
+                                        var res = ids.filter(x => x[0] != id);
+                                        res.map(x => $('#' + x[0]).css('border', '2px solid #dddddd'));
+                                        res.map(x => $('#' + x[0] + ' div').css({'background': 'white', 'color': '#555'}));
+                                        res.map(x => $('#' + x[0] + '  #p2 p').css({'color': '#555'}));
+                                        res.map(x => $('#' + x[0] + '  #p3 p').css({'color': '#555'}));
+                                        res.map(x => $('#' + x[0] + ' .price').css('color', '#555'));
+                                        res.map(x => $('#' + x[0] + ' img').attr('src', '/common/img/rmb.png'));
+                                    }
+                                    add(ids[0][0], ids[0][1]);
+                                    var id = ids[0][0];
+                                    $(".mp ul li").click(function(e) {
+                                        id = $(e.target).parents('li').attr('id');
+                                        remove(id);
+                                        add(id, ids.filter(x => x[0] == id)[0][1]);
+                                        $("#num").val(parseInt($("." + id).text()));
+                                    })
+                                    $("#num").keyup(function(){
+                                        var curr = parseInt($("#num").val());
+                                        var total = ids.filter(x => x[0] == id)[0][2];
+                                        if (isNaN(curr)) {
+                                            $("#num").val(0);
+                                            $("." + id).text(0);
+                                            self.tickets.filter(x => x.id == id)[0].num = 0;
+                                            return;
+                                        }
+                                        if (curr > total) {
+                                            $("#num").val(total);
+                                            $("." + id).text(total);
+                                            tickets.filter(x => x.id == id)[0].num = curr;
+                                            layui.use('layer', function() {
+                                                var layer = layui.layer;
+                                                layer.msg("已超出最大购票数", {time: 1500});
+                                            })
+                                        } else {
+                                            $("#num").val(curr);
+                                            $("." + id).text(curr);
+                                            self.tickets.filter(x => x.id == id)[0].num = curr;
+                                        }
+                                    })
+
+                                    $("#mins").click(function(){
+                                        var curr = parseInt($("#num").val()) - 1;
+                                        if (curr >= 0) {
+                                            $("#num").val(curr);
+                                            $("." + id).text(curr);
+                                            self.tickets.filter(x => x.id == id)[0].num = curr;
+                                        } else {
+                                            layui.use('layer', function() {
+                                                var layer = layui.layer;
+                                                layer.msg("票数不可少于0张", {time: 1500});
+                                            })
+                                        }
+                                    })
+                                    $("#adds").click(function(){
+                                        var curr = parseInt($("#num").val()) + 1;
+                                        var total = ids.filter(x => x[0] == id)[0][2];
+                                        if (curr <= total) {
+                                            $("#num").val(curr);
+                                            $("." + id).text(curr);
+                                            self.tickets.filter(x => x.id == id)[0].num = curr;
+                                        } else {
+                                            layui.use('layer', function() {
+                                                var layer = layui.layer;
+                                                layer.msg("已无余票", {time: 1000});
+                                            })
+                                        }
+                                    })
+                                }
+                            })
+                        },
+                        end: function() {
+                            //location.reload();
+                        },
+                        shade: 0.7
+                    });
+                    if(docCookies.getItem("weid") != null && docCookies.getItem("token") != null){
+                        $('#phone').val(datauser);
+                        $('#username').val(realname);
+                    }
+
+                });
+
+                // activitydetail(id, nickname, imgUrl, applyid);
+
+                //获取验证码
+                var lock = false;
+                var isCheckNum = false; //默认false
+                var count = false; //验证码倒计时
+                var getCheck = function(phoneNum) {
+                    var timeout = false;
+                    var seconds = 60;
+
+                    lock = true;
+                    count = setInterval(function() {
+                        if (seconds > 0) {
+                            seconds -= 1;
+                            $(".sign_code").text(seconds + "秒");
+                        } else {
+                            $(".sign_code").text("重新获取验证码");
+                            timeout = false;
+                            seconds = 60;
+                            lock = false;
+                            clearInterval(count);
+                        }
+                    }, 1000);
+
+                    $.ajax({
+                        url: CODES,
+                        dataType: 'json',
+                        type: 'post',
+                        data: { 'phone': phoneNum },
+                        success: function(data) {
+                            isCheckNum = true;
+                            console.log(data);
+                        },
+                        error: function(err) {
+                            console.log(err);
+                        }
+                    })
+                }
+
+                var phoneNum = 0;
+                var checkNum = 0;
+                setTimeout(function() {
+                    $(".sign_code").bind("click", function() {
+
+                        console.log(!lock);
+                        if (!lock) {
+                            phoneNum = $("#phone").val();
+
+                            var regexp = /^(13|14|17|15|18)/;
+                            var reg = new RegExp(regexp);
+                            console.log(phoneNum, reg.test(phoneNum));
+
+                            if (reg.test(phoneNum) && phoneNum.length == 11) {
+                                getCheck(phoneNum);
+                            } else {
+                                layui.use('layer', function() {
+                                    var layer = layui.layer;
+                                    layer.msg("手机号码错误", {time: 1500});
+                                })
+
+                            }
+                        }
+
+                    })
+                }, 1000);
+
+                 // 在线验证
+                //在线验证
+                var login = function(phoneNum, checkNum) {
+                    $.ajax({
+                        url: LOGIN,
+                        type: 'post',
+                        data: { 'phone': phoneNum, 'code': checkNum },
+                        success: function(data) {
+                            if (data.code != -200) {
+
+                                // localStorage.setItem('token', data.token);
+                                // localStorage.setItem('weid', data.data.weid);
+                                // localStorage.setItem('phone', data.data.phone);
+                                // self.setCookie(data.token, 7);
+                                // $.ajaxSetup({
+                                //     global: true,
+                                //     dataType: 'json',
+                                //     headers: {
+                                //         'Token': data.token
+                                //     },
+                                //     error: function() {
+                                //         console.log("系统错误，请稍后再试")
+                                //         layer.msg("系统错误，请稍后再试", {
+                                //             time: 1000
+                                //         });
+                                //     }
+                                // });
+                                // $(".sign_code,.sign_yz").css("display", "none");
+                                // isCheckNum = false;
+                                self.saveUserInfo(data.token, data.data.weid, data.data.avatar, data.data.identity, data.data.phone);
+                                // error: function() {
+                                //     console.log("系统错误，请稍后再试")
+                                //     layer.msg("系统错误，请稍后再试", {
+                                //         time: 1000
+                                //     });
+                                // }
+                                showLogin = false;
+                                isLogin = true;
+                                isCheckNum = false;
+                                // $("#modal_login").fadeOut(300);
+                                setTimeout(function(){
+                                    layui.use('layer', function() {
+                                        var layer = layui.layer;
+                                        layer.msg("您已成功登录", {time: 1500});
+                                    })
+                                    $("#avatar").attr('src', set_img(data.data.avatar, '/common/img/new/icon01.png', 29, 27));
+                                }, 300);
+
+                                $(".sign_code,.sign_yz").css("display", "none");
+                            } else {
+                                lock = false;
+                                clearInterval(count);
+                                layui.use('layer', function() {
+                                    var layer = layui.layer;
+                                    layer.msg("验证失败，请重新获取验证码", {time: 1500});
+                                })
+                                $(".sign_code").text("重新获取验证码");
+                            }
+                        },
+                        error: function(err) {
+                            console.log(err);
+                        }
+                    })
+                };
+                //点击在线验证按钮
+                var logBt = function() {
+                    phoneNum = $("#phone").val();
+                    checkNum = $(".check-num-apply").val();
+                    console.log(checkNum, phoneNum);
+                    var regexp = /^(13|14|17|15|18)/;
+                    var reg = new RegExp(regexp);
+                    if (reg.test(phoneNum) && phoneNum.length == 11 && checkNum.length == 6) {
+                        login(phoneNum, checkNum);
+                    } else {
+                        if (!(phoneNum.length == 11) || !reg.test(phoneNum)) {
+                            layui.use('layer', function() {
+                                var layer = layui.layer;
+                                layer.msg("手机号码错误", {time: 1500});
+                            })
+                            return;
+                        }
+                        if (!(checkNum.length == 6) || !isCheckNum) {
+                            layui.use('layer', function() {
+                                var layer = layui.layer;
+                                layer.msg("手机验证码错误", {time: 1500});
+                            })
+                            return;
+                        }
+                        /*if (!isChecked) {
+                            mess_tusi("请确认服务条款");
+                            return;
+                        }*/
+                    }
+                };
+                setTimeout(function() {
+                    $(".sign_yz_on").click(function() {
+
+                        logBt();
+                    })
+                }, 1000);
+
+                $("#phone").keydown(function(evt) {
+                    switch (evt.keyCode) {
+                        case 13:
+                            $(".check-num-apply").select();
+                    }
+                });
+
+                $(".check-num-apply").keydown(function(evt) {
+                    switch (evt.keyCode) {
+                        case 13:
+                            logBt();
+                    }
+                });
+                setTimeout(function() {
+                    $(".apply_submit").bind("click", function() {
+                        var name = $('#username').val();
+                        var telphone = $('#phone').val();
+                        var poistion = $("#zhiw").val();
+                        var company = $("#gongsi").val();
+                        var tid = []; //购票id
+                        var number = []; //购票数
+                        self.tickets.filter(x => x.num != 0).map(x => (tid.push(x.id), number.push(x.num)));
+                        if (tid == "") {
+                            console.log("选择门票")
+                            layui.use('layer', function() {
+                                var layer = layui.layer;
+                                layer.msg("请选择门票", {time: 1500});
+                            })
+                            return;
+                        }
+                        if (number == 0) {
+                            console.log("购买门票")
+                            layui.use('layer', function() {
+                                var layer = layui.layer;
+                                layer.msg("请购买门票", {time: 1500});
+                            })
+                            return;
+                        }
+                        if (name == "") {
+                            console.log("名字")
+                            layui.use('layer', function() {
+                                var layer = layui.layer;
+                                layer.msg("请输入名字", {time: 1500});
+                            })
+                            return;
+                        }
+                        if (telphone == "") {
+                            console.log("电话号码")
+                            layui.use('layer', function() {
+                                var layer = layui.layer;
+                                layer.msg("请输入电话号码", {time: 1500});
+                            })
+                            return;
+                        }
+                        if (docCookies.getItem("weid")== '' || docCookies.getItem("token") == '') {
+                            console.log("验证手机号")
+                            layui.use('layer', function() {
+                                var layer = layui.layer;
+                                layer.msg("请验证您的手机号", {time: 1500});
+                            })
+                            return;
+                        }
+
+                        if (poistion == "") {
+                            console.log("输入职位")
+                            layui.use('layer', function() {
+                                var layer = layui.layer;
+                                layer.msg("请输入职位", {time: 1500});
+                            })
+                            return;
+                        }
+                        if (company == "") {
+                            console.log("输入公司")
+                            layui.use('layer', function() {
+                                var layer = layui.layer;
+                                layer.msg("请输入公司", {time: 1500});
+                            })
+                            return;
+                        }
+                        var sendData = {
+                            activity_id: id,
+                            name: name,
+                            telphone: telphone,
+                            poistion: poistion,
+                            company: company,
+                            ticket_id: tid,
+                            num: number
+                        }
+                        $.ajax({
+                            url: ACTIVITY_ENROLL_STORE,
+                            type: 'post',
+                            data: sendData,
+                            headers: {
+                                'Token': docCookies.getItem("token")
+                            },
+                            success: function(data) {
+                                layer.closeAll('loading');
+                                if (data.code == 200) {
+                                    localStorage.setItem("phone", "");
+                                    localStorage.setItem('dataPhone', "");
+                                    localStorage.setItem('realName', "");
+                                    //location.reload();
+                                    layer.close(closeindex);
+                                    if (data.data.status == 2) {
+                                        self.activity_ebroll_detail(data.data.enroll_id);
+                                    } else if (data.data.status == 1) {
+                                        // 刷新页面
+                                        window.location.reload();
+                                    }
+                                }
+                                else if (data.code == 401) {
+                                    layui.use('layer', function() {
+                                        var layer = layui.layer;
+                                        layer.msg("请先登录再进行操作", {time: 1500});
+                                    })
+                                } else {
+                                    layui.use('layer', function() {
+                                        var layer = layui.layer;
+                                        layer.msg(data.message, {time: 1500});
+                                    })
+                                    //location.reload();
+                                    // Ticket(localStorage.getItem(weid));
+                                }
+                            },
+                            error: function(xhr) {
+                                layer.closeAll('loading');
+                                console.log(xhr);
+                            }
+                        });
+                        layer.load();
+                    })
+                }, 1000);
+            },
+            // 根据id查询活动
+           GetActivity(id, callback) {
+                $.ajax({
+                    url: ACTIVITY_DETAIL + "/" + id,
+                    type: 'get',
+                    headers: {
+                        'Token': docCookies.getItem("token")
+                    },
+                    success: function(data) {
+                        callback(data);
+                    },
+                    error: function(xhr) {
+                        console.log(xhr);
+                    }
+                });
+            },
+            // 设置cookie
+           setCookie(token, expiredays) {
+                var Days = expiredays;
+                var exp = new Date();
+                exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000);
+                document.cookie = "token=" + escape(token) + ";expires=" + exp.toGMTString() + ";path=/";
+            },
+            //微信扫码支付下单
+           wechat_scan_pay(number) {
+                var self=this;
+                $.ajax({
+                    url: ACTIVITY_WX_ORDER,
+                    type: 'post',
+                    data: {
+                        number: number
+                    },
+                    headers: {
+                        'Token': docCookies.getItem("token")
+                    },
+                    success: function(data) {
+                        //console.log(data)
+                        if (data.code == 200) {
+                            self.PaymentQR(data.data.qrcode_url, data.data.number, data.data.total_fee);
+                        } else {
+                            console.log(number);
+                        }
+
+                    },
+                    error: function(xhr) {
+                        console.log(xhr);
+                    }
+                })
+            },
+            //报名成功弹出票据模态框
+           activity_ebroll_detail(id) {
+                $.ajax({
+                    url: ACTIVITY_ENROLL_DETAIL + "/" + id, //活动报名详情
+                    type: 'get',
+                    headers: {
+                        'Token': docCookies.getItem("token")
+                    },
+                    success: function(data) {
+                        if (data.code == 200) {
+                            console.log("报名成功")
+                            console.log(urlall[0])
+                            Ticket(data.data);
+                            qrcodefun1(data.data.ticket_num);
+                            barcode('.bar-code svg', data.data.ticket_num);
+                        }
+
+                    },
+                    error: function(xhr) {
+                        console.log(xhr);
+                    }
+                })
+            },
+            // 调起支付
+           PaymentQR(qr_url, number, fee) {
+                console.log("支付")
+               var self=this;
+                paymentLayer = layer.open({
+                    skin: 'layui-layer-rim',
+                    type: 1,
+                    area: ['400px', '430px'],
+                    title: '微信扫码支付',
+                    closeBtn: 2,
+                    shadeClose: false,
+                    scrollbar: false,
+                    //content: '<img src="' + QRCODE + '?url=' + qr_url + '" width="300">',
+                    content: `<div class="payment-block">
+                            <div class="payment-qrcode"><img src="` + QRCODE + `?url=` + qr_url + `" width="300"></div>
+                            <div class="payment-desc">
+                                <p>付款金额：<b>￥` + fee + `</b></p>
+                            </div>
+                            <div class="payment-mark"><img src="/common/img/wepay-logo.png" width="100"></div>
+                        </div>`,
+                    end: function() {
+                        clearInterval(tmr);
+                        //location.reload();
+                    },
+                    shade: 0.7
+                });
+                tmr = setInterval(function() {
+                    $.ajax({
+                        url: ACTIVITY_ENROLL_ORDER_DETECT,
+                        type: 'post',
+                        dataType: 'json',
+                        data: {
+                            number: number
+                        },
+                        success: function(rep) {
+                            if (rep.data.state == 2) {
+                                clearInterval(tmr);
+                                layer.close(paymentLayer);
+                                // 弹出成功数据
+                                self.activity_ebroll_detail(rep.data.enroll_id);
+                            }
+                        },
+                        error: function(xhr) {
+                            console.log(xhr);
+                        }
+                    });
+                }, 1000)
+            },
+           // 保存信息
+           saveUserInfo(token, weid, imgUrl, identity, phone) {
+                //localStorage.setItem('token', token);
+                //localStorage.setItem('weid', weid);
+                localStorage.setItem('identity', identity);
+                localStorage.setItem('phone', phone);
+                //setCookie(token, weid, 7);
+                docCookies.setItem("token", token, new Date().getTime() + 7 * 24*60*60*1000, "/", '.' + root_domain);
+                docCookies.setItem("weid", weid, new Date().getTime() + 7 * 24*60*60*1000, "/", '.' + root_domain);
+                if(!imgUrl) {
+                    imgUrl = "/common/img/my.png";
+                    $("#login a").css({"background": "url("+ imgUrl +") center center / 100% no-repeat"});
+
+                } else if (imgUrl.indexOf('http') != 0 && imgUrl != "") {
+                    imgUrl = ApiMaterPlatQiniuDomain + imgUrl;
+                    $("#login a").css({"background": "url(" + localStorage.getItem('avatar') + ") center center / 100% no-repeat"});
+                    $("#login a").addClass("i-header").html("");
+                    showLogin = false;
+                    isLogin = true;
+                } else if(imgUrl.indexOf('http') == 0 && imgUrl != "") {
+                    $("#login a").css({"background": "url(" + imgUrl + ") center center / 100% no-repeat"});
+                }
+                window.localStorage.setItem("avatar", imgUrl);
+            },
+            // 报名信息是否完善（是否支付）
+           GetOrder(id) {
+                var self=this;
+                $.ajax({
+                    url: ACTIVITY_ENROLL_MYORDER,
+                    type: 'post',
+                    dataType: 'json',
+                    data: {
+                        activity_id: id
+                    },
+                    success: function(req) {
+                        if(req.code==200){
+
+                            if(req.data.status==2){
+                                self.page_info = true;
+                                self.pay_ment=req.data.status;
+                                layui.use('layer', function() {
+                                    var layer = layui.layer;
+                                    layer.msg("有未支付订单，先去支付吧", {time: 1500});
+                                })
+                                var href=window.location.protocol + '//' + window.location.host + '/'+ 'user/myactivity/order'
+                                console.log(href)
+                                window.location.href = href;
+                            }else if(req.data.status==3){
+                                self.page_info = true;
+                                self.pay_ment=req.data.status;
+                                layui.use('layer', function() {
+                                    var layer = layui.layer;
+                                    layer.msg("已支付，去个人中心看看吧！", {time: 1500});
+                                })
+                                var href=window.location.protocol + '//' + window.location.host + '/'+ 'user/myactivity/support'
+                                console.log(href)
+                                window.location.href = href;
+                            }else if(req.data.status==1){
+                                self.supper(this.id_domain);
+                            }
+                        }else{
+                            self.supper(this.id_domain);
+                        }
+                    },
+                    error: function(xhr) {
+                        console.log(xhr);
+                    }
+                });
+            },
+           // 报名
+            sign_up(){
+                this.GetOrder(this.id_domain)
             }
         },
 
