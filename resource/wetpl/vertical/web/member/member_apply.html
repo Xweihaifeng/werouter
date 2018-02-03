@@ -616,7 +616,6 @@
 
                             if(res.data.state == 4) {
                                 self.process_filters('member');
-
                             }
                         }
                     })
@@ -683,6 +682,8 @@
                         self.already.apply = true;
                         self.certification('apply', '');
                         
+                    } else {
+                        window.location.href = '/application';
                     }
                     $(".already").hide();
                 });
