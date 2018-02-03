@@ -23,6 +23,14 @@
         <link rel="stylesheet" href="/common/jquery.animsition/css/animsition.min.css">
         <script src="/common/jquery.animsition/js/jquery.animsition.min.js"></script>
     </head>
+    <style>
+        .fixeds{
+            position:fixed!important;
+            top:0;
+            /*right: 20.3%!important;*/
+            left:352px!important;
+        }
+    </style>
     <body>
         <!-- 登录部分 -->
         <div class="modal_login" id="modal_login"></div>
@@ -510,3 +518,18 @@
     </script>
     </body>
 </html>
+<script>
+    $(function () {
+        $(window).scroll(function(){
+            var erm=$("#qrCode").offset().top;
+
+            if($(document).scrollTop() >= 394){
+                $("#qrCode").addClass("fixeds")
+            }else {
+                $("#qrCode").removeClass("fixeds")
+                console.log(111,erm)
+            }
+        })
+    })
+
+</script>

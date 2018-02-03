@@ -80,6 +80,38 @@
         __init();
 
     </script>
+    <style>
+        .ivu-coupon-content{
+            border: 1px solid #e9eaec;
+        }
+        .ivu-coupon-content img{
+            max-width: 730px;
+            height: auto;
+        }
+        .name{
+            box-sizing: border-box;
+            padding-right: 26px;
+        }
+        .name > span{
+            float: right;
+        }
+        .ling{
+            float: left;
+        }
+        .rows{
+            height: auto;
+            min-height: 30px;
+            line-height: 30px;
+            overflow: hidden;
+        }
+        /*.line-right{*/
+            /*border-right: 1px solid #e9eaec;*/
+        /*}*/
+        /*.rows > i-col{*/
+            /*height: 30px;*/
+            /*line-height: 30px;*/
+        /*}*/
+    </style>
 </head>
 <body style="width: 100%; background: #F7F6F2;">
 
@@ -278,64 +310,71 @@
                 </div>
                 <modal v-model="modalCouponDetail" title="优惠卷详情" width="800">
                     <card>
-                        <Row style="margin-bottom: 10px;">
-                            <i-col span="8">优惠卷名称:</i-col>
-                            <i-col span="16">{{modalCouponDetailData.name}}</i-col>
+                        <Row class="rows" style="margin-bottom: 10px;border-bottom: 1px solid #e9eaec" >
+                            <i-col span="6" class="name"><span>优惠卷名称:</span></i-col>
+                            <i-col span="6" class="line-right">{{modalCouponDetailData.name}}</i-col>
+                            <i-col span="6" class="name" class="ling"><span>优惠卷描述:</span></i-col>
+                            <i-col span="6">{{modalCouponDetailData.description}}</i-col>
                         </Row>
-                        <Row style="margin-bottom: 10px;">
-                            <i-col span="8">优惠卷描述:</i-col>
-                            <i-col span="16">{{modalCouponDetailData.description}}</i-col>
+                        <!--<Row style="margin-bottom: 10px;">-->
+
+                        <!--</Row>-->
+                        <Row class="rows" style="margin-bottom: 10px;border-bottom: 1px solid #e9eaec">
+                            <i-col span="6" class="name"><span>背景色:</span></i-col>
+                            <i-col span="6" class="line-right"> <div :style="'background-color:'+modalCouponDetailData.colour+'; width: 15px; height: 15px; margin-top: 8px;'"></div></i-col>
+                            <i-col span="6" class="name"><span>领取限制:</span></i-col>
+                            <i-col span="6">{{modalCouponDetailData.get_condition}}</i-col>
                         </Row>
-                        <Row style="margin-bottom: 10px;">
-                            <i-col span="8">背景色:</i-col>
-                            <i-col span="16"> <div :style="'background-color:'+modalCouponDetailData.colour+'; width: 15px; height: 15px; margin-top: 8px;'"></div></i-col>
+                        <!--<Row style="margin-bottom: 10px;">-->
+                            <!---->
+                        <!--</Row>-->
+                        <Row class="rows" style="margin-bottom: 10px;border-bottom: 1px solid #e9eaec">
+                            <i-col span="6" class="name"><span>每次领取张数:</span></i-col>
+                            <i-col span="6" class="line-right">{{modalCouponDetailData.get_restrict}}</i-col>
+                            <i-col span="6" class="name"><span>会员等级:</span></i-col>
+                            <i-col span="6">{{modalCouponDetailData.levels}}</i-col>
                         </Row>
-                        <Row style="margin-bottom: 10px;">
-                            <i-col span="8">领取限制:</i-col>
-                            <i-col span="16">{{modalCouponDetailData.get_condition}}</i-col>
+                        <!--<Row style="margin-bottom: 10px;">-->
+                            <!---->
+                        <!--</Row>-->
+                        <Row class="rows" style="margin-bottom: 10px;border-bottom: 1px solid #e9eaec">
+                            <i-col span="6" class="name"><span>优惠卷类型:</span></i-col>
+                            <i-col span="6" class="line-right">{{modalCouponDetailData.coupon_type}}</i-col>
+                            <i-col span="6" class="name"><span>每张优惠金额:</span></i-col>
+                            <i-col span="6">{{modalCouponDetailData.amount}}</i-col>
                         </Row>
-                        <Row style="margin-bottom: 10px;">
-                            <i-col span="8">每次领取张数:</i-col>
-                            <i-col span="16">{{modalCouponDetailData.get_restrict}}</i-col>
+                        <!--<Row style="margin-bottom: 10px;">-->
+                            <!---->
+                        <!--</Row>-->
+                        <Row class="rows" style="margin-bottom: 10px;border-bottom: 1px solid #e9eaec">
+                            <i-col span="6" class="name"><span>其他优惠一起使用:</span></i-col>
+                            <i-col span="6" class="line-right">{{modalCouponDetailData.is_reuse}}</i-col>
+                            <i-col span="6" class="name"><span>使用限制:</span></i-col>
+                            <i-col span="6">{{modalCouponDetailData.use_restrictions}}</i-col>
                         </Row>
-                        <Row style="margin-bottom: 10px;">
-                            <i-col span="8">会员等级:</i-col>
-                            <i-col span="16">{{modalCouponDetailData.levels}}</i-col>
+                        <!--<Row style="margin-bottom: 10px;">-->
+                            <!---->
+                        <!--</Row>-->
+                        <Row class="rows" style="margin-bottom: 10px;border-bottom: 1px solid #e9eaec">
+                            <i-col span="6" class="name"><span>领取时间:</span></i-col>
+                            <i-col span="6" class="line-right">{{modalCouponDetailData.receive_time}}</i-col>
+                            <i-col span="6" class="name"><span>使用期限:</span></i-col>
+                            <i-col span="6">{{modalCouponDetailData.activity_time}}</i-col>
                         </Row>
-                        <Row style="margin-bottom: 10px;">
-                            <i-col span="8">优惠卷类型:</i-col>
-                            <i-col span="16">{{modalCouponDetailData.coupon_type}}</i-col>
+                        <!--<Row style="margin-bottom: 10px;">-->
+                            <!---->
+                        <!--</Row>-->
+                        <Row class="rows" style="margin-bottom: 10px;border-bottom: 1px solid #e9eaec">
+                            <i-col span="6" class="name"><span>推广标题:</span></i-col>
+                            <i-col span="6">{{modalCouponDetailData.title}}</i-col>
+
                         </Row>
-                        <Row style="margin-bottom: 10px;">
-                            <i-col span="8">每张优惠金额:</i-col>
-                            <i-col span="16">{{modalCouponDetailData.amount}}</i-col>
-                        </Row>
-                        <Row style="margin-bottom: 10px;">
-                            <i-col span="8">其他优惠一起使用:</i-col>
-                            <i-col span="16">{{modalCouponDetailData.is_reuse}}</i-col>
-                        </Row>
-                        <Row style="margin-bottom: 10px;">
-                            <i-col span="8">使用限制:</i-col>
-                            <i-col span="16">{{modalCouponDetailData.use_restrictions}}</i-col>
-                        </Row>
-                        <Row style="margin-bottom: 10px;">
-                            <i-col span="8">领取时间:</i-col>
-                            <i-col span="16">{{modalCouponDetailData.receive_time}}</i-col>
-                        </Row>
-                        <Row style="margin-bottom: 10px;">
-                            <i-col span="8">使用期限:</i-col>
-                            <i-col span="16">{{modalCouponDetailData.activity_time}}</i-col>
-                        </Row>
-                        <Row style="margin-bottom: 10px;">
-                            <i-col span="8">推广标题:</i-col>
-                            <i-col span="16">{{modalCouponDetailData.title}}</i-col>
-                        </Row>
-                        <Row style="margin-bottom: 10px;">
-                            <i-col span="8">推广图片:</i-col>
-                            <i-col span="16"><img :src="modalCouponDetailData.picture" alt="" style="display: block; width: 200px; height: 100px;"></i-col>
+                        <Row  class="rows" style="margin-bottom: 10px;">
+                            <i-col span="6" class="name"><span>推广图片:</span></i-col>
+                            <i-col span="6"><img :src="modalCouponDetailData.picture" alt="" style="display: block; width: 200px; height: 100px;"></i-col>
                         </Row>
                         <Row>
-                            <i-col style="text-align: center;">推广内容</i-col>
+                            <i-col span="6" class="name"><span style="">推广内容:</span></i-col>
                         </Row>
                         <Row>
                             <i-col class="ivu-coupon-content" v-html='modalCouponDetailData.content'></i-col>
