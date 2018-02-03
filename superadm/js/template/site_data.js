@@ -5,18 +5,16 @@ function mhide(){
  }
 $(document).ready(function(){
     start();
-    var weid='';
     //网站详情获取
     var init = function(){
         $.ajax({
-            url: ApiUrl + 'scms/setting/show',
+            url: ApiUrl + 'cms/site/data_show',
             type: 'get',
             dataType: 'json',
             success: function(data){
                 //console.log(data);
-                if (data.code === 200){
-                    var info = data.data;
-                    weid=info.weid;
+                if (data.code === 200 && data.data!=null){
+                    var info = JSON.parse(data.data.config);
                     $('input[name=title]').val(info.title);
                     $('textarea[name=description]').val(info.description);
                     $('textarea[name=key_word]').val(info.key_word);
@@ -31,7 +29,7 @@ $(document).ready(function(){
                     //$('input[name=old_link]').val(info.old_link);
                     $('input[name=favicon]').val(info.favicon);
                     $('input[name=logo]').val(info.logo);
-                    $('input[name=wap_logo]').val(info.logo);
+                    $('input[name=wap_logo]').val(info.wap_logo);
 
                     $('input[name=wx_qrcode]').val(info.wx_qrcode);
                     $('input[name=wb_qrcode]').val(info.wb_qrcode);
@@ -39,6 +37,9 @@ $(document).ready(function(){
                     // $('input[name=background]').val(info.background);
                     $('input[name=copyright_logo]').val(info.copyright_logo);
                     $('input[name=copyright_qrcode]').val(info.copyright_qrcode);
+
+                    $('input[name=header1]').val(info.header1);
+                    $('input[name=header2]').val(info.header2);
                   
                     if(info.favicon!='' && info.favicon!=null){$('#img_favicon').attr('src',ApiMaterPlatQiniuDomain+info.favicon);}
                     if(info.logo!='' && info.logo!=null){$('#img_logo').attr('src',ApiMaterPlatQiniuDomain+info.logo);}
@@ -50,6 +51,9 @@ $(document).ready(function(){
                     // 
                     if(info.copyright_logo!='' && info.copyright_logo!=null){$('#img_copyright_logo').attr('src',ApiMaterPlatQiniuDomain+info.copyright_logo);}
                     if(info.copyright_qrcode!='' && info.copyright_qrcode!=null){$('#img_copyright_qrcode').attr('src',ApiMaterPlatQiniuDomain+info.copyright_qrcode);}
+
+                    if(info.header1!='' && info.header1!=null){$('#img_header1').attr('src',ApiMaterPlatQiniuDomain+info.header1);}
+                    if(info.header2!='' && info.header2!=null){$('#img_header2').attr('src',ApiMaterPlatQiniuDomain+info.header2);}
 
                     //发布样式
                     // $('input[name=bar1]').val(info.bar1);
@@ -183,6 +187,8 @@ init();
               wap_logo:$('input[name=wap_logo]').val(),
               wx_qrcode:$('input[name=wx_qrcode]').val(),
               wb_qrcode:$('input[name=wb_qrcode]').val(),
+              header1:$('input[name=header1]').val(),
+              header2:$('input[name=header2]').val(),
              //  background_up:$('input[name=background_up]').val(),
 	            // background:$('input[name=background]').val(),
               copyright_logo:$('input[name=copyright_logo]').val(),
@@ -192,8 +198,9 @@ init();
                     type: "POST",
                     dataType: "json",
                     data:data,
-                    url: ApiUrl + 'scms/setting/'+weid,
+                    url: ApiUrl + 'cms/site/data_update',
                     success: function (data) {
+                      console.log(data);
                     	if (data.code === 200){
                            swal({text: '保存成功',type: 'success', timer: 20000});
                           // $('#message').show();
@@ -471,6 +478,91 @@ init();
                      $("input[name=wb_qrcode]").val(res.key);
                      var sourceLink = domain + res.key;
                      $("#img_wb_qrcode").attr('src', sourceLink);
+              },
+              'Error': function(up, err, errTip) {
+              },
+              'UploadComplete': function() {
+              },
+              'Key': function(up, file) {
+                  var key = "plats/resource/";
+                  key += new Date().valueOf() + '.' + file.name.substring(file.name.indexOf('.') + 1); 
+                  return key;
+              }
+          }
+     });
+          var uploader = Qiniu.uploader({
+          runtimes: 'html5,flash,html4', 
+          browse_button: 'header1file', 
+          uptoken_url: ApiUrl + 'file/qiniu_token',
+          get_new_uptoken: false, 
+          domain: ApiMaterPlatQiniuDomain,     
+          container: 'look',        
+          max_file_size: '100mb',           
+          flash_swf_url: 'http://cdn.staticfile.org/plupload/2.1.8/Moxie.swf',  
+          max_retries: 3,  
+          dragdrop: true,  
+          drop_element: 'look',
+          chunk_size: '4mb', 
+          auto_start: true,
+          init: {
+              'FilesAdded': function(up, files) {
+                  plupload.each(files, function(file) {
+                  });
+              },
+              'BeforeUpload': function(up, file) {
+              },
+              'UploadProgress': function(up, file) {
+              },
+              'FileUploaded': function(up, file, info) {
+                     var domain = up.getOption('domain');
+                     res = JSON.parse(info.response);
+                     console.log(res);
+                     $("input[name=header1]").val(res.key);
+                     var sourceLink = domain + res.key;
+                     $("#img_header1").attr('src', sourceLink);
+              },
+              'Error': function(up, err, errTip) {
+              },
+              'UploadComplete': function() {
+              },
+              'Key': function(up, file) {
+                  var key = "plats/resource/";
+                  key += new Date().valueOf() + '.' + file.name.substring(file.name.indexOf('.') + 1); 
+                  return key;
+              }
+          }
+     });
+
+     var uploader = Qiniu.uploader({
+          runtimes: 'html5,flash,html4', 
+          browse_button: 'header2file', 
+          uptoken_url: ApiUrl + 'file/qiniu_token',
+          get_new_uptoken: false, 
+          domain: ApiMaterPlatQiniuDomain,     
+          container: 'look',        
+          max_file_size: '100mb',           
+          flash_swf_url: 'http://cdn.staticfile.org/plupload/2.1.8/Moxie.swf',  
+          max_retries: 3,  
+          dragdrop: true,  
+          drop_element: 'look',
+          chunk_size: '4mb', 
+          auto_start: true,
+          init: {
+              'FilesAdded': function(up, files) {
+                  plupload.each(files, function(file) {
+                  });
+              },
+              'BeforeUpload': function(up, file) {
+              },
+              'UploadProgress': function(up, file) {
+              },
+              'FileUploaded': function(up, file, info) {
+                     var domain = up.getOption('domain');
+                     res = JSON.parse(info.response);
+                     console.log(res);
+                     $("input[name=header2]").val(res.key);
+                     var sourceLink = domain + res.key;
+                     $("#img_header2").attr('src', sourceLink);
               },
               'Error': function(up, err, errTip) {
               },
