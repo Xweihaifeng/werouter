@@ -1,74 +1,116 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title></title>
-        <meta charset="UTF-8">
-        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-        <link rel="shortcut icon" id="favicon" href="" />
-        <link rel="stylesheet" type="text/css" href="{{PATH_TML}}font/iconfont.css" />
-        <link rel="stylesheet" href="/common/css/bootstrap.min.css">
-        <link rel="stylesheet" href="{{PATH_TML}}css/normalize.css" />
-        <link rel="stylesheet" href="{{PATH_TML}}css/public_main.css">
-        <!-- <link rel="stylesheet" href="{{PATH_TML}}css/news_base.css" /> -->
-        <link rel="stylesheet" href="/common/layui/css/layui.css" />
-        <link rel="stylesheet" href="{{PATH_TML}}css/modal_login.css" />
-        <link rel="stylesheet" href="{{PATH_TML}}css/wepage.css" />
-        <script src="/common/js/jquery-3.2.1.min.js"></script>
-        <script src="/common/js/layer/layer.js"></script>
-        <script src="/common/layui/layui.js"></script>
-        <script src="/common/iview/vue.min.js"></script>
-        <script src="/common/iview/axios.min.js"></script>
-        <script charset="utf-8" type="text/javascript" src="{{PATH_CONFIG}}"></script>
-        <script charset="utf-8" type="text/javascript" src="{{PATH_TML}}js/modal_login.js"></script>
-        <link rel="stylesheet" href="/common/jquery.animsition/css/animsition.min.css">
-        <script src="/common/jquery.animsition/js/jquery.animsition.min.js"></script>
-    </head>
+<head lang="en">
+    <title></title>
+    <meta charset="UTF-8" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <link rel="shortcut icon" id="favicon" href="" />
+    <link rel="stylesheet" href="/common/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/common/layui/css/layui.css" />
+    <link rel="stylesheet" href="{{PATH_TML}}css/modal_login.css" />
+    <link rel="stylesheet" href="{{PATH_TML}}css/normalize.css" />    
+    <link rel="stylesheet" href="/common/magazine/css/iview.css">
+    <link rel="stylesheet" href="{{PATH_TML}}zone/css/zone.css">
+    <link rel="stylesheet" href="{{PATH_TML}}css/public_main.css">
+    <link rel="stylesheet" href="{{PATH_TML}}css/wepage.css" />
+    <script src="/common/js/jquery-3.2.1.min.js"></script>
+    <script src="/common/public/js/app.js"></script>
+    <script src="/common/iview/vue.min.js"></script>
+    <script src="/common/iview/axios.min.js"></script>
+    <script src="/common/iview/libs/util.js"></script>
+    <script src="/common/iview/libs/filter.js"></script>
+    <script src="/common/public/js/model/ver_ajax.js"></script>
+    <script src="/common/layui/layui.js"></script>
+    <script src="{{PATH_CONFIG}}"></script>
+    <script src="{{PATH_TML}}js/modal_login.js"></script>
+    <script src="/common/js/echart/echarts.js"></script>
+    <script src="/common/js/echart/china.js"></script>
+    <script src="{{PATH_TML}}zone/js/circle.js"></script>
+    <script src="/common/magazine/js/iview.min.js"></script>
+    <link rel="stylesheet" href="/common/jquery.animsition/css/animsition.min.css" />
+    <script src="/common/jquery.animsition/js/jquery.animsition.min.js"></script>
     <style>
-        .fixeds{
-            position:fixed!important;
-            top:0;
-            /*right: 20.3%!important;*/
-            left:352px!important;
-        }
-    </style>
-    <body>
-        <!-- 登录部分 -->
-        <div class="modal_login" id="modal_login"></div>
-        <div id="wepage" class="animsition">
-            <div id="header">
+    .fixeds{
+        position:fixed!important;
+        top:0;
+        /*right: 20.3%!important;*/
+        left:352px!important;
+    }
+    .read {
+        left: 0;
+        margin-left: 0;
+    }
+</style>
+</head>
+<body>
+    <div class="modal_login" id="modal_login"></div>
+    <div id="wepage" class="animsition">
+        <div id="header">
+            <div>
                 <div id="topline">
                     <a href="/"><img src="/common/img/new/logo-wepage.png" alt=""/></a>
                     <a :href="user" @click="login(1)"><p><img id="avatar" :src="setImg(avatar ,'/common/img/new/my.png', 100, 100)" alt=""/>{{userCenter}}</p></a>
                 </div>
-                <div id="userinfo" :style="{'background': 'url(' + setBg(pages_info.plats_domian.background, '/common/img/new/wepage.png') + ') no-repeat center','background-size': 'cover'}">
-                    <div>
-                        <a :href="'/' + pages_info.plats_domian.domain"><img class="avatar1" :src="setImg(brand(pages_info.plats_user.avatar) ,'/common/img/new/avatar.png', 100, 100)" alt=""/></a>
-                        <p>
-                            <span>
-                                {{pages_info.plats_user.real_name + '的微主页' | isBrand('user')}}
-                                <img :src="imgState('/common/img/new/member.png', '/common/img/new/memberoff.png', pages_info.plats_user_cert.is_authenticated == 1)" alt=""/>
-                                <img :src="imgState('/common/img/new/care.png', '/common/img/new/careoff.png', info.if_follow == 1 ? true : false)" alt="" @click="login(0)"/>
-                            </span>
-                            <span>{{pages_info.plats_user.motto | isBrand('motto')}}</span>
-                        </p>
-                    </div>
-                </div>
-                <div id="menu">
-                    <ul>
-                        <li><img id="plats-user" :src="setImg(brand(pages_info.plats_user.avatar) ,'/common/img/new/avatar.png', 25, 25)" alt=""></li>
-                        <li v-for="(e, i) in menu.list" @click="style(menu, i)" :class="{'underline': i === menu.flag}">{{e.name}}</li>
-                        <li id="center"><a href="/user"><p><img :src="setImg(avatar ,'/common/img/new/my.png', 25, 25)" alt=""/>{{userCenter}}</p></a></li>
-                    </ul>
+            </div>
+            <div id="userinfo" :style="{'background': 'url(' + setBg(pages_info.plats_domian.background, '/common/img/new/wepage.png') + ') no-repeat center','background-size': 'cover'}">
+                <div>
+                    <a :href="'/' + pages_info.plats_domian.domain"><img class="avatar1" :src="setImg(brand(pages_info.plats_user.avatar) ,'/common/img/new/avatar.png', 100, 100)" alt=""/></a>
+                    <p>
+                        <span>
+                            {{pages_info.plats_user.real_name + '的微主页' | isBrand('user')}}
+                            <img :src="imgState('/common/img/new/member.png', '/common/img/new/memberoff.png', pages_info.plats_user_cert.is_authenticated == 1)" alt=""/>
+                            <img :src="imgState('/common/img/new/care.png', '/common/img/new/careoff.png', info.if_follow == 1 ? true : false)" alt="" @click="login(0)"/>
+                        </span>
+                        <span>{{pages_info.plats_user.motto | isBrand('motto')}}</span>
+                    </p>
                 </div>
             </div>
-            <!-- 导航部分结束 -->
+            <div id="menu">
+                <ul>
+                    <li><a :href="'/' + pages_info.plats_domian.domain"><img id="plats-user" :src="setImg(brand(pages_info.plats_user.avatar) ,'/common/img/new/avatar.png', 45, 45)" alt=""></a></li>
+                    <li v-for="(e, i) in menu.list" @click="style(menu, i)" :class="{'underline': i === menu.flag}">{{e.name}}</li>
+                    <li id="center"><a :href="user" @click="login(1)"><p><img :src="setImg(avatar ,'/common/img/new/my.png', 25, 25)" alt=""/>{{userCenter}}</p></a></li>
+                </ul>
+            </div>
+        </div>
+        <div id="container">
             <div class="read">
                 <div id="toTop"></div>
             </div>
         </div>
-        <script src="/common/js/control.js"></script>
-        <script src="{{PATH_TML}}article/js/readArticle.js"></script>
-        <script>
+        <div id="bottom1">
+                <footer>
+                    <div class="footer-nav">
+                        <a href="javascript:void(0)">咨询与建议</a>
+                        <a href="javascript:void(0)">站点地图</a>
+                        <a id="contact" href="/org/lxwm">联系我们</a>
+                    </div>
+                    <div class="copyright" v-html="plats_info.copyright"></div>
+                    <div class="_ideConac">
+                        <img src="/common/img/gabeian.png" width="60" height="60">
+                    </div>
+                </footer>
+            </div>
+        </div>
+<script src="{{PATH_TML}}article/js/readArticle.js"></script>
+        
+<script>
+    $(function () {
+        $(window).scroll(function(){
+            var erm=$("#qrCode").offset().top;
+
+            if($(document).scrollTop() >= 394){
+                $("#qrCode").addClass("fixeds")
+            }else {
+                $("#qrCode").removeClass("fixeds")
+                console.log(111,erm)
+            }
+        })
+    })
+</script>
+
+<script>
         $(function() {
             $(".animsition").animsition({
                 inClass               :   'fade-in',
@@ -195,7 +237,7 @@
 
                 $("#plats-user").hide();
                 $("#center").hide();
-                /*var height = $("#menu").offset().top;
+                var height = $("#menu").offset().top;
                 $(window).scroll(function(){
                     if($(document).scrollTop() >= height){
                         $("#menu").css({position:"fixed",top:0,left:0,zIndex:99});
@@ -210,7 +252,7 @@
                         $("#plats-user").hide();
                         $("#menu ul li:nth-child(2)").show();
                     }
-                })*/
+                })
 
                 $('#favicon').attr('href', ApiMaterPlatQiniuDomain + plats_info.favicon);
                 $("title").text(pages_info.plats_show.head_title);
@@ -232,7 +274,7 @@
                             }
                         } else {
                             wepage.menu.flag = 0;
-                            wepage.type = 'articles'
+                            wepage.type = 'latest'
                         }                        
                     }
                 })
@@ -516,20 +558,5 @@
             }
         })
     </script>
-    </body>
+</body>
 </html>
-<script>
-    $(function () {
-        $(window).scroll(function(){
-            var erm=$("#qrCode").offset().top;
-
-            if($(document).scrollTop() >= 394){
-                $("#qrCode").addClass("fixeds")
-            }else {
-                $("#qrCode").removeClass("fixeds")
-                console.log(111,erm)
-            }
-        })
-    })
-
-</script>
