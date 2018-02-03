@@ -69,7 +69,7 @@
             <div id="menu">
                 <ul>
                     <li><a :href="'/' + pages_info.plats_domian.domain"><img id="plats-user" :src="setImg(brand(pages_info.plats_user.avatar) ,'/common/img/new/avatar.png', 45, 45)" alt=""></a></li>
-                    <li v-for="(e, i) in menu.list" @click="style(menu, i)" :class="{'underline': i === menu.flag}">{{e.name}}</li>
+                    <li v-for="(e, i) in menu.list" @click="style(menu, i, true)" :class="{'underline': i === menu.flag}">{{e.name}}</li>
                     <li id="center"><a :href="user" @click="login(1)"><p><img :src="setImg(avatar ,'/common/img/new/my.png', 25, 25)" alt=""/>{{userCenter}}</p></a></li>
                 </ul>
             </div>
@@ -220,7 +220,7 @@
                 fontColor: pages_info.plats_user_cert.is_authenticated == 1 ? {color: '#ff9900'} : {color: '#999'}
             },
             created: function(){
-                this.menu = {list: this.dataMenu.map(e => ({name: e})), flag: 0};
+                this.menu = {list: this.dataMenu.map(e => ({name: e})), flag: -1};  //////////////////////////////
                 this.wefriends();
                 this.init(window.location.pathname.split('/').pop());                
                 this.avatar = docCookies.getItem('token') ? (plats_user_info.avatar ? plats_user_info.avatar : localStorage.getItem('avatar')) : '';
@@ -287,7 +287,7 @@
                         case 'activity': this.type='activity'; this.getActList(1, 10); this.menu.flag = 2; break;
                         case 'wemall': this.type='shopping'; this.getShopCate(); this.menu.flag = 3; break;
                         case 'quan': this.type='zone';this.menu.flag = 4; break;
-                        default: this.type='latest'; this.getLatest(1, 10); this.menu.flag = 0; break;
+                        default: /*this.type='latest'; this.getLatest(1, 10); this.menu.flag = 0;*/ break;
                     }
                 },
                 wefriends: function(){
@@ -471,14 +471,24 @@
                         case 'activity': this.getActList(page, 10); break;
                     }
                 },
-                style: function(list, i) {
+                style: function(list, i, jump) {
                     list.flag = i;
-                    switch (i) {
-                        case 0: this.getLatest(1, 10); this.pages['latest'].page = 1; window.history.pushState(null, null, '/' + pages_info.plats_domian.domain + '/'); break;
-                        case 1: this.getArtList(1, 10); this.pages['articles'].page = 1; window.history.pushState(null, null, '/' + pages_info.plats_domian.domain + '/article'); break;
-                        case 2: this.getActList(1, 10); this.pages['activity'].page = 1; window.history.pushState(null, null, '/' + pages_info.plats_domian.domain + '/activity'); break;
-                        case 3: this.getShopCate(this.shopCate, 1, 10);this.pages['shopping'].page = 1; window.history.pushState(null, null, '/' + pages_info.plats_domian.domain + '/wemall'); break;
-                        case 4: wepage.type = 'zone'; wepage.none = false; this.pages['zone'].page = 1; window.history.pushState(null, null, '/' + pages_info.plats_domian.domain + '/quan'); break;
+                    if (jump) {
+                        switch (i) {
+                            case 0: window.location.href = '/' + pages_info.plats_domian.domain + '/'; break;
+                            case 1: window.location.href = '/' + pages_info.plats_domian.domain + '/article'; break;
+                            case 2: window.location.href = '/' + pages_info.plats_domian.domain + '/activity'; break;
+                            case 3: window.location.href =  '/' + pages_info.plats_domian.domain + '/wemall'; break;
+                            case 4: window.location.href = '/' + pages_info.plats_domian.domain + '/quan'; break;
+                        }
+                    } else {
+                        switch (i) {
+                            case 0: this.getLatest(1, 10); this.pages['latest'].page = 1; window.history.pushState(null, null, '/' + pages_info.plats_domian.domain + '/'); break;
+                            case 1: this.getArtList(1, 10); this.pages['articles'].page = 1; window.history.pushState(null, null, '/' + pages_info.plats_domian.domain + '/article'); break;
+                            case 2: this.getActList(1, 10); this.pages['activity'].page = 1; window.history.pushState(null, null, '/' + pages_info.plats_domian.domain + '/activity'); break;
+                            case 3: this.getShopCate(this.shopCate, 1, 10);this.pages['shopping'].page = 1; window.history.pushState(null, null, '/' + pages_info.plats_domian.domain + '/wemall'); break;
+                            case 4: wepage.type = 'zone'; wepage.none = false; this.pages['zone'].page = 1; window.history.pushState(null, null, '/' + pages_info.plats_domian.domain + '/quan'); break;
+                        }
                     }
                 },
                 select: function(type) {
