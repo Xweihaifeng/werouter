@@ -143,7 +143,6 @@
                 }
 
                 axios.get('http://demo.wezchina.com/api/articles/cates').then(data => {
-                    console.log(data)
                     this.artType.list = data.data.data;
                     this.artType.flag = 0;
                     this.artType.type = 'articles';
@@ -153,7 +152,6 @@
                     this.actType.list = data.data.data.list;
                     this.actType.flag = 0;
                     this.actType.type = 'activity';
-                    console.log(this.actType)
                 });
                 // this.getList(this.url, '', '', '', 1, 8); //初始化页面数据
 
@@ -322,7 +320,6 @@
                                 wepage.pages.articles.page = page;
                                 wepage.page = wepage.pages.articles;
                                 wepage.articles == '' ? wepage.none = true : wepage.none = false;
-                                console.log(data)
                             }
                         }
                     })
@@ -396,18 +393,20 @@
                     $(document).scrollTop(340);                    
                     switch (this.type) {
                         case 'latest': this.getLatest(page, 10); break;
-                        case 'articles': this.getArtList(page, 10, ''); break;
-                        case 'activity': this.getActList(page, 10, ''); break;
+                        case 'articles': this.getArtList(page, 10, this.remArt); break;
+                        case 'activity': this.getActList(page, 10, this.remAct); break;
                     }
                 },
                 tab: function(o, id, type){
                     if (type == 'act') {
+                        this.actType.flag = id;
                         window.history.pushState(null, null, '/' + pages_info.plats_domian.domain + '/activity/' + o.e_name);
                         this.getActList(1, 10, o.weid);
                         $("#" + this.remAct).removeClass('active');
                         $("#" + (type + id)).addClass('active');
                         this.remAct = type + id;
                     } else if (type == 'art') {
+                        this.artType.flag = id;
                         window.history.pushState(null, null, '/' + pages_info.plats_domian.domain + '/article/' + o.ename);
                         this.getArtList(1, 10, o.weid);
                         $("#" + this.remArt).removeClass('active');
@@ -423,8 +422,8 @@
                     list.flag = i;
                     switch (i) {
                         case 0: this.getLatest(1, 10); this.pages['latest'].page = 1; window.history.pushState(null, null, '/' + pages_info.plats_domian.domain + '/'); break;
-                        case 1: this.getArtList(1, 10, this.artType.list[0].weid); this.remAct = 'art0'; this.pages['articles'].page = 1; window.history.pushState(null, null, '/' + pages_info.plats_domian.domain + '/article'); break;
-                        case 2: this.getActList(1, 10, this.actType.list[0].weid); this.remAct = 'act0'; this.pages['activity'].page = 1; window.history.pushState(null, null, '/' + pages_info.plats_domian.domain + '/activity'); break;
+                        case 1: this.getArtList(1, 10, this.artType.list[this.artType.flag].weid); this.pages['articles'].page = 1; window.history.pushState(null, null, '/' + pages_info.plats_domian.domain + '/article'); break;
+                        case 2: this.getActList(1, 10, this.actType.list[this.actType.flag].weid); this.pages['activity'].page = 1; window.history.pushState(null, null, '/' + pages_info.plats_domian.domain + '/activity'); break;
                         case 3: this.getShopCate(this.shopCate, 1, 10);this.pages['shopping'].page = 1; window.history.pushState(null, null, '/' + pages_info.plats_domian.domain + '/wemall'); break;
                         case 4: wepage.type = 'zone'; wepage.none = false; this.pages['zone'].page = 1; window.history.pushState(null, null, '/' + pages_info.plats_domian.domain + '/quan'); break;
                     }
