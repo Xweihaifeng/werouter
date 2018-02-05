@@ -39,7 +39,7 @@
                     <div class="pay_qr" v-if="state.pay_qr">
                         <h2><span>微信扫码</span><span class="pay_qr_clear" @click="close_pay">×</span></h2>
                         <img class="pay_qr_img" :src="CMS_DETAIL_QRCODE + order_pay.qr_url" alt="">
-                        <div style="font-size: 12px; padding: 0 20px; color: #ea332d; ">会员缴费费用（￥{{JSON.stringify(member_position) == '{}'? '0' : member_position.price*member_levels.year}}）元。</div>
+                        <!-- <div style="font-size: 12px; padding: 0 20px; color: #ea332d; ">会员缴费费用（￥{{JSON.stringify(member_position) == '{}'? '0' : member_position.price*member_levels.year}}）元。</div> -->
                     </div>
 
                     <div class="member_app_list member_app_pay" v-if="member_primary.state == 2">
