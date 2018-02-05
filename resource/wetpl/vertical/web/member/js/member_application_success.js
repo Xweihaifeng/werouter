@@ -162,12 +162,12 @@ $(".member_domain_edit").click(function() {
     $(".member_domain_content").slideToggle();
 });
 
-function copyLink() {
-    if (!$("#coping_link").val()) {
-        return false;
-    }
-    var Url2 = document.getElementById("coping_link").select(); // 选择对象
-    document.execCommand("Copy"); // 执行浏览器复制命令
-    console.info("复制成功");
-    layer.msg("复制成功", { time: 1500 });
-}
+// function copyLink() {
+//     if (!$("#coping_link").val()) {
+//         return false;
+//     }
+//     var Url2 = document.getElementById("coping_link").select(); // 选择对象
+//     document.execCommand("Copy"); // 执行浏览器复制命令
+//     console.info("复制成功");
+//     layer.msg("复制成功", { time: 1500 });
+// }
