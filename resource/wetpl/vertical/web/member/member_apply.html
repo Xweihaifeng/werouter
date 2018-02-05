@@ -227,7 +227,7 @@
                             <div  class="display_flex">
                                 <a class="member_a_style term_servcice_rule"> 《 会员服务管理规范 》 </a>、
                                 <a class="member_a_style constitution"> 《 协会章程 》 </a>、
-                                <a class="member_a_style apply_template"> <img src="{{PATH_TML}}member/img/dowload.png"> 会员申请书模板下载 </a>
+                                <a class="member_a_style apply_template" :href="ApiMaterPlatQiniuDomain+member_set.apply_template"> <img src="{{PATH_TML}}member/img/dowload.png"> 会员申请书模板下载 </a>
                             </div>
                         </div>
                         <div class="member_sel_type">
@@ -242,18 +242,30 @@
                             </div>
                             <div class="member_danger"> <span class="member_warn"></span> *请下载、填写、签章、扫描、并上传 </div>
                         </div>
-                        <div class="member_sel_type">
-                            <div class="member_type_title"> 申请人： </div>
-                            <input type="text" class="member_app_input" placeholder="填写本人真实姓名" v-model="member.apply.plat_member_contacts">
+                        <div v-if="member.apply.apply_type == 1">
+                            <div class="member_sel_type">
+                                <div class="member_type_title"> 申请人： </div>
+                                <input type="text" class="member_app_input" placeholder="填写本人真实姓名" v-model="member.apply.plat_member_contacts">
+                            </div>
+                            <div class="member_sel_type">
+                                <div class="member_type_title"> 申请人电话： </div>
+                                <input type="text" class="member_app_input" placeholder="填写本人真实姓名" v-model="member.apply.plat_member_tel">
+                            </div>
                         </div>
-                        <div class="member_sel_type">
-                            <div class="member_type_title"> 申请人电话： </div>
-                            <input type="text" class="member_app_input" placeholder="填写本人真实姓名" v-model="member.apply.plat_member_tel">
-                        </div>
-                        <div class="member_sel_type">
-                            <div class="member_type_title"> 申请单位： </div>
-                            <input type="text" class="member_app_input" placeholder="公司名称" v-model="member.apply.member_int_name">
-                            <div class="member_danger"> <span class="member_warn"></span> *机构认证者可填写此项 </div>
+                        <div v-else-if="member.apply.apply_type == 2">
+                            <div class="member_sel_type">
+                                <div class="member_type_title"> 申请单位： </div>
+                                <input type="text" class="member_app_input" placeholder="公司名称" v-model="member.apply.member_int_name">
+                                <div class="member_danger"> <span class="member_warn"></span> *机构认证者必填写此项 </div>
+                            </div>
+                            <div class="member_sel_type">
+                                <div class="member_type_title"> 联系人： </div>
+                                <input type="text" class="member_app_input" placeholder="填写本人真实姓名" v-model="member.apply.plat_member_contacts">
+                            </div>
+                            <div class="member_sel_type">
+                                <div class="member_type_title"> 联系人电话： </div>
+                                <input type="text" class="member_app_input" placeholder="填写本人真实姓名" v-model="member.apply.plat_member_tel">
+                            </div>
                         </div>
                         <div class="member_sel_type">
                             <div class="member_type_title"> 申请地址： </div>
@@ -298,6 +310,7 @@
             ],
             member_set_type: [],
             pages_page_info: {},
+            member_set: {},
             member_price: '',
             get_card: '',
             get_card_state: false,
@@ -393,7 +406,7 @@
             })
 
             // 会员资料
-            this.member_setting();
+            // this.member_setting();
         },        
         mounted() {
             this.$nextTick(() => {
@@ -656,7 +669,21 @@
             },
             member_setting() {
                 ajax.get(MEMBER_SETTING).then((body) => {
+                    this.member_set = body.data;
                     this.member_set_type = body.data.condition;
+                    if(body.data.member_open_type == 1) {
+                        console.log(this.member.apply.apply_type);
+                    }
+                    
+                    else if(body.data.member_open_type == 2) {
+                        $("#institution_apply").prop('disabled', true);
+                        this.member.apply.apply_type = 1;
+                    }
+
+                    else if(body.data.member_open_type == 3) {
+                        $("#personal_apply").prop('disabled', true);
+                        this.member.apply.apply_type = 2;
+                    }
                     console.log("member_set_type:", this.member_set_type);
                 });
             },
@@ -703,6 +730,9 @@
                         window.location.href = '/application';
                     }
                     $(".already").hide();
+
+                    // 申请类型
+                    this.member_setting();
                 });
             },
             art_auth(name) {
