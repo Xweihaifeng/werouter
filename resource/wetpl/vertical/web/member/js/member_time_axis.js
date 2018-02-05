@@ -171,7 +171,6 @@ function member_issue(result2) {
 }
 
 function setBg(url, init) {
-    debugger;
     if (url) {
         var filename = url;  
         var index1 = filename.lastIndexOf(".");
