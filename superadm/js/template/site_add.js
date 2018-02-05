@@ -27,9 +27,9 @@ $(document).ready(function(){
             if (result.code === 200) {
                 var html = '';
                 $.each(result.data, function (key, val) {
-                    html += '<option name="options" value='+val.id+'>' + val.name + '</option>';
+                    html += '<option name="options" value='+val.id+'>' + val.title + '</option>';
                 });
-                $("#editionId").html(html);
+                $("#templateId").html(html);
             } else {
                 parent.layer.msg(result.message);
 
