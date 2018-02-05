@@ -898,6 +898,7 @@
         el: '#list',
         data: {
            cate_domain : $app.get_router(1), // 分类个性域名
+            user_domain:$app.get_router(1),   //个性域名
            id_domain:$app.get_router(4),   //商品id
            shop_info:{},                   //商品信息
            shop_image_list:[]  ,             //图片信息
@@ -1131,6 +1132,7 @@
             qrcodefun(id) {
                 var localhostPath=window.location.protocol + '//' + window.location.host + '/'
                 var qrcode_val = localhostPath + this.user_domain + "/wemall/goods/" + id;
+                console.log(qrcode_val)
                 if ($.support.msie && $.support.version <= 8) {
                     $("#shop_code").qrcode({
                         render: "table",
