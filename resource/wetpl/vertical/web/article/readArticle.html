@@ -35,7 +35,8 @@
         position:fixed!important;
         top:0;
         /*right: 20.3%!important;*/
-        left:352px!important;
+        left:335px!important;
+        margin-top: 60px;
     }
     .read {
         left: 0;
@@ -80,19 +81,19 @@
             </div>
         </div>
         <div id="bottom1">
-                <footer>
-                    <div class="footer-nav">
-                        <a href="javascript:void(0)">咨询与建议</a>
-                        <a href="javascript:void(0)">站点地图</a>
-                        <a id="contact" href="/org/lxwm">联系我们</a>
-                    </div>
-                    <div class="copyright" v-html="plats_info.copyright"></div>
-                    <div class="_ideConac">
-                        <img src="/common/img/gabeian.png" width="60" height="60">
-                    </div>
-                </footer>
-            </div>
+            <footer>
+                <div class="footer-nav">
+                    <a href="javascript:void(0)">咨询与建议</a>
+                    <a href="javascript:void(0)">站点地图</a>
+                    <a id="contact" href="/org/lxwm">联系我们</a>
+                </div>
+                <div class="copyright" v-html="plats_info.copyright"></div>
+                <div class="_ideConac">
+                    <img src="/common/img/gabeian.png" width="60" height="60">
+                </div>
+            </footer>
         </div>
+    </div>
 <script src="{{PATH_TML}}article/js/readArticle.js"></script>
         
 <script>
@@ -100,7 +101,7 @@
         $(window).scroll(function(){
             var erm=$("#qrCode").offset().top;
 
-            if($(document).scrollTop() >= 394){
+            if($(document).scrollTop() >= 340){
                 $("#qrCode").addClass("fixeds")
             }else {
                 $("#qrCode").removeClass("fixeds")

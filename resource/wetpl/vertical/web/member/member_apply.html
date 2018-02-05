@@ -587,6 +587,23 @@
                                 self.status(6);
                                 self.already.apply = false;
                                 console.log("会员初审", res.data)
+                                if(    self.member_set_type.indexOf('UA') >= 0
+                                    && self.member_set_type.indexOf('UG') >= 0
+                                    && this.pages_page_info.isUA == true
+                                    && this.pages_page_info.isUG == true) {
+                                    window.location.href = "/application";
+
+                                } else if(self.member_set_type.indexOf('UA') >= 0
+                                    && self.member_set_type.indexOf('UG') < 0
+                                    && this.pages_page_info.isUA == true) {
+                                    window.location.href = "/application";
+
+                                } else if(self.member_set_type.indexOf('UA') < 0
+                                    && self.member_set_type.indexOf('UG') >= 0
+                                    && this.pages_page_info.isUG == true) {
+                                    window.location.href = "/application";
+
+                                }
                             } else
 
                             if(res.data.state == 2) {
@@ -599,7 +616,6 @@
 
                             if(res.data.state == 4) {
                                 self.process_filters('member');
-
                             }
                         }
                     })
@@ -666,6 +682,8 @@
                         self.already.apply = true;
                         self.certification('apply', '');
                         
+                    } else {
+                        window.location.href = '/application';
                     }
                     $(".already").hide();
                 });
