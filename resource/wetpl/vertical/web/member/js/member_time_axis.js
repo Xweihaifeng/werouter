@@ -170,6 +170,22 @@ function member_issue(result2) {
     return member_time_axis;
 }
 
+function setBg(url, init) {
+    if (url) {
+        var filename = url;  
+        var index1 = filename.lastIndexOf(".");
+        var index2 = filename.length;
+        var suffix = filename.substring(index1 + 1, index2);
+        if(['doc','docx','pdf', 'txt'].indexOf(suffix) >= 0) {
+            return result1.plat_member_application = ApiMaterPlatQiniuDomain + url;
+        } else if(url.indexOf('http') != 0) {
+            return result1.plat_member_application = imgSet(url, 120, 120, 3);
+        }
+    } else {
+        return init;
+    }
+}
+
 // 是否申请
 function time_axis_member_apply() {
     var options0 = $.get(MEMBER_APPLY);
@@ -195,11 +211,7 @@ function time_axis_member_apply() {
                 result1.paper_img = imgSet(result1.paper_img, 120, 120, 3);
             }
 
-            if(!result1.plat_member_application) {
-                result1.plat_member_application = "/common/img/default_img.png";
-            } else if (result1.plat_member_application.indexOf('http') != 0 && result1.plat_member_application != "") {
-                result1.plat_member_application = imgSet(result1.plat_member_application, 120, 120, 3);
-            }
+            setBg(result1.plat_member_application, '#');
 
             if(result1.state == 1) {
 
