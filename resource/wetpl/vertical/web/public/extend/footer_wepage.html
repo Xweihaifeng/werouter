@@ -99,6 +99,7 @@
         var wepage = new Vue({
             el: '#wepage',
             data: {
+                path: window.location.pathname,
                 menu: {},
                 dataMenu: ['首页', '我的文章', '我的活动', '我的商城', '我的圈子'],
                 dynamic: [{id: 1, val: '/article/'}, {id: 3, val: '/activity/'}, {id: 4, val: '/wemall/goods/'}],
@@ -132,8 +133,9 @@
             },
             created: function(){
                 this.menu = {list: this.dataMenu.map(e => ({name: e})), flag: 0};
-                this.wefriends();
-                this.init(window.location.pathname.split('/').pop());                
+                this.wefriends();                
+                this.init(window.location.pathname.split('/').pop());
+                // this.init(...this.checkPath(this.path));
                 this.avatar = docCookies.getItem('token') ? (plats_user_info.avatar ? plats_user_info.avatar : localStorage.getItem('avatar')) : '';
                 
                 if (!docCookies.getItem('token')) {
@@ -145,14 +147,16 @@
                 axios.get('http://demo.wezchina.com/api/articles/cates').then(data => {
                     this.artType.list = data.data.data;
                     this.artType.flag = 0;
-                    this.artType.type = 'articles';
+                    this.artType.type = 'articles';                    
                 })
 
                 axios.get(apiUrl + 'activity/cate/lists').then(data => {
                     this.actType.list = data.data.data.list;
                     this.actType.flag = 0;
                     this.actType.type = 'activity';
+                    // this.init(...this.checkPath(this.path));
                 });
+                
                 // this.getList(this.url, '', '', '', 1, 8); //初始化页面数据
 
                 layui.use('layer', function() {
@@ -212,6 +216,16 @@
                         case 'wemall': this.type='shopping'; this.getShopCate(); this.menu.flag = 3; break;
                         case 'quan': this.type='zone';this.menu.flag = 4; break;
                         default: this.type='latest'; this.getLatest(1, 10); this.menu.flag = 0; break;
+                    }
+                },
+                checkPath: function(path) {
+                    var arr = path.split('/');
+                    var len = arr.length;
+                    var list = ['', 'article', 'activity', 'wemall', 'quan'];
+                    if (list.indexOf(arr[len - 1]) != -1) { //大类
+                        return [arr[len - 1]];
+                    } else { //小类
+                        return [arr[len - 2], arr[len - 1]];
                     }
                 },
                 wefriends: function(){
