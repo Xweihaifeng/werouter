@@ -1,50 +1,184 @@
-<!DOCTYPE html>
-<html>
+<#extend#>public/extend/index_extend.html</#extend#>
+<link rel="stylesheet" href="/resource/wetpl/substation/default/web/css/list.css">
+<link rel="stylesheet" href="{{PATH_TML}}member/css/member_application.css" />
+<link rel="stylesheet" href="{{PATH_TML}}member/css/member.css" />
 
-    <head>
-        <meta charset="utf-8" />
-        <title></title>
-        <link rel="shortcut icon" id="favicon" href="" />
-        <link rel="stylesheet" href="{{PATH_TML}}font/iconfont.css" />
-        <link rel="stylesheet" href="{{PATH_TML}}css/news_base.css" />
-        <link rel="stylesheet" href="{{PATH_TML}}css/modal_login.css" />
-        <link rel="stylesheet" href="{{PATH_TML}}member/css/member.css" />
+<div id="container">
+    <!--位置显示-->
+    <div class="seat">
+        <img src="/resource/wetpl/substation/default/web/image/fanhui.png" alt="" /> 当前位置在：<a href="">首页</a> > 加入商会 > 入会申请 <span class="wz"></span>
+        <div class="er-nav" id="menuTwo"></div>
+    </div>
 
-        <script src="/common/js/jquery-3.2.1.min.js"></script>
-        <script src="{{PATH_CONFIG}}"></script>
-        <script src="{{PATH_TML}}js/modal_login.js"></script>
-        <script src="{{PATH_TML}}member/js/member_public_config.js"></script>
-    </head>
+    <article class="news-main">
+        <!--左侧内容-->
+        <article class="main">
+            <h2 style="margin-top: 0px">
+                <strong>加入商会</strong>
+                <span style="margin-top: 10px;">Chamber Application</span>
+            </h2>
+            <ul class="aside" id="menuX">
+                <li> <a class="chan_li" id="oooo"> 商会首页 </a> </li>
+                <li :class="{cenav_cur: item.domain == 'rhsq'}" v-for="(item,index) in column_list"><a :id="item.domain" :href="item.domain == 'rhsq' ? '/apply' : '/org/'+ item.domain">{{ item.title }}</a></li>
+            </ul>
+        </article>
 
-    <body>
+        <!--右侧内容-->
+        <article class="list-big">
 
-        <!-- 导航部分开始 -->
-        <div class="modal_login" id="modal_login"></div>
-        <ul class="news_menu" id="public_main_news_menu"></ul>
-
-        <!-- 导航部分结束 -->
-        <div class="organize-content">
-            <div class="weizhuye-title">
-                <ul class="center-disperse" id="menuX">
-                    <a class="chan_li" href="/zz"> 商会首页 </a>
-                </ul>
-            </div>
-            <div class="weizhuye-gerenfencai" id="firstStage">
-                <div class="fengcai-main">
-                    <div class="main-top center-disperse">
-                        <div><div class="z"> 会员信息 </div></div>
-                        <div class="y"> 当前位置：首页&gt; <a id="menuY" href=""> 会员风采 </a></div>
+            <!-- 导航部分结束 -->
+            <div class="organize-content">
+                <div class="weizhuye-gerenfencai" id="firstStage">
+                    <div class="fengcai-main">
+                        <div class="main-top center-disperse">
+                            <div><div class="z"> 会员信息 </div></div>
+                        </div>
+                        <ul class="list-member-ul">
+                            <li class="member_title">
+                                <img :src="set_img(baseInfo.avatar, '/common/img/news_default.jpg', 300, 375)" class="member_header" />
+                                <div>{{baseInfo.plat_name}}{{baseInfo.level_name}}&emsp;{{memberInfo.real_name}}</div>
+                                <p> <b>{{memberInfo.real_name}}</b> , {{baseInfo.cert_info}}。</p>
+                            </li>
+                            <li class="member_content">
+                                <h3> 个人简介 </h3>
+                                <table cellpadding="0" cellspacing="0" rules="all" class="member-table">
+                                    <tbody>
+                                        <tr>
+                                            <td>姓&emsp;&emsp;名</td>
+                                            <td>{{memberInfo.real_name}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>性&emsp;&emsp;别</td>
+                                            <td>{{baseInfo.sex == 1? '中性' : baseInfo.sex == 2? '女' : '男'}}</td>
+                                        </tr>
+                                        <tr v-if="baseInfo.origo">
+                                            <td>籍&emsp;&emsp;贯</td>
+                                            <td>{{baseInfo.origo}}</td>
+                                        </tr>
+                                        <tr v-if="baseInfo.residential">
+                                            <td>现&emsp;&emsp;住</td>
+                                            <td>{{baseInfo.residential}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>认证信息</td>
+                                            <td>
+                                                <span class="vip-icon-1"><img src="/common/img/vrenzheng.png">&nbsp;官方认证</span>
+                                                |<span class="vip-icon-span1"><img class="vip-icon-2" src="/common/img/shiming.png"></span>
+                                                |<span class="vip-icon-span2"><a :href="'/cert/'+ info_weid" target="_blank"><img class="vip-icon-3" src="/common/img/authentication.png"></a></span>
+                                                <br> {{baseInfo.cert_info}}
+                                            </td>
+                                        </tr>
+                                        <tr v-if="baseInfo.page_domain">
+                                            <td>个人主页</td>
+                                            <td>
+                                                <a style="color:-webkit-link" :href="origin+'/'+baseInfo.page_domain" target="_blank">{{origin+'/'+baseInfo.page_domain}}</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>业务范围</td>
+                                            <td>{{memberInfo.business}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>社会职务</td>
+                                            <td>
+                                                <p>{{memberInfo.position}}</p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>个人荣誉</td>
+                                            <td>
+                                                <p>{{memberInfo.honor}}</p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>个人履历</td>
+                                            <td>
+                                                <p>{{memberInfo.resume}}</p>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </li>
+                        </ul>
                     </div>
-                    <ul class="list-member-ul">
-
-                    </ul>
                 </div>
             </div>
-        </div>
-        <!-- 右侧大背景图 -->
-        <div id="public_main_right_bg" style="position:fixed;top:0;bottom:0;left:1190px;width:100%;"></div>
-        <script src="{{PATH_TML}}js/public_main_right_bg.js"></script>
-        <script src="{{PATH_TML}}member/js/member.js"></script>
-    </body>
+        </article>
+    </article>
+</div>
 
-</html>
+<script>
+    var app = new Vue({
+        el: '#container',
+        data: {
+            column_list: [],        // 频道栏目列表
+            info_weid: $app.get_router(2), // 会员weid
+            applyInfo: {},  // 申请信息
+            baseInfo: {},   // 共用信息
+            memberInfo: {}, // 会员信息
+            origin: window.location.origin,
+
+        },
+        http: {
+            headers: {
+                token: plats_token,
+            }
+        },
+        created() {
+            var self = this;
+            // 频道栏目列表
+            ajax.get(CMS_CHANNEL_CATEGORIES + "org").then(res => {
+                this.column_list = res.data;
+            });
+
+            // 会员
+            this.current();
+        },
+        mounted() {
+            this.$nextTick(() => {
+
+            })
+        },
+        methods: {
+            current() {
+                ajax.get('member/u/profile?weid=' + this.info_weid).then((res) => {
+                    if(res.code === 200 && res.data) {
+                        var result = res.data;
+                        if(result.is_info == 2) {
+                            console.log("信息未完善!");
+                        } else if(result.is_info == 1) {
+                            console.log("信息已经完善!");
+                            this.applyInfo = result;
+                            this.mien();
+                        }
+                    } else {
+                        window.location.href = "/404";
+                    }
+                });
+            },
+            mien() {
+                ajax.get(MEMBER_MIEN +'/'+ this.info_weid).then((res) => {
+                    console.log(res);
+                    if(res.code === 200 && res.data) {
+                        this.baseInfo = res.data.baseInfo;
+                        this.memberInfo = res.data.memberInfo;
+                    } else {
+                        window.location.href = "/404";
+                    }
+                });
+            },
+            set_img: (url, init, w, h, mode) => {
+                if (url != '' && url != null && url != undefined) {
+                    if (url.indexOf('http') === -1 && url.indexOf('common') === -1) {
+                        return mode != undefined ? ApiMaterPlatQiniuDomain + url + '?imageView2/' + mode + '/w/' + w + '/h/' + h
+                                                 : ApiMaterPlatQiniuDomain + url + '?imageView2/3/w/' + w + '/h/' + h;
+                    } else {
+                        return url;
+                    }
+                } else {
+                    return init;
+                }
+            },
+        }
+    });
+</script>

@@ -177,7 +177,7 @@ function time_axis_member_apply() {
         if(data.code == 200) {  
 
             result1 = data.data;
-            console.log("会员申请：", result1);
+            // console.log("会员申请：", result1);
             member_apply_op_time = result1.sec_audit_time;
             if (!result1) {
                 return false;
@@ -309,7 +309,7 @@ if(token != null || token != undefined) {
     member_options.done(function(data) {
         if(data.code == 200) {
             var result = data.data;
-            console.log("准会员：", result);
+            // console.log("准会员：", result);
 
             if(!result) {
                 // * 非会员 -> 准会员
