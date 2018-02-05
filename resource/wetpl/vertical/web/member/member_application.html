@@ -39,7 +39,7 @@
                     <div class="pay_qr" v-if="state.pay_qr">
                         <h2><span>微信扫码</span><span class="pay_qr_clear" @click="close_pay">×</span></h2>
                         <img class="pay_qr_img" :src="CMS_DETAIL_QRCODE + order_pay.qr_url" alt="">
-                        <div style="font-size: 12px; padding: 0 20px; color: #ea332d; ">会员缴费功能由第三方提供，属于增值服务，平台使用前需要先购买基于“全国公民身份证号码查询服务中心”权威数据源，通过身份证号和姓名来校验是否一致。本服务由第三方提供，费用由平台实时在线代收。会员缴费费用（￥{{JSON.stringify(member_position) == '{}'? '0' : member_position.price*member_levels.year}}）元。</div>
+                        <div style="font-size: 12px; padding: 0 20px; color: #ea332d; ">会员缴费费用（￥{{JSON.stringify(member_position) == '{}'? '0' : member_position.price*member_levels.year}}）元。</div>
                     </div>
 
                     <div class="member_app_list member_app_pay" v-if="member_primary.state == 2">
@@ -162,6 +162,7 @@
                 },
                 order_pay: {},
                 setInterval_pay: '',
+                apply_wait_days: null,
             },
             http: {
                 headers: {
@@ -180,7 +181,10 @@
             },        
             mounted() {
                 this.$nextTick(() => {
-
+                    ajax.get(MEMBER_SETTING).then((body) => {
+                        this.apply_wait_days = body.data.apply_wait_days;
+                        localStorage.setItem("apply_wait_days", body.data.apply_wait_days);
+                    });
                 })
             },
             methods: {
