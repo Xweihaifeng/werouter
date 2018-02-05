@@ -393,8 +393,8 @@
                     $(document).scrollTop(340);                    
                     switch (this.type) {
                         case 'latest': this.getLatest(page, 10); break;
-                        case 'articles': this.getArtList(page, 10, this.remArt); break;
-                        case 'activity': this.getActList(page, 10, this.remAct); break;
+                        case 'articles': this.getArtList(page, 10, this.artType.list[this.artType.flag].weid); break;
+                        case 'activity': this.getActList(page, 10, this.actType.list[this.actType.flag].weid); break;
                     }
                 },
                 tab: function(o, id, type){

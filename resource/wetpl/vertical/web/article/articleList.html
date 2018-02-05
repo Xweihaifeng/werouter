@@ -101,6 +101,9 @@
                         </p>
                     </li>
                 </a>
+                <div id="pages">
+                    <Page :total="parseInt(pages[type].total)" :current="pages[type].page" :page-size="pages[type].limit" @on-change="change" v-if="pages[type].total > pages[type].limit"></Page>
+                </div>
                 <ul id="shop" v-show="type == 'shopping'">
                     <li v-for="(e, i) in shopCate">
                         <div>
@@ -236,8 +239,8 @@
                 <li id="friends">
                     <ul>
                         <li>
-                            <p @mouseenter="select('fans')" :class="{'friends': active == 'fans'}">我的粉丝({{info.fnums}})</p>
-                            <p @mouseenter="select('friends')" :class="{'friends': active == 'friends'}">我的关注({{info.gnums}})</p>
+                            <p @click="select('fans')" :class="{'friends': active == 'fans'}">我的粉丝({{info.fnums}})</p>
+                            <p @click="select('friends')" :class="{'friends': active == 'friends'}">我的关注({{info.gnums}})</p>
                         </li>
                         <li v-show="active == 'fans'">
                             <a v-for="e in info.flist" :href="'/' + e.domain" :title="e.nickname">
@@ -256,8 +259,6 @@
                 </li>
             </ul>
         </div>
-        <div id="pages">
-            <Page :total="parseInt(pages[type].total)" :current="pages[type].page" :page-size="pages[type].limit" @on-change="change" v-if="pages[type].total > pages[type].limit"></Page>
-        </div>
+        
     </div>
 </div>
