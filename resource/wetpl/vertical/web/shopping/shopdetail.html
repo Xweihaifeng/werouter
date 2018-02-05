@@ -462,6 +462,7 @@
                         headers: {'Token': plats_token}
                     }).then(data => {
                         this.info = data.data.data;
+                        console.log(this.info)
                         getLine(this.info);
                     })
                 },
@@ -507,7 +508,7 @@
         //footer
         new Vue({
             el: "#bottom1",
-            data: {                
+            data: {
             },
             created: function(){
 
@@ -545,9 +546,9 @@
             created: function(){
                 this.menu = {list: this.dataMenu.map(e => ({name: e})), flag: -1};  //////////////////////////////
                 this.wefriends();
-                this.init(window.location.pathname.split('/').pop());                
+                this.init(window.location.pathname.split('/').pop());
                 this.avatar = docCookies.getItem('token') ? (plats_user_info.avatar ? plats_user_info.avatar : localStorage.getItem('avatar')) : '';
-                
+
                 if (!docCookies.getItem('token')) {
                     this.userCenter = '快速登录';
                 } else {
@@ -566,7 +567,7 @@
                         $("#menu").css({position:"fixed",top:0,left:0,zIndex:99});
                         $("#content").css({"padding-top":"55px"});
                         $("#center").show();
-                        $("#plats-user").show();                        
+                        $("#plats-user").show();
                         $("#menu ul li:nth-child(2)").hide();
                     }else{
                         $("#menu").css({position:"relative",zIndex:0});
@@ -585,7 +586,7 @@
                     window.onpopstate = function(e) {
                         var curr = window.location.pathname.split('/').pop();
                         var list = ['', 'article', 'activity', 'wemall', 'quan'];
-                        var id = list.indexOf(curr);                    
+                        var id = list.indexOf(curr);
                         if (id != -1) {
                             wepage.menu.flag = id;
                             switch (id) {
@@ -598,7 +599,7 @@
                         } else {
                             wepage.menu.flag = 0;
                             wepage.type = 'latest'
-                        }                        
+                        }
                     }
                 })
             },
@@ -701,7 +702,7 @@
                     })
                 },
                 getLatest: function(page, limit) {
-                    axios.get(apiUrl + 'circel/dynamic?page=' + page + '&limit=10' + '&type=1&dynamic_type=0&domain=' + pages_info.plats_domian.domain).then(data => {                        
+                    axios.get(apiUrl + 'circel/dynamic?page=' + page + '&limit=10' + '&type=1&dynamic_type=0&domain=' + pages_info.plats_domian.domain).then(data => {
                         this.type = 'latest';
                         this.latest = data.data.data.list;
                         this.latest == '' ? wepage.none = true : wepage.none = false;
@@ -769,21 +770,21 @@
                             },
                             success: function(data){
                                 e.shopping = data.data.list.map(e => (e.stateBuy = false, e));
-                            }                                                            
+                            }
                         })
                     })
                     // console.log(this.shopCate)
                 },
                 login: function(type){
                     if (!docCookies.getItem("token")) {
-                        $("#modal_login").show();                        
+                        $("#modal_login").show();
                     } else {
                         if (type == 0) {
                             //1:已关注 0：未关注
-                            this.info.if_follow == 1 ? this.cancelFollow() : this.follow();    
+                            this.info.if_follow == 1 ? this.cancelFollow() : this.follow();
                         } else {
-                            this.user = '/user';                            
-                        }                        
+                            this.user = '/user';
+                        }
                     }
                 },
                 change: function(page){
@@ -861,12 +862,12 @@
                         return avatar;
                     }
                 },
-                buy: function(o, i, state) {                    
+                buy: function(o, i, state) {
                     if (state != 'leave') {
                         o.stateBuy = true;
                     } else {
                         o.stateBuy = false;
-                    }                    
+                    }
                 }
             },
             filters: {
@@ -898,7 +899,6 @@
         el: '#list',
         data: {
            cate_domain : $app.get_router(1), // 分类个性域名
-            user_domain:$app.get_router(1),   //个性域名
            id_domain:$app.get_router(4),   //商品id
            shop_info:{},                   //商品信息
            shop_image_list:[]  ,             //图片信息
@@ -1131,7 +1131,7 @@
             // 二维码生成
             qrcodefun(id) {
                 var localhostPath=window.location.protocol + '//' + window.location.host + '/'
-                var qrcode_val = localhostPath + this.user_domain + "/wemall/goods/" + id;
+                var qrcode_val = localhostPath + this.cate_domain + "/wemall/goods/" + id;
                 console.log(qrcode_val)
                 if ($.support.msie && $.support.version <= 8) {
                     $("#shop_code").qrcode({
@@ -1216,7 +1216,6 @@
                 ajax.get('goods/collection/destroy/' + id).then((res)=>{
                     console.log(11111,res.data)
                     if(res.code == 200) {
-                              alert(1111)
                             $(".add_to_collect").css({ "background": '#DE3E1E',"cursor": 'default'})
                             this.collect_id="";
                             $(".add_to_collect").html("点击收藏")

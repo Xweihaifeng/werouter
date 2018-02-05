@@ -11,13 +11,14 @@
     <script src="/common/iview/vue.min.js"></script>
     <script type="text/javascript" src="/common/js/JsBarcode.all.js"></script>
     <script type="text/javascript" src="/resource/wetpl/vertical/web/shopping/js/jquery.qrcode.min.js"></script>
+    <script src="{{PATH_TML}}js/modal_login.js"></script>
     <script src="/common/iview/axios.min.js"></script>
     <script src="/common/iview/libs/util.js"></script>
     <script src="/common/iview/libs/filter.js"></script>
     <script src="/common/layui/layui.js"></script>
     <script src="/common/public/js/model/ver_ajax.js"></script>
 
-
+    <link rel="stylesheet" href="{{PATH_TML}}css/modal_login.css" />
     <link rel="stylesheet" type="text/css" href="/common/css/main.css">
     <link rel="stylesheet" type="text/css" href="/common/css/fontawesome.min.css">
     <link rel="stylesheet" type="text/css" href="/common/css/bootstrap.min.css">
@@ -38,23 +39,29 @@
     </style>
 </head>
 <body>
-
+<div class="modal_login" id="modal_login"></div>
 <div id="container">
     <div id="content">
-        <div class="pay" id="pay">
+        <div class="pay" id="pay" v-if="state == 1">
             <div class="pay_info">
                 <div class="pay_bz">
-                    <img src="{{PATH_TML}}activity/img/success.png" alt="">
+                    <img src="{{PATH_TML}}activity/img/success.png" alt="" v-if="state == 1">
+                    <img src="{{PATH_TML}}activity/img/shixiao.png" alt="" v-if="state == 3">
                 </div>
                 <div class="pay_pre">
                     <div class="pay_title">
                         <div class="title_left">
-                            <h2>订单提交成功！去付款喽~</h2>
-                            <span>请在 <span v-html="pay_active.close_timeout"></span> 完成支付，以免订单过期</span>
+                            <h2 v-if="state == 1">订单提交成功！去付款喽~</h2>
+                            <h2 v-if="state == 3" style="color: #b9b8b8;">订单已失效，请重新选票</h2>
+                            <span v-if="state == 1">请在 <span v-html="pay_active.close_timeout"></span> 完成支付，以免订单过期</span>
+                            <span v-if="state == 3" style="color: #b9b8b8;">订单已逾期，请重新报名购买，以免没票</span>
                         </div>
                         <div class="title_right">
-                            <div class="price">
+                            <div class="price" style="margin-top: 0;font-size: 14px" v-if="state == 1">
                                 应付总额：<span v-html="pay_active.total_fee"></span>
+                            </div>
+                            <div class="price" style="margin-top: 0;font-size: 14px;color:#b9b8b8;" v-if="state == 3">
+                                应付总额：<span v-html="pay_active.total_fee" style="color: #b9b8b8;"></span>
                             </div>
                             <span @click="info_pre">订单详情</span>
                         </div>
@@ -116,6 +123,70 @@
                 </div>
             </div>
         </div>
+        <div class="pay_success" id="pay_success" v-if="state == 2">
+            <div class="pay_info">
+                <div class="pay_bz">
+                    <img src="{{PATH_TML}}activity/img/success.png" alt="">
+                </div>
+                <div class="pay_pre">
+                    <div class="pay_title">
+                        <div class="title_left">
+                            <h2>订单已成功支付</h2>
+                            <span>订单已成功，请及时取票</span>
+                        </div>
+                        <div class="order-detail" style="display: block;margin-top: 123px">
+                            <ul>
+                                <li class="clearfix">
+                                    <div class="label">票号:</div>
+                                    <div class="content">
+                                        <span class="order-num" v-html="pay_success.ticket_num"></span>
+                                    </div>
+                                </li>
+                                <li class="clearfix">
+                                    <div class="label">商品名称：</div>
+                                    <div class="content" v-html="pay_success.title"></div>
+                                </li>
+                                <li class="clearfix">
+                                    <div class="label">支付时间：</div>
+                                    <div class="content" v-html="pay_success.updated_at"></div>
+                                </li>
+                                <li class="clearfix">
+                                    <div class="label">活动地址：</div>
+                                    <div class="content" v-html="pay_success.area_name + pay_success.address"></div>
+                                </li>
+                                <span @click="success_pay" style="cursor:pointer">查看更多</span>
+                            </ul>
+                        </div>
+                    </div>
+                    <!--订单详情开始-->
+                    <div class="order-detail">
+                        <ul>
+                            <li class="clearfix">
+                                <div class="label">订单号:</div>
+                                <div class="content">
+                                    <span class="order-num" v-html="pay_active.out_trade_no"></span>
+                                </div>
+                            </li>
+                            <li class="clearfix">
+                                <div class="label">商品名称：</div>
+                                <div class="content" v-html="pay_active.activity_title"></div>
+                            </li>
+                            <li class="clearfix">
+                                <div class="label">订单时间：</div>
+                                <div class="content" v-html="pay_active.created_at"></div>
+                            </li>
+                            <li class="clearfix">
+                                <div class="label">发票信息：</div>
+                                <div class="content">
+                                    电子发票 个人
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--订单详情结束-->
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <script>
@@ -124,16 +195,52 @@
         data: {
              flag:false,        //详情页开关
              pay_num:$app.get_query_string('pay'),   //订单号
-             pay_active:{}                             //订单信息
+             pay_active:{},                             //订单信息
+            activity_num:$app.get_query_string('activity'),   //订单活动号
+            user:{} ,                                    //用户信息
+            pay_success:{},                                 //支付成功
+            state:0                                         //订单状态
+
         },
         mounted: function() {
             this.$nextTick(()=>{
                // 订单信息展示
-                ajax.get('/activity/user_order?number=' + this.pay_num).then((res)=>{
-                    if(res.code == 200) {
-                        this.pay_active=res.data;
-                    }
-                })
+                if(!docCookies.getItem("token")){
+                    $("#modal_login").show();
+                }else{
+                    this.user=plats_user_info;
+                    ajax.get('/activity/user_order?number=' + this.pay_num).then((res)=>{
+                        if(res.code == 200) {
+                            this.pay_active=res.data;
+                            if(res.data.state==2){
+                                this.state=2;
+                                layer.alert("订单已支付，勿重复提交", {time: 3000});
+                                $("body,html").css({background: "url('/common/img/bg.gif')"})
+                                this.artList(this.user.weid)
+                                return;
+                            }else if(res.data.state==3){
+                                this.state=3;
+                                alert("订单已过期")
+                                $(".title_right>span").css({color:"rgb(185, 184, 184)"});
+                                $(".order-detail>ul>li").css({color:"rgb(185, 184, 184)"});
+                                $(".order-detail .label").css({color:"rgb(185, 184, 184)"});
+                                $(".cash-title").css({color:"rgb(185, 184, 184)"});
+                                $(".payment-box").css({color:"rgb(185, 184, 184)"});
+                                $(".payment-box .payment-header .title").css({color:"rgb(185, 184, 184)"});
+                                $("#J_weixin>img").css({opacity:0.5}).click(function(){
+                                    layui.use('layer', function() {
+                                        var layer = layui.layer;
+                                        layer.msg("订单已过期，请重新购买", {time: 1500});
+                                    })
+                                })
+                                $("img").css({opacity:0.5})
+                            }else if(res.data.state==1){
+                                this.state=1;
+                            }
+                        }
+                    })
+                }
+
                 // this.activity_ebroll_detail("259297b0-07c5-11e8-9808-a7228ff5b169")
             });
         },
@@ -250,10 +357,11 @@
                     },
                     success: function(data) {
                         if (data.code == 200) {
-                            console.log("报名成功")
-                            self.Ticket(data.data);
-                            self.qrcodefun1(data.data.ticket_num);
-                            self.barcode('.bar-code svg', data.data.ticket_num);
+                            console.log("报名成功");
+                            self.pay_success=data.data;
+                            self.state=2;
+                            console.log(self.state)
+                            // self.pay_active={};
                         }
 
                     },
@@ -304,9 +412,11 @@
                     '<div class="ticket"></div>' +
                     '</div>' +
                     '</div>',
+
                     end: function() {
                         location.reload();
                     },
+
                     shade: 0.7
                 });
 
@@ -343,6 +453,11 @@
                 });
 
             },
+            success_pay(){
+                this.Ticket(this.pay_success);
+                this.qrcodefun1(this.pay_success.ticket_num);
+                this.barcode('.bar-code svg',this.pay_success.ticket_num);
+            },
             qrcodefun1(ticket_num) {
                 var qrcode_val = ticket_num;
                 // if ($.browser.msie && $.browser.version <= 8){
@@ -375,8 +490,36 @@
                     lineColor: "#000",
                     margin: 5
                 });
+            },
+            // 用户活动
+           artList(user_id) {
+                console.log("777777",user_id)
+                var self=this;
+                var sendData = {
+                    user_id: user_id,
+                }
+                $.ajax({
+                    // url: ACTIVITY_LIST,
+                    url: ACTIVITY_ENROLL_LISTS,
+                    type: 'post',
+                    data: sendData,
+                    success: function(data) {
+                        // console.log(data);
+                        if (data.code == 200) {
+                            var arts = data.data.list;
+                            for(var item of data.data.list) {
+                                console.log(item.activity_id);
+                                if(item.activity_id == self.activity_num ){
+                                    self.activity_ebroll_detail(item.weid)
+                                }
+                            }
+                        }
+                    },
+                    error: function(xhr) {
+                        console.log(xhr);
+                    }
+                })
             }
-
 
         }
     })

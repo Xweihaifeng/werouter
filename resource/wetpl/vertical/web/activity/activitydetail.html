@@ -1095,7 +1095,9 @@
                                         self.activity_ebroll_detail(data.data.enroll_id);
                                     } else if (data.data.status == 1) {
                                         // 刷新页面
-                                        window.location.reload();
+                                        var href=window.location.protocol + '//' + window.location.host + '/'+ 'yuxue/activity/pay?pay=' + data.data.number +'&activity=' + self.id_domain;
+                                        console.log(href)
+                                        window.location.href = href;
                                     }
                                 }
                                 else if (data.code == 401) {
@@ -1144,103 +1146,6 @@
                 exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000);
                 document.cookie = "token=" + escape(token) + ";expires=" + exp.toGMTString() + ";path=/";
             },
-            //微信扫码支付下单
-           wechat_scan_pay(number) {
-                var self=this;
-                $.ajax({
-                    url: ACTIVITY_WX_ORDER,
-                    type: 'post',
-                    data: {
-                        number: number
-                    },
-                    headers: {
-                        'Token': docCookies.getItem("token")
-                    },
-                    success: function(data) {
-                        //console.log(data)
-                        if (data.code == 200) {
-                            self.PaymentQR(data.data.qrcode_url, data.data.number, data.data.total_fee);
-                        } else {
-                            console.log(number);
-                        }
-
-                    },
-                    error: function(xhr) {
-                        console.log(xhr);
-                    }
-                })
-            },
-            //报名成功弹出票据模态框
-           activity_ebroll_detail(id) {
-                $.ajax({
-                    url: ACTIVITY_ENROLL_DETAIL + "/" + id, //活动报名详情
-                    type: 'get',
-                    headers: {
-                        'Token': docCookies.getItem("token")
-                    },
-                    success: function(data) {
-                        if (data.code == 200) {
-                            console.log("报名成功")
-                            console.log(urlall[0])
-                            Ticket(data.data);
-                            qrcodefun1(data.data.ticket_num);
-                            barcode('.bar-code svg', data.data.ticket_num);
-                        }
-
-                    },
-                    error: function(xhr) {
-                        console.log(xhr);
-                    }
-                })
-            },
-            // 调起支付
-           PaymentQR(qr_url, number, fee) {
-                console.log("支付")
-               var self=this;
-                paymentLayer = layer.open({
-                    skin: 'layui-layer-rim',
-                    type: 1,
-                    area: ['400px', '430px'],
-                    title: '微信扫码支付',
-                    closeBtn: 2,
-                    shadeClose: false,
-                    scrollbar: false,
-                    //content: '<img src="' + QRCODE + '?url=' + qr_url + '" width="300">',
-                    content: `<div class="payment-block">
-                            <div class="payment-qrcode"><img src="` + QRCODE + `?url=` + qr_url + `" width="300"></div>
-                            <div class="payment-desc">
-                                <p>付款金额：<b>￥` + fee + `</b></p>
-                            </div>
-                            <div class="payment-mark"><img src="/common/img/wepay-logo.png" width="100"></div>
-                        </div>`,
-                    end: function() {
-                        clearInterval(tmr);
-                        //location.reload();
-                    },
-                    shade: 0.7
-                });
-                tmr = setInterval(function() {
-                    $.ajax({
-                        url: ACTIVITY_ENROLL_ORDER_DETECT,
-                        type: 'post',
-                        dataType: 'json',
-                        data: {
-                            number: number
-                        },
-                        success: function(rep) {
-                            if (rep.data.state == 2) {
-                                clearInterval(tmr);
-                                layer.close(paymentLayer);
-                                // 弹出成功数据
-                                self.activity_ebroll_detail(rep.data.enroll_id);
-                            }
-                        },
-                        error: function(xhr) {
-                            console.log(xhr);
-                        }
-                    });
-                }, 1000)
-            },
            // 保存信息
            saveUserInfo(token, weid, imgUrl, identity, phone) {
                 //localStorage.setItem('token', token);
@@ -1281,11 +1186,12 @@
                             if(req.data.status==2){
                                 self.page_info = true;
                                 self.pay_ment=req.data.status;
+                                console.log(req.data.number);
                                 layui.use('layer', function() {
                                     var layer = layui.layer;
                                     layer.msg("有未支付订单，先去支付吧", {time: 1500});
                                 })
-                                var href=window.location.protocol + '//' + window.location.host + '/'+ 'user/myactivity/order'
+                                var href=window.location.protocol + '//' + window.location.host + '/'+ 'yuxue/activity/pay?pay=' + req.data.number + '&activity=' + self.id_domain;
                                 console.log(href)
                                 window.location.href = href;
                             }else if(req.data.status==3){
@@ -1312,8 +1218,16 @@
             },
            // 报名
             sign_up(){
-                this.GetOrder(this.id_domain)
-            }
+                if(this.active_detail.onStatus == '已结束'){
+                    layui.use('layer', function() {
+                        layer.msg("活动已过期", {time: 1500});
+                        return;
+                    })
+                }else{
+                    this.GetOrder(this.id_domain)
+                }
+            },
+
         },
 
     })
