@@ -40,4 +40,17 @@ $(function(){
         $('.signBox .sign_section').css('height', '306px');
     });
 
+    // 滚动事件
+    var Height=$(".project_t").offset().top;
+    $(window).scroll(function(){
+
+        if($(document).scrollTop()>=Height-250){
+            $("#userinfo").css({display:"none"});
+            // $("#menu").css({position:"relative"})
+            $(".project_t").css({position:"fixed",top:0,left:"50%",zIndex:99,marginTop:0,marginLeft:"-578px",width:783});
+        }else{
+            // $("#menu").css({position:"relative"})
+            $(".project_t").css({position:"relative",top:0,left:0,zIndex:1,marginTop:0,marginLeft:0});
+        }
+    })
 })
