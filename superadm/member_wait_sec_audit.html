@@ -438,10 +438,6 @@
                                         <td><a id="plat_member_application" class="btn btn-warning" href="" target="_blank">点击下载</a></td>
                                     </tr>
                                     <tr>
-                                        <td>申请资料</td>
-                                        <td><img id="paper_img" src="#" data-action="zoom" width="100"></td>
-                                    </tr>
-                                    <tr>
                                         <td>缴费状态</td>
                                         <td>
                                             <div id="is_pay"></div>
@@ -772,7 +768,6 @@
                     $('#plat_member_tel').text(data.data.plat_member_tel);
                     $('#plat_member_address').text(data.data.plat_member_address);
                     $('#plat_member_application').attr('href', ApiMaterPlatQiniuDomain + data.data.plat_member_application);
-                    $('#paper_img').attr('src', ApiMaterPlatQiniuDomain + data.data.paper_img);
                     $('#is_pay').html(data.data.is_pay == 1 ? '<span class="label label-success">已缴费</span>' : '<span class="label label-danger">未缴费</span>');
                     $('#ap_time').text(data.data.ap_time);
                     $('#pay_at').text(new Date(data.data.pay_at * 1000).format('yyyy-MM-dd hh:mm:ss'));
