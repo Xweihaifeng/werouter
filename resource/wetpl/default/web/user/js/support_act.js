@@ -279,7 +279,7 @@ $(document).ready(function() {
         }
         $.ajax({
             // url: ACTIVITY_LIST,
-            url: ACTIVITY_ENROLL_LISTS,
+            url: ACTIVITY_ENROLL_LISTS + '?status=1',
             type: 'post',
             data: sendData,
             success: function(data) {
@@ -293,7 +293,7 @@ $(document).ready(function() {
                         $("#" + x).fadeIn(700);
                     });
                     if (res == "") {
-                        $("#right").append('<div class="none">-- 已经没有了 --</div>');
+                        $("#right").append('<div class="none">-- 暂时没有支持任何活动 --</div>');
                     } else {
                         $("#right").append('<div class="more">-- 点击加载更多 --</div>');
                     }
