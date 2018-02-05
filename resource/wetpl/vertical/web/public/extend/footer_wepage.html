@@ -1,9 +1,11 @@
 <div id="bottom1">
             <footer>
                 <div class="footer-nav">
-                    <a href="javascript:void(0)">咨询与建议</a>
-                    <a href="javascript:void(0)">站点地图</a>
-                    <a id="contact" href="/org/lxwm">联系我们</a>
+                    <a :href="'/' + pages_info.plats_domian.domain + '/'">首页</a>
+                    <a :href="'/' + pages_info.plats_domian.domain + '/article'">我的文章</a>
+                    <a :href="'/' + pages_info.plats_domian.domain + '/activity'">我的活动</a>
+                    <a :href="'/' + pages_info.plats_domian.domain + '/wemall'">我的商城</a>
+                    <a :href="'/' + pages_info.plats_domian.domain + '/quan'">我的圈子</a>
                 </div>
                 <div class="copyright" v-html="plats_info.copyright"></div>
                 <div class="_ideConac">
@@ -142,12 +144,16 @@
 
                 axios.get('http://demo.wezchina.com/api/articles/cates').then(data => {
                     console.log(data)
+                    this.artType.list = data.data.data;
+                    this.artType.flag = 0;
+                    this.artType.type = 'articles';
                 })
 
                 axios.get(apiUrl + 'activity/cate/lists').then(data => {
-                    this.actType.list = [{weid: '', title: '全部'}, ...data.data.data.list];
+                    this.actType.list = data.data.data.list;
                     this.actType.flag = 0;
                     this.actType.type = 'activity';
+                    console.log(this.actType)
                 });
                 // this.getList(this.url, '', '', '', 1, 8); //初始化页面数据
 
@@ -306,7 +312,8 @@
                 },
                 getArtList: function(page, limit, cate_id) {
                     $.ajax({
-                        url: ARTICLE_LIST + '?userId=' + pages_info.plats_domian.plat_user_id + '&page=' + page + '&limit=' + limit + '&cate_id=' + cate_id,
+                        //ARTICLE_LIST
+                        url: ARTICLES_CATEGORY + '?userId=' + pages_info.plats_domian.plat_user_id + '&page=' + page + '&limit=' + limit + '&cateId=' + cate_id,
                         success: function(data){
                             if (data.code == 200){
                                 wepage.type = 'articles';
@@ -315,6 +322,7 @@
                                 wepage.pages.articles.page = page;
                                 wepage.page = wepage.pages.articles;
                                 wepage.articles == '' ? wepage.none = true : wepage.none = false;
+                                console.log(data)
                             }
                         }
                     })
@@ -393,16 +401,18 @@
                     }
                 },
                 tab: function(o, id, type){
-                    this.getActList(1, 10, o.weid);
-                    console.log(o.weid)
                     if (type == 'act') {
+                        window.history.pushState(null, null, '/' + pages_info.plats_domian.domain + '/activity/' + o.e_name);
+                        this.getActList(1, 10, o.weid);
                         $("#" + this.remAct).removeClass('active');
                         $("#" + (type + id)).addClass('active');
-                        this.remAct = type + id;    
+                        this.remAct = type + id;
                     } else if (type == 'art') {
+                        window.history.pushState(null, null, '/' + pages_info.plats_domian.domain + '/article/' + o.ename);
+                        this.getArtList(1, 10, o.weid);
                         $("#" + this.remArt).removeClass('active');
                         $("#" + (type + id)).addClass('active');
-                        this.remArt = type + id;    
+                        this.remArt = type + id;
                     }                    
                 },
                 style: function(list, i) {
@@ -413,8 +423,8 @@
                     list.flag = i;
                     switch (i) {
                         case 0: this.getLatest(1, 10); this.pages['latest'].page = 1; window.history.pushState(null, null, '/' + pages_info.plats_domian.domain + '/'); break;
-                        case 1: this.getArtList(1, 10, ''); this.pages['articles'].page = 1; window.history.pushState(null, null, '/' + pages_info.plats_domian.domain + '/article'); break;
-                        case 2: this.getActList(1, 10, ''); this.pages['activity'].page = 1; window.history.pushState(null, null, '/' + pages_info.plats_domian.domain + '/activity'); break;
+                        case 1: this.getArtList(1, 10, this.artType.list[0].weid); this.remAct = 'art0'; this.pages['articles'].page = 1; window.history.pushState(null, null, '/' + pages_info.plats_domian.domain + '/article'); break;
+                        case 2: this.getActList(1, 10, this.actType.list[0].weid); this.remAct = 'act0'; this.pages['activity'].page = 1; window.history.pushState(null, null, '/' + pages_info.plats_domian.domain + '/activity'); break;
                         case 3: this.getShopCate(this.shopCate, 1, 10);this.pages['shopping'].page = 1; window.history.pushState(null, null, '/' + pages_info.plats_domian.domain + '/wemall'); break;
                         case 4: wepage.type = 'zone'; wepage.none = false; this.pages['zone'].page = 1; window.history.pushState(null, null, '/' + pages_info.plats_domian.domain + '/quan'); break;
                     }
