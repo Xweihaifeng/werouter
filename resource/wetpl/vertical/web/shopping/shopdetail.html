@@ -26,9 +26,7 @@
     <link rel="stylesheet" href="/common/jquery.animsition/css/animsition.min.css">
     <script src="/common/jquery.animsition/js/jquery.animsition.min.js"></script>
 
-    <script type="text/javascript" src="/common/layer-v3.0.3/layer-v3.0.3/layer/layer.js"></script>
-    <link rel="stylesheet" href="/common/layer-v3.0.3/layer-v3.0.3/layer/skin/default/layer.css">
-
+    <script type="text/javascript" src="/resource/wetpl/vertical/web/shopping/js/jquery.qrcode.min.js"></script>
     <!--放大镜开始-->
     <script type="text/javascript" src="/resource/wetpl/vertical/web/shopping/js/jquery.jqzoom.min.js"></script>
     <script type="text/javascript" src="/resource/wetpl/vertical/web/shopping/js/focusimg.js"></script>
@@ -55,6 +53,52 @@
         height: auto;
         margin: 0 auto;
         background: #fff;
+    }
+    .qr_code_icon{
+        position: relative;
+        top: -32px;
+        left: 14px;
+        float: right;
+        width: 24px;
+        height: 24px;
+        background: url("{{PATH_TML}}shopping/img/er.png") no-repeat;
+        cursor: pointer;
+    }
+    #shop_code{
+        width: 140px;
+        height: 142px;
+        position: absolute;
+        top: 67px;
+        left: -115px;
+        border: 1px solid #dfdfdf;
+        display: none;
+        background: #fff;
+    }
+    #shop_code canvas{
+        margin: 15px 15px;
+    }
+    .qr_code_icon2{
+        position: relative;
+        top:0;
+        right: 0;
+        float: right;
+        width: 24px;
+        height: 24px;
+        background: url("{{PATH_TML}}shopping/img/er.png") no-repeat;
+        cursor: pointer;
+    }
+    #shop_code2{
+        width: 140px;
+        height: 142px;
+        position: absolute;
+        top: 67px;
+        left: -115px;
+        border: 1px solid #dfdfdf;
+        display: none;
+        background: #fff;
+    }
+    #shop_code2 canvas{
+        margin: 15px 15px;
     }
 </style>
 
@@ -96,10 +140,8 @@
                 <!--商品详情页开始-->
                 <div class="user_info_left">
                     <span></span>
-                    <div class = "qr_code_icon">
-                        <div class="boxcode">
-                            <div class="price_icon tc" id="product_qrcode" rel=""></div>
-                        </div>
+                    <div class = "qr_code_icon" @mouseenter="qrcode">
+                          <div id="shop_code"></div>
                     </div>
                     <div class="westoreWarp">
                         <div class="pro_deta_top clearfix">
@@ -165,6 +207,7 @@
                                             <button class="buy_btn" type="button" id="" @click="buy">立即购买</button>
                                             <!--<a href="javascript:void(0);" class="collect_btn collect-btn-click" data-tag="on" >立即收藏</a>''+-->
                                             <a href="javascript:void(0);" class="add_to_cart" data-tag="on" @click="add_buycar">加入购物车</a>
+                                            <a href="javascript:void(0);" class="add_to_collect" data-tag="on" @click="collect_select">点击收藏</a>
                                         </p>
                                     </div>
 
@@ -176,6 +219,10 @@
                             <div class="pro_deta_tab" >
                                 <a href="#goods_detail" class="active pro_date_tit2" @click="shop_click(0)" href="javascript:void(0)">商品详情</a>
                                 <a href="#goods_rule" class="pro_date_tit" @click="shop_click(1)" href="javascript:void(0)">购买须知</a>
+                                <button class="buy_btn" type="button" id="buy" @click="buy">立即购买</button>
+                                <div class = "qr_code_icon2" @mouseenter="qrcode2">
+                                    <div id="shop_code2"></div>
+                                </div>
                             </div>
                             <div class="pro_det">
                                 <p>
@@ -406,13 +453,16 @@
                 info: {},
                 fontColor: pages_info.plats_user_cert.is_authenticated == 1 ? {color: '#ff9900'} : {color: '#999'}
             },
+            created: function(){
+                this.wefriends();
+            },
             methods: {
                 wefriends: function(){
                     axios.get(apiUrl + 'circel/index?domain=' + pages_info.plats_domian.domain, {
                         headers: {'Token': plats_token}
                     }).then(data => {
                         this.info = data.data.data;
-                        // getLine(this.info);
+                        getLine(this.info);
                     })
                 },
                 setBg: function(url, init) {
@@ -448,6 +498,9 @@
                         return '来自火星';
                     }
                 },
+                select: function(type) {
+                    this.active = type;
+                }
             }
         })
 
@@ -852,6 +905,7 @@
             commont:[],                        //评论内容
             total:0,                            //评论总条数
             limit:3,                             //显示评论数
+            collect_id:""                       //收藏id
         },
         mounted: function() {
             var self = this;
@@ -862,11 +916,15 @@
                 self.comment();
                 self.focusimgfun()
                 self.zoomfun();
+                this.qrcodefun(this.id_domain);
 
             });
         },
         created: function(){
             //menu
+            layui.use('layer', function() {
+                this.layer = layui.layer;
+            })
 
         },
         methods: {
@@ -877,6 +935,8 @@
                         this.shop_info = res.data;
                         var str = this.shop_info.picture;
                         this.shop_image_list = str.split(',');
+                        // 商品收藏
+                        this.collection(res.data.weid)
                     }
                 })
             },
@@ -956,7 +1016,9 @@
                             console.log(res);
                             if(res.code === 200){
                                 window.localStorage.setItem(res.data,JSON.stringify(obj));
-                                window.location.href = "http://cnew.wezchina.com/" + self.cate_domain + "/wemall/order/" + res.data;
+                                // console.log(window.location.protocol + '//' + window.location.host)
+                                // console.log("http://cnew.wezchina.com/" + self.cate_domain)
+                                window.location.href = window.location.protocol + '//' + window.location.host + '/' + self.cate_domain + "/wemall/order/" + res.data;
                             }
                         }
                     })
@@ -993,10 +1055,17 @@
                                 });
                                 $(".add_to_cart").unbind("click");
                                 // alert("成功加入购物车")
-                                layer.msg("成功加入购物车", { time: 2500 });
+                                layui.use('layer', function() {
+                                    var layer = layui.layer;
+                                    layer.msg("成功加入购物车", {time: 2500});
+                                })
                             } else {
                                 // alert("该商品已经加入购物车,请勿重复添加")
-                                layer.msg("该商品已经加入购物车,请勿重复添加", { time: 2500 });
+                                layui.use('layer', function() {
+                                    var layer = layui.layer;
+                                    layer.msg("该商品已经加入购物车,请勿重复添加", {time: 2500});
+                                })
+
                             }
                         },
                         error: function(xhr) {
@@ -1057,7 +1126,131 @@
                       preload: 1,
                       magnify: 0.5
                   });
-              }
+              },
+            // 二维码生成
+            qrcodefun(id) {
+                var localhostPath=window.location.protocol + '//' + window.location.host + '/'
+                var qrcode_val = localhostPath + this.user_domain + "/wemall/goods/" + id;
+                if ($.support.msie && $.support.version <= 8) {
+                    $("#shop_code").qrcode({
+                        render: "table",
+                        width: 110,
+                        height: 110,
+                        text: qrcode_val
+                    });
+                    $("#shop_code2").qrcode({
+                        render: "table",
+                        width: 110,
+                        height: 110,
+                        text: qrcode_val
+                    });
+                } else {
+                    jQuery("#shop_code").qrcode({
+                        width: 110,
+                        height: 110,
+                        text: qrcode_val
+                    });
+                    jQuery("#shop_code2").qrcode({
+                        width: 110,
+                        height: 110,
+                        text: qrcode_val
+                    });
+                }
+
+            },
+            qrcode(){
+                $("#shop_code").show();
+                $(".qr_code_icon").mouseleave(function(){
+                    $("#shop_code").hide();
+                })
+            },
+            qrcode2(){
+                $("#shop_code2").show();
+                $(".qr_code_icon2").mouseleave(function(){
+                    $("#shop_code2").hide();
+                })
+            },
+            // 点击收藏
+            add_collection(uid,goods_id){
+                var self=this;
+                $.ajax({
+                    url: apiUrl + 'goods/collection/store',
+                    type: 'post',
+                    dataType: 'json',
+                    data: {
+                        goods_id: uid,
+                        mall_id: goods_id,
+                    },
+                    headers: {
+                        'Token': docCookies.getItem("token"),
+                    },
+                    success: function(data) {
+                        // console.log(data);
+                        if(data.code == 200) {
+                            console.log(data);
+
+                            $(".add_to_collect").css({
+                                "background": '#d4d4d4',
+                            });
+                            $(".add_to_collect").html("已收藏");
+                               self.collect_id=data.data;
+                            layui.use('layer', function() {
+                                var layer = layui.layer;
+                                layui.use('layer', function() {
+                                    var layer = layui.layer;
+                                    layer.msg("收藏成功", {time: 2500});
+                                })
+                            })
+                        }
+                    },
+                    error: function(xhr) {
+                        console.log(xhr);
+                    }
+                })
+            },
+            //取消收藏
+            del_collection(id){
+                console.log("删除")
+                ajax.get('goods/collection/destroy/' + id).then((res)=>{
+                    console.log(11111,res.data)
+                    if(res.code == 200) {
+                              alert(1111)
+                            $(".add_to_collect").css({ "background": '#DE3E1E',"cursor": 'default'})
+                            this.collect_id="";
+                            $(".add_to_collect").html("点击收藏")
+                            layui.use('layer', function() {
+                                var layer = layui.layer;
+                                layui.use('layer', function() {
+                                    var layer = layui.layer;
+                                    layer.msg("取消收藏成功", {time: 2500});
+                                })
+                            })
+
+                    }
+                })
+            },
+            //判断是否收藏
+            collection(id){
+                ajax.get('goods/collection/iscollection/' + id).then((res)=>{
+                    if(res.code == 200) {
+                        if(res.data!='no'){
+                            $(".add_to_collect").css({ "background": '#d4d4d4'})
+                            $(".add_to_collect").html("已收藏")
+                            this.collect_id=res.data;
+                        }
+                    }
+                })
+            },
+            // 点击收藏
+            collect_select(){
+                if(this.collect_id == ""){
+                    console.log(plats_user_info)
+                    this.add_collection(this.id_domain,this.shop_info.mall_id)
+                }else{
+                    console.log(this.collect_id)
+                     this.del_collection(this.collect_id)
+                }
+            }
         },
 
     })
