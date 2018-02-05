@@ -33,6 +33,19 @@
         .table>tbody>tr>td:first-child {
             text-align: center;
         }
+        
+        .inner-time {
+            display: block;
+            width: 62px;
+            font-size: 12px;
+        }
+        
+        .inner-title {
+            display: inline-block;
+            margin-left: 10px;
+            width: 250px;
+            font-size: 12px;
+        }
     </style>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -89,7 +102,73 @@
                         <div class="box">
                             <div class="box-header with-border" style="line-height: 35px;">
                                 <h3 class="box-title">微主页活动</h3>
-                                <a href="activity_cate.html" class="btn btn-success pull-right">活动分类</a>
+                                <a href="activity_cate.html" class="btn btn-primary pull-right">活动分类</a>
+                            </div>
+                            <div class="panel panel-info">
+                                <div class="panel-body">
+                                    <form action="" method="get" class="form-horizontal" role="form">
+                                        <div class="form-group">
+                                            <label class="col-xs-12 col-sm-3 col-md-1 control-label">推荐</label>
+                                            <div class="col-sm-1 col-xs-1 col-lg-1">
+                                                <div class="row row-fix tpl-category-container">
+                                                    <select class="form-control" name="is_pose">
+                                                            <option value="">不限</option>
+                                                            <option value="1">是</option>
+                                                            <option value="2">否</option>
+                                                        </select>
+
+                                                </div>
+                                            </div>
+                                            <label class="col-xs-12 col-sm-3 col-md-1 control-label">禁用</label>
+                                            <div class="col-sm-1 col-xs-1 col-lg-1">
+                                                <div class="row row-fix tpl-category-container">
+                                                    <select class="form-control" name="is_deny">
+                                                            <option value="">不限</option>
+                                                            <option value="1">是</option>
+                                                            <option value="2">否</option>
+                                                        </select>
+
+                                                </div>
+                                            </div>
+                                            <label class="col-xs-12 col-sm-3 col-md-1 control-label">隐私</label>
+                                            <div class="col-sm-1 col-xs-1 col-lg-1">
+                                                <div class="row row-fix tpl-category-container">
+                                                    <select class="form-control" name="is_private">
+                                                            <option value="">不限</option>
+                                                            <option value="2">是</option>
+                                                            <option value="1">否</option>
+                                                        </select>
+
+                                                </div>
+                                            </div>
+                                            <label class="col-xs-12 col-sm-3 col-md-1 control-label">状态</label>
+                                            <div class="col-sm-1 col-xs-1 col-lg-1">
+                                                <div class="row row-fix tpl-category-container">
+                                                    <select class="form-control" name="onstatus">
+                                                            <option value="">不限</option>
+                                                            <option value="1">未开始</option>
+                                                            <option value="2">进行中</option>
+                                                            <option value="3">已结束</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-xs-12 col-sm-3 col-md-1 control-label">手机</label>
+                                            <div class="col-sm-3 col-xs-3 col-lg-3">
+                                                <div class="row row-fix tpl-category-container">
+                                                    <input class="form-control" name="phone" placeholder="请输入发布者手机">
+                                                </div>
+                                            </div>
+                                            <label class="col-xs-12 col-sm-3 col-md-1 control-label">标题</label>
+                                            <div class="col-sm-3 col-xs-3 col-lg-3">
+                                                <div class="row row-fix tpl-category-container">
+                                                    <input class="form-control" name="title" placeholder="请输入活动名称">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
                             <!-- /.box-header -->
                             <div class="box-body">
@@ -97,8 +176,7 @@
                                     <thead>
                                         <tr>
                                             <th width="30px">序号</th>
-                                            <th>标题</th>
-                                            <th>封面</th>
+                                            <th>活动</th>
                                             <th>发布用户</th>
                                             <th>隐私发布</th>
                                             <th>开始时间</th>
@@ -330,42 +408,67 @@
                 "bProcessing": true,
                 "bServerSide": true,
                 "sAjaxSource": ApiUrl + "activity/all_list",
-                "fnServerParams": function(aoData) {},
-                // // <th width="30px">序号</th>
-                // //                             <th>标题</th>
-                // //                             <th>封面</th>
-                // //                             <th>发布用户</th>
-                // //                             <th>禁用状态</th>
-                // //                             <th>隐私发布</th>
-                // //                             <th>开始时间</th>
-                // //                             <th>报名截至</th>
-                // //                             <th>创建时间</th>
-                //                             <th>操作</th>
+                "fnServerParams": function(aoData) {
+                    aoData.push({
+                        "name": "is_pose",
+                        "value": $('select[name=is_pose]').val()
+                    });
+                    aoData.push({
+                        "name": "is_deny",
+                        "value": $('select[name=is_deny]').val()
+                    });
+                    aoData.push({
+                        "name": "is_private",
+                        "value": $('select[name=is_private]').val()
+                    });
+                    aoData.push({
+                        "name": "onstatus",
+                        "value": $('select[name=onstatus]').val()
+                    });
+                    aoData.push({
+                        "name": "phone",
+                        "value": $('input[name=phone]').val()
+                    });
+                    aoData.push({
+                        "name": "title",
+                        "value": $('input[name=title]').val()
+                    });
+                },
                 "aoColumns": [{
                     "mData": 'id',
                     "render": function(data, type, full, others) {
                         return others.settings._iDisplayStart + others.row + 1;
                     }
                 }, {
-                    "mData": 'cover',
+                    "mData": 'title',
                     "render": function(data, type, full) {
-                        return `<img src="` + ApiMaterPlatQiniuDomain + full.cover + `" data-action="zoom" width="60">`;
+                        return `<img src="` + ApiMaterPlatQiniuDomain + full.cover + `" data-action="zoom" width="60">` + `<span class="inner-title">` + data + `</span>`;
                     }
-                }, {
-                    "mData": 'title'
                 }, {
                     "mData": 'real_name',
                     "render": function(data, type, full) {
-                        return `<img src="` + ApiMaterPlatQiniuDomain + full.avatar + `" data-action="zoom" width="60"> ` + full.real_name;
+                        return `<img src="` + ApiMaterPlatQiniuDomain + full.avatar + `" data-action="zoom" width="40"> ` + full.real_name;
                     }
                 }, {
-                    "mData": 'is_private'
+                    "mData": 'is_private',
+                    'render': function(data, type, full) {
+                        return data == 2 ? '<span class="label label-success">是</span>' : '<span class="label label-default">否</span>';
+                    }
                 }, {
-                    "mData": 'begain_time'
+                    "mData": 'begain_time',
+                    "render": function(data, type, full) {
+                        return `<span class="inner-time">` + data + `</span>`;
+                    }
                 }, {
-                    "mData": 'enroll_deadline'
+                    "mData": 'enroll_deadline',
+                    "render": function(data, type, full) {
+                        return `<span class="inner-time">` + data + `</span>`;
+                    }
                 }, {
                     "mData": 'created_at',
+                    "render": function(data, type, full) {
+                        return `<span class="inner-time">` + data + `</span>`;
+                    }
                 }, {
                     "mData": 'status',
                     "render": function(data, type, full) {
@@ -385,11 +488,11 @@
                 }],
                 "aoColumnDefs": [{
                         "bSortable": false,
-                        "aTargets": [0, 1, 2, 3, 4, 5, 6, 7, 8]
+                        "aTargets": [0, 1, 2, 3, 7]
                     }, //can't be sorted
                     {
                         "bSearchable": false,
-                        "aTargets": [0, 1, 2, 3, 4, 5, 6, 7, 8]
+                        "aTargets": [0, 1, 2, 3, 7]
                     }, //can't be searched 
                 ],
                 　　　　　　　　　　"aaSorting": [
@@ -404,6 +507,10 @@
         }
         $(document).ready(function() {
             __init();
+        });
+        $(document).on('change', 'select[name=is_pose],select[name=is_deny],select[name=onstatus],select[name=is_private],input[name=phone],input[name=title]', function() {
+            dt_table.fnSettings().sAjaxSource = ApiUrl + 'activity/all_list';
+            dt_table.fnDraw();
         });
         $(document).on('click', '.action.label', function() {
             var the = this;
