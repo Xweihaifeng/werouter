@@ -1095,7 +1095,7 @@
                                         self.activity_ebroll_detail(data.data.enroll_id);
                                     } else if (data.data.status == 1) {
                                         // 刷新页面
-                                        var href=window.location.protocol + '//' + window.location.host + '/'+ 'yuxue/activity/pay?pay=' + data.data.number +'&activity=' + self.id_domain;
+                                        var href=window.location.protocol + '//' + window.location.host + '/'+ 'activity/pay?pay=' + data.data.number +'&activity=' + self.id_domain;
                                         console.log(href)
                                         window.location.href = href;
                                     }
@@ -1191,7 +1191,7 @@
                                     var layer = layui.layer;
                                     layer.msg("有未支付订单，先去支付吧", {time: 1500});
                                 })
-                                var href=window.location.protocol + '//' + window.location.host + '/'+ 'yuxue/activity/pay?pay=' + req.data.number + '&activity=' + self.id_domain;
+                                var href=window.location.protocol + '//' + window.location.host + '/'+ 'activity/pay?pay=' + req.data.number + '&activity=' + self.id_domain;
                                 console.log(href)
                                 window.location.href = href;
                             }else if(req.data.status==3){
@@ -1369,7 +1369,7 @@
                 var height = $("#menu").offset().top;
                 $(window).scroll(function(){
                     if($(document).scrollTop() >= height){
-                        $("#menu").css({position:"fixed",top:0,left:0,zIndex:99});
+                        // $("#menu").css({position:"fixed",top:0,left:0,zIndex:99});
                         $("#content").css({"padding-top":"55px"});
                         $("#center").show();
                         $("#plats-user").show();                        
