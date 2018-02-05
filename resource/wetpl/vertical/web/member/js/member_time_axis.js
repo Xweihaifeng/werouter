@@ -313,6 +313,24 @@ function time_axis_issue(result1, weid) {
     // <a href="/u/cert/`+ weid +`">`+ window.location.host + `/u/cert/` + weid +`</a>
 }
 
+// 查看微主页开通情况
+var pageInfo = function(callback) {
+    $.ajax({
+        url: PAGES_PAGE_INFO,
+        type: 'GET',
+        success: function(data) {
+            if (data.code == 200) {
+                callback(data.data);
+            } else {
+                layer.msg(data.message);
+            }
+        },
+        error: function(error) {
+            console.log(error);
+        }
+    })
+}
+
 // 登录状态下显示操作
 if(token != null || token != undefined) {
 
@@ -351,6 +369,15 @@ if(token != null || token != undefined) {
                     } else if(result.final_audit == 1) {
                         member_time_axis_result += time_axis_last_instance(result);
                         if(result.is_issued == 1) {
+
+                            pageInfo(function(rep) {
+                                if (!rep.hasPages && rep.isUM && $.inArray('UM', rep.openAllowSource) != -1) {
+                                    $("#btn-open-wepage").show();
+                                    $("#btn-open-wepage").bind("click", avatar_admin);
+                                } else {
+                                    $("#btn-open-wepage").remove();
+                                }
+                            });
                             // 证书已经颁发
                             $(".type_list, .member_cost, .member_off_cert").remove();
                             $(".member_certificate_block").show();
