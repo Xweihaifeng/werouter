@@ -619,29 +619,30 @@
                                     && this.pages_page_info.isUA == true
                                     && this.pages_page_info.isUG == true) {
                                     window.location.href = "/application";
+                                }
 
-                                } else if(self.member_set_type.indexOf('UA') >= 0
+                                else if(self.member_set_type.indexOf('UA') >= 0
                                     && self.member_set_type.indexOf('UG') < 0
                                     && this.pages_page_info.isUA == true) {
                                     window.location.href = "/application";
+                                }
 
-                                } else if(self.member_set_type.indexOf('UA') < 0
+                                else if(self.member_set_type.indexOf('UA') < 0
                                     && self.member_set_type.indexOf('UG') >= 0
                                     && this.pages_page_info.isUG == true) {
                                     window.location.href = "/application";
-
                                 }
-                            } else
+                            }
 
-                            if(res.data.state == 2) {
+                            else if(res.data.state == 2) {
                                 self.process_filters('money');
-                            } else
+                            }
 
-                            if(res.data.state == 3) {
+                            else if(res.data.state == 3) {
                                 self.process_filters('second');
-                            } else
+                            }
 
-                            if(res.data.state == 4) {
+                            else if(res.data.state == 4) {
                                 self.process_filters('member');
                             }
                         }
@@ -698,9 +699,9 @@
                         console.log("开始实名认证");
                         self.already.auth = true;
                         self.certification('auth', '');
-                    } else
-                    
-                    if(result.isUG == false && self.member_set_type.indexOf('UG') >= 0) {
+                    }
+
+                    else if(result.isUG == false && self.member_set_type.indexOf('UG') >= 0) {
                         if(result.isUA == true) {
                             self.already.auth_cont = true;
                             self.status(2);
@@ -709,9 +710,9 @@
                         console.log("开始官方认证");
                         self.already.cert = true;
                         self.cert();
-                    } else
-                    
-                    if(result.isUM == false) {
+                    }
+
+                    else if(result.isUM == false) {
                         if(result.isUA == true) {
                             self.already.auth_cont = true;
                             self.status(2);

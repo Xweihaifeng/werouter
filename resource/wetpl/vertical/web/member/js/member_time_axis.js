@@ -368,10 +368,10 @@ if(token != null || token != undefined) {
                                         result2.cert_template = imgSet(result2.cert_template, 750, 520, 3);
                                     }
                                     if(result2.plat_logo.indexOf('http') != 0 && result.plat_logo != "") {
-                                        result2.plat_logo = imgSet(result2.plat_logo, 100, 100, 3);
+                                        result2.plat_logo = imgSet(result2.plat_logo, 224, 224, 3);
                                     }
                                     if(result2.cert_seal.indexOf('http') != 0 && result.cert_seal != "") {
-                                        result2.cert_seal = imgSet(result2.cert_seal, 115, 115, 3);
+                                        result2.cert_seal = imgSet(result2.cert_seal, 960, 804, 3);
                                     }
                                     $(".member_certificate_big_image").html(member_issue(result2));
                                     $(".member_certificate_big_image").css("background-image", "url("+ result2.cert_template +")");
