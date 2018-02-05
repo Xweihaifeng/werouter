@@ -367,7 +367,7 @@
                     }
                 },
                 change: function(page){
-                    $(document).scrollTop(340);
+                    $(document).scrollTop(340);                    
                     switch (this.type) {
                         case 'latest': this.getLatest(page, 10); break;
                         case 'articles': this.getArtList(page, 10); break;
@@ -375,7 +375,10 @@
                     }
                 },
                 style: function(list, i) {
-                    $(document).scrollTop(340);
+                    var height = $("#menu").offset().top;
+                    if(height > 340){
+                        $(document).scrollTop(340);
+                    }
                     list.flag = i;
                     switch (i) {
                         case 0: this.getLatest(1, 10); this.pages['latest'].page = 1; window.history.pushState(null, null, '/' + pages_info.plats_domian.domain + '/'); break;
