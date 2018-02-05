@@ -43,7 +43,7 @@
                     </div>
 
                     <!-- 实名认证 -->                    
-                    <div class="continue" :style="{'borderColor': cont_status.auth.color}" v-if="already.auth_cont">
+                    <div class="continue" :style="{'borderColor': cont_status.auth.color}" id="auth_cont" v-if="already.auth_cont">
                         <img :src="cont_status.auth.img" alt="">
                         <p v-html="cont_status.auth.info"></p>
                         <p v-if="cont_status.auth.btn" v-html="cont_status.auth.btn"></p>
@@ -83,7 +83,7 @@
                     </div>
 
                     <!-- 官方认证 -->
-                    <div class="continue" :style="{'borderColor': cont_status.cert.color}" v-if="already.cert_cont">
+                    <div class="continue" :style="{'borderColor': cont_status.cert.color}" id="cert_cont" v-if="already.cert_cont">
                         <img :src="cont_status.cert.img" alt="">
                         <p v-html="cont_status.cert.info"></p>
                         <p v-if="cont_status.cert.btn" v-html="cont_status.cert.btn"></p>
@@ -194,7 +194,7 @@
                     </div>
 
                     <!-- 会员申请 -->
-                    <div class="continue" :style="{'borderColor': cont_status.apply.color}" v-if="already.apply_cont">
+                    <div class="continue" :style="{'borderColor': cont_status.apply.color}" id="apply_cont" v-if="already.apply_cont">
                         <img :src="cont_status.apply.img" alt="">
                         <p v-html="cont_status.apply.info"></p>
                         <p v-if="cont_status.apply.btn" v-html="cont_status.apply.btn"></p>
@@ -402,55 +402,46 @@
                         this.cont_status.auth.color = '#52a0e8';
                         this.cont_status.auth.img = '/common/img/member/+01.png';
                         this.cont_status.auth.info = '<span style="color: #52a0e8">实名认证</span> 审核中，请耐心等待... ...';
-                        // this.cont_status.auth.btn = '<button>重新提交</button>';
                         break;
                     case 1:
                         this.cont_status.auth.color = '#e85252';
                         this.cont_status.auth.img = '/common/img/member/+02.png';
                         this.cont_status.auth.info = '<span style="color: #e85252">实名认证</span> 审核失败';
-                        // this.cont_status.auth.btn = '<button>重新提交</button>';
                         break;
                     case 2:
                         this.cont_status.auth.color = '#31CB51';
                         this.cont_status.auth.img = '/common/img/member/+03.png';
                         this.cont_status.auth.info = '<span style="color: #31CB51">实名认证</span> 审核通过，您已认证成功';
-                        // this.cont_status.auth.btn = '<button>重新提交</button>';
                         break;
                     case 3:
                         this.cont_status.cert.color = '#52a0e8';
                         this.cont_status.cert.img = '/common/img/member/+01.png';
                         this.cont_status.cert.info = '<span style="color: #52a0e8">官方认证</span> 审核中，请耐心等待... ...';
-                        // this.cont_status.cert.btn = '<button>重新提交</button>';
                         break;
                     case 4:
                         this.cont_status.cert.color = '#e85252';
                         this.cont_status.cert.img = '/common/img/member/+02.png';
                         this.cont_status.cert.info = '<span style="color: #e85252">官方认证</span> 审核失败';
-                        // this.cont_status.cert.btn = '<button>重新提交</button>';
                         break;
                     case 5:
                         this.cont_status.cert.color = '#31CB51';
                         this.cont_status.cert.img = '/common/img/member/+03.png';
                         this.cont_status.cert.info = '<span style="color: #31CB51">官方认证</span> 审核通过，您已认证成功';
-                        // this.cont_status.cert.btn = '<button>重新提交</button>';
                         break;
                     case 6:
                         this.cont_status.apply.color = '#52a0e8';
                         this.cont_status.apply.img = '/common/img/member/+01.png';
                         this.cont_status.apply.info = '<span style="color: #52a0e8">会员申请</span> 审核中，请耐心等待... ...';
-                        // this.cont_status.apply.btn = '<button>重新提交</button>';
                         break;
                     case 7:
                         this.cont_status.apply.color = '#e85252';
                         this.cont_status.apply.img = '/common/img/member/+02.png';
                         this.cont_status.apply.info = '<span style="color: #e85252">会员申请</span> 审核失败';
-                        // this.cont_status.apply.btn = '<button>重新提交</button>';
                         break;
                     case 8:
                         this.cont_status.apply.color = '#31CB51';
                         this.cont_status.apply.img = '/common/img/member/+03.png';
                         this.cont_status.apply.info = '<span style="color: #31CB51">会员申请</span> 审核通过，您已申请成功';
-                        // this.cont_status.apply.btn = '<button>重新提交</button>';
                         break;
                 }
             },
@@ -478,6 +469,7 @@
                                 self.already.auth_cont = true;
                                 if(res.data.operation_status == 1) {
                                     self.status(0);
+                                    // this.time('auth_cont');
                                     self.already.auth = false;
                                     self.member.cert.card_id = res.data.card_id;
                                     self.member.cert.name = res.data.name;
@@ -493,6 +485,7 @@
 
                                 } else if(res.data.operation_status == 3) {
                                     self.status(1);
+                                    // this.time('auth_cont');
                                     self.member.auth.name = res.data.name;
                                     self.member.auth.card_id = res.data.card_id;
                                     self.member.auth.card_front = res.data.card_front;
@@ -502,6 +495,7 @@
 
                                 } else if(res.data.operation_status == 2) {
                                     self.status(2);
+                                    // this.time('auth_cont');
                                 }
 
                             } else {
@@ -520,14 +514,15 @@
                         self.already.cert_cont = true;
                         if(item.operation_status == 3 && item.is_done == 2) {
                             self.status(4);
+                            // this.time('cert_cont');
                             $("#cert_sub").hide().siblings().show();
                             self.member.cert._method = 'put';
                             self.member.cert.cert_info = item.cert_info;
                             self.member.cert.per_cert_imgs = item.per_cert_imgs;
 
-
                         } else if(item.is_done == 1) {
                             self.status(3);
+                            // this.time('cert_cont');
                             self.already.cert = false;
                             self.already.apply = true;
 
@@ -546,6 +541,7 @@
                         self.already.cert_cont = true;
                         if(item.operation_status == 3 && item.is_done == 2) {
                             self.status(4);
+                            // this.time('cert_cont');
                             $("#inst_sub").hide().siblings().show();
                             self.member.inst._method = 'put';
                             self.member.inst.org_name = item.org_name;
@@ -564,6 +560,7 @@
 
                         } else if(item.is_done == 1) {
                             self.status(3);
+                            // this.time('cert_cont');
                             self.already.cert = false;
                             self.already.apply = true;
 
@@ -585,6 +582,7 @@
                             if(res.data.state == 1) {
                                 self.process_filters('first');
                                 self.status(6);
+                                // this.time('apply_cont');
                                 self.already.apply = false;
                                 console.log("会员初审", res.data)
                                 if(    self.member_set_type.indexOf('UA') >= 0
@@ -663,6 +661,7 @@
                         if(result.isUA == true) {
                             self.already.auth_cont = true;
                             self.status(2);
+                            // this.time('auth_cont');
                         }
                         console.log("开始官方认证");
                         self.already.cert = true;
@@ -673,10 +672,12 @@
                         if(result.isUA == true) {
                             self.already.auth_cont = true;
                             self.status(2);
+                            // this.time('auth_cont');
                         }
                         if(result.isUG == true) {
                             self.already.cert_cont = true;
                             self.status(5);
+                            // this.time('cert_cont');
                         }
                         console.log("开始会员申请");
                         self.already.apply = true;
@@ -967,6 +968,11 @@
                 } else {
                     return init;
                 }
+            },
+            time(name) {
+                setTimeout(function () {
+                    $("#"+ name).slideUp();
+                }, 3500);
             },
             isCardNo(card) {
                 var objCard = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
