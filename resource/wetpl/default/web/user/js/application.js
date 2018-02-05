@@ -401,7 +401,24 @@ $(document).ready(function() {
     var options108 = $.post(apiUrl + "pages/wechatMini/initWechatMini");
     options108.done(function(data) {
         if (data.code == 200 && data.data) {
-            page_mini_wechat_detail();
+            //判读是否购买小程
+            $.ajax({
+                type: "POST",
+                url: apiUrl + "pages/miniOrder/isMiniOrderPay",
+                data: {user_id: mall_user_id}, // 要提交表单的ID
+                success: function(data) {
+                    if (data.code == 200) {
+                        if(data.data==true){
+                            $("#wechat_mini_buy_form").css("display","none");
+                            $("#uploadForm3").css("display","block");
+                            page_mini_wechat_detail();
+                        }else{
+                            $("#wechat_mini_buy_form").css("display","block");
+                            $("#uploadForm3").css("display","none");
+                        }
+                    }
+                }
+            });
         }
     });
     options108.fail(function(fail) {
@@ -752,7 +769,82 @@ $(document).ready(function() {
             },
         });
     }
-    
+
+    //购买微信小程序
+    $("#wechat_mini_buy_save").click(function() {
+        //判断用户是否已经支付过
+        $.ajax({
+            type: "POST",
+            url: apiUrl + "pages/miniOrder/detailByUser",
+            data: { user_id: mall_user_id }, // 要提交表单的ID
+            success: function(data) {
+                if (data.code == 200) {
+                    //判断是否支付过
+                    //未支付过生成订单
+                    if($.isEmptyObject(data.data)){
+                        $.ajax({
+                            type: "POST",
+                            url: apiUrl + "pages/miniOrder/store",
+                            success: function(data) {
+                                if (data.code == 200){
+                                    //弹出支付框
+                                    PayWechatMiniPost(data.data);
+                                }
+                            }
+                        });
+                    }else{
+                        if(data.data.status==1){
+                            //弹出支付框
+                            PayWechatMiniPost(data.data.weid);
+                        }
+                    }
+                }
+            }
+        });
+    });
+
+    function PayWechatMiniPost(weid) {
+        $.ajax({
+            type: "POST",
+            url: apiUrl + "pages/wechatPay/WechatMiniOrderPcPay",
+            data: { order_id: weid }, // 要提交表单的ID
+            success: function(data) {
+                if (data.code == 200) {
+                    $('#myModal').find(".modal-title").text('小程序购买支付');
+                    $('#myModal').find(".modal-body").css("text-align", "center");
+                    $('#myModal').find(".modal-body").children().remove();
+                    $('#myModal').find(".modal-body").append("<img src='" + QRCODE + "?url=" + data.data.url + "' />");
+                    $('#myModal').modal('show');
+                    //循环监控状态
+                    var listenStatus=setInterval(function(){
+                        $.ajax({
+                            type: "POST",
+                            url: apiUrl + "pages/miniOrder/detailByUser",
+                            data: { user_id: mall_user_id },
+                            success: function(data) {
+                                var status = data.data.status;
+                                if(status==2){
+                                    clearInterval(listenStatus);
+                                    page_mini_wechat_detail();
+                                    $('#myModal').modal('hide');
+                                    //隐藏购买
+                                    $("#wechat_mini_buy_form").css("display","none");
+                                    $("#uploadForm3").css("display","block");
+                                }
+                            },
+                        });
+                    },1500)
+                } else {
+                    if (data.message) {
+                        layer.msg(data.message, { time: 1500 });
+                    } else {
+                        layer.msg("未知错误", { time: 1500 });
+                    }
+                }
+            }
+        });
+    }
+
     /*    var modeleName = [];
         var moduleState = function() {
             $.ajax({
