@@ -4,11 +4,11 @@ $(function(){
     $(window).scroll(function(){
 
         if($(document).scrollTop()>=Height-250){
-            $("#userinfo").css({display:"none"});
+            // $("#userinfo").css({display:"none"});
             $("#menu").css({position:"relative"})
             $(".pro_deta_tab").css({position:"fixed",top:0,left:"50%",zIndex:99,marginTop:0,marginLeft:"-585px"});
         }else{
-            $("#menu").css({position:"relative"})
+            // $("#menu").css({position:"relative"})
             $(".pro_deta_tab").css({position:"relative",top:0,left:-15,zIndex:1,marginTop:"30px",marginLeft:0});
         }
     })
