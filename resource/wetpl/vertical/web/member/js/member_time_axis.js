@@ -407,7 +407,7 @@ if(token != null || token != undefined) {
 
                                     //证书生成图片
                                     html2canvas($(".member_certificate_big_image"), {
-                                         useCORS:true, 
+                                        useCORS: true, 
                                         onrendered: function(canvas) {
                                             //生成base64图片数据 
                                             canvas.setAttribute('id','thecanvas'); 
@@ -416,7 +416,9 @@ if(token != null || token != undefined) {
                                             // newImg.src =  dataUrl;  
                                             $(".member_certificate_big_image").parent().append(canvas); 
                                             $(".member_certificate_big_image").hide(); 
-                                        }   
+                                        },
+                                        width: 750,
+                                        height: 520,
                                     });
                                     // html2canvas(document.getElementById('id')).then(function(canvas) {document.body.appendChild(canvas);});
                                 }
