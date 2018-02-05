@@ -214,8 +214,14 @@
 
                         <!-- 会员缴费 -->
                         <div class="member_cost">
-                            <span class="member_warn"></span><span id="display_name">{{JSON.stringify(member_position) == '{}'? '普通会员' : member_position.level_name}}</span> 费用为 <span class="member_count">￥<span id="member_price">{{JSON.stringify(member_position) == '{}'? '0.01' : member_position.price}}</span>元</span> / 年 <span class="member_danger"> *在初审通过之前无需缴费 </span>
+                            <span class="member_warn"></span>
+                            <span id="display_name">第({{member_levels.number}})届&ensp;{{JSON.stringify(member_position) == '{}'? '普通会员' : member_position.level_name}}</span> 费用为
+                            <span class="member_count">￥
+                                <span id="member_price">{{JSON.stringify(member_position) == '{}'? '0' : member_position.price*member_levels.year}}</span>元
+                            </span> / 年&ensp;(生效时间：{{member_levels.time}})
+                            <span class="member_danger"> *在初审通过之前无需缴费 </span>
                         </div>
+
                         <div class="member_sel_type">
                             <div class="member_type_title"> 入会须知： </div>
                             <div  class="display_flex">
@@ -281,7 +287,7 @@
         el: '#container',
         data: {
             column_list: [],        // 频道栏目列表
-            member_levels: {list: [], type_active: 0},      // 会员等级
+            member_levels: {list: [], type_active: 0, number: '', time: '', year: ''},      // 会员等级
             member_position: {},
             process: [
                 { state:false, name:'apply',  title:"会员申请" },
@@ -372,7 +378,11 @@
 
             // 会员等级
             ajax.get('/member/session/current').then((res) => {
+                this.member_levels.year = res.data.years;
+                this.member_levels.number = res.data.number;
+                this.member_levels.time = res.data.created_at;
                 self.member.apply.session_id = res.data.weid;
+
                 var result = res.data.config.reverse();
                 var member_config = result.map((x,y) => {x.number = y; return x}).filter(e => e.open_type != 2)[0];
                /* var member_config = result.map((x,y) => x.number = y).filter(e => e.open_type != 2)[0];*/
@@ -475,8 +485,14 @@
                                     self.member.cert.name = res.data.name;
 
                                     if(self.member_set_type.indexOf('UG') >= 0) {
-                                        self.already.cert = true;
-                                        self.cert();
+                                        if(this.pages_page_info.isUG == true) {
+                                            self.already.cert = false;
+                                            self.already.apply = true;
+                                            self.certification('apply', '');
+                                        } else {
+                                            self.already.cert = true;
+                                            self.cert();
+                                        }
                                     } else {
                                         self.already.cert = false;
                                         self.already.apply = true;
@@ -970,6 +986,7 @@
                 }
             },
             time(name) {
+                // $("#"+ name).delay(3500).slideUp();
                 setTimeout(function () {
                     $("#"+ name).slideUp();
                 }, 3500);
