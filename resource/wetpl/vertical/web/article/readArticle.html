@@ -221,7 +221,7 @@
                 fontColor: pages_info.plats_user_cert.is_authenticated == 1 ? {color: '#ff9900'} : {color: '#999'}
             },
             created: function(){
-                this.menu = {list: this.dataMenu.map(e => ({name: e})), flag: -1};  //////////////////////////////
+                this.menu = {list: this.dataMenu.map(e => ({name: e})), flag: 1};  //////////////////////////////
                 this.wefriends();
                 this.init(window.location.pathname.split('/').pop());                
                 this.avatar = docCookies.getItem('token') ? (plats_user_info.avatar ? plats_user_info.avatar : localStorage.getItem('avatar')) : '';
