@@ -275,7 +275,9 @@ $(document).ready(function(){
                 var item = {};
                 item.id = $(this).data("id");
                 item.name = $(this).find(".category-name").val();
+                item.ename = $(this).find(".category-ename").val();
                 item.floor = $(this).find(".category-floor").val();
+
                 if(!item.name){
                     noneVal.nD = item.id;
                     return;
