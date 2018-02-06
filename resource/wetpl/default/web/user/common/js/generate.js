@@ -219,13 +219,35 @@ cert_realname_setting.done(function(data) {
         var result = data.data;
         if (!result) {
             console.log("在线认证未开通！");
-        } else if (result.status == 1) {
+            return false;
+        }
+
+        //  在线（status） : 1为开启，2为关闭
+        //  人工（auth_open） : 1为开启，2为关闭
+        if (result.status === 1 && result.auth_open === 1) {
             $(".on_line_cert").html('<a id="online">在线认证</a>');
             $("#online").bind("click", online_cert);
         }
 
-        if(result.auth_open === 2) {
+        else if(result.status === 1 && result.auth_open === 2) {
             $("#settings_realname").parent("a").attr("href", '/user/settings/verified');
+            if(window.location.pathname == '/user/settings/realname') {
+                window.location.pathname = '/user/settings/verified';
+            }
+        }
+
+        else if (result.status === 2 && result.auth_open === 1) {
+            $("#settings_realname").parent("a").attr("href", '/user/settings/realname');
+            if(window.location.pathname == '/user/settings/verified') {
+                window.location.pathname = '/user/settings/realname';
+            }
+        }
+
+        else if (result.status === 2 && result.auth_open === 2) {
+            $("#settings_realname").parent("a").remove();
+            if((window.location.pathname == '/user/settings/verified') || (window.location.pathname == '/user/settings/realname')) {
+                window.location.pathname = '/user';
+            }
         }
     }
 });
