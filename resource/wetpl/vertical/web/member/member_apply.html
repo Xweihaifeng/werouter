@@ -492,7 +492,7 @@
                                 self.already.auth_cont = true;
                                 if(res.data.operation_status == 1) {
                                     self.status(0);
-                                    // this.time('auth_cont');
+                                    this.time('auth_cont');
                                     self.already.auth = false;
                                     self.member.cert.card_id = res.data.card_id;
                                     self.member.cert.name = res.data.name;
@@ -514,7 +514,7 @@
 
                                 } else if(res.data.operation_status == 3) {
                                     self.status(1);
-                                    // this.time('auth_cont');
+                                    this.time('auth_cont');
                                     self.member.auth.name = res.data.name;
                                     self.member.auth.card_id = res.data.card_id;
                                     self.member.auth.card_front = res.data.card_front;
@@ -524,7 +524,7 @@
 
                                 } else if(res.data.operation_status == 2) {
                                     self.status(2);
-                                    // this.time('auth_cont');
+                                    this.time('auth_cont');
                                 }
 
                             } else {
@@ -543,7 +543,7 @@
                         self.already.cert_cont = true;
                         if(item.operation_status == 3 && item.is_done == 2) {
                             self.status(4);
-                            // this.time('cert_cont');
+                            this.time('cert_cont');
                             $("#cert_sub").hide().siblings().show();
                             self.member.cert._method = 'put';
                             self.member.cert.cert_info = item.cert_info;
@@ -551,7 +551,7 @@
 
                         } else if(item.is_done == 1) {
                             self.status(3);
-                            // this.time('cert_cont');
+                            this.time('cert_cont');
                             self.already.cert = false;
                             self.already.apply = true;
 
@@ -570,7 +570,7 @@
                         self.already.cert_cont = true;
                         if(item.operation_status == 3 && item.is_done == 2) {
                             self.status(4);
-                            // this.time('cert_cont');
+                            this.time('cert_cont');
                             $("#inst_sub").hide().siblings().show();
                             self.member.inst._method = 'put';
                             self.member.inst.org_name = item.org_name;
@@ -589,7 +589,7 @@
 
                         } else if(item.is_done == 1) {
                             self.status(3);
-                            // this.time('cert_cont');
+                            this.time('cert_cont');
                             self.already.cert = false;
                             self.already.apply = true;
 
@@ -611,7 +611,7 @@
                             if(res.data.state == 1) {
                                 self.process_filters('first');
                                 self.status(6);
-                                // this.time('apply_cont');
+                                this.time('apply_cont');
                                 self.already.apply = false;
                                 console.log("会员初审", res.data)
                                 if(    self.member_set_type.indexOf('UA') >= 0
@@ -691,7 +691,7 @@
                         if(result.isUA == true) {
                             self.already.auth_cont = true;
                             self.status(2);
-                            // this.time('auth_cont');
+                            this.time('auth_cont');
                         }
                         console.log("开始官方认证");
                         self.already.cert = true;
@@ -702,12 +702,12 @@
                         if(result.isUA == true) {
                             self.already.auth_cont = true;
                             self.status(2);
-                            // this.time('auth_cont');
+                            this.time('auth_cont');
                         }
                         if(result.isUG == true) {
                             self.already.cert_cont = true;
                             self.status(5);
-                            // this.time('cert_cont');
+                            this.time('cert_cont');
                         }
                         console.log("开始会员申请");
                         self.already.apply = true;
