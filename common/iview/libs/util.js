@@ -21,7 +21,7 @@ ajax.interceptors.request.use(
 // 如果是 401 没有权限需要重新编写LOGIN程序
 ajax.interceptors.response.use(
     response => {
-        console.log(response.data.code);
+        // console.log(response.data.code);
         switch (response.data.code){
             case 200:
                 if (response.data.message == 'Success'){

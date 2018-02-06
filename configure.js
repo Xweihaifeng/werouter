@@ -257,6 +257,8 @@ const SMS_USERSMS_TOGGLE = apiUrl + 'sms/usersms/toggle';
 
 // 活动管理
 const ACTIVITY_LIST = apiUrl + 'activity/listbyuser'; //活动 - 列表（根据用户id�?
+const ACTIVITY_PLAT_LIST = apiUrl + 'activity/lists'; //活动 - 列表 - 平台
+const ACTIVITY_CATE_PLAT_LIST = apiUrl + 'activity/cate/lists'; //活动 - 分类 - 列表
 const ACTIVITY_ACTIVITYINFO = apiUrl + 'activity/activityinfo'; //活动 -  个人活动统计详情
 const ACTIVITY_DESTROY = apiUrl + 'activity/destroy'; //活动 - 删除
 const ACTIVITY_STORE = apiUrl + 'activity/store'; //活动-保存
@@ -274,10 +276,12 @@ const ACTIVITY_COLLECTION_STORE = apiUrl + 'activity/collection/store'; // 活�
 const ACTIVITY_COLLECTION_ISCOLLECTION = apiUrl + 'activity/collection/iscollection'; // 活动 - 收藏 - 用户是否收藏
 
 const ACTIVITY_ENROLL_STORE = apiUrl + 'activity/enroll/store'; // 活动 -报名 - 保存
-const ACTIVITY_ENROLL_DETAIL = apiUrl + 'activity/enroll/detail'; // 活动 -报名 - 详情
+const ACTIVITY_ENROLL_DETAIL = apiUrl + 'activity/enroll/detail'; // 活动 -报名 - 详情LISTS_WITH_TICKETINFO
 const ACTIVITY_ENROLL_LISTS = apiUrl + 'activity/enroll/lists'; // 活动 -报名 - 列表
+const ACTIVITY_ENROLL_LISTS_WITH_TICKETINFO = apiUrl + 'activity/enroll/enroll_lists'; // 活动 -报名 - 列表
 const ACTIVITY_ENROLL_DESTROY = apiUrl + 'activity/enroll/destroy'; // 活动 - 报名 - 删除
 const ACTIVITY_ENROLL_COUNT = apiUrl + 'activity/enroll/count'; // 活动 - 报名 - 人数
+const ACTIVITY_ENROLL_EXPORT_CSV = apiUrl + 'activity/enroll/export_csv'; // 活动 - 报名 - 导出
 const ACTIVITY_ENROLL_TICKETS = apiUrl + 'activity/enroll/tickets'; // 活动 - 报名 - 售票状况
 const ACTIVITY_ENROLL_STATISTICS = apiUrl + 'activity/enroll/statistics'; // 活动 - 报名 - 图标统计
 const ACTIVITY_ENROLL_SMS_NOTIFY = apiUrl + 'activity/enroll/sms_notify'; // 活动 - 报名 - 短信通知

@@ -1,109 +1,294 @@
-<!DOCTYPE html>
-<html>
-    <head lang="en">
-        <title></title>
-        <meta charset="UTF-8" />
-        <link rel="shortcut icon" id="favicon" href="" />
-        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport" />
-        <meta name="description" content="" />
-        <meta name="keywords" content="" />
+<#extend#>public/extend/index_extend.html</#extend#>
+    <!--中间样式开始-->
+    <link rel="stylesheet" href="/resource/wetpl/substation/default/web/css/list.css">
+    <!-- <link rel="stylesheet" href="/resource/wetpl/substation/default/web/css/newsert.css">     -->
+    <link rel="stylesheet" href="{{PATH_TML}}member/css/member_application.css" />
+    <link rel="stylesheet" href="{{PATH_TML}}member/css/member_process.css" />
 
-        <script src="/common/js/jquery-3.2.1.min.js"></script>
-        <script src="/common/layer-v3.0.3/layer-v3.0.3/layer/layer.js"></script>
-        <script src="{{PATH_CONFIG}}"></script>
-        <script src="{{PATH_TML}}js/modal_login.js"></script>
-        <!-- <script src="/common/js/swiper-3.3.1.min.js"></script> -->
-
-        <link rel="stylesheet" href="{{PATH_TML}}font/iconfont.css" />
-        <link rel="stylesheet" href="{{PATH_TML}}css/news_base.css" />
-        <link rel="stylesheet" href="{{PATH_TML}}css/modal_login.css" />
-        <link rel="stylesheet" href="{{PATH_TML}}member/css/member_application.css" />
-        <link rel="stylesheet" href="{{PATH_TML}}member/css/member_process.css" />
-
-        <style>
-            ::-webkit-scrollbar { width: 0; height: 0; }
-            .dropdown-toggle, .get-check { height: 40px !important; }
-        </style>
-    </head>
-    <body>
-
-        <div class="modal_login" id="modal_login"></div>
-        <ul class="news_menu" id="public_main_news_menu"></ul>
-        <div class="member_application">
-            <div class="member_list_header"><img style="width: 25px;height: 25px;vertical-align: middle;margin-top: -5px" src="/common/img/huiyuanshengqing.png"> 会员 </div>
-            <div class="member_app_list">
-                <li class="member_active member_active0"> 初审 </li>
-                <li> 复审<span class="span1"></span><span class="span2"></span></li>
-                <li> 申请成功 <span class="span1"></span><span class="span2"></span></li>
-            </div>
-
-            <div class="qr_code_pc_outer"></div>
-            <div class="member_app_list member_app_pay">
-                恭喜您！初次审核通过！根据您的等级特质，您需要缴纳<span class="app_pay_count"></span>元，即可享受该服务!
-                <button class="member_go_pay"> 前往缴费 </button>
-            </div>
-
-            <div class="member_sel_type type_list">
-                <div class="member_type_title"> 选择类型: </div>
-                <ul class="member_sel_type_name"></ul>
-            </div>
-
-            <div class="member_cost">
-                <span class="member_warn"></span><span id="display_name">会员</span>费用为 <span class="member_count">￥<span id="member_price"></span>元</span> / 年 <span class="member_danger"> *在初审通过之前无需缴费 </span>
-            </div>
-
-            <div class="member_off_cert member_off_personal">
-
-                <div class="member_sel_type">
-                    <div class="member_type_title"> 申请人: </div>
-                    <input type="text" name="" class="member_app_input" id="member_first_name" placeholder="显示本人真实姓名" readonly>
-                </div>
-
-                <div class="member_sel_type">
-                    <div class="member_type_title"> 申请人电话: </div>
-                    <input type="text" name="" class="member_app_input" id="member_first_tel" placeholder="显示本人常用手机号码" readonly>
-                </div>
-
-                <div class="member_sel_type">
-                    <div class="member_type_title"> 申请地址: </div>
-                    <input type="text" name="" class="member_app_input" id="member_first_address" placeholder="显示详细的地址" readonly>
-                </div>
-            </div>
-
-            <div class="member_off_cert member_off_institutional">
-
-                <div class="member_sel_type">
-                    <div class="member_type_title"> 申请单位: </div>
-                    <input type="text" name="" class="member_app_input" id="member_second_company" placeholder="显示申请单位名称" readonly>
-                </div>
-
-                <div class="member_sel_type">
-                    <div class="member_type_title"> 申请人: </div>
-                    <input type="text" name="" class="member_app_input" id="member_second_name" placeholder="显示本人真实姓名" readonly>
-                </div>
-
-                <div class="member_sel_type">
-                    <div class="member_type_title"> 申请人电话: </div>
-                    <input type="text" name="" class="member_app_input" id="member_second_tel" placeholder="显示本人常用手机号码" readonly>
-                </div>
-
-                <div class="member_sel_type">
-                    <div class="member_type_title"> 申请地址: </div>
-                    <input type="text" name="" class="member_app_input" id="member_second_address" placeholder="显示详细的地址" readonly>
-                </div>
-            </div>
-
-            <div id="member_time_axis"></div>
+    <div id="container">
+        <!--位置显示-->
+        <div class="seat">
+            <img src="/resource/wetpl/substation/default/web/image/fanhui.png" alt="" /> 当前位置在：<a href="">首页</a> > 加入商会 > 入会申请 <span class="wz"></span>
+            <div class="er-nav" id="menuTwo"></div>
         </div>
-        <!-- 右侧大背景图 -->
-        <div id="public_main_right_bg" style="position:fixed;top:0;bottom:0;left:1190px;width:100%;"></div>
-        <script src="{{PATH_TML}}js/public_main_right_bg.js"></script>
 
-        <!-- <script src="/common/js/control.js"></script> -->
-        <!-- <script src="{{PATH_TML}}js/public_main.js"></script> -->
-        <script src="{{PATH_TML}}member/js/member_public_config.js"></script>
-        <script src="{{PATH_TML}}member/js/member_application.js"></script>
-        <script src="{{PATH_TML}}member/js/member_time_axis.js"></script>
+        <article class="news-main">
+            <!--左侧内容-->
+            <article class="main">
+                <h2 style="margin-top: 0px">
+                    <strong>加入商会</strong>
+                    <span style="margin-top: 10px;">Chamber Application</span>
+                </h2>
+                <ul class="aside" id="menuX">
+                    <li> <a class="chan_li" id="oooo"> 商会首页 </a> </li>
+                    <li :class="{cenav_cur: item.domain == 'rhsq'}" v-for="(item,index) in column_list"><a :id="item.domain" :href="item.domain == 'rhsq' ? '/apply' : '/org/'+ item.domain">{{ item.title }}</a></li>
+                </ul>
+            </article>
 
-    </body>
-</html>
+            <!--右侧内容-->
+            <article class="list-big">
+                <div class="member_application">
+                    <p class="member_prompt_info"> </p>
+                    <div class="member_list_header"><img style="width: 25px;height: 25px;vertical-align: middle;margin-top: -5px" src="/common/img/huiyuanshengqing.png"> 会员 </div>
+                    <div class="member_app_list">
+                        <li class="member_active member_active0"> 初审 </li>
+                        <li> 复审<span class="span1"></span><span class="span2"></span></li>
+                        <li> 申请成功 <span class="span1"></span><span class="span2"></span></li>
+                    </div>
+
+                    <div class="pay_qr" v-if="state.pay_qr">
+                        <h2><span>微信扫码</span><span class="pay_qr_clear" @click="close_pay">×</span></h2>
+                        <img class="pay_qr_img" :src="CMS_DETAIL_QRCODE + order_pay.qr_url" alt="">
+                        <!-- <div style="font-size: 12px; padding: 0 20px; color: #ea332d; ">会员缴费费用（￥{{JSON.stringify(member_position) == '{}'? '0' : member_position.price*member_levels.year}}）元。</div> -->
+                    </div>
+
+                    <div class="member_app_list member_app_pay" v-if="member_primary.state == 2">
+                        恭喜您！初次审核通过！根据您的等级特质，您需要缴纳<span class="app_pay_count">（￥{{JSON.stringify(member_position) == '{}'? '0' : member_position.price*member_levels.year}}）</span>元，即可享受该服务!
+                        <button class="member_go_pay" @click="member_go_pay"> 前往缴费 </button>
+                    </div>
+                    <div class="member_sel_type type_list" v-if='member_primary.state != 2'>
+                        <div class="member_type_title"> 选择类型: </div>
+                        <ul class="member_sel_type_name">
+                            <li v-for="(item,index) in member_levels.list" :class="{'member_active1': index == member_levels.type_active}">{{ item.level_name }}</li>
+                        </ul>
+                    </div>
+
+                    <!-- 会员缴费 -->
+                    <div class="member_cost" v-if='member_primary.state != 2'>
+                        <span class="member_warn"></span>
+                        <span id="display_name">第({{member_levels.number}})届&ensp;{{JSON.stringify(member_position) == '{}'? '普通会员' : member_position.level_name}}</span> 费用为
+                        <span class="member_count">￥
+                            <span id="member_price">{{JSON.stringify(member_position) == '{}'? '0' : member_position.price*member_levels.year}}</span>元
+                        </span> / 年&ensp;(生效时间：{{member_levels.time}})
+                        <span class="member_danger"> *在初审通过之前无需缴费 </span>
+                    </div>
+
+                    <div class="member_off_cert" v-if='member_primary.state != 2'>
+                        <div class="member_sel_type" v-if='member_primary.plat_member_organization'>
+                            <div class="member_type_title"> 申请单位: </div>
+                            <input type="text" name="" class="member_app_input" placeholder="显示申请单位名称" v-model="member_primary.plat_member_organization" readonly>
+                        </div>
+                        <div class="member_sel_type">
+                            <div class="member_type_title"> 申请人: </div>
+                            <input type="text" name="" class="member_app_input" placeholder="显示本人真实姓名" v-model="member_primary.plat_member_contacts" readonly>
+                        </div>
+                        <div class="member_sel_type">
+                            <div class="member_type_title"> 申请人电话: </div>
+                            <input type="text" name="" class="member_app_input" placeholder="显示本人常用手机号码" v-model="member_primary.plat_member_tel" readonly>
+                        </div>
+                        <div class="member_sel_type">
+                            <div class="member_type_title"> 申请地址: </div>
+                            <input type="text" name="" class="member_app_input" placeholder="显示详细的地址" v-model="member_primary.plat_member_address" readonly>
+                        </div>
+                    </div>
+
+                    <div class="member_certificate_block">
+                        <div class="member_sel_type" style="justify-content: center">
+                            <div class="member_certificate_big_image"></div>
+                        </div>
+                        <div class="member_sel_type">
+                            <div class="member_left_icon">
+                                <span class="member_success"></span>
+                            </div>
+                            <div class="member_con_title"> 恭喜您成功入会，会员证书已颁发。<a id="dw" href="javascript:void(0);">一键下载</a> <a id="btn-open-wepage" href="javascript:void(0);" onclick="avatar_admin()">开通微主页</a></div>
+                        </div>
+
+                        <div class="member_sel_type">
+                            <div class="member_right_con_link">
+                                <span> 您的证书链接为： </span>
+                                <input type="text" name="" id="coping_link" class="member_app_input" placeholder="http://www.xxx.com" readonly>
+                                <button class="member_link" onClick="copyLink()"> 复制链接 </button>
+                                <a class="member_link member_view_cert" target="_black"> 查看证书 </a>
+                            </div>
+                        </div>
+
+                        <div class="member_sel_type" style="display: none">
+                            <div class="member_right_con_link">
+                                <a href="" class="member_rights_interests"> 查看会员相关权益 </a>
+                            </div>
+                        </div>
+
+                        <div class="member_sel_type">
+                            <div class="member_left_icon">
+                                <span class="member_money"></span>
+                            </div>
+                            <div class="member_con_title"> 下一年度您的会费缴纳截止时间为： </div>
+                            <div class="member_count" id="memner_end_time"> 2020-10-09 </div>
+                            <!-- <button class="member_link member_next_money"> 我要续费 </button> -->
+                        </div>
+
+                        <div class="member_sel_type" style="display: none">
+                            <div class="member_per_domain">
+                                <div class="member_per_domain_title">
+                                    <div class=""> 设置个性域名 </div>
+                                    <div class="member_domain_edit"> 编辑 <span>></span></div>
+                                </div>
+                                <div class="member_domain_content">
+                                    <div class="member_right_con_link">
+                                        <div class="member_danger"> <span class="member_warn"> </span> 个性域名请使用长度为4～20个字符的数字或者字母 </div>
+                                    </div>
+                                    <div class="member_right_con_link">
+                                        <span> https://www.wezchina.com/ </span>
+                                        <input type="text" name="" id="coping_link" value="" class="member_app_input" placeholder="http://www.xxx.com">
+                                        <button class="member_link member_testing"> 检测 </button>
+                                        <button class="member_link member_adopt"> 通过 </button>
+
+                                    </div>
+                                    <div class="member_right_con_link">
+                                        <input type="button" name="" class="member_con_left member_app_submit" value="保存">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="member_time_axis"></div>
+                </div>
+            </article>
+        </article>
+    </div>
+
+    <script>
+        var app = new Vue({
+            el: '#container',
+            data: {
+                column_list: [],        // 频道栏目列表
+                member_levels: {list: [], type_active: 0, number: '', time: '', year: ''},      // 会员等级
+                member_position: {},
+                year: '',
+                member_primary: {},    // 初审信息
+                state: {
+                    pay_ok: true, pay_no: false, pay_qr: false,
+                },
+                order_pay: {},
+                setInterval_pay: '',
+                apply_wait_days: null,
+                member_set_type: [],
+                pages_page_info: {},
+            },
+            http: {
+                headers: {
+                    token: plats_token,
+                }
+            },
+            created() {
+                var self = this;
+                // 频道栏目列表
+                ajax.get(CMS_CHANNEL_CATEGORIES + "org").then(res => {
+                    this.column_list = res.data;
+                });
+
+                // 会员资料
+                this.member_setting();
+            },        
+            mounted() {
+                var self = this;
+                this.$nextTick(() => {
+                    if(!plats_token) {
+                        // this.already.login = true;
+                        window.location.href = '/apply';
+                    } else {
+
+                        ajax.get(MEMBER_SETTING).then((body) => {
+                            this.member_set_type = body.data.condition;
+                            this.apply_wait_days = body.data.apply_wait_days;
+                            localStorage.setItem("apply_wait_days", body.data.apply_wait_days);
+
+                            ajax.get(PAGES_PAGE_INFO).then((res) => {
+                                var result = res.data;
+                                this.pages_page_info = result;
+                                console.log(this.pages_page_info);
+
+                                if((this.pages_page_info.isUA == false && this.member_set_type.indexOf('UA') >= 0 && this.pages_page_info.isUG == false && this.member_set_type.indexOf('UG') >= 0)
+                                    || (this.pages_page_info.isUA == false && this.member_set_type.indexOf('UA') >= 0 && this.member_set_type.indexOf('UG') < 0)
+                                    || (this.pages_page_info.isUG == false && this.member_set_type.indexOf('UG') >= 0 && this.member_set_type.indexOf('UA') < 0)) {
+                                    window.location.href = '/apply';
+                                }
+                            })
+                        });
+
+                    }
+
+                })
+            },
+            methods: {
+                current() {
+                    ajax.get('/member/session/current').then((res) => {
+                        this.member_levels.year = res.data.years;
+                        this.member_levels.number = res.data.number;
+                        this.member_levels.time = res.data.created_at;
+
+                        var result = res.data.config.reverse();
+                        // var member_config = result.map((x,y) => {x.number = y; return x}).filter(e => e.open_type != 2)[0];
+                        var member_config = result.map((x,y) => {x.number = y; return x}).filter(e => e.mid == this.member_primary.plat_member_level_id)[0];
+                        this.member_position = member_config;
+                        this.member_levels.type_active = member_config.number;
+                        this.member_levels.list = result;
+                    })
+                },
+                member_setting() {
+                    ajax.get(MEMBER_APPLY).then((res) => {
+                        if(res.code === 200 && res.data) {
+                            this.member_primary = res.data;
+
+                            // 会员等级
+                            this.current();
+                            if(res.data.state == 1) {
+
+                            }
+
+                            else if(res.data.state == 2) {
+                                this.state.pay_no = true;
+                                this.state.pay_ok = false;
+                            }
+
+                            else if(res.data.state == 3) {
+                                $(".member_app_list li:eq(1)").addClass("member_active");
+                            }
+
+                            else if(res.data.state == 4) {
+                                $(".member_app_list li:gt(0)").addClass("member_active");
+                            }
+                        } else {
+                            window.location.href = '/apply';
+                        }
+                    })
+                },
+                member_go_pay() {
+                    ajax.get(MEMBER_WECHATPAY_APPLY_PAY + this.member_primary.weid).then((res) => {
+                        if(res.code === 200 && res.data) {
+                            this.order_pay = res.data;
+                            this.state.pay_qr = true;
+                            this.setInterval_pay = setInterval(() => { 
+                                this.polling_pay();
+                            }, 1000)
+                        }
+                    });
+                },
+                polling_pay() {
+                    ajax.post(MEMBER_APPLY_ORDER_DETECT, {order: this.order_pay.order_id}).then((res) => {
+                        if(res.code == 200) {
+                            if(res.data.state == 1) {
+                                console.log(res.data);
+                                this.state.pay_qr = false;
+                                clearInterval(this.setInterval_pay);
+                                layer.msg("付款成功！", { time: 2500 });
+                                setTimeout(function() {
+                                    window.location.reload();
+                                }, 500);
+                                return false;
+                            }
+                        }
+                    });
+                },
+                close_pay() {
+                    this.state.pay_qr = false;
+                    clearInterval(this.setInterval_pay);
+                }
+            }
+        });
+    </script>
+    <script type="text/javascript" src="/common/js/canvas.js"></script>
+    <script type="text/javascript" src="/common/js/canvas2image.js"></script>
+    <script src="{{PATH_TML}}member/js/member_time_axis.js"></script>
+    <script src="{{PATH_TML}}member/js/member_application_success.js"></script>

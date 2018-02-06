@@ -1926,7 +1926,8 @@
     height: 120px;
     position: absolute;
     top: -60px;
-    left: 97px;
+    left:50%;
+    margin-left: -60px;
     border-radius: 50%;
     border: 1px solid #e5e5e5;
     animation: 8s cubic-bezier(0.68, -0.55, 0.27, 1.55) 0s normal none infinite running fa-spin;
@@ -1969,6 +1970,7 @@
 .activity-detail .top .row .col-sm-6 p span {
     color: #000;
     font-weight: 600;
+    font-size: 16px;
 }
 
 .activity-detail .top .activity-msg {
@@ -1984,12 +1986,14 @@
 
 .activity-detail .top .guanzhu span {
     display: inline-block;
-    height: 32px;
-    width: 219px;
-    line-height: 32px;
+    height: 38px;
+    width: 244px;
+    line-height: 38px;
     text-align: center;
     color: #fff;
     background: #80ccf4;
+    font-size: 14px;
+    cursor: pointer;
 }
 
 .activity-detail .top .lianxi {
@@ -1999,13 +2003,14 @@
 
 .activity-detail .top .lianxi span {
     display: inline-block;
-    height: 32px;
-    width: 219px;
-    line-height: 32px;
+    height: 38px;
+    width: 244px;
+    line-height: 38px;
     text-align: center;
     color: #333;
     border: 1px solid #80ccf4;
     background: #fff;
+    font-size: 14px;
 }
 
 .activity-detail .erweima {
@@ -3705,20 +3710,21 @@
 }
 
 .activity-main .woyaobaoming {
-    height: 346px;
+    height: 370px;
     border: 1px solid #ccc;
-    padding-top: 30px;
-    width: 1070px;
-    margin-bottom: 76px;
+    padding-top: 35px;
+    width:100%;
+    margin-bottom: 80px;
 }
 
 .activity-main .woyaobaoming .z-img {
-    width: 455px;
+    width: 460px;
     padding-left: 15px;
 }
 
 .activity-main .woyaobaoming .main-msg {
-    width: 600px;
+    width: 660px;
+    margin-left: 25px;
 }
 
 .activity-main .woyaobaoming .main-msg i {
@@ -3746,17 +3752,40 @@
 .activity-main .woyaobaoming .main-msg .shi-jian {
     color: #555;
     font-size: 14px;
-    height: 14px;
-    line-height: 14px;
+    height: 18px;
+    line-height: 18px;
     margin-bottom: 15px;
+    display: flex;
+    justify-content: left;
 }
 
 .activity-main .woyaobaoming .main-msg .shi-jian span {
     margin-right: 30px;
+    display: flex;
+    justify-content: left;
 }
 
-.activity-main .woyaobaoming .main-msg .shi-jian span i {
+.activity-main .woyaobaoming .main-msg .shi-jian .end_time i {
+    width: 17px;
+    height: 18px;
+    margin-left: 2px;
+    background-image: url("/resource/wetpl/vertical/web/activity/img/time1.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 17px;
+    display:block;
     margin-right: 10px;
+}
+.activity-main .woyaobaoming .main-msg .shi-jian .liulan i {
+    width: 22px;
+    height: 18px;
+    margin-left: 2px;
+    background-image: url("/resource/wetpl/vertical/web/activity/img/readnum1.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 24px;
+    display:block;
+    margin-right: 7px;
 }
 
 .activity-main .woyaobaoming .main-msg .line {
@@ -3768,13 +3797,24 @@
 
 .activity-main .woyaobaoming .main-msg .time {
     color: #666;
-    height: 14px;
+    height: 18px;
     font-size: 14px;
     margin-bottom: 20px;
+    line-height: 18px;
 }
 
 .activity-main .woyaobaoming .main-msg .time i {
-    margin-right: 10px;
+    width: 16px;
+    height: 18px;
+    margin-right: 6px;
+    margin-left: 2px;
+    background-image: url("/resource/wetpl/vertical/web/activity/img/time1.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 17px;
+    display: block;
+    float: left;
+
 }
 
 .activity-main .woyaobaoming .main-msg .time span {
@@ -3783,14 +3823,24 @@
 
 .activity-main .woyaobaoming .main-msg .didian {
     color: #666;
-    height: 14px;
+    height: 18px;
     font-size: 14px;
     margin-bottom: 20px;
+    line-height: 18px;
 }
 
 .activity-main .woyaobaoming .main-msg .didian i {
-    margin-right: 12px;
+    width: 16px;
+    height: 18px;
+    margin-right: 5px;
     margin-left: 2px;
+    background-image: url("/resource/wetpl/vertical/web/activity/img/dizhi.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 17px;
+    display: block;
+    float: left;
+
 }
 
 .activity-main .woyaobaoming .main-msg .didian span {
@@ -3798,15 +3848,24 @@
 }
 
 .activity-main .woyaobaoming .main-msg .baomingrenshu {
-    height: 14px;
+    height: 18px;
     font-size: 14px;
-    line-height: 14px;
+    line-height: 18px;
     margin-bottom: 20px;
     color: #666;
 }
 
 .activity-main .woyaobaoming .main-msg .baomingrenshu i {
-    margin-right: 11px;
+    width: 16px;
+    height: 17px;
+    margin-left: 1px;
+    background-image: url("/resource/wetpl/vertical/web/activity/img/people1.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size:18px;
+    display: block;
+    float: left;
+    margin-right: 7px;
 }
 
 .activity-main .woyaobaoming .main-msg .baomingrenshu span {
@@ -3815,14 +3874,24 @@
 
 .activity-main .woyaobaoming .main-msg .pay-type {
     color: #666;
-    height: 30px;
-    line-height: 30px;
+    height:18px;
+    line-height: 18px;
     margin-bottom: 30px;
+    font-size: 14px;
 }
 
 .activity-main .woyaobaoming .main-msg .pay-type i {
-    margin-right: 15px;
+    width: 16px;
+    height: 17px;
+    margin-right: 8px;
     margin-left: 1px;
+    background-image: url("/resource/wetpl/vertical/web/activity/img/page.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size:18px;
+    display:block;
+    float: left;
+    /*margin-top: 7px;*/
 }
 
 .activity-main .woyaobaoming .main-msg .pay-type span {
@@ -3854,6 +3923,7 @@
     color: #fff;
     text-align: center;
     border-radius: 4px;
+    margin-top: 14px;
 }
 
 .activity-main .woyaobaoming .main-msg .bbbao span a {
@@ -3870,7 +3940,7 @@
 }
 
 .activity-main-center .project-box .show-content img {
-    width: 100%;
+    width: 100%!important;
 }
 
 .activity-main-center .project-box .show-content .main-title {

@@ -1,0 +1,528 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="{{PATH_CONFIG}}"></script>
+    <script src="/common/public/js/app.js"></script>
+    <script src="/common/js/jquery-3.2.1.min.js"></script>
+    <script src="/common/iview/vue.min.js"></script>
+    <script type="text/javascript" src="/common/js/JsBarcode.all.js"></script>
+    <script type="text/javascript" src="/resource/wetpl/vertical/web/shopping/js/jquery.qrcode.min.js"></script>
+    <script src="{{PATH_TML}}js/modal_login.js"></script>
+    <script src="/common/iview/axios.min.js"></script>
+    <script src="/common/iview/libs/util.js"></script>
+    <script src="/common/iview/libs/filter.js"></script>
+    <script src="/common/layui/layui.js"></script>
+    <script src="/common/public/js/model/ver_ajax.js"></script>
+
+    <link rel="stylesheet" href="{{PATH_TML}}css/modal_login.css" />
+    <link rel="stylesheet" type="text/css" href="/common/css/main.css">
+    <link rel="stylesheet" type="text/css" href="/common/css/fontawesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/common/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/common/css/buttons.css">
+    <link rel="stylesheet" type="text/css" href="/common/css/swiper.min.css">
+    <link rel="stylesheet" type="text/css" href="/resource/wetpl/default/web/user/css/discovery.css">
+    <link rel="stylesheet" href="/common/layer-v3.0.3/layer-v3.0.3/layer/skin/default/layer.css">
+    <link rel="stylesheet" type="text/css" href="/resource/wetpl/default/web/user/css/support_act.css">
+    <link rel="stylesheet" type="text/css" href="/resource/wetpl/default/web/activity/css/activitydetail.css">
+
+    <link rel="stylesheet" href="{{PATH_TML}}activity/css/activitypay.css" />
+    <title>Document</title>
+    <style>
+        .bar-code svg{
+            display: block;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+<div class="modal_login" id="modal_login"></div>
+<div id="container">
+    <div id="content">
+        <div class="pay" id="pay" v-if="state == 1">
+            <div class="pay_info">
+                <div class="pay_bz">
+                    <img src="{{PATH_TML}}activity/img/success.png" alt="" v-if="state == 1">
+                    <img src="{{PATH_TML}}activity/img/shixiao.png" alt="" v-if="state == 3">
+                </div>
+                <div class="pay_pre">
+                    <div class="pay_title">
+                        <div class="title_left">
+                            <h2 v-if="state == 1">订单提交成功！去付款喽~</h2>
+                            <h2 v-if="state == 3" style="color: #b9b8b8;">订单已失效，请重新选票</h2>
+                            <span v-if="state == 1">请在 <span v-html="pay_active.close_timeout"></span> 完成支付，以免订单过期</span>
+                            <span v-if="state == 3" style="color: #b9b8b8;">订单已逾期，请重新报名购买，以免没票</span>
+                        </div>
+                        <div class="title_right">
+                            <div class="price" style="margin-top: 0;font-size: 14px" v-if="state == 1">
+                                应付总额：<span v-html="pay_active.total_fee"></span>
+                            </div>
+                            <div class="price" style="margin-top: 0;font-size: 14px;color:#b9b8b8;" v-if="state == 3">
+                                应付总额：<span v-html="pay_active.total_fee" style="color: #b9b8b8;"></span>
+                            </div>
+                            <span @click="info_pre">订单详情</span>
+                        </div>
+                    </div>
+                    <!--订单详情开始-->
+                    <div class="order-detail">
+                        <ul>
+                            <li class="clearfix">
+                                <div class="label">订单号:</div>
+                                <div class="content">
+                                      <span class="order-num" v-html="pay_active.out_trade_no"></span>
+                                </div>
+                            </li>
+                            <li class="clearfix">
+                                <div class="label">商品名称：</div>
+                                <div class="content" v-html="pay_active.activity_title"></div>
+                            </li>
+                            <li class="clearfix">
+                                <div class="label">订单时间：</div>
+                                <div class="content" v-html="pay_active.created_at"></div>
+                            </li>
+                            <li class="clearfix">
+                                <div class="label">发票信息：</div>
+                                <div class="content">
+                                    电子发票 个人
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--订单详情结束-->
+                </div>
+            </div>
+            <div class="pay_way">
+                <div class="cash-title" id="J_cashTitle">
+                    选择以下支付方式付款
+                </div>
+                <div class="payment-box ">
+                    <div class="payment-header clearfix">
+                        <h3 class="title">支付平台</h3>
+                        <span class="desc"></span>
+                    </div>
+                    <div class="payment-body">
+                        <ul class="clearfix payment-list J_paymentList J_linksign-customize">
+                            <li id="J_weixin" @click="page_way">
+                                <img src="{{PATH_TML}}activity/img/weixinpay0701.png" alt="微信支付" style="margin-left: 0;">
+                            </li>
+                            <li class="J_bank">
+                                <img src="{{PATH_TML}}activity/img/event-alipay20160718.jpg" alt="支付宝" style="margin-left: 0;">
+                            </li>
+                            <li class="J_bank">
+                                <img src="{{PATH_TML}}activity/img/unionpay.png" alt="银联" style="margin-left: 0;">
+                            </li>
+                        </ul>
+                        <div class="event-desc">
+                            <p>支 付 宝：支付宝扫码支付，赢1999元红包</p>
+                            <p>小米分期：全场享 3 期免息</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="pay_success" id="pay_success" v-if="state == 2">
+            <div class="pay_info">
+                <div class="pay_bz">
+                    <img src="{{PATH_TML}}activity/img/success.png" alt="">
+                </div>
+                <div class="pay_pre">
+                    <div class="pay_title">
+                        <div class="title_left">
+                            <h2>订单已成功支付</h2>
+                            <span>订单已成功，请及时取票</span>
+                        </div>
+                        <div class="order-detail" style="display: block;margin-top: 123px">
+                            <ul>
+                                <li class="clearfix">
+                                    <div class="label">票号:</div>
+                                    <div class="content">
+                                        <span class="order-num" v-html="pay_success.ticket_num"></span>
+                                    </div>
+                                </li>
+                                <li class="clearfix">
+                                    <div class="label">商品名称：</div>
+                                    <div class="content" v-html="pay_success.title"></div>
+                                </li>
+                                <li class="clearfix">
+                                    <div class="label">支付时间：</div>
+                                    <div class="content" v-html="pay_success.updated_at"></div>
+                                </li>
+                                <li class="clearfix">
+                                    <div class="label">活动地址：</div>
+                                    <div class="content" v-html="pay_success.area_name + pay_success.address"></div>
+                                </li>
+                                <span @click="success_pay" style="cursor:pointer">查看更多</span>
+                            </ul>
+                        </div>
+                    </div>
+                    <!--订单详情开始-->
+                    <div class="order-detail">
+                        <ul>
+                            <li class="clearfix">
+                                <div class="label">订单号:</div>
+                                <div class="content">
+                                    <span class="order-num" v-html="pay_active.out_trade_no"></span>
+                                </div>
+                            </li>
+                            <li class="clearfix">
+                                <div class="label">商品名称：</div>
+                                <div class="content" v-html="pay_active.activity_title"></div>
+                            </li>
+                            <li class="clearfix">
+                                <div class="label">订单时间：</div>
+                                <div class="content" v-html="pay_active.created_at"></div>
+                            </li>
+                            <li class="clearfix">
+                                <div class="label">发票信息：</div>
+                                <div class="content">
+                                    电子发票 个人
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--订单详情结束-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var pay = new Vue({
+        el: '#container',
+        data: {
+             flag:false,        //详情页开关
+             pay_num:$app.get_query_string('pay'),   //订单号
+             pay_active:{},                             //订单信息
+            activity_num:$app.get_query_string('activity'),   //订单活动号
+            user:{} ,                                    //用户信息
+            pay_success:{},                                 //支付成功
+            state:0                                         //订单状态
+
+        },
+        mounted: function() {
+            this.$nextTick(()=>{
+               // 订单信息展示
+                if(!docCookies.getItem("token")){
+                    $("#modal_login").show();
+                }else{
+                    this.user=plats_user_info;
+                    ajax.get('/activity/user_order?number=' + this.pay_num).then((res)=>{
+                        if(res.code == 200) {
+                            this.pay_active=res.data;
+                            if(res.data.state==2){
+                                this.state=2;
+                                layer.alert("订单已支付，勿重复提交", {time: 3000});
+                                $("body,html").css({background: "url('/common/img/bg.gif')"})
+                                this.artList(this.user.weid)
+                                return;
+                            }else if(res.data.state==3){
+                                this.state=3;
+                                alert("订单已过期")
+                                $(".title_right>span").css({color:"rgb(185, 184, 184)"});
+                                $(".order-detail>ul>li").css({color:"rgb(185, 184, 184)"});
+                                $(".order-detail .label").css({color:"rgb(185, 184, 184)"});
+                                $(".cash-title").css({color:"rgb(185, 184, 184)"});
+                                $(".payment-box").css({color:"rgb(185, 184, 184)"});
+                                $(".payment-box .payment-header .title").css({color:"rgb(185, 184, 184)"});
+                                $("#J_weixin>img").css({opacity:0.5}).click(function(){
+                                    layui.use('layer', function() {
+                                        var layer = layui.layer;
+                                        layer.msg("订单已过期，请重新购买", {time: 1500});
+                                    })
+                                })
+                                $("img").css({opacity:0.5})
+                            }else if(res.data.state==1){
+                                this.state=1;
+                            }
+                        }
+                    })
+                }
+
+                // this.activity_ebroll_detail("259297b0-07c5-11e8-9808-a7228ff5b169")
+            });
+        },
+        created: function(){
+            layui.use('layer', function() {
+                this.layer = layui.layer;
+            })
+        },
+        methods: {
+            // 详情点击
+            info_pre(){
+               if(this.flag==false){
+                   $(".order-detail").slideDown(1000);
+                   this.flag=true;
+               }else{
+                   $(".order-detail").slideUp(1000);
+                   this.flag=false;
+                }
+            },
+            // 支付点击
+            page_way(){
+                console.log(this.pay_num)
+                this.wechat_scan_pay(this.pay_num);
+            },
+            // 扫码下单
+            wechat_scan_pay(number) {
+                var self=this;
+                $.ajax({
+                    url: ACTIVITY_WX_ORDER,
+                    type: 'post',
+                    data: {
+                        number: number
+                    },
+                    headers: {
+                        'Token': docCookies.getItem("token")
+                    },
+                    success: function(data) {
+                        //console.log(data)
+                        if (data.code == 200) {
+                            console.log(data.data.qrcode_url, data.data.number, data.data.total_fee)
+                            self.PaymentQR(data.data.qrcode_url, data.data.number, data.data.total_fee);
+                        } else {
+                            console.log(number);
+                        }
+
+                    },
+                    error: function(xhr) {
+                        console.log(xhr);
+                    }
+                })
+            },
+            // 支付
+            PaymentQR(qr_url, number, fee) {
+                console.log("支付")
+                var self=this;
+                paymentLayer = layer.open({
+                    skin: 'layui-layer-rim',
+                    type: 1,
+                    area: ['400px', '430px'],
+                    title: '微信扫码支付',
+                    closeBtn: 2,
+                    shadeClose: false,
+                    scrollbar: false,
+                    //content: '<img src="' + QRCODE + '?url=' + qr_url + '" width="300">',
+                    content: `<div class="payment-block">
+                            <div class="payment-qrcode"><img src="` + QRCODE + `?url=` + qr_url + `" width="300"></div>
+                            <div class="payment-desc">
+                                <p>付款金额：<b>￥` + fee + `</b></p>
+                            </div>
+                            <div class="payment-mark"><img src="/common/img/wepay-logo.png" width="100"></div>
+                        </div>`,
+                    end: function() {
+                        clearInterval(tmr);
+                        //location.reload();
+                    },
+                    shade: 0.7
+                });
+                tmr = setInterval(function() {
+                    console.log(number)
+                    $.ajax({
+                        url: ACTIVITY_ENROLL_ORDER_DETECT,
+                        type: 'post',
+                        dataType: 'json',
+                        data: {
+                            number: number
+                        },
+                        headers: {
+                            'Token': docCookies.getItem("token")
+                        },
+                        success: function(rep) {
+                            console.log(rep.data.state)
+                            if (rep.data.state == 2) {
+                                clearInterval(tmr);
+                                layer.close(paymentLayer);
+                                // 弹出成功数据
+                                self.activity_ebroll_detail(rep.data.enroll_id);
+                            }
+                        },
+                        error: function(xhr) {
+                            console.log(xhr);
+                        }
+                    });
+                }, 1000)
+            },
+            //报名成功弹出票据模态框
+            activity_ebroll_detail(id) {
+                // alert(1)
+                var self=this;
+                $.ajax({
+                    url: ACTIVITY_ENROLL_DETAIL + "/" + id, //活动报名详情
+                    type: 'get',
+                    headers: {
+                        'Token': docCookies.getItem("token")
+                    },
+                    success: function(data) {
+                        if (data.code == 200) {
+                            console.log("报名成功");
+                            self.pay_success=data.data;
+                            self.state=2;
+                            console.log(self.state)
+                            // self.pay_active={};
+                        }
+
+                    },
+                    error: function(xhr) {
+                        console.log(xhr);
+                    }
+                })
+            },
+            Ticket(data) {
+                layer.config({
+                    skin: 'winning-class' //自定义样式demo-class
+                })
+                var closeticket = layer.open({
+                    skin: 'winning-class',
+                    type: 1,
+                    area: ['530px'],
+                    title: 0,
+                    closeBtn: 0,
+                    shadeClose: true,
+                    scrollbar: false,
+                    content: '<div class="ticket-box">' +
+                    '<div class="ticket-box-top">' +
+                    '<div class="t_blank"></div>' +
+                    '<div class="ticket-qr"></div>' +
+                    '<div class="bar-code"><svg></svg></div>' +
+
+                    '<div style="width:92%;text-align:center;margin:0 auto;">票号：' + data.ticket_num + '</div>' +
+                    '<div style="width:92%;text-align:center;margin:0 auto;">活动时请向发起人展示，该码可在个人中心查看</div>' +
+                    '</div>' +
+                    '<div class="ticket-box-bottom">' +
+                    '<div class="ticket-title">' + data.title + '<span class="qun-chat">[群聊]</span></div>' +
+                    '<div class="ticket-time">' + data.begain_time + '&nbsp;' + data.begain_week + '&nbsp;' + data.begain_hour + '~~' + data.end_time + '&nbsp;' + data.end_week + '&nbsp;' + data.end_hour + '</div>' +
+                    '<div class="ticket-addr"><span><i class="fa fa-map-marker"></i></span>&nbsp;：' + data.area_name + data.address + '</div>' +
+                    '<div class="ticket-detail">' +
+                    '<div class="ticket-name">' +
+                    '<span class="sign_ticname"></span>：' + data.name +
+                    '</div>' +
+                    '<div class="ticket-phone">' +
+                    '<span class="sign_telphone"></span>：' + data.telphone +
+                    '</div>' +
+                    '<div class="ticket-position">' +
+                    '<span class="sign-ticzw"></span>：' + data.poistion +
+                    '</div>' +
+                    '<div class="ticket-company">' +
+                    '<span class="sign-ticcom"></span>：' + data.company +
+                    '</div>' +
+                    '</div>' +
+                    '<div class="ticket"></div>' +
+                    '</div>' +
+                    '</div>',
+
+                    end: function() {
+                        location.reload();
+                    },
+
+                    shade: 0.7
+                });
+
+                if (data.type == 2) {
+                    for (var i = 0; i < data.tickets.length; i++) {
+                        var dom =
+                            '<div class="ticket-item">' +
+                            '<p>' + data.tickets[i].name + '</p>' +
+                            '<div class="tic-price">' +
+                            '<span>￥' + data.tickets[i].price + '</span>' +
+                            '</div>' +
+                            '<div class="num">' +
+                            '<span>×' + data.tickets[i].count + '</span>' +
+                            '</div>' +
+                            '</div>';
+                        $('.ticket').append(dom);
+                    }
+                }
+
+                if (data.is_open_qun == 2) {
+                    $('.qun-chat').css('display', 'inline-block');
+                }
+                var qrImg = imgSet(data.wx_qun_qrcode, 0, 0);
+                $('.qun-chat').click(function() {
+                    layer.open({
+                        type: 1,
+                        area: ['320px', '320px'],
+                        title: 0,
+                        closeBtn: 0,
+                        shadeClose: true,
+                        scrollbar: false,
+                        content: '<div class="qun-qrcode"><img src="' + qrImg + '" alt=""></div>'
+                    });
+                });
+
+            },
+            success_pay(){
+                this.Ticket(this.pay_success);
+                this.qrcodefun1(this.pay_success.ticket_num);
+                this.barcode('.bar-code svg',this.pay_success.ticket_num);
+            },
+            qrcodefun1(ticket_num) {
+                var qrcode_val = ticket_num;
+                // if ($.browser.msie && $.browser.version <= 8){
+                if ($.support.msie && $.support.version <= 8) {
+
+                    $(".ticket-qr").qrcode({
+                        render: "table",
+                        width: 110,
+                        height: 110,
+                        text: qrcode_val
+                    });
+                } else {
+                    jQuery(".ticket-qr").qrcode({
+                        width: 110,
+                        height: 110,
+                        text: qrcode_val
+                    });
+                }
+
+            },
+            // 条形码生成
+            barcode(selector, ticket_num) {
+                JsBarcode(selector, ticket_num, {
+                    format: "CODE128",
+                    width: 2,
+                    height: 50,
+                    displayValue: false,
+                    text: ticket_num,
+                    background: "#fff",
+                    lineColor: "#000",
+                    margin: 5
+                });
+            },
+            // 用户活动
+           artList(user_id) {
+                console.log("777777",user_id)
+                var self=this;
+                var sendData = {
+                    user_id: user_id,
+                }
+                $.ajax({
+                    // url: ACTIVITY_LIST,
+                    url: ACTIVITY_ENROLL_LISTS,
+                    type: 'post',
+                    data: sendData,
+                    success: function(data) {
+                        // console.log(data);
+                        if (data.code == 200) {
+                            var arts = data.data.list;
+                            for(var item of data.data.list) {
+                                console.log(item.activity_id);
+                                if(item.activity_id == self.activity_num ){
+                                    self.activity_ebroll_detail(item.weid)
+                                }
+                            }
+                        }
+                    },
+                    error: function(xhr) {
+                        console.log(xhr);
+                    }
+                })
+            }
+
+        }
+    })
+</script>
+</body>
+</html>

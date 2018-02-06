@@ -183,6 +183,11 @@
                                                     <input class="form-control" type="text" name="name" placeholder="输入姓名筛选">
                                                 </div>
                                             </div>
+                                            <div class="col-sm-1 col-xs-1 col-lg-1 pull-right">
+                                                <div class="row row-fix tpl-category-container">
+                                                    <a class="btn btn-primary" href="member_wait_info.html">会员简历</a>
+                                                </div>
+                                            </div>
                                         </div>
                                     </form>
                                 </div>
@@ -430,10 +435,6 @@
                                         <td><a id="plat_member_application" class="btn btn-warning" href="" target="_black">点击下载</a></td>
                                     </tr>
                                     <tr>
-                                        <td>申请资料</td>
-                                        <td><img id="paper_img" src="#" data-action="zoom" width="100"></td>
-                                    </tr>
-                                    <tr>
                                         <td>缴费状态</td>
                                         <td>
                                             <div id="is_pay"></div>
@@ -592,7 +593,7 @@
                 }, {
                     "mData": 'level_name',
                     'render': function(data, type, full) {
-                        return '<span class="label label-info">' + data + '</span>';
+                        return '<span class="label label-info">第' + full.number + '届 - ' + data + '</span>';
                     }
                 }, {
                     "mData": 'is_info',
@@ -706,7 +707,7 @@
                 dataType: 'json',
                 success: function(data) {
                     $('#bootstrapModal input[name=weid]').val(weid);
-                    $('#level_name').text(data.data.baseInfo.level_name);
+                    $('#level_name').html('<span class="label label-info">第' + data.data.baseInfo.number + '届 - ' + data.data.baseInfo.level_name + '</span>');
                     $('#avatar').attr('src', ApiMaterPlatQiniuDomain + data.data.baseInfo.avatar);
                     $('#name').text(data.data.baseInfo.name);
                     $('#phone').text(data.data.baseInfo.phone);
@@ -715,7 +716,6 @@
                     $('#plat_member_tel').text(data.data.baseInfo.plat_member_tel);
                     $('#plat_member_address').text(data.data.baseInfo.plat_member_address);
                     $('#plat_member_application').attr('href', ApiMaterPlatQiniuDomain + data.data.baseInfo.plat_member_application);
-                    $('#paper_img').attr('src', ApiMaterPlatQiniuDomain + data.data.baseInfo.paper_img);
                     $('#is_pay').html(data.data.baseInfo.is_pay == 1 ? '<span class="label label-success">已缴费</span>' : '<span class="label label-danger">未缴费</span>');
                     $('#ap_time').text(data.data.baseInfo.ap_time);
                     $('#pay_at').text(new Date(data.data.baseInfo.pay_at * 1000).format('yyyy-MM-dd hh:mm:ss'));

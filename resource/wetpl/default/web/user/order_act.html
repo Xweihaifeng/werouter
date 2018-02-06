@@ -71,7 +71,7 @@
             var dom = '<tr>' +
                         '<td>'+data.out_trade_no+'</td>'+
                         '<td style="width:40%">'+data.activity_title+'</td>'+
-                        '<td>'+state+'</td>'+
+                        '<td class="buy" state=" '+data.state+' " style="cursor: pointer">'+state+'</td>'+
                         '<td>'+data.total_fee+'</td>'+
                         '<td>'+data.created_at+'</td>'+
                     '</tr>';
@@ -95,6 +95,18 @@
             },
             error : function (xhr) {
                 console.log(xhr)
+            }
+        });
+
+        $("tbody").delegate(".buy","click",function(){
+            var state_info=$(this).attr("state");
+            var number=$(this).parents("tr").children("td").eq(0).html();
+            console.log(number)
+            console.log(state_info)
+            if(state_info==1){
+                var href=window.location.protocol + '//' + window.location.host + '/'+ 'activity/pay?pay=' + number;
+                console.log(href)
+                window.location.href = href;
             }
         })
     })

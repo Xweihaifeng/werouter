@@ -100,10 +100,10 @@ $(document).ready(function(){
                     '<input type="text" class="order_info category-floor" value="'+data.sort+'" data-origin="'+data.sort+'">'+
                     '<div class="operate_info">'+
                         '<a href="javascript:;" class="delete_sort">删除</a>'+
-                        '|'+
-                        '<a href="javascript:;" class="showpubmanage">查看</a>'+
                     '</div>'
         return listhtml;
+        // '|'+
+        // '<a href="javascript:;" class="showpubmanage">查看</a>'+
     }
 
      // 获取商品分类

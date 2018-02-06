@@ -146,6 +146,7 @@ $(function() {
                     return false;
                 }
                 $(".page-left").append(news_detail(data.data));
+                // console.log($(".page-left").html())
 
                 if(!data.data.source_url) {
                     $(".read_original").hide();
@@ -182,4 +183,19 @@ $(function() {
     // 二维码的生成
     var qurl = apiUrl + '/file/qrcode?margin=3&url=' + window.location.href;
     $(".qr_code_pc_outer").prepend(`<img src="` + qurl + `" />`);
+
+
+
+    $(document).scroll(function () {
+        let tops = $(document).scrollTop();
+        let t = $("#ema").offset().top;
+        console.log(t,tops)
+        if(tops >= 160){
+            $("#ema").addClass("fixeds")
+        }else {
+            $("#ema").removeClass("fixeds")
+
+        }
+    })
+
 });

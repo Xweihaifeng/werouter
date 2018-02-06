@@ -37,7 +37,7 @@ if(token != null || token != undefined) {
                         if(!results) {
                             return false;
                         } else if(results.type == 1 || results.type == 2) {
-                            if(results.is_done == 2 && results.is_authenticated == 1 && results.operation_status == 2) {
+                            if(results.is_authenticated == 1 && results.operation_status == 2) {
                                 $(".member_off_cert").addClass("process_active");
                             } else {
                             	return false;

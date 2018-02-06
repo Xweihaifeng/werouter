@@ -1,84 +1,265 @@
-<!DOCTYPE html>
-<html>
-    <head lang="en">
-        <title></title>
-        <meta charset="UTF-8">
-        <link rel="shortcut icon" id="favicon" href="" />
-        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-
-        <script src="/common/js/jquery-3.2.1.min.js"></script>
-        <script src="/common/js/layer/layer.js"></script>
-        <!--<script src="/common/js/browser.min.js"></script>-->
-        <script src="{{PATH_CONFIG}}"></script>
-        <!-- <script type="text/javascript" src="{{PATH_TML}}shopping/js/jquery.qrcode.min.js"></script> -->
-         <!--<script src="/common/js/utf.js"></script>-->
-        <!--<script src="/common/js/qrcode.new.js"></script>-->
-        <script src="{{PATH_TML}}js/modal_login.js"></script>
-        <!--<script src="/common/js/public_use.js"></script>-->
-        <script src="/common/jquery-lazyload/jquery.lazyload.js"></script>
-        <!--<script src="/common/js/swiper-3.3.1.min.js"></script>-->
-        <!--<script src="/common/js/buttons.js"></script>-->
-
-        <!-- <link rel="stylesheet" href="/common/css/main.css"> -->
-        <link rel="stylesheet" href="{{PATH_TML}}css/public_main.css">
-        <link rel="stylesheet" href="{{PATH_TML}}font/iconfont.css" />
-        <link rel="stylesheet" href="{{PATH_TML}}css/news_base.css" />
-        <link rel="stylesheet" href="{{PATH_TML}}css/modal_login.css" />
-        <link rel="stylesheet" href="{{PATH_TML}}css/article.css">
-        <link rel="stylesheet" href="{{PATH_TML}}css/articleList.css">
-        <link rel="stylesheet" type="text/css" href="{{PATH_TML}}project/css/project.css">
-        <link rel="stylesheet" href="/common/css/bootstrap.min.css">
-        <link rel="stylesheet" href="/common/css/buttons.css">
-
-        <style>
-            ::-webkit-scrollbar { width: 0; height: 0; }
-            .dropdown-toggle, .get-check { height: 40px !important; }
-
-            html {
-                position: absolute!important;
-                overflow-y: auto!important;
-            }
-        </style>
-    </head>
-    <body style="width: 1366px;">
-        <!-- 登录部分 -->
-        <div class="modal_login" id="modal_login"></div>
-        <!-- 导航部分开始 -->
-        <ul class="news_menu" id="public_main_news_menu"></ul>
-        <!-- 导航部分结束 -->
-
-        <div class="article">
-            <#include#>template-userhead.html</#include#>
-            <div id="art-body">
-                <div id="art-main">
-                    <div class="art-title">Ta的微主页</div>
+<#extend#>public/extend/wepage_extend.html</#extend#>
+<div id="container">
+    <div id="content">
+        <!--<ul id="type">
+            <li style="color: #333;">全部</li>
+            <li>一月内</li>
+            <li>三月内</li>
+            <li>半年内</li>
+            <li>一年内</li>
+        </ul>-->                
+        <div id="main">
+            <ul id="list">
+                <ul class="nav nav-tabs" v-if="type == 'activity'">
+                    <li role="presentation" v-for="(e, i) in actType.list" :id="'act' + i" @click="tab(e, i, 'act')" :class="{'active': i == actType.flag}"><a href="javascript:void(0);">{{e.title}}</a></li>
+                </ul>
+                <ul class="nav nav-tabs" v-if="type == 'articles'">
+                    <li role="presentation" v-for="(e, i) in artType.list" :id="'art' + i" @click="tab(e, i, 'art')" :class="{'active': i == artType.flag}"><a href="javascript:void(0);">{{e.name}}</a></li>
+                </ul>
+                <div class="none" v-if="none">
+                    <img src="/common/img/no_con_default.png" alt=""/>
                 </div>
-                <#include#>template-userbody.html</#include#>
-            </div>
+                <a v-for="e in latest" :href='"/" + e.domain + dynamic.filter(x => x.id == e.dynamic_type)[0].val + JSON.parse(e.other).weid' v-show="type == 'latest'" target="_blank">
+                    <li v-if="e.dynamic_type == 1">
+                        <img class="i0" :src="setImg(JSON.parse(e.other).cover, '/common/img/new/products_load.jpg', 240, 160)" />
+                        <p>
+                            <span style="padding: 0;">
+                                <span>{{JSON.parse(e.other).title | cut(25)}}</span>
+                                <span>{{JSON.parse(e.other).summary | cut(100)}} </span>
+                            </span>
+                            <span>
+                                <img class="i1" src="/common/img/new/date.png" alt=""/><span style="padding-right:34px;">{{new Date(parseInt(e.updated_at * 1000)) | show_date | format_date}}</span>
+                                <img class="i2" src="/common/img/new/read.png" alt=""/><span>{{JSON.parse(e.other).views}}</span>
+                            </span>
+                        </p>
+                    </li>
+                    <li v-if="e.dynamic_type == 3">
+                        <img class="i0" :src="setImg(e.images, '/common/img/new/products_load.jpg', 240, 160)" />
+                        <p style="width:395px;">
+                            <span style="padding: 0;">
+                                <span>{{JSON.parse(e.other).title}}</span>
+                                <span>举办方：{{JSON.parse(e.other).Sponsor}} </span>
+                            </span>
+                            <span>
+                                <img class="i1" src="/common/img/new/date.png" alt=""/><span style="padding-right:45px;">{{new Date(parseInt(JSON.parse(e.other).begain_time * 1000)) | show_date | format_date + ' 开始'}}</span>
+                                <img class="i3" src="/common/img/new/local.png" alt=""/><span>{{JSON.parse(e.other).area_name + ' ' + JSON.parse(e.other).address}}</span>
+                            </span>
+                            <p class="act-btn">
+                                <span :class="{'act-title-free': JSON.parse(e.other).type == 1, 'act-title-price': JSON.parse(e.other).type != 1}">{{JSON.parse(e.other).type == 1 ? "免费" : "收费"}}</span>
+                                <span :class="{'act-free': JSON.parse(e.other).type == 1, 'act-price': JSON.parse(e.other).type != 1}">立即报名</span>
+                            </p>
+                        </p>
+                    </li>
+                    <li v-if="e.dynamic_type == 4">
+                        <img class="i0" :src="setImg(JSON.parse(e.other).cover, '/common/img/new/products_load.jpg', 240, 160)" />
+                        <p style="width:395px;">
+                            <span style="padding: 0;">
+                                <span>{{JSON.parse(e.other).title | cut(25)}}</span>
+                                <span>{{JSON.parse(e.other).summary | cut(100)}} </span>
+                            </span>
+                            <span>
+                                <span style="font-size:14px;color:#777;">价格</span><span style="width:100px;padding-right:34px;color:#ed4c4c;">￥{{JSON.parse(e.other).price}}</span>
+                                <span style="padding-top:0;color:#777;">市场价</span><span style="text-decoration: line-through;">￥{{JSON.parse(e.other).marketprice}}</span>
+                            </span>
+                        </p>
+                        <p class="sp-btn">
+                           <span>查看详情</span>
+                        </p>
+                    </li>
+                </a>
+                <a v-for="e in articles" :href="'/' + pages_info.plats_domian.domain + '/article/' + e.weid" v-show="type == 'articles'" target="_blank">
+                    <li>
+                        <img class="i0" :src="setImg(e.cover, '/common/img/new/products_load.jpg', 240, 160)" />
+                        <p>
+                            <span style="padding: 0;">
+                                <span>{{e.title | cut(25)}}</span>
+                                <span>{{e.summary | cut(100)}} </span>
+                            </span>
+                            <span>
+                                <img class="i1" src="/common/img/new/date.png" alt=""/><span style="padding-right:34px;">{{e.updated_at}}</span>
+                                <img class="i2" src="/common/img/new/read.png" alt=""/><span>{{e.views}}</span>
+                            </span>
+                        </p>
+                    </li>
+                </a>
+                <a v-for="e in activity" :href="'/' + e.domain + '/activity/' + e.weid" v-show="type == 'activity'" target="_blank">
+                    <li>
+                        <img class="i0" :src="setImg(e.cover, '/common/img/new/products_load.jpg', 240, 160)" />
+                        <p style="width:395px;">
+                            <span style="padding: 0;">
+                                <span>{{e.title}}</span>
+                                <span>举办方：{{e.Sponsor}} </span>
+                            </span>
+                            <span>
+                                <img class="i1" src="/common/img/new/date.png" alt=""/><span style="padding-right:10px;">{{e.begain_time + ' ' + e.begain_week + ' 开始'}}</span>
+                                <img class="i3" src="/common/img/new/local.png" alt=""/><span>{{e.area_name + ' ' + e.address}}</span>
+                            </span>
+                            <p class="act-btn">
+                                <span :class="{'act-title-free': e.type == 1, 'act-title-price': e.type != 1}">{{e.type == 1 ? "免费" : "收费"}}</span>
+                                <span :class="{'act-free': e.type == 1, 'act-price': e.type != 1}">立即报名</span>
+                            </p>
+                        </p>
+                    </li>
+                </a>
+                <div id="pages">
+                    <Page :total="parseInt(pages[type].total)" :current="pages[type].page" :page-size="pages[type].limit" @on-change="change" v-if="pages[type].total > pages[type].limit"></Page>
+                </div>
+                <ul id="shop" v-show="type == 'shopping'">
+                    <li v-for="(e, i) in shopCate">
+                        <div>
+                            <p></p>
+                            <p>{{i + 1}}F {{e.name}}</p>
+                        </div>
+                        <div>
+                           <a v-for="(o, i) in e.shopping.slice(0, 3)" :href="'/' + pages_info.plats_domian.domain + '/wemall/goods/' + o.weid" target="_blank" @mouseenter="buy(o, i)" @mouseleave="buy(o, i, 'leave')">
+                               <img :src="setImg(o.cover, '/common/img/new/products_load.jpg', 243, 160)" alt="" width="243" height="160" />
+                               <span class="sp-title">{{o.title | cut(15)}}</span>
+                               <span class="sp-intro">{{o.summary | cut(30)}}</span>
+                               <span class="sp-price"><em style="font-style:normal;font-size:16px;">￥</em>{{o.price}}<b>市场价 ￥<i>{{o.marketprice}}</i></b></span>
+                               <span class="sp-info" v-if="!o.stateBuy"><i>已售 <em>{{o.sales_num}}</em></i><i>收藏 <em>{{o.stock}}</em></i></span>
+                               <span class="sp-pinfo" v-else><i>立即购买</i></span>
+                           </a>
+                        </div>
+                    </li>
+                </ul>
+                <ul id="ozone" v-show="type == 'zone'">
+                    <li>
+                        <p></p>
+                        <p>Ta的圈子</p>
+                    </li>
+                    <li>
+                        <div>
+                            <ul class="red"></ul>
+                            <span>位微友</span>
+                        </div>
+                    </li>
+                    <li>
+                        <p></p>
+                        <p>Ta的微友曲线</p>
+                    </li>
+                    <li>
+                        <div style="display: flex; justify-content: flex-end;">
+                            <button class="btn btn-default" onclick="changeTime(2,'#')" style="position: relative; height: 34px;">去年</button>
+                            <a class="button-down-box-parent button-down-box-parent-p">
+                                <button class="btn btn-default" onclick="changeTime(1,'#');$('.button-down-box').hide()" onmouseenter="$('.button-down-box').show()">今年</button>
+                                <div class="button-down-box-parent" style="display: inline-block; width: auto;height: auto">
+                                    <ul class="button-down-box" onmouseleave="$('.button-down-box').hide()" style="display:none;margin-top:10px;">
+                                        <li onclick="changeTime(3,'#')" style="height:34px;padding-top:7px;text-align:center;cursor:pointer;display:block;font-size:14px;">当月</li>
+                                        <li onclick="changeTime(4,'#')" style="height:34px;padding-top:7px;text-align:center;cursor:pointer;display:block;font-size:14px;">上月</li>
+                                    </ul>
+                                </div>
+                            </a>
+                        </div>
+                        <div id="curve_count" style="width:790px;height:400px;"></div>
+                        <ul>
+                            <li style="width:32px;height:18px;margin-right:10px;background:#FF8C8E;padding:0;"></li>
+                            <li style="width:80px;height:18px;margin-right:10px;border:none;padding:0;font-size:14px;">新增微友</li>
+                            <li style="width:32px;height:18px;margin-right:10px;background:#17c295;padding:0;"></li>
+                            <li style="width:80px;height:18px;margin-right:10px;border:none;padding:0;font-size:14px;">活跃微友</li>
+                        </ul>
+                        <p class="y" style="align-items:flex-end;margin-top:10px;font-size:14px;color:#999;"></p>
+                        <p><img src="/common/img/group_bottom.png" width="100%" /></p>
+                    </li>
+                    <li>
+                        <p></p>
+                        <p>Ta的微友分布</p>
+                    </li>
+                    <li>
+                        <div>
+                            <div id="lanuch_main" style="width:790px;height:520px;"></div>
+                            <ul>
+                                <li><span style="background: #ff0000"></span><span><10000人</span></li>
+                                <li><span style="background: #ffac37"></span><span><5000人</span></li>
+                                <li><span style="background: #c1e461"></span><span><1000人</span></li>
+                                <li><span style="background: #f4f77d"></span><span><100人</span></li>
+                                <li><span style="background: #cccccc"></span><span><1人</span></li>
+                                <li><span style="background: #eeeeee"></span><span><0人</span></li>
+                            </ul>
+                        </div>
+                        <p id="red"></p>
+                        <p class="y"></p>
+                        <p><img src="/common/img/group_bottom.png" width="100%" /></p>
+                    </li>
+                </ul>
+            </ul>
+            <ul id="info">
+                <li id="maininfo">
+                    <span id="userhead" :style="{'background': 'url(' + setBg(pages_info.plats_domian.background_user, '/common/img/new/bg.png') + ') no-repeat center', 'background-size': '100% 100%'}"></span>
+                    <a :href="'/' + pages_info.plats_domian.domain"><img :src="setImg(pages_info.plats_user.avatar ,'/common/img/new/avatar.png', 90, 90)" alt=""/></a>
+                    <span id="username">{{pages_info.plats_user_cert.name || pages_info.plats_user.real_name}}</span>
+                    <ul>
+                        <a :href="'/' + pages_info.plats_domian.domain + '/article'">
+                            <li>
+                                <span>{{info.article_count}}</span>
+                                <span>文章</span>
+                            </li>
+                        </a>
+                        <a :href="'/' + pages_info.plats_domian.domain + '/project'">
+                            <li>
+                                <span>{{info.project_count}}</span>
+                                <span>项目</span>
+                            </li>
+                        </a>
+                        <a :href="'/' + pages_info.plats_domian.domain + '/activity'">
+                            <li>
+                                <span>{{info.activity_count}}</span>
+                                <span>活动</span>
+                            </li>
+                        </a>
+                    </ul>
+                </li>
+                <li id="address">
+                    <ul>
+                        <li>
+                            <span>
+                                <i :style="fontColor">{{plats_info.cert_name}}</i>
+                                <img :src="imgState('/common/img/new/offical.png', '/common/img/new/officaloff.png', pages_info.plats_user_cert.is_authenticated == 1)" alt="" width="76" height="26"/>
+                                <img :src="imgState('/common/img/new/cert.png', '/common/img/new/certoff.png', pages_info.plats_user_auth.is_authenticated == 1)" alt="" width="32" height="28"/>
+                                <img src="/common/img/new/message.png" alt="" width="60" height="24"/>
+                            </span>
+                            <span>{{pages_info.plats_user_cert.cert_info}}</span>
+                        </li>
+                        <li>
+                            <img src="/common/img/new/address.png" alt="" width="17" height="22"/>
+                            <span>{{area(pages_info.plats_user.province.name, pages_info.plats_user.area.name)}}</span>
+                        </li>
+                        <li>
+                            <img src="/common/img/new/sign.png" alt="" width="17" height="18"/>
+                            <span>{{pages_info.plats_user.motto}}</span>
+                        </li>
+                        <li>
+                            <img :src="setImg(pages_info.plats_user_qrcode, '/common/img/new/qrcode.png', 160, 160)" alt="" width="160" height="160"/>
+                            <p>
+                                <span>微信扫描二维码</span>
+                                <span style="color: #007cd3;font-weight: 600;padding-bottom: 5px;">支持Ta</span>
+                                <span style="color: #007cd3;font-weight: 600;">或分享给好友</span>
+                            </p>
+                        </li>
+                    </ul>
+                </li>
+                <li id="friends">
+                    <ul>
+                        <li>
+                            <p @click="select('fans')" :class="{'friends': active == 'fans'}">我的粉丝({{info.fnums}})</p>
+                            <p @click="select('friends')" :class="{'friends': active == 'friends'}">我的关注({{info.gnums}})</p>
+                        </li>
+                        <li v-show="active == 'fans'">
+                            <a v-for="e in info.flist" :href="'/' + e.domain" :title="e.nickname">
+                                <img class="care" :src="setImg(e.avatar, '/common/img/new/1.png', 54, 54)" alt="" width="54" height="54"/>
+                            </a>
+                        </li>
+                        <li v-show="active == 'friends'">
+                            <a v-for="e in info.glist" :href="'/' + e.domain" :title="e.nickname">
+                                <img class="care" :src="setImg(e.avatar, '/common/img/new/1.png', 54, 54)" alt="" width="54" height="54"/>
+                            </a>
+                        </li>
+                        <li>
+                            查看更多>>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
         </div>
-
-        <!-- <div id="beijing" style="position: fixed; left:1189px; top: 0; right: 0; bottom: 0; width:100%; height:100%; overflow-y: auto;"></div> -->
-        <!-- 右侧大背景图 -->
-        <div id="public_main_right_bg" style="position:fixed;top:0;bottom:0;left:1190px;width:100%;overflow-y:auto;"></div>
-        <script src="{{PATH_TML}}js/public_main_right_bg.js"></script>
-        <script>
-            $(function () {
-                var scrollTop = -1; // 鼠标进入到区域后，则存储当前window滚动条的高度
-                $('#public_main_right_bg').hover(function(){
-                    scrollTop = $(window).scrollTop();
-                }, function(){
-                    scrollTop = -1;
-                });
-
-                // 鼠标进入到区域后，则强制window滚动条的高度
-                $(window).scroll(function(){
-                    scrollTop!==-1 && $(this).scrollTop(scrollTop);
-                })
-            })
-        </script>
-
-        <script src="/common/js/control.js"></script>
-        <script src="{{PATH_TML}}article/js/articleList.js"></script>
-        <script src="/common/js/userinfo.js"></script>
-    </body>
-</html>
+        
+    </div>
+</div>

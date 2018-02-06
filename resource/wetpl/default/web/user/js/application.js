@@ -58,7 +58,6 @@ $(document).ready(function() {
         localStorage.removeItem('weid');
     })
 
-    $("#title").text('【' + localStorage.getItem('title') + '】');
 
     var domain;
     var isBrand;
@@ -66,6 +65,7 @@ $(document).ready(function() {
     var chatState;
     var chatState1;
     var chatState2;
+    var chatState3;
     var pageId;
     var hasDomain = function(weid) {
         $.ajax({
@@ -324,6 +324,18 @@ $(document).ready(function() {
 
     })
 
+    $("#we_toggle-button-app3").click(function() {
+        if (!chatState3) {
+            $("#we_toggle-button-app3").attr("checked", 'checked');
+            chatState3 = true;
+        } else {
+            $("#we_toggle-button-app3").removeAttr("checked");
+            chatState3 = false;
+        }
+
+    })
+
+
     function pages_wechat_detail() {
         var options106 = $.post(apiUrl + "pages/wechat/detail");
         options106.done(function(data) {
@@ -340,7 +352,13 @@ $(document).ready(function() {
                 $("#apiclient_key").val(result105.apiclient_key);
                 $("#filename").val(result105.verify_file_name);
                 $("input[name=verify_file_name]").val(result105.verify_file_name);
-
+                //判断滑块是否选中
+                if(result105.app_id&&result105.app_cert&&result105.verify_file_name){
+                    $("#we_toggle-button-app").attr("checked", 'checked');
+                }
+                if(result105.merchant_id&&result105.merchant_key&&result105.apiclient_cert&&result105.apiclient_key){
+                    $("#we_toggle-button-app1").attr("checked", 'checked');
+                }
             }
         });
         options106.fail(function(fail) {
@@ -355,6 +373,55 @@ $(document).ready(function() {
         }
     });
     options105.fail(function(fail) {
+        console.error(error);
+    });
+
+    //获取微信小程序配置
+    function page_mini_wechat_detail(){
+        var options107 = $.post(apiUrl + "pages/wechatMini/detail");
+        options107.done(function(data) {
+            if (data.code == 200 && data.data) {
+                //给微信小程序配置赋值
+                var result = data.data;
+                $("#uploadForm3").find("input[name=weid]").val(result.weid);
+                $("#mini_app_id").val(result.app_id);
+                $("#mini_app_cert").val(result.app_cert);
+                //设置滑块是否先中
+                if(result.app_id&&result.app_cert){
+                    //选中
+                    $("#we_toggle-button-app3").attr("checked", 'checked');
+                }
+            }
+        });
+        options107.fail(function(fail) {
+            console.error(error);
+        });
+    }
+    //初始化微信小程序配置
+    var options108 = $.post(apiUrl + "pages/wechatMini/initWechatMini");
+    options108.done(function(data) {
+        if (data.code == 200 && data.data) {
+            //判读是否购买小程
+            $.ajax({
+                type: "POST",
+                url: apiUrl + "pages/miniOrder/isMiniOrderPay",
+                data: {user_id: mall_user_id}, // 要提交表单的ID
+                success: function(data) {
+                    if (data.code == 200) {
+                        if(data.data==true){
+                            $("#wechat_mini_buy_form").css("display","none");
+                            $("#uploadForm3").css("display","block");
+                            page_mini_wechat_detail();
+                        }else{
+                            $("#wechat_mini_buy_form").css("display","block");
+                            $("#uploadForm3").css("display","none");
+                        }
+                    }
+                }
+            });
+        }
+    });
+    options108.fail(function(fail) {
         console.error(error);
     });
 
@@ -468,6 +535,17 @@ $(document).ready(function() {
 
         }
     });
+    $('#open3').click(function() {
+        var text = $(this).text();
+        if (text === "展开") {
+            $('.open_content3').stop().slideDown(400);
+            $(this).text("收起");
+        } else {
+            $('.open_content3').stop().slideUp(400);
+            $(this).text("展开");
+
+        }
+    });
 
     $("#wechat_merchant_save").click(function() {
         var body107 = new Object();
@@ -532,7 +610,7 @@ $(document).ready(function() {
         $('#myModal').find(".modal-title").text('服务号测试');
         $('#myModal').find(".modal-body").css("text-align", "center");
         $('#myModal').find(".modal-body").children().remove();
-        $('#myModal').find(".modal-body").append("<img src='" + QRCODE + "?url=http://m.new.wezchina.com/api/pages/wechat/wechatConfigureTest?userid=" + weid + "'/>");
+        $('#myModal').find(".modal-body").append("<img src='" + QRCODE + "?url="+mob_domian+"api/pages/wechat/wechatConfigureTest?userid=" + weid + "'/>");
         $('#myModal').modal('show');
 
     }
@@ -578,6 +656,190 @@ $(document).ready(function() {
                     layer.msg("修改成功！", { time: 1500 });
                 } else {
                     layer.msg(data.message, { time: 1500 });
+                }
+            }
+        });
+    }
+
+    //微信小程序数据提交
+    $("#wechat_mini_save").click(function() {
+        //判断微信公众号支付是否已经配置
+        $.ajax({
+            url:apiUrl + "pages/wechat/wechatIsOk",
+            type: 'POST',
+            headers: {
+                'Token': docCookies.getItem("token")
+            },
+            data: {userid:mall_user_id},
+            success: function(data) {
+                if (data.code == 200) {
+                    var data = new Object();
+                    data.weid = $("#uploadForm3").find("input[name=weid]").val();
+                    data.mini_app_id = $("#mini_app_id").val();
+                    data.mini_app_cert = $("#mini_app_cert").val();
+                    if (!data.mini_app_id) {
+                        layer.msg("小程序app_id为空！", { time: 5000 });
+                        return false;
+                    }
+                    if (!data.mini_app_cert) {
+                        layer.msg("小程序密钥app_cert为空！", { time: 5000 });
+                        return false;
+                    }
+                    layer.confirm('小程序配置必须和公众号支付为同一账户？', {
+                        btn: ['是','否']
+                    }, function(){
+                        addWechatMiniPost(new FormData($("#uploadForm3")[0]));
+                    }, function(){
+                        layer.msg("必须为同一账户！", { time: 5000 });
+                    });
+                } else {
+                    layer.msg("还未配置微信支付！", { time: 5000 });
+                }
+            }
+
+        });
+    });
+    //提交微信小程序配置数据
+    function addWechatMiniPost(data) {
+        $.ajax({
+            type: "POST",
+            async: false,
+            cache: false,
+            contentType: false,
+            processData: false,
+            url: apiUrl + "pages/wechatMini/update",
+            data: data, // 要提交表单的ID
+            success: function(data) {
+                if (data.code == 200) {
+                    layer.msg("修改成功！", { time: 1500 });
+                } else {
+                    layer.msg(data.message, { time: 1500 });
+                }
+            }
+        });
+    }
+    //微信小程序测试
+    $("#wechat_mini_test").click(function() {
+        //判断小程序是否配置完整
+        $.ajax({
+            url: apiUrl + "pages/wechatMini/wechatMiniIsOk",
+            type: 'POST',
+            headers: {
+                'Token': docCookies.getItem("token")
+            },
+            data: {userid: mall_user_id},
+            success: function(data) {
+                if (data.code == 200) {
+                    var obj = new Object();
+                    obj.weid = $("#uploadForm3").find("input[name=weid]").val();
+                    if (!obj.weid) {
+                        layer.msg("微信小程序配置信息不存在！", { time: 5000 });
+                        return false;
+                    }
+                    addWechatMiniTestPost();
+                }else{
+                    layer.msg("微信小程序配置信息不存在或未配完！", { time: 5000 });
+                }
+            }
+        });
+    });
+    //微信小程序测试支付数据提交
+    function addWechatMiniTestPost () {
+        $.ajax({
+            type: "POST",
+            url: apiUrl + "pages/wechatPay/wechatMiniPayTest",
+            data: { mall_user_id: mall_user_id }, // 要提交表单的ID
+            success: function(data) {
+                if (data.code == 200) {
+                    $('#myModal').find(".modal-title").text('小程序配置成功');
+                    $('#myModal').find(".modal-body").css("text-align", "center");
+                    $('#myModal').find(".modal-body").children().remove();
+                    $('#myModal').find(".modal-body").append("<img src='" + QRCODE + "?url=" + data.data.url + "' />");
+                    $('#myModal').modal('show');
+                } else {
+                    if (data.message) {
+                        layer.msg(data.message, { time: 1500 });
+                    } else {
+                        layer.msg("小程序配置有误请仔细检查", { time: 1500 });
+                    }
+                }
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                layer.msg("小程序配置有误请仔细检查", { time: 1500 });
+            },
+        });
+    }
+
+    //购买微信小程序
+    $("#wechat_mini_buy_save").click(function() {
+        //判断用户是否已经支付过
+        $.ajax({
+            type: "POST",
+            url: apiUrl + "pages/miniOrder/detailByUser",
+            data: { user_id: mall_user_id }, // 要提交表单的ID
+            success: function(data) {
+                if (data.code == 200) {
+                    //判断是否支付过
+                    //未支付过生成订单
+                    if($.isEmptyObject(data.data)){
+                        $.ajax({
+                            type: "POST",
+                            url: apiUrl + "pages/miniOrder/store",
+                            success: function(data) {
+                                if (data.code == 200){
+                                    //弹出支付框
+                                    PayWechatMiniPost(data.data);
+                                }
+                            }
+                        });
+                    }else{
+                        if(data.data.status==1){
+                            //弹出支付框
+                            PayWechatMiniPost(data.data.weid);
+                        }
+                    }
+                }
+            }
+        });
+    });
+
+    function PayWechatMiniPost(weid) {
+        $.ajax({
+            type: "POST",
+            url: apiUrl + "pages/wechatPay/WechatMiniOrderPcPay",
+            data: { order_id: weid }, // 要提交表单的ID
+            success: function(data) {
+                if (data.code == 200) {
+                    $('#myModal').find(".modal-title").text('小程序购买支付');
+                    $('#myModal').find(".modal-body").css("text-align", "center");
+                    $('#myModal').find(".modal-body").children().remove();
+                    $('#myModal').find(".modal-body").append("<img src='" + QRCODE + "?url=" + data.data.url + "' />");
+                    $('#myModal').modal('show');
+                    //循环监控状态
+                    var listenStatus=setInterval(function(){
+                        $.ajax({
+                            type: "POST",
+                            url: apiUrl + "pages/miniOrder/detailByUser",
+                            data: { user_id: mall_user_id },
+                            success: function(data) {
+                                var status = data.data.status;
+                                if(status==2){
+                                    clearInterval(listenStatus);
+                                    page_mini_wechat_detail();
+                                    $('#myModal').modal('hide');
+                                    //隐藏购买
+                                    $("#wechat_mini_buy_form").css("display","none");
+                                    $("#uploadForm3").css("display","block");
+                                }
+                            },
+                        });
+                    },1500)
+                } else {
+                    if (data.message) {
+                        layer.msg(data.message, { time: 1500 });
+                    } else {
+                        layer.msg("未知错误", { time: 1500 });
+                    }
                 }
             }
         });
@@ -993,7 +1255,7 @@ $(document).ready(function() {
                                 // console.log('res:', newCount)
                                 var newSign = $("#sign").val();
                                 $("#surplus").val(newCount);
-                                update(weid, newSign, newCount, false);
+                                //update(weid, newSign, newCount, false);
                                 //弹出支付成功窗口
                                 layer.msg("您已成功购买" + count + "条短信");
                                 // $("#operate-1").val('');

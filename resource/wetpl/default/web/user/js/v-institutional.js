@@ -175,12 +175,12 @@ $(document).ready(function(){
         if(data.code == 200) {
             var result = data.data;
             if(!result) {
-                $(".personal").attr({"disabled": false, "href": "personal"});
+                $(".personal").attr({"disabled": false, "href": "/user/settings/personal"});
                 return false;
             }
 
             if(result.type == 1) {
-                window.location.href = "personal"
+                window.location.href = "/user/settings/personal"
             } else if(result.type == 2) {
                 $(".personal").attr("disabled", true);
                 $(".personal").click(function() {
@@ -188,13 +188,13 @@ $(document).ready(function(){
                     return false;
                 });
 
-                if(result.is_done == 1) {
-                    $(".form-horizontal").hide();
-                    $(".whether-to-pass").show();
-                    $(".media-heading")  .text("机构认证中...").css("color", "#ffcc00");
-                    $(".warn-img")       .attr("src", "/common/img/carry.png");
-                } else if(result.is_done == 2) {
-                    if(result.is_authenticated == 2) {
+                if(result.is_authenticated == 2) {
+                    if(result.is_done == 1) {
+                        $(".form-horizontal").hide();
+                        $(".whether-to-pass").show();
+                        $(".media-heading")  .text("机构认证中...").css("color", "#ffcc00");
+                        $(".warn-img")       .attr("src", "/common/img/carry.png");
+                    } else if(result.is_done == 2) {
 
                         $(".submit2")           .show().siblings(".submit1").hide();
                         $("#org_name")          .val(result.org_name);
@@ -242,11 +242,11 @@ $(document).ready(function(){
                             $(".media-heading")  .text("机构认证已被拒绝，重新提交").css("color", "#ec2d2d");
                             $(".warn-img")       .attr("src", "/common/img/refuse.png");
                         }
-                    } else if (result.is_authenticated == 1) {
-                        $(".form-horizontal").hide();
-                        $(".media-heading")  .text("恭喜，您已经通过机构认证！").css("color", "#05a957");
-                        $(".warn-img")       .attr("src", "/common/img/pass.png");
                     }
+                } else if (result.is_authenticated == 1) {
+                    $(".form-horizontal").hide();
+                    $(".media-heading")  .text("恭喜，您已经通过机构认证！").css("color", "#05a957");
+                    $(".warn-img")       .attr("src", "/common/img/pass.png");
                 }
             }
         }
@@ -256,7 +256,8 @@ $(document).ready(function(){
     });
 
     // 手机号码验证信息
-    var regExp = "^((13[0-9])|(15[^4])|(18[0,2,3,5-9])|(17[0-8])|(147))\\d{8}$";
+    // var regExp = "^((13[0-9])|(15[^4])|(18[0,2,3,5-9])|(17[0-8])|(147))\\d{8}$";
+    var regExp = "^((13[0-9])|(15[0-9])|(18[0-9])|(17[0-8])|(14[5,7])|(166)|(19[8,9]))\\d{8}$";
     var objExp = new RegExp(regExp);
 
     // 提交机构认证填写信息

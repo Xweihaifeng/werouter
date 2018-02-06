@@ -103,12 +103,12 @@
                             <div class="btn-group save">
                                 <button class="button button-rounded button-highlight save_btn" style="margin-right: 24px;">保存</button>
                             </div>
-                            <p>短信内容中显示的名称，6个字符以内<span id="title"></span></p>
+                            <p>短信内容中显示的名称，6个字符以内，如<span id="title">【苏宁易购】</span></p>
                         </div>
                         <div class="input-group surplus ">
                             <span>短信余量:</span>
-                            <input type="text" id="surplus" readonly="readonly" class="form-control surplus-npt" placeholder="0" aria-describedby="basic-addon1" value="0">
-                            <p class="unit">条<span>?</span></p>
+                            <input type="text" id="surplus" readonly="readonly" class="form-control surplus-npt" placeholder="0" aria-describedby="basic-addon1" value="0" style="width: 150px;margin-right: 0;">
+                            <p class="unit" style="width:35px;margin-right:22px">条</p>
                             <div class="btn-group buy">
                                 <button class="button  button-rounded button-caution buy_btn">购买</button>
                             </div>
@@ -437,12 +437,49 @@
                 </div>
                 <!--weChat end -->
 
-
+                <!--weChatMini start -->
+                <div class="list">
+                    <div class="sign">
+                        <div class="sign_set">
+                            <p>微信小程序支付接口配置</p>
+                            <div class="toggle-button-wrapper switch">
+                                <input type="checkbox" id="we_toggle-button-app3" name="switch">
+                                <label for="we_toggle-button-app3" class="button-label">
+                                    <span class="circle"></span>
+                                    <span class="text on">ON</span>
+                                    <span class="text off">OFF</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="open" id="open3">展开</div>
+                    </div>
+                    <div class="open_content open_content3" style="display: none;padding-top: 8px;">
+                        <form id="uploadForm3" class="form-horizontal" method="post" enctype="multipart/form-data">
+                            <input type="hidden" name="weid" value="">
+                            <div class="input-group signset">
+                                <span style="width: 100px;">小程序ID: </span>
+                                <input type="text" class="form-control" id="mini_app_id" name="app_id" style="width: 500px;" placeholder="微信小程序appID">
+                                <p></p>
+                            </div>
+                            <div class="input-group surplus">
+                                <span style="width: 100px;">小程序密钥:</span>
+                                <input type="text" class="form-control" id="mini_app_cert" name="app_cert" style="width: 500px;" placeholder="微信小程序密钥appCert">
+                            </div>
+                            <div class="input-group surplus ">
+                                <button type="button" class="button button-rounded button-highlight" id="wechat_mini_save"> 确认保存</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                                <button type="button" class="button button-rounded button-highlight" id="wechat_mini_test"> 支付测试</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                                <button type="button" class="button button-rounded button-highlight"> <a href="#">下载小程序</a></button>
+                            </div>
+                        </form>
+                        <form id="wechat_mini_buy_form" class="form-horizontal" method="post" enctype="multipart/form-data">
+                            <div class="input-group surplus ">
+                                <button type="button" class="button button-rounded button-highlight" id="wechat_mini_buy_save"> 购买小程序</button>&nbsp;
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!--weChatMini end -->
             </div>
-
-
-
-
         </div>
     </div>
     <div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

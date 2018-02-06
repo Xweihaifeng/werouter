@@ -219,9 +219,35 @@ cert_realname_setting.done(function(data) {
         var result = data.data;
         if (!result) {
             console.log("在线认证未开通！");
-        } else if (result.status == 1) {
+            return false;
+        }
+
+        //  在线（status） : 1为开启，2为关闭
+        //  人工（auth_open） : 1为开启，2为关闭
+        if (result.status === 1 && result.auth_open === 1) {
             $(".on_line_cert").html('<a id="online">在线认证</a>');
             $("#online").bind("click", online_cert);
+        }
+
+        else if(result.status === 1 && result.auth_open === 2) {
+            $("#settings_realname").parent("a").attr("href", '/user/settings/verified');
+            if(window.location.pathname == '/user/settings/realname') {
+                window.location.pathname = '/user/settings/verified';
+            }
+        }
+
+        else if (result.status === 2 && result.auth_open === 1) {
+            $("#settings_realname").parent("a").attr("href", '/user/settings/realname');
+            if(window.location.pathname == '/user/settings/verified') {
+                window.location.pathname = '/user/settings/realname';
+            }
+        }
+
+        else if (result.status === 2 && result.auth_open === 2) {
+            $("#settings_realname").parent("a").remove();
+            if((window.location.pathname == '/user/settings/verified') || (window.location.pathname == '/user/settings/realname')) {
+                window.location.pathname = '/user';
+            }
         }
     }
 });
@@ -353,7 +379,7 @@ function avatar_admin() {
         id: 'layerDemo' + type //防止重复弹出
             ,
         content: `
-             <div class="cont-hd">
+              <div class="cont-hd" style="overflow: hidden;width: 100%;box-sizing: border-box;margin: 0">
                  <div class="cont-L" style=" width: 165px;height:141px;float: left;margin-top:50px;margin-left: 30px">
                      <img src="/resource/wetpl/default/web/user/img/domain_res.png" alt="">
                  </div>
@@ -368,9 +394,9 @@ function avatar_admin() {
                         <input type="text" class="form-control" name="verifycode" value="" style="width:200px;display: inline-block;float: right;outline: none;height:42px" placeholder="请输入验证码">
                         <label style=" display: inline-block;font-size:14px;color:#333333;float: right;line-height: 37px;margin-right: 10px">验证码</label>           
                     </div>
-                     <div class="btn" style="width: 100%;height: auto;">
-                        <div class="save" style="float: right;width: 60px; height: 36px;text-align: center;line-height: 36px; border-radius: 3px;color: #fff;cursor: pointer;margin-top: 10px;font-size: 14px;margin-right: 20px;background: #ffbf33;display: none;margin-right: 36px">保存</div>
-                    </div>
+               
+                        <div class="save" style="float: right;width: 60px; height: 36px;text-align: center;line-height: 36px; border-radius: 3px;color: #fff;cursor: pointer;margin-top: 10px;font-size: 14px;margin-right:47px;background: #ffbf33;display: none;">保存</div>
+                 
                 </div>
 
             </div>`

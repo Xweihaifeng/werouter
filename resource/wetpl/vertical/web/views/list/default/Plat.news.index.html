@@ -1,54 +1,304 @@
-<!--
- * Created by weifeng on 2017/11/12.
--->
+<#extend#>public/extend/index_extend.html</#extend#>
+<link rel="stylesheet" href="/common/magazine/css/iview.css">
+<script src="/common/magazine/js/iview.min.js"></script>
+<style>
+    /*[v-cloak] { display: none; }*/
+    * { margin: 0; padding: 0; }
+    html, body, p, output { margin: 0; padding: 0; background: none; }
+    ul, li { list-style: none; margin: 0; }
+    a { text-decoration: none; display: inline-block; }
+    .block { display: block!important; }
+    .news-main { position: relative; width: 1200px; min-height: 800px; margin: 30px auto; background-color: #fff; display: flex; justify-content: space-between; color: #666; }
+    .news-left { width: 850px; min-height: 600px; }
+    .news-right { width: 330px; min-height: 600px; }
 
-<!DOCTYPE html>
-<html>
+    .news-left .news-pre1 { position: relative; width: 100%; max-height: 300px; display: flex; justify-content: space-between; }
+    .news-left .news-pre1 > .news-hot { flex: 1; }
+    .news-left .news-pre1 > .news-hot:nth-child(1) { width: 540px; max-width: 540px; height: 300px; margin-right: 10px; }
+    .news-left .news-pre1 > .news-hot:nth-child(2) { position: absolute; right: 0; top: 0; width: 300px; max-width: 300px; height: 145px; }
+    .news-left .news-pre1 > .news-hot:nth-child(3) { position: absolute; right: 0; bottom: 0; width: 300px; max-width: 300px; height: 145px; }
+    .news-left .news-pre1 .news-hot > a, .news-left .news-pre1 .news-hot img { width: 100%; height: 100%; }
 
-    <head>
-        <title></title>
-        <meta charset="utf-8" />
-        <link rel="icon" href="" id="public_icon" />
+    .news-left .news-pre2 { width: 100%; height: 44px; margin: 14px 0; }
+    .news-left .news-pre2 > .news-col-nav { width: 100%; height: 100%; display: flex; justify-content: flex-start; align-items: center; margin: 0; border-bottom: 1px solid #e6e6e6; }
+    .news-left .news-pre2 > .news-col-nav > figcaption { flex: 1; max-width: 106px; height: 44px; display: inline-flex; align-items: center; flex-direction: column; margin-right: 3px; cursor: pointer; }
+    .news-left .news-pre2 > .news-col-nav > figcaption:last-child { margin-right: 0; }
+    .news-left .news-pre2 > .news-col-nav > figcaption:hover > ul { display: block; }
+    .news-left .news-pre2 > .news-col-nav > figcaption > span { position: relative; width: 100%; text-align: center; line-height: 44px; font-weight: bold; }
+    /*.news-left .news-pre2 > .news-col-nav > figcaption > span:hover, .news-left .news-pre2 > .news-col-nav > figcaption > ul > li:hover { box-shadow: inset 0 0 100px 0 #eee; }*/
+    .news-left .news-pre2 > .news-col-nav > figcaption > ul { position: relative; top: -1px; width: 100%; text-align: center; background-color: #fff; z-index: 99; display: none; }
+    .news-left .news-pre2 > .news-col-nav > figcaption > ul > li { width: 100%; line-height: 35px; font-size: 14px; border: 1px solid #e6e6e6; border-top: none; cursor: pointer; }
+    .news-left .news-pre2 > .news-col-nav .news-nav-active > span { color: #4caaed; }
+    .news-left .news-pre2 > .news-col-nav .news-nav-active > span::before { position: absolute; content: ""; transform: translateY(-50%); top: 50%; margin-left: -12px; width: 5px; height: 5px; border-radius: 50%; background-color: #4caaed; }
 
-        <script src="/common/js/jquery-3.2.1.min.js"></script> 
-        <script src="/common/layer-v3.0.3/layer-v3.0.3/layer/layer.js"></script>
-        <script src="{{PATH_CONFIG}}"></script>
-        <script src="{{PATH_TML}}js/modal_login.js"></script>
-        <script src="{{PATH_TML}}assets/list/default/js/news_center.js"></script>
-        <script src="{{PATH_TML}}assets/list/default/js/back_top.js"></script>
+    .news-left .news-con-list { width: 100%; display: flex; justify-content: space-between; margin: 0; padding: 20px 0; border-bottom: 1px solid #e6e6e6; font-size: 14px; }
+    .news-left .news-con-list .news-con-list-img { width: 236px; min-width: 236px; height: 135px; margin-right: 20px; }
+    .news-left .news-con-list .news-con-list-img > a, .news-left .news-con-list .news-con-list-img > a > img { width: 100%; height: 100%; }
+    .news-left .news-con-list h2 { height: 18px; font-size: 18px;  margin: 10px 0 0; }
+    .news-left .news-con-list .news-title { margin-top: 0!important; }
+    .news-left .news-con-list h2 a { height: 18px; color: #333; }
+    .news-left .news-con-list hgroup { color: #999; flex: 1; }
+    .news-left .news-con-list hgroup > p { line-height: 24px; }
+    .news-left .news-con-list .news-con-list-time { height: 20px; display: flex; justify-content: flex-start; align-items: center; margin: 19px 0; }
+    .news-left .news-con-list .news-con-list-time output { position: relative; min-width: 20px; height: 20px; line-height: 24px; margin-right: 28px; text-indent: 24px; color: #999; }
+    .news-left .news-con-list .news-con-list-time output.publisher::before { position: absolute; width: 20px; height: 20px; left: -2px; content: ""; background: url(/common/img/news-auth.png) no-repeat center; background-size: 16px; }
+    .news-left .news-con-list .news-con-list-time output.views::before { position: absolute; width: 22px; height: 20px; left: -2px; content: ""; background: url(/common/img/news-read.png) no-repeat center; }
+    .news-left .news-con-list .news-con-list-time output.publish_time::before { position: absolute; width: 20px; height: 20px; left: -2px; content: ""; background: url(/common/img/news-time.png) no-repeat center; background-size: 16px; }
 
-        <link rel="stylesheet" type="text/css" href="{{PATH_TML}}font/iconfont.css" />
-        <link rel="stylesheet" type="text/css" href="{{PATH_TML}}css/news_base.css" />
-        <link rel="stylesheet" type="text/css" href="{{PATH_TML}}assets/list/default/css/news_center.css" />
-        <link rel="stylesheet" type="text/css" href="{{PATH_TML}}css/modal_login.css" />
-    </head>
+    .news-left .news-pre4 { padding: 60px 0; margin: 0 auto; display: flex; justify-content: center; align-items: center; flex-direction: column; }
+    .news-left .news-pre4 pre { background-color: transparent; border: none; }
+    .news-left .news-pre4 .ivu-page { display: none; }
+    .news-left .news-pre4 .ivu-page > li { width: 35px; height: 35px; line-height: 35px; text-align: center; border-radius: 0; }
+    .news-left .news-pre4 .ivu-page-item-active { background-color: #46b2ee; border: 1px solid #46b2ee; color: #fff; }
 
-    <body>
-        <!-- 登录部分 -->
-        <div class="modal_login" id="modal_login"></div>
-        <!-- 导航部分开始 -->
-        <ul class="news_menu" id="public_main_news_menu"></ul>
-        <!-- 导航部分结束 -->
-        <!-- 新问中心开始 -->
-        <div class="details-content">
-            <div class="new-top-images">
-                <p class="center_center">新闻中心</p>
-            </div>
-            <div class="news-center-top">
-                <div class="hotspot">热点新闻</div>
-            </div>
-            <ul class="news-center-main-title">
-                <a class="chan_li" id="newN"> 最新发布 </a>
-            </ul>
-            <ul class="news-center-main"></ul>
-            <div align="center" id="news_loadingsImg" class="news-loadingsImg"> 查看更多 </div>
-            <div align="center" id="news_loadingsImg1" class="news-loadingsImg1"> 查看更多 </div>
-            <div id="plat-two-back-top"><img src="{{PATH_TML}}images/gotop.png"></div>
-        </div>
-        <!-- 新闻中心结束 -->
-        <!-- 右侧大背景图 -->
-        <div id="public_main_right_bg" style="position:fixed;top:0;bottom:0;left:1190px;width:100%;z-index:-10;"></div>
-        <script src="{{PATH_TML}}js/public_main_right_bg.js"></script>
-    </body>
+    .news-right .news-aside1 { width: 330px; min-height: 166px; background-color: #fafafa; margin-bottom: 20px; padding: 20px 0 0 0; font-size: 16px; }
+    .news-right figure { padding: 0 20px 0 24px; border-bottom: 1px solid #f3f3f3; }
+    .news-right figure:last-child { border: none; }
+    .news-right figure.news-aside1-title { height:20px; line-height: 20px; padding-left: 20px; vertical-align: middle; color: #333; border-bottom: none; border-left: 4px solid #f00; font-size: 20px; }
+    .news-right figure.news-aside1-list { padding: 20px 20px 20px 24px; font-size: 16px; }
+    .news-right figure.news-aside1-list .news-aside1-list-con h2 { line-height: 25px; margin-bottom: 12px; font-size: 16px; color: #666; }
+    .news-right figure.news-aside1-list .news-aside1-list-con p { color: #999; }
 
-</html>
+    .news-right .news-aside2 { width: 330px; min-height: 272px; background-color: #fafafa; padding: 20px 0 0 0; font-size: 16px; }
+    .news-right figure { padding: 0 20px 0 24px; border-bottom: 1px solid #f3f3f3; }
+    .news-right figure:last-child { border: none; }
+    .news-right figure.news-aside2-title { height:20px; line-height: 20px; padding-left: 20px; vertical-align: middle; color: #333; border-bottom: none; border-left: 4px solid #f00; font-size: 20px; }
+    .news-right figure.news-aside2-list { padding: 20px 20px 20px 24px; font-size: 16px; }
+    .news-right figure.news-aside2-list .news-aside2-list-con p img { width: 280px; height: 155px; }
+    .news-right figure.news-aside2-list .news-aside2-list-con h2 { line-height: 25px; margin-top: 12px; font-size: 16px; color: #666; }
+    .news-left .news-con-list:hover h2 a, .news-right figure.news-aside2-list:hover .news-aside2-list-con h2, .news-right figure.news-aside1-list:hover .news-aside1-list-con h2 { color: #2d8cf0; }
+</style>
+
+<!-- 新问中心开始 -->
+<div id="container">
+    <article class="news-main">
+        <article class="news-left">
+            <article class="news-pre1">
+                <aside class="news-hot" v-for="(e, i) in sub_rcon" v-if="e.thumb_image">
+                    <a :href="'/'+ channel_domain +'/'+ e.weid" target="_black">
+                        <img :src="set_img(e.thumb_image, '/common/img/news_default.jpg', 540, 300)" v-if="i == 0" :alt="e.title" :title="e.title" />
+                        <img :src="set_img(e.thumb_image, '/common/img/news_default.jpg', 300, 145)" v-else :alt="e.title" :title="e.title" />
+                    </a>
+                </aside>
+            </article>
+            <article class="news-pre2">
+                <figure class="news-col-nav" v-if="column.length > 0">
+                    <figcaption :class="{'news-nav-active' : item.domain == window.location.pathname.split('/').slice(1,4)[1] | (window.location.pathname.split('/').slice(1,4)[1] == undefined & index == 0)}" v-for="(item, index) in column" v-if="index < 8">
+                        <span :id="item.domain" @click="column_list(item.domain , item.title)">{{ item.title }}</span>
+                        <ul>
+                            <li :class="{'news-nav-active' : item.domain == window.location.pathname.split('/').slice(1,4)[1]}" v-for="(value, key) in item.children" @click="column_list(value.domain , item.title)">{{ value.title }}</li>
+                        </ul>
+                    </figcaption>
+                </figure>
+            </article>
+            <article class="news-pre3" v-if="con_list.length > 0">
+                <figure class="news-con-list" v-for="(item, index) in con_list">
+                    <figcaption class="news-con-list-img"><!--  v-if="item.thumb_image" -->
+                        <a :href="'/'+ channel_domain +'/' + item.weid" target="_black">
+                            <img :src="set_img(item.thumb_image, '/common/img/news_default.jpg', 236, 135)" :alt="item.title" :title="item.title" />
+                        </a>
+                    </figcaption>
+                    <hgroup>
+                        <h2><!--  :class="{'news-title' : item.thumb_image == ''}" -->
+                            <a :href="'/'+ channel_domain +'/' + item.weid" target="_black">{{ item.title | limitLen(0,33) }}</a>
+                        </h2>
+                        <aside class="news-con-list-time">
+                            <output class="publisher" v-if="item.publisher">{{ item.publisher }}</output>
+                            <output class="views">{{ item.views }}</output>
+                            <output class="publish_time">{{ item.publish_time }}</output>
+                        </aside>
+                        <p v-html="item.summary.substr(0, 82)"><!-- {{ item.summary | limitLen(0,82) }} --></p>
+                    </hgroup>
+                </figure>
+            </article>
+            <article class="news-pre4" v-else>
+                <img src="/common/img/no_con_default.png" />
+            </article>
+            
+            <article class="news-pre4" v-if="con_list.length > 0">
+                <img src="/common/img/no_con_default.png" v-if="con_list.length == 0">
+                <Page :total="parseInt(total)" :current="page" :page-size="limit" @on-change="change" :class="{'block': con_list.length != 0}" v-if="con_list.length != 0"></Page>
+            </article>
+        </article>
+        <article class="news-right">
+            <article class="news-aside1" v-if="aside1_list.length > 0">
+                <figure class="news-aside1-title">推荐新闻</figure>
+                <figure class="news-aside1-list" v-for="(item, index) in aside1_list">
+                    <a :href="'/'+ channel_domain +'/'+ item.weid" target="_black">
+                        <hgroup class="news-aside1-list-con">
+                            <h2>{{ item.title | limitLen(0,33) }}</h2>
+                            <p>{{ item.publish_time }}</p>
+                        </hgroup>
+                    </a>
+                </figure>
+            </article>
+            <article class="news-aside2" v-if="aside2_list.length > 0">
+                <figure class="news-aside2-title">精选内容</figure>
+                <figure class="news-aside2-list" v-for="(item, index) in aside2_list">
+                    <a :href="'/'+ channel_domain +'/'+ item.weid" target="_black">
+                        <hgroup class="news-aside2-list-con">
+                            <p><img :src="set_img(item.thumb_image, '/common/img/news_default.jpg', 280, 155)" :alt="item.title" :title="item.title"></p>
+                            <h2>{{ item.title | limitLen(0,33) }}</h2>
+                        </hgroup>
+                    </a>
+                </figure>
+            </article>
+        </article>
+    </article>
+</div>
+<!-- 新闻中心结束 -->
+
+<script>
+
+    var app = new Vue({
+        el: '#container',
+        data: {
+            title : '',
+            avatar: '',
+            domain: plats_user_info.domian == undefined ? 'index' : plats_user_info.domian,
+            logo: '',
+            header1: '',
+            header2: [], //头图
+            channel: [], //频道
+            key: '', //搜索关键字
+            qrcode: [
+                {ok: false, title: "手机版", image: "/api/file/qrcode?margin=2&url="+window.location.href},
+                {ok: false, title: "微信", image: plats_info.wx_qrcode? plats_info.wx_qrcode: window.location.origin+"/api/file/qrcode?margin=2&url="+window.location.href},
+                {ok: false, title: "微博", image: plats_info.wb_qrcode? plats_info.wb_qrcode: window.location.origin+"/api/file/qrcode?margin=2&url="+window.location.href},
+            ],
+            channel_domain : $app.get_router(1), // 频道个性域名
+            sub_rcon: {},                        // 热点新闻
+            aside1_list: {},                     // 推荐新闻
+            aside2_list: {},                     // 特荐新闻
+            column: {},                          // 新闻栏目
+            con_list: {},                        // 内容列表
+            first_domain: '',                    // 第一个栏目 \ 栏目域名
+            page: 1,                             // 默认页码
+            total: 0,                            // 默认页码总数
+            limit: 10,                           // 显示条数
+        },
+        created() {
+            var self = this;
+
+            // 共用头部分
+            axios.get(CMS_ADVS).then(data => {
+                var resp = data.data.data;
+                this.channel = resp.channel.list.map(e => (e.drop = false, e));
+                this.logo = this.set_img(resp.setting.s_logo, "/common/img/logo-so.png", 209, 50);
+                this.header1 = this.set_img(resp.header1.image, "/common/img/logo-title-info.png", 382, 45);
+                this.header2 = resp.header2;
+            });
+
+            $("#favicon").attr('href', ApiMaterPlatQiniuDomain + plats_info.favicon);
+
+            // 新闻热门部分
+            $sub_ajax.cms_content({channel_id: this.channel_domain, limit: 3, is_hot: 1}, (res) => {
+                this.sub_rcon = res.data.list;
+            });
+
+            // 新闻推荐部分
+            $sub_ajax.cms_content({channel_id: this.channel_domain, limit: 3, index_show: 1}, (res) => {
+                this.aside1_list = res.data.list;
+            });
+
+            // 新闻特荐部分
+            $sub_ajax.cms_content({channel_id: this.channel_domain, limit: 3, is_pose: 1}, (res) => {
+                this.aside2_list = res.data.list;
+            });
+
+            // 新闻列表显示
+            ajax.get(CMS_CHANNELS_DOMAIN_QUERY + this.channel_domain).then((res) => {
+
+                if(res.code == 200) {
+                    this.title = res.data.title;
+
+                    ajax.get("cms/cate_tree_by_channel?channel=" + res.data.weid).then((data) => {
+                        this.column = data.data;
+
+                        if($app.empty(this.column.length) == false) return false;
+                        this.column.forEach((body, index) =>{
+                            if(index == 0) {
+      
+                                $app.set_title(this.title + '-' + body.title + '-' + plats_info.title);
+                                this.first_domain = body.domain;
+                                this.cate(this.first_domain);
+                            }
+                        })
+                    })
+                }
+            })
+        },
+        mounted() {
+            this.$nextTick(() => {
+                window.onpopstate = () => {
+                    var pathname = window.location.pathname.split('/').slice(1,4);
+                    var column_domain = pathname[1];
+                    this.first_domain = first_domain;
+                    this.cate();
+                }
+            })
+        },
+        methods: {
+            cate: function(first_domain) {
+                var pathname = window.location.pathname.split('/').slice(1,4);
+                var column_domain = pathname[1];
+
+                if(first_domain) {
+                    this.first_domain = first_domain;
+                }
+
+                if(column_domain) {
+                    this.first_domain = column_domain;
+                }
+
+                $sub_ajax.cms_content({cate_id: this.first_domain, limit: this.limit, page: this.page}, (res) => {
+                    this.con_list = res.data.list;
+                    this.total = res.data.total;
+                });
+            },
+            change: function(page) {
+                this.page = page;
+                this.cate();
+            },
+            column_list: function(domain , title) {
+                
+                this.first_domain = domain;
+                this.page = 1;
+                window.history.pushState('json', '', '/'+ this.channel_domain +'/'+ this.first_domain);
+                $app.set_title(this.title + '-' + title + '-' + plats_info.title);
+                this.cate();
+            },
+            login: () => {
+                if(!docCookies.getItem("token")) {
+                    $("#modal_login").fadeIn(300);
+                } else {
+                    window.location.href = '/user';
+                }
+            },
+            set_img: (url, init, w, h, mode) => {
+                if (url != '' && url != null && url != undefined) {
+                    if (url.indexOf('http') === -1 && url.indexOf('common') === -1) {
+                        return mode != undefined ? ApiMaterPlatQiniuDomain + url + '?imageView2/' + mode + '/w/' + w + '/h/' + h
+                                                 : ApiMaterPlatQiniuDomain + url + '?imageView2/3/w/' + w + '/h/' + h;
+                    } else {
+                        return url;
+                    }
+                } else {
+                    return init;
+                }
+            },
+            search: (key) => window.location.href = window.location.protocol + '//' + window.location.host + '/so?q=' + key,
+            simple_null: (data) => data != null && data != '' && data != undefined ? false : true,
+            check: (domain, url) => url != null && url != '' ? url : '/' + domain,
+        },
+        filters: {
+            fixed_len: (value, len) => value.length > len ? value.substr(0, len) : value,
+            cut: (value, len) => value.length > len ? value.substr(0, len) + '...' : value,
+            show_date: (value) => value.getFullYear() + '-' + (value.getMonth() + 1) + '-' + value.getDate(),
+            format_date: (value) => {
+                var res = value.split('-').reduce((res, e, i) => res += e.length === 1? '0' + e + '-' : e + '-', '');
+                return res.substr(0, res.length - 1);
+            }
+        }
+    })
+</script>

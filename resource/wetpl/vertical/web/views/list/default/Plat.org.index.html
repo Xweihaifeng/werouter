@@ -1,66 +1,436 @@
 <!--
  * Created by weifeng on 2017/11/12.
 -->
+<#extend#>public/extend/index_extend.html</#extend#>
 
-<!DOCTYPE html>
-<html>
+    <link rel="stylesheet" href="/common/magazine/css/iview.css">
+    <script src="/common/magazine/js/iview.min.js"></script>
+    <link rel="stylesheet" href="/resource/wetpl/substation/default/web/css/list.css">
+    <link rel="stylesheet" href="/resource/wetpl/substation/default/web/css/newsert.css">
+    <script src="/resource/wetpl/substation/default/web/js/banner.js"></script>
 
-    <head>
-        <title></title>
-        <meta charset="utf-8" />
-        <link rel="icon" href="" id="public_icon" />
+    <style>
+        * { margin: 0; padding: 0; }
+        html, body, p { margin: 0; padding: 0; }
+        ul, li { list-style: none; }
+        .news-main { position: relative; width: 1200px; height: 800px; background-color: #e2e2e2; display: flex; justify-content: space-between; }
+        .news-left { width: 850px; height: 600px; box-shadow: inset 0 0 0 1px #f00; }
+        .news-right { width: 330px; height: 600px; box-shadow: inset 0 0 0 1px #f00; }
+       #container{
+           background: #fff;
+           padding-bottom: 30px;
+       }
+        .seat{
+            width: 1200px;
+            margin-top: 15px;
+        }
+        .news-main{
+            height: auto;
+            overflow: hidden;
+            background: #fff;
+            display: block;
+        }
+        .yuan{
+            margin-bottom: 0;
+        }
+        .wz{
+            color: #666666;
+            font-size: 14px;
+            font-family: "微软雅黑";
+            line-height: 19px;
+            padding-left: 3px;
+        }
+        /*二级分类样式开始*/
+        .er-nav{
+            width:auto;
+            height: 50px;
+            float: right;
+            display: flex;
+            justify-content: right;
+            padding: 0 10px;
+        }
+        .er-nav>a{
+            font-size: 14px;
+            color: #666666;
+            display: block;
+            width: auto;
+            height: 100%;
+            margin-right: 10px;
+            line-height: 40px;
+            padding: 0 15px;
+        }
+        .er-nav>.er_cur{
+            background: #0a8ddf;
+            color: #fff!important;
+        }
+        .new-list{
+            width: 100%;
+            height: auto;
+            overflow: hidden;
+        }
 
-        <link rel="stylesheet" type="text/css" href="{{PATH_TML}}font/iconfont.css" />
-        <link rel="stylesheet" type="text/css" href="{{PATH_TML}}css/news_base.css" />
-        <link rel="stylesheet" type="text/css" href="{{PATH_TML}}assets/list/organize/css/organize.css" />
-        <link rel="stylesheet" type="text/css" href="{{PATH_TML}}css/modal_login.css" />
-        <link rel="stylesheet" type="text/css" href="{{PATH_TML}}css/paging.css" />
+        /*单页模板*/
+         .org_content{
+             width: 100%;
+             height: auto;
+         }
+         .org_content>h3{
+             font-size: 16px;
+             font-weight: bold;
+             color: #000000;
+             font-family: '微软雅黑';
+             text-align: center;
+             padding: 1.5rem 0;
+         }
+        .org_content>div{
+            font-size: 14px;
+            color: #333!important;
+            line-height: 24px;
+            text-align: justify;
+        }
+        .org_content>div p{
+            width: 100%;
+            height: auto;
+        }
+        .org_content>div img{
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .new2-left>h2{
+            margin-top: 0;
+        }
+        /*二级分类样式结束*/
 
-        <script src="/common/js/jquery-3.2.1.min.js"></script> 
-        <script src="/common/layer-v3.0.3/layer-v3.0.3/layer/layer.js"></script>
-        <script src="{{PATH_CONFIG}}"></script>
-        <script src="{{PATH_TML}}js/modal_login.js"></script>
-        <script src="{{PATH_TML}}assets/list/organize/js/organize.js"></script>
-        <script src="{{PATH_TML}}js/paging.js"></script>
-    </head>
+        /*分页*/
+        .ivu-page{
+            margin-top: 60px;
+            margin-bottom: 66px;
+        }
+        .ivu-page-item-active{
+            background-color: #2D8CF0;
+        }
+    </style>
 
-    <body>
-        <!-- 登录部分 -->
-        <div class="modal_login" id="modal_login"></div>
-        <!-- 导航部分开始 -->
-        <ul class="news_menu" id="public_main_news_menu"></ul>
-        <!-- 导航部分结束 -->
-        <!-- 组织部分开始 -->
-        <div class="organize-content">
-            <div class="weizhuye-gerenfencai">
-                <div class="top-nav">
-                    <div id="thumb_image"></div>
-                    <ul class="center-disperse" id="menuX">
-                        <a class="chan_li" id="oooo"> 商会首页 </a>
-                    </ul>
-                </div>
+    <!-- 新问中心开始 -->
+    <div id="container">
+        <!--位置显示开始-->
+        <div class="seat">
+            <img src="/resource/wetpl/substation/default/web/image/fanhui.png" alt="">
+            当前位置在：
+            <a href="">首页</a>
+            > {{first_domain}} > {{cate_info.title}}
+            <div class="er-nav" id="menuTwo">
+                <a class="chan_li" :class="{er_cur : item.domain == third_domain}"  v-for="(item, index) in col_child" :id="item.domain"  :name="item.weid" :type="item.type" @click="column_list(item)">{{ item.title }}</a>
             </div>
-            <div class="weizhuye-gerenfencai" id="firstStage">
-                <div class="fengcai fengcai-main">
-                    <div class="main-top center-disperse">
-                        <div class="article_list clearfix">
-                            <!-- <input type="button" id="prev_btn"> -->
-                            <div id="menuTwo"></div>
-                            <!-- <input type="button" id="next_btn"> -->
-                        </div>
-                        <div class="y">当前位置：首页&gt; 组织 &gt; <a id="menuY"> 最新发布 </a></div>
-                    </div>
-                    <ul class="list-article-ul"></ul>
-                    <div class="paging"><div class="box" id="box"></div></div>
-                </div>
-            </div>
-            <div class="prompt-info"></div>
-            <div id="plat-two-back-top"><img src="{{PATH_TML}}images/gotop.png"></div>
         </div>
-        <!-- 组织部分结束 -->
-        <!-- 右侧大背景图 -->
-        <div id="public_main_right_bg" style="position:fixed;top:0;bottom:0;left:1190px;width:100%;"></div>
-        <script src="{{PATH_TML}}js/public_main_right_bg.js"></script>
-    </body>
+        <!--位置显示结束-->
 
-</html>
+        <article class="news-main">
+            <!--左侧内容开始-->
+            <article class="main">
+                <h2 style="margin-top: 0px">
+                    <strong>{{first_domain}}</strong>
+                    <span>Chamber of Commerce</span>
+                </h2>
+                <ul class="aside" id="menuX">
+      
+                    <li :id="item.weid" :class="{cenav_cur : item.domain==second_domain}" v-for="item in sub_aside" ><a :id="item.domain" :type="item.type" @click="column_list(item)">{{item.title}}</a></li>
+                </ul>
+            </article>
+            <!--左侧内容结束-->
+            <!--右侧内容开始-->
+            <article class="list-big">
+                <div class="title">
+                    <span>{{cate_info.title}}</span>
+                </div>
+                <div class="newsert">
+                    <div class="new-list" v-if="con_cont.type == 1 || cate_info.type==0 || cate_domain == '' && yuming_domain == '' ">
+                        <div class="new1" v-if="cate_domain == '' && yuming_domain == ''">
+                            <div class="s1-lbleft">
+                                <ul class="banner">
+                                    <li v-for="(item, index) in hot_cont">
+                                        <a :href="'/org/'+item.weid">
+                                            <img :src="item.thumb_image | img_src"  alt="">
+                                        </a>
+                                        <a :href="'/org/'+item.weid" class="banner-jie" title="item.title">{{item.title | limitLen(0,18)}}</a>
+                                    </li>
+                                </ul>
+                                <div class="btn">
+                                    <div class="Ibtn-bL"></div>
+                                    <div class="Ibtn-bR"></div>
+                                </div>
+                                <ul class="yuan">
+                                    <li class="yson" v-for="(item, index) in hot_cont"></li>
+                                </ul>
+                            </div>
+                            <div class="s1-lbright">
+                                <ul class="s1-lbr">
+                                    <li v-for="(item, index) in recom_cont">
+                                        <a :href="'/org/' + item.weid">{{item.title}}</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <ul class="new2">
+                            <li v-for="item in new2_cont">
+                                <a :href="'/org/' + item.weid" target="_blank" v-if="item.thumb_image != '' ">
+                                    <img :src="item.thumb_image" alt="">
+                                </a>
+                                <div class="new2-left" v-if="item.thumb_image != '' " style="width:660px">
+                                    <h2>
+                                        <a :href="'/org/' + item.weid" target="_blank">{{item.title}}</a>
+                                    </h2>
+                                    <p>
+                                        <a :href="'/org/' + item.weid" target="_blank">{{item.summary}}</a>
+                                    </p>
+                                    <div class="all">
+                                        <span>时间：{{item.publish_time}}</span>
+                                        <a :href="'/org/' + item.weid" target="_blank">查看更多 +</a>
+                                    </div>
+                                </div>
+                                <div class="new2-left" v-if="item.thumb_image == '' " style="width: 100%">
+                                    <h2>
+                                        <a :href="'/org/' + item.weid" target="_blank">{{item.title}}</a>
+                                    </h2>
+                                    <p>
+                                        <a :href="'/org/' + item.weid" target="_blank">{{item.summary}}</a>
+                                    </p>
+                                    <div class="all">
+                                        <span>时间：{{item.publish_time}}</span>
+                                        <a :href="'/org/' + item.weid" target="_blank">查看更多 +</a>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class='org_content' v-if="cate_info.type == 1 || con_cont.type == 1">
+                        <div v-html="con_cont.content"></div>
+                    </div>
+                </div>
+            </article>
+            <!--右侧内容结束-->
+
+        </article>
+        <!--分页-->
+        <Page :total="total" :current="page" :page-size="limit" @on-change="change" v-if="total > limit"></Page>
+    </div>
+    <!-- 新闻中心结束 -->
+
+<script>
+    new Vue({
+        el: '#container',
+        data: {
+            total:'',
+            page: 1,
+            limit: 5,
+            total_page:0,
+            channel_domain : $app.get_router(1),    //频道域名
+            cate_domain : $app.get_router(2), // 分类个性域名
+            sub_aside:[],
+            cate_info:{},
+            col_child : [],
+            new2_cont:{},        //下方新闻列表
+            hot_cont:{},          //幻灯片热门
+            recom_cont:{},        //幻灯片推荐
+            yuming_domain:'',
+            domain_weid:"",
+            parent_domain:"",
+            con_cont:"" ,          //单页显示内容
+            title:"",
+            second_domain:"",       //二级选中
+            third_domain:"" ,        //三级选中
+            first_domain:''         //一级名称
+        },
+        mounted: function() {
+            var self = this;
+            this.$nextTick(()=>{
+               // 左侧频道
+                this.channel_domain_query();
+                // 右侧推荐中心
+
+               // 右侧下方新闻中心
+                if(this.cate_domain == '' && this.yuming_domain == ''){
+                    this.channel_list();
+                }else{
+                    ajax.get(CMS_CHANNELS_DOMAIN_QUERY + this.channel_domain).then((res)=>{
+                        if(res.code == 200) {
+                            this.domain_weid = res.data.weid;
+                            ajax.get("cms/cate_tree_by_channel?channel=" + this.domain_weid).then((res) => {
+                                if (res.code == 200) {
+                                    var flag=true;
+                                    res.data.forEach(function (item, index) {
+                                        if (item.domain == self.cate_domain) {
+                                            self.cate(item);
+                                        }else{
+                                           flag1=false
+                                        }
+                                    });
+                                    if(flag1==false && self.cate_domain != ''){
+                                        ajax.get("cms/categories/domain_query/"+self.cate_domain).then((res)=>{
+                                            if(res.code == 200) {
+                                                self.cate_info=res.data;
+                                                if(self.cate_info.type==0){
+                                                    self.column(self.cate_domain);
+                                                }
+
+                                            }
+                                        })
+
+                                    }
+                                }
+                            })
+                        }
+                    })
+                }
+            });
+        },
+        created: function(){
+
+        },
+        methods: {
+            channel_list() {
+                // 热门
+                ajax.get(CMS_CONTENTS + "org&limit=5&is_hot=1").then((res)=>{
+                    if(res.code == 200){
+                        this.hot_cont=res.data.list;
+                    }
+                })
+                // 推荐
+                ajax.get(CMS_CONTENTS  + "org&limit=8&index_show=1").then((res)=>{
+                    if(res.code == 200){
+                        this.recom_cont=res.data.list;
+                    }
+                })
+                ajax.get("cms/contents?channel_id=org&limit="+this.limit+"&page="+this.page).then((res)=>{
+                    if(res.code == 200) {
+                        this.new2_cont=res.data.list;
+                        
+                        this.total=res.data.total;
+                        this.total_page = Math.ceil(this.total / this.limit);
+                    }
+                })
+            },
+            // 左侧导航查询方法
+            channel_domain_query() {
+                ajax.get(CMS_CHANNELS_DOMAIN_QUERY + this.channel_domain).then((res)=>{
+                    if(res.code == 200) {
+                        this.cate_info = res.data;
+                        this.title=res.data.title;
+                        this.domain_weid = res.data.weid;
+                        this.first_domain=res.data.search_name;
+                        ajax.get("cms/cate_tree_by_channel?channel=" + this.domain_weid).then((res)=>{
+                            if(res.code == 200) {
+                                var result = res.data;
+                                this.sub_aside = result;
+                                var flag=true;
+                                for(var item of this.sub_aside) {
+                                    if(item.domain == this.cate_domain) {
+                                        this.second_domain = item.domain;
+                                        flag=true;
+                                        break;
+                                    }else{
+                                        flag=false;
+                                    }
+                                }
+                                if(flag==false && this.cate_domain != '' ){
+                                    this.third_domain = this.cate_domain
+                                    this.cut_column(this.cate_domain);
+                                }
+                                $app.set_title(this.cate_info.title + '-' + plats_info.title);
+                            }
+                        })
+
+
+                    }
+                })
+            },
+            column(domain) {
+                ajax.get("cms/contents?cate_id="+domain+"&limit="+this.limit+"&page="+this.page).then((res)=>{
+                    if(res.code == 200) {
+                        this.new2_cont=res.data.list;
+                        this.total=res.data.total;
+                        this.total_page = Math.ceil(this.total / this.limit);
+                    }
+                })
+            },
+            cut_column(domain) {
+                ajax.get("cms/categories/domain_query/"+domain).then((res)=>{
+                    if(res.code == 200) {
+                        this.cate_info=res.data;
+                        this.con_cont=res.data;
+                        // 查找父集
+                        var parend_id=res.data.parent_id;
+                        var that=this;
+                            $.ajax({
+                                url:apiUrl + "cms/cate_categories?cate=" + parend_id,
+                                dataType: 'json',
+                                async:  false,
+                                success: function(res){
+                                    if(res.code === 200) {
+                                        that.col_child = res.data;
+                                    }
+                                }
+                            });
+                        this.second_domain=$("#" + parend_id).children("a").attr("id");
+                    }
+                })
+            },
+            cate(body){
+                var self = this;
+                self.page = 1;
+                self.cate_info = body;
+                self.con_cont = '';
+                self.new2_cont = {};
+                if(body.level == 1){
+                    self.second_domain=body.domain;
+                    if(body.children.length != 0){
+                        self.col_child = body.children;
+                        self.third_domain = body.children[0].domain;
+                            if(body.children[0].type == 0){
+                                self.column(body.children[0].domain);
+                            }else{
+                                self.con_cont = body.children[0];
+                            }
+                    }else{
+                        self.col_child=[];
+                        if(body.type == 0){
+                            self.column(body.domain);
+                        } else {
+                            self.con_cont = body;
+                        }
+                    }
+                }else{
+                    self.third_domain = body.domain;
+                    self.cut_column(body.domain)
+                    if(body.type==0){
+                        self.column(body.domain);
+                    }
+
+
+                }
+                $app.set_title( this.title + '-' + this.cate_info.title + '-' + plats_info.title);
+            },
+
+            change(page){
+                var self = this;
+                self.page = page;
+                if(self.yuming_domain == '' && self.cate_domain == '') {
+                    var domain = self.channel_domain;
+                    self.channel_list(domain)
+                } else {
+                    self.column(self.yuming_domain || self.cate_domain)
+                }
+            },
+            column_list(item) {
+                this.yuming_domain=item.domain;
+                this.cate_domain='';
+                window.history.pushState('json', '', '/'+ this.channel_domain +'/'+ item.domain);
+                this.cate(item);
+            },
+
+        }
+    })
+</script>
+<!--</body>-->
+<!--</html>-->

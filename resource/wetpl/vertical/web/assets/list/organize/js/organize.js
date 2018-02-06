@@ -65,7 +65,7 @@ $(function() {
 
     // 栏目显示区
     var news_channel_categories = function(result) {
-        var template = ` <a class="chan_li" id="` + result.domain + `" name="` + result.weid + `" href="/`+ pathname[0] +"/"+ result.domain + `" type="`+ result.type +`">` + result.title.substr(0, 4) + `</a>`
+        var template = `<li><a class="chan_li" id="` + result.domain + `" name="` + result.weid + `" href="/`+ pathname[0] +"/"+ result.domain + `" type="`+ result.type +`">` + result.title.substr(0, 4) + `</a>`+`</li> `
         return template;
     }
 
@@ -77,8 +77,9 @@ $(function() {
                 $.map(data.data, function(item, index) {
                     if(item.domain == pathname[1]) {
                         $(".article_list").addClass("z").html(item.title);
+                        console.log(item.domain)
                         li_name = item.domain;
-                        $(".list-article-ul").html("<div class='org_content'><div>"+ item.content +"</div></div>");
+                        $(".newsert").html("<div class='org_content'><div>"+ item.content +"</div></div>");
                     }
                 });
             }
@@ -109,10 +110,42 @@ $(function() {
     // 新闻详情显示区
     var news_contents = function(result) {
         var jumpUrl = result.weid;
-        var template = `<li name="` + jumpUrl + `">
-            <a href="/`+ pathname[0]+"/"+ jumpUrl +`" target="_blank">` + result.title + `</a>
-            <small>` + result.publish_time + `</small>
+        var template;
+        if(result.thumb_image){
+            template = `<li name="` + jumpUrl + `">
+            <a href="">
+                <img src="`+result.thumb_image+`" alt="">
+            </a>
+             <div class="new2-left">
+                <h2>
+                   <a href="/`+ pathname[0]+"/"+ jumpUrl +`" target="_blank">` + result.title + `</a>
+                </h2>
+                <p>
+                    <a href="/`+ pathname[0]+"/"+ jumpUrl +`" target="_blank">`+result.summary+`</a>
+                </p>
+                <div class="all">
+                    <span>时间：`+ result.publish_time +`</span>
+                    <a href="/`+ pathname[0]+"/"+ jumpUrl +`" target="_blank">查看更多 +</a>
+                </div>
+            </div>
         </li>`
+        }else{
+            template = `<li name="` + jumpUrl + `">
+             <div class="new2-left" style="width: 100%;float: left">
+                <h2>
+                   <a href="/`+ pathname[0]+"/"+ jumpUrl +`" target="_blank">` + result.title + `</a>
+                </h2>
+                <p>
+                    <a href="/`+ pathname[0]+"/"+ jumpUrl +`" target="_blank">`+result.summary+`</a>
+                </p>
+                <div class="all">
+                    <span>时间：`+ result.publish_time +`</span>
+                    <a href="/`+ pathname[0]+"/"+ jumpUrl +`" target="_blank">查看更多 +</a>
+                </div>
+            </div>
+        </li>`
+        }
+
 
         return template;
     }
@@ -128,12 +161,16 @@ $(function() {
             jump: true,                                    //是否支持跳转
             callback: function(page) {                     // 回调函数
                 page_tab(page);
+                if(this.totalPages==1){
+                    $('.paging').html("")
+                }
             }
         })
+
     }
     var page_tab = function(pageNum) {
         if((pathname.length == 2 && pathname[1] == "") || pathname.length == 1) {
-            $(".list-article-ul").html("");
+            $(".new2").html("");
             $.ajax({
                 url: CMS_CONTENTS + pathname[0] + "&page=" + pageNum,
                 dataType: 'JSON',
@@ -141,7 +178,7 @@ $(function() {
                 success: function(data) {
                     if(data.code == 200) {
                         $(data.data.list).each(function(index, value) {
-                            $(".list-article-ul").append(news_contents(value));
+                            $(".new2").append(news_contents(value));
                         });
                     }
                 },
@@ -150,16 +187,16 @@ $(function() {
                 }
             })
         } else {
-            li_name = $(".single_active").attr("id");
+            li_name = $(".cenav_cur").attr("id");
             var option4 = $.get(CMS_DETAIL_CONTENTS_CATE_ID + li_name + "&page=" + pageNum);
             option4.done(function(body) {
                 if(!body.data.list.length) {
                     return false;
                 }
                 // 更多页的执行函数！
-                $(".list-article-ul").html("");
+                $(".new2").html("");
                 $.each(body.data.list, function(key, value) {
-                    $(".list-article-ul").append(news_contents(value));
+                    $(".new2").append(news_contents(value));
                 });
             });
             option4.fail(function(error) {
@@ -178,12 +215,12 @@ $(function() {
 
             var two_type = $("#" + pathname[1]).attr("type");
             if(two_type == 0 && body.data.list.length == 0) {
-                $(".list-article-ul").html("<li>暂无内容</li>");
+                $(".new2").html("<li>暂无内容</li>");
 
                 paging(total, limit);
             } else {
                 $(body.data.list).each(function(index, value) {
-                    $(".list-article-ul").append(news_contents(value));
+                    $(".new2").append(news_contents(value));
                 });
 
                 paging(total, limit);                
@@ -263,9 +300,9 @@ $(function() {
                                 $("#menuTwo").append(menuTwo(value));
                             }
                         });
-
                         show_two = $("#menuTwo").children().first().attr("id");
-                        $('#' + show_two).addClass("single_active").siblings().removeClass("single_active");
+                        $("#menuTwo").children().first().addClass("er-cur").siblings().removeClass("er-cur");
+                        $('#' + show_two).parent("li").addClass("cenav_cur").siblings().removeClass("cenav_cur");
                         document.title = $('#' + show_two).text() + " — " + localStorage.getItem("title");
                         
                         $.ajax({
@@ -300,8 +337,8 @@ $(function() {
     }
 
     function two_ul(result) {
-        $(".list-article-ul").html("");
-        $(".list-article-ul").html(`<div class="org_content"><h3>` + result.title + `</h3><div>` + result.content + `</div></div>`);
+        $(".newsert").html("");
+        $(".newsert").html(`<div class="org_content"><h3>` + result.title + `</h3><div>` + result.content + `</div></div>`);
     }
 
     // Cms - 获取类目(根据频道weid)
@@ -323,7 +360,9 @@ $(function() {
 
                     // 单页执行
                     single_page(domain_weid);
-                    $('#' + pathname[1]).addClass("single_active").siblings().removeClass("single_active");                    
+                    $('#' + pathname[1]).parent("li").addClass("cenav_cur").siblings().removeClass("cenav_cur");
+                    $(".wz").text('>'+  $('#' + pathname[1]).text());
+                    $(".title>span").text($('#' + pathname[1]).text());
                 } else {
 
                     // 非单页执行
@@ -347,7 +386,7 @@ $(function() {
                                             success: function(data){
                                                 if(data.code === 200) {
                                                     document.title = $('#' + pathname[1]).text() + " — " + localStorage.getItem("title");
-                                                    $('#' + data.data.domain).addClass("cate-active-on").siblings().removeClass("cate-active-on");
+                                                    $('#' + data.data.domain).parent("li").addClass("cenav_cur").siblings().removeClass("cenav_cur");
                                                     $("#menuY").text(data.data.title);
                                                     document.title = $('#' + pathname[1]).text() + " — " + localStorage.getItem("title");
                                                 }
@@ -355,7 +394,7 @@ $(function() {
                                         });
 
                                         default_two(parend_id, pathname[1]);
-                                        $('#' + pathname[1]).addClass("single_active").siblings().removeClass("single_active");
+                                        $('#' + pathname[1]).addClass("er-cur").siblings().removeClass("er-cur");
 
                                         if($("#"+ pathname[1]).attr("type") == 1) {
                                             $.ajax({
@@ -364,7 +403,8 @@ $(function() {
                                                 async:  false,
                                                 success: function(data) {
                                                     if(data.code === 200) {
-                                                        $("#menuY").text(data.data.title);
+                                                        $(".wz").text('>'+  data.data.title);
+                                                        $(".title>span").text(data.data.title);
                                                         two_ul(data.data);
                                                         $(".paging").hide();
                                                         return false;
@@ -380,9 +420,9 @@ $(function() {
                                     } else {
                                         var menu_two = $("#"+ pathname[1]).attr("name");
                                         default_two2(menu_two, pathname[1]);
-
-                                        $('#' + pathname[1]).addClass("cate-active-on").siblings().removeClass("cate-active-on");
-                                        $("#menuY").text($('#' + pathname[1]).text());
+                                        $('#' + pathname[1]).parent("li").addClass("cenav_cur").siblings().removeClass("cenav_cur");
+                                        $(".wz").text('>'+  $('#' + pathname[1]).text());
+                                        $(".title>span").text($('#' + pathname[1]).text());
                                         document.title = $('#' + pathname[1]).text() + " — " + localStorage.getItem("title");
                                     }
                                 }
@@ -400,6 +440,8 @@ $(function() {
     $("#oooo").attr("href", "/zz");
     if(pathname[1] == null || pathname[1] == undefined) {
         document.title = "最新发布 — " + localStorage.getItem("title");
-        $("#oooo").addClass("single_active");
+        $("#oooo").parent("li").addClass("cenav_cur");
+        $(".wz").text('>'+ $("#oooo").text())
+        $(".title>span").text( $("#oooo").text())
     }
 });

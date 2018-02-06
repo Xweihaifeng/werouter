@@ -302,7 +302,8 @@ class router_index extends controller
         {
             $additional_config = $controller_router_config['config'];
         }
-
+        //$this->data['template'] = 'vertical';
+        
         $this->file = '/resource/' . ($this->data['is_custom'] === 1 && $sub_data === false
                 ? 'diytpl/'.$this->data['custom_file'].'/' : 'wetpl/'.$this->data['template'].'/');
         
@@ -339,7 +340,12 @@ class router_index extends controller
 
         if(!file_exists('.'.$this->file.$directory.$router_map))
         {
-            error(404);
+            $this->file = '/resource/wetpl/default/';
+            if(!file_exists('.'.$this->file.$directory.$router_map))
+            {
+                error(404);
+            }
+            
         }
 
         $this->router_name = $router_verify->router['router_name'];
@@ -403,7 +409,7 @@ class router_index extends controller
 
         return $cache_config_file;
     }
-
+    
     // 获取网站基本信息
     private function _domain_data($weid)
     {
@@ -411,8 +417,8 @@ class router_index extends controller
         //$this->data['domain'] = $_SERVER['HTTP_HOST'];
         $plats['var auth_code'] = auth_code($this->data['domain']);
 
-        $plats['var sub_domain'] = '';
-        $plats['sub_state'] = FALSE;
+        $plats['var sub_domain'] = FALSE; 
+        $plats['sub_state'] = FALSE; 
 
         $this->data['domain'] = $_SERVER['HTTP_HOST'];
         $plats['var site_domian'] = $protocol.$this->data['domain'].'/';
@@ -435,6 +441,15 @@ class router_index extends controller
         if(is_mobile() == TRUE && $this->data['wap_domain'] == 2)
         {
             $plats['var all_domian'] = $protocol.$_SERVER['HTTP_HOST'].'/m/';  //测试环境使用
+        }
+
+        if($this->data['wap_domain'] == 2)
+        {
+            $plats['var mob_domian'] = $protocol.$_SERVER['HTTP_HOST'].'/m/';
+        }
+        else
+        {
+            $plats['var mob_domian'] = $protocol.'m.'.$_SERVER['HTTP_HOST'].'/';
         }
         
         $plats['var root_domain'] = $this->_get_root_domain($_SERVER['HTTP_HOST']);
@@ -465,12 +480,14 @@ class router_index extends controller
             $plats['qiniu']['buckut'] = $this->qiniu_cofing['buckut'];
         }
 
+
         if($this->sub_state == FALSE)
         {
             //平台信息相关
-            $plats_sql = 'SELECT plat_name FROM we_plats
+            $plats_sql = 'SELECT weid,plat_name FROM we_plats
                     WHERE weid=? ';
             $plats_row = $this->db->queryOne($plats_sql , array($weid));
+            $plats['plats'] = $plats_row;
             if(empty($plats_row)) error(404);
 
             $plats_cms_sql = 'SELECT title , description , key_word
@@ -495,6 +512,12 @@ class router_index extends controller
             $plats['plats_info'] = $this->db->queryOne($plats_sql , array($this->sub_weid));
             if(empty($plats['plats_info'])) error(404);
         }
+
+         //秦商认证相关
+        $sql = 'SELECT cert_name FROM we_plats_user_online_auth_setting 
+                WHERE plat_id=?';
+        $row = $this->db->queryOne($sql , array($weid));
+        $plats['plats_info']['cert_name'] = $row['cert_name'];
 
 
         if(empty($_COOKIE['token']))

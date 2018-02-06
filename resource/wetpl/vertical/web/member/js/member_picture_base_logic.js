@@ -360,9 +360,9 @@ $(document).ready(function(){
 
     var column_list = function(data) {
         if(data.title == '入会申请') {
-            var template = `<a class="chan_li cate-active-on" id="`+ data.domain +`" href="/member/apply"> `+ data.title +` </a>`
+            var template = `<li class="cenav_cur"><a id="`+ data.domain +`" href="/member/apply"> `+ data.title +` </a></li>`
         } else {
-            var template = `<a class="chan_li" id="`+ data.domain +`" href="/org/`+ data.domain +`"> `+ data.title +` </a>`;
+            var template = `<li><a class="chan_li" id="`+ data.domain +`" href="/org/`+ data.domain +`"> `+ data.title +` </a></li>`;
         }
         return template;
     }
@@ -375,7 +375,7 @@ $(document).ready(function(){
         success: function(data){
             console.log(data.data);
             $.map(data.data, function(item, index) {
-                $(".member_top_disperse").append(column_list(item));
+                $("#menuX").append(column_list(item));
             });
         },
         error: function(xhr){

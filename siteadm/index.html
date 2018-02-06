@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -33,48 +34,243 @@
     <script src="js/config.js"></script>
     <script src="js/template/index.js"></script>
     <!-- Google Font -->
-    <style>::-webkit-scrollbar { width: 0; }</style>
+    <style>
+         ::-webkit-scrollbar {
+            width: 0;
+        }
+        
+        .info-label {
+            text-align: left !important;
+            padding: 0 !important;
+            margin-left: 30px;
+        }
+    </style>
 </head>
+
 <body class="hold-transition skin-blue sidebar-mini">
-<div class="wrapper">
-    <aside class="main-sidebar">
-        <!-- sidebar: style can be found in sidebar.less -->
-        <section class="sidebar">
-            <!-- search form -->
-            <form action="#" method="get" class="sidebar-form">
-                <div class="input-group">
-                    <input type="text" name="q" class="form-control" placeholder="Search...">
-                    <span class="input-group-btn">
-                    <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-                    </button>
-                    </span>
+    <div class="wrapper">
+        <aside class="main-sidebar">
+            <!-- sidebar: style can be found in sidebar.less -->
+            <section class="sidebar">
+                <!-- search form -->
+                <form action="#" method="get" class="sidebar-form">
+                    <div class="input-group">
+                        <input type="text" name="q" class="form-control" placeholder="Search...">
+                        <span class="input-group-btn">
+                            <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+                            </button>
+                            </span>
+                    </div>
+                </form>
+                <!-- /.search form -->
+                <ul id="root" class="sidebar-menu" data-widget="tree"></ul>
+            </section>
+            <!-- /.sidebar -->
+        </aside>
+        <!-- content-wrapper -->
+        <div class="content-wrapper">
+            <input type="hidden" name="config-url" value="index.html">
+            <section class="content-header" style="height:60px;">
+                <h1>
+                    后台管理首页
+                    <small>网站概况</small>
+                </h1>
+                <ol class="breadcrumb">
+                    <li><a href="#"><i class="fa fa-dashboard"></i> 首页</a></li>
+                    <li class="active">网站概况</li>
+                </ol>
+            </section>
+            <div class="row well">
+                <div class="col-xs-6 col-sm-6 col-lg-6">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-lg-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <div class="row clearfix">
+                                        <div class="col-xs-6" style="cursor:pointer; color:#999;">
+                                            <i class="fa fa-cog"></i> 系统信息
+                                        </div>
+                                        <div class="pull-right" style="margin-right: 15px;">
+                                        </div>
+                                    </div>
+                                </div>
+                                <ul class="panel-body list-group">
+                                    <form role="form" class="form-horizontal">
+                                        <div class="form-group">
+                                            <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label info-label">系统版本</label>
+                                            <div class="col-sm-8 col-lg-8 col-xs-8">
+                                                <span class="info-value Wez_version"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label info-label">站点地址</label>
+                                            <div class="col-sm-8 col-lg-8 col-xs-8">
+                                                <span class="info-value Wez_domain"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label info-label">手机地址</label>
+                                            <div class="col-sm-8 col-lg-8 col-xs-8">
+                                                <span class="info-value Wez_mobile_domain"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label info-label">SSL状态</label>
+                                            <div class="col-sm-8 col-lg-8 col-xs-8">
+                                                <span class="info-value Wez_ssl"></span>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-lg-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <div class="row clearfix">
+                                        <div class="col-xs-6" style="cursor:pointer; color:#999;">
+                                            <i class="fa fa-bar-chart"></i> 数据统计
+                                        </div>
+                                        <div class="pull-right" style="margin-right: 15px;">
+                                        </div>
+                                    </div>
+                                </div>
+                                <ul class="panel-body list-group">
+                                    <table class="table table-mtotal table-nomargin table-bordered table-striped table-bordered table-advance statistics">
+                                        <thead>
+                                            <tr>
+                                                <th>模块</th>
+                                                <th>总数据</th>
+                                                <th>今日</th>
+                                                <th>本月</th>
+                                                <th>年度</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="Wz_user" data-tag="user">
+                                                <td>用户</td>
+                                                <td><a class="drlabel drlabel-success Wz_total" href="javascript:;" data-tag="total">0</a></td>
+                                                <td><a class="drlabel drlabel-success Wz_day" href="javascript:;" data-tag="day">0</a></td>
+                                                <td><a class="drlabel drlabel-important Wz_month" href="javascript:;" data-tag="month">0</a></td>
+                                                <td><a class="drlabel drlabel-important Wz_year" href="javascript:;" data-tag="year">0</a></td>
+                                            </tr>
+                                            <tr class="Wz_member" data-tag="member">
+                                                <td>会员</td>
+                                                <td><a class="drlabel drlabel-success Wz_total" href="javascript:;" data-tag="total">0</a></td>
+                                                <td><a class="drlabel drlabel-success Wz_day" href="javascript:;" data-tag="day">0</a></td>
+                                                <td><a class="drlabel drlabel-important Wz_month" href="javascript:;" data-tag="month">0</a></td>
+                                                <td><a class="drlabel drlabel-important Wz_year" href="javascript:;" data-tag="year">0</a></td>
+                                            </tr>
+                                            <tr class="Wz_news" data-tag="news">
+                                                <td>新闻</td>
+                                                <td><a class="drlabel drlabel-success Wz_total" href="javascript:;" data-tag="total">0</a></td>
+                                                <td><a class="drlabel drlabel-success Wz_day" href="javascript:;" data-tag="day">0</a></td>
+                                                <td><a class="drlabel drlabel-important Wz_month" href="javascript:;" data-tag="month">0</a></td>
+                                                <td><a class="drlabel drlabel-important Wz_year" href="javascript:;" data-tag="year">0</a></td>
+                                            </tr>
+                                            <tr class="Wz_article" data-tag="article">
+                                                <td>文章</td>
+                                                <td><a class="drlabel drlabel-success Wz_total" href="javascript:;" data-tag="total">0</a></td>
+                                                <td><a class="drlabel drlabel-success Wz_day" href="javascript:;" data-tag="day">0</a></td>
+                                                <td><a class="drlabel drlabel-important Wz_month" href="javascript:;" data-tag="month">0</a></td>
+                                                <td><a class="drlabel drlabel-important Wz_year" href="javascript:;" data-tag="year">0</a></td>
+                                            </tr>
+                                            <tr class="Wz_vote" data-tag="vote">
+                                                <td>投票</td>
+                                                <td><a class="drlabel drlabel-success Wz_total" href="javascript:;" data-tag="total">0</a></td>
+                                                <td><a class="drlabel drlabel-success Wz_day" href="javascript:;" data-tag="day">0</a></td>
+                                                <td><a class="drlabel drlabel-important Wz_month" href="javascript:;" data-tag="month">0</a></td>
+                                                <td><a class="drlabel drlabel-important Wz_year" href="javascript:;" data-tag="year">0</a></td>
+                                            </tr>
+                                            <tr class="Wz_magazine" data-tag="magazine">
+                                                <td>杂志</td>
+                                                <td><a class="drlabel drlabel-success Wz_total" href="javascript:;" data-tag="total">0</a></td>
+                                                <td><a class="drlabel drlabel-success Wz_day" href="javascript:;" data-tag="day">0</a></td>
+                                                <td><a class="drlabel drlabel-important Wz_month" href="javascript:;" data-tag="month">0</a></td>
+                                                <td><a class="drlabel drlabel-important Wz_year" href="javascript:;" data-tag="year">0</a></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
-            </form>
-            <!-- /.search form -->
-            <ul id="root" class="sidebar-menu" data-widget="tree"></ul>
-        </section>
-        <!-- /.sidebar -->
-    </aside>
-    <!-- content-wrapper -->
-    <div class="content-wrapper">
-        <input type="hidden" name="config-url" value="index.html">
+                <div class="col-xs-6 col-sm-6 col-lg-6">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-lg-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <div class="row clearfix">
+                                        <div class="col-xs-6" style="cursor:pointer; color:#999;">
+                                            <i class="fa fa-bell"></i> 系统提醒
+                                        </div>
+                                        <div class="pull-right" style="margin-right: 15px;">
+                                        </div>
+                                    </div>
+                                </div>
+                                <ul class="panel-body list-group">
+                                    <div style="padding-top: 30px;padding-bottom: 30px;text-align: center;color: #d7d8da;"> 没有任何提醒 </div>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="control-sidebar-bg"></div>
     </div>
+    <!-- ./wrapper -->
 
-    <div class="control-sidebar-bg"></div>
-</div>
-<!-- ./wrapper -->
+    <!-- Bootstrap 3.3.7 -->
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- DataTables -->
+    <script src="bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <!-- SlimScroll -->
+    <script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+    <!-- FastClick -->
+    <script src="bower_components/fastclick/lib/fastclick.js"></script>
+    <!-- AdminLTE App -->
+    <script src="dist/js/adminlte.min.js"></script>
+    <script>
+        // 统计信息初始化
+        var loadInfo = function(callback) {
+            $.ajax({
+                url: ApiUrl + 'admins/sub_info',
+                type: 'GET',
+                success: function(data) {
+                    if (data.code == 200)
+                        callback(data.data);
+                    else
+                        alert(data.message);
+                },
+                error: function(xhr) {
+                    console.log(xhr);
+                }
+            });
+        }
 
-<!-- Bootstrap 3.3.7 -->
-<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-<!-- DataTables -->
-<script src="bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
-<script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-<!-- SlimScroll -->
-<script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-<!-- FastClick -->
-<script src="bower_components/fastclick/lib/fastclick.js"></script>
-<!-- AdminLTE App -->
-<script src="dist/js/adminlte.min.js"></script>
+        $(function() {
+            loadInfo(function(data) {
+                $('.Wez_version').text(data.system.version);
+                $('.Wez_domain').text(data.system.domain);
+                $('.Wez_mobile_domain').text(data.system.mobile_domain);
+                $('.Wez_ssl').text(data.system.ssl == 2 ? '已启用' : '未启用');
 
+                $('.statistics tbody tr').each(function(key, value) {
+                    var tag = $(value).data('tag');
+                    $(value).find('a').each(function(k, v) {
+                        var _tag = $(v).data('tag');
+                        $(v).text(data.module[tag][_tag]);
+                    });
+                });
+            });
+        })
+    </script>
 </body>
+
 </html>

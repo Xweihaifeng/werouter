@@ -7,13 +7,6 @@
     <meta charset="UTF-8">
     <link rel="shortcut icon" id="favicon" href="" />
     <meta charset="utf-8">
-    <!-- <base href="http://g.wezchina.com/my/"> -->
-    <!-- <link rel="stylesheet" type="text/css" href="css/common.css">
-<link rel="stylesheet" type="text/css" href="css/font.min.css"> -->
-    <!--[if lte IE 8]>
-        <script src="js/excanvas.js"></script>
-    <![endif]-->
-    <!-- <link rel="stylesheet" type="text/css" href="css/entry.css"> -->
 
     <link rel="stylesheet" type="text/css" href="/common/css/main.css">
     <link rel="stylesheet" type="text/css" href="/common/css/bootstrap.min.css">
@@ -193,39 +186,22 @@
                 <div class="wrap">
                     <div class="container">
                         <div class="manage">
-                            <!--<div class="data ">
-                                  <div class="chart doughnut">
-                                      <canvas id="J_ChartCity" width="120" height="120"></canvas>
-                                      <div class="intro">
-                                          <ul id="J_ListCity"></ul>
-                               </div>
-                                  </div>
-                                  <div class="chart doughnut">
-                                      <canvas id="J_ChartPosition" width="120" height="120"></canvas>
-                                      <div class="intro">
-                                          <ul id="J_ListPosition"></ul>
-                                      </div>
-                                  </div>
-                                  <div class="chart line">
-                                      <canvas id="J_ChartTimeLine" width="400" height="120"></canvas>
-                                  </div> -->
-                            <!-- <img src="/user/img/chart.png" alt=""> -->
                         </div>
 
 
                         <div class="title" id="J_ActivityTitle">Loading...</div>
                         <div class="result">
                             <div class="pull-left entry-num"><span class="word-blue">0</span>人已签到</div>
-                            <form class="form" action="#">
+                            <div class="form">
                                 <div class="form-group pull-left" style="width:700px;">
-                                    <!-- <a data-toggle="dialog" data-target="#J_DialogSign" class="btn btn-active">签到管理</a> -->
-                                    <input type="text" class="input-control" name="e_number" placeholder="活动开始时输入票号核验" maxlength="50" value="" style="width:300px;">
+                                    <input type="text" class="input-control" name="e_number" placeholder="请输入票号或通过扫码枪扫描" maxlength="50" value="" style="width:300px;">
                                     <button id="verify_ticket" type="button" class="btn btn-success">验票</button>
+                                    <button id="clear_ticket" type="button" class="btn btn-warning">清空</button>
                                 </div>
                                 <div class="form-group pull-right" style="width:80px;">
                                     <button type="button" class="btn btn-success" onclick="goEnroll()">报名数据</button>
                                 </div>
-                            </form>
+                            </div>
                         </div>
                         <div class="operation">
                             <div class="pull-left">

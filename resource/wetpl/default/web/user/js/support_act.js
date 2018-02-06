@@ -153,7 +153,7 @@ $(document).ready(function() {
             }
         }
         if (data.is_attend == 1)
-            var mark = `<div class="show-tiket">已参与</div>`;
+            var mark = `<div class=""><span style="display: block;height: 23px;line-height: 31px;color: #828282!important;">已参与</span></div>`;
         else {
             if (data.is_expired == 1)
                 var mark = `<div class="show-tiket">已过期</div>`;
@@ -164,23 +164,38 @@ $(document).ready(function() {
         }
 
         var template =
-            `<div class="show-art" id=` + data.activity_id + `>
-            <div class="show-title" id=` + data.domain + `>
-                <div class="at">` + act_title + `</div>
-                <div class="ad">` + data.begain_time + ` ~ ` + data.end_time + `</div>
+            `<div class="show-art" style="margin:0;border-top:1px solid #e6e6e6;display:block;width: 479px;height: 330px;border-right:0px solid #fff;border-bottom:0px solid #fff;border-left:0px solid #fff;" id=` + data.activity_id + `>       
+            <div class="myself" style="width: 100%;height: 24px;margin-top: 24px;">
+                <div class="my_con" style="width: 70%;height: 24px;float: left;">
+                     <div class="whoimg" style="width: 24px;height: 24px;border-radius: 50%;background: blue;float: left;"><img src="" alt=""></div>
+                     <span style="font-size: 14px;color: #666;float: left;line-height: 24px;margin-left: 6px;">` + data.name + `</span>
+                </div>
+                <div class="my_join" style="width: 12%;height: 24px;line-height: 24px;font-size: 13px;float: right;color: #666">
+                    <span style="float: right">` + mark + `</span>
+                </div>
             </div>
-            <div class="show-pic"></div>
-            <div class="show-cont">` + data.summary.substring(0, 60) + `...</div>
-            <div class="show-bottom text-center">
-                <div class="show-read">
-                    <img class="show-read-img" src="/common/img/icon_see_normal.png" width="20" alt="" />
-                </div>` + mark + `
+            <div class="show-pic" style="width: 460px;height: 160px;margin: 15px 0 0 0;"></div>
+            <div style="height: 33px;line-height: 33px!important;padding: 0;" class="show-title"  id=` + data.domain + `>
+                <div class="at" style="height: 100%!important;font-size: 16px;color: #333;">` + data.title.substring(0, 17) + `</div>
             </div>
-            <div class="show-shade" style="display: none;"><p>预览活动</p></div>
+            <div class="show-cont" style="width:100%;padding-left:0;height: 37px;overflow: hidden;"><p class="text2" style="">` + data.summary.substring(0, 110) + `</p></div>
+             
             </div>`
 
         return template;
     }
+    // <div class="show-bottom text-center" style="border: none;">
+    //     <div class="show-read" style="">
+    //     <div class="ad" style="">` + data.end_time + `</div>
+    //     </div>
+    //     </div>
+        // <img class="show-read-img" src="/common/img/icon_see_normal.png" width="20" style="line-height: 20px;display: block;margin: 5px auto 0" alt="" />
+
+    //     <div class="show-title" id=` + data.domain + `>
+    //     <div class="at">` + act_title + `</div>
+    //     <div class="ad">` + data.begain_time + ` ~ ` + data.end_time + `</div>
+    // </div>
+    //     <div class="show-shade" style="display: none;"><p>预览活动</p></div>
 
     var coverId = 0;
     var artsList = [];
@@ -198,7 +213,7 @@ $(document).ready(function() {
                 }
             }
 
-            $("#right").append(articleTemplate(x));
+            $(".cons").append(articleTemplate(x));
             $("#" + x.activity_id + " .show-pic").css(coverPicCss);
             $("#" + x.activity_id).click(function(e) {
 
@@ -213,7 +228,7 @@ $(document).ready(function() {
                     case 'show-read':
                     case 'show-read-img':
                         // console.log(domain);
-                        window.location.href = '/' + dm + '/activity/' + x.activity_id;
+                        window.location.href = '/' + dm + '/activ   ity/' + x.activity_id;
                         break;
 
                     case 'show-tiket':
@@ -279,7 +294,7 @@ $(document).ready(function() {
         }
         $.ajax({
             // url: ACTIVITY_LIST,
-            url: ACTIVITY_ENROLL_LISTS,
+            url: ACTIVITY_ENROLL_LISTS + '?status=1',
             type: 'post',
             data: sendData,
             success: function(data) {
@@ -293,7 +308,7 @@ $(document).ready(function() {
                         $("#" + x).fadeIn(700);
                     });
                     if (res == "") {
-                        $("#right").append('<div class="none">-- 已经没有了 --</div>');
+                        $("#right").append('<div class="none">-- 暂时没有支持任何活动 --</div>');
                     } else {
                         $("#right").append('<div class="more">-- 点击加载更多 --</div>');
                     }

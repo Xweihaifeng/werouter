@@ -19,13 +19,15 @@
         <script src="/common/public/js/model/sub_ajax.js"></script>
         <script src="{{PATH_TML}}js/jquery-3.2.1.js"></script>
         <script src="{{PATH_TML}}js/nav.js"></script>
+        <link rel="stylesheet" href="/common/jquery.animsition/css/animsition.min.css">
+        <script src="/common/jquery.animsition/js/jquery.animsition.min.js"></script>
         <style>
             [v-cloak] {
                 display: none;
             }
         </style>
     </head>
-    <body>
+    <body class="animsition">
         <div id="header" v-cloak>
             <header>
                 <main>
@@ -36,7 +38,7 @@
                         </a>
                     </div>
                     <div class="head-middle">
-                        <img src="{{PATH_TML}}image/logo_by.png" alt="">
+                        <img :src="header_img | img_src" alt="">
                     </div>
                     <div class="head-right">
                         <div class="hr-top">
@@ -103,6 +105,28 @@
         </footer>
 
         <script>
+              $(function() {
+                $(".animsition").animsition({
+                    inClass               :   'fade-in',
+                    outClass              :   'fade-out',
+                    inDuration            :    200 ,
+                    outDuration           :    200,
+                    linkElement           :   '.animsition-link',
+                    // e.g. linkElement   :   'a:not([target="_blank"]):not([href^=#])'
+                    loading               :    true,
+                    loadingParentElement  :   'body', //animsition wrapper element
+                    loadingClass          :   'animsition-loading',
+                    unSupportCss          : [ 'animation-duration',
+                        '-webkit-animation-duration',
+                        '-o-animation-duration'
+                    ],
+                    //"unSupportCss" option allows you to disable the "animsition" in case the css property in the array is not supported by your browser.
+                    //The default setting is to disable the "animsition" in a browser that does not support "animation-duration".
+                    overlay               :   false,
+                    overlayClass          :   'animsition-overlay-slide',
+                    overlayParentElement  :   'body'
+                });
+            });
             var header = new Vue({
                 el: '#header',
                 data: {
@@ -125,7 +149,8 @@
                         {ok: false, title: "手机版", image: "/api/file/qrcode?margin=2&url="+window.location.href},
                         {ok: false, title: "微信", image: plats_info.wx_qrcode? plats_info.wx_qrcode : window.location.origin+"/api/file/qrcode?margin=2&url="+window.location.href},
                         {ok: false, title: "微博", image: plats_info.wb_qrcode? plats_info.wb_qrcode : window.location.origin+"/api/file/qrcode?margin=2&url="+window.location.href},
-                    ]
+                    ],
+                    header_img: null,
                 },
                 mounted: function() {
                     this.$nextTick(()=>{
@@ -148,6 +173,7 @@
 
                                 this.channel = result;
                                 footer();
+                                this.header_img = app.$data.header1.image;
                             }
                         })
 

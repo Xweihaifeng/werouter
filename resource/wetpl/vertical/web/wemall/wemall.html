@@ -1,0 +1,107 @@
+<#extend#>public/extend/index_extend.html</#extend#>
+<link rel="stylesheet" href="{{PATH_TML}}wemall/css/wemall.css"/>
+<script src="{{PATH_TML}}wemall/js/banner.js"></script>
+<script src="{{PATH_TML}}wemall/js/wemall.js"></script>
+
+
+<!--商城开始-->
+<div id="container">
+    <div class="wemall">
+        <div class="banner">
+            <ul style="width: 100%;height: 100%;">
+                <template v-for="t in ban">
+                    <li :style="{background: 'url(' + httpType + '//' + plats_qiniu.domain_custom + '/' + t.image +')' + ' no-repeat ' + ' center/cover '}" ></li>
+                </template>
+            </ul>
+        </div>
+        <ul class="advert">
+            <li v-for="item in advert_cont">
+                <a href="">
+                    <img :src="httpType + '//' + plats_qiniu.domain_custom + '/' + item.image" alt="">
+                </a>
+            </li>
+        </ul>
+        <div class="wemall-cat">
+            <ul class="cat-nav">
+                <li class="check_cur" v-on:click="move(0)">全部</li>
+                <li v-for="(item,kes,i) in cat_list" @click="move(i)">{{item.type}}</li>
+            </ul>
+        </div>
+        <div class="wemall-con">
+            <div class="wemall-son" v-for="(item,key,index) in cat_list">
+                <div class="title">
+                    <h3>{{item.type}}</h3>
+                    <a href="">查看更多</a>
+                </div>
+                <ul style="background: #fff;" class="wemall-clist" :id=" 'wemall-clist' + index">
+                    <div class="clist-advert">
+                        <ul class="adv-list">
+                            <li v-for="x in item.adv">
+                                <a href="#">
+                                    <img :src="httpType + '//' + plats_qiniu.domain_custom + '/' + x.image" alt="">
+                                </a>
+                            </li>
+                        </ul>
+
+                        <div class="btn" :id=" 'btn' + index">
+                            <div class="btnL"></div>
+                            <div class="btnR"></div>
+                        </div>
+                    </div>
+                    <li v-for="y in item.goods">
+                        <a :href="'/' + y.domain + '/wemall/goods/' + y.weid">
+                            <div class="give">
+                                <img src="{{PATH_TML}}wemall/img/买赠.png" alt="" v-if="y.give==1">
+                            </div>
+                            <!--<div class="give" v-if="item.give==0"></div>-->
+                            <div class="photo">
+                                <img :src="httpType + '//' + plats_qiniu.domain_custom + '/' + y.cover + '?imageView2/1/w/280/h/200'" alt="">
+                            </div>
+                            <h3>{{y.title}}</h3>
+                            <div class="price">￥{{y.price}}</div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!--商城结束-->
+
+
+<script>
+    new Vue({
+        el: '#container',
+        data: {
+            total: 10,
+            page: 1,
+            limit: 5,
+            wemall_con: [],
+            advert_cont: [],        //广告
+            cat_list: [],
+            cat_adv: [],
+            ban:[],
+        },
+        mounted() {
+            $.ajax({
+                url:'http://dev.wezchina.com/api/plats/goods/defaults',
+                success:(res)=>{
+                    this.advert_cont = res.data.HomeAdv;
+                    this.cat_list = res.data.category;
+                    this.ban = res.data.HomeBanner;
+                    console.log(res.data)
+                }
+            })
+        },
+        methods: {
+            // 导航点击
+            move: function (index) {
+                var Top = $(".wemall-son").eq(index).offset().top;
+                $("html,body").animate({scrollTop: Top - 100}, 500);
+                $(".cat-nav > li").eq(index + 1).addClass("check_cur").siblings().removeClass("check_cur")
+            },
+        },
+
+
+    })
+</script>

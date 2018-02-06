@@ -1,0 +1,195 @@
+<#extend#>public/extend/index_extend.html</#extend#>
+<link rel="stylesheet" href="/common/magazine/css/iview.css">
+<link rel="stylesheet" href="{{PATH_TML}}activity/css/cate_list.css" />
+<link rel="stylesheet" href="{{PATH_TML}}project/css/project.css">
+<script src="/common/magazine/js/iview.min.js"></script>
+
+<div id="container">
+    <div id="proj">
+        <Spin fix v-if="isLoading">
+            <Icon type="load-c" size=45 class="demo-spin-icon-load"></Icon>
+            <div>加载中</div>
+        </Spin>
+        <div id="find">
+            <div id="type">
+                <p>分类：</p>
+                <ul>
+                    <li v-for="(e, i) in type" @click="show(e, 'type0', i)" :class="{'selected': i === type.flag}">{{e.title}}</li>
+                </ul>
+            </div>
+            <div id="time">
+                <p>时间：</p>
+                <ul>
+                    <li v-for="(e, i) in time" @click="show(e, 'type1', i)" :class="{'selected': i === time.flag}">{{e.name}}</li>
+                </ul>
+            </div>
+            <div id="type2">
+                <ul>
+                    <!--<li @click="show('total', 'type2')" :class="{'style-active-blue': showType.total}">综合</li>-->
+                    <li @click="show('latest', 'type2')" :class="{'style-active-blue': showType.latest}">最新</li>
+                    <li @click="show('hotest', 'type2')" :class="{'style-active-blue': showType.hotest}">最热</li>
+                </ul>
+                <ul>
+                    <li @click="show('proj', 'type3')" :class="{'style-active-red': showType.proj}">方格</li>
+                    <li @click="show('act', 'type3')" :class="{'style-active-red': showType.act}">条目</li>
+                </ul>
+            </div>
+        </div>
+        <div id="projects" v-show="showType.proj">
+            <div class="none" v-if="none">
+                <img src="/common/img/no_con_default.png" alt=""/>
+            </div>
+            <ul>
+                <a v-for="e in proj" :href="e.domain + '/activity/' + e.weid | href" target="_blank">
+                    <li>
+                        <div :class="status[e.onStatus]"></div>
+                        <img :src="setImg(e.cover, '/common/img/p04.png', 285, 160)" alt="" width="285" height="160"/>
+                        <div class="act">
+                            <p>{{e.title | cut(30)}}</p>
+                            <p>{{e.begain_time + ' ' + e.begain_week + ' 开始'}}</p>
+                            <p>
+                               <span>
+                                    <img :src="setImg(e.avatar, '/common/img/p05.png', 28, 28)" alt="" style="width:28px;height:28px;border-radius:28px;"/>
+                                    <span>{{e.enroll_num + '/' + e.enroll_limit}} 人已报名</span>
+                               </span>
+                               <span :class="{free: e.isFree, price: !e.isFree}">{{e.price}}</span>
+                            </p>
+                        </div>
+                    </li>
+                </a>
+            </ul>
+        </div>
+
+        <div class="cat-con" v-show="showType.act">
+            <div class="none" v-if="inai">
+                <img src="/common/img/no_con_default.png" alt=""/>
+            </div>
+            <ul class="cont-list">
+                <li v-for="e in act">
+                    <a :href="e.domain + '/activity/' + e.weid | href" target="_blank">
+                        <img :src="setImg(e.cover, '/common/img/p04.png', 260, 160)" alt="" width="285" height="160"/>
+                    </a>
+                    <div class="abstract">
+                        <a :href="e.domain + '/activity/' + e.weid | href" target="_blank">
+                            <h3>{{e.title | cut(30)}}</h3>
+                            <p>{{e.Sponsor}}</p>
+                        </a>
+                        <div class="abst-info">
+                            <div class="info-son">
+                                <img src="{{PATH_TML}}activity/img/时间.png" alt="">
+                                <span>{{e.begain_time + ' ' + e.begain_week + ' 开始'}}</span>
+                            </div>
+                            <div class="info-son">
+                                <img src="{{PATH_TML}}activity/img/地点.png" alt="">
+                                <span>{{e.area_name + ' ' + e.address}}</span>
+                            </div>
+                            <div class="info-son">
+                                <img src="{{PATH_TML}}activity/img/人员.png" alt="">
+                                <span>{{e.enroll_num + '/' + e.enroll_limit}}</span> 人已报名
+                            </div>
+                        </div>
+                    </div>
+                    <div class="attend" v-if="e.price == '免费'">
+                        <span>{{e.price}}</span>
+                        <button><a class="white" :href="e.domain + '/activity/' + e.weid | href" target="_blank">立即报名</a></button>
+                    </div>
+                    <div class="attend" v-else="e.price != '免费'">
+                        <span class="attebd_cur">{{e.price}}</span>
+                        <button class="button_cur"><a class="white" :href="e.domain + '/activity/' + e.weid | href" target="_blank">立即报名</a></button>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div id="pages">
+            <Page :total="parseInt(pages.total)" :current="pages.page" :page-size="pages.limit" @on-change="change" v-if="pages.total > pages.limit"></Page>
+        </div>
+    </div>
+</div>
+
+<script>
+    var activity = new Vue({
+        el: '#container',
+        data: {
+            showType: {act: false, proj: true, total: false, latest: true, hotest: false},
+            pageStore: [{id: 'proj', total: 8, page: 1, limit: 8}, {id: 'act', total: 8, page: 1, limit: 8}], //初始化分页数据
+            pages: {}, //当前分页
+            type: [],
+            time: [],
+            proj: [],
+            act: [],
+            dataTime: ['不限', '今天', '近三天', '近一周', '近一月'],
+            status: {'已发布': 'prepare', '进行中': 'doing', '已结束': 'end'},
+            url: apiUrl + 'activity/lists',
+            args: {cate_id: '', time_scope: '', order: ''}, //筛选条件
+            isLoading: false,
+            none: false,
+            inai: false
+        },
+        created: function(){
+            this.$Loading.start();
+            this.time = this.dataTime.map((x, i) => ({id: i, name: x}));
+            console.log(this.time);
+            axios.get(apiUrl + 'activity/cate/lists').then(data => {
+                this.type = [{weid: '', title: '全部'}, ...data.data.data.list];
+                this.type.flag = 0;
+            });
+            this.getList(this.url, '', '', '', 1, 8); //初始化页面数据
+        },
+        methods: {
+            change: function(page){
+                this.isLoading = true;
+                this.pages.page = page;
+                this.getList(this.url, this.args.cate_id, this.args.time_scope, this.args.order, page, this.pages.limit);
+            },
+            show: function(o, type, i){
+                if (type != 'type3') {
+                    this.pages.page = 1;
+                }
+                switch(type){
+                    case 'type0' : this.type.flag = i; this.args.cate_id = o.weid; break;
+                    case 'type1' : this.time.flag = i; this.args.time_scope = o.id; break;
+                    case 'type2' : var id = ['latest', 'hotest'].map((e, i) => o === e ? (this.showType[e] = true, i)
+                            : (this.showType[e] = false, null)).filter(x => x != null)[0];
+                        this.args.order = id; break;
+                    case 'type3' : ['act', 'proj'].map(e => o === e ? (this.showType[e] = true) : (this.showType[e] = false));
+                        this.pageStore = this.pageStore.map(e => o === e.id ? e : this.pages).map(e => o === e.id ? this.pages = e : e); break;
+                    default: break;
+                }
+                this.getList(apiUrl + 'activity/lists', this.args.cate_id, this.args.time_scope, this.args.order, this.pages.page, this.pages.limit);
+                this.isLoading = true;
+            },
+            setImg: function(url, init, w, h, mode){
+                if (url != '' && url != null && url != undefined) {
+                    if (url.indexOf('http') === -1 && url.indexOf('common') === -1) {
+                        return mode != undefined ? ApiMaterPlatQiniuDomain + url + '?imageView2/' + mode + '/w/' + w + '/h/' + h
+                                : ApiMaterPlatQiniuDomain + url + '?imageView2/3/w/' + w + '/h/' + h;
+                    } else {
+                        return url;
+                    }
+                } else {
+                    return init;
+                }
+            },
+            getList: function(url, cate_id, time_scope, order, page, limit){
+                axios.get(url + '?cate_id=' + cate_id + '&time_scope=' + time_scope + '&order=' + order + '&page=' + page + '&limit=' + limit).then(data => {
+                    this.isLoading = false;
+                    this.$Loading.finish();
+                    var info = data.data.data;
+                    if (info.list != '') {
+                        var data = info.list.map(e => e.type != 1 ? (e.isFree = false, e.price = '收费', e) : (e.isFree = true, e.price = '免费', e));
+                        this.showType.proj ? (this.none = false, this.pageStore[0].total = info.total, this.pages = this.pageStore[0], this.proj = data)
+                                : (this.inai = false, this.pageStore[1].total = info.total, this.pages = this.pageStore[1], this.act = data);
+                    } else {
+                        this.showType.proj ? (this.proj = [], this.none = true, this.pages.total = 8, this.pages.limit = 8)
+                                : (this.act = [], this.inai = true, this.pages.total = 8, this.pages.limit = 8);
+                    }
+                })
+            }
+        },
+        filters: {
+            cut: function(value, len) {
+                return value.length > len ? value.substr(0, len) + '...' : value
+            }
+        }
+    })
+</script>

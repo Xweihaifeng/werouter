@@ -32,6 +32,9 @@ $(document).ready(function(){
                     $('input[name=favicon]').val(info.favicon);
                     $('input[name=logo]').val(info.logo);
                     $('input[name=wap_logo]').val(info.logo);
+
+                    $('input[name=wx_qrcode]').val(info.wx_qrcode);
+                    $('input[name=wb_qrcode]').val(info.wb_qrcode);
                     // $('input[name=background_up]').val(info.background_up);
                     // $('input[name=background]').val(info.background);
                     $('input[name=copyright_logo]').val(info.copyright_logo);
@@ -41,12 +44,12 @@ $(document).ready(function(){
                     if(info.logo!='' && info.logo!=null){$('#img_logo').attr('src',ApiMaterPlatQiniuDomain+info.logo);}
                     if(info.wap_logo!='' && info.wap_logo!=null){$('#img_wap_logo').attr('src',ApiMaterPlatQiniuDomain+info.wap_logo);}
                     if(info.wx_qrcode!='' && info.wx_qrcode!=null){$('#img_wx_qrcode').attr('src',ApiMaterPlatQiniuDomain+info.wx_qrcode);}
-                    if(info.wb_qrcode!='' && info.wx_qrcode!=null){$('#img_wx_qrcode').attr('src',ApiMaterPlatQiniuDomain+info.wx_qrcode);}
+                    if(info.wb_qrcode!='' && info.wb_qrcode!=null){$('#img_wb_qrcode').attr('src',ApiMaterPlatQiniuDomain+info.wb_qrcode);}
                     // if(info.background!='' && info.background!=null){$('#img_background').attr('src',ApiMaterPlatQiniuDomain+info.background);}
                     // if(info.background_up!='' && info.background_up!=null){$('#img_background_up').attr('src',ApiMaterPlatQiniuDomain+info.background_up);}
                     // 
-                    if(info.copyright_logo!='' && info.copyright_logo!=null){$('#img_copyright_logo').attr('src',ApiMaterPlatQiniuDomain+info.background);}
-                    if(info.copyright_qrcode!='' && info.copyright_qrcode!=null){$('#img_copyright_qrcode').attr('src',ApiMaterPlatQiniuDomain+info.background_up);}
+                    if(info.copyright_logo!='' && info.copyright_logo!=null){$('#img_copyright_logo').attr('src',ApiMaterPlatQiniuDomain+info.copyright_logo);}
+                    if(info.copyright_qrcode!='' && info.copyright_qrcode!=null){$('#img_copyright_qrcode').attr('src',ApiMaterPlatQiniuDomain+info.copyright_qrcode);}
 
                     //发布样式
                     // $('input[name=bar1]').val(info.bar1);

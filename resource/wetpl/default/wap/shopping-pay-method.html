@@ -105,19 +105,20 @@
             shop_data()
             {
                 ajax.get('order/detail/' + this.store_num).then((res)=>{
-                    this.order_detail = res.data.mall_plat_user_id;
+                    this.order_detail = res.data;
+                    this.page_user_id = res.data.mall_plat_user_id;
                     this.isopenid();
                 });
             },
             activity_data()
             {
-                this.order_detail = this.activity.data.plat_user_id;
+                this.page_user_id = this.activity.data.plat_user_id;
                 this.isopenid();
             },
             // 获取商户与微信号对应的OPENID
             isopenid()
             {
-                $wx.pages_openid({userid : plats_user_info.weid , page_user_id : this.order_detail} , (openid)=>{
+                $wx.pages_openid({userid : plats_user_info.weid , page_user_id : this.page_user_id} , (openid)=>{
                     this.openid = openid;
                     this.wx_pay = [{type: 'activity', data: {'number' : this.store_num , 'openid' : this.openid}},
                                    {type: 'shop', data: {'order_id' : this.store_num , 'openid' : this.openid}}];
@@ -136,8 +137,8 @@
                                 mb_message('支付成功');
                                 setTimeout(()=>{
                                     switch(self.type) {
-                                        case 'shop': $app.open_page(all_domian + 'shopping/allOrder'); break;
-                                        case 'activity': $app.open_page(all_domian + 'user/myactivity/support/ticket/'); break;
+                                        case 'shop': $app.open_page('shopping/allOrder'); break;
+                                        case 'activity': $app.open_page('user/myactivity/support/ticket/'); break;
                                         default: break;
                                     }
                                 },1000);

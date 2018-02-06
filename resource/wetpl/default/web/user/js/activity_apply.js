@@ -187,6 +187,11 @@ var loadTickets = function(weid, callback) {
     });
 }
 
+// 导出列表
+var exportCsv = function(weid) {
+    location.href = '/export?type=activity_enroll_list&activity_id=' + weid;
+}
+
 // 短信通知
 var smsNotify = function(weid, enroll_id, callback) {
         layer.load();
@@ -266,6 +271,7 @@ var multiSmsNotify = function(weid, userIds, callback) {
         });
     });
 }
+
 $(document).on('click', '.all-sms-notify', function() {
     confirmer = layer.confirm('快捷发送方式将通知该活动所有报名者，若要指定接收人，请使用"短信管理"中的高级群发功能。<br>您确认要快捷发送通知吗？', {
         title: '快捷发送通知',
@@ -330,7 +336,7 @@ $(document).on('click', '.multi-sms-notify', function() {
 
 
     var selector;
-    $.getScript("/common/friendsuggest/ui.friendsuggest.js?sss", function() {
+    $.getScript("/common/friendsuggest/ui.friendsuggest.js", function() {
         selector = new giant.ui.friendsuggest({
             ajaxUrl: "/api/activity/enroll/fetcher?activity_id=" + id,
             ajaxLoadAllUrl: "/api/activity/enroll/fetcher?activity_id=" + id,
@@ -358,6 +364,10 @@ $(document).on('click', '.sms-notify', function() {
             layer.msg('已发送!');
         });
     }, function() {});
+});
+
+$(document).on('click', '.export-csv', function() {
+    exportCsv(id);
 });
 
 
@@ -447,6 +457,13 @@ $(document).ready(function() {
 
     // 列表模板
     var num = 0;
+    var ticketInfo = function(ticketInfo) {
+        var html = '';
+        for (key in ticketInfo) {
+            html += '<p><label>' + ticketInfo[key].name + '</label><span>' + ticketInfo[key].price + '元 x ' + ticketInfo[key].num + '</span></p>';
+        }
+        return html;
+    }
     var listtemplate = function(data) {
         console.log(num);
         num++;
@@ -456,14 +473,14 @@ $(document).ready(function() {
             `<td class="user">
             <div class="user-avatar"><img src="` + ApiMaterPlatQiniuDomain + data.avatar + `" width="45"></div>` +
             `<div class="user-desc">
-                <div class="username">` + data.name + `</div>` +
-            `<div class="company"><span>` + data.company + `</span><span>` + data.poistion + `</span></div>
+                <div class="username">` + data.real_name + `</div>` +
+            `<div class="company"><span>` + data.company + `</span><span>` + data.position + `</span></div>
             </div>` +
             '</td>' +
-            '<td class="mobile">' + data.telphone + '</td>' +
+            '<td class="mobile">' + data.phone + '</td>' +
             '<td class="ticket">' +
 
-            (data.type == 1 ? ' <img data-toggle="modal" data-target="#myModal" src="/common/img/ticket-apply.png">' : '<b>￥' + data.price + '<b>') +
+            (data.type == 1 ? ' <img data-toggle="modal" data-target="#myModal" src="/common/img/ticket-apply.png">' : ticketInfo(data.ticketInfo)) +
 
             '</td>' +
 
@@ -512,10 +529,10 @@ $(document).ready(function() {
             name: name,
             telphone: telphone
         }
-        console.log(sendData);
+
         $.ajax({
-            url: ACTIVITY_ENROLL_LISTS + '?status=1',
-            type: 'post',
+            url: ACTIVITY_ENROLL_LISTS_WITH_TICKETINFO + '?status=1',
+            type: 'GET',
             data: sendData,
             headers: {
                 'Token': docCookies.getItem("token")
@@ -675,7 +692,7 @@ $(document).ready(function() {
         $(this).text(typeObj[other]);
 
         if (selected == 'mobile') {
-            $('#J_InputSearchCondition').attr('placeholder', '请输入手机号后4位');
+            $('#J_InputSearchCondition').attr('placeholder', '请输入手机号');
             $('#J_InputSearchCondition').val('');
         } else {
             $('#J_InputSearchCondition').attr('placeholder', '请输入用户姓名');

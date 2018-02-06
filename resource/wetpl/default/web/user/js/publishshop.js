@@ -78,12 +78,11 @@ $(function(){
     var memberDom = function(data){
         var isPrice = data.price ? data.price : "";
         var dom =
-            '<div class="form-group member" weid="'+data.weid+'">'+
-            '<label class="col-sm-2 control-label">'+data.name+'</label>'+
-            '<div class="col-sm-3">'+
-            '<input type="text" class="form-control" name="member-price" value="'+isPrice+'">'+
-                '</div>'+
-                '</div>';
+            '<li style="position: relative; width: 280px;height: 40px;overflow: hidden ;background:#fafafa;box-sizing:border-box;padding-left:10px;float:left;weid="'+data.weid+'">'+
+            '<label class="" style="line-height: 40px;">'+data.name+'</label>'+
+            '<input type="text" class="form-control" style="background:#fff;width: 174px;position:relative;z-index100;top:2px;left-2px;height: 35px!important;float: right"  name="member-price" value="'+isPrice+'">'+
+            '<span style="position: absolute;top: 6px;right: 0;font-size: 16px;color: #999;">￥</span>'+
+                '</li>';
         return dom;
     };
 
@@ -100,7 +99,7 @@ $(function(){
 
         })
     $("input[name='discount_status']").click(function () {
-        $('.insert-member').children().remove();
+        $('#tables > ul').children().remove();
         if($("input[name='discount_status']:checked").val() == 1){
             $.ajax({
                 url : apiUrl + 'plat/member_level',
@@ -112,7 +111,8 @@ $(function(){
                     console.log('dfsdfs',res);
                     if(res.code == 200 && res.data.length){
                         for(var i=0; i<res.data.length; i++){
-                            $('.insert-member').append(memberDom(res.data[i]))
+                            $('#tables > ul').append(memberDom(res.data[i])).show();
+                            $("#parparp").show();
                         }
                     }
                 },
@@ -120,52 +120,56 @@ $(function(){
                     console.log(xhr)
                 }
             })
+        }else {
+            $('#tables > ul').hide();
+            $("#parparp").hide();
         }
     })
 
     //添加服务
     $(".add_service").click(function () {
 
-
+        $("#ser_add > ul ").show();
         var html=initServiceHtml('');
 
-        $(".insert-service").append(html);
+        $(".insert-service").addClass("serverss");
+        $("#ser_add > ul").append(html);
         delServiceDelete();
 
     });
+
      var initServiceHtml=function (data) {
          if (isNull(data)) {
-             var html='<div class="service_list"><div class="operate" style="font-size: 20px;position: absolute;right: 50px;"><i class="fa fa-close J_Service_Delete" style="top: 2px;color: #adadad;cursor: pointer;font-size: 24px;"></i></div>'+
-                 '<div class="form-group"><label class="col-sm-2 control-label">服务标题:</label><div class="col-sm-3"><input type="text" class="form-control" name="service_title" value=""></div></div>'+
-                 '<div class="form-group">'+
-                 '<label for="" class="col-sm-2 control-label">服务内容:</label>'+
-                 '<div class="col-sm-6">'+
-                 '<textarea class="form-control" name="service_content" rows="5"></textarea>'+
-                 '</div>'+
-                 '</div>'+
-                 '</div>';
+             var html= '<li class="service_list" style="border:1px solid #dddee1;width: 480px;margin-left: 95px;margin-bottom:20px;height: auto;overflow: hidden ;background:#fafafa;box-sizing:border-box;float:left;weid="'+data.weid+'">'+
+                 '<div  class="Service_Delete" style="border-bottom:1px solid #dddee1;width: 100%;box-sizing:border-box;padding:0 20px;display:flex;justify-content:space-between;align-items:center;height: 40px;"><h5 style="display: block;width: 70px;height: auto;line-height: 40px;float: left">添加服务</h5><span  style="cursor:pointer;display: block;width: 54px;height: 30px;border: 1px solid #dddee1;float: right;line-height: 30px;text-align: center;color: #666;">删除</span></div>'+
+                 '<label class="" style=" box-sizing:border-box;padding-left:10px;line-height: 40px;width: 100%;">服务标题:</label>'+
+                 '<input type="text" class="form-control" style="background:#fff;width: 95%;position:relative;z-index100;height: 40px;margin: 0 auto"  name="service_title" value="">'+
+                 '<label class="" style=" box-sizing:border-box;padding-left:10px;line-height: 40px;width: 100%;">服务内容:</label>'+
+                 '<textarea class="form-control" style="resize: none; width: 95%;margin: 0 auto 15px;" name="service_content" rows="5"></textarea>'+
+                 '</li>';
              return html;
          } else {
              //编辑使用（循环data）
              var html='';
              for (var i=0;i<data.length;i++){
-                 html+='<div class="service_list"><div class="operate" style="font-size: 20px;position: absolute;right: 50px;"><i class="fa fa-close J_Service_Delete" style="top: 2px;color: #adadad;cursor: pointer;font-size: 24px;"></i></div>'+
-                     '<div class="form-group"><label class="col-sm-2 control-label">服务标题:</label><div class="col-sm-3"><input type="text" class="form-control" name="service_title" value="'+data[i].service_title+'"></div></div>'+
-                     '<div class="form-group">'+
-                     '<label for="" class="col-sm-2 control-label">服务内容:</label>'+
-                     '<div class="col-sm-6">'+
-                    '<textarea class="form-control" name="service_content" rows="5">'+data[i].service_content+'</textarea>'+
-                    '</div>'+
-                    '</div>'+
-                    '</div>';
+                 html+='<li class="service_list" style="border:1px solid #dddee1;width: 480px;margin-left: 95px;margin-bottom:20px;height: auto;overflow: hidden ;background:#fafafa;box-sizing:border-box;float:left;weid="'+data.weid+'">'+
+                 '<div  class="Service_Delete" style="border-bottom:1px solid #dddee1;width: 100%;box-sizing:border-box;padding:0 20px;display:flex;justify-content:space-between;align-items:center;height: 40px;"><h5 style="display: block;width: 70px;height: auto;line-height: 40px;float: left">添加服务</h5><span  style="cursor:pointer;display: block;width: 54px;height: 30px;border: 1px solid #dddee1;float: right;line-height: 30px;text-align: center;color: #666;">删除</span></div>'+
+                 '<label class="" style=" box-sizing:border-box;padding-left:10px;line-height: 40px;width: 100%;">服务标题:</label>'+
+                 '<input type="text" class="form-control" style="background:#fff;width: 95%;position:relative;z-index100;height: 40px;margin: 0 auto"  name="service_title" value="'+data[i].service_title+'">'+
+                 '<label class="" style=" box-sizing:border-box;padding-left:10px;line-height: 40px;width: 100%;">服务内容:</label>'+
+                 '<textarea class="form-control" style="resize: none; width: 95%;margin: 0 auto 15px;" name="service_content" rows="5">'+data[i].service_content+'</textarea>'+
+                 '</li>';
              }
              return html;
          }
      }
      //删除服务
     var delServiceDelete=function () {
-        $(".J_Service_Delete").click(function () {
+        $(".Service_Delete > span").click(function () {
             $(this).closest(".service_list").remove();
+            if($("#ser_add > ul > li").length <= 0){
+                $("#ser_add > ul ").hide();
+            }
         });
     }
 
@@ -403,8 +407,38 @@ $(function(){
         var r = window.location.search.substr(1).match(reg); //匹配目标参数
         if (r != null) return unescape(r[2]); return null; //返回参数值
     }
+    // 获取商品分类
+    var systemType = [];
+    var system = function(systemid){
+        console.log()
+        $.ajax({
+            // url: "http://apitest.wezchina.com/goods/cates/list",
+            url: apiUrl + '/plats/goods/category',
+            type: 'get',
+            headers: {
+                'Token': docCookies.getItem("token")
+            },
+            success: function(data){
+                if (data.code == 200){
+                    let cates = data.data.list;
+                    if(cates.length>0){
+                        cates.map(x => {
+                            $(".systemtypes select").append(
+                                '<option id=' + x.weid + '>' + x.name + '</option>'
+                            )
+                            systemType.push({id: x.weid, name: x.name});
+                        })
+                    }
+                }
+            },
+            error: function(xhr){
+                console.log(xhr);
+            }
+        })
+    }
+    system();
      // 获取商品分类
-    var weid = getUrlParam('id');
+    // var weid = getUrlParam('id');
     var cateType = [];
     var userid=docCookies.getItem("weid");
     var catesfun = function(userid){
@@ -581,16 +615,16 @@ malldetail();
                     if(goods.discount_status == 1){
                         $("input[value='1']").removeAttr('checked').attr("checked","checked");
                     }
-                    $('.insert-member').children().remove();
+                    $('#tables > ul').children().remove();
                     if(goods.discount_status == 1 && goods.discount.length){
                         for(var i=0; i<goods.discount.length; i++){
-                             $('.insert-member').append(memberDom(goods.discount[i]))
+                             $('#tables > ul').append(memberDom(goods.discount[i])).show();
                         }
                     }
                     //加入服务列表
                     if(!isNull(goods.service)){
                         var html=initServiceHtml(JSON.parse(goods.service));
-                        $(".insert-service").append(html);
+                        $("#ser_add > ul").append(html);
                         delServiceDelete();
                     }
 
@@ -673,6 +707,9 @@ malldetail();
                 filesnamestr[index]=$(this).find(".filesname").val();
 
             })
+
+            var typenames = $("[name='type_id']").val();
+            var  system_cate_id = systemType.filter(y => y.name == typenames)[0].id;
 
             var option = $("[name='cate_id']").val();
             var  cate_id = cateType.filter(x => x.name == option)[0].id;
@@ -777,6 +814,7 @@ malldetail();
                 stock:stock,
                 sort:sort,
                 note:note,
+                system_cate_id:system_cate_id,
                 cate_id: cate_id,
                 page_id:page_id,
                 mall_id:mall_id,
@@ -793,8 +831,8 @@ malldetail();
             // console.log(sendData);
 
             if ($(this).data("id") !== 1) {
-                //sendData.weId = weid;
-                // console.log(JSON.stringify(sendData));
+                sendData.weId = weid;
+                console.log(JSON.stringify(sendData));
                 $.ajax({
                     //url: ARTICLE_EDIT,
                     url: GOODS_STORE,
@@ -819,7 +857,7 @@ malldetail();
                 })
             } else {
                 sendData.weid=id;
-                // console.log(sendData);
+                console.log(sendData);
                 $.ajax({
                     url: GOODS_UPDATE,
                     type: 'post',

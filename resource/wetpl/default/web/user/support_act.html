@@ -55,6 +55,40 @@
         .bar-code {
             text-align: center;
         }
+        .text2{
+            display:-webkit-box;
+            -webkit-box-orient:vertical;
+            -webkit-line-clamp:2;
+            overflow:hidden;
+            text-overflow:ellipsis;
+
+        }
+        .show-cont p{
+            font-size:14px!important;
+            color:#4D4D4D!important;
+        }
+
+        .cons > div{
+            float: left;
+        }
+        .cons > div:nth-of-type(2n) div.show-cont{
+            padding-right: 0;
+        }
+        .cons > div:nth-of-type(2n-1) div.myself{
+            padding-right: 17px;
+            box-sizing: border-box;
+        }
+        .cons > div:nth-of-type(2n){
+            box-sizing: border-box;
+            padding-left: 17px;
+        }
+        .show-tiket > span{
+            color: #828282!important;
+        }
+        .typesss{
+            width: 100%;
+            height: 60px;
+        }
     </style>
 </head>
 
@@ -69,6 +103,10 @@
                 <li class="active" style="color: #fff!important;">支持活动</li>
             </ol>
         </div>
+        <!--<div class="typesss">-->
+
+        <!--</div>-->
+        <div class="cons" style="width: 100%;height: auto;overflow:hidden;box-sizing: border-box;padding: 0 20px;"></div>
     </div>
     <!-- 模态框（Modal） -->
     <div class="modal fade bs-example-modal-sm" id="myModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
@@ -77,10 +115,8 @@
 
                 <div class="modal-body">
                     <input type="hidden" value="" id="myModal_input">
-
                     <div class="ticket_apply text-center">
                         <img src="/common/img/ticket-apply.png" alt="">
-
                     </div>
                 </div>
 
@@ -94,5 +130,4 @@
     <script charset="utf-8" type="text/javascript" src="{{PATH_TML}}user/js/support_act_pay.js"></script>
     <script charset="utf-8" type="text/javascript" src="{{PATH_TML}}user/js/support_act.js"></script>
 </body>
-
 </html>

@@ -1,10 +1,15 @@
-<#include#>header_include.html</#include#>
+<link rel="stylesheet" href="../../../../../common/css/common/img/about_img/n.css"><#include#>header_include.html</#include#>
 <script type="text/javascript">
     header_scroll = 'no';
 </script>
 <body>
 <link rel="stylesheet" href="/common/css/abouts.css">
+<link rel="stylesheet" href="/common/css/publicn.css">
+<link rel="stylesheet" href="/common/css/animationn.css">
+<link rel="stylesheet" href="/common/css/aboutsn.css">
 <script src="/common/js/news_pages.js"></script>
+<script src="/common/js/jquery.timer.js"></script>
+<script src="/common/js/public.js"></script>
 <!--<div class="location_box wrap">
 	<div class="location f_l">
 		<i class="fl ico loc_ico mr5"></i>
@@ -13,62 +18,711 @@
 </div>-->
 <div class="about_top_img"></div>
 <style type="text/css">
-    .icon-wenzhang{
+    .icon-wenzhang {
         top: 1px !important;
+    }
+    .title{
+        position: relative;
+        z-index: 900;
     }
 </style>
 <div id="app" class="article_main article_box" style="padding:0">
-    <section  class="ban">
-        <div class="bnaner_aubou">
-            <main>
-                <div class="bnbntitle"></div>
-                <img src="/common/img/iphone.png" alt="">
-            </main>
+    <div class="blank85" style="height: 70px;"></div>
+
+    <div class="adv_block">
+        <span class="img_about"></span>
+        <div class="warp pr">
+            <div class="img_aboutsp"></div>
         </div>
-    </section>
-    <section class="content">
-        <div class="toptop">
-            <main>
-                <ul class="content_left pps">
-                    <li :class="{'current': item.domain == currPage}" v-for="item in company">
-                        <a :class="{'about': item.domain == currPage}" :href="'/company/'+ item.domain"><span>{{item.title}}</span></a>
-                    </li>
-                </ul>
-            </main>
+    </div>
+    <div class="blank34"></div>
+
+
+    <div class="clearfix warp">
+        <div class="f_l Navigation_block">
+            <h6>关于我们</h6>
+            <ul>
+                <li :class="{'current': item.domain == currPage}" v-for="item in company">
+                    <a :href="'/company/'+ item.domain">
+                        <span class="f_l">{{item.title}}</span>
+                        <span class="f_r ico">&gt;</span>
+                    </a>
+                </li>
+            </ul>
         </div>
-        <main>
-            <div class="boxb">
-                <ul class="content_left diss">
-                    <li :class="{'current': item.domain == currPage}" v-for="item in company">
-                        <a :class="{'about': item.domain == currPage}" :href="'/company/'+ item.domain"><span>{{item.title}}</span></a>
-                    </li>
-                </ul>
-            </div>
-            <div class="content_rights">
-                <ul>
-                    <li>
-                        <div class="about_title">
-                            <div class="title_con">
-                                <div class="lineder"></div>
-                                <span>{{content.title}}</span>
-                                <img v-if="currPage == 'about'" src="/common/img/sugg.png" alt="">
-                                <img v-if="currPage == 'history'" src="/common/img/develope.png" alt="">
-                                <img v-if="currPage == 'honor'" src="/common/img/hoemer.png" alt="">
-                                <img v-if="currPage == 'cases'" src="/common/img/case.png" alt="">
-                                <img v-if="currPage == 'jobs'" src="/common/img/addus.png" alt="">
-                                <img v-if="currPage == 'contact'" src="/common/img/conect.png" alt="">
+
+        <template  v-if="currPage == 'about'">
+            <div class="f_r w977">
+                <div class="fzlc">
+                    <div class="title abstracttitle"></div>
+                    <div class="ovhide mt31 abstract_at">
+                        <div class="abstract_s1">
+                            <div class="f_l w600">
+                                <p>福建微众信息科技有限公司(www.fanwe.com
+                                    简称微众），创立于2008年1月，注册资本1000万。是一家以互联网创新模式软件产品及解决方案为核心，标准化管理、快速发展的高新技术企业。拥有员工百余人，拥有一批互联网领域10余年从业经验的专业团队。</p>
+                                <p>
+                                    在“互联网+”战略成为企业经济增长新引擎的形式下，微众洞察创业者与企业在“互联网+”进程中的不同需求（互联网化商业模式创新、传统企业转型策略、企业营销互联网化与信息化指导等），依托8年多的互联网核心技术沉淀，为创业者与企业提供符合企业“互联网+”战略的软件产品设计、开发以及提供互动营销云服务，以技术创新驱动企业“互联网+”战略的落地。</p>
+                                <p>目前微众已与兴业资本达成资本合作，完成首轮融资。未来，微众将继续围绕以互联网为核心的战略目标，在互联网创新模式产品、互动营销云平台、大数据等业务领域做全方位快速的布局。</p>
+                            </div>
+                            <div class="f_r" style="max-width:370px;">
+                                <img alt="图片无法显示哦~" src="/common/img/about_img/abstract_img1.png">
+                            </div>
+                            <div class="blank"></div>
+                        </div>
+                        <div class="blank15"></div>
+                        <div class="be_line"></div>
+                        <div class="blank15"></div>
+                        <div class="blank15"></div>
+                        <div class="abstract_s2">
+                            <div class="f_l" style="padding-right:25px">
+                                <img alt="图片无法显示哦~" src="/common/img/about_img/abstract_img2.png">
+                            </div>
+                            <div class="f_l " style="max-width:648px;">
+                                <h1>敏锐的行业前瞻性</h1>
+                                <p>微众设立战略研究室，与互联网各领域内从业者与专家保持密切沟通，形成微众独特的市场敏锐和前瞻性<br>先于全国市场，首家推出“微众众筹”、“微众P2P”、“微众O2O”等创新产品，并取得骄人的市场业绩！
+                                </p>
+                                <h1>雄厚的自主产品研发实力</h1>
+                                <p>有一支从业软件开发10余年、反应迅速、讲求团队合作的专业技术团队，奠定开发实力的高起点<br>多年互联网行业经验，拥有30余款互联网与移动互联网相关产品的自主知识产权！</p>
+                                <h1>全方位的产业链服务</h1>
+                                <p>战略先行：在企业创立或转型前期，梳理商业模式、规划技术平台、进行落地执行指导<br>技术支撑：根据战略中规划的技术平台，依托我们的研发实力，开发切合您需求与发展的软件产品<br>资本引入：协助您进行融资，实现企业快速发展、建立行业壁垒，让您走在行业竞争者前列！
+                                </p>
+                                <h1>强大的专业团队 </h1>
+                                <p>拥有一支由软件技术开发、商业营销策划、投融资等各行业资深专家及从业人员组成的专业团队<br>我们洞察市场、深谙技术、引入资本运作，旨在为不同需求、不同发展阶段的客户解决最实际的问题！
+                                </p>
+                            </div>
+                            <div class="blank"></div>
+                        </div>
+                        <div class="blank30"></div>
+                        <div class="be_line"></div>
+                        <div class="blank30"></div>
+                        <div class="abstract_s3">
+                            <div class="abstract_s3tit"></div>
+                            <div class="">
+                                <div class="boxes">
+                                    <div class="box">
+                                        <div class="box_img abstract_s3img1"></div>
+                                        <div class="box_txt">
+                                            <h1>快速稳定</h1>
+                                            <h2>天下武功唯快不破，打造互联网速度</h2>
+                                            <div class="blank15"></div>
+                                        </div>
+                                    </div>
+                                    <div class="box">
+                                        <div class="box_img abstract_s3img2"></div>
+                                        <div class="box_txt">
+                                            <h1>极致响应</h1>
+                                            <h2>极致的思维、产品、服务，您本就应该坐享其成</h2>
+                                            <div class="blank15"></div>
+                                        </div>
+                                    </div>
+                                    <div class="box">
+                                        <div class="box_img abstract_s3img3"></div>
+                                        <div class="box_txt">
+                                            <h1>谦卑为怀</h1>
+                                            <h2>对事待人常有谦卑之心，只为脱颖而出</h2>
+                                            <div class="blank15"></div>
+                                        </div>
+                                    </div>
+                                    <div class="blank"></div>
+                                </div>
                             </div>
                         </div>
-                        <ul class="about_con" v-html="content.content">
-
-                        </ul>
-                    </li>
-                </ul>
+                        <div class="blank30"></div>
+                        <div class="be_line"></div>
+                        <div class="blank30"></div>
+                        <div class="abstract_s4">
+                            <div class="abstract_s4tit"></div>
+                            <div class="blank10"></div>
+                            <div class="fack">
+                                我们是一群对互联网狂热的人。我们的成员由用户调研、交互设计、视觉设计、软件工程师、营销策划、投融资服务专家组成。<br>
+                                博学，深知，敏锐，创新，信任，积极，责任感，对细节的尊重，挑战权威...是我们的关键词。<br>
+                                深度挖掘客户需求，让我们的创新产品与极致服务帮助每个领域互联网化！<br>
+                            </div>
+                            <div class="blank20"></div>
+                            <div class="abstract_s4con">
+                                <div class="s4con1">
+                                    <img alt="图片无法显示哦~" src="/common/img/about_img/photo.png">
+                                    <a href="/company/jobs" class="joinus"></a>
+                                    <div class="blank"></div>
+                                </div>
+                                <div class="s4con2"></div>
+                            </div>
+                        </div>
+                        <div class="abstract_s5">
+                            <div class="blank30"></div>
+                            <div class="abstract_s5tit"></div>
+                            <div class="blank20"></div>
+                            <div class="abstract_s5con">
+                                <img alt="图片无法显示哦~" src="/common/img/about_img/workplase.png">
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </main>
-    </section>
-</div>
+        </template>
 
+
+        <template  v-if="currPage == 'honor'">
+            <div class="f_r w977">
+                <div class="fzlc ">
+                    <div class="title honortitle">
+                        <ul class="tab-items add-items " id="add_items">
+                            <li class="active" rel="1">
+                                <a href="javascript:void(0);" title="企业荣誉">企业荣誉</a>
+                                <span></span>
+                            </li>
+                            <li class="" rel="2">
+                                <a href="javascript:void(0);" title="企业资质">企业资质</a>
+                                <span></span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="blank15"></div>
+                    <div class="successlink tab-change common-show" rel="1">
+                        <img alt="图片无法显示哦~" src="/common/img/about_img/qyry.png">
+                    </div>
+                    <div class="successlink tab-change common-hide" rel="2">
+                        <img alt="图片无法显示哦~" src="/common/img/about_img/qyzz.png">
+                    </div>
+                </div>
+            </div>
+        </template>
+
+
+        <template  v-if="currPage == 'cases'">
+            <div class="f_r w977">
+                <div class="fzlc ">
+                    <div class="title successtitle">
+                        <ul class="tab-items add-items " id="add_items">
+                            <li class="active" rel="1">
+                                <a href="javascript:void(0);" title="o2o服务类">O2O服务类</a>
+                                <span></span>
+                            </li>
+                            <li class="" rel="2">
+                                <a href="javascript:void(0);" title="互联网金融">互联网金融</a>
+                                <span></span>
+                            </li>
+                            <li class="" rel="3">
+                                <a href="javascript:void(0);" title="其他">其他</a>
+                                <span></span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="blank15"></div>
+                    <div class="successlink tab-change common-show" rel="1">
+                        <div class="fff">
+                            <div class="clearfix" style=" width:100%;overflow: hidden;">
+                                <ul>
+                                    <li class="f_l link">
+                                        <div class="linkct o2oal1"></div>
+                                    </li>
+                                    <li class="f_l link">
+                                        <div class="linkct o2oal2"></div>
+                                    </li>
+                                    <li class="f_l link">
+                                        <div class="linkct o2oal3"></div>
+                                    </li>
+                                    <li class="f_l link">
+                                        <div class="linkct o2oal4"></div>
+                                    </li>
+                                    <li class="f_l link">
+                                        <div class="linkct o2oal5"></div>
+                                    </li>
+                                    <li class="f_l link">
+                                        <div class="linkct o2oal6"></div>
+                                    </li>
+                                    <li class="f_l link">
+                                        <div class="linkct o2oal7"></div>
+                                    </li>
+                                    <li class="f_l link">
+                                        <div class="linkct o2oal8"></div>
+                                    </li>
+                                    <li class="f_l link">
+                                        <div class="linkct o2oal9"></div>
+                                    </li>
+                                    <li class="f_l link">
+                                        <div class="linkct o2oal10"></div>
+                                    </li>
+                                    <li class="f_l link">
+                                        <div class="linkct o2oal11"></div>
+                                    </li>
+                                    <li class="f_l link">
+                                        <div class="linkct o2oal12"></div>
+                                    </li>
+                                    <li class="f_l link">
+                                        <div class="linkct o2oal13"></div>
+                                    </li>
+                                    <li class="f_l link">
+                                        <div class="linkct o2oal14"></div>
+                                    </li>
+                                    <li class="f_l link">
+                                        <div class="linkct o2oal15"></div>
+                                    </li>
+                                    <li class="f_l link">
+                                        <div class="linkct o2oal16"></div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="blank"></div>
+                        </div>
+                    </div><!--successlink end -->
+                    <div class="successlink tab-change common-hide" rel="2">
+                        <div class="fff">
+                            <div class="clearfix" style=" width:100%; overflow: hidden;">
+                                <ul>
+                                    <li class="f_l link">
+                                        <div class="linkct jral21"></div>
+                                    </li>
+                                    <li class="f_l link">
+                                        <div class="linkct jral22"></div>
+                                    </li>
+                                    <li class="f_l link">
+                                        <div class="linkct jral23"></div>
+                                    </li>
+                                    <!-- <li class="f_l link"><div class="linkct jral1"></div></li> -->
+                                    <li class="f_l link">
+                                        <div class="linkct jral2"></div>
+                                    </li>
+                                    <!-- <li class="f_l link"><div class="linkct jral3"></div></li> -->
+                                    <li class="f_l link">
+                                        <div class="linkct jral4"></div>
+                                    </li>
+                                    <li class="f_l link">
+                                        <div class="linkct jral5"></div>
+                                    </li>
+                                    <!-- <li class="f_l link"><div class="linkct jral6"></div></li>
+                                    <li class="f_l link"><div class="linkct jral7"></div></li>
+                                    <li class="f_l link"><div class="linkct jral8"></div></li>
+                                    <li class="f_l link"><div class="linkct jral9"></div></li>
+                                    <li class="f_l link"><div class="linkct jral10"></div></li>
+                                    <li class="f_l link"><div class="linkct jral11"></div></li>
+                                    <li class="f_l link"><div class="linkct jral12"></div></li>
+                                    <li class="f_l link"><div class="linkct jral13"></div></li>
+                                    <li class="f_l link"><div class="linkct jral14"></div></li>
+                                    <li class="f_l link"><div class="linkct jral15"></div></li> -->
+                                    <li class="f_l link">
+                                        <div class="linkct jral16"></div>
+                                    </li>
+                                    <li class="f_l link">
+                                        <div class="linkct jral17"></div>
+                                    </li>
+                                    <!-- <li class="f_l link"><div class="linkct jral18"></div></li>
+                                    <li class="f_l link"><div class="linkct jral19"></div></li> -->
+                                    <li class="f_l link">
+                                        <div class="linkct jral20"></div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="blank"></div>
+                        </div>
+                    </div><!--successlink end -->
+                    <div class="successlink tab-change common-hide" rel="3">
+                        <div class="fff">
+                            <div class="clearfix" style=" width:100%; overflow: hidden;">
+                                <ul>
+                                    <li class="f_l link">
+                                        <div class="linkct alqt1"></div>
+                                    </li>
+                                    <li class="f_l link">
+                                        <div class="linkct alqt2"></div>
+                                    </li>
+                                    <li class="f_l link">
+                                        <div class="linkct alqt3"></div>
+                                    </li>
+                                    <li class="f_l link">
+                                        <div class="linkct alqt4"></div>
+                                    </li>
+                                    <li class="f_l link">
+                                        <div class="linkct alqt5"></div>
+                                    </li>
+                                    <li class="f_l link">
+                                        <div class="linkct alqt6"></div>
+                                    </li>
+                                    <li class="f_l link">
+                                        <div class="linkct alqt7"></div>
+                                    </li>
+                                    <li class="f_l link">
+                                        <div class="linkct alqt8"></div>
+                                    </li>
+                                    <li class="f_l link">
+                                        <div class="linkct alqt9"></div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="blank"></div>
+                        </div>
+                    </div><!--successlink end -->
+                </div>
+            </div>
+        </template>
+
+
+        <template  v-if="currPage == 'history'">
+            <div class="f_r w977">
+                <div class="fzlc pr191">
+                    <div class="title progresstitle"></div>
+                    <div class="ovhide mt31 pars">
+                        <div class="lines" style="width: 1px; height:  a"></div>
+                        <dl>
+                            <dd class="clearfix">
+                                <span class="f_l year">2016</span>
+                                <ul>
+                                    <li>
+                                        <span class="f_l month" style="position: relative;z-index: 600;">7月</span>
+                                        <p>领跑互联网创新产品及解决方案，<em>获兴业资本首轮战略投资</em></p>
+                                    </li>
+                                    <li>
+                                        <span class="f_l month">6月</span>
+                                        <p><em>“微众互动直播系统”</em>、<em>“牛互动云平台” </em>正式发布</p>
+                                    </li>
+                                    <li>
+                                        <span class="f_l month">5月</span>
+                                        <p>微众通过不断的互联网创新和技术沉淀，<br>
+                                            累计获得6项软件发明专利、30余项软件著作权登记证书
+                                        </p>
+                                    </li>
+                                    <li>
+                                        <span class="f_l month">3月</span>
+                                        <p>微众牛媒体获“最具广告投放价值互联网广告平台奖”</p>
+                                    </li>
+                                    <li>
+                                        <span class="f_l month">2月</span>
+                                        <p>微众系列产品商业用户突破<em>15000+</em></p>
+                                    </li>
+                                </ul>
+                            </dd>
+                            <dd class="clearfix">
+                                <span class="f_l year">2015</span>
+                                <ul>
+                                    <li>
+                                        <span class="f_l month">9月</span>
+                                        <p>获福建省高新技术企业、福建省科技型企业认证<br>
+                                            累计获得20余个软件著作权登记证书</p>
+                                    </li>
+                                    <li>
+                                        <span class="f_l month">8月</span>
+                                        <p>公司团队人数扩张至百余人，迁址1000多平方的新办公室</p>
+                                    </li>
+                                    <li>
+                                        <span class="f_l month">7月</span>
+                                        <p>公司正式更名为"福建微众信息科技有限公司"</p>
+                                    </li>
+                                    <li>
+                                        <span class="f_l month">4月</span>
+                                        <p>首家发布<em>“微众社区O2O系统”“微众上门服务O2O系统”</em><br>
+                                            在国内开启了全新的O2O模式，引起了业内强烈关注
+                                        </p>
+                                    </li>
+                                    <li>
+                                        <span class="f_l month">2月</span>
+                                        <p>注册独立商标“牛传播”“牛媒体”“惠客宝”</p>
+                                    </li>
+                                    <li>
+                                        <span class="f_l month">1月</span>
+                                        <p>公司成立七周年 ，微众系列产品商业用户突破<em>10000家</em></p>
+                                    </li>
+                                </ul>
+                            </dd>
+                            <dd class="clearfix">
+                                <span class="f_l year">2014</span>
+                                <ul>
+                                    <li>
+                                        <span class="f_l month">9月</span>
+                                        <p>注册独立商标“易赞”“酷赞”“牛互动”“牛小店”</p>
+                                    </li>
+                                    <li>
+                                        <span class="f_l month">6月</span>
+                                        <p>发布“汇客宝全民经纪人系统”，为房地产行业提供全民营销解决方案</p>
+                                    </li>
+                                    <li>
+                                        <span class="f_l month">1月</span>
+                                        <p> 微众系列产品商业用户突破7000家</p>
+                                    </li>
+                                </ul>
+                            </dd>
+                            <dd class="clearfix">
+                                <span class="f_l year">2013</span>
+                                <ul>
+                                    <li>
+                                        <span class="f_l month">11月</span>
+                                        <p><em>全国第一款O2O软件“微众O2O系统”正式发布</em> <br>在国内奠定了O2O模式的基础</p>
+                                    </li>
+                                    <li>
+                                        <span class="f_l month">8月</span>
+                                        <p>“微众名品折扣系统”正式发布</p>
+                                    </li>
+                                    <li>
+                                        <span class="f_l month">5月</span>
+                                        <p>“微众在线订餐系统”正式发布</p>
+                                    </li>
+                                    <li>
+                                        <span class="f_l month">3月</span>
+                                        <p>获得10余个软件著作权登记证书</p>
+                                    </li>
+                                    <li>
+                                        <span class="f_l month">1月</span>
+                                        <p> 微众系列产品商业用户突破4000家</p>
+                                    </li>
+                                </ul>
+                            </dd>
+                            <dd class="clearfix">
+                                <span class="f_l year">2012</span>
+                                <ul>
+                                    <li>
+                                        <span class="f_l month">12月</span>
+                                        <p><em> 全国第一款互联网众筹软件“微众众筹系统”正式发布</em></p>
+                                    </li>
+                                    <li>
+                                        <span class="f_l month">10月</span>
+                                        <p><em>全国第一款互联网金融P2P平台软件“微众P2P网贷系统”正式发布</em></p>
+                                    </li>
+                                    <li>
+                                        <span class="f_l month">1月</span>
+                                        <p> 微众系列产品商业用户突破2000家</p>
+                                    </li>
+                                </ul>
+                            </dd>
+                            <dd class="clearfix">
+                                <span class="f_l year">2011</span>
+                                <ul>
+                                    <li>
+                                        <span class="f_l month">12月</span>
+                                        <p><em>“微众团购系统”销售收入突破千万</em></p>
+                                    </li>
+                                    <li>
+                                        <span class="f_l month">2月</span>
+                                        <p>成立全资子公司“福团网”，组建团队，触及团购平台的本地化运营</p>
+                                    </li>
+                                    <li>
+                                        <span class="f_l month">1月</span>
+                                        <p> 微众系列产品商业用户突破1000家<br>客户遍布全国及美国、加拿大、新加坡等海外国家和地区</p>
+                                    </li>
+                                </ul>
+                            </dd>
+                            <dd class="clearfix">
+                                <span class="f_l year">2010</span>
+                                <ul>
+                                    <li>
+                                        <span class="f_l month">12月</span>
+                                        <p> 获得“微众”商标注册认证</p>
+                                    </li>
+                                    <li>
+                                        <span class="f_l month">10月</span>
+                                        <p>全国第一款分享软件“微众分享系统”正式发布</p>
+                                    </li>
+                                    <li>
+                                        <span class="f_l month">3月</span>
+                                        <p><em>全国第一款团购软件“微众团购系统”正式发布，引领国内团购模式热潮</em></p>
+                                    </li>
+                                </ul>
+                            </dd>
+                            <dd class="clearfix">
+                                <span class="f_l year">2009</span>
+                                <ul>
+                                    <li>
+                                        <span class="f_l month">5月</span>
+                                        <p>公司成功转型互联网，提供电子商城定制及模块开发服务</p>
+                                    </li>
+                                    <li>
+                                        <span class="f_l month">3月</span>
+                                        <p>“fanwe.com”域名正式启用</p>
+                                    </li>
+                                    <li>
+                                        <span class="f_l month">3月</span>
+                                        <p>公司研发的“财易通食品台帐软件”得到福建省工商部门高度认可<br>确定为食品企业指定台帐管理软件</p>
+                                    </li>
+                                </ul>
+                            </dd>
+                            <dd class="clearfix">
+                                <span class="f_l year">2008</span>
+                                <ul>
+                                    <li>
+                                        <span class="f_l month">3月</span>
+                                        <p> 提供软件定制开发服务</p>
+                                    </li>
+                                    <li>
+                                        <span class="f_l month">1月</span>
+                                        <p><em>公司在福建福州正式成立</em></p>
+                                    </li>
+                                </ul>
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        <template  v-if="currPage == 'jobs'">
+            <div class="f_r w977">
+                <div class="fzlc pr191">
+                    <div class="title successtitle join_title"></div>
+                    <div class="ovhide mt31 pars">
+                        <div class="lines" style="width: 1px; height:  a"></div>
+                        <div  class="addwe" style="width: 100%!important;" id="join">
+                            <p>欢迎投递简历至：<span>job@weichina.com,</span>邮件主题为：<span>“地点+职位+姓名”</span></p>
+                            <ul class="adduss" style="width: 100%!important;">
+                                <li style="width: 100%!important;">
+                                    <div class="li-con">
+                                        <span>职位列表</span>
+                                        <span>
+                                    <select name="" id="0">
+                                        <option value="">全部职能</option>
+                                    </select>
+                                </span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="li-con">
+                                        <span>职位</span>
+                                        <span>
+                                        <span>工作职能</span>
+                                        <span>工作地点</span>
+                                        <span>招聘时效</span>
+                                    </span>
+                                    </div>
+                                    <!---->
+                                </li>
+                                <li  v-for="(item, index) in join" :id="index" @click="slide(item.weid,$event)">
+                                    <div class="li-con">
+                                        <span>{{item.title}}<div class="new">NEW</div></span>
+                                        <span>
+                                    <span>市场</span>
+                                    <span>西安-绿地</span>
+                                    <span>长期有效</span>
+                                    </span>
+                                    </div>
+                                    <div class="contentss" v-html="joincon"></div>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </template>
+        <template  v-if="currPage == 'contact'">
+            <div class="lx f_r w981" style="width:981px;">
+                <div class="lx_title"></div>
+                <div class="clearfix" style=" padding:20px 0;">
+                    <div class="f_l w591 l_con">
+                        <p style=" color:#0579cb; font-size:26px; line-height:40px;">有问题？</p>
+                        <p style=" font-size:15px; line-height:30px; color:#404040;">请拨打全国客服热线</p>
+                        <p class="lx_telep">4008-006-029</p>
+                        <div class="clearfix">
+                            <div class="lx_email f_l">邮箱：job@weichina.com</div>
+                        </div>
+                        <p style="margin-top: 10px;">座机：029-68538898</p>
+                    </div>
+                    <div class="f_r wx_img_b">
+                        <img alt="图片无法显示哦~" src="/common/img/main_code.jpg" width="115" height="115" class="f_l ml-115">
+                        <p class="con">
+                            扫描关注<br>微信公众平台
+                        </p>
+                    </div>
+                </div>
+                <div style=" font-size:15px;  line-height:40px; color:#404040;">您还可以通过以下方式联系</div>
+                <table class="f16  w981 new_table_2">
+                    <tbody>
+                    <tr class="table_h">
+                        <th width="191" height="42">
+                            <div align="center">产品型号</div>
+                        </th>
+                        <th width="400">
+                            <div align="center">产品名称</div>
+                        </th>
+                        <th width="198">
+                            <div align="center">QQ咨询</div>
+                        </th>
+                        <th width="172">
+                            <div align="center">联系方式</div>
+                        </th>
+                    </tr>
+                    <tr>
+                        <td rowspan="4">
+                            <div align="center"><strong>服务</strong></div>
+                        </td>
+                        <td height="42">微众生活服务平台</td>
+                        <td align="center"><a target="_blank"
+                                              href=""><img
+                                alt="图片无法显示哦~" src="/common/img/about_img/qq_img.png"></a></td>
+                        <td>029-68538660</td>
+                    </tr>
+                    <tr>
+                        <td height="42">微众投票系统</td>
+                        <td align="center"><a target="_blank"
+                                              href=""><img
+                                alt="图片无法显示哦~" src="/common/img/about_img/qq_img.png"></a></td>
+                        <td>029-68538660</td>
+                    </tr>
+                    <tr>
+                        <td height="42">微众平台办理业务</td>
+                        <td align="center"><a target="_blank"
+                                              href=""><img
+                                alt="图片无法显示哦~" src="/common/img/about_img/qq_img.png"></a></td>
+                        <td>029-68538660</td>
+                    </tr>
+                    <tr>
+                        <td height="42">微众系统</td>
+                        <td align="center"><a target="_blank"
+                                              href=""><img
+                                alt="图片无法显示哦~" src="/common/img/about_img/qq_img.png"></a></td>
+                        <td>029-68538660</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="4">
+                            <div align="center"><strong>互联网金融</strong></div>
+                        </td>
+                        <td height="42">微众众筹系统</td>
+                        <td align="center"><a target="_blank"
+                                              href=""><img
+                                alt="图片无法显示哦~" src="/common/img/about_img/qq_img.png"></a></td>
+                        <td>029-68538660</td>
+                    </tr>
+                    <tr>
+                        <td height="42">微众P2P系统</td>
+                        <td align="center"><a target="_blank"
+                                              href=""><img
+                                alt="图片无法显示哦~" src="/common/img/about_img/qq_img.png"></a></td>
+                        <td>029-68538660</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="blank91"></div>
+                <!-- <div class="address">
+                       <div class=" change">
+                                 <ul>
+                                     <li class="f_l pr ml279 current" rel="0">
+                                         <div class="position_img"></div>
+                                    <p>福州</p>
+                                     </li>
+
+                                     <div class="blank"></div>
+                                 </ul>
+                               <div class="blank"></div>
+                       </div>
+                </div> -->
+                <div class="blank"></div>
+                <div class="address_map mt12">
+                    <ul>
+                        <li class="pr current">
+                            <img alt="图片无法显示哦~" src="/common/img/about_img/2018-01-24_181124.png" width="981" height="530">
+                            <div class="address_info">
+                                <p>
+                                    西安市高新区锦业路1号绿地领海大厦A座15层<br>
+                                    联系电话：4008-006-029
+                                </p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </template>
+    </div>
+
+    <div class="btop"></div>
+    <div class="blank30"></div>
+    <div class="blank30"></div>
+</div>
 <script>
     $('.icon-0').addClass('icon-guanyuwomen0');
     $('.icon-1').addClass('icon-lianxiwomen');
@@ -79,26 +733,68 @@
     new Vue({
         el: '#app',
         data: {
-            'content' : {},
-            'show':true,
-            'page':1,
-            'company' :[],
-            'currPage' : window.location.pathname.split('/').pop()
+            'content': {},
+            'show': true,
+            'page': 1,
+            'company': [],
+            'currPage': window.location.pathname.split('/').pop(),
+            'title':'',
+            'join':'',
+            'joincon':'123123123',
+            'teems':'',
         },
         mounted() {
-            this.$nextTick( function () {
+            this.$nextTick(function () {
                 this.get_data(this.currPage);
+                this.people();
             });
         },
-        methods:{
-            get_data : function(channel){
+
+        methods: {
+            people:function () {
+                if(this.currPage === 'about'){
+                    ajax.get(web_business.web_cms_channel_contents, {
+                        params: {
+                            cate_id: 'team',
+                            limit: 10,
+                            'page': 1
+                        }
+                    }).then((res)=>{
+                        this.teems = res.data.list;
+                        $(this.teems).each((v,i)=>{
+                            i.img=settings+i.thumb_image;
+                        })
+
+                    })
+
+                }else if(this.currPage === 'jobs'){
+                    ajax.get(web_business.web_cms_channel_contents, {
+                        params: {
+                            cate_id: 'join',
+                            limit: 10,
+                            'page': 1
+                        }
+                    }).then((res)=>{
+                        this.join=res.data.list;
+                    })
+
+                }
+            },
+            get_data: function (channel) {
                 this.company = win.getStorage('header_about');
-                for(val in this.company){
-                    if(this.company[val].domain == channel){
+                this.title = this.company.title;
+                for (val in this.company) {
+                    if (this.company[val].domain == channel) {
                         this.content = this.company[val];
                         set_title(this.content.title);
                     }
                 }
+            },
+            slide:function (id,event){
+                ajax.get(web_business.web_cms_contents + id).then((res) => {
+                    this.joincon = res.data.content;
+                })
+                $(event.currentTarget).children("div").eq(1).delay(200).slideToggle("slow")
             }
         }
     });

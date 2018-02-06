@@ -50,7 +50,9 @@ var cloneObj = function (obj) {
                     }else{
                         list[i].avatar ='';
                     }
-           
+            if(json.data.list[i].phone==null){
+                 list[i].phone='';
+             }
             list[i].ctype = json.data.list[i].type == 1 ? '在线认证' : '人工认证';
             list[i].is_authenticated = json.data.list[i].is_authenticated == 1 ? '<span class="label label-success">已认证</span>' : '<span class="label label-primary">未认证</span>';
             if (json.data.list[i].operation_status == 1)
@@ -66,6 +68,9 @@ var cloneObj = function (obj) {
                            list[i].operation_time = new Date(json.data.list[i].operation_time * 1000).format('yyyy-MM-dd');
                 }else{list[i].operation_time = '';}
                         candle=json.data.list[i].type == 1?'详情':'更改';
+                        if(json.data.list[i].operation_status == 1 && json.data.list[i].type == 2){
+                             candle='审批';
+                        }
             list[i].operation=`<div class="btn-group" role="group"><button class="btn btn-primary pop-modal" data-type="` + json.data.list[i].type +  `" data-id="` + json.data.list[i].weid + `">`+candle+`</button>`;
           }
           params=json.data.params;
@@ -142,10 +147,11 @@ var cloneObj = function (obj) {
         //分页点击事件
         $('.pagination a').each(function (i) {
             $(this).click(function () {
+               if($(this).attr('data-dt-idx')>0 && $(this).attr('data-dt-idx')<=params.pageCount){
                 var page            = $(this).attr('data-dt-idx');
                 var real_name           = $('input[name=real_name]').val();
-              var phone               = $('input[name=phone]').val();
-              var is_authenticated    = $('select[name=is_authenticated]').val();
+                var phone               = $('input[name=phone]').val();
+                var is_authenticated    = $('select[name=is_authenticated]').val();
   
                 var data = {
                   real_name       : real_name,
@@ -155,6 +161,7 @@ var cloneObj = function (obj) {
                     limit       : 15,
                 };
                 initAdvList(data);
+                }
             })
         });
     }
@@ -222,6 +229,7 @@ var cloneObj = function (obj) {
       });
         } else if ($(this).data('type') == 1) {
       $('#bootstrapModalX').modal('show');
+      $('.order').hide();
       $.ajax({
         url: ApiUrl + 'cert/realname/show/' + $(this).data('id'),
         type: 'get',
@@ -247,6 +255,26 @@ var cloneObj = function (obj) {
                         $('#bootstrapModalX .refuse_words').text(data.data.refuse_words);
                     }
                     $('#bootstrapModalX .created_at').text(new Date(data.data.created_at * 1000).format('yyyy-MM-dd hh:mm:ss'));
+                    //付费方式
+                     var pay_type='平台代付'
+                     if(data.data.authLog!=null){
+                         if(data.data.authLog.pay_type==2){
+                            pay_type='自费';
+                         }else if(data.data.authLog.pay_type==3){
+                            pay_type='首次代付';
+                         }
+                     }
+                     $('#bootstrapModalX .pay_type').text(pay_type);
+                    //支付信息
+                    if(data.data.order!=null){
+                        $('.order').show();
+                        $('#bootstrapModalX .total_fee').text(data.data.order.total_fee+'￥');
+                        $('#bootstrapModalX .out_trade_no').text(data.data.order.out_trade_no);
+                        $('#bootstrapModalX .pay_at').text(new Date(data.data.order.pay_at * 1000).format('yyyy-MM-dd hh:mm:ss')); 
+                    }else{
+                      $('.order').hide();
+                      $('#bootstrapModalX .total_fee').text('0￥');
+                    }
         },
         error: function(xhr){
           console.log(xhr);
@@ -273,7 +301,7 @@ var cloneObj = function (obj) {
       success: function(data){
                 if (data.code == 200) {
                   swal({
-                    text: '更改成功！',
+                    text: '操作成功！',
                     type: 'success',
                     timer:20000
                   }).then(

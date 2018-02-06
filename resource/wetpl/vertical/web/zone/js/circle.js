@@ -240,8 +240,8 @@ function sendRequest(requestData, timeType, year, month) {
         let curve = data.data;
         if (curve != '') {
             xTitle = eval('["1\u6708","2\u6708","3\u6708","4\u6708","5\u6708","6\u6708","7\u6708","8\u6708","9\u6708","10\u6708","11\u6708","12\u6708"]');
-            newlyAdded = genArr(curve, arr);
-            Active = genArr(curve, arr);
+            newlyAdded = wepage.genArr(curve, arr);
+            Active = wepage.genArr(curve, arr);
         } else {
             layer.msg("没有查询到数据", {
                 time: 1500,

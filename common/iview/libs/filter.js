@@ -1,7 +1,12 @@
 
-Vue.filter('img_src', function (value , width , height, mode) {
+Vue.filter('img_src', function (value , width , height, mode , default_img) {
 
-    if (!value) return '/common/img/news_default.jpg';
+    if (!value ){
+        if($app.empty(default_img) == false) return '/common/img/news_default.jpg';
+        if(default_img == 'node') return '';
+        return default_img;
+    } 
+    
 
     if(value.indexOf('http') !== -1){
 
@@ -21,6 +26,19 @@ Vue.filter('img_src', function (value , width , height, mode) {
         } else {
             return settings + value + '?imageView2/3/w/' + width + '/h/' + height;
         }
+    }
+});
+
+Vue.filter('setImg', function (url, init, w, h, mode) {
+    if (url != '' && url != null && url != undefined) {
+        if (url.indexOf('http') === -1 && url.indexOf('common') === -1) {
+            return mode != undefined ? ApiMaterPlatQiniuDomain + url + '?imageView2/' + mode + '/w/' + w + '/h/' + h
+                : ApiMaterPlatQiniuDomain + url + '?imageView2/3/w/' + w + '/h/' + h;
+        } else {
+            return url;
+        }
+    } else {
+        return init;
     }
 });
 
@@ -114,9 +132,10 @@ Vue.filter('formateTime',function (value,type) {
 
 Vue.filter('formateString',function (value , state) {
     if($app.empty(value) == false) return '';
-
+    
     var update =  (new Date(value)).getTime();//时间戳要乘1000
     update = new Date(update);
+    
     year   = update.getFullYear();
     month  = (update.getMonth()+1<10)?('0'+(update.getMonth()+1)):(update.getMonth()+1);
     day    = (update.getDate()<10)?('0'+update.getDate()):(update.getDate());

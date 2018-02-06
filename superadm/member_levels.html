@@ -89,6 +89,7 @@
                         <div class="box">
                             <div class="box-header with-border" style="line-height: 35px;">
                                 <h3 class="box-title">会员级别</h3>
+                                <a href="member_session.html" class="btn btn-primary pull-right" style="margin-left:20px;">年届管理</a>
                                 <a href="member_level_add.html" class="btn btn-success pull-right">新增级别</a>
                             </div>
                             <!-- /.box-header -->
@@ -100,9 +101,7 @@
                                             <th>级别全称</th>
                                             <th>级别简称</th>
                                             <th>描述</th>
-                                            <th>价格|CNY</th>
-                                            <th>申请方式</th>
-                                            <th>状态</th>
+                                            <th>级别编号</th>
                                             <th>创建时间</th>
                                             <th>操作</th>
                                         </tr>
@@ -342,17 +341,7 @@
                 }, {
                     "mData": 'summary'
                 }, {
-                    "mData": 'member_price'
-                }, {
-                    "mData": 'member_type',
-                    'render': function(data, type, full) {
-                        return data == 1 ? '<span class="label label-success">可申请</span>' : '<span class="label label-default">仅展示</span>';
-                    }
-                }, {
-                    "mData": 'status',
-                    'render': function(data, type, full) {
-                        return data == 1 ? '<span class="label label-success">已启用</span>' : '<span class="label label-default">未启用</span>';
-                    }
+                    "mData": 'level_number'
                 }, {
                     "mData": 'created_at',
                     'render': function(data, type, full) {
@@ -366,11 +355,11 @@
                 }],
                 "aoColumnDefs": [{
                         "bSortable": false,
-                        "aTargets": [0, 1, 2, 3, 4, 5, 6, 7, 8]
+                        "aTargets": [0, 1, 2, 3, 4, 5]
                     }, //can't be sorted
                     {
                         "bSearchable": false,
-                        "aTargets": [0, 1, 2, 3, 4, 5, 6, 7, 8]
+                        "aTargets": [0, 1, 2, 3, 4, 5]
                     }, //can't be searched 
                 ],
                 　　　　　　　　　　"aaSorting": [
