@@ -263,7 +263,7 @@
             imageCode = '',
             imageCodeID = '',
             flag = false;
-
+        
         function bindMobileCode() {
             var $sendVerifyCodeBtn = $('#send_verify_code');
             $sendVerifyCodeBtn.click(function () {
@@ -283,13 +283,15 @@
                                 isCheckNum = true;
                                 var timeout = false;
                                 var seconds = 60;
-
+                                console.log(data,1111)
                                 count = setInterval(function () {
                                     if (seconds > 0) {
                                         seconds -= 1;
                                         $("#send_verify_code").text("剩余" + seconds + "秒");
                                     } else {
-                                        $("#send_verify_code").text("重新获取验证码");
+                                        // $("#send_verify_code").text("重新获取验证码");
+                                        bindMobileCode();
+                                        $('#send_verify_code').attr('disabled', false).html("重新获取验证码");
                                         timeout = false;
                                         seconds = 60;
                                         lock = false;
