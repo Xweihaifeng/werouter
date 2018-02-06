@@ -48,33 +48,33 @@
     <div class="modal_login" id="modal_login"></div>
     <div id="wepage" class="animsition">
         <div id="header">
-            <div>
-                <div id="topline">
-                    <a href="/"><img :src="setImg(plats_info.logo, '/common/img/new/we-logo.png', 25, 25)" alt=""/><i style="padding-left: 5px;font-style: normal;color: white;">{{plats_info.plat_name}}</i></a>
-                    <a :href="user" @click="login(1)"><p><img id="avatar" :src="setImg(avatar ,'/common/img/new/my.png', 100, 100)" alt=""/>{{userCenter}}</p></a>
-                </div>
-            </div>
-            <div id="userinfo" :style="{'background': 'url(' + setBg(pages_info.plats_domian.background, '/common/img/new/wepage.png') + ') no-repeat center','background-size': 'cover'}">
-                <div>
-                    <a :href="'/' + pages_info.plats_domian.domain"><img class="avatar1" :src="setImg(brand(pages_info.plats_user.avatar) ,'/common/img/new/avatar.png', 100, 100)" alt=""/></a>
-                    <p>
-                        <span>
-                            {{pages_info.plats_user.real_name + '的微主页' | isBrand('user')}}
-                            <img :src="imgState('/common/img/new/member.png', '/common/img/new/memberoff.png', pages_info.plats_user_cert.is_authenticated == 1)" alt=""/>
-                            <img :src="imgState('/common/img/new/care.png', '/common/img/new/careoff.png', info.if_follow == 1 ? true : false)" alt="" @click="login(0)"/>
-                        </span>
-                        <span>{{pages_info.plats_user.motto | isBrand('motto')}}</span>
-                    </p>
-                </div>
-            </div>
-            <div id="menu">
-                <ul>
-                    <li><a :href="'/' + pages_info.plats_domian.domain"><img id="plats-user" :src="setImg(brand(pages_info.plats_user.avatar) ,'/common/img/new/avatar.png', 45, 45)" alt=""></a></li>
-                    <li v-for="(e, i) in menu.list" @click="style(menu, i, true)" :class="{'underline': i === menu.flag}">{{e.name}}</li>
-                    <li id="center"><a :href="user" @click="login(1)"><p><img :src="setImg(avatar ,'/common/img/new/my.png', 25, 25)" alt=""/>{{userCenter}}</p></a></li>
-                </ul>
+        <div>
+            <div id="topline">
+                <a href="/"><img :src="setImg(plats_info.logo, '/common/img/new/logo-wepage.png', 24, 24)" alt=""/><i id="logo-font">{{plats_info.plat_name}}</i></a>
+                <a :href="user" @click="login(1)"><p><img id="avatar" :src="setImg(avatar, '/common/img/new/my.png', 100, 100)" alt=""/>{{userCenter}}</p></a>
             </div>
         </div>
+        <div id="userinfo" :style="{'background': 'url(' + setBg(pages_info.plats_domian.background, '/common/img/new/wepage.png') + ') no-repeat center','background-size': 'cover'}">
+            <div>
+                <a :href="'/' + pages_info.plats_domian.domain"><img class="avatar1" :src="setImg(brand(pages_info.plats_user.avatar) ,'/common/img/new/avatar.png', 100, 100)" alt=""/></a>
+                <p>
+                    <span>
+                        {{pages_info.plats_user.real_name + '的微主页' | isBrand('user')}}
+                        <img :src="imgState('/common/img/new/member.png', '/common/img/new/memberoff.png', pages_info.plats_user_cert.is_authenticated == 1)" alt=""/>
+                        <img :src="imgState('/common/img/new/care.png', '/common/img/new/careoff.png', info.if_follow == 1 ? true : false)" alt="" @click="login(0)"/>
+                    </span>
+                    <span>{{pages_info.plats_user.motto | isBrand('motto')}}</span>
+                </p>
+            </div>
+        </div>
+        <div id="menu">
+            <ul>
+                <li><a :href="'/' + pages_info.plats_domian.domain"><img id="plats-user" :src="setImg(brand(pages_info.plats_user.avatar) ,'/common/img/new/avatar.png', 45, 45)" alt=""></a></li>
+                <li v-for="(e, i) in menu.list" @click="style(menu, i)" :class="{'underline': i === menu.flag}">{{e.name}}</li>
+                <li id="center"><a :href="user" @click="login(1)"><p><img :src="setImg(avatar ,'/common/img/new/my.png', 25, 25)" alt=""/>{{userCenter}}</p></a></li>
+            </ul>
+        </div>
+    </div>
         <div id="container">
             <div class="read">
                 <div id="toTop"></div>
