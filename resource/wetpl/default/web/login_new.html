@@ -6,6 +6,7 @@
     <meta content="IE=Edge,chrome=1" http-equiv="X-UA-Compatible"/>
     <meta content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" name="viewport"/>
     <meta content="telephone=no" name="format-detection"/>
+    <link rel="shortcut icon" id="favicon" href="" />
     <title>登录</title>
     <meta content="authenticity_token" name="csrf-param"/>
     <meta content="Hyq2cNljCqvI6cJrSZMf/M2J8jt4kSAchfDSm0SLs8s=" name="csrf-token"/>
@@ -25,6 +26,14 @@
     <style>
         .l-captcha {
             height: 52px !important;
+        }
+
+        #wechat_logn {
+            padding: 20px;
+            background: #fff;
+            border-radius: 6px;
+            margin: 0 auto;
+            width: 360px
         }
     </style>
 </head>
@@ -96,9 +105,13 @@
                         第三方登录
                     </div>
                     <div class="third-sites">
-                        <a href="https://sso.vc.cn/auth/wechat"> <span class="wechat"></span> </a>
+                        <a href="#" id="wechat"> <span class="wechat"></span> </a>
                     </div>
                 </div>
+            </div>
+            <div id="wechat_logn" >
+                <div id="qrcode-block" style="margin-left:25px;"></div>
+                <div class="to-login" style="margin-bottom:30px;height:30px;background: url('/common/img/pc.png') no-repeat center"></div>
             </div>
         </div>
     </div>
@@ -147,7 +160,6 @@
         </div>
     </div>
 </div>
-
 
 
 <script type="text/javascript">
@@ -247,6 +259,46 @@
             preClickTime = currentClickTime;
         });
 
+        $("#wechat_logn").hide()
+
+        //二维码
+        $("#wechat").click(() => {
+            $("#sign_in").hide()
+            $("#wechat_logn").show()
+        })
+        $(".to-login").click(()=>{
+            $("#sign_in").show()
+            $("#wechat_logn").hide()
+        })
+        $("#favicon").attr("href", ApiMaterPlatQiniuDomain + localStorage.getItem("fav"));
+        $.getScript("https://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js", function(){
+            $.ajax({
+                url: apiUrl + 'setting/alias/weChatOpenConfig',
+                type: 'get',
+                dataType: 'json',
+                success: function(result) {
+                    if (result.code === 200) {
+                        var obj = new WxLogin({
+                            id: "qrcode-block",
+                            appid: result.data.appid,
+                            scope: "snsapi_login",
+                            redirect_uri: window.location.href,
+                            href: 'https://wezchina.com/common/css/wechat.css',
+                            state: ""
+                        });
+                    } else {
+                        parent.layer.msg(result.message);
+
+                        return false;
+                    }
+                },
+                error: function(xhr) {
+                    console.log(xhr);
+                }
+            });
+        })
+
+
 
     })
 </script>
@@ -263,7 +315,7 @@
             imageCode = '',
             imageCodeID = '',
             flag = false;
-        
+
         function bindMobileCode() {
             var $sendVerifyCodeBtn = $('#send_verify_code');
             $sendVerifyCodeBtn.click(function () {
@@ -283,7 +335,7 @@
                                 isCheckNum = true;
                                 var timeout = false;
                                 var seconds = 60;
-                                console.log(data,1111)
+                                console.log(data, 1111)
                                 count = setInterval(function () {
                                     if (seconds > 0) {
                                         seconds -= 1;
@@ -299,11 +351,11 @@
                                     }
                                 }, 1000);
                             } else {
-                                layer.msg("获取验证码失败", { time: 2500 });
+                                layer.msg("获取验证码失败", {time: 2500});
                             }
                         },
                         error: function (err) {
-                            layer.msg("获取验证码失败", { time: 2500 });
+                            layer.msg("获取验证码失败", {time: 2500});
                         }
                     })
                 }
@@ -389,7 +441,7 @@
                     } else {
                         lock = false;
                         clearInterval(count);
-                        layer.msg(data.message, { time: 2500 });
+                        layer.msg(data.message, {time: 2500});
                     }
                 },
                 error: function (err) {
@@ -407,16 +459,16 @@
                 login(phoneNum, checkNum, imageCode, imageCodeID);
             } else {
                 if (!(phoneNum.length == 11) || !reg.test(phoneNum)) {
-                    layer.msg("手机号码错误", { time: 2500 });
+                    layer.msg("手机号码错误", {time: 2500});
 
                     return;
                 }
                 if (!(checkNum.length == 6) || !isCheckNum) {
-                    layer.msg("手机验证码错误", { time: 2500 });
+                    layer.msg("手机验证码错误", {time: 2500});
                     return;
                 }
                 if (!isChecked) {
-                    layer.msg("请确认服务条款", { time: 2500 });
+                    layer.msg("请确认服务条款", {time: 2500});
                     return;
                 }
             }
