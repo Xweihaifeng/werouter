@@ -97,28 +97,32 @@
         }
 
         //子类型
-        var artType = {};
+        var artType = {list: [], flag: 0, type: 'articles', router: []};
         $.ajax({
             // url: 'http://demo.wezchina.com/api/articles/cates',
             url: ARTICLES_CATES + '?domain=' + pages_info.plats_domian.domain,
             async: false,
             success: function(data) {
-                artType.list = data.data;
-                artType.flag = 0;
-                artType.type = 'articles';
-                artType.router = artType.list.map(e => e.ename);
-            }                    
+                if (data.data != '' && data.data != undefined && data.data != null) {
+                    artType.list = data.data;
+                    artType.flag = 0;
+                    artType.type = 'articles';
+                    artType.router = artType.list.map(e => e.ename);    
+                }
+            }
         });
 
-        var actType = {};
+        var actType = {list: [], flag: 0, type: 'activity', router: []};
         $.ajax({
             url: apiUrl + 'activity/cate/lists',
             async: false,
             success: function(data) {
-                actType.list = data.data.list;
-                actType.flag = 0;
-                actType.type = 'activity';
-                actType.router = actType.list.map(e => e.e_name);
+                if (data.data.list != '' && data.data.list != undefined && data.data.list != null) {
+                    actType.list = data.data.list;
+                    actType.flag = 0;
+                    actType.type = 'activity';
+                    actType.router = actType.list.map(e => e.e_name);
+                }
             }
         })
 
@@ -362,7 +366,6 @@
                         this.type = 'latest';
                         this.latest = data.data.data.list;
                         this.latest == '' ? wepage.none = true : wepage.none = false;
-                        console.log(this.latest)
                     })
                 },
                 getArtList: function(page, limit, cate_id) {
