@@ -27,7 +27,7 @@
     <link rel="stylesheet" type="text/css" href="/resource/wetpl/default/web/user/css/discovery.css">
     <link rel="stylesheet" href="/common/layer-v3.0.3/layer-v3.0.3/layer/skin/default/layer.css">
     <link rel="stylesheet" type="text/css" href="/resource/wetpl/default/web/user/css/support_act.css">
-    <link rel="stylesheet" type="text/css" href="/resource/wetpl/default/web/activity/css/activitydetail.css">
+    <!--<link rel="stylesheet" type="text/css" href="/resource/wetpl/default/web/activity/css/activitydetail.css">-->
 
     <link rel="stylesheet" href="{{PATH_TML}}activity/css/activitypay.css" />
     <title>Document</title>
@@ -42,7 +42,7 @@
 <div class="modal_login" id="modal_login"></div>
 <div id="container">
     <div id="content">
-        <div class="pay" id="pay" v-if="state == 1">
+        <div class="pay" id="pay" v-if="state != 2">
             <div class="pay_info">
                 <div class="pay_bz">
                     <img src="{{PATH_TML}}activity/img/success.png" alt="" v-if="state == 1">
@@ -53,11 +53,11 @@
                         <div class="title_left">
                             <h2 v-if="state == 1">订单提交成功！去付款喽~</h2>
                             <h2 v-if="state == 3" style="color: #b9b8b8;">订单已失效，请重新选票</h2>
-                            <span v-if="state == 1">请在 <span v-html="pay_active.close_timeout"></span> 完成支付，以免订单过期</span>
-                            <span v-if="state == 3" style="color: #b9b8b8;">订单已逾期，请重新报名购买，以免没票</span>
+                            <span v-if="state == 1">请在 <span class="time" v-html="minter">分</span><span class="miao" v-html="second">s</span> 完成支付，以免订单过期</span>
+                            <span v-if="state == 3" style="color: #b9b8b8;">订单已逾期，请<a :href=" '/' + publisher_domain + '/activity/' + activity_num">重新</a>报名购买，以免没票</span>
                         </div>
                         <div class="title_right">
-                            <div class="price" style="margin-top: 0;font-size: 14px" v-if="state == 1">
+                            <div class="price" style="padding-top:21px;font-size: 14px" v-if="state == 1">
                                 应付总额：<span v-html="pay_active.total_fee"></span>
                             </div>
                             <div class="price" style="margin-top: 0;font-size: 14px;color:#b9b8b8;" v-if="state == 3">
@@ -196,11 +196,13 @@
              flag:false,        //详情页开关
              pay_num:$app.get_query_string('pay'),   //订单号
              pay_active:{},                             //订单信息
-            activity_num:$app.get_query_string('activity'),   //订单活动号
+            activity_num:"",                             //订单活动号
             user:{} ,                                    //用户信息
             pay_success:{},                                 //支付成功
-            state:0                                         //订单状态
-
+            state:0 ,                                        //订单状态
+            publisher_domain:"" ,                             //微主页
+            minter:0,                                  //剩余时间分
+            second:0,                                   //剩余时间秒
         },
         mounted: function() {
             this.$nextTick(()=>{
@@ -212,15 +214,20 @@
                     ajax.get('/activity/user_order?number=' + this.pay_num).then((res)=>{
                         if(res.code == 200) {
                             this.pay_active=res.data;
+                            this.activity_num=res.data.activity_id;
+                            this.publisher_domain=res.data.publisher_domain;
+                            console.log(8888888,this.pay_active);
+                            console.log(this.state);
+                            //
                             if(res.data.state==2){
                                 this.state=2;
+                                console.log(this.state)
                                 layer.alert("订单已支付，勿重复提交", {time: 3000});
                                 $("body,html").css({background: "url('/common/img/bg.gif')"})
                                 this.artList(this.user.weid)
                                 return;
                             }else if(res.data.state==3){
                                 this.state=3;
-                                alert("订单已过期")
                                 $(".title_right>span").css({color:"rgb(185, 184, 184)"});
                                 $(".order-detail>ul>li").css({color:"rgb(185, 184, 184)"});
                                 $(".order-detail .label").css({color:"rgb(185, 184, 184)"});
@@ -236,6 +243,8 @@
                                 $("img").css({opacity:0.5})
                             }else if(res.data.state==1){
                                 this.state=1;
+                                this.minter= Math.floor( parseInt(res.data.close_timeout) / 60 );
+                                 this.second= Math.floor(parseInt(res.data.close_timeout)) - (this.minter * 60)
                             }
                         }
                     })
@@ -522,6 +531,34 @@
             }
 
         }
+    })
+</script>
+<script>
+    $(function(){
+        // v-html="pay_active.close_timeout"
+        setTimeout(function(){
+            if($(".time")){
+                var intDiff = parseInt(1000); //倒计时总秒数量
+                var aa=setInterval(Time,1000);
+
+             function Time(){
+                   var minute = 0,
+                     second = 0; //时间默认值
+                 if (intDiff > 0) {
+                     minute = Math.floor(intDiff / 60 );
+                     second = Math.floor(intDiff) - (minute * 60);
+                 }
+                 if (minute <= 9) minute = '0' + minute;
+                 if (second <= 9) second = '0' + second;
+                 $('.time').html('<s></s>' + minute + '分');
+                 $('.miao').html('<s></s>' + second + '秒');
+                 intDiff--;
+                }
+
+
+            }
+        },1000)
+
     })
 </script>
 </body>

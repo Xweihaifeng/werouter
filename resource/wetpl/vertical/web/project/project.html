@@ -128,12 +128,38 @@
         created: function(){
             this.$Loading.start();
             this.time = this.dataTime.map((x, i) => ({id: i, name: x}));
-            console.log(this.time);
+            this.time.flag = 0;
             axios.get(apiUrl + 'activity/cate/lists').then(data => {
-                this.type = [{weid: '', title: '全部'}, ...data.data.data.list];
+                this.type = [{weid: '', title: '全部', e_name: ''}, ...data.data.data.list];
+                this.type.router = ['', ...data.data.data.list.map(e => e.e_name)];
                 this.type.flag = 0;
+                var path = this.checkPath(window.location.pathname);
+                if (path.length == 1) {
+                    this.getList(this.url, '', '', '', 1, 8);
+                } else {                    
+                    var id = this.type.router.indexOf(path[1]);
+                    this.type.flag = id;
+                    this.getList(this.url, this.type[id].weid, '', '', 1, 8);
+                }                
             });
-            this.getList(this.url, '', '', '', 1, 8); //初始化页面数据
+        },
+        mounted: function(){
+            this.$nextTick(function(){
+                window.onpopstate = function(e) {
+                    var path = activity.checkPath(window.location.pathname);
+                    var len = path.length;
+                    if (len == 1) {
+                        activity.type.flag = 0;
+                        activity.args.cate_id = '';
+                    } else {
+                        var id = activity.type.router.indexOf(path[1]);
+                        activity.type.flag = id;
+                        activity.args.cate_id = activity.type[id].weid;
+                    }
+                    activity.getList(apiUrl + 'activity/lists', activity.args.cate_id, activity.args.time_scope, activity.args.order, activity.pages.page, activity.pages.limit);
+                    activity.isLoading = true;
+                }
+            })
         },
         methods: {
             change: function(page){
@@ -146,7 +172,7 @@
                     this.pages.page = 1;
                 }
                 switch(type){
-                    case 'type0' : this.type.flag = i; this.args.cate_id = o.weid; break;
+                    case 'type0' : this.type.flag = i; this.args.cate_id = o.weid; window.history.pushState(null, null, '/activity/' + o.e_name); break;
                     case 'type1' : this.time.flag = i; this.args.time_scope = o.id; break;
                     case 'type2' : var id = ['latest', 'hotest'].map((e, i) => o === e ? (this.showType[e] = true, i)
                             : (this.showType[e] = false, null)).filter(x => x != null)[0];
@@ -157,6 +183,16 @@
                 }
                 this.getList(apiUrl + 'activity/lists', this.args.cate_id, this.args.time_scope, this.args.order, this.pages.page, this.pages.limit);
                 this.isLoading = true;
+            },
+            checkPath: function(path) {
+                var arr = path.split('/');
+                var len = arr.length;
+                var list = ['', 'article', 'activity', 'wemall', 'quan'];                    
+                if (list.indexOf(arr[len - 1]) != -1) { //大类                        
+                    return [arr[len - 1]];
+                } else { //小类                       
+                    return [arr[len - 2], arr[len - 1]];
+                }
             },
             setImg: function(url, init, w, h, mode){
                 if (url != '' && url != null && url != undefined) {

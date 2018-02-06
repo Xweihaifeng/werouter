@@ -33,12 +33,11 @@
                 <main>
                     <div class="head-left">
                         <a href="">
-                            <img :src="logo | img_src" alt="" v-if="!plats_info.logo">
-                            <img :src="plats_info.logo | img_src" alt="" v-else>
+                            <img :src="defImg(plats_info.logo, public_info.logo)" alt="">
                         </a>
                     </div>
                     <div class="head-middle">
-                        <img :src="header_img | img_src" alt="">
+                        <img :src="defImg(header_img, 'plats/resource/1515564209128.png')" alt="">
                     </div>
                     <div class="head-right">
                         <div class="hr-top">
@@ -130,27 +129,36 @@
             var header = new Vue({
                 el: '#header',
                 data: {
-                    placeholder : '搜索...',
-                    sub_aside : [],   //侧导航接口
-                    sub_aside_info : {},
-                    sub_rcon : [],    //右侧展示接口
                     channel_domain : $app.get_router(1), // 频道个性域名
-                    cate_domain : $app.get_router(2), // 分类个性域名
-                    cate_info : {}, // 分类详细信息
-                    limit : 10,
-                    page : ($app.get_query_string('page')) ? $app.get_query_string('page') : 1,
-                    total : 0,
-                    total_page : 0,
-                    page_show : [],
-                    searchText : '',
-                    channel: [],
-                    logo : 'plats/resource/1515564125368.png',
+                    cate_domain    : $app.get_router(2), // 分类个性域名
+                    page           : ($app.get_query_string('page')) ? $app.get_query_string('page') : 1,
+                    logo           : plats_info.logo,
+                    placeholder    : '搜索...',
+                    sub_aside      : [],   //侧导航接口
+                    sub_rcon       : [],    //右侧展示接口
+                    page_show      : [],
+                    channel        : [],
+                    public_info    : {},
+                    sub_aside_info : {},
+                    cate_info      : {}, // 分类详细信息
+                    limit          : 10,
+                    total          : 0,
+                    total_page     : 0,
+                    searchText     : '',
+                    header_img     : '',
                     qrcode: [
                         {ok: false, title: "手机版", image: "/api/file/qrcode?margin=2&url="+window.location.href},
                         {ok: false, title: "微信", image: plats_info.wx_qrcode? plats_info.wx_qrcode : window.location.origin+"/api/file/qrcode?margin=2&url="+window.location.href},
                         {ok: false, title: "微博", image: plats_info.wb_qrcode? plats_info.wb_qrcode : window.location.origin+"/api/file/qrcode?margin=2&url="+window.location.href},
                     ],
-                    header_img: null,
+                },
+                created() {
+                    ajax.get('backend/cms/site/data_show').then((res)=>{
+                        if(res.code == 200 && res.data) {
+                            this.public_info = JSON.parse(res.data.config);
+                            // console.log(this.public_info);
+                        }
+                    })
                 },
                 mounted: function() {
                     this.$nextTick(()=>{
@@ -173,7 +181,10 @@
 
                                 this.channel = result;
                                 footer();
-                                this.header_img = app.$data.header1.image;
+                                setTimeout(() => {
+                                    this.header_img = app.$data.header1.image;
+                                    // console.log(this.header_img);
+                                }, 300);
                             }
                         })
 
@@ -193,6 +204,21 @@
                     },
                     goSearchOpen: function() {
                         window.location.href = all_domian +"sub_search?q="+ this.searchText;
+                    },
+                    defImg: (url, init) => {
+                        if (url != '' && url != null && url != undefined) {
+                            if (url.indexOf('http') === -1 && url.indexOf('common') === -1) {
+                                return ApiMaterPlatQiniuDomain + url;
+                            } else {
+                                return url;
+                            }
+                        } else {
+                            if (init && init.indexOf('http') === -1 && init.indexOf('common') === -1) {
+                                return ApiMaterPlatQiniuDomain + init;
+                            } else {
+                                return init;
+                            }
+                        }
                     }
                 }
             });
@@ -203,20 +229,30 @@
                     data: {
                         foot_channel: header.channel,
                         footer      : {},
+                        foot_info   : {},
                     },
                     mounted: function() {
+                        this.foot_info = header.$data.public_info;
                         ajax.get('scms/setting/show').then((res)=>{
                             if(res.code == 200) {
                                 var result = res.data;
-
                                 result.code_id = window.location.origin +'/api/file/qrcode?margin=2&url='+ window.location.href;
-                                if(!result.copyright_logo) { result.copyright_logo = "plats/resource/1515752507217.png" }
-                                if(!result.copyright) {result.copyright = `上海市浙江商会(www.zccs.org)@2008-2012 All Rights Reserved` }
-                                if(!result.icp) {result.icp = `沪ICP备17020763号-1` }
-                                if(!result.email) {result.email = `shzjsh@yahoo.com.cn` }
-                                if(!result.tel) {result.tel = `021-50939588` }
-                                if(!result.fax) {result.fax = `021-50939388` }
-                                if(!result.addre) {result.addre = `上海市浦东大道900号华辰金融大厦25楼` }
+
+                                if(!result.copyright_logo) { result.copyright_logo = this.foot_info.copyright_logo }
+                                if(!result.copyright)     { result.copyright      = this.foot_info.copyright }
+                                if(!result.icp)          { result.icp            = this.foot_info.icp }
+                                if(!result.email)       { result.email          = this.foot_info.email }
+                                if(!result.tel)        { result.tel            = this.foot_info.tel }
+                                if(!result.fax)       { result.fax            = this.foot_info.fax }
+                                if(!result.addre)    { result.addre          = this.foot_info.addre }
+
+                                // if(!result.copyright_logo) { result.copyright_logo = "plats/resource/1515752507217.png" }
+                                // if(!result.copyright) {result.copyright = `上海市浙江商会(www.zccs.org)@2008-2012 All Rights Reserved` }
+                                // if(!result.icp) {result.icp = `沪ICP备17020763号-1` }
+                                // if(!result.email) {result.email = `shzjsh@yahoo.com.cn` }
+                                // if(!result.tel) {result.tel = `021-50939588` }
+                                // if(!result.fax) {result.fax = `021-50939388` }
+                                // if(!result.addre) {result.addre = `上海市浦东大道900号华辰金融大厦25楼` }
 
                                 this.footer = result;
                                 $("#favicon").attr('href', ApiMaterPlatQiniuDomain + result.favicon);

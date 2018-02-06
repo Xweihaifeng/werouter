@@ -1,4 +1,4 @@
-<div id="bottom1">
+        <div id="wepages_bottom">
             <footer>
                 <div class="footer-nav">
                     <a :href="'/' + pages_info.plats_domian.domain + '/'">首页</a>
@@ -103,7 +103,6 @@
             url: ARTICLES_CATES + '?domain=' + pages_info.plats_domian.domain,
             async: false,
             success: function(data) {
-                console.log(data)
                 artType.list = data.data;
                 artType.flag = 0;
                 artType.type = 'articles';
@@ -274,9 +273,7 @@
                     }
                 },
                 wefriends: function(){
-                    axios.get(apiUrl + 'circel/index?domain=' + pages_info.plats_domian.domain, {
-                        headers: {'Token': plats_token}
-                    }).then(data => {
+                    axios.get(apiUrl + 'circel/index?domain=' + pages_info.plats_domian.domain).then(data => {
                         this.info = data.data.data;
                         getLine(this.info);
                     })

@@ -35,10 +35,7 @@
     <script src="{{PATH_TML}}activity/js/activity.js"></script>
 </head>
 
-<style>
-    ::-webkit-scrollbar {
-        width: 0;
-    }
+<style>    
 
     html {
         position: absolute!important;
@@ -71,7 +68,7 @@
     .bar-code {
         text-align: center;
     }
-    #bottom1 {
+    #wepages_bottom {
         position: relative;
     }
     #topline p {
@@ -83,6 +80,12 @@
     #menu ul li:nth-of-type(4){
         color: #4d4d4d;
         border-bottom: 1px solid #46b2ee;
+    }
+    .copyright > p {
+        margin: 0!important;
+    }
+    .footer-nav a {
+        color: #666!important;
     }
 </style>
 
@@ -301,12 +304,14 @@
             <!--活动结束-->
         </div>
     </div>
-    <div id="bottom1">
+    <div id="wepages_bottom">
         <footer>
             <div class="footer-nav">
-                <a href="javascript:void(0)">咨询与建议</a>
-                <a href="javascript:void(0)">站点地图</a>
-                <a id="contact" href="/org/lxwm">联系我们</a>
+                <a :href="'/' + pages_info.plats_domian.domain + '/'">首页</a>
+                <a :href="'/' + pages_info.plats_domian.domain + '/article'">我的文章</a>
+                <a :href="'/' + pages_info.plats_domian.domain + '/activity'">我的活动</a>
+                <a :href="'/' + pages_info.plats_domian.domain + '/wemall'">我的商城</a>
+                <a :href="'/' + pages_info.plats_domian.domain + '/quan'">我的圈子</a>
             </div>
             <div class="copyright" v-html="plats_info.copyright"></div>
             <div class="_ideConac">
@@ -1331,7 +1336,7 @@
         }
 
         new Vue({
-            el: "#bottom1",
+            el: "#wepages_bottom",
             data: {
                 
             }
