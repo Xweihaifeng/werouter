@@ -274,9 +274,7 @@
                     }
                 },
                 wefriends: function(){
-                    axios.get(apiUrl + 'circel/index?domain=' + pages_info.plats_domian.domain, {
-                        headers: {'Token': plats_token}
-                    }).then(data => {
+                    axios.get(apiUrl + 'circel/index?domain=' + pages_info.plats_domian.domain).then(data => {
                         this.info = data.data.data;
                         getLine(this.info);
                     })
