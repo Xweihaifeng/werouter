@@ -4,6 +4,13 @@
     <link rel="stylesheet" href="/resource/wetpl/substation/default/web/css/newsert.css">
     <link rel="stylesheet" href="{{PATH_TML}}member/css/member_apply.css" />
 
+    <style>
+        /*#modal_login {
+            display: block!important;
+        }*/
+    </style>
+
+    <div class="modal_login" id="modal_login"></div>
     <div id="container">
         <!--位置显示-->
         <div class="seat">
@@ -411,7 +418,9 @@
         mounted() {
             this.$nextTick(() => {
                 if(!plats_token) {
-                    this.already.login = true;
+                    // this.already.login = true;
+                    $("#modal_login").show();
+                    this.already.auth = true;
                 } else {
                     // this.process_filters('login');
                     this.auth_certification();
@@ -736,6 +745,12 @@
             },
             art_auth(name) {
                 console.log(name);
+
+                if(!plats_token) {
+                    $("#modal_login").show();
+                    return false;
+                }
+
                 var self = this;
                 if(name === 'auth') {
                     if(!this.isCardNo(this.member.auth.card_id)) {
