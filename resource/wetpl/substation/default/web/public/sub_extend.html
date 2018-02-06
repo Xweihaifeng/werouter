@@ -38,7 +38,7 @@
                         </a>
                     </div>
                     <div class="head-middle">
-                        <img src="{{PATH_TML}}image/logo_by.png" alt="">
+                        <img :src="header_img | img_src" alt="">
                     </div>
                     <div class="head-right">
                         <div class="hr-top">
@@ -149,7 +149,8 @@
                         {ok: false, title: "手机版", image: "/api/file/qrcode?margin=2&url="+window.location.href},
                         {ok: false, title: "微信", image: plats_info.wx_qrcode? plats_info.wx_qrcode : window.location.origin+"/api/file/qrcode?margin=2&url="+window.location.href},
                         {ok: false, title: "微博", image: plats_info.wb_qrcode? plats_info.wb_qrcode : window.location.origin+"/api/file/qrcode?margin=2&url="+window.location.href},
-                    ]
+                    ],
+                    header_img: null,
                 },
                 mounted: function() {
                     this.$nextTick(()=>{
@@ -172,6 +173,7 @@
 
                                 this.channel = result;
                                 footer();
+                                this.header_img = app.$data.header1.image;
                             }
                         })
 

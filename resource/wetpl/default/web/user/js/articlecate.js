@@ -95,8 +95,12 @@ $(document).ready(function(){
                 '<td><a class="edit" data-toggle="modal"  data-target=".bs-example-modal-sm">编辑</a> <a class="del">删除</a></td>'+
 
             '</tr>';*/
+        if(data.weid == -1){
+            return;
+        }
         var listhtml='<li class="clearfloat category-item" data-id="'+data.weid+'">'+
-                    '<input type="text" class="sort_info category-name" value="'+data.name+'" data-origin="'+data.name+'">'+
+                    '<input type="text" style="width: 230px;" class="sort_info category-name" value="'+data.name+'" data-origin="'+data.name+'">'+
+                    '<input type="text" style="width: 230px;margin-left: 50px;" class="sort_info category-ename" value="'+data.ename+'" data-origin="'+data.ename+'">'+
                     '<input type="text" class="order_info category-floor" value="'+data.sort+'" data-origin="'+data.sort+'">'+
                     '<div class="operate_info">'+
                         '<a href="javascript:;" class="delete_sort">删除</a>'+
@@ -152,28 +156,6 @@ $(document).ready(function(){
     }
 
     catesfun(weid);
-    //获取商城信息
-    var malluserinfo = function () {
-        $.ajax({
-            url: apiUrl + 'mall/userdetail',
-            type: 'get',
-            headers: {
-                'Token': docCookies.getItem("token")
-            },
-            success: function (data) {
-                if (data.code == 200) {
-                    //设置商城信息
-                    $("input[name=mall_weid]").val(data.data.weid);
-                    $("input[name=mall_name]").val(data.data.title);
-                }
-            },
-            error: function (xhr) {
-                console.log(xhr);
-            }
-        })
-    }
-    malluserinfo();
-
     //back to top
     $("#toTop").hide();
     $(".read").scroll(function(){
@@ -209,7 +191,7 @@ $(document).ready(function(){
         });
         //添加商品分类
         $('#add_sort').on('click',function(){
-            var sortList = "<li class='clearfloat category-item' data-id='0'><input type='text' class='sort_info category-name' value=''><input type='number' class='order_info category-floor' value=''><div class='operate_info'><a href='javascript:;' class='delete_sort'>删除</a></div></li>";
+            var sortList = "<li class='clearfloat category-item' data-id='0'><input style='width: 230px' type='text' class='sort_info category-name' value=''><input style='width: 230px;margin-left: 50px;' type='text' class='sort_info category-ename'><input type='number' class='order_info category-floor' value=''><div class='operate_info'><a href='javascript:;' class='delete_sort'>删除</a></div></li>";
             $('.operate_box').append(sortList);
             $('.no_sort').remove();
             newCIV.push("")
@@ -382,6 +364,7 @@ $(document).ready(function(){
                 console.log("编辑");
                 var sendData={
                     name:data.name,
+                    ename:data.ename,
                     sort:data.floor,
                     weid:data.id
                 }
@@ -413,6 +396,7 @@ $(document).ready(function(){
                 console.log("添加");
                 var sendData={
                     name:data.name,
+                    ename:data.ename,
                     sort:data.floor
                 }
                 $.ajax({
