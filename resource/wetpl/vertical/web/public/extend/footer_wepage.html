@@ -103,7 +103,6 @@
             url: ARTICLES_CATES + '?domain=' + pages_info.plats_domian.domain,
             async: false,
             success: function(data) {
-                console.log(data)
                 artType.list = data.data;
                 artType.flag = 0;
                 artType.type = 'articles';
