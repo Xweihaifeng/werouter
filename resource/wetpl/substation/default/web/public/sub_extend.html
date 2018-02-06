@@ -156,7 +156,7 @@
                     ajax.get('backend/cms/site/data_show').then((res)=>{
                         if(res.code == 200 && res.data) {
                             this.public_info = JSON.parse(res.data.config);
-                            console.log(this.public_info);
+                            // console.log(this.public_info);
                         }
                     })
                 },
@@ -183,7 +183,7 @@
                                 footer();
                                 setTimeout(() => {
                                     this.header_img = app.$data.header1.image;
-                                    console.log(this.header_img);
+                                    // console.log(this.header_img);
                                 }, 300);
                             }
                         })
