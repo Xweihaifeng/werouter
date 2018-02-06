@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="{{PATH_TML}}css/modal_login.css" />
     <link rel="stylesheet" href="{{PATH_TML}}css/normalize.css" />
     <link rel="stylesheet" href="/common/magazine/css/iview.css">
+    <link rel="stylesheet" href="/resource/wetpl/vertical/web/css/public_main.css">
     <link rel="stylesheet" href="{{PATH_TML}}css/wepage.css" />
     <script src="/common/js/jquery-3.2.1.min.js"></script>
     <script src="/common/public/js/app.js"></script>
@@ -26,8 +27,7 @@
     <link rel="stylesheet" href="/common/jquery.animsition/css/animsition.min.css">
     <script src="/common/jquery.animsition/js/jquery.animsition.min.js"></script>
     
-    <script type="text/javascript" src="/resource/wetpl/vertical/web/shopping/js/jquery.qrcode.min.js"></script>
-    <link rel="stylesheet" href="/resource/wetpl/vertical/web/css/public_main.css">
+    <script type="text/javascript" src="/resource/wetpl/vertical/web/shopping/js/jquery.qrcode.min.js"></script>    
     <link rel="stylesheet" href="{{PATH_TML}}/css/font-awesome.min.css">
     <link rel="stylesheet" href="{{PATH_TML}}activity/css/activeSign.css" />
     <link rel="stylesheet" type="text/css" href="/resource/wetpl/vertical/web/activity/css/activity.css">
@@ -95,8 +95,8 @@
     <div id="header">
         <div>
             <div id="topline">
-                <a href="/"><img src="/common/img/new/logo-wepage.png" alt=""/></a>
-                <a :href="user" @click="login(1)"><p><img id="avatar" :src="setImg(avatar ,'/common/img/new/my.png', 100, 100)" alt=""/>{{userCenter}}</p></a>
+                <a href="/"><img :src="setImg(plats_info.logo, '/common/img/new/logo-wepage.png', 24, 24)" alt=""/><i id="logo-font">{{plats_info.plat_name}}</i></a>
+                <a :href="user" @click="login(1)"><p><img id="avatar" :src="setImg(avatar, '/common/img/new/my.png', 100, 100)" alt=""/>{{userCenter}}</p></a>
             </div>
         </div>
         <div id="userinfo" :style="{'background': 'url(' + setBg(pages_info.plats_domian.background, '/common/img/new/wepage.png') + ') no-repeat center','background-size': 'cover'}">

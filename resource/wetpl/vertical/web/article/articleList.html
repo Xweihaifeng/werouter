@@ -213,11 +213,12 @@
                         <li>
                             <span>
                                 <i :style="fontColor">{{plats_info.cert_name}}</i>
-                                <img :src="imgState('/common/img/new/offical.png', '/common/img/new/officaloff.png', pages_info.plats_user_cert.is_authenticated == 1)" alt="" width="76" height="26"/>
+                                <!-- <img :src="imgState('/common/img/new/offical.png', '/common/img/new/officaloff.png', pages_info.plats_user_cert.is_authenticated == 1)" alt="" width="76" height="26"/> -->
+                                <img :src="setImg('', '/common/img/new/offical.png', 76, 26)" alt="" width="76" height="26"/>
                                 <img :src="imgState('/common/img/new/cert.png', '/common/img/new/certoff.png', pages_info.plats_user_auth.is_authenticated == 1)" alt="" width="32" height="28"/>
                                 <img src="/common/img/new/message.png" alt="" width="60" height="24"/>
                             </span>
-                            <span>{{pages_info.plats_user_cert.cert_info}}</span>
+                            <span>{{pages_info.plats_user_cert.cert_info | checkCert}}</span>
                         </li>
                         <li>
                             <img src="/common/img/new/address.png" alt="" width="17" height="22"/>

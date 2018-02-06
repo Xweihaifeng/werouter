@@ -97,28 +97,32 @@
         }
 
         //子类型
-        var artType = {};
+        var artType = {list: [], flag: 0, type: 'articles', router: []};
         $.ajax({
             // url: 'http://demo.wezchina.com/api/articles/cates',
             url: ARTICLES_CATES + '?domain=' + pages_info.plats_domian.domain,
             async: false,
             success: function(data) {
-                artType.list = data.data;
-                artType.flag = 0;
-                artType.type = 'articles';
-                artType.router = artType.list.map(e => e.ename);
-            }                    
+                if (data.data != '' && data.data != undefined && data.data != null) {
+                    artType.list = data.data;
+                    artType.flag = 0;
+                    artType.type = 'articles';
+                    artType.router = artType.list.map(e => e.ename);    
+                }
+            }
         });
 
-        var actType = {};
+        var actType = {list: [], flag: 0, type: 'activity', router: []};
         $.ajax({
             url: apiUrl + 'activity/cate/lists',
             async: false,
             success: function(data) {
-                actType.list = data.data.list;
-                actType.flag = 0;
-                actType.type = 'activity';
-                actType.router = actType.list.map(e => e.e_name);
+                if (data.data.list != '' && data.data.list != undefined && data.data.list != null) {
+                    actType.list = data.data.list;
+                    actType.flag = 0;
+                    actType.type = 'activity';
+                    actType.router = actType.list.map(e => e.e_name);
+                }
             }
         })
 
@@ -155,7 +159,8 @@
                 avatar: '',
                 userCenter: '',
                 user: 'javascript:void(0)',
-                fontColor: pages_info.plats_user_cert.is_authenticated == 1 ? {color: '#ff9900'} : {color: '#999'},
+                // fontColor: pages_info.plats_user_cert.is_authenticated == 1 ? {color: '#ff9900'} : {color: '#999'},
+                fontColor: {color: '#ff9900'},
             },
             created: function(){
                 this.menu = {list: this.dataMenu.map(e => ({name: e})), flag: 0};                
@@ -273,7 +278,9 @@
                     }
                 },
                 wefriends: function(){
-                    axios.get(apiUrl + 'circel/index?domain=' + pages_info.plats_domian.domain).then(data => {
+                    axios.get(apiUrl + 'circel/index?domain=' + pages_info.plats_domian.domain, {
+                        headers: {'Token': docCookies.getItem('token')}
+                    }).then(data => {
                         this.info = data.data.data;
                         getLine(this.info);
                     })
@@ -308,7 +315,7 @@
                         url: apiUrl + 'circel/relationship',
                         type: 'POST',
                         headers: {
-                            'Token': plats_token
+                            'Token': docCookies.getItem('token')
                         },
                         data: {
                             'domain': pages_info.plats_domian.domain,
@@ -339,14 +346,14 @@
                             'type': 2
                         },
                         headers: {
-                            'Token': plats_token
+                            'Token': docCookies.getItem('token')
                         },
                         success: function(data){
                             if (data.code == 200) {
                                 layui.use('layer', function() {
                                     wepage.info.if_follow = 0;
                                     var layer = layui.layer;
-                                    layer.msg("取消关注成功", {time: 1500});
+                                    layer.msg("取消关注", {time: 1500});
                                 })
                             } else {
                                 layui.use('layer', function() {
@@ -362,7 +369,6 @@
                         this.type = 'latest';
                         this.latest = data.data.data.list;
                         this.latest == '' ? wepage.none = true : wepage.none = false;
-                        console.log(this.latest)
                     })
                 },
                 getArtList: function(page, limit, cate_id) {
@@ -564,6 +570,14 @@
                 format_date: function(value) {
                     var res = value.split('-').reduce((res, e, i) => res += e.length == 1 ? '0' + e + '-' : e + '-', '');
                     return res.substr(0, res.length - 1);
+                },
+                checkCert: function(value) {
+                    if (pages_info.plats_user_cert.is_authenticated == 1) {
+                        return value;
+                    } else {
+                        return '暂无认证信息';
+                    }
+                    
                 }
             }
         })
