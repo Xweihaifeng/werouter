@@ -2,6 +2,8 @@ var luo_response = '';
 
 function getResponse(resp) {
     luo_response = resp;
+    alert(luo_response)
+    // console.log(resp)
 }
 
 // 临时放到这里
@@ -252,7 +254,6 @@ $(function() {
         /*默认false*/
         count = false; /*验证码倒计时*/
     var getCheck = function(phoneNum) {
-
         $.ajax({
             url: CODES,
             dataType: 'json',
