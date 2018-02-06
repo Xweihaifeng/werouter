@@ -54,51 +54,56 @@
         margin: 0 auto;
         background: #fff;
     }
-    .qr_code_icon{
-        position: relative;
-        top: -32px;
-        left: 14px;
-        float: right;
-        width: 24px;
-        height: 24px;
-        background: url("{{PATH_TML}}shopping/img/er.png") no-repeat;
-        cursor: pointer;
-    }
-    #shop_code{
-        width: 140px;
-        height: 142px;
-        position: absolute;
-        top: 67px;
-        left: -115px;
-        border: 1px solid #dfdfdf;
-        display: none;
-        background: #fff;
-    }
+    /*.qr_code_icon{*/
+        /*position: relative;*/
+        /*top: -32px;*/
+        /*left: 14px;*/
+        /*float: right;*/
+        /*width: 24px;*/
+        /*height: 24px;*/
+        /*background: url("{{PATH_TML}}shopping/img/er.png") no-repeat;*/
+        /*cursor: pointer;*/
+    /*}*/
+    /*#shop_code{*/
+        /*width: 140px;*/
+        /*height: 142px;*/
+        /*position: absolute;*/
+        /*top: 67px;*/
+        /*left: -115px;*/
+        /*border: 1px solid #dfdfdf;*/
+        /*display: none;*/
+        /*background: #fff;*/
+    /*}*/
     #shop_code canvas{
         margin: 15px 15px;
     }
-    .qr_code_icon2{
-        position: relative;
-        top:0;
-        right: 0;
-        float: right;
-        width: 24px;
-        height: 24px;
-        background: url("{{PATH_TML}}shopping/img/er.png") no-repeat;
-        cursor: pointer;
-    }
+    /*.qr_code_icon2{*/
+        /*position: relative;*/
+        /*top:0;*/
+        /*right: 0;*/
+        /*float: right;*/
+        /*width: 24px;*/
+        /*height: 24px;*/
+        /*background: url("{{PATH_TML}}shopping/img/er.png") no-repeat;*/
+        /*cursor: pointer;*/
+    /*}*/
     #shop_code2{
-        width: 140px;
-        height: 142px;
+        /*width: 140px;*/
+        /*height: 142px;*/
         position: absolute;
-        top: 67px;
-        left: -115px;
-        border: 1px solid #dfdfdf;
+        top: 43px;
+        left: -9px;
+        /*border: 1px solid #dfdfdf;*/
         display: none;
-        background: #fff;
+        /*background: #fff;*/
     }
     #shop_code2 canvas{
         margin: 15px 15px;
+    }
+
+    #menu ul li:nth-of-type(5){
+        color: #4d4d4d;
+        border-bottom: 1px solid #46b2ee;
     }
 </style>
 
@@ -140,9 +145,9 @@
                 <!--商品详情页开始-->
                 <div class="user_info_left">
                     <span></span>
-                    <div class = "qr_code_icon" @mouseenter="qrcode">
-                          <div id="shop_code"></div>
-                    </div>
+                    <!--<div class = "qr_code_icon" @mouseenter="qrcode">-->
+                          <!--<div id="shop_code"></div>-->
+                    <!--</div>-->
                     <div class="westoreWarp">
                         <div class="pro_deta_top clearfix">
                             <div class="pro_deta_imgs">
@@ -167,6 +172,12 @@
                                     </div>
                                 </div>
                                 <!--缩图结束-->
+                                <div class="add_to_collect" @click="collect_select">
+                                    <span>收藏商品</span>
+                                </div>
+                                <!--<a href="javascript:void(0);" class="add_to_collect" data-tag="on" @click="collect_select">-->
+                                   <!---->
+                                <!--</a>-->
                             </div>
                             <div class="pro_deta_info">
                                 <form  method="get">
@@ -179,7 +190,7 @@
                                     </div>
                                     <div class="state">
                                         <span class="l"><i>已售 </i><em v-html="shop_info.sales_num"></em></span>
-                                        <span class="r"><i>收藏 </i><em id="collectnum" v-html="shop_info.collections"></em></span>
+                                        <span class="r"><i>收藏 </i><em id="collectnum" v-html="collection_num"></em></span>
                                     </div>
                                     <div class="control-group small-control-group clearfix" style="margin-top:10px;display:none">
                                         <label class="control-label" style="text-align: left;font-size: 14px;width: 38px;color: #999;    overflow: hidden;">配送至：</label>
@@ -207,7 +218,6 @@
                                             <button class="buy_btn" type="button" id="" @click="buy">立即购买</button>
                                             <!--<a href="javascript:void(0);" class="collect_btn collect-btn-click" data-tag="on" >立即收藏</a>''+-->
                                             <a href="javascript:void(0);" class="add_to_cart" data-tag="on" @click="add_buycar">加入购物车</a>
-                                            <a href="javascript:void(0);" class="add_to_collect" data-tag="on" @click="collect_select">点击收藏</a>
                                         </p>
                                     </div>
 
@@ -216,11 +226,13 @@
 
                         </div>
                         <div class="pro_deta_com" id = "goods_detail">
-                            <div class="pro_deta_tab" >
+                            <div class="pro_deta_tab" style="left: 0;">
                                 <a href="#goods_detail" class="active pro_date_tit2" @click="shop_click(0)" href="javascript:void(0)">商品详情</a>
                                 <a href="#goods_rule" class="pro_date_tit" @click="shop_click(1)" href="javascript:void(0)">购买须知</a>
-                                <button class="buy_btn" type="button" id="buy" @click="buy">立即购买</button>
-                                <div class = "qr_code_icon2" @mouseenter="qrcode2">
+                                <div class="tm-qrcode-icon " @mouseenter="qrcode2">
+                                    <a class="tm-qr-togger" data-spm-anchor-id="a220o.1000855.0.0">
+                                        手机购买
+                                    </a>
                                     <div id="shop_code2"></div>
                                 </div>
                             </div>
@@ -349,12 +361,14 @@
             </ul>
         </div>
     </div>
-    <div id="bottom1">
+    <div id="wepages_bottom">
         <footer>
             <div class="footer-nav">
-                <a href="javascript:void(0)">咨询与建议</a>
-                <a href="javascript:void(0)">站点地图</a>
-                <a id="contact" href="/org/lxwm">联系我们</a>
+                <a :href="'/' + pages_info.plats_domian.domain + '/'">首页</a>
+                <a :href="'/' + pages_info.plats_domian.domain + '/article'">我的文章</a>
+                <a :href="'/' + pages_info.plats_domian.domain + '/activity'">我的活动</a>
+                <a :href="'/' + pages_info.plats_domian.domain + '/wemall'">我的商城</a>
+                <a :href="'/' + pages_info.plats_domian.domain + '/quan'">我的圈子</a>
             </div>
             <div class="copyright" v-html="plats_info.copyright"></div>
             <div class="_ideConac">
@@ -906,7 +920,9 @@
             commont:[],                        //评论内容
             total:0,                            //评论总条数
             limit:3,                             //显示评论数
-            collect_id:""                       //收藏id
+            collect_id:"" ,                      //收藏id
+            collection_num:0,                    //收藏人数
+
         },
         mounted: function() {
             var self = this;
@@ -934,8 +950,10 @@
                 ajax.get(GOODS_DETAIL + '/' + id).then((res)=>{
                     if(res.code == 200) {
                         this.shop_info = res.data;
+                        $app.set_title(res.data.title);
                         var str = this.shop_info.picture;
                         this.shop_image_list = str.split(',');
+                        this.collection_num=res.data.collections;
                         // 商品收藏
                         this.collection(res.data.weid)
                     }
@@ -1134,12 +1152,6 @@
                 var qrcode_val = localhostPath + this.cate_domain + "/wemall/goods/" + id;
                 console.log(qrcode_val)
                 if ($.support.msie && $.support.version <= 8) {
-                    $("#shop_code").qrcode({
-                        render: "table",
-                        width: 110,
-                        height: 110,
-                        text: qrcode_val
-                    });
                     $("#shop_code2").qrcode({
                         render: "table",
                         width: 110,
@@ -1147,11 +1159,6 @@
                         text: qrcode_val
                     });
                 } else {
-                    jQuery("#shop_code").qrcode({
-                        width: 110,
-                        height: 110,
-                        text: qrcode_val
-                    });
                     jQuery("#shop_code2").qrcode({
                         width: 110,
                         height: 110,
@@ -1160,15 +1167,15 @@
                 }
 
             },
-            qrcode(){
-                $("#shop_code").show();
-                $(".qr_code_icon").mouseleave(function(){
-                    $("#shop_code").hide();
-                })
-            },
+            // qrcode(){
+            //     $("#shop_code").show();
+            //     $(".qr_code_icon").mouseleave(function(){
+            //         $("#shop_code").hide();
+            //     })
+            // },
             qrcode2(){
                 $("#shop_code2").show();
-                $(".qr_code_icon2").mouseleave(function(){
+                $(".tm-qrcode-icon").mouseleave(function(){
                     $("#shop_code2").hide();
                 })
             },
@@ -1191,9 +1198,7 @@
                         if(data.code == 200) {
                             console.log(data);
 
-                            $(".add_to_collect").css({
-                                "background": '#d4d4d4',
-                            });
+                            $(".add_to_collect").css({ "backgroundImage": "url('/resource/wetpl/vertical/web/shopping/img/ysc.png')"})
                             $(".add_to_collect").html("已收藏");
                                self.collect_id=data.data;
                             layui.use('layer', function() {
@@ -1202,6 +1207,7 @@
                                     var layer = layui.layer;
                                     layer.msg("收藏成功", {time: 2500});
                                 })
+                                this.collection_num++;
                             })
                         }
                     },
@@ -1216,7 +1222,7 @@
                 ajax.get('goods/collection/destroy/' + id).then((res)=>{
                     console.log(11111,res.data)
                     if(res.code == 200) {
-                            $(".add_to_collect").css({ "background": '#DE3E1E',"cursor": 'default'})
+                        $(".add_to_collect").css({ "backgroundImage": "url('/resource/wetpl/vertical/web/shopping/img/sc.png')"})
                             this.collect_id="";
                             $(".add_to_collect").html("点击收藏")
                             layui.use('layer', function() {
@@ -1226,7 +1232,7 @@
                                     layer.msg("取消收藏成功", {time: 2500});
                                 })
                             })
-
+                        this.collection_num--;
                     }
                 })
             },
@@ -1235,7 +1241,7 @@
                 ajax.get('goods/collection/iscollection/' + id).then((res)=>{
                     if(res.code == 200) {
                         if(res.data!='no'){
-                            $(".add_to_collect").css({ "background": '#d4d4d4'})
+                            $(".add_to_collect").css({ "backgroundImage": "url('/resource/wetpl/vertical/web/shopping/img/ysc.png')"})
                             $(".add_to_collect").html("已收藏")
                             this.collect_id=res.data;
                         }

@@ -455,14 +455,14 @@ select {
 }
 
 .pro_deta_tab {
-	width: 820px;
+	width:100%;
 	background: #f8f8f8;
 	height: 50px;
 	line-height: 50px;
 	border-bottom: 1px solid #ff9c00;
 	margin-top: 30px;
 	position: relative;
-	left: -15px;
+	left: 0px;
 }
 
 .pro_deta_tab a {
@@ -570,7 +570,7 @@ select {
 	font-size: 20px;
 }
 
-.key p .add_to_cart,.add_to_collect{
+.key p .add_to_cart{
 	display: block;
 	padding: 0 20px;
 	margin-left: 25px;
@@ -580,9 +580,6 @@ select {
 	border-radius: 3px;
 	float: left;
 	line-height: 40px;
-}
-.add_to_collect{
-	background: #DE3E1E;
 }
 
 
@@ -793,7 +790,7 @@ div.jqZoomPup {
 	width : 50px;
 	height : 50px;
 	border: 1px solid #aaa;
-	background: #ffffff url(../images/zoomlens.gif) 50% top no-repeat;
+	background: #ffffff url("../images/zoomlens.gif") 50% top no-repeat;
 	opacity: 0.5;
 	-moz-opacity: 0.5;
 	-khtml-opacity: 0.5;
@@ -813,7 +810,7 @@ div.jqZoomPup {
 }
 /*上面内容*/
 .pro_deta_top{
-	margin-bottom: 35px;
+	margin-bottom: 50px;
 }
 /*左边内容*/
 .pro_deta_imgs {
@@ -916,7 +913,7 @@ div.jqZoomPup {
 }
 .pro_deta_info .tit {
 	/*padding-top: 10px;*/
-	font-size: 22px;
+	font-size: 20px;
 	line-height: 1.5em;
 }
 
@@ -1105,4 +1102,49 @@ div.jqZoomPup {
 	position: absolute;
 	top: 5px;
 	right: 50px;
+}
+/*二维码样式*/
+.tm-qrcode-icon {
+	padding-left:15px;
+	float: right;
+	margin-left: -1px;
+	height: 48px;
+	line-height: 48px;
+	display: block;
+	cursor: pointer;
+    position: relative;
+}
+.tm-qr-togger {
+	font-size: 12px!important;
+	color: #989898;
+	padding: 0 50px 0 10px !important;
+	border-right: none;
+	line-height: 48px;
+	height: 100%;
+	display: block;
+	text-align: right;
+	background-repeat: no-repeat;
+	cursor: pointer;
+	background-position: 63px 12px;
+	background-image: url("/resource/wetpl/vertical/web/shopping/img/T12Fs8Fo0XXXb2csDf-38-59.png");
+}
+.tm-qrcode-icon:hover{
+	/*background: #D4D4D4;*/
+}
+.tm-qrcode-icon:hover .tm-qr-togger{
+	color: #989898!important;
+	background-position: 63px -26px;
+}
+/*收藏商品*/
+.add_to_collect{
+	width: auto;
+	height: auto;
+	padding: 5px 26px;
+	background-image:url("/resource/wetpl/vertical/web/shopping/img/sc.png");
+	background-repeat: no-repeat;
+	background-size: 24px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	cursor: pointer;
+
 }
