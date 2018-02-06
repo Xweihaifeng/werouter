@@ -14,6 +14,7 @@ $(document).ready(function () {
                     console.log(data.data);
                     $("input[name=weid]").val(data.data.weid);
                     $("input[name=name]").val(data.data.name);
+                    $("input[name=ename]").val(data.data.ename);
                     $("input[name=sort]").val(data.data.sort);
                 }
             }
@@ -47,6 +48,7 @@ $(document).ready(function () {
         }
         var weid = $("input[name=weid]").val();
         var name = $("input[name=name]").val();
+        var ename = $("input[name=ename]").val();
         var sort = $("input[name=sort]").val();
         if (isNull(weid)) {
             //保存提交
@@ -55,6 +57,7 @@ $(document).ready(function () {
                 type: 'POST',
                 data: {
                     name: name,
+                    ename: ename,
                     sort: sort
                 },
                 success: function (data) {
@@ -73,6 +76,7 @@ $(document).ready(function () {
                 data: {
                     weid: weid,
                     name: name,
+                    ename: ename,
                     sort: sort
                 },
                 success: function (data) {

@@ -10,7 +10,7 @@ $(document).ready(function () {
                 for (var i = 0, ien = json.data.list.length; i < ien; i++) {
                     json.data.list[i].id = i + 1;
                     //操作   
-                    json.data.list[i].operation = '<a href="goods_category_add.html?weid=' + json.data.list[i].weid + '" class="btn btn-info pull-left">编辑</a>' +
+                    json.data.list[i].operation = '<a href="article_category_add.html?weid=' + json.data.list[i].weid + '" class="btn btn-info pull-left">编辑</a>' +
                         '<button class="btn btn-danger btn-delete" style="float: left;margin-left:3px;" data-id="' + json.data.list[i].weid + '" ' +
                         'data-toggle="popover" data-placement="left" data-trigger="focus" data-html="true" title="确定要删除？" ' +
                         'data-content="<button class=' + "'btn btn-danger btn-delete-confirm'" + '  data-id=' + "'" + json.data.list[i].weid + "'" + '>确认</button>' +
@@ -23,6 +23,7 @@ $(document).ready(function () {
         "columns": [
             {"data": "id"},
             {"data": "name"},
+            {"data": "ename"},
             {"data": "sort"},
             {"data": "operation"}
         ],
