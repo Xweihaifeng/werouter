@@ -103,9 +103,9 @@
             var number=$(this).parents("tr").children("td").eq(0).html();
             console.log(number)
             console.log(state_info)
+            var href=window.location.protocol + '//' + window.location.host + '/'+ 'activity/pay?pay=' + number;
+            console.log(href)
             if(state_info==1){
-                var href=window.location.protocol + '//' + window.location.host + '/'+ 'activity/pay?pay=' + number;
-                console.log(href)
                 window.location.href = href;
             }
         })
