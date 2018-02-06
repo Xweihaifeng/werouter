@@ -28,7 +28,7 @@
                                 <span>{{JSON.parse(e.other).summary | cut(100)}} </span>
                             </span>
                             <span>
-                                <img class="i1" src="/common/img/new/date.png" alt=""/><span style="padding-right:34px;">{{JSON.parse(e.other).updated_at}}</span>
+                                <img class="i1" src="/common/img/new/date.png" alt=""/><span style="padding-right:34px;">{{new Date(parseInt(JSON.parse(e.other).updated_at * 1000)) | show_date | format_date}}</span>
                                 <img class="i2" src="/common/img/new/read.png" alt=""/><span>{{JSON.parse(e.other).views}}</span>
                             </span>
                         </p>
@@ -41,7 +41,7 @@
                                 <span>举办方：{{JSON.parse(e.other).Sponsor}} </span>
                             </span>
                             <span>
-                                <img class="i1" src="/common/img/new/date.png" alt=""/><span style="padding-right:34px;">{{JSON.parse(e.other).begain_time + ' ' + JSON.parse(e.other).begain_week + ' 开始'}}</span>
+                                <img class="i1" src="/common/img/new/date.png" alt=""/><span style="padding-right:45px;">{{new Date(parseInt(JSON.parse(e.other).begain_time * 1000)) | show_date | format_date + ' 开始'}}</span>
                                 <img class="i3" src="/common/img/new/local.png" alt=""/><span>{{JSON.parse(e.other).area_name + ' ' + JSON.parse(e.other).address}}</span>
                             </span>
                             <p class="act-btn">
@@ -91,7 +91,7 @@
                                 <span>举办方：{{e.Sponsor}} </span>
                             </span>
                             <span>
-                                <img class="i1" src="/common/img/new/date.png" alt=""/><span style="padding-right:34px;">{{e.begain_time + ' ' + e.begain_week + ' 开始'}}</span>
+                                <img class="i1" src="/common/img/new/date.png" alt=""/><span style="padding-right:10px;">{{e.begain_time + ' ' + e.begain_week + ' 开始'}}</span>
                                 <img class="i3" src="/common/img/new/local.png" alt=""/><span>{{e.area_name + ' ' + e.address}}</span>
                             </span>
                             <p class="act-btn">
