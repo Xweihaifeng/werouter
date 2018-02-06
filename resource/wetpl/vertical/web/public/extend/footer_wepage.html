@@ -277,7 +277,9 @@
                     }
                 },
                 wefriends: function(){
-                    axios.get(apiUrl + 'circel/index?domain=' + pages_info.plats_domian.domain).then(data => {
+                    axios.get(apiUrl + 'circel/index?domain=' + pages_info.plats_domian.domain, {
+                        headers: {'Token': docCookies.getItem('token')}
+                    }).then(data => {
                         this.info = data.data.data;
                         getLine(this.info);
                     })
@@ -312,7 +314,7 @@
                         url: apiUrl + 'circel/relationship',
                         type: 'POST',
                         headers: {
-                            'Token': plats_token
+                            'Token': docCookies.getItem('token')
                         },
                         data: {
                             'domain': pages_info.plats_domian.domain,
@@ -343,7 +345,7 @@
                             'type': 2
                         },
                         headers: {
-                            'Token': plats_token
+                            'Token': docCookies.getItem('token')
                         },
                         success: function(data){
                             if (data.code == 200) {
