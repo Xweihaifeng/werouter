@@ -5,6 +5,7 @@
  //列表折叠
 sessionStorage.listname='we-shop';
 $(document).ready(function(){
+
     //const ApiMaterPlatQiniuDomain       = 'http://images.new.wezchina.com/';
 
     var favicon = ApiMaterPlatQiniuDomain + localStorage.getItem('fav');
@@ -119,8 +120,8 @@ $(document).ready(function(){
             headers: {
                     'Token': docCookies.getItem("token")
                 },
+            data:{domain:pages_index},
             success: function(data){
-                console.log(data,12121);
                 if (data.code == 200) {
                     var cate = data.data;
                     cate.map(x => {
