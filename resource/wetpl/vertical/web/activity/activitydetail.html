@@ -115,7 +115,7 @@
         <div id="menu">
             <ul>
                 <li><a :href="'/' + pages_info.plats_domian.domain"><img id="plats-user" :src="setImg(brand(pages_info.plats_user.avatar) ,'/common/img/new/avatar.png', 45, 45)" alt=""></a></li>
-                <li v-for="(e, i) in menu.list" @click="style(menu, i)" :class="{'underline': i === menu.flag}">{{e.name}}</li>
+                <li v-for="(e, i) in menu.list" @click="style(menu, i, true)" :class="{'underline': i === menu.flag}">{{e.name}}</li>
                 <li id="center"><a :href="user" @click="login(1)"><p><img :src="setImg(avatar ,'/common/img/new/my.png', 25, 25)" alt=""/>{{userCenter}}</p></a></li>
             </ul>
         </div>
