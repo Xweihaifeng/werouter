@@ -80,6 +80,10 @@
     #userinfo div p {
         margin: 0;
     }
+    #menu ul li:nth-of-type(5){
+        color: #4d4d4d;
+        border-bottom: 1px solid #46b2ee;
+    }
 </style>
 <body>
 <div class="modal_login" id="modal_login"></div>
@@ -148,17 +152,17 @@
                                         <p class="pay-type">
                                             <i class="fa fa-cny"></i>
                                             费用 :
-                                            <span style="padding-left: 10px;color:#f7b026" v-if="active_detail.price == 0.00">免费</span>
-                                            <span style="padding-left: 10px;color:red" v-if="active_detail.price != 0.00" v-html="active_detail.price"></span>
+                                            <span style="padding-left: 10px;color:#f7b026" v-if="active_detail.type == 1">免费</span>
+                                            <span style="padding-left: 10px;color:red" v-if="active_detail.type == 2">收费</span>
                                         </p>
 
 
                                         <div class="bbbao">
                                             <span>
-                                                <a href="javascript:" data-id="1" class="support" style="width: 245px; height: 35px;border-radius: 5px;background: #00A0E9;" v-if="active_detail.onStatus != '已结束' && pay_ment != 3 " @click="sign_up">我要报名</a>
-                                                <a href="javascript:" data-id="1" class="support" style="width: 245px; height: 35px;border-radius: 5px;background: rgb(204, 204, 204);" v-if="active_detail.onStatus == '已结束' && pay_ment != 3" @click="sign_up">我要报名</a>
+                                                <a href="javascript:" data-id="1" class="support" style="width: 245px; height: 35px;border-radius: 5px;background: #00A0E9;" v-if="active_detail.onStatus != '已结束' && pay_ment != 2 " @click="sign_up">我要报名</a>
+                                                <a href="javascript:" data-id="1" class="support" style="width: 245px; height: 35px;border-radius: 5px;background: rgb(204, 204, 204);" v-if="active_detail.onStatus == '已结束' && pay_ment != 2" @click="sign_up">我要报名</a>
                                                 <!--<a href="" v-if="pay_ment==2">立即支付</a>-->
-                                                <a href="javascript:" data-id="1" class="support" style="width: 245px; height: 35px;border-radius: 5px;background: rgb(204, 204, 204);" v-if="pay_ment==3" @click="sign_up">已报名</a>
+                                                <a href="javascript:" data-id="1" class="support" style="width: 245px; height: 35px;border-radius: 5px;background: rgb(204, 204, 204);" v-if="pay_ment==2" @click="sign_up">已报名</a>
                                             </span>
                                         </div>
 
@@ -240,11 +244,11 @@
 
                                         <div class="row">
                                             <div class="col-sm-6" style="border-right: 1px solid #ccc">
-                                                <p><span class="act_num">13</span></p>
+                                                <p><span class="act_num" v-html="user_active_num"></span></p>
                                                 <p>举办活动</p>
                                             </div>
                                             <div class="col-sm-6">
-                                                <p><span class="act_per_num">27</span></p>
+                                                <p><span class="act_per_num" v-html="user_guest_num"></span></p>
                                                 <p>参与人数</p>
                                             </div>
                                         </div>
@@ -328,13 +332,16 @@
             tickets:[],
             page_info:false,                      //订单信息
             pay_ment:0,                           //按钮状态（支付的状态）
+            user_active_num:0,                     //该活动人发表活动总数
+            user_guest_num:0                        //参与人数
         },
         mounted: function() {
 
             this.$nextTick(()=>{
                 // 活动信息
                 this.active_detail_show(this.id_domain);
-
+                console.log(pages_info.plats_domian.weid)
+                this.active_guest_num(pages_info.plats_domian.plat_user_id)
                 console.log(88888888,docCookies.getItem("weid"));
                 console.log("dddddd",ACTIVITY_ENROLL_STORE)
             });
@@ -351,7 +358,8 @@
             active_detail_show(id){
                 ajax.get(ACTIVITY_DETAIL + '/' + id).then((res)=>{                    
                     if(res.code == 200) {                      
-                       this.active_detail=res.data;                       
+                       this.active_detail=res.data;
+                        $app.set_title(res.data.title);
                        this.cate_time=res.data.created_at.substr(0,10);
                         this.end_time=res.data.end_time.substr(0,10);
                         this.guest_show(this.id_domain);
@@ -448,7 +456,7 @@
 
             },
             // 收藏
-           iscollection(uid, id) {
+            iscollection(uid, id) {
                 var self=this;
                 $.ajax({
                     url: ACTIVITY_COLLECTION_ISCOLLECTION,
@@ -477,7 +485,7 @@
                 })
             },
             // 喜欢收藏
-           like(id) {
+            like(id) {
                 var self=this;
                 $.ajax({
                     url: ACTIVITY_COLLECTION_STORE,
@@ -558,9 +566,8 @@
                     success: function(data) {
                         console.log(data)
                         if (data.code == 200) {
-                            // alert("已报名");
                             self.page_info = true;
-                            self.pay_ment=3;
+                            self.pay_ment=2;
                         }
                     },
                     error: function(err) {
@@ -1092,8 +1099,9 @@
                                     //location.reload();
                                     layer.close(closeindex);
                                     if (data.data.status == 2) {
-                                        self.activity_ebroll_detail(data.data.enroll_id);
+                                        self.pay_ment=2;
                                     } else if (data.data.status == 1) {
+                                        self.pay_ment=1;
                                         // 刷新页面
                                         var href=window.location.protocol + '//' + window.location.host + '/'+ 'activity/pay?pay=' + data.data.number +'&activity=' + self.id_domain;
                                         console.log(href)
@@ -1185,7 +1193,7 @@
 
                             if(req.data.status==2){
                                 self.page_info = true;
-                                self.pay_ment=req.data.status;
+                                self.pay_ment=1;
                                 console.log(req.data.number);
                                 layui.use('layer', function() {
                                     var layer = layui.layer;
@@ -1196,7 +1204,7 @@
                                 window.location.href = href;
                             }else if(req.data.status==3){
                                 self.page_info = true;
-                                self.pay_ment=req.data.status;
+                                self.pay_ment=2;
                                 layui.use('layer', function() {
                                     var layer = layui.layer;
                                     layer.msg("已支付，去个人中心看看吧！", {time: 1500});
@@ -1227,7 +1235,15 @@
                     this.GetOrder(this.id_domain)
                 }
             },
-
+            // 举办活动数量
+            active_guest_num(uid){
+                ajax.get(ACTIVITY_ACTIVITYINFO + '/' + uid).then((res)=>{
+                        if(res.code==200){
+                            this.user_active_num=res.data.count;
+                            this.user_guest_num=res.data.countmember;
+                        }
+                })
+            }
         },
 
     })

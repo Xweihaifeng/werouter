@@ -44,8 +44,8 @@ $(function(){
     var Height=$(".project_t").offset().top;
     $(window).scroll(function(){
 
-        if($(document).scrollTop()>=Height-250){
-            $("#userinfo").css({display:"none"});
+        if($(document).scrollTop()>=Height){
+            // $("#userinfo").css({display:"none"});
             // $("#menu").css({position:"relative"})
             $(".project_t").css({position:"fixed",top:0,left:"50%",zIndex:99,marginTop:0,marginLeft:"-578px",width:783});
         }else{
