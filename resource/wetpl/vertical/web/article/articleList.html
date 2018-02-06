@@ -28,20 +28,20 @@
                                 <span>{{JSON.parse(e.other).summary | cut(100)}} </span>
                             </span>
                             <span>
-                                <img class="i1" src="/common/img/new/date.png" alt=""/><span style="padding-right:34px;">{{JSON.parse(e.other).updated_at}}</span>
+                                <img class="i1" src="/common/img/new/date.png" alt=""/><span style="padding-right:34px;">{{new Date(parseInt(e.updated_at * 1000)) | show_date | format_date}}</span>
                                 <img class="i2" src="/common/img/new/read.png" alt=""/><span>{{JSON.parse(e.other).views}}</span>
                             </span>
                         </p>
                     </li>
                     <li v-if="e.dynamic_type == 3">
-                        <img class="i0" :src="setImg(e.cover, '/common/img/new/products_load.jpg', 240, 160)" />
+                        <img class="i0" :src="setImg(e.images, '/common/img/new/products_load.jpg', 240, 160)" />
                         <p style="width:395px;">
                             <span style="padding: 0;">
                                 <span>{{JSON.parse(e.other).title}}</span>
                                 <span>举办方：{{JSON.parse(e.other).Sponsor}} </span>
                             </span>
                             <span>
-                                <img class="i1" src="/common/img/new/date.png" alt=""/><span style="padding-right:34px;">{{JSON.parse(e.other).begain_time + ' ' + JSON.parse(e.other).begain_week + ' 开始'}}</span>
+                                <img class="i1" src="/common/img/new/date.png" alt=""/><span style="padding-right:45px;">{{new Date(parseInt(JSON.parse(e.other).begain_time * 1000)) | show_date | format_date + ' 开始'}}</span>
                                 <img class="i3" src="/common/img/new/local.png" alt=""/><span>{{JSON.parse(e.other).area_name + ' ' + JSON.parse(e.other).address}}</span>
                             </span>
                             <p class="act-btn">
@@ -91,7 +91,7 @@
                                 <span>举办方：{{e.Sponsor}} </span>
                             </span>
                             <span>
-                                <img class="i1" src="/common/img/new/date.png" alt=""/><span style="padding-right:34px;">{{e.begain_time + ' ' + e.begain_week + ' 开始'}}</span>
+                                <img class="i1" src="/common/img/new/date.png" alt=""/><span style="padding-right:10px;">{{e.begain_time + ' ' + e.begain_week + ' 开始'}}</span>
                                 <img class="i3" src="/common/img/new/local.png" alt=""/><span>{{e.area_name + ' ' + e.address}}</span>
                             </span>
                             <p class="act-btn">
@@ -212,7 +212,7 @@
                     <ul>
                         <li>
                             <span>
-                                <i :style="fontColor">官方认证</i>
+                                <i :style="fontColor">{{plats_info.cert_name}}</i>
                                 <img :src="imgState('/common/img/new/offical.png', '/common/img/new/officaloff.png', pages_info.plats_user_cert.is_authenticated == 1)" alt="" width="76" height="26"/>
                                 <img :src="imgState('/common/img/new/cert.png', '/common/img/new/certoff.png', pages_info.plats_user_auth.is_authenticated == 1)" alt="" width="32" height="28"/>
                                 <img src="/common/img/new/message.png" alt="" width="60" height="24"/>
@@ -228,10 +228,11 @@
                             <span>{{pages_info.plats_user.motto}}</span>
                         </li>
                         <li>
-                            <img :src="setImg(pages_info.plats_user_qrcode, '/common/img/new/qrcode.png', 140, 140)" alt="" width="140" height="140"/>
+                            <img :src="setImg(pages_info.plats_user_qrcode, '/common/img/new/qrcode.png', 160, 160)" alt="" width="160" height="160"/>
                             <p>
                                 <span>微信扫描二维码</span>
-                                <span>分享给好友</span>
+                                <span style="color: #007cd3;font-weight: 600;padding-bottom: 5px;">支持Ta</span>
+                                <span style="color: #007cd3;font-weight: 600;">或分享给好友</span>
                             </p>
                         </li>
                     </ul>

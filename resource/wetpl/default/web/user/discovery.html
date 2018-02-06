@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 	<head lang="en">
 		<title>发现文章</title>
 		<meta charset="UTF-8">
@@ -20,7 +19,29 @@
 		<link rel="stylesheet" type="text/css" href="/common/css/swiper.min.css">
 		<link rel="stylesheet" type="text/css" href="{{PATH_TML}}user/css/discovery.css">
 	</head>
+	<style>
+		.cons a{
+			float: left;
+		}
+		.cons a:nth-of-type(2n){
+			box-sizing: border-box;
+			padding-left: 17px;
 
+		}
+		.cons a:nth-of-type(2n) div.my_join > span{
+			float: right;
+		}
+		.show-cont{
+			color: #999!important;
+		}
+		.text2{
+			display:-webkit-box;
+			-webkit-box-orient:vertical;
+			-webkit-line-clamp:2;
+			overflow:hidden;
+			text-overflow:ellipsis;
+		}
+	</style>
 	<body style="width: 100%; background: #F7F6F2;">
 		<div class="left-nav"></div>
 		<div id="top"></div>
@@ -32,6 +53,9 @@
 	                <li class="active" style="color: #fff!important;">发现文章</li>
 	            </ol>
 	        </div>
+			<div class="cons" style="box-sizing: border-box;padding: 0 20px;width: 100%;height: auto;">
+
+			</div>
 		</div>
 		<!--模块引入-->
 		<script charset="utf-8" type="text/javascript" src="{{PATH_TML}}user/common/js/generate.js"></script>
@@ -39,5 +63,4 @@
 		<script charset="utf-8" type="text/javascript" src="{{PATH_TML}}user/js/common.js"></script>
 		<script charset="utf-8" type="text/javascript" src="{{PATH_TML}}user/js/discovery.js"></script>
 	</body>
-
 </html>

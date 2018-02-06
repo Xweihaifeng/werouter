@@ -144,7 +144,7 @@
                     shopping: {total: 1, page: 1, limit: 1},
                     zone: {total: 1, page: 1, limit: 1}
                 },
-                page: {total: 10, page: 1, limit: 10},
+                page: {},
                 tabs: 2,
                 remArt: 'art0', //文章标签
                 remAct: 'act0', //活动标签                
@@ -200,22 +200,42 @@
             mounted: function(){
                 this.$nextTick(function(){                    
                     window.onpopstate = function(e) {
-                        var curr = window.location.pathname.split('/').pop();
+                        var path = wepage.checkPath(window.location.pathname);
                         var list = ['', 'article', 'activity', 'wemall', 'quan'];
-                        var id = list.indexOf(curr);                    
-                        if (id != -1) {
-                            wepage.menu.flag = id;
-                            switch (id) {
-                                case 0: wepage.type = 'latest'; wepage.latest == '' ? wepage.none = true : wepage.none = false; break;
-                                case 1: wepage.type = 'articles'; wepage.articles == '' ? wepage.none = true : wepage.none = false; break;
-                                case 2: wepage.type = 'activity'; wepage.activity == '' ? wepage.none = true : wepage.none = false; break;
-                                case 3: wepage.type = 'shopping'; wepage.shopping == '' ? wepage.none = true : wepage.none = false; break;
-                                case 4: wepage.type = 'zone'; wepage.none = false; break;
+                        if (path.length == 1) {
+                            var id = list.indexOf(path[0]);
+                            if (id != -1) {
+                                wepage.menu.flag = id;
+                                switch (id) {
+                                    case 0: wepage.type = 'latest'; wepage.latest == '' ? wepage.none = true : wepage.none = false; wepage.getLatest(1, 10); break;
+                                    case 1: wepage.type = 'articles'; wepage.articles == '' ? wepage.none = true : wepage.none = false; wepage.getArtList(1, 10, wepage.artType.list[0].weid); wepage.artType.flag = 0; break;
+                                    case 2: wepage.type = 'activity'; wepage.activity == '' ? wepage.none = true : wepage.none = false; wepage.getActList(1, 10, wepage.actType.list[0].weid); wepage.actType.flag = 0; break;
+                                    case 3: wepage.type = 'shopping'; wepage.shopping == '' ? wepage.none = true : wepage.none = false; wepage.getShopCate(); break;
+                                    case 4: wepage.type = 'zone'; wepage.none = false; break;
+                                }
+                            } else {
+                                wepage.menu.flag = 0;
+                                wepage.type = 'latest';
                             }
-                        } else {
-                            wepage.menu.flag = 0;
-                            wepage.type = 'latest'
-                        }                        
+                        } else { //子类                            
+                            var id = list.indexOf(path[0]);
+                            if (id != -1) {
+                                wepage.menu.flag = id;
+                                var artId = this.artType.router.indexOf(path[1]);
+                                var actId = this.actType.router.indexOf(path[1]);
+                                switch (id) {
+                                    case 0: wepage.type = 'latest'; wepage.latest == '' ? wepage.none = true : wepage.none = false; wepage.getLatest(1, 10); break;
+                                    case 1: wepage.type = 'articles'; wepage.articles == '' ? wepage.none = true : wepage.none = false; wepage.getArtList(1, 10, wepage.artType.list[artId].weid); this.artType.flag = artId; break;
+                                    case 2: wepage.type = 'activity'; wepage.activity == '' ? wepage.none = true : wepage.none = false; wepage.getActList(1, 10, wepage.actType.list[actId].weid); this.actType.flag = actId; break;
+                                    case 3: wepage.type = 'shopping'; wepage.shopping == '' ? wepage.none = true : wepage.none = false; wepage.getShopCate(); break;
+                                    case 4: wepage.type = 'zone'; wepage.none = false; break;
+                                }
+                            } else {
+                                wepage.menu.flag = 0;
+                                wepage.type = 'latest';
+                            }
+                        }
+                        
                     }
                 })
             },
@@ -345,6 +365,7 @@
                         this.type = 'latest';
                         this.latest = data.data.data.list;
                         this.latest == '' ? wepage.none = true : wepage.none = false;
+                        console.log(this.latest)
                     })
                 },
                 getArtList: function(page, limit, cate_id) {
@@ -540,6 +561,13 @@
                 },
                 cut: function(value, len) {
                     return value.length > len ? value.substr(0, len) + '...' : value;
+                },
+                show_date: function(value) { 
+                    return value.getFullYear() + '-' + (value.getMonth() + 1) + '-' + value.getDate();
+                },
+                format_date: function(value) {
+                    var res = value.split('-').reduce((res, e, i) => res += e.length == 1 ? '0' + e + '-' : e + '-', '');
+                    return res.substr(0, res.length - 1);
                 }
             }
         })

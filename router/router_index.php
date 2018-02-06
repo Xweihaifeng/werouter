@@ -480,6 +480,7 @@ class router_index extends controller
             $plats['qiniu']['buckut'] = $this->qiniu_cofing['buckut'];
         }
 
+
         if($this->sub_state == FALSE)
         {
             //平台信息相关
@@ -511,6 +512,12 @@ class router_index extends controller
             $plats['plats_info'] = $this->db->queryOne($plats_sql , array($this->sub_weid));
             if(empty($plats['plats_info'])) error(404);
         }
+
+         //秦商认证相关
+        $sql = 'SELECT cert_name FROM we_plats_user_online_auth_setting 
+                WHERE plat_id=?';
+        $row = $this->db->queryOne($sql , array($weid));
+        $plats['plats_info']['cert_name'] = $row['cert_name'];
 
 
         if(empty($_COOKIE['token']))
