@@ -204,22 +204,36 @@
                         var list = ['', 'article', 'activity', 'wemall', 'quan'];
                         if (path.length == 1) {
                             var id = list.indexOf(path[0]);
-                            console.log(id)
                             if (id != -1) {
                                 wepage.menu.flag = id;
                                 switch (id) {
-                                    case 0: wepage.type = 'latest'; wepage.latest == '' ? wepage.none = true : wepage.none = false; break;
-                                    case 1: wepage.type = 'articles'; wepage.articles == '' ? wepage.none = true : wepage.none = false; break;
-                                    case 2: wepage.type = 'activity'; wepage.activity == '' ? wepage.none = true : wepage.none = false; break;
-                                    case 3: wepage.type = 'shopping'; wepage.shopping == '' ? wepage.none = true : wepage.none = false; break;
+                                    case 0: wepage.type = 'latest'; wepage.latest == '' ? wepage.none = true : wepage.none = false; wepage.getLatest(1, 10); break;
+                                    case 1: wepage.type = 'articles'; wepage.articles == '' ? wepage.none = true : wepage.none = false; wepage.getArtList(1, 10, wepage.artType.list[0].weid); wepage.artType.flag = 0; break;
+                                    case 2: wepage.type = 'activity'; wepage.activity == '' ? wepage.none = true : wepage.none = false; wepage.getActList(1, 10, wepage.actType.list[0].weid); wepage.actType.flag = 0; break;
+                                    case 3: wepage.type = 'shopping'; wepage.shopping == '' ? wepage.none = true : wepage.none = false; wepage.getShopCate(); break;
                                     case 4: wepage.type = 'zone'; wepage.none = false; break;
                                 }
                             } else {
                                 wepage.menu.flag = 0;
-                                wepage.type = 'latest'
+                                wepage.type = 'latest';
                             }
-                        } else {
-                            console.log(path)
+                        } else { //子类                            
+                            var id = list.indexOf(path[0]);
+                            if (id != -1) {
+                                wepage.menu.flag = id;
+                                var artId = this.artType.router.indexOf(path[1]);
+                                var actId = this.actType.router.indexOf(path[1]);
+                                switch (id) {
+                                    case 0: wepage.type = 'latest'; wepage.latest == '' ? wepage.none = true : wepage.none = false; wepage.getLatest(1, 10); break;
+                                    case 1: wepage.type = 'articles'; wepage.articles == '' ? wepage.none = true : wepage.none = false; wepage.getArtList(1, 10, wepage.artType.list[artId].weid); this.artType.flag = artId; break;
+                                    case 2: wepage.type = 'activity'; wepage.activity == '' ? wepage.none = true : wepage.none = false; wepage.getActList(1, 10, wepage.actType.list[actId].weid); this.actType.flag = actId; break;
+                                    case 3: wepage.type = 'shopping'; wepage.shopping == '' ? wepage.none = true : wepage.none = false; wepage.getShopCate(); break;
+                                    case 4: wepage.type = 'zone'; wepage.none = false; break;
+                                }
+                            } else {
+                                wepage.menu.flag = 0;
+                                wepage.type = 'latest';
+                            }
                         }
                         
                     }
@@ -351,7 +365,6 @@
                         this.type = 'latest';
                         this.latest = data.data.data.list;
                         this.latest == '' ? wepage.none = true : wepage.none = false;
-                        console.log(this.latest)
                     })
                 },
                 getArtList: function(page, limit, cate_id) {
