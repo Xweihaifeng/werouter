@@ -237,150 +237,84 @@
                                                 <span class="brand_on_off off">OFF</span>
                                             </div>
                                             </span>
-                                          </div>
-                                        </li>
-                                        <!-- 人工认证结束 -->
-                                        <!-- 购买短信包开始 -->
-                                        <li class="message_box sms_package">
-                                            <div class="per_bottom_tit">
-                                                <span class="scad_setting">短信</span>
-                                                <span class="switch brand_set turn_on_off switch-close" data-key="is_sms_open">
+                                    </div>
+                                    </li>
+                                    <!-- 人工认证结束 -->
+                                    <!-- 购买短信包开始 -->
+                                    <li class="message_box sms_package">
+                                        <div class="per_bottom_tit">
+                                            <span class="scad_setting">短信</span>
+                                            <span class="switch brand_set turn_on_off switch-close" data-key="is_sms_open">
                                                     <div id="op1" class="open">
                                                         <div id="op2" class="close"></div>
                                                         <span class="brand_on_off on">ON</span>
-                                                <span class="brand_on_off off">OFF</span>
-                                            </div>
-                                            </span>
-                                            <a class="edit_domain">展开</a>
-                                    </div>
-                                    <div class="edit_domain_area" style="display: none;">
-                                        <div class="panel-body">
-                                            <div class="form-group">
-                                                <div class="col-sm-12 col-md-12 col-lg-12 data">
-                                                    <div class="chart doughnut" style="width:400px">
-                                                        <canvas id="chartPie" style="width:150px;height:150px;"></canvas>
-                                                        <div class="intro" style="margin-left: 120px;">
-                                                            <ul id="listPie"></ul>
-                                                        </div>
+                                            <span class="brand_on_off off">OFF</span>
+                                        </div>
+                                        </span>
+                                        <a class="edit_domain">展开</a>
+                                </div>
+                                <div class="edit_domain_area" style="display: none;">
+                                    <div class="panel-body">
+                                        <div class="form-group">
+                                            <div class="col-sm-12 col-md-12 col-lg-12 data">
+                                                <div class="chart doughnut" style="width:400px">
+                                                    <canvas id="chartPie" style="width:150px;height:150px;"></canvas>
+                                                    <div class="intro" style="margin-left: 120px;">
+                                                        <ul id="listPie"></ul>
                                                     </div>
-                                                    <div class="chart line" style="width:400px;margin-left:20px;">
-                                                        <canvas id="chartLine" style="width:400px;height:150px;"></canvas>
-                                                    </div>
+                                                </div>
+                                                <div class="chart line" style="width:400px;margin-left:20px;">
+                                                    <canvas id="chartLine" style="width:400px;height:150px;"></canvas>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="panel-body">
-                                            <div class="form-group">
-                                                <label class="control-label col-sm-4 col-md-4 col-lg-4">短信签名设置</label>
-                                                <div class="col-sm-8 col-md-8 col-lg-8">
-                                                    <div class="input-group">
-                                                        <input type="text" class="form-control" id="sign" name="sign" placeholder="短信签名">
-                                                        <span class="input-group-btn">
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-4 col-md-4 col-lg-4">短信签名设置</label>
+                                            <div class="col-sm-8 col-md-8 col-lg-8">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" id="sign" name="sign" placeholder="短信签名">
+                                                    <span class="input-group-btn">
                                                                     <button id="signSet" class="btn btn-success" type="button">保存设置</button>
                                                                 </span>
-                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="panel-body">
-                                            <div class="form-group">
-                                                <label class="col-xs-4 col-sm-4 col-md-4 control-label">短信余量</label>
-                                                <div class="col-sm-8 col-xs-8 col-lg-8">
-                                                    <div class="row row-fix tpl-category-container">
-                                                        <input class="messarg_sign" type="text" name="rest_count" value="0" readonly>&nbsp;条 &nbsp;
-                                                        <button type="button" class="btn btn-warning btn-cancel-buy">购买</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="message_buy_box" style="display: none;">
-                                            <div class="message_buy_tit">选择购买短信套餐</div>
-                                            <p class="message_info">
-                                                短信属于增值服务，由第三方提供。使用前是要先购买套餐，该费用由微众中国代收
-                                            </p>
-                                            <div class="message_package">
-                                                <span class="message_package_tit">选择套餐：</span>
-                                                <ul class="message_package_con">
-                                                </ul>
-                                            </div>
-                                            <div class="apply_buy">
-                                                <input type="hidden" name="order_id" value="">
-                                                <button type="button" class="btn btn-danger btn-lg buy-instance">购买套餐</button>
-                                            </div>
-                                        </div>
-                                        </li>
-                                        <!-- 购买短信包结束 -->
-
-                                        <!-- 七牛配置开始 -->
-                                        <li class="message_box online_cert">
-                                            <div class="per_bottom_tit">
-                                                <span class="scad_setting">七牛对象存储</span>
-                                                <span class="switch brand_set turn_on_off switch-close" data-key="is_sms_open">
-                                                    <!-- <div id="op1" class="open">
-                                                        <div id="op2" class="close"></div>
-                                                        <span class="brand_on_off on">ON</span>
-                                                <span class="brand_on_off off">OFF</span>
-                                            </div> -->
-                                            </span>
-                                            <a class="edit_domain">展开</a>
                                     </div>
-                                    <div class="edit_domain_area" style="display: none;">
-                                        <div class="panel-body">
-                                            <form id="fromManager" class="form-horizontal" style="padding: 30px;">
-                                                <div class="form-group">
-                                                    <label class="control-label col-sm-4 col-md-4 col-lg-4">Bucket</label>
-                                                    <div class="col-sm-8 col-md-8 col-lg-8">
-                                                        <input type="text" class="form-control" id="bucket" name="config[bucket]" placeholder="bucket仓库">
-                                                    </div>
+                                    <div class="panel-body">
+                                        <div class="form-group">
+                                            <label class="col-xs-4 col-sm-4 col-md-4 control-label">短信余量</label>
+                                            <div class="col-sm-8 col-xs-8 col-lg-8">
+                                                <div class="row row-fix tpl-category-container">
+                                                    <input class="messarg_sign" type="text" name="rest_count" value="0" readonly>&nbsp;条 &nbsp;
+                                                    <button type="button" class="btn btn-warning btn-cancel-buy">购买</button>
                                                 </div>
-                                                <div class="form-group">
-                                                    <label class="control-label col-sm-4 col-md-4 col-lg-4">授权KEY</label>
-                                                    <div class="col-sm-8 col-md-8 col-lg-8">
-                                                        <input type="text" class="form-control" id="access_key" name="config[access_key]" placeholder="access_key">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="control-label col-sm-4 col-md-4 col-lg-4">认证KEY</label>
-                                                    <div class="col-sm-8 col-md-8 col-lg-8">
-                                                        <input type="text" class="form-control" id="secret_key" name="config[secret_key]" placeholder="secret_key">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="control-label col-sm-4 col-md-4 col-lg-4">客户域名</label>
-                                                    <div class="col-sm-8 col-md-8 col-lg-8">
-                                                        <input type="text" class="form-control" id="domain_custom" name="config[domain_custom]" placeholder="自定义域名">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="control-label col-sm-4 col-md-4 col-lg-4">默认域名</label>
-                                                    <div class="col-sm-8 col-md-8 col-lg-8">
-                                                        <input type="text" class="form-control" id="domain_default" name="config[domain_default]" placeholder="默认域名">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="control-label col-sm-4 col-md-4 col-lg-4">HTTPS</label>
-                                                    <div class="col-sm-8 col-md-8 col-lg-8">
-                                                        <input type="text" class="form-control" id="domain_https" name="config[domain_https]" placeholder="HTTPS域名">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="control-label col-sm-4 col-md-4 col-lg-4">回调链接</label>
-                                                    <div class="col-sm-8 col-md-8 col-lg-8">
-                                                        <input type="text" class="form-control" id="notify_url" name="config[notify_url]" placeholder="回调链接">
-                                                    </div>
-                                                </div>
-                                                <div>
-                                                    <button type="button" class="btn btn-info pull-right" id="updateSet">保存</button>
-                                                </div>
-                                            </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="message_buy_box" style="display: none;">
+                                        <div class="message_buy_tit">选择购买短信套餐</div>
+                                        <p class="message_info">
+                                            短信属于增值服务，由第三方提供。使用前是要先购买套餐，该费用由微众中国代收
+                                        </p>
+                                        <div class="message_package">
+                                            <span class="message_package_tit">选择套餐：</span>
+                                            <ul class="message_package_con">
+                                            </ul>
+                                        </div>
+                                        <div class="apply_buy">
+                                            <input type="hidden" name="order_id" value="">
+                                            <button type="button" class="btn btn-danger btn-lg buy-instance">购买套餐</button>
                                         </div>
                                     </div>
                                     </li>
-                                    <!-- 七牛配置结束 -->
-                                    <!-- 微信配置开始 -->
+                                    <!-- 购买短信包结束 -->
+
+                                    <!-- 七牛配置开始 -->
                                     <li class="message_box online_cert">
                                         <div class="per_bottom_tit">
-                                            <span class="scad_setting">微信公众号与支付</span>
+                                            <span class="scad_setting">七牛对象存储</span>
                                             <span class="switch brand_set turn_on_off switch-close" data-key="is_sms_open">
                                                     <!-- <div id="op1" class="open">
                                                         <div id="op2" class="close"></div>
@@ -391,158 +325,252 @@
                                         <a class="edit_domain">展开</a>
                                 </div>
                                 <div class="edit_domain_area" style="display: none;">
-                                    <ul class="tab-content nav nav-tabs form-horizontal" style="padding: 10px 60px 0px;">
-                                        <li role="presentation" class="active"><a href="javascript:;">公众号</a></li>
-                                        <li role="presentation"><a href="javascript:;">微信支付</a></li>
-                                        <li role="presentation"><a href="javascript:;">开放平台</a></li>
-                                    </ul>
-                                    <div class="panel-body tab-body">
-                                        <form id="weChat" class="form-horizontal" style="padding: 30px;">
+                                    <div class="panel-body">
+                                        <form id="fromManager" class="form-horizontal" style="padding: 30px;">
                                             <div class="form-group">
-                                                <label class="control-label col-sm-4 col-md-4 col-lg-4">APPID</label>
+                                                <label class="control-label col-sm-4 col-md-4 col-lg-4">Bucket</label>
                                                 <div class="col-sm-8 col-md-8 col-lg-8">
-                                                    <input type="text" class="form-control" id="wechat_appid" name="config[wechat_appid]" placeholder="wechat_appid">
+                                                    <input type="text" class="form-control" id="bucket" name="config[bucket]" placeholder="bucket仓库">
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label class="control-label col-sm-4 col-md-4 col-lg-4">SECRETKEY</label>
+                                                <label class="control-label col-sm-4 col-md-4 col-lg-4">授权KEY</label>
                                                 <div class="col-sm-8 col-md-8 col-lg-8">
-                                                    <input type="text" class="form-control" id="wechat_secretkey" name="config[wechat_secretkey]" placeholder="wechat_secretkey">
+                                                    <input type="text" class="form-control" id="access_key" name="config[access_key]" placeholder="access_key">
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label class="control-label col-sm-4 col-md-4 col-lg-4">验证文件</label>
+                                                <label class="control-label col-sm-4 col-md-4 col-lg-4">认证KEY</label>
                                                 <div class="col-sm-8 col-md-8 col-lg-8">
-                                                    <input type="text" class="form-control" id="wechat_verify_txt" name="config[wechat_verify_txt]" placeholder="wechat_verify_txt">
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <button type="button" class="btn btn-info pull-right weChatSet">保存</button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <div class="panel-body tab-body" style="display:none">
-                                        <form id="weChat" class="form-horizontal" style="padding: 30px;">
-                                            <div class="form-group">
-                                                <label class="control-label col-sm-4 col-md-4 col-lg-4">商户号</label>
-                                                <div class="col-sm-8 col-md-8 col-lg-8">
-                                                    <input type="text" class="form-control" id="wechat_merchant_id" name="config[wechat_merchant_id]" placeholder="商户号">
+                                                    <input type="text" class="form-control" id="secret_key" name="config[secret_key]" placeholder="secret_key">
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label class="control-label col-sm-4 col-md-4 col-lg-4">商户key</label>
+                                                <label class="control-label col-sm-4 col-md-4 col-lg-4">客户域名</label>
                                                 <div class="col-sm-8 col-md-8 col-lg-8">
-                                                    <input type="text" class="form-control" id="wechat_payment_key" name="config[wechat_payment_key]" placeholder="商户密钥">
+                                                    <input type="text" class="form-control" id="domain_custom" name="config[domain_custom]" placeholder="自定义域名">
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label class="control-label col-sm-4 col-md-4 col-lg-4">支付证书</label>
+                                                <label class="control-label col-sm-4 col-md-4 col-lg-4">默认域名</label>
                                                 <div class="col-sm-8 col-md-8 col-lg-8">
-                                                    <div class="input-group">
-                                                        <input type="text" class="form-control" id="apiclient_cert" name="config[apiclient_cert]" placeholder="客户端支付证书">
-                                                        <span class="input-group-btn">
-                                                                          <button class="btn btn-warning" id="pickfiles" type="button">上传文件</button>
-                                                                        </span>
-                                                    </div>
+                                                    <input type="text" class="form-control" id="domain_default" name="config[domain_default]" placeholder="默认域名">
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label class="control-label col-sm-4 col-md-4 col-lg-4">证书key</label>
+                                                <label class="control-label col-sm-4 col-md-4 col-lg-4">HTTPS</label>
                                                 <div class="col-sm-8 col-md-8 col-lg-8">
-                                                    <div class="input-group">
-                                                        <input type="text" class="form-control" id="apiclient_key" name="config[apiclient_key]" placeholder="客户端证书key">
-                                                        <span class="input-group-btn">
-                                                                          <button class="btn btn-warning" id="pickfiles2" type="button">上传文件</button>
-                                                                        </span>
-                                                    </div>
+                                                    <input type="text" class="form-control" id="domain_https" name="config[domain_https]" placeholder="HTTPS域名">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-sm-4 col-md-4 col-lg-4">回调链接</label>
+                                                <div class="col-sm-8 col-md-8 col-lg-8">
+                                                    <input type="text" class="form-control" id="notify_url" name="config[notify_url]" placeholder="回调链接">
                                                 </div>
                                             </div>
                                             <div>
-                                                <button type="button" class="btn btn-info pull-right weChatPaySet">保存</button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <div class="panel-body tab-body" style="display:none">
-                                        <form id="weChat" class="form-horizontal" style="padding: 30px;">
-                                            <div class="form-group">
-                                                <label class="control-label col-sm-4 col-md-4 col-lg-4">AppID</label>
-                                                <div class="col-sm-8 col-md-8 col-lg-8">
-                                                    <input type="text" class="form-control" id="wechat_open_appid" name="config[open_appid]" placeholder="">
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="control-label col-sm-4 col-md-4 col-lg-4">AppSecret</label>
-                                                <div class="col-sm-8 col-md-8 col-lg-8">
-                                                    <input type="text" class="form-control" id="wechat_open_secret" name="config[open_secret]" placeholder="">
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <button type="button" class="btn btn-info pull-right weChatOpenSet">保存</button>
+                                                <button type="button" class="btn btn-info pull-right" id="updateSet">保存</button>
                                             </div>
                                         </form>
                                     </div>
                                 </div>
                                 </li>
-                                <!-- 微信配置结束 -->
-                                <!-- 微主页配置开始 -->
-                                <li class="message_box wepages_config">
+                                <!-- 七牛配置结束 -->
+                                <!-- 微信配置开始 -->
+                                <li class="message_box weixin">
                                     <div class="per_bottom_tit">
-                                        <span class="scad_setting">微主页配置</span>
+                                        <span class="scad_setting">微信公众号与支付</span>
                                         <span class="switch brand_set turn_on_off switch-close" data-key="is_sms_open">
-                                            <!-- <div id="op1" class="open">
-                                                <div id="op2" class="close"></div>
-                                                <span class="brand_on_off on">ON</span>
+                                                    <!-- <div id="op1" class="open">
+                                                        <div id="op2" class="close"></div>
+                                                        <span class="brand_on_off on">ON</span>
                                         <span class="brand_on_off off">OFF</span>
                                     </div> -->
                                     </span>
                                     <a class="edit_domain">展开</a>
                             </div>
                             <div class="edit_domain_area" style="display: none;">
-                                <div class="panel-body">
-                                    <form id="fromManager" class="form-horizontal" style="padding: 30px;">
+                                <ul class="tab-content nav nav-tabs form-horizontal" style="padding: 10px 60px 0px;">
+                                    <li role="presentation" class="active"><a href="javascript:;">公众号</a></li>
+                                    <li role="presentation"><a href="javascript:;">微信支付</a></li>
+                                    <li role="presentation"><a href="javascript:;">开放平台</a></li>
+                                </ul>
+                                <div class="panel-body tab-body">
+                                    <form id="weChat" class="form-horizontal" style="padding: 30px;">
                                         <div class="form-group">
-                                            <label class="control-label col-sm-4 col-md-4 col-lg-4">允许开通用户</label>
+                                            <label class="control-label col-sm-4 col-md-4 col-lg-4">APPID</label>
                                             <div class="col-sm-8 col-md-8 col-lg-8">
-                                                <div class="row">
-                                                    <div class="col-sm-4 col-md-4 col-lg-4">
-                                                        <div class="checkbox">
-                                                            <label><input type="checkbox" name="open_allow_source" value="UA">实名认证</label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-4 col-md-4 col-lg-4">
-
-                                                        <div class="checkbox">
-                                                            <label><input type="checkbox" name="open_allow_source" value="UG">官方认证</label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-4 col-md-4 col-lg-4">
-
-                                                        <div class="checkbox">
-                                                            <label><input type="checkbox" name="open_allow_source" value="UM">会员</label>
-                                                        </div>
-                                                    </div>
-                                                    <p style="display: block;padding-top: 7px;padding-left:15px;color: #999;min-width: 220px;font-size: 12px;    line-height: 25px;">
-                                                        1.不同级别用户开通开通微主页功能不同,全部关闭等效于全站禁止开通微主页<br> 2.实名认证级别的用户开通的微主页限使用非商务功能<br> 3.官方认证和会员开通的微主页功能无限制<br> 4.商务功能包括（商城、文章打赏、收费活动）
-                                                    </p>
-                                                </div>
+                                                <input type="text" class="form-control" id="wechat_appid" name="config[wechat_appid]" placeholder="wechat_appid">
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="control-label col-sm-4 col-md-4 col-lg-4">个性域名每月修改次数上限</label>
+                                            <label class="control-label col-sm-4 col-md-4 col-lg-4">SECRETKEY</label>
                                             <div class="col-sm-8 col-md-8 col-lg-8">
-                                                <input type="text" class="form-control" id="modifyLimit" name="modifyLimit" placeholder="微主页个性域名月度允许修改次数">
+                                                <input type="text" class="form-control" id="wechat_secretkey" name="config[wechat_secretkey]" placeholder="wechat_secretkey">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-4 col-md-4 col-lg-4">验证文件</label>
+                                            <div class="col-sm-8 col-md-8 col-lg-8">
+                                                <input type="text" class="form-control" id="wechat_verify_txt" name="config[wechat_verify_txt]" placeholder="wechat_verify_txt">
                                             </div>
                                         </div>
                                         <div>
-                                            <button type="button" class="btn btn-info pull-right" id="wepagesSet">保存</button>
+                                            <button type="button" class="btn btn-info pull-right weChatSet">保存</button>
                                         </div>
                                     </form>
                                 </div>
+                                <div class="panel-body tab-body" style="display:none">
+                                    <form id="weChat" class="form-horizontal" style="padding: 30px;">
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-10 col-md-10 col-lg-10"></label>
+                                            <div class="col-sm-2 col-md-2 col-lg-2">
+                                                <div class="wechat-pay-switch" style="float:right">
+                                                    <span class="switch brand_set turn_on_off switch-close" data-key="is_sms_open">
+                                                                <div id="op1" class="open">
+                                                                    <div id="op2" class="close"></div>
+                                                                    <span class="brand_on_off on">开启</span>
+                                                    <span class="brand_on_off off">关闭</span>
+                                                </div>
+                                                </span>
+                                            </div>
+                                        </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-4 col-md-4 col-lg-4">商户号</label>
+                                    <div class="col-sm-8 col-md-8 col-lg-8">
+                                        <input type="text" class="form-control" id="wechat_merchant_id" name="config[wechat_merchant_id]" placeholder="商户号">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-4 col-md-4 col-lg-4">商户key</label>
+                                    <div class="col-sm-8 col-md-8 col-lg-8">
+                                        <input type="text" class="form-control" id="wechat_payment_key" name="config[wechat_payment_key]" placeholder="商户密钥">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-4 col-md-4 col-lg-4">支付证书</label>
+                                    <div class="col-sm-8 col-md-8 col-lg-8">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="apiclient_cert" name="config[apiclient_cert]" placeholder="客户端支付证书">
+                                            <span class="input-group-btn">
+                                                                          <button class="btn btn-warning" id="pickfiles" type="button">上传文件</button>
+                                                                        </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-4 col-md-4 col-lg-4">证书key</label>
+                                    <div class="col-sm-8 col-md-8 col-lg-8">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="apiclient_key" name="config[apiclient_key]" placeholder="客户端证书key">
+                                            <span class="input-group-btn">
+                                                                          <button class="btn btn-warning" id="pickfiles2" type="button">上传文件</button>
+                                                                        </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <button type="button" class="btn btn-info pull-right weChatPaySet">保存</button>
+                                </div>
+                                </form>
                             </div>
-                            </li>
-                            <!-- 微主页配置结束 -->
-                            <!-- 会员配置开始 -->
-                            <!-- <li class="message_box wepages_config">
+                            <div class="panel-body tab-body" style="display:none">
+                                <form id="weChat" class="form-horizontal" style="padding: 30px;">
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-10 col-md-10 col-lg-10"></label>
+                                        <div class="col-sm-2 col-md-2 col-lg-2">
+                                            <div class="wechat-open-switch" style="float:right">
+                                                <span class="switch brand_set turn_on_off switch-close" data-key="is_sms_open">
+                                                                    <div id="op1" class="open">
+                                                                        <div id="op2" class="close"></div>
+                                                                        <span class="brand_on_off on">开启</span>
+                                                <span class="brand_on_off off">关闭</span>
+                                            </div>
+                                            </span>
+                                        </div>
+                                    </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-4 col-md-4 col-lg-4">AppID</label>
+                                <div class="col-sm-8 col-md-8 col-lg-8">
+                                    <input type="text" class="form-control" id="wechat_open_appid" name="config[open_appid]" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-4 col-md-4 col-lg-4">AppSecret</label>
+                                <div class="col-sm-8 col-md-8 col-lg-8">
+                                    <input type="text" class="form-control" id="wechat_open_secret" name="config[open_secret]" placeholder="">
+                                </div>
+                            </div>
+                            <div>
+                                <button type="button" class="btn btn-info pull-right weChatOpenSet">保存</button>
+                            </div>
+                            </form>
+                        </div>
+                    </div>
+                    </li>
+                    <!-- 微信配置结束 -->
+                    <!-- 微主页配置开始 -->
+                    <li class="message_box wepages_config">
+                        <div class="per_bottom_tit">
+                            <span class="scad_setting">微主页配置</span>
+                            <span class="switch brand_set turn_on_off switch-close" data-key="is_sms_open">
+                                            <!-- <div id="op1" class="open">
+                                                <div id="op2" class="close"></div>
+                                                <span class="brand_on_off on">ON</span>
+                            <span class="brand_on_off off">OFF</span>
+                        </div> -->
+                        </span>
+                        <a class="edit_domain">展开</a>
+                </div>
+                <div class="edit_domain_area" style="display: none;">
+                    <div class="panel-body">
+                        <form id="fromManager" class="form-horizontal" style="padding: 30px;">
+                            <div class="form-group">
+                                <label class="control-label col-sm-4 col-md-4 col-lg-4">允许开通用户</label>
+                                <div class="col-sm-8 col-md-8 col-lg-8">
+                                    <div class="row">
+                                        <div class="col-sm-4 col-md-4 col-lg-4">
+                                            <div class="checkbox">
+                                                <label><input type="checkbox" name="open_allow_source" value="UA">实名认证</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4 col-md-4 col-lg-4">
+
+                                            <div class="checkbox">
+                                                <label><input type="checkbox" name="open_allow_source" value="UG">官方认证</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4 col-md-4 col-lg-4">
+
+                                            <div class="checkbox">
+                                                <label><input type="checkbox" name="open_allow_source" value="UM">会员</label>
+                                            </div>
+                                        </div>
+                                        <p style="display: block;padding-top: 7px;padding-left:15px;color: #999;min-width: 220px;font-size: 12px;    line-height: 25px;">
+                                            1.不同级别用户开通开通微主页功能不同,全部关闭等效于全站禁止开通微主页<br> 2.实名认证级别的用户开通的微主页限使用非商务功能<br> 3.官方认证和会员开通的微主页功能无限制<br> 4.商务功能包括（商城、文章打赏、收费活动）
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-4 col-md-4 col-lg-4">个性域名每月修改次数上限</label>
+                                <div class="col-sm-8 col-md-8 col-lg-8">
+                                    <input type="text" class="form-control" id="modifyLimit" name="modifyLimit" placeholder="微主页个性域名月度允许修改次数">
+                                </div>
+                            </div>
+                            <div>
+                                <button type="button" class="btn btn-info pull-right" id="wepagesSet">保存</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                </li>
+                <!-- 微主页配置结束 -->
+                <!-- 会员配置开始 -->
+                <!-- <li class="message_box wepages_config">
                                 <div class="per_bottom_tit">
                                     <span class="scad_setting">会员配置</span>
                                     <span class="switch brand_set turn_on_off switch-close" data-key="is_sms_open">
@@ -585,48 +613,48 @@
                             </div>
                         </div>
                         </li> -->
-                            <!-- 会员配置结束 -->
-                            <!-- 官方认证名称配置开始 -->
-                                        <li class="message_box online_cert">
-                                            <div class="per_bottom_tit">
-                                                <span class="scad_setting">官方认证名称</span>
-                                                <span class="switch brand_set turn_on_off switch-close" data-key="is_sms_open">
+                <!-- 会员配置结束 -->
+                <!-- 官方认证名称配置开始 -->
+                <li class="message_box online_cert">
+                    <div class="per_bottom_tit">
+                        <span class="scad_setting">官方认证名称</span>
+                        <span class="switch brand_set turn_on_off switch-close" data-key="is_sms_open">
                                                     <!-- <div id="op1" class="open">
                                                         <div id="op2" class="close"></div>
                                                         <span class="brand_on_off on">ON</span>
-                                                <span class="brand_on_off off">OFF</span>
-                                            </div> -->
-                                            </span>
-                                            <a class="edit_domain">展开</a>
-                                    </div>
-                                    <div class="edit_domain_area" style="display: none;">
-                                        <div class="panel-body">
-                                            <form id="fromManager" class="form-horizontal" style="padding: 30px;">
-                                                <div class="form-group">
-                                                    <label class="control-label col-sm-4 col-md-4 col-lg-4">官方认证名称</label>
-                                                    <div class="col-sm-8 col-md-8 col-lg-8">
-                                                        <input type="text" class="form-control" id="cert_name" name="cert_name" placeholder="官方认证名称">
-                                                    </div>
-                                                </div>
-                                                <div>
-                                                    <button type="button" class="btn btn-info pull-right" id="certnameSet">保存</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                    </li>
-                                    <!-- 官方认证名称配置结束 -->
-
-                            </ul>
-                        </div>
-
-                    </div>
-                    <!-- /.box-body -->
-                </div>
-                <!-- /.box -->
-
+                        <span class="brand_on_off off">OFF</span>
+                    </div> -->
+                    </span>
+                    <a class="edit_domain">展开</a>
         </div>
-        <!-- /.col -->
+        <div class="edit_domain_area" style="display: none;">
+            <div class="panel-body">
+                <form id="fromManager" class="form-horizontal" style="padding: 30px;">
+                    <div class="form-group">
+                        <label class="control-label col-sm-4 col-md-4 col-lg-4">官方认证名称</label>
+                        <div class="col-sm-8 col-md-8 col-lg-8">
+                            <input type="text" class="form-control" id="cert_name" name="cert_name" placeholder="官方认证名称">
+                        </div>
+                    </div>
+                    <div>
+                        <button type="button" class="btn btn-info pull-right" id="certnameSet">保存</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        </li>
+        <!-- 官方认证名称配置结束 -->
+
+        </ul>
+    </div>
+
+    </div>
+    <!-- /.box-body -->
+    </div>
+    <!-- /.box -->
+
+    </div>
+    <!-- /.col -->
     </div>
     <!-- /.row -->
     </section>

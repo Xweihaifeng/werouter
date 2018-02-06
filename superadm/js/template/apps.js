@@ -67,11 +67,11 @@ var __init_onlione_cert = function() {
         type: 'get',
         dataType: 'json',
         success: function(data) {
-             $('input[name=cert_name]').val(data.data.cert_name);
-             $('input[name=auth_money]').val(data.data.auth_money);
-             if(data.data.pay_type>1){
+            $('input[name=cert_name]').val(data.data.cert_name);
+            $('input[name=auth_money]').val(data.data.auth_money);
+            if (data.data.pay_type > 1) {
                 $('#rzjf').show();
-             }
+            }
             if (data.data.status == 1)
                 $('.online_cert .switch').removeClass('switch-close').addClass('switch-open');
             else
@@ -79,7 +79,7 @@ var __init_onlione_cert = function() {
             $('.online_cert input[name=rest_count]').val(data.data.auth_num);
             $(".online_cert input[name='pay_type'][value=" + data.data.pay_type + "]").attr("checked", true);
 
-             if (data.data.auth_open == 1)
+            if (data.data.auth_open == 1)
                 $('.auth_cert .switch').removeClass('switch-close').addClass('switch-open');
             else
                 $('.auth_cert .switch').removeClass('switch-open').addClass('switch-close');
@@ -154,11 +154,11 @@ $(document).on('click', '.auth_cert .switch', function() {
 $(document).on('click', '.online_cert input[name=pay_type]', function() {
     var that = this;
     var pay_type = $("input[name='pay_type']:checked").val();
-    if(pay_type>1){
+    if (pay_type > 1) {
         $('#rzjf').show();
-     }else{
-       $('#rzjf').hide();
-     }
+    } else {
+        $('#rzjf').hide();
+    }
     $.ajax({
         url: ApiUrl + 'cert/realname/set_pay_type',
         type: 'post',
@@ -582,7 +582,7 @@ $('#updateSet').click(function() {
         success: function(data) {
             console.log(data);
             if (data.code === 200) {
-                swal({text: '保存成功',type: 'success', timer: 20000});
+                swal({ text: '保存成功', type: 'success', timer: 20000 });
                 //swal('提示', '保存成功', 'success');
             } else {
                 console.log('error: -200');
@@ -604,134 +604,195 @@ $('#updateSet').click(function() {
 // 微信配置 - weixin_config
 
 var __init_weixin_config = function() {
-        $.ajax({
-            url: ApiUrl + 'setting/alias/weChatConfig',
-            type: 'get',
-            dataType: 'json',
-            success: function(result) {
-                if (result.code === 200) {
-                    $('#wechat_appid').val(result.data.wechat_appid);
-                    $('#wechat_secretkey').val(result.data.wechat_secretkey);
-                    $('#wechat_verify_txt').val(result.data.wechat_verify_txt);
+    $.ajax({
+        url: ApiUrl + 'setting/alias/weChatConfig',
+        type: 'get',
+        dataType: 'json',
+        success: function(result) {
+            if (result.code === 200) {
+                $('#wechat_appid').val(result.data.wechat_appid);
+                $('#wechat_secretkey').val(result.data.wechat_secretkey);
+                $('#wechat_verify_txt').val(result.data.wechat_verify_txt);
+            } else {
+                parent.layer.msg(result.message);
+
+                return false;
+            }
+        },
+        error: function(xhr) {
+            console.log(xhr);
+        }
+    });
+    $.ajax({
+        url: ApiUrl + 'setting/alias/weChatPayConfig',
+        type: 'get',
+        dataType: 'json',
+        success: function(result) {
+            if (result.code === 200) {
+                if (result.data.status == 1) {
+                    $('.wechat-pay-switch .switch').removeClass('switch-close').addClass('switch-open');
                 } else {
-                    parent.layer.msg(result.message);
-
-                    return false;
+                    $('.wechat-pay-switch .switch').addClass('switch-close').removeClass('switch-open');
                 }
-            },
-            error: function(xhr) {
-                console.log(xhr);
+                $('#wechat_merchant_id').val(result.data.wechat_merchant_id);
+                $('#wechat_payment_key').val(result.data.wechat_payment_key);
+                $('#apiclient_cert').val(result.data.apiclient_cert);
+                $('#apiclient_key').val(result.data.apiclient_key);
+            } else {
+                parent.layer.msg(result.message);
+
+                return false;
             }
-        });
-        $.ajax({
-            url: ApiUrl + 'setting/alias/weChatPayConfig',
-            type: 'get',
-            dataType: 'json',
-            success: function(result) {
-                if (result.code === 200) {
-                    $('#wechat_merchant_id').val(result.data.wechat_merchant_id);
-                    $('#wechat_payment_key').val(result.data.wechat_payment_key);
-                    $('#apiclient_cert').val(result.data.apiclient_cert);
-                    $('#apiclient_key').val(result.data.apiclient_key);
+        },
+        error: function(xhr) {
+            console.log(xhr);
+        }
+    });
+    $.ajax({
+        url: ApiUrl + 'setting/alias/weChatOpenConfig',
+        type: 'get',
+        dataType: 'json',
+        success: function(result) {
+            if (result.code === 200) {
+                if (result.data.status == 1) {
+                    $('.wechat-open-switch .switch').removeClass('switch-close').addClass('switch-open');
                 } else {
-                    parent.layer.msg(result.message);
-
-                    return false;
+                    $('.wechat-open-switch .switch').addClass('switch-close').removeClass('switch-open');
                 }
-            },
-            error: function(xhr) {
-                console.log(xhr);
+                $('#wechat_open_appid').val(result.data.appid);
+                $('#wechat_open_secret').val(result.data.appsecret);
+            } else {
+                parent.layer.msg(result.message);
+
+                return false;
             }
-        });
-        $.ajax({
-            url: ApiUrl + 'setting/alias/weChatOpenConfig',
-            type: 'get',
-            dataType: 'json',
-            success: function(result) {
-                if (result.code === 200) {
-                    $('#wechat_open_appid').val(result.data.appid);
-                    $('#wechat_open_secret').val(result.data.appsecret);
+        },
+        error: function(xhr) {
+            console.log(xhr);
+        }
+    });
+    // 客户端证书
+    var uploader = Qiniu.uploader({
+        runtimes: 'html5,flash,html4',
+        browse_button: 'pickfiles',
+        uptoken_url: ApiUrl + 'file/qiniu_token',
+        get_new_uptoken: false,
+        domain: ApiMaterPlatQiniuDomain,
+        max_file_size: '100mb',
+        flash_swf_url: 'http://cdn.staticfile.org/plupload/2.1.8/Moxie.swf',
+        max_retries: 3,
+        chunk_size: '4mb',
+        auto_start: true,
+        filters: {
+            max_file_size: '5mb',
+            prevent_duplicates: true,
+            // Specify what files to browse for
+            mime_types: [
+                { title: "Cert File", extensions: "pem" },
+            ]
+        },
+        init: {
+            'FileUploaded': function(up, file, info) {
+                var domain = up.getOption('domain');
+                res = JSON.parse(info.response);
+                $("#apiclient_cert").val(res.key);
+                var sourceLink = domain + res.key;
+            },
+            'Key': function(up, file) {
+                var key = "resource/cert/";
+                key += new Date().valueOf() + '.' + file.name.substring(file.name.indexOf('.') + 1);
+                return key;
+            }
+        }
+    });
+
+    // 客户端证书key
+    var uploader2 = Qiniu.uploader({
+        runtimes: 'html5,flash,html4',
+        browse_button: 'pickfiles2',
+        uptoken_url: ApiUrl + 'file/qiniu_token',
+        get_new_uptoken: false,
+        domain: ApiMaterPlatQiniuDomain,
+        max_file_size: '100mb',
+        flash_swf_url: 'http://cdn.staticfile.org/plupload/2.1.8/Moxie.swf',
+        max_retries: 3,
+        chunk_size: '4mb',
+        auto_start: true,
+        filters: {
+            max_file_size: '5mb',
+            prevent_duplicates: true,
+            // Specify what files to browse for
+            mime_types: [
+                { title: "Cert File", extensions: "pem" },
+            ]
+        },
+        init: {
+            'FileUploaded': function(up, file, info) {
+                var domain = up.getOption('domain');
+                res = JSON.parse(info.response);
+                $("#apiclient_key").val(res.key);
+                var sourceLink = domain + res.key;
+            },
+            'Key': function(up, file) {
+                var key = "resource/cert/";
+                key += new Date().valueOf() + '.' + file.name.substring(file.name.indexOf('.') + 1);
+                return key;
+            }
+        }
+    });
+}
+
+$(document).on('click', '.wechat-pay-switch .switch', function() {
+    var that = this;
+    var status = $(that).hasClass('switch-open') ? 2 : 1;
+    $.ajax({
+        url: ApiUrl + 'setting/wechat_pay/toggle',
+        type: 'post',
+        dataType: 'json',
+        data: { status: status },
+        success: function(data) {
+            if (data.code == 200) {
+                if (data.data.status == 1) {
+                    $(that).removeClass('switch-close').addClass('switch-open');
                 } else {
-                    parent.layer.msg(result.message);
+                    $(that).removeClass('switch-open').addClass('switch-close');
+                }
+            } else {
+                swal('提示', data.message, 'error');
+            }
+        },
+        error: function(xhr) {
+            console.log(xhr);
+        }
+    });
 
-                    return false;
+});
+$(document).on('click', '.wechat-open-switch .switch', function() {
+    var that = this;
+    var status = $(that).hasClass('switch-open') ? 2 : 1;
+    $.ajax({
+        url: ApiUrl + 'setting/wechat_open/toggle',
+        type: 'post',
+        dataType: 'json',
+        data: { status: status },
+        success: function(data) {
+            if (data.code == 200) {
+                if (data.data.status == 1) {
+                    $(that).removeClass('switch-close').addClass('switch-open');
+                } else {
+                    $(that).removeClass('switch-open').addClass('switch-close');
                 }
-            },
-            error: function(xhr) {
-                console.log(xhr);
+            } else {
+                swal('提示', data.message, 'error');
             }
-        });
-        // 客户端证书
-        var uploader = Qiniu.uploader({
-            runtimes: 'html5,flash,html4',
-            browse_button: 'pickfiles',
-            uptoken_url: ApiUrl + 'file/qiniu_token',
-            get_new_uptoken: false,
-            domain: ApiMaterPlatQiniuDomain,
-            max_file_size: '100mb',
-            flash_swf_url: 'http://cdn.staticfile.org/plupload/2.1.8/Moxie.swf',
-            max_retries: 3,
-            chunk_size: '4mb',
-            auto_start: true,
-            filters: {
-                max_file_size: '5mb',
-                prevent_duplicates: true,
-                // Specify what files to browse for
-                mime_types: [
-                    { title: "Cert File", extensions: "pem" },
-                ]
-            },
-            init: {
-                'FileUploaded': function(up, file, info) {
-                    var domain = up.getOption('domain');
-                    res = JSON.parse(info.response);
-                    $("#apiclient_cert").val(res.key);
-                    var sourceLink = domain + res.key;
-                },
-                'Key': function(up, file) {
-                    var key = "resource/cert/";
-                    key += new Date().valueOf() + '.' + file.name.substring(file.name.indexOf('.') + 1);
-                    return key;
-                }
-            }
-        });
+        },
+        error: function(xhr) {
+            console.log(xhr);
+        }
+    });
 
-        // 客户端证书key
-        var uploader2 = Qiniu.uploader({
-            runtimes: 'html5,flash,html4',
-            browse_button: 'pickfiles2',
-            uptoken_url: ApiUrl + 'file/qiniu_token',
-            get_new_uptoken: false,
-            domain: ApiMaterPlatQiniuDomain,
-            max_file_size: '100mb',
-            flash_swf_url: 'http://cdn.staticfile.org/plupload/2.1.8/Moxie.swf',
-            max_retries: 3,
-            chunk_size: '4mb',
-            auto_start: true,
-            filters: {
-                max_file_size: '5mb',
-                prevent_duplicates: true,
-                // Specify what files to browse for
-                mime_types: [
-                    { title: "Cert File", extensions: "pem" },
-                ]
-            },
-            init: {
-                'FileUploaded': function(up, file, info) {
-                    var domain = up.getOption('domain');
-                    res = JSON.parse(info.response);
-                    $("#apiclient_key").val(res.key);
-                    var sourceLink = domain + res.key;
-                },
-                'Key': function(up, file) {
-                    var key = "resource/cert/";
-                    key += new Date().valueOf() + '.' + file.name.substring(file.name.indexOf('.') + 1);
-                    return key;
-                }
-            }
-        });
-    }
-    // 微信公众平台保存
+});
+// 微信公众平台保存
 $('.weChatSet').click(function() {
     var wechatList = {
         'wechat_appid': $('#wechat_appid').val(),
@@ -748,7 +809,7 @@ $('.weChatSet').click(function() {
         success: function(data) {
             console.log(data);
             if (data.code === 200) {
-                swal({text: '保存成功',type: 'success', timer: 20000});
+                swal({ text: '保存成功', type: 'success', timer: 20000 });
                 //swal('提示', '保存成功', 'success');
             } else {
                 console.log('error: -200');
@@ -777,7 +838,7 @@ $('.weChatPaySet').click(function() {
         success: function(data) {
             console.log(data);
             if (data.code === 200) {
-                swal({text: '保存成功',type: 'success', timer: 20000});
+                swal({ text: '保存成功', type: 'success', timer: 20000 });
                 //swal('提示', '保存成功', 'success');
             } else {
                 console.log('error: -200');
@@ -804,7 +865,7 @@ $('.weChatOpenSet').click(function() {
         success: function(data) {
             console.log(data);
             if (data.code === 200) {
-                swal({text: '保存成功',type: 'success', timer: 20000});
+                swal({ text: '保存成功', type: 'success', timer: 20000 });
                 //swal('提示', '保存成功', 'success');
             } else {
                 console.log('error: -200');
@@ -880,7 +941,7 @@ $('#wepagesSet').click(function() {
         success: function(data) {
             console.log(data);
             if (data.code === 200) {
-                swal({text: '保存成功',type: 'success', timer: 20000});
+                swal({ text: '保存成功', type: 'success', timer: 20000 });
                 //swal('提示', '保存成功', 'success');
             } else {
                 console.log('error: -200');
@@ -892,8 +953,8 @@ $('#wepagesSet').click(function() {
     });
 });
 $('#certnameSet').click(function() {
-    var cert_name =  $.trim($('input[name=cert_name]').val());
-    if(cert_name==''){
+    var cert_name = $.trim($('input[name=cert_name]').val());
+    if (cert_name == '') {
         return false;
     }
     var formList = {
@@ -903,10 +964,10 @@ $('#certnameSet').click(function() {
         url: ApiUrl + 'cert/realname/setting_update',
         type: 'post',
         dataType: 'json',
-        data:formList,
+        data: formList,
         success: function(data) {
             if (data.code === 200) {
-                swal({text: '保存成功',type: 'success', timer: 20000});
+                swal({ text: '保存成功', type: 'success', timer: 20000 });
             } else {
                 console.log('error: -200');
             }
@@ -917,8 +978,8 @@ $('#certnameSet').click(function() {
     });
 });
 $('#update_auth_money').click(function() {
-    var auth_money =  $.trim($('input[name=auth_money]').val());
-    if(auth_money==''){
+    var auth_money = $.trim($('input[name=auth_money]').val());
+    if (auth_money == '') {
         return false;
     }
     var formList = {
@@ -928,10 +989,10 @@ $('#update_auth_money').click(function() {
         url: ApiUrl + 'cert/realname/setting_update',
         type: 'post',
         dataType: 'json',
-        data:formList,
+        data: formList,
         success: function(data) {
             if (data.code === 200) {
-                swal({text: '保存成功',type: 'success', timer: 20000});
+                swal({ text: '保存成功', type: 'success', timer: 20000 });
             } else {
                 console.log('error: -200');
             }
