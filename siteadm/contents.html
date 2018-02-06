@@ -641,7 +641,7 @@
                 },
                 dataType: 'json',
                 success: function(data) {
-                    $(that).attr('href', '/' + data.data.domain + '/' + content_id, '_blank');
+                    $(that).attr('href', '/' + data.data.site_domain+'/' + data.data.domain + '/' + content_id, '_blank');
                     $(that).click();
                 },
                 error: function(xhr) {
