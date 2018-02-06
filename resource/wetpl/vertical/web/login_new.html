@@ -36,6 +36,9 @@
     <div class="pure-content">
         <div class="wrapper"></div>
         <div class="pure-header">
+            <a href="/">
+            <img id="logo"  class="logo" src="">
+            </a>
         </div>
         <div class="home-title">
 
@@ -115,10 +118,10 @@
                 <div class="media-link">
                     <div class="code-filed">
                         <div class="box">
-                            <img alt="Wechat_qrcode" src="/common/img/wechat_sss.jpg"/>
+                            <img id="Wechat_qrcode" alt="Wechat_qrcode" src=""/>
                         </div>
                         <div class="box">
-                            <img alt="Erweima" src="/common/img/wechat_sss.jpg"/>
+                            <img id="Erweima" alt="Erweima" src="/common/img/wechat_sss.jpg"/>
                         </div>
                     </div>
                 </div>
@@ -129,7 +132,7 @@
 
                 </div>
             </div>
-            <p class="copyright">Copyright © 创投圈 </p>
+            <p id="copyright" class="copyright"> </p>
         </div>
     </div>
 </div>
@@ -502,7 +505,14 @@
             $(this).parents('.control-group').removeClass('control-group-focus');
         }
     })
-    $(".home-title").html(plats_info.plat_name)
+    $(".home-title").html(plats_info.plat_name);
+
+    $('#copyright').html('Copyright © '+plats_info.plat_name + "    " +plats_info.icp);
+
+    $('#Wechat_qrcode').attr('src' , http_type+plats_qiniu.domain_custom +'/'+ plats_info.wx_qrcode);
+    $('#Erweima').attr('src' , http_type+plats_qiniu.domain_custom +'/'+ plats_info.wb_qrcode);
+    $('#logo').attr('src' , http_type+plats_qiniu.domain_custom +'/'+ plats_info.logo);
+
 })
 
 </script>
