@@ -297,11 +297,11 @@
                                     }
                                 }, 1000);
                             } else {
-                                // layer.msg("获取验证码失败", { time: 2500 });
+                                layer.msg("获取验证码失败", { time: 2500 });
                             }
                         },
                         error: function (err) {
-                            // layer.msg("获取验证码失败", { time: 2500 });
+                            layer.msg("获取验证码失败", { time: 2500 });
                         }
                     })
                 }
@@ -387,7 +387,7 @@
                     } else {
                         lock = false;
                         clearInterval(count);
-                        // layer.msg(data.message, { time: 2500 });
+                        layer.msg(data.message, { time: 2500 });
                     }
                 },
                 error: function (err) {
@@ -401,22 +401,20 @@
             imageCode = $(".image_code").val();
             var regexp = /^(13|14|17|15|18)/;
             var reg = new RegExp(regexp);
-            console.log(checkNum, 1)
-            console.log(phoneNum, 2)
             if (reg.test(phoneNum) && phoneNum.length == 11 && checkNum.length == 6 && isCheckNum && isChecked) {
                 login(phoneNum, checkNum, imageCode, imageCodeID);
             } else {
                 if (!(phoneNum.length == 11) || !reg.test(phoneNum)) {
-                    // layer.msg("手机号码错误", { time: 2500 });
+                    layer.msg("手机号码错误", { time: 2500 });
 
                     return;
                 }
                 if (!(checkNum.length == 6) || !isCheckNum) {
-                    // layer.msg("手机验证码错误", { time: 2500 });
+                    layer.msg("手机验证码错误", { time: 2500 });
                     return;
                 }
                 if (!isChecked) {
-                    // layer.msg("请确认服务条款", { time: 2500 });
+                    layer.msg("请确认服务条款", { time: 2500 });
                     return;
                 }
             }
