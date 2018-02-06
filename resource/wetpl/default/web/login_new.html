@@ -8,19 +8,10 @@
     <meta content="telephone=no" name="format-detection"/>
     <link rel="shortcut icon" id="favicon" href="" />
     <title>登录</title>
-    <meta content="authenticity_token" name="csrf-param"/>
-    <meta content="Hyq2cNljCqvI6cJrSZMf/M2J8jt4kSAchfDSm0SLs8s=" name="csrf-token"/>
     <link href="/common/css/login_news.css" media="all" rel="stylesheet" type="text/css"/>
     <script src="/common/js/jquery-3.2.1.min.js"></script>
     <script src="/common/public/js/app.js"></script>
     <script src="/common/layer-v3.0.3/layer-v3.0.3/layer/layer.js"></script>
-    <link href="https://sso.vc.cn/users/images/apple-touch-icon-144x144.png" rel="apple-touch-icon-precomposed"
-          sizes="144x144"/>
-    <link href="https://sso.vc.cn/users/images/apple-touch-icon-114x114.png" rel="apple-touch-icon-precomposed"
-          sizes="114x114"/>
-    <link href="https://sso.vc.cn/users/images/apple-touch-icon-72x72.png" rel="apple-touch-icon-precomposed"
-          sizes="72x72"/>
-    <link href="https://sso.vc.cn/users/images/apple-touch-icon.png" rel="apple-touch-icon-precomposed"/>
     <script src="{{PATH_CONFIG}}"></script>
     <script src="/common/js/login_news.js" type="text/javascript"></script>
     <style>
@@ -130,33 +121,15 @@
                             <img alt="Erweima" src="/common/img/wechat_sss.jpg"/>
                         </div>
                     </div>
-                    <div class="media-list">
-                        <a href="http://weibo.com/ctquan" class="weibo" target="_blank"></a>
-                        <a href="https://sso.vc.cn/users/sign_in" class="weixin"></a>
-                        <a href="http://www.linkedin.com/company/3131329?trk=vsrp_companies_res_name&amp;trkInfo=VSRPsearchId%3A1377949681410417804316%2CVSRPtargetId%3A3131329%2CVSRPcmpt%3Aprimary"
-                           class="linkin" target="_blank"></a>
-                    </div>
                 </div>
                 <div class="footer-map">
-                    <a href="https://vc.cn/system/sitemap.xml.gz">谷歌地图</a>
-                    <a href="https://vc.cn/system/sitemap.xml.gz">百度地图</a>
+
                 </div>
                 <div class="friends">
-                    <a href="http://dev.360.cn/" target="_blank">360移动开放平台</a>
-                    <a href="http://www.zvca.org/" target="_blank">中关村私募股权投资协会</a>
-                    <a href="http://www.upyun.com/" target="_blank">又拍云</a>
-                    <a href="http://www.ycpai.com/index" target="_blank">缘创派</a>
-                    <a href="http://www.lagou.com/" target="_blank">拉勾招聘</a>
-                    <a href="http://www.kuaifawu.com/" target="_blank">快法务</a>
-                    <a href="http://www.laohucaijing.com/" target="_blank">环球老虎财经</a>
-                    <a href="http://www.gbtags.com/gb/index.htm" target="_blank">极客标签</a>
-                    <a href="http://www.histarter.com/" target="_blank">hiStarter</a>
-                    <a href="http://www.tmtpost.com/" target="_blank">钛媒体</a>
-                    <a href="http://www.zczj.com/" target="_blank">众筹之家</a>
-                    <a href="http://www.iprbank.cn/" target="_blank">中细软</a>
+
                 </div>
             </div>
-            <p class="copyright">版权所有 陕西省秦商联合会 &copy; 网站备案信息：陕ICP备17021746号</p>
+            <p class="copyright">Copyright © 创投圈 </p>
         </div>
     </div>
 </div>
@@ -263,42 +236,72 @@
 
         //二维码
         $("#wechat").click(() => {
-            $("#sign_in").hide()
-            $("#wechat_logn").show()
+            $("#sign_in").hide();
+            $("#wechat_logn").show();
+            $.getScript("https://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js", function(){
+                $.ajax({
+                    url: apiUrl + 'setting/alias/weChatOpenConfig',
+                    type: 'get',
+                    dataType: 'json',
+                    success: function(result) {
+                        if (result.code === 200) {
+                            var obj = new WxLogin({
+                                id: "qrcode-block",
+                                appid: result.data.appid,
+                                scope: "snsapi_login",
+                                redirect_uri: window.location.href,
+                                href: '/common/css/wechat.css',
+                                state: ""
+                            });
+                        } else {
+                            parent.layer.msg(result.message);
+
+                            return false;
+                        }
+                    },
+                    error: function(xhr) {
+                        console.log(xhr);
+                    }
+                });
+            });
         })
         $(".to-login").click(()=>{
             $("#sign_in").show()
             $("#wechat_logn").hide()
         })
         $("#favicon").attr("href", ApiMaterPlatQiniuDomain + localStorage.getItem("fav"));
-        $.getScript("https://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js", function(){
-            $.ajax({
-                url: apiUrl + 'setting/alias/weChatOpenConfig',
-                type: 'get',
-                dataType: 'json',
-                success: function(result) {
-                    if (result.code === 200) {
-                        var obj = new WxLogin({
-                            id: "qrcode-block",
-                            appid: result.data.appid,
-                            scope: "snsapi_login",
-                            redirect_uri: window.location.href,
-                            href: 'https://wezchina.com/common/css/wechat.css',
-                            state: ""
-                        });
-                    } else {
-                        parent.layer.msg(result.message);
 
-                        return false;
-                    }
+
+        var code = $app.get_query_string('code');
+        var state = $app.get_query_string('state');
+        var ref_id = localStorage.getItem('ref_id');
+        var ref_url = localStorage.getItem('ref_url');
+        var domain = localStorage.getItem('domain');
+
+        if (code != false) {
+            $.ajax({
+                url: apiUrl + "wx/scan_callback",
+                data: {
+                    'code': code,
+                    'state': state,
+                    'ref_id': ref_id,
+                    'ref_url': ref_url,
+                    'domain': domain
                 },
-                error: function(xhr) {
-                    console.log(xhr);
+                success: function(data) {
+                    localStorage.setItem('token', data.token);
+                    localStorage.setItem('weid', data.data.weid);
+                    localStorage.setItem('phone', data.data.phone);
+                    setCookie(data.token, 7);
+                    if (data.data.phone === null || data.data.phone === undefined || data.data.phone === '') {
+                        location.href = siteUrl + "/bind";
+                    } else {
+                        location.href = siteUrl + "/user";
+                    }
+
                 }
             });
-        })
-
-
+        }
 
     })
 </script>
@@ -484,7 +487,7 @@
         $(".fast-login").show().siblings(".login-style").hide()
     })
 </script>
-<script src="/common/js/h.js" type="text/javascript"></script>
+
 <script type="text/javascript">$(function () {
     $('#error_message .close').on('touchstart', function () {
         $('#error_message').slideToggle('fast');
