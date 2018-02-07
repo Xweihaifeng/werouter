@@ -12,7 +12,7 @@
 <div class="main-bg">
     <!-- 顶部大图 -->
     <div class="ban">
-        <img v-if="header2.image!=''" :name="header2" :src="header2.image | img_src(1920, 450, 1 , 'node')" alt="">
+        <img :src="defImg(header2.image, header_big)" alt="">
     </div>
     <main>
         <div class="main-s1">
@@ -201,6 +201,7 @@
             yqlj      : {},
             peoples_title : {},
             users     : [],
+            header_big: '',
         },
         mounted: function() {
             this.$nextTick(()=>{
@@ -231,11 +232,12 @@
                     var result = res.data;
 
                     if(!result.header2 || result.header2 == '{}') {
-                        result.header2 = { weid: "", type_id: "a56119c0-765b-11e7-a42e-770589f0tou2", title: "头部横图", image: "plats/resource/1515564231387.jpg", url: "#", description: "" }
+                        this.header_big = header.$data.public_info.header2;
+                        result.header2 = { weid: "", type_id: "a56119c0-765b-11e7-a42e-770589f0tou2", title: "头部横图", image: this.header_big, url: "#", description: "" }
                     }
 
                     if(!result.header1 || result.header1 == '{}') {
-                        result.header1 = { weid: "", type_id: "a56119c0-765b-11e7-a42e-770589f0tou1", title: "首页顶部logo图", image: "plats/resource/1513162345858.png", url: "#", description: "" }
+                        result.header1 = { weid: "", type_id: "a56119c0-765b-11e7-a42e-770589f0tou1", title: "首页顶部logo图", image: "", url: "#", description: "" }
                     }
 
                     if(!result.leader || result.leader == '{}') {
@@ -294,6 +296,21 @@
                 var url = '';
                 url = all_domian + "so?q=" + this.searchText;
                 $app.open_page(url);
+            },
+            defImg: (url, init) => {
+                if (url != '' && url != null && url != undefined) {
+                    if (url.indexOf('http') === -1 && url.indexOf('common') === -1) {
+                        return ApiMaterPlatQiniuDomain + url;
+                    } else {
+                        return url;
+                    }
+                } else {
+                    if (init && init.indexOf('http') === -1 && init.indexOf('common') === -1) {
+                        return ApiMaterPlatQiniuDomain + init;
+                    } else {
+                        return init;
+                    }
+                }
             }
         }
     });
