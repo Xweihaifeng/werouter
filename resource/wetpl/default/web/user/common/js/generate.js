@@ -320,17 +320,23 @@ options1.done(function(data) {
         }
 
         if (result.type == 1 || result.type == 2) {
-            if (result.is_done == 1) {
+            if(result.is_authenticated == 1) {
+                $(".v-cert-success-info").show();
+            } else {
+                $(".v-cert-success-info").show();
+            }
 
-                $(".whether-to-pass").show();
+            // if (result.is_done == 1) {
 
-            } else if (result.is_done == 2 && result.is_authenticated == 1) {
-                if (result.operation_status == 2) {
-                    $("#v_v_member").show();
-                    member_options();
-                }
+            //     $(".whether-to-pass").show();
 
-                var options = $
+            // } else if (result.is_done == 2 && result.is_authenticated == 1) {
+            //     if (result.operation_status == 2) {
+            //         $("#v_v_member").show();
+            //         member_options();
+            //     }
+
+                // var options = $
                     // 判断微主页是否开通
                     // var options3 = $.get(PAGES_PAGE_ISOPENPAGE);
                     // options3.done(function(data) {
@@ -349,13 +355,13 @@ options1.done(function(data) {
                     //     consolr.error(error);
                     // });
                     // $(".av-on-line").show();
-                $(".v-cert-success-info").show();
+            //     $(".v-cert-success-info").show();
 
-            } else if (result.is_done == 2 && result.is_authenticated == 2) {
+            // } else if (result.is_done == 2 && result.is_authenticated == 2) {
 
-                $(".whether-to-pass").show();
-                $("#v_form_list").show();
-            }
+            //     $(".whether-to-pass").show();
+            //     $("#v_form_list").show();
+            // }
 
         } else {
             $(".personal").attr({ "disabled": false, "href": "personal" });
