@@ -82,6 +82,7 @@ $(function() {
             publisher = result.publisher;
         }
         console.log("详情：", pathname[0], result);
+        // <span class="publisher"><a href="/index" class="" target="win_index">` + publisher.substr(0, 10) + `</a></span>
         var template = `
             <p class="rich_media_title" id="activity-name">` + result.title + `</p>
             <div class="clearfix bts">
@@ -90,7 +91,8 @@ $(function() {
                     template = template + `<img src="` + thumb_image + `" alt="">`;
                 }
                 template = template + `</a></span>
-                <span class="publisher"><a href="/index" class="" target="win_index">` + publisher.substr(0, 10) + `</a></span>
+                
+                <span class="publisher"><a href="/index" class="" target="win_index">` + plats_info.plat_name + `</a></span>
                 <span class="auth">` + result.auth.substr(0, 5) + `</span>
                 <span class="source">`+ result.source +`</span>
                 <span class="updated_at">` + result.publish_time.substr(0, 10) + `</span>
