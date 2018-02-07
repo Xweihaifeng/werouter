@@ -16,7 +16,7 @@
 <!--商城开始-->
 <div id="container">
     <div class="wemall">
-        <div class="banner">
+        <div class="banner" v-if="ban.length>0">
             <ul style="width: 100%;height: 100%;">
                 <template v-for="t in ban">
                     <li :style="{background: 'url(' + httpType + '//' + plats_qiniu.domain_custom + '/' + t.image +')' + ' no-repeat ' + ' center/cover '}" ></li>
