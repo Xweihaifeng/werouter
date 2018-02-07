@@ -109,13 +109,13 @@
                     <div class="payment-body">
                         <ul class="clearfix payment-list J_paymentList J_linksign-customize">
                             <li id="J_weixin" @click="page_way">
-                                <img src="{{PATH_TML}}activity/img/weixinpay0701.png" alt="微信支付" style="margin-left: 0;">
+                                <img src="{{PATH_TML}}activity/img/693828550_1220895053_01.png" alt="微信支付" style="margin-left: 0;">
                             </li>
                             <li class="J_bank">
-                                <img src="{{PATH_TML}}activity/img/event-alipay20160718.jpg" alt="支付宝" style="margin-left: 0;">
+                                <img src="{{PATH_TML}}activity/img/693828550_1220894189_02.png" alt="支付宝" style="margin-left: 0;">
                             </li>
                             <li class="J_bank">
-                                <img src="{{PATH_TML}}activity/img/unionpay.png" alt="银联" style="margin-left: 0;">
+                                <img src="{{PATH_TML}}activity/img/693828550_1220893892_03.png" alt="银联" style="margin-left: 0;">
                             </li>
                         </ul>
                         <div class="event-desc">
@@ -314,7 +314,7 @@
                 paymentLayer = layer.open({
                     skin: 'layui-layer-rim',
                     type: 1,
-                    area: ['413px', '430px'],
+                    area: ['372px', '430px'],
                     title: '微信扫码支付',
                     closeBtn: 2,
                     shadeClose: false,
@@ -326,6 +326,7 @@
                                 <p>付款金额：<b>￥` + fee + `</b></p>
                             </div>
                             <div class="payment-mark"><img src="/common/img/wepay-logo.png" width="100"></div>
+                            <div class="mobel_phone"></div>
                         </div>`,
                     end: function() {
                         clearInterval(tmr);
@@ -534,7 +535,7 @@
                         console.log(xhr);
                     }
                 })
-            }
+            },
 
         }
     })
@@ -564,7 +565,13 @@
 
             }
         },1000)
-
+        $("body").delegate(".payment-block","mouseenter",function(){
+            console.log($(".mobel_phone"))
+            $(".mobel_phone").fadeIn(1000);
+        })
+        $("body").delegate(".payment-block","mouseleave",function(){
+            $(".mobel_phone").fadeOut(1000);
+        })
     })
 </script>
 </body>

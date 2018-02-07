@@ -178,6 +178,7 @@ ul,li {
     height: 60px;
     display: block;
     margin-top: -2px;
+    transition: all 0.2s;
 }
 .event-desc p {
     margin: 0;
@@ -226,14 +227,16 @@ ul,li {
 }
 .order-detail .order-num {
     color: #ff6700;
-    padding-left: 39px;
+    padding-left: 25px;
 }
 /*详情结束*/
 /*二维码支付样式*/
 .payment-block{
     width: 383px;
-    height: 372px;
-    overflow: hidden;
+    height: auto;
+    position: relative;
+    margin: 0 auto;
+    /*overflow: hidden;*/
 }
 .payment-qrcode{
     width: 100%;
@@ -262,4 +265,34 @@ ul,li {
     width:100%;
     height: auto;
     padding-left: 18px;
+}
+.mobel_phone{
+    width: 307px;
+    height: 488px;
+    background: url("/resource/wetpl/vertical/web/activity/img/weinxin-pay.png") no-repeat;
+    position: absolute;
+    top: -84px;
+    left: -302px;
+    z-index: 19891018;
+    display: none;
+    /*opacity:1;*/
+}
+.layui-layer-page .layui-layer-content{
+    overflow:visible!important;
+}
+.layui-layer-rim{
+    border: none!important;
+}
+/*.payment-block:hover .mobel_phone{*/
+    /*opacity: 1;*/
+    /*display: block;*/
+/*}*/
+.layui-layer-shade{
+    opacity: 0.3!important;
+}
+#J_weixin:hover img{
+    transform: scale(1.4,1.4);
+}
+#J_weixin:hover{
+    border: 1px solid #CC7832;
 }

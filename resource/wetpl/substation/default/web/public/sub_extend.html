@@ -37,7 +37,7 @@
                         </a>
                     </div>
                     <div class="head-middle">
-                        <img :src="defImg(header_img, 'plats/resource/1515564209128.png')" alt="">
+                        <img :src="defImg(header_img, public_info.header1)" alt="">
                     </div>
                     <div class="head-right">
                         <div class="hr-top">
@@ -156,7 +156,11 @@
                     ajax.get('backend/cms/site/data_show').then((res)=>{
                         if(res.code == 200 && res.data) {
                             this.public_info = JSON.parse(res.data.config);
-                            // console.log(this.public_info);
+                            this.qrcode = [
+                                {ok: false, title: "手机版", image: "/api/file/qrcode?margin=2&url="+window.location.href},
+                                {ok: false, title: "微信", image: plats_info.wx_qrcode? plats_info.wx_qrcode : this.public_info.wx_qrcode},
+                                {ok: false, title: "微博", image: plats_info.wb_qrcode? plats_info.wb_qrcode : this.public_info.wb_qrcode}
+                            ]
                         }
                     })
                 },
@@ -245,14 +249,6 @@
                                 if(!result.tel)        { result.tel            = this.foot_info.tel }
                                 if(!result.fax)       { result.fax            = this.foot_info.fax }
                                 if(!result.addre)    { result.addre          = this.foot_info.addre }
-
-                                // if(!result.copyright_logo) { result.copyright_logo = "plats/resource/1515752507217.png" }
-                                // if(!result.copyright) {result.copyright = `上海市浙江商会(www.zccs.org)@2008-2012 All Rights Reserved` }
-                                // if(!result.icp) {result.icp = `沪ICP备17020763号-1` }
-                                // if(!result.email) {result.email = `shzjsh@yahoo.com.cn` }
-                                // if(!result.tel) {result.tel = `021-50939588` }
-                                // if(!result.fax) {result.fax = `021-50939388` }
-                                // if(!result.addre) {result.addre = `上海市浦东大道900号华辰金融大厦25楼` }
 
                                 this.footer = result;
                                 $("#favicon").attr('href', ApiMaterPlatQiniuDomain + result.favicon);
