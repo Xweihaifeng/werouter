@@ -1,5 +1,6 @@
 #content{
     background: url("/common/img/bg.gif");
+    padding: 30px 0;
 }
 ul,li {
     list-style: none;
@@ -8,6 +9,8 @@ ul,li {
     width: 1200px;
     height: auto;
     margin: 35px auto;
+    /*background: #EEEEEE;*/
+    background: red;
 }
 #pay_success{
     width: 1200px;
@@ -26,6 +29,7 @@ ul,li {
     padding: 45px;
     overflow: hidden;
     margin-bottom: 30px;
+    margin-top: 25px;
 }
 .pay_bz{
     width: 120px;
@@ -85,6 +89,9 @@ ul,li {
     font-size: 16px;
     color: #FF6700;
 }
+.price>span::after{
+    content: '元';
+}
 .title_right>span{
     display: block;
     width: 100%;
@@ -93,6 +100,11 @@ ul,li {
     font-size: 14px;
     line-height: 38px;
     cursor: pointer;
+    background-image: url("/resource/wetpl/vertical/web/activity/img/693828550_1214538889_down.png");
+    background-repeat: no-repeat;
+    background-size: 13px;
+    background-position: 182px 14px;
+    padding-right:20px;
 }
 
 .pay_way{
@@ -165,6 +177,7 @@ ul,li {
     width: 172px;
     height: 60px;
     display: block;
+    margin-top: -2px;
 }
 .event-desc p {
     margin: 0;
@@ -211,7 +224,8 @@ ul,li {
   float: left;
 }
 .order-detail .order-num {
-color: #ff6700;
+    color: #ff6700;
+    padding-left: 25px;
 }
 /*详情结束*/
 /*二维码支付样式*/

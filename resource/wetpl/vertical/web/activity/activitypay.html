@@ -53,7 +53,7 @@
                         <div class="title_left">
                             <h2 v-if="state == 1">订单提交成功！去付款喽~</h2>
                             <h2 v-if="state == 3" style="color: #b9b8b8;">订单已失效，请重新选票</h2>
-                            <span v-if="state == 1">请在 <span class="time" v-html="minter">分</span><span class="miao" v-html="second">s</span> 完成支付，以免订单过期</span>
+                            <span v-if="state == 1">请在 <span class="time" v-html="minter">分</span><span class="miao" v-html="second">s</span> 内完成支付，超时后将取消订单</span>
                             <span v-if="state == 3" style="color: #b9b8b8;">订单已逾期，请<a :href=" '/' + publisher_domain + '/activity/' + activity_num">重新</a>报名购买，以免没票</span>
                         </div>
                         <div class="title_right">
@@ -116,8 +116,8 @@
                             </li>
                         </ul>
                         <div class="event-desc">
-                            <p>支 付 宝：支付宝扫码支付，赢1999元红包</p>
-                            <p>小米分期：全场享 3 期免息</p>
+                            <p>推荐使用微信支付</p>
+                            <p>支付宝和银联支付正在维护</p>
                         </div>
                     </div>
                 </div>
@@ -263,9 +263,11 @@
             info_pre(){
                if(this.flag==false){
                    $(".order-detail").slideDown(1000);
+                   $(".title_right>span").css({"backgroundImage": "url('/resource/wetpl/vertical/web/activity/img/693828550_1214540847_up.png')"})
                    this.flag=true;
                }else{
                    $(".order-detail").slideUp(1000);
+                   $(".title_right>span").css({"backgroundImage": "url('/resource/wetpl/vertical/web/activity/img/693828550_1214538889_down.png')"})
                    this.flag=false;
                 }
             },
