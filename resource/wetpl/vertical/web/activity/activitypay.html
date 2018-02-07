@@ -58,6 +58,8 @@
                             <h2 v-if="state == 3" style="color: #b9b8b8;">订单已失效，请重新选票</h2>
                             <span v-if="state == 1">请在 <span class="time" v-html="minter + '分' "></span><span class="miao" v-html="second + '秒' "></span> 内完成支付，超时后将取消订单</span>
                             <span v-if="state == 3" style="color: #b9b8b8;">订单已逾期，请<a :href=" '/' + publisher_domain + '/activity/' + activity_num">重新</a>报名购买，以免没票</span>
+                            <div class="xinxi" v-if="state == 1" style="color:  #616161;">订单信息：<span v-html="pay_active.name">姓名</span> <span v-html="phone"></span> <span v-html="pay_active.activity_title"></span> </div>
+                            <div class="xinxi" v-if="state == 3" style="color:  #b9b8b8;">订单信息：<span v-html="pay_active.name">姓名</span> <span v-html="phone"></span> <span v-html="pay_active.activity_title"></span> </div>
                         </div>
                         <div class="title_right">
                             <div class="price" style="padding-top:21px;font-size: 14px" v-if="state == 1">
@@ -207,6 +209,7 @@
             publisher_domain:"" ,                             //微主页
             minter:0,                                  //剩余时间分
             second:0,                                   //剩余时间秒
+            phone:"",                                    //联系方式
         },
         mounted: function() {
             this.$nextTick(()=>{
@@ -222,6 +225,7 @@
                             this.publisher_domain=res.data.publisher_domain;
                             console.log(8888888,this.pay_active);
                             console.log(this.state);
+                            this.phone=res.data.telphone.substring(0, 3) + "****" + res.data.telphone.substring(7, 11);
                             if(res.data.state==2){
                                 this.state=2;
                                 console.log(this.state)
@@ -249,6 +253,7 @@
                                 this.state=1;
                                 this.minter= Math.floor( parseInt(res.data.close_timeout) / 60 );
                                  this.second= Math.floor(parseInt(res.data.close_timeout)) - (this.minter * 60)
+
                             }
                         }
                     })
@@ -266,12 +271,18 @@
             // 详情点击
             info_pre(){
                if(this.flag==false){
+                   $(".xinxi").css({display:"none"})
                    $(".order-detail").slideDown(1000);
                    $(".title_right>span").css({"backgroundImage": "url('/resource/wetpl/vertical/web/activity/img/693828550_1214540847_up.png')"})
                    this.flag=true;
                }else{
-                   $(".order-detail").slideUp(1000);
+
+                   $(".order-detail").slideUp(1000,function(){
+                       $(".xinxi").css({display:"block"})
+                   });
                    $(".title_right>span").css({"backgroundImage": "url('/resource/wetpl/vertical/web/activity/img/693828550_1214538889_down.png')"})
+
+
                    this.flag=false;
                 }
             },
@@ -545,7 +556,10 @@
         // v-html="pay_active.close_timeout"
         setTimeout(function(){
             if($(".time")){
-                var intDiff = parseInt(1000); //倒计时总秒数量
+                var time_min=parseInt($(".time").html())*60
+                var time_s=parseInt($(".miao").html())
+                var time=time_min + time_s;
+                var intDiff = parseInt(time); //倒计时总秒数量
                 var aa=setInterval(Time,1000);
 
              function Time(){
@@ -555,16 +569,18 @@
                      minute = Math.floor(intDiff / 60 );
                      second = Math.floor(intDiff) - (minute * 60);
                  }
-                 if (minute <= 9) minute = '0' + minute;
-                 if (second <= 9) second = '0' + second;
+                 // if (minute <= 9) minute = '0' + minute;
+                 // if (second <= 9) second = '0' + second;
                  $('.time').html('<s></s>' + minute + '分');
                  $('.miao').html('<s></s>' + second + '秒');
                  intDiff--;
+                 if(intDiff==0){
+                     window.location.reload();
+                 }
                 }
 
-
             }
-        },1000)
+        },500)
         $("body").delegate(".payment-block","mouseenter",function(){
             console.log($(".mobel_phone"))
             $(".mobel_phone").fadeIn(1000);
