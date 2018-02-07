@@ -159,7 +159,7 @@ $(document).on('click', '.multi-sms-notify', function() {
 
 
     var selector;
-    $.getScript("/common/friendsuggest/ui.friendsuggest.js?sss", function() {
+    $.getScript("/common/friendsuggest/ui.friendsuggest.js", function() {
         selector = new giant.ui.friendsuggest({
             ajaxUrl: "/api/activity/enroll/fetcher?activity_id=" + id,
             ajaxLoadAllUrl: "/api/activity/enroll/fetcher?activity_id=" + id,
