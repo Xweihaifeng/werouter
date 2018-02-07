@@ -152,7 +152,7 @@
                                         </div>
                                         <div class="didian"><i class="fa fa-map-marker"></i>地点 ：<a class="city-link" :href=" 'http://map.baidu.com/?newmap=1&from=alamap&tpl=mapdots&s=con%26wd%3D'  + active_detail.area_name + active_detail.address + '%26c%3D233' " target="_blank"><span class="city">{{active_detail.area_name}}{{active_detail.address}}</span></a></div>
                                         <p class="baomingrenshu"><i class=" fa fa-user"></i>报名人数 : <span>已有 <span class="apply_num" v-html="active_detail.enroll_num"></span> 人报名</span>
-                                            <span style="margin-left: 10px">限 <span class="enroll_limit" v-html="active_detail.enroll_limit"></span> 人报名</span></p>
+                                            <span style="margin-left: 10px" v-if="active_detail.type != 2">限 <span class="enroll_limit" v-html="active_detail.enroll_limit"></span> 人报名</span></p>
                                         <p class="pay-type">
                                             <i class="fa fa-cny"></i>
                                             费用 :
@@ -176,20 +176,20 @@
                             <div class="left col-sm-8" style="width: 840px">
                                 <div class="activity-main-center">
                                     <div class="project-box clearfix">
-                                        <div style="height: 60px">
+                                        <div style="height: 60px;position: absolute;top: 0;left: 0;width:100%" class="pro-title">
                                             <ul class="project_t" role="tablist">
                                                 <li role="presentation" class="menuItem active" id="projectDe">
-                                                    <a class="a-none" href="#acitivty-detail" @click="shop_click(0)">活动详情</a>
+                                                    <a class="a-none" href="javascript:[0]" change="#acitivty-detail" @click="shop_click(0)">活动详情</a>
                                                 </li>
                                                 <li role="presentation" class="menuItem">
-                                                    <a class="a-none" href="#acitivty-honored" @click="shop_click(1)">活动嘉宾(<span class="guest_num" v-html="guest_num"></span>)</a>
+                                                    <a class="a-none" href="javascript:[0]" change="#acitivty-honored" @click="shop_click(1)">活动嘉宾(<span class="guest_num" v-html="guest_num"></span>)</a>
                                                 </li>
                                                 <li role="presentation" class="menuItem ">
-                                                    <a class="a-none" href="#acitivty-guests" @click="shop_click(2)">活动成员(<span class="enroll_num">{{active_num}}</span>)</a>
+                                                    <a class="a-none" href="javascript:[0]" change="#acitivty-guests" @click="shop_click(2)">活动成员(<span class="enroll_num">{{active_num}}</span>)</a>
                                                 </li>
                                             </ul>
                                         </div>
-
+                                        <div class="db" style="width:100%;height: 57px;"></div>
                                         <div class="show-content project_con panel panel_color" id="panel_top1" style="border-radius: 0;border-top: none">
                                             <div class="show-content" id="acitivty-detail" v-html="active_detail.content"></div>
                                             <p class="main-title">活动嘉宾 (<span class="guest_num">{{guest_num}}</span>)</p>
@@ -436,10 +436,11 @@
             },
             //  点击事件
             shop_click(cate) {
-                var top;
                 $(".project_t").children("li").children("a").css({color:"#333",fontWeight:500});
                 $(".project_t").children("li").eq(cate).addClass("active").siblings().removeClass("active");
-
+                var tz=$(".project_t").children("li").eq(cate).children("a").attr("change");
+                var top=$(tz).offset().top-70;
+                $("html,body").animate({scrollTop:top}, 0);
             },
             // 二维码插件
             qrcodefun(id) {
