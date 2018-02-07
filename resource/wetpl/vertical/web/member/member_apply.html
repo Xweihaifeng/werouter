@@ -404,7 +404,8 @@
                 self.member.apply.session_id = res.data.weid;
 
                 var result = res.data.config.reverse();
-                var member_config = result.map((x,y) => {x.number = y; return x}).filter(e => e.open_type != 2)[0];
+                var member_config = result.map((x,y) => {x.number = y; return x}).filter(e => e.open_type != 2 && e.open_type != 3)[0];
+                // var member_config = result.map((x,y) => {x.number = y; return x}).filter(e => e.open_type != 2)[0];
                /* var member_config = result.map((x,y) => x.number = y).filter(e => e.open_type != 2)[0];*/
                 this.member_position = member_config;
                 this.member.apply.plat_member_level_id = member_config.mid;
@@ -727,20 +728,22 @@
                     }
                     $(".already").hide();
 
-                    if(this.member_set.member_open_type == 1) {
-                        console.log(this.member.apply.apply_type);
-                    }
+                    this.$nextTick(() => {
+                        if(this.member_set.member_open_type == 1) {
+                            console.log(this.member.apply.apply_type);
+                        }
 
-                    else if(this.member_set.member_open_type == 2) {
-                        $("#institution_apply").prop('disabled', true);
-                        this.member.apply.apply_type = 1;
-                    }
+                        else if(this.member_set.member_open_type == 2) {
+                            $("#institution_apply").prop('disabled', true);
+                            this.member.apply.apply_type = 1;
+                        }
 
-                    else if(this.member_set.member_open_type == 3) {
-                        $("#personal_apply").prop('disabled', true);
-                        this.member.apply.apply_type = 2;
-                    }
-                    console.log("member_set_type:", this.member_set_type);
+                        else if(this.member_set.member_open_type == 3) {
+                            $("#personal_apply").prop('disabled', true);
+                            this.member.apply.apply_type = 2;
+                        }
+                        console.log("member_set_type:", this.member_set_type);
+                    })
                 });
             },
             art_auth(name) {
