@@ -49,7 +49,7 @@
                     <div class="member_sel_type type_list" v-if='member_primary.state != 2'>
                         <div class="member_type_title"> 选择类型: </div>
                         <ul class="member_sel_type_name">
-                            <li v-for="(item,index) in member_levels.list" :class="{'member_active1': index == member_levels.type_active}">{{ item.level_name }}</li>
+                            <li v-for="(item,index) in member_levels.list" :class="{'member_active1': index == member_levels.type_active}" v-if="item.open_type != 2 && item.open_type != 3">{{ item.level_name }}</li>
                         </ul>
                     </div>
 
@@ -197,7 +197,7 @@
                             ajax.get(PAGES_PAGE_INFO).then((res) => {
                                 var result = res.data;
                                 this.pages_page_info = result;
-                                console.log(this.pages_page_info);
+                                // console.log(this.pages_page_info);
 
                                 if((this.pages_page_info.isUA == false && this.member_set_type.indexOf('UA') >= 0 && this.pages_page_info.isUG == false && this.member_set_type.indexOf('UG') >= 0)
                                     || (this.pages_page_info.isUA == false && this.member_set_type.indexOf('UA') >= 0 && this.member_set_type.indexOf('UG') < 0)
@@ -269,7 +269,7 @@
                     ajax.post(MEMBER_APPLY_ORDER_DETECT, {order: this.order_pay.order_id}).then((res) => {
                         if(res.code == 200) {
                             if(res.data.state == 1) {
-                                console.log(res.data);
+                                // console.log(res.data);
                                 this.state.pay_qr = false;
                                 clearInterval(this.setInterval_pay);
                                 layer.msg("付款成功！", { time: 2500 });
