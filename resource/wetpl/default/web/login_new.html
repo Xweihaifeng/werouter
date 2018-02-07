@@ -1,284 +1,142 @@
 <!DOCTYPE html>
-<!-- saved from url=(0031)https://sso.vc.cn/users/sign_in -->
-<html lang="en">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <meta content="IE=Edge,chrome=1" http-equiv="X-UA-Compatible"/>
-    <meta content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" name="viewport"/>
-    <meta content="telephone=no" name="format-detection"/>
+<html>
+
+<head lang="en">
+    <title>用户登录</title>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link rel="shortcut icon" id="favicon" href="" />
-    <title>登录</title>
-    <link href="/common/css/login_news.css" media="all" rel="stylesheet" type="text/css"/>
+
+    <!-- <link rel="stylesheet" href="common/css/main.css"> -->
+    <link rel="stylesheet" href="/common/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{PATH_TML}}font/iconfont.css" />
+    <link rel="stylesheet" href="{{PATH_TML}}css/news_base.css" />
+    <link rel="stylesheet" href="/common/css/buttons.css">
+    <link rel="stylesheet" href="/common/css/login.css">
+
     <script src="/common/js/jquery-3.2.1.min.js"></script>
-    <script src="/common/public/js/app.js"></script>
-    <script src="/common/layer-v3.0.3/layer-v3.0.3/layer/layer.js"></script>
+    <script type="text/javascript" src="/common/layer-v3.0.3/layer-v3.0.3/layer/layer.js"></script>
+    <script src="/common/js/browser.min.js"></script>
+    <script src="/common/js/buttons.js"></script>
     <script src="{{PATH_CONFIG}}"></script>
-    <script src="/common/js/login_news.js" type="text/javascript"></script>
-    <style>
-        .l-captcha {
-            height: 52px !important;
-        }
 
-        #wechat_logn {
-            padding: 20px;
-            background: #fff;
-            border-radius: 6px;
-            margin: 0 auto;
-            width: 360px
-        }
-    </style>
 </head>
+
 <body>
-<div class="modal hide"></div>
-<div class="pure-container">
-    <div class="pure-centero">
-    </div>
-    <div class="pure-content">
-        <div class="wrapper"></div>
-        <div class="pure-header">
-        </div>
-        <div class="home-title">
+    <ul class="news_menu" id="public_main_news_menu"></ul>
+    <div class="bg">
+        <div class="bg_top_img">
+            <div class="show-login" style="display: block">
+                <div class="login-cont">
+                    <div class="login-heading">快速登录</div>
+                    <div class="login-body">
+                        <div class="input-group" style="margin-top: 15px;">
+                            <div class="input-group-btn">
+                                <button type="button" class="btn btn-default dropdown-toggle" style="height: 44px;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">+86 中国 </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="active">+86 中国</a></li>
+                                    <li><a>美国</a></li>
+                                </ul>
+                            </div>
+                            <input type="text" class="form-control phone-num" maxlength="11" style="height: 44px; line-height: 44px; font-size: medium;" placeholder="请输入手机号码">
+                        </div>
 
-        </div>
-        <div id="door">
-            <div id="sign_in">
-                <ul class="login-choice">
-                    <li class="active" style="width: 100%" data-active="fast-login">快速登录</li>
-                </ul>
-                <div class="fast-login login-style" style="display: none;">
-                    <form accept-charset="UTF-8" autocomplete="off" class="simple_form form-horizontal new_user"
-                          id="captcha-login-form" method="post" novalidate="novalidate">
-                        <div style="margin:0;padding:0;display:inline">
-                            <input name="utf8" type="hidden" value="✓"/>
-                            <input name="authenticity_token" type="hidden"
-                                   value="Hyq2cNljCqvI6cJrSZMf/M2J8jt4kSAchfDSm0SLs8s="/>
-                        </div>
-                        <input id="login_type" name="login_type" type="hidden" value="captcha"/>
-                        <div class="control-group string optional">
-                            <label class="string optional control-label" for="user_login">请输入您的手机号，未注册将自动注册</label>
-                            <div class="controls">
-                                <input class="string optional" id="user_login" maxlength="11" name="userlogin" size="50"
-                                       type="text"/>
-                            </div>
-                        </div>
-                        <div class="control-group" style="height: 52px">
-                            <div class="l-captcha" data-site-key="f33ae969d27848afdaa3ff2c79c58476" data-width="360"
-                                 data-callback="getResponse" style="height: 52px!important;"></div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label check-num" for="user_verify_code">请输入手机验证码</label>
-                            <div class="controls" style="width:63%;float:left">
-                                <input autocomplete="off" class="string optional verify-code check-num"
-                                       id="user_verify_code" maxlength="6" name="user[verify_code]" placeholder=""
-                                       size="50" type="text" value=""/>
-                            </div>
-                            <div class="captcha-wrap">
-                                <a href="javascript:void(0);" class="verify-code-btn get-check" style="font-size: 14px;"
-                                   disabled="disabled" id="send_verify_code">获取验证码</a>
-                            </div>
-                        </div>
-                        <div class="error-block"></div>
-                        <div class="error-block-tip" for="user_login"></div>
-                        <div class="controls field agree_private">
-                            <input checked="" id="agree_privacy" class="label-sign pull-left checked"
-                                   placeholder="请输入短信验证码" name="agree_privacy" type="checkbox"/>
-                            <label class="pull-left" for="agree_privacy">我已阅读并同意</label>
-                            <a style="font-size: 14px" href="" target="_blank">《互助共享平台服务条款》</a>
-                        </div>
-                        <div class="submit-btn">
-                            <input class="submit-btn login-bt" id="submit-btn" name="commit" type="button" value="登 录"/>
-                        </div>
-                    </form>
-                </div>
+                        <!-- <div class="input-group" style="margin-top: 15px;">
+                                <input type="text" class="form-control image_code" maxlength="5" placeholder="请输入图片验证码" style="height: 44px; line-height: 44px; font-size: medium;">
+                                <span class="input-group-btn">
+                                    <img src="" class="btn btn-default" id="image_code_id_url" alt="图片验证码" style="width:100px;height:44px;padding:0;" title="图片验证码">
+                                </span>
+                            </div> -->
 
-                <div class="third-login">
-                    <div class="title">
-                        第三方登录
+                        <div class="input-group" style="margin-top: 15px;width: 330px;">
+                            <div class="l-captcha" data-site-key="f33ae969d27848afdaa3ff2c79c58476" data-height=60 data-width="328" data-callback="getResponse"></div>
+                        </div>
+
+                        <div class="input-group" style="margin-top: 15px;">
+                            <input type="text" class="form-control check-num" maxlength="6" placeholder="请输入短信验证码" style="height: 44px; line-height: 44px; font-size: medium;">
+                            <span class="input-group-btn">
+                                    <button class="btn btn-default get-check" style="height: 44px;" type="button">获取验证码</button>
+                                </span>
+                        </div>
+
+                        <div class="check" style="margin-top: 15px;">
+                            <input type="checkbox" id="check" checked>
+                            <span><a>已阅读并同意《<span id="corporation"></span>服务条款》</a>
+                            </span>
+                        </div>
+
+                        <div id="log-in">
+                            <a class="button button-lowercase button-primary login-bt">登录</a>
+                            <div id="qrcode"></div>
+                        </div>
                     </div>
-                    <div class="third-sites">
-                        <a href="#" id="wechat"> <span class="wechat"></span> </a>
+                    <div class="wexin">
+                        <!-- <div class="wx">微信登录</div> -->
+                        <div id="qrcode-block" style="margin-left:25px;"></div>
+                        <div class="to-login"></div>
                     </div>
                 </div>
             </div>
-            <div id="wechat_logn" >
-                <div id="qrcode-block" style="margin-left:25px;"></div>
-                <div class="to-login" style="margin-bottom:30px;height:30px;background: url('/common/img/pc.png') no-repeat center"></div>
-            </div>
         </div>
+        <div class="bg_bottom_img">
+
+        </div>
+
     </div>
 
-</div>
-<div class="pure-footer">
-    <div class="ctquan">
-        <div id="footer">
-            <div class="footer_main">
-                <div class="media-link">
-                    <div class="code-filed">
-                        <div class="box">
-                            <img alt="Wechat_qrcode" src="/common/img/wechat_sss.jpg"/>
-                        </div>
-                        <div class="box">
-                            <img alt="Erweima" src="/common/img/wechat_sss.jpg"/>
-                        </div>
-                    </div>
-                </div>
-                <div class="footer-map">
+    <!-- 右侧大背景图 -->
+    <div id="public_main_right_bg" style="position:fixed;top:0;bottom:0;left:1190px;width:100%;"></div>
+    <script src="{{PATH_TML}}js/public_main_right_bg.js"></script>
 
-                </div>
-                <div class="friends">
+    <!-- <script src="//captcha.luosimao.com/static/js/api.js"></script> -->
+    <!-- <script src="https://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js"></script> -->
+    <script src="{{PATH_TML}}js/image_code_id.js"></script>
+    <!-- <script src="/js/news_base.js"></script> -->
+    <script>
+        $("#favicon").attr("href", ApiMaterPlatQiniuDomain + localStorage.getItem("fav"));
+        $.getScript("https://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js", function(){
+            $.ajax({
+                url: apiUrl + 'setting/alias/weChatOpenConfig',
+                type: 'get',
+                dataType: 'json',
+                success: function(result) {
+                    if (result.code === 200) {
+                        var obj = new WxLogin({
+                            id: "qrcode-block",
+                            appid: result.data.appid,
+                            scope: "snsapi_login",
+                            redirect_uri: window.location.href,
+                            href: 'https://wezchina.com/common/css/wechat.css',
+                            state: ""
+                        });
+                    } else {
+                        parent.layer.msg(result.message);
 
-                </div>
-            </div>
-            <p class="copyright">Copyright © 创投圈 </p>
-        </div>
-    </div>
-</div>
-
-
-<script type="text/javascript">
-    var luo_response = '';
-
-    function getResponse(resp) {
-        luo_response = resp;
-    }
-
-    $(function () {
-
-        function initCaptchaLoginFormLabel() {
-            var $userVerifyCode = $("#user_verify_code");
-            if (!!$userVerifyCode.val()) {
-                $userVerifyCode.parents(".control-group").addClass("control-group-focus")
-                $userVerifyCode.parents(".control-group").find("label").text("手机验证码")
-            } else {
-                $userVerifyCode.parents(".control-group").find("label").text("请输入手机验证码")
-            }
-        }
-
-        setTimeout(initCaptchaLoginFormLabel, 100)
-
-        // focus时修改label
-        $("#captcha-login-form #user_login").focus(function () {
-            $(this).parents(".control-group").find("label").text("手机号")
-        }).blur(function () {
-            if (!$(this).val()) {
-                $(this).parents(".control-group").find("label").text("请输入您的手机号，未注册将自动注册")
-            }
-        })
-
-
-        $("#user_verify_code").focus(function () {
-            $(this).parents(".control-group").find("label").text("手机验证码")
-        }).blur(function () {
-            if (!$(this).val()) {
-                $(this).parents(".control-group").find("label").text("请输入手机验证码")
-            }
-        })
-
-        setTimeout(function () {
-            //$("#captcha-login-form #user_login").focus();
-        }, 200);
-
-
-        window.changeSendVerifyCodeBtn = function () {
-            setTimeout(function () {
-                if ($('#captcha-login-form #user_login').parent().hasClass('has-success') && !$("#l_captcha_widget").hasClass('verify-success')) {
-                    if ($('#send_verify_code').html() === '获取验证码') {
-                        $('#send_verify_code').removeAttr('disabled');
+                        return false;
                     }
-                } else {
-                    $('#send_verify_code').attr('disabled', 'disabled');
+                },
+                error: function(xhr) {
+                    console.log(xhr);
                 }
-            }, 200)
-        }
-
-        $("form#captcha-login-form").validate({
-            debug: false,
-            errorClass: "has-error",
-            validClass: "has-success",
-            onkeyup: false,
-            focusCleanup: false,
-            ignore: "",
-
-
-            unhighlight: function (element, errorClass, validClass) {
-                $(element).parents('form').find(".error-block[for='" + $(element).attr('id') + "']").attr('for', '').html('');
-                $(element).parent().removeClass(errorClass).addClass(validClass);
-                changeSendVerifyCodeBtn();
-            },
-
-
-        })
-
-    })
-</script>
-<script type="text/javascript">
-    $(function () {
-        // 防止操作过快导致页面卡顿
-        var times = 0, preClickTime, currentClickTime
-        $(document).on("cut copy paste", "#password-user-login", function (e) {
-            if (times === 0) {
-                preClickTime = new Date().getTime();
-                times++;
-                return
-            }
-            currentClickTime = new Date().getTime();
-            if ((currentClickTime - preClickTime) < 1000) {
-                alert("您的操作过于频繁");
-                preClickTime = currentClickTime;
-                e.preventDefault()
-                return;
-            }
-            times++;
-            preClickTime = currentClickTime;
-        });
-
-        $("#wechat_logn").hide()
-
-        //二维码
-        $("#wechat").click(() => {
-            $("#sign_in").hide();
-            $("#wechat_logn").show();
-            $.getScript("https://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js", function(){
-                $.ajax({
-                    url: apiUrl + 'setting/alias/weChatOpenConfig',
-                    type: 'get',
-                    dataType: 'json',
-                    success: function(result) {
-                        if (result.code === 200) {
-                            var obj = new WxLogin({
-                                id: "qrcode-block",
-                                appid: result.data.appid,
-                                scope: "snsapi_login",
-                                redirect_uri: window.location.href,
-                                href: '/common/css/wechat.css',
-                                state: ""
-                            });
-                        } else {
-                            parent.layer.msg(result.message);
-
-                            return false;
-                        }
-                    },
-                    error: function(xhr) {
-                        console.log(xhr);
-                    }
-                });
             });
         })
-        $(".to-login").click(()=>{
-            $("#sign_in").show()
-            $("#wechat_logn").hide()
-        })
-        $("#favicon").attr("href", ApiMaterPlatQiniuDomain + localStorage.getItem("fav"));
 
+        // 扫码登录
+        function setCookie(token, expiredays)
+        {
+            var Days = expiredays;
+            var exp = new Date();
+            var domain = '.'+root_domain;
+            exp.setTime(exp.getTime() + Days*24*60*60*1000);
+            document.cookie = "token="+ escape (token) + ";expires=" + exp.toGMTString() +";path=/;domain="+domain;
+        }
 
-        var code = $app.get_query_string('code');
-        var state = $app.get_query_string('state');
+        var code = GetQueryString('code');
+        var state = GetQueryString('state');
         var ref_id = localStorage.getItem('ref_id');
         var ref_url = localStorage.getItem('ref_url');
         var domain = localStorage.getItem('domain');
-
-        if (code != false) {
+        if (code !== null && code !== undefined && code !== '') {
             $.ajax({
                 url: apiUrl + "wx/scan_callback",
                 data: {
@@ -292,7 +150,7 @@
                     localStorage.setItem('token', data.token);
                     localStorage.setItem('weid', data.data.weid);
                     localStorage.setItem('phone', data.data.phone);
-                    $app.set_login_data(data);
+                    setCookie(data.token, 7);
                     if (data.data.phone === null || data.data.phone === undefined || data.data.phone === '') {
                         location.href = siteUrl + "/bind";
                     } else {
@@ -303,209 +161,8 @@
             });
         }
 
-    })
-</script>
 
-<script>
-    $(function () {
-        $("#submit-btn").click(() => {
-
-        })
-        var lock = false;
-        var isCheckNum = false;
-        var phoneNum = 0,
-            checkNum = 0,
-            imageCode = '',
-            imageCodeID = '',
-            flag = false;
-
-        function bindMobileCode() {
-            var $sendVerifyCodeBtn = $('#send_verify_code');
-            $sendVerifyCodeBtn.click(function () {
-                if (luo_response) {
-                    var phoneNum = $("#user_login").val();
-                    if (!!$(this).attr('disabled')) {
-                        return false;
-                    }
-                    $('#send_verify_code').attr('disabled', true).html("60s后重新获取");
-                    $.ajax({
-                        url: CODES,
-                        dataType: 'json',
-                        type: 'post',
-                        data: {'phone': phoneNum, luo_response: luo_response},
-                        success: function (data) {
-                            if (data.code == 200) {
-                                isCheckNum = true;
-                                var timeout = false;
-                                var seconds = 60;
-                                console.log(data, 1111)
-                                count = setInterval(function () {
-                                    if (seconds > 0) {
-                                        seconds -= 1;
-                                        $("#send_verify_code").text("剩余" + seconds + "秒");
-                                    } else {
-                                        // $("#send_verify_code").text("重新获取验证码");
-                                        bindMobileCode();
-                                        $('#send_verify_code').attr('disabled', false).html("重新获取验证码");
-                                        timeout = false;
-                                        seconds = 60;
-                                        lock = false;
-                                        clearInterval(count);
-                                    }
-                                }, 1000);
-                            } else {
-                                layer.msg("获取验证码失败", {time: 2500});
-                            }
-                        },
-                        error: function (err) {
-                            layer.msg("获取验证码失败", {time: 2500});
-                        }
-                    })
-                }
-            });
-
-
-        }
-
-        bindMobileCode();
-
-        //route
-        var isLogin = false; //判断用户登陆与否
-        var router = function (route) {
-            var routerList = ['home', 'login', 'article', 'shopping'];
-
-            var isMember = function (routerList, route) {
-                return routerList.filter(x => x === route);
-            }
-
-            var home = function () {
-                window.location.href = '/';
-            }
-
-            var login = function () {
-                if (!isLogin) {
-                    showLogin = true;
-                    $("#modal").show();
-                    $(".show-login").fadeIn(300);
-                } else {
-                    window.location.href = "/user";
-                }
-            }
-
-            var article = function () {
-                showLogin = false;
-                window.location.href = "/index/article";
-            }
-
-            var shopping = function () {
-                showLogin = false;
-                // window.location.href = "/index/wemall";
-            }
-
-            if (isMember(routerList, route) != "") {
-                eval(route)();
-            }
-        }
-
-        //login input check
-        var isChecked = true; //默认选中
-        $("#check").change(function () {
-            if (!isChecked) {
-                console.log("checked");
-                isChecked = true;
-            } else {
-                console.log("uncheck");
-                isChecked = false;
-            }
-        })
-
-        //用户登录
-        var login = function (phoneNum, checkNum, imageCode, imageCodeID) {
-            $.ajax({
-                url: LOGIN,
-                type: 'post',
-                data: {'phone': phoneNum, 'code': checkNum, 'luo_response': luo_response},
-                success: function (data) {
-                    console.log(data);
-                    if (data.code != -200) {
-                        $app.set_login_data(data);
-                        showLogin = false;
-                        isLogin = true;
-                        isCheckNum = false;
-                        window.location.href = '/user/';
-                        public_logon_link();
-                        // var url_parama = GetQueryString('url');
-                        // if( url_parama !== null && url_parama !== undefined && url_parama !== '' ) {
-                        //      window.location.href = url_parama;
-                        // }else{
-                        //      window.location.href = '/user/';
-                        // }
-
-                    } else {
-                        lock = false;
-                        clearInterval(count);
-                        layer.msg(data.message, {time: 2500});
-                    }
-                },
-                error: function (err) {
-                    console.log(err);
-                }
-            })
-        }
-        //点击登录按钮
-        var logBt = function (phoneNum, checkNum) {
-
-            imageCode = $(".image_code").val();
-            var regexp = /^(13|14|17|15|18)/;
-            var reg = new RegExp(regexp);
-            if (reg.test(phoneNum) && phoneNum.length == 11 && checkNum.length == 6 && isCheckNum && isChecked) {
-                login(phoneNum, checkNum, imageCode, imageCodeID);
-            } else {
-                if (!(phoneNum.length == 11) || !reg.test(phoneNum)) {
-                    layer.msg("手机号码错误", {time: 2500});
-
-                    return;
-                }
-                if (!(checkNum.length == 6) || !isCheckNum) {
-                    layer.msg("手机验证码错误", {time: 2500});
-                    return;
-                }
-                if (!isChecked) {
-                    layer.msg("请确认服务条款", {time: 2500});
-                    return;
-                }
-            }
-        }
-        $(".login-bt").click(function () {
-            logBt($("#user_login").val(), $("#user_verify_code").val());
-        })
-    })
-</script>
-<script type="text/javascript">
-    $(function () {
-        // 选择登陆方式
-        $(".fast-login").show().siblings(".login-style").hide()
-    })
-</script>
-
-<script type="text/javascript">$(function () {
-    $('#error_message .close').on('touchstart', function () {
-        $('#error_message').slideToggle('fast');
-    });
-
-    $('#door .control-group .controls input').blur()
-    $('#door .control-group .controls input').focus(function () {
-        $(this).parents('.control-group').addClass('control-group-focus');
-    })
-    $('#door .control-group .controls input').blur(function () {
-        if (!$(this).val()) {
-            $(this).parents('.control-group').removeClass('control-group-focus');
-        }
-    })
-    $(".home-title").html(plats_info.plat_name)
-})
-
-</script>
-<!--<script src="//captcha.luosimao.com/static/js/api.js"></script>-->
+    </script>
 </body>
+
 </html>
