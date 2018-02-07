@@ -400,7 +400,7 @@ $(function() {
                             id: "qrcode-block",
                             appid: result.data.appid,
                             scope: "snsapi_login",
-                            redirect_uri: window.location.href,
+                            redirect_uri: http_type+real_domain,
                             href: 'https://wezchina.com/common/css/wechat.css',
                             state: ""
                         });

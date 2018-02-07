@@ -244,22 +244,22 @@
             },
             methods: {
                 init: function(...type){                    
-                    if (type.length == 1) {
+                    if (type.length == 1) {                        
                         switch (type[0]) {
                             case '': this.type='latest'; this.getLatest(1, 10); this.menu.flag = 0; break;
-                            case 'article': this.type='articles'; this.getArtList(1, 10, (this.artType.list[0].weid != undefined ? this.artType.list[0].weid : '')); this.menu.flag = 1; break;
-                            case 'activity': this.type='activity'; this.getActList(1, 10, (this.actType.list[0].weid != undefined ? this.actType.list[0].weid : '')); this.menu.flag = 2; break;
+                            case 'article': this.type='articles'; this.getArtList(1, 10, (this.artType.list != '' ? this.artType.list[0].weid : '')); this.menu.flag = 1; break;
+                            case 'activity': this.type='activity'; this.getActList(1, 10, (this.actType.list != '' ? this.actType.list[0].weid : '')); this.menu.flag = 2; break;
                             case 'wemall': this.type='shopping'; this.getShopCate(); this.menu.flag = 3; break;
                             case 'quan': this.type='zone';this.menu.flag = 4; break;
                             default: this.type='latest'; this.getLatest(1, 10); this.menu.flag = 0; break;
                         }
-                    } else if (type.length == 2) {
+                    } else if (type.length == 2) {                        
                         var artId = this.artType.router.indexOf(type[1]);
                         var actId = this.actType.router.indexOf(type[1]);
                         switch (type[0]) {
                             case '': this.type='latest'; this.getLatest(1, 10); this.menu.flag = 0; break;
-                            case 'article': this.type='articles'; this.getArtList(1, 10, (this.artType.list[0].weid != undefined ? this.artType.list[0].weid : '')); this.artType.flag = artId; this.menu.flag = 1; break;
-                            case 'activity': this.type='activity'; this.getActList(1, 10, (this.actType.list[0].weid != undefined ? this.actType.list[0].weid : '')); this.actType.flag = actId; this.menu.flag = 2; break;
+                            case 'article': this.type='articles'; this.getArtList(1, 10, (this.artType.list != '' ? this.artType.list[artId].weid : '')); this.artType.flag = artId; this.menu.flag = 1; break;
+                            case 'activity': this.type='activity'; this.getActList(1, 10, (this.actType.list != '' ? this.actType.list[actId].weid : '')); this.actType.flag = actId; this.menu.flag = 2; break;
                             case 'wemall': this.type='shopping'; this.getShopCate(); this.menu.flag = 3; break;
                             case 'quan': this.type='zone';this.menu.flag = 4; break;
                             default: this.type='latest'; this.getLatest(1, 10); this.menu.flag = 0; break;
@@ -483,8 +483,8 @@
                     list.flag = i;
                     switch (i) {
                         case 0: this.getLatest(1, 10); this.pages['latest'].page = 1; window.history.pushState(null, null, '/' + pages_info.plats_domian.domain + '/'); break;
-                        case 1: this.getArtList(1, 10, (this.artType.list[this.artType.flag].weid != undefined ? this.artType.list[this.artType.flag].weid : '')); this.pages['articles'].page = 1; window.history.pushState(null, null, '/' + pages_info.plats_domian.domain + '/article'); break;
-                        case 2: this.getActList(1, 10, (this.actType.list[this.actType.flag].weid != undefined ? this.actType.list[this.actType.flag].weid : '')); this.pages['activity'].page = 1; window.history.pushState(null, null, '/' + pages_info.plats_domian.domain + '/activity'); break;
+                        case 1: this.getArtList(1, 10, (this.artType.list != '' ? this.artType.list[this.artType.flag].weid : '')); this.pages['articles'].page = 1; window.history.pushState(null, null, '/' + pages_info.plats_domian.domain + '/article'); break;
+                        case 2: this.getActList(1, 10, (this.actType.list != '' ? this.actType.list[this.actType.flag].weid : '')); this.pages['activity'].page = 1; window.history.pushState(null, null, '/' + pages_info.plats_domian.domain + '/activity'); break;
                         case 3: this.getShopCate(this.shopCate, 1, 10);this.pages['shopping'].page = 1; window.history.pushState(null, null, '/' + pages_info.plats_domian.domain + '/wemall'); break;
                         case 4: wepage.type = 'zone'; wepage.none = false; this.pages['zone'].page = 1; window.history.pushState(null, null, '/' + pages_info.plats_domian.domain + '/quan'); break;
                     }
