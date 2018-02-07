@@ -2,7 +2,16 @@
 <link rel="stylesheet" href="{{PATH_TML}}wemall/css/wemall.css"/>
 <script src="{{PATH_TML}}wemall/js/banner.js"></script>
 <script src="{{PATH_TML}}wemall/js/wemall.js"></script>
-
+<style type="text/css">
+    .node{
+        padding: 60px 0;
+        margin: 0 auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+</style>
 
 <!--商城开始-->
 <div id="container">
@@ -28,7 +37,7 @@
                 <li v-for="(item,kes,i) in cat_list" @click="move(i)">{{item.type}}</li>
             </ul>
         </div>
-        <div v-else>
+        <div class="node" v-else>
             <img src="/common/img/no_con_default.png" />
         </div>
 
