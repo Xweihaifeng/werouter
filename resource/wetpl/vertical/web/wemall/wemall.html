@@ -83,14 +83,10 @@
             ban:[],
         },
         mounted() {
-            $.ajax({
-                url:'http://dev.wezchina.com/api/plats/goods/defaults',
-                success:(res)=>{
-                    this.advert_cont = res.data.HomeAdv;
-                    this.cat_list = res.data.category;
-                    this.ban = res.data.HomeBanner;
-                    console.log(res.data)
-                }
+            ajax.get('/plats/goods/defaults').then((res)=>{
+                 this.advert_cont = res.data.HomeAdv;
+                this.cat_list = res.data.category;
+                this.ban = res.data.HomeBanner;
             })
         },
         methods: {
