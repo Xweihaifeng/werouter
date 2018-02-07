@@ -373,7 +373,7 @@ if(token != null || token != undefined) {
                             pageInfo(function(rep) {
                                 if (!rep.hasPages && rep.isUM && $.inArray('UM', rep.openAllowSource) != -1) {
                                     $("#btn-open-wepage").show();
-                                    $("#btn-open-wepage").bind("click", avatar_admin);
+                                    // $("#btn-open-wepage").bind("click", avatar_admin);
                                 } else {
                                     $("#btn-open-wepage").remove();
                                 }

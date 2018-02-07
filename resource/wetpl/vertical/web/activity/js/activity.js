@@ -43,14 +43,16 @@ $(function(){
     // 滚动事件
     var Height=$(".project_t").offset().top;
     $(window).scroll(function(){
+        // $("#acitivty-detail").css({paddingTop:0})
+        if($(document).scrollTop()>=Height - 10){
 
-        if($(document).scrollTop()>=Height){
-            // $("#userinfo").css({display:"none"});
-            // $("#menu").css({position:"relative"})
-            $(".project_t").css({position:"fixed",top:0,left:"50%",zIndex:99,marginTop:0,marginLeft:"-578px",width:783});
-        }else{
-            // $("#menu").css({position:"relative"})
-            $(".project_t").css({position:"relative",top:0,left:0,zIndex:1,marginTop:0,marginLeft:0});
+            $(".pro-title").css({position:"fixed",top:0,left:"50%",zIndex:99,marginTop:0,marginLeft:"-580px",width:785,borderRight:"1px solid #C9C9C9",borderLeft:"1px solid #C9C9C9"});
+
+        } else{
+
+            $(".pro-title").css({position:"absolute",top:0,left:0,zIndex:1,marginTop:0,marginLeft:0,borderLeft:"none",width:784});
+
+
         }
     })
 

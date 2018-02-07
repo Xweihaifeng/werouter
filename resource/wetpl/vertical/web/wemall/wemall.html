@@ -13,6 +13,9 @@
                     <li :style="{background: 'url(' + httpType + '//' + plats_qiniu.domain_custom + '/' + t.image +')' + ' no-repeat ' + ' center/cover '}" ></li>
                 </template>
             </ul>
+            <div v-else>
+                <img src="/common/img/no_con_default.png" />
+            </div>
         </div>
         <ul class="advert" v-if="advert_cont.length>0">
             <li v-for="item in advert_cont">
@@ -27,9 +30,7 @@
                 <li v-for="(item,kes,i) in cat_list" @click="move(i)">{{item.type}}</li>
             </ul>
         </div>
-        <div v-else>
-            <img src="/common/img/no_con_default.png" />
-        </div>
+
         <div class="wemall-con" v-if="cat_list.length>0">
             <div class="wemall-son" v-for="(item,key,index) in cat_list">
                 <div class="title">

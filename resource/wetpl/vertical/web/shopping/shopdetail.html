@@ -233,8 +233,8 @@
                         </div>
                         <div class="pro_deta_com" id = "goods_detail">
                             <div class="pro_deta_tab" style="left: 0;">
-                                <a href="#goods_detail" class="active pro_date_tit2" @click="shop_click(0)" href="javascript:void(0)">商品详情</a>
-                                <a href="#goods_rule" class="pro_date_tit" @click="shop_click(1)" href="javascript:void(0)">购买须知</a>
+                                <a  class="active pro_date_tit2" @click="shop_click(0)" href="javascript:void(0)" change="#goods_detail">商品详情</a>
+                                <a  class="pro_date_tit" @click="shop_click(1)" href="javascript:void(0)" change="#goods_rule">购买须知</a>
                                 <div class="tm-qrcode-icon " @mouseenter="qrcode2">
                                     <a class="tm-qr-togger" data-spm-anchor-id="a220o.1000855.0.0">
                                         手机购买
@@ -969,6 +969,9 @@
             // 详情点击效果
             shop_click(cate) {
                 $(".pro_deta_tab").children("a").eq(cate).addClass("active").siblings().removeClass("active");
+                var tz=$(".pro_deta_tab").children("a").eq(cate).attr("change");
+                var top=$(tz).offset().top-70;
+                $("html,body").animate({scrollTop:top}, 0);
             },
             // 图片浏览效果
             image_click(dire) {
@@ -1174,12 +1177,6 @@
                 }
 
             },
-            // qrcode(){
-            //     $("#shop_code").show();
-            //     $(".qr_code_icon").mouseleave(function(){
-            //         $("#shop_code").hide();
-            //     })
-            // },
             qrcode2(){
                 $("#shop_code2").show();
                 $(".tm-qrcode-icon").mouseleave(function(){
@@ -1205,7 +1202,7 @@
                         if(data.code == 200) {
                             console.log(data);
 
-                            $(".add_to_collect").css({ "backgroundImage": "url('/resource/wetpl/vertical/web/shopping/img/ysc.png')"})
+                            $(".add_to_collect").css({ "backgroundImage": "url('/resource/wetpl/vertical/web/shopping/img/sc.png')"})
                             $(".add_to_collect").html("已收藏");
                                self.collect_id=data.data;
                             layui.use('layer', function() {
@@ -1229,7 +1226,7 @@
                 ajax.get('goods/collection/destroy/' + id).then((res)=>{
                     console.log(11111,res.data)
                     if(res.code == 200) {
-                        $(".add_to_collect").css({ "backgroundImage": "url('/resource/wetpl/vertical/web/shopping/img/sc.png')"})
+                        $(".add_to_collect").css({ "backgroundImage": "url('/resource/wetpl/vertical/web/shopping/img/ysc.png')"})
                             this.collect_id="";
                             $(".add_to_collect").html("点击收藏")
                             layui.use('layer', function() {
@@ -1248,7 +1245,7 @@
                 ajax.get('goods/collection/iscollection/' + id).then((res)=>{
                     if(res.code == 200) {
                         if(res.data!='no'){
-                            $(".add_to_collect").css({ "backgroundImage": "url('/resource/wetpl/vertical/web/shopping/img/ysc.png')"})
+                            $(".add_to_collect").css({ "backgroundImage": "url('/resource/wetpl/vertical/web/shopping/img/sc.png')"})
                             $(".add_to_collect").html("已收藏")
                             this.collect_id=res.data;
                         }

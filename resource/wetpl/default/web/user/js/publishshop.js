@@ -150,6 +150,8 @@ $(function(){
              return html;
          } else {
              //编辑使用（循环data）
+
+
              var html='';
              for (var i=0;i<data.length;i++){
                  html+='<li class="service_list" style="border:1px solid #dddee1;width: 480px;margin-left: 95px;margin-bottom:20px;height: auto;overflow: hidden ;background:#fafafa;box-sizing:border-box;float:left;weid="'+data.weid+'">'+
@@ -159,6 +161,7 @@ $(function(){
                  '<label class="" style=" box-sizing:border-box;padding-left:10px;line-height: 40px;width: 100%;">服务内容:</label>'+
                  '<textarea class="form-control" style="resize: none; width: 95%;margin: 0 auto 15px;" name="service_content" rows="5">'+data[i].service_content+'</textarea>'+
                  '</li>';
+
              }
              return html;
          }
@@ -593,7 +596,7 @@ malldetail();
                 },
             dataType: 'json',
             success: function(data){
-                // console.log(data);
+                console.log(data,111);
                 if (data.code == 200) {
                     var goods = data.data;
                     $("input[name='title']").val(goods.title);
@@ -612,17 +615,29 @@ malldetail();
                         $(".postage").show();
                         $(".postage_max_money").show();
                     }
+
                     if(goods.discount_status == 1){
                         $("input[value='1']").removeAttr('checked').attr("checked","checked");
                     }
-                    $('#tables > ul').children().remove();
-                    if(goods.discount_status == 1 && goods.discount.length){
-                        for(var i=0; i<goods.discount.length; i++){
-                             $('#tables > ul').append(memberDom(goods.discount[i])).show();
+
+                    $('#tables > ul').children().remove()
+
+                    if(goods.discount_status == 1 ){
+                        if(goods.discount){
+                            if(goods.discount.length){
+                                for(var i=0; i<goods.discount.length; i++){
+                                    $('#tables > ul').append(memberDom(goods.discount[i])).show();
+                                }
+                            }
+
                         }
+
                     }
                     //加入服务列表
                     if(!isNull(goods.service)){
+
+                        $("#ser_add > ul ").show();
+                        $(".insert-service").addClass("serverss");
                         var html=initServiceHtml(JSON.parse(goods.service));
                         $("#ser_add > ul").append(html);
                         delServiceDelete();
