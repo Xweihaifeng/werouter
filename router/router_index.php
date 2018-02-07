@@ -417,6 +417,8 @@ class router_index extends controller
         //$this->data['domain'] = $_SERVER['HTTP_HOST'];
         $plats['var auth_code'] = auth_code($this->data['domain']);
 
+        $plats['var domain'] = $this->data['domain'];
+
         $plats['var sub_domain'] = FALSE; 
         $plats['sub_state'] = FALSE; 
 
