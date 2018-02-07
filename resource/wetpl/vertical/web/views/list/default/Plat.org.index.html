@@ -175,7 +175,7 @@
                         <ul class="new2">
                             <li v-for="item in new2_cont">
                                 <a :href="'/org/' + item.weid" target="_blank" v-if="item.thumb_image != '' ">
-                                    <img :src="item.thumb_image" alt="">
+                                    <img :src="item.thumb_image | img_src" alt="">
                                 </a>
                                 <div class="new2-left" v-if="item.thumb_image != '' " style="width:660px">
                                     <h2>
