@@ -99,12 +99,11 @@
         //子类型
         var artType = {list: [], flag: 0, type: 'articles', router: []};
         $.ajax({
-            // url: 'http://demo.wezchina.com/api/articles/cates',
             url: ARTICLES_CATES + '?domain=' + pages_info.plats_domian.domain,
             async: false,
             success: function(data) {
                 if (data.data != '' && data.data != undefined && data.data != null) {
-                    artType.list = data.data;
+                    artType.list = data.data.slice(0, 9);
                     artType.flag = 0;
                     artType.type = 'articles';
                     artType.router = artType.list.map(e => e.ename);
@@ -118,13 +117,13 @@
             async: false,
             success: function(data) {
                 if (data.data.list != '' && data.data.list != undefined && data.data.list != null) {
-                    actType.list = data.data.list;
+                    actType.list = data.data.list.slice(0, 9);
                     actType.flag = 0;
                     actType.type = 'activity';
                     actType.router = actType.list.map(e => e.e_name);
                 }
             }
-        })
+        });
 
         var wepage = new Vue({
             el: '#wepage',

@@ -126,6 +126,7 @@ $(document).ready(function(){
             } 
           var data = {
                 edition_id:$("#editionId").find("option:selected").val(),
+                template_id:$("#templateId").find("option:selected").val(),
                 site_name:$('input[name=site_name]').val(),
                 domain:$('input[name=domain]').val(),
                 real_name:$('input[name=real_name]').val(),

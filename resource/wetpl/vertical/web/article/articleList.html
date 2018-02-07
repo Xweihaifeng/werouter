@@ -18,7 +18,7 @@
                 </ul>
                 <div class="none" v-if="none">
                     <img src="/common/img/no_con_default.png" alt=""/>
-                </div>                
+                </div>
                 <a v-for="e in latest" :href='"/" + e.domain + dynamic.filter(x => x.id == e.dynamic_type)[0].val + JSON.parse(e.other).weid' v-show="type == 'latest'" target="_blank">
                     <li v-if="e.dynamic_type == 1">
                         <img class="i0" :src="setImg(JSON.parse(e.other).cover, '/common/img/new/products_load.jpg', 240, 160)" />
