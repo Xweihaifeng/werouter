@@ -30,7 +30,7 @@
     <!--<link rel="stylesheet" type="text/css" href="/resource/wetpl/default/web/activity/css/activitydetail.css">-->
 
     <link rel="stylesheet" href="{{PATH_TML}}activity/css/activitypay.css" />
-    <title>Document</title>
+    <title>订单支付</title>
     <style>
         .bar-code svg{
             display: block;
@@ -53,7 +53,7 @@
                         <div class="title_left">
                             <h2 v-if="state == 1">订单提交成功！去付款喽~</h2>
                             <h2 v-if="state == 3" style="color: #b9b8b8;">订单已失效，请重新选票</h2>
-                            <span v-if="state == 1">请在 <span class="time" v-html="minter">分</span><span class="miao" v-html="second">s</span> 内完成支付，超时后将取消订单</span>
+                            <span v-if="state == 1">请在 <span class="time" v-html="minter + '分' "></span><span class="miao" v-html="second + '秒' "></span> 内完成支付，超时后将取消订单</span>
                             <span v-if="state == 3" style="color: #b9b8b8;">订单已逾期，请<a :href=" '/' + publisher_domain + '/activity/' + activity_num">重新</a>报名购买，以免没票</span>
                         </div>
                         <div class="title_right">
@@ -154,7 +154,8 @@
                                     <div class="label">活动地址：</div>
                                     <div class="content" v-html="pay_success.area_name + pay_success.address"></div>
                                 </li>
-                                <span @click="success_pay" style="cursor:pointer">查看更多</span>
+                                <span @click="success_pay" style="cursor:pointer">查看电子票</span>
+                                <a href="/user/myactivity/support">支持活动列表</a>
                             </ul>
                         </div>
                     </div>
@@ -218,7 +219,6 @@
                             this.publisher_domain=res.data.publisher_domain;
                             console.log(8888888,this.pay_active);
                             console.log(this.state);
-                            //
                             if(res.data.state==2){
                                 this.state=2;
                                 console.log(this.state)
@@ -310,7 +310,7 @@
                 paymentLayer = layer.open({
                     skin: 'layui-layer-rim',
                     type: 1,
-                    area: ['400px', '430px'],
+                    area: ['413px', '430px'],
                     title: '微信扫码支付',
                     closeBtn: 2,
                     shadeClose: false,
