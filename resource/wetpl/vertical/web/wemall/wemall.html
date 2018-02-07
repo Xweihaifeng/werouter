@@ -2,32 +2,46 @@
 <link rel="stylesheet" href="{{PATH_TML}}wemall/css/wemall.css"/>
 <script src="{{PATH_TML}}wemall/js/banner.js"></script>
 <script src="{{PATH_TML}}wemall/js/wemall.js"></script>
-
+<style type="text/css">
+    .node{
+        padding: 60px 0;
+        margin: 0 auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+</style>
 
 <!--商城开始-->
 <div id="container">
     <div class="wemall">
-        <div class="banner">
+        <div class="banner" v-if="ban.length>0">
             <ul style="width: 100%;height: 100%;">
                 <template v-for="t in ban">
                     <li :style="{background: 'url(' + httpType + '//' + plats_qiniu.domain_custom + '/' + t.image +')' + ' no-repeat ' + ' center/cover '}" ></li>
                 </template>
             </ul>
+
         </div>
-        <ul class="advert">
+        <ul class="advert" v-if="advert_cont.length>0">
             <li v-for="item in advert_cont">
                 <a href="">
                     <img :src="httpType + '//' + plats_qiniu.domain_custom + '/' + item.image" alt="">
                 </a>
             </li>
         </ul>
-        <div class="wemall-cat">
+        <div class="wemall-cat" v-if="cat_list.length>0">
             <ul class="cat-nav">
                 <li class="check_cur" v-on:click="move(0)">全部</li>
                 <li v-for="(item,kes,i) in cat_list" @click="move(i)">{{item.type}}</li>
             </ul>
         </div>
-        <div class="wemall-con">
+        <div class="node" v-else>
+            <img src="/common/img/no_con_default.png" />
+        </div>
+
+        <div class="wemall-con" v-if="cat_list.length>0">
             <div class="wemall-son" v-for="(item,key,index) in cat_list">
                 <div class="title">
                     <h3>{{item.type}}</h3>

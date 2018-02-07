@@ -125,7 +125,7 @@
             </div>
         </div>
         <!--位置显示结束-->
-
+        
         <article class="news-main">
             <!--左侧内容开始-->
             <article class="main">
@@ -175,7 +175,7 @@
                         <ul class="new2">
                             <li v-for="item in new2_cont">
                                 <a :href="'/org/' + item.weid" target="_blank" v-if="item.thumb_image != '' ">
-                                    <img :src="item.thumb_image" alt="">
+                                    <img :src="item.thumb_image | img_src" alt="">
                                 </a>
                                 <div class="new2-left" v-if="item.thumb_image != '' " style="width:660px">
                                     <h2>
@@ -419,7 +419,7 @@
                     var domain = self.channel_domain;
                     self.channel_list(domain)
                 } else {
-                    self.column(self.yuming_domain || self.cate_domain)
+                    self.column(self.third_domain || self.cate_domain)
                 }
             },
             column_list(item) {

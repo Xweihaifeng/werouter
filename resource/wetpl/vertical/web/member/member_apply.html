@@ -215,7 +215,7 @@
                         <div class="member_sel_type">
                             <div class="member_type_title"> 选择类型： </div>
                             <ul class="member_sel_type_name">
-                                <li v-for="(item,index) in member_levels.list" :class="{'member_active1': index == member_levels.type_active, 'member_tyle_2': item.open_type == 2}" @click="levels_list(item,index)">{{ item.level_name }}</li>
+                                <li v-for="(item,index) in member_levels.list" :class="{'member_active1': index == member_levels.type_active, 'member_tyle_2': item.open_type == 2}" @click="levels_list(item,index)" v-if="item.open_type != 2 && item.open_type != 3">{{ item.level_name }}</li>
                             </ul>
                         </div>
 
