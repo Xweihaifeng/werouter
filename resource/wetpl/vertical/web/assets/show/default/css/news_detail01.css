@@ -85,8 +85,8 @@ a {
 }
 .page-content .page-left .page-title {
     margin: 10px 0 0;
-    max-height: 60px;
-    overflow: hidden;
+    height: auto;
+
 }
 .page-content .page-left .page-title>img {
     margin: 0px -6px -9px 0;
@@ -122,10 +122,28 @@ a {
     color: #333;
     text-align: justify;
 }
-.page-content .page-left .page-details img {
+.page-content .page-left .page-details > p > img {
+    width: 90%!important;
+    display: block;
+    margin: 0 auto;
+}
+.page-left p img{
     width: 90%;
     display: block;
     margin: 0 auto;
+}
+.page-left .page-title > img{
+    width: 52px!important;
+    height: 24px!important;
+    display: block;
+
+}
+.page-left .page-title{
+    height: auto!important;
+}
+.page-left .page-title > span{
+    display: block;
+    margin-top: 20px;
 }
 .page-content .page-left .evaluate {
     user-select: none;
