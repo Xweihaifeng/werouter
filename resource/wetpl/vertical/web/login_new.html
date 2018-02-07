@@ -252,7 +252,7 @@
                                 id: "qrcode-block",
                                 appid: result.data.appid,
                                 scope: "snsapi_login",
-                                redirect_uri: window.location.href,
+                                redirect_uri: http_type+real_domain,
                                 href: '/common/css/wechat.css',
                                 state: ""
                             });
@@ -505,7 +505,7 @@
             $(this).parents('.control-group').removeClass('control-group-focus');
         }
     })
-    $(".home-title").html(plats_info.plat_name);
+    $(".home-title").html(plats_info.title);
 
     $('#copyright').html('Copyright © '+plats_info.plat_name + "    " +plats_info.icp);
 
