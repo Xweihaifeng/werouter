@@ -268,8 +268,9 @@
                 },
                 checkPath: function(path) {
                     var arr = path.split('/');
-                    console.log(arr)
                     var len = arr.length;
+                    arr = arr[len - 1] != '' ? arr : arr.slice(0, len - 1);
+                    len = arr.length;
                     var list = ['', 'article', 'activity', 'wemall', 'quan'];                    
                     if (list.indexOf(arr[len - 1]) != -1) { //大类                        
                         return [arr[len - 1]];
