@@ -483,8 +483,8 @@
                     list.flag = i;
                     switch (i) {
                         case 0: this.getLatest(1, 10); this.pages['latest'].page = 1; window.history.pushState(null, null, '/' + pages_info.plats_domian.domain + '/'); break;
-                        case 1: this.getArtList(1, 10, this.artType.list[this.artType.flag].weid); this.pages['articles'].page = 1; window.history.pushState(null, null, '/' + pages_info.plats_domian.domain + '/article'); break;
-                        case 2: this.getActList(1, 10, this.actType.list[this.actType.flag].weid); this.pages['activity'].page = 1; window.history.pushState(null, null, '/' + pages_info.plats_domian.domain + '/activity'); break;
+                        case 1: this.getArtList(1, 10, (this.artType.list[this.artType.flag].weid != undefined ? this.artType.list[this.artType.flag].weid : '')); this.pages['articles'].page = 1; window.history.pushState(null, null, '/' + pages_info.plats_domian.domain + '/article'); break;
+                        case 2: this.getActList(1, 10, (this.actType.list[this.actType.flag].weid != undefined ? this.actType.list[this.actType.flag].weid : '')); this.pages['activity'].page = 1; window.history.pushState(null, null, '/' + pages_info.plats_domian.domain + '/activity'); break;
                         case 3: this.getShopCate(this.shopCate, 1, 10);this.pages['shopping'].page = 1; window.history.pushState(null, null, '/' + pages_info.plats_domian.domain + '/wemall'); break;
                         case 4: wepage.type = 'zone'; wepage.none = false; this.pages['zone'].page = 1; window.history.pushState(null, null, '/' + pages_info.plats_domian.domain + '/quan'); break;
                     }
