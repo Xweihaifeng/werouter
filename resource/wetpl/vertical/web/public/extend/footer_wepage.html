@@ -117,7 +117,7 @@
             async: false,
             success: function(data) {                
                 if (data.data.list != '' && data.data.list != undefined && data.data.list != null) {
-                    actType.list = data.data.list.slice(0, 9);
+                    actType.list = [{weid: '', title: '全部', e_name: ''}, ...data.data.list.slice(0, 9)];                    
                     actType.flag = 0;
                     actType.type = 'activity';
                     actType.router = actType.list.map(e => e.e_name);
@@ -243,8 +243,8 @@
                 })
             },
             methods: {
-                init: function(...type){                    
-                    if (type.length == 1) {                        
+                init: function(...type){
+                    if (type.length == 1) {
                         switch (type[0]) {
                             case '': this.type='latest'; this.getLatest(1, 10); this.menu.flag = 0; break;
                             case 'article': this.type='articles'; this.getArtList(1, 10, (this.artType.list != '' ? this.artType.list[0].weid : '')); this.menu.flag = 1; break;
@@ -253,7 +253,7 @@
                             case 'quan': this.type='zone';this.menu.flag = 4; break;
                             default: this.type='latest'; this.getLatest(1, 10); this.menu.flag = 0; break;
                         }
-                    } else if (type.length == 2) {                        
+                    } else if (type.length == 2) {
                         var artId = this.artType.router.indexOf(type[1]);
                         var actId = this.actType.router.indexOf(type[1]);
                         switch (type[0]) {
@@ -268,6 +268,7 @@
                 },
                 checkPath: function(path) {
                     var arr = path.split('/');
+                    console.log(arr)
                     var len = arr.length;
                     var list = ['', 'article', 'activity', 'wemall', 'quan'];                    
                     if (list.indexOf(arr[len - 1]) != -1) { //大类                        
@@ -461,14 +462,22 @@
                 tab: function(o, id, type){
                     if (type == 'act') {
                         this.actType.flag = id;
-                        window.history.pushState(null, null, '/' + pages_info.plats_domian.domain + '/activity/' + o.e_name);
+                        if (id == 0) {
+                            window.history.pushState(null, null, '/' + pages_info.plats_domian.domain + '/activity');
+                        } else {
+                            window.history.pushState(null, null, '/' + pages_info.plats_domian.domain + '/activity/' + o.e_name);
+                        }
                         this.getActList(1, 10, o.weid);
                         $("#" + this.remAct).removeClass('active');
                         $("#" + (type + id)).addClass('active');
                         this.remAct = type + id;
                     } else if (type == 'art') {
                         this.artType.flag = id;
-                        window.history.pushState(null, null, '/' + pages_info.plats_domian.domain + '/article/' + o.ename);
+                        if (id == 0) {
+                            window.history.pushState(null, null, '/' + pages_info.plats_domian.domain + '/article');
+                        } else {
+                            window.history.pushState(null, null, '/' + pages_info.plats_domian.domain + '/article/' + o.ename);
+                        }                        
                         this.getArtList(1, 10, o.weid);
                         $("#" + this.remArt).removeClass('active');
                         $("#" + (type + id)).addClass('active');
@@ -482,7 +491,7 @@
                     }
                     list.flag = i;
                     switch (i) {
-                        case 0: this.getLatest(1, 10); this.pages['latest'].page = 1; window.history.pushState(null, null, '/' + pages_info.plats_domian.domain + '/'); break;
+                        case 0: this.getLatest(1, 10); this.pages['latest'].page = 1; window.history.pushState(null, null, '/' + pages_info.plats_domian.domain); break;
                         case 1: this.getArtList(1, 10, (this.artType.list != '' ? this.artType.list[this.artType.flag].weid : '')); this.pages['articles'].page = 1; window.history.pushState(null, null, '/' + pages_info.plats_domian.domain + '/article'); break;
                         case 2: this.getActList(1, 10, (this.actType.list != '' ? this.actType.list[this.actType.flag].weid : '')); this.pages['activity'].page = 1; window.history.pushState(null, null, '/' + pages_info.plats_domian.domain + '/activity'); break;
                         case 3: this.getShopCate(this.shopCate, 1, 10);this.pages['shopping'].page = 1; window.history.pushState(null, null, '/' + pages_info.plats_domian.domain + '/wemall'); break;
