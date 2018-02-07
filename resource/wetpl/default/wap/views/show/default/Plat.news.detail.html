@@ -23,9 +23,9 @@
         </div>
     </div>
     <div id="read-art" v-html="news_detail.content"></div>
-    <div id="footer_bottom">
-        <div class="read-org" style="">
-            <a :href="news_detail.source_url">阅读原文</a>
+    <div id="footer_bottom" style="display: none;">
+        <div class="read-org" style="" v-if="news_detail.source_url">
+            <a :href="news_detail.source_url | href">阅读原文</a>
         </div>
         <div class="read-count">阅读 <span>{{news_detail.views}}</span></div>
         <div class="read-like" @click="zan()">
