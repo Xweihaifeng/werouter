@@ -36,6 +36,9 @@
             display: block;
             margin: 0 auto;
         }
+        .layui-layer>.layui-layer-content{
+            height: auto!important;
+        }
     </style>
 </head>
 <body>
@@ -222,7 +225,8 @@
                             if(res.data.state==2){
                                 this.state=2;
                                 console.log(this.state)
-                                layer.alert("订单已支付，勿重复提交", {time: 3000});
+                                layer.msg("订单已支付，勿重复提交", {time: 1500});
+                                // layer.alert("订单已支付，勿重复提交", {time: 3000});
                                 $("body,html").css({background: "url('/common/img/bg.gif')"})
                                 this.artList(this.user.weid)
                                 return;
@@ -388,7 +392,7 @@
                 var closeticket = layer.open({
                     skin: 'winning-class',
                     type: 1,
-                    area: ['530px'],
+                    area: ['371px'],
                     title: 0,
                     closeBtn: 0,
                     shadeClose: true,
@@ -503,7 +507,7 @@
                 });
             },
             // 用户活动
-           artList(user_id) {
+            artList(user_id) {
                 console.log("777777",user_id)
                 var self=this;
                 var sendData = {
