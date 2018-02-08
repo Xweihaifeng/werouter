@@ -2,8 +2,6 @@ var luo_response = '';
 
 function getResponse(resp) {
     luo_response = resp;
-    alert(luo_response)
-    // console.log(resp)
 }
 
 // 临时放到这里
