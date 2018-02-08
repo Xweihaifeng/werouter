@@ -18,7 +18,7 @@
                     </ul>
                     <div class="act-hot"><span>热门</span></div>
                 </div>
-                <a :href="'/' + item.domain + '/activitydetail/' + JSON.parse(item.other).weid | href">
+                <a :href="'/' + item.domain + '/activity/' + JSON.parse(item.other).weid | href">
                     <div class="act-content">
                         <div class="act-cover"><img class="lazy" :src="JSON.parse(item.other).cover | img_src(110, 69, 1)" width="110" height="69" /></div>
                         <div class="act-cont">
