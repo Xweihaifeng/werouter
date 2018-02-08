@@ -3718,10 +3718,17 @@
 }
 
 .activity-main .woyaobaoming .z-img {
-    width: 460px;
-    padding-left: 15px;
+    width: 450px;
+    margin-left: 15px;
+    overflow: hidden;
+    cursor: pointer;
 }
-
+.z-img>img{
+    transition: all ease 1s;
+}
+.activity-main .woyaobaoming .z-img:hover img{
+    transform: scale(1.2);
+}
 .activity-main .woyaobaoming .main-msg {
     width: 660px;
     margin-left: 25px;

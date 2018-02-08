@@ -14,10 +14,15 @@ $(function(){
 
     // 光标离开事件
     $(document).on('focus', '#phone', function() {
-        console.log($('.layui-layer').height());
-        $('.sign_code').css('display', 'block');
-        $('.sign_yz').css('display', 'block');
-        $('.signBox .sign_section').css('height', '354px');
+        if(docCookies.getItem("weid") != null && docCookies.getItem("token") != null){
+            return;
+        }else{
+            console.log($('.layui-layer').height());
+            $('.sign_code').css('display', 'block');
+            $('.sign_yz').css('display', 'block');
+            $('.signBox .sign_section').css('height', '354px');
+        }
+
     });
     $(document).on('focus', '#username', function() {
         $('.sign_code').css('display', 'none');
