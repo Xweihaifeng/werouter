@@ -976,25 +976,46 @@
                 var input = $("#"+file_name);
                 var formData = new FormData();
                 formData.append("file", input[0].firstChild.files[0]);
+                formData.append("prefix", "plat/member/");
 
-                ajax.post('file/uploadfile', formData).then((res)=>{
-                    if(res.code == 200) {
-                        var result = res.data;
-                        if(name === 'auth') {
-                            self.member.auth[file_name] = result.key;
-                            console.log(1, file_name, self.member, self.member.auth[file_name]);
-                        } else if(name === 'cert') {
-                            self.member.cert[file_name] = result.key;
-                            console.log(2, file_name, self.member, self.member.cert[file_name]);
-                        } else if(name === 'inst'){
-                            self.member.inst[file_name] = result.key;
-                            console.log(3, file_name, self.member, self.member.inst[file_name]);
-                        } else if(name === 'apply') {
+                if(name === 'apply') {
+                    ajax.post('file/uploadWordfile', formData).then((res)=>{
+                        if(res.code == 200) {
+                            layer.msg('上传成功！', { time: 2000 });
+                            var result = res.data;
                             self.member.apply[file_name] = result.key;
                             console.log(4, file_name, self.member, self.member.apply[file_name]);
+                        } else {
+                            layer.msg(res.message + '<br>请上传已完善的会员申请书模板文件！<br>（支持 .doc/.docx 格式）', { time: 5000 });
+                            return false;
                         }
-                    }
-                })
+                    })
+                } else {
+                    ajax.post('file/uploadfile', formData).then((res)=>{
+                        if(res.code == 200) {
+                            var result = res.data;
+                            if(name === 'auth') {
+                                self.member.auth[file_name] = result.key;
+                                console.log(1, file_name, self.member, self.member.auth[file_name]);
+                            }
+
+                            else if(name === 'cert') {
+                                self.member.cert[file_name] = result.key;
+                                console.log(2, file_name, self.member, self.member.cert[file_name]);
+                            }
+
+                            else if(name === 'inst'){
+                                self.member.inst[file_name] = result.key;
+                                console.log(3, file_name, self.member, self.member.inst[file_name]);
+                            }
+
+                            // else if(name === 'apply') {
+                            //     self.member.apply[file_name] = result.key;
+                            //     console.log(4, file_name, self.member, self.member.apply[file_name]);
+                            // }
+                        }
+                    })
+                }
             },
             suffix(name) {
                 var filename = name;  
