@@ -344,12 +344,16 @@
         mounted: function() {
 
             this.$nextTick(()=>{
+
+                // 增加浏览量
+                this.add_view(this.id_domain)
                 // 活动信息
                 this.active_detail_show(this.id_domain);
                 console.log(pages_info.plats_domian.weid)
-                this.active_guest_num(pages_info.plats_domian.plat_user_id)
+                this.active_guest_num(pages_info.plats_domian.plat_user_id);
                 console.log(88888888,docCookies.getItem("weid"));
-                console.log("dddddd",ACTIVITY_ENROLL_STORE)
+                console.log("dddddd",ACTIVITY_ENROLL_STORE);
+
             });
 
         },
@@ -506,12 +510,17 @@
                         console.log(data);
                         if (data.code == 200) {
                             self.like_state=true;
+                            layui.use('layer', function() {
+                                var layer = layui.layer;
+                                layer.msg("已收藏", {time: 1500});
+                            })
                             $(".collect-btn-click").css({
                                 "background": '#d4d4d4',
                                 "cursor": 'default'
                             });
                             $(".collect-btn-click").text("已收藏");
                             $(".collect-btn-click").attr("id", data.data);
+
                         }
                     },
                     error: function(xhr) {
@@ -530,6 +539,10 @@
                     success: function(data) {
                         self.like_state=false;
                         if (data.code == 200) {
+                            layui.use('layer', function() {
+                                var layer = layui.layer;
+                                layer.msg("已取消收藏", {time: 1500});
+                            })
                             $(".collect-btn-click").css({
                                 "background": '#80ccf4',
                                 "cursor": 'pointer'
@@ -591,16 +604,22 @@
 
                 var datauser = '';
                 var realname = '';
+                var position_user = '';         //职位
+                var company_user = '';           //公司
                 var disa = '';
                 if (docCookies.getItem("weid") != null && docCookies.getItem("token") != null) {
                     datauser = plats_user_info.phone;
                     realname = plats_user_info.real_name;
+                    position_user = plats_user_info.position;
+                    company_user = plats_user_info.company;
                     console.log(datauser)
                     console.log(realname)
                     disa = 'readonly="readonly"';
                 } else {
                     datauser = '请输入手机号码';
                     realname = '请输入姓名';
+                    position_user = '请填写您的所在职位';
+                    company_user = '请填写您的所在公司';
                     disa = '';
                 }
 
@@ -681,12 +700,12 @@
                         '</div>' +
                         '<div class="sign_zw sign_input" >' +
                         '<div class="text">' +
-                        '<input id="zhiw" type="text" placeholder="请填写您的所在职位">' +
+                        '<input id="zhiw" type="text" placeholder=" '+position_user+' " style="background: #ffffff">' +
                         '</div>' +
                         '</div>' +
                         '<div class="sign_com sign_input">' +
                         '<div class="text">' +
-                        '<input id="gongsi" type="text" placeholder="请填写您的所在公司">' +
+                        '<input id="gongsi" type="text" placeholder=" '+company_user+' " style="background: #ffffff">' +
                         '</div>' +
                         '</div>' +
                         '</div>' +
@@ -831,6 +850,8 @@
                     if(docCookies.getItem("weid") != null && docCookies.getItem("token") != null){
                         $('#phone').val(datauser);
                         $('#username').val(realname);
+                        $('#zhiw').val(position_user);
+                        $('#gongsi').val(company_user);
                     }
 
                 });
@@ -948,8 +969,9 @@
                                     })
                                     $("#avatar").attr('src', set_img(data.data.avatar, '/common/img/new/icon01.png', 29, 27));
                                 }, 300);
-
                                 $(".sign_code,.sign_yz").css("display", "none");
+                                $("#username").attr("readonly","readonly")
+                                $("#phone").attr("readonly","readonly")
                             } else {
                                 lock = false;
                                 clearInterval(count);
@@ -1125,6 +1147,11 @@
                                         var layer = layui.layer;
                                         layer.msg(data.message, {time: 1500});
                                     })
+
+                                    setTimeout(function(){
+                                        window.location.reload();
+                                    }, 2000);
+
                                     //location.reload();
                                     // Ticket(localStorage.getItem(weid));
                                 }
@@ -1249,6 +1276,14 @@
                             this.user_active_num=res.data.count;
                             this.user_guest_num=res.data.countmember;
                         }
+                })
+            },
+            // 增加浏览量
+            add_view(id){
+                ajax.get(ACTIVITY_ADDVIEW + '/' + id).then((res)=>{
+                    if(res.code == 200) {
+
+                    }
                 })
             }
         },

@@ -100,7 +100,7 @@
         var artType = {list: [], flag: 0, type: 'articles', router: []};
         $.ajax({
             url: ARTICLES_CATES + '?domain=' + pages_info.plats_domian.domain,
-            async: false,
+            // async: false,
             success: function(data) {
                 if (data.data != '' && data.data != undefined && data.data != null) {
                     artType.list = data.data.slice(0, 9);
@@ -114,7 +114,7 @@
         var actType = {list: [], flag: 0, type: 'activity', router: []};
         $.ajax({
             url: apiUrl + 'activity/cate/lists',
-            async: false,
+            // async: false,
             success: function(data) {                
                 if (data.data.list != '' && data.data.list != undefined && data.data.list != null) {
                     actType.list = [{weid: '', title: '全部', e_name: ''}, ...data.data.list.slice(0, 9)];                    

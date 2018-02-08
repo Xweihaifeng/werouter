@@ -157,6 +157,40 @@
                         <form-item label="限制条件" prop="money" v-show="formItemMember.conditions == 2 || formItemMember.conditions == 3">
                             <i-input v-model="formItemMember.money" placeholder="请输入升级金额"></i-input>
                         </form-item>
+                        <form-item label="会员卡样式" prop="card_style">
+                            <i-select v-model="formItemMember.card_style"  @on-change="selectCardStyle">
+                                <i-option value='1'>1</i-option>
+                                <i-option value='2'>2</i-option>
+                                <i-option value='3'>3</i-option>
+                                <i-option value='4'>4</i-option>
+                                <i-option value='5'>5</i-option>
+                                <i-option value='6'>6</i-option>
+                                <i-option value='7'>7</i-option>
+                                <i-option value='8'>8</i-option>
+                                <i-option value='9'>9</i-option>
+                                <i-option value='10'>10</i-option>
+                                <i-option value='11'>11</i-option>
+                                <i-option value='12'>12</i-option>
+                                <i-option value='13'>13</i-option>
+                                <i-option value='14'>14</i-option>
+                                <i-option value='15'>15</i-option>
+                                <i-option value='16'>16</i-option>
+                                <i-option value='17'>17</i-option>
+                                <i-option value='18'>18</i-option>
+                                <i-option value='19'>19</i-option>
+                                <i-option value='20'>20</i-option>
+                                <i-option value='21'>21</i-option>
+                                <i-option value='22'>22</i-option>
+                                <i-option value='23'>23</i-option>
+                            </i-select>
+                        </form-item>
+                        <form-item label="样式图">
+                            <img :src="formItemMemberCardImge" style="width: 400px;">
+                        </form-item>
+                        <form-item label="字体颜色景色" prop="card_font_colour">
+                            <color-picker v-model="formItemMember.card_font_colour" recommend />
+                        </form-item>
+
                         <form-item>
                             <i-button type="primary" @click="handleLevelsmit('formItemMember')">保存</i-button>
                             <i-button type="ghost" style="margin-left: 8px">取消</i-button>
@@ -430,12 +464,15 @@
             uploadUrl:apiUrl+'file/uploadfile', //七牛上传地址
             uploadList: [], //上传列表
             menuList: ["概览", "发布会员卡", "会员卡管理", "发布代金券", "管理代金券"], //控制导航
+            formItemMemberCardImge:'/common/img/card/1.png',
             formItemMember: {
                 weid:'',
                 levels_name: '',
                 conditions: '',
                 discount:'',
                 money: '0.00',
+                card_style:'1',
+                card_font_colour:'#000000',
             },
             formItemMemberValidate: {
                 levels_name: [
@@ -446,7 +483,10 @@
                 ],
                 discount:[
                     {required: true, message: '会员卡折扣不能为空', trigger: 'blur'}
-                ]
+                ],
+                card_style:[
+                    {required: true, message: '会员卡样式类型不能为空', trigger: 'blur'},
+                ],
             },
             columnsMemberLevel: [
                 {
@@ -1017,12 +1057,14 @@
                         this.MemberLevelEdit=false;
                     }else{
                         //清空数据信息为重新进入页面
-                        this.formItemMember={
+                        this.formItemMember= {
                             weid:'',
                             levels_name: '',
                             conditions: '',
                             discount:'',
                             money: '0.00',
+                            card_style:'1',
+                            card_font_colour:'#000000',
                         };
                     }
                 }
@@ -1220,11 +1262,13 @@
                     var self=this;
                     ajax.post('member/level/detail', {id:index}).then((res)=>{
                         if(res.code==200){
-                            var data={weid:res.data.weid,levels_name:res.data.levels_name,conditions:res.data.conditions,discount:res.data.discount,money:res.data.money};
+                            var data={weid:res.data.weid,levels_name:res.data.levels_name,conditions:res.data.conditions,discount:res.data.discount,money:res.data.money,card_style:res.data.card_style,card_font_colour:res.data.card_font_colour};
                             this.formItemMember=data;
                             //类型转换为字符型
                             this.formItemMember.conditions=this.formItemMember.conditions.toString();
                             this.formItemMember.discount=this.formItemMember.discount.toString();
+                            this.formItemMember.card_style=this.formItemMember.card_style.toString();
+                            this.formItemMemberCardImge='/common/img/card/'+data.card_style+'.png';
                             this.currentState=1;
                             //设置编辑标志位
                             this.MemberLevelEdit=true;
@@ -1602,6 +1646,9 @@
             },
             CouponRecordListPage(index){
                 this.CouponRecordListInit(this.CouponRecordList.CouponRecordListPageSize,index);
+            },
+            selectCardStyle(value){
+                this.formItemMemberCardImge='/common/img/card/'+value+'.png';
             }
         }
     })

@@ -43,7 +43,9 @@
                 <a v-for="e in proj" :href="e.domain + '/activity/' + e.weid | href" target="_blank">
                     <li>
                         <div :class="status[e.onStatus]"></div>
-                        <img :src="setImg(e.cover, '/common/img/p04.png', 285, 160)" alt="" width="285" height="160"/>
+                        <div class="pro_img">
+                            <img :src="setImg(e.cover, '/common/img/p04.png', 285, 160)" alt="" width="285" height="160"/>
+                        </div>
                         <div class="act">
                             <p>{{e.title | cut(30)}}</p>
                             <p>{{e.begain_time + ' ' + e.begain_week + ' 开始'}}</p>

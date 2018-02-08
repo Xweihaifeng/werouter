@@ -111,18 +111,28 @@ ul{
     height:220px;
     padding: 30px 0;
     border-bottom: 1px solid #D9D9D9;
+    position: relative;
 }
 .cont-list>li>a{
-    width: auto;
-    height: auto;
+    width: 260px;
+    height: 160px;
     display: block;
     float: left;
     margin-right: 24px;
+    overflow: hidden;
 }
 .cont-list>li>a>img{
     width: 260px;
     height: 160px;
     display: block;
+    transition: all ease 1s;
+}
+.cont-list>li:hover .abstract>a>h3{
+    color: #4CAAED;
+}
+
+.cont-list>li:hover a>img{
+    transform: scale(1.2);
 }
 .abstract{
     width: 640px;

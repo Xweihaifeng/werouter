@@ -11,7 +11,7 @@
                    </a>
                </li>
                <li><a :href="'/' + domain + '/article'"><img src="/common/img/new/icon02.png" alt=""/></a></li>
-               <li><a href="javascript:void(0);"><img src="/common/img/new/icon03.png" alt=""/></a></li>
+               <!-- <li><a href="javascript:void(0);"><img src="/common/img/new/icon03.png" alt=""/></a></li> -->
                <li><a :href="'/' + domain + '/activity'"><img src="/common/img/new/icon04.png" alt=""/></a></li>
                <li><a :href="'/' + domain + '/wemall'"><img src="/common/img/new/icon05.png" alt=""/></a></li>
                <li><a :href="'/' + domain + '/quan'"><img src="/common/img/new/icon06.png" alt=""/></a></li>
@@ -137,7 +137,7 @@
                     <li class="fc"><p class="line">{{peoples_title.title}}</p></li>
                     <li class="fc"><a :href="peoples_title.url">更多>></a></li>
                 </ul>
-                <div class="fleft huizhang">
+                <!--<div class="fleft huizhang">
                     <a :href="leader.url">
                         <img :src="set_img(leader.image, leader.image, 186, 220)">
                     </a>
@@ -145,8 +145,8 @@
                         <span>{{leader.title}}</span>
                         <p style="height:20px;">{{leader.description}}</p>
                     </div>
-                </div>
-                <div id="marquee1" class="marqueeleft fleft" style="width:960px;">
+                </div>-->
+                <div id="marquee1" class="marqueeleft fleft" style="width:1170px;">
                     <div style="width:18000px;">
                         <ul id="marquee1_1">
                             <li v-for="u in users">
@@ -396,7 +396,7 @@
                 if (resp.users != '' && resp.users != undefined) {
                     this.users = resp.users;
                 } else {
-                    //this.users = [{"weid":"71f96b93-da75-11e7-85d7-fa5985d0eaa1","avatar":"/common/img/new/m03.png","real_name":"刘阿津","position":"秦商联合会会长、第十届陕西省政协常委","nickname":"刘阿津"},{"weid":"9a20c1b1-da77-11e7-85d7-fa5985d0eaa1","avatar":"/common/img/new/m04.png","real_name":"吴一坚","position":"陕西省人民政府决策咨询委员会专家委员","nickname":"吴一坚"},{"weid":"5819432b-da79-11e7-85d7-fa5985d0eaa1","avatar":"/common/img/new/m05.png","real_name":"孙俊良","position":"陕西省总商会第十一届副会长","nickname":"孙俊良"},{"weid":"add8b61e-da7a-11e7-85d7-fa5985d0eaa1","avatar":"/common/img/new/m06.png","real_name":"郭家学","position":"秦商联合会执行副会长","nickname":"郭家学"},{"weid":"af2ef256-da7b-11e7-85d7-fa5985d0eaa1","avatar":"/common/img/new/m07.png","real_name":"李黑记","position":"东岭集团党委书记、董事长兼总经理","nickname":"李黑记"}];
+                    /*this.users = [{"weid":"71f96b93-da75-11e7-85d7-fa5985d0eaa1","avatar":"/common/img/new/m03.png","real_name":"刘阿津","position":"秦商联合会会长、第十届陕西省政协常委","nickname":"刘阿津"},{"weid":"9a20c1b1-da77-11e7-85d7-fa5985d0eaa1","avatar":"/common/img/new/m04.png","real_name":"吴一坚","position":"陕西省人民政府决策咨询委员会专家委员","nickname":"吴一坚"},{"weid":"5819432b-da79-11e7-85d7-fa5985d0eaa1","avatar":"/common/img/new/m05.png","real_name":"孙俊良","position":"陕西省总商会第十一届副会长","nickname":"孙俊良"},{"weid":"add8b61e-da7a-11e7-85d7-fa5985d0eaa1","avatar":"/common/img/new/m06.png","real_name":"郭家学","position":"秦商联合会执行副会长","nickname":"郭家学"},{"weid":"af2ef256-da7b-11e7-85d7-fa5985d0eaa1","avatar":"/common/img/new/m07.png","real_name":"李黑记","position":"东岭集团党委书记、董事长兼总经理","nickname":"李黑记"}];*/
                     this.users = [{"weid":"71f96b93-da75-11e7-85d7-fa5985d0eaa1","avatar":"tx/liuajin.png","real_name":"刘阿津","position":"秦商联合会会长、第十届陕西省政协常委","nickname":"刘阿津"},{"weid":"9a20c1b1-da77-11e7-85d7-fa5985d0eaa1","avatar":"tx/wuyijian.png","real_name":"吴一坚","position":"陕西省人民政府决策咨询委员会专家委员","nickname":"吴一坚"},{"weid":"5819432b-da79-11e7-85d7-fa5985d0eaa1","avatar":"tx/sunjunliang.png","real_name":"孙俊良","position":"陕西省总商会第十一届副会长","nickname":"孙俊良"},{"weid":"add8b61e-da7a-11e7-85d7-fa5985d0eaa1","avatar":"tx/guojiaxue.png","real_name":"郭家学","position":"秦商联合会执行副会长","nickname":"郭家学"},{"weid":"af2ef256-da7b-11e7-85d7-fa5985d0eaa1","avatar":"tx/liheiji.png","real_name":"李黑记","position":"东岭集团党委书记、董事长兼总经理","nickname":"李黑记"},{"weid":"73946f7e-da7d-11e7-85d7-fa5985d0eaa1","avatar":"tx/zhaotao.png","real_name":"赵涛","position":"秦商联合会执行副会长","nickname":"赵涛"},{"weid":"c1b7a537-da7e-11e7-85d7-fa5985d0eaa1","avatar":"tx/wangxi.png","real_name":"王茜","position":"秦商联合会执行副会长","nickname":"王茜"},{"weid":"7715b7c3-da7f-11e7-85d7-fa5985d0eaa1","avatar":"tx/zoujianhan.png","real_name":"邹剑寒","position":"陕西商会会长、秦商联合会副会长","nickname":"邹剑寒"},{"weid":"a3853ca0-da80-11e7-85d7-fa5985d0eaa1","avatar":"tx/cuironghua.png","real_name":"崔荣华","position":"秦商联合会执行副会长","nickname":"崔荣华"},{"weid":"af4d294c-da81-11e7-85d7-fa5985d0eaa1","avatar":"tx/hejianliang.png","real_name":"何建梁","position":"秦商联合会执行副会长","nickname":"何建梁"},{"weid":"aa503bd4-da85-11e7-85d7-fa5985d0eaa1","avatar":"tx/chenhua.png","real_name":"陈华","position":"秦商联合会执行副会长","nickname":"陈华"},{"weid":"97eb100c-daef-11e7-85d7-fa5985d0eaa1","avatar":"tx/songyuqing.png","real_name":"宋玉庆","position":"秦商联合会执行副会长","nickname":"宋玉庆"},{"weid":"5ea2a6bb-daf2-11e7-85d7-fa5985d0eaa1","avatar":"tx/lijihe.png","real_name":"李继和","position":"秦商联合会执行副会长","nickname":"李继和"},{"weid":"37c78719-daf3-11e7-85d7-fa5985d0eaa1","avatar":"tx/dongxiaojun.png","real_name":"董小军","position":"秦商联合会执行副会长","nickname":"董小军"},{"weid":"defd8ec8-daf4-11e7-85d7-fa5985d0eaa1","avatar":"tx/chengyan.png","real_name":"程延","position":"秦商联合会执行副会长","nickname":"程延"},{"weid":"9d4885f6-daf5-11e7-85d7-fa5985d0eaa1","avatar":"tx/gaohongpeng.png","real_name":"高鸿鹏","position":"秦商联合会执行副会长","nickname":"高鸿鹏"},{"weid":"6bde1879-daf6-11e7-85d7-fa5985d0eaa1","avatar":"tx/jinxinkang.png","real_name":"金新康","position":"秦商联合会执行副会长","nickname":"金新康"},{"weid":"3e8986f2-daf7-11e7-85d7-fa5985d0eaa1","avatar":"tx/hezhifang.png","real_name":"何志方","position":"秦商联合会副会长","nickname":"何志方"},{"weid":"c1db8669-daf8-11e7-85d7-fa5985d0eaa1","avatar":"tx/sunxi.png","real_name":"孙茵","position":"秦商联合会副会长","nickname":"孙茵"},{"weid":"81b25332-de22-11e7-85d7-fa5985d0eaa1","avatar":"tx/lvjianzhong.png","real_name":"吕建中","position":"秦商联合会执行副会长","nickname":"吕建中"}];
                 }
             });

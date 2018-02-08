@@ -14,7 +14,7 @@
                     <li role="presentation" v-for="(e, i) in actType.list" :id="'act' + i" @click="tab(e, i, 'act')" :class="{'active': i == actType.flag}"><a href="javascript:void(0);">{{e.title}}</a></li>
                 </ul>
                 <ul class="nav nav-tabs" v-if="type == 'articles'">
-                    <li role="presentation" v-for="(e, i) in artType.list" :id="'art' + i" @click="tab(e, i, 'art')" :class="{'active': i == artType.flag}"><a href="javascript:void(0);">{{e.name}}</a></li>
+                    <li role="presentation" v-for="(e, i) in artType.list" :id="'art' + i" @click="tab(e, i, 'art')" :class="{'active': i == artType.flag}" v-show="e.weid != -2"><a href="javascript:void(0);">{{e.name}}</a></li>
                 </ul>
                 <div class="none" v-if="none">
                     <img src="/common/img/no_con_default.png" alt=""/>
@@ -260,7 +260,6 @@
                     </ul>
                 </li>
             </ul>
-        </div>
-        
+        </div>        
     </div>
 </div>
