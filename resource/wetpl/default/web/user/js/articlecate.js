@@ -96,7 +96,7 @@ $(document).ready(function(){
                 '<td><a class="edit" data-toggle="modal"  data-target=".bs-example-modal-sm">编辑</a> <a class="del">删除</a></td>'+
 
             '</tr>';*/
-        if(data.weid == -1){
+        if(data.weid == -1 || data.weid == -2){
             return;
         }
         var listhtml='<li class="clearfloat category-item" data-id="'+data.weid+'">'+
