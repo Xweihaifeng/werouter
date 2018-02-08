@@ -1147,7 +1147,11 @@
                                         var layer = layui.layer;
                                         layer.msg(data.message, {time: 1500});
                                     })
-                                    window.location.reload();
+
+                                    setTimeout(function(){
+                                        window.location.reload();
+                                    }, 2000);
+
                                     //location.reload();
                                     // Ticket(localStorage.getItem(weid));
                                 }
