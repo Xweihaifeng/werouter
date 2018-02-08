@@ -83,10 +83,10 @@ class export extends controller
         foreach ($results as $key => $value) {
             $output = array();
             $output[] = $value['real_name'];
-            $output[] = $value['phone'];
+            $output[] = $value['phone'] . '	';
             $output[] = $value['company'];
             $output[] = $value['position'];
-			$output[] = date('Y-m-d H:i:s', $value['created_at']);
+			$output[] = date('Y-m-d H:i:s', $value['created_at']) . '	';
 			foreach($enrollTickets as $k => $v) {
 				if ($k === $value['weid']) {
 					$__tmp = [];
