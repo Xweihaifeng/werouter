@@ -510,12 +510,17 @@
                         console.log(data);
                         if (data.code == 200) {
                             self.like_state=true;
+                            layui.use('layer', function() {
+                                var layer = layui.layer;
+                                layer.msg("已收藏", {time: 1500});
+                            })
                             $(".collect-btn-click").css({
                                 "background": '#d4d4d4',
                                 "cursor": 'default'
                             });
                             $(".collect-btn-click").text("已收藏");
                             $(".collect-btn-click").attr("id", data.data);
+
                         }
                     },
                     error: function(xhr) {
@@ -534,6 +539,10 @@
                     success: function(data) {
                         self.like_state=false;
                         if (data.code == 200) {
+                            layui.use('layer', function() {
+                                var layer = layui.layer;
+                                layer.msg("已取消收藏", {time: 1500});
+                            })
                             $(".collect-btn-click").css({
                                 "background": '#80ccf4',
                                 "cursor": 'pointer'
