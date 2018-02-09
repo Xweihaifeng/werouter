@@ -143,7 +143,6 @@ $(document).ready(function() {
         });
     }
     var articleTemplate = function(data) {
-        console.log(999999999)
         var act_title = "";
         if (data.title != "" && data.title != null && data.title != undefined) {
 
@@ -168,7 +167,7 @@ $(document).ready(function() {
             `<div class="show-art" style="margin:0;border-top:1px solid #e6e6e6;display:block;width: 479px;height: auto;border-right:0px solid #fff;border-bottom:0px solid #fff;border-left:0px solid #fff;" id=` + data.activity_id + `>       
             <div class="myself" style="width: 100%;height: 24px;margin-top: 24px;position: relative;">
                 <div class="my_con" style="width: 70%;height: 24px;">
-                     <div class="whoimg" style="width: 24px;height: 24px;border-radius: 50%;background: blue;float: left;"><img src=" ` + 'http://images.wezchina.com/' + data.avatar + ` " alt="" style="width:24px;height: 24px;border-radius: 50%;display: block"></div>
+                     <div class="whoimg" style="width: 24px;height: 24px;border-radius: 50%;background: blue;float: left;"><a href="` + '/' + data.domain + ` "><img src=" ` + 'http://images.wezchina.com/' + data.avatar + ` " alt="" style="width:24px;height: 24px;border-radius: 50%;display: block"></a></div>
                      <span style="font-size: 14px;color: #666;float: left;line-height: 24px;margin-left: 6px;">` + data.real_name + `</span>
                 </div>
       
@@ -177,7 +176,7 @@ $(document).ready(function() {
                 </div>
             </div>
             <div class="time" style="width:460px;height: 20px;line-height: 20px;font-size: 14px;margin-top: 10px;color: #9c9c9c;">
-                  <span>时间：` + data.begain_weekday + ` &nbsp; ` + data.begain_time + '~' + data.end_time +`</span>
+                  <span>时间:<span style="padding-left: 5px"> ` + data.begain_weekday + `</span> &nbsp; ` + data.begain_time + '~' + data.end_time +`</span>
             </div>
             <div class="show-pic" style="width: 460px;height: 260px;margin: 15px 0 0 0;"></div>
             <div style="height: 33px;line-height: 33px!important;padding: 0;" class="show-title"  id=` + data.domain + `>
@@ -217,7 +216,6 @@ $(document).ready(function() {
                     'background-size': '100%'
                 }
             }
-            console.log(44444444)
             $(".cons").append(articleTemplate(x));
             $("#" + x.activity_id + " .show-pic").css(coverPicCss);
             $("#" + x.activity_id).click(function(e) {
@@ -265,9 +263,6 @@ $(document).ready(function() {
     }
 
     var returnPart = function(data, start, end) {
-        console.log(777777,data);
-        console.log(88888,start);
-        console.log(999999,end);
         return data.slice(start, start + end);
     }
 
@@ -276,18 +271,16 @@ $(document).ready(function() {
     var loadMore = function(data) {
         perLoad = 2;
         var res = returnPart(data, start, perLoad);
-        console.log(res);
         start += perLoad;
-        console.log(start);
         genArticles(res);
         artsList.map(x => {
             $("#" + x).fadeIn(700);
         });
         $(".more").remove();
         if (res == "") {
-            $("#right").append('<div class="more">-- 到底了，快去看看你感兴趣的活动吧！ --</div>');
+            $("#right").append('<div class="more" style="font-size: 12px;color: #9c9c9c;">-- 到底了，快去看看你感兴趣的活动吧！ --</div>');
         } else {
-            $("#right").append('<div class="more">-- 点击加载更多 --</div>');
+            $("#right").append('<div class="more" style="font-size: 12px;color: #9c9c9c;">-- 点击加载更多 --</div>');
         }
         $(".more").click(function() {
             loadMore(data);
@@ -296,46 +289,10 @@ $(document).ready(function() {
 
     var artList = function() {
         var page=1;
-        // var limit = 10;
-        // var sendData = {
-        //     user_id: user_id,
-        //     limit: limit,
-        //     page: page
-        // }
         var sendData = {
-            // limit: limit,
             page: page,
         }
-        // $.ajax({
-        //     // url: ACTIVITY_LIST,
-        //     url: ACTIVITY_ENROLL_LISTS + '?status=1',
-        //     type: 'post',
-        //     data: sendData,
-        //     success: function(data) {
-        //         console.log(data);
-        //         if (data.code == 200) {
-        //             var arts = data.data.list;
-        //             var res = returnPart(arts, start, perLoad);
-        //             start += perLoad;
-        //             genArticles(res);
-        //             artsList.map(x => {
-        //                 $("#" + x).fadeIn(700);
-        //             });
-        //             if (res == "") {
-        //                 $("#right").append('<div class="none">-- 暂时没有支持任何活动 --</div>');
-        //             } else {
-        //                 $("#right").append('<div class="more">-- 点击加载更多 --</div>');
-        //             }
-        //
-        //             $(".more").click(function() {
-        //                 loadMore(arts);
-        //             })
-        //         }
-        //     },
-        //     error: function(xhr) {
-        //         console.log(xhr);
-        //     }
-        // })
+
 
         $.ajax({
             url: "/api/activity/enroll/my_enrolls",
@@ -360,21 +317,27 @@ $(document).ready(function() {
                     } else {
                         $("#right").append('<div class="more">-- 滑动加载更多 --</div>');
                     }
-
-                    // $(".more").click(function() {
-                    //     loadMore(arts);
-                    // })
                     // 下拉加载更多
                     $(window).scroll(function(){
                         if($(document).scrollTop()>=$(document).height()-$(window).height()){
-                            // console.log("qqqqqqqqqqqqqq",page);
+                            $(".more").html('<div class="load" style="width: 100px;height: 64px;position: fixed;bottom:10px;left: 50%;margin-left:-166px;background: url(https://images.wezchina.com/5-121204193R0.gif) no-repeat scroll 5px 12px;"></div>');
+                            setTimeout(function(){
 
-                            loadMore(arts);
+                                if (res == "") {
+                                    $(".more").html('-- 到底了，快去看看你感兴趣的活动吧！ --');
+                                } else {
+                                    $(".more").html('-- 滑动加载更多 --');
+                                }
+                                loadMore(arts);
+                            },500)
 
                         }
                     })
 
                   //   渲染内容结束
+
+
+
                 }
             },
             error: function(xhr) {
