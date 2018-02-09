@@ -321,7 +321,7 @@ $(document).ready(function() {
             `<td class="user">
             <div class="user-avatar"><img src="` + ApiMaterPlatQiniuDomain + data.avatar + `" width="45"></div>` +
             `<div class="user-desc">
-                <div class="username">` + data.name + `</div>` +
+                <div class="username">` + data.real_name + `</div>` +
             `<div class="company"><span>` + data.company + `</span><span>` + data.poistion + `</span></div>
             </div>` +
             '</td>' +
