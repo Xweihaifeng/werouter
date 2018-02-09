@@ -143,6 +143,7 @@ $(document).ready(function() {
         });
     }
     var articleTemplate = function(data) {
+        console.log(999999999)
         var act_title = "";
         if (data.title != "" && data.title != null && data.title != undefined) {
 
@@ -164,17 +165,21 @@ $(document).ready(function() {
         }
 
         var template =
-            `<div class="show-art" style="margin:0;border-top:1px solid #e6e6e6;display:block;width: 479px;height: 330px;border-right:0px solid #fff;border-bottom:0px solid #fff;border-left:0px solid #fff;" id=` + data.activity_id + `>       
-            <div class="myself" style="width: 100%;height: 24px;margin-top: 24px;">
-                <div class="my_con" style="width: 70%;height: 24px;float: left;">
-                     <div class="whoimg" style="width: 24px;height: 24px;border-radius: 50%;background: blue;float: left;"><img src="" alt=""></div>
-                     <span style="font-size: 14px;color: #666;float: left;line-height: 24px;margin-left: 6px;">` + data.name + `</span>
+            `<div class="show-art" style="margin:0;border-top:1px solid #e6e6e6;display:block;width: 479px;height: auto;border-right:0px solid #fff;border-bottom:0px solid #fff;border-left:0px solid #fff;" id=` + data.activity_id + `>       
+            <div class="myself" style="width: 100%;height: 24px;margin-top: 24px;position: relative;">
+                <div class="my_con" style="width: 70%;height: 24px;">
+                     <div class="whoimg" style="width: 24px;height: 24px;border-radius: 50%;background: blue;float: left;"><img src=" ` + 'http://images.wezchina.com/' + data.avatar + ` " alt="" style="width:24px;height: 24px;border-radius: 50%;display: block"></div>
+                     <span style="font-size: 14px;color: #666;float: left;line-height: 24px;margin-left: 6px;">` + data.real_name + `</span>
                 </div>
-                <div class="my_join" style="width: 12%;height: 24px;line-height: 24px;font-size: 13px;float: right;color: #666">
-                    <span style="float: right">` + mark + `</span>
+      
+                <div class="my_join" style="width: 12%;height: 24px;line-height: 24px;font-size: 13px;color: #666;position: absolute;top: 0;right:20px;">
+                    <span style="cursor: pointer">` + mark + `</span>
                 </div>
             </div>
-            <div class="show-pic" style="width: 460px;height: 160px;margin: 15px 0 0 0;"></div>
+            <div class="time" style="width:460px;height: 20px;line-height: 20px;font-size: 14px;margin-top: 10px;color: #9c9c9c;">
+                  <span>时间：` + data.begain_weekday + ` &nbsp; ` + data.begain_time + '~' + data.end_time +`</span>
+            </div>
+            <div class="show-pic" style="width: 460px;height: 260px;margin: 15px 0 0 0;"></div>
             <div style="height: 33px;line-height: 33px!important;padding: 0;" class="show-title"  id=` + data.domain + `>
                 <div class="at" style="height: 100%!important;font-size: 16px;color: #333;">` + data.title.substring(0, 17) + `</div>
             </div>
@@ -212,7 +217,7 @@ $(document).ready(function() {
                     'background-size': '100%'
                 }
             }
-
+            console.log(44444444)
             $(".cons").append(articleTemplate(x));
             $("#" + x.activity_id + " .show-pic").css(coverPicCss);
             $("#" + x.activity_id).click(function(e) {
@@ -260,22 +265,27 @@ $(document).ready(function() {
     }
 
     var returnPart = function(data, start, end) {
+        console.log(777777,data);
+        console.log(88888,start);
+        console.log(999999,end);
         return data.slice(start, start + end);
     }
 
     var start = 0;
-    var perLoad = 9; //默认一次加载条数
+    var perLoad = 4; //默认一次加载条数
     var loadMore = function(data) {
+        perLoad = 2;
         var res = returnPart(data, start, perLoad);
         console.log(res);
         start += perLoad;
+        console.log(start);
         genArticles(res);
         artsList.map(x => {
             $("#" + x).fadeIn(700);
         });
         $(".more").remove();
         if (res == "") {
-            $("#right").append('<div class="more">-- 已经没有了 --</div>');
+            $("#right").append('<div class="more">-- 到底了，快去看看你感兴趣的活动吧！ --</div>');
         } else {
             $("#right").append('<div class="more">-- 点击加载更多 --</div>');
         }
@@ -284,22 +294,60 @@ $(document).ready(function() {
         })
     }
 
-    var artList = function(user_id) {
-        var limit = "";
-        var page = 1;
+    var artList = function() {
+        var page=1;
+        // var limit = 10;
+        // var sendData = {
+        //     user_id: user_id,
+        //     limit: limit,
+        //     page: page
+        // }
         var sendData = {
-            user_id: user_id,
-            limit: limit,
-            page: page
+            // limit: limit,
+            page: page,
         }
+        // $.ajax({
+        //     // url: ACTIVITY_LIST,
+        //     url: ACTIVITY_ENROLL_LISTS + '?status=1',
+        //     type: 'post',
+        //     data: sendData,
+        //     success: function(data) {
+        //         console.log(data);
+        //         if (data.code == 200) {
+        //             var arts = data.data.list;
+        //             var res = returnPart(arts, start, perLoad);
+        //             start += perLoad;
+        //             genArticles(res);
+        //             artsList.map(x => {
+        //                 $("#" + x).fadeIn(700);
+        //             });
+        //             if (res == "") {
+        //                 $("#right").append('<div class="none">-- 暂时没有支持任何活动 --</div>');
+        //             } else {
+        //                 $("#right").append('<div class="more">-- 点击加载更多 --</div>');
+        //             }
+        //
+        //             $(".more").click(function() {
+        //                 loadMore(arts);
+        //             })
+        //         }
+        //     },
+        //     error: function(xhr) {
+        //         console.log(xhr);
+        //     }
+        // })
+
         $.ajax({
-            // url: ACTIVITY_LIST,
-            url: ACTIVITY_ENROLL_LISTS + '?status=1',
-            type: 'post',
+            url: "/api/activity/enroll/my_enrolls",
+            type: 'get',
             data: sendData,
+            headers: {
+                'Token': docCookies.getItem("token")
+            },
             success: function(data) {
                 console.log(data);
                 if (data.code == 200) {
+                  // 渲染内容开始
                     var arts = data.data.list;
                     var res = returnPart(arts, start, perLoad);
                     start += perLoad;
@@ -308,22 +356,35 @@ $(document).ready(function() {
                         $("#" + x).fadeIn(700);
                     });
                     if (res == "") {
-                        $("#right").append('<div class="none">-- 暂时没有支持任何活动 --</div>');
+                        $("#right").append('<div class="more">-- 到底了，快去看看你感兴趣的活动吧！ --</div>');
                     } else {
-                        $("#right").append('<div class="more">-- 点击加载更多 --</div>');
+                        $("#right").append('<div class="more">-- 滑动加载更多 --</div>');
                     }
 
-                    $(".more").click(function() {
-                        loadMore(arts);
+                    // $(".more").click(function() {
+                    //     loadMore(arts);
+                    // })
+                    // 下拉加载更多
+                    $(window).scroll(function(){
+                        if($(document).scrollTop()>=$(document).height()-$(window).height()){
+                            // console.log("qqqqqqqqqqqqqq",page);
+
+                            loadMore(arts);
+
+                        }
                     })
+
+                  //   渲染内容结束
                 }
             },
             error: function(xhr) {
                 console.log(xhr);
             }
         })
+
     }
 
     artList(docCookies.getItem("weid"));
+
 
 })
