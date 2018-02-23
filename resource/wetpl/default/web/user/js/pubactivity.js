@@ -74,7 +74,7 @@
  var ticketdel = function(obj) {
          deletedTickets.push($(obj).closest(".J_ActivityTicket").data('id'));
          if (parseInt($(obj).closest(".J_ActivityTicket").data('joined')) > 0) {
-             mess_tusi('该票已经有人购买，不能删除!');
+             notice.alert('该票已经有人购买，不能删除!');
              return;
          }
          $(obj).closest(".J_ActivityTicket").remove();
@@ -416,14 +416,14 @@
          if ($(this).attr("id") == "J_ActivityOverTime") {
              // $(idname+' option').removeAttr("selected");
              if (beginTime >= endTime) {
-                 mess_tusi("结束时间不能小于开始时间");
+                 notice.alert("结束时间不能小于开始时间");
                  $(idname + ' [value="' + beginTime + '"]').attr("selected", "selected");
 
              }
          } else if ($(this).attr("id") == "J_ActivityEntryOverTime") {
              // $('#J_ActivityEntryOverTime option').removeAttr("selected");
              if (entryTime >= beginTime) {
-                 mess_tusi("截止时间不能大于开始时间");
+                 notice.alert("截止时间不能大于开始时间");
                  $('#J_ActivityEntryOverTime [value="' + beginTime + '"]').attr("selected", "selected");
 
 
@@ -431,12 +431,12 @@
          } else if ($(this).attr("id") == "J_ActivityStartTime") {
              // $(idname+' option').removeAttr("selected");
              if (beginTime >= endTime) {
-                 mess_tusi("结束时间不能小于开始时间");
+                 notice.alert("结束时间不能小于开始时间");
                  $(idname + ' [value="' + endTime + '"]').attr("selected", "selected");
 
              }
              if (entryTime >= beginTime) {
-                 mess_tusi("截止时间不能大于开始时间");
+                 notice.alert("截止时间不能大于开始时间");
                  $('#J_ActivityEntryOverTime [value="' + entryTime + '"]').attr("selected", "selected");
 
 
@@ -450,6 +450,7 @@
 
          var cover = $("#J_ActivityPoster").val();
          var title = $("#J_ActivityTitle").val();
+         var summary = $("#J_ActivitySummary").val();
          var cate = $("#J_ActivityCate").val();
          var area_id = $("#J_ActivityCityId").val();
          var area_name = $("#J_ActivityCity").val();
@@ -471,52 +472,61 @@
          var is_open_qun = $('#is_open_qun').get(0).checked ? 2 : 1;
          var wx_qun_qrcode = $("input[name=wx_qun_qrcode]").val();
          if (!$("#J_ActivityProtocal").get(0).checked) {
-             mess_tusi("请选择阅读并同意");
+             notice.alert("请选择阅读并同意");
              return;
          }
          if (cover == '') {
-             mess_tusi('请选择封面');
+             notice.alert('请选择封面');
              return;
          }
 
          if (title == '') {
-             mess_tusi('请输入标题');
+             notice.alert('请输入标题');
              return;
          } else if (title.length < 5) {
-             mess_tusi('标题字数不可小于5个');
+             notice.alert('标题字数不可小于5个');
+             return;
+         }
+
+         if (summary == '') {
+             notice.alert('请输入活动简介');
+             return;
+         }
+         if (summary.length > 255) {
+             notice.alert('活动简介不能大于255个字符');
              return;
          }
          if (!cate) {
-             mess_tusi('请选择活动分类');
+             notice.alert('请选择活动分类');
              return;
          }
          if (!content) {
-             mess_tusi('请输入详情');
+             notice.alert('请输入详情');
              return;
          }
 
          if (area_id == '') {
-             mess_tusi('请选择城市');
+             notice.alert('请选择城市');
              return;
          }
          if (address == '') {
-             mess_tusi('请输入地址');
+             notice.alert('请输入地址');
              return;
          }
          if ($("#J_ActivityStartDate").val() == '') {
-             mess_tusi('请选择开始时间');
+             notice.alert('请选择开始时间');
              return;
          }
          if ($("#J_ActivityOverDate").val() == '') {
-             mess_tusi('请选择结束时间');
+             notice.alert('请选择结束时间');
              return;
          }
          if ($("#J_ActivityEntryOverDate").val() == '') {
-             mess_tusi('请选择截至时间');
+             notice.alert('请选择截至时间');
              return;
          }
          if (Sponsor.length < 1) {
-             mess_tusi('请输入主办方');
+             notice.alert('请输入主办方');
              return;
          }
          var btnstatus = $(this).data('status');
@@ -574,12 +584,12 @@
                              deletedTickets.splice(0, deletedTickets.length);
 
                          } else {
-                             mess_tusi("活动编辑成功");
+                             notice.alert("活动编辑成功");
                          }
 
 
                      } else {
-                         mess_tusi(data.message);
+                         notice.alert(data.message);
                      }
                      setTimeout(function() {
                          window.location.href = '/user/admin/activity/list';
@@ -602,7 +612,7 @@
                      console.log(data);
                      if (data.code == 200) {
                          // if(btnstatus==2){
-                         // mess_tusi("活动保存成功");
+                         // notice.alert("活动保存成功");
                          // 保存嘉宾和门票
                          console.log($(".J_ActivityGuest").length);
                          if ($(".J_ActivityGuest").length > 0) {
@@ -616,12 +626,12 @@
 
 
                          }
-                         mess_tusi("活动发布成功");
+                         notice.alert("活动发布成功");
                          setTimeout(function() {
                              window.location.href = '/user/admin/activity/list';
                          }, 2000);
                      } else {
-                         mess_tusi(data.message);
+                         notice.alert(data.message);
                      }
                  },
                  error: function(xhr) {
@@ -663,11 +673,11 @@
                              console.log("index:", index);
                              if (flag >= index) {
                                  if (btnstatus == 2) {
-                                     //mess_tusi("活动保存成功");
+                                     //notice.alert("活动保存成功");
 
 
                                  } else {
-                                     //mess_tusi("活动修改成功");
+                                     //notice.alert("活动修改成功");
 
                                  }
                                  //location.reload();
@@ -676,7 +686,7 @@
                              }
 
                          } else {
-                             mess_tusi(data.message);
+                             notice.alert(data.message);
                          }
                      },
                      error: function(xhr) {
@@ -698,11 +708,11 @@
                              flag++;
                              if (flag >= index) {
                                  if (btnstatus == 2) {
-                                     //mess_tusi("活动保存成功");
+                                     //notice.alert("活动保存成功");
 
 
                                  } else {
-                                     // mess_tusi("活动发布成功");
+                                     // notice.alert("活动发布成功");
 
                                  }
                                  // location.reload();
@@ -712,7 +722,7 @@
                              }
 
                          } else {
-                             mess_tusi(data.message);
+                             notice.alert(data.message);
                          }
                      },
                      error: function(xhr) {
@@ -751,11 +761,11 @@
                              flag++;
                              if (flag >= index) {
                                  if (btnstatus == 2) {
-                                     mess_tusi("活动保存成功");
+                                     notice.alert("活动保存成功");
 
 
                                  } else {
-                                     mess_tusi("活动修改成功");
+                                     notice.alert("活动修改成功");
 
                                  }
 
@@ -763,7 +773,7 @@
                              }
 
                          } else {
-                             mess_tusi(data.message);
+                             notice.alert(data.message);
                          }
                      },
                      error: function(xhr) {
@@ -784,11 +794,11 @@
                              flag++;
                              if (flag >= index) {
                                  if (btnstatus == 2) {
-                                     mess_tusi("活动保存成功");
+                                     notice.alert("活动保存成功");
 
 
                                  } else {
-                                     mess_tusi("活动发布成功");
+                                     notice.alert("活动发布成功");
 
                                  }
                                  //window.location = "/user/admin/activity/list";
@@ -797,7 +807,7 @@
                              }
 
                          } else {
-                             mess_tusi(data.message);
+                             notice.alert(data.message);
                          }
                      },
                      error: function(xhr) {
@@ -825,19 +835,19 @@
 
          var guestid = $("#J_GuestId").val();
          if (name == '') {
-             mess_tusi('请输入姓名');
+             notice.alert('请输入姓名');
              return;
          }
          if (avatar == '') {
-             mess_tusi('请选择头像');
+             notice.alert('请选择头像');
              return;
          }
          if (position == '') {
-             mess_tusi('请输入职务');
+             notice.alert('请输入职务');
              return;
          }
          if (company == '') {
-             mess_tusi('请输入公司');
+             notice.alert('请输入公司');
              return;
          }
          var sendData = {
@@ -886,31 +896,31 @@
          var num = $("#J_TicketNum").val();
          var ticketid = $("#J_TicketId").val();
          if (name == '') {
-             mess_tusi('请输入票名');
+             notice.alert('请输入票名');
              return;
          }
          if (price == '') {
-             mess_tusi('请输入票价');
+             notice.alert('请输入票价');
              return;
          }
          if (isNaN(price)) {
-             mess_tusi('票价必须为数字');
+             notice.alert('票价必须为数字');
              return;
          }
          if (price <= 0) {
-             mess_tusi('票价必须大于0');
+             notice.alert('票价必须大于0');
              return;
          }
          if (num == '') {
-             mess_tusi('请输入总票数');
+             notice.alert('请输入总票数');
              return;
          }
          if (isNaN(num)) {
-             mess_tusi('票数必须为数字');
+             notice.alert('票数必须为数字');
              return;
          }
          if (num <= 0) {
-             mess_tusi('票数大于0');
+             notice.alert('票数大于0');
              return;
          }
          num = parseInt(num);
@@ -1015,6 +1025,7 @@
                          $("#img").attr("src", qiniu_bucket_domain + data.data.cover);
                          $("#J_ActivityPoster").val(data.data.cover);
                          $("#J_ActivityTitle").val(data.data.title);
+                         $("#J_ActivitySummary").val(data.data.summary);
                          $("#J_ActivityCate option[value='" + data.data.cate_id + "']").attr('selected', true);
                          $("#J_ActivityCity").val(data.data.area_name);
                          $("#J_ActivityCityId").val(data.data.area_id);
@@ -1083,7 +1094,7 @@
                          ticketlistdetail(data.data.weid);
 
                      } else {
-                         mess_tusi(data.message);
+                         notice.alert(data.message);
                      }
                  },
                  error: function(xhr) {
@@ -1126,7 +1137,7 @@
                          }
 
                      } else {
-                         mess_tusi(data.message);
+                         notice.alert(data.message);
                      }
                  },
                  error: function(xhr) {
@@ -1163,7 +1174,7 @@
                          }
 
                      } else {
-                         mess_tusi(data.message);
+                         notice.alert(data.message);
                      }
                  },
                  error: function(xhr) {

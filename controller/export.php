@@ -33,7 +33,7 @@ class export extends controller
 			exit('请求错误');
 		// 报名
         $enroll_sql = 'SELECT 
-			e.weid, u.real_name, u.phone, u.company, u.position, e.created_at
+			e.weid, u.real_name, u.phone, u.company, u.position, e.is_attend, e.created_at
 		FROM we_page_activity_enroll e
 		left join we_plats_user u  on u.weid = e.plat_user_id
 		left join we_page_activity a on a.weid = e.activity_id
@@ -76,17 +76,17 @@ class export extends controller
         $file_name = $activity['title'] . '-' . date('m月d') . '.csv';
         header('Content-Type: application/octet-stream');
         header('Content-Disposition: attachment; filename=' . $file_name);
-        $header_data = ['姓名', '手机', '公司', '职位', '报名时间', '票务信息'];
+        $header_data = ['姓名', '手机', '公司', '职位', '报名时间', '票务信息', '是否签到'];
         if (!empty($header_data)) {
             echo iconv('utf-8','gbk//TRANSLIT' , '"' . implode('","',$header_data) . '"' . "\n");
         }
         foreach ($results as $key => $value) {
             $output = array();
-            $output[] = $value['real_name'];
-            $output[] = $value['phone'];
-            $output[] = $value['company'];
-            $output[] = $value['position'];
-			$output[] = date('Y-m-d H:i:s', $value['created_at']);
+            $output[] = $value['real_name'] . "\t";
+            $output[] = $value['phone'] . "\t";
+            $output[] = $value['company'] . "\t";
+            $output[] = $value['position'] . "\t";
+			$output[] = date('Y-m-d H:i:s', $value['created_at']) . "\t";
 			foreach($enrollTickets as $k => $v) {
 				if ($k === $value['weid']) {
 					$__tmp = [];
@@ -94,11 +94,12 @@ class export extends controller
 					$__enroll_id = $value['weid'];
 					$__theEnroll = $enrollTickets[$__enroll_id];
 					foreach ($__theEnroll as $key => $val) {
-						$__info .= $val['name'] . '(' . $val['price'] . '元x' . $val['num'] . ') ';
+						$__info .= $val['name'] . '(' . $val['price'] . '元x' . $val['num'] . ')' . "\t";
 					}
 					$output['ticketInfo'] = $__info;
 				}
 			}
+			$output[] = ($value['is_attend'] == 1 ? '是' : '否') . "\t";
 			echo iconv('utf-8','gbk//TRANSLIT' , '"' . implode('","', $output) . "\"\n");
         }
 	}

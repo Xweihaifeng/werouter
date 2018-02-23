@@ -100,7 +100,7 @@
         var artType = {list: [], flag: 0, type: 'articles', router: []};
         $.ajax({
             url: ARTICLES_CATES + '?domain=' + pages_info.plats_domian.domain,
-            // async: false,
+            async: false,
             success: function(data) {
                 if (data.data != '' && data.data != undefined && data.data != null) {
                     artType.list = data.data.slice(0, 9);
@@ -114,8 +114,8 @@
         var actType = {list: [], flag: 0, type: 'activity', router: []};
         $.ajax({
             url: apiUrl + 'activity/cate/lists',
-            // async: false,
-            success: function(data) {                
+            async: false,
+            success: function(data) {
                 if (data.data.list != '' && data.data.list != undefined && data.data.list != null) {
                     actType.list = [{weid: '', title: '全部', e_name: ''}, ...data.data.list.slice(0, 9)];                    
                     actType.flag = 0;
@@ -169,7 +169,7 @@
                     this.userCenter = '快速登录';
                 } else {
                     this.userCenter = '用户中心';
-                }              
+                }
 
                 this.init(...this.checkPath(this.path));
                 this.wefriends();
@@ -201,7 +201,7 @@
                 $("title").text(pages_info.plats_show.head_title);
             },
             mounted: function(){
-                this.$nextTick(function(){                    
+                this.$nextTick(function(){
                     window.onpopstate = function(e) {
                         var path = wepage.checkPath(window.location.pathname);
                         var list = ['', 'article', 'activity', 'wemall', 'quan'];
@@ -453,7 +453,7 @@
                     }
                 },
                 change: function(page){
-                    $(document).scrollTop(340);                    
+                    $(document).scrollTop($("#menu").offset().top);
                     switch (this.type) {
                         case 'latest': this.getLatest(page, 10); break;
                         case 'articles': this.getArtList(page, 10, this.artType.list[this.artType.flag].weid); break;
