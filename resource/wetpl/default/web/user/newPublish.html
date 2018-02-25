@@ -24,6 +24,7 @@
 	<script src="{{PATH_TML}}user/common/js/generate_manage.js"></script>
     <script src="{{PATH_TML}}user/js/publish.js"></script>
     <!-- <script src="/common/js/swiper-3.3.1.min.js"></script> -->
+    <script src="/common/js/laydate/laydate.js"></script>
     <script src="/common/js/buttons.js"></script>
     <script src="/common/js/ckeditor/ckeditor.js"></script>
     <script src="/common/js/plupload/plupload.full.min.js"></script>
@@ -134,10 +135,15 @@
                 <select name="article" class="form-control" style="width: 120px;"></select>
             </div>
 
-            <!--<div class="art-type systemtypes" style="display: flex; margin-top: 30px;">-->
-                 <!--<span style="margin-right: 15px;padding-left: 0;line-height: 32px;">系统分类:</span>-->
-                <!--<select name="type_id" class="form-control" style="width: 120px;"></select>-->
-            <!--</div>-->
+            <!-- <div class="art-type systemtypes" style="display: flex; margin-top: 30px;">
+                 <span style="margin-right: 15px;padding-left: 0;line-height: 32px;">系统分类:</span>
+                <select name="type_id" class="form-control" style="width: 120px;"></select>
+            </div> -->
+
+            <div class="art-private" style="display: flex; margin-top: 30px;">
+                <span style="margin-right: 15px;padding-left: 0;line-height: 32px;">发布时间:</span>
+                <input type="text" id="date" class="form-control" style="width: 180px;">
+            </div>
 
             <div class="art-private">
                 <span style="padding: 0;">隐私发布:</span>
@@ -160,6 +166,11 @@
 			$('#art-link').fadeOut(400);
 		}
 	})
+
+    laydate.render({
+      elem: '#date'
+      ,type: 'datetime'
+    });
 
 </script>
 </body>
