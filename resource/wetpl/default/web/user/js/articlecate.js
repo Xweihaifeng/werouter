@@ -191,12 +191,14 @@ $(document).ready(function(){
             newCIV.push($(this).find(".category-name").val())
         });
         //添加商品分类
+        var sav = false;
         $('#add_sort').on('click',function(){
             var sortList = "<li class='clearfloat category-item' data-id='0'><input style='width: 230px' type='text' class='sort_info category-name' value=''><input style='width: 230px;margin-left: 50px;' type='text' class='sort_info category-ename'><input type='number' class='order_info category-floor' value=''><div class='operate_info'><a href='javascript:;' class='delete_sort'>删除</a></div></li>";
             $('.operate_box').append(sortList);
             $('.no_sort').remove();
             $('.sort_save').css({'background':'#ff9c00'});
-            newCIV.push("")
+            newCIV.push("");
+            sav = true;
         });
 
         $(".operate_box").on("blur",".category-name",function(){
@@ -269,99 +271,109 @@ $(document).ready(function(){
         })
         //保存分类
         var flags = true;
+        $(".category-item input").change(function () {
+            sav = true;
+            $('.sort_save').css({'background':'#ff9c00'});
+        })
         $(document).on("click",".save-btn",function(){
-            var categories = new Array();
-            var noneVal = {};
-            var addcate=updatecate=[];
-            $(".category-item").each(function(){
-                var item = {};
-                item.id = $(this).data("id");
-                item.name = $(this).find(".category-name").val();
-                item.ename = $(this).find(".category-ename").val();
-                item.floor = $(this).find(".category-floor").val();
+                var categories = new Array();
+                var noneVal = {};
+                var addcate=updatecate=[];
 
-                if(!item.name){
-                    noneVal.nD = item.id;
+                $(".category-item").each(function(){
+                    var item = {};
+                    item.id = $(this).data("id");
+                    item.name = $(this).find(".category-name").val();
+                    item.ename = $(this).find(".category-ename").val();
+                    item.floor = $(this).find(".category-floor").val();
+
+                    if(!item.name){
+                        noneVal.nD = item.id;
+                        return;
+                    }
+                    if(!item.floor){
+                        item.floor = 0;
+                    }
+                    categories.push(item);
+                })
+                console.log(newCIV);
+                console.log(categoryItemValue);
+                console.log(categories);
+                if(categories.length == 0){
                     return;
                 }
-                if(!item.floor){
-                    item.floor = 0;
-                }
-                categories.push(item);
-            })
-            console.log(newCIV);
-            console.log(categoryItemValue);
-            console.log(categories);
-            if(categories.length == 0){
-                return;
-            }
-            var params = {categories:categories,ajax:1};
+                var params = {categories:categories,ajax:1};
 
 
 
-            if (categoryItemValue.length == newCIV.length){
-                var cn_arr = []
-                for(var s in categoryItemValue){
-                    for(var x in newCIV){
-                        if(categoryItemValue[s] == newCIV[x]){
-                            cn_arr.push(categoryItemValue[s]);
+                if (categoryItemValue.length == newCIV.length){
+                    var cn_arr = []
+                    for(var s in categoryItemValue){
+                        for(var x in newCIV){
+                            if(categoryItemValue[s] == newCIV[x]){
+                                cn_arr.push(categoryItemValue[s]);
+                            }
                         }
                     }
-                }
-                if (cn_arr.length != categoryItemValue.length)
-                {
+                    if (cn_arr.length != categoryItemValue.length)
+                    {
 
-                    subB = false;
+                        subB = false;
+                    }else{
+                        subB = true;
+                    }
+
                 }else{
-                    subB = true;
+                    subB = false;
                 }
+                console.log(subB+":sub");
+                if (noneVal.nD=='')
+                {
+                    mess_tusi("商品名称不能为空")
 
-            }else{
-                subB = false;
-            }
-            console.log(subB+":sub");
-            if (noneVal.nD=='')
-            {
-                mess_tusi("商品名称不能为空")
-
-            }
-            // else if (subB)
-            // {
-            //     mess_tusi("没有修改分类")
-            // }
-            else{
-                var callback = function(msg){
-                    if(msg.result == 0){
-                           mess_tusi("保存成功",function(){
+                }
+                // else if (subB)
+                // {
+                //     mess_tusi("没有修改分类")
+                // }
+                else{
+                    var callback = function(msg){
+                        if(msg.result == 0){
+                            mess_tusi("保存成功",function(){
                                 window.location.reload();
                             });
-                    }else{
-                        mess_tusi(msg.description,function(){
-                            if(msg.data){
-                                window.location.href = msg.data;
+                        }else{
+                            mess_tusi(msg.description,function(){
+                                if(msg.data){
+                                    window.location.href = msg.data;
+                                }
+                            });
+                        }
+                    }
+                    console.log(categories);
+                    if(sav == true){
+                        if(flags==true){
+                            flags = false;
+                            setTimeout(saves, 500);
+                            function saves() {
+                                categories.map(x => {
+                                    addeditsave(x,categories.length,flags);
+                                })
                             }
-                        });
-                    }
-                }
-                console.log(categories);
-                if(flags==true){
-                    flags = false;
-                    setTimeout(saves, 500);
-                    function saves() {
-                        categories.map(x => {
 
-                            addeditsave(x,categories.length,flags);
-
-                        })
+                        }
+                    }else {
+                        mess_tusi("目前没有添加或更改")
                     }
 
-                }
 
-                //window.location.reload();
-                // location.reload();
-                //requestAjax(params, 'post', '/index.php?ctl=mywemall&act=do_categories', callback, true);
-            }
-        });
+                    //window.location.reload();
+                    // location.reload();
+                    //requestAjax(params, 'post', '/index.php?ctl=mywemall&act=do_categories', callback, true);
+                }
+            });
+
+
 
 
     }
