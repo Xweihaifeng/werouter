@@ -160,6 +160,20 @@
                 user: 'javascript:void(0)',
                 // fontColor: pages_info.plats_user_cert.is_authenticated == 1 ? {color: '#ff9900'} : {color: '#999'},
                 fontColor: {color: '#ff9900'},
+                ff: {
+                    fans: {
+                        type: 1,
+                        page: 1,
+                        next: "查看更多>>",
+                        total: 1
+                    },
+                    friends: {
+                        type: 2,
+                        page: 1,
+                        next: "查看更多>>",
+                        total: 1
+                    }
+                }
             },
             created: function(){
                 this.menu = {list: this.dataMenu.map(e => ({name: e})), flag: 0};                
@@ -283,6 +297,8 @@
                         headers: {'Token': docCookies.getItem('token')}
                     }).then(data => {
                         this.info = data.data.data;
+                        this.ff.fans.total = parseInt(this.info.fnums / 12) + (this.info.fnums % 12 == 0 ? 0 : 1);
+                        this.ff.friends.total = parseInt(this.info.friends / 12) + this.info.friends % 12 == 0 ? 0 : 1;
                         getLine(this.info);
                     })
                 },
@@ -366,7 +382,7 @@
                     })
                 },
                 getLatest: function(page, limit) {
-                    axios.get(apiUrl + 'circel/dynamic?page=' + page + '&limit=10' + '&type=1&dynamic_type=0&domain=' + pages_info.plats_domian.domain).then(data => {                        
+                    axios.get(apiUrl + 'circel/dynamic?page=' + page + '&limit=10' + '&type=1&dynamic_type=0&domain=' + pages_info.plats_domian.domain).then(data => {
                         this.type = 'latest';
                         this.latest = data.data.data.list;
                         this.latest == '' ? wepage.none = true : wepage.none = false;
@@ -376,6 +392,7 @@
                     $.ajax({
                         url: ARTICLES_CATEGORY + '?userId=' + pages_info.plats_domian.plat_user_id + '&page=' + page + '&limit=' + limit + '&cateId=' + cate_id,
                         success: function(data){
+                            console.log(data.data)
                             if (data.code == 200){
                                 wepage.type = 'articles';
                                 wepage.articles = data.data.list;
@@ -551,6 +568,22 @@
                         o.stateBuy = true;
                     } else {
                         o.stateBuy = false;
+                    }
+                },
+                more: function() {
+                    var reqUrl = apiUrl + 'circel/flist';
+                    var type = this.active;
+                    var reqPage = this.ff[type].page + 1;
+                    console.log(reqPage, this.ff[type].total);
+                    if (reqPage > this.ff[type].total) {
+                        this.ff[type].next = "没有更多了";
+                    } else {
+                        axios.get(reqUrl + '?domain=' + pages_info.plats_domian.domain + '&page=' + reqPage + '&type=' + this.ff[type].type + '&limit=' + 4, {
+                            headers: {'Token': docCookies.getItem('token')}
+                        }).then(data => {
+                            console.log(data.data)
+                            this.ff[type].page += 1;
+                        })
                     }
                 }
             },

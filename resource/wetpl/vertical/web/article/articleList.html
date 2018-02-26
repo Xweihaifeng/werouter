@@ -76,7 +76,7 @@
                                 <span>{{e.summary | cut(100)}} </span>
                             </span>
                             <span>
-                                <img class="i1" src="/common/img/new/date.png" alt=""/><span style="padding-right:34px;">{{e.updated_at}}</span>
+                                <img class="i1" src="/common/img/new/date.png" alt=""/><span style="padding-right:34px;">{{(e.publish_time || e.updated_at)}}</span>
                                 <img class="i2" src="/common/img/new/read.png" alt=""/><span>{{e.views}}</span>
                             </span>
                         </p>
@@ -254,8 +254,11 @@
                                 <img class="care" :src="setImg(e.avatar, '/common/img/new/1.png', 54, 54)" alt="" width="54" height="54"/>
                             </a>
                         </li>
-                        <li>
-                            查看更多>>
+                        <li v-if="active == 'fans'" @click="more">
+                            {{ff.fans.next}}
+                        </li>
+                        <li v-if="active == 'friends'" @click="more">
+                            {{ff.friends.next}}
                         </li>
                     </ul>
                 </li>
