@@ -211,6 +211,7 @@ $(document).ready(function(){
                 {
                     if (i != _index)
                     {
+                        // console.log(_index)
                         // mess_tusi("分类名称不能重复");
                         layer.msg("分类名称不能重复")
                         _This.val('');
