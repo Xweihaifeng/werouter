@@ -345,11 +345,15 @@ $(document).ready(function(){
                 console.log(categories);
                 if(flags==true){
                     flags = false;
-                    categories.map(x => {
+                    setTimeout(saves, 500);
+                    function saves() {
+                        categories.map(x => {
 
-                        addeditsave(x,categories.length,flags);
+                            addeditsave(x,categories.length,flags);
 
-                    })
+                        })
+                    }
+
                 }
 
                 //window.location.reload();
@@ -367,6 +371,8 @@ $(document).ready(function(){
             // var catename = $("input[name=catename]").val();
             // console.log($("#myModal_input").val(),catename);
             // if($("#myModal_input").val()!=0 && $("#myModal_input").val()!=null){
+        console.log(flags,1111);
+        console.log(data,3333);
 
             if(data.id!=0){
                 console.log("编辑");
@@ -391,7 +397,6 @@ $(document).ready(function(){
                             flag++;
                             // mess_tusi("修改成功");
                             // $('#myModal').modal('hide');
-                            // location.reload();
                             if(flag==len){
                                 mess_tusi("操作成功");
                                 location.reload();
@@ -409,7 +414,7 @@ $(document).ready(function(){
                     sort:data.floor
                 }
                 $.ajax({
-                    // url: apiUrl + 'articles/cates',
+                    url: apiUrl + 'articles/cates',
                     type:'post',
                     data:sendData,
                     headers: {
