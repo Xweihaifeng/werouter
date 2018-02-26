@@ -343,11 +343,15 @@ $(document).ready(function(){
                     }
                 }
                 console.log(categories);
-                categories.map(x => {
+                if(flags==true){
+                    flags = false;
+                    categories.map(x => {
 
-                    addeditsave(x,categories.length,flags);
+                        addeditsave(x,categories.length,flags);
 
-                })
+                    })
+                }
+
                 //window.location.reload();
                 // location.reload();
                 //requestAjax(params, 'post', '/index.php?ctl=mywemall&act=do_categories', callback, true);
@@ -363,8 +367,7 @@ $(document).ready(function(){
             // var catename = $("input[name=catename]").val();
             // console.log($("#myModal_input").val(),catename);
             // if($("#myModal_input").val()!=0 && $("#myModal_input").val()!=null){
-        if(flags==true){
-            flags = false;
+
             if(data.id!=0){
                 console.log("编辑");
                 var sendData={
@@ -406,7 +409,7 @@ $(document).ready(function(){
                     sort:data.floor
                 }
                 $.ajax({
-                    url: apiUrl + 'articles/cates',
+                    // url: apiUrl + 'articles/cates',
                     type:'post',
                     data:sendData,
                     headers: {
@@ -430,13 +433,12 @@ $(document).ready(function(){
                 })
             }
         }
-        flags = false;
 
 
                             //location.reload();
 
         // });
-    }
+
 // addeditsave();
    /* // 编辑分类
     var cateedit=function(){
