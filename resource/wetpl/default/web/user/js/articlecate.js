@@ -195,6 +195,7 @@ $(document).ready(function(){
             var sortList = "<li class='clearfloat category-item' data-id='0'><input style='width: 230px' type='text' class='sort_info category-name' value=''><input style='width: 230px;margin-left: 50px;' type='text' class='sort_info category-ename'><input type='number' class='order_info category-floor' value=''><div class='operate_info'><a href='javascript:;' class='delete_sort'>删除</a></div></li>";
             $('.operate_box').append(sortList);
             $('.no_sort').remove();
+            $('.sort_save').css({'background':'#ff9c00'});
             newCIV.push("")
         });
 
@@ -371,8 +372,8 @@ $(document).ready(function(){
             // var catename = $("input[name=catename]").val();
             // console.log($("#myModal_input").val(),catename);
             // if($("#myModal_input").val()!=0 && $("#myModal_input").val()!=null){
-        console.log(flags,1111);
-        console.log(data,3333);
+        // console.log(flags,1111);
+        // console.log(data,3333);
 
             if(data.id!=0){
                 console.log("编辑");
