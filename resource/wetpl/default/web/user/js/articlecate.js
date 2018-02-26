@@ -401,11 +401,14 @@ $(document).ready(function(){
                                     layer.msg(v.name+"的名字不符合")
                                     return;
                                 }
-
                             })
                             function saves() {
+                                layer.close(indexs);
+                                var inde = layer.load(1, {
+                                    shade: [0.1,'#fff'] //0.1透明度的白色背景
+                                });
                                 categories.map(x => {
-                                    addeditsave(x,categories.length,flags,indexs);
+                                    addeditsave(x,categories.length,flags,inde);
                                 })
                                 // $(".loging").css({'display':'block'})
 
@@ -435,8 +438,6 @@ $(document).ready(function(){
                     sort:data.floor,
                     weid:data.id
                 }
-                console.log(sendData,2222222222)
-
                 $.ajax({
                     url:apiUrl + 'articles/cates',
                     type:'put',
@@ -447,15 +448,18 @@ $(document).ready(function(){
                     dataType: 'json',
                     success: function(data){
                          if (data.code == 200) {
-                            flags==true;
+                             flags=true;
                             flag++;
                             // mess_tusi("修改成功");
                             // $('#myModal').modal('hide');
                             if(flag==len){
                                 // $(".loging").css({'display':'none'})
                                 // mess_tusi("操作成功");
+                                alert(indexs)
                                 layer.close(indexs);
                                 layer.msg("操作成功")
+                                $('.sort_save').css({'background':'#fdca77'});
+                                flag=1;
                                 // location.reload();
                             }
                         }else {
@@ -484,7 +488,7 @@ $(document).ready(function(){
                     dataType: 'json',
                     success: function(data){
                         if (data.code == 200) {
-                            flags==true;
+                            flags=true;
                             flag++;
                             // mess_tusi("添加成功");
                             // $('#myModal').modal('hide');
@@ -493,6 +497,7 @@ $(document).ready(function(){
                                 // mess_tusi("添加成功");
                                 layer.close(indexs);
                                 layer.msg("添加成功")
+                                flag=1
                                 // location.reload();
                             }
                         }else {
