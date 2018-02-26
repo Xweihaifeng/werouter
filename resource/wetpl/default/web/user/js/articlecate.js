@@ -455,7 +455,6 @@ $(document).ready(function(){
                             if(flag==len){
                                 // $(".loging").css({'display':'none'})
                                 // mess_tusi("操作成功");
-                                alert(indexs)
                                 layer.close(indexs);
                                 layer.msg("操作成功")
                                 $('.sort_save').css({'background':'#fdca77'});
