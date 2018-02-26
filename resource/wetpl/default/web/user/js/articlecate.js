@@ -287,7 +287,7 @@ $(document).ready(function(){
         })
         var cn = true;
         $(".category-item input:nth-of-type(2)").change(function () {
-            var reg = /^[a-zA-Z0-9~!@#$%^&*()_+-={}|;:'"<,>.?]*$/;
+            var reg = /^[a-zA-Z0-9]*$/;
             var _txt = $(this).val();
             if (reg.test(_txt)) {
                 flags = true;
@@ -349,7 +349,9 @@ $(document).ready(function(){
                     subB = false;
                 }
                 console.log(subB+":sub");
-                if (noneVal.nD=='')
+            console.log(sav,flags)
+
+            if (noneVal.nD=='')
                 {
                     // mess_tusi("商品名称不能为空")
                     layer.msg("商品名称不能为空")
@@ -380,6 +382,7 @@ $(document).ready(function(){
                             });
                         }
                     }
+
                     if(sav == true){
                         if(flags==true){
                             flags = false;
@@ -388,7 +391,7 @@ $(document).ready(function(){
                             });
                             var cns =true;
                             categories.forEach(function (v,i) {
-                                var regs = /^[a-zA-Z0-9~!@#$%^&*()_+-={}|;:'"<,>.?]*$/;
+                                var regs = /^[a-zA-Z0-9]*$/;
                                 if (regs.test(v.ename)) {
                                    if(categories.length == i+1){
                                        if( cns == true){
@@ -398,17 +401,18 @@ $(document).ready(function(){
                                 } else {
                                     cns = false;
                                     layer.close(indexs);
-                                    layer.msg(v.name+"的名字不符合")
+                                    layer.msg(v.name+"的别名不符合规范")
                                     return;
                                 }
                             })
                             function saves() {
+                                flags = true;
                                 layer.close(indexs);
                                 var inde = layer.load(1, {
                                     shade: [0.1,'#fff'] //0.1透明度的白色背景
                                 });
                                 categories.map(x => {
-                                    addeditsave(x,categories.length,flags,inde);
+                                    addeditsave(x,categories.length,inde);
                                 })
                                 // $(".loging").css({'display':'block'})
 
@@ -428,7 +432,7 @@ $(document).ready(function(){
     }
     // 添加/编辑分类
     var flag=1;
-    var addeditsave=function(data,len,flags,indexs){
+    var addeditsave=function(data,len,indexs){
 
             if(data.id!=0){
                 console.log("编辑");
@@ -448,7 +452,6 @@ $(document).ready(function(){
                     dataType: 'json',
                     success: function(data){
                          if (data.code == 200) {
-                             flags=true;
                             flag++;
                             // mess_tusi("修改成功");
                             // $('#myModal').modal('hide');
@@ -487,7 +490,6 @@ $(document).ready(function(){
                     dataType: 'json',
                     success: function(data){
                         if (data.code == 200) {
-                            flags=true;
                             flag++;
                             // mess_tusi("添加成功");
                             // $('#myModal').modal('hide');
