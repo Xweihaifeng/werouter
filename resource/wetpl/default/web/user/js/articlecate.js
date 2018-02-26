@@ -227,6 +227,7 @@ $(document).ready(function(){
 
         //删除分类
         $('.operate_box').on('click','.delete_sort',function(){
+            $(".loging").css({'display':'block'})
             var _lidom = $(this).closest('li');
             console.log(_lidom[0].dataset.id,"??????????")
             newCIV.splice(_lidom.index(),1);
@@ -255,6 +256,7 @@ $(document).ready(function(){
                         if (data.code == 200) {
                             // $('#myModal').modal('hide');
                             // location.reload();
+                            $(".loging").css({'display':'none'})
                             mess_tusi("分类删除成功");
                             _lidom.remove();
 
@@ -276,6 +278,7 @@ $(document).ready(function(){
             $('.sort_save').css({'background':'#ff9c00'});
         })
         $(document).on("click",".save-btn",function(){
+
                 var categories = new Array();
                 var noneVal = {};
                 var addcate=updatecate=[];
@@ -304,8 +307,6 @@ $(document).ready(function(){
                 }
                 var params = {categories:categories,ajax:1};
 
-
-
                 if (categoryItemValue.length == newCIV.length){
                     var cn_arr = []
                     for(var s in categoryItemValue){
@@ -330,7 +331,6 @@ $(document).ready(function(){
                 if (noneVal.nD=='')
                 {
                     mess_tusi("商品名称不能为空")
-
                 }
                 // else if (subB)
                 // {
@@ -359,6 +359,7 @@ $(document).ready(function(){
                                 categories.map(x => {
                                     addeditsave(x,categories.length,flags);
                                 })
+                                $(".loging").css({'display':'block'})
                             }
 
                         }
@@ -411,6 +412,7 @@ $(document).ready(function(){
                             // mess_tusi("修改成功");
                             // $('#myModal').modal('hide');
                             if(flag==len){
+                                $(".loging").css({'display':'none'})
                                 mess_tusi("操作成功");
                                 location.reload();
                             }
@@ -441,6 +443,7 @@ $(document).ready(function(){
                             // mess_tusi("添加成功");
                             // $('#myModal').modal('hide');
                             if(flag==len){
+                                $(".loging").css({'display':'none'})
                                 mess_tusi("添加成功");
                                 location.reload();
                             }
