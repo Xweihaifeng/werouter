@@ -211,8 +211,8 @@ $(document).ready(function(){
                 {
                     if (i != _index)
                     {
-                        mess_tusi("分类名称不能重复");
-                        // layer.msg("分类名称不能重复")
+                        // mess_tusi("分类名称不能重复");
+                        layer.msg("分类名称不能重复")
                         _This.val('');
                     }
                 }else   if(_index>newCIV.length-1){
@@ -228,7 +228,10 @@ $(document).ready(function(){
 
         //删除分类
         $('.operate_box').on('click','.delete_sort',function(){
-            $(".loging").css({'display':'block'})
+            // $(".loging").css({'display':'block'})
+            var indes = layer.load(1, {
+                shade: [0.1,'#fff'] //0.1透明度的白色背景
+            });
             var _lidom = $(this).closest('li');
             console.log(_lidom[0].dataset.id,"??????????")
             newCIV.splice(_lidom.index(),1);
@@ -242,7 +245,7 @@ $(document).ready(function(){
                         mess_tusi(msg.description);
                     }
                 }*/
-                console.log(_lidom.data("id"),1111111111111111);
+                // console.log(_lidom.data("id"),1111111111111111);
                 let id = _lidom.data("id");
                 $.ajax({
                     url: apiUrl + 'articles/cates',
@@ -257,14 +260,17 @@ $(document).ready(function(){
                         if (data.code == 200) {
                             // $('#myModal').modal('hide');
                             // location.reload();
-                            $(".loging").css({'display':'none'})
-                            mess_tusi("分类删除成功");
+                            // $(".loging").css({'display':'none'})
+                            layer.close(indes);
+                            // mess_tusi("分类删除成功");
+                            layer.msg("分类删除成功")
                             _lidom.remove();
 
                         }else {
                             // $(".use-right-box").before(alerthtml);
                             $(".loging").css({'display':'none'})
                              mess_tusi(data.message+"不能删除");
+                            layer.msg(data.message+"不能删除")
                         }
                     }
                 })
@@ -278,6 +284,19 @@ $(document).ready(function(){
         $(".category-item input").change(function () {
             sav = true;
             $('.sort_save').css({'background':'#ff9c00'});
+        })
+        var cn = true;
+        $(".category-item input:nth-of-type(2)").change(function () {
+            var reg = /^[a-zA-Z0-9~!@#$%^&*()_+-={}|;:'"<,>.?]*$/;
+            var _txt = $(this).val();
+            if (reg.test(_txt)) {
+                flags = true;
+                cn = true;
+            } else {
+                layer.msg("分类别名不能是汉字或非法字符")
+                flags = false;
+                cn = false;
+            }
         })
         $(document).on("click",".save-btn",function(){
 
@@ -332,7 +351,8 @@ $(document).ready(function(){
                 console.log(subB+":sub");
                 if (noneVal.nD=='')
                 {
-                    mess_tusi("商品名称不能为空")
+                    // mess_tusi("商品名称不能为空")
+                    layer.msg("商品名称不能为空")
                 }
                 // else if (subB)
                 // {
@@ -341,38 +361,61 @@ $(document).ready(function(){
                 else{
                     var callback = function(msg){
                         if(msg.result == 0){
-                            mess_tusi("保存成功",function(){
+                            // mess_tusi("保存成功",function(){
+                            //     window.location.reload();
+                            // });
+                            layer.msg("保存成功",function(){
                                 window.location.reload();
                             });
                         }else{
-                            mess_tusi(msg.description,function(){
+                            // mess_tusi(msg.description,function(){
+                            //     if(msg.data){
+                            //         window.location.href = msg.data;
+                            //     }
+                            // });
+                            layer.msg(msg.description,function(){
                                 if(msg.data){
                                     window.location.href = msg.data;
                                 }
                             });
                         }
                     }
-                    console.log(categories);
                     if(sav == true){
                         if(flags==true){
                             flags = false;
-                            setTimeout(saves, 500);
+                            var indexs = layer.load(1, {
+                                shade: [0.1,'#fff'] //0.1透明度的白色背景
+                            });
+                            var cns =true;
+                            categories.forEach(function (v,i) {
+                                var regs = /^[a-zA-Z0-9~!@#$%^&*()_+-={}|;:'"<,>.?]*$/;
+                                if (regs.test(v.ename)) {
+                                   if(categories.length == i+1){
+                                       if( cns == true){
+                                           setTimeout(saves, 500);
+                                       }
+                                   }
+                                } else {
+                                    cns = false;
+                                    layer.close(indexs);
+                                    layer.msg(v.name+"的名字不符合")
+                                    return;
+                                }
+
+                            })
                             function saves() {
                                 categories.map(x => {
-                                    addeditsave(x,categories.length,flags);
+                                    addeditsave(x,categories.length,flags,indexs);
                                 })
-                                $(".loging").css({'display':'block'})
+                                // $(".loging").css({'display':'block'})
+
                             }
 
                         }
                     }else {
-                        mess_tusi("目前没有添加或更改")
+                        // mess_tusi("目前没有添加或更改")
+                        layer.msg("目前没有添加或更改")
                     }
-
-
-                    //window.location.reload();
-                    // location.reload();
-                    //requestAjax(params, 'post', '/index.php?ctl=mywemall&act=do_categories', callback, true);
                 }
             });
 
@@ -382,13 +425,7 @@ $(document).ready(function(){
     }
     // 添加/编辑分类
     var flag=1;
-    var addeditsave=function(data,len,flags){
-        // $('.save').bind('click', function() {
-            // var catename = $("input[name=catename]").val();
-            // console.log($("#myModal_input").val(),catename);
-            // if($("#myModal_input").val()!=0 && $("#myModal_input").val()!=null){
-        // console.log(flags,1111);
-        // console.log(data,3333);
+    var addeditsave=function(data,len,flags,indexs){
 
             if(data.id!=0){
                 console.log("编辑");
@@ -398,6 +435,8 @@ $(document).ready(function(){
                     sort:data.floor,
                     weid:data.id
                 }
+                console.log(sendData,2222222222)
+
                 $.ajax({
                     url:apiUrl + 'articles/cates',
                     type:'put',
@@ -407,20 +446,23 @@ $(document).ready(function(){
                     },
                     dataType: 'json',
                     success: function(data){
-                        // console.log(data);
-                        if (data.code == 200) {
+                         if (data.code == 200) {
                             flags==true;
                             flag++;
                             // mess_tusi("修改成功");
                             // $('#myModal').modal('hide');
                             if(flag==len){
-                                $(".loging").css({'display':'none'})
-                                mess_tusi("操作成功");
-                                location.reload();
+                                // $(".loging").css({'display':'none'})
+                                // mess_tusi("操作成功");
+                                layer.close(indexs);
+                                layer.msg("操作成功")
+                                // location.reload();
                             }
                         }else {
-                            $(".loging").css({'display':'none'})
-                            mess_tusi(data.message);
+                            // $(".loging").css({'display':'none'})
+                            // mess_tusi(data.message);
+                            layer.close(indexs);
+                            layer.msg(data.message)
                         }
                     }
                 })
@@ -431,6 +473,7 @@ $(document).ready(function(){
                     ename:data.ename,
                     sort:data.floor
                 }
+
                 $.ajax({
                     url: apiUrl + 'articles/cates',
                     type:'post',
@@ -446,13 +489,17 @@ $(document).ready(function(){
                             // mess_tusi("添加成功");
                             // $('#myModal').modal('hide');
                             if(flag==len){
-                                $(".loging").css({'display':'none'})
-                                mess_tusi("添加成功");
-                                location.reload();
+                                // $(".loging").css({'display':'none'})
+                                // mess_tusi("添加成功");
+                                layer.close(indexs);
+                                layer.msg("添加成功")
+                                // location.reload();
                             }
                         }else {
-                            $(".loging").css({'display':'none'})
-                            mess_tusi(data.message);
+                            // $(".loging").css({'display':'none'})
+                            // mess_tusi(data.message);
+                            layer.close(indexs);
+                            layer.msg(data.message)
                         }
                     }
                 })
