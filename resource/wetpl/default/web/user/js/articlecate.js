@@ -267,6 +267,7 @@ $(document).ready(function(){
             }
         })
         //保存分类
+        var flags = true;
         $(document).on("click",".save-btn",function(){
             var categories = new Array();
             var noneVal = {};
@@ -344,7 +345,7 @@ $(document).ready(function(){
                 console.log(categories);
                 categories.map(x => {
 
-                    addeditsave(x,categories.length);
+                    addeditsave(x,categories.length,flags);
 
                 })
                 //window.location.reload();
@@ -357,13 +358,14 @@ $(document).ready(function(){
     }
     // 添加/编辑分类
     var flag=1;
-    var addeditsave=function(data,len){
+    var addeditsave=function(data,len,flags){
         // $('.save').bind('click', function() {
             // var catename = $("input[name=catename]").val();
             // console.log($("#myModal_input").val(),catename);
             // if($("#myModal_input").val()!=0 && $("#myModal_input").val()!=null){
+        if(flags==true){
+            flags = false;
             if(data.id!=0){
-
                 console.log("编辑");
                 var sendData={
                     name:data.name,
@@ -371,17 +373,18 @@ $(document).ready(function(){
                     sort:data.floor,
                     weid:data.id
                 }
-                 $.ajax({
+                $.ajax({
                     url:apiUrl + 'articles/cates',
                     type:'put',
                     data:sendData,
                     headers: {
-                            'Token': docCookies.getItem("token")
-                        },
+                        'Token': docCookies.getItem("token")
+                    },
                     dataType: 'json',
                     success: function(data){
                         // console.log(data);
                         if (data.code == 200) {
+                            flags==true;
                             flag++;
                             // mess_tusi("修改成功");
                             // $('#myModal').modal('hide');
@@ -407,11 +410,12 @@ $(document).ready(function(){
                     type:'post',
                     data:sendData,
                     headers: {
-                            'Token': docCookies.getItem("token")
-                        },
+                        'Token': docCookies.getItem("token")
+                    },
                     dataType: 'json',
                     success: function(data){
                         if (data.code == 200) {
+                            flags==true;
                             flag++;
                             // mess_tusi("添加成功");
                             // $('#myModal').modal('hide');
@@ -425,6 +429,10 @@ $(document).ready(function(){
                     }
                 })
             }
+        }
+        flags = false;
+
+
                             //location.reload();
 
         // });
