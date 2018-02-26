@@ -392,7 +392,6 @@
                     $.ajax({
                         url: ARTICLES_CATEGORY + '?userId=' + pages_info.plats_domian.plat_user_id + '&page=' + page + '&limit=' + limit + '&cateId=' + cate_id,
                         success: function(data){
-                            console.log(data.data)
                             if (data.code == 200){
                                 wepage.type = 'articles';
                                 wepage.articles = data.data.list;
@@ -571,18 +570,23 @@
                     }
                 },
                 more: function() {
+                    var self = this;
                     var reqUrl = apiUrl + 'circel/flist';
                     var type = this.active;
                     var reqPage = this.ff[type].page + 1;
-                    console.log(reqPage, this.ff[type].total);
                     if (reqPage > this.ff[type].total) {
                         this.ff[type].next = "没有更多了";
                     } else {
-                        axios.get(reqUrl + '?domain=' + pages_info.plats_domian.domain + '&page=' + reqPage + '&type=' + this.ff[type].type + '&limit=' + 4, {
+                        this.ff[type].page += 1;
+                        axios.get(reqUrl + '?domain=' + pages_info.plats_domian.domain + '&page=' + reqPage + '&type=' + this.ff[type].type + '&limit=' + 12, {
                             headers: {'Token': docCookies.getItem('token')}
                         }).then(data => {
-                            console.log(data.data)
-                            this.ff[type].page += 1;
+                            var list = data.data.data.list;
+                            if (type == 'fans') {
+                                self.info.flist = self.info.flist.concat(list);
+                            } else {
+                                self.info.glist = self.info.glist.concat(list);
+                            }
                         })
                     }
                 }
