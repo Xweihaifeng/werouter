@@ -262,6 +262,7 @@ $(document).ready(function(){
 
                         }else {
                             // $(".use-right-box").before(alerthtml);
+                            $(".loging").css({'display':'none'})
                              mess_tusi(data.message+"不能删除");
                         }
                     }
@@ -417,6 +418,7 @@ $(document).ready(function(){
                                 location.reload();
                             }
                         }else {
+                            $(".loging").css({'display':'none'})
                             mess_tusi(data.message);
                         }
                     }
@@ -448,6 +450,7 @@ $(document).ready(function(){
                                 location.reload();
                             }
                         }else {
+                            $(".loging").css({'display':'none'})
                             mess_tusi(data.message);
                         }
                     }
