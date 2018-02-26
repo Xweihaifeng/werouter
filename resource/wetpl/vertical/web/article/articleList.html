@@ -76,7 +76,7 @@
                                 <span>{{e.summary | cut(100)}} </span>
                             </span>
                             <span>
-                                <img class="i1" src="/common/img/new/date.png" alt=""/><span style="padding-right:34px;">{{(e.publish_time || e.updated_at)}}</span>
+                                <img class="i1" src="/common/img/new/date.png" alt=""/><span style="padding-right:34px;">{{(e.publish_time || e.updated_at) | cut(10)}}</span>
                                 <img class="i2" src="/common/img/new/read.png" alt=""/><span>{{e.views}}</span>
                             </span>
                         </p>
