@@ -611,7 +611,11 @@
                     return value.length > len ? value.substr(0, len) + '...' : value;
                 },
                 show_date: function(value) {
-                    return value.getFullYear() + '-' + (value.getMonth() + 1) + '-' + value.getDate();
+                    if (typeof value == 'object') {
+                        return value.getFullYear() + '-' + (value.getMonth() + 1) + '-' + value.getDate();
+                    } else {
+                        return value;
+                    }
                 },
                 format_date: function(value) {
                     var res = value.split('-').reduce((res, e, i) => res += e.length == 1 ? '0' + e + '-' : e + '-', '');
