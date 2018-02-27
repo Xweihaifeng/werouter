@@ -618,8 +618,12 @@
                     }
                 },
                 format_date: function(value) {
-                    var res = value.split('-').reduce((res, e, i) => res += e.length == 1 ? '0' + e + '-' : e + '-', '');
-                    return res.substr(0, res.length - 1);
+                    if (value.length != 10) {
+                        var res = value.split('-').reduce((res, e, i) => res += e.length == 1 ? '0' + e + '-' : e + '-', '');
+                        return res.substr(0, res.length - 1);
+                    } else {
+                        return value;
+                    }
                 },
                 checkCert: function(value) {
                     if (pages_info.plats_user_cert.is_authenticated == 1) {
