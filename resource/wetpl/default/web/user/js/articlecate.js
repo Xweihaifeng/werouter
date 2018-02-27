@@ -439,7 +439,6 @@ $(document).ready(function(){
                             });
                             var cns =true;
                             categories.forEach(function (v,i) {
-                                console.log(v)
                                 if(v.name.length < 2){
                                     cns = false;
                                     flags = true;
@@ -476,7 +475,6 @@ $(document).ready(function(){
                                             if( cns == true){
                                                 setTimeout(saves, 500);
                                                 sav = false;
-
                                             }
                                         }
                                     } else {
