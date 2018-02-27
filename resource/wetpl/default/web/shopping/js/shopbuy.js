@@ -281,11 +281,16 @@ var qiniu_bucket_domain =ApiMaterPlatQiniuDomain;
                     $(".payimg").children().remove();
                      $(".payimg").append("<img src='"+QRCODE+"?url="+data.data.url+"' />");//支付二维码图片
                     // 循环判断是否支付
+
                     t=setInterval(function(){
                         init(id);
-                    },1000);
-
-
+                    },1500);
+                    setTimeout(function(){
+                        //超过1分钟未支付跳转订单列表
+                        clearInterval(t);
+                        mess_tusi('超过一分钟未支付自动跳转中...');
+                        window.location.href ="/user/myaccount/order";
+                    },60000);
                 }else{
                     // console.log('PAY  ERROR');
                     mess_tusi(data.message);
