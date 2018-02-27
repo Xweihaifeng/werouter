@@ -1,10 +1,13 @@
 <!doctype html>
 <html lang="en">
 <head>
+    <script type="text/javascript" async="" src="http://captcha.luosimao.com/static/dist/captcha.js?v=201707071250"></script>
+    <title>订单支付</title>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="shortcut icon" id="favicon" href="http://images.wezchina.com/plats/resource/1516267133719.ico">
     <script src="{{PATH_CONFIG}}"></script>
     <script src="/common/public/js/app.js"></script>
     <script src="/common/js/jquery-3.2.1.min.js"></script>
@@ -30,7 +33,7 @@
     <!--<link rel="stylesheet" type="text/css" href="/resource/wetpl/default/web/activity/css/activitydetail.css">-->
 
     <link rel="stylesheet" href="{{PATH_TML}}activity/css/activitypay.css" />
-    <title>订单支付</title>
+
     <style>
         .bar-code svg{
             display: block;
@@ -39,10 +42,19 @@
         .layui-layer>.layui-layer-content{
             height: auto!important;
         }
+        header{
+            width: 100%;
+            height: 101px;
+            background: #fff;
+            border-bottom: 2px solid #FF6700;
+        }
     </style>
 </head>
 <body>
 <div class="modal_login" id="modal_login"></div>
+<header>
+
+</header>
 <div id="container">
     <div id="content">
         <div class="pay" id="pay" v-if="state != 2">
@@ -234,7 +246,7 @@
                                 $("body,html").css({background: "url('/common/img/bg.gif')"})
                                 this.artList(this.user.weid)
                                 return;
-                            }else if(res.data.state==3){
+                            }else if(res.data.state==3 || res.data.close_timeout==0){
                                 this.state=3;
                                 $(".title_right>span").css({color:"rgb(185, 184, 184)"});
                                 $(".order-detail>ul>li").css({color:"rgb(185, 184, 184)"});
@@ -364,6 +376,8 @@
                                 layer.close(paymentLayer);
                                 // 弹出成功数据
                                 self.activity_ebroll_detail(rep.data.enroll_id);
+                                console.log("刷新")
+                                location.reload();
                             }
                         },
                         error: function(xhr) {
@@ -387,6 +401,8 @@
                             console.log("报名成功");
                             self.pay_success=data.data;
                             self.state=2;
+                            // window.location.reload();
+
                             console.log(self.state)
                             // self.pay_active={};
                         }
@@ -575,12 +591,13 @@
                  $('.miao').html('<s></s>' + second + '秒');
                  intDiff--;
                  if(intDiff==0){
+                     console.log(22222222)
                      window.location.reload();
                  }
                 }
 
             }
-        },500)
+        },1000)
         $("body").delegate(".payment-block","mouseenter",function(){
             console.log($(".mobel_phone"))
             $(".mobel_phone").fadeIn(1000);
