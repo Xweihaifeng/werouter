@@ -167,7 +167,7 @@ $(document).ready(function() {
             `<div class="show-art" style="margin:0;border-top:1px solid #e6e6e6;display:block;width: 479px;height: auto;border-right:0px solid #fff;border-bottom:0px solid #fff;border-left:0px solid #fff;" id=` + data.activity_id + `>       
             <div class="myself" style="width: 100%;height: 24px;margin-top: 24px;position: relative;">
                 <div class="my_con" style="width: 70%;height: 24px;">
-                     <div class="whoimg" style="width: 24px;height: 24px;border-radius: 50%;background: blue;float: left;"><a href="` + '/' + data.domain + ` "><img src=" ` + 'http://images.wezchina.com/' + data.avatar + ` " alt="" style="width:24px;height: 24px;border-radius: 50%;display: block"></a></div>
+                     <div class="whoimg" style="width: 24px;height: 24px;border-radius: 50%;float: left;"><a href="` + '/' + data.domain + ` " ><img src=" ` + 'http://images.wezchina.com/' + data.avatar + ` " alt="" style="width:24px;height: 24px;border-radius: 50%;display: block"></a></div>
                      <span style="font-size: 14px;color: #666;float: left;line-height: 24px;margin-left: 6px;">` + data.real_name + `</span>
                 </div>
       

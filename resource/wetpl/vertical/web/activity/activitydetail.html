@@ -156,8 +156,8 @@
                                         <p class="pay-type">
                                             <i class="fa fa-cny"></i>
                                             费用 :
-                                            <span style="padding-left: 10px;color:#f7b026" v-if="active_detail.type == 1">免费</span>
-                                            <span style="padding-left: 10px;color:red" v-if="active_detail.type == 2">收费</span>
+                                            <span style="color:#f7b026" v-if="active_detail.type == 1">免费</span>
+                                            <span style="color:red" v-if="active_detail.type == 2">收费</span>
                                         </p>
 
 
@@ -230,7 +230,8 @@
                                             </div>
                                             <div id="folding"> </div>
                                             <div class="clearfix"></div>
-                                            <div class="see-more text-center">没有更多</div>
+                                            <div class="see-more text-center" v-if="active_num > 0 && active_num <= 11 ">没有更多</div>
+                                            <div class="see-more text-center text-long" v-if="active_num > 11 " style="cursor: pointer">查看更多</div>
                                         </div>
                                     </div>
                                 </div>
@@ -240,7 +241,7 @@
                                     <div class="top top_avatar">
                                         <img :src=" 'http://images.wezchina.com/' + active_user_info.avatar" alt="">
                                         <div class="jubanfang">
-                                            <a class="linkto " href="/index">
+                                            <a class="linkto " :href=" '/' + user_domain">
                                                 {{active_user_info.nickname}}
                                                 <img src="/common/img/vrenzheng.png" alt="">
                                             </a>
@@ -339,7 +340,8 @@
             page_info:false,                      //订单信息
             pay_ment:0,                           //按钮状态（支付的状态）
             user_active_num:0,                     //该活动人发表活动总数
-            user_guest_num:0                        //参与人数
+            user_guest_num:0,                       //参与人数
+            flag:true                               //控制显示开关
         },
         mounted: function() {
 
@@ -597,149 +599,151 @@
             },
             // 报名
             supper(id) {
-                var self=this;
-                id=self.id_domain;
-                $(".layui-layer-shade").show();
-                $(".layui-layer").show();
+               if(this.flag){
+                   var self=this;
+                   self.flag=false;
+                   id=self.id_domain;
+                   // $(".layui-layer-shade").show();
+                   // $(".layui-layer").show();
 
-                var datauser = '';
-                var realname = '';
-                var position_user = '';         //职位
-                var company_user = '';           //公司
-                var disa = '';
-                if (docCookies.getItem("weid") != null && docCookies.getItem("token") != null) {
-                    datauser = plats_user_info.phone;
-                    realname = plats_user_info.real_name;
-                    position_user = plats_user_info.position;
-                    company_user = plats_user_info.company;
-                    console.log(datauser)
-                    console.log(realname)
-                    disa = 'readonly="readonly"';
-                } else {
-                    datauser = '请输入手机号码';
-                    realname = '请输入姓名';
-                    position_user = '请填写您的所在职位';
-                    company_user = '请填写您的所在公司';
-                    disa = '';
-                }
+                   var datauser = '';
+                   var realname = '';
+                   var position_user = '';         //职位
+                   var company_user = '';           //公司
+                   var disa = '';
+                   if (docCookies.getItem("weid") != null && docCookies.getItem("token") != null) {
+                       datauser = plats_user_info.phone;
+                       realname = plats_user_info.real_name;
+                       position_user = plats_user_info.position;
+                       company_user = plats_user_info.company;
+                       console.log(datauser)
+                       console.log(realname)
+                       disa = 'readonly="readonly"';
+                   } else {
+                       datauser = '请输入手机号码';
+                       realname = '请输入姓名';
+                       position_user = '请填写您的所在职位';
+                       company_user = '请填写您的所在公司';
+                       disa = '';
+                   }
 
-                self.GetActivity(id, function(rep) {
-                    closeindex = layer.open({
-                        type: 1,
-                        area: ['600px'],
-                        title: 0,
-                        closeBtn: 0,
-                        shadeClose: true,
-                        scrollbar: false,
-                        content: '<div id="signBg">' +
-                        '<div class="signBox">' +
-                        '<div class="sign_head">' +
-                        '<div class="sign_head_title">' +
-                        '确认报名' +
-                        '</div>' +
-                        '<div class="clon1"></div>' +
-                        '<div class="sign_head_contain">' +
-                        '<p class="act_title activity_title_apply"></p>' +
-                        '<p class="act_ttt">' +
-                        '<span class="act_time">' +
-                        '时间： <span class=" act_time_all" >' + rep.data.begain_time + ' ~ ' + rep.data.end_time + '</span>' +
-                        '</span>' +
-                        '<span class="act_time">' +
-                        '<span class="act_time_deadline">' + rep.data.enroll_deadline + '</span> 报名截止' +
-                        '</span>' +
-                        '</p>' +
-                        '<p class="act_dress">地点：' + rep.data.area_name + rep.data.address + '</p>' +
-                        '</div>' +
-                        '</div>' +
-
-
-                        '<div class="sign_head">' +
-                        '<div class="sign_head_title">门票信息</div>' +
-                        '<div class="clon1"></div>' +
-                        '<div class="sign_head_contain">' +
-                        '<div class="act_title">' +
-                        '<div class="mp">' +
-
-                        '<ul></ul>' +
-                        '<div id="tickets"><span>购买数量： </span>' +
-                        '<span id="mins">-</span>' +
-                        '<span><input type="text" class="form-control" id="num" pattern="[0-9]*" maxlength="3" value="0"></span>' +
-                        '<span id="adds">+</span>' +
-                        '</div>' +
-                        '</div>' +
-
-                        '</div></div>' +
-                        '</div>' +
+                   self.GetActivity(id, function(rep) {
+                       closeindex = layer.open({
+                           type: 1,
+                           area: ['600px'],
+                           title: 0,
+                           closeBtn: 0,
+                           shadeClose: true,
+                           scrollbar: false,
+                           content: '<div id="signBg">' +
+                           '<div class="signBox">' +
+                           '<div class="sign_head">' +
+                           '<div class="sign_head_title">' +
+                           '确认报名' +
+                           '</div>' +
+                           '<div class="clon1"></div>' +
+                           '<div class="sign_head_contain">' +
+                           '<p class="act_title activity_title_apply"></p>' +
+                           '<p class="act_ttt">' +
+                           '<span class="act_time">' +
+                           '时间： <span class=" act_time_all" >' + rep.data.begain_time + ' ~ ' + rep.data.end_time + '</span>' +
+                           '</span>' +
+                           '<span class="act_time">' +
+                           '<span class="act_time_deadline">' + rep.data.enroll_deadline + '</span> 报名截止' +
+                           '</span>' +
+                           '</p>' +
+                           '<p class="act_dress">地点：' + rep.data.area_name + rep.data.address + '</p>' +
+                           '</div>' +
+                           '</div>' +
 
 
+                           '<div class="sign_head">' +
+                           '<div class="sign_head_title">门票信息</div>' +
+                           '<div class="clon1"></div>' +
+                           '<div class="sign_head_contain">' +
+                           '<div class="act_title">' +
+                           '<div class="mp">' +
 
-                        '<div class="sign_section">' +
-                        '<div class="">' +
-                        '<div class="sign_section_title">' +
-                        '确认信息' +
-                        '</div>' +
-                        '<div class="clon2"></div>' +
-                        '<div class="sign_section_contain">' +
-                        '<div class="sign_name sign_input">' +
-                        '<div class="text">' +
-                        '<input id="username" type="text" ' + disa + ' placeholder="' + realname + '" style="margin-top: 0;font-size: inherit;">' +
-                        '</div>' +
-                        '</div>' +
+                           '<ul></ul>' +
+                           '<div id="tickets"><span>购买数量： </span>' +
+                           '<span id="mins">-</span>' +
+                           '<span><input type="text" class="form-control" id="num" pattern="[0-9]*" maxlength="3" value="0"></span>' +
+                           '<span id="adds">+</span>' +
+                           '</div>' +
+                           '</div>' +
 
-                        '<div class="sign_phone sign_input" style="width: 540px;height: 38px;">' +
-                        '<div class="text">' +
-                        '<input id="phone" type="text"  ' + disa + '  placeholder="' + datauser + '">' +
-                        '</div>' +
-                        '<button class="sign_code" style="display: none" ">获取验证码</button>' +
-                        '</div>' +
-                        '<div class="sign_yz sign_input" style="display: none;">' +
-                        '<div class="text">' +
-                        '<input type="text" class="check-num-apply" placeholder="请输入验证码">' +
-                        '</div>' +
-                        '<button class="sign_yz_on">在线验证</button>' +
-                        '</div>' +
-                        '<div class="sign_zw sign_input" >' +
-                        '<div class="text">' +
-                        '<input id="zhiw" type="text" placeholder=" '+position_user+' " style="background: #ffffff">' +
-                        '</div>' +
-                        '</div>' +
-                        '<div class="sign_com sign_input">' +
-                        '<div class="text">' +
-                        '<input id="gongsi" type="text" placeholder=" '+company_user+' " style="background: #ffffff">' +
-                        '</div>' +
-                        '</div>' +
-                        '</div>' +
-                        '</div>' +
-                        '</div>' +
-
-                        '<div class="sign_foot">' +
-                        '<div class="sign_foot_contn">' +
-                        '<span class="apply_submit" style="cursor:pointer;">确认</span>' +
-                        '</div>' +
-                        '</div>' +
-                        '</div>' +
-                        '</div>',
+                           '</div></div>' +
+                           '</div>' +
 
 
-                        success: function() {
-                            console.log(9999999,apiUrl + 'activity/tickets?activity_id=' + window.location.pathname.split('/').pop());
-                            CurrentActivity = rep.data;
-                            $.ajax({
-                                url: apiUrl + 'activity/tickets?activity_id=' + window.location.pathname.split('/').pop(),
-                                type: 'GET',
-                                success: function(data) {
-                                    console.log(data);
-                                    var ids = [];
-                                    $(".mp ul").append(
-                                        data.data.reduce((res, e, i) =>
-                                                (ids.push([e.weid, e.type, e.total_num - e.sold_num]), self.tickets.push({ id: e.weid, num: 0 }),
-                                                    res += `<li id="${e.weid}">
+
+                           '<div class="sign_section">' +
+                           '<div class="">' +
+                           '<div class="sign_section_title">' +
+                           '确认信息' +
+                           '</div>' +
+                           '<div class="clon2"></div>' +
+                           '<div class="sign_section_contain">' +
+                           '<div class="sign_name sign_input">' +
+                           '<div class="text">' +
+                           '<input id="username" type="text" ' + disa + ' placeholder="' + realname + '" style="margin-top: 0;font-size: inherit;">' +
+                           '</div>' +
+                           '</div>' +
+
+                           '<div class="sign_phone sign_input" style="width: 540px;height: 38px;">' +
+                           '<div class="text">' +
+                           '<input id="phone" type="text"  ' + disa + '  placeholder="' + datauser + '">' +
+                           '</div>' +
+                           '<button class="sign_code" style="display: none" ">获取验证码</button>' +
+                           '</div>' +
+                           '<div class="sign_yz sign_input" style="display: none;">' +
+                           '<div class="text">' +
+                           '<input type="text" class="check-num-apply" placeholder="请输入验证码">' +
+                           '</div>' +
+                           '<button class="sign_yz_on">在线验证</button>' +
+                           '</div>' +
+                           '<div class="sign_zw sign_input" >' +
+                           '<div class="text">' +
+                           '<input id="zhiw" type="text" placeholder=" '+position_user+' " style="background: #ffffff">' +
+                           '</div>' +
+                           '</div>' +
+                           '<div class="sign_com sign_input">' +
+                           '<div class="text">' +
+                           '<input id="gongsi" type="text" placeholder=" '+company_user+' " style="background: #ffffff">' +
+                           '</div>' +
+                           '</div>' +
+                           '</div>' +
+                           '</div>' +
+                           '</div>' +
+
+                           '<div class="sign_foot">' +
+                           '<div class="sign_foot_contn">' +
+                           '<span class="apply_submit" style="cursor:pointer;">确认</span>' +
+                           '</div>' +
+                           '</div>' +
+                           '</div>' +
+                           '</div>',
+
+
+                           success: function() {
+                               console.log(9999999,apiUrl + 'activity/tickets?activity_id=' + window.location.pathname.split('/').pop());
+                               CurrentActivity = rep.data;
+                               $.ajax({
+                                   url: apiUrl + 'activity/tickets?activity_id=' + window.location.pathname.split('/').pop(),
+                                   type: 'GET',
+                                   success: function(data) {
+                                       console.log(data);
+                                       var ids = [];
+                                       $(".mp ul").append(
+                                           data.data.reduce((res, e, i) =>
+                                                   (ids.push([e.weid, e.type, e.total_num - e.sold_num]), self.tickets.push({ id: e.weid, num: 0 }),
+                                                       res += `<li id="${e.weid}">
                                                                                 ${e.type == 1 ?
-                                                        `<div id="p1"><p class="free" style="padding-right: 15px;">免费</p></div>`
-                                                        :
-                                                        `<div id="p1"><img src="/common/img/rmb.png">
+                                                           `<div id="p1"><p class="free" style="padding-right: 15px;">免费</p></div>`
+                                                           :
+                                                           `<div id="p1"><img src="/common/img/rmb.png">
                                                                                     <p class="price">${e.price}</p></div>`
-                                                        }
+                                                           }
                                                                                 <div id="p2">
                                                                                 <p class="tkname">${e.name}</p>
                                                                                 <p class="tkdscp">${e.description}</p>
@@ -749,421 +753,423 @@
                                                                                 <p class="tknum"><span class="${e.weid}">0</span>张</p>
                                                                                 </div>
                                                                                 </li>`)
-                                            , '')
-                                    );
-                                    var add = (id, type) => {
-                                        if (type == 1) {
-                                            console.log(1)
-                                            $("#" + id).css('border', '2px solid #ffb03f');
-                                            $("#" + id + ' #p2').css({'background': '#ffb03f'});
-                                            $("#" + id + ' #p3').css({'background': '#ffb03f'});
-                                            $("#tickets").hide();
-                                            $(".tknum span").text(1);
-                                            self.tickets.filter(x => x.id == id)[0].num = 1;
-                                        } else {
-                                            console.log(2)
-                                            $("#" + id).css('border', '2px solid #007cd3');
-                                            $("#" + id + ' #p2').css({'background': '#007cd3'});
-                                            $("#" + id + ' #p3').css({'background': '#007cd3'});
-                                            $("#" + id + ' .price').css('color', '#007cd3');
-                                            $("#" + id + ' img').attr('src', '/common/img/rmbo.png');
-                                        }
-                                        $("#" + id + ' #p2 p').css({'color': 'white'});
-                                        $("#" + id + ' #p3 p').css({'color': 'white'});
-                                    }
-                                    var remove = (id) => {
-                                        var res = ids.filter(x => x[0] != id);
-                                        res.map(x => $('#' + x[0]).css('border', '2px solid #dddddd'));
-                                        res.map(x => $('#' + x[0] + ' div').css({'background': 'white', 'color': '#555'}));
-                                        res.map(x => $('#' + x[0] + '  #p2 p').css({'color': '#555'}));
-                                        res.map(x => $('#' + x[0] + '  #p3 p').css({'color': '#555'}));
-                                        res.map(x => $('#' + x[0] + ' .price').css('color', '#555'));
-                                        res.map(x => $('#' + x[0] + ' img').attr('src', '/common/img/rmb.png'));
-                                    }
-                                    add(ids[0][0], ids[0][1]);
-                                    var id = ids[0][0];
-                                    $(".mp ul li").click(function(e) {
-                                        id = $(e.target).parents('li').attr('id');
-                                        remove(id);
-                                        add(id, ids.filter(x => x[0] == id)[0][1]);
-                                        $("#num").val(parseInt($("." + id).text()));
-                                    })
-                                    $("#num").keyup(function(){
-                                        var curr = parseInt($("#num").val());
-                                        var total = ids.filter(x => x[0] == id)[0][2];
-                                        if (isNaN(curr)) {
-                                            $("#num").val(0);
-                                            $("." + id).text(0);
-                                            self.tickets.filter(x => x.id == id)[0].num = 0;
-                                            return;
-                                        }
-                                        if (curr > total) {
-                                            $("#num").val(total);
-                                            $("." + id).text(total);
-                                            tickets.filter(x => x.id == id)[0].num = curr;
-                                            layui.use('layer', function() {
-                                                var layer = layui.layer;
-                                                layer.msg("已超出最大购票数", {time: 1500});
-                                            })
-                                        } else {
-                                            $("#num").val(curr);
-                                            $("." + id).text(curr);
-                                            self.tickets.filter(x => x.id == id)[0].num = curr;
-                                        }
-                                    })
+                                               , '')
+                                       );
+                                       var add = (id, type) => {
+                                           if (type == 1) {
+                                               console.log(1)
+                                               $("#" + id).css('border', '2px solid #ffb03f');
+                                               $("#" + id + ' #p2').css({'background': '#ffb03f'});
+                                               $("#" + id + ' #p3').css({'background': '#ffb03f'});
+                                               $("#tickets").hide();
+                                               $(".tknum span").text(1);
+                                               self.tickets.filter(x => x.id == id)[0].num = 1;
+                                           } else {
+                                               console.log(2)
+                                               $("#" + id).css('border', '2px solid #007cd3');
+                                               $("#" + id + ' #p2').css({'background': '#007cd3'});
+                                               $("#" + id + ' #p3').css({'background': '#007cd3'});
+                                               $("#" + id + ' .price').css('color', '#007cd3');
+                                               $("#" + id + ' img').attr('src', '/common/img/rmbo.png');
+                                           }
+                                           $("#" + id + ' #p2 p').css({'color': 'white'});
+                                           $("#" + id + ' #p3 p').css({'color': 'white'});
+                                       }
+                                       var remove = (id) => {
+                                           var res = ids.filter(x => x[0] != id);
+                                           res.map(x => $('#' + x[0]).css('border', '2px solid #dddddd'));
+                                           res.map(x => $('#' + x[0] + ' div').css({'background': 'white', 'color': '#555'}));
+                                           res.map(x => $('#' + x[0] + '  #p2 p').css({'color': '#555'}));
+                                           res.map(x => $('#' + x[0] + '  #p3 p').css({'color': '#555'}));
+                                           res.map(x => $('#' + x[0] + ' .price').css('color', '#555'));
+                                           res.map(x => $('#' + x[0] + ' img').attr('src', '/common/img/rmb.png'));
+                                       }
+                                       add(ids[0][0], ids[0][1]);
+                                       var id = ids[0][0];
+                                       $(".mp ul li").click(function(e) {
+                                           id = $(e.target).parents('li').attr('id');
+                                           remove(id);
+                                           add(id, ids.filter(x => x[0] == id)[0][1]);
+                                           $("#num").val(parseInt($("." + id).text()));
+                                       })
+                                       $("#num").keyup(function(){
+                                           var curr = parseInt($("#num").val());
+                                           var total = ids.filter(x => x[0] == id)[0][2];
+                                           if (isNaN(curr)) {
+                                               $("#num").val(0);
+                                               $("." + id).text(0);
+                                               self.tickets.filter(x => x.id == id)[0].num = 0;
+                                               return;
+                                           }
+                                           if (curr > total) {
+                                               $("#num").val(total);
+                                               $("." + id).text(total);
+                                               self.tickets.filter(x => x.id == id)[0].num = curr;
+                                               layui.use('layer', function() {
+                                                   var layer = layui.layer;
+                                                   layer.msg("已超出最大购票数", {time: 1500});
+                                               })
+                                           } else {
+                                               $("#num").val(curr);
+                                               $("." + id).text(curr);
+                                               self.tickets.filter(x => x.id == id)[0].num = curr;
+                                           }
+                                       })
 
-                                    $("#mins").click(function(){
-                                        var curr = parseInt($("#num").val()) - 1;
-                                        if (curr >= 0) {
-                                            $("#num").val(curr);
-                                            $("." + id).text(curr);
-                                            self.tickets.filter(x => x.id == id)[0].num = curr;
-                                        } else {
-                                            layui.use('layer', function() {
-                                                var layer = layui.layer;
-                                                layer.msg("票数不可少于0张", {time: 1500});
-                                            })
-                                        }
-                                    })
-                                    $("#adds").click(function(){
-                                        var curr = parseInt($("#num").val()) + 1;
-                                        var total = ids.filter(x => x[0] == id)[0][2];
-                                        if (curr <= total) {
-                                            $("#num").val(curr);
-                                            $("." + id).text(curr);
-                                            self.tickets.filter(x => x.id == id)[0].num = curr;
-                                        } else {
-                                            layui.use('layer', function() {
-                                                var layer = layui.layer;
-                                                layer.msg("已无余票", {time: 1000});
-                                            })
-                                        }
-                                    })
-                                }
-                            })
-                        },
-                        end: function() {
-                            //location.reload();
-                        },
-                        shade: 0.7
-                    });
-                    if(docCookies.getItem("weid") != null && docCookies.getItem("token") != null){
-                        $('#phone').val(datauser);
-                        $('#username').val(realname);
-                        $('#zhiw').val(position_user);
-                        $('#gongsi').val(company_user);
-                    }
+                                       $("#mins").click(function(){
+                                           var curr = parseInt($("#num").val()) - 1;
+                                           if (curr >= 0) {
+                                               $("#num").val(curr);
+                                               $("." + id).text(curr);
+                                               self.tickets.filter(x => x.id == id)[0].num = curr;
+                                           } else {
+                                               layui.use('layer', function() {
+                                                   var layer = layui.layer;
+                                                   layer.msg("票数不可少于0张", {time: 1500});
+                                               })
+                                           }
+                                       })
+                                       $("#adds").click(function(){
+                                           var curr = parseInt($("#num").val()) + 1;
+                                           var total = ids.filter(x => x[0] == id)[0][2];
+                                           if (curr <= total) {
+                                               $("#num").val(curr);
+                                               $("." + id).text(curr);
+                                               self.tickets.filter(x => x.id == id)[0].num = curr;
+                                           } else {
+                                               layui.use('layer', function() {
+                                                   var layer = layui.layer;
+                                                   layer.msg("已无余票", {time: 1000});
+                                               })
+                                           }
+                                       })
+                                   }
+                               })
+                           },
+                           end: function() {
+                               //location.reload();
+                               self.flag=true;
+                           },
+                           shade: 0.7
+                       });
+                       if(docCookies.getItem("weid") != null && docCookies.getItem("token") != null){
+                           $('#phone').val(datauser);
+                           $('#username').val(realname);
+                           $('#zhiw').val(position_user);
+                           $('#gongsi').val(company_user);
+                       }
 
-                });
+                   });
 
-                // activitydetail(id, nickname, imgUrl, applyid);
+                   // activitydetail(id, nickname, imgUrl, applyid);
 
-                //获取验证码
-                var lock = false;
-                var isCheckNum = false; //默认false
-                var count = false; //验证码倒计时
-                var getCheck = function(phoneNum) {
-                    var timeout = false;
-                    var seconds = 60;
+                   //获取验证码
+                   var lock = false;
+                   var isCheckNum = false; //默认false
+                   var count = false; //验证码倒计时
+                   var getCheck = function(phoneNum) {
+                       var timeout = false;
+                       var seconds = 60;
 
-                    lock = true;
-                    count = setInterval(function() {
-                        if (seconds > 0) {
-                            seconds -= 1;
-                            $(".sign_code").text(seconds + "秒");
-                        } else {
-                            $(".sign_code").text("重新获取验证码");
-                            timeout = false;
-                            seconds = 60;
-                            lock = false;
-                            clearInterval(count);
-                        }
-                    }, 1000);
+                       lock = true;
+                       count = setInterval(function() {
+                           if (seconds > 0) {
+                               seconds -= 1;
+                               $(".sign_code").text(seconds + "秒");
+                           } else {
+                               $(".sign_code").text("重新获取验证码");
+                               timeout = false;
+                               seconds = 60;
+                               lock = false;
+                               clearInterval(count);
+                           }
+                       }, 1000);
 
-                    $.ajax({
-                        url: CODES,
-                        dataType: 'json',
-                        type: 'post',
-                        data: { 'phone': phoneNum },
-                        success: function(data) {
-                            isCheckNum = true;
-                            console.log(data);
-                        },
-                        error: function(err) {
-                            console.log(err);
-                        }
-                    })
-                }
+                       $.ajax({
+                           url: CODES,
+                           dataType: 'json',
+                           type: 'post',
+                           data: { 'phone': phoneNum },
+                           success: function(data) {
+                               isCheckNum = true;
+                               console.log(data);
+                           },
+                           error: function(err) {
+                               console.log(err);
+                           }
+                       })
+                   }
 
-                var phoneNum = 0;
-                var checkNum = 0;
-                setTimeout(function() {
-                    $(".sign_code").bind("click", function() {
+                   var phoneNum = 0;
+                   var checkNum = 0;
+                   setTimeout(function() {
+                       $(".sign_code").bind("click", function() {
 
-                        console.log(!lock);
-                        if (!lock) {
-                            phoneNum = $("#phone").val();
+                           console.log(!lock);
+                           if (!lock) {
+                               phoneNum = $("#phone").val();
 
-                            var regexp = /^(13|14|17|15|18)/;
-                            var reg = new RegExp(regexp);
-                            console.log(phoneNum, reg.test(phoneNum));
+                               var regexp = /^(13|14|17|15|18)/;
+                               var reg = new RegExp(regexp);
+                               console.log(phoneNum, reg.test(phoneNum));
 
-                            if (reg.test(phoneNum) && phoneNum.length == 11) {
-                                getCheck(phoneNum);
-                            } else {
-                                layui.use('layer', function() {
-                                    var layer = layui.layer;
-                                    layer.msg("手机号码错误", {time: 1500});
-                                })
+                               if (reg.test(phoneNum) && phoneNum.length == 11) {
+                                   getCheck(phoneNum);
+                               } else {
+                                   layui.use('layer', function() {
+                                       var layer = layui.layer;
+                                       layer.msg("手机号码错误", {time: 1500});
+                                   })
 
-                            }
-                        }
+                               }
+                           }
 
-                    })
-                }, 1000);
+                       })
+                   }, 1000);
 
-                 // 在线验证
-                //在线验证
-                var login = function(phoneNum, checkNum) {
-                    $.ajax({
-                        url: LOGIN,
-                        type: 'post',
-                        data: { 'phone': phoneNum, 'code': checkNum },
-                        success: function(data) {
-                            if (data.code != -200) {
+                   // 在线验证
+                   //在线验证
+                   var login = function(phoneNum, checkNum) {
+                       $.ajax({
+                           url: LOGIN,
+                           type: 'post',
+                           data: { 'phone': phoneNum, 'code': checkNum },
+                           success: function(data) {
+                               if (data.code != -200) {
 
-                                // localStorage.setItem('token', data.token);
-                                // localStorage.setItem('weid', data.data.weid);
-                                // localStorage.setItem('phone', data.data.phone);
-                                // self.setCookie(data.token, 7);
-                                // $.ajaxSetup({
-                                //     global: true,
-                                //     dataType: 'json',
-                                //     headers: {
-                                //         'Token': data.token
-                                //     },
-                                //     error: function() {
-                                //         console.log("系统错误，请稍后再试")
-                                //         layer.msg("系统错误，请稍后再试", {
-                                //             time: 1000
-                                //         });
-                                //     }
-                                // });
-                                // $(".sign_code,.sign_yz").css("display", "none");
-                                // isCheckNum = false;
-                                self.saveUserInfo(data.token, data.data.weid, data.data.avatar, data.data.identity, data.data.phone);
-                                // error: function() {
-                                //     console.log("系统错误，请稍后再试")
-                                //     layer.msg("系统错误，请稍后再试", {
-                                //         time: 1000
-                                //     });
-                                // }
-                                showLogin = false;
-                                isLogin = true;
-                                isCheckNum = false;
-                                // $("#modal_login").fadeOut(300);
-                                setTimeout(function(){
-                                    layui.use('layer', function() {
-                                        var layer = layui.layer;
-                                        layer.msg("您已成功登录", {time: 1500});
-                                    })
-                                    $("#avatar").attr('src', set_img(data.data.avatar, '/common/img/new/icon01.png', 29, 27));
-                                }, 300);
-                                $(".sign_code,.sign_yz").css("display", "none");
-                                $("#username").attr("readonly","readonly")
-                                $("#phone").attr("readonly","readonly")
-                            } else {
-                                lock = false;
-                                clearInterval(count);
-                                layui.use('layer', function() {
-                                    var layer = layui.layer;
-                                    layer.msg("验证失败，请重新获取验证码", {time: 1500});
-                                })
-                                $(".sign_code").text("重新获取验证码");
-                            }
-                        },
-                        error: function(err) {
-                            console.log(err);
-                        }
-                    })
-                };
-                //点击在线验证按钮
-                var logBt = function() {
-                    phoneNum = $("#phone").val();
-                    checkNum = $(".check-num-apply").val();
-                    console.log(checkNum, phoneNum);
-                    var regexp = /^(13|14|17|15|18)/;
-                    var reg = new RegExp(regexp);
-                    if (reg.test(phoneNum) && phoneNum.length == 11 && checkNum.length == 6) {
-                        login(phoneNum, checkNum);
-                    } else {
-                        if (!(phoneNum.length == 11) || !reg.test(phoneNum)) {
-                            layui.use('layer', function() {
-                                var layer = layui.layer;
-                                layer.msg("手机号码错误", {time: 1500});
-                            })
-                            return;
-                        }
-                        if (!(checkNum.length == 6) || !isCheckNum) {
-                            layui.use('layer', function() {
-                                var layer = layui.layer;
-                                layer.msg("手机验证码错误", {time: 1500});
-                            })
-                            return;
-                        }
-                        /*if (!isChecked) {
-                            mess_tusi("请确认服务条款");
-                            return;
-                        }*/
-                    }
-                };
-                setTimeout(function() {
-                    $(".sign_yz_on").click(function() {
+                                   // localStorage.setItem('token', data.token);
+                                   // localStorage.setItem('weid', data.data.weid);
+                                   // localStorage.setItem('phone', data.data.phone);
+                                   // self.setCookie(data.token, 7);
+                                   // $.ajaxSetup({
+                                   //     global: true,
+                                   //     dataType: 'json',
+                                   //     headers: {
+                                   //         'Token': data.token
+                                   //     },
+                                   //     error: function() {
+                                   //         console.log("系统错误，请稍后再试")
+                                   //         layer.msg("系统错误，请稍后再试", {
+                                   //             time: 1000
+                                   //         });
+                                   //     }
+                                   // });
+                                   // $(".sign_code,.sign_yz").css("display", "none");
+                                   // isCheckNum = false;
+                                   self.saveUserInfo(data.token, data.data.weid, data.data.avatar, data.data.identity, data.data.phone);
+                                   // error: function() {
+                                   //     console.log("系统错误，请稍后再试")
+                                   //     layer.msg("系统错误，请稍后再试", {
+                                   //         time: 1000
+                                   //     });
+                                   // }
+                                   showLogin = false;
+                                   isLogin = true;
+                                   isCheckNum = false;
+                                   // $("#modal_login").fadeOut(300);
+                                   setTimeout(function(){
+                                       layui.use('layer', function() {
+                                           var layer = layui.layer;
+                                           layer.msg("您已成功登录", {time: 1500});
+                                       })
+                                       $("#avatar").attr('src', set_img(data.data.avatar, '/common/img/new/icon01.png', 29, 27));
+                                   }, 300);
+                                   $(".sign_code,.sign_yz").css("display", "none");
+                                   $("#username").attr("readonly","readonly")
+                                   $("#phone").attr("readonly","readonly")
+                               } else {
+                                   lock = false;
+                                   clearInterval(count);
+                                   layui.use('layer', function() {
+                                       var layer = layui.layer;
+                                       layer.msg("验证失败，请重新获取验证码", {time: 1500});
+                                   })
+                                   $(".sign_code").text("重新获取验证码");
+                               }
+                           },
+                           error: function(err) {
+                               console.log(err);
+                           }
+                       })
+                   };
+                   //点击在线验证按钮
+                   var logBt = function() {
+                       phoneNum = $("#phone").val();
+                       checkNum = $(".check-num-apply").val();
+                       console.log(checkNum, phoneNum);
+                       var regexp = /^(13|14|17|15|18)/;
+                       var reg = new RegExp(regexp);
+                       if (reg.test(phoneNum) && phoneNum.length == 11 && checkNum.length == 6) {
+                           login(phoneNum, checkNum);
+                       } else {
+                           if (!(phoneNum.length == 11) || !reg.test(phoneNum)) {
+                               layui.use('layer', function() {
+                                   var layer = layui.layer;
+                                   layer.msg("手机号码错误", {time: 1500});
+                               })
+                               return;
+                           }
+                           if (!(checkNum.length == 6) || !isCheckNum) {
+                               layui.use('layer', function() {
+                                   var layer = layui.layer;
+                                   layer.msg("手机验证码错误", {time: 1500});
+                               })
+                               return;
+                           }
+                           /*if (!isChecked) {
+                               mess_tusi("请确认服务条款");
+                               return;
+                           }*/
+                       }
+                   };
+                   setTimeout(function() {
+                       $(".sign_yz_on").click(function() {
 
-                        logBt();
-                    })
-                }, 1000);
+                           logBt();
+                       })
+                   }, 1000);
 
-                $("#phone").keydown(function(evt) {
-                    switch (evt.keyCode) {
-                        case 13:
-                            $(".check-num-apply").select();
-                    }
-                });
+                   $("#phone").keydown(function(evt) {
+                       switch (evt.keyCode) {
+                           case 13:
+                               $(".check-num-apply").select();
+                       }
+                   });
 
-                $(".check-num-apply").keydown(function(evt) {
-                    switch (evt.keyCode) {
-                        case 13:
-                            logBt();
-                    }
-                });
-                setTimeout(function() {
-                    $(".apply_submit").bind("click", function() {
-                        var name = $('#username').val();
-                        var telphone = $('#phone').val();
-                        var poistion = $("#zhiw").val();
-                        var company = $("#gongsi").val();
-                        var tid = []; //购票id
-                        var number = []; //购票数
-                        self.tickets.filter(x => x.num != 0).map(x => (tid.push(x.id), number.push(x.num)));
-                        if (tid == "") {
-                            console.log("选择门票")
-                            layui.use('layer', function() {
-                                var layer = layui.layer;
-                                layer.msg("请选择门票", {time: 1500});
-                            })
-                            return;
-                        }
-                        if (number == 0) {
-                            console.log("购买门票")
-                            layui.use('layer', function() {
-                                var layer = layui.layer;
-                                layer.msg("请购买门票", {time: 1500});
-                            })
-                            return;
-                        }
-                        if (name == "") {
-                            console.log("名字")
-                            layui.use('layer', function() {
-                                var layer = layui.layer;
-                                layer.msg("请输入名字", {time: 1500});
-                            })
-                            return;
-                        }
-                        if (telphone == "") {
-                            console.log("电话号码")
-                            layui.use('layer', function() {
-                                var layer = layui.layer;
-                                layer.msg("请输入电话号码", {time: 1500});
-                            })
-                            return;
-                        }
-                        if (docCookies.getItem("weid")== '' || docCookies.getItem("token") == '') {
-                            console.log("验证手机号")
-                            layui.use('layer', function() {
-                                var layer = layui.layer;
-                                layer.msg("请验证您的手机号", {time: 1500});
-                            })
-                            return;
-                        }
+                   $(".check-num-apply").keydown(function(evt) {
+                       switch (evt.keyCode) {
+                           case 13:
+                               logBt();
+                       }
+                   });
+                   setTimeout(function() {
+                       $(".apply_submit").bind("click", function() {
+                           var name = $('#username').val();
+                           var telphone = $('#phone').val();
+                           var poistion = $("#zhiw").val();
+                           var company = $("#gongsi").val();
+                           var tid = []; //购票id
+                           var number = []; //购票数
+                           self.tickets.filter(x => x.num != 0).map(x => (tid.push(x.id), number.push(x.num)));
+                           if (tid == "") {
+                               console.log("选择门票")
+                               layui.use('layer', function() {
+                                   var layer = layui.layer;
+                                   layer.msg("请选择门票", {time: 1500});
+                               })
+                               return;
+                           }
+                           if (number == 0) {
+                               console.log("购买门票")
+                               layui.use('layer', function() {
+                                   var layer = layui.layer;
+                                   layer.msg("请购买门票", {time: 1500});
+                               })
+                               return;
+                           }
+                           if (name == "") {
+                               console.log("名字")
+                               layui.use('layer', function() {
+                                   var layer = layui.layer;
+                                   layer.msg("请输入名字", {time: 1500});
+                               })
+                               return;
+                           }
+                           if (telphone == "") {
+                               console.log("电话号码")
+                               layui.use('layer', function() {
+                                   var layer = layui.layer;
+                                   layer.msg("请输入电话号码", {time: 1500});
+                               })
+                               return;
+                           }
+                           if (docCookies.getItem("weid")== '' || docCookies.getItem("token") == '') {
+                               console.log("验证手机号")
+                               layui.use('layer', function() {
+                                   var layer = layui.layer;
+                                   layer.msg("请验证您的手机号", {time: 1500});
+                               })
+                               return;
+                           }
 
-                        if (poistion == "") {
-                            console.log("输入职位")
-                            layui.use('layer', function() {
-                                var layer = layui.layer;
-                                layer.msg("请输入职位", {time: 1500});
-                            })
-                            return;
-                        }
-                        if (company == "") {
-                            console.log("输入公司")
-                            layui.use('layer', function() {
-                                var layer = layui.layer;
-                                layer.msg("请输入公司", {time: 1500});
-                            })
-                            return;
-                        }
-                        var sendData = {
-                            activity_id: id,
-                            name: name,
-                            telphone: telphone,
-                            poistion: poistion,
-                            company: company,
-                            ticket_id: tid,
-                            num: number
-                        }
-                        $.ajax({
-                            url: ACTIVITY_ENROLL_STORE,
-                            type: 'post',
-                            data: sendData,
-                            headers: {
-                                'Token': docCookies.getItem("token")
-                            },
-                            success: function(data) {
-                                layer.closeAll('loading');
-                                if (data.code == 200) {
-                                    localStorage.setItem("phone", "");
-                                    localStorage.setItem('dataPhone', "");
-                                    localStorage.setItem('realName', "");
-                                    //location.reload();
-                                    layer.close(closeindex);
-                                    if (data.data.status == 2) {
-                                        self.pay_ment=2;
-                                    } else if (data.data.status == 1) {
-                                        self.pay_ment=1;
-                                        // 刷新页面
-                                        var href=window.location.protocol + '//' + window.location.host + '/'+ 'activity/pay?pay=' + data.data.number +'&activity=' + self.id_domain;
-                                        console.log(href)
-                                        window.location.href = href;
-                                    }
-                                }
-                                else if (data.code == 401) {
-                                    layui.use('layer', function() {
-                                        var layer = layui.layer;
-                                        layer.msg("请先登录再进行操作", {time: 1500});
-                                    })
-                                } else {
-                                    layui.use('layer', function() {
-                                        var layer = layui.layer;
-                                        layer.msg(data.message, {time: 1500});
-                                    })
+                           if (poistion == "") {
+                               console.log("输入职位")
+                               layui.use('layer', function() {
+                                   var layer = layui.layer;
+                                   layer.msg("请输入职位", {time: 1500});
+                               })
+                               return;
+                           }
+                           if (company == "") {
+                               console.log("输入公司")
+                               layui.use('layer', function() {
+                                   var layer = layui.layer;
+                                   layer.msg("请输入公司", {time: 1500});
+                               })
+                               return;
+                           }
+                           var sendData = {
+                               activity_id: id,
+                               name: name,
+                               telphone: telphone,
+                               poistion: poistion,
+                               company: company,
+                               ticket_id: tid,
+                               num: number
+                           }
+                           $.ajax({
+                               url: ACTIVITY_ENROLL_STORE,
+                               type: 'post',
+                               data: sendData,
+                               headers: {
+                                   'Token': docCookies.getItem("token")
+                               },
+                               success: function(data) {
+                                   layer.closeAll('loading');
+                                   if (data.code == 200) {
+                                       localStorage.setItem("phone", "");
+                                       localStorage.setItem('dataPhone', "");
+                                       localStorage.setItem('realName', "");
+                                       //location.reload();
+                                       layer.close(closeindex);
+                                       if (data.data.status == 2) {
+                                           self.pay_ment=2;
+                                       } else if (data.data.status == 1) {
+                                           self.pay_ment=1;
+                                           // 刷新页面
+                                           var href=window.location.protocol + '//' + window.location.host + '/'+ 'activity/pay?pay=' + data.data.number +'&activity=' + self.id_domain;
+                                           console.log(href)
+                                           window.location.href = href;
+                                       }
+                                   }
+                                   else if (data.code == 401) {
+                                       layui.use('layer', function() {
+                                           var layer = layui.layer;
+                                           layer.msg("请先登录再进行操作", {time: 1500});
+                                       })
+                                   } else {
+                                       layui.use('layer', function() {
+                                           var layer = layui.layer;
+                                           layer.msg(data.message, {time: 1500});
+                                       })
 
-                                    setTimeout(function(){
-                                        window.location.reload();
-                                    }, 2000);
+                                       setTimeout(function(){
+                                           window.location.reload();
+                                       }, 2000);
 
-                                    //location.reload();
-                                    // Ticket(localStorage.getItem(weid));
-                                }
-                            },
-                            error: function(xhr) {
-                                layer.closeAll('loading');
-                                console.log(xhr);
-                            }
-                        });
-                        layer.load();
-                    })
-                }, 1000);
+                                       //location.reload();
+                                       // Ticket(localStorage.getItem(weid));
+                                   }
+                               },
+                               error: function(xhr) {
+                                   layer.closeAll('loading');
+                                   console.log(xhr);
+                               }
+                           });
+                           layer.load();
+                       })
+                   }, 1000);
+               }
             },
             // 根据id查询活动
            GetActivity(id, callback) {
@@ -1374,7 +1380,7 @@
         new Vue({
             el: "#wepages_bottom",
             data: {
-                
+
             }
         })
 
@@ -1409,9 +1415,9 @@
             created: function(){
                 this.menu = {list: this.dataMenu.map(e => ({name: e})), flag: -1};  //////////////////////////////
                 this.wefriends();
-                this.init(window.location.pathname.split('/').pop());                
+                this.init(window.location.pathname.split('/').pop());
                 this.avatar = docCookies.getItem('token') ? (plats_user_info.avatar ? plats_user_info.avatar : localStorage.getItem('avatar')) : '';
-                
+
                 if (!docCookies.getItem('token')) {
                     this.userCenter = '快速登录';
                 } else {
@@ -1430,7 +1436,7 @@
                         // $("#menu").css({position:"fixed",top:0,left:0,zIndex:99});
                         $("#content").css({"padding-top":"55px"});
                         $("#center").show();
-                        $("#plats-user").show();                        
+                        $("#plats-user").show();
                         $("#menu ul li:nth-child(2)").hide();
                     }else{
                         $("#menu").css({position:"relative",zIndex:0});
@@ -1449,7 +1455,7 @@
                     window.onpopstate = function(e) {
                         var curr = window.location.pathname.split('/').pop();
                         var list = ['', 'article', 'activity', 'wemall', 'quan'];
-                        var id = list.indexOf(curr);                    
+                        var id = list.indexOf(curr);
                         if (id != -1) {
                             wepage.menu.flag = id;
                             switch (id) {
@@ -1462,7 +1468,7 @@
                         } else {
                             wepage.menu.flag = 0;
                             wepage.type = 'latest'
-                        }                        
+                        }
                     }
                 })
             },
@@ -1565,7 +1571,7 @@
                     })
                 },
                 getLatest: function(page, limit) {
-                    axios.get(apiUrl + 'circel/dynamic?page=' + page + '&limit=10' + '&type=1&dynamic_type=0&domain=' + pages_info.plats_domian.domain).then(data => {                        
+                    axios.get(apiUrl + 'circel/dynamic?page=' + page + '&limit=10' + '&type=1&dynamic_type=0&domain=' + pages_info.plats_domian.domain).then(data => {
                         this.type = 'latest';
                         this.latest = data.data.data.list;
                         this.latest == '' ? wepage.none = true : wepage.none = false;
@@ -1633,21 +1639,21 @@
                             },
                             success: function(data){
                                 e.shopping = data.data.list.map(e => (e.stateBuy = false, e));
-                            }                                                            
+                            }
                         })
                     })
                     // console.log(this.shopCate)
                 },
                 login: function(type){
                     if (!docCookies.getItem("token")) {
-                        $("#modal_login").show();                        
+                        $("#modal_login").show();
                     } else {
                         if (type == 0) {
                             //1:已关注 0：未关注
-                            this.info.if_follow == 1 ? this.cancelFollow() : this.follow();    
+                            this.info.if_follow == 1 ? this.cancelFollow() : this.follow();
                         } else {
-                            this.user = '/user';                            
-                        }                        
+                            this.user = '/user';
+                        }
                     }
                 },
                 change: function(page){
@@ -1725,12 +1731,12 @@
                         return avatar;
                     }
                 },
-                buy: function(o, i, state) {                    
+                buy: function(o, i, state) {
                     if (state != 'leave') {
                         o.stateBuy = true;
                     } else {
                         o.stateBuy = false;
-                    }                    
+                    }
                 }
             },
             filters: {

@@ -1211,8 +1211,8 @@
                                     var layer = layui.layer;
                                     layer.msg("收藏成功", {time: 2500});
                                 })
-                                this.collection_num++;
-                            })
+                            });
+
                         }
                     },
                     error: function(xhr) {
@@ -1236,7 +1236,8 @@
                                     layer.msg("取消收藏成功", {time: 2500});
                                 })
                             })
-                        this.collection_num--;
+                        console.log(7777777,this.collection_num)
+
                     }
                 })
             },
@@ -1256,10 +1257,12 @@
             collect_select(){
                 if(this.collect_id == ""){
                     console.log(plats_user_info)
-                    this.add_collection(this.id_domain,this.shop_info.mall_id)
+                    this.add_collection(this.id_domain,this.shop_info.mall_id);
+                    this.collection_num++;
                 }else{
                     console.log(this.collect_id)
                      this.del_collection(this.collect_id)
+                     this.collection_num--;
                 }
             }
         },

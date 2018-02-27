@@ -83,6 +83,8 @@
                 state = '未付款'
             }else if(data.state == 2){
                 state = '已付款'
+            }else if(data.state == 3){
+                state = '已过期'
             }
             var dom = '<tr>' +
                 '<td>'+data.out_trade_no+'</td>'+
