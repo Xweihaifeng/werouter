@@ -215,6 +215,18 @@ $(document).ready(function(){
                     cn = false;
                 }
             }
+            var objss=document.querySelectorAll(".category-item input:nth-of-type(1)")
+            objss.forEach((v,i)=>{
+                v.addEventListener("change",myfuns,false);
+            })
+            function myfuns() {
+                if($(this).val().length < 2){
+                    layer.msg("分类名不能少于两个字")
+                    if($(this).val().length > 10){
+                        layer.msg("分类名不能多于10个字")
+                    }
+                }
+            }
         });
 
         $(".operate_box").on("blur",".category-name",function(){
@@ -319,23 +331,25 @@ $(document).ready(function(){
                 cn = false;
             }
         }
-        // $(".category-item input:nth-of-type(2)").change(function () {
-        //     alert(1)
-        //     var reg = /^[a-zA-Z0-9]*$/;
-        //     var _txt = $(this).val();
-        //     console.log(_txt)
-        //     if (reg.test(_txt)) {
-        //         flags = true;
-        //         cn = true;
-        //         alert(flags,2332)
-        //     } else {
-        //         layer.msg("分类别名不能是汉字或非法字符")
-        //         flags = false;
-        //         cn = false;
-        //         alert(flags,444444)
-        //     }
-        //
+        // $(".category-item input:nth-of-type(1)").change(function () {
+        //    var lengths = $(".category-item input:nth-of-type(1)").val().length;
+        //    alert(lengths)
+        //    if(lengths < 2 || lengths > 10){
+        //        layer.msg("分类名长度规定为2~10")
+        //    }
         // })
+        var objs=document.querySelectorAll(".category-item input:nth-of-type(1)")
+        objs.forEach((v,i)=>{
+            v.addEventListener("change",myfuns,false);
+        })
+        function myfuns() {
+           if($(this).val().length < 2){
+               layer.msg("分类名不能少于两个字")
+                if($(this).val().length > 10){
+                    layer.msg("分类名不能多于10个字")
+                }
+           }
+        }
         $(document).on("click",".save-btn",function(){
                 var categories = new Array();
                 var noneVal = {};
@@ -417,7 +431,6 @@ $(document).ready(function(){
                             });
                         }
                     }
-
                     if(sav == true){
                         if(flags==true){
                             flags = false;
@@ -426,22 +439,51 @@ $(document).ready(function(){
                             });
                             var cns =true;
                             categories.forEach(function (v,i) {
-                                var regs = /^[a-zA-Z]*$/;
-                                if (regs.test(v.ename)) {
-                                   if(categories.length == i+1){
-                                       if( cns == true){
-                                           setTimeout(saves, 500);
-                                           sav = false;
-                                       }
-                                   }
-                                } else {
+                                if(v.name.length < 2){
                                     cns = false;
+                                    flags = true;
                                     layer.close(indexs);
-                                    layer.msg(v.name+"的别名不符合规范")
-                                    return;
+                                    layer.msg(v.name+"分类名不能少于两个字")
+                                    return
+                                } else if(v.name.length > 10){
+                                    cns = false;
+                                    flags = true;
+                                    layer.close(indexs);
+                                    layer.msg(v.name+"分类名不能多于10个字")
+                                    return
+                                } else if(v.ename.length < 4){
+                                    cns = false;
+                                    flags = true;
+                                    layer.close(indexs);
+                                    layer.msg(v.name+"分类名不能小于4个字")
+                                    return
+                                } else if(v.ename.length > 32){
+                                    cns = false;
+                                    flags = true;
+                                    layer.close(indexs);
+                                    layer.msg(v.name+"分类名不能多于32个字")
+                                    return
+                                }else {
+                                    var regs = /^[a-zA-Z]*$/;
+                                    if (regs.test(v.ename)) {
+                                        if(categories.length == i+1){
+                                            if( cns == true){
+                                                setTimeout(saves, 500);
+                                                sav = false;
+
+                                            }
+                                        }
+                                    } else {
+                                        cns = false;
+                                        layer.close(indexs);
+                                        layer.msg(v.name+"的别名不符合规范")
+                                        return;
+                                    }
                                 }
+
                             })
                             function saves() {
+                                // alert(1)
                                 flags = true;
                                 layer.close(indexs);
                                 var inde = layer.load(1, {
