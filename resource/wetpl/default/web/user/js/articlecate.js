@@ -190,10 +190,10 @@ $(document).ready(function(){
             categoryItemValue.push($(this).find(".category-name").val());
             newCIV.push($(this).find(".category-name").val())
         });
-        //添加商品分类
+        //添加文章分类
         var sav = false;
         $('#add_sort').on('click',function(){
-            var sortList = "<li class='clearfloat category-item' data-id='0'><input style='width: 230px' type='text' class='sort_info category-name' value=''><input style='width: 230px;margin-left: 50px;' type='text' class='sort_info category-ename'><input type='number' class='order_info category-floor' value=''><div class='operate_info'><a href='javascript:;' class='delete_sort'>删除</a></div></li>";
+            var sortList = `<li class='clearfloat category-item' data-id='0'><input style='width: 230px' type='text' minlength="2" maxlength="10" class='sort_info category-name' value=''><input style='width: 230px;margin-left: 50px;'  minlength="4" maxlength="32"  type='text' class='sort_info category-ename'><input type='number' class='order_info category-floor' value=''><div class='operate_info'><a href='javascript:;' class='delete_sort'>删除</a></div></li>`;
             $('.operate_box').append(sortList);
             $('.no_sort').remove();
             $('.sort_save').css({'background':'#ff9c00'});
@@ -313,12 +313,10 @@ $(document).ready(function(){
             if (reg.test(_txt)) {
                 flags = true;
                 cn = true;
-                alert(flags,212)
             } else {
                 layer.msg("分类别名不能是汉字或非法字符")
                 flags = false;
                 cn = false;
-                alert(2)
             }
         }
         // $(".category-item input:nth-of-type(2)").change(function () {
