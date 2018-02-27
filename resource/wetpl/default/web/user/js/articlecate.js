@@ -455,13 +455,13 @@ $(document).ready(function(){
                                     cns = false;
                                     flags = true;
                                     layer.close(indexs);
-                                    layer.msg(v.name+"分类名不能小于4个字")
+                                    layer.msg(v.ename+"分类别名不能小于4个字")
                                     return
                                 } else if(v.ename.length > 32){
                                     cns = false;
                                     flags = true;
                                     layer.close(indexs);
-                                    layer.msg(v.name+"分类名不能多于32个字")
+                                    layer.msg(v.ename+"分类别名不能多于32个字")
                                     return
                                 }else {
                                     var regs = /^[a-zA-Z]*$/;
