@@ -230,8 +230,8 @@
                                             </div>
                                             <div id="folding"> </div>
                                             <div class="clearfix"></div>
-                                            <div class="see-more text-center" v-if="active_num > 0 && active_num <= 11 ">没有更多</div>
-                                            <div class="see-more text-center text-long" v-if="active_num > 11 " style="cursor: pointer">查看更多</div>
+                                            <div class="see-more text-center" v-if="active_num > 0 && active_page == page">没有更多</div>
+                                            <div class="see-more text-center text-long" v-if="active_page > page " style="cursor: pointer" @click="active_more(id_domain,page)">查看更多</div>
                                         </div>
                                     </div>
                                 </div>
@@ -334,6 +334,8 @@
             guest_num:0,                      //邀请嘉宾人数
             active_guest:[],                   //活动成员
             active_num:0,                      //参加活动人数
+            active_page:0,                     //参加活动页面展示页面
+            active_limit:11,                  //每次加载参加活动人数条数
             active_user_info:{},               //发表活动者信息
             like_state:false,                  //是否收藏状态
             tickets:[],
@@ -341,7 +343,8 @@
             pay_ment:0,                           //按钮状态（支付的状态）
             user_active_num:0,                     //该活动人发表活动总数
             user_guest_num:0,                       //参与人数
-            flag:true                               //控制显示开关
+            flag:true,                               //控制显示开关
+            page:1                                   //加载更多
         },
         mounted: function() {
 
@@ -351,10 +354,7 @@
                 this.add_view(this.id_domain)
                 // 活动信息
                 this.active_detail_show(this.id_domain);
-                console.log(pages_info.plats_domian.weid)
                 this.active_guest_num(pages_info.plats_domian.plat_user_id);
-                console.log(88888888,docCookies.getItem("weid"));
-                console.log("dddddd",ACTIVITY_ENROLL_STORE);
 
             });
 
@@ -375,12 +375,10 @@
                        this.cate_time=res.data.created_at.substr(0,10);
                         this.end_time=res.data.end_time.substr(0,10);
                         this.guest_show(this.id_domain);
-                        this.active_guest_show(this.id_domain);
+                        this.active_guest_show(this.id_domain,this.page);
                         this.qrcodefun(this.id_domain);
-                        // console.log(pages_info)
                         this.active_user_info=pages_info.plats_user;
                         if(plats_user_info){
-                            // alert(1)
                             this. isEnroll(docCookies.getItem("weid"), this.id_domain)
                             this.iscollection(docCookies.getItem("weid"), this.id_domain)
                         }else{
@@ -416,11 +414,14 @@
                 })
             },
             // 活动成员
-            active_guest_show(id){
+            active_guest_show(id,page){
                 var self=this;
                 var sendData={
+                    page:page,
+                    limit:self.active_limit,
                     activity_id:id,
                 }
+
                 $.ajax({
                     url: ACTIVITY_ENROLL_LISTS,
                     type: 'post',
@@ -431,9 +432,14 @@
                     success: function(data){
                         console.log(data);
                         if (data.code == 200){
-
-                            self.active_guest=data.data.list;
+                            self.active_page=Math.ceil(data.data.total/self.active_limit)
+                            console.log("总页数",self.active_page)
+                            data.data.list.forEach(function(item,index){
+                                self.active_guest.push(item)
+                            })
                             self.active_num=data.data.total;
+                            console.log("当前数据",page)
+                            self.page=page;
 
                         }
                     },
@@ -481,10 +487,10 @@
                     success: function(data) {
                         console.log(data);
                         if (data.code == 200) {
-                            $(".collect-btn-click").css({
-                                "background": '#d4d4d4',
-                                "cursor": 'default'
-                            });
+                            // $(".collect-btn-click").css({
+                            //     "background": '#d4d4d4',
+                            //     "cursor": 'default'
+                            // });
                             $(".collect-btn-click").text("已收藏");
                             $(".collect-btn-click").data("id", 2);
                             $(".collect-btn-click").attr("id", data.data);
@@ -516,10 +522,10 @@
                                 var layer = layui.layer;
                                 layer.msg("已收藏", {time: 1500});
                             })
-                            $(".collect-btn-click").css({
-                                "background": '#d4d4d4',
-                                "cursor": 'default'
-                            });
+                            // $(".collect-btn-click").css({
+                            //     "background": '#d4d4d4',
+                            //     "cursor": 'default'
+                            // });
                             $(".collect-btn-click").text("已收藏");
                             $(".collect-btn-click").attr("id", data.data);
 
@@ -534,29 +540,46 @@
             canclecollect(id) {
                 var self=this;
                 console.log(77777,id)
-                $.ajax({
-                    // url: ACTIVITY_LIST,
-                    url: ACTIVITY_COLLECTION_DESTROY + "/" + id,
-                    type: 'get',
-                    success: function(data) {
-                        self.like_state=false;
-                        if (data.code == 200) {
-                            layui.use('layer', function() {
-                                var layer = layui.layer;
-                                layer.msg("已取消收藏", {time: 1500});
-                            })
-                            $(".collect-btn-click").css({
-                                "background": '#80ccf4',
-                                "cursor": 'pointer'
-                            });
-                            $(".collect-btn-click").text("+收藏");
-                            $(".collect-btn-click").attr("id", '');
+                // 询问框开始
+                layer.confirm('确定取消收藏吗？', {
+                    btn: ['确定','取消'] //按钮
+                }, function(){
+                    $.ajax({
+                        // url: ACTIVITY_LIST,
+                        url: ACTIVITY_COLLECTION_DESTROY + "/" + id,
+                        type: 'get',
+                        success: function(data) {
+                            self.like_state=false;
+                            if (data.code == 200) {
+                                layui.use('layer', function() {
+                                    var layer = layui.layer;
+                                    layer.msg('已取消收藏', {icon: 1});
+                                })
+                                $(".collect-btn-click").css({
+                                    "background": '#80ccf4',
+                                    "cursor": 'pointer'
+                                });
+                                $(".collect-btn-click").text("+收藏");
+                                $(".collect-btn-click").attr("id", '');
+                            }
+                        },
+                        error: function(xhr) {
+                            console.log(xhr);
                         }
-                    },
-                    error: function(xhr) {
-                        console.log(xhr);
-                    }
-                })
+                    })
+
+                }, function(){
+                    layui.use('layer', function() {
+                        var layer = layui.layer;
+                        layer.msg('您可以去支持活动看活动更新状态', {
+                            time: 20000, //20s后自动关闭
+                            btn: ['明白了', '知道了']
+                        });
+                    })
+
+                });
+                // 询问框结束
+
             },
             // 收藏状态
             Lstate(){
@@ -1291,6 +1314,11 @@
 
                     }
                 })
+            },
+            // 参加活动点击更多
+            active_more(id,page){
+                page++;
+                this.active_guest_show(id,page)
             }
         },
 
@@ -1642,7 +1670,6 @@
                             }
                         })
                     })
-                    // console.log(this.shopCate)
                 },
                 login: function(type){
                     if (!docCookies.getItem("token")) {
