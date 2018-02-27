@@ -439,6 +439,7 @@ $(document).ready(function(){
                             });
                             var cns =true;
                             categories.forEach(function (v,i) {
+                                console.log(v)
                                 if(v.name.length < 2){
                                     cns = false;
                                     flags = true;
@@ -455,14 +456,19 @@ $(document).ready(function(){
                                     cns = false;
                                     flags = true;
                                     layer.close(indexs);
-                                    layer.msg(v.ename+"分类别名不能小于4个字")
+                                    layer.msg(v.name+"分类别名不能小于4个字")
                                     return
                                 } else if(v.ename.length > 32){
                                     cns = false;
                                     flags = true;
                                     layer.close(indexs);
-                                    layer.msg(v.ename+"分类别名不能多于32个字")
+                                    layer.msg(v.name+"分类别名不能多于32个字")
                                     return
+                                }else if(v.floor == 0){
+                                    cns = false;
+                                    flags = true;
+                                    layer.close(indexs);
+                                    layer.msg(v.name+"排序不能为空或0")
                                 }else {
                                     var regs = /^[a-zA-Z]*$/;
                                     if (regs.test(v.ename)) {
