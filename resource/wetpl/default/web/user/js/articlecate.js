@@ -443,31 +443,31 @@ $(document).ready(function(){
                                     cns = false;
                                     flags = true;
                                     layer.close(indexs);
-                                    layer.msg(v.name+"分类名不能少于两个字")
+                                    layer.msg(v.name+"&nbsp;分类名不能少于两个字")
                                     return
                                 } else if(v.name.length > 10){
                                     cns = false;
                                     flags = true;
                                     layer.close(indexs);
-                                    layer.msg(v.name+"分类名不能多于10个字")
+                                    layer.msg(v.name+"&nbsp;分类名不能多于10个字")
                                     return
                                 } else if(v.ename.length < 4){
                                     cns = false;
                                     flags = true;
                                     layer.close(indexs);
-                                    layer.msg(v.name+"分类别名不能小于4个字")
+                                    layer.msg(v.name+"&nbsp;分类别名不能小于4个字")
                                     return
                                 } else if(v.ename.length > 32){
                                     cns = false;
                                     flags = true;
                                     layer.close(indexs);
-                                    layer.msg(v.name+"分类别名不能多于32个字")
+                                    layer.msg(v.name+"&nbsp;分类别名不能多于32个字")
                                     return
                                 }else if(v.floor == 0){
                                     cns = false;
                                     flags = true;
                                     layer.close(indexs);
-                                    layer.msg(v.name+"排序不能为空或0")
+                                    layer.msg(v.name+"&nbsp;排序不能为空或0")
                                 }else {
                                     var regs = /^[a-zA-Z]*$/;
                                     if (regs.test(v.ename)) {
@@ -480,7 +480,7 @@ $(document).ready(function(){
                                     } else {
                                         cns = false;
                                         layer.close(indexs);
-                                        layer.msg(v.name+"的别名不符合规范")
+                                        layer.msg(v.name+"&nbsp;的别名不符合规范")
                                         return;
                                     }
                                 }
