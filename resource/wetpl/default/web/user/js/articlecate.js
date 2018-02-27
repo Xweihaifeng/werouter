@@ -204,7 +204,7 @@ $(document).ready(function(){
                 v.addEventListener("change",myfun,false);
             })
             function myfun() {
-                var reg = /^[a-zA-Z0-9]*$/;
+                var reg = /^[a-zA-Z]*$/;
                 var _txt = $(this).val();
                 if (reg.test(_txt)) {
                     flags = true;
@@ -286,7 +286,7 @@ $(document).ready(function(){
                         }else {
                             // $(".use-right-box").before(alerthtml);
                             $(".loging").css({'display':'none'})
-                             mess_tusi(data.message+"不能删除");
+                             // mess_tusi(data.message+"不能删除");
                             layer.msg(data.message+"不能删除")
                         }
                     }
@@ -308,7 +308,7 @@ $(document).ready(function(){
             v.addEventListener("change",myfun,false);
         })
         function myfun() {
-            var reg = /^[a-zA-Z0-9]*$/;
+            var reg = /^[a-zA-Z]*$/;
             var _txt = $(this).val();
             if (reg.test(_txt)) {
                 flags = true;
@@ -426,11 +426,12 @@ $(document).ready(function(){
                             });
                             var cns =true;
                             categories.forEach(function (v,i) {
-                                var regs = /^[a-zA-Z0-9]*$/;
+                                var regs = /^[a-zA-Z]*$/;
                                 if (regs.test(v.ename)) {
                                    if(categories.length == i+1){
                                        if( cns == true){
                                            setTimeout(saves, 500);
+                                           sav = false;
                                        }
                                    }
                                 } else {
