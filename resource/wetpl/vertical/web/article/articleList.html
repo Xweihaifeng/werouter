@@ -28,7 +28,7 @@
                                 <span>{{JSON.parse(e.other).summary | cut(100)}} </span>
                             </span>
                             <span>
-                                <img class="i1" src="/common/img/new/date.png" alt=""/><span style="padding-right:34px;">{{new Date(parseInt(e.updated_at * 1000)) | show_date | format_date}}</span>
+                                <img class="i1" src="/common/img/new/date.png" alt=""/><span style="padding-right:34px;">{{e.publish_time ? (e.publish_time | cut(10)) : new Date(parseInt(e.updated_at * 1000)) | show_date | format_date}}</span>
                                 <img class="i2" src="/common/img/new/read.png" alt=""/><span>{{JSON.parse(e.other).views}}</span>
                             </span>
                         </p>
