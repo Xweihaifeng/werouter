@@ -143,7 +143,7 @@ $(document).ready(function(){
                     // cateedit();
                     // delcate();
                     $(".showpubmanage").bind("click",function(){
-                        console.log($(this).closest('li').data("id"));
+                        // console.log($(this).closest('li').data("id"));
                         window.location.href='/user/admin/wemall/goods/list/'+$(this).closest('li').data("id")
 
                     })
@@ -199,6 +199,22 @@ $(document).ready(function(){
             $('.sort_save').css({'background':'#ff9c00'});
             newCIV.push("");
             sav = true;
+            var obj=document.querySelectorAll(".category-item input:nth-of-type(2)")
+            obj.forEach((v,i)=>{
+                v.addEventListener("change",myfun,false);
+            })
+            function myfun() {
+                var reg = /^[a-zA-Z0-9]*$/;
+                var _txt = $(this).val();
+                if (reg.test(_txt)) {
+                    flags = true;
+                    cn = true;
+                } else {
+                    layer.msg("分类别名不能是汉字或非法字符")
+                    flags = false;
+                    cn = false;
+                }
+            }
         });
 
         $(".operate_box").on("blur",".category-name",function(){
@@ -257,7 +273,7 @@ $(document).ready(function(){
                         },
                     dataType: 'json',
                     success: function(data){
-                        console.log(data);
+                        // console.log(data);
                         if (data.code == 200) {
                             // $('#myModal').modal('hide');
                             // location.reload();
@@ -287,24 +303,45 @@ $(document).ready(function(){
             $('.sort_save').css({'background':'#ff9c00'});
         })
         var cn = true;
-        $(".category-item input:nth-of-type(2)").change(function () {
+        var obj=document.querySelectorAll(".category-item input:nth-of-type(2)")
+        obj.forEach((v,i)=>{
+            v.addEventListener("change",myfun,false);
+        })
+        function myfun() {
             var reg = /^[a-zA-Z0-9]*$/;
             var _txt = $(this).val();
             if (reg.test(_txt)) {
                 flags = true;
                 cn = true;
+                alert(flags,212)
             } else {
                 layer.msg("分类别名不能是汉字或非法字符")
                 flags = false;
                 cn = false;
+                alert(2)
             }
-        })
+        }
+        // $(".category-item input:nth-of-type(2)").change(function () {
+        //     alert(1)
+        //     var reg = /^[a-zA-Z0-9]*$/;
+        //     var _txt = $(this).val();
+        //     console.log(_txt)
+        //     if (reg.test(_txt)) {
+        //         flags = true;
+        //         cn = true;
+        //         alert(flags,2332)
+        //     } else {
+        //         layer.msg("分类别名不能是汉字或非法字符")
+        //         flags = false;
+        //         cn = false;
+        //         alert(flags,444444)
+        //     }
+        //
+        // })
         $(document).on("click",".save-btn",function(){
-
                 var categories = new Array();
                 var noneVal = {};
                 var addcate=updatecate=[];
-
                 $(".category-item").each(function(){
                     var item = {};
                     item.id = $(this).data("id");
@@ -321,9 +358,9 @@ $(document).ready(function(){
                     }
                     categories.push(item);
                 })
-                console.log(newCIV);
-                console.log(categoryItemValue);
-                console.log(categories);
+                // console.log(newCIV);
+                // console.log(categoryItemValue);
+                // console.log(categories);
                 if(categories.length == 0){
                     return;
                 }
@@ -349,8 +386,7 @@ $(document).ready(function(){
                 }else{
                     subB = false;
                 }
-                console.log(subB+":sub");
-            console.log(sav,flags)
+            // console.log(sav,flags)
 
             if (noneVal.nD=='')
                 {
@@ -416,9 +452,7 @@ $(document).ready(function(){
                                     addeditsave(x,categories.length,inde);
                                 })
                                 // $(".loging").css({'display':'block'})
-
                             }
-
                         }
                     }else {
                         // mess_tusi("目前没有添加或更改")
@@ -434,9 +468,8 @@ $(document).ready(function(){
     // 添加/编辑分类
     var flag=1;
     var addeditsave=function(data,len,indexs){
-
             if(data.id!=0){
-                console.log("编辑");
+                // console.log("编辑");
                 var sendData={
                     name:data.name,
                     ename:data.ename,
@@ -474,7 +507,7 @@ $(document).ready(function(){
                     }
                 })
             }else{
-                console.log("添加");
+                // console.log("添加");
                 var sendData={
                     name:data.name,
                     ename:data.ename,
