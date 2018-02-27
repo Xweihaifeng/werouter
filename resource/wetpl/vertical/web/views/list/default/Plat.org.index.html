@@ -259,14 +259,18 @@
                             ajax.get("cms/cate_tree_by_channel?channel=" + this.domain_weid).then((res) => {
                                 if (res.code == 200) {
                                     var flag=true;
+                                    var indexCheck;
+                                    var items=[];
                                     res.data.forEach(function (item, index) {
-                                        if (item.domain == self.cate_domain) {
-                                            self.cate(item);
-                                        }else{
-                                           flag1=false
-                                        }
+                                        items.push(item.domain)
                                     });
-                                    if(flag1==false && self.cate_domain != ''){
+                                    if($.inArray(self.cate_domain, items) == -1){
+                                        flag=false
+                                    }else{
+                                        flag=true
+                                        indexCheck=$.inArray(self.cate_domain, items);
+                                    }
+                                    if(flag==false && self.cate_domain != ''){
                                         ajax.get("cms/categories/domain_query/"+self.cate_domain).then((res)=>{
                                             if(res.code == 200) {
                                                 self.cate_info=res.data;
@@ -277,6 +281,12 @@
                                             }
                                         })
 
+                                    }else{
+                                        res.data.forEach(function (item, index) {
+                                            if (index == indexCheck) {
+                                                self.cate(item);
+                                            }
+                                        });
                                     }
                                 }
                             })
