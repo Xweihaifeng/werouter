@@ -55,7 +55,7 @@ $(function(){
 
         } else{
 
-            $(".pro-title").css({position:"absolute",top:0,left:0,zIndex:1,marginTop:0,marginLeft:0,borderLeft:"none",width:784});
+            $(".pro-title").css({position:"absolute",top:0,left:0,zIndex:1,marginTop:0,marginLeft:0,borderLeft:"none",borderRight:"none",width:783});
 
 
         }
