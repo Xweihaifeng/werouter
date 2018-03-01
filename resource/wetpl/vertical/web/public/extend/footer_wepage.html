@@ -125,6 +125,10 @@
             }
         });
 
+        var axios = axios.create({
+            headers: {'Token': docCookies.getItem('token')}
+        });
+
         var wepage = new Vue({
             el: '#wepage',
             data: {
@@ -200,7 +204,7 @@
                         $("#menu").css({position:"fixed",top:0,left:0,zIndex:99});
                         $("#content").css({"padding-top":"55px"});
                         $("#center").show();
-                        $("#plats-user").show();                        
+                        $("#plats-user").show();
                         $("#menu ul li:nth-child(2)").hide();
                     }else{
                         $("#menu").css({position:"relative",zIndex:0});
@@ -210,7 +214,6 @@
                         $("#menu ul li:nth-child(2)").show();
                     }
                 })
-
                 $('#favicon').attr('href', ApiMaterPlatQiniuDomain + plats_info.favicon);
                 $("title").text(pages_info.plats_show.head_title);
             },
@@ -293,9 +296,7 @@
                     }
                 },
                 wefriends: function(){
-                    axios.get(apiUrl + 'circel/index?domain=' + pages_info.plats_domian.domain, {
-                        headers: {'Token': docCookies.getItem('token')}
-                    }).then(data => {
+                    axios.get(apiUrl + 'circel/index?domain=' + pages_info.plats_domian.domain).then(data => {
                         this.info = data.data.data;
                         this.ff.fans.total = parseInt(this.info.fnums / 12) + (this.info.fnums % 12 == 0 ? 0 : 1);
                         this.ff.friends.total = parseInt(this.info.friends / 12) + this.info.friends % 12 == 0 ? 0 : 1;
@@ -328,56 +329,40 @@
                     return spread.filter(x => parseInt(x.nums) > 10000);
                 },
                 follow: function(){
-                    $.ajax({
-                        url: apiUrl + 'circel/relationship',
-                        type: 'POST',
-                        headers: {
-                            'Token': docCookies.getItem('token')
-                        },
-                        data: {
-                            'domain': pages_info.plats_domian.domain,
-                            'type': 2
-                        },
-                        success: function(data){
-                            if (data.code == 200) {
-                                wepage.info.if_follow = 1;
-                                layui.use('layer', function() {
-                                    var layer = layui.layer;
-                                    layer.msg("关注成功", {time: 1500});
-                                })
-                            } else {
-                                layui.use('layer', function() {
-                                    var layer = layui.layer;
-                                    layer.msg(data.message, {time: 1500});
-                                })
-                            }
+                    axios.post(apiUrl + 'circel/relationship', {
+                        domain: pages_info.plats_domian.domain,
+                        type: 2
+                    }).then(data => {
+                        if (data.data.code == 200) {
+                            wepage.info.if_follow = 1;
+                            layui.use('layer', function() {
+                                var layer = layui.layer;
+                                layer.msg("关注成功", {time: 1500});
+                            })
+                        } else {
+                            layui.use('layer', function() {
+                                var layer = layui.layer;
+                                layer.msg(data.data.message, {time: 1500});
+                            })
                         }
                     })
                 },
                 cancelFollow: function(){
-                    $.ajax({
-                        url: apiUrl + 'circel/quxiao',
-                        type: 'POST',
-                        data: {
-                            'domain': pages_info.plats_domian.domain,
-                            'type': 2
-                        },
-                        headers: {
-                            'Token': docCookies.getItem('token')
-                        },
-                        success: function(data){
-                            if (data.code == 200) {
-                                layui.use('layer', function() {
-                                    wepage.info.if_follow = 0;
-                                    var layer = layui.layer;
-                                    layer.msg("取消关注", {time: 1500});
-                                })
-                            } else {
-                                layui.use('layer', function() {
-                                    var layer = layui.layer;
-                                    layer.msg(data.message, {time: 1500});
-                                })
-                            }
+                    axios.post(apiUrl + 'circel/quxiao', {
+                        domain: pages_info.plats_domian.domain,
+                        type: 2
+                    }).then(data => {
+                        if (data.data.code == 200) {
+                            layui.use('layer', function() {
+                                wepage.info.if_follow = 0;
+                                var layer = layui.layer;
+                                layer.msg("取消关注", {time: 1500});
+                            })
+                        } else {
+                            layui.use('layer', function() {
+                                var layer = layui.layer;
+                                layer.msg(data.data.message, {time: 1500});
+                            })
                         }
                     })
                 },
@@ -578,9 +563,7 @@
                         this.ff[type].next = "没有更多了";
                     } else {
                         this.ff[type].page += 1;
-                        axios.get(reqUrl + '?domain=' + pages_info.plats_domian.domain + '&page=' + reqPage + '&type=' + this.ff[type].type + '&limit=' + 12, {
-                            headers: {'Token': docCookies.getItem('token')}
-                        }).then(data => {
+                        axios.get(reqUrl + '?domain=' + pages_info.plats_domian.domain + '&page=' + reqPage + '&type=' + this.ff[type].type + '&limit=' + 12).then(data => {
                             var list = data.data.data.list;
                             if (type == 'fans') {
                                 self.info.flist = self.info.flist.concat(list);

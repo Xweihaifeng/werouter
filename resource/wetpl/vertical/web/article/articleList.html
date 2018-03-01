@@ -52,7 +52,7 @@
                     </li>
                     <li v-if="e.dynamic_type == 4">
                         <img class="i0" :src="setImg(JSON.parse(e.other).cover, '/common/img/new/products_load.jpg', 240, 160)" />
-                        <p style="width:395px;">
+                        <p>
                             <span style="padding: 0;">
                                 <span>{{JSON.parse(e.other).title | cut(25)}}</span>
                                 <span>{{JSON.parse(e.other).summary | cut(100)}} </span>
