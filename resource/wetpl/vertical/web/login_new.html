@@ -241,6 +241,9 @@
         $("#wechat").click(() => {
             $("#sign_in").hide();
             $("#wechat_logn").show();
+
+            alert(http_type+real_domain);
+
             $.getScript("https://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js", function(){
                 $.ajax({
                     url: apiUrl + 'setting/alias/weChatOpenConfig',
